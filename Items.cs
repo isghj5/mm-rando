@@ -292,6 +292,12 @@ namespace MMRando
         //oops I forgot one
         public const int ChestToGoronRaceGrotto = 254; //contents?
 
+        //remains
+        public const int RemainsOdolwa = 255;
+        public const int RemainsGoht = 256;
+        public const int RemainsGyorg = 257;
+        public const int RemainsTwinmold = 258;
+
         public static readonly ReadOnlyCollection<int> REPEATABLE
             = new ReadOnlyCollection<int>(new int[] {
                 ItemGoldDust,
@@ -530,6 +536,7 @@ namespace MMRando
                 0xC5CE72,
                 0xC5CE72,
                 0xC5CE72
+                // todo boss remains starting item?
         });
 
         public static readonly ReadOnlyCollection<byte> ITEM_VALUES
@@ -632,6 +639,7 @@ namespace MMRando
                 0x31,
                 0x32,
                 0x34
+                // todo boss remains starting item?
         });
 
         public static readonly ReadOnlyCollection<string> ITEM_NAMES
@@ -890,10 +898,14 @@ namespace MMRando
                 "Map: Romani Ranch",
                 "Map: Great Bay",
                 "Map: Stone Tower",
-                "Goron Racetrack Grotto"
+                "Goron Racetrack Grotto",
+                "Odolwa's Remains",
+                "Goht's Remains",
+                "Gyorg's Remains",
+                "Twinmold's Remains",
         });
 
-        internal static readonly int TotalNumberOfItems = 255;
+        internal static readonly int TotalNumberOfItems = 259;
     }
 
 }

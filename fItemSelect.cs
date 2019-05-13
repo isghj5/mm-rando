@@ -264,7 +264,11 @@ namespace MMRando
             "Map: Romani Ranch",
             "Map: Great Bay",
             "Map: Stone Tower",
-            "Goron Racetrack Grotto"
+            "Goron Racetrack Grotto",
+            "Odolwa's Remains",
+            "Goht's Remains",
+            "Gyorg's Remains",
+            "Twinmold's Remains",
         };
 
         private static string[] ITEM_NAMES = DEFAULT_ITEM_NAMES.ToArray();
