@@ -9,7 +9,7 @@
 
         public static bool IsOutOfRange(int itemId)
         {
-            return itemId > Items.ChestToGoronRaceGrotto;
+            return itemId > Items.RemainsTwinmold;
         }
 
         public static bool IsShopItem(int itemIndex)

@@ -1347,6 +1347,7 @@ namespace MMRando
             }
 
             int freeItem = RNG.Next(Items.SongOath + 1);
+            // todo allow remains
             if (ForbiddenReplacedBy.ContainsKey(Items.MaskDeku))
             {
                 while (ItemList[freeItem].ReplacesItemId != -1

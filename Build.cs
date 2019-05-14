@@ -220,6 +220,10 @@ namespace MMRando
 
         private void WriteFreeItem(int Item)
         {
+            if (Item >= Items.RemainsOdolwa)
+            {
+                Item -= 157;
+            }
             ROMFuncs.WriteToROM(Items.ITEM_ADDRS[Item], Items.ITEM_VALUES[Item]);
             switch (Item)
             {

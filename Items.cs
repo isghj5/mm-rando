@@ -438,7 +438,7 @@ namespace MMRando
 
         public static readonly ReadOnlyCollection<int> ITEM_ADDRS
             = new ReadOnlyCollection<int>(new int[] {
-                0xC5CE41,
+                0xC5CE41, // Deku Mask
                 0xC5CE25,
                 0xC5CE26,
                 0xC5CE27,
@@ -465,16 +465,9 @@ namespace MMRando
                 0xC5CE2A,
                 0xC5CE2A,
                 0xC5CE6E,
-                0xC5CE6E,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
+                0xC5CE6E, // Giant Wallet
+                0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0xC5CE70, // Heart Pieces
                 0xC5CE70,
                 0xC5CE70,
                 0xC5CE70,
@@ -505,8 +498,7 @@ namespace MMRando
                 0xC5CE70,
                 0xC5CE70,
                 0xC5CE70,
-                0xC5CE70,
-                0xC5CE3C,
+                0xC5CE3C, // Postman's Hat
                 0xC5CE3D,
                 0xC5CE3E,
                 0xC5CE3F,
@@ -527,21 +519,25 @@ namespace MMRando
                 0xC5CE51,
                 0xC5CE52,
                 0xC5CE47,
-                0xC5CE4D,
-                0xC5CE72,
+                0xC5CE4D, // Zora Mask
+                0xC5CE72, // Song of Soaring
                 0xC5CE72,
                 0xC5CE71,
                 0xC5CE73,
                 0xC5CE73,
                 0xC5CE72,
                 0xC5CE72,
-                0xC5CE72
-                // todo boss remains starting item?
+                0xC5CE72, // Oath to Order
+
+                0xC5CE73, // Odolwa's Remains
+                0xC5CE73,
+                0xC5CE73,
+                0xC5CE73, /// Twinmold's Remains
         });
 
         public static readonly ReadOnlyCollection<byte> ITEM_VALUES
             = new ReadOnlyCollection<byte>(new byte[] {
-                0x32,
+                0x32, // Deku Mask
                 0x01,
                 0x02,
                 0x03,
@@ -568,16 +564,9 @@ namespace MMRando
                 0x06,
                 0x06,
                 0x10,
-                0x20,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
-                0,
+                0x20, // Giant's Wallet
+                0, 0, 0, 0, 0, 0, 0, 0, 0,
+                0x10, // Heart Pieces
                 0x10,
                 0x10,
                 0x10,
@@ -608,8 +597,7 @@ namespace MMRando
                 0x10,
                 0x10,
                 0x10,
-                0x10,
-                0x3E,
+                0x3E, // Postman's Hat
                 0x38,
                 0x47,
                 0x45,
@@ -630,16 +618,20 @@ namespace MMRando
                 0x44,
                 0x49,
                 0x33,
-                0x34,
-                0xB0,
+                0x34, // Zora Mask
+                0xB0, // Song of Soaring
                 0x70,
                 0x01,
                 0x40,
                 0x80,
                 0x31,
                 0x32,
-                0x34
-                // todo boss remains starting item?
+                0x34, // Oath to Order
+
+                0x01, // Odolwa's Remains
+                0x02,
+                0x04,
+                0x08, // Twinmold's Remains
         });
 
         public static readonly ReadOnlyCollection<string> ITEM_NAMES
