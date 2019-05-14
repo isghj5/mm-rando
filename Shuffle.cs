@@ -21,6 +21,8 @@ namespace MMRando
         private int[] _newDCMasks = new int[] { -1, -1, -1, -1 };
         private int[] _newEnts = new int[] { -1, -1, -1, -1 };
         private int[] _newExts = new int[] { -1, -1, -1, -1 };
+        private int[] _randomizedEntrances;
+        private int[] _randomizedExits;
 
 
         public class ItemObject
@@ -261,21 +263,48 @@ namespace MMRando
 
         #endregion
 
-        private void EntranceShuffle()
+        private void EntranceShuffle(int[] entrances, int[] exits)
         {
-            _newEntrances = new int[] { -1, -1, -1, -1 };
-            _newExits = new int[] { -1, -1, -1, -1 };
-            _newDCFlags = new int[] { -1, -1, -1, -1 };
-            _newDCMasks = new int[] { -1, -1, -1, -1 };
-            _newEnts = new int[] { -1, -1, -1, -1 };
-            _newExts = new int[] { -1, -1, -1, -1 };
+            int dungPoolSize = Values.OldEntrances.Count, genPoolSize = 0;
+            if (entrances != null && exits != null && entrances.Length == exits.Length && entrances.Length > 1 )
+            {
+                genPoolSize = entrances.Length;
+            }
+            int poolSize = dungPoolSize + genPoolSize;
+            _newEntrances = new int[poolSize];
+            _newExits = new int[poolSize];
+            _newDCFlags = new int[poolSize];
+            _newDCMasks = new int[poolSize];
+            _newEnts = new int[poolSize];
+            _newExts = new int[poolSize];
+            for( int i = 0; i < poolSize; i++)
+            {
+                _newEntrances[i] = -1;
+                _newExits[i] = -1;
+                _newDCFlags[i] = -1;
+                _newDCMasks[i] = -1;
+                _newEnts[i] = -1;
+                _newExts[i] = -1;
+            }
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < dungPoolSize; i++)
             {
                 int n;
                 do
                 {
-                    n = RNG.Next(4);
+                    n = RNG.Next(dungPoolSize);
+                } while (_newEnts.Contains(n));
+
+                _newEnts[i] = n;
+                _newExts[n] = i;
+            };
+
+            for (int i = 4; i < poolSize; i++)
+            {
+                int n;
+                do
+                {
+                    n = RNG.Next(genPoolSize) + dungPoolSize;
                 } while (_newEnts.Contains(n));
 
                 _newEnts[i] = n;
@@ -296,7 +325,7 @@ namespace MMRando
                 Items.AreaGreatBayTempleAccess
             };
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < dungPoolSize; i++)
             {
                 Debug.WriteLine($"Entrance {DI[_newEnts[i]]} placed at {DE[i].ID}.");
                 ItemList[DI[_newEnts[i]]] = DE[i];
@@ -316,18 +345,30 @@ namespace MMRando
                 Items.AreaGreatBayTempleClear
             };
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < dungPoolSize; i++)
             {
                 ItemList[DI[i]] = DE[_newEnts[i]];
             };
 
-            for (int i = 0; i < 4; i++)
+            _randomizedEntrances = new int[poolSize];
+            _randomizedExits = new int[poolSize];
+            for (int i = 0; i < dungPoolSize; i++)
             {
+                _randomizedEntrances[i] = Values.OldEntrances[i];
+                _randomizedExits[i] = Values.OldExits[i];
                 _newEntrances[i] = Values.OldEntrances[_newEnts[i]];
                 _newExits[i] = Values.OldExits[_newExts[i]];
                 _newDCFlags[i] = Values.OldDCFlags[_newExts[i]];
                 _newDCMasks[i] = Values.OldMaskFlags[_newExts[i]];
             };
+
+            for (int i = dungPoolSize; i < poolSize; i++)
+            {
+                _randomizedEntrances[i] = entrances[i-dungPoolSize];
+                _randomizedExits[i] = exits[i-dungPoolSize];
+                _newEntrances[i] = entrances[_newEnts[i]-dungPoolSize];
+                _newExits[i] = exits[_newExts[i]-dungPoolSize];
+            }
         }
 
         #region Sequences and BGM

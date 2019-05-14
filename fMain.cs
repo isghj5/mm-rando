@@ -714,7 +714,7 @@ namespace MMRando
                 if (Settings.RandomizeDungeonEntrances)
                 {
                     worker.ReportProgress(10, "Shuffling entrances...");
-                    EntranceShuffle();
+                    EntranceShuffle( new int[] { 0xB400, 0x5000, 0xD420 }, new int[] { 0x9A20, 0x8430, 0xD830 } );
                 }
 
                 worker.ReportProgress(30, "Shuffling items...");
