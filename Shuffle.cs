@@ -1346,8 +1346,11 @@ namespace MMRando
                 return;
             }
 
-            int freeItem = RNG.Next(Items.SongOath + 1);
-            // todo allow remains
+            int freeItem = RNG.Next(Items.ITEM_VALUES.Count + 1);
+            if (freeItem > Items.SongOath)
+            {
+                freeItem += 157;
+            }
             if (ForbiddenReplacedBy.ContainsKey(Items.MaskDeku))
             {
                 while (ItemList[freeItem].ReplacesItemId != -1
