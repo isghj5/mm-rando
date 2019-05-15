@@ -168,20 +168,6 @@ namespace MMRando
             };
         }
 
-        private static void ReadMapExits(byte[] Map, int Addr)
-        {
-            List<ushort> exits = new List<ushort>();
-            ushort exit = 0xFF;
-            do
-            {
-                exit = Arr_ReadU16(Map, Addr + (exits.Count*2));
-                if( exit != 0x00)
-                {
-                    exits.Add(exit);
-                }
-            } while ( exit != 0x00 );
-        }
-
         private static List<Actor> ReadMapActors(byte[] Map, int Addr, int Count)
         {
             List<Actor> Actors = new List<Actor>();
@@ -275,36 +261,6 @@ namespace MMRando
                             int ObjectAddr = (int)Arr_ReadU32(MMFileList[f].Data, k + 4) & 0xFFFFFF;
                             SceneList[i].Maps[j].ObjAddr = ObjectAddr;
                             SceneList[i].Maps[j].Objects = ReadMapObjects(MMFileList[f].Data, ObjectAddr, ObjectCount);
-                        };
-                        if (cmd == 0x14)
-                        {
-                            break;
-                        };
-                        k += 8;
-                    };
-                };
-            };
-        }
-
-        public static void GetExits()
-        {
-            ReadSceneTable();
-            GetMaps();
-            GetMapHeaders();
-            for (int i = 0; i < SceneList.Count; i++)
-            {
-                for (int j = 0; j < SceneList[i].Maps.Count; j++)
-                {
-                    int f = SceneList[i].Maps[j].File;
-                    CheckCompressed(f);
-                    int k = SceneList[i].Maps[j].Header;
-                    while (true)
-                    {
-                        byte cmd = MMFileList[f].Data[k];
-                        if (cmd == 0x13)
-                        {
-                            int ExitListAddr = (int)Arr_ReadU32(MMFileList[f].Data, k + 4) & 0xFFFFFF;
-                            ReadMapExits(MMFileList[f].Data, ExitListAddr);
                         };
                         if (cmd == 0x14)
                         {

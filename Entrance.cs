@@ -33,7 +33,6 @@ namespace MMRando
                 Arr_WriteU32(MMFileList[f].Data, GetEntranceAddr(olde[i]), data[i]);
             };
         }
-
     }
 
 }

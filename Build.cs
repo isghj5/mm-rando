@@ -126,6 +126,11 @@ namespace MMRando
             }
         }
 
+        private void WriteEntrances()
+        {
+            ROMFuncs.WriteEntrances(GetOriginalEntrances(), GetShuffledEntrances());
+        }
+
         private void WriteDungeons()
         {
             if ((Settings.LogicMode == LogicMode.Vanilla) || (!Settings.RandomizeDungeonEntrances))
@@ -133,8 +138,8 @@ namespace MMRando
                 return;
             }
 
-            ROMFuncs.WriteEntrances(_randomizedEntrances, _newEntrances);
-            ROMFuncs.WriteEntrances(_randomizedExits, _newExits);
+            ROMFuncs.WriteEntrances(Values.OldEntrances.ToArray(), _newEntrances);
+            ROMFuncs.WriteEntrances(Values.OldExits.ToArray(), _newExits);
             byte[] li = new byte[] { 0x24, 0x02, 0x00, 0x00 };
             List<int[]> addr = new List<int[]>();
             addr = ROMFuncs.GetAddresses(AddrsDirectory + "d-check");
@@ -441,8 +446,14 @@ namespace MMRando
             worker.ReportProgress(66, "Writing Tatl...");
             WriteTatlColour();
 
+            worker.ReportProgress(67, "Writing entrances...");
+            WriteEntrances();
+
             worker.ReportProgress(68, "Writing dungeons...");
             WriteDungeons();
+
+            worker.ReportProgress(69, "Writing owl statues...");
+            ROMFuncs.SwapOwlStatues(_randomizedOwls);
 
             worker.ReportProgress(70, "Writing gimmicks...");
             WriteGimmicks();

@@ -713,12 +713,19 @@ namespace MMRando
 
                 if (Settings.RandomizeDungeonEntrances)
                 {
-                    worker.ReportProgress(10, "Shuffling entrances...");
-                    EntranceShuffle( new int[] { 0xB400, 0x5000, 0xD420 }, new int[] { 0x9A20, 0x8430, 0xD830 } );
+                    worker.ReportProgress(10, "Shuffling dungeons...");
+                    DungeonShuffle();
                 }
+
+                worker.ReportProgress(15, "Shuffling entrances...");
+                EntranceShuffle();
+
+                worker.ReportProgress(20, "Shuffling owls...");
+                OwlShuffle(false, false);
 
                 worker.ReportProgress(30, "Shuffling items...");
                 ItemShuffle();
+
 
 
                 if (Settings.EnableGossipHints)
