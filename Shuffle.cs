@@ -15,13 +15,6 @@ namespace MMRando
 
         Random RNG;
 
-        private int[] _newEntrances = new int[] { -1, -1, -1, -1 };
-        private int[] _newExits = new int[] { -1, -1, -1, -1 };
-        private int[] _newDCFlags = new int[] { -1, -1, -1, -1 };
-        private int[] _newDCMasks = new int[] { -1, -1, -1, -1 };
-        private int[] _newEnts = new int[] { -1, -1, -1, -1 };
-        private int[] _newExts = new int[] { -1, -1, -1, -1 };
-        private int[] _randomizedOwls;
 
         public class ItemObject
         {
@@ -130,40 +123,93 @@ namespace MMRando
         };
 
         //rando functions
+        #region Entrances and Dungeons and Owl Statues
 
+        private int[] _newEntrances = new int[] { -1, -1, -1, -1 };
+        private int[] _newExits = new int[] { -1, -1, -1, -1 };
+        private int[] _newDCFlags = new int[] { -1, -1, -1, -1 };
+        private int[] _newDCMasks = new int[] { -1, -1, -1, -1 };
+        private int[] _newEnts = new int[] { -1, -1, -1, -1 };
+        private int[] _newExts = new int[] { -1, -1, -1, -1 };
+        private int[] _randomizedOwls;
 
-        private void OwlShuffle(bool spring, bool hidden)
+        private void DungeonShuffle()
         {
-            int size = 12;
-            int poolSize = size;
-            _randomizedOwls = new int[size];
-            for(int i = 0;i< _randomizedOwls.Length; i++)
+            int poolSize = Values.OldEntrances.Count;
+            _newEntrances = new int[poolSize];
+            _newExits = new int[poolSize];
+            _newDCFlags = new int[poolSize];
+            _newDCMasks = new int[poolSize];
+            _newEnts = new int[poolSize];
+            _newExts = new int[poolSize];
+            for (int i = 0; i < poolSize; i++)
             {
-                _randomizedOwls[i] = -1;
+                _newEntrances[i] = -1;
+                _newExits[i] = -1;
+                _newDCFlags[i] = -1;
+                _newDCMasks[i] = -1;
+                _newEnts[i] = -1;
+                _newExts[i] = -1;
             }
-            if( !spring )
-            {
-                _randomizedOwls[8] = 8;
-            }
-            if( !hidden)
-            {
-                _randomizedOwls[10] = 10;
-            }
-            int owl = 0;
-            while( owl < _randomizedOwls.Length) {
-                if (_randomizedOwls[owl] == -1)
-                {
-                    int n;
-                    do
-                    {
-                        n = RNG.Next(_randomizedOwls.Length);
-                    } while (_randomizedOwls.Contains(n));
 
-                    _randomizedOwls[owl] = n;
-                    _randomizedOwls[n] = owl;
-                }
-                owl++;
-            }
+            for (int i = 0; i < poolSize; i++)
+            {
+                int n;
+                do
+                {
+                    n = RNG.Next(poolSize);
+                } while (_newEnts.Contains(n));
+
+                _newEnts[i] = n;
+                _newExts[n] = i;
+            };
+
+            ItemObject[] DE = new ItemObject[] {
+                ItemList[Items.AreaWoodFallTempleAccess],
+                ItemList[Items.AreaSnowheadTempleAccess],
+                ItemList[Items.AreaInvertedStoneTowerTempleAccess],
+                ItemList[Items.AreaGreatBayTempleAccess]
+            };
+
+            int[] DI = new int[] {
+                Items.AreaWoodFallTempleAccess,
+                Items.AreaSnowheadTempleAccess,
+                Items.AreaInvertedStoneTowerTempleAccess,
+                Items.AreaGreatBayTempleAccess
+            };
+
+            for (int i = 0; i < poolSize; i++)
+            {
+                Debug.WriteLine($"Entrance {DI[_newEnts[i]]} placed at {DE[i].ID}.");
+                ItemList[DI[_newEnts[i]]] = DE[i];
+            };
+
+            DE = new ItemObject[] {
+                ItemList[Items.AreaWoodFallTempleClear],
+                ItemList[Items.AreaSnowheadTempleClear],
+                ItemList[Items.AreaStoneTowerClear],
+                ItemList[Items.AreaGreatBayTempleClear]
+            };
+
+            DI = new int[] {
+                Items.AreaWoodFallTempleClear,
+                Items.AreaSnowheadTempleClear,
+                Items.AreaStoneTowerClear,
+                Items.AreaGreatBayTempleClear
+            };
+
+            for (int i = 0; i < poolSize; i++)
+            {
+                ItemList[DI[i]] = DE[_newEnts[i]];
+            };
+
+            for (int i = 0; i < poolSize; i++)
+            {
+                _newEntrances[i] = Values.OldEntrances[_newEnts[i]];
+                _newExits[i] = Values.OldExits[_newExts[i]];
+                _newDCFlags[i] = Values.OldDCFlags[_newExts[i]];
+                _newDCMasks[i] = Values.OldMaskFlags[_newExts[i]];
+            };
         }
 
         private class Spawn
@@ -179,40 +225,115 @@ namespace MMRando
             public int SpawnAddress;
             public string Name;
             public int ShuffledAddress;
+            public Spawn Exit;
         }
 
-        private List<Spawn> spawnSet;
-        private List<int> linkedEntrances;
-
-        private void AddSpawn(string Name, int Address, string Scene)
+        private class CollectionState
         {
-            spawnSet.Add(new Spawn(Name,Address,Scene));
-            linkedEntrances.Add(-1);
+            List<string> Inventory = new List<string>();
+            public void Collect(string Item)
+            {
+                Inventory.Add(Item);
+            }
+            public bool Has(string Item)
+            {
+                return Inventory.Contains(Item);
+            }
         }
 
+        Dictionary<string, List<Spawn>> TerminaMap { get; set; }
+        Dictionary<string, Predicate<CollectionState>> TerminaLogic;
+        int[] _OriginalEntrances { get; set; }
+        int[] _ShuffledEntrances { get; set; }
+
+        private void OwlShuffle(bool spring, bool hidden)
+        {
+            int size = 12;
+            int poolSize = size;
+            _randomizedOwls = new int[size];
+            for (int i = 0; i < _randomizedOwls.Length; i++)
+            {
+                _randomizedOwls[i] = -1;
+            }
+            if (!spring)
+            {
+                _randomizedOwls[8] = 8;
+            }
+            if (!hidden)
+            {
+                _randomizedOwls[10] = 10;
+            }
+            int owl = 0;
+            while (owl < _randomizedOwls.Length)
+            {
+                if (_randomizedOwls[owl] == -1)
+                {
+                    int n;
+                    do
+                    {
+                        n = RNG.Next(_randomizedOwls.Length);
+                    } while (_randomizedOwls.Contains(n));
+
+                    _randomizedOwls[owl] = 8;
+                    _randomizedOwls[n] = 8;
+                }
+                owl++;
+            }
+        }
         private void EntranceShuffle()
         {
-            spawnSet = new List<Spawn>();
-            linkedEntrances = new List<int>();
+            TerminaMap = new Dictionary<string, List<Spawn>>();
+            TerminaLogic = new Dictionary<string, Predicate<CollectionState>>();
+            GetVanillaTerminaMap();
+            ConstructTerminaLogic();
+            ShuffleEntrances();
+            EntranceOverrides();
+            FinalizeEntrances();
+        }
+
+        private void GetVanillaTerminaMap()
+        {
             AddSpawn("Clock Tower: Secret", 0x2E10, "Secret");
             AddSpawn("Clock Tower: Twisted Hallway", 0xC000, "Clock Tower");
             AddSpawn("Clock Tower: Front", 0xC010, "Clock Tower");
-            AddSceneSpawns(
-                new string[] { "WCT", "Swamp", "Bay", "Mountain", "Ikana",
-                                "Romani", "SCT", "ECT", "NCT", "Observatory", "Telescope" }, 
-                0x54, "Termina Field" 
-            );
-            AddSceneSpawns(
-                new string[] { "Clock Tower", "TF", "ECT Owl", "WCT Owl",
-                                "NCT", "WCT Scrub", "Laundry", "ECT Chest" },
-                0xD8, "South Clock Town");
-            AddSceneSpawns(
-                new string[] { "TF", "ECT", "SCT", "Fairy" },
-                0xD6, "North Clock Town");
-            AddSceneSpawns(
-                new string[] { },
-                0xD4, "West Clock Town" );
+            AddSceneSpawns(new string[] {
+                "West Clock Town", "Swamp Path", "Great Bay Coast",
+                "Mountain Path", "Ikana Path", "Milk Road", "South Clock Town",
+                "East Clock Town", "North Clock Town", "Observatory", "Telescope" },
+                    0x54, "Termina Field");
+            AddSceneSpawns(new string[] {
+                "Clock Tower", "Termina Field", "East Clock Town: Owl",
+                "West Clock Town: Owl", "North Clock Town", "West Clock Town: Scrub",
+                "Laundry Pool", "East Clock Town: Chest Game" },
+                    0xD8, "South Clock Town");
+            AddSceneSpawns(new string[] {
+                "Termina Field", "East Clock Town", "South Clock Town", "Clock Town Fairy" },
+                    0xD6, "North Clock Town");
+            AddSceneSpawns(new string[] {
+                "Termina Field", "South Clock Town: Scrub", "South Clock Town: Scrub"},
+                    0xD4, "West Clock Town");
+            AddSceneSpawns(new string[] { },
+                    0xD4, "East Clock Town");
+            string[] tempMountainSpawns = new string[] {
+                "", "Smithy", "Twin Islands", "Goron Grave",
+                "Snowhead Path", "", "Mountain Path", "", "Owl Warp" };
+            AddSceneSpawns(tempMountainSpawns, 0x9A, "Mountain Village");
+            AddSceneSpawns(tempMountainSpawns, 0xAE, "Mountain Village Spring");
+            tempMountainSpawns = new string[] {
+                "Mountain Village", "Goron Village", "Goron Racetrack" };
+            AddSceneSpawns(tempMountainSpawns, 0xB4, "Twin Islands");
+            AddSceneSpawns(tempMountainSpawns, 0xB6, "Twin Islands Spring");
+            tempMountainSpawns = new string[] {
+                "Twin Islands", "", "Goron Shrine", "Lens Grotto" };
+            AddSceneSpawns(tempMountainSpawns, 0x94, "Goron Village");
+            tempMountainSpawns = new string[] {
+                "Twin Islands", "", "Goron Shrine" };
+            AddSceneSpawns(tempMountainSpawns, 0x8A, "Goron Village Spring");
             AddSpawn("Moon", 0xC800, "Moon");
+            AddSpawns("Moon",
+                new string[] { "Woodfall Trial", "Snowhead Trial", "Great Bay Trial", "Stone Tower Trial" },
+                new UInt16[] { 0x4E00, 0x7800, 0x8800, 0xC600 }
+            );
             AddSpawn("Majora Fight", 0x0200, "Majora");
             AddSpawn("Ikana Warp", 0x2040, "Ikana Canyon");
             AddSpawn("Romani Warp", 0x3E40, "Milk Road");
@@ -220,90 +341,133 @@ namespace MMRando
             AddSpawn("Zora Cape Warp", 0x6A60, "Zora Cape");
             AddSpawn("Swamp Warp", 0x84A0, "Swamp");
             AddSpawn("Woodfall Warp", 0x8640, "Woodfall");
-            AddSpawn("Mountain Warp", 0x9A80, "MV");
             AddSpawn("Stone Tower Warp", 0xAA30, "Stone Tower");
-            AddSpawn("Spring Mountain Warp", 0xAE80, "MV Spring");
             AddSpawn("Snowhead Warp", 0xB230, "Snowhead");
-            AddSpawn("Ikana Warp", 0xD890, "SCT");
+            AddSpawn("Clock Town Warp", 0xD890, "South Clock Town");
+        }
+
+        private void ConstructTerminaLogic()
+        {
+            TerminaLogic["Snowhead Warp"] = s => s.Has("Bow");
+        }
+
+        private void EntranceOverrides()
+        {
+            // going into clock tower goes to moon
+            // talking to skull kid returns to twisted hallway
             PairSpawns("South Clock Town: Clock Tower", "Clock Tower: Twisted Hallway", "OW");
             PairSpawns("Moon", "Majora Fight", "OW");
-            ShuffleEntrances();
-            ConnectEntrances("Clock Tower: Front", "Moon");
+            ConnectEntrances("Clock Tower: Front", "Moon", true);
+            // sets the starting location
+            ConnectEntrances("South Clock Town: Clock Tower", "Mountain Village Spring: Owl Warp", false);
+            // test to see if warping to MV before and after Goht yields a different spot
+            ConnectEntrances("Mountain Village Spring: Owl Warp", "Woodfall Trial", false);
+            ConnectEntrances("Mountain Village Spring: Owl Warp", "Snowhead Trial", false);
         }
 
         private void ShuffleEntrances()
         {
-            int[] ents = new int[spawnSet.Count];
-            for( int i = 0; i < ents.Length; i++)
-            {
-                ents[i] = -1;
-            }
-            for (int i = 0; i < ents.Length; i++)
-            {
-                int n;
-                do
-                {
-                    n = RNG.Next(ents.Length);
-                } while (ents.Contains(n));
-                ents[i] = n;
-                ConnectEntrances(spawnSet[i].Name, spawnSet[n].Name);
-            }
+
         }
 
         private void AddSceneSpawns(string[] Spawns, UInt16 Scene, string SceneName)
         {
             for (int i = 0; i < Spawns.Length; i++)
             {
-                if (!Spawns[i].Equals("")) {
-                    AddSpawn(SceneName+": "+Spawns[i], (Scene << 8) + (i << 4), SceneName );
+                if (!Spawns[i].Equals(""))
+                {
+                    AddSpawn(SceneName + ": " + Spawns[i], (Scene << 8) + (i << 4), SceneName);
                 }
             }
         }
 
-        private void PairSpawns( string from, string to, string type)
+        private void AddSpawns(string parent, string[] sceneName, ushort[] sceneAddress)
         {
-            int i = spawnSet.FindIndex(u => u.Name == from);
-            int j = spawnSet.FindIndex(u => u.Name == to);
-            Spawn f = spawnSet[i];
-            Spawn t = spawnSet[j];
-            linkedEntrances[i] = j;
-            linkedEntrances[j] = i;
+            for (int i = 0; i < sceneName.Length; i++)
+            {
+                AddSpawn(sceneName[i], sceneAddress[i], sceneName[i]);
+            }
         }
 
-        private void ConnectEntrances( string from, string to )
+        private void AddSpawn(string Name, int Address, string Scene)
         {
-            int i = spawnSet.FindIndex(u => u.Name == from);
-            int j = spawnSet.FindIndex(u => u.Name == to);
-            Spawn f = spawnSet[i];
-            Spawn t = spawnSet[j];
+            if (!TerminaMap.ContainsKey(Scene))
+            {
+                TerminaMap.Add(Scene, new List<Spawn>());
+            }
+            List<Spawn> sceneSpawns = TerminaMap[Scene];
+            sceneSpawns.Add(new Spawn(Name, Address, Scene));
+
+        }
+
+        private Spawn GetSpawn(string Name)
+        {
+            Spawn temp;
+            foreach (List<Spawn> SceneSpawns in TerminaMap.Values)
+            {
+                temp = SceneSpawns.Find(u => Name.Equals(u.Name));
+                if (temp != null)
+                {
+                    return temp;
+                }
+            }
+            return null;
+        }
+
+        private void PairSpawns(string from, string to, string type)
+        {
+            Spawn f = GetSpawn(from);
+            Spawn t = GetSpawn(to);
+            f.Exit = t;
+            t.Exit = f;
+        }
+
+        private void ConnectEntrances(string from, string to, bool connectReverse)
+        {
+            Spawn f = GetSpawn(from);
+            Spawn t = GetSpawn(to);
             f.ShuffledAddress = t.SpawnAddress;
-            if (linkedEntrances[i] != -1 && linkedEntrances[j] != -1)
+            if (connectReverse && f.Exit != null && t.Exit != null)
             {
-                Spawn backF = spawnSet[linkedEntrances[j]];
-                Spawn backT = spawnSet[linkedEntrances[i]];
-                backF.ShuffledAddress = backT.SpawnAddress;
+                f.Exit.ShuffledAddress = t.Exit.SpawnAddress;
             }
         }
 
-        public int[] GetOriginalEntrances()
+        private int SpawnTotal()
         {
-            int[] entrances = new int[spawnSet.Count];
-            for(int i = 0; i < spawnSet.Count; i++)
+            int t = 0;
+            foreach (List<Spawn> Scene in TerminaMap.Values)
             {
-                entrances[i] = spawnSet[i].SpawnAddress;
+                t += Scene.Count;
             }
-            return entrances;
+            return t;
         }
 
-        public int[] GetShuffledEntrances()
+        private List<Spawn> GetSpawns()
         {
-            int[] entrances = new int[spawnSet.Count];
-            for (int i = 0; i < spawnSet.Count; i++)
+            List<Spawn> Spawns = new List<Spawn>();
+            foreach (List<Spawn> Scene in TerminaMap.Values)
             {
-                entrances[i] = spawnSet[i].ShuffledAddress;
+                Spawns.AddRange(Scene);
             }
-            return entrances;
+            return Spawns;
         }
+
+        public void FinalizeEntrances()
+        {
+            List<Spawn> Entrances = GetSpawns();
+            _OriginalEntrances = new int[Entrances.Count];
+            _ShuffledEntrances = new int[Entrances.Count];
+            int i = 0;
+            foreach (Spawn Spawn in Entrances)
+            {
+                _OriginalEntrances[i] = Spawn.SpawnAddress;
+                _ShuffledEntrances[i] = Spawn.ShuffledAddress;
+                i++;
+            }
+        }
+        #endregion
+
 
         #region Gossip quotes
 
@@ -434,85 +598,6 @@ namespace MMRando
         }
 
         #endregion
-
-        private void DungeonShuffle()
-        {
-            int poolSize = Values.OldEntrances.Count;
-            _newEntrances = new int[poolSize];
-            _newExits = new int[poolSize];
-            _newDCFlags = new int[poolSize];
-            _newDCMasks = new int[poolSize];
-            _newEnts = new int[poolSize];
-            _newExts = new int[poolSize];
-            for( int i = 0; i < poolSize; i++)
-            {
-                _newEntrances[i] = -1;
-                _newExits[i] = -1;
-                _newDCFlags[i] = -1;
-                _newDCMasks[i] = -1;
-                _newEnts[i] = -1;
-                _newExts[i] = -1;
-            }
-
-            for (int i = 0; i < poolSize; i++)
-            {
-                int n;
-                do
-                {
-                    n = RNG.Next(poolSize);
-                } while (_newEnts.Contains(n));
-
-                _newEnts[i] = n;
-                _newExts[n] = i;
-            };
-
-            ItemObject[] DE = new ItemObject[] {
-                ItemList[Items.AreaWoodFallTempleAccess],
-                ItemList[Items.AreaSnowheadTempleAccess],
-                ItemList[Items.AreaInvertedStoneTowerTempleAccess],
-                ItemList[Items.AreaGreatBayTempleAccess]
-            };
-
-            int[] DI = new int[] {
-                Items.AreaWoodFallTempleAccess,
-                Items.AreaSnowheadTempleAccess,
-                Items.AreaInvertedStoneTowerTempleAccess,
-                Items.AreaGreatBayTempleAccess
-            };
-
-            for (int i = 0; i < poolSize; i++)
-            {
-                Debug.WriteLine($"Entrance {DI[_newEnts[i]]} placed at {DE[i].ID}.");
-                ItemList[DI[_newEnts[i]]] = DE[i];
-            };
-
-            DE = new ItemObject[] {
-                ItemList[Items.AreaWoodFallTempleClear],
-                ItemList[Items.AreaSnowheadTempleClear],
-                ItemList[Items.AreaStoneTowerClear],
-                ItemList[Items.AreaGreatBayTempleClear]
-            };
-
-            DI = new int[] {
-                Items.AreaWoodFallTempleClear,
-                Items.AreaSnowheadTempleClear,
-                Items.AreaStoneTowerClear,
-                Items.AreaGreatBayTempleClear
-            };
-
-            for (int i = 0; i < poolSize; i++)
-            {
-                ItemList[DI[i]] = DE[_newEnts[i]];
-            };
-
-            for (int i = 0; i < poolSize; i++)
-            {
-                _newEntrances[i] = Values.OldEntrances[_newEnts[i]];
-                _newExits[i] = Values.OldExits[_newExts[i]];
-                _newDCFlags[i] = Values.OldDCFlags[_newExts[i]];
-                _newDCMasks[i] = Values.OldMaskFlags[_newExts[i]];
-            };
-        }
 
         #region Sequences and BGM
 

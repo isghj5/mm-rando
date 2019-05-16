@@ -128,7 +128,7 @@ namespace MMRando
 
         private void WriteEntrances()
         {
-            ROMFuncs.WriteEntrances(GetOriginalEntrances(), GetShuffledEntrances());
+            ROMFuncs.WriteEntrances(_OriginalEntrances, _ShuffledEntrances);
         }
 
         private void WriteDungeons()
