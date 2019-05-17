@@ -17,7 +17,7 @@ namespace MMRando
             List<ActorLookup> Actors = new List<ActorLookup>();
             ActorLookup O;
             ValueSwap Swap;
-            for (int s = 1; s < SceneList.Count; s++)
+            for (int s = 0; s < SceneList.Count; s++)
             {
                 for (int m = 0; m < SceneList[s].Maps.Count; m++)
                 {

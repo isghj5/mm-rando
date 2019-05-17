@@ -721,7 +721,7 @@ namespace MMRando
                 EntranceShuffle();
 
                 worker.ReportProgress(20, "Shuffling owls...");
-                OwlShuffle(false, false);
+                OwlShuffle(true);
 
                 worker.ReportProgress(30, "Shuffling items...");
                 ItemShuffle();

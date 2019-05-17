@@ -226,6 +226,7 @@ namespace MMRando
             public string Name;
             public int ShuffledAddress;
             public Spawn Exit;
+            public string Type;
         }
 
         private class CollectionState
@@ -246,7 +247,7 @@ namespace MMRando
         int[] _OriginalEntrances { get; set; }
         int[] _ShuffledEntrances { get; set; }
 
-        private void OwlShuffle(bool spring, bool hidden)
+        private void OwlShuffle(bool hidden)
         {
             int size = 12;
             int poolSize = size;
@@ -255,13 +256,11 @@ namespace MMRando
             {
                 _randomizedOwls[i] = -1;
             }
-            if (!spring)
-            {
-                _randomizedOwls[8] = 8;
-            }
             if (!hidden)
             {
-                _randomizedOwls[10] = 10;
+                _randomizedOwls[0] = 0;
+                _randomizedOwls[8] = 9;
+                _randomizedOwls[10] = 11;
             }
             int owl = 0;
             while (owl < _randomizedOwls.Length)
@@ -287,49 +286,61 @@ namespace MMRando
             GetVanillaTerminaMap();
             ConstructTerminaLogic();
             ShuffleEntrances();
-            EntranceOverrides();
+            //TestEntrances();
             FinalizeEntrances();
         }
 
         private void GetVanillaTerminaMap()
         {
-            AddSpawn("Clock Tower: Secret", 0x2E10, "Secret");
-            AddSpawn("Clock Tower: Twisted Hallway", 0xC000, "Clock Tower");
-            AddSpawn("Clock Tower: Front", 0xC010, "Clock Tower");
             AddSceneSpawns(new string[] {
                 "West Clock Town", "Swamp Path", "Great Bay Coast",
                 "Mountain Path", "Ikana Path", "Milk Road", "South Clock Town",
                 "East Clock Town", "North Clock Town", "Observatory", "Telescope" },
                     0x54, "Termina Field");
             AddSceneSpawns(new string[] {
-                "Clock Tower", "Termina Field", "East Clock Town: Owl",
-                "West Clock Town: Owl", "North Clock Town", "West Clock Town: Scrub",
-                "Laundry Pool", "East Clock Town: Chest Game" },
+                "Clock Tower", "Termina Field", "East Clock Town",
+                "West Clock Town", "North Clock Town", "West Clock Town: Scrub",
+                "Laundry Pool", "South East Connection" },
                     0xD8, "South Clock Town");
             AddSceneSpawns(new string[] {
                 "Termina Field", "East Clock Town", "South Clock Town", "Clock Town Fairy" },
                     0xD6, "North Clock Town");
             AddSceneSpawns(new string[] {
-                "Termina Field", "South Clock Town: Scrub", "South Clock Town: Scrub"},
+                "Termina Field", "South West Connection", "South Clock Town",
+                "Swordsman's School", "Curiosity Shop", "Trading Post", "Bomb Shop",
+                "Post Office", "Lottery Shop"},
                     0xD4, "West Clock Town");
-            AddSceneSpawns(new string[] { },
-                    0xD4, "East Clock Town");
-            string[] tempMountainSpawns = new string[] {
+            AddSceneSpawns(new string[] {
+                "Termina Field", "South East Connection", "Observatory", "South Clock Town",
+                "Treasure Chest Game", "North Clock Town", "Honey & Darling", "Mayor's Residence",
+                "Town Shooting Gallery", "Stock Pot Inn", },
+                    0xD2, "East Clock Town");
+            string[] duplicateSceneSpawns = new string[] {
+                "Swamp Path", "Tourist Center", "Woodfall", "Deku Palace",
+                "Deku Palace Shortcut", "Potion Shop", "Boat Cruise", "Woods of Mystery",
+                "Swamp Spider House", "Ikana Canyon", "Owl Warp"};
+            AddSceneSpawns(duplicateSceneSpawns, 0x84, "Southern Swamp");
+            AddSceneSpawns(duplicateSceneSpawns, 0x0C, "Southern Swamp Healed");
+            duplicateSceneSpawns = new string[] {
                 "", "Smithy", "Twin Islands", "Goron Grave",
                 "Snowhead Path", "", "Mountain Path", "", "Owl Warp" };
-            AddSceneSpawns(tempMountainSpawns, 0x9A, "Mountain Village");
-            AddSceneSpawns(tempMountainSpawns, 0xAE, "Mountain Village Spring");
-            tempMountainSpawns = new string[] {
+            AddSceneSpawns(duplicateSceneSpawns, 0x9A, "Mountain Village");
+            AddSceneSpawns(duplicateSceneSpawns, 0xAE, "Mountain Village Spring");
+            duplicateSceneSpawns = new string[] {
                 "Mountain Village", "Goron Village", "Goron Racetrack" };
-            AddSceneSpawns(tempMountainSpawns, 0xB4, "Twin Islands");
-            AddSceneSpawns(tempMountainSpawns, 0xB6, "Twin Islands Spring");
-            tempMountainSpawns = new string[] {
+            AddSceneSpawns(duplicateSceneSpawns, 0xB4, "Twin Islands");
+            AddSceneSpawns(duplicateSceneSpawns, 0xB6, "Twin Islands Spring");
+            duplicateSceneSpawns = new string[] {
                 "Twin Islands", "", "Goron Shrine", "Lens Grotto" };
-            AddSceneSpawns(tempMountainSpawns, 0x94, "Goron Village");
-            tempMountainSpawns = new string[] {
+            AddSceneSpawns(duplicateSceneSpawns, 0x94, "Goron Village");
+            duplicateSceneSpawns = new string[] {
                 "Twin Islands", "", "Goron Shrine" };
-            AddSceneSpawns(tempMountainSpawns, 0x8A, "Goron Village Spring");
+            AddSceneSpawns(duplicateSceneSpawns, 0x8A, "Goron Village Spring");
             AddSpawn("Moon", 0xC800, "Moon");
+            ConnectInteriors(
+                new string[] { "Bomb Shop", "Trading Post" },
+                new UInt16[] { 0xCA00, 0x6200 });
+            AddSpawn("Clock Tower: South Clock Town", 0xC010, "Clock Tower");
             AddSpawns("Moon",
                 new string[] { "Woodfall Trial", "Snowhead Trial", "Great Bay Trial", "Stone Tower Trial" },
                 new UInt16[] { 0x4E00, 0x7800, 0x8800, 0xC600 }
@@ -344,17 +355,41 @@ namespace MMRando
             AddSpawn("Stone Tower Warp", 0xAA30, "Stone Tower");
             AddSpawn("Snowhead Warp", 0xB230, "Snowhead");
             AddSpawn("Clock Town Warp", 0xD890, "South Clock Town");
+            ConnectSpawnPoints();
+        }
+
+        private void ConnectInteriors(string[] Scene, ushort[] Address)
+        {
+            for( int i = 0; i < Scene.Length; i++)
+            {
+                string SpawnName = Scene[i];
+                AddSpawn(SpawnName, Address[i], Scene[i]);
+                string To = "";
+                foreach (Spawn S in GetSpawns())
+                {
+                    if (S.Name.Contains(SpawnName))
+                    {
+                        To = S.Name;
+                        break;
+                    }
+                }
+                if (!To.Equals(""))
+                {
+                    PairSpawns(SpawnName, To, "Interior");
+                }
+            }
         }
 
         private void ConstructTerminaLogic()
         {
-            TerminaLogic["Snowhead Warp"] = s => s.Has("Bow");
         }
 
         private void EntranceOverrides()
         {
             // going into clock tower goes to moon
             // talking to skull kid returns to twisted hallway
+            AddSpawn("Twisted Hallway: Clock Tower", 0x2E10, "Twisted Hallway");
+            AddSpawn("Clock Tower: Twisted Hallway", 0xC000, "Clock Tower");
             PairSpawns("South Clock Town: Clock Tower", "Clock Tower: Twisted Hallway", "OW");
             PairSpawns("Moon", "Majora Fight", "OW");
             ConnectEntrances("Clock Tower: Front", "Moon", true);
@@ -365,9 +400,138 @@ namespace MMRando
             ConnectEntrances("Mountain Village Spring: Owl Warp", "Snowhead Trial", false);
         }
 
+        private void TestEntrances()
+        {
+            ConnectEntrances("South Clock Town: Clock Tower", "Termina Field: North Clock Town", true);
+        }
+
         private void ShuffleEntrances()
         {
+            Dictionary<string, bool> SpawnSet = new Dictionary<string, bool>();
+            foreach ( Spawn S in GetSpawns())
+            {
+                    SpawnSet.Add(S.Name, true);
+            }
+            List<string> TempInaccessible = new List<string>();
+            List<string> FillWorld = new List<string>();
+            CollectionState Inventory = new CollectionState();
+            Predicate<Spawn> CanAdd = S => SpawnSet.ContainsKey(S.Name) && SpawnSet[S.Name] && (S.Type == null || (S.Type != null && S.Type != null));
+            CanAdd = S => true;
+            CanAdd = S => S != null && SpawnSet.ContainsKey(S.Name) && SpawnSet[S.Name];
+            Spawn To, From;
+            string TempExit;
+            FillWorld.Add("South Clock Town: Clock Tower");
+            while (FillWorld.Count > 0)
+            {
+                From = GetSpawn(FillWorld[0]);
+                if (CanAdd.Invoke(From))
+                {
+                    To = ChooseNextEntrance(SpawnSet, From, CanAdd);
+                    if (To != null)
+                    {
+                        SpawnSet[From.Name] = false;
+                        FillWorld.RemoveAll(S => S == FillWorld[0]);
+                        ConnectEntrances(From.Name, To.Name, true);
+                        if (To != null && To.Exit != null && SpawnSet.ContainsKey(To.Exit.Name))
+                        {
+                            SpawnSet[To.Exit.Name] = false;
+                            if (FillWorld.Contains(To.Exit.Name))
+                            {
+                                FillWorld.RemoveAll(S => S == To.Exit.Name);
+                            }
+                        }
+                        if (TerminaMap.ContainsKey(To.Scene) && CheckEntranceLogic(To.Scene, Inventory))
+                        {
+                            foreach (Spawn SceneSpawn in TerminaMap[To.Scene])
+                            {
+                                if (SceneSpawn.Exit != null)
+                                {
+                                    TempExit = SceneSpawn.Exit.Name;
+                                    if (SpawnSet.ContainsKey(TempExit) && SpawnSet[TempExit] && CheckEntranceLogic(TempExit, Inventory))
+                                    {
+                                        FillWorld.Add(TempExit);
+                                    }
+                                    else if (!TempInaccessible.Contains(TempExit))
+                                    {
+                                        TempInaccessible.Add(TempExit);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    // somehow the entrance being placed is no longer allowed to be placed
+                    // not sure what code execution path let's that happen tho?
+                    FillWorld.RemoveAt(0);
+                }
+                // if we've run out of connected places to put things, and still have more entrances to place
+                // start adding entrances from a new starting point
+                // eventually want to tie this in to the owl statues to pick out an accessible owl statue
+                if( FillWorld.Count == 0 )
+                {
+                    List<KeyValuePair<string,bool>> Available = SpawnSet.Where(S => S.Value).ToList();
+                    if( Available.Count > 1 )
+                    {
+                        int n = RNG.Next(Available.Count);
+                        FillWorld.Add(Available[n].Key);
+                    }
+                }
+            }
+            foreach (KeyValuePair<string, bool> NotPlaced in SpawnSet.Where(S => S.Value) )
+            {
+                Console.WriteLine(NotPlaced.Key);
+            }
+        }
 
+        private bool CheckEntranceLogic(string Name, CollectionState Inventory)
+        {
+            Predicate<CollectionState> IsAccessible = TerminaLogic[Name];
+            return IsAccessible.Invoke(Inventory);
+        }
+
+        private Spawn ChooseNextEntrance(Dictionary<string, bool> SpawnSet, Spawn Departure, Predicate<Spawn> CanAdd)
+        {
+            List<string> candidates = new List<string>();
+            if (Departure.Name.Equals("South Clock Town: Clock Tower"))
+            {
+                // choose from the hub areas first
+                foreach (string s in new string[] { "South Clock Town", "North Clock Town", "Termina Field", "Ikana Canyon", "Zora Hall" } )
+                {
+                    if( TerminaMap.ContainsKey(s))
+                    {
+                        foreach (Spawn S in TerminaMap[s])
+                        {
+                            if (CanAdd.Invoke(S))
+                            {
+                                candidates.Add(S.Name);
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (string SpawnName in SpawnSet.Keys)
+                {
+                    if (SpawnSet[SpawnName])
+                    {
+                        Spawn S = GetSpawn(SpawnName);
+                        if (CanAdd.Invoke(S))
+                        {
+                            candidates.Add(S.Name);
+                        }
+                    }
+                }
+            }
+            int n = RNG.Next(candidates.Count);
+            if( candidates.Count > 1)
+            {
+                return GetSpawn(candidates[n]);
+                //return GetSpawn(candidates[0]);
+            }
+            return null;
         }
 
         private void AddSceneSpawns(string[] Spawns, UInt16 Scene, string SceneName)
@@ -397,7 +561,8 @@ namespace MMRando
             }
             List<Spawn> sceneSpawns = TerminaMap[Scene];
             sceneSpawns.Add(new Spawn(Name, Address, Scene));
-
+            TerminaLogic[Name] = s => true;
+            TerminaLogic[Scene] = s => true;
         }
 
         private Spawn GetSpawn(string Name)
@@ -420,16 +585,59 @@ namespace MMRando
             Spawn t = GetSpawn(to);
             f.Exit = t;
             t.Exit = f;
+            f.Type = type;
+            t.Type = type;
         }
 
         private void ConnectEntrances(string from, string to, bool connectReverse)
         {
             Spawn f = GetSpawn(from);
             Spawn t = GetSpawn(to);
-            f.ShuffledAddress = t.SpawnAddress;
-            if (connectReverse && f.Exit != null && t.Exit != null)
+            if( f != null && t != null)
             {
-                f.Exit.ShuffledAddress = t.Exit.SpawnAddress;
+                f.ShuffledAddress = t.SpawnAddress;
+                Console.WriteLine("'{0}: {2}' -> '{1}'", from, to, f.SpawnAddress.ToString("X4"));
+                if (connectReverse && f.Exit != null && t.Exit != null)
+                {
+                    t.Exit.ShuffledAddress = f.Exit.SpawnAddress;
+                    Console.WriteLine("'{0}: {2}' -> '{1}'", t.Exit.Name, f.Exit.Name, t.Exit.SpawnAddress.ToString("X4"));
+                }
+            }
+        }
+
+        private void ConnectSpawnPoints()
+        {
+            List<Spawn> SpawnSet = GetSpawns();
+            Dictionary<Spawn, string> SpawnPoint = new Dictionary<Spawn, string>();
+            Dictionary<Spawn, string> SpawnExit = new Dictionary<Spawn, string>();
+            int sep;
+            foreach(Spawn S in SpawnSet)
+            {
+                sep = S.Name.IndexOf(':');
+                if (sep != -1)
+                {
+                    SpawnPoint[S] = S.Name.Substring(0, sep);
+                    SpawnExit[S] = S.Name.Substring(sep + 2);
+                }
+            }
+            int j;
+            for(int i = 0; i< SpawnSet.Count; i++)
+            {
+                if(SpawnPoint.ContainsKey(SpawnSet[i]) && SpawnExit.ContainsKey(SpawnSet[i]) )
+                {
+                    j = SpawnSet.FindIndex((S) =>
+                    {
+                        if (!SpawnPoint.ContainsKey(S) || !SpawnExit.ContainsKey(S))
+                        {
+                            return false;
+                        }
+                        return SpawnPoint[S].Equals(SpawnExit[SpawnSet[i]]) && SpawnExit[S].Equals(SpawnPoint[SpawnSet[i]]);
+                    });
+                    if (j != -1)
+                    {
+                        PairSpawns(SpawnSet[i].Name, SpawnSet[j].Name, "Overworld");
+                    }
+                }
             }
         }
 
