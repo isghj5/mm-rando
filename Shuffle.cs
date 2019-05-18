@@ -286,7 +286,7 @@ namespace MMRando
             GetVanillaTerminaMap();
             ConstructTerminaLogic();
             ShuffleEntrances();
-            //TestEntrances();
+            TestEntrances();
             FinalizeEntrances();
         }
 
@@ -303,7 +303,7 @@ namespace MMRando
                 "Laundry Pool", "South East Connection" },
                     0xD8, "South Clock Town");
             AddSceneSpawns(new string[] {
-                "Termina Field", "East Clock Town", "South Clock Town", "Clock Town Fairy" },
+                "Termina Field", "East Clock Town", "South Clock Town", "Clock Town Fairy", "Deku Playground" },
                     0xD6, "North Clock Town");
             AddSceneSpawns(new string[] {
                 "Termina Field", "South West Connection", "South Clock Town",
@@ -313,14 +313,46 @@ namespace MMRando
             AddSceneSpawns(new string[] {
                 "Termina Field", "South East Connection", "Observatory", "South Clock Town",
                 "Treasure Chest Game", "North Clock Town", "Honey & Darling", "Mayor's Residence",
-                "Town Shooting Gallery", "Stock Pot Inn", },
+                "Town Shooting Gallery", "Stock Pot Inn", "Stock Pot Roof", "Milk Bar"},
                     0xD2, "East Clock Town");
+            ConnectInteriors(
+                new string[] { "Clock Town Fairy", "Woodfall Fairy", "Snowhead Fairy", "Great Bay Fairy", "Stone Tower Fairy" },
+                new ushort[] { 0x4600, 0x4610, 0x4620, 0x4630, 0x4640 });
+            ConnectInteriors(
+                new string[] {
+                    "Bomb Shop", "Trading Post", "Swordsman's School", "Curiosity Shop",
+                    "Post Office", "Lottery Shop", "Treasure Chest Game", "Honey & Darling",
+                    "Mayor's Residence", "Town Shooting Gallery", "Stock Pot Inn", "Stock Pot Roof",
+                    "Milk Bar", "Deku Playground" },
+                new UInt16[] {
+                    0xCA00, 0x6200, 0xA200, 0x0E00,
+                    0x5600, 0x6C00, 0x2800, 0x0800,
+                    0x0000, 0x3A00, 0xBC00, 0xBC10,
+                    0x2400, 0x3600 });
+            GetSpawn("Stock Pot Roof").Scene = "Stock Pot Inn";
+
+            AddSceneSpawns( new string[]{ "Termina Field", "Southern Swamp", "Swamp Shooting Gallery" }, 0x7A, "Swamp Path");
             string[] duplicateSceneSpawns = new string[] {
                 "Swamp Path", "Tourist Center", "Woodfall", "Deku Palace",
-                "Deku Palace Shortcut", "Potion Shop", "Boat Cruise", "Woods of Mystery",
+                "Deku Shortcut", "Potion Shop", "", "Woods of Mystery",
                 "Swamp Spider House", "Ikana Canyon", "Owl Warp"};
             AddSceneSpawns(duplicateSceneSpawns, 0x84, "Southern Swamp");
             AddSceneSpawns(duplicateSceneSpawns, 0x0C, "Southern Swamp Healed");
+            AddSceneSpawns(new string[] {
+                "Southern Swamp", "Getting Caught", "Deku King Chamber", "Sonata Monkey",
+                "Deku Shortcut", "", "", "", "Bean Seller", ""
+            }, 0x50, "Deku Palace");
+            GetSpawn("Deku Palace: Getting Caught").Type = "Special";
+            AddSceneSpawns(new string[] { "", "Deku Palace", "Sonata Monkey", "Monkey Freedom" }, 0x76, "Deku King Chamber");
+            GetSpawn("Deku King Chamber: Monkey Freedom").Type = "Special";
+            // Tourist Center Spawn Point 
+            ConnectInteriors(
+                new string[] { "Potion Shop", "Swamp Shooting Gallery", "Swamp Spider House", "Woods of Mystery", "Tourist Center" }, 
+                new ushort[] { 0x0400, 0x4200, 0x4800, 0xC200, 0xA800 });
+            AddSceneSpawns(new string[] { "Southern Swamp", "Temple", "Woodfall Fairy",
+                "Deku Princess", "Owl Warp" }, 0x86, "Woodfall" );
+
+            AddSceneSpawns(new string[] { "Termina Field", "Mountain Village" }, 0x32, "Mountain Path");
             duplicateSceneSpawns = new string[] {
                 "", "Smithy", "Twin Islands", "Goron Grave",
                 "Snowhead Path", "", "Mountain Path", "", "Owl Warp" };
@@ -334,27 +366,55 @@ namespace MMRando
                 "Twin Islands", "", "Goron Shrine", "Lens Grotto" };
             AddSceneSpawns(duplicateSceneSpawns, 0x94, "Goron Village");
             duplicateSceneSpawns = new string[] {
-                "Twin Islands", "", "Goron Shrine" };
+                "Twin Islands", "", "Goron Shrine" };            
             AddSceneSpawns(duplicateSceneSpawns, 0x8A, "Goron Village Spring");
-            AddSpawn("Moon", 0xC800, "Moon");
             ConnectInteriors(
-                new string[] { "Bomb Shop", "Trading Post" },
-                new UInt16[] { 0xCA00, 0x6200 });
+                new string[] { "Goron Grave", "Smithy", "Goron Racetrack", "Lens Grotto", "Goron Shrine" },
+                new ushort[] { 0x960, 0x5200, 0xD000, 0x1500, 0x5E00 });
+            AddSpawn("Goron Shop: Goron Shrine", 0x7400, "Goron Shop" );
+            AddSpawn("Goron Shrine: Goron Shop", 0x5E10, "Goron Shrine" );
+            AddSpawn("Goron Racetrack: Race", 0xD010, "Goron: Racetrack");
+            GetSpawn("Goron Racetrack: Race").Type = "Special";
+            AddSceneSpawns(new string[]{ "Mountain Village", "Snowhead" }, 0xB0, "Snowhead Path" );
+            AddSceneSpawns(new string[] { "Snowhead Path", "Temple", "Snowhead Fairy", "Owl Warp"}, 0xB2, "Snowhead");
+
+            //todo: finish Great Bay/ Romani Ranch
+            AddSceneSpawns(new string[] { "Termina Field", "Romani Ranch", "", "Gorman Track", "Owl Warp" }, 0x3E, "Milk Road" );
+
+            AddSceneSpawns(new string[] {
+                "Termina Field", "Zora Cape", "", "Pinnacle Rock", "Fisherman's Hut",
+                "Pirate's Fortress", "", "Marine Lab", "Ocean Spider House", "", "", "Owl Warp" }, 0x68, "Great Bay Coast");
+
+            AddSceneSpawns(new string[] {
+                "Great Bay Coast", "Zora Hall Water", "Zora Hall", "", "Waterfall Rapids", "Great Bay Fairy", "Owl Warp"}, 0x6A, "Zora Cape");
+
+            AddSceneSpawns(new string[] { "Termina Field", "Ikana Canyon", "Ikana Graveyard" }, 0xA0, "Ikana Path");
+            AddSceneSpawns(new string[] {
+                "Ikana Canyon", "Night 3 Grave", "Night 2 Grave",
+                "Night 1 Grave", "Dampe's House", "Defeat Skull Keeta" }, 0x80, "Ikana Graveyard");
+            AddSceneSpawns(new string[] {
+                "Ikana Path", "Poe Hut", "Music Box", "Stone Tower", "Owl Warp", "Well",
+                "Sakon's Hideout", "", "Ikana Castle", "", "", "Stone Tower Fairy", "Secret Shrine" }, 0x20, "Ikana Canyon");
+            AddSceneSpawns(new string[] { "Well", "Ikana Canyon", "", "", "", "", "Igos" }, 0x34, "Ikana Castle");
+            AddSceneSpawns(new string[] { "Ikana Canyon", "Ikana Castle" }, 0x90, "Well");
+            AddSceneSpawns(new string[] { "Ikana Canyon", "Inverted Stone Tower", "Temple", "Owl Warp" }, 0xAA, "Stone Tower");
+            AddSceneSpawns(new string[] { "Stone Tower", "Stone Tower Temple" }, 0xAC, "Inverted Stone Tower");
+            ConnectInteriors(
+                new string[] {
+                    "Music Box", "Igos", "Secret Shrine", "Poe Hut",
+                    "Stone Tower Temple", "Sakon's Hideout" },
+                new ushort[] { 0xA400, 0xA600, 0xBA00, 0x9C00, 0x2600, 0x9800 });
+
+            AddSpawn("Moon", 0xC800, "Moon");
             AddSpawn("Clock Tower: South Clock Town", 0xC010, "Clock Tower");
             AddSpawns("Moon",
                 new string[] { "Woodfall Trial", "Snowhead Trial", "Great Bay Trial", "Stone Tower Trial" },
                 new UInt16[] { 0x4E00, 0x7800, 0x8800, 0xC600 }
             );
             AddSpawn("Majora Fight", 0x0200, "Majora");
-            AddSpawn("Ikana Warp", 0x2040, "Ikana Canyon");
             AddSpawn("Romani Warp", 0x3E40, "Milk Road");
             AddSpawn("Great Bay Warp", 0x68B0, "Great Bay");
             AddSpawn("Zora Cape Warp", 0x6A60, "Zora Cape");
-            AddSpawn("Swamp Warp", 0x84A0, "Swamp");
-            AddSpawn("Woodfall Warp", 0x8640, "Woodfall");
-            AddSpawn("Stone Tower Warp", 0xAA30, "Stone Tower");
-            AddSpawn("Snowhead Warp", 0xB230, "Snowhead");
-            AddSpawn("Clock Town Warp", 0xD890, "South Clock Town");
             ConnectSpawnPoints();
         }
 
@@ -398,11 +458,18 @@ namespace MMRando
             // test to see if warping to MV before and after Goht yields a different spot
             ConnectEntrances("Mountain Village Spring: Owl Warp", "Woodfall Trial", false);
             ConnectEntrances("Mountain Village Spring: Owl Warp", "Snowhead Trial", false);
+            AddSceneSpawns(new string[] {
+                "Great Bay Gossip", "Woodfall Gossip", "Stone Tower Gossip", "Snowhead Gossip",
+                "", "Spring Water", "", "Dodongo", "", "Scrub Haggle", "Cow", "Beehive", "Bean Seller",
+                "Peahat" },
+                0x14, "Grotto");
         }
 
         private void TestEntrances()
         {
-            ConnectEntrances("South Clock Town: Clock Tower", "Termina Field: North Clock Town", true);
+            AddSpawn("Moon Crash", 0x54C0, "Bad Ideas");
+            ConnectEntrances("Clock Tower: South Clock Town", "Moon Crash", false);
+            ConnectEntrances("South Clock Town: Clock Tower", "Swamp Path: Termina Field", true);
         }
 
         private void ShuffleEntrances()
@@ -410,7 +477,10 @@ namespace MMRando
             Dictionary<string, bool> SpawnSet = new Dictionary<string, bool>();
             foreach ( Spawn S in GetSpawns())
             {
+                if (!S.Name.Contains("Temple"))
+                {
                     SpawnSet.Add(S.Name, true);
+                }
             }
             List<string> TempInaccessible = new List<string>();
             List<string> FillWorld = new List<string>();
