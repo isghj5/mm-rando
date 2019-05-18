@@ -354,6 +354,7 @@ namespace MMRando
                 Seed = Settings.Seed,
                 RandomizeDungeonEntrances = Settings.RandomizeDungeonEntrances,
                 ItemList = itemList,
+                EntranceList = _EntranceSpoilers,
                 ITEM_NAMES = Items.ITEM_NAMES,
                 NewEnts = _newEnts
             };

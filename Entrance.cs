@@ -26,10 +26,12 @@ namespace MMRando
             uint[] data = new uint[newe.Length];
             for (int i = 0; i < newe.Length; i++)
             {
+                Console.WriteLine(newe[i].ToString("X4"));
                 data[i] = Arr_ReadU32(MMFileList[f].Data, GetEntranceAddr(newe[i]));
             };
             for (int i = 0; i < newe.Length; i++)
             {
+                Console.WriteLine(olde[i].ToString("X4"));
                 Arr_WriteU32(MMFileList[f].Data, GetEntranceAddr(olde[i]), data[i]);
             };
         }

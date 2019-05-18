@@ -19,6 +19,8 @@ namespace MMRando
 
         public List<ItemObject> ItemList { get; set; }
 
+        public List<string> EntranceList { get; set; }
+
         public ReadOnlyCollection<string> ITEM_NAMES { get; set; }
 
         public int[] NewEnts { get; set; }
