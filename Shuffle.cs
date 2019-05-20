@@ -863,16 +863,10 @@ namespace MMRando
                 };
 
                 int sourceItemId = ItemList[itemIndex].ReplacesItemId;
-                if (ItemUtils.IsItemDefinedPastAreas(sourceItemId))
-                {
-                    sourceItemId -= Values.NumberOfAreasAndOther;
-                };
+                sourceItemId -= ItemUtils.GetItemOffset(sourceItemId);
 
                 int toItemId = itemIndex;
-                if (ItemUtils.IsItemDefinedPastAreas(toItemId))
-                {
-                    toItemId -= Values.NumberOfAreasAndOther;
-                };
+                toItemId -= ItemUtils.GetItemOffset(toItemId);
 
                 // 5% chance of being fake
                 bool isFake = (RNG.Next(100) < 5);
@@ -1768,6 +1762,12 @@ namespace MMRando
                 return false;
             }
 
+            if (ItemUtils.IsTemporaryItem(currentItem) && ItemUtils.IsMoonItem(target))
+            {
+                Debug.WriteLine($"{currentItem} cannot be placed on the moon.");
+                return false;
+            }
+
             //check direct dependence
             ConditionRemoves = new List<int[]>();
             DependenceChecked = new Dictionary<int, Dependence> { { target, new Dependence { Type = DependenceType.Dependent } } };
@@ -1854,9 +1854,21 @@ namespace MMRando
             PlaceMasks(itemPool);
             PlaceRegularItems(itemPool);
             PlaceShopItems(itemPool);
+            PlaceMoonItems(itemPool);
             PlaceHeartpieces(itemPool);
             PlaceOther(itemPool);
             PlaceTingleMaps(itemPool);
+        }
+
+        /// <summary>
+        /// Places moon items in the randomization pool.
+        /// </summary>
+        private void PlaceMoonItems(List<int> itemPool)
+        {
+            for (int i = Items.HeartPieceDekuTrial; i <= Items.MaskFierceDeity; i++)
+            {
+                PlaceItem(i, itemPool);
+            }
         }
 
         /// <summary>
