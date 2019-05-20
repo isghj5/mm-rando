@@ -111,6 +111,11 @@ namespace MMRando.Models
         public bool RandomizeEnemies { get; set; }
 
         /// <summary>
+        /// (Beta) Randomize entrances
+        /// </summary>
+        public bool RandomizeEntrances { get; set; }
+
+        /// <summary>
         /// Randomize background music (includes bgm from other video games)
         /// </summary>
         public bool RandomizeBGM { get; set; }
