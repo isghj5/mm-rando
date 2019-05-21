@@ -202,6 +202,11 @@ namespace MMRando
             {
                 ROMFuncs.ApplyHack(ModsDirectory + "floor-" + floorType.ToString());
             }
+
+            //if (Settings.HideClock) // todo add UI
+            {
+                ROMFuncs.ApplyHack(ModsDirectory + "hide-clock");
+            }
         }
 
         private void WriteEnemies()

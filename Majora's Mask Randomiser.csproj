@@ -295,6 +295,9 @@
     <None Include="mods\gi-table">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="mods\hide-clock">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="mods\init-file">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
