@@ -586,6 +586,12 @@ namespace MMRando
         {
             int[] O = new int[3];
 
+            if (Settings.RandomizeOwlWarps) { O[0] += 20197152; };
+            if (Settings.RandomizeOwlStatues) { O[0] += 1048576; };
+            if (Settings.MixEntrances) { O[0] += 524288; };
+            if (Settings.RandomizeSpecialEntrances) { O[0] += 262144; };
+            if (Settings.RandomizeInteriorEntrances) { O[0] += 131072; };
+            if (Settings.RandomizeOverworldEntrances) { O[0] += 65536; };
             if (Settings.AddMoonItems) { O[0] += 32768; };
             if (Settings.FreeHints) { O[0] += 16384; };
             if (Settings.UseCustomItemList) { O[0] += 8192; };
@@ -650,6 +656,12 @@ namespace MMRando
             int Combos = (int)Base36.Decode(O[1]);
             int ColourAndMisc = (int)Base36.Decode(O[2]);
 
+            Settings.RandomizeOwlWarps = (Checks & 20197152) > 0;
+            Settings.RandomizeOwlStatues = (Checks & 1048576) > 0;
+            Settings.MixEntrances = (Checks & 524288) > 0;
+            Settings.RandomizeSpecialEntrances = (Checks & 262144) > 0;
+            Settings.RandomizeInteriorEntrances = (Checks & 131072) > 0;
+            Settings.RandomizeOverworldEntrances = (Checks & 65536) > 0;
             Settings.AddMoonItems = (Checks & 32768) > 0;
             Settings.FreeHints = (Checks & 16384) > 0;
             Settings.UseCustomItemList = (Checks & 8192) > 0;

@@ -943,7 +943,6 @@ namespace MMRando
         }
         #endregion
 
-
         #region Gossip quotes
 
         private void MakeGossipQuotes()
