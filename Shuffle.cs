@@ -294,11 +294,6 @@ namespace MMRando
         private void GetVanillaTerminaMap()
         {
             AddSceneSpawns(new string[] {
-                "West Clock Town", "Swamp Path", "Great Bay Coast",
-                "Mountain Path", "Ikana Path", "Milk Road", "South Clock Town",
-                "East Clock Town", "North Clock Town", "Observatory", "Telescope" },
-                    0x54, "Termina Field");
-            AddSceneSpawns(new string[] {
                 "Clock Tower", "Termina Field", "East Clock Town",
                 "West Clock Town", "North Clock Town", "South West Connection",
                 "Laundry Pool", "South East Connection" },
@@ -339,13 +334,19 @@ namespace MMRando
 
             AddSceneSpawns(new string[] { "East Clock Town", "Termina Field", "Telescope" }, 0x4C, "Observatory");
 
+            AddSceneSpawns(new string[] {
+                "West Clock Town", "Swamp Path", "Great Bay Coast",
+                "Mountain Path", "Ikana Path", "Milk Road", "South Clock Town",
+                "East Clock Town", "North Clock Town", "Observatory", "Telescope" },
+                    0x54, "Termina Field");
+
             AddSceneSpawns(new string[] { "Termina Field", "Southern Swamp", "Swamp Shooting Gallery" }, 0x7A, "Swamp Path");
             string[] duplicateSceneSpawns = new string[] {
                 "Swamp Path", "Tourist Center", "Woodfall", "Deku Palace",
                 "Deku Shortcut", "Potion Shop", "", "Woods of Mystery",
                 "Swamp Spider House", "Ikana Canyon", "Owl Warp"};
             AddSceneSpawns(duplicateSceneSpawns, 0x84, "Southern Swamp");
-            AddSceneSpawns(duplicateSceneSpawns, 0x0C, "Southern Swamp Healed");
+            //AddSceneSpawns(duplicateSceneSpawns, 0x0C, "Southern Swamp Healed");
 
             AddSceneSpawns(new string[] {
                 "Southern Swamp", "Getting Caught", "Deku King Chamber", "Sonata Monkey",
@@ -365,17 +366,14 @@ namespace MMRando
                 "", "Smithy", "Twin Islands", "Goron Grave",
                 "Snowhead Path", "", "Mountain Path", "", "Owl Warp" };
             AddSceneSpawns(duplicateSceneSpawns, 0x9A, "Mountain Village");
-            AddSceneSpawns(duplicateSceneSpawns, 0xAE, "Mountain Village Spring");
             duplicateSceneSpawns = new string[] {
                 "Mountain Village", "Goron Village", "Goron Racetrack" };
             AddSceneSpawns(duplicateSceneSpawns, 0xB4, "Twin Islands");
-            AddSceneSpawns(duplicateSceneSpawns, 0xB6, "Twin Islands Spring");
             duplicateSceneSpawns = new string[] {
                 "Twin Islands", "", "Goron Shrine", "Lens Grotto" };
             AddSceneSpawns(duplicateSceneSpawns, 0x94, "Goron Village");
             duplicateSceneSpawns = new string[] {
                 "Twin Islands", "", "Goron Shrine" };
-            AddSceneSpawns(duplicateSceneSpawns, 0x8A, "Goron Village Spring");
             ConnectInteriors(
                 new string[] { "Goron Grave", "Smithy", "Goron Racetrack", "Lens Grotto", "Goron Shrine" },
                 new ushort[] { 0x960, 0x5200, 0xD000, 0x1500, 0x5E00 });
