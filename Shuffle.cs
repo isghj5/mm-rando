@@ -287,7 +287,7 @@ namespace MMRando
             GetVanillaTerminaMap();
             ConstructTerminaLogic();
             ShuffleEntrances();
-            TestEntrances();
+            //TestEntrances();
             FinalizeEntrances();
         }
 
@@ -317,9 +317,6 @@ namespace MMRando
                 "Town Shooting Gallery", "Stock Pot Inn", "Stock Pot Roof", "Milk Bar"},
                     0xD2, "East Clock Town");
             ConnectInteriors(
-                new string[] { "Clock Town Fairy", "Woodfall Fairy", "Snowhead Fairy", "Great Bay Fairy", "Stone Tower Fairy" },
-                new ushort[] { 0x4600, 0x4610, 0x4620, 0x4630, 0x4640 });
-            ConnectInteriors(
                 new string[] {
                     "Bomb Shop", "Trading Post", "Swordsman's School", "Curiosity Shop",
                     "Post Office", "Lottery Shop", "Treasure Chest Game", "Honey & Darling",
@@ -333,6 +330,8 @@ namespace MMRando
             GetSpawn("Stock Pot Roof").Scene = "Stock Pot Inn";
             PairSpawns("South Clock Town: South West Connection", "West Clock Town: South West Connection", "Overworld");
             PairSpawns("South Clock Town: South East Connection", "East Clock Town: South East Connection", "Overworld");
+
+            AddSceneSpawns(new string[] { "South Clock Town", "Curiosity Shop Backroom" }, 0xDA, "Laundry Pool");
 
             AddSpawn("Curiosity Shop Backroom: Laundry Pool", 0x0E10, "Curiosity Shop Backroom");
             AddSpawn("Curiosity Shop Backroom: Telescope", 0x0E20, "Curiosity Shop Backroom");
@@ -398,7 +397,7 @@ namespace MMRando
 
             AddSceneSpawns(new string[] {
                 "Termina Field", "Zora Cape", "", "Pinnacle Rock", "Fisherman's Hut",
-                "Pirate's Fortress", "", "Marine Lab", "Ocean Spider House", "", "", "Owl Warp" }, 0x68, "Great Bay Coast");
+                "Pirate's Fortress", "", "Marine Lab", "Ocean Spider House", "", "", "Owl Warp", "Caught" }, 0x68, "Great Bay Coast");
             ConnectInteriors(
                 new string[] { "Pinnacle Rock", "Fisherman's Hut", "Marine Lab", "Ocean Spider House" },
                 new ushort[] { 0x4400, 0x7200, 0x5800, 0x4A00 });
@@ -425,16 +424,17 @@ namespace MMRando
             AddSpawns("Pirate Tunnel",
                 new string[] { "Telescope", "Entrance", "Exit" },
                 new ushort[] { 0x4080, 0x4090, 0x40A0 });
-            PairSpawns("Pirate's Fortress: Hookshot Room", "Hookshot Room: Main", "Interior");
-            PairSpawns("Pirate's Fortress: Hookshot Room Upper", "Hookshot Room: Upper", "Interior");
-            PairSpawns("Pirate's Fortress: Well Guarded Room", "Well Guarded Room: Entrance", "Interior");
-            PairSpawns("Pirate's Fortress: Well Guarded Exit", "Well Guarded Room: Exit", "Interior");
-            PairSpawns("Pirate's Fortress: Barrel Room", "Barrel Room: Entrance", "Interior");
-            PairSpawns("Pirate's Fortress: Barrel Room Exit", "Barrel Room: Exit", "Interior");
-            PairSpawns("Pirate's Fortress: Twin Barrel Room", "Twin Barrel Room: Entrance", "Interior");
-            PairSpawns("Pirate's Fortress: Twin Barrel Room Exit", "Twin Barrel Room: Exit", "Interior");
-            PairSpawns("Outside PF: Pirate Tunnel", "Pirate Tunnel: Entrance", "Interior");
-            PairSpawns("Outside PF: Telescope Room", "Pirate Tunnel: Exit", "Interior");
+            PairSpawns("Outside PF: Great Bay Coast", "Great Bay Coast: Pirate's Fortress", "Water");
+            PairPirateEntrance("Pirate's Fortress: Hookshot Room", "Hookshot Room: Main");
+            PairPirateEntrance("Pirate's Fortress: Hookshot Room Upper", "Hookshot Room: Upper");
+            PairPirateEntrance("Pirate's Fortress: Well Guarded Room", "Well Guarded Room: Entrance");
+            PairPirateEntrance("Pirate's Fortress: Well Guarded Exit", "Well Guarded Room: Exit");
+            PairPirateEntrance("Pirate's Fortress: Barrel Room", "Barrel Room: Entrance");
+            PairPirateEntrance("Pirate's Fortress: Barrel Room Exit", "Barrel Room: Exit");
+            PairPirateEntrance("Pirate's Fortress: Twin Barrel Room", "Twin Barrel Room: Entrance");
+            PairPirateEntrance("Pirate's Fortress: Twin Barrel Room Exit", "Twin Barrel Room: Exit");
+            PairPirateEntrance("Outside PF: Pirate Tunnel", "Pirate Tunnel: Entrance");
+            PairPirateEntrance("Outside PF: Telescope Room", "Pirate Tunnel: Exit");
 
             AddSceneSpawns(new string[] {
                 "Great Bay Coast", "Zora Hall Water", "Zora Hall",
@@ -452,15 +452,19 @@ namespace MMRando
 
             AddSceneSpawns(new string[] { "Termina Field", "Ikana Canyon", "Ikana Graveyard" }, 0xA0, "Ikana Path");
             AddSceneSpawns(new string[] {
-                "Ikana Canyon", "Night 3 Grave", "Night 2 Grave",
+                "Ikana Path", "Night 3 Grave", "Night 2 Grave",
                 "Night 1 Grave", "Dampe's House", "Defeat Skull Keeta" }, 0x80, "Ikana Graveyard");
             ConnectInteriors(
-                new string[] { "Night 1 Grave", "Night 2 Grave", "Night 3 Grave", "Dampe's House" },
+                new string[] { "Night 2 Grave", "Night 1 Grave", "Night 3 Grave", "Dampe's House" },
                 new ushort[] { 0x0A00, 0x0A10, 0x5A00, 0x5A10 });
 
             AddSceneSpawns(new string[] {
                 "Ikana Path", "Poe Hut", "Music Box", "Stone Tower", "Owl Warp", "Well",
                 "Sakon's Hideout", "", "Ikana Castle", "", "", "Stone Tower Fairy", "Secret Shrine" }, 0x20, "Ikana Canyon");
+            AddSceneSpawns(new string[] { "Well", "Ikana Canyon", "", "", "", "", "Igos" }, 0x34, "Ikana Castle");
+            AddSceneSpawns(new string[] { "Ikana Canyon", "Ikana Castle" }, 0x90, "Well");
+            AddSceneSpawns(new string[] { "Ikana Canyon", "Inverted Stone Tower", "Stone Tower Temple", "Owl Warp" }, 0xAA, "Stone Tower");
+            AddSceneSpawns(new string[] { "Stone Tower", "Temple" }, 0xAC, "Inverted Stone Tower");
             ConnectInteriors(
                 new string[] {
                     "Music Box", "Igos", "Secret Shrine", "Poe Hut",
@@ -468,10 +472,10 @@ namespace MMRando
                 new ushort[] {
                     0xA400, 0xA600, 0xBA00, 0x9C00,
                     0x2600, 0x9800 });
-            AddSceneSpawns(new string[] { "Well", "Ikana Canyon", "", "", "", "", "Igos" }, 0x34, "Ikana Castle");
-            AddSceneSpawns(new string[] { "Ikana Canyon", "Ikana Castle" }, 0x90, "Well");
-            AddSceneSpawns(new string[] { "Ikana Canyon", "Inverted Stone Tower", "Temple", "Owl Warp" }, 0xAA, "Stone Tower");
-            AddSceneSpawns(new string[] { "Stone Tower", "Stone Tower Temple" }, 0xAC, "Inverted Stone Tower");
+
+            ConnectInteriors(
+                new string[] { "Clock Town Fairy", "Woodfall Fairy", "Snowhead Fairy", "Great Bay Fairy", "Stone Tower Fairy" },
+                new ushort[] { 0x4600, 0x4610, 0x4620, 0x4630, 0x4640 });
 
             AddSpawn("Moon", 0xC800, "Moon");
             AddSpawn("Clock Tower: South Clock Town", 0xC010, "Clock Tower");
@@ -489,11 +493,16 @@ namespace MMRando
 
         private void ConnectTelescope(string SpawnPoint, string Telescope)
         {
-            GetSpawn(SpawnPoint).Exit = GetSpawn(Telescope);
-            GetSpawn(SpawnPoint).Type = "Telescope";
+            GetSpawn(Telescope).Exit = GetSpawn(SpawnPoint);
             GetSpawn(Telescope).Type = "Telescope";
         }
 
+        private void PairPirateEntrance(string OutdoorEntrance, string IndoorEntrance)
+        {
+            PairSpawns(OutdoorEntrance, IndoorEntrance, "Interior");
+            GetSpawn(OutdoorEntrance).Type = "Interior Exit";
+
+        }
         private void ConnectInteriors(string[] Scene, ushort[] Address)
         {
             for (int i = 0; i < Scene.Length; i++)
@@ -506,6 +515,7 @@ namespace MMRando
                     if (!SpawnName.Equals(S.Name) && S.Name.Contains(SpawnName))
                     {
                         PairSpawns(SpawnName, S.Name, "Interior");
+                        S.Type = "Interior Exit";
                     }
                 }
                 if (!To.Equals(""))
@@ -547,7 +557,8 @@ namespace MMRando
 
         private void TestEntrances()
         {
-            SwapEntrances("South Clock Town: Clock Tower", "Moon");
+            SwapEntrances("South Clock Town: South West Connection", "Moon");
+            SwapEntrances("South Clock Town: Clock Tower", "South Clock Town: Laundry Pool");
             SwapEntrances("East Clock Town: South Clock Town", "Moon: Stone Tower Trial");
             SwapEntrances("West Clock Town: South Clock Town", "Moon: Great Bay Trial");
             SwapEntrances("North Clock Town: South Clock Town", "Moon: Snowhead Trial");
@@ -557,30 +568,80 @@ namespace MMRando
         private void ShuffleEntrances()
         {
             List<Dictionary<string, bool>> SpawnSet = new List<Dictionary<string, bool>>();
-            SpawnSet.Add(new Dictionary<string, bool>());
-            SpawnSet.Add(new Dictionary<string, bool>());
-            SpawnSet.Add(new Dictionary<string, bool>());
-            string[] poolScenes = new string[]{ "South Clock Town" };
+            bool ShuffleInteriors = true;
+            bool ShuffleOverworld = false;
+            bool ShuffleOneWay = false;
+            bool MixEntrances = false;
+            if( MixEntrances)
+            {
+                SpawnSet.Add(new Dictionary<string, bool>());
+            }
+            else
+            {
+                if( ShuffleOverworld)
+                {
+                    SpawnSet.Add(new Dictionary<string, bool>());
+                }
+                if (ShuffleInteriors)
+                {
+                    SpawnSet.Add(new Dictionary<string, bool>());
+                }
+                if (ShuffleOneWay)
+                {
+                    SpawnSet.Add(new Dictionary<string, bool>());
+                }
+            }
+            string[] poolScenes = new string[]{ "South Clock Town", "Ikana Canyon", "Termina Field" };
+            int chosenPool = 0;
             foreach (Spawn S in GetSpawns())
             {
                 if (!S.Name.Contains("Temple") ) {
-                    if ( S.Exit != null && (poolScenes.Contains(S.Scene) || poolScenes.Contains(S.Exit.Scene)))
+                    if( MixEntrances)
                     {
-                        if ( S.Type == "Overworld" )
-                        {
-                            SpawnSet[0].Add(S.Name, true);
-                        }
-                        else
-                        {
-                            SpawnSet[1].Add(S.Name, true);
-                        }
-
+                        chosenPool = 0;
                     }
                     else
                     {
-                        SpawnSet[2].Add(S.Name, true);
+                        if (S.Exit != null)
+                        {
+                            if (S.Type == "Overworld" || S.Type == "Water")
+                            {
+                                if (!ShuffleOverworld)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    chosenPool = 0;
+                                }
+                            }
+                            else
+                            {
+                                if( !ShuffleInteriors)
+                                {
+                                    continue;
+                                }
+                                else
+                                {
+                                    chosenPool = ShuffleOverworld ? 1 : 0;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            if( !ShuffleOneWay)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                chosenPool = ShuffleOverworld && ShuffleInteriors ? 2 : ShuffleOverworld || ShuffleInteriors ? 1 : 0;
+                            }
+                        }
+
                     }
                 }
+                SpawnSet[chosenPool].Add(S.Name, true);
             }
             List<string> TempInaccessible = new List<string>();
             List<string> FillWorld = new List<string>();
@@ -603,7 +664,7 @@ namespace MMRando
                         SpawnSet[pool][From.Name] = false;
                         FillWorld.RemoveAll(S => S == FillWorld[0]);
                         ConnectEntrances(From.Name, To.Name, true);
-                        if (To != null && To.Exit != null && SpawnSet[pool].ContainsKey(To.Exit.Name))
+                        if (To.Exit != null && SpawnSet[pool].ContainsKey(To.Exit.Name))
                         {
                             SpawnSet[pool][To.Exit.Name] = false;
                             if (FillWorld.Contains(To.Exit.Name))
@@ -630,6 +691,13 @@ namespace MMRando
                             }
                         }
                     }
+                    else
+                    {
+                        // there was no available entrance to connect to
+                        SpawnSet[pool][From.Name] = false;
+                        Console.WriteLine("Could Not Place: {0}", From.Name);
+                        FillWorld.RemoveAt(0);
+                    }
                 }
                 else
                 {
@@ -642,18 +710,18 @@ namespace MMRando
                 // eventually want to tie this in to the owl statues to pick out an accessible owl statue
                 if (FillWorld.Count == 0)
                 {
-                    pool = ( pool + 1 ) % SpawnSet.Count;
-                    List<KeyValuePair<string, bool>> Available = SpawnSet[pool].Where(S => S.Value).ToList();
-                    if (Available.Count > 1)
+                    for (int i = 0; i < SpawnSet.Count; i++)
                     {
-                        int n = RNG.Next(Available.Count);
-                        FillWorld.Add(Available[n].Key);
+                        pool = (pool + 1) % SpawnSet.Count;
+                        List<KeyValuePair<string, bool>> Available = SpawnSet[pool].Where(S => S.Value).ToList();
+                        if (Available.Count > 0)
+                        {
+                            int n = RNG.Next(Available.Count);
+                            FillWorld.Add(Available[n].Key);
+                            break;
+                        }
                     }
                 }
-            }
-            foreach (KeyValuePair<string, bool> NotPlaced in SpawnSet[pool].Where(S => S.Value))
-            {
-                Console.WriteLine(NotPlaced.Key);
             }
         }
 
@@ -666,6 +734,7 @@ namespace MMRando
         private Spawn ChooseNextEntrance(Dictionary<string, bool> SpawnSet, Spawn Departure, Predicate<Spawn> CanAdd)
         {
             List<string> candidates = new List<string>();
+            bool AllowTelescopes = true;
             if (Departure.Name.Equals("South Clock Town: Clock Tower"))
             {
                 // choose from the hub areas first
@@ -677,7 +746,21 @@ namespace MMRando
                         {
                             if (CanAdd.Invoke(S))
                             {
-                                candidates.Add(S.Name);
+                                if (Departure.Type == S.Type)
+                                {
+                                    candidates.Add(S.Name);
+                                }
+                                if (AllowTelescopes)
+                                {
+                                    if (Departure.Type == "Interior" && S.Type == "Telescope")
+                                    {
+                                        candidates.Add(S.Name);
+                                    }
+                                    if (Departure.Type == "Telescope" && S.Type == "Interior")
+                                    {
+                                        candidates.Add(S.Name);
+                                    }
+                                }
                             }
                         }
                     }
@@ -692,7 +775,10 @@ namespace MMRando
                         Spawn S = GetSpawn(SpawnName);
                         if (CanAdd.Invoke(S))
                         {
-                            candidates.Add(S.Name);
+                            if (Departure.Type == S.Type)
+                            {
+                                candidates.Add(S.Name);
+                            }
                         }
                     }
                 }
@@ -768,11 +854,9 @@ namespace MMRando
             if (f != null && t != null)
             {
                 f.ShuffledAddress = t.SpawnAddress;
-                Console.WriteLine("'{0}: {2}' -> '{1}'", from, to, f.SpawnAddress.ToString("X4"));
                 if (connectReverse && f.Exit != null && t.Exit != null)
                 {
                     t.Exit.ShuffledAddress = f.Exit.SpawnAddress;
-                    Console.WriteLine("'{0}: {2}' -> '{1}'", t.Exit.Name, f.Exit.Name, t.Exit.SpawnAddress.ToString("X4"));
                 }
             }
         }
@@ -781,8 +865,9 @@ namespace MMRando
         {
             string OldValue = GetSpawns().Find(S => S.SpawnAddress == GetSpawn(ReplacingEntrance).ShuffledAddress).Name;
             string NewValue = GetSpawns().Find(S => S.SpawnAddress == GetSpawn(NewEntrance).ShuffledAddress).Name;
-            ConnectEntrances(ReplacingEntrance, NewValue, false);
-            ConnectEntrances(NewEntrance, OldValue, false);
+            ConnectEntrances(ReplacingEntrance, NewEntrance, true);
+            ConnectEntrances(OldValue, NewValue, true);
+            Console.WriteLine("Swap {0} > {1} : {2} > {3}", ReplacingEntrance, NewEntrance, OldValue, NewValue);
         }
 
         private void ConnectSpawnPoints()
