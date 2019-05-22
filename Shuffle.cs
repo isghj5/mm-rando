@@ -392,8 +392,8 @@ namespace MMRando
                 "Milk Road", "", "Stable", "Ranch House", "Cucco Shack", "Doggy Racetrack",
                 "", "", "", "", "", ""}, 0x64, "Romani Ranch");
             ConnectInteriors(
-                new string[] { "Stable", "Ranch House", "Cucco Shack", "Doggy Racetrack" },
-                new ushort[] {  0x0600, 0x0610, 0x7E00, 0x7C00 });
+                new string[] { "Stable", "Ranch House", "Cucco Shack", "Doggy Racetrack", "Gorman Track" },
+                new ushort[] {  0x0600, 0x0610, 0x7E00, 0x7C00, 0xCE00 });
 
             AddSceneSpawns(new string[] {
                 "Termina Field", "Zora Cape", "", "Pinnacle Rock", "Fisherman's Hut",
