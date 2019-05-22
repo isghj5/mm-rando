@@ -537,6 +537,7 @@ namespace MMRando
             cSpecialEntrance.Enabled = v;
             cOwlStatue.Enabled = v;
             cOwlWarp.Enabled = v;
+            cMoonItems.Enabled = v;
 
             bopen.Enabled = v;
             bRandomise.Enabled = v;
