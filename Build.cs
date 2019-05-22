@@ -128,7 +128,10 @@ namespace MMRando
 
         private void WriteEntrances()
         {
-            ROMFuncs.WriteEntrances(_OriginalEntrances, _ShuffledEntrances);
+            if (Settings.RandomizeOverworldEntrances || Settings.RandomizeInteriorEntrances || Settings.RandomizeOwlWarps || Settings.RandomizeSpecialEntrances)
+            {
+                ROMFuncs.WriteEntrances(_OriginalEntrances, _ShuffledEntrances);
+            }
         }
 
         private void WriteDungeons()
@@ -486,7 +489,7 @@ namespace MMRando
             WriteDungeons();
 
             worker.ReportProgress(54, "Writing owl statues...");
-            ROMFuncs.SwapOwlStatues(_randomizedOwls);
+            WriteOwls();
 
             worker.ReportProgress(70, "Writing gimmicks...");
             WriteGimmicks();
@@ -518,6 +521,13 @@ namespace MMRando
 
         }
 
+        private void WriteOwls()
+        {
+            if (Settings.RandomizeOwlStatues)
+            {
+                ROMFuncs.SwapOwlStatues(_randomizedOwls);
+            }
+        }
     }
 
 }

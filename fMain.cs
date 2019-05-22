@@ -290,6 +290,36 @@ namespace MMRando
             UpdateSingleSetting(() => Settings.DamageEffect = (DamageEffect)cDType.SelectedIndex);
         }
 
+        private void cSpecialEntrance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => Settings.RandomizeSpecialEntrances = cSpecialEntrance.Checked);
+        }
+
+        private void cMixEntrances_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => Settings.MixEntrances = cMixEntrances.Checked);
+        }
+
+        private void cOverworldEntrance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => Settings.RandomizeOverworldEntrances = cOverworldEntrance.Checked);
+        }
+
+        private void cInteriorEntrance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => Settings.RandomizeInteriorEntrances = cInteriorEntrance.Checked);
+        }
+
+        private void cOwlStatue_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => Settings.RandomizeOwlStatues = cOwlStatue.Checked);
+        }
+
+        private void cOwlWarp_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => Settings.RandomizeOwlWarps = cOwlWarp.Checked);
+        }
+
         private void cEnemy_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => Settings.RandomizeEnemies = cEnemy.Checked);
@@ -501,6 +531,12 @@ namespace MMRando
             cFreeHints.Enabled = v;
             cHTMLLog.Enabled = v;
             cN64.Enabled = v;
+            cMixEntrances.Enabled = v;
+            cOverworldEntrance.Enabled = v;
+            cInteriorEntrance.Enabled = v;
+            cSpecialEntrance.Enabled = v;
+            cOwlStatue.Enabled = v;
+            cOwlWarp.Enabled = v;
 
             bopen.Enabled = v;
             bRandomise.Enabled = v;
@@ -777,10 +813,16 @@ namespace MMRando
                 }
 
                 worker.ReportProgress(15, "Shuffling entrances...");
-                EntranceShuffle();
+                if( Settings.RandomizeOverworldEntrances || Settings.RandomizeInteriorEntrances || Settings.RandomizeOwlWarps || Settings.RandomizeSpecialEntrances)
+                {
+                    EntranceShuffle();
+                }
 
                 worker.ReportProgress(20, "Shuffling owls...");
-                OwlShuffle(true);
+                if( Settings.RandomizeOwlStatues)
+                {
+                    OwlShuffle(Settings.RandomizeSpecialEntrances);
+                }
 
                 worker.ReportProgress(30, "Shuffling items...");
                 ItemShuffle();
@@ -809,6 +851,7 @@ namespace MMRando
         }
 
         #endregion
+
     }
 
 }

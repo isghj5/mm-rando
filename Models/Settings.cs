@@ -113,7 +113,32 @@ namespace MMRando.Models
         /// <summary>
         /// (Beta) Randomize entrances
         /// </summary>
-        public bool RandomizeEntrances { get; set; }
+        public bool MixEntrances { get; set; }
+
+        /// <summary>
+        /// (Beta) Randomize entrances
+        /// </summary>
+        public bool RandomizeOverworldEntrances { get; set; }
+
+        /// <summary>
+        /// (Beta) Randomize entrances
+        /// </summary>
+        public bool RandomizeInteriorEntrances { get; set; }
+
+        /// <summary>
+        /// (Beta) Randomize entrances
+        /// </summary>
+        public bool RandomizeOwlStatues { get; set; }
+
+        /// <summary>
+        /// (Beta) Randomize entrances
+        /// </summary>
+        public bool RandomizeOwlWarps { get; set; }
+
+        /// <summary>
+        /// (Beta) Randomize entrances
+        /// </summary>
+        public bool RandomizeSpecialEntrances { get; set; }
 
         /// <summary>
         /// Randomize background music (includes bgm from other video games)

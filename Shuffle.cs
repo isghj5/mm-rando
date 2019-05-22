@@ -246,7 +246,7 @@ namespace MMRando
         Dictionary<string, Predicate<CollectionState>> TerminaLogic;
         int[] _OriginalEntrances { get; set; }
         int[] _ShuffledEntrances { get; set; }
-        List<string> _EntranceSpoilers { get; set; }
+        List<string> _EntranceSpoilers { get; set; } = new List<string>();
 
         private void OwlShuffle(bool hidden)
         {
@@ -568,10 +568,10 @@ namespace MMRando
         private void ShuffleEntrances()
         {
             List<Dictionary<string, bool>> SpawnSet = new List<Dictionary<string, bool>>();
-            bool ShuffleInteriors = true;
-            bool ShuffleOverworld = false;
-            bool ShuffleOneWay = false;
-            bool MixEntrances = false;
+            bool ShuffleInteriors = Settings.RandomizeInteriorEntrances;
+            bool ShuffleOverworld = Settings.RandomizeOverworldEntrances;
+            bool ShuffleOneWay = Settings.RandomizeSpecialEntrances || Settings.RandomizeOwlWarps;
+            bool MixEntrances = Settings.MixEntrances;
             if( MixEntrances)
             {
                 SpawnSet.Add(new Dictionary<string, bool>());

@@ -44,6 +44,7 @@ namespace MMRando
             this.cN64 = new System.Windows.Forms.CheckBox();
             this.lOutput = new System.Windows.Forms.Label();
             this.tabMain = new System.Windows.Forms.TabPage();
+            this.cMoonItems = new System.Windows.Forms.CheckBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.cAdditional = new System.Windows.Forms.CheckBox();
@@ -104,7 +105,12 @@ namespace MMRando
             this.cDummy = new System.Windows.Forms.CheckBox();
             this.lHrule = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.cMoonItems = new System.Windows.Forms.CheckBox();
+            this.cOverworldEntrance = new System.Windows.Forms.CheckBox();
+            this.cInteriorEntrance = new System.Windows.Forms.CheckBox();
+            this.cMixEntrances = new System.Windows.Forms.CheckBox();
+            this.cOwlWarp = new System.Windows.Forms.CheckBox();
+            this.cSpecialEntrance = new System.Windows.Forms.CheckBox();
+            this.cOwlStatue = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabROMSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
@@ -140,7 +146,7 @@ namespace MMRando
             this.cUserItems.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.cUserItems.AutoSize = true;
             this.cUserItems.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cUserItems.Location = new System.Drawing.Point(187, 45);
+            this.cUserItems.Location = new System.Drawing.Point(187, 55);
             this.cUserItems.Name = "cUserItems";
             this.cUserItems.Size = new System.Drawing.Size(119, 17);
             this.cUserItems.TabIndex = 11;
@@ -158,7 +164,7 @@ namespace MMRando
             this.tSettings.Location = new System.Drawing.Point(0, 23);
             this.tSettings.Name = "tSettings";
             this.tSettings.SelectedIndex = 0;
-            this.tSettings.Size = new System.Drawing.Size(354, 298);
+            this.tSettings.Size = new System.Drawing.Size(354, 318);
             this.tSettings.TabIndex = 10;
             // 
             // tabROMSettings
@@ -261,6 +267,12 @@ namespace MMRando
             // 
             // tabMain
             // 
+            this.tabMain.Controls.Add(this.cOwlStatue);
+            this.tabMain.Controls.Add(this.cSpecialEntrance);
+            this.tabMain.Controls.Add(this.cOwlWarp);
+            this.tabMain.Controls.Add(this.cMixEntrances);
+            this.tabMain.Controls.Add(this.cInteriorEntrance);
+            this.tabMain.Controls.Add(this.cOverworldEntrance);
             this.tabMain.Controls.Add(this.cMoonItems);
             this.tabMain.Controls.Add(this.label3);
             this.tabMain.Controls.Add(this.label2);
@@ -279,10 +291,25 @@ namespace MMRando
             this.tabMain.Location = new System.Drawing.Point(4, 25);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMain.Size = new System.Drawing.Size(346, 269);
+            this.tabMain.Size = new System.Drawing.Size(346, 289);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Main Settings";
             this.tabMain.UseVisualStyleBackColor = true;
+            // 
+            // cMoonItems
+            // 
+            this.cMoonItems.AutoSize = true;
+            this.cMoonItems.BackColor = System.Drawing.Color.Transparent;
+            this.cMoonItems.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cMoonItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cMoonItems.ForeColor = System.Drawing.Color.Black;
+            this.cMoonItems.Location = new System.Drawing.Point(226, 147);
+            this.cMoonItems.Name = "cMoonItems";
+            this.cMoonItems.Size = new System.Drawing.Size(80, 17);
+            this.cMoonItems.TabIndex = 15;
+            this.cMoonItems.Text = "Moon items";
+            this.cMoonItems.UseVisualStyleBackColor = false;
+            this.cMoonItems.CheckedChanged += new System.EventHandler(this.cMoonItems_CheckedChanged);
             // 
             // label3
             // 
@@ -290,7 +317,7 @@ namespace MMRando
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.Location = new System.Drawing.Point(102, 212);
+            this.label3.Location = new System.Drawing.Point(102, 195);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(143, 13);
             this.label3.TabIndex = 14;
@@ -300,7 +327,7 @@ namespace MMRando
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.ActiveBorder;
-            this.label2.Location = new System.Drawing.Point(10, 208);
+            this.label2.Location = new System.Drawing.Point(13, 195);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(325, 13);
             this.label2.TabIndex = 14;
@@ -373,7 +400,7 @@ namespace MMRando
             this.cEnemy.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cEnemy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cEnemy.ForeColor = System.Drawing.Color.Black;
-            this.cEnemy.Location = new System.Drawing.Point(141, 237);
+            this.cEnemy.Location = new System.Drawing.Point(240, 261);
             this.cEnemy.Name = "cEnemy";
             this.cEnemy.Size = new System.Drawing.Size(66, 17);
             this.cEnemy.TabIndex = 9;
@@ -827,14 +854,14 @@ namespace MMRando
             // mLogicEdit
             // 
             this.mLogicEdit.Name = "mLogicEdit";
-            this.mLogicEdit.Size = new System.Drawing.Size(180, 22);
+            this.mLogicEdit.Size = new System.Drawing.Size(150, 22);
             this.mLogicEdit.Text = "Logic editor";
             this.mLogicEdit.Click += new System.EventHandler(this.mLogicEdit_Click);
             // 
             // mItemIncl
             // 
             this.mItemIncl.Name = "mItemIncl";
-            this.mItemIncl.Size = new System.Drawing.Size(180, 22);
+            this.mItemIncl.Size = new System.Drawing.Size(150, 22);
             this.mItemIncl.Text = "Item list editor";
             this.mItemIncl.Click += new System.EventHandler(this.mItemIncl_Click);
             // 
@@ -974,27 +1001,92 @@ namespace MMRando
             this.label5.TabIndex = 14;
             this.label5.Text = "_____________________________________________________";
             // 
-            // cMoonItems
+            // cOverworldEntrance
             // 
-            this.cMoonItems.AutoSize = true;
-            this.cMoonItems.BackColor = System.Drawing.Color.Transparent;
-            this.cMoonItems.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cMoonItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cMoonItems.ForeColor = System.Drawing.Color.Black;
-            this.cMoonItems.Location = new System.Drawing.Point(226, 147);
-            this.cMoonItems.Name = "cMoonItems";
-            this.cMoonItems.Size = new System.Drawing.Size(80, 17);
-            this.cMoonItems.TabIndex = 15;
-            this.cMoonItems.Text = "Moon items";
-            this.cMoonItems.UseVisualStyleBackColor = false;
-            this.cMoonItems.CheckedChanged += new System.EventHandler(this.cMoonItems_CheckedChanged);
+            this.cOverworldEntrance.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cOverworldEntrance.Location = new System.Drawing.Point(16, 215);
+            this.cOverworldEntrance.Name = "cOverworldEntrance";
+            this.cOverworldEntrance.Size = new System.Drawing.Size(126, 17);
+            this.cOverworldEntrance.TabIndex = 0;
+            this.cOverworldEntrance.Text = "Overworld Entrances";
+            this.cOverworldEntrance.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cOverworldEntrance.UseVisualStyleBackColor = true;
+            this.cOverworldEntrance.CheckedChanged += new System.EventHandler(this.cOverworldEntrance_CheckedChanged);
+            // 
+            // cInteriorEntrance
+            // 
+            this.cInteriorEntrance.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cInteriorEntrance.Location = new System.Drawing.Point(16, 238);
+            this.cInteriorEntrance.Name = "cInteriorEntrance";
+            this.cInteriorEntrance.Size = new System.Drawing.Size(126, 17);
+            this.cInteriorEntrance.TabIndex = 16;
+            this.cInteriorEntrance.Text = "Interior Entrances";
+            this.cInteriorEntrance.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cInteriorEntrance.UseVisualStyleBackColor = true;
+            this.cInteriorEntrance.CheckedChanged += new System.EventHandler(this.cInteriorEntrance_CheckedChanged);
+            // 
+            // cMixEntrances
+            // 
+            this.cMixEntrances.AutoSize = true;
+            this.cMixEntrances.BackColor = System.Drawing.Color.Transparent;
+            this.cMixEntrances.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cMixEntrances.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cMixEntrances.ForeColor = System.Drawing.Color.Black;
+            this.cMixEntrances.Location = new System.Drawing.Point(187, 215);
+            this.cMixEntrances.Name = "cMixEntrances";
+            this.cMixEntrances.Size = new System.Drawing.Size(120, 17);
+            this.cMixEntrances.TabIndex = 17;
+            this.cMixEntrances.Text = "Mix Entrance Types";
+            this.cMixEntrances.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cMixEntrances.UseVisualStyleBackColor = false;
+            this.cMixEntrances.CheckedChanged += new System.EventHandler(this.cMixEntrances_CheckedChanged);
+            // 
+            // cOwlWarp
+            // 
+            this.cOwlWarp.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cOwlWarp.Location = new System.Drawing.Point(16, 261);
+            this.cOwlWarp.Name = "cOwlWarp";
+            this.cOwlWarp.Size = new System.Drawing.Size(126, 17);
+            this.cOwlWarp.TabIndex = 18;
+            this.cOwlWarp.Text = "Owl Statue Warps";
+            this.cOwlWarp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cOwlWarp.UseVisualStyleBackColor = true;
+            this.cOwlWarp.CheckedChanged += new System.EventHandler(this.cOwlWarp_CheckedChanged);
+            // 
+            // cSpecialEntrance
+            // 
+            this.cSpecialEntrance.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cSpecialEntrance.Location = new System.Drawing.Point(180, 238);
+            this.cSpecialEntrance.Name = "cSpecialEntrance";
+            this.cSpecialEntrance.Size = new System.Drawing.Size(126, 17);
+            this.cSpecialEntrance.TabIndex = 19;
+            this.cSpecialEntrance.Text = "Special Entrances";
+            this.cSpecialEntrance.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cSpecialEntrance.UseVisualStyleBackColor = true;
+            this.cSpecialEntrance.CheckedChanged += new System.EventHandler(this.cSpecialEntrance_CheckedChanged);
+            // 
+            // cOwlStatue
+            // 
+            this.cOwlStatue.AutoSize = true;
+            this.cOwlStatue.BackColor = System.Drawing.Color.Transparent;
+            this.cOwlStatue.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cOwlStatue.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cOwlStatue.ForeColor = System.Drawing.Color.Black;
+            this.cOwlStatue.Location = new System.Drawing.Point(59, 170);
+            this.cOwlStatue.Name = "cOwlStatue";
+            this.cOwlStatue.Size = new System.Drawing.Size(83, 17);
+            this.cOwlStatue.TabIndex = 20;
+            this.cOwlStatue.Text = "Owl Statues";
+            this.cOwlStatue.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cOwlStatue.UseVisualStyleBackColor = false;
+            this.cOwlStatue.CheckedChanged += new System.EventHandler(this.cOwlStatue_CheckedChanged);
             // 
             // MainRandomizerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(355, 452);
+            this.ClientSize = new System.Drawing.Size(355, 462);
             this.Controls.Add(this.lStatus);
             this.Controls.Add(this.cDummy);
             this.Controls.Add(this.pProgress);
@@ -1106,6 +1198,12 @@ namespace MMRando
         private System.Windows.Forms.CheckBox cFreeHints;
         private System.Windows.Forms.CheckBox cHTMLLog;
         private System.Windows.Forms.CheckBox cMoonItems;
+        private System.Windows.Forms.CheckBox cOverworldEntrance;
+        private System.Windows.Forms.CheckBox cMixEntrances;
+        private System.Windows.Forms.CheckBox cInteriorEntrance;
+        private System.Windows.Forms.CheckBox cOwlStatue;
+        private System.Windows.Forms.CheckBox cSpecialEntrance;
+        private System.Windows.Forms.CheckBox cOwlWarp;
     }
 }
 
