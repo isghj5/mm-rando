@@ -298,7 +298,7 @@ namespace MMRando
             AddSceneSpawns(new string[] {
                 "Clock Tower", "Termina Field", "East Clock Town",
                 "West Clock Town", "North Clock Town", "South West Connection",
-                "Laundry Pool", "South East Connection" },
+                "Laundry Pool", "South East Connection", "", "Owl Warp" },
                     0xD8, "South Clock Town");
             AddSceneSpawns(new string[] {
                 "Termina Field", "East Clock Town", "South Clock Town", "Clock Town Fairy", "Deku Playground" },
@@ -596,49 +596,49 @@ namespace MMRando
             foreach (Spawn S in GetSpawns())
             {
                 if (!S.Name.Contains("Temple") ) {
-                    if( MixEntrances)
+                    if (S.Exit != null)
                     {
-                        chosenPool = 0;
-                    }
-                    else
-                    {
-                        if (S.Exit != null)
+                        if (S.Type == "Overworld" || S.Type == "Water")
                         {
-                            if (S.Type == "Overworld" || S.Type == "Water")
-                            {
-                                if (!ShuffleOverworld)
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    chosenPool = 0;
-                                }
-                            }
-                            else
-                            {
-                                if( !ShuffleInteriors)
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    chosenPool = ShuffleOverworld ? 1 : 0;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if( !ShuffleOneWay)
+                            if (!ShuffleOverworld)
                             {
                                 continue;
                             }
                             else
                             {
-                                chosenPool = ShuffleOverworld && ShuffleInteriors ? 2 : ShuffleOverworld || ShuffleInteriors ? 1 : 0;
+                                chosenPool = 0;
                             }
                         }
-
+                        else
+                        {
+                            if( !ShuffleInteriors)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                chosenPool = ShuffleOverworld ? 1 : 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if( !ShuffleOneWay)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            if (!Settings.RandomizeSpecialEntrances && !S.Name.Contains("Owl Warp"))
+                            {
+                                continue;
+                            }
+                            chosenPool = ShuffleOverworld && ShuffleInteriors ? 2 : ShuffleOverworld || ShuffleInteriors ? 1 : 0;
+                        }
+                    }
+                    if (MixEntrances)
+                    {
+                        chosenPool = 0;
                     }
                 }
                 SpawnSet[chosenPool].Add(S.Name, true);
