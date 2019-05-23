@@ -1244,11 +1244,11 @@ namespace MMRando
             log.AppendLine();
 
             log.AppendLine($" {"Item",-40}    {"Location"}");
-            foreach (var item in spoiler.ItemList)
+            foreach (var item in spoiler.ItemList.OrderBy(item => item.ReplacesItemId))
             {
-                string replaces = Items.ITEM_NAMES[item.ReplacesItemId];
                 string name = Items.ITEM_NAMES[item.ID];
-                log.AppendLine($"{replaces,-40} >> {name}");
+                string replaces = Items.ITEM_NAMES[item.ReplacesItemId];
+                log.AppendLine($"{name,-40} >> {replaces}");
             }
 
             log.AppendLine();
