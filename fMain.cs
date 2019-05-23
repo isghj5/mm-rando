@@ -586,7 +586,7 @@ namespace MMRando
         {
             int[] O = new int[3];
 
-            if (Settings.RandomizeOwlWarps) { O[0] += 20197152; };
+            if (Settings.RandomizeOwlWarps) { O[0] += 2097152; };
             if (Settings.RandomizeOwlStatues) { O[0] += 1048576; };
             if (Settings.MixEntrances) { O[0] += 524288; };
             if (Settings.RandomizeSpecialEntrances) { O[0] += 262144; };
@@ -656,7 +656,7 @@ namespace MMRando
             int Combos = (int)Base36.Decode(O[1]);
             int ColourAndMisc = (int)Base36.Decode(O[2]);
 
-            Settings.RandomizeOwlWarps = (Checks & 20197152) > 0;
+            Settings.RandomizeOwlWarps = (Checks & 2097152) > 0;
             Settings.RandomizeOwlStatues = (Checks & 1048576) > 0;
             Settings.MixEntrances = (Checks & 524288) > 0;
             Settings.RandomizeSpecialEntrances = (Checks & 262144) > 0;

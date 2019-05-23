@@ -219,12 +219,12 @@ namespace MMRando
                 this.Name = Name;
                 this.SpawnAddress = Address;
                 this.Scene = Scene;
-                this.ShuffledAddress = Address;
+                //this.ShuffledAddress = Address;
             }
             public string Scene;
             public int SpawnAddress;
             public string Name;
-            public int ShuffledAddress;
+            //public int ShuffledAddress;
             public Spawn Exit;
             public string Type;
         }
@@ -243,6 +243,7 @@ namespace MMRando
         }
 
         Dictionary<string, List<Spawn>> TerminaMap { get; set; }
+        Dictionary<string, List<Spawn>> ShuffledMap { get; set; }
         Dictionary<string, Predicate<CollectionState>> TerminaLogic;
         int[] _OriginalEntrances { get; set; }
         int[] _ShuffledEntrances { get; set; }
@@ -283,6 +284,7 @@ namespace MMRando
         private void EntranceShuffle()
         {
             TerminaMap = new Dictionary<string, List<Spawn>>();
+            ShuffledMap = new Dictionary<string, List<Spawn>>();
             TerminaLogic = new Dictionary<string, Predicate<CollectionState>>();
             GetVanillaTerminaMap();
             ConstructTerminaLogic();
@@ -296,7 +298,7 @@ namespace MMRando
             AddSceneSpawns(new string[] {
                 "Clock Tower", "Termina Field", "East Clock Town",
                 "West Clock Town", "North Clock Town", "South West Connection",
-                "Laundry Pool", "South East Connection" },
+                "Laundry Pool", "South East Connection", "", "Owl Warp" },
                     0xD8, "South Clock Town");
             AddSceneSpawns(new string[] {
                 "Termina Field", "East Clock Town", "South Clock Town", "Clock Town Fairy", "Deku Playground" },
@@ -555,17 +557,13 @@ namespace MMRando
 
         private void TestEntrances()
         {
-            SwapEntrances("South Clock Town: South West Connection", "Moon");
-            SwapEntrances("South Clock Town: Clock Tower", "South Clock Town: Laundry Pool");
-            SwapEntrances("East Clock Town: South Clock Town", "Moon: Stone Tower Trial");
-            SwapEntrances("West Clock Town: South Clock Town", "Moon: Great Bay Trial");
-            SwapEntrances("North Clock Town: South Clock Town", "Moon: Snowhead Trial");
-            SwapEntrances("Termina Field: South Clock Town", "Moon: Woodfall Trial");
+
         }
 
         private void ShuffleEntrances()
         {
             List<Dictionary<string, bool>> SpawnSet = new List<Dictionary<string, bool>>();
+            List<Dictionary<string, bool>> ChosenSet = new List<Dictionary<string, bool>>();
             bool ShuffleInteriors = Settings.RandomizeInteriorEntrances;
             bool ShuffleOverworld = Settings.RandomizeOverworldEntrances;
             bool ShuffleOneWay = Settings.RandomizeSpecialEntrances || Settings.RandomizeOwlWarps;
@@ -573,20 +571,24 @@ namespace MMRando
             if( MixEntrances)
             {
                 SpawnSet.Add(new Dictionary<string, bool>());
+                ChosenSet.Add(new Dictionary<string, bool>());
             }
             else
             {
                 if( ShuffleOverworld)
                 {
                     SpawnSet.Add(new Dictionary<string, bool>());
+                    ChosenSet.Add(new Dictionary<string, bool>());
                 }
                 if (ShuffleInteriors)
                 {
                     SpawnSet.Add(new Dictionary<string, bool>());
+                    ChosenSet.Add(new Dictionary<string, bool>());
                 }
                 if (ShuffleOneWay)
                 {
                     SpawnSet.Add(new Dictionary<string, bool>());
+                    ChosenSet.Add(new Dictionary<string, bool>());
                 }
             }
             string[] poolScenes = new string[]{ "South Clock Town", "Ikana Canyon", "Termina Field" };
@@ -594,60 +596,62 @@ namespace MMRando
             foreach (Spawn S in GetSpawns())
             {
                 if (!S.Name.Contains("Temple") ) {
-                    if( MixEntrances)
+                    if (S.Exit != null)
                     {
-                        chosenPool = 0;
-                    }
-                    else
-                    {
-                        if (S.Exit != null)
+                        if (S.Type == "Overworld" || S.Type == "Water")
                         {
-                            if (S.Type == "Overworld" || S.Type == "Water")
-                            {
-                                if (!ShuffleOverworld)
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    chosenPool = 0;
-                                }
-                            }
-                            else
-                            {
-                                if( !ShuffleInteriors)
-                                {
-                                    continue;
-                                }
-                                else
-                                {
-                                    chosenPool = ShuffleOverworld ? 1 : 0;
-                                }
-                            }
-                        }
-                        else
-                        {
-                            if( !ShuffleOneWay)
+                            if (!ShuffleOverworld)
                             {
                                 continue;
                             }
                             else
                             {
-                                chosenPool = ShuffleOverworld && ShuffleInteriors ? 2 : ShuffleOverworld || ShuffleInteriors ? 1 : 0;
+                                chosenPool = 0;
                             }
                         }
-
+                        else
+                        {
+                            if( !ShuffleInteriors)
+                            {
+                                continue;
+                            }
+                            else
+                            {
+                                chosenPool = ShuffleOverworld ? 1 : 0;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if( !ShuffleOneWay)
+                        {
+                            continue;
+                        }
+                        else
+                        {
+                            if (!Settings.RandomizeSpecialEntrances && !S.Name.Contains("Owl Warp"))
+                            {
+                                continue;
+                            }
+                            chosenPool = ShuffleOverworld && ShuffleInteriors ? 2 : ShuffleOverworld || ShuffleInteriors ? 1 : 0;
+                        }
+                    }
+                    if (MixEntrances)
+                    {
+                        chosenPool = 0;
                     }
                 }
                 SpawnSet[chosenPool].Add(S.Name, true);
+                ChosenSet[chosenPool].Add(S.Name, true);
             }
             List<string> TempInaccessible = new List<string>();
             List<string> FillWorld = new List<string>();
             CollectionState Inventory = new CollectionState();
             int pool = 0;
-            Predicate<Spawn> CanAdd = S => SpawnSet[pool].ContainsKey(S.Name) && SpawnSet[pool][S.Name] && (S.Type == null || (S.Type != null && S.Type != null));
-            CanAdd = S => true;
-            CanAdd = S => S != null && SpawnSet[pool].ContainsKey(S.Name) && SpawnSet[pool][S.Name];
+            Predicate<Spawn> CanAdd = S => S != null && SpawnSet[pool].ContainsKey(S.Name) && SpawnSet[pool][S.Name];
+            Predicate<Spawn> CanChoose = S => 
+                S != null && ChosenSet[pool].ContainsKey(S.Name) && ChosenSet[pool][S.Name] && 
+                (S.Exit == null || S.Exit != null && SpawnSet[pool].ContainsKey(S.Exit.Name) && SpawnSet[pool][S.Exit.Name]);
             Spawn To, From;
             string TempExit;
             FillWorld.Add("South Clock Town: Clock Tower");
@@ -656,15 +660,17 @@ namespace MMRando
                 From = GetSpawn(FillWorld[0]);
                 if (CanAdd.Invoke(From))
                 {
-                    To = ChooseNextEntrance(SpawnSet[pool], From, CanAdd);
+                    To = ChooseNextEntrance(SpawnSet[pool], From, CanChoose);
                     if (To != null)
                     {
                         SpawnSet[pool][From.Name] = false;
+                        ChosenSet[pool][To.Name] = false;
                         FillWorld.RemoveAll(S => S == FillWorld[0]);
                         ConnectEntrances(From.Name, To.Name, true);
                         if (To.Exit != null && SpawnSet[pool].ContainsKey(To.Exit.Name))
                         {
                             SpawnSet[pool][To.Exit.Name] = false;
+                            ChosenSet[pool][From.Exit.Name] = false;
                             if (FillWorld.Contains(To.Exit.Name))
                             {
                                 FillWorld.RemoveAll(S => S == To.Exit.Name);
@@ -732,7 +738,7 @@ namespace MMRando
         private Spawn ChooseNextEntrance(Dictionary<string, bool> SpawnSet, Spawn Departure, Predicate<Spawn> CanAdd)
         {
             List<string> candidates = new List<string>();
-            bool AllowTelescopes = true;
+            bool AllowTelescopes = Settings.RandomizeSpecialEntrances;
             if (Departure.Name.Equals("South Clock Town: Clock Tower"))
             {
                 // choose from the hub areas first
@@ -814,9 +820,13 @@ namespace MMRando
             if (!TerminaMap.ContainsKey(Scene))
             {
                 TerminaMap.Add(Scene, new List<Spawn>());
+                ShuffledMap.Add(Scene, new List<Spawn>());
             }
             List<Spawn> sceneSpawns = TerminaMap[Scene];
-            sceneSpawns.Add(new Spawn(Name, Address, Scene));
+            Spawn newSpawn = new Spawn(Name, Address, Scene);
+            sceneSpawns.Add(newSpawn);
+            sceneSpawns = ShuffledMap[Scene];
+            sceneSpawns.Add(newSpawn);
             TerminaLogic[Name] = s => true;
             TerminaLogic[Scene] = s => true;
         }
@@ -845,27 +855,69 @@ namespace MMRando
             t.Type = type;
         }
 
+        private void SetShuffledSpawn(Spawn f, Spawn t)
+        {
+            if (f == t)
+            {
+                return;
+            }
+            int shuffleIndex = -1, replaceIndex = -1;
+            List<Spawn> temp = TerminaMap[f.Scene];
+            if( temp != null && temp.Contains(f) )
+            {
+                shuffleIndex = temp.FindIndex(S => S == f);
+                temp = ShuffledMap[f.Scene];
+            }
+            else
+            {
+                temp = null;
+                foreach (string SceneSpawns in TerminaMap.Keys)
+                {
+                    if( TerminaMap[SceneSpawns].Contains(f))
+                    {
+                        temp = ShuffledMap[SceneSpawns];
+                        shuffleIndex = temp.FindIndex(S => S == f);
+                        break;
+                    }
+                }
+            }
+            List<Spawn> temp2 = ShuffledMap[t.Scene];
+            if (temp != null && temp.Contains(t))
+            {
+                replaceIndex = temp2.FindIndex(S => S == t);
+            }
+            else
+            {
+                temp2 = null;
+                foreach (List<Spawn> SceneSpawns in ShuffledMap.Values)
+                {
+                    if (SceneSpawns.Contains(t))
+                    {
+                        temp2 = SceneSpawns;
+                        replaceIndex = temp2.FindIndex(S => S == t);
+                        break;
+                    }
+                }
+            }
+            if( temp != null && shuffleIndex != -1 && temp2 != null && replaceIndex != -1)
+            {
+                temp2[replaceIndex] = temp[shuffleIndex];
+                temp[shuffleIndex] = t;
+            }
+        }
+
         private void ConnectEntrances(string from, string to, bool connectReverse)
         {
             Spawn f = GetSpawn(from);
             Spawn t = GetSpawn(to);
             if (f != null && t != null)
             {
-                f.ShuffledAddress = t.SpawnAddress;
+                SetShuffledSpawn(f, t);
                 if (connectReverse && f.Exit != null && t.Exit != null)
                 {
-                    t.Exit.ShuffledAddress = f.Exit.SpawnAddress;
+                    SetShuffledSpawn(t.Exit, f.Exit);
                 }
             }
-        }
-
-        private void SwapEntrances(string ReplacingEntrance, string NewEntrance)
-        {
-            string OldValue = GetSpawns().Find(S => S.SpawnAddress == GetSpawn(ReplacingEntrance).ShuffledAddress).Name;
-            string NewValue = GetSpawns().Find(S => S.SpawnAddress == GetSpawn(NewEntrance).ShuffledAddress).Name;
-            ConnectEntrances(ReplacingEntrance, NewEntrance, true);
-            ConnectEntrances(OldValue, NewValue, true);
-            Console.WriteLine("Swap {0} > {1} : {2} > {3}", ReplacingEntrance, NewEntrance, OldValue, NewValue);
         }
 
         private void ConnectSpawnPoints()
@@ -926,19 +978,26 @@ namespace MMRando
 
         public void FinalizeEntrances()
         {
-            List<Spawn> Entrances = GetSpawns();
+            List<Spawn> Entrances = GetSpawns(), OriginalScene, ShuffledScene;
             _OriginalEntrances = new int[Entrances.Count];
             _ShuffledEntrances = new int[Entrances.Count];
             _EntranceSpoilers = new List<string>();
+            Entrances = new List<Spawn>();
             int i = 0;
-            Spawn ShuffledSpawn;
-            foreach (Spawn Spawn in Entrances)
+            Spawn Spawn, ShuffledSpawn;
+            foreach (string Scene in TerminaMap.Keys)
             {
-                _OriginalEntrances[i] = Spawn.SpawnAddress;
-                _ShuffledEntrances[i] = Spawn.ShuffledAddress;
-                ShuffledSpawn = Entrances.Find(S => S.SpawnAddress == Spawn.ShuffledAddress);
-                _EntranceSpoilers.Add(Spawn.Name + " -> " + ShuffledSpawn.Name);
-                i++;
+                OriginalScene = TerminaMap[Scene];
+                ShuffledScene = ShuffledMap[Scene];
+                for (int s = 0; s < OriginalScene.Count; s++)
+                {
+                    Spawn = OriginalScene[s];
+                    ShuffledSpawn = ShuffledScene[s];
+                    _OriginalEntrances[i] = Spawn.SpawnAddress;
+                    _ShuffledEntrances[i] = ShuffledSpawn.SpawnAddress;
+                    _EntranceSpoilers.Add(Spawn.Name + " -> " + ShuffledSpawn.Name);
+                    i++;
+                }
             }
         }
         #endregion
