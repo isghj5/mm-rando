@@ -1,4 +1,6 @@
-﻿namespace MMRando.Utils
+﻿using MMRando.Constants;
+
+namespace MMRando.Utils
 {
     public static class ItemUtils
     {
@@ -45,18 +47,30 @@
                    && itemId <= Items.TradeItemMamaLetter;
         }
 
-        public static int GetItemOffset(int itemId)
+        public static int AddItemOffset(int itemId)
         {
-            var offset = 0;
-            if (itemId > Items.AreaInvertedStoneTowerNew)
+            if (itemId >= Items.AreaSouthAccess)
             {
-                offset += Values.NumberOfAreasAndOther;
+                itemId += Values.NumberOfAreasAndOther;
             }
-            if (itemId > Items.AreaMoonAccess)
+            if (itemId >= Items.OtherOneMask)
             {
-                offset += 5;
+                itemId += 5;
             }
-            return offset;
+            return itemId;
+        }
+
+        public static int SubtractItemOffset(int itemId)
+        {
+            if (itemId >= Items.OtherOneMask)
+            {
+                itemId -= 5;
+            }
+            if (itemId >= Items.AreaSouthAccess)
+            {
+                itemId -= Values.NumberOfAreasAndOther;
+            }
+            return itemId;
         }
 
         public static bool IsDungeonItem(int itemIndex)
@@ -74,6 +88,11 @@
         public static bool IsMoonItem(int itemIndex)
         {
             return itemIndex >= Items.HeartPieceDekuTrial && itemIndex <= Items.MaskFierceDeity;
+        }
+
+        public static bool IsOtherItem(int itemIndex)
+        {
+            return itemIndex >= Items.ChestLensCaveRedRupee && itemIndex <= Items.ChestToGoronRaceGrotto;
         }
 
         internal static bool IsDeed(int item)
