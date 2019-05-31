@@ -10,6 +10,10 @@ namespace MMRando.Models
         public Settings Settings { get; private set; }
         public Random Random { get; private set; }
         public List<ItemObject> ItemList { get; set; }
+        public int[] EntranceList { get; set; }
+        public int[] ShuffledEntranceList { get; set; }
+        public List<string> EntranceSpoilers { get; set; }
+        public int[] OwlStatueList { get; set; }
         public List<string> GossipQuotes { get; set; }
         public List<ItemLogic> Logic { get; set; }
 

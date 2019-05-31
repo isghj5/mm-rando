@@ -152,6 +152,26 @@ namespace MMRando.Models
         public bool RandomizeDungeonEntrances { get; set; }
 
         /// <summary>
+        /// Randomize where overworld entrances lead to
+        /// </summary>
+        public bool RandomizeOverworldEntrances { get; set; } = false;
+
+        /// <summary>
+        /// Randomize entrances leading to closed in areas
+        /// </summary>
+        public bool RandomizeInteriorEntrances { get; set; } = true;
+
+        /// <summary>
+        /// Randomize owl warp entrances
+        /// </summary>
+        public bool RandomizeOwlWarps { get; set; } = false;
+
+        /// <summary>
+        /// Randomize which owl warp is revealed by activating a given owl statue
+        /// </summary>
+        public bool RandomizeOwlStatues { get; set; }
+
+        /// <summary>
         /// (Beta) Randomize enemies
         /// </summary>
         public bool RandomizeEnemies { get; set; }

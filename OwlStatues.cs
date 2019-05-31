@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MMRando
 {
-    public partial class ROMFuncs
+    public class OwlStatues
     {
         private class ActorLookup
         {

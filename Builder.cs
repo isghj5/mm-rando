@@ -152,6 +152,22 @@ namespace MMRando
             }
         }
 
+        private void WriteEntrances()
+        {
+            if (_settings.RandomizeOverworldEntrances || _settings.RandomizeInteriorEntrances || _settings.RandomizeOwlWarps)
+            {
+                EntranceUtils.WriteEntrances(_randomized.EntranceList, _randomized.ShuffledEntranceList);
+            }
+        }
+
+        private void WriteOwlStatues()
+        {
+            if(_settings.RandomizeOwlStatues)
+            {
+                OwlStatues.SwapOwlStatues(_randomized.OwlStatueList);
+            }
+        }
+
         private void WriteDungeons()
         {
             if ((_settings.LogicMode == LogicMode.Vanilla) || (!_settings.RandomizeDungeonEntrances))
@@ -482,8 +498,14 @@ namespace MMRando
                 worker.ReportProgress(62, "Writing cutscenes...");
                 WriteCutscenes();
 
+                worker.ReportProgress(63, "Writing entrances...");
+                WriteEntrances();
+
                 worker.ReportProgress(63, "Writing dungeons...");
                 WriteDungeons();
+
+                worker.ReportProgress(63, "Writing owl statues...");
+                WriteOwlStatues();
 
                 worker.ReportProgress(64, "Writing gimmicks...");
                 WriteGimmicks();
