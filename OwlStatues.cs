@@ -2,6 +2,7 @@
 using MMRando.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace MMRando
 {
@@ -72,7 +73,7 @@ namespace MMRando
             List<ActorLookup> owlStatues = GetOwlActors();
             for (int i = 0; i < newOwlLocations.Length; i++)
             {
-                Console.WriteLine(owlStatues[i].Scene);
+                Debug.WriteLine(RomData.SceneList[owlStatues[i].Scene].Number.ToString("X4"));
                 owlStatues[i].NewV = owlStatues[newOwlLocations[i]].OldV;
             }
             SetOwlActors(owlStatues);

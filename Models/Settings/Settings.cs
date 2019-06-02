@@ -154,7 +154,7 @@ namespace MMRando.Models
         /// <summary>
         /// Randomize where overworld entrances lead to
         /// </summary>
-        public bool RandomizeOverworldEntrances { get; set; } = false;
+        public bool RandomizeOverworldEntrances { get; set; } = true;
 
         /// <summary>
         /// Randomize entrances leading to closed in areas
@@ -169,7 +169,7 @@ namespace MMRando.Models
         /// <summary>
         /// Randomize which owl warp is revealed by activating a given owl statue
         /// </summary>
-        public bool RandomizeOwlStatues { get; set; }
+        public bool RandomizeOwlStatues { get; set; } = true;
 
         /// <summary>
         /// (Beta) Randomize enemies

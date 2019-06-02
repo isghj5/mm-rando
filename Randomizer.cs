@@ -320,15 +320,6 @@ namespace MMRando
 
         Dictionary<string, List<Spawn>> TerminaMap { get; set; }
         Dictionary<string, List<Spawn>> ShuffledMap { get; set; }
-        List<string> SpecialEntrances = new List<string>()
-        {
-            "Goron Racetrack: Race",
-            "Goron Racetrack: Race Over",
-            "Deku Palace: Caught",
-            "Great Bay Coast: Caught",
-            "Outside PF: Caught",
-        };
-
         private void OwlShuffle(bool hidden)
         {
             int size = 12;
@@ -368,6 +359,7 @@ namespace MMRando
             ShuffledMap = new Dictionary<string, List<Spawn>>();
             GetVanillaTerminaMap();
             ShuffleEntrances();
+            CheckEntrances();
             TestEntrances();
             FinalizeEntrances();
         }
@@ -483,9 +475,9 @@ namespace MMRando
             ConnectSingleInterior("Lens Grotto", "Goron Village", 0x1500, 0x9430);
             ConnectSingleInterior("Goron Shop", "Goron Shrine", 0x7400, 0x5E10);
 
-            AddSpawn("Goron Racetrack: Race", 0xD010, "Goron Racetrack");
-            AddSpawn("Goron Racetrack: Race Over", 0xD020, "Goron Racetrack");
-            PairInteriorEntrance("Goron Racetrack: Race", "Goron Racetrack: Race Over");
+            AddSpawn("Goron Racetrack: Minigame", 0xD010, "Goron Racetrack");
+            AddSpawn("Goron Racetrack: Minigame Over", 0xD020, "Goron Racetrack");
+            PairInteriorEntrance("Goron Racetrack: Minigame", "Goron Racetrack: Minigame Over");
 
             AddSceneSpawns(new string[] {
                 "Mountain Village", "Snowhead"
@@ -625,7 +617,7 @@ namespace MMRando
             AddSpawn("Dungeon Clear: Twinmold", 0x2070, "Twinmold");
             foreach (string s in new string[] { "Odolwa", "Goht", "Gyorg", "Twinmold" })
             {
-                PairInteriorEntrance("Dungeon Clear: " + s, "Boss Chamber: " + s);
+                PairSpawns("Dungeon Clear: " + s, "Boss Chamber: " + s, "Boss");
             }
 
             AddSpawn("Moon", 0xC800, "Moon");
@@ -638,52 +630,6 @@ namespace MMRando
             ConnectTelescope("Curiosity Shop Backroom: Telescope", "Curiosity Shop: Telescope");
             ConnectTelescope("Observatory: Telescope", "Termina Field: Telescope");
             ConnectTelescope("Pirate Tunnel: Telescope", "Pirate's Fortress: Telescope");
-        }
-
-        private void ConnectDuplicateSceneSpawns(string[] SceneSpawns, string SceneName, ushort AddressPrefix, string SceneSuffix, ushort DuplicateAddressPrefix)
-        {
-            AddSceneSpawns(SceneSpawns, AddressPrefix, SceneName);
-            AddSceneSpawns(SceneSpawns, DuplicateAddressPrefix, SceneName + " " + SceneSuffix);
-        }
-
-        private void ConnectSingleInterior(string InteriorScene, string OuterScene, ushort InteriorAddress, ushort OuterAddress)
-        {
-            AddSpawn(OuterScene + ": " + InteriorScene, OuterAddress, OuterScene);
-            ConnectInteriors(new string[] { InteriorScene }, new ushort[] { InteriorAddress });
-        }
-
-        private void ConnectTelescope(string SpawnPoint, string Telescope)
-        {
-            GetSpawn(Telescope).Exit.Add(GetSpawn(SpawnPoint));
-            GetSpawn(Telescope).Type = "Telescope";
-            GetSpawn(SpawnPoint).Type = "Telescope Spawn";
-        }
-
-        private void PairInteriorEntrance(string OutdoorEntrance, string IndoorEntrance)
-        {
-            PairSpawns(OutdoorEntrance, IndoorEntrance, "Interior");
-            GetSpawn(OutdoorEntrance).Type = "Interior Exit";
-
-        }
-        private void ConnectInteriors(string[] Scene, ushort[] Address)
-        {
-            for (int i = 0; i < Scene.Length; i++)
-            {
-                string SpawnName = Scene[i];
-                AddSpawn(SpawnName, Address[i], Scene[i]);
-                string To = "";
-                foreach (Spawn S in GetSpawns())
-                {
-                    if (!SpawnName.Equals(S.Name) && S.Name.Contains(SpawnName))
-                    {
-                        PairSpawns(SpawnName, S.Name, "Interior");
-                        S.Type = "Interior Exit";
-                    }
-                }
-                if (!To.Equals(""))
-                {
-                }
-            }
         }
 
         private void EntranceOverrides()
@@ -741,108 +687,74 @@ namespace MMRando
         {
             List<Dictionary<string, bool>> SpawnSet = new List<Dictionary<string, bool>>();
             List<Dictionary<string, bool>> ChosenSet = new List<Dictionary<string, bool>>();
+            Dictionary<string, List<string>> SpawnTypeSet = new Dictionary<string, List<string>>();
             bool ShuffleInteriors = _settings.RandomizeInteriorEntrances;
             bool ShuffleOverworld = _settings.RandomizeOverworldEntrances;
             bool ShuffleOneWay = _settings.RandomizeOwlWarps;
             bool MixEntrances = false;
-            if (MixEntrances)
-            {
-                SpawnSet.Add(new Dictionary<string, bool>());
-                ChosenSet.Add(new Dictionary<string, bool>());
-            }
-            else
-            {
-                if (ShuffleOverworld)
-                {
-                    SpawnSet.Add(new Dictionary<string, bool>());
-                    ChosenSet.Add(new Dictionary<string, bool>());
-                }
-                if (ShuffleInteriors)
-                {
-                    SpawnSet.Add(new Dictionary<string, bool>());
-                    ChosenSet.Add(new Dictionary<string, bool>());
-                }
-                if (ShuffleOneWay)
-                {
-                    SpawnSet.Add(new Dictionary<string, bool>());
-                    ChosenSet.Add(new Dictionary<string, bool>());
-                }
-            }
             string[] poolScenes = new string[] { "South Clock Town", "Ikana Canyon", "Termina Field" };
-            int chosenPool = 0;
+            string SpawnType;
             foreach (Spawn S in GetSpawns())
             {
-                if (!S.Name.Contains(": Temple"))
+                SpawnType = S.Type == null ? "None" : S.Type;
+                if (S.Type == null && S.Exit.Count == 0)
+                    { SpawnType = "One Way"; }
+                if (SpawnType=="Interior Exit")
+                    { SpawnType = "Interior"; }
+                if (SpawnType == "Telescope Spawn")
+                    { SpawnType = "Telescope"; }
+                if (S.Name.Contains("Owl Warp"))
+                    { SpawnType = "Owl Warp"; }
+                if (!ShuffleInteriors && (SpawnType == "Interior" || SpawnType == "Telescope"))
+                    { SpawnType = "Permanent"; }
+                if (!ShuffleInteriors && SpawnType == "Telescope")
+                    { SpawnType = "Permanent"; }
+                if(!ShuffleOverworld && (SpawnType == "Overworld" || SpawnType == "Water"))
+                    { SpawnType = "Permanent"; }
+                if (MixEntrances && SpawnType != "Permanent")
+                    { SpawnType = "Insanity"; }
+                if (!SpawnTypeSet.ContainsKey(SpawnType))
                 {
-                    if (S.Exit != null)
-                    {
-                        if (S.Type == "Overworld" || S.Type == "Water")
-                        {
-                            if (!ShuffleOverworld)
-                            {
-                                ConnectEntrances(S.Name, S.Name, false);
-                                continue;
-                            }
-                            chosenPool = 0;
-                        }
-                        else if (S.Type == "Telescope")
-                        {
-                            if(!ShuffleInteriors)
-                            {
-                                ConnectEntrances(S.Name, S.Name, false);
-                                continue;
-                            }
-                            chosenPool = ShuffleOverworld ? 1 : 0;
-                        }
-                        else
-                        {
-                            if (!ShuffleInteriors)
-                            {
-                                ConnectEntrances(S.Name, S.Name, false);
-                                continue;
-                            }
-                            else
-                            {
-                                chosenPool = ShuffleOverworld ? 1 : 0;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        if (S.Type == "Telescope Spawn")
-                        {
-                            if (!ShuffleInteriors)
-                            {
-                                ConnectEntrances(S.Name, S.Name, false);
-                                continue;
-                            }
-                            chosenPool = ShuffleOverworld ? 1 : 0;
-                        }
-                        if (!ShuffleOneWay)
-                        {
-                            ConnectEntrances(S.Name, S.Name, false);
-                            continue;
-                        }
-                        else
-                        {
-                            if (!S.Name.Contains("Owl Warp"))
-                            {
-                                ConnectEntrances(S.Name, S.Name, false);
-                                continue;
-                            }
-                            chosenPool = ShuffleOverworld && ShuffleInteriors ? 2 : ShuffleOverworld || ShuffleInteriors ? 1 : 0;
-                        }
-                    }
-                    if (MixEntrances)
-                    {
-                        chosenPool = 0;
-                    }
+                    SpawnTypeSet.Add(SpawnType, new List<string>());
                 }
-                SpawnSet[chosenPool].Add(S.Name, true);
-                ChosenSet[chosenPool].Add(S.Name, true);
-                if (S.Type == "Telescope Spawn")
+                SpawnTypeSet[SpawnType].Add(S.Name);
+            }
+            if (SpawnTypeSet.ContainsKey("Permanent"))
+            {
+                foreach (string SpawnName in SpawnTypeSet["Permanent"])
                 {
-                    ChosenSet[chosenPool][S.Name] = false;
+                    ConnectEntrances(SpawnName, SpawnName, false);
+                }
+            }
+            Dictionary<string, bool> TempPool;
+            foreach ( string Type in new List<string>() {
+                "Insanity",
+                "Dungeon",
+                "Overworld",
+                "Water",
+                "Interior",
+                "One Way",
+                "Owl Warp"
+            })
+            {
+                if (SpawnTypeSet.ContainsKey(Type))
+                {
+                    TempPool = new Dictionary<string, bool>();
+                    if (SpawnTypeSet[Type].Count > 1)
+                    {
+                        foreach (string SpawnName in SpawnTypeSet[Type])
+                        {
+                            TempPool.Add(SpawnName, true);
+                        }
+                        SpawnSet.Add(TempPool);
+                        TempPool = new Dictionary<string, bool>();
+                        SpawnSet.Last().ToList().ForEach(SpawnName => TempPool.Add(SpawnName.Key, SpawnName.Value));
+                        ChosenSet.Add(TempPool);
+                    }
+                    else if (SpawnTypeSet[Type].Count > 0)
+                    {
+                        ConnectEntrances(SpawnTypeSet[Type][0], SpawnTypeSet[Type][0], false);
+                    }
                 }
             }
             int pool = 0;
@@ -901,44 +813,17 @@ namespace MMRando
                         }
                         else
                         {
-                            Console.WriteLine("Nowhere Left For '{0}' To Go", FillWorld[0]);
+                            Debug.WriteLine("Nowhere Left For '{0}' To Go", FillWorld[0]);
                             FillWorld.RemoveAt(0);
                         }
                     }
                     else
                     {
-                        Console.WriteLine("Not Allowed To Place {0}", FillWorld[0]);
+                        Debug.WriteLine("Not Allowed To Place {0}", FillWorld[0]);
                         FillWorld.RemoveAt(0);
                     }
                 }
                 pool++;
-            }
-        }
-
-        private void CheckEntrances()
-        {
-            List<string> FillWorld = new List<string>();
-            List<string> Inaccessible = new List<string>();
-            Spawn Next;
-            string TempExit;
-            FillWorld.Add("South Clock Town: Clock Tower");
-            while (FillWorld.Count > 0)
-            {
-                Next = GetShuffledSpawn(FillWorld[0]);
-                if (Next != null)
-                {
-                    foreach (Spawn SceneSpawn in TerminaMap[Next.Scene])
-                    {
-                        foreach (Spawn Exit in SceneSpawn.Exit)
-                        {
-                            TempExit = Exit.Name;
-                            if (!Inaccessible.Contains(TempExit))
-                            {
-                                Inaccessible.Add(TempExit);
-                            }
-                        }
-                    }
-                }
             }
         }
 
@@ -1050,16 +935,33 @@ namespace MMRando
             return null;
         }
 
-        private void PairSpawns(string from, string to, string type)
+        private void PairInteriorEntrance(string OutdoorEntrance, string IndoorEntrance)
         {
-            Spawn f = GetSpawn(from);
-            Spawn t = GetSpawn(to);
-            if (f != null && t != null)
+            PairSpawns(OutdoorEntrance, IndoorEntrance, "Interior");
+            GetSpawn(OutdoorEntrance).Type = "Interior Exit";
+
+        }
+
+        private void PairSpawns(string From, string To, string Type)
+        {
+            Spawn F = GetSpawn(From);
+            Spawn T = GetSpawn(To);
+            if (F != null && T != null)
             {
-                f.Exit.Add(t);
-                t.Exit.Add(f);
-                f.Type = type;
-                t.Type = type;
+                F.Type = Type;
+                T.Type = Type;
+                if( F.Exit != null && T.Exit != null)
+                {
+                    if(!F.Exit.Contains(T))
+                    {
+                        F.Exit.Add(T);
+                    }
+                    if (!T.Exit.Contains(F))
+                    {
+                        T.Exit.Add(F);
+                    }
+
+                }
             }
         }
 
@@ -1122,6 +1024,54 @@ namespace MMRando
                             SetShuffledSpawn(ToExit, FromExit);
                         }
                     }
+                }
+            }
+        }
+
+        private void ConnectDuplicateSceneSpawns(string[] SceneSpawns, string SceneName, ushort AddressPrefix, string SceneSuffix, ushort DuplicateAddressPrefix)
+        {
+            AddSceneSpawns(SceneSpawns, AddressPrefix, SceneName);
+            AddSceneSpawns(SceneSpawns, DuplicateAddressPrefix, SceneName + " " + SceneSuffix);
+        }
+
+        private void ConnectSingleInterior(string InteriorScene, string OuterScene, ushort InteriorAddress, ushort OuterAddress)
+        {
+            AddSpawn(OuterScene + ": " + InteriorScene, OuterAddress, OuterScene);
+            ConnectInteriors(new string[] { InteriorScene }, new ushort[] { InteriorAddress });
+        }
+
+        private void ConnectTelescope(string SpawnPoint, string Telescope)
+        {
+            Spawn Room = GetSpawn(SpawnPoint);
+            Spawn Scope = GetSpawn(Telescope);
+            if( Room != null && Scope != null)
+            {
+                Scope.Type = "Telescope";
+                Room.Type = "Telescope Spawn";
+                if (!Scope.Exit.Contains(Room))
+                {
+                    Scope.Exit.Add(Room);
+                }
+            }
+        }
+
+        private void ConnectInteriors(string[] Scene, ushort[] Address)
+        {
+            for (int i = 0; i < Scene.Length; i++)
+            {
+                string SpawnName = Scene[i];
+                AddSpawn(SpawnName, Address[i], Scene[i]);
+                string To = "";
+                foreach (Spawn S in GetSpawns())
+                {
+                    if (!SpawnName.Equals(S.Name) && S.Name.Contains(SpawnName))
+                    {
+                        PairSpawns(SpawnName, S.Name, "Interior");
+                        S.Type = "Interior Exit";
+                    }
+                }
+                if (!To.Equals(""))
+                {
                 }
             }
         }
