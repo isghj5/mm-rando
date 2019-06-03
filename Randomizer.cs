@@ -2830,6 +2830,10 @@ namespace MMRando
             var itemPool = new List<int>();
             for (int i = Items.BottleCatchFairy; i <= Items.BottleCatchMushroom; i++)
             {
+                if (ItemList[i].ReplacesAnotherItem)
+                {
+                    continue;
+                }
                 itemPool.Add(i);
             }
 
