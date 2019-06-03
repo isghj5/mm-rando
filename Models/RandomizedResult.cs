@@ -12,7 +12,7 @@ namespace MMRando.Models
         public List<ItemObject> ItemList { get; set; }
         public int[] EntranceList { get; set; }
         public int[] ShuffledEntranceList { get; set; }
-        public List<string> EntranceSpoilers { get; set; }
+        public List<SpoilerEntrance> EntranceSpoilers { get; set; }
         public int[] OwlStatueList { get; set; }
         public List<string> GossipQuotes { get; set; }
         public List<ItemLogic> Logic { get; set; }

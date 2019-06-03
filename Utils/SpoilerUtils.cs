@@ -29,6 +29,7 @@ namespace MMRando.Utils
                 SettingsString = settingsString,
                 Seed = settings.Seed,
                 RandomizeDungeonEntrances = settings.RandomizeDungeonEntrances,
+                EntranceList = randomized.EntranceSpoilers,
                 ItemList = itemList,
                 NewDestinationIndices = randomized.NewDestinationIndices,
                 Logic = randomized.Logic
@@ -83,6 +84,15 @@ namespace MMRando.Utils
             foreach (var item in spoiler.ItemList.OrderBy(i => i.NewLocationId))
             {
                 log.AppendLine($"{item.Name,-40} >> {item.NewLocationName}");
+            }
+            log.AppendLine();
+            log.AppendLine();
+
+            log.AppendLine($" {"Entrance",-50}    {"Location"}");
+            foreach (var entrance in spoiler.EntranceList)
+            {
+                log.AppendLine($"{entrance.OriginalEntrance + " [" + entrance.OriginalAddress.ToString("X4") + "]", -50}" +
+                    $" >> {entrance.ShuffledEntrance} [{entrance.ShuffledAddress.ToString("X4")}]");
             }
 
             using (StreamWriter sw = new StreamWriter(path))
