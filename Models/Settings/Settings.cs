@@ -154,22 +154,42 @@ namespace MMRando.Models
         /// <summary>
         /// Randomize where overworld entrances lead to
         /// </summary>
-        public bool RandomizeOverworldEntrances { get; set; } = true;
+        public bool RandomizeOverworldEntrances { get; set; }
 
         /// <summary>
         /// Randomize entrances leading to closed in areas
         /// </summary>
-        public bool RandomizeInteriorEntrances { get; set; } = true;
+        public bool RandomizeInteriorEntrances { get; set; }
+
+        /// <summary>
+        /// Randomize entrances which don't have w return entrance (getting caught, ikana river, etc)
+        /// </summary>
+        public bool RandomizeOneWayEntrances { get; set; }
 
         /// <summary>
         /// Randomize owl warp entrances
         /// </summary>
-        public bool RandomizeOwlWarps { get; set; } = false;
+        public bool RandomizeOwlWarps { get; set; }
+
+        /// <summary>
+        /// Randomize the trials on the moon in with interiors
+        /// </summary>
+        public bool RandomizeMoonTrials { get; set; }
+
+        /// <summary>
+        /// Randomize the unique grottos into the pool
+        /// </summary>
+        public bool RandomizeGrottoEntrances { get; set; }
+
+        /// <summary>
+        /// Randomize every entrance within the same pool
+        /// </summary>
+        public bool RandomizeEntranceInsanity { get; set; }
 
         /// <summary>
         /// Randomize which owl warp is revealed by activating a given owl statue
         /// </summary>
-        public bool RandomizeOwlStatues { get; set; } = true;
+        public bool RandomizeOwlStatues { get; set; }
 
         /// <summary>
         /// (Beta) Randomize enemies
@@ -269,6 +289,14 @@ namespace MMRando.Models
             int part2 = (int)parts[1];
             int part3 = (int)parts[2];
 
+            RandomizeEntranceInsanity = (part1 & 8388608) > 0;
+            RandomizeOneWayEntrances = (part1 & 4194304) > 0;
+            RandomizeGrottoEntrances = (part1 & 2097152) > 0;
+            RandomizeMoonTrials = (part1 & 1048576) > 0;
+            RandomizeOwlStatues = (part1 & 524288) > 0;
+            RandomizeOwlWarps = (part1 & 262144) > 0;
+            RandomizeOverworldEntrances = (part1 & 131072) > 0;
+            RandomizeInteriorEntrances = (part1 & 65536) > 0;
             AddMoonItems = (part1 & 32768) > 0;
             FreeHints = (part1 & 16384) > 0;
             UseCustomItemList = (part1 & 8192) > 0;
@@ -315,6 +343,14 @@ namespace MMRando.Models
         {
             int[] parts = new int[3];
 
+            if (RandomizeEntranceInsanity) { parts[0] += 8388608; }
+            if (RandomizeOneWayEntrances) { parts[0] += 4194304; }
+            if (RandomizeGrottoEntrances) { parts[0] += 2097152; }
+            if (RandomizeMoonTrials) { parts[0] += 1048576; }
+            if (RandomizeOwlStatues) { parts[0] += 524288; }
+            if (RandomizeOwlWarps) { parts[0] += 262144; }
+            if (RandomizeOverworldEntrances) { parts[0] += 131072; }
+            if (RandomizeInteriorEntrances) { parts[0] += 65536; }
             if (AddMoonItems) { parts[0] += 32768; };
             if (FreeHints) { parts[0] += 16384; };
             if (UseCustomItemList) { parts[0] += 8192; };

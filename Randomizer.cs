@@ -698,46 +698,56 @@ namespace MMRando
             bool ShuffleInteriors = _settings.RandomizeInteriorEntrances;
             bool ShuffleOverworld = _settings.RandomizeOverworldEntrances;
             bool ShuffleOwls = _settings.RandomizeOwlWarps;
-            bool ShuffleOneWay = true;
-            bool ShuffleMoon = true;
-            bool ShuffleSpecial = true;
-            bool MixEntrances = false;
+            bool ShuffleOneWay = _settings.RandomizeOneWayEntrances;
+            bool ShuffleMoon = _settings.RandomizeMoonTrials;
+            bool ShuffleGrotto = _settings.RandomizeGrottoEntrances;
+            bool ShuffleSpecial = false;
+            bool MixEntrances = _settings.RandomizeEntranceInsanity;
             string SpawnType;
             foreach (Spawn S in GetSpawns())
             {
                 if (S.Address == 0xFFFF) { continue; }
                 SpawnType = S.Type == null ? "None" : S.Type;
-                if (S.Type == null && S.Exit.Count == 0)
-                { SpawnType = "One Way"; }
+
                 if (S.Name.Contains("Boss Chamber") && _settings.RandomizeDungeonEntrances)
                 { SpawnType = "Interior"; }
                 if (S.Name.Contains("Dungeon Clear") && _settings.RandomizeDungeonEntrances)
                 { SpawnType = "Interior Exit"; }
+
                 if (SpawnType == "Interior Exit" && ShuffleOneWay)
                 { SpawnType = "Interior"; }
                 if (SpawnType == "Telescope Spawn" && ShuffleOneWay)
                 { SpawnType = "Telescope"; }
                 if (SpawnType == "Moon" && ShuffleMoon)
                 { SpawnType = "Interior"; }
+
                 if (S.Name.Contains("Owl Warp"))
                 { SpawnType = ShuffleOwls ? "Owl Warp" : "Permanent"; }
+                if (S.Name.Contains("Grotto"))
+                { SpawnType = ShuffleGrotto ? "One Way" : "Permanent"; }
+                if (S.Type == null && S.Exit.Count == 0)
+                { SpawnType = "One Way"; }
+
                 if (!ShuffleInteriors && (SpawnType == "Interior" || SpawnType == "Telescope" || SpawnType == "Interior Exit" || SpawnType == "Telescope Spawn"))
-                { SpawnType = "Permanent"; }
-                if (!ShuffleOneWay && SpawnType == "One Way")
                 { SpawnType = "Permanent"; }
                 if (!ShuffleOverworld && (SpawnType == "Overworld" || SpawnType == "Water"))
                 { SpawnType = "Permanent"; }
                 if (!ShuffleSpecial && SpawnType == "Special")
                 { SpawnType = "Permanent"; }
+                if (!ShuffleOneWay && SpawnType == "One Way")
+                { SpawnType = "Permanent"; }
+
                 if (MixEntrances && SpawnType != "Permanent" && SpawnType != "Dungeon")
                 { SpawnType = "Insanity"; }
-                foreach (string SpawnName in new List<string> { "South Clock Town: Clock Tower Roof", "Clock Tower Roof", "Majora Fight" })
+
+                foreach (string SpawnName in new List<string> { "Majora Fight" })
                 {
                     if (S.Name == SpawnName)
                     {
                         SpawnType = "Permanent";
                     }
                 }
+
                 if (!SpawnTypeSet.ContainsKey(SpawnType))
                 {
                     SpawnTypeSet.Add(SpawnType, new List<string>());
@@ -760,12 +770,13 @@ namespace MMRando
             }
             Dictionary<string, bool> TempPool;
             foreach (string Type in new List<string>() {
-                "Insanity",
                 "Overworld",
                 "Water",
                 "Interior",
+                "Telescope",
                 "One Way",
-                "Owl Warp"
+                "Owl Warp",
+                "Insanity",
             })
             {
                 if (SpawnTypeSet.ContainsKey(Type))

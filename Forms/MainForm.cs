@@ -434,6 +434,46 @@ namespace MMRando
             UpdateSingleSetting(() => _settings.TatlColorSchema = (TatlColorSchema)cTatl.SelectedIndex);
         }
 
+        private void cInteriorEntrance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.RandomizeInteriorEntrances = cInteriorEntrance.Checked);
+        }
+
+        private void cOWEntrance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.RandomizeOverworldEntrances = cOWEntrance.Checked);
+        }
+
+        private void cGrottoEntrance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.RandomizeGrottoEntrances = cGrottoEntrance.Checked);
+        }
+
+        private void cOwlEntrance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.RandomizeOwlWarps = cOwlEntrance.Checked);
+        }
+
+        private void cOneWayEntrance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.RandomizeOneWayEntrances = cOneWayEntrance.Checked);
+        }
+
+        private void cMoonEntrance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.RandomizeMoonTrials = cMoonEntrance.Checked);
+        }
+
+        private void cInsanityEntrance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.RandomizeEntranceInsanity = cInsanityEntrance.Checked);
+        }
+
+        private void cOwlStatue_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.RandomizeOwlStatues = cOwlStatue.Checked);
+        }
+
         private void cMode_SelectedIndexChanged(object sender, EventArgs e)
         {
 
