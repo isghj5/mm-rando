@@ -2993,7 +2993,7 @@ namespace MMRando
                     DungeonShuffle();
                 }
 
-                if (_settings.RandomizeOverworldEntrances || _settings.RandomizeInteriorEntrances || _settings.RandomizeOwlWarps)
+                if (_settings.EntranceRandoActivated())
                 {
                     worker.ReportProgress(15, "Shuffling entrances...");
                     EntranceShuffle();

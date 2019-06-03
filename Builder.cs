@@ -154,7 +154,7 @@ namespace MMRando
 
         private void WriteEntrances()
         {
-            if (_settings.RandomizeOverworldEntrances || _settings.RandomizeInteriorEntrances || _settings.RandomizeOwlWarps)
+            if (_settings.EntranceRandoActivated())
             {
                 EntranceUtils.WriteEntrances(_randomized.EntranceList, _randomized.ShuffledEntranceList);
             }

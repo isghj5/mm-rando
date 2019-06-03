@@ -85,19 +85,23 @@ namespace MMRando.Utils
             {
                 log.AppendLine($"{item.Name,-40} >> {item.NewLocationName}");
             }
-            log.AppendLine();
-            log.AppendLine();
-
-            log.AppendLine($" {"Entrance",-50}    {"Location"}");
-            foreach (var entrance in spoiler.EntranceList)
+            if(spoiler.EntranceList != null)
             {
-                log.AppendLine($"{entrance.OriginalEntrance + " [" + entrance.OriginalAddress.ToString("X4") + "]", -50}" +
-                    $" >> {entrance.ShuffledEntrance} [{entrance.ShuffledAddress.ToString("X4")}]");
-            }
 
-            using (StreamWriter sw = new StreamWriter(path))
-            {
-                sw.Write(log.ToString());
+                log.AppendLine();
+                log.AppendLine();
+
+                log.AppendLine($" {"Entrance",-50}    {"Location"}");
+                foreach (var entrance in spoiler.EntranceList)
+                {
+                    log.AppendLine($"{entrance.OriginalEntrance + " [" + entrance.OriginalAddress.ToString("X4") + "]",-50}" +
+                        $" >> {entrance.ShuffledEntrance} [{entrance.ShuffledAddress.ToString("X4")}]");
+                }
+
+                using (StreamWriter sw = new StreamWriter(path))
+                {
+                    sw.Write(log.ToString());
+                }
             }
         }
     }

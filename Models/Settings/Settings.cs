@@ -191,6 +191,11 @@ namespace MMRando.Models
         /// </summary>
         public bool RandomizeOwlStatues { get; set; }
 
+        public bool EntranceRandoActivated()
+        {
+            return RandomizeGrottoEntrances || RandomizeInteriorEntrances || RandomizeMoonTrials || RandomizeOneWayEntrances || RandomizeOverworldEntrances || RandomizeOwlWarps;
+        }
+
         /// <summary>
         /// (Beta) Randomize enemies
         /// </summary>
