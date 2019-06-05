@@ -608,7 +608,7 @@ namespace MMRando
                 "Well", "Sakon's Hideout", "", "Ikana Castle", "", "",
                 "Stone Tower Fairy", "Secret Shrine", "Cursed Area Exit", "Cursed Area"
             }, 0x20, "Ikana Canyon");
-            PairInteriorEntrance("Ikana Canyon: Cursed Area", "Ikana Canyon: Cursed Area Exit");
+            PairInteriorEntrance("Ikana Canyon: Cursed Area Exit", "Ikana Canyon: Cursed Area");
             AddSceneSpawns(new string[] {
                 "Well", "Ikana Canyon", "", "", "", "", "Igos"
             }, 0x34, "Ikana Castle");
