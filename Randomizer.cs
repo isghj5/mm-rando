@@ -1736,42 +1736,52 @@ namespace MMRando
 
         public void FinalizeEntrances()
         {
-            List<Spawn> OriginalScene, ShuffledScene;
+            List<Spawn> OriginalScene;
             Dictionary<Spawn, Spawn> EntranceShuffle = new Dictionary<Spawn, Spawn>();
+            _randomized.EntranceList = new Dictionary<string, uint[]>();
+            _randomized.ShuffledEntranceList = new Dictionary<string, uint[]>();
             _randomized.EntranceSpoilers = new List<SpoilerEntrance>();
-            Spawn Spawn, ShuffledSpawn;
+
+            Spawn Spawn, Exit, ShuffledExit;
             bool WasPlaced;
+            uint[] SceneExitList, ShuffledSceneExitList;
             foreach (string Scene in TerminaMap.Keys)
             {
                 OriginalScene = TerminaMap[Scene];
-                ShuffledScene = ShuffledMap[Scene];
                 for (int s = 0; s < OriginalScene.Count; s++)
                 {
                     Spawn = OriginalScene[s];
-                    ShuffledSpawn = ShuffledScene[s];                    
-                    if (Spawn.Address != 0xFFFF)
+                    if( Spawn.Exit.Count == 1)
                     {
-                        WasPlaced = ShuffledSpawn != null && ShuffledSpawn.Address != 0xFFFF;
-                        if (WasPlaced)
+                        Exit = Spawn.Exit[0];
+                        ShuffledExit = GetShuffledSpawn(Exit.Name);
+                        if (Spawn.Address != 0xFFFF)
                         {
-                            EntranceShuffle.Add(Spawn, ShuffledSpawn);
+                            WasPlaced = ShuffledExit != null && ShuffledExit.Address != 0xFFFF;
+                            if (WasPlaced)
+                            {
+                                EntranceShuffle.Add(Spawn, ShuffledExit);
+                            }
+                            else
+                            {
+                                EntranceShuffle.Add(Spawn, Spawn);
+                            }
+                            _randomized.EntranceSpoilers.Add(new SpoilerEntrance(Exit, ShuffledExit, WasPlaced));
                         }
-                        else
-                        {
-                            EntranceShuffle.Add(Spawn, Spawn);
-                        }
-                        _randomized.EntranceSpoilers.Add(new SpoilerEntrance(Spawn, ShuffledSpawn, WasPlaced));
                     }
                 }
-            }
-            _randomized.EntranceList = new int[EntranceShuffle.Keys.Count];
-            _randomized.ShuffledEntranceList = new int[EntranceShuffle.Keys.Count];
-            int i = 0;
-            foreach ( Spawn Entrance in EntranceShuffle.Keys)
-            {
-                _randomized.EntranceList[i] = Entrance.Address;
-                _randomized.ShuffledEntranceList[i] = EntranceShuffle[Entrance].Address;
-                i++;
+
+                SceneExitList = new uint[EntranceShuffle.Keys.Count];
+                _randomized.EntranceList[Scene] = SceneExitList;
+                ShuffledSceneExitList = new uint[EntranceShuffle.Keys.Count];
+                _randomized.ShuffledEntranceList[Scene] = ShuffledSceneExitList;
+                int i = 0;
+                foreach (Spawn Entrance in EntranceShuffle.Keys)
+                {
+                    SceneExitList[i] = Entrance.Address;
+                    ShuffledSceneExitList[i] = EntranceShuffle[Entrance].Address;
+                    i++;
+                }
             }
         }
         #endregion
