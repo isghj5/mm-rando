@@ -156,7 +156,23 @@ namespace MMRando
         {
             if (_settings.EntranceRandoActivated())
             {
-                EntranceUtils.WriteEntrances(_randomized.EntranceList, _randomized.ShuffledEntranceList);
+                SceneUtils.ReadSceneTable();
+                SceneUtils.GetMaps();
+                SceneUtils.GetMapHeaders();
+                int SceneNumber;
+                Dictionary<string, int> SceneLookupTable = new Dictionary<string, int>()
+                {
+                    { "South Clock Town", 0x6F }
+                };
+                foreach(string SceneName in _randomized.EntranceList.Keys)
+                {
+                    if (SceneLookupTable.ContainsKey(SceneName) && _randomized.EntranceList.ContainsKey(SceneName) && _randomized.ShuffledEntranceList.ContainsKey(SceneName))
+                    {
+                        SceneNumber = SceneLookupTable[SceneName];
+                        EntranceUtils.WriteSceneExits(SceneNumber, _randomized.EntranceList[SceneName], _randomized.ShuffledEntranceList[SceneName]);
+                    }
+                }
+                //EntranceUtils.WriteEntrances(_randomized.EntranceList, _randomized.ShuffledEntranceList);
             }
         }
 
