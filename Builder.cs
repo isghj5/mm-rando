@@ -159,27 +159,12 @@ namespace MMRando
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
-                int sceneNumber;
-                List<ushort> fakeExits;
-                Dictionary<string, int> sceneLookupTable = new Dictionary<string, int>()
+                foreach (int sceneIndex in RomData.SceneList.Select(s=>s.Number))
                 {
-                    { "South Clock Town", 0x6F },
-                    { "Moon", 0x67 },
-                };
-                Dictionary<string, int> sceneExitCount = new Dictionary<string, int>()
-                {
-                    { "South Clock Town", 8 },
-                    { "Moon", 5 },
-                };
-                foreach (string sceneName in sceneLookupTable.Keys)
-                {
-                    if (sceneLookupTable.ContainsKey(sceneName) && _randomized.EntranceList.ContainsKey(sceneName) && 
-                        _randomized.ShuffledEntranceList.ContainsKey(sceneName) && sceneExitCount.ContainsKey(sceneName))
+                    if (_randomized.EntranceList.ContainsKey(sceneIndex) && _randomized.ShuffledEntranceList.ContainsKey(sceneIndex) )
                     {
-                        sceneNumber = sceneLookupTable[sceneName];
-                        fakeExits = Enumerable.Range(0,sceneExitCount[sceneName]).Select(x => (ushort)0x0000).ToList();
-                        Debug.WriteLine("\n" + sceneName);
-                        EntranceUtils.WriteSceneExits(sceneNumber, fakeExits.ToArray());
+                        Debug.WriteLine("Scene " + sceneIndex + "\n-----\n");
+                        EntranceUtils.WriteSceneExits(sceneIndex, _randomized.EntranceList[sceneIndex].ToList(), _randomized.ShuffledEntranceList[sceneIndex]);
                     }
                 }
             }

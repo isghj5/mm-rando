@@ -40,7 +40,7 @@ namespace MMRando.Utils
             }
         }
 
-        public static void WriteSceneExits(int sceneNumber, ushort[] shuffledExit)
+        public static void WriteSceneExits(int sceneNumber, List<ushort> originalExits, ushort[] shuffledExits)
         {
             SceneUtils.ReadSceneTable();
             SceneUtils.GetMaps();
@@ -48,16 +48,21 @@ namespace MMRando.Utils
             Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
             int f = scene.File;
             RomUtils.CheckCompressed(f);
-            int exitAddress;
-            ushort[] originalExits = new ushort[shuffledExit.Length];
+            int exitAddress, shuffledIndex;
+            ushort tempExit;
             exitAddress = scene.ExitAddr;
-            for (int j = 0; j < shuffledExit.Length; j++)
+            for (int i = 0; i < shuffledExits.Length; i++)
             {
-                originalExits[j] = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + j * 2);
-                System.Diagnostics.Debug.WriteLine($"{originalExits[j].ToString("X4")} : {shuffledExit[j].ToString("X4")}");
-                if (shuffledExit[j] != 0xFFFF)
+                tempExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + i * 2);
+                System.Diagnostics.Debug.WriteLine($"{tempExit.ToString("X4")} : {originalExits[i].ToString("X4")} : {shuffledExits[i].ToString("X4")}");
+                if ( originalExits.Contains( tempExit ))
                 {
-                    ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + j * 2, 0xC800);
+                    shuffledIndex = originalExits.FindIndex(x => x == tempExit);
+                    System.Diagnostics.Debug.WriteLine($"{shuffledIndex}: [{tempExit.ToString("X4")} -> {shuffledExits[shuffledIndex].ToString("X4")}]");
+                    if (shuffledExits[i] != 0xFFFF)
+                    {
+                        ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + shuffledIndex * 2, shuffledExits[shuffledIndex]);
+                    }
                 }
             }
         }
