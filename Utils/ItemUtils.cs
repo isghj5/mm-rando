@@ -15,10 +15,13 @@ namespace MMRando.Utils
             return itemId > Items.MaskFierceDeity;
         }
 
-        public static bool IsShopItem(int itemIndex)
+        public static bool IsShopItem(int itemId)
         {
-            return itemIndex >= Items.ShopItemTradingPostRedPotion
-                    && itemIndex <= Items.ShopItemZoraRedPotion;
+            return (itemId >= Items.ShopItemTradingPostRedPotion
+                    && itemId <= Items.ShopItemZoraRedPotion)
+                    || itemId == Items.ItemBombBag
+                    || itemId == Items.UpgradeBigBombBag
+                    || itemId == Items.MaskAllNight;
         }
 
         public static bool IsFakeItem(int itemId)
@@ -51,7 +54,7 @@ namespace MMRando.Utils
         {
             if (itemId >= Items.AreaSouthAccess)
             {
-                itemId += Values.NumberOfAreasAndOther;
+                itemId += Items.NumberOfAreasAndOther;
             }
             if (itemId >= Items.OtherOneMask)
             {
@@ -68,37 +71,57 @@ namespace MMRando.Utils
             }
             if (itemId >= Items.AreaSouthAccess)
             {
-                itemId -= Values.NumberOfAreasAndOther;
+                itemId -= Items.NumberOfAreasAndOther;
             }
             return itemId;
         }
 
-        public static bool IsDungeonItem(int itemIndex)
+        public static bool IsDungeonItem(int itemId)
         {
-            return itemIndex >= Items.ItemWoodfallMap
-                    && itemIndex <= Items.ItemStoneTowerKey4;
+            return itemId >= Items.ItemWoodfallMap
+                    && itemId <= Items.ItemStoneTowerKey4;
         }
 
-        public static bool IsBottleCatchContent(int itemIndex)
+        public static bool IsBottleCatchContent(int itemId)
         {
-            return itemIndex >= Items.BottleCatchFairy
-                   && itemIndex <= Items.BottleCatchMushroom;
+            return itemId >= Items.BottleCatchFairy
+                   && itemId <= Items.BottleCatchMushroom;
         }
 
-        public static bool IsMoonItem(int itemIndex)
+        public static bool IsMoonItem(int itemId)
         {
-            return itemIndex >= Items.HeartPieceDekuTrial && itemIndex <= Items.MaskFierceDeity;
+            return itemId >= Items.HeartPieceDekuTrial && itemId <= Items.MaskFierceDeity;
         }
 
-        public static bool IsOtherItem(int itemIndex)
+        public static bool IsOtherItem(int itemId)
         {
-            return itemIndex >= Items.ChestLensCaveRedRupee && itemIndex <= Items.ChestToGoronRaceGrotto;
+            return itemId >= Items.ChestLensCaveRedRupee && itemId <= Items.IkanaScrubGoldRupee;
         }
 
         internal static bool IsDeed(int item)
         {
             return item >= Items.TradeItemLandDeed
                     && item <= Items.TradeItemOceanDeed;
+        }
+
+        public static bool IsHeartPiece(int itemId)
+        {
+            return (itemId >= Items.HeartPieceNotebookMayor && itemId <= Items.HeartPieceKnuckle)
+                || (itemId >= Items.HeartPieceSouthClockTown && itemId <= Items.HeartContainerStoneTower)
+                || (itemId >= Items.HeartPieceDekuTrial && itemId <= Items.HeartPieceLinkTrial)
+                || itemId == Items.ChestSecretShrineHeartPiece
+                || itemId == Items.HeartPieceBank;
+        }
+
+        public static bool IsStartingItem(int itemId)
+        {
+            return itemId == Items.MaskDeku || itemId == Items.SongHealing;
+        }
+
+        public static bool IsSong(int itemId)
+        {
+            return itemId >= Items.SongHealing
+                && itemId <= Items.SongOath;
         }
     }
 }

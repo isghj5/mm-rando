@@ -1,6 +1,7 @@
 ﻿using MMRando.Forms;
 using MMRando.Forms.Tooltips;
 using MMRando.Models;
+using MMRando.Models.Settings;
 using MMRando.Utils;
 using System;
 using System.ComponentModel;
@@ -17,7 +18,7 @@ namespace MMRando
         private string _oldSettingsString = "";
         private int _seedOld = 0;
 
-        public Settings _settings { get; set; }
+        public SettingsObject _settings { get; set; }
 
         public AboutForm About { get; private set; }
         public ManualForm Manual { get; private set; }
@@ -45,7 +46,7 @@ namespace MMRando
 
             _randomizer = new Randomizer(_settings);
 
-            ItemEditor = new ItemEditForm(_settings.CustomItemList);
+            ItemEditor = new ItemEditForm(_settings);
             LogicEditor = new LogicEditorForm();
             Manual = new ManualForm();
             About = new AboutForm();
@@ -72,7 +73,6 @@ namespace MMRando
             TooltipBuilder.SetTooltip(cShop, "Enable shop items being placed in the randomization pool.");
             TooltipBuilder.SetTooltip(cBottled, "Enable captured bottle contents being randomized.");
             TooltipBuilder.SetTooltip(cSoS, "Exclude song of soaring from being placed in the randomization pool.");
-            TooltipBuilder.SetTooltip(cGossip, "Enable gossip stones displaying hints on where certain items are located.");
             TooltipBuilder.SetTooltip(cDEnt, "Enable randomization of dungeon entrances. \n\nStone Tower Temple is always vanilla, but Inverted Stone Tower Temple is randomized.");
             TooltipBuilder.SetTooltip(cAdditional, "Enable miscellaneous items being placed in the randomization pool.\n\nAmong the miscellaneous items are:\nFreestanding heartpieces, overworld chests, (hidden) grotto chests, Tingle's maps and bank heartpiece.");
             TooltipBuilder.SetTooltip(cEnemy, "Enable randomization of enemies. May cause softlocks in some circumstances, use at your own risk.");
@@ -83,15 +83,21 @@ namespace MMRando
             TooltipBuilder.SetTooltip(cDType, "Select an effect to occur whenever Link is being damaged:\n\n - Default: Vanilla effects occur.\n - Fire: All damage burns Link.\n - Ice: All damage freezes Link.\n - Shock: All damage shocks link.\n - Knockdown: All damage knocks Link down.\n - Random: Any random effect of the above.");
             TooltipBuilder.SetTooltip(cGravity, "Select a movement modifier:\n\n - Default: No movement modifier.\n - High speed: Link moves at a much higher velocity.\n - Super low gravity: Link can jump very high.\n - Low gravity: Link can jump high.\n - High gravity: Link can barely jump.");
             TooltipBuilder.SetTooltip(cFloors, "Select a floortype for every floor ingame:\n\n - Default: Vanilla floortypes.\n - Sand: Link sinks slowly into every floor, affecting movement speed.\n - Ice: Every floor is slippery.\n - Snow: Similar to sand. \n - Random: Any random floortypes of the above.");
+            TooltipBuilder.SetTooltip(cClockSpeed, "Modify the speed of time.");
+            TooltipBuilder.SetTooltip(cHideClock, "Clock UI will be hidden.");
 
             // Comforts/cosmetics
             TooltipBuilder.SetTooltip(cCutsc, "Enable shortened cutscenes.\n\nCertain cutscenes are skipped or otherwise shortened.\nDISCLAIMER: This may cause crashing in certain emulators.");
             TooltipBuilder.SetTooltip(cQText, "Enable quick text. Dialogs are fast-forwarded to choices/end of dialog.");
-            TooltipBuilder.SetTooltip(cBGM, "Select to randomize background music sequences that are played throughout the game.");
-            TooltipBuilder.SetTooltip(cFreeHints, "Select to enable reading gossip stone hints without requiring the Mask of Truth.");
+            TooltipBuilder.SetTooltip(cBGM, "Randomize background music sequences that are played throughout the game.");
+            TooltipBuilder.SetTooltip(cNoMusic, "Mute background music.");
+            TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
+            TooltipBuilder.SetTooltip(cClearHints, "Gossip stone hints will give clear item and location names.");
+            TooltipBuilder.SetTooltip(cNoDowngrades, "Downgrading items will be prevented.");
             TooltipBuilder.SetTooltip(bTunic, "Select the color of Link's Tunic.");
             TooltipBuilder.SetTooltip(cLink, "Select a character model to replace Link's default model.");
             TooltipBuilder.SetTooltip(cTatl, "Select a color scheme to replace Tatl's default color scheme.");
+            TooltipBuilder.SetTooltip(cGossipHints, "Select a Gossip Stone hint style\n\n - Default: Vanilla Gossip Stone hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, 3 hints about locations with logically-required items, 2 hints about locations with no logically-required items.");
         }
 
         #region Forms Code
@@ -253,7 +259,6 @@ namespace MMRando
         {
             cUserItems.Checked = _settings.UseCustomItemList;
             cAdditional.Checked = _settings.AddOther;
-            cGossip.Checked = _settings.EnableGossipHints;
             cSoS.Checked = _settings.ExcludeSongOfSoaring;
             cSpoiler.Checked = _settings.GenerateSpoilerLog;
             cMixSongs.Checked = _settings.AddSongs;
@@ -262,11 +267,16 @@ namespace MMRando
             cShop.Checked = _settings.AddShopItems;
             cDEnt.Checked = _settings.RandomizeDungeonEntrances;
             cBGM.Checked = _settings.RandomizeBGM;
+            cNoMusic.Checked = _settings.NoBGM;
             cEnemy.Checked = _settings.RandomizeEnemies;
             cCutsc.Checked = _settings.ShortenCutscenes;
             cQText.Checked = _settings.QuickTextEnabled;
             cFreeHints.Checked = _settings.FreeHints;
             cMoonItems.Checked = _settings.AddMoonItems;
+            cClearHints.Checked = _settings.ClearHints;
+            cHideClock.Checked = _settings.HideClock;
+            cClockSpeed.SelectedIndex = (int) _settings.ClockSpeed;
+            cNoDowngrades.Checked = _settings.PreventDowngrades;
 
             cDMult.SelectedIndex = (int)_settings.DamageMode;
             cDType.SelectedIndex = (int)_settings.DamageEffect;
@@ -275,6 +285,7 @@ namespace MMRando
             cTatl.SelectedIndex = (int)_settings.TatlColorSchema;
             cGravity.SelectedIndex = (int)_settings.MovementMode;
             cFloors.SelectedIndex = (int)_settings.FloorType;
+            cGossipHints.SelectedIndex = (int)_settings.GossipHintStyle;
             bTunic.BackColor = _settings.TunicColor;
         }
 
@@ -308,6 +319,9 @@ namespace MMRando
         private void cN64_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _settings.GenerateROM = cN64.Checked);
+            cVC.Enabled = cN64.Checked;
+            cVC.Checked &= cVC.Enabled;
+            UpdateSingleSetting(() => _settings.OutputVC = cVC.Enabled && cVC.Checked);
         }
 
         private void cSpoiler_CheckedChanged(object sender, EventArgs e)
@@ -347,6 +361,11 @@ namespace MMRando
         private void cBGM_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _settings.RandomizeBGM = cBGM.Checked);
+        }
+
+        private void cNoMusic_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.NoBGM = cNoMusic.Checked);
         }
 
         private void cBottled_CheckedChanged(object sender, EventArgs e)
@@ -389,11 +408,6 @@ namespace MMRando
             UpdateSingleSetting(() => _settings.FloorType = (FloorType)cFloors.SelectedIndex);
         }
 
-        private void cGossip_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _settings.EnableGossipHints = cGossip.Checked);
-        }
-
         private void cGravity_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _settings.MovementMode = (MovementMode)cGravity.SelectedIndex);
@@ -412,6 +426,21 @@ namespace MMRando
         private void cFreeHints_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _settings.FreeHints = cFreeHints.Checked);
+        }
+
+        private void cClearHints_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.ClearHints = cClearHints.Checked);
+        }
+
+        private void cNoDowngrades_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.PreventDowngrades = cNoDowngrades.Checked);
+        }
+
+        private void cHideClock_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.HideClock = cHideClock.Checked);
         }
 
         private void cQText_CheckedChanged(object sender, EventArgs e)
@@ -502,6 +531,16 @@ namespace MMRando
             _settings.UserLogicFileName = openLogic.FileName;
         }
 
+        private void cClockSpeed_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.ClockSpeed = (ClockSpeed)cClockSpeed.SelectedIndex);
+        }
+
+        private void cGossipHints_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.GossipHintStyle = (GossipHintStyle)cGossipHints.SelectedIndex);
+        }
+
         private void cVC_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _settings.OutputVC = cVC.Checked);
@@ -550,7 +589,7 @@ namespace MMRando
                 cBottled.Enabled = false;
                 cShop.Enabled = false;
                 cSpoiler.Enabled = false;
-                cGossip.Enabled = false;
+                cGossipHints.Enabled = false;
                 cAdditional.Enabled = false;
                 cUserItems.Enabled = false;
                 cMoonItems.Enabled = false;
@@ -564,7 +603,7 @@ namespace MMRando
                 cBottled.Enabled = onMainTab;
                 cShop.Enabled = onMainTab;
                 cSpoiler.Enabled = onMainTab;
-                cGossip.Enabled = onMainTab;
+                cGossipHints.Enabled = onMainTab;
                 cAdditional.Enabled = onMainTab;
                 cUserItems.Enabled = onMainTab;
                 cMoonItems.Enabled = onMainTab;
@@ -592,6 +631,15 @@ namespace MMRando
                     cAdditional.Enabled = onMainTab;
                     cMoonItems.Enabled = onMainTab;
                 }
+            }
+
+            if (_settings.GossipHintStyle == GossipHintStyle.Default || _settings.LogicMode == LogicMode.Vanilla)
+            {
+                cClearHints.Enabled = false;
+            }
+            else
+            {
+                cClearHints.Enabled = onMainTab;
             }
         }
 
@@ -626,6 +674,7 @@ namespace MMRando
         {
             cAdditional.Enabled = v;
             cBGM.Enabled = v;
+            cNoMusic.Enabled = v;
             cBottled.Enabled = v;
             cCutsc.Enabled = v;
             cDChests.Enabled = v;
@@ -636,7 +685,9 @@ namespace MMRando
             cDummy.Enabled = v;
             cEnemy.Enabled = v;
             cFloors.Enabled = v;
-            cGossip.Enabled = v;
+            cClockSpeed.Enabled = v;
+            cGossipHints.Enabled = v;
+            cHideClock.Enabled = v;
             cGravity.Enabled = v;
             cLink.Enabled = v;
             cMixSongs.Enabled = v;
@@ -648,6 +699,8 @@ namespace MMRando
             cSpoiler.Enabled = v;
             cTatl.Enabled = v;
             cFreeHints.Enabled = v;
+            cClearHints.Enabled = v;
+            cNoDowngrades.Enabled = v;
             cHTMLLog.Enabled = v;
             cN64.Enabled = v;
             cMoonItems.Enabled = v;
@@ -668,7 +721,7 @@ namespace MMRando
 
         public void InitializeSettings()
         {
-            _settings = new Settings();
+            _settings = new SettingsObject();
 
             cDMult.SelectedIndex = 0;
             cDType.SelectedIndex = 0;
@@ -677,16 +730,21 @@ namespace MMRando
             cMode.SelectedIndex = 0;
             cLink.SelectedIndex = 0;
             cTatl.SelectedIndex = 0;
+            cGossipHints.SelectedIndex = 0;
+            cClockSpeed.SelectedIndex = 0;
             cSpoiler.Checked = true;
             cSoS.Checked = true;
-            cGossip.Checked = true;
+            cNoDowngrades.Checked = true;
+            cCutsc.Checked = true;
+            cQText.Checked = true;
 
             bTunic.BackColor = Color.FromArgb(0x1E, 0x69, 0x1B);
 
             _settings.GenerateROM = true;
             _settings.GenerateSpoilerLog = true;
             _settings.ExcludeSongOfSoaring = true;
-            _settings.EnableGossipHints = true;
+            _settings.ShortenCutscenes = true;
+            _settings.QuickTextEnabled = true;
             _settings.TunicColor = bTunic.BackColor;
             _settings.Seed = Math.Abs(Environment.TickCount);
 
@@ -822,6 +880,8 @@ namespace MMRando
             cDType.Enabled = v;
             cGravity.Enabled = v;
             cFloors.Enabled = v;
+            cClockSpeed.Enabled = v;
+            cHideClock.Enabled = v;
 
 
             // Comfort/Cosmetics
@@ -829,6 +889,9 @@ namespace MMRando
             cQText.Enabled = v;
             cBGM.Enabled = v;
             cFreeHints.Enabled = v;
+            cNoDowngrades.Enabled = v;
+            cClearHints.Enabled = _settings.LogicMode != LogicMode.Vanilla && _settings.GossipHintStyle != GossipHintStyle.Default && v;
+            cGossipHints.Enabled = _settings.LogicMode != LogicMode.Vanilla && v;
 
             cLink.Enabled = v;
 
@@ -842,5 +905,4 @@ namespace MMRando
             }
         }
     }
-
 }

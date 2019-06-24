@@ -1,16 +1,15 @@
-﻿using MMRando.Constants;
+using MMRando.Constants;
 using MMRando.Models;
 using MMRando.Models.Rom;
+using MMRando.Models.Settings;
 using MMRando.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace MMRando
 {
@@ -18,12 +17,14 @@ namespace MMRando
     public class Builder
     {
         private RandomizedResult _randomized;
-        private Settings _settings;
+        private SettingsObject _settings;
+        private MessageTable _messageTable;
 
         public Builder(RandomizedResult randomized)
         {
             _randomized = randomized;
             _settings = randomized.Settings;
+            _messageTable = new MessageTable();
         }
 
         private void WriteAudioSeq()
@@ -41,6 +42,16 @@ namespace MMRando
             ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-music");
             ResourceUtils.ApplyHack(Values.ModsDirectory + "inst24-swap-guitar");
             SequenceUtils.RebuildAudioSeq(RomData.SequenceList);
+        }
+
+        private void WriteMuteMusic()
+        {
+            if (_settings.NoBGM)
+            {
+                var codeFileAddress = 0xB3C000;
+                var offset = 0x102350; // address for branch when scene music is loaded
+                ReadWriteUtils.WriteToROM(codeFileAddress + offset, 0x1000); // change to always branch (do not load)
+            }
         }
 
         private void WritePlayerModel()
@@ -154,7 +165,7 @@ namespace MMRando
 
         private void WriteEntrances()
         {
-            if (_settings.EntranceRandoActivated())
+            if (false)
             {
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
@@ -163,7 +174,7 @@ namespace MMRando
                 {
                     if (_randomized.EntranceList.ContainsKey(sceneIndex) && _randomized.ShuffledEntranceList.ContainsKey(sceneIndex) )
                     {
-                        Debug.WriteLine("Scene " + sceneIndex + "\n-----\n");
+                        System.Diagnostics.Debug.WriteLine("Scene " + sceneIndex + "\n-----\n");
                         EntranceUtils.WriteSceneExits(sceneIndex, _randomized.EntranceList[sceneIndex].ToList(), _randomized.ShuffledEntranceList[sceneIndex]);
                     }
                 }
@@ -172,10 +183,7 @@ namespace MMRando
 
         private void WriteOwlStatues()
         {
-            if(_settings.RandomizeOwlStatues)
-            {
-                OwlStatues.SwapOwlStatues(_randomized.OwlStatueList);
-            }
+
         }
 
         private void WriteDungeons()
@@ -256,21 +264,77 @@ namespace MMRando
                 ResourceUtils.ApplyHack(Values.ModsDirectory + "floor-" + floorType.ToString());
             }
 
-            if(_settings.ClockSpeed != Values.VanillaClockSpeed)
+            if(_settings.ClockSpeed != ClockSpeed.Default)
             {
                 WriteClockSpeed(_settings.ClockSpeed);
             }
+
+            if (_settings.HideClock)
+            {
+                WriteHideClock();
+            }
+        }
+
+        private void WriteHideClock()
+        {
+            var codeFileAddress = 0xB3C000;
+            var offset = 0x73B7C; // branch for UI is time hasn't changed
+            ReadWriteUtils.WriteToROM(codeFileAddress + offset, 0x10); // change to always branch
         }
 
         /// <summary>
         /// Overwrite the clockspeed (see Settings.ClockSpeed for details)
         /// </summary>
         /// <param name="clockSpeed"></param>
-        private void WriteClockSpeed(byte clockSpeed)
+        private void WriteClockSpeed(ClockSpeed clockSpeed)
         {
-            var addr = 0x00BC66D4;
-            uint val = 0x240B0000 + (uint)clockSpeed;
-            ReadWriteUtils.WriteToROM(addr, val);
+            byte speed;
+            short invertedModifier;
+            switch (clockSpeed)
+            {
+                default:
+                case ClockSpeed.Default:
+                    speed = 3;
+                    invertedModifier = -2;
+                    break;
+                case ClockSpeed.VerySlow:
+                    speed = 1;
+                    invertedModifier = 0;
+                    break;
+                case ClockSpeed.Slow:
+                    speed = 2;
+                    invertedModifier = -1;
+                    break;
+                case ClockSpeed.Fast:
+                    speed = 6;
+                    invertedModifier = -4;
+                    break;
+                case ClockSpeed.VeryFast:
+                    speed = 9;
+                    invertedModifier = -6;
+                    break;
+                case ClockSpeed.SuperFast:
+                    speed = 18;
+                    invertedModifier = -12;
+                    break;
+            }
+
+            ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-clock-speed");
+
+            var codeFileAddress = 0xB3C000;
+            var hackAddressOffset = 0x8A674;
+            var modificationOffset = 0x1B;
+            ReadWriteUtils.WriteToROM(codeFileAddress + hackAddressOffset + modificationOffset, speed);
+            
+            var invertedModifierOffsets = new List<int>
+            {
+                0xB1B8E,
+                0x7405E
+            };
+            foreach (var offset in invertedModifierOffsets)
+            {
+                ReadWriteUtils.WriteToROM(codeFileAddress + offset, (ushort)invertedModifier);
+            }
         }
 
         /// <summary>
@@ -291,90 +355,128 @@ namespace MMRando
             }
         }
 
-        private void WriteFreeItem(int Item)
+        private void PutOrCombine(Dictionary<int, byte> dictionary, int key, byte value, bool add = false)
         {
-            ReadWriteUtils.WriteToROM(Items.ITEM_ADDRS[Item], Items.ITEM_VALUES[Item]);
-            switch (Item)
+            if (!dictionary.ContainsKey(key))
             {
-                case Items.ItemBow:
-                    ReadWriteUtils.WriteToROM(0xC5CE6F, (byte)0x01);
-                    break;
-                case Items.ItemBombBag:
-                    ReadWriteUtils.WriteToROM(0xC5CE6F, (byte)0x08);
-                    break;
-                case Items.UpgradeRazorSword: //sword upgrade
-                    ReadWriteUtils.WriteToROM(0xC5CE00, (byte)0x4E);
-                    break;
-                case Items.UpgradeGildedSword:
-                    ReadWriteUtils.WriteToROM(0xC5CE00, (byte)0x4F);
-                    break;
-                case Items.UpgradeBigQuiver: //quiver upgrade
-                    ReadWriteUtils.WriteToROM(0xC5CE6F, (byte)0x02);
-                    break;
-                case Items.UpgradeBiggestQuiver:
-                    ReadWriteUtils.WriteToROM(0xC5CE6F, (byte)0x03);
-                    break;
-                case Items.UpgradeBigBombBag://bomb bag upgrade
-                    ReadWriteUtils.WriteToROM(0xC5CE6F, (byte)0x10);
-                    break;
-                case Items.UpgradeBiggestBombBag:
-                    ReadWriteUtils.WriteToROM(0xC5CE6F, (byte)0x18);
-                    break;
-                default:
-                    break;
+                dictionary[key] = 0;
+            }
+            dictionary[key] = add ? (byte)(dictionary[key] + value) : (byte)(dictionary[key] | value);
+        }
+
+        private void WriteFreeItems(params int[] itemIds)
+        {
+            Dictionary<int, byte> startingItems = new Dictionary<int, byte>();
+            if (!itemIds.Contains(Items.UpgradeRazorSword) && !itemIds.Contains(Items.UpgradeGildedSword))
+            {
+                PutOrCombine(startingItems, 0xC5CE21, 0x01); // add Kokiri Sword
+            }
+            if (!itemIds.Contains(Items.UpgradeMirrorShield))
+            {
+                PutOrCombine(startingItems, 0xC5CE21, 0x10); // add Hero's Shield
+            }
+            PutOrCombine(startingItems, 0xC5CE72, 0x10); // add Song of Time
+
+            foreach (var id in itemIds)
+            {
+                var itemAddress = Items.ITEM_ADDRS[id];
+                var itemValue = Items.ITEM_VALUES[id];
+                PutOrCombine(startingItems, itemAddress, itemValue, ItemUtils.IsHeartPiece(id));
+
+                switch (id)
+                {
+                    case Items.ItemBow:
+                        PutOrCombine(startingItems, 0xC5CE6F, 0x01);
+                        break;
+                    case Items.ItemBombBag:
+                        PutOrCombine(startingItems, 0xC5CE6F, 0x08);
+                        break;
+                    case Items.UpgradeRazorSword: //sword upgrade
+                        startingItems[0xC5CE00] = 0x4E;
+                        break;
+                    case Items.UpgradeGildedSword:
+                        startingItems[0xC5CE00] = 0x4F;
+                        break;
+                    case Items.UpgradeBigQuiver: //quiver upgrade
+                        PutOrCombine(startingItems, 0xC5CE6F, 0x02);
+                        break;
+                    case Items.UpgradeBiggestQuiver:
+                        PutOrCombine(startingItems, 0xC5CE6F, 0x03);
+                        break;
+                    case Items.UpgradeBigBombBag://bomb bag upgrade
+                        PutOrCombine(startingItems, 0xC5CE6F, 0x10);
+                        break;
+                    case Items.UpgradeBiggestBombBag:
+                        PutOrCombine(startingItems, 0xC5CE6F, 0x18);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            foreach (var kvp in startingItems)
+            {
+                ReadWriteUtils.WriteToROM(kvp.Key, kvp.Value);
             }
         }
 
         private void WriteItems()
         {
+            var freeItems = new List<int>();
             if (_settings.LogicMode == LogicMode.Vanilla)
             {
-                WriteFreeItem(Items.MaskDeku);
+                freeItems.Add(Items.MaskDeku);
+                freeItems.Add(Items.SongHealing);
 
                 if (_settings.ShortenCutscenes)
                 {
                     //giants cs were removed
-                    WriteFreeItem(Items.SongOath);
+                    freeItems.Add(Items.SongOath);
                 }
+
+                WriteFreeItems(freeItems.ToArray());
 
                 return;
             }
 
             //write free item (start item default = Deku Mask)
-            var freeItemIndex = _randomized.ItemList.FindIndex(u => u.ReplacesItemId == Items.MaskDeku);
-            WriteFreeItem(_randomized.ItemList[freeItemIndex].ID);
+            freeItems.Add(_randomized.ItemList.Find(u => u.ReplacesItemId == Items.MaskDeku).ID);
+            freeItems.Add(_randomized.ItemList.Find(u => u.ReplacesItemId == Items.SongHealing).ID);
+            WriteFreeItems(freeItems.ToArray());
 
             //write everything else
             ItemSwapUtils.ReplaceGetItemTable(Values.ModsDirectory);
             ItemSwapUtils.InitItems();
 
-            for (int i = 0; i < _randomized.ItemList.Count; i++)
+            ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-epona");
+            if (_settings.PreventDowngrades)
             {
-                var itemId = _randomized.ItemList[i].ID;
+                ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-downgrades");
+            }
+
+            foreach (var item in _randomized.ItemList)
+            {
+                bool isRepeatable = Items.REPEATABLE.Contains(item.ID);
+                bool isCycleRepeatable = Items.CYCLE_REPEATABLE.Contains(item.ID);
+
+                if (!_settings.PreventDowngrades)
+                {
+                    isRepeatable |= Items.DOWNGRADABLE_ITEMS.Contains(item.ID);
+                }
 
                 // Unused item
-                if (_randomized.ItemList[i].ReplacesItemId == -1)
+                if (!item.ReplacesAnotherItem)
                 {
                     continue;
-                };
+                }
 
-                bool isRepeatable = Items.REPEATABLE.Contains(itemId);
-                bool isCycleRepeatable = Items.CYCLE_REPEATABLE.Contains(itemId);
-                int replacesItemId = _randomized.ItemList[i].ReplacesItemId;
-
-                Debug.WriteLine($"Writing {Items.ITEM_NAMES[itemId]} --> {Items.ITEM_NAMES[replacesItemId]}");
-
-                itemId = ItemUtils.SubtractItemOffset(itemId);
-
-                replacesItemId = ItemUtils.SubtractItemOffset(replacesItemId);
-
-                if (ItemUtils.IsBottleCatchContent(i))
+                if (ItemUtils.IsBottleCatchContent(item.ID))
                 {
-                    ItemSwapUtils.WriteNewBottle(replacesItemId, itemId);
+                    ItemSwapUtils.WriteNewBottle(item.ReplacesItemId, item.ID);
                 }
                 else
                 {
-                    ItemSwapUtils.WriteNewItem(replacesItemId, itemId, isRepeatable, isCycleRepeatable);
+                    ItemSwapUtils.WriteNewItem(item.ReplacesItemId, item.ID, isRepeatable, isCycleRepeatable);
                 }
             }
 
@@ -396,9 +498,9 @@ namespace MMRando
                 WriteFreeHints();
             }
 
-            if (_settings.EnableGossipHints)
+            if (_settings.GossipHintStyle != GossipHintStyle.Default)
             {
-                MessageUtils.WriteGossipHints(_randomized.GossipQuotes, _randomized.Random);
+                _messageTable.UpdateMessages(_randomized.GossipQuotes);
             }
         }
 
@@ -470,6 +572,7 @@ namespace MMRando
             using (BinaryReader OldROM = new BinaryReader(File.Open(InFile, FileMode.Open, FileAccess.Read)))
             {
                 RomUtils.ReadFileTable(OldROM);
+                _messageTable.InitializeTable();
             }
 
             List<MMFile> originalMMFileList = null;
@@ -498,9 +601,11 @@ namespace MMRando
                     ResourceUtils.ApplyHack(Values.ModsDirectory + "title-screen");
                     ResourceUtils.ApplyHack(Values.ModsDirectory + "misc-changes");
                     ResourceUtils.ApplyHack(Values.ModsDirectory + "cm-cs");
+                    ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-song-of-healing");
                     WriteFileSelect();
                 }
                 ResourceUtils.ApplyHack(Values.ModsDirectory + "init-file");
+                ResourceUtils.ApplyHack(Values.ModsDirectory + "fierce-deity-anywhere");
 
                 worker.ReportProgress(61, "Writing quick text...");
                 WriteQuickText();
@@ -526,13 +631,12 @@ namespace MMRando
                 worker.ReportProgress(66, "Writing items...");
                 WriteItems();
 
-                worker.ReportProgress(67, "Writing gossip...");
+                worker.ReportProgress(67, "Writing messages...");
                 WriteGossipQuotes();
+                MessageTable.WriteMessageTable(_messageTable);
 
                 worker.ReportProgress(68, "Writing startup...");
                 WriteStartupStrings();
-
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "fierce-deity-anywhere");
 
                 if (_settings.GeneratePatch)
                 {
@@ -541,11 +645,10 @@ namespace MMRando
                 }
             }
 
-            worker.ReportProgress(72, "Writing Tatl color...");
+            worker.ReportProgress(72, "Writing cosmetics...");
             WriteTatlColour();
-
-            worker.ReportProgress(73, "Writing tunic color...");
             WriteTunicColor();
+            WriteMuteMusic();
 
             if (_settings.GenerateROM)
             {

@@ -1,22 +1,20 @@
-﻿using System;
+﻿using MMRando.Models.Rom;
+using MMRando.Models.Settings;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Collections.ObjectModel;
 
 namespace MMRando.Models
 {
     public class RandomizedResult
     {
-        public Settings Settings { get; private set; }
+        public SettingsObject Settings { get; private set; }
         public Random Random { get; private set; }
         public List<ItemObject> ItemList { get; set; }
         public Dictionary<int,ushort[]> EntranceList { get; set; }
         public Dictionary<int, ushort[]> ShuffledEntranceList { get; set; }
         public List<SpoilerEntrance> EntranceSpoilers { get; set; }
         public int[] OwlStatueList { get; set; }
-        public List<string> GossipQuotes { get; set; }
-        public List<ItemLogic> Logic { get; set; }
-
         public int[] NewEntrances = new int[] { -1, -1, -1, -1 };
         public int[] NewExits = new int[] { -1, -1, -1, -1 };
 
@@ -24,8 +22,13 @@ namespace MMRando.Models
         public int[] NewDCFlags = new int[] { -1, -1, -1, -1 };
         public int[] NewDCMasks = new int[] { -1, -1, -1, -1 };
         public int[] NewDestinationIndices = new int[] { -1, -1, -1, -1 };
+        public List<MessageEntry> GossipQuotes { get; set; }
+        public List<ItemLogic> Logic { get; set; }
 
-        public RandomizedResult(Settings settings, Random random)
+        public ReadOnlyCollection<MoonPathItem> RequiredItemsForMoonAccess { get; set; }
+
+
+        public RandomizedResult(SettingsObject settings, Random random)
         {
             Settings = settings;
             Random = random;

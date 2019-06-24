@@ -1,11 +1,9 @@
-﻿using MMRando.Models;
+﻿using MMRando.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
 using System.Runtime.Serialization.Json;
-using System.Text;
 
 namespace MMRando.Models
 {
@@ -24,6 +22,10 @@ namespace MMRando.Models
         public List<SpoilerEntrance> EntranceList { get; set; }
 
         public List<ItemLogic> Logic { get; set; }
+
+        public Dictionary<GossipQuote, string> GossipHints { get; set; }
+
+        public string CustomItemListString { get; set; }
 
         public string LogicJson
         {

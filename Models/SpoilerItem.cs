@@ -1,25 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MMRando.Models
+﻿namespace MMRando.Models
 {
     public class SpoilerItem
     {
-        public int Id { get; set; }
-        public string Name => Items.ITEM_NAMES[Id];
+        public int Id { get; private set; }
+        public string Name { get; private set; }
 
-        public int NewLocationId { get; set; }
-        public string NewLocationName => Items.ITEM_NAMES[NewLocationId];
+        public int NewLocationId { get; private set; }
+        public string NewLocationName { get; private set; }
 
-        public int ReplacedById { get; set; }
-        public string ReplacedByName => Items.ITEM_NAMES[ReplacedById];
+        public bool IsJunk { get; private set; }
 
-        public SpoilerItem(ItemObject itemObject)
+        public SpoilerItem(ItemObject itemObject, string locationName)
         {
             Id = itemObject.ID;
-            NewLocationId = itemObject.ReplacesItemId;
+            Name = Id < Items.ITEM_NAMES.Count ? Items.ITEM_NAMES[Id] : itemObject.Name;
+            NewLocationId = itemObject.ReplacesAnotherItem ? itemObject.ReplacesItemId : Id;
+            NewLocationName = NewLocationId < Items.LOCATION_NAMES.Count ? Items.LOCATION_NAMES[NewLocationId] : locationName;
+            IsJunk = Name.Contains("Rupee") || Name.Contains("Heart");
         }
     }
 }
