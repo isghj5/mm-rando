@@ -8,12 +8,13 @@ namespace MMRando.Models
         {
             this.Name = Name;
             this.Address = Address;
-            this.Scene = Scene;
+            this.SceneName = Scene;
         }
         public string Name { get; set; }
-        public string Scene { get; set; }
+        public string SceneName { get; set; }
+        public ushort SceneNumber { get; set; }
         public ushort Address { get; set; }
-        public List<Spawn> Exit { get; set; } = new List<Spawn>();
+        public List<Spawn> ExitSpawn { get; set; } = new List<Spawn>();
         public string Type { get; set; }
     }
 }

@@ -682,7 +682,7 @@ namespace MMRando
         private bool CanReturn(Dictionary<string, bool> AllowedSpawn, Spawn S)
         {
             bool result = true;
-            foreach (Spawn X in S.Exit)
+            foreach (Spawn X in S.ExitSpawn)
             {
                 if (!AllowedSpawn.ContainsKey(X.Name) || !AllowedSpawn[X.Name])
                 {
@@ -725,7 +725,7 @@ namespace MMRando
                 { SpawnType = ShuffleOwls ? "Owl Warp" : "Permanent"; }
                 if (S.Name.Contains("Grotto"))
                 { SpawnType = ShuffleGrotto ? "One Way" : "Permanent"; }
-                if (S.Type == null && S.Exit.Count == 0)
+                if (S.Type == null && S.ExitSpawn.Count == 0)
                 { SpawnType = "One Way"; }
 
                 if (!ShuffleInteriors && (SpawnType == "Interior" || SpawnType == "Telescope" || SpawnType == "Interior Exit" || SpawnType == "Telescope Spawn"))
@@ -809,7 +809,7 @@ namespace MMRando
             Predicate<Spawn> CanAdd = S => S != null && SpawnSet[pool].ContainsKey(S.Name) && SpawnSet[pool][S.Name];
             Predicate<Spawn> CanChoose = S =>
                 S != null && ChosenSet[pool].ContainsKey(S.Name) && ChosenSet[pool][S.Name] &&
-                (S.Exit.Count == 0 || S.Exit.Count > 0 && CanReturn(SpawnSet[pool], S));
+                (S.ExitSpawn.Count == 0 || S.ExitSpawn.Count > 0 && CanReturn(SpawnSet[pool], S));
             Spawn To, From;
             while (pool < SpawnSet.Count)
             {
@@ -840,9 +840,9 @@ namespace MMRando
                             else
                             {
                                 ConnectEntrances(From.Name, To.Name, true);
-                                if (To.Exit.Count > 0)
+                                if (To.ExitSpawn.Count > 0)
                                 {
-                                    foreach (Spawn Exit in To.Exit)
+                                    foreach (Spawn Exit in To.ExitSpawn)
                                     {
                                         SpawnSet[pool][Exit.Name] = false;
                                         if (FillWorld.Contains(Exit.Name))
@@ -850,7 +850,7 @@ namespace MMRando
                                             FillWorld.Remove(Exit.Name);
                                         }
                                     }
-                                    foreach (Spawn Exit in From.Exit)
+                                    foreach (Spawn Exit in From.ExitSpawn)
                                     {
                                         ChosenSet[pool][Exit.Name] = false;
                                     }
@@ -966,7 +966,7 @@ namespace MMRando
                                 {
                                     if (SpawnPoint != null)
                                     {
-                                        foreach (Spawn Exit in SpawnPoint.Exit)
+                                        foreach (Spawn Exit in SpawnPoint.ExitSpawn)
                                         {
                                             if (Visited.ContainsKey(Exit.Name) && Visited[Exit.Name] == 0)
                                             {
@@ -985,11 +985,11 @@ namespace MMRando
                         Visited[Next.Name] = group;
                         if (Next != null)
                         {
-                            foreach (Spawn Exit in Next.Exit)
+                            foreach (Spawn Exit in Next.ExitSpawn)
                             {
                                 AddEntranceToPath(Paths, CurrentPath, Next.Name + " -> " + Exit.Name);
                             }
-                            FillWorld.Push(Next.Scene);
+                            FillWorld.Push(Next.SceneName);
                         }
                     }
                     else
@@ -1510,11 +1510,11 @@ namespace MMRando
             {
                 F.Type = Type;
                 T.Type = Type;
-                if (F.Exit != null && T.Exit != null)
+                if (F.ExitSpawn != null && T.ExitSpawn != null)
                 {
-                    if (!F.Exit.Contains(T))
+                    if (!F.ExitSpawn.Contains(T))
                     {
-                        F.Exit.Add(T);
+                        F.ExitSpawn.Add(T);
                     }
                 }
             }
@@ -1531,16 +1531,16 @@ namespace MMRando
             List<Spawn> SceneSpawns = new List<Spawn>();
             foreach(Spawn Spawn in TerminaMap[Scene])
             {
-                if( Spawn.Exit.Count == 1)
+                if( Spawn.ExitSpawn.Count == 1)
                 {
-                    SceneSpawns.Add(Spawn.Exit[0]);
+                    SceneSpawns.Add(Spawn.ExitSpawn[0]);
                 }
             }
             foreach(Spawn Spawn in SceneSpawns)
             {
-                if (Spawn.Exit.Count == 1)
+                if (Spawn.ExitSpawn.Count == 1)
                 {
-                    string Original = Spawn.Exit[0].Name;
+                    string Original = Spawn.ExitSpawn[0].Name;
                     string Duplicate = Original.Insert(Original.IndexOf(":"), " " + DuplicateSuffix);
                     PairSingleSpawn(Spawn.Name, Duplicate, Spawn.Type);
                 }
@@ -1561,9 +1561,9 @@ namespace MMRando
             {
                 Scope.Type = "Telescope";
                 Room.Type = "Telescope Spawn";
-                if (!Scope.Exit.Contains(Room))
+                if (!Scope.ExitSpawn.Contains(Room))
                 {
-                    Scope.Exit.Add(Room);
+                    Scope.ExitSpawn.Add(Room);
                 }
             }
         }
@@ -1615,7 +1615,7 @@ namespace MMRando
             int j;
             for (int i = 0; i < SpawnSet.Count; i++)
             {
-                if (SpawnSet[i].Exit.Count == 0 && SpawnPoint.ContainsKey(SpawnSet[i]) && SpawnExit.ContainsKey(SpawnSet[i]))
+                if (SpawnSet[i].ExitSpawn.Count == 0 && SpawnPoint.ContainsKey(SpawnSet[i]) && SpawnExit.ContainsKey(SpawnSet[i]))
                 {
                     j = SpawnSet.FindIndex((S) =>
                     {
@@ -1679,11 +1679,11 @@ namespace MMRando
         private void SetShuffledSpawn(Spawn f, Spawn t)
         {
             int shuffleIndex = -1;
-            List<Spawn> temp = TerminaMap[f.Scene];
+            List<Spawn> temp = TerminaMap[f.SceneName];
             if (temp != null && temp.Contains(f))
             {
                 shuffleIndex = temp.FindIndex(S => S == f);
-                temp = ShuffledMap[f.Scene];
+                temp = ShuffledMap[f.SceneName];
             }
             else
             {
@@ -1711,11 +1711,11 @@ namespace MMRando
             if (f != null && t != null)
             {
                 SetShuffledSpawn(f, t);
-                if (connectReverse && f.Exit.Count > 0 && t.Exit.Count > 0)
+                if (connectReverse && f.ExitSpawn.Count > 0 && t.ExitSpawn.Count > 0)
                 {
-                    foreach (Spawn ToExit in t.Exit)
+                    foreach (Spawn ToExit in t.ExitSpawn)
                     {
-                        foreach (Spawn FromExit in f.Exit)
+                        foreach (Spawn FromExit in f.ExitSpawn)
                         {
                             SetShuffledSpawn(ToExit, FromExit);
                         }
@@ -1738,22 +1738,22 @@ namespace MMRando
         {
             List<Spawn> OriginalScene;
             Dictionary<Spawn, Spawn> EntranceShuffle = new Dictionary<Spawn, Spawn>();
-            _randomized.EntranceList = new Dictionary<string, uint[]>();
-            _randomized.ShuffledEntranceList = new Dictionary<string, uint[]>();
+            _randomized.EntranceList = new Dictionary<string, ushort[]>();
+            _randomized.ShuffledEntranceList = new Dictionary<string, ushort[]>();
             _randomized.EntranceSpoilers = new List<SpoilerEntrance>();
 
             Spawn Spawn, Exit, ShuffledExit;
             bool WasPlaced;
-            uint[] SceneExitList, ShuffledSceneExitList;
+            ushort[] SceneExitList, ShuffledSceneExitList;
             foreach (string Scene in TerminaMap.Keys)
             {
                 OriginalScene = TerminaMap[Scene];
                 for (int s = 0; s < OriginalScene.Count; s++)
                 {
                     Spawn = OriginalScene[s];
-                    if( Spawn.Exit.Count == 1)
+                    if( Spawn.ExitSpawn.Count == 1)
                     {
-                        Exit = Spawn.Exit[0];
+                        Exit = Spawn.ExitSpawn[0];
                         ShuffledExit = GetShuffledSpawn(Exit.Name);
                         if (Spawn.Address != 0xFFFF)
                         {
@@ -1771,9 +1771,9 @@ namespace MMRando
                     }
                 }
 
-                SceneExitList = new uint[EntranceShuffle.Keys.Count];
+                SceneExitList = new ushort[EntranceShuffle.Keys.Count];
                 _randomized.EntranceList[Scene] = SceneExitList;
-                ShuffledSceneExitList = new uint[EntranceShuffle.Keys.Count];
+                ShuffledSceneExitList = new ushort[EntranceShuffle.Keys.Count];
                 _randomized.ShuffledEntranceList[Scene] = ShuffledSceneExitList;
                 int i = 0;
                 foreach (Spawn Entrance in EntranceShuffle.Keys)

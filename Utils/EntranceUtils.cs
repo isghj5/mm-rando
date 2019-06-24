@@ -1,6 +1,7 @@
 ﻿using MMRando.Models.Rom;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MMRando.Utils
 {
@@ -39,47 +40,24 @@ namespace MMRando.Utils
             }
         }
 
-        public static void WriteSceneExits(int SceneNumber, uint[] OriginalExit, uint[] ShuffledExit)
+        public static void WriteSceneExits(int sceneNumber, ushort[] shuffledExit)
         {
-            int StartScene = Math.Min(SceneNumber, RomData.SceneList.Count-1);
-            for (int i = StartScene; i >= 0; i--)
+            SceneUtils.ReadSceneTable();
+            SceneUtils.GetMaps();
+            SceneUtils.GetMapHeaders();
+            Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
+            int f = scene.File;
+            RomUtils.CheckCompressed(f);
+            int exitAddress;
+            ushort[] originalExits = new ushort[shuffledExit.Length];
+            exitAddress = scene.ExitAddr;
+            for (int j = 0; j < shuffledExit.Length; j++)
             {
-                if( RomData.SceneList[i].Number == SceneNumber)
+                originalExits[j] = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + j * 2);
+                System.Diagnostics.Debug.WriteLine($"{originalExits[j].ToString("X4")} : {shuffledExit[j].ToString("X4")}");
+                if (shuffledExit[j] != 0xFFFF)
                 {
-                    int f = RomData.SceneList[i].File;
-                    RomUtils.CheckCompressed(f);
-                    int k = 0, s = 0;
-                    uint exitListAddress;
-                    ushort Temp;
-                    byte cmd;
-                    do
-                    {
-                        cmd = RomData.MMFileList[f].Data[k];
-                        if (cmd == 0x13)
-                        {
-                            exitListAddress = ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, k + 4) & 0xFFFFFF;
-                            for (int j = 0; j < OriginalExit.Length; j++)
-                            {
-                                s = j;
-                                Temp = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitListAddress + s * 2);
-                                System.Diagnostics.Debug.WriteLine($"{Temp.ToString("X4")} : {OriginalExit[j].ToString("X4")} : {ShuffledExit[j].ToString("X4")}");
-                                if (Temp != OriginalExit[j])
-                                {
-                                    s = -1;
-                                    do
-                                    {
-                                        s++;
-                                        Temp = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitListAddress + s * 2);
-                                    } while (s < OriginalExit.Length && Temp != OriginalExit[j]);
-                                }
-                                if (Temp == OriginalExit[j])
-                                {
-                                    System.Diagnostics.Debug.WriteLine(Temp.ToString("X4"));
-                                }
-                            }
-                        }
-                        k += 8;
-                    } while (cmd != 0x14);
+                    ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + j * 2, 0xC800);
                 }
             }
         }

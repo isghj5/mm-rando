@@ -79,7 +79,10 @@ namespace MMRando.Utils
                             RomData.SceneList[i].Maps.Add(m);
                             mapsaddr += 8;
                         }
-                        break;
+                    }
+                    if (cmd == 0x13)
+                    {
+                        RomData.SceneList[i].ExitAddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
                     }
                     if (cmd == 0x14)
                     {

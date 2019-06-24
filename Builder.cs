@@ -159,20 +159,29 @@ namespace MMRando
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
-                int SceneNumber;
-                Dictionary<string, int> SceneLookupTable = new Dictionary<string, int>()
+                int sceneNumber;
+                List<ushort> fakeExits;
+                Dictionary<string, int> sceneLookupTable = new Dictionary<string, int>()
                 {
-                    { "South Clock Town", 0x6F }
+                    { "South Clock Town", 0x6F },
+                    { "Moon", 0x67 },
                 };
-                foreach(string SceneName in _randomized.EntranceList.Keys)
+                Dictionary<string, int> sceneExitCount = new Dictionary<string, int>()
                 {
-                    if (SceneLookupTable.ContainsKey(SceneName) && _randomized.EntranceList.ContainsKey(SceneName) && _randomized.ShuffledEntranceList.ContainsKey(SceneName))
+                    { "South Clock Town", 8 },
+                    { "Moon", 5 },
+                };
+                foreach (string sceneName in sceneLookupTable.Keys)
+                {
+                    if (sceneLookupTable.ContainsKey(sceneName) && _randomized.EntranceList.ContainsKey(sceneName) && 
+                        _randomized.ShuffledEntranceList.ContainsKey(sceneName) && sceneExitCount.ContainsKey(sceneName))
                     {
-                        SceneNumber = SceneLookupTable[SceneName];
-                        EntranceUtils.WriteSceneExits(SceneNumber, _randomized.EntranceList[SceneName], _randomized.ShuffledEntranceList[SceneName]);
+                        sceneNumber = sceneLookupTable[sceneName];
+                        fakeExits = Enumerable.Range(0,sceneExitCount[sceneName]).Select(x => (ushort)0x0000).ToList();
+                        Debug.WriteLine("\n" + sceneName);
+                        EntranceUtils.WriteSceneExits(sceneNumber, fakeExits.ToArray());
                     }
                 }
-                //EntranceUtils.WriteEntrances(_randomized.EntranceList, _randomized.ShuffledEntranceList);
             }
         }
 
