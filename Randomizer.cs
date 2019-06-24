@@ -134,8 +134,7 @@ namespace MMRando
 
         private void MakeGossipQuotes()
         {
-            _randomized.GossipQuotes = MessageUtils.MakeGossipQuotes
-                (_randomized);
+            _randomized.GossipQuotes = MessageUtils.MakeGossipQuotes(_randomized);
         }
 
         #endregion
@@ -2647,13 +2646,13 @@ namespace MMRando
                     DungeonShuffle();
                 }
 
-                if (_settings.EntranceRandoActivated())
+                if (true)
                 {
                     worker.ReportProgress(15, "Shuffling entrances...");
                     EntranceShuffle();
                 }
 
-                if (_settings.RandomizeOwlStatues)
+                if (false)
                 {
                     worker.ReportProgress(25, "Shuffling owl statues...");
                     OwlShuffle(false);

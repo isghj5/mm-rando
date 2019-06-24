@@ -165,7 +165,7 @@ namespace MMRando
 
         private void WriteEntrances()
         {
-            if (false)
+            if (_settings.AreEntrancesRandomized())
             {
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
@@ -183,7 +183,10 @@ namespace MMRando
 
         private void WriteOwlStatues()
         {
+            if (_settings.RandomizeOwlStatues)
+            {
 
+            }
         }
 
         private void WriteDungeons()

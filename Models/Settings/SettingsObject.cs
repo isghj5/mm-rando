@@ -147,6 +147,63 @@ namespace MMRando.Models.Settings
         public bool RandomizeDungeonEntrances { get; set; }
 
         /// <summary>
+        /// Randomize all entrances between pools
+        /// </summary>
+        public bool RandomizeEntranceInsanity { get; set; }
+
+        /// <summary>
+        /// Randomize overworld entrances
+        /// </summary>
+        public bool DecoupleEntrances { get; set; }
+
+        /// <summary>
+        /// Randomize overworld entrances
+        /// </summary>
+        public bool RandomizeOverworldEntrances { get; set; } = true;
+
+        /// <summary>
+        /// Randomize interior entrances
+        /// </summary>
+        public bool RandomizeInteriorEntrances { get; set; } = true;
+
+        /// <summary>
+        /// Randomize which owl warps activate when striking a given owl statue
+        /// </summary>
+        public bool RandomizeOwlStatues { get; set; }
+
+        /// <summary>
+        /// Randomize what destination you end up in after soaring to a given owl warp
+        /// </summary>
+        public bool RandomizeOwlWarps { get; set; }
+
+        /// <summary>
+        /// Randomize entrances which have no business being randomized (winning minigames, post cutscene spawns)
+        /// </summary>
+        public bool RandomizeSpecialEntrances { get; set; }
+
+        /// <summary>
+        /// Include Moon Trials as an interior entrance, will shuffle amonst themselves if interior entrances not active
+        /// </summary>
+        public bool RandomizeMoonTrials { get; set; }
+        
+        /// <summary>
+        /// Include entrances you can return from (Getting thrown out of pirate's fortress)
+        /// </summary>
+        public bool RandomizeOneWayEntrances { get; set; }
+
+        /// <summary>
+        /// Randomize grottos amongst themselves
+        /// </summary>
+        public bool RandomizeGrottoEntrances { get; set; }
+
+        public bool AreEntrancesRandomized()
+        {
+            return RandomizeGrottoEntrances || RandomizeInteriorEntrances || RandomizeMoonTrials
+                || RandomizeDungeonEntrances || RandomizeOneWayEntrances || RandomizeOverworldEntrances
+                || RandomizeOwlWarps;
+        }
+
+        /// <summary>
         /// (Beta) Randomize enemies
         /// </summary>
         public bool RandomizeEnemies { get; set; }
