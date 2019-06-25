@@ -76,6 +76,7 @@
     <Compile Include="GameObjects\GossipQuote.cs" />
     <Compile Include="Models\MoonPathItem.cs" />
     <Compile Include="Models\RandomizedResult.cs" />
+    <Compile Include="Models\Rom\Exit.cs" />
     <Compile Include="Models\Rom\MessageTable.cs" />
     <Compile Include="Models\Rom\Enemy.cs" />
     <Compile Include="Models\Rom\Spawn.cs" />

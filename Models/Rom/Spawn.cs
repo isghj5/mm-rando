@@ -12,7 +12,6 @@ namespace MMRando.Models
         }
         public string Name { get; set; }
         public string SceneName { get; set; }
-        public ushort SceneNumber { get; set; }
         public ushort Address { get; set; }
         public List<Spawn> ExitSpawn { get; set; } = new List<Spawn>();
         public string Type { get; set; }
