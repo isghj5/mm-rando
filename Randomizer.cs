@@ -259,7 +259,8 @@ namespace MMRando
             TerminaMap = new Dictionary<string, List<Spawn>>();
             ShuffledMap = new Dictionary<string, List<Spawn>>();
             SceneNamesByIndex = new Dictionary<ushort, List<string>>();
-            ReadTerminaMap();
+            //ReadTerminaMap();
+            BuildTerminaMap();
             ShuffleEntrances();
             CheckEntrances();
             FinalizeEntrances();
@@ -322,7 +323,9 @@ namespace MMRando
                                 writer.WritePropertyName("type");
                                 writer.WriteValue(s.spawnType);
                                 writer.WritePropertyName("exit-id");
-                                writer.WriteValue(exit!=null ? exit.spawnId : -1);
+                                writer.WriteValue(exit != null ? exit.spawnId : -1);
+                                writer.WritePropertyName("exit-list-index");
+                                writer.WriteValue((s.spawnAddress & 0xF0) >> 4);
                                 writer.WritePropertyName("scene-name");
                                 writer.WriteValue(s.sceneName);
                                 writer.WritePropertyName("scene-id");
@@ -345,7 +348,8 @@ namespace MMRando
 
         private void ReadTerminaMap()
         {
-
+            StreamReader file = new StreamReader(Values.MainDirectory + @"/entrances.json");
+            JsonReader spawnJson = new JsonTextReader(file);
         }
 
         private void BuildTerminaMap()

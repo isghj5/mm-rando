@@ -174,8 +174,8 @@ namespace MMRando
                 {
                     if (_randomized.EntranceList.ContainsKey(sceneIndex) && _randomized.ShuffledEntranceList.ContainsKey(sceneIndex) )
                     {
-                        System.Diagnostics.Debug.WriteLine("Scene " + sceneIndex + "\n-----\n");
-                        EntranceUtils.WriteSceneExits(sceneIndex, _randomized.EntranceList[sceneIndex].ToList(), _randomized.ShuffledEntranceList[sceneIndex]);
+                        System.Diagnostics.Debug.WriteLine("Scene " + sceneIndex.ToString("X2") + "\n-----\n");
+                        EntranceUtils.WriteSceneExits(sceneIndex, _randomized.EntranceList[sceneIndex], _randomized.ShuffledEntranceList[sceneIndex], Enumerable.Range(0,_randomized.EntranceList.Count).ToArray());
                     }
                 }
             }
