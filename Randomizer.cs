@@ -5,6 +5,7 @@ using MMRando.Models;
 using MMRando.Models.Rom;
 using MMRando.Models.Settings;
 using MMRando.Utils;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -258,19 +259,96 @@ namespace MMRando
             TerminaMap = new Dictionary<string, List<Spawn>>();
             ShuffledMap = new Dictionary<string, List<Spawn>>();
             SceneNamesByIndex = new Dictionary<ushort, List<string>>();
-            GetVanillaTerminaMap();
+            ReadTerminaMap();
             ShuffleEntrances();
             CheckEntrances();
             FinalizeEntrances();
             WriteMapData();
         }
 
-        private void WriteMapData()
+        private class SpawnData
         {
-            
+            public int spawnId;
+            public string sceneName;
+            public int sceneId;
+            public string spawnName;
+            public string spawnType;
+            public int spawnAddress;
+            public string exitName;
         }
 
-        private void GetVanillaTerminaMap()
+        private void WriteMapData()
+        {
+            StringBuilder sb = new StringBuilder();
+            StringWriter sw = new StringWriter(sb);
+            using (JsonWriter writer = new JsonTextWriter(sw))
+            {
+                writer.Formatting = Formatting.Indented;
+                writer.WriteStartObject();
+                writer.WritePropertyName("scenes");
+                writer.WriteStartArray();
+                List<SpawnData> spawns = new List<SpawnData>();
+                int spawnIndex = 0;
+                foreach (ushort sceneIndex in SceneNamesByIndex.Keys)
+                {
+                    foreach (string sceneName in SceneNamesByIndex[sceneIndex])
+                    {
+                        if (TerminaMap.ContainsKey(sceneName))
+                        {
+                            foreach (SpawnData s in TerminaMap[sceneName].Select(spawn => new SpawnData()
+                            {
+                                spawnId = spawnIndex++,
+                                sceneName = sceneName,
+                                sceneId = sceneIndex,
+                                spawnName = spawn.Name,
+                                spawnAddress = spawn.Address,
+                                spawnType = spawn.Type,
+                                exitName = (spawn.ExitSpawn.Count > 0) ? spawn.ExitSpawn[0].Name : "LUL"
+                            }))
+                            {
+                                spawns.Add(s);
+                            }
+                            SpawnData exit;
+                            foreach (SpawnData s in spawns)
+                            {
+                                exit = spawns.Find(x=>x.spawnName==s.exitName);
+                                writer.WriteStartObject();
+                                writer.WritePropertyName("id");
+                                writer.WriteValue(s.spawnId);
+                                writer.WritePropertyName("name");
+                                writer.WriteValue(s.spawnName);
+                                writer.WritePropertyName("number");
+                                writer.WriteValue(s.spawnAddress.ToString("X4"));
+                                writer.WritePropertyName("type");
+                                writer.WriteValue(s.spawnType);
+                                writer.WritePropertyName("exit-id");
+                                writer.WriteValue(exit!=null ? exit.spawnId : -1);
+                                writer.WritePropertyName("scene-name");
+                                writer.WriteValue(s.sceneName);
+                                writer.WritePropertyName("scene-id");
+                                writer.WriteValue(s.sceneId.ToString("X2"));
+                                writer.WriteEndObject();
+                            }
+                        }
+                    }
+                }
+                writer.WriteEndArray();
+                writer.WriteEndObject();
+            }
+            string spawnJson = sb.ToString();
+            Debug.WriteLine(spawnJson);
+            using (StreamWriter file = new StreamWriter(Values.MainDirectory + @"/entrances.json"))
+            {
+                file.Write(spawnJson);
+            }
+        }
+
+        private void ReadTerminaMap()
+        {
+
+        }
+
+        private void BuildTerminaMap()
         {
             AddSpawn("Clock Tower: South Clock Town", 0xC010, "Clock Tower");
             // Assign Clock Tower Scene a name
@@ -2652,7 +2730,7 @@ namespace MMRando
                     EntranceShuffle();
                 }
 
-                if (false)
+                if (_settings.RandomizeOwlStatues)
                 {
                     worker.ReportProgress(25, "Shuffling owl statues...");
                     OwlShuffle(false);
