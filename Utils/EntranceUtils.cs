@@ -51,19 +51,25 @@ namespace MMRando.Utils
             int exitAddress, shuffledIndex;
             ushort tempExit;
             exitAddress = scene.ExitAddr;
+            Dictionary<int, ushort> shuffledExitValues = new Dictionary<int, ushort>();
             for (int i = 0; i < shuffledExits.Length; i++)
             {
                 tempExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + i * 2);
                 System.Diagnostics.Debug.WriteLine($"{tempExit.ToString("X4")} : {originalExits[i].ToString("X4")} : {shuffledExits[i].ToString("X4")}");
+                
                 if ( originalExits.Contains( tempExit ))
                 {
                     shuffledIndex = originalExits.FindIndex(x => x == tempExit);
-                    System.Diagnostics.Debug.WriteLine($"{shuffledIndex}: [{tempExit.ToString("X4")} -> {shuffledExits[shuffledIndex].ToString("X4")}]");
+                    System.Diagnostics.Debug.WriteLine($"{shuffledIndex}: [{tempExit.ToString("X4")} -> {shuffledExits[i].ToString("X4")}]");
                     if (shuffledExits[i] != 0xFFFF)
                     {
-                        ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + shuffledIndex * 2, shuffledExits[shuffledIndex]);
+                        shuffledExitValues.Add((int)exitAddress + shuffledIndex * 2, shuffledExits[i]);
                     }
                 }
+            }
+            foreach (int address in shuffledExitValues.Keys)
+            {
+                ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, address, shuffledExitValues[address]);
             }
         }
     }
