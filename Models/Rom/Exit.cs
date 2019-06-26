@@ -7,13 +7,13 @@ namespace MMRando.Models.Rom
 {
     public class Exit
     {
-        public int spawnId;
-        public string sceneName;
-        public int sceneId;
-        public string spawnName;
-        public string spawnType;
-        public int spawnAddress;
-        public int exitId;
-        public int exitIndex;
+        public int ID;
+        public string SceneName;
+        public int SceneId;
+        public string SpawnName;
+        public string SpawnType;
+        public int SpawnAddress;
+        public int ExitId;
+        public int ExitIndex;
     }
 }

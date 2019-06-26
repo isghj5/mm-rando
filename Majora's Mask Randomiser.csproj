@@ -259,6 +259,9 @@
     <None Include="Resources\addresses\tunic-forms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\ENTRANCES.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\models\kafei">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

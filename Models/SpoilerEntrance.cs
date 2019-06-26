@@ -13,8 +13,8 @@ namespace MMRando.Models
         public string ShuffledEntrance { get; }
         public SpoilerEntrance(Spawn Original, Spawn Shuffled, bool WasPlaced)
         {
-            OriginalAddress = Original.Address;
-            OriginalEntrance = Original.Name;
+            OriginalAddress = Original.SpawnAddress;
+            OriginalEntrance = Original.SpawnName;
             if(Shuffled == null)
             {
                 ShuffledAddress = 0xFFFF;
@@ -22,8 +22,8 @@ namespace MMRando.Models
             }
             else
             {
-                ShuffledAddress = Shuffled.Address;
-                ShuffledEntrance = Shuffled.Name + (WasPlaced ? "" : " (Not Placed)");
+                ShuffledAddress = Shuffled.SpawnAddress;
+                ShuffledEntrance = Shuffled.SpawnName + (WasPlaced ? "" : " (Not Placed)");
             }
         }
     }

@@ -4,16 +4,21 @@ namespace MMRando.Models
 {
     public class Spawn
     {
+        public Spawn() { }
         public Spawn( string Name, ushort Address, string Scene)
         {
-            this.Name = Name;
-            this.Address = Address;
+            this.SpawnName = Name;
+            this.SpawnAddress = Address;
             this.SceneName = Scene;
         }
-        public string Name { get; set; }
+        public int ID { get; set; }
+        public string SpawnName { get; set; }
+        public ushort SpawnAddress { get; set; }
+        public string SpawnType { get; set; }
         public string SceneName { get; set; }
-        public ushort Address { get; set; }
-        public List<Spawn> ExitSpawn { get; set; } = new List<Spawn>();
-        public string Type { get; set; }
+        public ushort SceneId { get; set; }
+        public int ExitIndex { get; set; }
+        public Spawn ExitSpawn { get; set; }
+        public int ExitId { get; set; }
     }
 }

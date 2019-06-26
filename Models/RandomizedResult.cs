@@ -11,7 +11,8 @@ namespace MMRando.Models
         public SettingsObject Settings { get; private set; }
         public Random Random { get; private set; }
         public List<ItemObject> ItemList { get; set; }
-        public Dictionary<int,ushort[]> EntranceList { get; set; }
+        public Dictionary<int, ushort[]> EntranceList { get; set; }
+        public Dictionary<int, int[]> ExitListIndices { get; set; }
         public Dictionary<int, ushort[]> ShuffledEntranceList { get; set; }
         public List<SpoilerEntrance> EntranceSpoilers { get; set; }
         public int[] OwlStatueList { get; set; }
