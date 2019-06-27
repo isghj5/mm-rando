@@ -170,12 +170,14 @@ namespace MMRando
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
+                int[] fakeExits = Enumerable.Range(0, 32).ToArray();
                 foreach (int sceneIndex in RomData.SceneList.Select(s=>s.Number))
                 {
                     if (_randomized.EntranceList.ContainsKey(sceneIndex) && _randomized.ShuffledEntranceList.ContainsKey(sceneIndex) )
                     {
                         System.Diagnostics.Debug.WriteLine("Scene " + sceneIndex.ToString("X2") + "\n-----\n");
                         EntranceUtils.WriteSceneExits(sceneIndex, _randomized.EntranceList[sceneIndex], _randomized.ShuffledEntranceList[sceneIndex], _randomized.ExitListIndices[sceneIndex]);
+                        //EntranceUtils.WriteSceneExits(sceneIndex, fakeExits.Select(x=>(ushort)x).ToArray(), fakeExits.Select(x => (ushort)x).ToArray(), fakeExits);
                     }
                 }
             }

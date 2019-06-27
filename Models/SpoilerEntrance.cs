@@ -11,7 +11,7 @@ namespace MMRando.Models
         public ushort ShuffledAddress { get; }
         public string OriginalEntrance { get; }
         public string ShuffledEntrance { get; }
-        public SpoilerEntrance(Spawn Original, Spawn Shuffled, bool WasPlaced)
+        public SpoilerEntrance(Exit Original, Exit Shuffled, bool WasPlaced)
         {
             OriginalAddress = Original.SpawnAddress;
             OriginalEntrance = Original.SpawnName;
