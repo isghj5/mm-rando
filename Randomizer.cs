@@ -260,23 +260,23 @@ namespace MMRando
             ShuffledMap = new Dictionary<string, List<Exit>>();
             SceneNamesByIndex = new Dictionary<ushort, List<string>>();
             ReadTerminaMap();
-            //BuildTerminaMap();
             ShuffleEntrances();
             //CheckEntrances();
             FinalizeEntrances();
-            WriteMapData();
+            //WriteMapData();
         }
 
         private void ConnectPairedEntrances()
         {
+            List<Exit> allSpawns = GetSpawns();
             foreach (List<Exit> spawns in TerminaMap.Values)
             {
                 foreach (Exit spawn in spawns)
                 {
-                    if (spawn.ExitId > 0 && spawn.ExitId < spawns.Count)
+                    if (spawn.ExitId > 0 && spawn.ExitId < allSpawns.Count)
                     {
-                        Exit match = spawns.Find(s => s.ID == spawn.ExitId);
-                        PairSpawns(spawn.SpawnName, spawns[spawn.ExitId].SpawnName, spawn.SpawnType);
+                        Exit match = allSpawns.Find(s => s.ID == spawn.ExitId);
+                        spawn.ExitSpawn = match;
                     }
                 }
             }
@@ -284,15 +284,6 @@ namespace MMRando
 
         private void WriteMapData()
         {
-            //int spawnID = 1;
-            //GetSpawns().ForEach(s => s.ID = spawnID++);
-            foreach (Exit s in GetSpawns())
-            {
-                if (s.ExitSpawn != null)
-                {
-                    s.ExitIndex = (s.ExitSpawn.SpawnAddress & 0xF0) >> 4;
-                }
-            }
             List<Exit> spawns = new List<Exit>();
             Dictionary<string, bool> added = new Dictionary<string, bool>();
             int spawnIndex = 1;
@@ -312,7 +303,8 @@ namespace MMRando
                             //SpawnAddressString = spawn.SpawnAddress.ToString("X4"),
                             //SpawnType = spawn.SpawnType,
                             //ExitId = spawn.ExitId,
-                            //ExitIndex = (spawn.SpawnAddress & 0xF0) >> 4,
+                            //ExitName = spawn.ExitSpawn == null ? "" : spawn.ExitSpawn.SpawnName,
+                            //ExitIndex = (spawn.ExitSpawn == null) ? 0 : (spawn.ExitSpawn.SpawnAddress & 0xF0) >> 4,
                             ID = spawn.ID,
                             SceneName = spawn.SceneName,
                             SceneId = spawn.SceneId,
@@ -321,7 +313,8 @@ namespace MMRando
                             SpawnAddressString = spawn.SpawnAddressString,
                             SpawnType = spawn.SpawnType,
                             ExitId = spawn.ExitId,
-                            //ExitIndex = spawn.ExitIndex,
+                            ExitName = spawn.ExitName,
+                            ExitIndex = spawn.ExitIndex
                         }))
                         {
                             if (!added.ContainsKey(s.SpawnName))
@@ -337,7 +330,7 @@ namespace MMRando
             JsonSerializerSettings settings = new JsonSerializerSettings();
             string spawnJson = JsonConvert.SerializeObject(spawns,Formatting.Indented);
             Debug.WriteLine(spawnJson);
-            using (StreamWriter file = new StreamWriter(Values.MainDirectory + @"/ENTRANCES.json"))
+            using (StreamWriter file = new StreamWriter(Values.MainDirectory + @"\Resources\ENTRANCES.json"))
             {
                 file.Write(spawnJson);
             }
@@ -345,7 +338,7 @@ namespace MMRando
 
         private void ReadTerminaMap()
         {
-            StreamReader file = new StreamReader(Values.MainDirectory + @"/ENTRANCES.json");
+            StreamReader file = new StreamReader(Values.MainDirectory + @"\Resources\ENTRANCES.json");
             string spawnJson = file.ReadToEnd();
             List<Exit> spawnData = JsonConvert.DeserializeObject<List<Exit>>(spawnJson);
             file.Close();
@@ -905,6 +898,12 @@ namespace MMRando
 
         private Exit ChooseNextEntrance(Dictionary<string, bool> SpawnSet, string DepartureType, List<string> DeparturePool, Predicate<Exit> CanAdd)
         {
+            Dictionary<string, string> spawnTypeMap = new Dictionary<string, string>()
+            {
+                { "Interior", "Interior Exit" },
+                {"Interior Exit", "interior" }
+            };
+            string matchType = spawnTypeMap.ContainsKey(DepartureType) ? spawnTypeMap[DepartureType] : DepartureType;
             List<string> candidates = new List<string>();
             foreach (string SpawnName in SpawnSet.Keys)
             {
@@ -914,7 +913,7 @@ namespace MMRando
                     if (CanAdd.Invoke(S))
                     {
                         // need to keep this up to date with the section above
-                        if (DepartureType == S.SpawnType)
+                        if (matchType == S.SpawnType)
                         {
                             candidates.Add(S.SpawnName);
                         }

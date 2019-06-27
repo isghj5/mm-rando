@@ -55,7 +55,7 @@ namespace MMRando.Utils
             {
                 tempExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + shuffledIndexes[i] * 2);
                 ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + shuffledIndexes[i] * 2, shuffledExits[i]);
-                System.Diagnostics.Debug.WriteLine($"\"{originalExits[i]}\" @ {shuffledIndexes[i]}: {tempExit.ToString("X4")} -> {shuffledExits[i].ToString("X4")}");
+                System.Diagnostics.Debug.WriteLine($"\"{originalExits[i].ToString("X4")}\" @ {shuffledIndexes[i]}: {tempExit.ToString("X4")} -> {shuffledExits[i].ToString("X4")}");
             }
         }
     }

@@ -19,6 +19,7 @@ namespace MMRando.Models
         public string SceneName { get; set; }
         public ushort SceneId { get; set; }
         public int ExitIndex { get; set; }
+        public string ExitName { get; set; }
         public Exit ExitSpawn { get; set; }
         public int ExitId { get; set; }
     }
