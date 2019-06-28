@@ -1354,7 +1354,7 @@ namespace MMRando
             bool WasPlaced;
             int numExits, currExit;
 
-            foreach ( Exit s in GetSpawns())
+            foreach ( Exit s in GetSpawns().Where(x=>x.SpawnType!="Owl Warp"))
             {
                 if(!EntranceShuffle.ContainsKey(s.SceneId))
                 {

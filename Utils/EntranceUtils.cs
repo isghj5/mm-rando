@@ -40,6 +40,24 @@ namespace MMRando.Utils
             }
         }
 
+        public static void ReadSceneExits(int sceneNumber, int count)
+        {
+            SceneUtils.ReadSceneTable();
+            SceneUtils.GetMaps();
+            SceneUtils.GetMapHeaders();
+            Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
+            int f = scene.File;
+            RomUtils.CheckCompressed(f);
+            int exitAddress;
+            ushort tempExit;
+            exitAddress = scene.ExitAddr;
+            for (int i = 0; i < count; i++)
+            {
+                tempExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + i * 2);
+                System.Diagnostics.Debug.WriteLine($"{i}: {tempExit.ToString("X4")}");
+            }
+        }
+
         public static void WriteSceneExits(int sceneNumber, ushort[] originalExits, ushort[] shuffledExits, int[] shuffledIndexes)
         {
             SceneUtils.ReadSceneTable();
