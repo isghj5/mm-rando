@@ -9,6 +9,10 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using MMRando.GameObjects;
+using MMRando.Extensions;
+using MMRando.Attributes;
+using System.Text.RegularExpressions;
 
 namespace MMRando
 {
@@ -340,49 +344,52 @@ namespace MMRando
             dictionary[key] = add ? (byte)(dictionary[key] + value) : (byte)(dictionary[key] | value);
         }
 
-        private void WriteFreeItems(params int[] itemIds)
+        private void WriteFreeItems(params Item[] items)
         {
             Dictionary<int, byte> startingItems = new Dictionary<int, byte>();
-            if (!itemIds.Contains(Items.UpgradeRazorSword) && !itemIds.Contains(Items.UpgradeGildedSword))
+            if (!items.Contains(Item.UpgradeRazorSword) && !items.Contains(Item.UpgradeGildedSword))
             {
                 PutOrCombine(startingItems, 0xC5CE21, 0x01); // add Kokiri Sword
             }
-            if (!itemIds.Contains(Items.UpgradeMirrorShield))
+            if (!items.Contains(Item.UpgradeMirrorShield))
             {
                 PutOrCombine(startingItems, 0xC5CE21, 0x10); // add Hero's Shield
             }
             PutOrCombine(startingItems, 0xC5CE72, 0x10); // add Song of Time
 
-            foreach (var id in itemIds)
+            foreach (var item in items)
             {
-                var itemAddress = Items.ITEM_ADDRS[id];
-                var itemValue = Items.ITEM_VALUES[id];
-                PutOrCombine(startingItems, itemAddress, itemValue, ItemUtils.IsHeartPiece(id));
-
-                switch (id)
+                var startingItem = item.GetAttribute<StartingItemAttribute>();
+                if (startingItem == null)
                 {
-                    case Items.ItemBow:
+                    throw new Exception($@"Invalid starting item ""{item}""");
+                }
+                PutOrCombine(startingItems, startingItem.Address, startingItem.Value, ItemUtils.IsHeartPiece(item));
+
+                switch (item)
+                {
+                    case Item.ItemBow:
                         PutOrCombine(startingItems, 0xC5CE6F, 0x01);
                         break;
-                    case Items.ItemBombBag:
+                    case Item.ItemBombBag:
                         PutOrCombine(startingItems, 0xC5CE6F, 0x08);
                         break;
-                    case Items.UpgradeRazorSword: //sword upgrade
+                    case Item.UpgradeRazorSword: //sword upgrade
                         startingItems[0xC5CE00] = 0x4E;
                         break;
-                    case Items.UpgradeGildedSword:
+                    case Item.UpgradeGildedSword:
                         startingItems[0xC5CE00] = 0x4F;
                         break;
-                    case Items.UpgradeBigQuiver: //quiver upgrade
+                    case Item.UpgradeBigQuiver: //quiver upgrade
                         PutOrCombine(startingItems, 0xC5CE6F, 0x02);
                         break;
-                    case Items.UpgradeBiggestQuiver:
+                    case Item.UpgradeBiggestQuiver:
                         PutOrCombine(startingItems, 0xC5CE6F, 0x03);
                         break;
-                    case Items.UpgradeBigBombBag://bomb bag upgrade
+                    case Item.UpgradeBigBombBag://bomb bag upgrade
                         PutOrCombine(startingItems, 0xC5CE6F, 0x10);
                         break;
-                    case Items.UpgradeBiggestBombBag:
+                    case Item.UpgradeBiggestBombBag:
                         PutOrCombine(startingItems, 0xC5CE6F, 0x18);
                         break;
                     default:
@@ -398,16 +405,16 @@ namespace MMRando
 
         private void WriteItems()
         {
-            var freeItems = new List<int>();
+            var freeItems = new List<Item>();
             if (_settings.LogicMode == LogicMode.Vanilla)
             {
-                freeItems.Add(Items.MaskDeku);
-                freeItems.Add(Items.SongHealing);
+                freeItems.Add(Item.MaskDeku);
+                freeItems.Add(Item.SongHealing);
 
                 if (_settings.ShortenCutscenes)
                 {
                     //giants cs were removed
-                    freeItems.Add(Items.SongOath);
+                    freeItems.Add(Item.SongOath);
                 }
 
                 WriteFreeItems(freeItems.ToArray());
@@ -416,8 +423,8 @@ namespace MMRando
             }
 
             //write free item (start item default = Deku Mask)
-            freeItems.Add(_randomized.ItemList.Find(u => u.ReplacesItemId == Items.MaskDeku).ID);
-            freeItems.Add(_randomized.ItemList.Find(u => u.ReplacesItemId == Items.SongHealing).ID);
+            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.MaskDeku).Item);
+            freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.SongHealing).Item);
             WriteFreeItems(freeItems.ToArray());
 
             //write everything else
@@ -430,31 +437,46 @@ namespace MMRando
                 ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-downgrades");
             }
 
+            var newMessages = new List<MessageEntry>();
             foreach (var item in _randomized.ItemList)
             {
-                bool isRepeatable = Items.REPEATABLE.Contains(item.ID);
-                bool isCycleRepeatable = Items.CYCLE_REPEATABLE.Contains(item.ID);
+                bool isRepeatable = item.Item.HasAttribute<RepeatableAttribute>();
+                bool isCycleRepeatable = item.Item.HasAttribute<CycleRepeatableAttribute>();
 
                 if (!_settings.PreventDowngrades)
                 {
-                    isRepeatable |= Items.DOWNGRADABLE_ITEMS.Contains(item.ID);
+                    isRepeatable |= item.Item.HasAttribute<DowngradableAttribute>();
                 }
 
                 // Unused item
-                if (!item.ReplacesAnotherItem)
+                if (item.NewLocation == null)
                 {
                     continue;
                 }
 
-                if (ItemUtils.IsBottleCatchContent(item.ID))
+                if (ItemUtils.IsBottleCatchContent(item.Item))
                 {
-                    ItemSwapUtils.WriteNewBottle(item.ReplacesItemId, item.ID);
+                    ItemSwapUtils.WriteNewBottle(item.NewLocation.Value, item.Item);
                 }
                 else
                 {
-                    ItemSwapUtils.WriteNewItem(item.ReplacesItemId, item.ID, isRepeatable, isCycleRepeatable);
+                    ItemSwapUtils.WriteNewItem(item.NewLocation.Value, item.Item, isRepeatable, isCycleRepeatable, newMessages, _settings.UpdateShopAppearance);
                 }
             }
+
+            var copyRupeesRegex = new Regex(": [0-9]+ Rupees");
+            foreach (var newMessage in newMessages)
+            {
+                var oldMessage = _messageTable.GetMessage(newMessage.Id);
+                if (oldMessage != null)
+                {
+                    newMessage.Header = oldMessage.Header;
+                    var cost = copyRupeesRegex.Match(oldMessage.Message).Value;
+                    newMessage.Message = copyRupeesRegex.Replace(newMessage.Message, cost);
+                }
+            }
+
+            _messageTable.UpdateMessages(newMessages);
 
             if (_settings.AddShopItems)
             {
@@ -543,6 +565,33 @@ namespace MMRando
             RomUtils.SetStrings(Values.ModsDirectory + "logo-text", $"v{v}", _settings.ToString());
         }
 
+        private void WriteShopObjects()
+        {
+            RomUtils.CheckCompressed(1325); // trading post
+            var data = RomData.MMFileList[1325].Data.ToList();
+            data.RemoveRange(0x15C, 4); // reduce end padding from actors list
+            data.InsertRange(0x62, new byte[] { 0x00, 0xC1, 0x00, 0xAF }); // add extra objects
+            data[0x29] += 2; // increase object count by 2
+            data[0x37] += 4; // add 4 to actor list address
+            RomData.MMFileList[1325].Data = data.ToArray();
+
+            RomUtils.CheckCompressed(1503); // bomb shop
+            RomData.MMFileList[1503].Data[0x53] = 0x98; // add extra objects
+            RomData.MMFileList[1503].Data[0x29] += 1; // increase object count by 1
+
+            RomUtils.CheckCompressed(1142); // witch shop
+            data = RomData.MMFileList[1142].Data.ToList();
+            data.RemoveRange(0x78, 4); // reduce end padding from actors list
+            data.InsertRange(0x48, new byte[] { 0x00, 0xC1, 0x00, 0xC1 }); // add extra objects
+            data[0x29] += 2; // increase object count by 2
+            data[0x37] += 4; // add 4 to actor list address
+            RomData.MMFileList[1142].Data = data.ToArray();
+
+            RomUtils.CheckCompressed(1152); // curiosity shop
+            RomData.MMFileList[1152].Data[0x5B] = 0x98; // add extra objects
+            RomData.MMFileList[1152].Data[0x29] += 1; // increase object count by 1
+        }
+
         public void MakeROM(string baseROMFilename, string outputROMFilename, BackgroundWorker worker)
         {
             using (BinaryReader baseROM = new BinaryReader(File.Open(baseROMFilename, FileMode.Open, FileAccess.Read)))
@@ -597,6 +646,11 @@ namespace MMRando
 
                 worker.ReportProgress(65, "Writing enemies...");
                 WriteEnemies();
+
+                // if shop should match given items
+                {
+                    WriteShopObjects();
+                }
 
                 worker.ReportProgress(66, "Writing items...");
                 WriteItems();

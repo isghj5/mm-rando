@@ -206,6 +206,16 @@ namespace MMRando.Models
             set => SetField(ref preventDowngrades, value);
         }
         private bool preventDowngrades = true;
+
+        /// <summary>
+        /// Update shop models and text
+        /// </summary>
+        public bool UpdateShopAppearance
+        {
+            get => updateShopAppearance;
+            set => SetField(ref updateShopAppearance, value);
+        }
+        private bool updateShopAppearance = true;
         #endregion
 
         #region Gimmicks

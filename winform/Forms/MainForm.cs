@@ -86,6 +86,7 @@ namespace MMRando
             TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
             TooltipBuilder.SetTooltip(cClearHints, "Gossip stone hints will give clear item and location names.");
             TooltipBuilder.SetTooltip(cNoDowngrades, "Downgrading items will be prevented.");
+            TooltipBuilder.SetTooltip(cShopAppearance, "Shops models and text will be updated to match the item they give.");
             TooltipBuilder.SetTooltip(bTunic, "Select the color of Link's Tunic.");
             TooltipBuilder.SetTooltip(cLink, "Select a character model to replace Link's default model.");
             TooltipBuilder.SetTooltip(cTatl, "Select a color scheme to replace Tatl's default color scheme.");
@@ -396,6 +397,7 @@ namespace MMRando
             cFreeHints.Enabled = v;
             cClearHints.Enabled = v;
             cNoDowngrades.Enabled = v;
+            cShopAppearance.Enabled = v;
             cHTMLLog.Enabled = v;
             cN64.Enabled = v;
             cMoonItems.Enabled = v;
@@ -463,6 +465,7 @@ namespace MMRando
             BindCheckboxToSetting(cFreeHints, nameof(_settings.FreeHints));
             BindCheckboxToSetting(cClearHints, nameof(_settings.ClearHints));
             BindCheckboxToSetting(cNoDowngrades, nameof(_settings.PreventDowngrades));
+            BindCheckboxToSetting(cShopAppearance, nameof(_settings.UpdateShopAppearance));
 
             BindComboBoxToEnumSetting(cDMult, nameof(_settings.DamageMode), DamageMode.Default);
             BindComboBoxToEnumSetting(cDType, nameof(_settings.DamageEffect), DamageEffect.Default);
@@ -566,6 +569,7 @@ namespace MMRando
             cBGM.Enabled = v;
             cFreeHints.Enabled = v;
             cNoDowngrades.Enabled = v;
+            cShopAppearance.Enabled = v;
             cClearHints.Enabled = _settings.LogicMode != LogicMode.Vanilla && _settings.GossipHintStyle != GossipHintStyle.Default && v;
             cGossipHints.Enabled = _settings.LogicMode != LogicMode.Vanilla && v;
 
