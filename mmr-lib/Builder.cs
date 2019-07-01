@@ -438,29 +438,21 @@ namespace MMRando
             }
 
             var newMessages = new List<MessageEntry>();
-            foreach (var item in _randomized.ItemList)
+            foreach (var io in _randomized.ItemList)
             {
-                bool isRepeatable = item.Item.HasAttribute<RepeatableAttribute>();
-                bool isCycleRepeatable = item.Item.HasAttribute<CycleRepeatableAttribute>();
-
-                if (!_settings.PreventDowngrades)
-                {
-                    isRepeatable |= item.Item.HasAttribute<DowngradableAttribute>();
-                }
-
                 // Unused item
-                if (item.NewLocation == null)
+                if (io.NewLocation == null)
                 {
                     continue;
                 }
 
-                if (ItemUtils.IsBottleCatchContent(item.Item))
+                if (ItemUtils.IsBottleCatchContent(io.Item))
                 {
-                    ItemSwapUtils.WriteNewBottle(item.NewLocation.Value, item.Item);
+                    ItemSwapUtils.WriteNewBottle(io.NewLocation.Value, io.Item);
                 }
                 else
                 {
-                    ItemSwapUtils.WriteNewItem(item.NewLocation.Value, item.Item, isRepeatable, isCycleRepeatable, newMessages, _settings.UpdateShopAppearance);
+                    ItemSwapUtils.WriteNewItem(io.NewLocation.Value, io.Item, newMessages, _settings.UpdateShopAppearance, _settings.PreventDowngrades);
                 }
             }
 
