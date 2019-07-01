@@ -129,7 +129,7 @@ namespace MMRando.Utils
                 cycle_repeat += 2;
             }
 
-            var repeatable = item.IsRepeatable() || (preventDowngrades && item.IsDowngradable());
+            var repeatable = item.IsRepeatable() || (!preventDowngrades && item.IsDowngradable());
             if (!repeatable)
             {
                 SceneUtils.UpdateSceneFlagMask(getItemIndex);
