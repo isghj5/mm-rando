@@ -394,7 +394,7 @@ namespace MMRando
                 if (S.SpawnName.Contains("Owl Warp"))
                 { SpawnType = ShuffleOwls ? "Owl Warp" : "Permanent"; }
                 if (S.SpawnName.Contains("Grotto"))
-                { SpawnType = ShuffleGrotto ? "One Way" : "Permanent"; }
+                { SpawnType = ShuffleGrotto ? "Grotto" : "Permanent"; }
                 if (S.SpawnType == null && S.ExitSpawn == null)
                 { SpawnType = "One Way"; }
 
@@ -446,6 +446,7 @@ namespace MMRando
                 "Telescope",
                 "One Way",
                 "Owl Warp",
+                "Grotto",
                 "Insanity",
             })
             {
