@@ -3,14 +3,14 @@
 -vars - todo: may connect to switches
 -type - 0=ground, 1=water, 2=air, 3=other, 4=respawn
 -moving - 0=no, 1=yes
--scene excludes
+-exclude map or scene file
 -octorok
 0008
 0005
 ff00
 1
 0
-13,49
+1165,1369
 -wallmaster
 000a
 0009
@@ -45,7 +45,7 @@ fffd,fffe,ffff
 0000
 0
 1
-7
+1522
 -dinolfos
 0019
 0017
@@ -59,14 +59,14 @@ fffd,fffe,ffff
 0000
 2
 1
-69
+1504
 -skulltula
 0024
 0020
 003f,007f,0004
 3
 0
-27,28
+1284,1291
 -death armos - crash, link to paths?
 -002d
 -001d
@@ -93,7 +93,7 @@ ffff
 ff02,ff00
 0
 0
-46
+1362
 -red bubble
 003c
 0051
@@ -128,7 +128,7 @@ ffff
 7f07,7f05,7f06
 0
 0
-4b,13
+1388,1165
 -skullwalltula
 -0050
 -0020
@@ -183,7 +183,7 @@ ff01,ff81,ff00
 0042,0022,0032
 0
 1
-43,28
+1353,1291
 -guay
 00f1
 0006
@@ -211,7 +211,7 @@ ff01,ff81,ff00
 0c01,1402,ff03,ff01,ff00,0a01,0202,0801,ff02
 4
 1
-49
+1369
 -desbreko
 014b
 016b
@@ -232,14 +232,14 @@ ff01,ff81,ff00
 ff34,ff02,ff01,ff03,ff9f,019f,0102,0103
 2
 1
-18
+1190
 -boe
 0164
 017a
 ff00,6404,7804,7800,2800,3200,9605,3205,6405,ff01,ff05,c200,fa00,fa01,8c05
 4
 1
-
+1218
 -real bombchu
 016f
 0181
@@ -260,7 +260,7 @@ ff00,6404,7804,7800,2800,3200,9605,3205,6405,ff01,ff05,c200,fa00,fa01,8c05
 0000
 0
 1
-1b
+1208
 -eeno
 01e6
 01c4
@@ -281,11 +281,11 @@ ff00,ff01,0000,0001
 00ff
 2
 1
-16,18
+1175,1190
 -hornet
 0204
 01eb
 0000
 2
 1
-23
+1258

@@ -50,7 +50,6 @@ namespace MMRando.Utils
                 if (saddr != 0)
                 {
                     s.File = RomUtils.AddrToFile((int)saddr);
-                    s.Number = i >> 4;
                     RomData.SceneList.Add(s);
                 }
                 i += 16;

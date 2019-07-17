@@ -13,6 +13,6 @@ namespace MMRando.Models.Rom
         public List<int> Variables = new List<int>();
         public int Type;
         public int Stationary;
-        public List<int> SceneExclude = new List<int>();
+        public List<int> ExcludeMapOrSceneFile = new List<int>();
     }
 }
