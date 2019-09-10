@@ -19,6 +19,10 @@ namespace MMRando.Models.Rom
         {
             if (messages.ContainsKey(message.Id))
             {
+                if (message.Header == null)
+                {
+                    message.Header = messages[message.Id].Header;
+                }
                 messages[message.Id] = message;
             }
         }
@@ -29,6 +33,15 @@ namespace MMRando.Models.Rom
             {
                 UpdateMessages(item);
             }
+        }
+
+        public MessageEntry GetMessage(ushort id)
+        {
+            if (messages.ContainsKey(id))
+            {
+                return messages[id];
+            }
+            return null;
         }
 
         public void InitializeTable()

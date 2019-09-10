@@ -11,6 +11,10 @@ namespace MMRando.Extensions
         {
             var type = value.GetType();
             var name = Enum.GetName(type, value);
+            if (name == null)
+            {
+                return null;
+            }
             return type.GetField(name)
                 .GetCustomAttributes(false)
                 .OfType<TAttribute>()
@@ -21,9 +25,27 @@ namespace MMRando.Extensions
         {
             var type = value.GetType();
             var name = Enum.GetName(type, value);
+            if (name == null)
+            {
+                return null;
+            }
             return type.GetField(name)
                 .GetCustomAttributes(false)
                 .OfType<TAttribute>();
+        }
+
+        public static bool HasAttribute<TAttribute>(this Enum value) where TAttribute : Attribute
+        {
+            var type = value.GetType();
+            var name = Enum.GetName(type, value);
+            if (name == null)
+            {
+                return false;
+            }
+            return type.GetField(name)
+                .GetCustomAttributes(false)
+                .OfType<TAttribute>()
+                .Any();
         }
     }
 }

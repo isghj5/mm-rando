@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -68,13 +68,33 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Attributes\ChestAttribute.cs" />
+    <Compile Include="Attributes\ChestTypeAttribute.cs" />
+    <Compile Include="Attributes\CycleRepeatableAttribute.cs" />
+    <Compile Include="Attributes\EntranceNameAttribute.cs" />
+    <Compile Include="Attributes\GetBottleItemIndicesAttribute.cs" />
+    <Compile Include="Attributes\GetItemIndexAttribute.cs" />
+    <Compile Include="Attributes\GossipItemHintAttribute.cs" />
+    <Compile Include="Attributes\GossipLocationHintAttribute.cs" />
+    <Compile Include="Attributes\ShopRoomAttribute.cs" />
+    <Compile Include="Attributes\ShopTextAttribute.cs" />
+    <Compile Include="Attributes\ShopInventoryAttribute.cs" />
+    <Compile Include="Attributes\TemporaryAttribute.cs" />
+    <Compile Include="Attributes\RegionNameAttribute.cs" />
+    <Compile Include="Attributes\LocationNameAttribute.cs" />
+    <Compile Include="Attributes\ItemNameAttribute.cs" />
+    <Compile Include="Attributes\RepeatableAttribute.cs" />
+    <Compile Include="Attributes\DowngradableAttribute.cs" />
     <Compile Include="Attributes\GossipRestrictAttribute.cs" />
+    <Compile Include="Attributes\StartingItemAttribute.cs" />
     <Compile Include="Extensions\AttributeExtensions.cs" />
+    <Compile Include="Extensions\ItemExtensions.cs" />
     <Compile Include="Extensions\KeyEqualityComparer.cs" />
     <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="Forms\Tooltips\TooltipBuilder.cs" />
     <Compile Include="GameObjects\GossipQuote.cs" />
-    <Compile Include="Models\MoonPathItem.cs" />
+    <Compile Include="GameObjects\Item.cs" />
+    <Compile Include="GameObjects\MessageShopText.cs" />
     <Compile Include="Models\RandomizedResult.cs" />
     <Compile Include="Models\Rom\MessageTable.cs" />
     <Compile Include="Models\Rom\Enemy.cs" />
@@ -307,6 +327,18 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\mods\fierce-deity-anywhere">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\mods\fix-cow-bottle-check">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\mods\fix-fairies">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\mods\fix-skulltula-tokens">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\mods\fix-sword-song-of-time">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\mods\fix-epona">
@@ -817,16 +849,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="200px_majoramask_rtw_icon.ico" />
+    <None Include="Resources\REQ_GLITCH_COMMONTRICKS.txt" />
+    <None Include="Resources\REQ_GLITCH_NOSETUPS.txt" />
     <Content Include="Templates\HtmlSpoiler.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>HtmlSpoiler.cs</LastGenOutput>
     </Content>
-    <None Include="Resources\ITEM_INDICES.txt" />
     <None Include="Resources\ENEMIES.txt" />
-    <None Include="Resources\GOSSIP.txt" />
     <None Include="Resources\SEQS.txt" />
     <None Include="Resources\REQ_CASUAL.txt" />
-    <EmbeddedResource Include="Resources\REQ_GLITCH.txt" />
+    <None Include="Resources\REQ_GLITCH.txt" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

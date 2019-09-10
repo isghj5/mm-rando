@@ -9,16 +9,17 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using MMRando.LogicMigrator;
+using MMRando.Properties;
 
 namespace MMRando
 {
     public partial class LogicEditorForm : Form
     {
         private static readonly string[] DEFAULT_ITEM_NAMES = new string[] { "Deku Mask", "Hero's Bow", "Fire Arrow", "Ice Arrow", "Light Arrow", "Bomb Bag (20)", "Magic Bean", 
-        "Powder Keg", "Pictobox", "Lens of Truth", "Hookshot", "Great Fairy's Sword", "Witch Bottle", "Aliens Bottle", "Gold Dust", 
-        "Beaver Race Bottle", "Dampe Bottle", "Chateau Bottle", "Bombers' Notebook", "Razor Sword", "Gilded Sword", "Mirror Shield",
-        "Town Archery Quiver (40)", "Swamp Archery Quiver (50)", "Town Bomb Bag (30)", "Mountain Bomb Bag (40)", "Town Wallet (200)", "Ocean Wallet (500)", "Moon's Tear", 
-        "Land Title Deed", "Swamp Title Deed", "Mountain Title Deed", "Ocean Title Deed", "Room Key", "Letter to Kafei", "Pendant of Memories",
+        "Powder Keg", "Pictobox", "Lens of Truth", "Hookshot", "Great Fairy Magic Meter", "Great Fairy Spin Attack", "Great Fairy Extended Magic", "Great Fairy Double Defense",
+        "Great Fairy's Sword", "Witch Bottle", "Aliens Bottle", "Goron Race Bottle", "Beaver Race Bottle", "Dampe Bottle", "Chateau Bottle", "Bombers' Notebook", "Razor Sword",
+        "Gilded Sword", "Mirror Shield", "Town Archery Quiver (40)", "Swamp Archery Quiver (50)", "Town Bomb Bag (30)", "Mountain Bomb Bag (40)", "Town Wallet (200)",
+        "Ocean Wallet (500)", "Moon's Tear", "Land Title Deed", "Swamp Title Deed", "Mountain Title Deed", "Ocean Title Deed", "Room Key", "Letter to Kafei", "Pendant of Memories",
         "Letter to Mama", "Mayor Dotour HP", "Postman HP", "Rosa Sisters HP", "??? HP", "Grandma Short Story HP", "Grandma Long Story HP",
         "Keaton Quiz HP", "Deku Playground HP", "Town Archery HP", "Honey and Darling HP", "Swordsman's School HP", "Postbox HP",
         "Termina Field Gossips HP", "Termina Field Business Scrub HP", "Swamp Archery HP", "Pictograph Contest HP", "Boat Archery HP",
@@ -46,7 +47,7 @@ namespace MMRando
         "Great Bay Coast Grotto", "Great Bay Cape Ledge (1)", "Great Bay Cape Ledge (2)", "Great Bay Cape Grotto", "Great Bay Cape Underwater", 
         "PF Exterior 20r (1)", "PF Exterior 20r (2)", "PF Exterior 20r (3)", "Path to Swamp Grotto", "Doggy Racetrack 50r", "Graveyard Grotto",
         "Swamp Grotto", "Woodfall 5r", "Woodfall 20r", "Well Right Path 50r", "Well Left Path 50r", "Mountain Village Chest (Spring)",
-        "Mountain Village Grotto Bottle (Spring)", "Path to Ikana 20r", "Path to Ikana Grotto", "Stone Tower 100r", "Stone Tower Bombchu 10",
+        "Mountain Village Grotto (Spring) 20r", "Path to Ikana 20r", "Path to Ikana Grotto", "Stone Tower 100r", "Stone Tower Bombchu 10",
         "Stone Tower Magic Bean", "Path to Snowhead Grotto", "Twin Islands 20r", "Secret Shrine HP", "Secret Shrine Dinolfos",
         "Secret Shrine Wizzrobe", "Secret Shrine Wart", "Secret Shrine Garo Master", "Inn Staff Room", "Inn Guest Room", "Mystery Woods Grotto",
         "East Clock Town 100r", "South Clock Town 20r", "South Clock Town 50r", "Bank HP", "South Clock Town HP", "North Clock Town HP",
@@ -54,7 +55,100 @@ namespace MMRando
         "Pirates' Fortress HP", "Zora Hall Scrub HP", "Path to Snowhead HP", "Great Bay Coast HP", "Ikana Scrub HP", "Ikana Castle HP", 
         "Odolwa Heart Container", "Goht Heart Container", "Gyorg Heart Container", "Twinmold Heart Container", "Map: Clock Town", "Map: Woodfall",
         "Map: Snowhead", "Map: Romani Ranch", "Map: Great Bay", "Map: Stone Tower", "Goron Racetrack Grotto", "Ikana Scrub 200r", "One Mask", "Two Masks",
-        "Three Masks", "Four Masks", "Moon Access", "Deku Trial HP", "Goron Trial HP", "Zora Trial HP", "Link Trial HP", "Fierce Deity's Mask" };
+        "Three Masks", "Four Masks", "Moon Access", "Deku Trial HP", "Goron Trial HP", "Zora Trial HP", "Link Trial HP", "Fierce Deity's Mask",
+        "Link Trial 30 Arrows", "Link Trial 10 Bombchu", "Pre-Clocktown 10 Deku Nuts", "Starting Sword", "Starting Shield", "Starting Heart 1", "Starting Heart 2",
+        "Ranch Cow #1 Milk", "Ranch Cow #2 Milk", "Ranch Cow #3 Milk", "Well Cow Milk", "Termina Grotto Cow #1 Milk", "Termina Grotto Cow #2 Milk",
+        "Great Bay Coast Grotto Cow #1 Milk", "Great Bay Coast Grotto Cow #2 Milk",
+        "Swamp Skulltula Main Room Near Ceiling", "Swamp Skulltula Gold Room Near Ceiling", "Swamp Skulltula Monument Room Torch", "Swamp Skulltula Gold Room Pillar", "Swamp Skulltula Pot Room Jar",
+
+        "Swamp Skulltula Tree Room Grass 1", "Swamp Skulltula Tree Room Grass 2", "Swamp Skulltula Main Room Water", "Swamp Skulltula Main Room Lower Left Soft Soil", "Swamp Skulltula Monument Room Crate 1",
+
+        "Swamp Skulltula Main Room Upper Soft Soil", "Swamp Skulltula Main Room Lower Right Soft Soil", "Swamp Skulltula Monument Room Lower Wall", "Swamp Skulltula Monument Room On Monument", "Swamp Skulltula Main Room Pillar",
+
+        "Swamp Skulltula Pot Room Pot 1", "Swamp Skulltula Pot Room Pot 2", "Swamp Skulltula Gold Room Hive", "Swamp Skulltula Main Room Upper Pillar", "Swamp Skulltula Pot Room Behind Vines",
+
+        "Swamp Skulltula Tree Room Tree 1", "Swamp Skulltula Pot Room Wall", "Swamp Skulltula Pot Room Hive 1", "Swamp Skulltula Tree Room Tree 2", "Swamp Skulltula Gold Room Wall",
+
+        "Swamp Skulltula Tree Room Hive", "Swamp Skulltula Monument Room Crate 2", "Swamp Skulltula Pot Room Hive 2", "Swamp Skulltula Tree Room Tree 3", "Swamp Skulltula Main Room Jar",
+
+        "Ocean Skulltula Storage Room Behind Boat", "Ocean Skulltula Library Hole Behind Picture", "Ocean Skulltula Library Hole Behind Cabinet", "Ocean Skulltula Library On Corner Bookshelf", "Ocean Skulltula 2nd Room Ceiling Edge",
+
+        "Ocean Skulltula 2nd Room Ceiling Plank", "Ocean Skulltula Colored Skulls Ceiling Edge", "Ocean Skulltula Library Ceiling Edge", "Ocean Skulltula Storage Room Ceiling Web", "Ocean Skulltula Storage Room Behind Crate",
+
+        "Ocean Skulltula 2nd Room Jar", "Ocean Skulltula Entrance Right Wall", "Ocean Skulltula Entrance Left Wall", "Ocean Skulltula 2nd Room Webbed Hole", "Ocean Skulltula Entrance Web",
+
+        "Ocean Skulltula Colored Skulls Chandelier 1", "Ocean Skulltula Colored Skulls Chandelier 2", "Ocean Skulltula Colored Skulls Chandelier 3", "Ocean Skulltula Colored Skulls Behind Picture", "Ocean Skulltula Library Behind Picture",
+
+        "Ocean Skulltula Library Behind Bookcase 1", "Ocean Skulltula Storage Room Crate", "Ocean Skulltula 2nd Room Webbed Pot", "Ocean Skulltula 2nd Room Upper Pot", "Ocean Skulltula Colored Skulls Pot",
+
+        "Ocean Skulltula Storage Room Jar", "Ocean Skulltula 2nd Room Lower Pot", "Ocean Skulltula Library Behind Bookcase 2", "Ocean Skulltula 2nd Room Behind Skull 1", "Ocean Skulltula 2nd Room Behind Skull 2",
+
+        "Clock Town Stray Fairy",
+        "Woodfall Pre-Boss Lower Right Bubble",
+        "Woodfall Entrance Fairy",
+        "Woodfall Pre-Boss Upper Left Bubble",
+        "Woodfall Pre-Boss Pillar Bubble",
+        "Woodfall Deku Baba",
+        "Woodfall Poison Water Bubble",
+        "Woodfall Main Room Bubble",
+        "Woodfall Skulltula",
+        "Woodfall Pre-Boss Upper Right Bubble",
+        "Woodfall Main Room Switch",
+        "Woodfall Entrance Platform",
+        "Woodfall Dark Room",
+        "Woodfall Jar Fairy",
+        "Woodfall Bridge Room Hive",
+        "Woodfall Platform Room Hive",
+        "Snowhead Snow Room Bubble",
+        "Snowhead Ceiling Bubble",
+        "Snowhead Dinolfos 1",
+        "Snowhead Bridge Room Ledge Bubble",
+        "Snowhead Bridge Room Pillar Bubble",
+        "Snowhead Dinolfos 2",
+        "Snowhead Map Room Fairy",
+        "Snowhead Map Room Ledge",
+        "Snowhead Basement",
+        "Snowhead Twin Block",
+        "Snowhead Icicle Room Wall",
+        "Snowhead Main Room Wall",
+        "Snowhead Pillar Freezards",
+        "Snowhead Ice Puzzle",
+        "Snowhead Crate",
+        "Great Bay Skulltula",
+        "Great Bay Pre-Boss Room Underwater Bubble",
+        "Great Bay Water Control Room Underwater Bubble",
+        "Great Bay Pre-Boss Room Bubble",
+        "Great Bay Waterwheel Room Upper",
+        "Great Bay Green Valve",
+        "Great Bay Seesaw Room",
+        "Great Bay Waterwheel Room Lower",
+        "Great Bay Entrance Torches",
+        "Great Bay Bio Babas",
+        "Great Bay Underwater Barrel",
+        "Great Bay Whirlpool Jar",
+        "Great Bay Whirlpool Barrel",
+        "Great Bay Dexihands Jar",
+        "Great Bay Ledge Jar",
+        "Stone Tower Mirror Sun Block",
+        "Stone Tower Eyegore",
+        "Stone Tower Lava Room Fire Ring",
+        "Stone Tower Updraft Fire Ring",
+        "Stone Tower Mirror Sun Switch",
+        "Stone Tower Boss Warp",
+        "Stone Tower Wizzrobe",
+        "Stone Tower Death Armos",
+        "Stone Tower Updraft Frozen Eye",
+        "Stone Tower Thin Bridge",
+        "Stone Tower Basement Ledge",
+        "Stone Tower Statue Eye",
+        "Stone Tower Underwater",
+        "Stone Tower Bridge Crystal",
+        "Stone Tower Lava Room Ledge",
+        "Lottery 50r", "Bank 5r", "Milk Bar Chateau", "Milk Bar Milk", "Deku Playground 50r", "Honey and Darling 50r", "Kotake Mushroom Sale 20r", "Pictograph Contest 5r",
+        "Pictograph Contest 20r", "Swamp Scrub Magic Bean", "Ocean Scrub Green Potion", "Canyon Scrub Blue Potion", "Zora Hall Stage Lights 5r", "Gorman Bros Purchase Milk",
+        "Gorman Bros Race Milk", "Ocean Spider House 50r", "Ocean Spider House 20r", "Lulu Pictograph 5r", "Lulu Pictograph 20r", "Treasure Chest Game 50r", "Treasure Chest Game 20r",
+        "Treasure Chest Game Deku Nuts", "Curiosity Shop 5r", "Curiosity Shop 20r", "Curiosity Shop 50r", "Curiosity Shop 200r", "Seahorse",
+        };
 
         string[] ITEM_NAMES = DEFAULT_ITEM_NAMES.ToArray();
 
@@ -221,7 +315,12 @@ namespace MMRando
 
         private void nItem_ValueChanged(object sender, EventArgs e)
         {
-            n = (int)nItem.Value;
+            SetIndex((int)nItem.Value);
+        }
+
+        private void SetIndex(int index)
+        {
+            n = index;
             lIName.Text = ITEM_NAMES[n];
             updating = true;
             FillDependence(n);
@@ -287,68 +386,12 @@ namespace MMRando
         {
             if (openLogic.ShowDialog() == DialogResult.OK)
             {
-                StreamReader LogicFile = new StreamReader(File.Open(openLogic.FileName, FileMode.Open));
-                ItemList = new List<ItemLogic>();
-                var logicString = LogicFile.ReadToEnd();
-                logicString = Migrator.ApplyMigrations(logicString);
-                string[] lines = logicString.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-                ItemSelectorForm.ResetItems();
-                ITEM_NAMES = DEFAULT_ITEM_NAMES.ToArray();
-                int i = 0;
-                while (true)
+                using (var logicFile = new StreamReader(File.Open(openLogic.FileName, FileMode.Open)))
                 {
-                    if (i == lines.Length)
-                    {
-                        break;
-                    };
-                    if (lines[i].Contains("-"))
-                    {
-                        var itemName = lines[i].Substring(2);
-                        if (ItemList.Count >= ITEM_NAMES.Length)
-                        {
-                            var newList = ITEM_NAMES.ToList();
-                            newList.Add(itemName);
-                            ItemSelectorForm.AddItem(itemName);
-                            ITEM_NAMES = newList.ToArray();
-                        }
-                        i++;
-                        continue;
-                    }
-                    else
-                    {
-                        ItemLogic l = new ItemLogic();
-                        l.Dependence = new List<int>();
-                        if (lines[i] != "")
-                        {
-                            foreach (string j in lines[i].Split(','))
-                            {
-                                l.Dependence.Add(Convert.ToInt32(j));
-                            };
-                        };
-                        l.Conditional = new List<List<int>>();
-                        if (lines[i + 1] != "")
-                        {
-                            foreach (string j in lines[i + 1].Split(';'))
-                            {
-                                List<int> c = new List<int>();
-                                foreach (string k in j.Split(','))
-                                {
-                                    c.Add(Convert.ToInt32(k));
-                                };
-                                l.Conditional.Add(c);
-                            };
-                        };
-                        l.Time_Needed = Convert.ToInt32(lines[i + 2]);
-                        l.Time_Available = Convert.ToInt32(lines[i + 3]);
-                        ItemList.Add(l);
-                        i += 4;
-                    };
-                };
-                LogicFile.Close();
-                nItem.Value = 1;
-                nItem.Value = 0;
-                nItem.Maximum = ITEM_NAMES.Length - 1;
-            };
+                    var logicString = logicFile.ReadToEnd();
+                    LoadLogic(logicString);
+                }
+            }
         }
 
         private void mSave_Click(object sender, EventArgs e)
@@ -468,6 +511,88 @@ namespace MMRando
             {
                 UpdateConditional(n, index);
             }
+        }
+
+        private void casualToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            LoadLogic(Resources.REQ_CASUAL);
+        }
+
+        private void glitchednoSetupsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            LoadLogic(Resources.REQ_GLITCH_NOSETUPS);
+        }
+
+        private void glitchedcommonTricksToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            LoadLogic(Resources.REQ_GLITCH_COMMONTRICKS);
+        }
+
+        private void glitchedToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            LoadLogic(Resources.REQ_GLITCH);
+        }
+
+        private void LoadLogic(string logicString)
+        {
+            logicString = Migrator.ApplyMigrations(logicString);
+            ItemList = new List<ItemLogic>();
+            string[] lines = logicString.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            ItemSelectorForm.ResetItems();
+            ITEM_NAMES = DEFAULT_ITEM_NAMES.ToArray();
+            int i = 0;
+            while (true)
+            {
+                if (i == lines.Length)
+                {
+                    break;
+                };
+                if (lines[i].Contains("-"))
+                {
+                    var itemName = lines[i].Substring(2);
+                    if (ItemList.Count >= ITEM_NAMES.Length)
+                    {
+                        var newList = ITEM_NAMES.ToList();
+                        newList.Add(itemName);
+                        ItemSelectorForm.AddItem(itemName);
+                        ITEM_NAMES = newList.ToArray();
+                    }
+                    i++;
+                    continue;
+                }
+                else
+                {
+                    ItemLogic l = new ItemLogic();
+                    l.Dependence = new List<int>();
+                    if (lines[i] != "")
+                    {
+                        foreach (string j in lines[i].Split(','))
+                        {
+                            l.Dependence.Add(Convert.ToInt32(j));
+                        };
+                    };
+                    l.Conditional = new List<List<int>>();
+                    if (lines[i + 1] != "")
+                    {
+                        foreach (string j in lines[i + 1].Split(';'))
+                        {
+                            List<int> c = new List<int>();
+                            foreach (string k in j.Split(','))
+                            {
+                                c.Add(Convert.ToInt32(k));
+                            };
+                            l.Conditional.Add(c);
+                        };
+                    };
+                    l.Time_Needed = Convert.ToInt32(lines[i + 2]);
+                    l.Time_Available = Convert.ToInt32(lines[i + 3]);
+                    ItemList.Add(l);
+                    i += 4;
+                };
+            };
+            
+            nItem.Maximum = ITEM_NAMES.Length - 1;
+            SetIndex((int)nItem.Value);
         }
     }
 }
