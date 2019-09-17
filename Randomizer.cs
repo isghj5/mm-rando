@@ -238,7 +238,7 @@ namespace MMRando
             ShuffleEntrances();
             //CheckEntrances();
             FinalizeEntrances();
-            //WriteMapData();
+            WriteMapData();
         }
 
         private void ConnectPairedEntrances()
@@ -259,6 +259,15 @@ namespace MMRando
 
         private void WriteMapData()
         {
+            foreach (KeyValuePair<string,string> type in GetSpawns().Select(spawn =>  
+                new KeyValuePair<string,string> ( spawn.SpawnName,
+                    spawn.SpawnType == "Interior" || spawn.SpawnType == "Interior Exit" ? 
+                        ((spawn.SpawnType == "Interior") ? "Interior Exit" : "Interior") : spawn.SpawnType)
+                ))
+            {
+                GetSpawn(type.Key).SpawnType = type.Value;
+            }
+
             List<Exit> spawns = new List<Exit>();
             Dictionary<string, bool> added = new Dictionary<string, bool>();
             int spawnIndex = 1;
@@ -270,16 +279,6 @@ namespace MMRando
                     {
                         foreach (Exit s in TerminaMap[sceneName].Select(spawn => new Exit()
                         {
-                            //ID = spawn.ID,
-                            //SceneName = spawn.SceneName,
-                            //SceneId = sceneIndex,
-                            //SpawnName = spawn.SpawnName,
-                            //SpawnAddress = spawn.SpawnAddress,
-                            //SpawnAddressString = spawn.SpawnAddress.ToString("X4"),
-                            //SpawnType = spawn.SpawnType,
-                            //ExitId = spawn.ExitId,
-                            //ExitName = spawn.ExitSpawn == null ? "" : spawn.ExitSpawn.SpawnName,
-                            //ExitIndex = (spawn.ExitSpawn == null) ? 0 : (spawn.ExitSpawn.SpawnAddress & 0xF0) >> 4,
                             ID = spawn.ID,
                             SceneName = spawn.SceneName,
                             SceneId = spawn.SceneId,
@@ -308,6 +307,28 @@ namespace MMRando
             using (StreamWriter file = new StreamWriter(Values.MainDirectory + @"\Resources\ENTRANCES.json"))
             {
                 file.Write(spawnJson);
+            }
+            PrintMapLogic();
+        }
+
+        private void PrintMapLogic()
+        {
+            List<string> sortedScene;
+            foreach (ushort sceneIndex in SceneNamesByIndex.Keys)
+            {
+                sortedScene = SceneNamesByIndex[sceneIndex];
+                //sortedScene.Sort();
+                foreach (string sceneName in sortedScene)
+                {
+                    if (TerminaMap.ContainsKey(sceneName))
+                    {
+                        foreach (Exit s in TerminaMap[sceneName])
+                        {
+
+                            Debug.WriteLine( $"- {s.ID} : {s.SpawnName.Replace(":", " ->")}\n\n\n0\n0" );
+                        }
+                    }
+                }
             }
         }
 
@@ -673,8 +694,10 @@ namespace MMRando
             {
                 SceneNamesByIndex[sceneIndex] = new List<string>();
             }
-            SceneNamesByIndex[sceneIndex].Add(sceneName);
-
+            if ( !SceneNamesByIndex[sceneIndex].Contains(sceneName))
+            {
+                SceneNamesByIndex[sceneIndex].Add(sceneName);
+            }
         }
 
         private void AddDuplicateSceneSpawns(string[] SceneSpawns, string SceneName, ushort AddressPrefix, ushort SceneIndex, string SceneSuffix, ushort DuplicateAddressPrefix, ushort DuplicateSceneIndex)
@@ -1276,6 +1299,18 @@ namespace MMRando
                 }
             }
 
+            return lines;
+        }
+
+        private string[] ReadEntranceRulesetFromResources()
+        {
+            string[] lines = null;
+            var mode = _settings.LogicMode;
+
+            if (mode == LogicMode.Casual)
+            {
+                lines = Properties.Resources.ENT_REQ_CASUAL.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            }
             return lines;
         }
 
