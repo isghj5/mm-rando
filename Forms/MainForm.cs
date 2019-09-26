@@ -25,6 +25,7 @@ namespace MMRando
         public ManualForm Manual { get; private set; }
         public LogicEditorForm LogicEditor { get; private set; }
         public ItemEditForm ItemEditor { get; private set; }
+        public StartingItemEditForm StartingItemEditor { get; private set; }
 
         private Randomizer _randomizer;
         private Builder _builder;
@@ -50,6 +51,11 @@ namespace MMRando
             ItemEditor = new ItemEditForm(_settings);
             ItemEditor.FormClosing += ItemEditor_FormClosing;
             UpdateCustomItemAmountLabel();
+
+            StartingItemEditor = new StartingItemEditForm(_settings);
+            StartingItemEditor.FormClosing += StartingItemEditor_FormClosing;
+            UpdateCustomStartingItemAmountLabel();
+
             LogicEditor = new LogicEditorForm();
             Manual = new ManualForm();
             About = new AboutForm();
@@ -96,12 +102,13 @@ namespace MMRando
             TooltipBuilder.SetTooltip(cClockSpeed, "Modify the speed of time.");
             TooltipBuilder.SetTooltip(cHideClock, "Clock UI will be hidden.");
             TooltipBuilder.SetTooltip(cNoStartingItems, "You will not start with any randomized starting items.");
+            TooltipBuilder.SetTooltip(cBlastCooldown, "Adjust the cooldown timer after using the Blast Mask.");
 
             // Comforts/cosmetics
             TooltipBuilder.SetTooltip(cCutsc, "Enable shortened cutscenes.\n\nCertain cutscenes are skipped or otherwise shortened.\nDISCLAIMER: This may cause crashing in certain emulators.");
             TooltipBuilder.SetTooltip(cQText, "Enable quick text. Dialogs are fast-forwarded to choices/end of dialog.");
-            TooltipBuilder.SetTooltip(cBGM, "Randomize background music sequences that are played throughout the game.");
-            TooltipBuilder.SetTooltip(cNoMusic, "Mute background music.");
+            TooltipBuilder.SetTooltip(cSFX, "Randomize sound effects that are played throughout the game.");
+            TooltipBuilder.SetTooltip(cMusic, "Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music.");
             TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
             TooltipBuilder.SetTooltip(cClearHints, "Gossip stone hints will give clear item and location names.");
             TooltipBuilder.SetTooltip(cNoDowngrades, "Downgrading items will be prevented.");
@@ -281,8 +288,7 @@ namespace MMRando
             cDChests.Checked = _settings.AddDungeonItems;
             cShop.Checked = _settings.AddShopItems;
             cDEnt.Checked = _settings.RandomizeDungeonEntrances;
-            cBGM.Checked = _settings.RandomizeBGM;
-            cNoMusic.Checked = _settings.NoBGM;
+            cSFX.Checked = _settings.RandomizeSounds;
             cEnemy.Checked = _settings.RandomizeEnemies;
             cCutsc.Checked = _settings.ShortenCutscenes;
             cQText.Checked = _settings.QuickTextEnabled;
@@ -291,7 +297,7 @@ namespace MMRando
             cFairyRewards.Checked = _settings.AddFairyRewards;
             cClearHints.Checked = _settings.ClearHints;
             cHideClock.Checked = _settings.HideClock;
-            cClockSpeed.SelectedIndex = (int) _settings.ClockSpeed;
+            cClockSpeed.SelectedIndex = (int)_settings.ClockSpeed;
             cNoDowngrades.Checked = _settings.PreventDowngrades;
             cShopAppearance.Checked = _settings.UpdateShopAppearance;
             cNutChest.Checked = _settings.AddNutChest;
@@ -312,6 +318,8 @@ namespace MMRando
             cGravity.SelectedIndex = (int)_settings.MovementMode;
             cFloors.SelectedIndex = (int)_settings.FloorType;
             cGossipHints.SelectedIndex = (int)_settings.GossipHintStyle;
+            cBlastCooldown.SelectedIndex = (int)_settings.BlastMaskCooldown;
+            cMusic.SelectedIndex = (int)_settings.Music;
             bTunic.BackColor = _settings.TunicColor;
         }
 
@@ -386,7 +394,7 @@ namespace MMRando
             UpdateSingleSetting(() => _settings.GeneratePatch = cPatch.Checked);
         }
 
-        private void cHTMLLog_CheckedChanged(object sender,EventArgs e)
+        private void cHTMLLog_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _settings.GenerateHTMLLog = cHTMLLog.Checked);
         }
@@ -437,14 +445,14 @@ namespace MMRando
             UpdateSingleSetting(() => _settings.AddStrayFairies = cStrayFairies.Checked);
         }
 
-        private void cBGM_CheckedChanged(object sender, EventArgs e)
+        private void cSFX_CheckedChanged(object sender, EventArgs e)
         {
-            UpdateSingleSetting(() => _settings.RandomizeBGM = cBGM.Checked);
+            UpdateSingleSetting(() => _settings.RandomizeSounds = cSFX.Checked);
         }
 
-        private void cNoMusic_CheckedChanged(object sender, EventArgs e)
+        private void cMusic_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateSingleSetting(() => _settings.NoBGM = cNoMusic.Checked);
+            UpdateSingleSetting(() => _settings.Music = (Music)cMusic.SelectedIndex);
         }
 
         private void cBottled_CheckedChanged(object sender, EventArgs e)
@@ -593,6 +601,12 @@ namespace MMRando
             UpdateSingleSetting(() => _settings.GossipHintStyle = (GossipHintStyle)cGossipHints.SelectedIndex);
         }
 
+
+        private void cBlastCooldown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.BlastMaskCooldown = (BlastMaskCooldown)cBlastCooldown.SelectedIndex);
+        }
+
         private void cVC_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _settings.OutputVC = cVC.Checked);
@@ -645,6 +659,28 @@ namespace MMRando
             {
                 lCustomItemAmount.Text = $"{_settings.CustomItemList.Count}/{ItemUtils.AllLocations().Count()} items randomized";
             }
+        }
+
+        private void bStartingItemEditor_Click(object sender, EventArgs e)
+        {
+            StartingItemEditor.Show();
+        }
+
+        private void tStartingItemList_TextChanged(object sender, EventArgs e)
+        {
+            StartingItemEditor.UpdateChecks(tStartingItemList.Text);
+            UpdateCustomStartingItemAmountLabel();
+        }
+
+        private void StartingItemEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            tStartingItemList.Text = _settings.CustomStartingItemListString;
+            UpdateCustomStartingItemAmountLabel();
+        }
+
+        private void UpdateCustomStartingItemAmountLabel()
+        {
+            lCustomStartingItemAmount.Text = StartingItemEditor.ExternalLabel;
         }
 
 
@@ -700,8 +736,11 @@ namespace MMRando
                 cStrayFairies.Enabled = onMainTab;
                 cMundaneRewards.Enabled = onMainTab;
 
+                tStartingItemList.Enabled = onMainTab;
+                bStartingItemEditor.Enabled = onMainTab;
+
                 cNoStartingItems.Enabled = onMainTab && (_settings.AddOther || _settings.UseCustomItemList);
-                if (!cNoStartingItems.Enabled)
+                if (!cNoStartingItems.Enabled && onMainTab)
                 {
                     cNoStartingItems.Checked = false;
                     _settings.NoStartingItems = false;
@@ -750,8 +789,8 @@ namespace MMRando
         private void EnableAllControls(bool v)
         {
             cAdditional.Enabled = v;
-            cBGM.Enabled = v;
-            cNoMusic.Enabled = v;
+            cSFX.Enabled = v;
+            cMusic.Enabled = v;
             cBottled.Enabled = v;
             cCutsc.Enabled = v;
             cDChests.Enabled = v;
@@ -764,6 +803,7 @@ namespace MMRando
             cFloors.Enabled = v;
             cClockSpeed.Enabled = v;
             cGossipHints.Enabled = v;
+            cBlastCooldown.Enabled = v;
             cHideClock.Enabled = v;
             cGravity.Enabled = v;
             cLink.Enabled = v;
@@ -794,6 +834,8 @@ namespace MMRando
             cPatch.Enabled = v;
             bApplyPatch.Enabled = v;
             cUpdateChests.Enabled = v;
+            tStartingItemList.Enabled = v;
+            bStartingItemEditor.Enabled = v;
 
             bopen.Enabled = v;
             bRandomise.Enabled = v;
@@ -820,6 +862,8 @@ namespace MMRando
             cTatl.SelectedIndex = 0;
             cGossipHints.SelectedIndex = 0;
             cClockSpeed.SelectedIndex = 0;
+            cBlastCooldown.SelectedIndex = 0;
+            cMusic.SelectedIndex = 0;
             cSpoiler.Checked = true;
             cSoS.Checked = true;
             cNoDowngrades.Checked = true;
@@ -890,7 +934,7 @@ namespace MMRando
                     MessageBox.Show($"Error randomizing logic: {ex.Message}{nl}{nl}Please try a different seed", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                
+
                 if (_settings.GenerateSpoilerLog
                     && _settings.LogicMode != LogicMode.Vanilla)
                 {
@@ -981,12 +1025,12 @@ namespace MMRando
             cFloors.Enabled = v;
             cClockSpeed.Enabled = v;
             cHideClock.Enabled = v;
+            cBlastCooldown.Enabled = v;
 
 
             // Comfort/Cosmetics
             cCutsc.Enabled = v;
             cQText.Enabled = v;
-            cBGM.Enabled = v;
             cFreeHints.Enabled = v;
             cNoDowngrades.Enabled = v;
             cShopAppearance.Enabled = v;

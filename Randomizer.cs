@@ -1,9 +1,11 @@
 using MMRando.Constants;
 using MMRando.Extensions;
+using MMRando.GameObjects;
 using MMRando.LogicMigrator;
 using MMRando.Models;
 using MMRando.Models.Rom;
 using MMRando.Models.Settings;
+using MMRando.Models.SoundEffects;
 using MMRando.Utils;
 using Newtonsoft.Json;
 using System;
@@ -13,8 +15,6 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Text;
-using MMRando.GameObjects;
 
 namespace MMRando
 {
@@ -1039,74 +1039,6 @@ namespace MMRando
         }
         #endregion
 
-        #region Sequences and BGM
-
-        private void BGMShuffle()
-        {
-            while (RomData.TargetSequences.Count > 0)
-            {
-                List<SequenceInfo> Unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
-
-                int targetIndex = Random.Next(RomData.TargetSequences.Count);
-                var targetSequence = RomData.TargetSequences[targetIndex];
-
-                while (true)
-                {
-                    int unassignedIndex = Random.Next(Unassigned.Count);
-
-                    if (Unassigned[unassignedIndex].Name.StartsWith("mm")
-                        & (Random.Next(100) < 50))
-                    {
-                        continue;
-                    }
-
-                    for (int i = 0; i < Unassigned[unassignedIndex].Type.Count; i++)
-                    {
-                        if (targetSequence.Type.Contains(Unassigned[unassignedIndex].Type[i]))
-                        {
-                            Unassigned[unassignedIndex].Replaces = targetSequence.Replaces;
-                            Debug.WriteLine(Unassigned[unassignedIndex].Name + " -> " + targetSequence.Name);
-                            RomData.TargetSequences.RemoveAt(targetIndex);
-                            break;
-                        }
-                        else if (i + 1 == Unassigned[unassignedIndex].Type.Count)
-                        {
-                            if ((Random.Next(30) == 0)
-                                && ((Unassigned[unassignedIndex].Type[0] & 8) == (targetSequence.Type[0] & 8))
-                                && (Unassigned[unassignedIndex].Type.Contains(10) == targetSequence.Type.Contains(10))
-                                && (!Unassigned[unassignedIndex].Type.Contains(16)))
-                            {
-                                Unassigned[unassignedIndex].Replaces = targetSequence.Replaces;
-                                Debug.WriteLine(Unassigned[unassignedIndex].Name + " -> " + targetSequence.Name);
-                                RomData.TargetSequences.RemoveAt(targetIndex);
-                                break;
-                            }
-                        }
-                    }
-
-                    if (Unassigned[unassignedIndex].Replaces != -1)
-                    {
-                        break;
-                    }
-                }
-            }
-
-            RomData.SequenceList.RemoveAll(u => u.Replaces == -1);
-        }
-
-        private void SortBGM()
-        {
-            if (!_settings.RandomizeBGM)
-            {
-                return;
-            }
-
-            SequenceUtils.ReadSequenceInfo();
-            BGMShuffle();
-        }
-
-        #endregion
-
         private void SetTatlColour()
         {
             if (_settings.TatlColorSchema == TatlColorSchema.Rainbow)
@@ -1130,6 +1062,23 @@ namespace MMRando
             }
         }
 
+        private void UpdateLogicForSettings()
+        {
+            if (_settings.CustomStartingItemList != null)
+            {
+                foreach (var itemObject in ItemList)
+                {
+                    itemObject.DependsOnItems?.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
+                    itemObject.Conditionals?.ForEach(c => c.RemoveAll(item => _settings.CustomStartingItemList.Contains(item)));
+                }
+            }
+            if (_settings.AddShopItems)
+            {
+                ItemList[(int)Item.ShopItemWitchBluePotion]?.DependsOnItems.Remove(Item.BottleCatchMushroom);
+            }
+            // todo handle progressive upgrades here.
+        }
+
         private void PrepareRulesetItemData()
         {
             ItemList = new List<ItemObject>();
@@ -1142,6 +1091,8 @@ namespace MMRando
             {
                 string[] data = ReadRulesetFromResources();
                 PopulateItemListFromLogicData(data);
+
+                UpdateLogicForSettings();
             }
             else
             {
@@ -1317,6 +1268,7 @@ namespace MMRando
         private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath)
         {
             Debug.WriteLine($"CheckDependence({currentItem}, {target})");
+
             if (ItemList[(int)currentItem].TimeNeeded == 0
                 && !ItemList.Any(io => (io.Conditionals?.Any(c => c.Contains(currentItem)) ?? false) || (io.DependsOnItems?.Contains(currentItem) ?? false)))
             {
@@ -1761,6 +1713,11 @@ namespace MMRando
 
         private bool CheckMatch(Item currentItem, Item target)
         {
+            if (_settings.CustomStartingItemList.Contains(currentItem))
+            {
+                return true;
+            }
+
             if (ItemUtils.IsStartingLocation(target) && ForbiddenStartingItems.Contains(currentItem))
             {
                 Debug.WriteLine($"{currentItem} cannot be a starting item.");
@@ -2509,6 +2466,10 @@ namespace MMRando
 
         private ReadOnlyCollection<Item> GetRequiredItems(Item item, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, ReadOnlyCollection<Item>> checkedItems = null, Item? exclude = null)
         {
+            if (_settings.CustomStartingItemList.Contains(item))
+            {
+                return new List<Item>().AsReadOnly();
+            }
             if (item == exclude)
             {
                 return null;
@@ -2619,6 +2580,14 @@ namespace MMRando
                 worker.ReportProgress(30, "Shuffling items...");
                 RandomizeItems();
 
+                foreach (var itemLogic in _randomized.Logic)
+                {
+                    if (_settings.CustomStartingItemList.Contains((Item)itemLogic.ItemId) && !ItemList[itemLogic.ItemId].IsRandomized)
+                    {
+                        itemLogic.Acquired = true;
+                    }
+                }
+
                 _randomized.AllItemsOnPathToMoon = GetRequiredItems(Item.AreaMoonAccess, _randomized.Logic)?.Where(item => !item.IsFake()).ToList().AsReadOnly();
                 if (_randomized.AllItemsOnPathToMoon == null)
                 {
@@ -2650,12 +2619,6 @@ namespace MMRando
             //Randomize tatl colour
             SeedRNG();
             SetTatlColour();
-
-            worker.ReportProgress(45, "Randomizing Music...");
-
-            //Sort BGM
-            SeedRNG();
-            SortBGM();
 
             return _randomized;
         }

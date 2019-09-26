@@ -9,6 +9,8 @@ namespace MMRando.Models
 {
     public class Spoiler
     {
+        public Guid Id { get; set; } = Guid.NewGuid();
+
         public string Version { get; set; }
 
         public string SettingsString { get; set; }
@@ -26,6 +28,8 @@ namespace MMRando.Models
         public Dictionary<GossipQuote, string> GossipHints { get; set; }
 
         public string CustomItemListString { get; set; }
+
+        public string CustomStartingItemListString { get; set; }
 
         public string LogicJson
         {

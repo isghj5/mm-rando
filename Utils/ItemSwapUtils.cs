@@ -1,10 +1,9 @@
-﻿using MMRando.Models.Rom;
-using System;
-using System.Collections.Generic;
-using MMRando.GameObjects;
-using MMRando.Extensions;
-using MMRando.Attributes;
+﻿using MMRando.Attributes;
 using MMRando.Constants;
+using MMRando.Extensions;
+using MMRando.GameObjects;
+using MMRando.Models.Rom;
+using System.Collections.Generic;
 
 namespace MMRando.Utils
 {
@@ -12,8 +11,8 @@ namespace MMRando.Utils
     {
         const int BOTTLE_CATCH_TABLE = 0xCD7C08;
         static int cycle_repeat = 0;
-        static int cycle_repeat_count_address = 0xC72CEA;
-        static ushort cycle_repeat_count = 0x76;
+        static int cycle_repeat_count_address = 0xC72CFA;
+        static ushort cycle_repeat_count = 0x74;
         static int GET_ITEM_TABLE = 0;
 
         public static void ReplaceGetItemTable(string ModsDir)
@@ -27,7 +26,7 @@ namespace MMRando.Utils
             ReadWriteUtils.WriteToROM(0xBDAEA8, (uint)last_file + 2);
             ResourceUtils.ApplyHack(ModsDir + "standing-hearts");
             ResourceUtils.ApplyHack(ModsDir + "fix-item-checks");
-            cycle_repeat = 0xC72DF6;
+            cycle_repeat = 0xC72DF4;
             SceneUtils.ResetSceneFlagMask();
         }
 
@@ -101,14 +100,14 @@ namespace MMRando.Utils
         public static void WriteNewItem(Item location, Item item, List<MessageEntry> newMessages, bool updateShop, bool preventDowngrades, bool updateChest, ChestTypeAttribute.ChestType? overrideChestType)
         {
             System.Diagnostics.Debug.WriteLine($"Writing {item.Name()} --> {location.Location()}");
-            
+
             int f = RomUtils.GetFileIndexForWriting(GET_ITEM_TABLE);
             int baseaddr = GET_ITEM_TABLE - RomData.MMFileList[f].Addr;
             var getItemIndex = location.GetItemIndex().Value;
             int offset = (getItemIndex - 1) * 8 + baseaddr;
             var newItem = RomData.GetItemList[item.GetItemIndex().Value];
             var fileData = RomData.MMFileList[f].Data;
-            
+
             var data = new byte[]
             {
                 newItem.ItemGained,
@@ -121,13 +120,8 @@ namespace MMRando.Utils
                 (byte)(newItem.Object & 0xFF),
             };
             ReadWriteUtils.Arr_Insert(data, 0, data.Length, fileData, offset);
-
-            var isCycleRepeatable = item.IsCycleRepeatable();
-            if (location >= Item.MundaneItemCuriosityShopBlueRupee && location <= Item.MundaneItemCuriosityShopGoldRupee && item.Name().Contains("Rupee"))
-            {
-                isCycleRepeatable = true;
-            }
-            if (isCycleRepeatable)
+            
+            if (item.IsCycleRepeatable() || (item.Name().Contains("Rupee") && location.IsRupeeRepeatable()))
             {
                 ReadWriteUtils.WriteToROM(cycle_repeat, (ushort)getItemIndex);
                 cycle_repeat += 2;
@@ -181,6 +175,16 @@ namespace MMRando.Utils
                 if (location == Item.StartingSword)
                 {
                     ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-sword-song-of-time");
+                }
+
+                if (location == Item.MundaneItemSeahorse)
+                {
+                    ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-fisherman");
+                }
+
+                if (location == Item.MaskFierceDeity)
+                {
+                    ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-fd-mask-reset");
                 }
             }
         }

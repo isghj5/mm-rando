@@ -24,6 +24,9 @@
 <# if (spoiler.CustomItemListString != null) { #>
 <label><b>Custom Item List: </b></label><span><#= spoiler.CustomItemListString #></span><br/>
 <# } #>
+<# if (spoiler.CustomStartingItemListString != null) { #>
+<label><b>Custom Starting Item List: </b></label><span><#= spoiler.CustomStartingItemListString #></span><br/>
+<# } #>
 <br/>
 <# if (spoiler.RandomizeDungeonEntrances) { 
 #>
@@ -99,7 +102,11 @@
 </table>
 <# } #>
 <script>
-	var logic = <#= spoiler.LogicJson #>
+    var spoilerLogId = '<#= spoiler.Id #>';
+    var logic = JSON.parse(localStorage.getItem('MMR-Logic-' + spoilerLogId));
+    if (!logic) {
+	    logic = <#= spoiler.LogicJson #>
+    }
 
 	function all(list, predicate) {
 		for (var i = 0; i < list.length; i++) {
@@ -118,6 +125,10 @@
 		}
 		return false;
 	}
+
+    function saveItems() {
+        localStorage.setItem('MMR-Logic-' + spoilerLogId, JSON.stringify(logic));
+    }
 
 	function recalculateItems() {
 		var recalculate = false;
@@ -165,8 +176,18 @@
 		}
 		if (recalculate) {
 			recalculateItems();
-		}
+		} else {
+            saveItems();
+        }
 	}
+
+    for (var i = 0; i < logic.length; i++) {
+        var item = logic[i];
+        if (item.Acquired) {
+            item.Checked = true;
+	        document.querySelector("tr[data-newlocationid='" + id + "'] input").checked = true;
+        }
+    }
 
     var startingLocations = [0, 94, 274, 275, 276, 277];
     for (var id of startingLocations) {
