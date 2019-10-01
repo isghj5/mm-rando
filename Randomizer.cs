@@ -235,8 +235,9 @@ namespace MMRando
             ShuffledMap = new Dictionary<string, List<Exit>>();
             SceneNamesByIndex = new Dictionary<ushort, List<string>>();
             ReadTerminaMap();
-            ShuffleEntrances();
+            //ShuffleEntrances();
             //CheckEntrances();
+            ReverseEntrances();
             FinalizeEntrances();
             WriteMapData();
         }
@@ -507,18 +508,69 @@ namespace MMRando
                             else
                             {
                                 ConnectEntrances(From.SpawnName, To.SpawnName, true);
-                                if (To.ExitSpawn != null )
+                                if (To.ExitSpawn != null)
                                 {
                                     SpawnSet[pool][To.ExitSpawn.SpawnName] = false;
                                     if (FillWorld.Contains(To.ExitSpawn.SpawnName))
                                     {
                                         FillWorld.Remove(To.ExitSpawn.SpawnName);
                                     }
-                                    if( From.ExitSpawn != null )
+                                    if (From.ExitSpawn != null)
                                     {
                                         ChosenSet[pool][From.ExitSpawn.SpawnName] = false;
                                     }
                                 }
+                            }
+                        }
+                        else
+                        {
+                            Debug.WriteLine("Nowhere Left For '{0}' To Go", FillWorld[0]);
+                            FillWorld.RemoveAt(0);
+                        }
+                    }
+                    else
+                    {
+                        Debug.WriteLine("Not Allowed To Place {0}", FillWorld[0]);
+                        FillWorld.RemoveAt(0);
+                    }
+                }
+                pool++;
+            }
+        }
+
+        private void ReverseEntrances()
+        {
+            Dictionary<string, List<string>> SpawnTypeSet = GetEntranceTypes();
+            List<Dictionary<string, bool>> SpawnSet = GetEntrancePools(SpawnTypeSet);
+            List<Dictionary<string, bool>> ChosenSet = GetEntrancePools(SpawnTypeSet);
+            int pool = 0;
+            List<string> FillWorld = new List<string>();
+            bool CanAdd(Exit S, Dictionary<string, bool> exitPool) => S != null && SpawnSet[pool].ContainsKey(S.SpawnName) && exitPool[S.SpawnName];
+            Exit To, From;
+            while (pool < SpawnSet.Count)
+            {
+                foreach (string Spawn in SpawnSet[pool].Keys)
+                {
+                    if (SpawnSet[pool][Spawn])
+                    {
+                        FillWorld.Add(Spawn);
+                    }
+                }
+                for (int i = 0; i < FillWorld.Count; i++)
+                {
+                    From = GetSpawn(FillWorld[i]);
+                    To = GetSpawn(FillWorld[FillWorld.Count - 1 - i]);
+                    if (CanAdd(From, SpawnSet[pool]) && CanAdd(To, ChosenSet[pool]))
+                    {
+                        SpawnSet[pool][From.SpawnName] = false;
+                        ChosenSet[pool][To.SpawnName] = false;
+                        ConnectEntrances(From.SpawnName, To.SpawnName, true);
+                        if (To.ExitSpawn != null)
+                        {
+                            SpawnSet[pool][To.ExitSpawn.SpawnName] = false;
+                            if (From.ExitSpawn != null)
+                            {
+                                ChosenSet[pool][From.ExitSpawn.SpawnName] = false;
                             }
                         }
                         else
@@ -551,9 +603,9 @@ namespace MMRando
                 if (SpawnSet[SpawnName])
                 {
                     Exit S = GetSpawn(SpawnName);
+                    // checks if logically available
                     if (CanAdd.Invoke(S))
                     {
-                        // need to keep this up to date with the section above
                         if (matchType == S.SpawnType)
                         {
                             candidates.Add(S.SpawnName);
@@ -700,12 +752,6 @@ namespace MMRando
             }
         }
 
-        private void AddDuplicateSceneSpawns(string[] SceneSpawns, string SceneName, ushort AddressPrefix, ushort SceneIndex, string SceneSuffix, ushort DuplicateAddressPrefix, ushort DuplicateSceneIndex)
-        {
-            AddSceneSpawns(SceneSpawns, AddressPrefix, SceneIndex, SceneName);
-            AddSceneSpawns(SceneSpawns, DuplicateAddressPrefix, DuplicateSceneIndex, SceneName + " " + SceneSuffix);
-        }
-
         private void AddSceneSpawns(string[] spawnName, ushort scenePrefix, ushort sceneIndex, string sceneName)
         {
             for (int i = 0; i < spawnName.Length; i++)
@@ -716,15 +762,6 @@ namespace MMRando
                 }
             }
             AddSceneNameIndex(sceneName, sceneIndex);
-        }
-
-        private void AddSpawns(string parent, string[] sceneName, ushort[] sceneSpawnAddress, ushort[] sceneIndex)
-        {
-            for (int i = 0; i < sceneName.Length; i++)
-            {
-                AddSpawn(parent + ": " + sceneName[i], sceneSpawnAddress[i], parent);
-                AddSceneNameIndex(sceneName[i], sceneIndex[i]);
-            }
         }
 
         private void AddSpawn(string Name, ushort Address, string Scene)
@@ -770,13 +807,6 @@ namespace MMRando
             return null;
         }
 
-        private void PairInteriorEntrance(string OutdoorEntrance, string IndoorEntrance)
-        {
-            PairSpawns(OutdoorEntrance, IndoorEntrance, "Interior");
-            GetSpawn(OutdoorEntrance).SpawnType = "Interior Exit";
-
-        }
-
         private void PairSingleSpawn(string From, string To, string Type)
         {
             Exit F = GetSpawn(From);
@@ -796,125 +826,6 @@ namespace MMRando
         {
             PairSingleSpawn(From, To, Type);
             PairSingleSpawn(To, From, Type);
-        }
-
-        private void PairDuplicateSpawns(string Scene, string DuplicateSuffix)
-        {
-        }
-
-        private void PairSingleInterior(string InteriorScene, string OuterScene, ushort InteriorAddress, ushort OuterAddress)
-        {
-            AddSpawn(OuterScene + ": " + InteriorScene, OuterAddress, OuterScene);
-            AddPairedInteriors(new string[] { InteriorScene }, new ushort[] { InteriorAddress }, new ushort[] { 0xFFFF });
-        }
-
-        private void PairTelescope(string SpawnPoint, string Telescope)
-        {
-            Exit Room = GetSpawn(SpawnPoint);
-            Exit Scope = GetSpawn(Telescope);
-            if (Room != null && Scope != null)
-            {
-                Scope.SpawnType = "Telescope";
-                Room.SpawnType = "Telescope Spawn";
-                Scope.ExitSpawn = Room;
-            }
-        }
-
-        private void AddPairedInteriors(string[] scene, ushort[] spawnAddress, ushort[] sceneAddress)
-        {
-            for (int i = 0; i < scene.Length; i++)
-            {
-                string spawnName = scene[i];
-                AddSpawn(spawnName, spawnAddress[i], scene[i]);
-                if( sceneAddress[i] != 0xFFFF)
-                {
-                    AddSceneNameIndex(spawnName, sceneAddress[i]);
-                }
-                string to = "";
-                foreach (Exit s in GetSpawns())
-                {
-                    if (!spawnName.Equals(s.SpawnName) && s.SpawnName.Contains(spawnName))
-                    {
-                        PairInteriorEntrance(s.SpawnName, spawnName);
-                    }
-                }
-                if (!to.Equals(""))
-                {
-                }
-            }
-        }
-
-        private void AddGrottos(string[] GrottoName, ushort[] Address, string Scene)
-        {
-            for (int i = 0; i < GrottoName.Length; i++)
-            {
-                string SpawnName = "Grotto: " + GrottoName[i];
-                AddSpawn(SpawnName, Address[i], Scene);
-            }
-        }
-
-        private void PairOverworldSpawns()
-        {
-            List<Exit> SpawnSet = GetSpawns();
-            Dictionary<Exit, string> SpawnPoint = new Dictionary<Exit, string>();
-            Dictionary<Exit, string> SpawnExit = new Dictionary<Exit, string>();
-            int sep;
-            foreach (Exit S in SpawnSet)
-            {
-                sep = S.SpawnName.IndexOf(':');
-                if (sep != -1)
-                {
-                    SpawnPoint[S] = S.SpawnName.Substring(0, sep);
-                    SpawnExit[S] = S.SpawnName.Substring(sep + 2);
-                }
-            }
-            int j;
-            for (int i = 0; i < SpawnSet.Count; i++)
-            {
-                if (SpawnSet[i].ExitSpawn == null && SpawnPoint.ContainsKey(SpawnSet[i]) && SpawnExit.ContainsKey(SpawnSet[i]))
-                {
-                    j = SpawnSet.FindIndex((S) =>
-                    {
-                        if (!SpawnPoint.ContainsKey(S) || !SpawnExit.ContainsKey(S))
-                        {
-                            return false;
-                        }
-                        return SpawnPoint[S].Equals(SpawnExit[SpawnSet[i]]) && SpawnExit[S].Equals(SpawnPoint[SpawnSet[i]]);
-                    });
-                    if (j != -1)
-                    {
-                        if (SpawnSet[i].SpawnType != "" || SpawnSet[j].SpawnType != "")
-                        {
-                            PairSpawns(SpawnSet[i].SpawnName, SpawnSet[j].SpawnName, "Overworld");
-                        }
-                    }
-                }
-            }
-        }
-
-        private void PairDungeonSpawns()
-        {
-            int[] DungeonOrder = _randomized.NewDestinationIndices;
-            string[] dungeons = new string[] { "Woodfall", "Snowhead", "Inverted Stone Tower", "Great Bay" };
-            string[] areas = new string[] { "Woodfall", "Snowhead", "Inverted Stone Tower", "Zora Cape" };
-            int j;
-            for(int i = 0; i < dungeons.Length; i++)
-            {
-                j = _settings.RandomizeDungeonEntrances ? DungeonOrder[i] : i;
-                PairSpawns(areas[i] + ": Temple", dungeons[j] + " Temple", "Dungeon");
-                ConnectEntrances(areas[i] + ": Temple", dungeons[j] + " Temple", true);
-            }
-        }
-
-        private void PairMoonSpawns()
-        {
-            foreach(Exit S in TerminaMap["Moon"])
-            {
-                if(S.SpawnName != "Moon")
-                {
-                    PairSingleSpawn(S.SpawnName, "Moon", "Moon");
-                }
-            }
         }
 
         private Exit GetShuffledSpawn(string Spawn)
@@ -997,8 +908,13 @@ namespace MMRando
             bool WasPlaced;
             int numExits, currExit;
 
-            foreach ( Exit s in GetSpawns().Where(x=>x.SpawnType!="Owl Warp"))
-            {
+            foreach ( Exit s in GetSpawns().Where(x=>
+                x.SpawnType != "Owl Warp" 
+                && x.SpawnType != "Telescope"
+                && x.SpawnType != "Telescope Spawn"
+                && x.SpawnType != "Permanent"
+                && x.SpawnType != "Grotto"
+            )) {
                 if(!EntranceShuffle.ContainsKey(s.SceneId))
                 {
                     EntranceShuffle[s.SceneId] = new List<Exit>();
