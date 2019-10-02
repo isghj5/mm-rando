@@ -236,7 +236,7 @@ namespace MMRando
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
-                foreach(int i in new int[] { 27 })
+                foreach(int i in new int[] { 45 })
                     EntranceUtils.ReadSceneExits(i, 16);
                 int[] fakeExits = Enumerable.Range(0, 32).ToArray();
                 foreach (int sceneIndex in RomData.SceneList.Select(s=>s.Number))
