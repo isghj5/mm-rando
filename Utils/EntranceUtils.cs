@@ -54,7 +54,7 @@ namespace MMRando.Utils
             for (int i = 0; i < count; i++)
             {
                 tempExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + i * 2);
-                System.Diagnostics.Debug.WriteLine($"{i}: {tempExit.ToString("X4")}");
+                System.Diagnostics.Debug.WriteLine($"{i}: {tempExit.ToString("X4")} = {tempExit}");
             }
         }
 

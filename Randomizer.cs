@@ -229,14 +229,18 @@ namespace MMRando
         Dictionary<string, List<Exit>> TerminaMap { get; set; }
         Dictionary<string, List<Exit>> ShuffledMap { get; set; }
         Dictionary<ushort, List<string>> SceneNamesByIndex { get; set; }
+        Dictionary<string, string> EntranceShuffleMapping { get; set; }
+        EntranceData TerminaMapData { get; set; }
         private void EntranceShuffle()
         {
             TerminaMap = new Dictionary<string, List<Exit>>();
             ShuffledMap = new Dictionary<string, List<Exit>>();
             SceneNamesByIndex = new Dictionary<ushort, List<string>>();
+            EntranceShuffleMapping = new Dictionary<string, string>();
             ReadTerminaMap();
             CustomNewEntrances();
-            ShuffleEntrances();
+            //ShuffleEntrances();
+            ShuffleEntranceData();
             //CheckEntrances();
             //ReverseEntrances();
             FinalizeEntrances();
@@ -251,7 +255,7 @@ namespace MMRando
             {
                 x = allSpawns.Find(s => s.SpawnName == e.Leaving);
                 c = allSpawns.Find(s => s.SpawnName == e.Returning);
-                if( x != null && c != null)
+                if (x != null && c != null)
                 {
                     x.ExitSpawn = c;
                     x.SpawnType = e.Type;
@@ -273,37 +277,48 @@ namespace MMRando
             List<Entrance> entrances = new List<Entrance>();
             List<Region> regions = new List<Region>();
             List<Exit> exits = new List<Exit>();
+            List<Spawn> spawns = new List<Spawn>();
             Dictionary<string, bool> added = new Dictionary<string, bool>();
-            int spawnIndex = 1;
             foreach (ushort sceneIndex in SceneNamesByIndex.Keys)
             {
                 foreach (string sceneName in SceneNamesByIndex[sceneIndex])
                 {
-                    regions.Add(new Region(sceneName, sceneIndex));
                     if (TerminaMap.ContainsKey(sceneName))
                     {
                         foreach (Exit s in TerminaMap[sceneName])
                         {
                             if (!added.ContainsKey(s.SpawnName))
                             {
-                                entrances.Add(new Entrance(s.SpawnName, s.ExitSpawn != null ? s.ExitSpawn.SpawnName : "No Match", s.SpawnType));
+                                s.ExitName = s.SpawnName;
                                 exits.Add(s);
-                                spawnIndex++;
                                 added[s.SpawnName] = true;
                             }
                         }
+                        regions.Add(new Region(sceneName, sceneIndex));
                     }
                 }
             }
-            foreach(Exit x in exits)
+            Spawn tempSpawn;
+            foreach (Region r in regions)
+            {
+                foreach (Entrance e in r.AddExits(exits))
+                {
+                    tempSpawn = e.Spawn;
+                    if (spawns.Find(t => tempSpawn.RegionName.Equals(t.RegionName) && tempSpawn.SpawnName.Equals(t.SpawnName) && tempSpawn.SpawnIndex == t.SpawnIndex) == null){
+                        spawns.Add(tempSpawn);
+                    }
+                    entrances.Add(e);
+                }
+            }
+            foreach (Exit x in exits)
             {
                 x.ExitSpawn = null;
-                x.RegionName = x.SceneName;
             }
             EntranceData data = new EntranceData();
             data.exits = exits;
             data.regions = regions;
             data.entrances = entrances;
+            data.spawns = spawns;
             JsonSerializerSettings settings = new JsonSerializerSettings();
             string spawnJson = JsonConvert.SerializeObject(data,Formatting.Indented);
             Debug.WriteLine(spawnJson);
@@ -339,13 +354,18 @@ namespace MMRando
         {
             StreamReader file = new StreamReader(Values.MainDirectory + @"\Resources\ENTRANCES.json");
             string spawnJson = file.ReadToEnd();
-            EntranceData spawnData = JsonConvert.DeserializeObject<EntranceData>(spawnJson);
+            EntranceData entranceData = JsonConvert.DeserializeObject<EntranceData>(spawnJson);
             file.Close();
-            foreach (Exit spawn in spawnData.exits)
+            foreach (Exit spawn in entranceData.exits)
             {
                 AddExitSpawn(spawn);
             }
-            ConnectEntrances(spawnData.entrances);
+            foreach (Region r in entranceData.regions)
+            {
+                AddSceneNameIndex(r.RegionName, (ushort)r.SceneId);
+            }
+            ConnectEntrances(entranceData.entrances);
+            TerminaMapData = entranceData;
         }
 
         private bool CanReturn(Dictionary<string, bool> AllowedSpawn, Exit S)
@@ -467,6 +487,11 @@ namespace MMRando
                 }
             }
             return SpawnSet;
+        }
+
+        private void ShuffleEntranceData()
+        {
+
         }
 
         private void ShuffleEntrances()
@@ -759,7 +784,7 @@ namespace MMRando
             sceneSpawns.Add(spawn);
             sceneSpawns = ShuffledMap[scene];
             sceneSpawns.Add(null);
-            AddSceneNameIndex(spawn.SceneName, spawn.SceneId);
+            //AddSceneNameIndex(spawn.SceneName, spawn.SceneId);
         }
 
         private void AddExitPair(Exit leaving, Exit returning, string type)

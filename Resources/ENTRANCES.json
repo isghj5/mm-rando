@@ -106,39 +106,43 @@
     },
     {
       "RegionName": "Moon",
-      "SceneId": 0
+      "SceneId": 103
     },
     {
       "RegionName": "Link Trial",
-      "SceneId": 0
+      "SceneId": 102
     },
     {
       "RegionName": "Deku Trial",
-      "SceneId": 0
+      "SceneId": 42
     },
     {
       "RegionName": "Goron Trial",
-      "SceneId": 0
+      "SceneId": 63
     },
     {
       "RegionName": "Zora Trial",
-      "SceneId": 0
+      "SceneId": 71
     },
     {
       "RegionName": "Woodfall Temple",
-      "SceneId": 0
+      "SceneId": 27
     },
     {
       "RegionName": "Snowhead Temple",
-      "SceneId": 0
+      "SceneId": 33
     },
     {
       "RegionName": "Great Bay Temple",
-      "SceneId": 0
+      "SceneId": 73
     },
     {
       "RegionName": "Stone Tower Temple",
-      "SceneId": 0
+      "SceneId": 22
+    },
+    {
+      "RegionName": "Inverted Stone Tower Temple",
+      "SceneId": 24
     },
     {
       "RegionName": "Deku Palace",
@@ -297,19 +301,31 @@
       "SceneId": 59
     },
     {
-      "RegionName": "Outside PF",
-      "SceneId": 20
-    },
-    {
       "RegionName": "Pirate's Fortress",
       "SceneId": 20
     },
     {
-      "RegionName": "Pirate's Fortress",
+      "RegionName": "PF Tunnel",
       "SceneId": 35
     },
     {
-      "RegionName": "PF Interior",
+      "RegionName": "PF Hookshot Room",
+      "SceneId": 35
+    },
+    {
+      "RegionName": "PF Hookshot Room Upper",
+      "SceneId": 35
+    },
+    {
+      "RegionName": "PF Twin Barrel Room",
+      "SceneId": 35
+    },
+    {
+      "RegionName": "PF Guarded Room",
+      "SceneId": 35
+    },
+    {
+      "RegionName": "PF Barrel Room",
       "SceneId": 35
     },
     {
@@ -1084,7 +1100,7 @@
     },
     {
       "SpawnName": "Observatory: Telescope",
-      "SpawnAddress": 65535,
+      "SpawnAddress": 19488,
       "SpawnType": "Telescope Spawn",
       "RegionName": "Observatory",
       "SceneName": "Observatory",
@@ -1584,7 +1600,7 @@
     },
     {
       "SpawnName": "Stone Tower Temple Exit",
-      "SpawnAddress": 65535,
+      "SpawnAddress": 43552,
       "SpawnType": "Dungeon Exit",
       "RegionName": "Stone Tower Temple",
       "SceneName": "Stone Tower Temple",
@@ -2154,7 +2170,7 @@
     },
     {
       "SpawnName": "Goron Racetrack: Minigame Over",
-      "SpawnAddress": 65535,
+      "SpawnAddress": 53280,
       "SpawnType": "Minigame",
       "RegionName": "Goron Racetrack",
       "SceneName": "Goron Racetrack",
@@ -2174,7 +2190,7 @@
     },
     {
       "SpawnName": "Goron Shrine: Goron Shop",
-      "SpawnAddress": 65535,
+      "SpawnAddress": 29696,
       "SpawnType": "Interior",
       "RegionName": "Goron Shrine",
       "SceneName": "Goron Shrine",
@@ -2214,7 +2230,7 @@
     },
     {
       "SpawnName": "Snowhead: Temple",
-      "SpawnAddress": 65535,
+      "SpawnAddress": 15360,
       "SpawnType": "Dungeon",
       "RegionName": "Snowhead",
       "SceneName": "Snowhead",
@@ -2566,7 +2582,7 @@
       "SpawnName": "Outside PF: Telescope Room",
       "SpawnAddress": 16544,
       "SpawnType": "Special",
-      "RegionName": "Outside PF",
+      "RegionName": "PF Tunnel",
       "SceneName": "Outside PF",
       "SceneId": 59,
       "ExitIndex": 3,
@@ -2588,6 +2604,16 @@
       "SpawnType": "Interior",
       "RegionName": "Pirate's Fortress",
       "SceneName": "Pirate's Fortress",
+      "SceneId": 20,
+      "ExitIndex": 0,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Hookshot Room",
+      "SpawnAddress": 16384,
+      "SpawnType": "Interior Exit",
+      "RegionName": "PF Hookshot Room",
+      "SceneName": "PF Hookshot Room",
       "SceneId": 35,
       "ExitIndex": 0,
       "ExitSpawn": null
@@ -2598,6 +2624,16 @@
       "SpawnType": "Interior",
       "RegionName": "Pirate's Fortress",
       "SceneName": "Pirate's Fortress",
+      "SceneId": 20,
+      "ExitIndex": 1,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Hookshot Room Upper",
+      "SpawnAddress": 16400,
+      "SpawnType": "Interior Exit",
+      "RegionName": "PF Hookshot Room Upper",
+      "SceneName": "PF Hookshot Room Upper",
       "SceneId": 35,
       "ExitIndex": 1,
       "ExitSpawn": null
@@ -2608,6 +2644,16 @@
       "SpawnType": "Interior",
       "RegionName": "Pirate's Fortress",
       "SceneName": "Pirate's Fortress",
+      "SceneId": 20,
+      "ExitIndex": 2,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Well Guarded Room",
+      "SpawnAddress": 16416,
+      "SpawnType": "Interior Exit",
+      "RegionName": "PF Guarded Room",
+      "SceneName": "PF Guarded Room",
       "SceneId": 35,
       "ExitIndex": 2,
       "ExitSpawn": null
@@ -2618,6 +2664,16 @@
       "SpawnType": "Interior",
       "RegionName": "Pirate's Fortress",
       "SceneName": "Pirate's Fortress",
+      "SceneId": 20,
+      "ExitIndex": 3,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Well Guarded Exit",
+      "SpawnAddress": 16432,
+      "SpawnType": "Interior Exit",
+      "RegionName": "PF Guarded Room",
+      "SceneName": "PF Guarded Room",
       "SceneId": 35,
       "ExitIndex": 3,
       "ExitSpawn": null
@@ -2633,11 +2689,31 @@
       "ExitSpawn": null
     },
     {
+      "SpawnName": "Barrel Room",
+      "SpawnAddress": 16448,
+      "SpawnType": "Interior Exit",
+      "RegionName": "PF Barrel Room",
+      "SceneName": "PF Barrel Room",
+      "SceneId": 35,
+      "ExitIndex": 4,
+      "ExitSpawn": null
+    },
+    {
       "SpawnName": "Pirate's Fortress: Barrel Room Exit",
       "SpawnAddress": 8800,
       "SpawnType": "Interior",
       "RegionName": "Pirate's Fortress",
       "SceneName": "Pirate's Fortress",
+      "SceneId": 35,
+      "ExitIndex": 5,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Barrel Room Exit",
+      "SpawnAddress": 16464,
+      "SpawnType": "Interior Exit",
+      "RegionName": "PF Barrel Room",
+      "SceneName": "PF Barrel Room",
       "SceneId": 35,
       "ExitIndex": 5,
       "ExitSpawn": null
@@ -2653,11 +2729,31 @@
       "ExitSpawn": null
     },
     {
+      "SpawnName": "Twin Barrel Room",
+      "SpawnAddress": 16480,
+      "SpawnType": "Interior Exit",
+      "RegionName": "PF Twin Barrel Room",
+      "SceneName": "PF Twin Barrel Room",
+      "SceneId": 35,
+      "ExitIndex": 6,
+      "ExitSpawn": null
+    },
+    {
       "SpawnName": "Pirate's Fortress: Twin Barrel Room Exit",
       "SpawnAddress": 8832,
-      "SpawnType": "Permanent",
+      "SpawnType": "Interior",
       "RegionName": "Pirate's Fortress",
       "SceneName": "Pirate's Fortress",
+      "SceneId": 35,
+      "ExitIndex": 7,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Twin Barrel Room Exit",
+      "SpawnAddress": 16496,
+      "SpawnType": "Interior Exit",
+      "RegionName": "PF Twin Barrel Room",
+      "SceneName": "PF Twin Barrel Room",
       "SceneId": 35,
       "ExitIndex": 7,
       "ExitSpawn": null
@@ -2754,7 +2850,7 @@
     },
     {
       "SpawnName": "Zora Cape: Temple",
-      "SpawnAddress": 65535,
+      "SpawnAddress": 35840,
       "SpawnType": "Dungeon",
       "RegionName": "Zora Cape",
       "SceneName": "Zora Cape",
@@ -2764,7 +2860,7 @@
     },
     {
       "SpawnName": "Dungeon Clear: Gyorg",
-      "SpawnAddress": 65535,
+      "SpawnAddress": 27264,
       "SpawnType": "Boss",
       "RegionName": "Zora Cape",
       "SceneName": "Zora Cape",
@@ -3231,7 +3327,7 @@
     },
     {
       "Leaving": "South Clock Town: Owl Warp",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Owl Warp"
     },
     {
@@ -3576,12 +3672,12 @@
     },
     {
       "Leaving": "Southern Swamp: Owl Warp",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Owl Warp"
     },
     {
       "Leaving": "Southern Swamp: Ikana Canyon",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "One Way"
     },
     {
@@ -3606,7 +3702,7 @@
     },
     {
       "Leaving": "Ikana Canyon: Owl Warp",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Owl Warp"
     },
     {
@@ -3691,7 +3787,7 @@
     },
     {
       "Leaving": "Southern Swamp Healed: Owl Warp",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Owl Warp"
     },
     {
@@ -3781,7 +3877,7 @@
     },
     {
       "Leaving": "Deku Palace: Caught",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Special"
     },
     {
@@ -3871,7 +3967,7 @@
     },
     {
       "Leaving": "Woodfall: Owl Warp",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Owl Warp"
     },
     {
@@ -3921,7 +4017,7 @@
     },
     {
       "Leaving": "Mountain Village: Owl Warp",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Owl Warp"
     },
     {
@@ -3951,7 +4047,7 @@
     },
     {
       "Leaving": "Mountain Village Spring: Owl Warp",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Owl Warp"
     },
     {
@@ -4051,7 +4147,7 @@
     },
     {
       "Leaving": "Goron Racetrack: Minigame Over",
-      "Returning": "No Match",
+      "Returning": "Minigame",
       "Type": "Minigame"
     },
     {
@@ -4061,7 +4157,7 @@
     },
     {
       "Leaving": "Goron Shrine: Goron Shop",
-      "Returning": "No Match",
+      "Returning": "Goron Shop Exit",
       "Type": "Interior"
     },
     {
@@ -4246,7 +4342,7 @@
     },
     {
       "Leaving": "Outside PF: Caught",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Special"
     },
     {
@@ -4266,43 +4362,83 @@
     },
     {
       "Leaving": "Pirate's Fortress: Hookshot Room",
-      "Returning": "No Match",
+      "Returning": "Hookshot Room",
       "Type": "Interior"
     },
     {
       "Leaving": "Pirate's Fortress: Hookshot Room Upper",
-      "Returning": "No Match",
+      "Returning": "Hookshot Room Upper",
       "Type": "Interior"
     },
     {
       "Leaving": "Pirate's Fortress: Well Guarded Room",
-      "Returning": "No Match",
+      "Returning": "Well Guarded Room",
       "Type": "Interior"
     },
     {
       "Leaving": "Pirate's Fortress: Well Guarded Exit",
-      "Returning": "No Match",
+      "Returning": "Well Guarded Exit",
       "Type": "Interior"
     },
     {
       "Leaving": "Pirate's Fortress: Barrel Room",
-      "Returning": "No Match",
+      "Returning": "Barrel Room",
       "Type": "Interior"
     },
     {
       "Leaving": "Pirate's Fortress: Barrel Room Exit",
-      "Returning": "No Match",
+      "Returning": "Barrel Room Exit",
       "Type": "Interior"
     },
     {
       "Leaving": "Pirate's Fortress: Twin Barrel Room",
-      "Returning": "No Match",
+      "Returning": "Twin Barrel Room",
       "Type": "Interior"
     },
     {
       "Leaving": "Pirate's Fortress: Twin Barrel Room Exit",
-      "Returning": "No Match",
+      "Returning": "Twin Barrel Room Exit",
       "Type": "Permanent"
+    },
+    {
+      "Leaving": "Hookshot Room",
+      "Returning": "Pirate's Fortress: Hookshot Room",
+      "Type": "Interior Exit"
+    },
+    {
+      "Leaving": "Hookshot Room Upper",
+      "Returning": "Pirate's Fortress: Hookshot Room Upper",
+      "Type": "Interior Exit"
+    },
+    {
+      "Leaving": "Well Guarded Room",
+      "Returning": "Pirate's Fortress: Well Guarded Room",
+      "Type": "Interior Exit"
+    },
+    {
+      "Leaving": "Well Guarded Exit",
+      "Returning": "Pirate's Fortress: Well Guarded Exit",
+      "Type": "Interior Exit"
+    },
+    {
+      "Leaving": "Barrel Room",
+      "Returning": "Pirate's Fortress: Barrel Room",
+      "Type": "Interior Exit"
+    },
+    {
+      "Leaving": "Barrel Room Exit",
+      "Returning": "Pirate's Fortress: Barrel Room Exit",
+      "Type": "Interior Exit"
+    },
+    {
+      "Leaving": "Twin Barrel Room",
+      "Returning": "Pirate's Fortress: Twin Barrel Room",
+      "Type": "Interior Exit"
+    },
+    {
+      "Leaving": "Twin Barrel Room Exit",
+      "Returning": "Pirate's Fortress: Twin Barrel Room Exit",
+      "Type": "Interior Exit"
     },
     {
       "Leaving": "Pirate's Fortress: Telescope",
@@ -4316,7 +4452,7 @@
     },
     {
       "Leaving": "Outside PF: Water Jet Exit",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Special"
     },
     {
@@ -4346,7 +4482,7 @@
     },
     {
       "Leaving": "Zora Cape: Owl Warp",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Owl Warp"
     },
     {
@@ -4521,7 +4657,7 @@
     },
     {
       "Leaving": "Stone Tower: Owl Warp",
-      "Returning": "No Match",
+      "Returning": "One Way",
       "Type": "Owl Warp"
     },
     {
