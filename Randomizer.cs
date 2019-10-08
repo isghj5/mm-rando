@@ -481,10 +481,14 @@ namespace MMRando
                     {
                         foreach (string SpawnName in SpawnTypeSet[Type])
                         {
-                            TempPool.Add(SpawnName, true);
+                            if( !TempPool.ContainsKey(SpawnName))
+                            {
+                                TempPool.Add(SpawnName, true);
+                            }
                         }
                         SpawnSet.Add(TempPool);
                     }
+                    // what was the point of this? connects a single entrance membered pool to itself?
                     else if (SpawnTypeSet[Type].Count > 0)
                     {
                         ConnectEntrances(SpawnTypeSet[Type][0], SpawnTypeSet[Type][0], false);
