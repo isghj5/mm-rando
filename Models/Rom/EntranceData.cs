@@ -62,11 +62,11 @@ namespace MMRando.Models
     public class Region
     {
         public string RegionName { get; }
-        public uint SceneId { get; }
-        public uint ExternalSceneId { get; private set; }
+        public ushort SceneId { get; }
+        public ushort ExternalSceneId { get; private set; }
         public List<string> Spawns { get; private set; }
         public List<string> Exits { get; private set; }
-        public Region(string RegionName, uint SceneId)
+        public Region(string RegionName, ushort SceneId)
         {
             this.RegionName = RegionName;
             this.SceneId = SceneId;
@@ -78,6 +78,7 @@ namespace MMRando.Models
         {
             Spawn spawn;
             List<Entrance> addedEntrances = new List<Entrance>();
+            Entrance e;
             byte s;
             foreach (Exit x in oldExits)
             {
@@ -88,12 +89,21 @@ namespace MMRando.Models
                         s = (byte)((x.ExitSpawn.SpawnAddress & 0x1F0) >> 4);
                         if (ExternalSceneId == 0xFFFF)
                         {
-                            ExternalSceneId = (uint)((x.ExitSpawn.SpawnAddress & 0xFE00) >> 9);
+                            ExternalSceneId = (ushort)((x.ExitSpawn.SpawnAddress & 0xFE00) >> 9);
                         }
                         spawn = new Spawn(x.ExitSpawn.SpawnName, this.RegionName, s);
-                        addedEntrances.Add(new Entrance(x.SpawnName, spawn, x, x.SpawnType));
-                        Spawns.Add($"{spawn.SpawnName} [{x.ExitSpawn.SpawnAddress.ToString("X4")}]");
+                        e = new Entrance(x.SpawnName, spawn, x, x.SpawnType);
+                        e.Leaving = x.SpawnName;
+                        e.Returning = spawn.SpawnName;
+                        addedEntrances.Add(e);
+                        Spawns.Add(spawn.SpawnName);
                         Exits.Add(x.ExitName);
+                    }
+                    else
+                    {
+                        s = (byte)((x.SpawnAddress & 0x1F0) >> 4);
+                        spawn = new Spawn(x.SpawnName, this.RegionName, s);
+                        Spawns.Add(spawn.SpawnName);
                     }
                 }
             }

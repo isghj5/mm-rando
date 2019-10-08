@@ -1,6 +1,10 @@
 {
   "regions": [
     {
+      "RegionName": "Clock Tower",
+      "SceneId": 99
+    },
+    {
       "RegionName": "South Clock Town",
       "SceneId": 111
     },
@@ -34,6 +38,10 @@
     },
     {
       "RegionName": "Curiosity Shop",
+      "SceneId": 13
+    },
+    {
+      "RegionName": "Kafei's House",
       "SceneId": 13
     },
     {
@@ -97,8 +105,24 @@
       "SceneId": 19
     },
     {
-      "RegionName": "Twinmold Boss Arena",
-      "SceneId": 19
+      "RegionName": "Odolwa's Lair",
+      "SceneId": 31
+    },
+    {
+      "RegionName": "Goht's Lair",
+      "SceneId": 68
+    },
+    {
+      "RegionName": "Gyorg's Lair",
+      "SceneId": 95
+    },
+    {
+      "RegionName": "Twinmold's Lair",
+      "SceneId": 54
+    },
+    {
+      "RegionName": "Majora's Lair",
+      "SceneId": 11
     },
     {
       "RegionName": "Southern Swamp Healed",
@@ -183,10 +207,6 @@
     {
       "RegionName": "Woodfall",
       "SceneId": 70
-    },
-    {
-      "RegionName": "Woodfall",
-      "SceneId": 27
     },
     {
       "RegionName": "Deku Princess Room",
@@ -409,10 +429,6 @@
       "SceneId": 81
     },
     {
-      "RegionName": "Stone Tower Temple",
-      "SceneId": 22
-    },
-    {
       "RegionName": "Sakon's Hideout",
       "SceneId": 79
     },
@@ -441,7 +457,7 @@
     {
       "SpawnName": "South Clock Town: Clock Tower",
       "SpawnAddress": 49168,
-      "SpawnType": "Overworld",
+      "SpawnType": "Interior",
       "RegionName": "South Clock Town",
       "SceneName": "South Clock Town",
       "SceneId": 111,
@@ -809,13 +825,53 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Laundry Pool: Curiosity Shop Backroom",
-      "SpawnAddress": 54864,
+      "SpawnName": "Laundry Pool: Kafei's House",
+      "SpawnAddress": 3600,
       "SpawnType": "Interior",
       "RegionName": "Laundry Pool",
       "SceneName": "Laundry Pool",
       "SceneId": 112,
       "ExitIndex": 1,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Clock Tower: South Clock Town",
+      "SpawnAddress": 55296,
+      "SpawnType": "Interior Exit",
+      "RegionName": "Clock Tower",
+      "SceneName": "Clock Tower",
+      "SceneId": 111,
+      "ExitIndex": 0,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Clock Tower Roof Exit",
+      "SpawnAddress": 55424,
+      "SpawnType": "Interior Exit",
+      "RegionName": "Clock Tower Roof",
+      "SceneName": "Clock Tower Roof",
+      "SceneId": 25,
+      "ExitIndex": 0,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Clock Tower Roof: Moon",
+      "SpawnAddress": 51200,
+      "SpawnType": "Permanent",
+      "RegionName": "Clock Tower Roof",
+      "SceneName": "Clock Tower Roof",
+      "SceneId": 25,
+      "ExitIndex": 0,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Moon: Clock Tower",
+      "SpawnAddress": 51200,
+      "SpawnType": "Permanent",
+      "RegionName": "Moon",
+      "SceneName": "Moon",
+      "SceneId": 103,
+      "ExitIndex": 0,
       "ExitSpawn": null
     },
     {
@@ -856,6 +912,16 @@
       "SceneName": "Curiosity Shop",
       "SceneId": 13,
       "ExitIndex": 0,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Kafei's House Exit",
+      "SpawnAddress": 55824,
+      "SpawnType": "Interior Exit",
+      "RegionName": "Kafei's House",
+      "SceneName": "Kafei's House",
+      "SceneId": 13,
+      "ExitIndex": 1,
       "ExitSpawn": null
     },
     {
@@ -1069,16 +1135,6 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Termina Field: Telescope",
-      "SpawnAddress": 19488,
-      "SpawnType": "Telescope",
-      "RegionName": "Observatory",
-      "SceneName": "Observatory",
-      "SceneId": 41,
-      "ExitIndex": 15,
-      "ExitSpawn": null
-    },
-    {
       "SpawnName": "Observatory: East Clock Town Exit",
       "SpawnAddress": 53792,
       "SpawnType": "Interior Exit",
@@ -1096,16 +1152,6 @@
       "SceneName": "Observatory",
       "SceneId": 41,
       "ExitIndex": 1,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Observatory: Telescope",
-      "SpawnAddress": 19488,
-      "SpawnType": "Telescope Spawn",
-      "RegionName": "Observatory",
-      "SceneName": "Observatory",
-      "SceneId": 41,
-      "ExitIndex": 0,
       "ExitSpawn": null
     },
     {
@@ -1359,11 +1405,11 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Dungeon Clear: Twinmold",
+      "SpawnName": "Ikana Canyon: Dungeon Clear",
       "SpawnAddress": 8304,
       "SpawnType": "Boss",
-      "RegionName": "Twinmold Boss Arena",
-      "SceneName": "Twinmold Boss Arena",
+      "RegionName": "Ikana Canyon",
+      "SceneName": "Ikana Canyon",
       "SceneId": 19,
       "ExitIndex": 1,
       "ExitSpawn": null
@@ -1459,6 +1505,26 @@
       "ExitSpawn": null
     },
     {
+      "SpawnName": "Moon: Majora's Lair",
+      "SpawnAddress": 512,
+      "SpawnType": "Boss",
+      "RegionName": "Moon",
+      "SceneName": "Moon",
+      "SceneId": 103,
+      "ExitIndex": 1,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Majora's Lair",
+      "SpawnAddress": 512,
+      "SpawnType": "Boss",
+      "RegionName": "Majora's Lair",
+      "SceneName": "Majora's Lair",
+      "SceneId": 0,
+      "ExitIndex": 1,
+      "ExitSpawn": null
+    },
+    {
       "SpawnName": "Moon: Link Trial",
       "SpawnAddress": 50688,
       "SpawnType": "Interior",
@@ -1549,7 +1615,7 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Odolwa Boss Entrance",
+      "SpawnName": "Odolwa's Boss Lair",
       "SpawnAddress": 14336,
       "SpawnType": "Boss",
       "RegionName": "Woodfall Temple",
@@ -1569,7 +1635,7 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Goht Boss Entrance",
+      "SpawnName": "Goht's Boss Lair",
       "SpawnAddress": 33280,
       "SpawnType": "Boss",
       "RegionName": "Snowhead Temple",
@@ -1589,7 +1655,7 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Gyorg Boss Entrance",
+      "SpawnName": "Gyorg's Boss Lair",
       "SpawnAddress": 47104,
       "SpawnType": "Boss",
       "RegionName": "Great Bay Temple",
@@ -1609,7 +1675,17 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Twinmold Boss Entrance",
+      "SpawnName": "Inverted Stone Tower Temple Exit",
+      "SpawnAddress": 44048,
+      "SpawnType": "Dungeon Exit",
+      "RegionName": "Inverted Stone Tower Temple",
+      "SceneName": "Inverted Stone Tower Temple",
+      "SceneId": 22,
+      "ExitIndex": 0,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Twinmold's Boss Lair",
       "SpawnAddress": 10768,
       "SpawnType": "Boss",
       "RegionName": "Inverted Stone Tower Temple",
@@ -1676,16 +1752,6 @@
       "SceneName": "Deku Palace",
       "SceneId": 43,
       "ExitIndex": 9,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Deku Palace: Bean Seller",
-      "SpawnAddress": 5312,
-      "SpawnType": "Interior",
-      "RegionName": "Deku Palace",
-      "SceneName": "Deku Palace",
-      "SceneId": 43,
-      "ExitIndex": 6,
       "ExitSpawn": null
     },
     {
@@ -1779,7 +1845,7 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Woodfall Temple Entrance",
+      "SpawnName": "Woodfall: Temple",
       "SpawnAddress": 12288,
       "SpawnType": "Dungeon",
       "RegionName": "Woodfall",
@@ -1829,7 +1895,7 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Dungeon Clear: Odolwa",
+      "SpawnName": "Woodfall Temple: Dungeon Clear",
       "SpawnAddress": 12304,
       "SpawnType": "Boss",
       "RegionName": "Deku Princess Room",
@@ -1979,7 +2045,7 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Dungeon Clear: Goht",
+      "SpawnName": "Mountain Village: Dungeon Clear",
       "SpawnAddress": 39424,
       "SpawnType": "Boss",
       "RegionName": "Mountain Village Spring",
@@ -2019,16 +2085,6 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Grotto: Hot Spring Water Winter",
-      "SpawnAddress": 0,
-      "SpawnType": "Grotto",
-      "RegionName": "Twin Islands",
-      "SceneName": "Twin Islands",
-      "SceneId": 93,
-      "ExitIndex": 3,
-      "ExitSpawn": null
-    },
-    {
       "SpawnName": "Twin Islands Spring: Mountain Village",
       "SpawnAddress": 39456,
       "SpawnType": "Overworld",
@@ -2056,16 +2112,6 @@
       "SceneName": "Twin Islands Spring",
       "SceneId": 94,
       "ExitIndex": 2,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Grotto: Hot Spring Water Spring",
-      "SpawnAddress": 0,
-      "SpawnType": "Grotto",
-      "RegionName": "Twin Islands Spring",
-      "SceneName": "Twin Islands Spring",
-      "SceneId": 94,
-      "ExitIndex": 3,
       "ExitSpawn": null
     },
     {
@@ -2121,7 +2167,7 @@
     {
       "SpawnName": "Goron Village Spring: Goron Shrine",
       "SpawnAddress": 24064,
-      "SpawnType": "Interior",
+      "SpawnType": "Overworld",
       "RegionName": "Goron Village Spring",
       "SceneName": "Goron Village Spring",
       "SceneId": 72,
@@ -2571,21 +2617,11 @@
     {
       "SpawnName": "Outside PF: Pirate Platform Exit",
       "SpawnAddress": 8896,
-      "SpawnType": "Interior Exit",
+      "SpawnType": "Overworld",
       "RegionName": "Outside PF",
       "SceneName": "Outside PF",
       "SceneId": 59,
       "ExitIndex": 5,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Outside PF: Telescope Room",
-      "SpawnAddress": 16544,
-      "SpawnType": "Special",
-      "RegionName": "PF Tunnel",
-      "SceneName": "Outside PF",
-      "SceneId": 59,
-      "ExitIndex": 3,
       "ExitSpawn": null
     },
     {
@@ -2600,18 +2636,8 @@
     },
     {
       "SpawnName": "Pirate's Fortress: Hookshot Room",
-      "SpawnAddress": 8720,
-      "SpawnType": "Interior",
-      "RegionName": "Pirate's Fortress",
-      "SceneName": "Pirate's Fortress",
-      "SceneId": 20,
-      "ExitIndex": 0,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Hookshot Room",
       "SpawnAddress": 16384,
-      "SpawnType": "Interior Exit",
+      "SpawnType": "Interior",
       "RegionName": "PF Hookshot Room",
       "SceneName": "PF Hookshot Room",
       "SceneId": 35,
@@ -2619,149 +2645,9 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Pirate's Fortress: Hookshot Room Upper",
-      "SpawnAddress": 8736,
-      "SpawnType": "Interior",
-      "RegionName": "Pirate's Fortress",
-      "SceneName": "Pirate's Fortress",
-      "SceneId": 20,
-      "ExitIndex": 1,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Hookshot Room Upper",
-      "SpawnAddress": 16400,
+      "SpawnName": "Hookshot Room",
+      "SpawnAddress": 8720,
       "SpawnType": "Interior Exit",
-      "RegionName": "PF Hookshot Room Upper",
-      "SceneName": "PF Hookshot Room Upper",
-      "SceneId": 35,
-      "ExitIndex": 1,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Pirate's Fortress: Well Guarded Room",
-      "SpawnAddress": 8752,
-      "SpawnType": "Interior",
-      "RegionName": "Pirate's Fortress",
-      "SceneName": "Pirate's Fortress",
-      "SceneId": 20,
-      "ExitIndex": 2,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Well Guarded Room",
-      "SpawnAddress": 16416,
-      "SpawnType": "Interior Exit",
-      "RegionName": "PF Guarded Room",
-      "SceneName": "PF Guarded Room",
-      "SceneId": 35,
-      "ExitIndex": 2,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Pirate's Fortress: Well Guarded Exit",
-      "SpawnAddress": 8768,
-      "SpawnType": "Interior",
-      "RegionName": "Pirate's Fortress",
-      "SceneName": "Pirate's Fortress",
-      "SceneId": 20,
-      "ExitIndex": 3,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Well Guarded Exit",
-      "SpawnAddress": 16432,
-      "SpawnType": "Interior Exit",
-      "RegionName": "PF Guarded Room",
-      "SceneName": "PF Guarded Room",
-      "SceneId": 35,
-      "ExitIndex": 3,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Pirate's Fortress: Barrel Room",
-      "SpawnAddress": 8784,
-      "SpawnType": "Interior",
-      "RegionName": "Pirate's Fortress",
-      "SceneName": "Pirate's Fortress",
-      "SceneId": 35,
-      "ExitIndex": 4,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Barrel Room",
-      "SpawnAddress": 16448,
-      "SpawnType": "Interior Exit",
-      "RegionName": "PF Barrel Room",
-      "SceneName": "PF Barrel Room",
-      "SceneId": 35,
-      "ExitIndex": 4,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Pirate's Fortress: Barrel Room Exit",
-      "SpawnAddress": 8800,
-      "SpawnType": "Interior",
-      "RegionName": "Pirate's Fortress",
-      "SceneName": "Pirate's Fortress",
-      "SceneId": 35,
-      "ExitIndex": 5,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Barrel Room Exit",
-      "SpawnAddress": 16464,
-      "SpawnType": "Interior Exit",
-      "RegionName": "PF Barrel Room",
-      "SceneName": "PF Barrel Room",
-      "SceneId": 35,
-      "ExitIndex": 5,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Pirate's Fortress: Twin Barrel Room",
-      "SpawnAddress": 8816,
-      "SpawnType": "Interior",
-      "RegionName": "Pirate's Fortress",
-      "SceneName": "Pirate's Fortress",
-      "SceneId": 35,
-      "ExitIndex": 6,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Twin Barrel Room",
-      "SpawnAddress": 16480,
-      "SpawnType": "Interior Exit",
-      "RegionName": "PF Twin Barrel Room",
-      "SceneName": "PF Twin Barrel Room",
-      "SceneId": 35,
-      "ExitIndex": 6,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Pirate's Fortress: Twin Barrel Room Exit",
-      "SpawnAddress": 8832,
-      "SpawnType": "Interior",
-      "RegionName": "Pirate's Fortress",
-      "SceneName": "Pirate's Fortress",
-      "SceneId": 35,
-      "ExitIndex": 7,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Twin Barrel Room Exit",
-      "SpawnAddress": 16496,
-      "SpawnType": "Interior Exit",
-      "RegionName": "PF Twin Barrel Room",
-      "SceneName": "PF Twin Barrel Room",
-      "SceneId": 35,
-      "ExitIndex": 7,
-      "ExitSpawn": null
-    },
-    {
-      "SpawnName": "Pirate's Fortress: Telescope",
-      "SpawnAddress": 8864,
-      "SpawnType": "Telescope",
       "RegionName": "Pirate's Fortress",
       "SceneName": "Pirate's Fortress",
       "SceneId": 20,
@@ -2769,9 +2655,149 @@
       "ExitSpawn": null
     },
     {
+      "SpawnName": "Pirate's Fortress: Hookshot Room Upper",
+      "SpawnAddress": 16400,
+      "SpawnType": "Interior",
+      "RegionName": "PF Hookshot Room Upper",
+      "SceneName": "PF Hookshot Room Upper",
+      "SceneId": 35,
+      "ExitIndex": 1,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Hookshot Room Upper",
+      "SpawnAddress": 8736,
+      "SpawnType": "Interior Exit",
+      "RegionName": "Pirate's Fortress",
+      "SceneName": "Pirate's Fortress",
+      "SceneId": 20,
+      "ExitIndex": 1,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Pirate's Fortress: Well Guarded Room",
+      "SpawnAddress": 16416,
+      "SpawnType": "Interior",
+      "RegionName": "PF Guarded Room",
+      "SceneName": "PF Guarded Room",
+      "SceneId": 35,
+      "ExitIndex": 2,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Well Guarded Room",
+      "SpawnAddress": 8752,
+      "SpawnType": "Interior Exit",
+      "RegionName": "Pirate's Fortress",
+      "SceneName": "Pirate's Fortress",
+      "SceneId": 20,
+      "ExitIndex": 2,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Pirate's Fortress: Well Guarded Exit",
+      "SpawnAddress": 16432,
+      "SpawnType": "Interior",
+      "RegionName": "PF Guarded Room",
+      "SceneName": "PF Guarded Room",
+      "SceneId": 35,
+      "ExitIndex": 3,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Well Guarded Exit",
+      "SpawnAddress": 8768,
+      "SpawnType": "Interior Exit",
+      "RegionName": "Pirate's Fortress",
+      "SceneName": "Pirate's Fortress",
+      "SceneId": 20,
+      "ExitIndex": 3,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Pirate's Fortress: Barrel Room",
+      "SpawnAddress": 16448,
+      "SpawnType": "Interior",
+      "RegionName": "PF Barrel Room",
+      "SceneName": "PF Barrel Room",
+      "SceneId": 35,
+      "ExitIndex": 4,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Barrel Room",
+      "SpawnAddress": 8784,
+      "SpawnType": "Interior Exit",
+      "RegionName": "Pirate's Fortress",
+      "SceneName": "Pirate's Fortress",
+      "SceneId": 35,
+      "ExitIndex": 4,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Pirate's Fortress: Barrel Room Exit",
+      "SpawnAddress": 16464,
+      "SpawnType": "Interior",
+      "RegionName": "PF Barrel Room",
+      "SceneName": "PF Barrel Room",
+      "SceneId": 35,
+      "ExitIndex": 5,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Barrel Room Exit",
+      "SpawnAddress": 8800,
+      "SpawnType": "Interior Exit",
+      "RegionName": "Pirate's Fortress",
+      "SceneName": "Pirate's Fortress",
+      "SceneId": 35,
+      "ExitIndex": 5,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Pirate's Fortress: Twin Barrel Room",
+      "SpawnAddress": 16480,
+      "SpawnType": "Interior",
+      "RegionName": "PF Twin Barrel Room",
+      "SceneName": "PF Twin Barrel Room",
+      "SceneId": 35,
+      "ExitIndex": 6,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Twin Barrel Room",
+      "SpawnAddress": 8816,
+      "SpawnType": "Interior Exit",
+      "RegionName": "Pirate's Fortress",
+      "SceneName": "Pirate's Fortress",
+      "SceneId": 35,
+      "ExitIndex": 6,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Pirate's Fortress: Twin Barrel Room Exit",
+      "SpawnAddress": 16496,
+      "SpawnType": "Interior",
+      "RegionName": "PF Twin Barrel Room",
+      "SceneName": "PF Twin Barrel Room",
+      "SceneId": 35,
+      "ExitIndex": 7,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Twin Barrel Room Exit",
+      "SpawnAddress": 8832,
+      "SpawnType": "Interior Exit",
+      "RegionName": "Pirate's Fortress",
+      "SceneName": "Pirate's Fortress",
+      "SceneId": 35,
+      "ExitIndex": 7,
+      "ExitSpawn": null
+    },
+    {
       "SpawnName": "Pirate's Fortress: Pirate Platform",
       "SpawnAddress": 28752,
-      "SpawnType": "Interior",
+      "SpawnType": "Overworld",
       "RegionName": "Pirate's Fortress",
       "SceneName": "Pirate's Fortress",
       "SceneId": 20,
@@ -2859,7 +2885,7 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Dungeon Clear: Gyorg",
+      "SpawnName": "Zora Cape: Dungeon Clear",
       "SpawnAddress": 27264,
       "SpawnType": "Boss",
       "RegionName": "Zora Cape",
@@ -3159,7 +3185,7 @@
       "ExitSpawn": null
     },
     {
-      "SpawnName": "Stone Tower: Stone Tower Temple",
+      "SpawnName": "Stone Tower: Temple",
       "SpawnAddress": 9728,
       "SpawnType": "Interior",
       "RegionName": "Stone Tower",
@@ -3176,6 +3202,36 @@
       "SceneName": "Stone Tower",
       "SceneId": 88,
       "ExitIndex": 8,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Stone Tower: Inverted Stone Tower",
+      "SpawnAddress": 44032,
+      "SpawnType": "Overworld",
+      "RegionName": "Stone Tower",
+      "SceneName": "Stone Tower",
+      "SceneId": 88,
+      "ExitIndex": 0,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Inverted Stone Tower: Temple",
+      "SpawnAddress": 9728,
+      "SpawnType": "Dungeon",
+      "RegionName": "Stone Tower",
+      "SceneName": "Stone Tower",
+      "SceneId": 89,
+      "ExitIndex": 0,
+      "ExitSpawn": null
+    },
+    {
+      "SpawnName": "Inverted Stone Tower: Stone Tower",
+      "SpawnAddress": 43536,
+      "SpawnType": "Overworld",
+      "RegionName": "Stone Tower",
+      "SceneName": "Stone Tower",
+      "SceneId": 89,
+      "ExitIndex": 0,
       "ExitSpawn": null
     },
     {
@@ -3282,7 +3338,22 @@
   "entrances": [
     {
       "Leaving": "South Clock Town: Clock Tower",
-      "Returning": "No Match",
+      "Returning": "Clock Tower: South Clock Town",
+      "Type": "Overworld"
+    },
+    {
+      "Leaving": "Clock Tower: South Clock Town",
+      "Returning": "South Clock Town: Clock Tower",
+      "Type": "Overworld"
+    },
+    {
+      "Leaving": "Clock Tower: South Clock Town",
+      "Returning": "South Clock Town: Clock Tower",
+      "Type": "Overworld"
+    },
+    {
+      "Leaving": "Clock Tower: South Clock Town",
+      "Returning": "South Clock Town: Clock Tower",
       "Type": "Overworld"
     },
     {
@@ -3323,6 +3394,21 @@
     {
       "Leaving": "South Clock Town: Clock Tower Roof",
       "Returning": "Clock Tower Roof Exit",
+      "Type": "Permanent"
+    },
+    {
+      "Leaving": "Clock Tower Roof Exit",
+      "Returning": "South Clock Town: Clock Tower Roof",
+      "Type": "Permanent"
+    },
+    {
+      "Leaving": "Clock Tower Roof: Moon",
+      "Returning": "Moon: Clock Tower",
+      "Type": "Permanent"
+    },
+    {
+      "Leaving": "Moon Clock Tower",
+      "Returning": "Clock Tower Roof: Moon",
       "Type": "Permanent"
     },
     {
@@ -3466,8 +3552,8 @@
       "Type": "Overworld"
     },
     {
-      "Leaving": "Laundry Pool: Curiosity Shop Backroom",
-      "Returning": "No Match",
+      "Leaving": "Laundry Pool: Kafei's House",
+      "Returning": "Kafei's House Exit",
       "Type": "Interior"
     },
     {
@@ -3488,6 +3574,11 @@
     {
       "Leaving": "Curiosity Shop Exit",
       "Returning": "West Clock Town: Curiosity Shop",
+      "Type": "Interior Exit"
+    },
+    {
+      "Leaving": "Kafei's House Exit",
+      "Returning": "Laundry Pool: Kafei's House",
       "Type": "Interior Exit"
     },
     {
@@ -3596,11 +3687,6 @@
       "Type": "Interior"
     },
     {
-      "Leaving": "Termina Field: Telescope",
-      "Returning": "Observatory: Telescope",
-      "Type": "Telescope"
-    },
-    {
       "Leaving": "Observatory: East Clock Town Exit",
       "Returning": "East Clock Town: Observatory",
       "Type": "Interior Exit"
@@ -3609,11 +3695,6 @@
       "Leaving": "Observatory: Termina Field Exit",
       "Returning": "Termina Field: Observatory",
       "Type": "Interior Exit"
-    },
-    {
-      "Leaving": "Observatory: Telescope",
-      "Returning": "No Match",
-      "Type": "Telescope Spawn"
     },
     {
       "Leaving": "Swamp Path: Termina Field",
@@ -3741,8 +3822,8 @@
       "Type": "Interior"
     },
     {
-      "Leaving": "Dungeon Clear: Twinmold",
-      "Returning": "Twinmold Boss Entrance",
+      "Leaving": "Ikana Canyon: Dungeon Clear",
+      "Returning": "Twinmold's Boss Lair",
       "Type": "Boss"
     },
     {
@@ -3796,6 +3877,16 @@
       "Type": "Interior"
     },
     {
+      "Leaving": "Moon: Majora's Lair",
+      "Returning": "Majora's Lair",
+      "Type": "Boss"
+    },
+    {
+      "Leaving": "Majora's Lair",
+      "Returning": "Moon: Majora's Lair",
+      "Type": "Boss"
+    },
+    {
       "Leaving": "Moon: Deku Trial",
       "Returning": "Deku Trial Exit",
       "Type": "Interior"
@@ -3836,18 +3927,18 @@
       "Type": "Dungeon Exit"
     },
     {
-      "Leaving": "Odolwa Boss Entrance",
-      "Returning": "Dungeon Clear: Woodfall Temple",
+      "Leaving": "Odolwa's Boss Lair",
+      "Returning": "Woodfall Temple: Dungeon Clear",
       "Type": "Boss"
     },
     {
       "Leaving": "Snowhead Temple Exit",
-      "Returning": "Snowhead: Snowhead Temple",
+      "Returning": "Snowhead: Temple",
       "Type": "Dungeon Exit"
     },
     {
-      "Leaving": "Goht Boss Entrance",
-      "Returning": "Dungeon Clear: Mountain Village",
+      "Leaving": "Goht's Boss Lair",
+      "Returning": "Mountain Village: Dungeon Clear",
       "Type": "Boss"
     },
     {
@@ -3856,8 +3947,8 @@
       "Type": "Dungeon Exit"
     },
     {
-      "Leaving": "Gyorg Boss Entrance",
-      "Returning": "Dungeon Clear: Zora Cape",
+      "Leaving": "Gyorg's Boss Lair",
+      "Returning": "Zora Cape: Dungeon Clear",
       "Type": "Boss"
     },
     {
@@ -3866,8 +3957,8 @@
       "Type": "Dungeon Exit"
     },
     {
-      "Leaving": "Twinmold Boss Entrance",
-      "Returning": "Dungeon Clear: Twinmold",
+      "Leaving": "Twinmold's Boss Lair",
+      "Returning": "Ikana Canyon: Dungeon Clear",
       "Type": "Boss"
     },
     {
@@ -3899,11 +3990,6 @@
       "Leaving": "Deku Palace: Deku Shortcut",
       "Returning": "Southern Swamp: Deku Shortcut",
       "Type": "Overworld"
-    },
-    {
-      "Leaving": "Deku Palace: Bean Seller",
-      "Returning": "No Match",
-      "Type": "Interior"
     },
     {
       "Leaving": "Potion Shop Exit",
@@ -3951,7 +4037,7 @@
       "Type": "Overworld"
     },
     {
-      "Leaving": "Woodfall Temple Entrance",
+      "Leaving": "Woodfall: Temple",
       "Returning": "Woodfall Temple Exit",
       "Type": "Dungeon"
     },
@@ -3976,8 +4062,8 @@
       "Type": "Interior Exit"
     },
     {
-      "Leaving": "Dungeon Clear: Odolwa",
-      "Returning": "No Match",
+      "Leaving": "Woodfall Temple: Dungeon Clear",
+      "Returning": "Odolwa's Boss Lair",
       "Type": "Boss"
     },
     {
@@ -4051,8 +4137,8 @@
       "Type": "Owl Warp"
     },
     {
-      "Leaving": "Dungeon Clear: Goht",
-      "Returning": "No Match",
+      "Leaving": "Mountain Village: Dungeon Clear",
+      "Returning": "Goht's Boss Lair",
       "Type": "Boss"
     },
     {
@@ -4071,29 +4157,19 @@
       "Type": "Interior"
     },
     {
-      "Leaving": "Grotto: Hot Spring Water Winter",
-      "Returning": "No Match",
-      "Type": "Grotto"
-    },
-    {
       "Leaving": "Twin Islands Spring: Mountain Village",
       "Returning": "Twin Islands Spring: Mountain Village",
       "Type": "Overworld"
     },
     {
       "Leaving": "Twin Islands Spring: Goron Village",
-      "Returning": "Goron Village: Twin Islands",
+      "Returning": "Goron Village Spring: Twin Islands",
       "Type": "Overworld"
     },
     {
       "Leaving": "Twin Islands Spring: Goron Racetrack",
       "Returning": "Goron Racetrack Exit",
       "Type": "Interior"
-    },
-    {
-      "Leaving": "Grotto: Hot Spring Water Spring",
-      "Returning": "No Match",
-      "Type": "Grotto"
     },
     {
       "Leaving": "Goron Village: Twin Islands",
@@ -4103,7 +4179,7 @@
     {
       "Leaving": "Goron Village: Goron Shrine",
       "Returning": "Goron Shrine Exit",
-      "Type": "Interior"
+      "Type": "Overworld"
     },
     {
       "Leaving": "Goron Village: Lens Grotto",
@@ -4117,13 +4193,13 @@
     },
     {
       "Leaving": "Goron Village Spring: Twin Islands",
-      "Returning": "No Match",
+      "Returning": "Twin Islands Spring: Goron Village",
       "Type": "Overworld"
     },
     {
       "Leaving": "Goron Village Spring: Goron Shrine",
       "Returning": "Goron Shrine Exit",
-      "Type": "Interior"
+      "Type": "Overworld"
     },
     {
       "Leaving": "Goron Grave Exit",
@@ -4153,7 +4229,7 @@
     {
       "Leaving": "Goron Shrine Exit",
       "Returning": "Goron Village: Goron Shrine",
-      "Type": "Interior Exit"
+      "Type": "Overworld"
     },
     {
       "Leaving": "Goron Shrine: Goron Shop",
@@ -4177,7 +4253,7 @@
     },
     {
       "Leaving": "Snowhead: Temple",
-      "Returning": "No Match",
+      "Returning": "Snowhead Temple Exit",
       "Type": "Dungeon"
     },
     {
@@ -4351,11 +4427,6 @@
       "Type": "Interior Exit"
     },
     {
-      "Leaving": "Outside PF: Telescope Room",
-      "Returning": "No Match",
-      "Type": "Special"
-    },
-    {
       "Leaving": "Pirate's Fortress: Outside PF",
       "Returning": "Outside PF: Pirate's Fortress",
       "Type": "Overworld"
@@ -4441,11 +4512,6 @@
       "Type": "Interior Exit"
     },
     {
-      "Leaving": "Pirate's Fortress: Telescope",
-      "Returning": "No Match",
-      "Type": "Telescope"
-    },
-    {
       "Leaving": "Pirate's Fortress: Pirate Platform",
       "Returning": "Outside PF: Pirate Platform Exit",
       "Type": "Interior"
@@ -4487,12 +4553,12 @@
     },
     {
       "Leaving": "Zora Cape: Temple",
-      "Returning": "No Match",
+      "Returning": "Great Bay Temple Exit",
       "Type": "Dungeon"
     },
     {
-      "Leaving": "Dungeon Clear: Gyorg",
-      "Returning": "No Match",
+      "Leaving": "Zora Cape: Dungeon Clear",
+      "Returning": "Gyorg's Boss Lair",
       "Type": "Boss"
     },
     {
@@ -4582,8 +4648,8 @@
     },
     {
       "Leaving": "Ikana Graveyard: Night 3 Grave",
-      "Returning": "Night 3 Grave Exit",
-      "Type": "Permanent"
+      "Returning": "Dampe's House Exit",
+      "Type": "Interior"
     },
     {
       "Leaving": "Ikana Graveyard: Night 2 Grave",
@@ -4593,11 +4659,6 @@
     {
       "Leaving": "Ikana Graveyard: Night 1 Grave",
       "Returning": "Night 1 Grave Exit",
-      "Type": "Interior"
-    },
-    {
-      "Leaving": "Ikana Graveyard: Dampe's House",
-      "Returning": "Dampe's House",
       "Type": "Interior"
     },
     {
@@ -4611,14 +4672,9 @@
       "Type": "Interior Exit"
     },
     {
-      "Leaving": "Night 3 Grave Exit",
-      "Returning": "Ikana Graveyard: Night 3 Grave",
-      "Type": "Interior Exit"
-    },
-    {
       "Leaving": "Dampe's House",
       "Returning": "Ikana Graveyard: Dampe's House",
-      "Type": "Permanent"
+      "Type": "Interior Exit"
     },
     {
       "Leaving": "Ikana Castle: Well",
@@ -4651,14 +4707,34 @@
       "Type": "Overworld"
     },
     {
-      "Leaving": "Stone Tower: Stone Tower Temple",
+      "Leaving": "Stone Tower: Temple",
       "Returning": "Stone Tower Temple Exit",
       "Type": "Interior"
+    },
+    {
+      "Leaving": "Stone Tower Temple Exit",
+      "Returning": "Stone Tower: Temple",
+      "Type": "Interior Exit"
+    },
+    {
+      "Leaving": "Stone Tower: Inverted Stone Tower",
+      "Returning": "Iverted Stone Tower: Stone Tower",
+      "Type": "Overworld"
     },
     {
       "Leaving": "Stone Tower: Owl Warp",
       "Returning": "One Way",
       "Type": "Owl Warp"
+    },
+    {
+      "Leaving": "Inverted Stone Tower: Stone Tower",
+      "Returning": "Stone Tower: Inverted Stone Tower",
+      "Type": "Overworld"
+    },
+    {
+      "Leaving": "Inverted Stone Tower: Temple",
+      "Returning": "Inverted Stone Tower Temple Exit",
+      "Type": "Overworld"
     },
     {
       "Leaving": "Music Box Exit",

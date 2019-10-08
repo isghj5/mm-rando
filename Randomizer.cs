@@ -238,9 +238,8 @@ namespace MMRando
             SceneNamesByIndex = new Dictionary<ushort, List<string>>();
             EntranceShuffleMapping = new Dictionary<string, string>();
             ReadTerminaMap();
-            CustomNewEntrances();
-            //ShuffleEntrances();
-            ShuffleEntranceData();
+            ShuffleEntrances();
+            //ShuffleEntranceData();
             //CheckEntrances();
             //ReverseEntrances();
             FinalizeEntrances();
@@ -267,9 +266,10 @@ namespace MMRando
             }
         }
 
-        private void CustomNewEntrances()
+        private void CustomNewEntrances(List<Region> regions)
         {
-
+            //AddNewExit("Majora's Lair", 0x0200, "Moon", regions, 1);
+            //AddNewExit("Clock Tower: South Clock Town", 0xD800, "Clock Tower", regions, 1);
         }
 
         private void WriteMapData()
@@ -312,6 +312,10 @@ namespace MMRando
             }
             foreach (Exit x in exits)
             {
+                if (x.ExitSpawn != null)
+                {
+                    x.SpawnName = x.ExitSpawn.SpawnName;
+                }
                 x.ExitSpawn = null;
             }
             EntranceData data = new EntranceData();
@@ -360,6 +364,7 @@ namespace MMRando
             {
                 AddExitSpawn(spawn);
             }
+            CustomNewEntrances(entranceData.regions);
             foreach (Region r in entranceData.regions)
             {
                 AddSceneNameIndex(r.RegionName, (ushort)r.SceneId);
@@ -770,6 +775,15 @@ namespace MMRando
             {
                 SceneNamesByIndex[sceneIndex].Add(sceneName);
             }
+        }
+
+        private void AddNewExit(string SpawnName, ushort SpawnAddress, string RegionName, List<Region> Regions, int ExitIndex)
+        {
+            Exit x = new Exit(SpawnName, SpawnAddress, RegionName);
+            Region region = Regions.Find(r=>RegionName.Equals(r.RegionName));
+            x.SceneName = region.RegionName;
+            x.SceneId = region.SceneId;
+            x.ExitIndex = ExitIndex;
         }
 
         private void AddExitSpawn(Exit spawn)
