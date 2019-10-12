@@ -3,7 +3,7 @@
     {
       "RegionName": "Clock Tower",
       "SceneId": 99,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 96,
       "Spawns": [
         "South Clock Town: Clock Tower"
       ],
@@ -14,7 +14,7 @@
     {
       "RegionName": "South Clock Town",
       "SceneId": 111,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 108,
       "Spawns": [
         "Clock Tower: South Clock Town",
         "Termina Field: South Clock Town",
@@ -42,7 +42,7 @@
     {
       "RegionName": "North Clock Town",
       "SceneId": 110,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 107,
       "Spawns": [
         "Termina Field: North Clock Town",
         "East Clock Town: North Clock Town",
@@ -61,7 +61,7 @@
     {
       "RegionName": "West Clock Town",
       "SceneId": 109,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 106,
       "Spawns": [
         "Termina Field: West Clock Town",
         "South Clock Town: South West Connection",
@@ -88,7 +88,7 @@
     {
       "RegionName": "East Clock Town",
       "SceneId": 108,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 105,
       "Spawns": [
         "Termina Field: East Clock Town",
         "South Clock Town: South East Connection",
@@ -121,7 +121,7 @@
     {
       "RegionName": "Laundry Pool",
       "SceneId": 112,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 109,
       "Spawns": [
         "South Clock Town: Laundry Pool",
         "Kafei's House Exit"
@@ -134,7 +134,7 @@
     {
       "RegionName": "Bomb Shop",
       "SceneId": 104,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 101,
       "Spawns": [
         "West Clock Town: Bomb Shop"
       ],
@@ -145,7 +145,7 @@
     {
       "RegionName": "Trading Post",
       "SceneId": 52,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 49,
       "Spawns": [
         "West Clock Town: Trading Post"
       ],
@@ -156,7 +156,7 @@
     {
       "RegionName": "Swordsman's School",
       "SceneId": 84,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 81,
       "Spawns": [
         "West Clock Town: Swordsman's School"
       ],
@@ -167,7 +167,7 @@
     {
       "RegionName": "Curiosity Shop",
       "SceneId": 13,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 7,
       "Spawns": [
         "West Clock Town: Curiosity Shop"
       ],
@@ -178,7 +178,7 @@
     {
       "RegionName": "Kafei's House",
       "SceneId": 13,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 7,
       "Spawns": [
         "Laundry Pool: Kafei's House"
       ],
@@ -189,7 +189,7 @@
     {
       "RegionName": "Post Office",
       "SceneId": 46,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 43,
       "Spawns": [
         "West Clock Town: Post Office"
       ],
@@ -200,7 +200,7 @@
     {
       "RegionName": "Lottery Shop",
       "SceneId": 57,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 54,
       "Spawns": [
         "West Clock Town: Lottery Shop"
       ],
@@ -211,7 +211,7 @@
     {
       "RegionName": "Treasure Chest Game",
       "SceneId": 23,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 20,
       "Spawns": [
         "East Clock Town: Treasure Chest Game"
       ],
@@ -222,7 +222,7 @@
     {
       "RegionName": "Honey & Darling",
       "SceneId": 17,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 4,
       "Spawns": [
         "East Clock Town: Honey & Darling"
       ],
@@ -233,7 +233,7 @@
     {
       "RegionName": "Mayor's Residence",
       "SceneId": 18,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 0,
       "Spawns": [
         "East Clock Town: Mayor's Residence"
       ],
@@ -244,7 +244,7 @@
     {
       "RegionName": "Town Shooting Gallery",
       "SceneId": 32,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 29,
       "Spawns": [
         "East Clock Town: Town Shooting Gallery"
       ],
@@ -255,7 +255,7 @@
     {
       "RegionName": "Stock Pot Inn",
       "SceneId": 97,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 94,
       "Spawns": [
         "East Clock Town: Stock Pot Inn",
         "East Clock Town: Stock Pot Roof"
@@ -268,7 +268,7 @@
     {
       "RegionName": "Milk Bar",
       "SceneId": 21,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 18,
       "Spawns": [
         "East Clock Town: Milk Bar"
       ],
@@ -279,7 +279,7 @@
     {
       "RegionName": "Deku Playground",
       "SceneId": 30,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 27,
       "Spawns": [
         "North Clock Town: Deku Playground"
       ],
@@ -290,7 +290,7 @@
     {
       "RegionName": "Clock Tower Roof",
       "SceneId": 25,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 22,
       "Spawns": [
         "South Clock Town: Clock Tower Roof",
         "Moon: Clock Tower"
@@ -303,7 +303,7 @@
     {
       "RegionName": "Termina Field",
       "SceneId": 45,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 42,
       "Spawns": [
         "West Clock Town: Termina Field",
         "Swamp Path: Termina Field",
@@ -332,7 +332,7 @@
     {
       "RegionName": "Observatory",
       "SceneId": 41,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 38,
       "Spawns": [
         "East Clock Town: Observatory",
         "Termina Field: Observatory"
@@ -345,7 +345,7 @@
     {
       "RegionName": "Swamp Path",
       "SceneId": 64,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 61,
       "Spawns": [
         "Termina Field: Swamp Path",
         "Southern Swamp: Swamp Path",
@@ -360,7 +360,7 @@
     {
       "RegionName": "Southern Swamp",
       "SceneId": 69,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 66,
       "Spawns": [
         "Swamp Path: Southern Swamp",
         "Tourist Center Exit",
@@ -386,7 +386,7 @@
     {
       "RegionName": "Ikana Canyon",
       "SceneId": 19,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 16,
       "Spawns": [
         "Southern Swamp: Ikana Canyon",
         "Ikana Path: Ikana Canyon",
@@ -421,7 +421,7 @@
     {
       "RegionName": "Majora's Lair",
       "SceneId": 11,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 1,
       "Spawns": [
         "Moon: Majora's Lair"
       ],
@@ -432,7 +432,7 @@
     {
       "RegionName": "Southern Swamp Healed",
       "SceneId": 0,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 66,
       "Spawns": [
         "Swamp Path: Southern Swamp",
         "Tourist Center Exit",
@@ -458,7 +458,7 @@
     {
       "RegionName": "Moon",
       "SceneId": 103,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 100,
       "Spawns": [
         "Moon: Clock Tower",
         "Majora's Lair",
@@ -478,7 +478,7 @@
     {
       "RegionName": "Link Trial",
       "SceneId": 102,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 99,
       "Spawns": [
         "Moon: Link Trial"
       ],
@@ -489,7 +489,7 @@
     {
       "RegionName": "Deku Trial",
       "SceneId": 42,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 39,
       "Spawns": [
         "Moon: Deku Trial"
       ],
@@ -500,7 +500,7 @@
     {
       "RegionName": "Goron Trial",
       "SceneId": 63,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 60,
       "Spawns": [
         "Moon: Goron Trial"
       ],
@@ -511,7 +511,7 @@
     {
       "RegionName": "Zora Trial",
       "SceneId": 71,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 68,
       "Spawns": [
         "Moon: Zora Trial"
       ],
@@ -522,7 +522,7 @@
     {
       "RegionName": "Woodfall Temple",
       "SceneId": 27,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 24,
       "Spawns": [
         "Woodfall: Temple",
         "Woodfall Temple: Dungeon Clear"
@@ -535,7 +535,7 @@
     {
       "RegionName": "Deku Princess Room",
       "SceneId": 27,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 24,
       "Spawns": [
         "Woodfall: Deku Princess Room",
         "Odolwa's Boss Lair"
@@ -548,7 +548,7 @@
     {
       "RegionName": "Snowhead Temple",
       "SceneId": 33,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 30,
       "Spawns": [
         "Snowhead: Temple",
         "Mountain Village: Dungeon Clear"
@@ -561,7 +561,7 @@
     {
       "RegionName": "Great Bay Temple",
       "SceneId": 73,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 70,
       "Spawns": [
         "Zora Cape: Temple",
         "Zora Cape: Dungeon Clear"
@@ -574,7 +574,7 @@
     {
       "RegionName": "Stone Tower Temple",
       "SceneId": 22,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 19,
       "Spawns": [
         "Stone Tower: Temple"
       ],
@@ -585,7 +585,7 @@
     {
       "RegionName": "Inverted Stone Tower Temple",
       "SceneId": 24,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 21,
       "Spawns": [
         "Inverted Stone Tower: Temple",
         "Ikana Canyon: Dungeon Clear"
@@ -598,7 +598,7 @@
     {
       "RegionName": "Deku Palace",
       "SceneId": 43,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 40,
       "Spawns": [
         "Southern Swamp: Deku Palace",
         "Deku Palace: Caught",
@@ -618,7 +618,7 @@
     {
       "RegionName": "Potion Shop",
       "SceneId": 10,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 2,
       "Spawns": [
         "Southern Swamp: Potion Shop"
       ],
@@ -629,7 +629,7 @@
     {
       "RegionName": "Swamp Shooting Gallery",
       "SceneId": 36,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 33,
       "Spawns": [
         "Swamp Path: Swamp Shooting Gallery"
       ],
@@ -640,7 +640,7 @@
     {
       "RegionName": "Swamp Spider House",
       "SceneId": 39,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 36,
       "Spawns": [
         "Southern Swamp: Swamp Spider House"
       ],
@@ -651,7 +651,7 @@
     {
       "RegionName": "Woods of Mystery",
       "SceneId": 100,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 97,
       "Spawns": [
         "Southern Swamp: Woods of Mystery"
       ],
@@ -662,7 +662,7 @@
     {
       "RegionName": "Tourist Center",
       "SceneId": 87,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 84,
       "Spawns": [
         "Southern Swamp: Tourist Center"
       ],
@@ -673,7 +673,7 @@
     {
       "RegionName": "Deku King Chamber",
       "SceneId": 62,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 59,
       "Spawns": [
         "Deku Palace: Deku King Chamber"
       ],
@@ -684,7 +684,7 @@
     {
       "RegionName": "Sonata Monkey",
       "SceneId": 62,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 59,
       "Spawns": [
         "Deku Palace: Sonata Monkey"
       ],
@@ -695,7 +695,7 @@
     {
       "RegionName": "Deku Shrine",
       "SceneId": 82,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 79,
       "Spawns": [
         "Deku Palace: Deku Shrine"
       ],
@@ -706,7 +706,7 @@
     {
       "RegionName": "Woodfall",
       "SceneId": 70,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 67,
       "Spawns": [
         "Southern Swamp: Woodfall",
         "Woodfall Temple Exit",
@@ -724,7 +724,7 @@
     {
       "RegionName": "Mountain Path",
       "SceneId": 28,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 25,
       "Spawns": [
         "Termina Field: Mountain Path",
         "Mountain Village: Mountain Path"
@@ -737,7 +737,7 @@
     {
       "RegionName": "Mountain Village",
       "SceneId": 80,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 77,
       "Spawns": [
         "Smithy Exit",
         "Twin Islands: Mountain Village",
@@ -757,7 +757,7 @@
     {
       "RegionName": "Mountain Village Spring",
       "SceneId": 90,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 87,
       "Spawns": [
         "Smithy Exit",
         "Twin Islands Spring: Mountain Village",
@@ -779,7 +779,7 @@
     {
       "RegionName": "Twin Islands",
       "SceneId": 93,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 90,
       "Spawns": [
         "Mountain Village: Twin Islands",
         "Goron Village: Twin Islands",
@@ -794,7 +794,7 @@
     {
       "RegionName": "Twin Islands Spring",
       "SceneId": 94,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 91,
       "Spawns": [
         "Twin Islands Spring: Mountain Village",
         "Goron Village Spring: Twin Islands",
@@ -809,7 +809,7 @@
     {
       "RegionName": "Goron Village",
       "SceneId": 77,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 74,
       "Spawns": [
         "Twin Islands: Goron Village",
         "Goron Shrine Exit",
@@ -824,7 +824,7 @@
     {
       "RegionName": "Lens Grotto",
       "SceneId": 7,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 10,
       "Spawns": [
         "Goron Village: Lens Grotto"
       ],
@@ -835,7 +835,7 @@
     {
       "RegionName": "Goron Village Spring",
       "SceneId": 72,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 69,
       "Spawns": [
         "Twin Islands Spring: Goron Village",
         "Goron Shrine Exit"
@@ -848,7 +848,7 @@
     {
       "RegionName": "Goron Grave",
       "SceneId": 78,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 75,
       "Spawns": [
         "Mountain Village: Goron Grave"
       ],
@@ -859,7 +859,7 @@
     {
       "RegionName": "Smithy",
       "SceneId": 44,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 41,
       "Spawns": [
         "Mountain Village: Smithy"
       ],
@@ -870,7 +870,7 @@
     {
       "RegionName": "Goron Racetrack",
       "SceneId": 107,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 104,
       "Spawns": [
         "Twin Islands: Goron Racetrack",
         "Goron Racetrack: Minigame Over",
@@ -884,7 +884,7 @@
     {
       "RegionName": "Goron Shrine",
       "SceneId": 50,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 47,
       "Spawns": [
         "Goron Village: Goron Shrine",
         "Goron Shrine: Goron Shop"
@@ -896,7 +896,7 @@
     {
       "RegionName": "Snowhead Path",
       "SceneId": 91,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 88,
       "Spawns": [
         "Mountain Village: Snowhead Path",
         "Snowhead: Snowhead Path"
@@ -909,7 +909,7 @@
     {
       "RegionName": "Snowhead",
       "SceneId": 92,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 89,
       "Spawns": [
         "Snowhead Path: Snowhead",
         "Snowhead Temple Exit",
@@ -925,7 +925,7 @@
     {
       "RegionName": "Milk Road",
       "SceneId": 34,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 31,
       "Spawns": [
         "Termina Field: Milk Road",
         "Romani Ranch: Milk Road",
@@ -941,7 +941,7 @@
     {
       "RegionName": "Romani Ranch",
       "SceneId": 53,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 50,
       "Spawns": [
         "Milk Road: Romani Ranch",
         "Stable Exit",
@@ -960,7 +960,7 @@
     {
       "RegionName": "Stable",
       "SceneId": 16,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 3,
       "Spawns": [
         "Romani Ranch: Stable"
       ],
@@ -971,7 +971,7 @@
     {
       "RegionName": "Ranch House",
       "SceneId": 16,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 3,
       "Spawns": [
         "Romani Ranch: Ranch House"
       ],
@@ -982,7 +982,7 @@
     {
       "RegionName": "Cucco Shack",
       "SceneId": 66,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 63,
       "Spawns": [
         "Romani Ranch: Cucco Shack"
       ],
@@ -993,7 +993,7 @@
     {
       "RegionName": "Doggy Racetrack",
       "SceneId": 65,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 62,
       "Spawns": [
         "Romani Ranch: Doggy Racetrack"
       ],
@@ -1004,7 +1004,7 @@
     {
       "RegionName": "Gorman Track",
       "SceneId": 106,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 103,
       "Spawns": [
         "Milk Road: Gorman Track"
       ],
@@ -1015,7 +1015,7 @@
     {
       "RegionName": "Great Bay Coast",
       "SceneId": 55,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 52,
       "Spawns": [
         "Termina Field: Great Bay Coast",
         "Zora Cape: Great Bay Coast",
@@ -1040,7 +1040,7 @@
     {
       "RegionName": "Pinnacle Rock",
       "SceneId": 37,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 34,
       "Spawns": [
         "Great Bay Coast: Pinnacle Rock"
       ],
@@ -1051,7 +1051,7 @@
     {
       "RegionName": "Fisherman's Hut",
       "SceneId": 60,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 57,
       "Spawns": [
         "Great Bay Coast: Fisherman's Hut"
       ],
@@ -1062,7 +1062,7 @@
     {
       "RegionName": "Marine Lab",
       "SceneId": 47,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 44,
       "Spawns": [
         "Great Bay Coast: Marine Lab"
       ],
@@ -1073,7 +1073,7 @@
     {
       "RegionName": "Ocean Spider House",
       "SceneId": 40,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 37,
       "Spawns": [
         "Great Bay Coast: Ocean Spider House"
       ],
@@ -1084,7 +1084,7 @@
     {
       "RegionName": "Outside PF",
       "SceneId": 59,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 56,
       "Spawns": [
         "Great Bay Coast: Pirate's Fortress",
         "Pirate's Fortress: Outside PF",
@@ -1101,7 +1101,7 @@
     {
       "RegionName": "Pirate's Fortress",
       "SceneId": 20,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 17,
       "Spawns": [
         "Outside PF: Pirate's Fortress",
         "Pirate's Fortress: Hookshot Room",
@@ -1130,7 +1130,7 @@
     {
       "RegionName": "PF Hookshot Room",
       "SceneId": 35,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 32,
       "Spawns": [
         "Hookshot Room"
       ],
@@ -1141,7 +1141,7 @@
     {
       "RegionName": "PF Hookshot Room Upper",
       "SceneId": 35,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 32,
       "Spawns": [
         "Hookshot Room Upper"
       ],
@@ -1152,7 +1152,7 @@
     {
       "RegionName": "PF Twin Barrel Room",
       "SceneId": 35,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 32,
       "Spawns": [
         "Twin Barrel Room",
         "Twin Barrel Room Exit"
@@ -1165,7 +1165,7 @@
     {
       "RegionName": "PF Guarded Room",
       "SceneId": 35,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 32,
       "Spawns": [
         "Well Guarded Room",
         "Well Guarded Exit"
@@ -1178,7 +1178,7 @@
     {
       "RegionName": "PF Barrel Room",
       "SceneId": 35,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 32,
       "Spawns": [
         "Barrel Room",
         "Barrel Room Exit"
@@ -1191,7 +1191,7 @@
     {
       "RegionName": "Zora Cape",
       "SceneId": 56,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 53,
       "Spawns": [
         "Great Bay Coast: Zora Cape",
         "Zora Hall: Water",
@@ -1215,7 +1215,7 @@
     {
       "RegionName": "Zora Hall",
       "SceneId": 51,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 48,
       "Spawns": [
         "Zora Cape: Zora Hall Water",
         "Zora Cape: Zora Hall",
@@ -1238,7 +1238,7 @@
     {
       "RegionName": "Waterfall Rapids",
       "SceneId": 74,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 71,
       "Spawns": [
         "Zora Cape: Waterfall Rapids"
       ],
@@ -1249,7 +1249,7 @@
     {
       "RegionName": "Zora Shop",
       "SceneId": 76,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 73,
       "Spawns": [
         "Zora Hall: Zora Shop"
       ],
@@ -1260,7 +1260,7 @@
     {
       "RegionName": "Lulu's Room",
       "SceneId": 76,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 73,
       "Spawns": [
         "Zora Hall: Lulu's Room"
       ],
@@ -1271,7 +1271,7 @@
     {
       "RegionName": "Evan's Room",
       "SceneId": 76,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 73,
       "Spawns": [
         "Zora Hall: Evan's Room"
       ],
@@ -1282,7 +1282,7 @@
     {
       "RegionName": "Japas's Room",
       "SceneId": 76,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 73,
       "Spawns": [
         "Zora Hall: Japas's Room"
       ],
@@ -1293,7 +1293,7 @@
     {
       "RegionName": "Mikau's Room",
       "SceneId": 76,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 73,
       "Spawns": [
         "Zora Hall: Mikau's Room"
       ],
@@ -1304,7 +1304,7 @@
     {
       "RegionName": "Ikana Path",
       "SceneId": 83,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 80,
       "Spawns": [
         "Termina Field: Ikana Path",
         "Ikana Canyon: Ikana Path",
@@ -1319,7 +1319,7 @@
     {
       "RegionName": "Ikana Graveyard",
       "SceneId": 67,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 64,
       "Spawns": [
         "Ikana Path: Ikana Graveyard",
         "Dampe's House Exit",
@@ -1336,7 +1336,7 @@
     {
       "RegionName": "Night 2 Grave",
       "SceneId": 12,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 5,
       "Spawns": [
         "Ikana Graveyard: Night 2 Grave"
       ],
@@ -1347,7 +1347,7 @@
     {
       "RegionName": "Night 1 Grave",
       "SceneId": 12,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 5,
       "Spawns": [
         "Ikana Graveyard: Night 1 Grave"
       ],
@@ -1358,7 +1358,7 @@
     {
       "RegionName": "Dampe's House",
       "SceneId": 48,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 45,
       "Spawns": [
         "Dampe's House Exit"
       ],
@@ -1367,7 +1367,7 @@
     {
       "RegionName": "Ikana Castle",
       "SceneId": 29,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 26,
       "Spawns": [
         "Well: Ikana Castle",
         "Ikana Canyon: Ikana Castle",
@@ -1382,7 +1382,7 @@
     {
       "RegionName": "Well",
       "SceneId": 75,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 72,
       "Spawns": [
         "Ikana Canyon: Well",
         "Ikana Castle: Well"
@@ -1395,7 +1395,7 @@
     {
       "RegionName": "Stone Tower",
       "SceneId": 88,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 85,
       "Spawns": [
         "Ikana Canyon: Stone Tower",
         "Stone Tower Temple Exit",
@@ -1414,7 +1414,7 @@
     {
       "RegionName": "Music Box",
       "SceneId": 85,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 82,
       "Spawns": [
         "Ikana Canyon: Music Box"
       ],
@@ -1425,7 +1425,7 @@
     {
       "RegionName": "Igos",
       "SceneId": 86,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 83,
       "Spawns": [
         "Ikana Castle: Igos"
       ],
@@ -1436,7 +1436,7 @@
     {
       "RegionName": "Secret Shrine",
       "SceneId": 96,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 93,
       "Spawns": [
         "Ikana Canyon: Secret Shrine"
       ],
@@ -1447,7 +1447,7 @@
     {
       "RegionName": "Poe Hut",
       "SceneId": 81,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 78,
       "Spawns": [
         "Ikana Canyon: Poe Hut"
       ],
@@ -1458,7 +1458,7 @@
     {
       "RegionName": "Sakon's Hideout",
       "SceneId": 79,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 76,
       "Spawns": [
         "Ikana Canyon: Sakon's Hideout"
       ],
@@ -1469,7 +1469,7 @@
     {
       "RegionName": "Clock Town Fairy",
       "SceneId": 38,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 35,
       "Spawns": [
         "North Clock Town: Clock Town Fairy"
       ],
@@ -1480,7 +1480,7 @@
     {
       "RegionName": "Woodfall Fairy Fountain",
       "SceneId": 38,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 35,
       "Spawns": [
         "Woodfall: Woodfall Fairy"
       ],
@@ -1491,7 +1491,7 @@
     {
       "RegionName": "Snowhead Fairy Fountain",
       "SceneId": 38,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 35,
       "Spawns": [
         "Snowhead: Snowhead Fairy"
       ],
@@ -1502,7 +1502,7 @@
     {
       "RegionName": "Great Bay Fairy Fountain",
       "SceneId": 38,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 35,
       "Spawns": [
         "Zora Cape: Great Bay Fairy"
       ],
@@ -1513,7 +1513,7 @@
     {
       "RegionName": "Stone Tower Fairy Fountain",
       "SceneId": 38,
-      "ExternalSceneId": 65535,
+      "ExternalSceneId": 35,
       "Spawns": [
         "Ikana Canyon: Stone Tower Fairy"
       ],
@@ -2532,7 +2532,7 @@
       "ExitSpawn": null,
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Cursed Area Exit",
-      "ExitIndex": 13,
+      "ExitIndex": 11,
       "SpawnName": "Ikana Canyon: Cursed Area"
     },
     {
@@ -2543,7 +2543,7 @@
       "ExitSpawn": null,
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Cursed Area",
-      "ExitIndex": 14,
+      "ExitIndex": 10,
       "SpawnName": "Ikana Canyon: Cursed Area"
     },
     {

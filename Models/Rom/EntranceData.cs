@@ -6,19 +6,15 @@ namespace MMRando.Models
 {
     public class Exit
     {
-        public Exit() { }
-        public Exit( string Name, ushort Address, string Scene)
-        {
-            this.SpawnName = Name;
-            this.SpawnAddress = Address;
-            this.SceneName = Scene;
+        public Exit(Exit x) {
+            if( x!= null)
+            {
+                this.RegionName = x.RegionName;
+                this.ExitName = x.ExitName;
+                this.ExitIndex = x.ExitIndex;
+                this.SpawnName = x.SpawnName;
+            }
         }
-        public ushort SpawnAddress { get; set; }
-        public string SpawnType { get; set; }
-        public string SceneName { get; set; } // phase this out for region name
-        public ushort SceneId { get; set; }
-        public Exit ExitSpawn { get; set; }
-
         public string RegionName { get; set; }
         public string ExitName { get; set; }
         public int ExitIndex { get; set; }
@@ -45,8 +41,8 @@ namespace MMRando.Models
         public string ExitName { get; private set; }
         public string ReturnSpawnName { get; set; }
         public string ReturnExitName { get; set; }
-        public string Leaving { get; set; }
-        public string Returning { get; set; }
+        //public string Leaving { get; set; }
+        //public string Returning { get; set; }
         public string Type { get; private set; }
         public Entrance( string EntranceName, string SpawnName, string ExitName, string Type)
         {
@@ -64,49 +60,6 @@ namespace MMRando.Models
         public ushort ExternalSceneId { get; private set; }
         public List<string> Spawns { get; private set; }
         public List<string> Exits { get; private set; }
-        public Region(string RegionName, ushort SceneId)
-        {
-            this.RegionName = RegionName;
-            this.SceneId = SceneId;
-            ExternalSceneId = 0xFFFF;
-            Spawns = new List<string>();
-            Exits = new List<string>();
-        }
-        //    public List<Entrance> AddExits(List<Exit> oldExits)
-        //    {
-        //        Spawn spawn;
-        //        List<Entrance> addedEntrances = new List<Entrance>();
-        //        Entrance e;
-        //        byte s;
-        //        foreach (Exit x in oldExits)
-        //        {
-        //            if (x.RegionName.Equals(RegionName))
-        //            {
-        //                if( x.ExitSpawn != null)
-        //                {
-        //                    s = (byte)((x.ExitSpawn.SpawnAddress & 0x1F0) >> 4);
-        //                    if (ExternalSceneId == 0xFFFF)
-        //                    {
-        //                        ExternalSceneId = (ushort)((x.ExitSpawn.SpawnAddress & 0xFE00) >> 9);
-        //                    }
-        //                    spawn = new Spawn(x.ExitSpawn.SpawnName, this.RegionName, s);
-        //                    e = new Entrance(x.SpawnName, spawn, x, x.SpawnType);
-        //                    e.Leaving = x.SpawnName;
-        //                    e.Returning = spawn.SpawnName;
-        //                    addedEntrances.Add(e);
-        //                    Spawns.Add(spawn.SpawnName);
-        //                    Exits.Add(x.ExitName);
-        //                }
-        //                else
-        //                {
-        //                    s = (byte)((x.SpawnAddress & 0x1F0) >> 4);
-        //                    spawn = new Spawn(x.SpawnName, this.RegionName, s);
-        //                    Spawns.Add(spawn.SpawnName);
-        //                }
-        //            }
-        //        }
-        //        return addedEntrances;
-        //    }
     }
 
     public class EntranceData
@@ -116,5 +69,31 @@ namespace MMRando.Models
         public List<Spawn> spawns;
         public List<Entrance> entrances;
         public Dictionary<string, string> internalSceneSwitches;
+        public EntranceData(EntranceData Copy)
+        {
+            if(Copy != null)
+            {
+                this.regions = new List<Region>();
+                foreach (Region r in Copy.regions)
+                {
+                    this.regions.Add(r);
+                }
+                this.exits = new List<Exit>();
+                foreach (Exit x in Copy.exits)
+                {
+                    this.exits.Add(new Exit(x));
+                }
+                this.spawns = new List<Spawn>();
+                foreach (Spawn s in Copy.spawns)
+                {
+                    this.spawns.Add(s);
+                }
+                this.entrances = new List<Entrance>();
+                foreach (Entrance e in Copy.entrances)
+                {
+                    this.entrances.Add(e);
+                }
+            }
+        }
     }
 }

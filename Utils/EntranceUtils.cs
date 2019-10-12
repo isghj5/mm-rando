@@ -8,7 +8,7 @@ namespace MMRando.Utils
     public static class EntranceUtils
     {
         private static EntranceData VanillaEntrances;
-        private static void SetEntrances(EntranceData vanillaEntrances)
+        public static void SetEntrances(EntranceData vanillaEntrances)
         {
             VanillaEntrances = vanillaEntrances;
         }
