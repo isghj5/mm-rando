@@ -41,20 +41,18 @@ namespace MMRando.Models
     public class Entrance
     {
         public string EntranceName { get; private set; }
-        public Spawn Spawn { get; private set; }
-        public Exit Exit { get; private set; }
         public string SpawnName { get; private set; }
         public string ExitName { get; private set; }
+        public string ReturnSpawnName { get; set; }
+        public string ReturnExitName { get; set; }
         public string Leaving { get; set; }
         public string Returning { get; set; }
         public string Type { get; private set; }
-        public Entrance( string EntranceName, Spawn Spawn, Exit Exit, string Type)
+        public Entrance( string EntranceName, string SpawnName, string ExitName, string Type)
         {
             this.EntranceName = EntranceName;
-            this.Spawn = Spawn;
-            this.Exit = Exit;
-            if (Spawn != null) this.SpawnName = Spawn.SpawnName;
-            if (Exit != null) this.ExitName = Exit.SpawnName;
+            this.SpawnName = SpawnName;
+            this.ExitName = ExitName;
             this.Type = Type;
         }
     }
@@ -74,41 +72,41 @@ namespace MMRando.Models
             Spawns = new List<string>();
             Exits = new List<string>();
         }
-        public List<Entrance> AddExits(List<Exit> oldExits)
-        {
-            Spawn spawn;
-            List<Entrance> addedEntrances = new List<Entrance>();
-            Entrance e;
-            byte s;
-            foreach (Exit x in oldExits)
-            {
-                if (x.RegionName.Equals(RegionName))
-                {
-                    if( x.ExitSpawn != null)
-                    {
-                        s = (byte)((x.ExitSpawn.SpawnAddress & 0x1F0) >> 4);
-                        if (ExternalSceneId == 0xFFFF)
-                        {
-                            ExternalSceneId = (ushort)((x.ExitSpawn.SpawnAddress & 0xFE00) >> 9);
-                        }
-                        spawn = new Spawn(x.ExitSpawn.SpawnName, this.RegionName, s);
-                        e = new Entrance(x.SpawnName, spawn, x, x.SpawnType);
-                        e.Leaving = x.SpawnName;
-                        e.Returning = spawn.SpawnName;
-                        addedEntrances.Add(e);
-                        Spawns.Add(spawn.SpawnName);
-                        Exits.Add(x.ExitName);
-                    }
-                    else
-                    {
-                        s = (byte)((x.SpawnAddress & 0x1F0) >> 4);
-                        spawn = new Spawn(x.SpawnName, this.RegionName, s);
-                        Spawns.Add(spawn.SpawnName);
-                    }
-                }
-            }
-            return addedEntrances;
-        }
+        //    public List<Entrance> AddExits(List<Exit> oldExits)
+        //    {
+        //        Spawn spawn;
+        //        List<Entrance> addedEntrances = new List<Entrance>();
+        //        Entrance e;
+        //        byte s;
+        //        foreach (Exit x in oldExits)
+        //        {
+        //            if (x.RegionName.Equals(RegionName))
+        //            {
+        //                if( x.ExitSpawn != null)
+        //                {
+        //                    s = (byte)((x.ExitSpawn.SpawnAddress & 0x1F0) >> 4);
+        //                    if (ExternalSceneId == 0xFFFF)
+        //                    {
+        //                        ExternalSceneId = (ushort)((x.ExitSpawn.SpawnAddress & 0xFE00) >> 9);
+        //                    }
+        //                    spawn = new Spawn(x.ExitSpawn.SpawnName, this.RegionName, s);
+        //                    e = new Entrance(x.SpawnName, spawn, x, x.SpawnType);
+        //                    e.Leaving = x.SpawnName;
+        //                    e.Returning = spawn.SpawnName;
+        //                    addedEntrances.Add(e);
+        //                    Spawns.Add(spawn.SpawnName);
+        //                    Exits.Add(x.ExitName);
+        //                }
+        //                else
+        //                {
+        //                    s = (byte)((x.SpawnAddress & 0x1F0) >> 4);
+        //                    spawn = new Spawn(x.SpawnName, this.RegionName, s);
+        //                    Spawns.Add(spawn.SpawnName);
+        //                }
+        //            }
+        //        }
+        //        return addedEntrances;
+        //    }
     }
 
     public class EntranceData

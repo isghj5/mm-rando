@@ -266,51 +266,46 @@ namespace MMRando
             }
         }
 
-        private void CustomNewEntrances(List<Region> regions)
-        {
-            //AddNewExit("Majora's Lair", 0x0200, "Moon", regions, 1);
-            //AddNewExit("Clock Tower: South Clock Town", 0xD800, "Clock Tower", regions, 1);
-        }
-
         private void WriteMapData()
         {
-            List<Entrance> entrances = new List<Entrance>();
-            List<Region> regions = new List<Region>();
-            List<Exit> exits = new List<Exit>();
-            List<Spawn> spawns = new List<Spawn>();
-            Dictionary<string, bool> added = new Dictionary<string, bool>();
-            foreach (ushort sceneIndex in SceneNamesByIndex.Keys)
-            {
-                foreach (string sceneName in SceneNamesByIndex[sceneIndex])
-                {
-                    if (TerminaMap.ContainsKey(sceneName))
-                    {
-                        foreach (Exit s in TerminaMap[sceneName])
-                        {
-                            if (!added.ContainsKey(s.SpawnName))
-                            {
-                                s.ExitName = s.SpawnName;
-                                exits.Add(s);
-                                added[s.SpawnName] = true;
-                            }
-                        }
-                        regions.Add(new Region(sceneName, sceneIndex));
-                    }
-                }
-            }
-            Spawn tempSpawn;
-            foreach (Region r in regions)
-            {
-                foreach (Entrance e in r.AddExits(exits))
-                {
-                    tempSpawn = e.Spawn;
-                    if (spawns.Find(t => tempSpawn.RegionName.Equals(t.RegionName) && tempSpawn.SpawnName.Equals(t.SpawnName) && tempSpawn.SpawnIndex == t.SpawnIndex) == null){
-                        spawns.Add(tempSpawn);
-                    }
-                    entrances.Add(e);
-                }
-            }
-            foreach (Exit x in exits)
+            //List<Entrance> entrances = new List<Entrance>();
+            //List<Region> regions = new List<Region>();
+            //List<Exit> exits = new List<Exit>();
+            //List<Spawn> spawns = new List<Spawn>();
+            //Dictionary<string, bool> added = new Dictionary<string, bool>();
+            //foreach (ushort sceneIndex in SceneNamesByIndex.Keys)
+            //{
+            //    foreach (string sceneName in SceneNamesByIndex[sceneIndex])
+            //    {
+            //        if (TerminaMap.ContainsKey(sceneName))
+            //        {
+            //            foreach (Exit s in TerminaMap[sceneName])
+            //            {
+            //                if (!added.ContainsKey(s.SpawnName))
+            //                {
+            //                    s.ExitName = s.SpawnName;
+            //                    exits.Add(s);
+            //                    added[s.SpawnName] = true;
+            //                }
+            //            }
+            //            regions.Add(new Region(sceneName, sceneIndex));
+            //        }
+            //    }
+            //}
+            //Spawn tempSpawn;
+            //foreach (Region r in regions)
+            //{
+            //    foreach (Entrance e in r.AddExits(exits))
+            //    {
+            //        tempSpawn = e.Spawn;
+            //        if (spawns.Find(t => tempSpawn.RegionName.Equals(t.RegionName) && tempSpawn.SpawnName.Equals(t.SpawnName) && tempSpawn.SpawnIndex == t.SpawnIndex) == null)
+            //        {
+            //            spawns.Add(tempSpawn);
+            //        }
+            //        entrances.Add(e);
+            //    }
+            //}
+            foreach (Exit x in GetSpawns())
             {
                 if (x.ExitSpawn != null)
                 {
@@ -318,13 +313,18 @@ namespace MMRando
                 }
                 x.ExitSpawn = null;
             }
-            EntranceData data = new EntranceData();
-            data.exits = exits;
-            data.regions = regions;
-            data.entrances = entrances;
-            data.spawns = spawns;
+            foreach(Entrance e in TerminaMapData.entrances)
+            {
+                e.ReturnExitName = e.Returning;
+                e.ReturnSpawnName = e.Leaving;
+            }
+            //EntranceData data = new EntranceData();
+            //data.exits = exits;
+            //data.regions = regions;
+            //data.entrances = entrances;
+            //data.spawns = spawns;
             JsonSerializerSettings settings = new JsonSerializerSettings();
-            string spawnJson = JsonConvert.SerializeObject(data,Formatting.Indented);
+            string spawnJson = JsonConvert.SerializeObject(TerminaMapData, Formatting.Indented);
             Debug.WriteLine(spawnJson);
             using (StreamWriter file = new StreamWriter(Values.MainDirectory + @"\Resources\ENTRANCES.json"))
             {
@@ -364,7 +364,6 @@ namespace MMRando
             {
                 AddExitSpawn(spawn);
             }
-            CustomNewEntrances(entranceData.regions);
             foreach (Region r in entranceData.regions)
             {
                 AddSceneNameIndex(r.RegionName, (ushort)r.SceneId);
@@ -779,15 +778,6 @@ namespace MMRando
             {
                 SceneNamesByIndex[sceneIndex].Add(sceneName);
             }
-        }
-
-        private void AddNewExit(string SpawnName, ushort SpawnAddress, string RegionName, List<Region> Regions, int ExitIndex)
-        {
-            Exit x = new Exit(SpawnName, SpawnAddress, RegionName);
-            Region region = Regions.Find(r=>RegionName.Equals(r.RegionName));
-            x.SceneName = region.RegionName;
-            x.SceneId = region.SceneId;
-            x.ExitIndex = ExitIndex;
         }
 
         private void AddExitSpawn(Exit spawn)

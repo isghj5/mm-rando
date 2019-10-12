@@ -1,6 +1,5 @@
-﻿using MMRando.Models.Rom;
-using System;
-using System.Collections.Generic;
+﻿using MMRando.Models;
+using MMRando.Models.Rom;
 using System.Linq;
 
 namespace MMRando.Utils
@@ -8,6 +7,11 @@ namespace MMRando.Utils
 
     public static class EntranceUtils
     {
+        private static EntranceData VanillaEntrances;
+        private static void SetEntrances(EntranceData vanillaEntrances)
+        {
+            VanillaEntrances = vanillaEntrances;
+        }
         private static int GetEntranceAddr(int ent)
         {
             int offset = ((ent >> 9) * 12) + 0xC5BC64;
