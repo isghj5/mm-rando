@@ -1467,7 +1467,7 @@
       ]
     },
     {
-      "RegionName": "Clock Town Fairy",
+      "RegionName": "Clock Town Fairy Fountain",
       "SceneId": 38,
       "ExternalSceneId": 35,
       "Spawns": [
@@ -6231,7 +6231,7 @@
       "ReturnExitName": "Lottery Shop Exit",
       "Leaving": "West Clock Town: Lottery Shop",
       "Returning": "Lottery Shop Exit",
-      "Type": "Overworld"
+      "Type": "Interior"
     },
     {
       "EntranceName": "East Clock Town: Termina Field",

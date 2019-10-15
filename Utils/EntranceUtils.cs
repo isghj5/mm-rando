@@ -1,5 +1,6 @@
 ﻿using MMRando.Models;
 using MMRando.Models.Rom;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MMRando.Utils
@@ -7,11 +8,6 @@ namespace MMRando.Utils
 
     public static class EntranceUtils
     {
-        private static EntranceData VanillaEntrances;
-        public static void SetEntrances(EntranceData vanillaEntrances)
-        {
-            VanillaEntrances = vanillaEntrances;
-        }
         private static int GetEntranceAddr(int ent)
         {
             int offset = ((ent >> 9) * 12) + 0xC5BC64;
@@ -62,7 +58,7 @@ namespace MMRando.Utils
             }
         }
 
-        public static void WriteSceneExits(int sceneNumber, ushort[] originalExits, ushort[] shuffledExits, int[] shuffledIndexes)
+        public static void WriteSceneExits(int sceneNumber, List<ushort> shuffledExits, List<int> shuffledIndexes)
         {
             SceneUtils.ReadSceneTable();
             SceneUtils.GetMaps();
@@ -72,10 +68,9 @@ namespace MMRando.Utils
             RomUtils.CheckCompressed(f);
             int exitAddress;
             exitAddress = scene.ExitAddr;
-            for (int i = 0; i < shuffledExits.Length; i++)
+            for (int i = 0; i < shuffledExits.Count; i++)
             {
                 ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + shuffledIndexes[i] * 2, shuffledExits[i]);
-                System.Diagnostics.Debug.WriteLine($"\"{originalExits[i].ToString("X4")}\" @ {shuffledIndexes[i]} -> {shuffledExits[i].ToString("X4")}");
             }
         }
     }

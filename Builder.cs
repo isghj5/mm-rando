@@ -239,10 +239,10 @@ namespace MMRando
                 foreach(int i in new int[] { 19}) EntranceUtils.ReadSceneExits(i, 16);
                 foreach (int sceneIndex in RomData.SceneList.Select(s=>s.Number))
                 {
-                    if (_randomized.EntranceList.ContainsKey(sceneIndex) && _randomized.ShuffledEntranceList.ContainsKey(sceneIndex) )
+                    if (_randomized.ShuffledEntranceList.ContainsKey(sceneIndex) && _randomized.ExitListIndices.ContainsKey(sceneIndex) )
                     {
                         Debug.WriteLine("Scene " + sceneIndex.ToString("X2") + "\n-----\n");
-                        EntranceUtils.WriteSceneExits(sceneIndex, _randomized.EntranceList[sceneIndex], _randomized.ShuffledEntranceList[sceneIndex], _randomized.ExitListIndices[sceneIndex]);
+                        EntranceUtils.WriteSceneExits(sceneIndex, _randomized.ShuffledEntranceList[sceneIndex], _randomized.ExitListIndices[sceneIndex]);
                     }
                 }
             }

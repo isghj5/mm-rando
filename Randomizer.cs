@@ -226,21 +226,19 @@ namespace MMRando
         }
         
         #region Entrance Rando
-        Dictionary<string, List<Exit>> TerminaMap { get; set; }
-        Dictionary<string, List<Exit>> ShuffledMap { get; set; }
-        Dictionary<ushort, List<string>> SceneNamesByIndex { get; set; }
-        Dictionary<string, string> EntranceShuffleMapping { get; set; }
         EntranceData TerminaMapData { get; set; }
         private void EntranceShuffle()
         {
-            TerminaMap = new Dictionary<string, List<Exit>>();
-            ShuffledMap = new Dictionary<string, List<Exit>>();
-            SceneNamesByIndex = new Dictionary<ushort, List<string>>();
-            EntranceShuffleMapping = new Dictionary<string, string>();
             ReadTerminaMap();
             ShuffleEntrances();
             FinalizeEntrances();
+            //RenameSpawns();
             WriteMapData();
+        }
+
+        private void RenameSpawns()
+        {
+            TerminaMapData.RenameSpawn("North Clock Town: Clock Town Fairy", "Clock Town Fairy");
         }
 
         private void WriteMapData()
@@ -257,22 +255,9 @@ namespace MMRando
 
         private void PrintMapLogic()
         {
-            List<string> sortedScene;
-            foreach (ushort sceneIndex in SceneNamesByIndex.Keys)
+            foreach (Exit x in TerminaMapData.exits)
             {
-                sortedScene = SceneNamesByIndex[sceneIndex];
-                //sortedScene.Sort();
-                foreach (string sceneName in sortedScene)
-                {
-                    if (TerminaMap.ContainsKey(sceneName))
-                    {
-                        foreach (Exit s in TerminaMap[sceneName])
-                        {
-
-                            Debug.WriteLine( $"{s.SpawnName.Replace(":", " ->")}\n\n\n0\n0" );
-                        }
-                    }
-                }
+                Debug.WriteLine($"{x.ExitName.Replace(":", " ->")}\n\n\n0\n0");
             }
         }
 
@@ -281,143 +266,55 @@ namespace MMRando
             StreamReader file = new StreamReader(Values.MainDirectory + @"\Resources\ENTRANCES.json");
             string spawnJson = file.ReadToEnd();
             TerminaMapData = JsonConvert.DeserializeObject<EntranceData>(spawnJson);
-            EntranceUtils.SetEntrances(TerminaMapData);
             file.Close();
         }
 
         private void ShuffleEntrances()
         {
-            //Dictionary<string, List<string>> SpawnTypeSet = new Dictionary<string, List<string>>();
-            //List<Dictionary<string, bool>> SpawnSet = new List<Dictionary<string, bool>>();
-            //int pool = 0;
-            //List<string> FillWorld = new List<string>(), SpawnTypePool = null;
-            //Predicate<Exit> CanAdd = S => S != null && SpawnSet[pool].ContainsKey(S.SpawnName) && SpawnSet[pool][S.SpawnName];
-            //Exit To, From;
-            //while (pool < SpawnSet.Count)
-            //{
-            //    foreach (string Spawn in SpawnSet[pool].Keys)
-            //    {
-            //        if (SpawnSet[pool][Spawn])
-            //        {
-            //            FillWorld.Add(Spawn);
-            //        }
-            //    }
-            //    while (FillWorld.Count > 0)
-            //    {
-            //        From = GetSpawn(FillWorld[0]);
-            //        if (CanAdd.Invoke(From))
-            //        {
-            //            SpawnTypeSet.Values.ToList().ForEach(
-            //                TypeSet => { if (TypeSet.Contains(From.SpawnName)) { SpawnTypePool = TypeSet; } });
-            //            To = ;
-            //            if (To != null)
-            //            {
-            //                SpawnSet[pool][From.SpawnName] = false;
-            //                ChosenSet[pool][To.SpawnName] = false;
-            //                FillWorld.RemoveAt(0);
-            //                ConnectEntrances(From.SpawnName, To.SpawnName, true);
-            //                if (To.ExitSpawn != null)
-            //                {
-            //                    SpawnSet[pool][To.ExitSpawn.SpawnName] = false;
-            //                    if (FillWorld.Contains(To.ExitSpawn.SpawnName))
-            //                    {
-            //                        FillWorld.Remove(To.ExitSpawn.SpawnName);
-            //                    }
-            //                    if (From.ExitSpawn != null)
-            //                    {
-            //                        ChosenSet[pool][From.ExitSpawn.SpawnName] = false;
-            //                    }
-            //                }
-            //            }
-            //            else
-            //            {
-            //                Debug.WriteLine("Nowhere Left For '{0}' To Go", FillWorld[0]);
-            //                FillWorld.RemoveAt(0);
-            //            }
-            //        }
-            //        else
-            //        {
-            //            Debug.WriteLine("Not Allowed To Place {0}", FillWorld[0]);
-            //            FillWorld.RemoveAt(0);
-            //        }
-            //    }
-            //    pool++;
-            //}
-        }
-
-        /**
-        private void ConnectEntrances(string from, string to, bool connectReverse)
-        {
-            Exit f = GetSpawn(from);
-            Exit t = GetSpawn(to);
-            if (f != null && t != null)
+            List<string> interiorEntrances = TerminaMapData.entrances.FindAll(e => "Interior".Equals(e.Type)).Select(e => e.EntranceName).ToList();
+            List<string> shuffledInteriors = new List<string>();
+            for( int i = interiorEntrances.Count - 1; i >= 0; i--)
             {
-                SetShuffledSpawn(f, t);
-                if (connectReverse && f.ExitSpawn != null && t.ExitSpawn != null)
-                {
-                    SetShuffledSpawn(t.ExitSpawn, f.ExitSpawn);
-                }
+                shuffledInteriors.Add(interiorEntrances[i]);
+            }
+            for (int i = 0 ; i< interiorEntrances.Count; i++)
+            {
+                TerminaMapData.ConnectEntrance(interiorEntrances[i], shuffledInteriors[i]);
             }
         }
-        */
 
         public void FinalizeEntrances()
         {
             Dictionary<ushort, List<Exit>> EntranceShuffle = new Dictionary<ushort, List<Exit>>();
-            _randomized.EntranceList = new Dictionary<int, ushort[]>();
-            _randomized.ShuffledEntranceList = new Dictionary<int, ushort[]>();
-            _randomized.ExitListIndices = new Dictionary<int, int[]>();
+            _randomized.ShuffledEntranceList = new Dictionary<int, List<ushort>>();
+            _randomized.ExitListIndices = new Dictionary<int, List<int>>();
             _randomized.EntranceSpoilers = new List<SpoilerEntrance>();
-            ushort[] sceneExitList, shuffledSceneExitList;
-            int[] sceneExitIndices;
-            Exit ShuffledExit;
-            bool WasPlaced;
-            int numExits, currExit;
+            List<ushort> sceneExitSpawns;
+            List<int> sceneExitIndices;
+            ushort spawnAddress;
+            int sceneIndex;
 
-            //foreach ( Exit s in GetSpawns().Where(x=>
-            //    x.SpawnType != "Owl Warp" 
-            //    && x.SpawnType != "Telescope"
-            //    && x.SpawnType != "Telescope Spawn"
-            //    && x.SpawnType != "Permanent"
-            //    && x.SpawnType != "Grotto"
-            //)) {
-            //    if(!EntranceShuffle.ContainsKey(s.SceneId))
-            //    {
-            //        EntranceShuffle[s.SceneId] = new List<Exit>();
-            //    }
-            //    EntranceShuffle[s.SceneId].Add(s);
-            //}
-
-            //foreach (ushort sceneIndex in EntranceShuffle.Keys)
-            //{
-            //    numExits = EntranceShuffle[sceneIndex].Count;
-            //    sceneExitList = new ushort[numExits];
-            //    _randomized.EntranceList[sceneIndex] = sceneExitList;
-            //    shuffledSceneExitList = new ushort[numExits];
-            //    _randomized.ShuffledEntranceList[sceneIndex] = shuffledSceneExitList;
-            //    sceneExitIndices = new int[numExits];
-            //    _randomized.ExitListIndices[sceneIndex] = sceneExitIndices;
-            //    currExit = 0;
-            //    foreach (Exit Exit in EntranceShuffle[sceneIndex])
-            //    {
-            //        ShuffledExit = GetShuffledSpawn(Exit.SpawnName);
-            //        sceneExitList[currExit] = Exit.SpawnAddress;
-            //        sceneExitIndices[currExit] = Exit.ExitIndex;
-            //        if (Exit.SpawnAddress != 0xFFFF)
-            //        {
-            //            WasPlaced = ShuffledExit != null && ShuffledExit.SpawnAddress != 0xFFFF;
-            //            if (WasPlaced)
-            //            {
-            //                shuffledSceneExitList[currExit] = ShuffledExit.SpawnAddress;
-            //                _randomized.EntranceSpoilers.Add(new SpoilerEntrance(Exit, ShuffledExit, WasPlaced));
-            //            } else {
-            //                shuffledSceneExitList[currExit] = Exit.SpawnAddress;
-            //                _randomized.EntranceSpoilers.Add(new SpoilerEntrance(Exit, Exit, WasPlaced));
-            //            }
-            //        }
-            //        currExit++;
-            //    }
-            //}
+            foreach( Exit exit in TerminaMapData.exits)
+            {
+                spawnAddress = TerminaMapData.SpawnAddress(exit.SpawnName);
+                sceneIndex = TerminaMapData.SceneIndex(exit.RegionName);
+                if ( spawnAddress != 0xFFFF && sceneIndex != -1)
+                {
+                    if ( !_randomized.ShuffledEntranceList.ContainsKey(sceneIndex))
+                    {
+                        _randomized.ShuffledEntranceList[sceneIndex] = new List<ushort>();
+                    }
+                    sceneExitSpawns = _randomized.ShuffledEntranceList[sceneIndex];
+                    if( !_randomized.ExitListIndices.ContainsKey(sceneIndex))
+                    {
+                        _randomized.ExitListIndices[sceneIndex] = new List<int>();
+                    }
+                    sceneExitIndices = _randomized.ExitListIndices[sceneIndex];
+                    sceneExitSpawns.Add(spawnAddress);
+                    sceneExitIndices.Add(exit.ExitIndex);
+                    Debug.WriteLine($"[{exit.RegionName}:{sceneIndex}] Exit {exit.ExitIndex}: {exit.SpawnName} [{spawnAddress.ToString("X4")}]");
+                }
+            }
         }
         #endregion
 

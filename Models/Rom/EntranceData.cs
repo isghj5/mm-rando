@@ -23,9 +23,9 @@ namespace MMRando.Models
 
     public class Spawn
     {
-        public string SpawnName { get; private set; }
-        public string RegionName { get; private set; }
-        public byte SpawnIndex { get; private set; }
+        public string SpawnName { get; set; }
+        public string RegionName { get; set; }
+        public byte SpawnIndex { get; set; }
         public Spawn(string SpawnName, string RegionName, byte SpawnIndex)
         {
             this.SpawnName = SpawnName;
@@ -36,14 +36,12 @@ namespace MMRando.Models
 
     public class Entrance
     {
-        public string EntranceName { get; private set; }
-        public string SpawnName { get; private set; }
-        public string ExitName { get; private set; }
+        public string EntranceName { get; set; }
+        public string SpawnName { get; set; }
+        public string ExitName { get; set; }
         public string ReturnSpawnName { get; set; }
         public string ReturnExitName { get; set; }
-        //public string Leaving { get; set; }
-        //public string Returning { get; set; }
-        public string Type { get; private set; }
+        public string Type { get; set; }
         public Entrance( string EntranceName, string SpawnName, string ExitName, string Type)
         {
             this.EntranceName = EntranceName;
@@ -55,11 +53,11 @@ namespace MMRando.Models
 
     public class Region
     {
-        public string RegionName { get; }
-        public ushort SceneId { get; }
-        public ushort ExternalSceneId { get; private set; }
-        public List<string> Spawns { get; private set; }
-        public List<string> Exits { get; private set; }
+        public string RegionName { get; set; }
+        public ushort SceneId { get; set; }
+        public ushort ExternalSceneId { get; set; }
+        public List<string> Spawns { get; set; }
+        public List<string> Exits { get; set; }
     }
 
     public class EntranceData
@@ -94,6 +92,103 @@ namespace MMRando.Models
                     this.entrances.Add(e);
                 }
             }
+        }
+
+        public void RenameSpawn(string oldSpawnName, string newSpawnName)
+        {
+            if(spawns.Find(s => oldSpawnName.Equals(s.SpawnName)) != null)
+            {
+                foreach (Spawn spawn in spawns.FindAll(s => oldSpawnName.Equals(s.SpawnName)))
+                {
+                    spawn.SpawnName = newSpawnName;
+                }
+                foreach (Exit exit in exits.FindAll(x => oldSpawnName.Equals(x.SpawnName)))
+                {
+                    exit.SpawnName = newSpawnName;
+                }
+                foreach (Entrance ent in entrances.FindAll(e => oldSpawnName.Equals(e.SpawnName)))
+                {
+                    ent.SpawnName = newSpawnName;
+                }
+                foreach (Entrance ent in entrances.FindAll(e => oldSpawnName.Equals(e.ReturnSpawnName)))
+                {
+                    ent.ReturnSpawnName = newSpawnName;
+                }
+                foreach (Region region in regions)
+                {
+                    int i = region.Spawns.FindIndex(s => oldSpawnName.Equals(s));
+                    if( i != -1)
+                    {
+                        region.Spawns[i] = newSpawnName;
+                    }
+                }
+            }
+        }
+
+        public void RenameExit(string oldExitName, string newExitName)
+        {
+            if (exits.Find(s => oldExitName.Equals(s.ExitName)) != null)
+            {
+                foreach (Exit exit in exits.FindAll(x => oldExitName.Equals(x.ExitName)))
+                {
+                    exit.ExitName = newExitName;
+                }
+                foreach (Entrance ent in entrances.FindAll(e => oldExitName.Equals(e.ExitName)))
+                {
+                    ent.ExitName = newExitName;
+                }
+                foreach (Entrance ent in entrances.FindAll(e => oldExitName.Equals(e.ReturnExitName)))
+                {
+                    ent.ReturnExitName = newExitName;
+                }
+                foreach (Region region in regions)
+                {
+                    int i = region.Exits.FindIndex(x => oldExitName.Equals(x));
+                    if (i != -1)
+                    {
+                        region.Exits[i] = newExitName;
+                    }
+                }
+            }
+        }
+
+        internal bool ConnectEntrance(string from, string to)
+        {
+            Entrance source = entrances.Find(e => from.Equals(e.EntranceName));
+            Entrance dest = entrances.Find(e => to.Equals(e.EntranceName));
+            if (source == null || dest == null)
+            {
+                return false;
+            }
+            Exit sourceExit = exits.Find(x => source.ExitName.Equals(x.ExitName));
+            Exit destExit = exits.Find(x => dest.ReturnExitName.Equals(x.ExitName));
+            if( sourceExit == null || destExit == null)
+            {
+                return false;
+            }
+            sourceExit.SpawnName = dest.ReturnSpawnName;
+            destExit.SpawnName = source.SpawnName;
+            return true;
+        }
+
+        internal ushort SpawnAddress( string SpawnName )
+        {
+            Spawn spawn = spawns.Find(s => SpawnName.Equals(s.SpawnName));
+            if (spawn != null)
+            {
+                Region region = regions.Find(r => spawn.RegionName.Equals(r.RegionName));
+                if (region != null)
+                {
+                    return (ushort)((region.ExternalSceneId << 9) + (spawn.SpawnIndex << 4));
+                }
+            }
+            return 0xFFFF;
+        }
+
+        internal int SceneIndex( string RegionName)
+        {
+            Region region = regions.Find(r => RegionName.Equals(r.RegionName));
+            return (region == null) ? -1 : region.SceneId;
         }
     }
 }
