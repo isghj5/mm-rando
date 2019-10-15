@@ -190,5 +190,17 @@ namespace MMRando.Models
             Region region = regions.Find(r => RegionName.Equals(r.RegionName));
             return (region == null) ? -1 : region.SceneId;
         }
+
+        internal void UpdateEntrances()
+        {
+            Exit t;
+            foreach (Entrance e in entrances)
+            {
+                t = exits.Find(x => e.ExitName.Equals(x.ExitName));
+                e.SpawnName = t.SpawnName;
+                t = exits.Find(x => e.ReturnExitName.Equals(x.ExitName));
+                e.ReturnSpawnName = t.SpawnName;
+            }
+        }
     }
 }

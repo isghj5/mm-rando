@@ -231,6 +231,7 @@ namespace MMRando
         {
             ReadTerminaMap();
             ShuffleEntrances();
+
             FinalizeEntrances();
             //RenameSpawns();
             WriteMapData();
@@ -271,16 +272,21 @@ namespace MMRando
 
         private void ShuffleEntrances()
         {
-            List<string> interiorEntrances = TerminaMapData.entrances.FindAll(e => "Interior".Equals(e.Type)).Select(e => e.EntranceName).ToList();
-            List<string> shuffledInteriors = new List<string>();
-            for( int i = interiorEntrances.Count - 1; i >= 0; i--)
+            //List<string> interiorEntrances = TerminaMapData.entrances.FindAll(e => "Interior".Equals(e.Type)).Select(e => e.EntranceName).ToList();
+            //List<string> shuffledInteriors = new List<string>();
+            //for( int i = interiorEntrances.Count - 1; i >= 0; i--)
+            //{
+            //    shuffledInteriors.Add(interiorEntrances[i]);
+            //}
+            //for (int i = 0 ; i< interiorEntrances.Count; i++)
+            //{
+            //    TerminaMapData.ConnectEntrance(interiorEntrances[i], shuffledInteriors[i]);
+            //}
+            foreach( Exit x in TerminaMapData.exits)
             {
-                shuffledInteriors.Add(interiorEntrances[i]);
+                x.SpawnName = x.ExitName;
             }
-            for (int i = 0 ; i< interiorEntrances.Count; i++)
-            {
-                TerminaMapData.ConnectEntrance(interiorEntrances[i], shuffledInteriors[i]);
-            }
+            TerminaMapData.UpdateEntrances();
         }
 
         public void FinalizeEntrances()
