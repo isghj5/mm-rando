@@ -161,17 +161,14 @@ namespace MMRando.Models
                 return false;
             }
             Exit sourceExit = exits.Find(x => source.ExitName.Equals(x.ExitName));
-            Exit sourceReturnExit = exits.Find(x => source.ReturnExitName.Equals(x.ExitName));
-            Exit destExit = exits.Find(x => dest.ExitName.Equals(x.ExitName));
             Exit destReturnExit = exits.Find(x => dest.ReturnExitName.Equals(x.ExitName));
-            if ( sourceExit == null || destExit == null || sourceReturnExit == null || destReturnExit == null )
+            if ( sourceExit == null || destReturnExit == null )
             {
                 return false;
             }
+
             sourceExit.SpawnName = dest.SpawnName;
             destReturnExit.SpawnName = source.ReturnSpawnName;
-            destExit.SpawnName = source.SpawnName;
-            sourceReturnExit.SpawnName = dest.ReturnSpawnName;
             return true;
         }
 

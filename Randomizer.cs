@@ -238,7 +238,7 @@ namespace MMRando
 
         private void ModifySpawns()
         {
-
+            TerminaMapData.entrances = TerminaMapData.entrances.FindAll(e => !"Interior Exit".Equals(e.Type));
         }
 
         private void WriteMapData()
@@ -286,7 +286,6 @@ namespace MMRando
 
         public void FinalizeEntrances()
         {
-            Dictionary<ushort, List<Exit>> EntranceShuffle = new Dictionary<ushort, List<Exit>>();
             _randomized.ShuffledEntranceList = new Dictionary<int, List<ushort>>();
             _randomized.ExitListIndices = new Dictionary<int, List<int>>();
             _randomized.EntranceSpoilers = new List<SpoilerEntrance>();
@@ -294,7 +293,6 @@ namespace MMRando
             List<int> sceneExitIndices;
             ushort spawnAddress;
             int sceneIndex;
-
             foreach( Exit exit in TerminaMapData.exits)
             {
                 spawnAddress = TerminaMapData.SpawnAddress(exit.SpawnName);
@@ -314,6 +312,10 @@ namespace MMRando
                     sceneExitSpawns.Add(spawnAddress);
                     sceneExitIndices.Add(exit.ExitIndex);
                     Debug.WriteLine($"[{exit.RegionName}:{sceneIndex}] Exit {exit.ExitIndex} ({exit.ExitName}): {exit.SpawnName} [{spawnAddress.ToString("X4")}]");
+                }
+                else
+                {
+                    Debug.WriteLine($"{exit.ExitName} not placed: {spawnAddress}, {sceneIndex}");
                 }
             }
         }

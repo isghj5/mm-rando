@@ -1281,9 +1281,11 @@
       "SceneId": 48,
       "ExternalSceneId": 45,
       "Spawns": [
-        "Dampe's House Exit"
+        "Ikana Graveyard: Night 3 Grave"
       ],
-      "Exits": []
+      "Exits": [
+        "Dampe's House Exit"
+      ]
     },
     {
       "RegionName": "Ikana Castle",
@@ -2809,7 +2811,7 @@
     {
       "RegionName": "Zora Shop",
       "ExitName": "Zora Shop Exit",
-      "ExitIndex": 5,
+      "ExitIndex": 4,
       "SpawnName": "Zora Shop Exit"
     },
     {
@@ -3967,42 +3969,42 @@
     {
       "SpawnName": "Hookshot Room",
       "RegionName": "PF Hookshot Room",
-      "SpawnIndex": 1
+      "SpawnIndex": 0
     },
     {
       "SpawnName": "Hookshot Room Upper",
       "RegionName": "PF Hookshot Room Upper",
-      "SpawnIndex": 2
+      "SpawnIndex": 1
     },
     {
       "SpawnName": "Twin Barrel Room",
       "RegionName": "PF Twin Barrel Room",
-      "SpawnIndex": 7
+      "SpawnIndex": 6
     },
     {
       "SpawnName": "Twin Barrel Room Exit",
       "RegionName": "PF Twin Barrel Room",
-      "SpawnIndex": 8
+      "SpawnIndex": 7
     },
     {
       "SpawnName": "Well Guarded Room",
       "RegionName": "PF Guarded Room",
-      "SpawnIndex": 3
+      "SpawnIndex": 2
     },
     {
       "SpawnName": "Well Guarded Exit",
       "RegionName": "PF Guarded Room",
-      "SpawnIndex": 4
+      "SpawnIndex": 3
     },
     {
       "SpawnName": "Barrel Room",
       "RegionName": "PF Barrel Room",
-      "SpawnIndex": 5
+      "SpawnIndex": 4
     },
     {
       "SpawnName": "Barrel Room Exit",
       "RegionName": "PF Barrel Room",
-      "SpawnIndex": 6
+      "SpawnIndex": 5
     },
     {
       "SpawnName": "Great Bay Coast: Zora Cape",
@@ -4138,6 +4140,11 @@
       "SpawnName": "Night 1 Grave Exit",
       "RegionName": "Ikana Graveyard",
       "SpawnIndex": 3
+    },
+    {
+      "SpawnName": "Ikana Graveyard: Night 3 Grave",
+      "RegionName": "Dampe's House",
+      "SpawnIndex": 0
     },
     {
       "SpawnName": "Ikana Graveyard: Night 2 Grave",
