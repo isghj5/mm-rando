@@ -430,32 +430,6 @@
       ]
     },
     {
-      "RegionName": "Southern Swamp Healed",
-      "SceneId": 0,
-      "ExternalSceneId": 66,
-      "Spawns": [
-        "Swamp Path: Southern Swamp",
-        "Tourist Center Exit",
-        "Woodfall: Southern Swamp",
-        "Deku Palace: Southern Swamp",
-        "Deku Palace: Deku Shortcut",
-        "Potion Shop Exit",
-        "Woods of Mystery Exit",
-        "Swamp Spider House Exit",
-        "Southern Swamp Healed: Owl Warp"
-      ],
-      "Exits": [
-        "Southern Swamp Healed: Swamp Path",
-        "Southern Swamp Healed: Tourist Center",
-        "Southern Swamp Healed: Woodfall",
-        "Southern Swamp Healed: Deku Palace",
-        "Southern Swamp Healed: Deku Shortcut",
-        "Southern Swamp Healed: Potion Shop",
-        "Southern Swamp Healed: Woods of Mystery",
-        "Southern Swamp Healed: Swamp Spider House"
-      ]
-    },
-    {
       "RegionName": "Moon",
       "SceneId": 103,
       "ExternalSceneId": 100,
@@ -755,28 +729,6 @@
       ]
     },
     {
-      "RegionName": "Mountain Village Spring",
-      "SceneId": 90,
-      "ExternalSceneId": 87,
-      "Spawns": [
-        "Smithy Exit",
-        "Twin Islands Spring: Mountain Village",
-        "Goron Grave Exit",
-        "Snowhead Path: Mountain Village",
-        "Mountain Path: Mountain Village",
-        "Mountain Village Spring: Owl Warp",
-        "Goht's Boss Lair"
-      ],
-      "Exits": [
-        "Mountain Village Spring: Smithy",
-        "Mountain Village Spring: Twin Islands",
-        "Mountain Village Spring: Goron Grave",
-        "Mountain Village Spring: Snowhead Path",
-        "Mountain Village Spring: Mountain Path",
-        "Mountain Village: Dungeon Clear"
-      ]
-    },
-    {
       "RegionName": "Twin Islands",
       "SceneId": 93,
       "ExternalSceneId": 90,
@@ -789,21 +741,6 @@
         "Twin Islands: Mountain Village",
         "Twin Islands: Goron Village",
         "Twin Islands: Goron Racetrack"
-      ]
-    },
-    {
-      "RegionName": "Twin Islands Spring",
-      "SceneId": 94,
-      "ExternalSceneId": 91,
-      "Spawns": [
-        "Twin Islands Spring: Mountain Village",
-        "Goron Village Spring: Twin Islands",
-        "Goron Racetrack Exit"
-      ],
-      "Exits": [
-        "Twin Islands Spring: Mountain Village",
-        "Twin Islands Spring: Goron Village",
-        "Twin Islands Spring: Goron Racetrack"
       ]
     },
     {
@@ -833,19 +770,6 @@
       ]
     },
     {
-      "RegionName": "Goron Village Spring",
-      "SceneId": 72,
-      "ExternalSceneId": 69,
-      "Spawns": [
-        "Twin Islands Spring: Goron Village",
-        "Goron Shrine Exit"
-      ],
-      "Exits": [
-        "Goron Village Spring: Twin Islands",
-        "Goron Village Spring: Goron Shrine"
-      ]
-    },
-    {
       "RegionName": "Goron Grave",
       "SceneId": 78,
       "ExternalSceneId": 75,
@@ -872,13 +796,10 @@
       "SceneId": 107,
       "ExternalSceneId": 104,
       "Spawns": [
-        "Twin Islands: Goron Racetrack",
-        "Goron Racetrack: Minigame Over",
-        "Goron Racetrack: Minigame Over"
+        "Twin Islands: Goron Racetrack"
       ],
       "Exits": [
-        "Goron Racetrack Exit",
-        "Goron Racetrack: Minigame"
+        "Goron Racetrack Exit"
       ]
     },
     {
@@ -2094,60 +2015,6 @@
       "SpawnName": "Majora's Lair"
     },
     {
-      "RegionName": "Southern Swamp Healed",
-      "ExitName": "Southern Swamp Healed: Swamp Path",
-      "ExitIndex": 0,
-      "SpawnName": "Southern Swamp Healed: Swamp Path"
-    },
-    {
-      "RegionName": "Southern Swamp Healed",
-      "ExitName": "Southern Swamp Healed: Tourist Center",
-      "ExitIndex": 1,
-      "SpawnName": "Southern Swamp Healed: Tourist Center"
-    },
-    {
-      "RegionName": "Southern Swamp Healed",
-      "ExitName": "Southern Swamp Healed: Woodfall",
-      "ExitIndex": 2,
-      "SpawnName": "Southern Swamp Healed: Woodfall"
-    },
-    {
-      "RegionName": "Southern Swamp Healed",
-      "ExitName": "Southern Swamp Healed: Deku Palace",
-      "ExitIndex": 3,
-      "SpawnName": "Southern Swamp Healed: Deku Palace"
-    },
-    {
-      "RegionName": "Southern Swamp Healed",
-      "ExitName": "Southern Swamp Healed: Deku Shortcut",
-      "ExitIndex": 4,
-      "SpawnName": "Southern Swamp Healed: Deku Shortcut"
-    },
-    {
-      "RegionName": "Southern Swamp Healed",
-      "ExitName": "Southern Swamp Healed: Potion Shop",
-      "ExitIndex": 5,
-      "SpawnName": "Southern Swamp Healed: Potion Shop"
-    },
-    {
-      "RegionName": "Southern Swamp Healed",
-      "ExitName": "Southern Swamp Healed: Woods of Mystery",
-      "ExitIndex": 7,
-      "SpawnName": "Southern Swamp Healed: Woods of Mystery"
-    },
-    {
-      "RegionName": "Southern Swamp Healed",
-      "ExitName": "Southern Swamp Healed: Swamp Spider House",
-      "ExitIndex": 8,
-      "SpawnName": "Southern Swamp Healed: Swamp Spider House"
-    },
-    {
-      "RegionName": "Southern Swamp Healed",
-      "ExitName": "Southern Swamp Healed: Owl Warp",
-      "ExitIndex": 0,
-      "SpawnName": "Southern Swamp Healed: Owl Warp"
-    },
-    {
       "RegionName": "Moon",
       "ExitName": "Moon: Clock Tower",
       "ExitIndex": 0,
@@ -2436,48 +2303,6 @@
       "SpawnName": "Mountain Village: Owl Warp"
     },
     {
-      "RegionName": "Mountain Village Spring",
-      "ExitName": "Mountain Village Spring: Smithy",
-      "ExitIndex": 1,
-      "SpawnName": "Mountain Village Spring: Smithy"
-    },
-    {
-      "RegionName": "Mountain Village Spring",
-      "ExitName": "Mountain Village Spring: Twin Islands",
-      "ExitIndex": 2,
-      "SpawnName": "Mountain Village Spring: Twin Islands"
-    },
-    {
-      "RegionName": "Mountain Village Spring",
-      "ExitName": "Mountain Village Spring: Goron Grave",
-      "ExitIndex": 3,
-      "SpawnName": "Mountain Village Spring: Goron Grave"
-    },
-    {
-      "RegionName": "Mountain Village Spring",
-      "ExitName": "Mountain Village Spring: Snowhead Path",
-      "ExitIndex": 4,
-      "SpawnName": "Mountain Village Spring: Snowhead Path"
-    },
-    {
-      "RegionName": "Mountain Village Spring",
-      "ExitName": "Mountain Village Spring: Mountain Path",
-      "ExitIndex": 0,
-      "SpawnName": "Mountain Village Spring: Mountain Path"
-    },
-    {
-      "RegionName": "Mountain Village Spring",
-      "ExitName": "Mountain Village Spring: Owl Warp",
-      "ExitIndex": 9,
-      "SpawnName": "Mountain Village Spring: Owl Warp"
-    },
-    {
-      "RegionName": "Mountain Village Spring",
-      "ExitName": "Mountain Village: Dungeon Clear",
-      "ExitIndex": 0,
-      "SpawnName": "Mountain Village: Dungeon Clear"
-    },
-    {
       "RegionName": "Twin Islands",
       "ExitName": "Twin Islands: Mountain Village",
       "ExitIndex": 0,
@@ -2494,24 +2319,6 @@
       "ExitName": "Twin Islands: Goron Racetrack",
       "ExitIndex": 2,
       "SpawnName": "Twin Islands: Goron Racetrack"
-    },
-    {
-      "RegionName": "Twin Islands Spring",
-      "ExitName": "Twin Islands Spring: Mountain Village",
-      "ExitIndex": 0,
-      "SpawnName": "Twin Islands Spring: Mountain Village"
-    },
-    {
-      "RegionName": "Twin Islands Spring",
-      "ExitName": "Twin Islands Spring: Goron Village",
-      "ExitIndex": 1,
-      "SpawnName": "Twin Islands Spring: Goron Village"
-    },
-    {
-      "RegionName": "Twin Islands Spring",
-      "ExitName": "Twin Islands Spring: Goron Racetrack",
-      "ExitIndex": 2,
-      "SpawnName": "Twin Islands Spring: Goron Racetrack"
     },
     {
       "RegionName": "Goron Village",
@@ -2538,18 +2345,6 @@
       "SpawnName": "Lens Grotto Exit"
     },
     {
-      "RegionName": "Goron Village Spring",
-      "ExitName": "Goron Village Spring: Twin Islands",
-      "ExitIndex": 0,
-      "SpawnName": "Goron Village Spring: Twin Islands"
-    },
-    {
-      "RegionName": "Goron Village Spring",
-      "ExitName": "Goron Village Spring: Goron Shrine",
-      "ExitIndex": 2,
-      "SpawnName": "Goron Village Spring: Goron Shrine"
-    },
-    {
       "RegionName": "Goron Grave",
       "ExitName": "Goron Grave Exit",
       "ExitIndex": 0,
@@ -2566,18 +2361,6 @@
       "ExitName": "Goron Racetrack Exit",
       "ExitIndex": 0,
       "SpawnName": "Goron Racetrack Exit"
-    },
-    {
-      "RegionName": "Goron Racetrack",
-      "ExitName": "Goron Racetrack: Minigame",
-      "ExitIndex": 15,
-      "SpawnName": "Goron Racetrack: Minigame"
-    },
-    {
-      "RegionName": "Goron Racetrack",
-      "ExitName": "Goron Racetrack: Minigame Over",
-      "ExitIndex": 0,
-      "SpawnName": "Goron Racetrack: Minigame Over"
     },
     {
       "RegionName": "Goron Shrine",
@@ -3697,46 +3480,6 @@
       "SpawnIndex": 0
     },
     {
-      "SpawnName": "Swamp Path: Southern Swamp",
-      "RegionName": "Southern Swamp Healed",
-      "SpawnIndex": 0
-    },
-    {
-      "SpawnName": "Tourist Center Exit",
-      "RegionName": "Southern Swamp Healed",
-      "SpawnIndex": 1
-    },
-    {
-      "SpawnName": "Woodfall: Southern Swamp",
-      "RegionName": "Southern Swamp Healed",
-      "SpawnIndex": 2
-    },
-    {
-      "SpawnName": "Deku Palace: Southern Swamp",
-      "RegionName": "Southern Swamp Healed",
-      "SpawnIndex": 3
-    },
-    {
-      "SpawnName": "Deku Palace: Deku Shortcut",
-      "RegionName": "Southern Swamp Healed",
-      "SpawnIndex": 4
-    },
-    {
-      "SpawnName": "Potion Shop Exit",
-      "RegionName": "Southern Swamp Healed",
-      "SpawnIndex": 5
-    },
-    {
-      "SpawnName": "Woods of Mystery Exit",
-      "RegionName": "Southern Swamp Healed",
-      "SpawnIndex": 7
-    },
-    {
-      "SpawnName": "Swamp Spider House Exit",
-      "RegionName": "Southern Swamp Healed",
-      "SpawnIndex": 8
-    },
-    {
       "SpawnName": "Majora's Lair",
       "RegionName": "Moon",
       "SpawnIndex": 0
@@ -3957,36 +3700,6 @@
       "SpawnIndex": 6
     },
     {
-      "SpawnName": "Smithy Exit",
-      "RegionName": "Mountain Village Spring",
-      "SpawnIndex": 1
-    },
-    {
-      "SpawnName": "Twin Islands Spring: Mountain Village",
-      "RegionName": "Mountain Village Spring",
-      "SpawnIndex": 2
-    },
-    {
-      "SpawnName": "Goron Grave Exit",
-      "RegionName": "Mountain Village Spring",
-      "SpawnIndex": 3
-    },
-    {
-      "SpawnName": "Snowhead Path: Mountain Village",
-      "RegionName": "Mountain Village Spring",
-      "SpawnIndex": 4
-    },
-    {
-      "SpawnName": "Mountain Path: Mountain Village",
-      "RegionName": "Mountain Village Spring",
-      "SpawnIndex": 6
-    },
-    {
-      "SpawnName": "Goht's Boss Lair",
-      "RegionName": "Mountain Village Spring",
-      "SpawnIndex": 0
-    },
-    {
       "SpawnName": "Mountain Village: Twin Islands",
       "RegionName": "Twin Islands",
       "SpawnIndex": 0
@@ -3999,21 +3712,6 @@
     {
       "SpawnName": "Goron Racetrack Exit",
       "RegionName": "Twin Islands",
-      "SpawnIndex": 2
-    },
-    {
-      "SpawnName": "Twin Islands Spring: Mountain Village",
-      "RegionName": "Twin Islands Spring",
-      "SpawnIndex": 2
-    },
-    {
-      "SpawnName": "Goron Village Spring: Twin Islands",
-      "RegionName": "Twin Islands Spring",
-      "SpawnIndex": 1
-    },
-    {
-      "SpawnName": "Goron Racetrack Exit",
-      "RegionName": "Twin Islands Spring",
       "SpawnIndex": 2
     },
     {
@@ -4037,16 +3735,6 @@
       "SpawnIndex": 16
     },
     {
-      "SpawnName": "Twin Islands Spring: Goron Village",
-      "RegionName": "Goron Village Spring",
-      "SpawnIndex": 0
-    },
-    {
-      "SpawnName": "Goron Shrine Exit",
-      "RegionName": "Goron Village Spring",
-      "SpawnIndex": 2
-    },
-    {
       "SpawnName": "Mountain Village: Goron Grave",
       "RegionName": "Goron Grave",
       "SpawnIndex": 0
@@ -4060,11 +3748,6 @@
       "SpawnName": "Twin Islands: Goron Racetrack",
       "RegionName": "Goron Racetrack",
       "SpawnIndex": 0
-    },
-    {
-      "SpawnName": "Goron Racetrack: Minigame Over",
-      "RegionName": "Goron Racetrack",
-      "SpawnIndex": 2
     },
     {
       "SpawnName": "Goron Village: Goron Shrine",
@@ -5292,70 +4975,6 @@
       "Type": "Boss"
     },
     {
-      "EntranceName": "Southern Swamp Healed: Swamp Path",
-      "SpawnName": "Southern Swamp Healed: Swamp Path",
-      "ExitName": "Southern Swamp Healed: Swamp Path",
-      "ReturnSpawnName": "Swamp Path: Southern Swamp",
-      "ReturnExitName": "Swamp Path: Southern Swamp",
-      "Type": "Overworld"
-    },
-    {
-      "EntranceName": "Southern Swamp Healed: Tourist Center",
-      "SpawnName": "Southern Swamp Healed: Tourist Center",
-      "ExitName": "Southern Swamp Healed: Tourist Center",
-      "ReturnSpawnName": "Tourist Center Exit",
-      "ReturnExitName": "Tourist Center Exit",
-      "Type": "Interior"
-    },
-    {
-      "EntranceName": "Southern Swamp Healed: Woodfall",
-      "SpawnName": "Southern Swamp Healed: Woodfall",
-      "ExitName": "Southern Swamp Healed: Woodfall",
-      "ReturnSpawnName": "Woodfall: Southern Swamp",
-      "ReturnExitName": "Woodfall: Southern Swamp",
-      "Type": "Overworld"
-    },
-    {
-      "EntranceName": "Southern Swamp Healed: Deku Palace",
-      "SpawnName": "Southern Swamp Healed: Deku Palace",
-      "ExitName": "Southern Swamp Healed: Deku Palace",
-      "ReturnSpawnName": "Deku Palace: Southern Swamp",
-      "ReturnExitName": "Deku Palace: Southern Swamp",
-      "Type": "Overworld"
-    },
-    {
-      "EntranceName": "Southern Swamp Healed: Deku Shortcut",
-      "SpawnName": "Southern Swamp Healed: Deku Shortcut",
-      "ExitName": "Southern Swamp Healed: Deku Shortcut",
-      "ReturnSpawnName": "Deku Palace: Deku Shortcut",
-      "ReturnExitName": "Deku Palace: Deku Shortcut",
-      "Type": "Overworld"
-    },
-    {
-      "EntranceName": "Southern Swamp Healed: Potion Shop",
-      "SpawnName": "Southern Swamp Healed: Potion Shop",
-      "ExitName": "Southern Swamp Healed: Potion Shop",
-      "ReturnSpawnName": "Potion Shop Exit",
-      "ReturnExitName": "Potion Shop Exit",
-      "Type": "Interior"
-    },
-    {
-      "EntranceName": "Southern Swamp Healed: Woods of Mystery",
-      "SpawnName": "Southern Swamp Healed: Woods of Mystery",
-      "ExitName": "Southern Swamp Healed: Woods of Mystery",
-      "ReturnSpawnName": "Woods of Mystery Exit",
-      "ReturnExitName": "Woods of Mystery Exit",
-      "Type": "Interior"
-    },
-    {
-      "EntranceName": "Southern Swamp Healed: Swamp Spider House",
-      "SpawnName": "Southern Swamp Healed: Swamp Spider House",
-      "ExitName": "Southern Swamp Healed: Swamp Spider House",
-      "ReturnSpawnName": "Swamp Spider House Exit",
-      "ReturnExitName": "Swamp Spider House Exit",
-      "Type": "Interior"
-    },
-    {
       "EntranceName": "Moon: Majora's Lair",
       "SpawnName": "Moon: Majora's Lair",
       "ExitName": "Moon: Majora's Lair",
@@ -5708,46 +5327,6 @@
       "Type": "Overworld"
     },
     {
-      "EntranceName": "Mountain Village Spring: Smithy",
-      "SpawnName": "Mountain Village Spring: Smithy",
-      "ExitName": "Mountain Village Spring: Smithy",
-      "ReturnSpawnName": "Smithy Exit",
-      "ReturnExitName": "Smithy Exit",
-      "Type": "Interior"
-    },
-    {
-      "EntranceName": "Mountain Village Spring: Twin Islands",
-      "SpawnName": "Mountain Village Spring: Twin Islands",
-      "ExitName": "Mountain Village Spring: Twin Islands",
-      "ReturnSpawnName": "Twin Islands Spring: Mountain Village",
-      "ReturnExitName": "Twin Islands Spring: Mountain Village",
-      "Type": "Overworld"
-    },
-    {
-      "EntranceName": "Mountain Village Spring: Goron Grave",
-      "SpawnName": "Mountain Village Spring: Goron Grave",
-      "ExitName": "Mountain Village Spring: Goron Grave",
-      "ReturnSpawnName": "Goron Grave Exit",
-      "ReturnExitName": "Goron Grave Exit",
-      "Type": "Interior"
-    },
-    {
-      "EntranceName": "Mountain Village Spring: Snowhead Path",
-      "SpawnName": "Mountain Village Spring: Snowhead Path",
-      "ExitName": "Mountain Village Spring: Snowhead Path",
-      "ReturnSpawnName": "Snowhead Path: Mountain Village",
-      "ReturnExitName": "Snowhead Path: Mountain Village",
-      "Type": "Overworld"
-    },
-    {
-      "EntranceName": "Mountain Village Spring: Mountain Path",
-      "SpawnName": "Mountain Village Spring: Mountain Path",
-      "ExitName": "Mountain Village Spring: Mountain Path",
-      "ReturnSpawnName": "Mountain Path: Mountain Village",
-      "ReturnExitName": "Mountain Path: Mountain Village",
-      "Type": "Overworld"
-    },
-    {
       "EntranceName": "Mountain Village: Dungeon Clear",
       "SpawnName": "Mountain Village: Dungeon Clear",
       "ExitName": "Mountain Village: Dungeon Clear",
@@ -5775,30 +5354,6 @@
       "EntranceName": "Twin Islands: Goron Racetrack",
       "SpawnName": "Twin Islands: Goron Racetrack",
       "ExitName": "Twin Islands: Goron Racetrack",
-      "ReturnSpawnName": "Goron Racetrack Exit",
-      "ReturnExitName": "Goron Racetrack Exit",
-      "Type": "Interior"
-    },
-    {
-      "EntranceName": "Twin Islands Spring: Mountain Village",
-      "SpawnName": "Twin Islands Spring: Mountain Village",
-      "ExitName": "Twin Islands Spring: Mountain Village",
-      "ReturnSpawnName": "Twin Islands Spring: Mountain Village",
-      "ReturnExitName": "Twin Islands Spring: Mountain Village",
-      "Type": "Overworld"
-    },
-    {
-      "EntranceName": "Twin Islands Spring: Goron Village",
-      "SpawnName": "Twin Islands Spring: Goron Village",
-      "ExitName": "Twin Islands Spring: Goron Village",
-      "ReturnSpawnName": "Goron Village Spring: Twin Islands",
-      "ReturnExitName": "Goron Village Spring: Twin Islands",
-      "Type": "Overworld"
-    },
-    {
-      "EntranceName": "Twin Islands Spring: Goron Racetrack",
-      "SpawnName": "Twin Islands Spring: Goron Racetrack",
-      "ExitName": "Twin Islands Spring: Goron Racetrack",
       "ReturnSpawnName": "Goron Racetrack Exit",
       "ReturnExitName": "Goron Racetrack Exit",
       "Type": "Interior"
@@ -5836,22 +5391,6 @@
       "Type": "Interior Exit"
     },
     {
-      "EntranceName": "Goron Village Spring: Twin Islands",
-      "SpawnName": "Goron Village Spring: Twin Islands",
-      "ExitName": "Goron Village Spring: Twin Islands",
-      "ReturnSpawnName": "Twin Islands Spring: Goron Village",
-      "ReturnExitName": "Twin Islands Spring: Goron Village",
-      "Type": "Overworld"
-    },
-    {
-      "EntranceName": "Goron Village Spring: Goron Shrine",
-      "SpawnName": "Goron Village Spring: Goron Shrine",
-      "ExitName": "Goron Village Spring: Goron Shrine",
-      "ReturnSpawnName": "Goron Shrine Exit",
-      "ReturnExitName": "Goron Shrine Exit",
-      "Type": "Overworld"
-    },
-    {
       "EntranceName": "Goron Grave Exit",
       "SpawnName": "Goron Grave Exit",
       "ExitName": "Goron Grave Exit",
@@ -5874,14 +5413,6 @@
       "ReturnSpawnName": "Twin Islands: Goron Racetrack",
       "ReturnExitName": "Twin Islands: Goron Racetrack",
       "Type": "Interior Exit"
-    },
-    {
-      "EntranceName": "Goron Racetrack: Minigame",
-      "SpawnName": "Goron Racetrack: Minigame",
-      "ExitName": "Goron Racetrack: Minigame",
-      "ReturnSpawnName": "Goron Racetrack: Minigame Over",
-      "ReturnExitName": "Goron Racetrack: Minigame Over",
-      "Type": "Minigame"
     },
     {
       "EntranceName": "Goron Shrine Exit",
@@ -6161,7 +5692,7 @@
       "ExitName": "Hookshot Room",
       "ReturnSpawnName": "Pirate's Fortress: Hookshot Room",
       "ReturnExitName": "Pirate's Fortress: Hookshot Room",
-      "Type": "Interior Exit"
+      "Type": "Interior"
     },
     {
       "EntranceName": "Hookshot Room Upper",
@@ -6169,7 +5700,7 @@
       "ExitName": "Hookshot Room Upper",
       "ReturnSpawnName": "Pirate's Fortress: Hookshot Room Upper",
       "ReturnExitName": "Pirate's Fortress: Hookshot Room Upper",
-      "Type": "Interior Exit"
+      "Type": "Interior"
     },
     {
       "EntranceName": "Well Guarded Room",
@@ -6177,7 +5708,7 @@
       "ExitName": "Well Guarded Room",
       "ReturnSpawnName": "Pirate's Fortress: Well Guarded Room",
       "ReturnExitName": "Pirate's Fortress: Well Guarded Room",
-      "Type": "Interior Exit"
+      "Type": "Interior"
     },
     {
       "EntranceName": "Well Guarded Exit",
@@ -6185,7 +5716,7 @@
       "ExitName": "Well Guarded Exit",
       "ReturnSpawnName": "Pirate's Fortress: Well Guarded Exit",
       "ReturnExitName": "Pirate's Fortress: Well Guarded Exit",
-      "Type": "Interior Exit"
+      "Type": "Interior"
     },
     {
       "EntranceName": "Barrel Room",
@@ -6193,7 +5724,7 @@
       "ExitName": "Barrel Room",
       "ReturnSpawnName": "Pirate's Fortress: Barrel Room",
       "ReturnExitName": "Pirate's Fortress: Barrel Room",
-      "Type": "Interior Exit"
+      "Type": "Interior"
     },
     {
       "EntranceName": "Barrel Room Exit",
@@ -6201,7 +5732,7 @@
       "ExitName": "Barrel Room Exit",
       "ReturnSpawnName": "Pirate's Fortress: Barrel Room Exit",
       "ReturnExitName": "Pirate's Fortress: Barrel Room Exit",
-      "Type": "Interior Exit"
+      "Type": "Interior"
     },
     {
       "EntranceName": "Twin Barrel Room",
@@ -6209,7 +5740,7 @@
       "ExitName": "Twin Barrel Room",
       "ReturnSpawnName": "Pirate's Fortress: Twin Barrel Room",
       "ReturnExitName": "Pirate's Fortress: Twin Barrel Room",
-      "Type": "Interior Exit"
+      "Type": "Interior"
     },
     {
       "EntranceName": "Twin Barrel Room Exit",
@@ -6217,7 +5748,7 @@
       "ExitName": "Twin Barrel Room Exit",
       "ReturnSpawnName": "Pirate's Fortress: Twin Barrel Room Exit",
       "ReturnExitName": "Pirate's Fortress: Twin Barrel Room Exit",
-      "Type": "Interior Exit"
+      "Type": "Interior"
     },
     {
       "EntranceName": "Pirate's Fortress: Pirate Platform",
@@ -6233,7 +5764,7 @@
       "ExitName": "Pirate's Fortress: Hookshot Room",
       "ReturnSpawnName": "Hookshot Room",
       "ReturnExitName": "Hookshot Room",
-      "Type": "Interior"
+      "Type": "Interior Exit"
     },
     {
       "EntranceName": "Pirate's Fortress: Hookshot Room Upper",
@@ -6241,7 +5772,7 @@
       "ExitName": "Pirate's Fortress: Hookshot Room Upper",
       "ReturnSpawnName": "Hookshot Room Upper",
       "ReturnExitName": "Hookshot Room Upper",
-      "Type": "Interior"
+      "Type": "Interior Exit"
     },
     {
       "EntranceName": "Pirate's Fortress: Twin Barrel Room",
@@ -6249,7 +5780,7 @@
       "ExitName": "Pirate's Fortress: Twin Barrel Room",
       "ReturnSpawnName": "Twin Barrel Room",
       "ReturnExitName": "Twin Barrel Room",
-      "Type": "Interior"
+      "Type": "Interior Exit"
     },
     {
       "EntranceName": "Pirate's Fortress: Twin Barrel Room Exit",
@@ -6265,7 +5796,7 @@
       "ExitName": "Pirate's Fortress: Well Guarded Room",
       "ReturnSpawnName": "Well Guarded Room",
       "ReturnExitName": "Well Guarded Room",
-      "Type": "Interior"
+      "Type": "Interior Exit"
     },
     {
       "EntranceName": "Pirate's Fortress: Well Guarded Exit",
@@ -6273,7 +5804,7 @@
       "ExitName": "Pirate's Fortress: Well Guarded Exit",
       "ReturnSpawnName": "Well Guarded Exit",
       "ReturnExitName": "Well Guarded Exit",
-      "Type": "Interior"
+      "Type": "Interior Exit"
     },
     {
       "EntranceName": "Pirate's Fortress: Barrel Room",
@@ -6281,7 +5812,7 @@
       "ExitName": "Pirate's Fortress: Barrel Room",
       "ReturnSpawnName": "Barrel Room",
       "ReturnExitName": "Barrel Room",
-      "Type": "Interior"
+      "Type": "Interior Exit"
     },
     {
       "EntranceName": "Pirate's Fortress: Barrel Room Exit",
@@ -6289,7 +5820,7 @@
       "ExitName": "Pirate's Fortress: Barrel Room Exit",
       "ReturnSpawnName": "Barrel Room Exit",
       "ReturnExitName": "Barrel Room Exit",
-      "Type": "Interior"
+      "Type": "Interior Exit"
     },
     {
       "EntranceName": "Zora Cape: Great Bay Coast",

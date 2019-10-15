@@ -230,16 +230,15 @@ namespace MMRando
         private void EntranceShuffle()
         {
             ReadTerminaMap();
+            ModifySpawns();
             ShuffleEntrances();
-
             FinalizeEntrances();
-            //RenameSpawns();
             WriteMapData();
         }
 
-        private void RenameSpawns()
+        private void ModifySpawns()
         {
-            TerminaMapData.RenameSpawn("North Clock Town: Clock Town Fairy", "Clock Town Fairy");
+
         }
 
         private void WriteMapData()
@@ -272,21 +271,17 @@ namespace MMRando
 
         private void ShuffleEntrances()
         {
-            //List<string> interiorEntrances = TerminaMapData.entrances.FindAll(e => "Interior".Equals(e.Type)).Select(e => e.EntranceName).ToList();
-            //List<string> shuffledInteriors = new List<string>();
-            //for( int i = interiorEntrances.Count - 1; i >= 0; i--)
-            //{
-            //    shuffledInteriors.Add(interiorEntrances[i]);
-            //}
-            //for (int i = 0 ; i< interiorEntrances.Count; i++)
-            //{
-            //    TerminaMapData.ConnectEntrance(interiorEntrances[i], shuffledInteriors[i]);
-            //}
-            foreach( Exit x in TerminaMapData.exits)
+            List<string> interiorEntrances = TerminaMapData.entrances.FindAll(e => "Interior".Equals(e.Type)).Select(e => e.EntranceName).ToList();
+            List<string> shuffledInteriors = new List<string>();
+            for (int i = interiorEntrances.Count - 1; i >= 0; i--)
             {
-                x.SpawnName = x.ExitName;
+                shuffledInteriors.Add(interiorEntrances[i]);
             }
-            TerminaMapData.UpdateEntrances();
+            for (int i = 0; i < interiorEntrances.Count; i++)
+            {
+                TerminaMapData.ConnectEntrance(interiorEntrances[i], shuffledInteriors[i]);
+                Debug.WriteLine($"{interiorEntrances[i]} -> {shuffledInteriors[i]}");
+            }
         }
 
         public void FinalizeEntrances()
@@ -318,7 +313,7 @@ namespace MMRando
                     sceneExitIndices = _randomized.ExitListIndices[sceneIndex];
                     sceneExitSpawns.Add(spawnAddress);
                     sceneExitIndices.Add(exit.ExitIndex);
-                    Debug.WriteLine($"[{exit.RegionName}:{sceneIndex}] Exit {exit.ExitIndex}: {exit.SpawnName} [{spawnAddress.ToString("X4")}]");
+                    Debug.WriteLine($"[{exit.RegionName}:{sceneIndex}] Exit {exit.ExitIndex} ({exit.ExitName}): {exit.SpawnName} [{spawnAddress.ToString("X4")}]");
                 }
             }
         }
