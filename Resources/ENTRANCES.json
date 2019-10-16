@@ -423,11 +423,45 @@
       "SceneId": 11,
       "ExternalSceneId": 1,
       "Spawns": [
-        "Moon: Majora's Lair"
-      ],
-      "Exits": [
         "Majora's Lair"
-      ]
+      ],
+      "Exits": []
+    },
+    {
+      "RegionName": "Odolwa",
+      "SceneId": 31,
+      "ExternalSceneId": 28,
+      "Spawns": [
+        "Odolwa's Boss Lair"
+      ],
+      "Exits": []
+    },
+    {
+      "RegionName": "Goht",
+      "SceneId": 68,
+      "ExternalSceneId": 65,
+      "Spawns": [
+        "Goht's Boss Lair"
+      ],
+      "Exits": []
+    },
+    {
+      "RegionName": "Gyorg",
+      "SceneId": 95,
+      "ExternalSceneId": 92,
+      "Spawns": [
+        "Gyorg's Boss Lair"
+      ],
+      "Exits": []
+    },
+    {
+      "RegionName": "Twinmold",
+      "SceneId": 54,
+      "ExternalSceneId": 51,
+      "Spawns": [
+        "Twinmold's Boss Lair"
+      ],
+      "Exits": []
     },
     {
       "RegionName": "Moon",
@@ -808,9 +842,11 @@
       "ExternalSceneId": 47,
       "Spawns": [
         "Goron Village: Goron Shrine",
+        "Goron Shop Exit"
       ],
       "Exits": [
-        "Goron Shrine Exit"
+        "Goron Shrine Exit",
+        "Goron Shrine: Goron Shop"
       ]
     },
     {
@@ -1010,12 +1046,16 @@
         "Pirate's Fortress: Outside PF",
         "Outside PF: Pirate Tunnel",
         "Outside PF: Caught",
-        "Pirate's Fortress: Pirate Platform"
+        "Pirate's Fortress: Pirate Platform",
+        "Underwater Tunnel Exit",
+        "Sewer Tunnel Exit"
       ],
       "Exits": [
         "Outside PF: Great Bay Coast",
         "Outside PF: Pirate's Fortress",
-        "Outside PF: Pirate Platform Exit"
+        "Outside PF: Pirate Platform Exit",
+        "Outside PF: Underwater Entrance",
+        "Outside PF: Sewer Tunnel"
       ]
     },
     {
@@ -1321,16 +1361,22 @@
       "Spawns": [
         "Ikana Canyon: Stone Tower",
         "Stone Tower Temple Exit",
-        "Stone Tower: Owl Warp",
-        "Stone Tower: Inverted Stone Tower",
-        "Inverted Stone Tower Temple Exit",
-        "Stone Tower: Inverted Stone Tower"
+        "Stone Tower: Owl Warp"
       ],
       "Exits": [
         "Stone Tower: Ikana Canyon",
-        "Stone Tower: Temple",
-        "Inverted Stone Tower: Temple",
-        "Inverted Stone Tower: Stone Tower"
+        "Stone Tower: Temple"
+      ]
+    },
+    {
+      "RegionName": "Inverted Stone Tower",
+      "SceneId": 89,
+      "ExternalSceneId": 86,
+      "Spawns": [
+        "Inverted Stone Tower Temple Exit"
+      ],
+      "Exits": [
+        "Inverted Stone Tower: Temple"
       ]
     },
     {
@@ -1441,6 +1487,30 @@
       ],
       "Exits": [
         "Stone Tower Fairy Exit"
+      ]
+    },
+    {
+      "RegionName": "Goron Shop",
+      "SceneId": 61,
+      "ExternalSceneId": 58,
+      "Spawns": [
+        "Goron Shrine: Goron Shop"
+      ],
+      "Exits": [
+        "Goron Shop Exit"
+      ]
+    },
+    {
+      "RegionName": "PF Tunnel",
+      "SceneId": 35,
+      "ExternalSceneId": 32,
+      "Spawns": [
+        "Outside PF: Underwater Entrance",
+        "Outside PF: Sewer Tunnel"
+      ],
+      "Exits": [
+        "Underwater Tunnel Exit",
+        "Sewer Tunnel Exit"
       ]
     }
   ],
@@ -2084,7 +2154,7 @@
     {
       "RegionName": "Woodfall Temple",
       "ExitName": "Odolwa's Boss Lair",
-      "ExitIndex": 0,
+      "ExitIndex": 1,
       "SpawnName": "Odolwa's Boss Lair"
     },
     {
@@ -2092,12 +2162,6 @@
       "ExitName": "Deku Princess Room Exit",
       "ExitIndex": 2,
       "SpawnName": "Deku Princess Room Exit"
-    },
-    {
-      "RegionName": "Deku Princess Room",
-      "ExitName": "Woodfall Temple: Dungeon Clear",
-      "ExitIndex": 0,
-      "SpawnName": "Woodfall Temple: Dungeon Clear"
     },
     {
       "RegionName": "Snowhead Temple",
@@ -2108,7 +2172,7 @@
     {
       "RegionName": "Snowhead Temple",
       "ExitName": "Goht's Boss Lair",
-      "ExitIndex": 0,
+      "ExitIndex": 1,
       "SpawnName": "Goht's Boss Lair"
     },
     {
@@ -2120,7 +2184,7 @@
     {
       "RegionName": "Great Bay Temple",
       "ExitName": "Gyorg's Boss Lair",
-      "ExitIndex": 0,
+      "ExitIndex": 1,
       "SpawnName": "Gyorg's Boss Lair"
     },
     {
@@ -2138,7 +2202,7 @@
     {
       "RegionName": "Inverted Stone Tower Temple",
       "ExitName": "Twinmold's Boss Lair",
-      "ExitIndex": 0,
+      "ExitIndex": 1,
       "SpawnName": "Twinmold's Boss Lair"
     },
     {
@@ -2244,6 +2308,12 @@
       "SpawnName": "Woodfall: Woodfall Fairy"
     },
     {
+      "RegionName": "Woodfall Temple",
+      "ExitName": "Woodfall Temple: Dungeon Clear",
+      "ExitIndex": 255,
+      "SpawnName": "Woodfall Temple: Dungeon Clear"
+    },
+    {
       "RegionName": "Woodfall",
       "ExitName": "Woodfall: Deku Princess Room",
       "ExitIndex": 3,
@@ -2302,6 +2372,12 @@
       "ExitName": "Mountain Village: Owl Warp",
       "ExitIndex": 7,
       "SpawnName": "Mountain Village: Owl Warp"
+    },
+    {
+      "RegionName": "Mountain Village",
+      "ExitName": "Mountain Village: Dungeon Clear",
+      "ExitIndex": 255,
+      "SpawnName": "Mountain Village: Dungeon Clear"
     },
     {
       "RegionName": "Twin Islands",
@@ -2390,7 +2466,7 @@
     {
       "RegionName": "Snowhead",
       "ExitName": "Snowhead: Temple",
-      "ExitIndex": 0,
+      "ExitIndex": 1,
       "SpawnName": "Snowhead: Temple"
     },
     {
@@ -2750,7 +2826,7 @@
     {
       "RegionName": "Zora Cape",
       "ExitName": "Zora Cape: Dungeon Clear",
-      "ExitIndex": 0,
+      "ExitIndex": 255,
       "SpawnName": "Zora Cape: Dungeon Clear"
     },
     {
@@ -2940,22 +3016,10 @@
       "SpawnName": "Stone Tower: Owl Warp"
     },
     {
-      "RegionName": "Stone Tower",
-      "ExitName": "Stone Tower: Inverted Stone Tower",
-      "ExitIndex": 0,
-      "SpawnName": "Stone Tower: Inverted Stone Tower"
-    },
-    {
-      "RegionName": "Stone Tower",
+      "RegionName": "Inverted Stone Tower",
       "ExitName": "Inverted Stone Tower: Temple",
       "ExitIndex": 0,
       "SpawnName": "Inverted Stone Tower: Temple"
-    },
-    {
-      "RegionName": "Stone Tower",
-      "ExitName": "Inverted Stone Tower: Stone Tower",
-      "ExitIndex": 0,
-      "SpawnName": "Inverted Stone Tower: Stone Tower"
     },
     {
       "RegionName": "Music Box",
@@ -3016,6 +3080,42 @@
       "ExitName": "Stone Tower Fairy Exit",
       "ExitIndex": 4,
       "SpawnName": "Stone Tower Fairy Exit"
+    },
+    {
+      "RegionName": "Goron Shrine",
+      "ExitName": "Goron Shrine: Goron Shop",
+      "ExitIndex": 1,
+      "SpawnName": "Goron Shrine: Goron Shop"
+    },
+    {
+      "RegionName": "Goron Shop",
+      "ExitName": "Goron Shop Exit",
+      "ExitIndex": 0,
+      "SpawnName": "Goron Shop Exit"
+    },
+    {
+      "RegionName": "Outside PF",
+      "ExitName": "Outside PF: Underwater Entrance",
+      "ExitIndex": 2,
+      "SpawnName": "Outside PF: Underwater Entrance"
+    },
+    {
+      "RegionName": "PF Tunnel",
+      "ExitName": "Underwater Tunnel Exit",
+      "ExitIndex": 9,
+      "SpawnName": "Underwater Tunnel Exit"
+    },
+    {
+      "RegionName": "Outside PF",
+      "ExitName": "Outside PF: Sewer Tunnel",
+      "ExitIndex": 3,
+      "SpawnName": "Outside PF: Sewer Tunnel"
+    },
+    {
+      "RegionName": "PF Tunnel",
+      "ExitName": "Sewer Tunnel Exit",
+      "ExitIndex": 12,
+      "SpawnName": "Sewer Tunnel Exit"
     }
   ],
   "spawns": [
@@ -3466,8 +3566,8 @@
     },
     {
       "SpawnName": "Twinmold's Boss Lair",
-      "RegionName": "Ikana Canyon",
-      "SpawnIndex": 1
+      "RegionName": "Twinmold",
+      "SpawnIndex": 0
     },
     {
       "SpawnName": "Moon: Majora's Lair",
@@ -3536,7 +3636,7 @@
     },
     {
       "SpawnName": "Odolwa's Boss Lair",
-      "RegionName": "Deku Princess Room",
+      "RegionName": "Odolwa",
       "SpawnIndex": 0
     },
     {
@@ -3546,7 +3646,12 @@
     },
     {
       "SpawnName": "Mountain Village: Dungeon Clear",
-      "RegionName": "Snowhead Temple",
+      "RegionName": "Mountain Village",
+      "SpawnIndex": 0
+    },
+    {
+      "SpawnName": "Goht's Boss Lair",
+      "RegionName": "Goht",
       "SpawnIndex": 0
     },
     {
@@ -3556,7 +3661,7 @@
     },
     {
       "SpawnName": "Zora Cape: Dungeon Clear",
-      "RegionName": "Great Bay Temple",
+      "RegionName": "Zora Cape",
       "SpawnIndex": 8
     },
     {
@@ -3571,7 +3676,7 @@
     },
     {
       "SpawnName": "Ikana Canyon: Dungeon Clear",
-      "RegionName": "Inverted Stone Tower Temple",
+      "RegionName": "Ikana Canyon",
       "SpawnIndex": 7
     },
     {
@@ -4031,7 +4136,7 @@
     },
     {
       "SpawnName": "Gyorg's Boss Lair",
-      "RegionName": "Zora Cape",
+      "RegionName": "Gyorg",
       "SpawnIndex": 0
     },
     {
@@ -4167,7 +4272,7 @@
     {
       "SpawnName": "Ikana Canyon: Well",
       "RegionName": "Well",
-      "SpawnIndex": 1
+      "SpawnIndex": 0
     },
     {
       "SpawnName": "Ikana Castle: Well",
@@ -4188,11 +4293,6 @@
       "SpawnName": "Inverted Stone Tower Temple Exit",
       "RegionName": "Stone Tower",
       "SpawnIndex": 1
-    },
-    {
-      "SpawnName": "Stone Tower: Inverted Stone Tower",
-      "RegionName": "Stone Tower",
-      "SpawnIndex": 0
     },
     {
       "SpawnName": "Ikana Canyon: Music Box",
@@ -4243,6 +4343,36 @@
       "SpawnName": "Ikana Canyon: Stone Tower Fairy",
       "RegionName": "Stone Tower Fairy Fountain",
       "SpawnIndex": 4
+    },
+    {
+      "SpawnName": "Goron Shrine: Goron Shop",
+      "RegionName": "Goron Shop",
+      "SpawnIndex": 0
+    },
+    {
+      "SpawnName": "Goron Shop Exit",
+      "RegionName": "Goron Shrine",
+      "SpawnIndex": 1
+    },
+    {
+      "SpawnName": "Outside PF: Underwater Entrance",
+      "RegionName": "PF Tunnel",
+      "SpawnIndex": 9
+    },
+    {
+      "SpawnName": "Underwater Tunnel Exit",
+      "RegionName": "Outside PF",
+      "SpawnIndex": 2
+    },
+    {
+      "SpawnName": "Outside PF: Sewer Tunnel",
+      "RegionName": "PF Tunnel",
+      "SpawnIndex": 10
+    },
+    {
+      "SpawnName": "Sewer Tunnel Exit",
+      "RegionName": "Outside PF",
+      "SpawnIndex": 6
     }
   ],
   "entrances": [
@@ -4500,7 +4630,7 @@
       "ExitName": "East Clock Town: Mayor's Residence",
       "ReturnSpawnName": "Mayor's Residence Exit",
       "ReturnExitName": "Mayor's Residence Exit",
-      "Type": "Overworld"
+      "Type": "Interior"
     },
     {
       "EntranceName": "East Clock Town: Town Shooting Gallery",
@@ -4908,7 +5038,7 @@
       "ExitName": "Ikana Canyon: Well",
       "ReturnSpawnName": "Well: Ikana Canyon",
       "ReturnExitName": "Well: Ikana Canyon",
-      "Type": "Overworld"
+      "Type": "Interior"
     },
     {
       "EntranceName": "Ikana Canyon: Sakon's Hideout",
@@ -4964,7 +5094,7 @@
       "ExitName": "Ikana Canyon: Dungeon Clear",
       "ReturnSpawnName": "Twinmold's Boss Lair",
       "ReturnExitName": "Twinmold's Boss Lair",
-      "Type": "Boss"
+      "Type": "Boss Exit"
     },
     {
       "EntranceName": "Majora's Lair",
@@ -4972,14 +5102,6 @@
       "ExitName": "Majora's Lair",
       "ReturnSpawnName": "Moon: Majora's Lair",
       "ReturnExitName": "Moon: Majora's Lair",
-      "Type": "Boss"
-    },
-    {
-      "EntranceName": "Moon: Majora's Lair",
-      "SpawnName": "Moon: Majora's Lair",
-      "ExitName": "Moon: Majora's Lair",
-      "ReturnSpawnName": "Majora's Lair",
-      "ReturnExitName": "Majora's Lair",
       "Type": "Boss"
     },
     {
@@ -5076,7 +5198,7 @@
       "ExitName": "Woodfall Temple: Dungeon Clear",
       "ReturnSpawnName": "Odolwa's Boss Lair",
       "ReturnExitName": "Odolwa's Boss Lair",
-      "Type": "Boss"
+      "Type": "Boss Exit"
     },
     {
       "EntranceName": "Snowhead Temple Exit",
@@ -5332,7 +5454,7 @@
       "ExitName": "Mountain Village: Dungeon Clear",
       "ReturnSpawnName": "Goht's Boss Lair",
       "ReturnExitName": "Goht's Boss Lair",
-      "Type": "Boss"
+      "Type": "Boss Exit"
     },
     {
       "EntranceName": "Twin Islands: Mountain Village",
@@ -5588,7 +5710,7 @@
       "ExitName": "Great Bay Coast: Pinnacle Rock",
       "ReturnSpawnName": "Pinnacle Rock Exit",
       "ReturnExitName": "Pinnacle Rock Exit",
-      "Type": "Water"
+      "Type": "Interior"
     },
     {
       "EntranceName": "Great Bay Coast: Fisherman's Hut",
@@ -5604,7 +5726,7 @@
       "ExitName": "Great Bay Coast: Pirate's Fortress",
       "ReturnSpawnName": "Outside PF: Great Bay Coast",
       "ReturnExitName": "Outside PF: Great Bay Coast",
-      "Type": "Water"
+      "Type": "Overworld"
     },
     {
       "EntranceName": "Great Bay Coast: Marine Lab",
@@ -5628,7 +5750,7 @@
       "ExitName": "Pinnacle Rock Exit",
       "ReturnSpawnName": "Great Bay Coast: Pinnacle Rock",
       "ReturnExitName": "Great Bay Coast: Pinnacle Rock",
-      "Type": "Water"
+      "Type": "Interior Exit"
     },
     {
       "EntranceName": "Fisherman's Hut Exit",
@@ -5660,7 +5782,7 @@
       "ExitName": "Outside PF: Great Bay Coast",
       "ReturnSpawnName": "Great Bay Coast: Pirate's Fortress",
       "ReturnExitName": "Great Bay Coast: Pirate's Fortress",
-      "Type": "Water"
+      "Type": "Overworld"
     },
     {
       "EntranceName": "Outside PF: Pirate's Fortress",
@@ -5836,7 +5958,7 @@
       "ExitName": "Zora Cape: Zora Hall Water",
       "ReturnSpawnName": "Zora Hall: Water",
       "ReturnExitName": "Zora Hall: Water",
-      "Type": "Water"
+      "Type": "Overworld"
     },
     {
       "EntranceName": "Zora Cape: Zora Hall",
@@ -5876,7 +5998,7 @@
       "ExitName": "Zora Cape: Dungeon Clear",
       "ReturnSpawnName": "Gyorg's Boss Lair",
       "ReturnExitName": "Gyorg's Boss Lair",
-      "Type": "Boss"
+      "Type": "Boss Exit"
     },
     {
       "EntranceName": "Zora Hall: Water",
@@ -5884,7 +6006,7 @@
       "ExitName": "Zora Hall: Water",
       "ReturnSpawnName": "Zora Cape: Zora Hall Water",
       "ReturnExitName": "Zora Cape: Zora Hall Water",
-      "Type": "Water"
+      "Type": "Overworld"
     },
     {
       "EntranceName": "Zora Hall: Zora Cape",
@@ -6060,7 +6182,7 @@
       "ExitName": "Ikana Castle: Well",
       "ReturnSpawnName": "Well: Ikana Castle",
       "ReturnExitName": "Well: Ikana Castle",
-      "Type": "Overworld"
+      "Type": "Interior"
     },
     {
       "EntranceName": "Ikana Castle: Ikana Canyon",
@@ -6084,7 +6206,7 @@
       "ExitName": "Well: Ikana Canyon",
       "ReturnSpawnName": "Ikana Canyon: Well",
       "ReturnExitName": "Ikana Canyon: Well",
-      "Type": "Overworld"
+      "Type": "Interior Exit"
     },
     {
       "EntranceName": "Well: Ikana Castle",
@@ -6092,7 +6214,7 @@
       "ExitName": "Well: Ikana Castle",
       "ReturnSpawnName": "Ikana Castle: Well",
       "ReturnExitName": "Ikana Castle: Well",
-      "Type": "Overworld"
+      "Type": "Interior Exit"
     },
     {
       "EntranceName": "Stone Tower: Ikana Canyon",
@@ -6116,14 +6238,6 @@
       "ExitName": "Inverted Stone Tower: Temple",
       "ReturnSpawnName": "Inverted Stone Tower Temple Exit",
       "ReturnExitName": "Inverted Stone Tower Temple Exit",
-      "Type": "Overworld"
-    },
-    {
-      "EntranceName": "Inverted Stone Tower: Stone Tower",
-      "SpawnName": "Inverted Stone Tower: Stone Tower",
-      "ExitName": "Inverted Stone Tower: Stone Tower",
-      "ReturnSpawnName": "Stone Tower: Inverted Stone Tower",
-      "ReturnExitName": "Stone Tower: Inverted Stone Tower",
       "Type": "Overworld"
     },
     {
@@ -6204,6 +6318,54 @@
       "ExitName": "Stone Tower Fairy Exit",
       "ReturnSpawnName": "Ikana Canyon: Stone Tower Fairy",
       "ReturnExitName": "Ikana Canyon: Stone Tower Fairy",
+      "Type": "Interior Exit"
+    },
+    {
+      "EntranceName": "Goron Shop",
+      "SpawnName": "Goron Shrine: Goron Shop",
+      "ExitName": "Goron Shrine: Goron Shop",
+      "ReturnSpawnName": "Goron Shop Exit",
+      "ReturnExitName": "Goron Shop Exit",
+      "Type": "Interior"
+    },
+    {
+      "EntranceName": "Goron Shop Exit",
+      "SpawnName": "Goron Shop Exit",
+      "ExitName": "Goron Shop Exit",
+      "ReturnSpawnName": "Goron Shrine: Goron Shop",
+      "ReturnExitName": "Goron Shrine: Goron Shop",
+      "Type": "Interior Exit"
+    },
+    {
+      "EntranceName": "PF Underwater Tunnel",
+      "SpawnName": "Outside PF: Underwater Entrance",
+      "ExitName": "Outside PF: Underwater Entrance",
+      "ReturnSpawnName": "Underwater Tunnel Exit",
+      "ReturnExitName": "Underwater Tunnel Exit",
+      "Type": "Interior"
+    },
+    {
+      "EntranceName": "Underwater Tunnel Exit",
+      "SpawnName": "Underwater Tunnel Exit",
+      "ExitName": "Underwater Tunnel Exit",
+      "ReturnSpawnName": "Outside PF: Underwater Entrance",
+      "ReturnExitName": "Outside PF: Underwater Entrance",
+      "Type": "Interior Exit"
+    },
+    {
+      "EntranceName": "PF Sewer Tunnel",
+      "SpawnName": "Outside PF: Sewer Tunnel",
+      "ExitName": "Outside PF: Sewer Tunnel",
+      "ReturnSpawnName": "Sewer Tunnel Exit",
+      "ReturnExitName": "Sewer Tunnel Exit",
+      "Type": "Interior"
+    },
+    {
+      "EntranceName": "Sewer Tunnel Exit",
+      "SpawnName": "Sewer Tunnel Exit",
+      "ExitName": "Sewer Tunnel Exit",
+      "ReturnSpawnName": "Outside PF: Sewer Tunnel",
+      "ReturnExitName": "Outside PF: Sewer Tunnel",
       "Type": "Interior Exit"
     }
   ],

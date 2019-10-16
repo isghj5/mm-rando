@@ -236,12 +236,14 @@ namespace MMRando
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
-                foreach(int i in new int[] { 50 }) EntranceUtils.ReadSceneExits(i, 16);
+                // boss lairs
+                foreach (int i in new int[] { 31, 68, 95, 54 }) EntranceUtils.ReadSceneExits(i, 16);
+                // pirate's fortress
+                foreach (int i in new int[] { 20, 35, 59 }) EntranceUtils.ReadSceneExits(i, 16);
                 foreach (int sceneIndex in RomData.SceneList.Select(s=>s.Number))
                 {
                     if (_randomized.ShuffledEntranceList.ContainsKey(sceneIndex) && _randomized.ExitListIndices.ContainsKey(sceneIndex) )
                     {
-                        Debug.WriteLine("Scene " + sceneIndex.ToString("X2") + "\n-----\n");
                         EntranceUtils.WriteSceneExits(sceneIndex, _randomized.ShuffledEntranceList[sceneIndex], _randomized.ExitListIndices[sceneIndex]);
                     }
                 }

@@ -229,6 +229,7 @@ namespace MMRando
         EntranceData TerminaMapData { get; set; }
         private void EntranceShuffle()
         {
+            _randomized.EntranceSpoilers = new List<SpoilerEntrance>();
             ReadTerminaMap();
             ModifySpawns();
             WriteMapData();
@@ -238,9 +239,8 @@ namespace MMRando
 
         private void ModifySpawns()
         {
-            TerminaMapData.AddRegion("Goron Shop", 0x3D, 0x3A);
             //entrance name, region name, spawn name, spawn index, exit index, return spawn region name, return spawn name, return spawn index, return exit index
-            TerminaMapData.AddEntrance("Goron Shop", "Goron Shop", "Goron Shrine: Goron Shop", 0, 0, "Goron Shrine", "Goron Shop Exit", 1, 1, "Interior");
+            // TerminaMapData.AddEntrance("Goron Shop", "Goron Shop", "Goron Shrine: Goron Shop", 0, 0, "Goron Shrine", "Goron Shop Exit", 1, 1, "Interior");
         }
 
         private void WriteMapData()
@@ -271,28 +271,68 @@ namespace MMRando
             file.Close();
         }
 
+        private List<List<string>> GetEntrancePools()
+        {
+            List<List<string>> pools = new List<List<string>>();
+            pools.Add( TerminaMapData.entrances.FindAll(e => "Interior".Equals(e.Type) || "Boss".Equals(e.Type)).Select(e => e.EntranceName).ToList() );
+            pools.Add(TerminaMapData.entrances.FindAll(e => "Overworld".Equals(e.Type)).Select(e => e.EntranceName).ToList());
+            return pools;
+        }
+
         private void ShuffleEntrances()
         {
-            List<string> interiorEntrances = TerminaMapData.entrances.FindAll(e => "Interior".Equals(e.Type) || "Boss".Equals(e.Type)).Select(e => e.EntranceName).ToList();
-            List<string> shuffledInteriors = new List<string>();
-            for (int i = interiorEntrances.Count - 1; i >= 0; i--)
+            List<List<string>> entrancePools = GetEntrancePools();
+            List<string> shuffledEntrances;
+            foreach( List<string> entrancePool in entrancePools)
             {
-                shuffledInteriors.Add(interiorEntrances[i]);
+                shuffledEntrances = new List<string>();
+                bool success;
+                // all this does is reverse entrances within pools
+                // we'll want to pluck each entrance and it's opposite off the pool as we go
+                for (int i = entrancePool.Count - 1; i >= 0; i--)
+                {
+                    shuffledEntrances.Add(entrancePool[i]);
+                }
+                for (int i = 0; i < entrancePool.Count; i++)
+                {
+                    success = TerminaMapData.ConnectEntrance(entrancePool[i], shuffledEntrances[i]);
+                    _randomized.EntranceSpoilers.Add(new SpoilerEntrance(entrancePool[i], (success) ? shuffledEntrances[i] : entrancePool[i] + "(failed)"));
+                }
             }
-            for (int i = 0; i < interiorEntrances.Count; i++)
+        }
+
+        internal void FinalizeExit(ushort spawnAddress, int sceneIndex, Exit exit)
+        {
+            if( exit.ExitIndex == 255) { return; }
+            List<ushort> sceneExitSpawns;
+            List<int> sceneExitIndices;
+            if (!_randomized.ShuffledEntranceList.ContainsKey(sceneIndex))
             {
-                TerminaMapData.ConnectEntrance(interiorEntrances[i], shuffledInteriors[i]);
-                Debug.WriteLine($"{interiorEntrances[i]} -> {shuffledInteriors[i]}");
+                _randomized.ShuffledEntranceList[sceneIndex] = new List<ushort>();
             }
+            sceneExitSpawns = _randomized.ShuffledEntranceList[sceneIndex];
+            if (!_randomized.ExitListIndices.ContainsKey(sceneIndex))
+            {
+                _randomized.ExitListIndices[sceneIndex] = new List<int>();
+            }
+            sceneExitIndices = _randomized.ExitListIndices[sceneIndex];
+            sceneExitSpawns.Add(spawnAddress);
+            sceneExitIndices.Add(exit.ExitIndex);
+            Debug.WriteLine($"[{exit.RegionName}:{sceneIndex}] Exit {exit.ExitIndex} ({exit.ExitName}): {exit.SpawnName} [{spawnAddress.ToString("X4")}]");
+
         }
 
         public void FinalizeEntrances()
         {
             _randomized.ShuffledEntranceList = new Dictionary<int, List<ushort>>();
             _randomized.ExitListIndices = new Dictionary<int, List<int>>();
-            _randomized.EntranceSpoilers = new List<SpoilerEntrance>();
-            List<ushort> sceneExitSpawns;
-            List<int> sceneExitIndices;
+            Dictionary<int, int> sceneSync = new Dictionary<int, int>()
+            {
+                { 69, 0 },     // swamp
+                { 80, 90 },     // mountain village
+                { 93, 94 },     // twin islands
+                { 77, 72 }      // goron village
+            };
             ushort spawnAddress;
             int sceneIndex;
             foreach( Exit exit in TerminaMapData.exits)
@@ -301,19 +341,13 @@ namespace MMRando
                 sceneIndex = TerminaMapData.SceneIndex(exit.RegionName);
                 if ( spawnAddress != 0xFFFF && sceneIndex != -1)
                 {
-                    if ( !_randomized.ShuffledEntranceList.ContainsKey(sceneIndex))
+                    FinalizeExit(spawnAddress, sceneIndex, exit );
+                    if( sceneSync.ContainsKey(sceneIndex))
                     {
-                        _randomized.ShuffledEntranceList[sceneIndex] = new List<ushort>();
+                        if( !"Goron Village: Lens Grotto".Equals(exit.ExitName) ){
+                            FinalizeExit(spawnAddress, sceneSync[sceneIndex], exit);
+                        }
                     }
-                    sceneExitSpawns = _randomized.ShuffledEntranceList[sceneIndex];
-                    if( !_randomized.ExitListIndices.ContainsKey(sceneIndex))
-                    {
-                        _randomized.ExitListIndices[sceneIndex] = new List<int>();
-                    }
-                    sceneExitIndices = _randomized.ExitListIndices[sceneIndex];
-                    sceneExitSpawns.Add(spawnAddress);
-                    sceneExitIndices.Add(exit.ExitIndex);
-                    Debug.WriteLine($"[{exit.RegionName}:{sceneIndex}] Exit {exit.ExitIndex} ({exit.ExitName}): {exit.SpawnName} [{spawnAddress.ToString("X4")}]");
                 }
                 else
                 {
