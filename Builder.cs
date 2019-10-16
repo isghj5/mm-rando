@@ -236,7 +236,7 @@ namespace MMRando
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
-                foreach(int i in new int[] { 20, 35 }) EntranceUtils.ReadSceneExits(i, 16);
+                foreach(int i in new int[] { 50 }) EntranceUtils.ReadSceneExits(i, 16);
                 foreach (int sceneIndex in RomData.SceneList.Select(s=>s.Number))
                 {
                     if (_randomized.ShuffledEntranceList.ContainsKey(sceneIndex) && _randomized.ExitListIndices.ContainsKey(sceneIndex) )

@@ -808,7 +808,6 @@
       "ExternalSceneId": 47,
       "Spawns": [
         "Goron Village: Goron Shrine",
-        "Goron Shrine: Goron Shop"
       ],
       "Exits": [
         "Goron Shrine Exit"
@@ -2371,12 +2370,6 @@
       "SpawnName": "Goron Shrine Exit"
     },
     {
-      "RegionName": "Goron Shrine",
-      "ExitName": "Goron Shrine: Goron Shop",
-      "ExitIndex": 0,
-      "SpawnName": "Goron Shrine: Goron Shop"
-    },
-    {
       "RegionName": "Snowhead Path",
       "ExitName": "Snowhead Path: Mountain Village",
       "ExitIndex": 0,
@@ -2995,7 +2988,7 @@
       "SpawnName": "Sakon's Hideout Exit"
     },
     {
-      "RegionName": "Clock Town Fairy",
+      "RegionName": "Clock Town Fairy Fountain",
       "ExitName": "Clock Town Fairy Exit",
       "ExitIndex": 0,
       "SpawnName": "Clock Town Fairy Exit"
@@ -4228,7 +4221,7 @@
     },
     {
       "SpawnName": "North Clock Town: Clock Town Fairy",
-      "RegionName": "Clock Town Fairy",
+      "RegionName": "Clock Town Fairy Fountain",
       "SpawnIndex": 0
     },
     {

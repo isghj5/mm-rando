@@ -231,14 +231,16 @@ namespace MMRando
         {
             ReadTerminaMap();
             ModifySpawns();
+            WriteMapData();
             ShuffleEntrances();
             FinalizeEntrances();
-            WriteMapData();
         }
 
         private void ModifySpawns()
         {
-            TerminaMapData.entrances = TerminaMapData.entrances.FindAll(e => !"Interior Exit".Equals(e.Type));
+            TerminaMapData.AddRegion("Goron Shop", 0x3D, 0x3A);
+            //entrance name, region name, spawn name, spawn index, exit index, return spawn region name, return spawn name, return spawn index, return exit index
+            TerminaMapData.AddEntrance("Goron Shop", "Goron Shop", "Goron Shrine: Goron Shop", 0, 0, "Goron Shrine", "Goron Shop Exit", 1, 1, "Interior");
         }
 
         private void WriteMapData()
@@ -271,7 +273,7 @@ namespace MMRando
 
         private void ShuffleEntrances()
         {
-            List<string> interiorEntrances = TerminaMapData.entrances.FindAll(e => "Interior".Equals(e.Type)).Select(e => e.EntranceName).ToList();
+            List<string> interiorEntrances = TerminaMapData.entrances.FindAll(e => "Interior".Equals(e.Type) || "Boss".Equals(e.Type)).Select(e => e.EntranceName).ToList();
             List<string> shuffledInteriors = new List<string>();
             for (int i = interiorEntrances.Count - 1; i >= 0; i--)
             {
