@@ -7,18 +7,51 @@
 <html>
 <head>
 <style>
-	th{ text-align:left }
-	.spoiler{ background-color:black }
-	.spoiler:hover { background-color: white;  }
-	[data-content]:before { content: attr(data-content); }
+    body.dark-mode {
+      background-color: #111;
+      color: #ccc;
+    }
+    body.dark-mode a {
+      color: #111;
+    }
+    body.dark-mode button {
+      background-color: #ddd;
+      color: #111;
+    }
 
-	.show-highlight .unavailable .newlocation { background-color: #FFDDDD; }
-	.show-highlight .acquired .newlocation { background-color: #DDFFDD; }
-	.show-highlight .available .newlocation { background-color: #DDDDFF; }
+    body.light-mode {
+      background-color: #eee;
+      color: #111;
+    }
+    body.light-mode a {
+      color: #111;
+    }
+    body.light-mode button {
+      background-color: #111;
+      color: #ccc;
+    }
+
+    th{ text-align:left }
     .region { text-align: center; font-weight: bold; }
+    [data-content]:before { content: attr(data-content); }
+
+	.dark-mode .spoiler{ background-color:#ccc }
+	.dark-mode .spoiler:hover { background-color: #111;  }
+	.dark-mode .show-highlight .unavailable .newlocation { background-color: #500705; }
+	.dark-mode .show-highlight .acquired .newlocation { background-color: #69591f; }
+	.dark-mode .show-highlight .available .newlocation { background-color: #313776; }
+
+	.light-mode .spoiler{ background-color:#111 }
+	.light-mode .spoiler:hover { background-color: #ccc;  }
+	.light-mode .show-highlight .unavailable .newlocation { background-color: #FF9999; }
+	.light-mode .show-highlight .acquired .newlocation { background-color: #99FF99; }
+	.light-mode .show-highlight .available .newlocation { background-color: #9999FF; }
+
+
     #spoilerLogState { width: 560px; }
 </style>
 </head>
+<body class="light-mode">
 <label><b>Version: </b></label><span><#= spoiler.Version #></span><br/>
 <label><b>Settings String: </b></label><span><#= spoiler.SettingsString #></span><br/>
 <label><b>Seed: </b></label><span><#= spoiler.Seed #></span><br/>
@@ -28,6 +61,9 @@
 <# if (spoiler.CustomStartingItemListString != null) { #>
 <label><b>Custom Starting Item List: </b></label><span><#= spoiler.CustomStartingItemListString #></span><br/>
 <# } #>
+<br/>
+<button type="button" onclick="toggleDarkLight()" title="Toggle dark/light mode">Toggle Dark Theme</button>
+<br/>
 <br/>
 <label><b>Spoiler Log State: </b></label><input id="spoilerLogState" type="text"/><br/>
 <# if (spoiler.RandomizeDungeonEntrances) { 
@@ -56,7 +92,7 @@
  <tr>
      <th>Location</th>
 	 <th></th>
-     <th>Item</th>
+     <th></th>
  </tr>
 <# foreach (var region in spoiler.ItemList.GroupBy(item => item.Region).OrderBy(g => g.Key)) {
 #>
@@ -270,5 +306,12 @@
             }
         }
 	});
+
+    function toggleDarkLight() {
+	    var body = document.getElementsByTagName('body')[0];
+	    var currentClassBody = body.className;
+	    body.className = currentClassBody === "dark-mode" ? "light-mode" : "dark-mode";
+    }
 </script>
+</body>
 </html>

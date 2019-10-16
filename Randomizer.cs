@@ -392,7 +392,7 @@ namespace MMRando
             }
             if (_settings.AddShopItems)
             {
-                ItemList[(int)Item.ShopItemWitchBluePotion]?.DependsOnItems.Remove(Item.BottleCatchMushroom);
+                ItemList[(int)Item.ShopItemWitchBluePotion].DependsOnItems?.Remove(Item.BottleCatchMushroom);
             }
             // todo handle progressive upgrades here.
         }
@@ -440,7 +440,7 @@ namespace MMRando
         {
             if (Migrator.GetVersion(data.ToList()) != Migrator.CurrentVersion)
             {
-                throw new InvalidDataException("Logic file is out of date. Open it in the Logic Editor to bring it up to date.");
+                throw new InvalidDataException("Logic file is out of date or invalid. Open it in the Logic Editor to bring it up to date.");
             }
 
             int itemId = 0;
