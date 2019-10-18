@@ -1,6 +1,7 @@
 ﻿using MMRando.Models;
 using MMRando.Models.Rom;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace MMRando.Utils
@@ -48,13 +49,14 @@ namespace MMRando.Utils
             Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
             int f = scene.File;
             RomUtils.CheckCompressed(f);
-            int exitAddress;
             ushort tempExit;
-            exitAddress = scene.ExitAddr;
-            for (int i = 0; i < count; i++)
+            foreach(int exitAddress in scene.ExitAddr)
             {
-                tempExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + i * 2);
-                System.Diagnostics.Debug.WriteLine($"{i}: {tempExit.ToString("X4")} = {tempExit}");
+                for (int i = 0; i < count; i++)
+                {
+                    tempExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + i * 2);
+                    System.Diagnostics.Debug.WriteLine($"{i}: {tempExit.ToString("X4")} = {tempExit}");
+                }
             }
         }
 
@@ -66,11 +68,15 @@ namespace MMRando.Utils
             Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
             int f = scene.File;
             RomUtils.CheckCompressed(f);
-            int exitAddress;
-            exitAddress = scene.ExitAddr;
-            for (int i = 0; i < shuffledExits.Count; i++)
+            if (scene.ExitAddr.Count > 1) {
+                Debug.WriteLine(scene.Number);
+            }
+            foreach( int exitAddress in scene.ExitAddr)
             {
-                ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + shuffledIndexes[i] * 2, shuffledExits[i]);
+                for (int i = 0; i < shuffledExits.Count; i++)
+                {
+                    ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + shuffledIndexes[i] * 2, shuffledExits[i]);
+                }
             }
         }
     }

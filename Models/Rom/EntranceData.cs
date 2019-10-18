@@ -263,5 +263,19 @@ namespace MMRando.Models
                 regions.Add(r);
             }
         }
+
+        internal string ReverseEntrance(string EntranceName)
+        {
+            Entrance ent = entrances.Find(e => EntranceName.Equals(e.EntranceName));
+            if( ent != null)
+            {
+                Entrance rev = entrances.Find(e => ent.ReturnExitName.Equals(e.ExitName));
+                if( rev != null)
+                {
+                    return rev.EntranceName;
+                }
+            }
+            return EntranceName;
+        }
     }
 }
