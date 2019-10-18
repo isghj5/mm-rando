@@ -2076,7 +2076,7 @@
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Dungeon Clear",
-      "ExitIndex": 1,
+      "ExitIndex": 255,
       "SpawnName": "Ikana Canyon: Dungeon Clear"
     },
     {
@@ -2820,7 +2820,7 @@
     {
       "RegionName": "Zora Cape",
       "ExitName": "Zora Cape: Temple",
-      "ExitIndex": 0,
+      "ExitIndex": 255,
       "SpawnName": "Zora Cape: Temple"
     },
     {
@@ -6238,7 +6238,7 @@
       "ExitName": "Inverted Stone Tower: Temple",
       "ReturnSpawnName": "Inverted Stone Tower Temple Exit",
       "ReturnExitName": "Inverted Stone Tower Temple Exit",
-      "Type": "Overworld"
+      "Type": "Dungeon"
     },
     {
       "EntranceName": "Music Box Exit",

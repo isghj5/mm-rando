@@ -282,21 +282,42 @@ namespace MMRando
         private void ShuffleEntrances()
         {
             List<List<string>> entrancePools = GetEntrancePools();
-            List<string> shuffledEntrances;
+            List<string> sourceEntrances, destEntrances;
+            Dictionary<string, int> entranceUsed = new Dictionary<string, int>();
             foreach( List<string> entrancePool in entrancePools)
             {
-                shuffledEntrances = new List<string>();
+                sourceEntrances = new List<string>();
+                destEntrances = new List<string>();
+                foreach ( string entrance in entrancePool)
+                {
+                    sourceEntrances.Add(entrance);
+                    destEntrances.Add(entrance);
+                    entranceUsed[entrance] = 0;
+                }
                 bool success;
+                int n;
+                string selectionEntrance, chosenEntrance, reverseSelectionEntrance, reverseChosenEntrance;
                 // all this does is reverse entrances within pools
                 // we'll want to pluck each entrance and it's opposite off the pool as we go
-                for (int i = entrancePool.Count - 1; i >= 0; i--)
+                while (sourceEntrances.Count > 0)
                 {
-                    shuffledEntrances.Add(entrancePool[i]);
-                }
-                for (int i = 0; i < entrancePool.Count; i++)
-                {
-                    success = TerminaMapData.ConnectEntrance(entrancePool[i], shuffledEntrances[i]);
-                    _randomized.EntranceSpoilers.Add(new SpoilerEntrance(entrancePool[i], (success) ? shuffledEntrances[i] : entrancePool[i] + "(failed)"));
+                    selectionEntrance = sourceEntrances[0];
+                    reverseSelectionEntrance = TerminaMapData.ReverseEntrance(selectionEntrance);
+                    sourceEntrances.Remove(selectionEntrance);
+                    if (entranceUsed.ContainsKey(reverseSelectionEntrance)) { entranceUsed[reverseSelectionEntrance]++; }
+
+                    n = _random.Next(destEntrances.Count);
+                    chosenEntrance = destEntrances[n];
+                    reverseChosenEntrance = TerminaMapData.ReverseEntrance(chosenEntrance);
+                    destEntrances.Remove(chosenEntrance);
+                    if (entranceUsed.ContainsKey(chosenEntrance)) { entranceUsed[chosenEntrance]++; }
+                    
+                    // these entrances have implicitly been set, so remove them from the selection pool
+                    sourceEntrances.Remove(reverseSelectionEntrance);
+                    destEntrances.Remove(reverseChosenEntrance);
+
+                    success = TerminaMapData.ConnectEntrance(selectionEntrance, chosenEntrance);
+                    _randomized.EntranceSpoilers.Add(new SpoilerEntrance(selectionEntrance, (success) ? chosenEntrance : selectionEntrance + "(failed)"));
                 }
             }
         }
