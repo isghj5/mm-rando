@@ -1,4 +1,4 @@
-﻿using MMRando.Extensions;
+using MMRando.Extensions;
 using MMRando.GameObjects;
 using MMRando.Models;
 using MMRando.Models.Settings;

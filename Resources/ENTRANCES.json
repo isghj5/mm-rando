@@ -4382,7 +4382,8 @@
       "ExitName": "Clock Tower: South Clock Town",
       "ReturnSpawnName": "South Clock Town: Clock Tower",
       "ReturnExitName": "South Clock Town: Clock Tower",
-      "Type": "Overworld"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "South Clock Town: Clock Tower",
@@ -4390,7 +4391,8 @@
       "ExitName": "South Clock Town: Clock Tower",
       "ReturnSpawnName": "Clock Tower: South Clock Town",
       "ReturnExitName": "Clock Tower: South Clock Town",
-      "Type": "Overworld"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "South Clock Town: Termina Field",
@@ -4398,7 +4400,8 @@
       "ExitName": "South Clock Town: Termina Field",
       "ReturnSpawnName": "Termina Field: South Clock Town",
       "ReturnExitName": "Termina Field: South Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "South Clock Town: East Clock Town",
@@ -4406,7 +4409,8 @@
       "ExitName": "South Clock Town: East Clock Town",
       "ReturnSpawnName": "East Clock Town: South Clock Town",
       "ReturnExitName": "East Clock Town: South Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "South Clock Town: West Clock Town",
@@ -4414,7 +4418,8 @@
       "ExitName": "South Clock Town: West Clock Town",
       "ReturnSpawnName": "West Clock Town: South Clock Town",
       "ReturnExitName": "West Clock Town: South Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "South Clock Town: North Clock Town",
@@ -4422,7 +4427,8 @@
       "ExitName": "South Clock Town: North Clock Town",
       "ReturnSpawnName": "North Clock Town: South Clock Town",
       "ReturnExitName": "North Clock Town: South Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "South Clock Town: South West Connection",
@@ -4430,7 +4436,8 @@
       "ExitName": "South Clock Town: South West Connection",
       "ReturnSpawnName": "West Clock Town: South West Connection",
       "ReturnExitName": "West Clock Town: South West Connection",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "South Clock Town: Laundry Pool",
@@ -4438,7 +4445,8 @@
       "ExitName": "South Clock Town: Laundry Pool",
       "ReturnSpawnName": "Laundry Pool: South Clock Town",
       "ReturnExitName": "Laundry Pool: South Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "South Clock Town: South East Connection",
@@ -4446,7 +4454,8 @@
       "ExitName": "South Clock Town: South East Connection",
       "ReturnSpawnName": "East Clock Town: South East Connection",
       "ReturnExitName": "East Clock Town: South East Connection",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "South Clock Town: Clock Tower Roof",
@@ -4454,7 +4463,8 @@
       "ExitName": "South Clock Town: Clock Tower Roof",
       "ReturnSpawnName": "Clock Tower Roof Exit",
       "ReturnExitName": "Clock Tower Roof Exit",
-      "Type": "Permanent"
+      "Type": "Permanent",
+      "Properties": []
     },
     {
       "EntranceName": "North Clock Town: Termina Field",
@@ -4462,7 +4472,8 @@
       "ExitName": "North Clock Town: Termina Field",
       "ReturnSpawnName": "Termina Field: North Clock Town",
       "ReturnExitName": "Termina Field: North Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "North Clock Town: East Clock Town",
@@ -4470,7 +4481,8 @@
       "ExitName": "North Clock Town: East Clock Town",
       "ReturnSpawnName": "East Clock Town: North Clock Town",
       "ReturnExitName": "East Clock Town: North Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "North Clock Town: South Clock Town",
@@ -4478,7 +4490,8 @@
       "ExitName": "North Clock Town: South Clock Town",
       "ReturnSpawnName": "South Clock Town: North Clock Town",
       "ReturnExitName": "South Clock Town: North Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "North Clock Town: Clock Town Fairy",
@@ -4486,7 +4499,8 @@
       "ExitName": "North Clock Town: Clock Town Fairy",
       "ReturnSpawnName": "Clock Town Fairy Exit",
       "ReturnExitName": "Clock Town Fairy Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "North Clock Town: Deku Playground",
@@ -4494,7 +4508,8 @@
       "ExitName": "North Clock Town: Deku Playground",
       "ReturnSpawnName": "Deku Playground Exit",
       "ReturnExitName": "Deku Playground Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "West Clock Town: Termina Field",
@@ -4502,7 +4517,8 @@
       "ExitName": "West Clock Town: Termina Field",
       "ReturnSpawnName": "Termina Field: West Clock Town",
       "ReturnExitName": "Termina Field: West Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "West Clock Town: South West Connection",
@@ -4510,7 +4526,8 @@
       "ExitName": "West Clock Town: South West Connection",
       "ReturnSpawnName": "South Clock Town: South West Connection",
       "ReturnExitName": "South Clock Town: South West Connection",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "West Clock Town: South Clock Town",
@@ -4518,7 +4535,8 @@
       "ExitName": "West Clock Town: South Clock Town",
       "ReturnSpawnName": "South Clock Town: West Clock Town",
       "ReturnExitName": "South Clock Town: West Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "West Clock Town: Swordsman's School",
@@ -4526,7 +4544,8 @@
       "ExitName": "West Clock Town: Swordsman's School",
       "ReturnSpawnName": "Swordsman's School Exit",
       "ReturnExitName": "Swordsman's School Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "West Clock Town: Curiosity Shop",
@@ -4534,7 +4553,8 @@
       "ExitName": "West Clock Town: Curiosity Shop",
       "ReturnSpawnName": "Curiosity Shop Exit",
       "ReturnExitName": "Curiosity Shop Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "West Clock Town: Trading Post",
@@ -4542,7 +4562,8 @@
       "ExitName": "West Clock Town: Trading Post",
       "ReturnSpawnName": "Trading Post Exit",
       "ReturnExitName": "Trading Post Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "West Clock Town: Bomb Shop",
@@ -4550,7 +4571,8 @@
       "ExitName": "West Clock Town: Bomb Shop",
       "ReturnSpawnName": "Bomb Shop Exit",
       "ReturnExitName": "Bomb Shop Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "West Clock Town: Post Office",
@@ -4558,7 +4580,8 @@
       "ExitName": "West Clock Town: Post Office",
       "ReturnSpawnName": "Post Office Exit",
       "ReturnExitName": "Post Office Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "West Clock Town: Lottery Shop",
@@ -4566,7 +4589,8 @@
       "ExitName": "West Clock Town: Lottery Shop",
       "ReturnSpawnName": "Lottery Shop Exit",
       "ReturnExitName": "Lottery Shop Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: Termina Field",
@@ -4574,7 +4598,8 @@
       "ExitName": "East Clock Town: Termina Field",
       "ReturnSpawnName": "Termina Field: East Clock Town",
       "ReturnExitName": "Termina Field: East Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: South East Connection",
@@ -4582,7 +4607,8 @@
       "ExitName": "East Clock Town: South East Connection",
       "ReturnSpawnName": "South Clock Town: South East Connection",
       "ReturnExitName": "South Clock Town: South East Connection",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: Observatory",
@@ -4590,7 +4616,8 @@
       "ExitName": "East Clock Town: Observatory",
       "ReturnSpawnName": "Observatory: East Clock Town Exit",
       "ReturnExitName": "Observatory: East Clock Town Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: South Clock Town",
@@ -4598,7 +4625,8 @@
       "ExitName": "East Clock Town: South Clock Town",
       "ReturnSpawnName": "South Clock Town: East Clock Town",
       "ReturnExitName": "South Clock Town: East Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: Treasure Chest Game",
@@ -4606,7 +4634,8 @@
       "ExitName": "East Clock Town: Treasure Chest Game",
       "ReturnSpawnName": "Treasure Chest Game Exit",
       "ReturnExitName": "Treasure Chest Game Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: North Clock Town",
@@ -4614,7 +4643,8 @@
       "ExitName": "East Clock Town: North Clock Town",
       "ReturnSpawnName": "North Clock Town: East Clock Town",
       "ReturnExitName": "North Clock Town: East Clock Town",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: Honey & Darling",
@@ -4622,7 +4652,8 @@
       "ExitName": "East Clock Town: Honey & Darling",
       "ReturnSpawnName": "Honey & Darling Exit",
       "ReturnExitName": "Honey & Darling Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: Mayor's Residence",
@@ -4630,7 +4661,8 @@
       "ExitName": "East Clock Town: Mayor's Residence",
       "ReturnSpawnName": "Mayor's Residence Exit",
       "ReturnExitName": "Mayor's Residence Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: Town Shooting Gallery",
@@ -4638,7 +4670,8 @@
       "ExitName": "East Clock Town: Town Shooting Gallery",
       "ReturnSpawnName": "Town Shooting Gallery Exit",
       "ReturnExitName": "Town Shooting Gallery Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: Stock Pot Inn",
@@ -4646,7 +4679,8 @@
       "ExitName": "East Clock Town: Stock Pot Inn",
       "ReturnSpawnName": "Stock Pot Inn Exit",
       "ReturnExitName": "Stock Pot Inn Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: Stock Pot Roof",
@@ -4654,7 +4688,8 @@
       "ExitName": "East Clock Town: Stock Pot Roof",
       "ReturnSpawnName": "Stock Pot Roof Exit",
       "ReturnExitName": "Stock Pot Roof Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "East Clock Town: Milk Bar",
@@ -4662,7 +4697,8 @@
       "ExitName": "East Clock Town: Milk Bar",
       "ReturnSpawnName": "Milk Bar Exit",
       "ReturnExitName": "Milk Bar Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Laundry Pool: South Clock Town",
@@ -4670,7 +4706,8 @@
       "ExitName": "Laundry Pool: South Clock Town",
       "ReturnSpawnName": "South Clock Town: Laundry Pool",
       "ReturnExitName": "South Clock Town: Laundry Pool",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Laundry Pool: Kafei's House",
@@ -4678,7 +4715,8 @@
       "ExitName": "Laundry Pool: Kafei's House",
       "ReturnSpawnName": "Kafei's House Exit",
       "ReturnExitName": "Kafei's House Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Bomb Shop Exit",
@@ -4686,7 +4724,8 @@
       "ExitName": "Bomb Shop Exit",
       "ReturnSpawnName": "West Clock Town: Bomb Shop",
       "ReturnExitName": "West Clock Town: Bomb Shop",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Trading Post Exit",
@@ -4694,7 +4733,8 @@
       "ExitName": "Trading Post Exit",
       "ReturnSpawnName": "West Clock Town: Trading Post",
       "ReturnExitName": "West Clock Town: Trading Post",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Swordsman's School Exit",
@@ -4702,7 +4742,8 @@
       "ExitName": "Swordsman's School Exit",
       "ReturnSpawnName": "West Clock Town: Swordsman's School",
       "ReturnExitName": "West Clock Town: Swordsman's School",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Curiosity Shop Exit",
@@ -4710,7 +4751,8 @@
       "ExitName": "Curiosity Shop Exit",
       "ReturnSpawnName": "West Clock Town: Curiosity Shop",
       "ReturnExitName": "West Clock Town: Curiosity Shop",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Kafei's House Exit",
@@ -4718,7 +4760,8 @@
       "ExitName": "Kafei's House Exit",
       "ReturnSpawnName": "Laundry Pool: Kafei's House",
       "ReturnExitName": "Laundry Pool: Kafei's House",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Post Office Exit",
@@ -4726,7 +4769,8 @@
       "ExitName": "Post Office Exit",
       "ReturnSpawnName": "West Clock Town: Post Office",
       "ReturnExitName": "West Clock Town: Post Office",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Lottery Shop Exit",
@@ -4734,7 +4778,8 @@
       "ExitName": "Lottery Shop Exit",
       "ReturnSpawnName": "West Clock Town: Lottery Shop",
       "ReturnExitName": "West Clock Town: Lottery Shop",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Treasure Chest Game Exit",
@@ -4742,7 +4787,8 @@
       "ExitName": "Treasure Chest Game Exit",
       "ReturnSpawnName": "East Clock Town: Treasure Chest Game",
       "ReturnExitName": "East Clock Town: Treasure Chest Game",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Honey & Darling Exit",
@@ -4750,7 +4796,8 @@
       "ExitName": "Honey & Darling Exit",
       "ReturnSpawnName": "East Clock Town: Honey & Darling",
       "ReturnExitName": "East Clock Town: Honey & Darling",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Mayor's Residence Exit",
@@ -4758,7 +4805,8 @@
       "ExitName": "Mayor's Residence Exit",
       "ReturnSpawnName": "East Clock Town: Mayor's Residence",
       "ReturnExitName": "East Clock Town: Mayor's Residence",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Town Shooting Gallery Exit",
@@ -4766,7 +4814,8 @@
       "ExitName": "Town Shooting Gallery Exit",
       "ReturnSpawnName": "East Clock Town: Town Shooting Gallery",
       "ReturnExitName": "East Clock Town: Town Shooting Gallery",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Stock Pot Inn Exit",
@@ -4774,7 +4823,8 @@
       "ExitName": "Stock Pot Inn Exit",
       "ReturnSpawnName": "East Clock Town: Stock Pot Inn",
       "ReturnExitName": "East Clock Town: Stock Pot Inn",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Stock Pot Roof Exit",
@@ -4782,7 +4832,8 @@
       "ExitName": "Stock Pot Roof Exit",
       "ReturnSpawnName": "East Clock Town: Stock Pot Roof",
       "ReturnExitName": "East Clock Town: Stock Pot Roof",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Milk Bar Exit",
@@ -4790,7 +4841,8 @@
       "ExitName": "Milk Bar Exit",
       "ReturnSpawnName": "East Clock Town: Milk Bar",
       "ReturnExitName": "East Clock Town: Milk Bar",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Deku Playground Exit",
@@ -4798,7 +4850,8 @@
       "ExitName": "Deku Playground Exit",
       "ReturnSpawnName": "North Clock Town: Deku Playground",
       "ReturnExitName": "North Clock Town: Deku Playground",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Clock Tower Roof Exit",
@@ -4806,7 +4859,8 @@
       "ExitName": "Clock Tower Roof Exit",
       "ReturnSpawnName": "South Clock Town: Clock Tower Roof",
       "ReturnExitName": "South Clock Town: Clock Tower Roof",
-      "Type": "Permanent"
+      "Type": "Permanent",
+      "Properties": []
     },
     {
       "EntranceName": "Clock Tower Roof: Moon",
@@ -4814,7 +4868,8 @@
       "ExitName": "Clock Tower Roof: Moon",
       "ReturnSpawnName": "Moon: Clock Tower",
       "ReturnExitName": "Moon: Clock Tower",
-      "Type": "Permanent"
+      "Type": "Permanent",
+      "Properties": []
     },
     {
       "EntranceName": "Termina Field: West Clock Town",
@@ -4822,7 +4877,8 @@
       "ExitName": "Termina Field: West Clock Town",
       "ReturnSpawnName": "West Clock Town: Termina Field",
       "ReturnExitName": "West Clock Town: Termina Field",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Termina Field: Swamp Path",
@@ -4830,7 +4886,8 @@
       "ExitName": "Termina Field: Swamp Path",
       "ReturnSpawnName": "Swamp Path: Termina Field",
       "ReturnExitName": "Swamp Path: Termina Field",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Termina Field: Great Bay Coast",
@@ -4838,7 +4895,8 @@
       "ExitName": "Termina Field: Great Bay Coast",
       "ReturnSpawnName": "Great Bay Coast: Termina Field",
       "ReturnExitName": "Great Bay Coast: Termina Field",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Termina Field: Mountain Path",
@@ -4846,7 +4904,8 @@
       "ExitName": "Termina Field: Mountain Path",
       "ReturnSpawnName": "Mountain Path: Termina Field",
       "ReturnExitName": "Mountain Path: Termina Field",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Termina Field: Ikana Path",
@@ -4854,7 +4913,8 @@
       "ExitName": "Termina Field: Ikana Path",
       "ReturnSpawnName": "Ikana Path: Termina Field",
       "ReturnExitName": "Ikana Path: Termina Field",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Termina Field: Milk Road",
@@ -4862,7 +4922,8 @@
       "ExitName": "Termina Field: Milk Road",
       "ReturnSpawnName": "Milk Road: Termina Field",
       "ReturnExitName": "Milk Road: Termina Field",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Termina Field: South Clock Town",
@@ -4870,7 +4931,8 @@
       "ExitName": "Termina Field: South Clock Town",
       "ReturnSpawnName": "South Clock Town: Termina Field",
       "ReturnExitName": "South Clock Town: Termina Field",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Termina Field: East Clock Town",
@@ -4878,7 +4940,8 @@
       "ExitName": "Termina Field: East Clock Town",
       "ReturnSpawnName": "East Clock Town: Termina Field",
       "ReturnExitName": "East Clock Town: Termina Field",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Termina Field: North Clock Town",
@@ -4886,7 +4949,8 @@
       "ExitName": "Termina Field: North Clock Town",
       "ReturnSpawnName": "North Clock Town: Termina Field",
       "ReturnExitName": "North Clock Town: Termina Field",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Termina Field: Observatory",
@@ -4894,7 +4958,8 @@
       "ExitName": "Termina Field: Observatory",
       "ReturnSpawnName": "Observatory: Termina Field Exit",
       "ReturnExitName": "Observatory: Termina Field Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Observatory: East Clock Town Exit",
@@ -4902,7 +4967,8 @@
       "ExitName": "Observatory: East Clock Town Exit",
       "ReturnSpawnName": "East Clock Town: Observatory",
       "ReturnExitName": "East Clock Town: Observatory",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Observatory: Termina Field Exit",
@@ -4910,7 +4976,8 @@
       "ExitName": "Observatory: Termina Field Exit",
       "ReturnSpawnName": "Termina Field: Observatory",
       "ReturnExitName": "Termina Field: Observatory",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Swamp Path: Termina Field",
@@ -4918,7 +4985,8 @@
       "ExitName": "Swamp Path: Termina Field",
       "ReturnSpawnName": "Termina Field: Swamp Path",
       "ReturnExitName": "Termina Field: Swamp Path",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Swamp Path: Southern Swamp",
@@ -4926,7 +4994,8 @@
       "ExitName": "Swamp Path: Southern Swamp",
       "ReturnSpawnName": "Southern Swamp: Swamp Path",
       "ReturnExitName": "Southern Swamp: Swamp Path",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Swamp Path: Swamp Shooting Gallery",
@@ -4934,7 +5003,8 @@
       "ExitName": "Swamp Path: Swamp Shooting Gallery",
       "ReturnSpawnName": "Swamp Shooting Gallery Exit",
       "ReturnExitName": "Swamp Shooting Gallery Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Southern Swamp: Swamp Path",
@@ -4942,7 +5012,8 @@
       "ExitName": "Southern Swamp: Swamp Path",
       "ReturnSpawnName": "Swamp Path: Southern Swamp",
       "ReturnExitName": "Swamp Path: Southern Swamp",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Southern Swamp: Tourist Center",
@@ -4950,7 +5021,8 @@
       "ExitName": "Southern Swamp: Tourist Center",
       "ReturnSpawnName": "Tourist Center Exit",
       "ReturnExitName": "Tourist Center Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Southern Swamp: Woodfall",
@@ -4958,7 +5030,8 @@
       "ExitName": "Southern Swamp: Woodfall",
       "ReturnSpawnName": "Woodfall: Southern Swamp",
       "ReturnExitName": "Woodfall: Southern Swamp",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Southern Swamp: Deku Palace",
@@ -4966,7 +5039,8 @@
       "ExitName": "Southern Swamp: Deku Palace",
       "ReturnSpawnName": "Deku Palace: Southern Swamp",
       "ReturnExitName": "Deku Palace: Southern Swamp",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Southern Swamp: Deku Shortcut",
@@ -4974,7 +5048,8 @@
       "ExitName": "Southern Swamp: Deku Shortcut",
       "ReturnSpawnName": "Deku Palace: Deku Shortcut",
       "ReturnExitName": "Deku Palace: Deku Shortcut",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Southern Swamp: Potion Shop",
@@ -4982,7 +5057,8 @@
       "ExitName": "Southern Swamp: Potion Shop",
       "ReturnSpawnName": "Potion Shop Exit",
       "ReturnExitName": "Potion Shop Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Southern Swamp: Woods of Mystery",
@@ -4990,7 +5066,8 @@
       "ExitName": "Southern Swamp: Woods of Mystery",
       "ReturnSpawnName": "Woods of Mystery Exit",
       "ReturnExitName": "Woods of Mystery Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Southern Swamp: Swamp Spider House",
@@ -4998,7 +5075,8 @@
       "ExitName": "Southern Swamp: Swamp Spider House",
       "ReturnSpawnName": "Swamp Spider House Exit",
       "ReturnExitName": "Swamp Spider House Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Ikana Path",
@@ -5006,7 +5084,8 @@
       "ExitName": "Ikana Canyon: Ikana Path",
       "ReturnSpawnName": "Ikana Path: Ikana Canyon",
       "ReturnExitName": "Ikana Path: Ikana Canyon",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Poe Hut",
@@ -5014,7 +5093,8 @@
       "ExitName": "Ikana Canyon: Poe Hut",
       "ReturnSpawnName": "Poe Hut Exit",
       "ReturnExitName": "Poe Hut Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Music Box",
@@ -5022,7 +5102,8 @@
       "ExitName": "Ikana Canyon: Music Box",
       "ReturnSpawnName": "Music Box Exit",
       "ReturnExitName": "Music Box Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Stone Tower",
@@ -5030,7 +5111,8 @@
       "ExitName": "Ikana Canyon: Stone Tower",
       "ReturnSpawnName": "Stone Tower: Ikana Canyon",
       "ReturnExitName": "Stone Tower: Ikana Canyon",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Well",
@@ -5038,7 +5120,8 @@
       "ExitName": "Ikana Canyon: Well",
       "ReturnSpawnName": "Well: Ikana Canyon",
       "ReturnExitName": "Well: Ikana Canyon",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Sakon's Hideout",
@@ -5046,7 +5129,8 @@
       "ExitName": "Ikana Canyon: Sakon's Hideout",
       "ReturnSpawnName": "Sakon's Hideout Exit",
       "ReturnExitName": "Sakon's Hideout Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Ikana Castle",
@@ -5054,7 +5138,8 @@
       "ExitName": "Ikana Canyon: Ikana Castle",
       "ReturnSpawnName": "Ikana Castle: Ikana Canyon",
       "ReturnExitName": "Ikana Castle: Ikana Canyon",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Stone Tower Fairy",
@@ -5062,7 +5147,8 @@
       "ExitName": "Ikana Canyon: Stone Tower Fairy",
       "ReturnSpawnName": "Stone Tower Fairy Exit",
       "ReturnExitName": "Stone Tower Fairy Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Secret Shrine",
@@ -5070,7 +5156,8 @@
       "ExitName": "Ikana Canyon: Secret Shrine",
       "ReturnSpawnName": "Secret Shrine Exit",
       "ReturnExitName": "Secret Shrine Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Cursed Area Exit",
@@ -5078,7 +5165,8 @@
       "ExitName": "Ikana Canyon: Cursed Area Exit",
       "ReturnSpawnName": "Ikana Canyon: Cursed Area",
       "ReturnExitName": "Ikana Canyon: Cursed Area",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Cursed Area",
@@ -5086,7 +5174,8 @@
       "ExitName": "Ikana Canyon: Cursed Area",
       "ReturnSpawnName": "Ikana Canyon: Cursed Area Exit",
       "ReturnExitName": "Ikana Canyon: Cursed Area Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Canyon: Dungeon Clear",
@@ -5094,7 +5183,8 @@
       "ExitName": "Ikana Canyon: Dungeon Clear",
       "ReturnSpawnName": "Twinmold's Boss Lair",
       "ReturnExitName": "Twinmold's Boss Lair",
-      "Type": "Boss Exit"
+      "Type": "Boss Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Majora's Lair",
@@ -5102,7 +5192,8 @@
       "ExitName": "Majora's Lair",
       "ReturnSpawnName": "Moon: Majora's Lair",
       "ReturnExitName": "Moon: Majora's Lair",
-      "Type": "Boss"
+      "Type": "Boss",
+      "Properties": []
     },
     {
       "EntranceName": "Moon: Link Trial",
@@ -5110,7 +5201,8 @@
       "ExitName": "Moon: Link Trial",
       "ReturnSpawnName": "Link Trial Exit",
       "ReturnExitName": "Link Trial Exit",
-      "Type": "Trial"
+      "Type": "Trial",
+      "Properties": []
     },
     {
       "EntranceName": "Moon: Deku Trial",
@@ -5118,7 +5210,8 @@
       "ExitName": "Moon: Deku Trial",
       "ReturnSpawnName": "Deku Trial Exit",
       "ReturnExitName": "Deku Trial Exit",
-      "Type": "Trial"
+      "Type": "Trial",
+      "Properties": []
     },
     {
       "EntranceName": "Moon: Goron Trial",
@@ -5126,7 +5219,8 @@
       "ExitName": "Moon: Goron Trial",
       "ReturnSpawnName": "Goron Trial Exit",
       "ReturnExitName": "Goron Trial Exit",
-      "Type": "Trial"
+      "Type": "Trial",
+      "Properties": []
     },
     {
       "EntranceName": "Moon: Zora Trial",
@@ -5134,7 +5228,8 @@
       "ExitName": "Moon: Zora Trial",
       "ReturnSpawnName": "Zora Trial Exit",
       "ReturnExitName": "Zora Trial Exit",
-      "Type": "Trial"
+      "Type": "Trial",
+      "Properties": []
     },
     {
       "EntranceName": "Link Trial Exit",
@@ -5142,7 +5237,8 @@
       "ExitName": "Link Trial Exit",
       "ReturnSpawnName": "Moon: Link Trial",
       "ReturnExitName": "Moon: Link Trial",
-      "Type": "Trial Exit"
+      "Type": "Trial Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Deku Trial Exit",
@@ -5150,7 +5246,8 @@
       "ExitName": "Deku Trial Exit",
       "ReturnSpawnName": "Moon: Deku Trial",
       "ReturnExitName": "Moon: Deku Trial",
-      "Type": "Trial Exit"
+      "Type": "Trial Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Goron Trial Exit",
@@ -5158,7 +5255,8 @@
       "ExitName": "Goron Trial Exit",
       "ReturnSpawnName": "Moon: Goron Trial",
       "ReturnExitName": "Moon: Goron Trial",
-      "Type": "Trial Exit"
+      "Type": "Trial Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Trial Exit",
@@ -5166,7 +5264,8 @@
       "ExitName": "Zora Trial Exit",
       "ReturnSpawnName": "Moon: Zora Trial",
       "ReturnExitName": "Moon: Zora Trial",
-      "Type": "Trial Exit"
+      "Type": "Trial Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Woodfall Temple Exit",
@@ -5174,7 +5273,8 @@
       "ExitName": "Woodfall Temple Exit",
       "ReturnSpawnName": "Woodfall: Temple",
       "ReturnExitName": "Woodfall: Temple",
-      "Type": "Dungeon Exit"
+      "Type": "Dungeon Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Odolwa's Boss Lair",
@@ -5182,7 +5282,8 @@
       "ExitName": "Odolwa's Boss Lair",
       "ReturnSpawnName": "Woodfall Temple: Dungeon Clear",
       "ReturnExitName": "Woodfall Temple: Dungeon Clear",
-      "Type": "Boss"
+      "Type": "Boss",
+      "Properties": []
     },
     {
       "EntranceName": "Deku Princess Room Exit",
@@ -5190,7 +5291,8 @@
       "ExitName": "Deku Princess Room Exit",
       "ReturnSpawnName": "Woodfall: Deku Princess Room",
       "ReturnExitName": "Woodfall: Deku Princess Room",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Woodfall Temple: Dungeon Clear",
@@ -5198,7 +5300,8 @@
       "ExitName": "Woodfall Temple: Dungeon Clear",
       "ReturnSpawnName": "Odolwa's Boss Lair",
       "ReturnExitName": "Odolwa's Boss Lair",
-      "Type": "Boss Exit"
+      "Type": "Boss Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Snowhead Temple Exit",
@@ -5206,7 +5309,8 @@
       "ExitName": "Snowhead Temple Exit",
       "ReturnSpawnName": "Snowhead: Temple",
       "ReturnExitName": "Snowhead: Temple",
-      "Type": "Dungeon Exit"
+      "Type": "Dungeon Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Goht's Boss Lair",
@@ -5214,7 +5318,8 @@
       "ExitName": "Goht's Boss Lair",
       "ReturnSpawnName": "Mountain Village: Dungeon Clear",
       "ReturnExitName": "Mountain Village: Dungeon Clear",
-      "Type": "Boss"
+      "Type": "Boss",
+      "Properties": []
     },
     {
       "EntranceName": "Great Bay Temple Exit",
@@ -5222,7 +5327,8 @@
       "ExitName": "Great Bay Temple Exit",
       "ReturnSpawnName": "Zora Cape: Temple",
       "ReturnExitName": "Zora Cape: Temple",
-      "Type": "Dungeon Exit"
+      "Type": "Dungeon Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Gyorg's Boss Lair",
@@ -5230,7 +5336,8 @@
       "ExitName": "Gyorg's Boss Lair",
       "ReturnSpawnName": "Zora Cape: Dungeon Clear",
       "ReturnExitName": "Zora Cape: Dungeon Clear",
-      "Type": "Boss"
+      "Type": "Boss",
+      "Properties": []
     },
     {
       "EntranceName": "Stone Tower Temple Exit",
@@ -5238,7 +5345,8 @@
       "ExitName": "Stone Tower Temple Exit",
       "ReturnSpawnName": "Stone Tower: Temple",
       "ReturnExitName": "Stone Tower: Temple",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Inverted Stone Tower Temple Exit",
@@ -5246,7 +5354,8 @@
       "ExitName": "Inverted Stone Tower Temple Exit",
       "ReturnSpawnName": "Inverted Stone Tower: Temple",
       "ReturnExitName": "Inverted Stone Tower: Temple",
-      "Type": "Dungeon Exit"
+      "Type": "Dungeon Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Twinmold's Boss Lair",
@@ -5254,7 +5363,8 @@
       "ExitName": "Twinmold's Boss Lair",
       "ReturnSpawnName": "Ikana Canyon: Dungeon Clear",
       "ReturnExitName": "Ikana Canyon: Dungeon Clear",
-      "Type": "Boss"
+      "Type": "Boss",
+      "Properties": []
     },
     {
       "EntranceName": "Deku Palace: Southern Swamp",
@@ -5262,7 +5372,8 @@
       "ExitName": "Deku Palace: Southern Swamp",
       "ReturnSpawnName": "Southern Swamp: Deku Palace",
       "ReturnExitName": "Southern Swamp: Deku Palace",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Deku Palace: Deku King Chamber",
@@ -5270,7 +5381,8 @@
       "ExitName": "Deku Palace: Deku King Chamber",
       "ReturnSpawnName": "Deku King Chamber Exit",
       "ReturnExitName": "Deku King Chamber Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Deku Palace: Sonata Monkey",
@@ -5278,7 +5390,8 @@
       "ExitName": "Deku Palace: Sonata Monkey",
       "ReturnSpawnName": "Sonata Monkey Exit",
       "ReturnExitName": "Sonata Monkey Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Deku Palace: Deku Shrine",
@@ -5286,7 +5399,8 @@
       "ExitName": "Deku Palace: Deku Shrine",
       "ReturnSpawnName": "Deku Shrine Exit",
       "ReturnExitName": "Deku Shrine Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Deku Palace: Deku Shortcut",
@@ -5294,7 +5408,8 @@
       "ExitName": "Deku Palace: Deku Shortcut",
       "ReturnSpawnName": "Southern Swamp: Deku Shortcut",
       "ReturnExitName": "Southern Swamp: Deku Shortcut",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Potion Shop Exit",
@@ -5302,7 +5417,8 @@
       "ExitName": "Potion Shop Exit",
       "ReturnSpawnName": "Southern Swamp: Potion Shop",
       "ReturnExitName": "Southern Swamp: Potion Shop",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Swamp Shooting Gallery Exit",
@@ -5310,7 +5426,8 @@
       "ExitName": "Swamp Shooting Gallery Exit",
       "ReturnSpawnName": "Swamp Path: Swamp Shooting Gallery",
       "ReturnExitName": "Swamp Path: Swamp Shooting Gallery",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Swamp Spider House Exit",
@@ -5318,7 +5435,8 @@
       "ExitName": "Swamp Spider House Exit",
       "ReturnSpawnName": "Southern Swamp: Swamp Spider House",
       "ReturnExitName": "Southern Swamp: Swamp Spider House",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Woods of Mystery Exit",
@@ -5326,7 +5444,8 @@
       "ExitName": "Woods of Mystery Exit",
       "ReturnSpawnName": "Southern Swamp: Woods of Mystery",
       "ReturnExitName": "Southern Swamp: Woods of Mystery",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Tourist Center Exit",
@@ -5334,7 +5453,8 @@
       "ExitName": "Tourist Center Exit",
       "ReturnSpawnName": "Southern Swamp: Tourist Center",
       "ReturnExitName": "Southern Swamp: Tourist Center",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Deku King Chamber Exit",
@@ -5342,7 +5462,8 @@
       "ExitName": "Deku King Chamber Exit",
       "ReturnSpawnName": "Deku Palace: Deku King Chamber",
       "ReturnExitName": "Deku Palace: Deku King Chamber",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Sonata Monkey Exit",
@@ -5350,7 +5471,8 @@
       "ExitName": "Sonata Monkey Exit",
       "ReturnSpawnName": "Deku Palace: Sonata Monkey",
       "ReturnExitName": "Deku Palace: Sonata Monkey",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Deku Shrine Exit",
@@ -5358,7 +5480,8 @@
       "ExitName": "Deku Shrine Exit",
       "ReturnSpawnName": "Deku Palace: Deku Shrine",
       "ReturnExitName": "Deku Palace: Deku Shrine",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Woodfall: Southern Swamp",
@@ -5366,7 +5489,8 @@
       "ExitName": "Woodfall: Southern Swamp",
       "ReturnSpawnName": "Southern Swamp: Woodfall",
       "ReturnExitName": "Southern Swamp: Woodfall",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Woodfall: Temple",
@@ -5374,7 +5498,8 @@
       "ExitName": "Woodfall: Temple",
       "ReturnSpawnName": "Woodfall Temple Exit",
       "ReturnExitName": "Woodfall Temple Exit",
-      "Type": "Dungeon"
+      "Type": "Dungeon",
+      "Properties": []
     },
     {
       "EntranceName": "Woodfall: Woodfall Fairy",
@@ -5382,7 +5507,8 @@
       "ExitName": "Woodfall: Woodfall Fairy",
       "ReturnSpawnName": "Woodfall Fairy Exit",
       "ReturnExitName": "Woodfall Fairy Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Woodfall: Deku Princess Room",
@@ -5390,7 +5516,8 @@
       "ExitName": "Woodfall: Deku Princess Room",
       "ReturnSpawnName": "Deku Princess Room Exit",
       "ReturnExitName": "Deku Princess Room Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Mountain Path: Termina Field",
@@ -5398,7 +5525,8 @@
       "ExitName": "Mountain Path: Termina Field",
       "ReturnSpawnName": "Termina Field: Mountain Path",
       "ReturnExitName": "Termina Field: Mountain Path",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Mountain Path: Mountain Village",
@@ -5406,7 +5534,8 @@
       "ExitName": "Mountain Path: Mountain Village",
       "ReturnSpawnName": "Mountain Village: Mountain Path",
       "ReturnExitName": "Mountain Village: Mountain Path",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Mountain Village: Smithy",
@@ -5414,7 +5543,8 @@
       "ExitName": "Mountain Village: Smithy",
       "ReturnSpawnName": "Smithy Exit",
       "ReturnExitName": "Smithy Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Mountain Village: Twin Islands",
@@ -5422,7 +5552,8 @@
       "ExitName": "Mountain Village: Twin Islands",
       "ReturnSpawnName": "Twin Islands: Mountain Village",
       "ReturnExitName": "Twin Islands: Mountain Village",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Mountain Village: Goron Grave",
@@ -5430,7 +5561,8 @@
       "ExitName": "Mountain Village: Goron Grave",
       "ReturnSpawnName": "Goron Grave Exit",
       "ReturnExitName": "Goron Grave Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Mountain Village: Snowhead Path",
@@ -5438,7 +5570,8 @@
       "ExitName": "Mountain Village: Snowhead Path",
       "ReturnSpawnName": "Snowhead Path: Mountain Village",
       "ReturnExitName": "Snowhead Path: Mountain Village",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Mountain Village: Mountain Path",
@@ -5446,7 +5579,8 @@
       "ExitName": "Mountain Village: Mountain Path",
       "ReturnSpawnName": "Mountain Path: Mountain Village",
       "ReturnExitName": "Mountain Path: Mountain Village",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Mountain Village: Dungeon Clear",
@@ -5454,7 +5588,8 @@
       "ExitName": "Mountain Village: Dungeon Clear",
       "ReturnSpawnName": "Goht's Boss Lair",
       "ReturnExitName": "Goht's Boss Lair",
-      "Type": "Boss Exit"
+      "Type": "Boss Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Twin Islands: Mountain Village",
@@ -5462,7 +5597,8 @@
       "ExitName": "Twin Islands: Mountain Village",
       "ReturnSpawnName": "Mountain Village: Twin Islands",
       "ReturnExitName": "Mountain Village: Twin Islands",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Twin Islands: Goron Village",
@@ -5470,7 +5606,8 @@
       "ExitName": "Twin Islands: Goron Village",
       "ReturnSpawnName": "Goron Village: Twin Islands",
       "ReturnExitName": "Goron Village: Twin Islands",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Twin Islands: Goron Racetrack",
@@ -5478,7 +5615,8 @@
       "ExitName": "Twin Islands: Goron Racetrack",
       "ReturnSpawnName": "Goron Racetrack Exit",
       "ReturnExitName": "Goron Racetrack Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Goron Village: Twin Islands",
@@ -5486,7 +5624,8 @@
       "ExitName": "Goron Village: Twin Islands",
       "ReturnSpawnName": "Twin Islands: Goron Village",
       "ReturnExitName": "Twin Islands: Goron Village",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Goron Village: Goron Shrine",
@@ -5494,7 +5633,8 @@
       "ExitName": "Goron Village: Goron Shrine",
       "ReturnSpawnName": "Goron Shrine Exit",
       "ReturnExitName": "Goron Shrine Exit",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Goron Village: Lens Grotto",
@@ -5502,7 +5642,8 @@
       "ExitName": "Goron Village: Lens Grotto",
       "ReturnSpawnName": "Lens Grotto Exit",
       "ReturnExitName": "Lens Grotto Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Lens Grotto Exit",
@@ -5510,7 +5651,8 @@
       "ExitName": "Lens Grotto Exit",
       "ReturnSpawnName": "Goron Village: Lens Grotto",
       "ReturnExitName": "Goron Village: Lens Grotto",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Goron Grave Exit",
@@ -5518,7 +5660,8 @@
       "ExitName": "Goron Grave Exit",
       "ReturnSpawnName": "Mountain Village: Goron Grave",
       "ReturnExitName": "Mountain Village: Goron Grave",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Smithy Exit",
@@ -5526,7 +5669,8 @@
       "ExitName": "Smithy Exit",
       "ReturnSpawnName": "Mountain Village: Smithy",
       "ReturnExitName": "Mountain Village: Smithy",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Goron Racetrack Exit",
@@ -5534,7 +5678,8 @@
       "ExitName": "Goron Racetrack Exit",
       "ReturnSpawnName": "Twin Islands: Goron Racetrack",
       "ReturnExitName": "Twin Islands: Goron Racetrack",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Goron Shrine Exit",
@@ -5542,7 +5687,8 @@
       "ExitName": "Goron Shrine Exit",
       "ReturnSpawnName": "Goron Village: Goron Shrine",
       "ReturnExitName": "Goron Village: Goron Shrine",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Snowhead Path: Mountain Village",
@@ -5550,7 +5696,8 @@
       "ExitName": "Snowhead Path: Mountain Village",
       "ReturnSpawnName": "Mountain Village: Snowhead Path",
       "ReturnExitName": "Mountain Village: Snowhead Path",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Snowhead Path: Snowhead",
@@ -5558,7 +5705,8 @@
       "ExitName": "Snowhead Path: Snowhead",
       "ReturnSpawnName": "Snowhead: Snowhead Path",
       "ReturnExitName": "Snowhead: Snowhead Path",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Snowhead: Snowhead Path",
@@ -5566,7 +5714,8 @@
       "ExitName": "Snowhead: Snowhead Path",
       "ReturnSpawnName": "Snowhead Path: Snowhead",
       "ReturnExitName": "Snowhead Path: Snowhead",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Snowhead: Temple",
@@ -5574,7 +5723,8 @@
       "ExitName": "Snowhead: Temple",
       "ReturnSpawnName": "Snowhead Temple Exit",
       "ReturnExitName": "Snowhead Temple Exit",
-      "Type": "Dungeon"
+      "Type": "Dungeon",
+      "Properties": []
     },
     {
       "EntranceName": "Snowhead: Snowhead Fairy",
@@ -5582,7 +5732,8 @@
       "ExitName": "Snowhead: Snowhead Fairy",
       "ReturnSpawnName": "Snowhead Fairy Exit",
       "ReturnExitName": "Snowhead Fairy Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Milk Road: Termina Field",
@@ -5590,7 +5741,8 @@
       "ExitName": "Milk Road: Termina Field",
       "ReturnSpawnName": "Termina Field: Milk Road",
       "ReturnExitName": "Termina Field: Milk Road",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Milk Road: Romani Ranch",
@@ -5598,7 +5750,8 @@
       "ExitName": "Milk Road: Romani Ranch",
       "ReturnSpawnName": "Romani Ranch: Milk Road",
       "ReturnExitName": "Romani Ranch: Milk Road",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Milk Road: Gorman Track",
@@ -5606,7 +5759,8 @@
       "ExitName": "Milk Road: Gorman Track",
       "ReturnSpawnName": "Gorman Track Exit",
       "ReturnExitName": "Gorman Track Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Romani Ranch: Milk Road",
@@ -5614,7 +5768,8 @@
       "ExitName": "Romani Ranch: Milk Road",
       "ReturnSpawnName": "Milk Road: Romani Ranch",
       "ReturnExitName": "Milk Road: Romani Ranch",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Romani Ranch: Stable",
@@ -5622,7 +5777,8 @@
       "ExitName": "Romani Ranch: Stable",
       "ReturnSpawnName": "Stable Exit",
       "ReturnExitName": "Stable Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Romani Ranch: Ranch House",
@@ -5630,7 +5786,8 @@
       "ExitName": "Romani Ranch: Ranch House",
       "ReturnSpawnName": "Ranch House Exit",
       "ReturnExitName": "Ranch House Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Romani Ranch: Cucco Shack",
@@ -5638,7 +5795,8 @@
       "ExitName": "Romani Ranch: Cucco Shack",
       "ReturnSpawnName": "Cucco Shack Exit",
       "ReturnExitName": "Cucco Shack Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Romani Ranch: Doggy Racetrack",
@@ -5646,7 +5804,8 @@
       "ExitName": "Romani Ranch: Doggy Racetrack",
       "ReturnSpawnName": "Doggy Racetrack Exit",
       "ReturnExitName": "Doggy Racetrack Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Stable Exit",
@@ -5654,7 +5813,8 @@
       "ExitName": "Stable Exit",
       "ReturnSpawnName": "Romani Ranch: Stable",
       "ReturnExitName": "Romani Ranch: Stable",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Ranch House Exit",
@@ -5662,7 +5822,8 @@
       "ExitName": "Ranch House Exit",
       "ReturnSpawnName": "Romani Ranch: Ranch House",
       "ReturnExitName": "Romani Ranch: Ranch House",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Cucco Shack Exit",
@@ -5670,7 +5831,8 @@
       "ExitName": "Cucco Shack Exit",
       "ReturnSpawnName": "Romani Ranch: Cucco Shack",
       "ReturnExitName": "Romani Ranch: Cucco Shack",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Doggy Racetrack Exit",
@@ -5678,7 +5840,8 @@
       "ExitName": "Doggy Racetrack Exit",
       "ReturnSpawnName": "Romani Ranch: Doggy Racetrack",
       "ReturnExitName": "Romani Ranch: Doggy Racetrack",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Gorman Track Exit",
@@ -5686,7 +5849,8 @@
       "ExitName": "Gorman Track Exit",
       "ReturnSpawnName": "Milk Road: Gorman Track",
       "ReturnExitName": "Milk Road: Gorman Track",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Great Bay Coast: Termina Field",
@@ -5694,7 +5858,8 @@
       "ExitName": "Great Bay Coast: Termina Field",
       "ReturnSpawnName": "Termina Field: Great Bay Coast",
       "ReturnExitName": "Termina Field: Great Bay Coast",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Great Bay Coast: Zora Cape",
@@ -5702,7 +5867,8 @@
       "ExitName": "Great Bay Coast: Zora Cape",
       "ReturnSpawnName": "Zora Cape: Great Bay Coast",
       "ReturnExitName": "Zora Cape: Great Bay Coast",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Great Bay Coast: Pinnacle Rock",
@@ -5710,7 +5876,8 @@
       "ExitName": "Great Bay Coast: Pinnacle Rock",
       "ReturnSpawnName": "Pinnacle Rock Exit",
       "ReturnExitName": "Pinnacle Rock Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": ["Water"]
     },
     {
       "EntranceName": "Great Bay Coast: Fisherman's Hut",
@@ -5718,7 +5885,8 @@
       "ExitName": "Great Bay Coast: Fisherman's Hut",
       "ReturnSpawnName": "Fisherman's Hut Exit",
       "ReturnExitName": "Fisherman's Hut Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Great Bay Coast: Pirate's Fortress",
@@ -5726,7 +5894,8 @@
       "ExitName": "Great Bay Coast: Pirate's Fortress",
       "ReturnSpawnName": "Outside PF: Great Bay Coast",
       "ReturnExitName": "Outside PF: Great Bay Coast",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": ["Water"]
     },
     {
       "EntranceName": "Great Bay Coast: Marine Lab",
@@ -5734,7 +5903,8 @@
       "ExitName": "Great Bay Coast: Marine Lab",
       "ReturnSpawnName": "Marine Lab Exit",
       "ReturnExitName": "Marine Lab Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Great Bay Coast: Ocean Spider House",
@@ -5742,7 +5912,8 @@
       "ExitName": "Great Bay Coast: Ocean Spider House",
       "ReturnSpawnName": "Ocean Spider House Exit",
       "ReturnExitName": "Ocean Spider House Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Pinnacle Rock Exit",
@@ -5750,7 +5921,8 @@
       "ExitName": "Pinnacle Rock Exit",
       "ReturnSpawnName": "Great Bay Coast: Pinnacle Rock",
       "ReturnExitName": "Great Bay Coast: Pinnacle Rock",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": ["Water"]
     },
     {
       "EntranceName": "Fisherman's Hut Exit",
@@ -5758,7 +5930,8 @@
       "ExitName": "Fisherman's Hut Exit",
       "ReturnSpawnName": "Great Bay Coast: Fisherman's Hut",
       "ReturnExitName": "Great Bay Coast: Fisherman's Hut",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Marine Lab Exit",
@@ -5766,7 +5939,8 @@
       "ExitName": "Marine Lab Exit",
       "ReturnSpawnName": "Great Bay Coast: Marine Lab",
       "ReturnExitName": "Great Bay Coast: Marine Lab",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Ocean Spider House Exit",
@@ -5774,7 +5948,8 @@
       "ExitName": "Ocean Spider House Exit",
       "ReturnSpawnName": "Great Bay Coast: Ocean Spider House",
       "ReturnExitName": "Great Bay Coast: Ocean Spider House",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Outside PF: Great Bay Coast",
@@ -5782,7 +5957,8 @@
       "ExitName": "Outside PF: Great Bay Coast",
       "ReturnSpawnName": "Great Bay Coast: Pirate's Fortress",
       "ReturnExitName": "Great Bay Coast: Pirate's Fortress",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": ["Water"]
     },
     {
       "EntranceName": "Outside PF: Pirate's Fortress",
@@ -5790,7 +5966,8 @@
       "ExitName": "Outside PF: Pirate's Fortress",
       "ReturnSpawnName": "Pirate's Fortress: Outside PF",
       "ReturnExitName": "Pirate's Fortress: Outside PF",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Outside PF: Pirate Platform Exit",
@@ -5798,7 +5975,8 @@
       "ExitName": "Outside PF: Pirate Platform Exit",
       "ReturnSpawnName": "Pirate's Fortress: Pirate Platform",
       "ReturnExitName": "Pirate's Fortress: Pirate Platform",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Pirate's Fortress: Outside PF",
@@ -5806,7 +5984,8 @@
       "ExitName": "Pirate's Fortress: Outside PF",
       "ReturnSpawnName": "Outside PF: Pirate's Fortress",
       "ReturnExitName": "Outside PF: Pirate's Fortress",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Hookshot Room",
@@ -5814,7 +5993,8 @@
       "ExitName": "Hookshot Room",
       "ReturnSpawnName": "Pirate's Fortress: Hookshot Room",
       "ReturnExitName": "Pirate's Fortress: Hookshot Room",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Hookshot Room Upper",
@@ -5822,7 +6002,8 @@
       "ExitName": "Hookshot Room Upper",
       "ReturnSpawnName": "Pirate's Fortress: Hookshot Room Upper",
       "ReturnExitName": "Pirate's Fortress: Hookshot Room Upper",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Well Guarded Room",
@@ -5830,7 +6011,8 @@
       "ExitName": "Well Guarded Room",
       "ReturnSpawnName": "Pirate's Fortress: Well Guarded Room",
       "ReturnExitName": "Pirate's Fortress: Well Guarded Room",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Well Guarded Exit",
@@ -5838,7 +6020,8 @@
       "ExitName": "Well Guarded Exit",
       "ReturnSpawnName": "Pirate's Fortress: Well Guarded Exit",
       "ReturnExitName": "Pirate's Fortress: Well Guarded Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Barrel Room",
@@ -5846,7 +6029,8 @@
       "ExitName": "Barrel Room",
       "ReturnSpawnName": "Pirate's Fortress: Barrel Room",
       "ReturnExitName": "Pirate's Fortress: Barrel Room",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Barrel Room Exit",
@@ -5854,7 +6038,8 @@
       "ExitName": "Barrel Room Exit",
       "ReturnSpawnName": "Pirate's Fortress: Barrel Room Exit",
       "ReturnExitName": "Pirate's Fortress: Barrel Room Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Twin Barrel Room",
@@ -5862,7 +6047,8 @@
       "ExitName": "Twin Barrel Room",
       "ReturnSpawnName": "Pirate's Fortress: Twin Barrel Room",
       "ReturnExitName": "Pirate's Fortress: Twin Barrel Room",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Twin Barrel Room Exit",
@@ -5870,7 +6056,8 @@
       "ExitName": "Twin Barrel Room Exit",
       "ReturnSpawnName": "Pirate's Fortress: Twin Barrel Room Exit",
       "ReturnExitName": "Pirate's Fortress: Twin Barrel Room Exit",
-      "Type": "Permanent"
+      "Type": "Interior",
+      "Properties": ["Permanent"]
     },
     {
       "EntranceName": "Pirate's Fortress: Pirate Platform",
@@ -5878,7 +6065,8 @@
       "ExitName": "Pirate's Fortress: Pirate Platform",
       "ReturnSpawnName": "Outside PF: Pirate Platform Exit",
       "ReturnExitName": "Outside PF: Pirate Platform Exit",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Pirate's Fortress: Hookshot Room",
@@ -5886,7 +6074,8 @@
       "ExitName": "Pirate's Fortress: Hookshot Room",
       "ReturnSpawnName": "Hookshot Room",
       "ReturnExitName": "Hookshot Room",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Pirate's Fortress: Hookshot Room Upper",
@@ -5894,7 +6083,8 @@
       "ExitName": "Pirate's Fortress: Hookshot Room Upper",
       "ReturnSpawnName": "Hookshot Room Upper",
       "ReturnExitName": "Hookshot Room Upper",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Pirate's Fortress: Twin Barrel Room",
@@ -5902,7 +6092,8 @@
       "ExitName": "Pirate's Fortress: Twin Barrel Room",
       "ReturnSpawnName": "Twin Barrel Room",
       "ReturnExitName": "Twin Barrel Room",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Pirate's Fortress: Twin Barrel Room Exit",
@@ -5910,7 +6101,8 @@
       "ExitName": "Pirate's Fortress: Twin Barrel Room Exit",
       "ReturnSpawnName": "Twin Barrel Room Exit",
       "ReturnExitName": "Twin Barrel Room Exit",
-      "Type": "Permanent"
+      "Type": "Permanent",
+      "Properties": []
     },
     {
       "EntranceName": "Pirate's Fortress: Well Guarded Room",
@@ -5918,7 +6110,8 @@
       "ExitName": "Pirate's Fortress: Well Guarded Room",
       "ReturnSpawnName": "Well Guarded Room",
       "ReturnExitName": "Well Guarded Room",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Pirate's Fortress: Well Guarded Exit",
@@ -5926,7 +6119,8 @@
       "ExitName": "Pirate's Fortress: Well Guarded Exit",
       "ReturnSpawnName": "Well Guarded Exit",
       "ReturnExitName": "Well Guarded Exit",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Pirate's Fortress: Barrel Room",
@@ -5934,7 +6128,8 @@
       "ExitName": "Pirate's Fortress: Barrel Room",
       "ReturnSpawnName": "Barrel Room",
       "ReturnExitName": "Barrel Room",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Pirate's Fortress: Barrel Room Exit",
@@ -5942,7 +6137,8 @@
       "ExitName": "Pirate's Fortress: Barrel Room Exit",
       "ReturnSpawnName": "Barrel Room Exit",
       "ReturnExitName": "Barrel Room Exit",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Cape: Great Bay Coast",
@@ -5950,7 +6146,8 @@
       "ExitName": "Zora Cape: Great Bay Coast",
       "ReturnSpawnName": "Great Bay Coast: Zora Cape",
       "ReturnExitName": "Great Bay Coast: Zora Cape",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Cape: Zora Hall Water",
@@ -5958,7 +6155,8 @@
       "ExitName": "Zora Cape: Zora Hall Water",
       "ReturnSpawnName": "Zora Hall: Water",
       "ReturnExitName": "Zora Hall: Water",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": ["Water"]
     },
     {
       "EntranceName": "Zora Cape: Zora Hall",
@@ -5966,7 +6164,8 @@
       "ExitName": "Zora Cape: Zora Hall",
       "ReturnSpawnName": "Zora Hall: Zora Cape",
       "ReturnExitName": "Zora Hall: Zora Cape",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Cape: Waterfall Rapids",
@@ -5974,7 +6173,8 @@
       "ExitName": "Zora Cape: Waterfall Rapids",
       "ReturnSpawnName": "Waterfall Rapids Exit",
       "ReturnExitName": "Waterfall Rapids Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Cape: Great Bay Fairy",
@@ -5982,7 +6182,8 @@
       "ExitName": "Zora Cape: Great Bay Fairy",
       "ReturnSpawnName": "Great Bay Fairy Exit",
       "ReturnExitName": "Great Bay Fairy Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Cape: Temple",
@@ -5990,7 +6191,8 @@
       "ExitName": "Zora Cape: Temple",
       "ReturnSpawnName": "Great Bay Temple Exit",
       "ReturnExitName": "Great Bay Temple Exit",
-      "Type": "Dungeon"
+      "Type": "Dungeon",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Cape: Dungeon Clear",
@@ -5998,7 +6200,8 @@
       "ExitName": "Zora Cape: Dungeon Clear",
       "ReturnSpawnName": "Gyorg's Boss Lair",
       "ReturnExitName": "Gyorg's Boss Lair",
-      "Type": "Boss Exit"
+      "Type": "Boss Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Hall: Water",
@@ -6006,7 +6209,8 @@
       "ExitName": "Zora Hall: Water",
       "ReturnSpawnName": "Zora Cape: Zora Hall Water",
       "ReturnExitName": "Zora Cape: Zora Hall Water",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": ["Water"]
     },
     {
       "EntranceName": "Zora Hall: Zora Cape",
@@ -6014,7 +6218,8 @@
       "ExitName": "Zora Hall: Zora Cape",
       "ReturnSpawnName": "Zora Cape: Zora Hall",
       "ReturnExitName": "Zora Cape: Zora Hall",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Hall: Zora Shop",
@@ -6022,7 +6227,8 @@
       "ExitName": "Zora Hall: Zora Shop",
       "ReturnSpawnName": "Zora Shop Exit",
       "ReturnExitName": "Zora Shop Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Hall: Lulu's Room",
@@ -6030,7 +6236,8 @@
       "ExitName": "Zora Hall: Lulu's Room",
       "ReturnSpawnName": "Lulu's Room Exit",
       "ReturnExitName": "Lulu's Room Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Hall: Evan's Room",
@@ -6038,7 +6245,8 @@
       "ExitName": "Zora Hall: Evan's Room",
       "ReturnSpawnName": "Evan's Room Exit",
       "ReturnExitName": "Evan's Room Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Hall: Japas's Room",
@@ -6046,7 +6254,8 @@
       "ExitName": "Zora Hall: Japas's Room",
       "ReturnSpawnName": "Japas's Room Exit",
       "ReturnExitName": "Japas's Room Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Hall: Mikau's Room",
@@ -6054,7 +6263,8 @@
       "ExitName": "Zora Hall: Mikau's Room",
       "ReturnSpawnName": "Mikau's Room Exit",
       "ReturnExitName": "Mikau's Room Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Waterfall Rapids Exit",
@@ -6062,7 +6272,8 @@
       "ExitName": "Waterfall Rapids Exit",
       "ReturnSpawnName": "Zora Cape: Waterfall Rapids",
       "ReturnExitName": "Zora Cape: Waterfall Rapids",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Zora Shop Exit",
@@ -6070,7 +6281,8 @@
       "ExitName": "Zora Shop Exit",
       "ReturnSpawnName": "Zora Hall: Zora Shop",
       "ReturnExitName": "Zora Hall: Zora Shop",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Lulu's Room Exit",
@@ -6078,7 +6290,8 @@
       "ExitName": "Lulu's Room Exit",
       "ReturnSpawnName": "Zora Hall: Lulu's Room",
       "ReturnExitName": "Zora Hall: Lulu's Room",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Evan's Room Exit",
@@ -6086,7 +6299,8 @@
       "ExitName": "Evan's Room Exit",
       "ReturnSpawnName": "Zora Hall: Evan's Room",
       "ReturnExitName": "Zora Hall: Evan's Room",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Japas's Room Exit",
@@ -6094,7 +6308,8 @@
       "ExitName": "Japas's Room Exit",
       "ReturnSpawnName": "Zora Hall: Japas's Room",
       "ReturnExitName": "Zora Hall: Japas's Room",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Mikau's Room Exit",
@@ -6102,7 +6317,8 @@
       "ExitName": "Mikau's Room Exit",
       "ReturnSpawnName": "Zora Hall: Mikau's Room",
       "ReturnExitName": "Zora Hall: Mikau's Room",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Path: Termina Field",
@@ -6110,7 +6326,8 @@
       "ExitName": "Ikana Path: Termina Field",
       "ReturnSpawnName": "Termina Field: Ikana Path",
       "ReturnExitName": "Termina Field: Ikana Path",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Path: Ikana Canyon",
@@ -6118,7 +6335,8 @@
       "ExitName": "Ikana Path: Ikana Canyon",
       "ReturnSpawnName": "Ikana Canyon: Ikana Path",
       "ReturnExitName": "Ikana Canyon: Ikana Path",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Path: Ikana Graveyard",
@@ -6126,7 +6344,8 @@
       "ExitName": "Ikana Path: Ikana Graveyard",
       "ReturnSpawnName": "Ikana Graveyard: Ikana Path",
       "ReturnExitName": "Ikana Graveyard: Ikana Path",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Graveyard: Ikana Path",
@@ -6134,7 +6353,8 @@
       "ExitName": "Ikana Graveyard: Ikana Path",
       "ReturnSpawnName": "Ikana Path: Ikana Graveyard",
       "ReturnExitName": "Ikana Path: Ikana Graveyard",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Graveyard: Night 3 Grave",
@@ -6142,7 +6362,8 @@
       "ExitName": "Ikana Graveyard: Night 3 Grave",
       "ReturnSpawnName": "Dampe's House Exit",
       "ReturnExitName": "Dampe's House Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Graveyard: Night 2 Grave",
@@ -6150,7 +6371,8 @@
       "ExitName": "Ikana Graveyard: Night 2 Grave",
       "ReturnSpawnName": "Night 2 Grave Exit",
       "ReturnExitName": "Night 2 Grave Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Graveyard: Night 1 Grave",
@@ -6158,7 +6380,17 @@
       "ExitName": "Ikana Graveyard: Night 1 Grave",
       "ReturnSpawnName": "Night 1 Grave Exit",
       "ReturnExitName": "Night 1 Grave Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
+    },
+    {
+      "EntranceName": "Dampe's House Exit",
+      "SpawnName": "Dampe's House Exit",
+      "ExitName": "Dampe's House Exit",
+      "ReturnSpawnName": "Ikana Graveyard: Night 3 Grave",
+      "ReturnExitName": "Ikana Graveyard: Night 3 Grave",
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Night 2 Grave Exit",
@@ -6166,7 +6398,8 @@
       "ExitName": "Night 2 Grave Exit",
       "ReturnSpawnName": "Ikana Graveyard: Night 2 Grave",
       "ReturnExitName": "Ikana Graveyard: Night 2 Grave",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Night 1 Grave Exit",
@@ -6174,7 +6407,8 @@
       "ExitName": "Night 1 Grave Exit",
       "ReturnSpawnName": "Ikana Graveyard: Night 1 Grave",
       "ReturnExitName": "Ikana Graveyard: Night 1 Grave",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Castle: Well",
@@ -6182,7 +6416,8 @@
       "ExitName": "Ikana Castle: Well",
       "ReturnSpawnName": "Well: Ikana Castle",
       "ReturnExitName": "Well: Ikana Castle",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Castle: Ikana Canyon",
@@ -6190,7 +6425,8 @@
       "ExitName": "Ikana Castle: Ikana Canyon",
       "ReturnSpawnName": "Ikana Canyon: Ikana Castle",
       "ReturnExitName": "Ikana Canyon: Ikana Castle",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Ikana Castle: Igos",
@@ -6198,7 +6434,8 @@
       "ExitName": "Ikana Castle: Igos",
       "ReturnSpawnName": "Igos Exit",
       "ReturnExitName": "Igos Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Well: Ikana Canyon",
@@ -6206,7 +6443,8 @@
       "ExitName": "Well: Ikana Canyon",
       "ReturnSpawnName": "Ikana Canyon: Well",
       "ReturnExitName": "Ikana Canyon: Well",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Well: Ikana Castle",
@@ -6214,7 +6452,8 @@
       "ExitName": "Well: Ikana Castle",
       "ReturnSpawnName": "Ikana Castle: Well",
       "ReturnExitName": "Ikana Castle: Well",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Stone Tower: Ikana Canyon",
@@ -6222,7 +6461,8 @@
       "ExitName": "Stone Tower: Ikana Canyon",
       "ReturnSpawnName": "Ikana Canyon: Stone Tower",
       "ReturnExitName": "Ikana Canyon: Stone Tower",
-      "Type": "Overworld"
+      "Type": "Overworld",
+      "Properties": []
     },
     {
       "EntranceName": "Stone Tower: Temple",
@@ -6230,7 +6470,8 @@
       "ExitName": "Stone Tower: Temple",
       "ReturnSpawnName": "Stone Tower Temple Exit",
       "ReturnExitName": "Stone Tower Temple Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Inverted Stone Tower: Temple",
@@ -6238,7 +6479,8 @@
       "ExitName": "Inverted Stone Tower: Temple",
       "ReturnSpawnName": "Inverted Stone Tower Temple Exit",
       "ReturnExitName": "Inverted Stone Tower Temple Exit",
-      "Type": "Dungeon"
+      "Type": "Dungeon",
+      "Properties": []
     },
     {
       "EntranceName": "Music Box Exit",
@@ -6246,7 +6488,8 @@
       "ExitName": "Music Box Exit",
       "ReturnSpawnName": "Ikana Canyon: Music Box",
       "ReturnExitName": "Ikana Canyon: Music Box",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Igos Exit",
@@ -6254,7 +6497,8 @@
       "ExitName": "Igos Exit",
       "ReturnSpawnName": "Ikana Castle: Igos",
       "ReturnExitName": "Ikana Castle: Igos",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Secret Shrine Exit",
@@ -6262,7 +6506,8 @@
       "ExitName": "Secret Shrine Exit",
       "ReturnSpawnName": "Ikana Canyon: Secret Shrine",
       "ReturnExitName": "Ikana Canyon: Secret Shrine",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Poe Hut Exit",
@@ -6270,7 +6515,8 @@
       "ExitName": "Poe Hut Exit",
       "ReturnSpawnName": "Ikana Canyon: Poe Hut",
       "ReturnExitName": "Ikana Canyon: Poe Hut",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Sakon's Hideout Exit",
@@ -6278,7 +6524,8 @@
       "ExitName": "Sakon's Hideout Exit",
       "ReturnSpawnName": "Ikana Canyon: Sakon's Hideout",
       "ReturnExitName": "Ikana Canyon: Sakon's Hideout",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Clock Town Fairy Exit",
@@ -6286,7 +6533,8 @@
       "ExitName": "Clock Town Fairy Exit",
       "ReturnSpawnName": "North Clock Town: Clock Town Fairy",
       "ReturnExitName": "North Clock Town: Clock Town Fairy",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Woodfall Fairy Exit",
@@ -6294,7 +6542,8 @@
       "ExitName": "Woodfall Fairy Exit",
       "ReturnSpawnName": "Woodfall: Woodfall Fairy",
       "ReturnExitName": "Woodfall: Woodfall Fairy",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Snowhead Fairy Exit",
@@ -6302,7 +6551,8 @@
       "ExitName": "Snowhead Fairy Exit",
       "ReturnSpawnName": "Snowhead: Snowhead Fairy",
       "ReturnExitName": "Snowhead: Snowhead Fairy",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Great Bay Fairy Exit",
@@ -6310,7 +6560,8 @@
       "ExitName": "Great Bay Fairy Exit",
       "ReturnSpawnName": "Zora Cape: Great Bay Fairy",
       "ReturnExitName": "Zora Cape: Great Bay Fairy",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Stone Tower Fairy Exit",
@@ -6318,7 +6569,8 @@
       "ExitName": "Stone Tower Fairy Exit",
       "ReturnSpawnName": "Ikana Canyon: Stone Tower Fairy",
       "ReturnExitName": "Ikana Canyon: Stone Tower Fairy",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "Goron Shop",
@@ -6326,7 +6578,8 @@
       "ExitName": "Goron Shrine: Goron Shop",
       "ReturnSpawnName": "Goron Shop Exit",
       "ReturnExitName": "Goron Shop Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Goron Shop Exit",
@@ -6334,7 +6587,8 @@
       "ExitName": "Goron Shop Exit",
       "ReturnSpawnName": "Goron Shrine: Goron Shop",
       "ReturnExitName": "Goron Shrine: Goron Shop",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     },
     {
       "EntranceName": "PF Underwater Tunnel",
@@ -6342,7 +6596,8 @@
       "ExitName": "Outside PF: Underwater Entrance",
       "ReturnSpawnName": "Underwater Tunnel Exit",
       "ReturnExitName": "Underwater Tunnel Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": ["Water"]
     },
     {
       "EntranceName": "Underwater Tunnel Exit",
@@ -6350,7 +6605,8 @@
       "ExitName": "Underwater Tunnel Exit",
       "ReturnSpawnName": "Outside PF: Underwater Entrance",
       "ReturnExitName": "Outside PF: Underwater Entrance",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": ["Water"]
     },
     {
       "EntranceName": "PF Sewer Tunnel",
@@ -6358,7 +6614,8 @@
       "ExitName": "Outside PF: Sewer Tunnel",
       "ReturnSpawnName": "Sewer Tunnel Exit",
       "ReturnExitName": "Sewer Tunnel Exit",
-      "Type": "Interior"
+      "Type": "Interior",
+      "Properties": []
     },
     {
       "EntranceName": "Sewer Tunnel Exit",
@@ -6366,7 +6623,8 @@
       "ExitName": "Sewer Tunnel Exit",
       "ReturnSpawnName": "Outside PF: Sewer Tunnel",
       "ReturnExitName": "Outside PF: Sewer Tunnel",
-      "Type": "Interior Exit"
+      "Type": "Interior Exit",
+      "Properties": []
     }
   ],
   "internalSceneSwitches": null

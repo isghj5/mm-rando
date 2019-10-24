@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 
 namespace MMRando.Models
 {
@@ -50,6 +51,7 @@ namespace MMRando.Models
         public string ReturnSpawnName { get; set; }
         public string ReturnExitName { get; set; }
         public string Type { get; set; }
+        public List<string> Properties { get; set; }
         public Entrance( string EntranceName, string SpawnName, string ReturnSpawnName, string Type)
         {
             this.EntranceName = EntranceName;
@@ -58,6 +60,7 @@ namespace MMRando.Models
             this.ReturnSpawnName = ReturnSpawnName;
             this.ReturnExitName = ReturnSpawnName;
             this.Type = Type;
+            this.Properties = new List<string>();
         }
     }
 
@@ -276,6 +279,41 @@ namespace MMRando.Models
                 }
             }
             return EntranceName;
+        }
+
+        internal bool EntranceRegionTypeCount(string entranceName, List<string> entranceTypes, int entCount)
+        {
+            string ent = entrances.Find(e => entranceName.Equals(e.EntranceName)).SpawnName;
+            string reg = spawns.Find(s => ent.Equals(s.SpawnName)).RegionName;
+            List<string> exitList = exits.FindAll(x => reg.Equals(x.RegionName)).Select(x => x.ExitName).ToList();
+            int c = 0;
+            exitList.ForEach(x => {
+                Entrance en = entrances.Find(e => x.Equals(e.ExitName));
+                if( en != null )
+                {
+                    foreach(string entranceType in entranceTypes)
+                    {
+                        if (entranceType.Equals(en.Type))
+                        {
+                            c++;
+                            break;
+                        }                        
+                    }
+                }
+            });
+            return c == entCount;
+        }
+
+        internal string EntranceType(string entranceName)
+        {
+            Entrance ent = entrances.Find(e=>entranceName.Equals(e.EntranceName));
+            return (ent != null) ? ent.Type : "None";
+        }
+
+        internal bool EntranceHasProperty(string entranceName, string property)
+        {
+            Entrance ent = entrances.Find(e => entranceName.Equals(e.EntranceName));
+            return (ent == null) ? false : ent.Properties.Contains(property);
         }
     }
 }

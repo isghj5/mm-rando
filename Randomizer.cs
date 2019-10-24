@@ -274,27 +274,68 @@ namespace MMRando
         private List<List<string>> GetEntrancePools()
         {
             Dictionary<string, List<string>> entrancesByType = new Dictionary<string, List<string>>();
+            Dictionary<string, bool> entranceUsed = new Dictionary<string, bool>();
             TerminaMapData.entrances.ForEach(ent => {
-                string type = ent.Type;
-                if (!entrancesByType.ContainsKey(type) ) { entrancesByType.Add(type, new List<string>()); }
-                List<string> entSet = entrancesByType[type];
+                string entType = ent.Type;
+                if (!entrancesByType.ContainsKey(entType) ) { entrancesByType.Add(entType, new List<string>()); }
+                List<string> entSet = entrancesByType[entType];
                 entSet.Add(ent.EntranceName);
+                entranceUsed.Add(ent.EntranceName, false);
             } );
             List<List<string>> typePools = new List<List<string>>
             {
-                new List<string> { "Overworld", "Interior", "Interior Exit", "Dungeon", "Dungeon Exit", "Trial", "Boss" }
-
+                // new List<string> { "Overworld", "Interior", "Interior Exit", "Dungeon", "Dungeon Exit", "Trial", "Boss", "Boss Exit" },
+                new List<string> { "Overworld: Water", "Interior: Water", "Interior Exit: Water"},
+                new List<string> { "Overworld", "Dungeon" },
+                new List<string> { "Interior: 2" },
+                new List<string> { "Interior: 1" },
+                new List<string> { "Boss", "Trial" },
             };
             List<List<string>> pools = new List<List<string>>();
             List<string> pool;
+            List<string> poolProps;
+            string type;
+            int entCount;
             foreach( List<string> typePool in typePools)
             {
                 pool = new List<string>();
-                foreach(string type in typePool)
+                foreach(string poolName in typePool)
                 {
-                    if( entrancesByType.ContainsKey(type))
+                    poolProps = poolName.Split(':').ToList();
+                    poolProps.ForEach(p => p = p.Trim());
+                    if (poolProps.Count > 0)
                     {
-                        entrancesByType[type].ForEach(e => pool.Add(e));
+                        type = poolProps[0];
+                        if (poolProps.Count > 1) {
+                            poolProps = poolProps[1].Split(' ').ToList();
+                        } else
+                        {
+                            poolProps = new List<string> { };
+                        }
+                        if (entrancesByType.ContainsKey(type))
+                        {
+                            entrancesByType[type].ForEach(e => {
+                                bool valid = true;
+                                foreach (string prop in poolProps)
+                                {
+                                    if (int.TryParse(prop, out entCount))
+                                    {
+                                        valid = TerminaMapData.EntranceRegionTypeCount(e, new List<string> { type, type + " Exit" }, entCount);
+                                    }
+                                    else
+                                    {
+                                        valid = TerminaMapData.EntranceHasProperty(e, prop);
+                                    }
+                                }
+                                if (valid) {
+                                    if( entranceUsed.ContainsKey(e) && !entranceUsed[e])
+                                    {
+                                        pool.Add(e);
+                                        entranceUsed[e] = true;
+                                    }
+                                }
+                            });
+                        }
                     }
                 }
                 pools.Add(pool);
@@ -349,7 +390,14 @@ namespace MMRando
                         destEntrances.Remove(reverseSelectionEntrance);
                     }
                     success = TerminaMapData.ConnectEntrance(selectionEntrance, chosenEntrance);
-                    _randomized.EntranceSpoilers.Add(new SpoilerEntrance(selectionEntrance, (success) ? chosenEntrance : selectionEntrance + "(failed)"));
+                    if( success)
+                    {
+                        _randomized.EntranceSpoilers.Add(new SpoilerEntrance(selectionEntrance, chosenEntrance));
+                        if ("Overworld".Equals(TerminaMapData.EntranceType(selectionEntrance)) && !selectionEntrance.Equals(reverseSelectionEntrance) && !chosenEntrance.Equals(reverseChosenEntrance))
+                        {
+                            _randomized.EntranceSpoilers.Add(new SpoilerEntrance(reverseChosenEntrance, reverseSelectionEntrance));
+                        }
+                    }
                 }
                 foreach( string entrance in entranceUsed.Keys)
                 {
