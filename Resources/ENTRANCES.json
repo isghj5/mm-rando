@@ -1746,7 +1746,7 @@
     {
       "RegionName": "Laundry Pool",
       "ExitName": "Laundry Pool: Kafei's House",
-      "ExitIndex": 1,
+      "ExitIndex": 2,
       "SpawnName": "Laundry Pool: Kafei's House"
     },
     {
@@ -4291,7 +4291,7 @@
     },
     {
       "SpawnName": "Inverted Stone Tower Temple Exit",
-      "RegionName": "Stone Tower",
+      "RegionName": "Inverted Stone Tower",
       "SpawnIndex": 1
     },
     {
@@ -5110,7 +5110,7 @@
       "ExitName": "Moon: Link Trial",
       "ReturnSpawnName": "Link Trial Exit",
       "ReturnExitName": "Link Trial Exit",
-      "Type": "Interior"
+      "Type": "Trial"
     },
     {
       "EntranceName": "Moon: Deku Trial",
@@ -5118,7 +5118,7 @@
       "ExitName": "Moon: Deku Trial",
       "ReturnSpawnName": "Deku Trial Exit",
       "ReturnExitName": "Deku Trial Exit",
-      "Type": "Interior"
+      "Type": "Trial"
     },
     {
       "EntranceName": "Moon: Goron Trial",
@@ -5126,7 +5126,7 @@
       "ExitName": "Moon: Goron Trial",
       "ReturnSpawnName": "Goron Trial Exit",
       "ReturnExitName": "Goron Trial Exit",
-      "Type": "Interior"
+      "Type": "Trial"
     },
     {
       "EntranceName": "Moon: Zora Trial",
@@ -5134,7 +5134,7 @@
       "ExitName": "Moon: Zora Trial",
       "ReturnSpawnName": "Zora Trial Exit",
       "ReturnExitName": "Zora Trial Exit",
-      "Type": "Interior"
+      "Type": "Trial"
     },
     {
       "EntranceName": "Link Trial Exit",
@@ -5142,7 +5142,7 @@
       "ExitName": "Link Trial Exit",
       "ReturnSpawnName": "Moon: Link Trial",
       "ReturnExitName": "Moon: Link Trial",
-      "Type": "Interior Exit"
+      "Type": "Trial Exit"
     },
     {
       "EntranceName": "Deku Trial Exit",
@@ -5150,7 +5150,7 @@
       "ExitName": "Deku Trial Exit",
       "ReturnSpawnName": "Moon: Deku Trial",
       "ReturnExitName": "Moon: Deku Trial",
-      "Type": "Interior Exit"
+      "Type": "Trial Exit"
     },
     {
       "EntranceName": "Goron Trial Exit",
@@ -5158,7 +5158,7 @@
       "ExitName": "Goron Trial Exit",
       "ReturnSpawnName": "Moon: Goron Trial",
       "ReturnExitName": "Moon: Goron Trial",
-      "Type": "Interior Exit"
+      "Type": "Trial Exit"
     },
     {
       "EntranceName": "Zora Trial Exit",
@@ -5166,7 +5166,7 @@
       "ExitName": "Zora Trial Exit",
       "ReturnSpawnName": "Moon: Zora Trial",
       "ReturnExitName": "Moon: Zora Trial",
-      "Type": "Interior Exit"
+      "Type": "Trial Exit"
     },
     {
       "EntranceName": "Woodfall Temple Exit",
@@ -5798,7 +5798,7 @@
       "ExitName": "Outside PF: Pirate Platform Exit",
       "ReturnSpawnName": "Pirate's Fortress: Pirate Platform",
       "ReturnExitName": "Pirate's Fortress: Pirate Platform",
-      "Type": "Interior Exit"
+      "Type": "Overworld"
     },
     {
       "EntranceName": "Pirate's Fortress: Outside PF",
@@ -5870,7 +5870,7 @@
       "ExitName": "Twin Barrel Room Exit",
       "ReturnSpawnName": "Pirate's Fortress: Twin Barrel Room Exit",
       "ReturnExitName": "Pirate's Fortress: Twin Barrel Room Exit",
-      "Type": "Interior"
+      "Type": "Permanent"
     },
     {
       "EntranceName": "Pirate's Fortress: Pirate Platform",
@@ -5878,7 +5878,7 @@
       "ExitName": "Pirate's Fortress: Pirate Platform",
       "ReturnSpawnName": "Outside PF: Pirate Platform Exit",
       "ReturnExitName": "Outside PF: Pirate Platform Exit",
-      "Type": "Interior"
+      "Type": "Overworld"
     },
     {
       "EntranceName": "Pirate's Fortress: Hookshot Room",

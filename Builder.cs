@@ -1,4 +1,4 @@
-﻿using MMRando.Attributes;
+using MMRando.Attributes;
 using MMRando.Constants;
 using MMRando.Extensions;
 using MMRando.GameObjects;
@@ -235,13 +235,11 @@ namespace MMRando
             {
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
-                SceneUtils.GetMapHeaders();
-                SceneUtils.GetAlternateExits();
                 // boss lairs
                 foreach (int i in new int[] { 31, 68, 95, 54 }) EntranceUtils.ReadSceneExits(i, 16);
                 // pirate's fortress
                 foreach (int i in new int[] { 20, 35, 59 }) EntranceUtils.ReadSceneExits(i, 16);
-                foreach (int i in new int[] { 99, 25 }) EntranceUtils.ReadSceneExits(i, 16);
+                foreach (int i in new int[] { 112 }) EntranceUtils.ReadSceneExits(i, 16);
                 foreach (int sceneIndex in RomData.SceneList.Select(s=>s.Number))
                 {
                     if (_randomized.ShuffledEntranceList.ContainsKey(sceneIndex) && _randomized.ExitListIndices.ContainsKey(sceneIndex) )

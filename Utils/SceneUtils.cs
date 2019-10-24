@@ -1,4 +1,4 @@
-﻿using MMRando.Models.Rom;
+using MMRando.Models.Rom;
 using System.Collections.Generic;
 
 namespace MMRando.Utils
@@ -79,16 +79,13 @@ namespace MMRando.Utils
                             mapsaddr += 8;
                         }
                     }
-                    if (cmd == 0x13)
-                    {
-                        RomData.SceneList[i].ExitAddr.Add((int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF);
-                    }
                     if (cmd == 0x14)
                     {
                         break;
                     }
                     j += 8;
                 }
+                CheckHeaderForExits(f, 0, RomData.SceneList[i].ExitAddr);
             }
         }
 
@@ -252,23 +249,22 @@ namespace MMRando.Utils
                 }
             }
         }
-        private static void CheckHeaderForExits(Map map, List<int> exits)
+        private static void CheckHeaderForExits(int f, int headeraddr, List<int> exits)
         {
-            int f = map.File;
-            RomUtils.CheckCompressed(f);
-            int k = map.Header;
+            int j = headeraddr;
             int setupsaddr = -1;
             int nextlowest = -1;
+            byte s;
             while (true)
             {
-                byte cmd = RomData.MMFileList[f].Data[k];
+                byte cmd = RomData.MMFileList[f].Data[j];
                 if (cmd == 0x13)
                 {
-                    exits.Add((int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, k + 4) & 0xFFFFFF);
+                    exits.Add((int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF);
                 }
                 else if (cmd == 0x18)
                 {
-                    setupsaddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, k + 4) & 0xFFFFFF;
+                    setupsaddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
                 }
                 else if (cmd == 0x14)
                 {
@@ -276,41 +272,27 @@ namespace MMRando.Utils
                 }
                 else
                 {
-                    if (RomData.MMFileList[f].Data[k + 4] == 0x03)
+                    if (RomData.MMFileList[f].Data[j + 4] == 0x02)
                     {
-                        int p = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, k + 4) & 0xFFFFFF;
+                        int p = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
                         if (((p < nextlowest) || (nextlowest == -1)) && ((p > setupsaddr) && (setupsaddr != -1)))
                         {
                             nextlowest = p;
                         }
                     }
                 }
-                k += 8;
+                j += 8;
             }
-            if ((setupsaddr != -1) && (nextlowest != -1))
+            if ((setupsaddr != -1) && nextlowest != -1)
             {
-                for (k = setupsaddr; k < nextlowest; k += 4)
+                j = setupsaddr;
+                s = RomData.MMFileList[f].Data[j];
+                while (s == 0x02)
                 {
-                    byte s = RomData.MMFileList[f].Data[k];
-                    if (s != 0x03)
-                    {
-                        break;
-                    }
-                    int p = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, k) & 0xFFFFFF;
-                    Map m = new Map();
-                    m.File = f;
-                    m.Header = p;
-                    CheckHeaderForExits(m, exits);
-                }
-            }
-        }
-        public static void GetAlternateExits()
-        {
-            for (int i = 0; i < RomData.SceneList.Count; i++)
-            {
-                for (int j = 0; j < RomData.SceneList[i].Maps.Count; j++)
-                {
-                    CheckHeaderForExits(RomData.SceneList[i].Maps[j], RomData.SceneList[i].ExitAddr);
+                    int p = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j) & 0xFFFFFF;
+                    CheckHeaderForExits(f, p, exits);
+                    j += 4;
+                    s = RomData.MMFileList[f].Data[j];
                 }
             }
         }

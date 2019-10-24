@@ -299,25 +299,38 @@ namespace MMRando
                 string selectionEntrance, chosenEntrance, reverseSelectionEntrance, reverseChosenEntrance;
                 // all this does is reverse entrances within pools
                 // we'll want to pluck each entrance and it's opposite off the pool as we go
-                while (sourceEntrances.Count > 0)
+                while (destEntrances.Count > 0)
                 {
                     selectionEntrance = sourceEntrances[0];
                     reverseSelectionEntrance = TerminaMapData.ReverseEntrance(selectionEntrance);
-                    sourceEntrances.Remove(selectionEntrance);
                     if (entranceUsed.ContainsKey(reverseSelectionEntrance)) { entranceUsed[reverseSelectionEntrance]++; }
-
                     n = _random.Next(destEntrances.Count);
                     chosenEntrance = destEntrances[n];
                     reverseChosenEntrance = TerminaMapData.ReverseEntrance(chosenEntrance);
-                    destEntrances.Remove(chosenEntrance);
                     if (entranceUsed.ContainsKey(chosenEntrance)) { entranceUsed[chosenEntrance]++; }
-                    
-                    // these entrances have implicitly been set, so remove them from the selection pool
-                    sourceEntrances.Remove(reverseSelectionEntrance);
-                    destEntrances.Remove(reverseChosenEntrance);
 
+                    if (selectionEntrance.Equals(reverseSelectionEntrance))
+                    {
+                        Debug.WriteLine($"{selectionEntrance} does not appear to have an opposite");
+                    }
+                    if (chosenEntrance.Equals(reverseChosenEntrance))
+                    {
+                        Debug.WriteLine($"{selectionEntrance} does not appear to have an opposite");
+                    }
+                    sourceEntrances.Remove(selectionEntrance);
+                    destEntrances.Remove(chosenEntrance);
+                    // these entrances have implicitly been set, so remove them from the selection pool
+                    if(!selectionEntrance.Equals(reverseSelectionEntrance) && !chosenEntrance.Equals(reverseChosenEntrance))
+                    {
+                        sourceEntrances.Remove(reverseChosenEntrance);
+                        destEntrances.Remove(reverseSelectionEntrance);
+                    }
                     success = TerminaMapData.ConnectEntrance(selectionEntrance, chosenEntrance);
                     _randomized.EntranceSpoilers.Add(new SpoilerEntrance(selectionEntrance, (success) ? chosenEntrance : selectionEntrance + "(failed)"));
+                }
+                foreach( string entrance in entranceUsed.Keys)
+                {
+                    Debug.WriteLine($"{entrance}: {entranceUsed[entrance]}");
                 }
             }
         }
