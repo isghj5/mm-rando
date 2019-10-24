@@ -273,9 +273,32 @@ namespace MMRando
 
         private List<List<string>> GetEntrancePools()
         {
+            Dictionary<string, List<string>> entrancesByType = new Dictionary<string, List<string>>();
+            TerminaMapData.entrances.ForEach(ent => {
+                string type = ent.Type;
+                if (!entrancesByType.ContainsKey(type) ) { entrancesByType.Add(type, new List<string>()); }
+                List<string> entSet = entrancesByType[type];
+                entSet.Add(ent.EntranceName);
+            } );
+            List<List<string>> typePools = new List<List<string>>
+            {
+                new List<string> { "Overworld", "Interior", "Interior Exit", "Dungeon", "Dungeon Exit", "Trial", "Boss" }
+
+            };
             List<List<string>> pools = new List<List<string>>();
-            pools.Add( TerminaMapData.entrances.FindAll(e => "Interior".Equals(e.Type) || "Boss".Equals(e.Type)).Select(e => e.EntranceName).ToList() );
-            pools.Add(TerminaMapData.entrances.FindAll(e => "Overworld".Equals(e.Type)).Select(e => e.EntranceName).ToList());
+            List<string> pool;
+            foreach( List<string> typePool in typePools)
+            {
+                pool = new List<string>();
+                foreach(string type in typePool)
+                {
+                    if( entrancesByType.ContainsKey(type))
+                    {
+                        entrancesByType[type].ForEach(e => pool.Add(e));
+                    }
+                }
+                pools.Add(pool);
+            };
             return pools;
         }
 
