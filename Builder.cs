@@ -241,7 +241,7 @@ namespace MMRando
                 foreach (int i in new int[] { 31, 68, 95, 54 }) EntranceUtils.ReadSceneExits(i, 16);
                 // pirate's fortress
                 foreach (int i in new int[] { 20, 35, 59 }) EntranceUtils.ReadSceneExits(i, 16);
-                foreach (int i in new int[] { 43, 19 }) EntranceUtils.ReadSceneExits(i, 16);
+                foreach (int i in new int[] { 99, 25 }) EntranceUtils.ReadSceneExits(i, 16);
                 foreach (int sceneIndex in RomData.SceneList.Select(s=>s.Number))
                 {
                     if (_randomized.ShuffledEntranceList.ContainsKey(sceneIndex) && _randomized.ExitListIndices.ContainsKey(sceneIndex) )
