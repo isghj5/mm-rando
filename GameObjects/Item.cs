@@ -2165,7 +2165,7 @@ namespace MMRando.GameObjects
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x134)]
+        [GetItemIndex(0x182)]
         ItemRanchBarnOtherCowMilk1,
 
         [Repeatable, Temporary, CycleRepeatable]
@@ -2173,7 +2173,7 @@ namespace MMRando.GameObjects
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x133)]
+        [GetItemIndex(0x1A2)]
         ItemRanchBarnOtherCowMilk2,
 
         [Repeatable, Temporary, CycleRepeatable]
@@ -2827,7 +2827,7 @@ namespace MMRando.GameObjects
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Icicle Room Wall"), RegionName("Snowhead Temple")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x0233A000 + 0x22A, ChestAttribute.AppearanceType.Normal)]
         [GetItemIndex(0x197)]
         CollectibleStrayFairySnowhead11,
 
@@ -3114,7 +3114,7 @@ namespace MMRando.GameObjects
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x182)]
+        [GetItemIndex(0x133)]
         MundaneItemDekuPlaygroundPurpleRupee,
 
         [RupeeRepeatable]
@@ -3198,7 +3198,7 @@ namespace MMRando.GameObjects
         [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x1A2)]
+        [GetItemIndex(0x134)]
         MundaneItemOceanSpiderHouseDay2PurpleRupee,
 
         [Repeatable]

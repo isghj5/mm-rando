@@ -366,7 +366,7 @@
 32
 - All Night Mask
 31
-
+120;10;440;92;93;119
 0
 32
 - Blast Mask
@@ -591,7 +591,7 @@
 0
 - Ikana clear
 117,10,0,120,4,142,437,433,91
-
+274;23;24
 0
 0
 - Explosives
@@ -1261,7 +1261,7 @@
 0
 - Twinmold Heart Container
 117,0,10,120,4,142,437,433,91
-
+274;23;24
 0
 0
 - Map: Clock Town
@@ -1650,7 +1650,7 @@
 0
 0
 - Ocean Skulltula Entrance Web
-110,2,433
+110,2,433,119
 10;93
 0
 0
