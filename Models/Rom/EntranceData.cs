@@ -315,5 +315,31 @@ namespace MMRando.Models
             Entrance ent = entrances.Find(e => entranceName.Equals(e.EntranceName));
             return (ent == null) ? false : ent.Properties.Contains(property);
         }
+
+        internal void UpdateExit(string ExitName, string NewSpawnName)
+        {
+            Exit exit = exits.Find(x => ExitName.Equals(x.ExitName));
+            Spawn spawn = spawns.Find(s => NewSpawnName.Equals(s.SpawnName));
+            if (exit != null && spawn != null)
+            {
+                exit.SpawnName = NewSpawnName;
+                List<Entrance> updateList = entrances.Where(e => ExitName.Equals(e.ExitName) || ExitName.Equals(e.ReturnExitName)).ToList();
+                foreach( Entrance e in updateList ){
+                    if( ExitName.Equals(e.ExitName))
+                    {
+                        e.SpawnName = NewSpawnName;
+                    }
+                    else
+                    {
+                        e.ReturnSpawnName = NewSpawnName;
+                    }
+                }
+            }
+            else
+            {
+                Debug.WriteLine($"Update {ExitName} -> {NewSpawnName} failed ({exit}, {spawn})");
+            }
+        }
+
     }
 }

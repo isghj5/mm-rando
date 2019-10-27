@@ -285,11 +285,12 @@ namespace MMRando
             List<List<string>> typePools = new List<List<string>>
             {
                 // new List<string> { "Overworld", "Interior", "Interior Exit", "Dungeon", "Dungeon Exit", "Trial", "Boss", "Boss Exit" },
-                new List<string> { "Overworld: Water", "Interior: Water", "Interior Exit: Water"},
+                //new List<string> { "Overworld: Water", "Interior: Water", "Interior Exit: Water"},
                 new List<string> { "Overworld", "Dungeon" },
-                new List<string> { "Interior: 2" },
-                new List<string> { "Interior: 1" },
-                new List<string> { "Boss", "Trial" },
+                new List<string> { "Interior", "Boss", "Trial" },
+                //new List<string> { "Interior: 2" },
+                //new List<string> { "Interior: 1" },
+                //new List<string> { "Boss", "Trial" },
             };
             List<List<string>> pools = new List<List<string>>();
             List<string> pool;
@@ -404,6 +405,7 @@ namespace MMRando
                     Debug.WriteLine($"{entrance}: {entranceUsed[entrance]}");
                 }
             }
+
         }
 
         internal void FinalizeExit(ushort spawnAddress, int sceneIndex, Exit exit)

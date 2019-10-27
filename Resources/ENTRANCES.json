@@ -2218,6 +2218,12 @@
       "SpawnName": "Deku Palace: Caught"
     },
     {
+      "RegionName": "Deku King Chamber",
+      "ExitName": "Deku King Chamber: Caught",
+      "ExitIndex": 1,
+      "SpawnName": "Deku Palace: Caught"
+    },
+    {
       "RegionName": "Deku Palace",
       "ExitName": "Deku Palace: Deku King Chamber",
       "ExitIndex": 1,
