@@ -233,6 +233,7 @@ namespace MMRando
             ReadTerminaMap();
             ModifySpawns();
             WriteMapData();
+            PrepareEntranceData();
             ShuffleEntrances();
             FinalizeEntrances();
         }
@@ -241,6 +242,14 @@ namespace MMRando
         {
             //entrance name, region name, spawn name, spawn index, exit index, return spawn region name, return spawn name, return spawn index, return exit index
             // TerminaMapData.AddEntrance("Goron Shop", "Goron Shop", "Goron Shrine: Goron Shop", 0, 0, "Goron Shrine", "Goron Shop Exit", 1, 1, "Interior");
+        }
+
+        private void PrepareEntranceData()
+        {
+            TerminaMapData.UpdateExit("South Clock Town: Clock Tower", "The Moon");
+            int n = _random.Next(TerminaMapData.spawns.Count);
+            string startSpawn = TerminaMapData.spawns[n].SpawnName;
+            EntranceUtils.SetExternalEntrances(new int[] { TerminaMapData.SpawnAddress("Clock Tower: South Clock Town") }, new int[] { TerminaMapData.SpawnAddress(startSpawn) });
         }
 
         private void WriteMapData()
@@ -284,10 +293,10 @@ namespace MMRando
             } );
             List<List<string>> typePools = new List<List<string>>
             {
-                // new List<string> { "Overworld", "Interior", "Interior Exit", "Dungeon", "Dungeon Exit", "Trial", "Boss", "Boss Exit" },
+                new List<string> { "Overworld", "Interior", "Interior Exit", "Dungeon", "Dungeon Exit", "Trial", "Boss", "Boss Exit" },
                 //new List<string> { "Overworld: Water", "Interior: Water", "Interior Exit: Water"},
-                new List<string> { "Overworld", "Dungeon" },
-                new List<string> { "Interior", "Boss", "Trial" },
+                //new List<string> { "Overworld", "Dungeon" },
+                //new List<string> { "Interior", "Boss", "Trial" },
                 //new List<string> { "Interior: 2" },
                 //new List<string> { "Interior: 1" },
                 //new List<string> { "Boss", "Trial" },
