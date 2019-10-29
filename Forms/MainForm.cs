@@ -108,7 +108,7 @@ namespace MMRando
             TooltipBuilder.SetTooltip(cCutsc, "Enable shortened cutscenes.\n\nCertain cutscenes are skipped or otherwise shortened.\nDISCLAIMER: This may cause crashing in certain emulators.");
             TooltipBuilder.SetTooltip(cQText, "Enable quick text. Dialogs are fast-forwarded to choices/end of dialog.");
             TooltipBuilder.SetTooltip(cSFX, "Randomize sound effects that are played throughout the game.");
-            TooltipBuilder.SetTooltip(cMusic, "Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music.");
+            TooltipBuilder.SetTooltip(cMusic, "Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music. Causes softlock on Frog Choir HP.");
             TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
             TooltipBuilder.SetTooltip(cClearHints, "Gossip stone hints will give clear item and location names.");
             TooltipBuilder.SetTooltip(cNoDowngrades, "Downgrading items will be prevented.");
@@ -119,6 +119,10 @@ namespace MMRando
             TooltipBuilder.SetTooltip(cLink, "Select a character model to replace Link's default model.");
             TooltipBuilder.SetTooltip(cTatl, "Select a color scheme to replace Tatl's default color scheme.");
             TooltipBuilder.SetTooltip(cGossipHints, "Select a Gossip Stone hint style\n\n - Default: Vanilla Gossip Stone hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, 3 hints about locations with logically-required items, 2 hints about locations with no logically-required items.");
+            TooltipBuilder.SetTooltip(cSkipBeaver, "Modify Beavers to not have to race the younger beaver.");
+            TooltipBuilder.SetTooltip(cGoodDampeRNG, "Change Dampe ghost flames to always have two on the ground floor and one up the ladder.");
+            TooltipBuilder.SetTooltip(cGoodDogRaceRNG, "Make Gold Dog always win if you have the Mask of Truth.");
+            TooltipBuilder.SetTooltip(cFasterLabFish, "Change Lab Fish to only need to be fed one fish.");
         }
 
         #region Forms Code
@@ -180,9 +184,20 @@ namespace MMRando
             tROMName.Text = _settings.InputROMFilename;
         }
 
+        private void bLoadLogic_Click(object sender, EventArgs e)
+        {
+            if(openLogic.ShowDialog() == DialogResult.OK)
+            {
+                _settings.UserLogicFileName = openLogic.FileName;
+                tbUserLogic.Text = Path.GetFileNameWithoutExtension(_settings.UserLogicFileName);
+            }
+        }
+
         private void Randomize()
         {
             if (_settings.GenerateROM && !ValidateInputFile()) return;
+
+            if (_settings.LogicMode == LogicMode.UserLogic && !ValidateLogicFile()) return;
 
             saveROM.FileName = !string.IsNullOrWhiteSpace(_settings.InputPatchFilename)
                 ? Path.ChangeExtension(Path.GetFileName(_settings.InputPatchFilename), "z64")
@@ -309,6 +324,10 @@ namespace MMRando
             cNoStartingItems.Checked = _settings.NoStartingItems;
             cEponaSword.Checked = _settings.FixEponaSword;
             cUpdateChests.Checked = _settings.UpdateChests;
+            cSkipBeaver.Checked = _settings.SpeedupBeavers;
+            cGoodDampeRNG.Checked = _settings.SpeedupDampe;
+            cGoodDogRaceRNG.Checked = _settings.SpeedupDogRace;
+            cFasterLabFish.Checked = _settings.SpeedupLabFish;
 
             cDMult.SelectedIndex = (int)_settings.DamageMode;
             cDType.SelectedIndex = (int)_settings.DamageEffect;
@@ -570,6 +589,26 @@ namespace MMRando
             UpdateSingleSetting(() => _settings.TatlColorSchema = (TatlColorSchema)cTatl.SelectedIndex);
         }
 
+        private void cSkipBeaver_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.SpeedupBeavers = cSkipBeaver.Checked);
+        }
+
+        private void cGoodDampeRNG_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.SpeedupDampe = cGoodDampeRNG.Checked);
+        }
+
+        private void cGoodDogRaceRNG_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.SpeedupDogRace = cGoodDogRaceRNG.Checked);
+        }
+
+        private void cFasterLabFish_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _settings.SpeedupLabFish = cFasterLabFish.Checked);
+        }
+
         private void cMode_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -580,15 +619,18 @@ namespace MMRando
 
             var logicMode = (LogicMode)cMode.SelectedIndex;
 
-            if (logicMode == LogicMode.UserLogic
-                && openLogic.ShowDialog() != DialogResult.OK)
+            if (logicMode == LogicMode.UserLogic)
             {
-                cMode.SelectedIndex = 0;
-                logicMode = LogicMode.Casual;
+                tbUserLogic.Enabled = true;
+                bLoadLogic.Enabled = true;
+            }
+            else
+            {
+                tbUserLogic.Enabled = false;
+                bLoadLogic.Enabled = false;
             }
 
             UpdateSingleSetting(() => _settings.LogicMode = logicMode);
-            _settings.UserLogicFileName = openLogic.FileName;
         }
 
         private void cClockSpeed_SelectedIndexChanged(object sender, EventArgs e)
@@ -836,6 +878,10 @@ namespace MMRando
             cUpdateChests.Enabled = v;
             tStartingItemList.Enabled = v;
             bStartingItemEditor.Enabled = v;
+            cSkipBeaver.Enabled = v;
+            cGoodDampeRNG.Enabled = v;
+            cGoodDogRaceRNG.Enabled = v;
+            cFasterLabFish.Enabled = v;
 
             bopen.Enabled = v;
             bRandomise.Enabled = v;
@@ -892,6 +938,9 @@ namespace MMRando
             _settings.Seed = Math.Abs(Environment.TickCount);
 
             tSeed.Text = _settings.Seed.ToString();
+
+            tbUserLogic.Enabled = false;
+            bLoadLogic.Enabled = false;
 
             var oldSettingsString = tSString.Text;
             UpdateSettingsString();
@@ -950,6 +999,8 @@ namespace MMRando
             {
                 if (!ValidateInputFile()) return;
 
+                if (!ValidateLogicFile()) return;
+
                 if (!RomUtils.ValidateROM(_settings.InputROMFilename))
                 {
                     MessageBox.Show("Cannot verify input ROM is Majora's Mask (U).",
@@ -986,6 +1037,17 @@ namespace MMRando
             if (!File.Exists(_settings.InputROMFilename))
             {
                 MessageBox.Show("Input ROM not found, cannot generate output.",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+            return true;
+        }
+
+        private bool ValidateLogicFile()
+        {
+            if (_settings.LogicMode == LogicMode.UserLogic && !File.Exists(_settings.UserLogicFileName))
+            {
+                MessageBox.Show("User Logic not found, please load User Logic or change logic mode.",
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
@@ -1038,6 +1100,11 @@ namespace MMRando
             cEponaSword.Enabled = v;
             cClearHints.Enabled = _settings.LogicMode != LogicMode.Vanilla && _settings.GossipHintStyle != GossipHintStyle.Default && v;
             cGossipHints.Enabled = _settings.LogicMode != LogicMode.Vanilla && v;
+
+            cSkipBeaver.Enabled = v;
+            cGoodDampeRNG.Enabled = v;
+            cGoodDogRaceRNG.Enabled = v;
+            cFasterLabFish.Enabled = v;
 
             cLink.Enabled = v;
 

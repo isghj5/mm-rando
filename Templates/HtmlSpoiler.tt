@@ -7,17 +7,51 @@
 <html>
 <head>
 <style>
-	th{ text-align:left }
-	.spoiler{ background-color:black }
-	.spoiler:hover { background-color: white;  }
-	[data-content]:before { content: attr(data-content); }
+    body.dark-mode {
+      background-color: #111;
+      color: #ccc;
+    }
+    body.dark-mode a {
+      color: #111;
+    }
+    body.dark-mode button {
+      background-color: #ddd;
+      color: #111;
+    }
 
-	.show-highlight .unavailable .newlocation { background-color: #FFDDDD; }
-	.show-highlight .acquired .newlocation { background-color: #DDFFDD; }
-	.show-highlight .available .newlocation { background-color: #DDDDFF; }
+    body.light-mode {
+      background-color: #eee;
+      color: #111;
+    }
+    body.light-mode a {
+      color: #111;
+    }
+    body.light-mode button {
+      background-color: #111;
+      color: #ccc;
+    }
+
+    th{ text-align:left }
     .region { text-align: center; font-weight: bold; }
+    [data-content]:before { content: attr(data-content); }
+
+	.dark-mode .spoiler{ background-color:#ccc }
+	.dark-mode .spoiler:hover { background-color: #111;  }
+	.dark-mode .show-highlight .unavailable .newlocation { background-color: #500705; }
+	.dark-mode .show-highlight .acquired .newlocation { background-color: #69591f; }
+	.dark-mode .show-highlight .available .newlocation { background-color: #313776; }
+
+	.light-mode .spoiler{ background-color:#111 }
+	.light-mode .spoiler:hover { background-color: #ccc;  }
+	.light-mode .show-highlight .unavailable .newlocation { background-color: #FF9999; }
+	.light-mode .show-highlight .acquired .newlocation { background-color: #99FF99; }
+	.light-mode .show-highlight .available .newlocation { background-color: #9999FF; }
+
+
+    #spoilerLogState { width: 560px; }
 </style>
 </head>
+<body class="light-mode">
 <label><b>Version: </b></label><span><#= spoiler.Version #></span><br/>
 <label><b>Settings String: </b></label><span><#= spoiler.SettingsString #></span><br/>
 <label><b>Seed: </b></label><span><#= spoiler.Seed #></span><br/>
@@ -28,6 +62,10 @@
 <label><b>Custom Starting Item List: </b></label><span><#= spoiler.CustomStartingItemListString #></span><br/>
 <# } #>
 <br/>
+<button type="button" onclick="toggleDarkLight()" title="Toggle dark/light mode">Toggle Dark Theme</button>
+<br/>
+<br/>
+<label><b>Spoiler Log State: </b></label><input id="spoilerLogState" type="text"/><br/>
 <# if (spoiler.RandomizeDungeonEntrances) { 
 #>
 <h2>Dungeon Entrance Replacements</h2>
@@ -54,7 +92,7 @@
  <tr>
      <th>Location</th>
 	 <th></th>
-     <th>Item</th>
+     <th></th>
  </tr>
 <# foreach (var region in spoiler.ItemList.GroupBy(item => item.Region).OrderBy(g => g.Key)) {
 #>
@@ -102,12 +140,6 @@
 </table>
 <# } #>
 <script>
-    var spoilerLogId = '<#= spoiler.Id #>';
-    var logic = JSON.parse(localStorage.getItem('MMR-Logic-' + spoilerLogId));
-    if (!logic) {
-	    logic = <#= spoiler.LogicJson #>
-    }
-
 	function all(list, predicate) {
 		for (var i = 0; i < list.length; i++) {
 			if (!predicate(list[i])) {
@@ -125,10 +157,58 @@
 		}
 		return false;
 	}
-
+    
+    var segmentSize = 16;
     function saveItems() {
-        localStorage.setItem('MMR-Logic-' + spoilerLogId, JSON.stringify(logic));
+        var segments = [];
+        for (var i = 0; i < logic.length; i++) {
+            var segmentIndex = parseInt(i / segmentSize);
+            segments[segmentIndex] = segments[segmentIndex] || 0;
+            if (logic[i].Checked) {
+                segments[parseInt(i / segmentSize)] += (1 << (i%segmentSize));
+            }
+        }
+        var saveString = segments.map(function(s) {
+            return s.toString(16);
+        }).join("-");
+        var saveInput = document.querySelector("#spoilerLogState");
+        saveInput.value = saveString;
     }
+
+    function loadItems() {
+        var saveInput = document.querySelector("#spoilerLogState");
+        var segments = saveInput.value.split("-");
+        if (Math.ceil((logic.length - 1) / segmentSize) !== segments.length) {
+            alert("Invalid Spoiler Log state");
+            return;
+        }
+        segments = segments.map(function(segment) {
+            return parseInt(segment, 16);
+        });
+        for (var i = 0; i < segments.length; i++) {
+            var segment = segments[i];
+            for (var j = 0; j < segmentSize; j++) {
+                var itemIndex = segmentSize * i + j;
+                if (itemIndex < logic.length) {
+                    var mark = ((segment >> j) % 2 == 1);
+                    logic[itemIndex].Checked = mark;
+                    var itemRow = document.querySelector("tr[data-newlocationid='" + itemIndex + "']");
+                    if (itemRow) {
+	                    logic[itemRow.dataset.id].Acquired = mark;
+                    } else {
+	                    logic[itemIndex].Acquired = mark;
+                    }
+                }
+            }
+        }
+		recalculateItems();
+    }
+
+    document.querySelector("#spoilerLogState").addEventListener("keypress", function(event) {
+        if (event.keyCode === 13) {
+            loadItems();
+        }
+    });
 
 	function recalculateItems() {
 		var recalculate = false;
@@ -181,11 +261,13 @@
         }
 	}
 
+    var logic = <#= spoiler.LogicJson #>;
+
     for (var i = 0; i < logic.length; i++) {
         var item = logic[i];
         if (item.Acquired) {
             item.Checked = true;
-	        document.querySelector("tr[data-newlocationid='" + id + "'] input").checked = true;
+	        document.querySelector("tr[data-newlocationid='" + i + "'] input").checked = true;
         }
     }
 
@@ -224,5 +306,12 @@
             }
         }
 	});
+
+    function toggleDarkLight() {
+	    var body = document.getElementsByTagName('body')[0];
+	    var currentClassBody = body.className;
+	    body.className = currentClassBody === "dark-mode" ? "light-mode" : "dark-mode";
+    }
 </script>
+</body>
 </html>

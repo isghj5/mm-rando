@@ -34,6 +34,7 @@ namespace MMRando
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.bopen = new System.Windows.Forms.Button();
             this.openROM = new System.Windows.Forms.OpenFileDialog();
+            this.openLogic = new System.Windows.Forms.OpenFileDialog();
             this.tROMName = new System.Windows.Forms.TextBox();
             this.cUserItems = new System.Windows.Forms.CheckBox();
             this.tSettings = new System.Windows.Forms.TabControl();
@@ -51,6 +52,8 @@ namespace MMRando
             this.lCustomStartingItemAmount = new System.Windows.Forms.Label();
             this.bStartingItemEditor = new System.Windows.Forms.Button();
             this.tStartingItemList = new System.Windows.Forms.TextBox();
+            this.tbUserLogic = new System.Windows.Forms.TextBox();
+            this.bLoadLogic = new System.Windows.Forms.Button();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.cNoStartingItems = new System.Windows.Forms.CheckBox();
             this.cDEnt = new System.Windows.Forms.CheckBox();
@@ -92,6 +95,11 @@ namespace MMRando
             this.cDMult = new System.Windows.Forms.ComboBox();
             this.cGravity = new System.Windows.Forms.ComboBox();
             this.tabComfort = new System.Windows.Forms.TabPage();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.cGoodDogRaceRNG = new System.Windows.Forms.CheckBox();
+            this.cFasterLabFish = new System.Windows.Forms.CheckBox();
+            this.cGoodDampeRNG = new System.Windows.Forms.CheckBox();
+            this.cSkipBeaver = new System.Windows.Forms.CheckBox();
             this.lMusic = new System.Windows.Forms.Label();
             this.cMusic = new System.Windows.Forms.ComboBox();
             this.cSFX = new System.Windows.Forms.CheckBox();
@@ -126,7 +134,6 @@ namespace MMRando
             this.mSep1 = new System.Windows.Forms.ToolStripSeparator();
             this.mAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.openBROM = new System.Windows.Forms.OpenFileDialog();
-            this.openLogic = new System.Windows.Forms.OpenFileDialog();
             this.pProgress = new System.Windows.Forms.ProgressBar();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.lStatus = new System.Windows.Forms.Label();
@@ -143,11 +150,6 @@ namespace MMRando
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.cSkipBeaver = new System.Windows.Forms.CheckBox();
-            this.cGoodDampeRNG = new System.Windows.Forms.CheckBox();
-            this.cGoodFishRNG = new System.Windows.Forms.CheckBox();
-            this.cGoodDogRaceRNG = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabROMSettings.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -158,11 +160,11 @@ namespace MMRando
             this.groupBox2.SuspendLayout();
             this.tabGimmick.SuspendLayout();
             this.tabComfort.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.mMenu.SuspendLayout();
             this.ttOutput.SuspendLayout();
             this.tpOutputSettings.SuspendLayout();
             this.tpPatchSettings.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // bopen
@@ -178,6 +180,10 @@ namespace MMRando
             // openROM
             // 
             this.openROM.Filter = "ROM files|*.z64";
+            // 
+            // openLogic
+            // 
+            this.openLogic.Filter = "Logic File|*.txt";
             // 
             // tROMName
             // 
@@ -209,7 +215,7 @@ namespace MMRando
             this.tSettings.Location = new System.Drawing.Point(0, 23);
             this.tSettings.Name = "tSettings";
             this.tSettings.SelectedIndex = 0;
-            this.tSettings.Size = new System.Drawing.Size(355, 437);
+            this.tSettings.Size = new System.Drawing.Size(355, 463);
             this.tSettings.TabIndex = 10;
             // 
             // tabROMSettings
@@ -222,7 +228,7 @@ namespace MMRando
             this.tabROMSettings.Location = new System.Drawing.Point(4, 25);
             this.tabROMSettings.Name = "tabROMSettings";
             this.tabROMSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tabROMSettings.Size = new System.Drawing.Size(347, 408);
+            this.tabROMSettings.Size = new System.Drawing.Size(347, 434);
             this.tabROMSettings.TabIndex = 3;
             this.tabROMSettings.Text = "ROM Settings";
             this.tabROMSettings.UseVisualStyleBackColor = true;
@@ -339,6 +345,8 @@ namespace MMRando
             // tabMain
             // 
             this.tabMain.Controls.Add(this.groupBox4);
+            this.tabMain.Controls.Add(this.tbUserLogic);
+            this.tabMain.Controls.Add(this.bLoadLogic);
             this.tabMain.Controls.Add(this.groupBox3);
             this.tabMain.Controls.Add(this.groupBox2);
             this.tabMain.Controls.Add(this.lMode);
@@ -346,7 +354,7 @@ namespace MMRando
             this.tabMain.Location = new System.Drawing.Point(4, 25);
             this.tabMain.Name = "tabMain";
             this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMain.Size = new System.Drawing.Size(347, 408);
+            this.tabMain.Size = new System.Drawing.Size(347, 434);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Main Settings";
             this.tabMain.UseVisualStyleBackColor = true;
@@ -356,7 +364,7 @@ namespace MMRando
             this.groupBox4.Controls.Add(this.lCustomStartingItemAmount);
             this.groupBox4.Controls.Add(this.bStartingItemEditor);
             this.groupBox4.Controls.Add(this.tStartingItemList);
-            this.groupBox4.Location = new System.Drawing.Point(10, 333);
+            this.groupBox4.Location = new System.Drawing.Point(10, 354);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(325, 72);
             this.groupBox4.TabIndex = 17;
@@ -394,13 +402,31 @@ namespace MMRando
             this.tStartingItemList.Text = "--";
             this.tStartingItemList.TextChanged += new System.EventHandler(this.tStartingItemList_TextChanged);
             // 
+            // tbUserLogic
+            // 
+            this.tbUserLogic.Location = new System.Drawing.Point(99, 43);
+            this.tbUserLogic.Name = "tbUserLogic";
+            this.tbUserLogic.ReadOnly = true;
+            this.tbUserLogic.Size = new System.Drawing.Size(219, 20);
+            this.tbUserLogic.TabIndex = 18;
+            // 
+            // bLoadLogic
+            // 
+            this.bLoadLogic.Location = new System.Drawing.Point(23, 41);
+            this.bLoadLogic.Name = "bLoadLogic";
+            this.bLoadLogic.Size = new System.Drawing.Size(73, 24);
+            this.bLoadLogic.TabIndex = 17;
+            this.bLoadLogic.Text = "Open Logic";
+            this.bLoadLogic.UseVisualStyleBackColor = true;
+            this.bLoadLogic.Click += new System.EventHandler(this.bLoadLogic_Click);
+            // 
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.cNoStartingItems);
             this.groupBox3.Controls.Add(this.cDEnt);
             this.groupBox3.Controls.Add(this.cEnemy);
             this.groupBox3.Controls.Add(this.cMixSongs);
-            this.groupBox3.Location = new System.Drawing.Point(10, 255);
+            this.groupBox3.Location = new System.Drawing.Point(10, 281);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(324, 71);
             this.groupBox3.TabIndex = 16;
@@ -486,7 +512,7 @@ namespace MMRando
             this.groupBox2.Controls.Add(this.cShop);
             this.groupBox2.Controls.Add(this.cAdditional);
             this.groupBox2.Controls.Add(this.cMoonItems);
-            this.groupBox2.Location = new System.Drawing.Point(10, 49);
+            this.groupBox2.Location = new System.Drawing.Point(10, 80);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(325, 200);
             this.groupBox2.TabIndex = 15;
@@ -728,7 +754,7 @@ namespace MMRando
             this.lMode.BackColor = System.Drawing.Color.Transparent;
             this.lMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lMode.ForeColor = System.Drawing.Color.Black;
-            this.lMode.Location = new System.Drawing.Point(19, 22);
+            this.lMode.Location = new System.Drawing.Point(25, 17);
             this.lMode.Name = "lMode";
             this.lMode.Size = new System.Drawing.Size(68, 13);
             this.lMode.TabIndex = 0;
@@ -740,13 +766,11 @@ namespace MMRando
             this.cMode.FormattingEnabled = true;
             this.cMode.Items.AddRange(new object[] {
             "Casual",
-            "Glitched (no setups)",
-            "Glitched (common tricks)",
             "Glitched",
             "Vanilla Layout",
             "User Logic",
             "No Logic"});
-            this.cMode.Location = new System.Drawing.Point(90, 18);
+            this.cMode.Location = new System.Drawing.Point(96, 13);
             this.cMode.Name = "cMode";
             this.cMode.Size = new System.Drawing.Size(222, 21);
             this.cMode.TabIndex = 1;
@@ -771,7 +795,7 @@ namespace MMRando
             this.tabGimmick.Controls.Add(this.cGravity);
             this.tabGimmick.Location = new System.Drawing.Point(4, 25);
             this.tabGimmick.Name = "tabGimmick";
-            this.tabGimmick.Size = new System.Drawing.Size(347, 408);
+            this.tabGimmick.Size = new System.Drawing.Size(347, 434);
             this.tabGimmick.TabIndex = 2;
             this.tabGimmick.Text = "Gimmicks";
             this.tabGimmick.UseVisualStyleBackColor = true;
@@ -993,10 +1017,71 @@ namespace MMRando
             this.tabComfort.Location = new System.Drawing.Point(4, 25);
             this.tabComfort.Name = "tabComfort";
             this.tabComfort.Padding = new System.Windows.Forms.Padding(3);
-            this.tabComfort.Size = new System.Drawing.Size(347, 408);
+            this.tabComfort.Size = new System.Drawing.Size(347, 434);
             this.tabComfort.TabIndex = 1;
             this.tabComfort.Text = "Comfort/Cosmetics";
             this.tabComfort.UseVisualStyleBackColor = true;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.cGoodDogRaceRNG);
+            this.groupBox5.Controls.Add(this.cFasterLabFish);
+            this.groupBox5.Controls.Add(this.cGoodDampeRNG);
+            this.groupBox5.Controls.Add(this.cSkipBeaver);
+            this.groupBox5.Location = new System.Drawing.Point(7, 275);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(334, 127);
+            this.groupBox5.TabIndex = 27;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Speed Ups";
+            // 
+            // cGoodDogRaceRNG
+            // 
+            this.cGoodDogRaceRNG.AutoSize = true;
+            this.cGoodDogRaceRNG.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(14, 66);
+            this.cGoodDogRaceRNG.Name = "cGoodDogRaceRNG";
+            this.cGoodDogRaceRNG.Size = new System.Drawing.Size(131, 17);
+            this.cGoodDogRaceRNG.TabIndex = 3;
+            this.cGoodDogRaceRNG.Text = "Good Dog Race RNG";
+            this.cGoodDogRaceRNG.UseVisualStyleBackColor = true;
+            this.cGoodDogRaceRNG.CheckedChanged += new System.EventHandler(this.cGoodDogRaceRNG_CheckedChanged);
+            // 
+            // cFasterLabFish
+            // 
+            this.cFasterLabFish.AutoSize = true;
+            this.cFasterLabFish.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cFasterLabFish.Location = new System.Drawing.Point(47, 89);
+            this.cFasterLabFish.Name = "cFasterLabFish";
+            this.cFasterLabFish.Size = new System.Drawing.Size(98, 17);
+            this.cFasterLabFish.TabIndex = 2;
+            this.cFasterLabFish.Text = "Faster Lab Fish";
+            this.cFasterLabFish.UseVisualStyleBackColor = true;
+            this.cFasterLabFish.CheckedChanged += new System.EventHandler(this.cFasterLabFish_CheckedChanged);
+            // 
+            // cGoodDampeRNG
+            // 
+            this.cGoodDampeRNG.AutoSize = true;
+            this.cGoodDampeRNG.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cGoodDampeRNG.Location = new System.Drawing.Point(29, 43);
+            this.cGoodDampeRNG.Name = "cGoodDampeRNG";
+            this.cGoodDampeRNG.Size = new System.Drawing.Size(116, 17);
+            this.cGoodDampeRNG.TabIndex = 1;
+            this.cGoodDampeRNG.Text = "Good Dampe RNG";
+            this.cGoodDampeRNG.UseVisualStyleBackColor = true;
+            this.cGoodDampeRNG.CheckedChanged += new System.EventHandler(this.cGoodDampeRNG_CheckedChanged);
+            // 
+            // cSkipBeaver
+            // 
+            this.cSkipBeaver.AutoSize = true;
+            this.cSkipBeaver.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.cSkipBeaver.Location = new System.Drawing.Point(18, 20);
+            this.cSkipBeaver.Name = "cSkipBeaver";
+            this.cSkipBeaver.Size = new System.Drawing.Size(127, 17);
+            this.cSkipBeaver.TabIndex = 0;
+            this.cSkipBeaver.Text = "Skip Younger Beaver";
+            this.cSkipBeaver.UseVisualStyleBackColor = true;
+            this.cSkipBeaver.CheckedChanged += new System.EventHandler(this.cSkipBeaver_CheckedChanged);
             // 
             // lMusic
             // 
@@ -1017,7 +1102,7 @@ namespace MMRando
             this.cMusic.Items.AddRange(new object[] {
             "Default",
             "Random",
-            "None"});
+            "None (Risky)"});
             this.cMusic.Location = new System.Drawing.Point(128, 248);
             this.cMusic.Name = "cMusic";
             this.cMusic.Size = new System.Drawing.Size(167, 21);
@@ -1380,7 +1465,7 @@ namespace MMRando
             // 
             // pProgress
             // 
-            this.pProgress.Location = new System.Drawing.Point(11, 584);
+            this.pProgress.Location = new System.Drawing.Point(11, 608);
             this.pProgress.Margin = new System.Windows.Forms.Padding(2);
             this.pProgress.Name = "pProgress";
             this.pProgress.Size = new System.Drawing.Size(339, 19);
@@ -1395,7 +1480,7 @@ namespace MMRando
             // 
             this.lStatus.AutoSize = true;
             this.lStatus.BackColor = System.Drawing.Color.Transparent;
-            this.lStatus.Location = new System.Drawing.Point(15, 565);
+            this.lStatus.Location = new System.Drawing.Point(15, 589);
             this.lStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lStatus.Name = "lStatus";
             this.lStatus.Size = new System.Drawing.Size(47, 13);
@@ -1452,7 +1537,7 @@ namespace MMRando
             this.cDummy.AutoSize = true;
             this.cDummy.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.cDummy.Enabled = false;
-            this.cDummy.Location = new System.Drawing.Point(265, 561);
+            this.cDummy.Location = new System.Drawing.Point(265, 585);
             this.cDummy.Name = "cDummy";
             this.cDummy.Size = new System.Drawing.Size(80, 17);
             this.cDummy.TabIndex = 9;
@@ -1464,7 +1549,7 @@ namespace MMRando
             // 
             this.lHrule.AutoSize = true;
             this.lHrule.ForeColor = System.Drawing.SystemColors.ActiveBorder;
-            this.lHrule.Location = new System.Drawing.Point(20, 449);
+            this.lHrule.Location = new System.Drawing.Point(20, 473);
             this.lHrule.Name = "lHrule";
             this.lHrule.Size = new System.Drawing.Size(325, 13);
             this.lHrule.TabIndex = 12;
@@ -1474,7 +1559,7 @@ namespace MMRando
             // 
             this.label5.AutoSize = true;
             this.label5.ForeColor = System.Drawing.SystemColors.ActiveBorder;
-            this.label5.Location = new System.Drawing.Point(20, 546);
+            this.label5.Location = new System.Drawing.Point(20, 570);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(325, 13);
             this.label5.TabIndex = 14;
@@ -1488,7 +1573,7 @@ namespace MMRando
             // 
             this.ttOutput.Controls.Add(this.tpOutputSettings);
             this.ttOutput.Controls.Add(this.tpPatchSettings);
-            this.ttOutput.Location = new System.Drawing.Point(4, 466);
+            this.ttOutput.Location = new System.Drawing.Point(4, 490);
             this.ttOutput.Name = "ttOutput";
             this.ttOutput.SelectedIndex = 0;
             this.ttOutput.Size = new System.Drawing.Size(354, 89);
@@ -1541,69 +1626,12 @@ namespace MMRando
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.cGoodDogRaceRNG);
-            this.groupBox5.Controls.Add(this.cGoodFishRNG);
-            this.groupBox5.Controls.Add(this.cGoodDampeRNG);
-            this.groupBox5.Controls.Add(this.cSkipBeaver);
-            this.groupBox5.Location = new System.Drawing.Point(7, 275);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(334, 127);
-            this.groupBox5.TabIndex = 27;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Speed Ups";
-            // 
-            // cSkipBeaver
-            // 
-            this.cSkipBeaver.AutoSize = true;
-            this.cSkipBeaver.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cSkipBeaver.Location = new System.Drawing.Point(7, 20);
-            this.cSkipBeaver.Name = "cSkipBeaver";
-            this.cSkipBeaver.Size = new System.Drawing.Size(127, 17);
-            this.cSkipBeaver.TabIndex = 0;
-            this.cSkipBeaver.Text = "Skip Younger Beaver";
-            this.cSkipBeaver.UseVisualStyleBackColor = true;
-            // 
-            // cGoodDampeRNG
-            // 
-            this.cGoodDampeRNG.AutoSize = true;
-            this.cGoodDampeRNG.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cGoodDampeRNG.Location = new System.Drawing.Point(18, 43);
-            this.cGoodDampeRNG.Name = "cGoodDampeRNG";
-            this.cGoodDampeRNG.Size = new System.Drawing.Size(116, 17);
-            this.cGoodDampeRNG.TabIndex = 1;
-            this.cGoodDampeRNG.Text = "Good Dampe RNG";
-            this.cGoodDampeRNG.UseVisualStyleBackColor = true;
-            // 
-            // cGoodFishRNG
-            // 
-            this.cGoodFishRNG.AutoSize = true;
-            this.cGoodFishRNG.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cGoodFishRNG.Location = new System.Drawing.Point(33, 66);
-            this.cGoodFishRNG.Name = "cGoodFishRNG";
-            this.cGoodFishRNG.Size = new System.Drawing.Size(101, 17);
-            this.cGoodFishRNG.TabIndex = 2;
-            this.cGoodFishRNG.Text = "Good Fish RNG";
-            this.cGoodFishRNG.UseVisualStyleBackColor = true;
-            // 
-            // cGoodDogRaceRNG
-            // 
-            this.cGoodDogRaceRNG.AutoSize = true;
-            this.cGoodDogRaceRNG.CheckAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(3, 89);
-            this.cGoodDogRaceRNG.Name = "cGoodDogRaceRNG";
-            this.cGoodDogRaceRNG.Size = new System.Drawing.Size(131, 17);
-            this.cGoodDogRaceRNG.TabIndex = 3;
-            this.cGoodDogRaceRNG.Text = "Good Dog Race RNG";
-            this.cGoodDogRaceRNG.UseVisualStyleBackColor = true;
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(355, 614);
+            this.ClientSize = new System.Drawing.Size(355, 636);
             this.Controls.Add(this.ttOutput);
             this.Controls.Add(this.lStatus);
             this.Controls.Add(this.cDummy);
@@ -1638,6 +1666,8 @@ namespace MMRando
             this.tabGimmick.PerformLayout();
             this.tabComfort.ResumeLayout(false);
             this.tabComfort.PerformLayout();
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.mMenu.ResumeLayout(false);
             this.mMenu.PerformLayout();
             this.ttOutput.ResumeLayout(false);
@@ -1645,8 +1675,6 @@ namespace MMRando
             this.tpOutputSettings.PerformLayout();
             this.tpPatchSettings.ResumeLayout(false);
             this.tpPatchSettings.PerformLayout();
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1657,6 +1685,7 @@ namespace MMRando
         private System.Windows.Forms.Button bopen;
         private System.Windows.Forms.OpenFileDialog openROM;
         private System.Windows.Forms.OpenFileDialog openPatch;
+        private System.Windows.Forms.OpenFileDialog openLogic;
         private System.Windows.Forms.TextBox tROMName;
         private System.Windows.Forms.ComboBox cMode;
         private System.Windows.Forms.Label lMode;
@@ -1705,7 +1734,6 @@ namespace MMRando
         private System.Windows.Forms.ToolStripMenuItem mCustomise;
         private System.Windows.Forms.ToolStripMenuItem mLogicEdit;
         private System.Windows.Forms.CheckBox cUserItems;
-        private System.Windows.Forms.OpenFileDialog openLogic;
         private System.Windows.Forms.ProgressBar pProgress;
         private System.ComponentModel.BackgroundWorker bgWorker;
         private System.Windows.Forms.Label lStatus;
@@ -1752,6 +1780,8 @@ namespace MMRando
         private System.Windows.Forms.TextBox tCustomItemList;
         private System.Windows.Forms.Label lCustomItemAmount;
         private System.Windows.Forms.CheckBox cFairyRewards;
+        private System.Windows.Forms.TextBox tbUserLogic;
+        private System.Windows.Forms.Button bLoadLogic;
         private System.Windows.Forms.CheckBox cCowMilk;
         private System.Windows.Forms.CheckBox cSpiders;
         private System.Windows.Forms.CheckBox cStrayFairies;
@@ -1767,7 +1797,7 @@ namespace MMRando
         private System.Windows.Forms.Label lCustomStartingItemAmount;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.CheckBox cGoodDogRaceRNG;
-        private System.Windows.Forms.CheckBox cGoodFishRNG;
+        private System.Windows.Forms.CheckBox cFasterLabFish;
         private System.Windows.Forms.CheckBox cGoodDampeRNG;
         private System.Windows.Forms.CheckBox cSkipBeaver;
     }

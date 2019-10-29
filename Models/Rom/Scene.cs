@@ -7,6 +7,6 @@ namespace MMRando.Models.Rom
         public int File;
         public int Number;
         public List<Map> Maps = new List<Map>();
-        public int ExitAddr;
+        public List<int> ExitAddr = new List<int>();
     }
 }

@@ -1,4 +1,4 @@
-﻿using MMRando.Extensions;
+using MMRando.Extensions;
 using MMRando.GameObjects;
 using MMRando.Models;
 using MMRando.Models.Settings;
@@ -129,7 +129,7 @@ namespace MMRando.Utils
             log.AppendLine($" {"Location",-50}    {"Item"}");
             foreach (var item in spoiler.EntranceList)
             {
-                log.AppendLine($"{item.OriginalAddress.ToString("X4")}: {item.OriginalEntrance,-50} -> {item.ShuffledAddress.ToString("X4")}: {item.ShuffledEntrance}");
+                log.AppendLine($"{item.OriginalEntrance,-50} -> {item.ShuffledEntrance}");
             }
 
             log.AppendLine();

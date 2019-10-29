@@ -235,17 +235,18 @@ namespace MMRando
             {
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
-                SceneUtils.GetMapHeaders();
-                foreach(int i in new int[] { 45 })
-                    EntranceUtils.ReadSceneExits(i, 16);
-                int[] fakeExits = Enumerable.Range(0, 32).ToArray();
+                // boss lairs
+                foreach (int i in new int[] { 31, 68, 95, 54 }) EntranceUtils.ReadSceneExits(i, 16);
+                // pirate's fortress
+                foreach (int i in new int[] { 20, 35, 59 }) EntranceUtils.ReadSceneExits(i, 16);
+                foreach (int i in new int[] { 112 }) EntranceUtils.ReadSceneExits(i, 16);
+                ReadWriteUtils.WriteToROM(0xC5CDFA, 0x3);
+                ReadWriteUtils.WriteToROM(0xC5CDFB, 0xFF);
                 foreach (int sceneIndex in RomData.SceneList.Select(s=>s.Number))
                 {
-                    if (_randomized.EntranceList.ContainsKey(sceneIndex) && _randomized.ShuffledEntranceList.ContainsKey(sceneIndex) )
+                    if (_randomized.ShuffledEntranceList.ContainsKey(sceneIndex) && _randomized.ExitListIndices.ContainsKey(sceneIndex) )
                     {
-                        System.Diagnostics.Debug.WriteLine("Scene " + sceneIndex.ToString("X2") + "\n-----\n");
-                        EntranceUtils.WriteSceneExits(sceneIndex, _randomized.EntranceList[sceneIndex], _randomized.ShuffledEntranceList[sceneIndex], _randomized.ExitListIndices[sceneIndex]);
-                        //EntranceUtils.WriteSceneExits(sceneIndex, fakeExits.Select(x=>(ushort)x).ToArray(), fakeExits.Select(x => (ushort)x).ToArray(), fakeExits);
+                        EntranceUtils.WriteSceneExits(sceneIndex, _randomized.ShuffledEntranceList[sceneIndex], _randomized.ExitListIndices[sceneIndex]);
                     }
                 }
             }
@@ -313,7 +314,7 @@ namespace MMRando
 
         private void WriteSpeedUps()
         {
-            // if (speedupbeavers)
+            if (_settings.SpeedupBeavers)
             {
                 ResourceUtils.ApplyHack(Values.ModsDirectory + "speedup-beavers");
                 _messageTable.UpdateMessages(new MessageEntry
@@ -336,9 +337,19 @@ namespace MMRando
                 });
             }
 
-            // if (speedupDampe)
+            if (_settings.SpeedupDampe)
             {
                 ResourceUtils.ApplyHack(Values.ModsDirectory + "speedup-dampe");
+            }
+
+            if (_settings.SpeedupLabFish)
+            {
+                ResourceUtils.ApplyHack(Values.ModsDirectory + "speedup-labfish");
+            }
+
+            if (_settings.SpeedupDogRace)
+            {
+                ResourceUtils.ApplyHack(Values.ModsDirectory + "speedup-dograce");
             }
         }
 
@@ -667,7 +678,7 @@ namespace MMRando
                     {
                         overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
                     }
-                    ItemSwapUtils.WriteNewItem(item.NewLocation.Value, item.Item, newMessages, _settings.UpdateShopAppearance, _settings.PreventDowngrades, _settings.UpdateChests && item.IsRandomized, overrideChestType);
+                    ItemSwapUtils.WriteNewItem(item.NewLocation.Value, item.Item, newMessages, _settings.UpdateShopAppearance, _settings.PreventDowngrades, _settings.UpdateChests && item.IsRandomized, overrideChestType, _settings.CustomStartingItemList.Contains(item.Item));
                 }
             }
 
@@ -883,13 +894,13 @@ namespace MMRando
                 {
                     Id = 0x51,
                     Header = new byte[11] { 0x02, 0x00, 0x52, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },
-                    Message = $"\u0017You got an \u0005Ocean Gold Skulltula\u0011Spirit\0!\u0018\u00BF", // todo display count "\u0011\u001f\0\u0010This is your \u000D one!\u001c\0\u0028"
+                    Message = $"\u0017You got an \u0005Ocean Gold Skulltula\u0011Spirit\0!\u0018\u001F\u0000\u0010 This is your \u0001\u000D\u0000 one!\u00BF",
                 });
                 newMessages.Add(new MessageEntry
                 {
                     Id = 0x52,
                     Header = new byte[11] { 0x02, 0x00, 0x52, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },
-                    Message = $"\u0017You got a \u0006Swamp Gold Skulltula\u0011Spirit\0!\u0018\u00BF", // todo display count "\u0011\u001f\0\u0010This is your \u000D one!\u001c\0\u0028"
+                    Message = $"\u0017You got a \u0006Swamp Gold Skulltula\u0011Spirit\0!\u0018\u001F\u0000\u0010 This is your \u0001\u000D\u0000 one!\u00BF",
                 });
             }
 
@@ -919,7 +930,7 @@ namespace MMRando
                 "\u0017You found the \u0001Boss Key\u0000 for\u0011{0}!\u0018\u00BF",
                 "\u0017You found the \u0001Dungeon Map\u0000 for\u0011{0}!\u0018\u00BF",
                 "\u0017You found the \u0001Compass\u0000 for\u0011{0}!\u0018\u00BF",
-                "\u0017You found a \u0001Stray Fairy\u0000 from\u0011{0}!\u0018\u00BF",
+                "\u0017You found a \u0001Stray Fairy\u0000 from\u0011{0}!\u0018\u001F\u0000\u0010\u0011This is your \u0001\u000C\u0000 one!\u00BF",
             };
 
             var dungeonItemIcons = new byte[]

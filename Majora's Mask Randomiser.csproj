@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -104,9 +104,9 @@
     <Compile Include="GameObjects\Item.cs" />
     <Compile Include="GameObjects\MessageShopText.cs" />
     <Compile Include="Models\RandomizedResult.cs" />
+    <Compile Include="Models\Rom\EntranceData.cs" />
     <Compile Include="Models\Rom\MessageTable.cs" />
     <Compile Include="Models\Rom\Enemy.cs" />
-    <Compile Include="Models\Rom\Exit.cs" />
     <Compile Include="Models\Settings\BlastMaskCooldown.cs" />
     <Compile Include="Models\Settings\Music.cs" />
     <Compile Include="Models\SoundEffects\EffectAttribute.cs" />
@@ -472,6 +472,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\mods\speedup-dampe">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\mods\speedup-dograce">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\mods\speedup-labfish">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\mods\standing-hearts">
@@ -886,9 +892,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="200px_majoramask_rtw_icon.ico" />
-    <None Include="Resources\REQ_GLITCH_COMMONTRICKS.txt" />
-    <None Include="Resources\REQ_GLITCH_NOSETUPS.txt" />
-    <None Include="Resources\ENT_REQ_CASUAL.txt" />
     <Content Include="Templates\HtmlSpoiler.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
       <LastGenOutput>HtmlSpoiler.cs</LastGenOutput>

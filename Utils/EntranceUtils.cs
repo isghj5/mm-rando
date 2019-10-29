@@ -1,6 +1,7 @@
-﻿using MMRando.Models.Rom;
-using System;
+﻿using MMRando.Models;
+using MMRando.Models.Rom;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace MMRando.Utils
@@ -8,6 +9,12 @@ namespace MMRando.Utils
 
     public static class EntranceUtils
     {
+        private static int[] olde, newe;
+        public static void SetExternalEntrances(int[] old, int[] now)
+        {
+            olde = old;
+            newe = now;
+        }
         private static int GetEntranceAddr(int ent)
         {
             int offset = ((ent >> 9) * 12) + 0xC5BC64;
@@ -48,17 +55,19 @@ namespace MMRando.Utils
             Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
             int f = scene.File;
             RomUtils.CheckCompressed(f);
-            int exitAddress;
+            Debug.WriteLine($"Scene Number: {sceneNumber}");
             ushort tempExit;
-            exitAddress = scene.ExitAddr;
-            for (int i = 0; i < count; i++)
+            foreach(int exitAddress in scene.ExitAddr)
             {
-                tempExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + i * 2);
-                System.Diagnostics.Debug.WriteLine($"{i}: {tempExit.ToString("X4")}");
+                for (int i = 0; i < count; i++)
+                {
+                    tempExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + i * 2);
+                    System.Diagnostics.Debug.WriteLine($"{i}: {tempExit.ToString("X4")} = {tempExit}");
+                }
             }
         }
 
-        public static void WriteSceneExits(int sceneNumber, ushort[] originalExits, ushort[] shuffledExits, int[] shuffledIndexes)
+        public static void WriteSceneExits(int sceneNumber, List<ushort> shuffledExits, List<int> shuffledIndexes)
         {
             SceneUtils.ReadSceneTable();
             SceneUtils.GetMaps();
@@ -66,13 +75,17 @@ namespace MMRando.Utils
             Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
             int f = scene.File;
             RomUtils.CheckCompressed(f);
-            int exitAddress;
-            exitAddress = scene.ExitAddr;
-            for (int i = 0; i < shuffledExits.Length; i++)
-            {
-                ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + shuffledIndexes[i] * 2, shuffledExits[i]);
-                System.Diagnostics.Debug.WriteLine($"\"{originalExits[i].ToString("X4")}\" @ {shuffledIndexes[i]} -> {shuffledExits[i].ToString("X4")}");
+            if (scene.ExitAddr.Count > 1) {
+                Debug.WriteLine(scene.Number);
             }
+            foreach( int exitAddress in scene.ExitAddr)
+            {
+                for (int i = 0; i < shuffledExits.Count; i++)
+                {
+                    ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + shuffledIndexes[i] * 2, shuffledExits[i]);
+                }
+            }
+            WriteEntrances(olde, newe);
         }
     }
 }

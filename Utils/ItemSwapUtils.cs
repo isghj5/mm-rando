@@ -11,7 +11,7 @@ namespace MMRando.Utils
     {
         const int BOTTLE_CATCH_TABLE = 0xCD7C08;
         static int cycle_repeat = 0;
-        static int cycle_repeat_count_address = 0xC72CFA;
+        static int cycle_repeat_count_address = 0xC72D16;
         static ushort cycle_repeat_count = 0x74;
         static int GET_ITEM_TABLE = 0;
 
@@ -28,6 +28,10 @@ namespace MMRando.Utils
             ResourceUtils.ApplyHack(ModsDir + "fix-item-checks");
             cycle_repeat = 0xC72DF4;
             SceneUtils.ResetSceneFlagMask();
+            SceneUtils.UpdateSceneFlagMask(0x5B); // red potion
+            SceneUtils.UpdateSceneFlagMask(0x91); // chateau romani
+            SceneUtils.UpdateSceneFlagMask(0x92); // milk
+            SceneUtils.UpdateSceneFlagMask(0x93); // gold dust
         }
 
         private static void InitGetBottleList()
@@ -97,7 +101,7 @@ namespace MMRando.Utils
             }
         }
 
-        public static void WriteNewItem(Item location, Item item, List<MessageEntry> newMessages, bool updateShop, bool preventDowngrades, bool updateChest, ChestTypeAttribute.ChestType? overrideChestType)
+        public static void WriteNewItem(Item location, Item item, List<MessageEntry> newMessages, bool updateShop, bool preventDowngrades, bool updateChest, ChestTypeAttribute.ChestType? overrideChestType, bool isExtraStartingItem)
         {
             System.Diagnostics.Debug.WriteLine($"Writing {item.Name()} --> {location.Location()}");
 
@@ -105,7 +109,9 @@ namespace MMRando.Utils
             int baseaddr = GET_ITEM_TABLE - RomData.MMFileList[f].Addr;
             var getItemIndex = location.GetItemIndex().Value;
             int offset = (getItemIndex - 1) * 8 + baseaddr;
-            var newItem = RomData.GetItemList[item.GetItemIndex().Value];
+            var newItem = isExtraStartingItem 
+                ? Items.RecoveryHeart // Warning: this will not work well for starting with Bottle contents (currently impossible), because you'll first have to acquire the Recovery Heart before getting the bottle-less version. Also may interfere with future implementation of progressive upgrades.
+                : RomData.GetItemList[item.GetItemIndex().Value];
             var fileData = RomData.MMFileList[f].Data;
 
             var data = new byte[]
@@ -121,7 +127,8 @@ namespace MMRando.Utils
             };
             ReadWriteUtils.Arr_Insert(data, 0, data.Length, fileData, offset);
             
-            if (item.IsCycleRepeatable() || (item.Name().Contains("Rupee") && location.IsRupeeRepeatable()))
+            // todo use Logic Editor to handle which locations should be repeatable and which shouldn't.
+            if ((item.IsCycleRepeatable() && location != Item.HeartPieceNotebookMayor) || (item.Name().Contains("Rupee") && location.IsRupeeRepeatable()))
             {
                 ReadWriteUtils.WriteToROM(cycle_repeat, (ushort)getItemIndex);
                 cycle_repeat += 2;
@@ -138,25 +145,25 @@ namespace MMRando.Utils
 
             if (item == Item.ItemBottleWitch)
             {
-                ReadWriteUtils.WriteToROM(0xB49982, (ushort)getItemIndex);
+                ReadWriteUtils.WriteToROM(0xB4997E, (ushort)getItemIndex);
                 ReadWriteUtils.WriteToROM(0xC72B42, (ushort)getItemIndex);
             }
 
             if (item == Item.ItemBottleMadameAroma)
             {
-                ReadWriteUtils.WriteToROM(0xB4999A, (ushort)getItemIndex);
+                ReadWriteUtils.WriteToROM(0xB4998A, (ushort)getItemIndex);
                 ReadWriteUtils.WriteToROM(0xC72B4E, (ushort)getItemIndex);
             }
 
             if (item == Item.ItemBottleAliens)
             {
-                ReadWriteUtils.WriteToROM(0xB499A6, (ushort)getItemIndex);
+                ReadWriteUtils.WriteToROM(0xB49996, (ushort)getItemIndex);
                 ReadWriteUtils.WriteToROM(0xC72B5A, (ushort)getItemIndex);
             }
             
             if (item == Item.ItemBottleGoronRace)
             {
-                ReadWriteUtils.WriteToROM(0xB499B2, (ushort)getItemIndex);
+                ReadWriteUtils.WriteToROM(0xB499A2, (ushort)getItemIndex);
                 ReadWriteUtils.WriteToROM(0xC72B66, (ushort)getItemIndex);
             }
 

@@ -145,6 +145,7 @@ namespace MMRando.GameObjects
         ItemFairySword,
 
         //[StartingItem(0xC5CE36, 0x12)]
+        [Repeatable] // specially handled to turn into Red Potion on subsequent times
         [ItemName("Bottle with Red Potion"), LocationName("Kotake"), RegionName("Southern Swamp")]
         [GossipLocationHint("the sleeping witch"), GossipItemHint("a vessel of health", "bottled fortitude")]
         [ShopText("Replenishes your life energy. Comes with an Empty Bottle.")]
@@ -153,6 +154,7 @@ namespace MMRando.GameObjects
         ItemBottleWitch,
 
         //[StartingItem(0xC5CE37, 0x12)]
+        [Repeatable] // specially handled to turn into Milk on subsequent times
         [ItemName("Bottle with Milk"), LocationName("Aliens Defense"), RegionName("Romani Ranch")]
         [GossipLocationHint("the ranch girl", "a good deed"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings. Comes with an Empty Bottle.")]
@@ -162,6 +164,7 @@ namespace MMRando.GameObjects
 
         [RupeeRepeatable]
         //[StartingItem(0xC5CE38, 0x12)]
+        [Repeatable] // specially handled to turn into Gold Dust on subsequent times
         [ItemName("Bottle with Gold Dust"), LocationName("Goron Race"), RegionName("Twin Islands")]
         [GossipLocationHint("a sporting event"), GossipItemHint("a gleaming powder"), GossipCompetitiveHint]
         [ShopText("It's very high quality. Comes with an Empty Bottle.")]
@@ -186,6 +189,7 @@ namespace MMRando.GameObjects
         ItemBottleDampe,
 
         //[StartingItem(0xC5CE3B, 0x12)]
+        [Repeatable] // specially handled to turn into Chateau Romani on subsequent times
         [ItemName("Bottle with Chateau Romani"), LocationName("Madame Aroma in Bar"), RegionName("East Clock Town")]
         [GossipLocationHint("an important lady"), GossipItemHint("a dairy product", "an adult beverage")]
         [ShopText("Drink it to get lasting stamina for your magic power. Comes with an Empty Bottle.")]
@@ -1096,7 +1100,7 @@ namespace MMRando.GameObjects
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 7)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 7)]
         [ShopText("Replenishes your life energy.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xCD)]
         ShopItemTradingPostRedPotion,
 
@@ -1107,7 +1111,7 @@ namespace MMRando.GameObjects
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 2)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 3)]
         [ShopText("Replenishes your magic power.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xBB)]
         ShopItemTradingPostGreenPotion,
 
@@ -1118,7 +1122,7 @@ namespace MMRando.GameObjects
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 3)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 6)]
         [ShopText("Use it to defend yourself.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0xBC)]
         ShopItemTradingPostShield,
 
@@ -1129,7 +1133,7 @@ namespace MMRando.GameObjects
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 0)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 0)]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xBD)]
         ShopItemTradingPostFairy,
 
@@ -1183,7 +1187,7 @@ namespace MMRando.GameObjects
         [ShopRoom(ShopRoomAttribute.Room.WitchShop, 0x42)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 2)]
         [ShopText("Replenishes both life energy and magic power.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xC2)]
         ShopItemWitchBluePotion,
 
@@ -1193,7 +1197,7 @@ namespace MMRando.GameObjects
         [ShopRoom(ShopRoomAttribute.Room.WitchShop, 0x48)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 0)]
         [ShopText("Replenishes your life energy.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xC3)]
         ShopItemWitchRedPotion,
 
@@ -1203,7 +1207,7 @@ namespace MMRando.GameObjects
         [ShopRoom(ShopRoomAttribute.Room.WitchShop, 0x4A)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 1)]
         [ShopText("Replenishes your magic power.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xC4)]
         ShopItemWitchGreenPotion,
 
@@ -1256,7 +1260,7 @@ namespace MMRando.GameObjects
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 2)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShopSpring, 2)]
         [ShopText("Replenishes your life energy.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xC9)]
         ShopItemGoronRedPotion,
 
@@ -1266,7 +1270,7 @@ namespace MMRando.GameObjects
         [ShopRoom(ShopRoomAttribute.Room.ZoraShop, 0x4A)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.ZoraShop, 0)]
         [ShopText("Use it to defend yourself.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0xCA)]
         ShopItemZoraShield,
 
@@ -1286,7 +1290,7 @@ namespace MMRando.GameObjects
         [ShopRoom(ShopRoomAttribute.Room.ZoraShop, 0x46)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.ZoraShop, 2)]
         [ShopText("Replenishes your life energy.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xCC)]
         ShopItemZoraRedPotion,
 
@@ -2120,7 +2124,7 @@ namespace MMRando.GameObjects
         [ItemName("Hero's Shield"), LocationName("Starting Shield"), RegionName("Misc")]
         [GossipLocationHint("a new file", "a quest's inception"), GossipItemHint("a basic guard", "protection")]
         [ShopText("Use it to defend yourself.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x129)]
         StartingShield,
 
@@ -2152,7 +2156,7 @@ namespace MMRando.GameObjects
         [ItemName("Milk"), LocationName("Ranch Cow #1"), RegionName("Romani Ranch")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x132)]
         ItemRanchBarnMainCowMilk,
 
@@ -2160,23 +2164,23 @@ namespace MMRando.GameObjects
         [ItemName("Milk"), LocationName("Ranch Cow #2"), RegionName("Romani Ranch")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x134)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x182)]
         ItemRanchBarnOtherCowMilk1,
 
         [Repeatable, Temporary, CycleRepeatable]
         [ItemName("Milk"), LocationName("Ranch Cow #3"), RegionName("Romani Ranch")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x133)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [GetItemIndex(0x1A2)]
         ItemRanchBarnOtherCowMilk2,
 
         [Repeatable, Temporary, CycleRepeatable]
         [ItemName("Milk"), LocationName("Cow Beneath the Well"), RegionName("Beneath the Well")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x135)]
         ItemWellCowMilk,
 
@@ -2184,7 +2188,7 @@ namespace MMRando.GameObjects
         [ItemName("Milk"), LocationName("Termina Grotto Cow #1"), RegionName("Termina Field")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x136)]
         ItemTerminaGrottoCowMilk1,
 
@@ -2192,7 +2196,7 @@ namespace MMRando.GameObjects
         [ItemName("Milk"), LocationName("Termina Grotto Cow #2"), RegionName("Termina Field")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x137)]
         ItemTerminaGrottoCowMilk2,
 
@@ -2200,7 +2204,7 @@ namespace MMRando.GameObjects
         [ItemName("Milk"), LocationName("Great Bay Coast Grotto Cow #1"), RegionName("Great Bay Coast")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x138)]
         ItemCoastGrottoCowMilk1,
 
@@ -2208,7 +2212,7 @@ namespace MMRando.GameObjects
         [ItemName("Milk"), LocationName("Great Bay Coast Grotto Cow #2"), RegionName("Great Bay Coast")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x139)]
         ItemCoastGrottoCowMilk2,
 
@@ -2823,7 +2827,7 @@ namespace MMRando.GameObjects
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Icicle Room Wall"), RegionName("Snowhead Temple")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x0233A000 + 0x22A, ChestAttribute.AppearanceType.Normal)]
         [GetItemIndex(0x197)]
         CollectibleStrayFairySnowhead11,
 
@@ -2863,28 +2867,28 @@ namespace MMRando.GameObjects
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x1A4)]
+        [GetItemIndex(0x1A7)]
         CollectibleStrayFairyGreatBay1,
 
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Pre-Boss Room Underwater Bubble"), RegionName("Great Bay Temple")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x1A5)]
+        [GetItemIndex(0x1A4)]
         CollectibleStrayFairyGreatBay2,
 
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Water Control Room Underwater Bubble"), RegionName("Great Bay Temple")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x1A6)]
+        [GetItemIndex(0x1A5)]
         CollectibleStrayFairyGreatBay3,
 
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Pre-Boss Room Bubble"), RegionName("Great Bay Temple")]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Great Bay.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
-        [GetItemIndex(0x1A7)]
+        [GetItemIndex(0x1A6)]
         CollectibleStrayFairyGreatBay4,
 
         // A8 empty
@@ -3092,7 +3096,7 @@ namespace MMRando.GameObjects
         [ItemName("Chateau Romani"), LocationName("Milk Bar Chateau"), RegionName("East Clock Town")]
         [GossipLocationHint("a town shop"), GossipItemHint("a dairy product", "an adult beverage")]
         [ShopText("Drink it to get lasting stamina for your magic power.", isMultiple: true)]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x180)]
         ShopItemMilkBarChateau,
 
@@ -3100,7 +3104,7 @@ namespace MMRando.GameObjects
         [ItemName("Milk"), LocationName("Milk Bar Milk"), RegionName("East Clock Town")]
         [GossipLocationHint("a town shop"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x181)]
         ShopItemMilkBarMilk,
 
@@ -3110,7 +3114,7 @@ namespace MMRando.GameObjects
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x182)]
+        [GetItemIndex(0x133)]
         MundaneItemDekuPlaygroundPurpleRupee,
 
         [RupeeRepeatable]
@@ -3161,7 +3165,7 @@ namespace MMRando.GameObjects
         [ItemName("Green Potion"), LocationName("Ocean Scrub Purchase"), RegionName("Zora Hall")]
         [GossipLocationHint("a western merchant"), GossipItemHint("a magic potion", "a green drink")]
         [ShopText("Replenishes your magic power.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x19C)]
         ShopItemBusinessScrubGreenPotion,
 
@@ -3169,7 +3173,7 @@ namespace MMRando.GameObjects
         [ItemName("Blue Potion"), LocationName("Canyon Scrub Purchase"), RegionName("Ikana Canyon")]
         [GossipLocationHint("an eastern merchant"), GossipItemHint("consumable strength", "a magic potion", "a blue drink")]
         [ShopText("Replenishes both life energy and magic power.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x19D)]
         ShopItemBusinessScrubBluePotion,
 
@@ -3185,7 +3189,7 @@ namespace MMRando.GameObjects
         [ItemName("Milk"), LocationName("Gorman Bros Milk Purchase"), RegionName("Milk Road")]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x1A0)]
         ShopItemGormanBrosMilk,
 
@@ -3194,7 +3198,7 @@ namespace MMRando.GameObjects
         [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x1A2)]
+        [GetItemIndex(0x134)]
         MundaneItemOceanSpiderHouseDay2PurpleRupee,
 
         [Repeatable]

@@ -28,7 +28,7 @@ namespace MMRando.Utils
             }
 
             int bit = 1 << (num & 7);
-            int f =RomUtils. GetFileIndexForWriting(SCENE_FLAG_MASKS);
+            int f = RomUtils.GetFileIndexForWriting(SCENE_FLAG_MASKS);
             int addr = SCENE_FLAG_MASKS - RomData.MMFileList[f].Addr + offset;
             RomData.MMFileList[f].Data[addr] |= (byte)bit;
         }
@@ -79,16 +79,13 @@ namespace MMRando.Utils
                             mapsaddr += 8;
                         }
                     }
-                    if (cmd == 0x13)
-                    {
-                        RomData.SceneList[i].ExitAddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
-                    }
                     if (cmd == 0x14)
                     {
                         break;
                     }
                     j += 8;
                 }
+                CheckHeaderForExits(f, 0, RomData.SceneList[i].ExitAddr);
             }
         }
 
@@ -252,7 +249,52 @@ namespace MMRando.Utils
                 }
             }
         }
-
+        private static void CheckHeaderForExits(int f, int headeraddr, List<int> exits)
+        {
+            int j = headeraddr;
+            int setupsaddr = -1;
+            int nextlowest = -1;
+            byte s;
+            while (true)
+            {
+                byte cmd = RomData.MMFileList[f].Data[j];
+                if (cmd == 0x13)
+                {
+                    exits.Add((int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF);
+                }
+                else if (cmd == 0x18)
+                {
+                    setupsaddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                }
+                else if (cmd == 0x14)
+                {
+                    break;
+                }
+                else
+                {
+                    if (RomData.MMFileList[f].Data[j + 4] == 0x02)
+                    {
+                        int p = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                        if (((p < nextlowest) || (nextlowest == -1)) && ((p > setupsaddr) && (setupsaddr != -1)))
+                        {
+                            nextlowest = p;
+                        }
+                    }
+                }
+                j += 8;
+            }
+            if ((setupsaddr != -1) && nextlowest != -1)
+            {
+                j = setupsaddr;
+                s = RomData.MMFileList[f].Data[j];
+                while (s == 0x02)
+                {
+                    int p = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j) & 0xFFFFFF;
+                    CheckHeaderForExits(f, p, exits);
+                    j += 4;
+                    s = RomData.MMFileList[f].Data[j];
+                }
+            }
+        }
     }
-
 }
