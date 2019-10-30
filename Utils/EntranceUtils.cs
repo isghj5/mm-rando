@@ -9,12 +9,6 @@ namespace MMRando.Utils
 
     public static class EntranceUtils
     {
-        private static int[] olde, newe;
-        public static void SetExternalEntrances(int[] old, int[] now)
-        {
-            olde = old;
-            newe = now;
-        }
         private static int GetEntranceAddr(int ent)
         {
             int offset = ((ent >> 9) * 12) + 0xC5BC64;
@@ -49,9 +43,6 @@ namespace MMRando.Utils
 
         public static void ReadSceneExits(int sceneNumber, int count)
         {
-            SceneUtils.ReadSceneTable();
-            SceneUtils.GetMaps();
-            SceneUtils.GetMapHeaders();
             Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
             int f = scene.File;
             RomUtils.CheckCompressed(f);
@@ -71,7 +62,6 @@ namespace MMRando.Utils
         {
             SceneUtils.ReadSceneTable();
             SceneUtils.GetMaps();
-            SceneUtils.GetMapHeaders();
             Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
             int f = scene.File;
             RomUtils.CheckCompressed(f);
@@ -85,7 +75,6 @@ namespace MMRando.Utils
                     ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + shuffledIndexes[i] * 2, shuffledExits[i]);
                 }
             }
-            WriteEntrances(olde, newe);
         }
     }
 }

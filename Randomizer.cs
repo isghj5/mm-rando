@@ -246,10 +246,6 @@ namespace MMRando
 
         private void PrepareEntranceData()
         {
-            TerminaMapData.UpdateExit("South Clock Town: Clock Tower", "The Moon");
-            int n = _random.Next(TerminaMapData.spawns.Count);
-            string startSpawn = TerminaMapData.spawns[n].SpawnName;
-            EntranceUtils.SetExternalEntrances(new int[] { TerminaMapData.SpawnAddress("Clock Tower: South Clock Town") }, new int[] { TerminaMapData.SpawnAddress(startSpawn) });
         }
 
         private void WriteMapData()

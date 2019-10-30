@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace MMRando.Utils
 {
-
     public class SceneUtils
     {
+        const bool DEBUG = false;
         const int SCENE_TABLE = 0xC5A1E0;
         const int SCENE_FLAG_MASKS = 0xC5C500;
         public static void ResetSceneFlagMask()
@@ -63,6 +63,7 @@ namespace MMRando.Utils
             {
                 int f = RomData.SceneList[i].File;
                 RomUtils.CheckCompressed(f);
+                if (DEBUG) { System.Diagnostics.Debug.WriteLine($"Scene {RomData.SceneList[i].Number}"); }
                 int j = 0;
                 while (true)
                 {
@@ -254,13 +255,45 @@ namespace MMRando.Utils
             int j = headeraddr;
             int setupsaddr = -1;
             int nextlowest = -1;
+            byte numCutscenes = 0xFF;
+            int cutsceneAddress = 0x8FFFFFF;
+            ushort cutsceneExit = 0xFFFF;
             byte s;
+            if (DEBUG) { System.Diagnostics.Debug.WriteLine("Header"); }
             while (true)
             {
                 byte cmd = RomData.MMFileList[f].Data[j];
                 if (cmd == 0x13)
                 {
                     exits.Add((int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF);
+                }
+                else if (cmd == 0x17)
+                {
+                    numCutscenes = (byte)(ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, j) & 0xFF);
+                    cutsceneAddress = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                    for( int i = 0; i < numCutscenes; i++, cutsceneAddress += 8)
+                    {
+                        cutsceneExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, cutsceneAddress + 4);
+                        // oath cutscene which warps to moon, point instead to majora
+                        if (cutsceneExit == 0xC800)
+                        {
+                            ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, cutsceneAddress + 4, 0x0200);
+                        }
+                        // moon crash?? to swamp spider house???
+                        //else if (cutsceneExit == 0x54C0)
+                        //{
+                        //    ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, cutsceneAddress + 4, 0x4800);
+                        //}
+                        //// starting room?
+                        //else if (cutsceneExit == 0xD800)
+                        //{
+                        //    ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, cutsceneAddress + 4, 0x0200);
+                        //}
+                        else if (cutsceneExit != 0xFFFF && DEBUG)
+                        {
+                            System.Diagnostics.Debug.WriteLine(cutsceneExit.ToString("X4"));
+                        }
+                    }
                 }
                 else if (cmd == 0x18)
                 {
