@@ -2461,7 +2461,7 @@
 0
 - EntrancePiratesFortressFromTelescope
 
-
+531;93,532;533
 0
 0
 - EntrancePiratesFortressFromPiratesFortressExteriorBalcony
@@ -2540,37 +2540,37 @@
 0
 0
 - EntranceAncientCastleofIkanaCourtyardFromIkanaCanyon
-
+788
 
 0
 0
 - EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana
-
+763
 
 0
 0
 - EntranceAncientCastleofIkanaFromCourtyard
-
+762
 
 0
 0
 - EntranceAncientCastleofIkanaFromBlockHole
-
+762,120
 
 0
 0
 - EntranceAncientCastleofIkanaFromKegHole
-
+7,92,762
 
 0
 0
 - EntranceAncientCastleofIkanaFromIgosduIkanasLair
-
+672
 
 0
 0
 - EntranceDekuScrubPlaygroundFromNorthClockTown
-
+784
 
 0
 0
@@ -2585,47 +2585,47 @@
 0
 0
 - EntranceSnowheadTempleFromSnowhead
-
+779,92,99
 
 0
 0
 - EntranceMilkRoadFromTerminaField
-
+767
 
 0
 0
 - EntranceMilkRoadFromRomaniRanch
-
+769
 
 0
 0
 - EntranceMilkRoadFromGormanRacetrackTrack
-
+701
 
 0
 0
 - EntranceMilkRoadFromGormanRacetrackMain
-
+700
 
 0
 0
 - EntranceMilkRoadFromOwlStatue
-
+764,789
 
 0
 0
 - EntrancePiratesFortressHookshotRoomFromLowerDoor
-
+761
 
 0
 0
 - EntrancePiratesFortressHookshotRoomFromUpperDoor
-
+761
 
 0
 0
 - EntrancePiratesFortressGuardRoomFromFrontDoor
-
+761
 
 0
 0
@@ -2670,67 +2670,67 @@
 0
 0
 - EntranceSwampShootingGalleryFromRoadtoSouthernSwamp
-
+773
 
 0
 0
 - EntrancePinnacleRockFromGreatBayCoast
-
+770
 
 0
 0
 - EntrancePinnacleRockFromPinnacleRock
 
-
+535;536
 0
 0
 - EntranceFairysFountainFromNorthClockTown
-
+784
 
 0
 0
 - EntranceFairysFountainFromWoodfall
-
+0,775
 
 0
 0
 - EntranceFairysFountainFromSnowhead
-
+92,99,779
 
 0
 0
 - EntranceFairysFountainFromZoraCape
-
+10,119,771
 
 0
 0
 - EntranceFairysFountainFromIkanaCanyon
-
+788
 
 0
 0
 - EntranceSwampSpiderHouseFromSouthernSwamp
 759
-
+787;120
 0
 0
 - EntranceOceansideSpiderHouseFromGreatBayCoast
-
+770
 
 0
 0
 - EntranceAstralObservatoryFromEastClockTown
-782
-
+782,783,784
+120;10;93
 0
 0
 - EntranceAstralObservatoryFromTerminaField
 
-
+569;0,767
 0
 0
 - EntranceAstralObservatoryFromTelescope
-
+570
 
 0
 0
@@ -2745,92 +2745,92 @@
 0
 0
 - EntranceDekuPalaceFromDekuPalace
-
+766
 
 0
 0
 - EntranceDekuPalaceFromDekuKingsChamberMain
-
+0,622
 
 0
 0
 - EntranceDekuPalaceFromDekuKingsChamberGardenWest
-
+623
 
 0
 0
 - EntranceDekuPalaceFromDekuShrine
-
+666
 
 0
 0
 - EntranceDekuPalaceFromSouthernSwampUpper
-759
+759,0
 
 0
 0
 - EntranceDekuPalaceGardenWestFromPalaceVinesGrotto
 
-
+462;468
 0
 0
 - EntranceDekuPalaceGardenWestFromPalaceStraightGrotto
 
-
+460;467
 0
 0
 - EntranceDekuPalaceGardenEastFromPalaceStraightGrotto
 
-
+460;467
 0
 0
 - EntranceDekuPalaceGardenEastFromBeanSellerGrotto
-
+465
 
 0
 0
 - EntranceDekuPalaceGardenEastFromPalaceVinesGrotto
 
-
+462;468
 0
 0
 - EntranceMountainSmithyFromMountainVillage
-
+777
 
 0
 0
 - EntranceTerminaFieldFromWestClockTown
-
+783
 
 0
 0
 - EntranceTerminaFieldFromRoadtoSouthernSwamp
-
+773
 
 0
 0
 - EntranceTerminaFieldFromGreatBayCoast
-
+770
 
 0
 0
 - EntranceTerminaFieldFromPathtoMountainVillage
 
-
+505;506
 0
 0
 - EntranceTerminaFieldFromRoadtoIkana
-
+778,96
 
 0
 0
 - EntranceTerminaFieldFromMilkRoad
-
+764
 
 0
 0
 - EntranceTerminaFieldFromSouthClockTown
-
+785
 
 0
 0
@@ -2840,37 +2840,37 @@
 0
 0
 - EntranceTerminaFieldFromNorthClockTown
-
+784
 
 0
 0
 - EntranceTerminaFieldFromAstralObservatory
-
+765
 
 0
 0
 - EntranceTerminaFieldFromAstralObservatoryTelescope
-
+765
 
 0
 0
 - EntranceTerminaFieldFromCremiaEscort
-
+120,769
 
 0
 0
 - EntrancePostOfficeFromWestClockTown
-
+783
 
 0
 0
 - EntranceMarineResearchLabFromGreatBayCoast
-
+770
 
 0
 0
 - EntranceDampsHouseFromIkanaGraveyardGrave
-
+774,90
 
 0
 0
@@ -2880,77 +2880,77 @@
 0
 0
 - EntranceGoronShrineFromGoronVillage
-
+776
 
 0
 0
 - EntranceGoronShrineFromGoronShop
-
+621
 
 0
 0
 - EntranceZoraHallFromZoraCapeLand
-
+771
 
 0
 0
 - EntranceZoraHallFromZoraCapeWater
-
+93,771
 
 0
 0
 - EntranceZoraHallFromZoraShop
-
+655
 
 0
 0
 - EntranceZoraHallFromLulusRoom
-
+652
 
 0
 0
 - EntranceZoraHallFromEvansRoom
-
+653
 
 0
 0
 - EntranceZoraHallFromJapasRoom
 
-
+651;654
 0
 0
 - EntranceZoraHallFromMikauTijosRoom
-
+650
 
 0
 0
 - EntranceTradingPostFromWestClockTown
-
+783
 
 0
 0
 - EntranceRomaniRanchFromMilkRoad
-
+7,92,764
 
 0
 0
 - EntranceRomaniRanchFromBarn
-
+436
 
 0
 0
 - EntranceRomaniRanchFromRanchHouse
-
+437
 
 0
 0
 - EntranceRomaniRanchFromCuccoShack
-
+629
 
 0
 0
 - EntranceRomaniRanchFromDoggyRacetrack
-
+628
 
 0
 0
@@ -2960,92 +2960,92 @@
 0
 0
 - EntranceGreatBayCoastFromTerminaField
-
+96,767
 
 0
 0
 - EntranceGreatBayCoastFromZoraCape
-
+771
 
 0
 0
 - EntranceGreatBayCoastFromGreatBayCoastBeach
-
+770
 
 0
 0
 - EntranceGreatBayCoastFromPinnacleRock
 
-
+535;536
 0
 0
 - EntranceGreatBayCoastFromFishermansHut
-
+620
 
 0
 0
 - EntranceGreatBayCoastFromPiratesFortress
-
+93,772
 
 0
 0
 - EntranceGreatBayCoastFromGreatBayCoastNearFortress
-
+770
 
 0
 0
 - EntranceGreatBayCoastFromMarineResearchLab
-
+573
 
 0
 0
 - EntranceGreatBayCoastFromOceansideSpiderHouse
-
+543
 
 0
 0
 - EntranceGreatBayCoastFromOwlStatue
-
+770,789
 
 0
 0
 - EntranceGreatBayCoastFromPiratesFortressThrownOut
-
+772
 
 0
 0
 - EntranceZoraCapeFromGreatBayCoast
-
+770
 
 0
 0
 - EntranceZoraCapeFromZoraHallLand
-
+768
 
 0
 0
 - EntranceZoraCapeFromZoraHallWater
-
+93,768
 
 0
 0
 - EntranceZoraCapeFromZoraCape
-
+771
 
 0
 0
 - EntranceZoraCapeFromWaterfallRapids
-
+647
 
 0
 0
 - EntranceZoraCapeFromFairysFountain
-
+540
 
 0
 0
 - EntranceZoraCapeFromOwlStatue
-
+771,789
 
 0
 0
@@ -3060,62 +3060,62 @@
 0
 0
 - EntranceLotteryShopFromWestClockTown
-
+783
 
 0
 0
 - EntrancePiratesFortressExteriorFromGreatBayCoast
-
+93,770
 
 0
 0
 - EntrancePiratesFortressExteriorFromPiratesFortressMain
-
+761
 
 0
 0
 - EntrancePiratesFortressExteriorFromPiratesFortressSewerMain
-
+532
 
 0
 0
 - EntrancePiratesFortressExteriorFromPiratesFortressSewerExhaust
-
-
+93
+531;532;533
 0
 0
 - EntrancePiratesFortressExteriorFromThrownOut
-
+761
 
 0
 0
 - EntrancePiratesFortressExteriorFromPiratesFortressBalcony
-
+10,761
 
 0
 0
 - EntrancePiratesFortressExteriorFromPiratesFortressSewerDoor
-
-
+93
+531;532;533
 0
 0
 - EntranceFishermansHutFromGreatBayCoast
-
+770
 
 0
 0
 - EntranceGoronShopFromGoronVillage
 
-
+576;577
 0
 0
 - EntranceDekuKingsChamberFromDekuPalace
-
+0,766
 
 0
 0
 - EntranceDekuKingsChamberFromDekuPalaceWestGarden
-
+0,766
 
 0
 0
@@ -3125,7 +3125,7 @@
 0
 0
 - EntranceRoadtoSouthernSwampFromTerminaField
-
+767
 
 0
 0
@@ -3135,22 +3135,22 @@
 0
 0
 - EntranceRoadtoSouthernSwampFromSwampShootingGallery
-
+534
 
 0
 0
 - EntranceDoggyRacetrackFromRomaniRanch
-
+769
 
 0
 0
 - EntranceCuccoShackFromRomaniRanch
-
+769
 
 0
 0
 - EntranceIkanaGraveyardFromRoadtoIkana
-
+778
 
 0
 0
@@ -3160,12 +3160,12 @@
 0
 0
 - EntranceIkanaGraveyardFromDay2Grave
-
+439
 
 0
 0
 - EntranceIkanaGraveyardFromDay1Grave
-
+440
 
 0
 0
@@ -3190,17 +3190,17 @@
 0
 0
 - EntranceWoodfallFromFairysFountain
-
+538
 
 0
 0
 - EntranceWoodfallFromWoodfallTempleExit
 
-
+503;504
 0
 0
 - EntranceWoodfallFromOwlStatue
-
+0,775,789
 
 0
 0
@@ -3210,108 +3210,108 @@
 0
 0
 - EntranceZoraTrialFromZoraTrial
-
+641
 
 0
 0
 - EntranceGoronVillageFromPathtoGoronVillage
-
+780
 
 0
 0
 - EntranceGoronVillageFromGoronShrine
 
-
+576;577
 0
 0
 - EntranceGoronVillageFromLonePeakShrine
-
+469
 
 0
 0
 - EntranceGreatBayTempleFromZoraCape
-
+10,93,100,771
 
 0
 0
 - EntranceWaterfallRapidsFromZoraCape
-
+10,771
 
 0
 0
 - EntranceBeneaththeWellFromIkanaCanyon
-
+788
 
 0
 0
 - EntranceBeneaththeWellFromAncientCastleofIkana
-
+762
 
 0
 0
 - EntranceZoraHallRoomsMikauTijosRoomFromZoraHall
-
+93,768
 
 0
 0
 - EntranceZoraHallRoomsJapasRoomFromZoraHall
-
+93,768
 
 0
 0
 - EntranceZoraHallRoomsLulusRoomFromZoraHall
-
+93,768
 
 0
 0
 - EntranceZoraHallRoomsEvansRoomFromZoraHall
-
+93,768
 
 0
 0
 - EntranceZoraHallRoomsJapasRoomFromJapasRoom
-
-
+93
+651;654
 0
 0
 - EntranceZoraHallRoomsZoraShopFromZoraHall
-
+768
 
 0
 0
 - EntranceGoronGraveyardFromMountainVillage
-
-
+777
+9,741;108
 0
 0
 - EntranceSakonsHideoutFromIkanaCanyon
-
+760
 
 0
 0
 - EntranceMountainVillageFromMountainSmithy
-
+559
 
 0
 0
 - EntranceMountainVillageFromPathtoGoronVillage
-
+780
 
 0
 0
 - EntranceMountainVillageFromGoronGraveyard
-
+656
 
 0
 0
 - EntranceMountainVillageFromPathtoSnowhead
 
-
+677;92,678,741
 0
 0
 - EntranceMountainVillageFromPathtoMountainVillage
 
-
+119,505;506
 0
 0
 - EntranceMountainVillageFromSnowheadClear
@@ -3320,48 +3320,48 @@
 0
 0
 - EntranceMountainVillageFromOwlStatue
-
+777,789
 
 0
 0
 - EntrancePoeHutFromIkanaCanyon
-
+788
 
 0
 0
 - EntranceDekuShrineFromDekuPalace
-
-
+766
+0,120;105
 0
 0
 - EntranceRoadtoIkanaFromTerminaField
-
+767
 
 0
 0
 - EntranceRoadtoIkanaFromIkanaCanyon
-
+760
 
 0
 0
 - EntranceRoadtoIkanaFromIkanaGraveyard
-
+774
 
 0
 0
 - EntranceSwordsmansSchoolFromWestClockTown
-
+783
 
 0
 0
 - EntranceMusicBoxHouseFromIkanaCanyon
-
-
+788
+118;97,482
 0
 0
 - EntranceIgosduIkanasLairFromAncientCastleofIkana
-
-
+763
+4,120,741;7,25,92
 0
 0
 - EntranceTouristInformationFromSouthernSwamp
@@ -3370,7 +3370,7 @@
 0
 0
 - EntranceStoneTowerFromIkanaCanyon
-
+788
 
 0
 0
@@ -3380,23 +3380,23 @@
 0
 0
 - EntranceStoneTowerFromOwlStatue
-
+788,789
 
 0
 0
 - EntrancePathtoSnowheadFromMountainVillage
-
+777
 
 0
 0
 - EntrancePathtoSnowheadFromSnowhead
-
+779
 
 0
 0
 - EntranceSnowheadFromPathtoSnowhead
 
-
+92,677,741;678
 0
 0
 - EntranceSnowheadFromSnowheadTemple
@@ -3405,27 +3405,27 @@
 0
 0
 - EntranceSnowheadFromFairysFountain
-
+539
 
 0
 0
 - EntranceSnowheadFromOwlStatue
-
+779,789
 
 0
 0
 - EntrancePathtoGoronVillageFromMountainVillage
-
+777
 
 0
 0
 - EntrancePathtoGoronVillageFromGoronVillage
-
+776
 
 0
 0
 - EntrancePathtoGoronVillageFromGoronRacetrack
-
+702
 
 0
 0
@@ -3435,7 +3435,7 @@
 0
 0
 - EntranceSecretShrineFromIkanaCanyon
-
+760
 
 0
 0
@@ -3455,7 +3455,7 @@
 0
 0
 - EntranceClockTowerInteriorFromSouthClockTown
-
+785
 
 0
 0
@@ -3470,157 +3470,157 @@
 0
 0
 - EntranceTheMoonFromClockTowerRooftop
-
+102,105,108,113,118,499
 
 0
 0
 - EntranceTheMoonFromDekuTrial
-
+547
 
 0
 0
 - EntranceTheMoonFromGoronTrial
-
+624
 
 0
 0
 - EntranceTheMoonFromZoraTrial
 
-
+641;642
 0
 0
 - EntranceTheMoonFromLinkTrial
-
+693
 
 0
 0
 - EntranceBombShopFromWestClockTown
-
+783
 
 0
 0
 - EntranceGormanTrackFromMilkRoadMain
-
+764
 
 0
 0
 - EntranceGormanTrackFromMilkRoadGated
-
+520
 
 0
 0
 - EntranceGoronRacetrackFromPathtoMountainVillage
-
+92,780,7
 
 0
 0
 - EntranceEastClockTownFromTerminaField
-
+767
 
 0
 0
 - EntranceEastClockTownFromSouthClockTownNorthern
-
+785
 
 0
 0
 - EntranceEastClockTownFromAstralObservatory
-
+765
 
 0
 0
 - EntranceEastClockTownFromSouthClockTownSouthern
-
+785
 
 0
 0
 - EntranceEastClockTownFromTreasureChestShop
-
+496
 
 0
 0
 - EntranceEastClockTownFromNorthClockTown
-
+784
 
 0
 0
 - EntranceEastClockTownFromHoneyDarlingsShop
-
+438
 
 0
 0
 - EntranceEastClockTownFromMayorsResidence
-
+433
 
 0
 0
 - EntranceEastClockTownFromShootingGalleryClockTown
-
+516
 
 0
 0
 - EntranceEastClockTownFromStockPotInnLower
-
+790
 
 0
 0
 - EntranceEastClockTownFromStockPotInnUpper
-
+790
 
 0
 0
 - EntranceEastClockTownFromMilkBar
-
+494
 
 0
 0
 - EntranceWestClockTownFromTerminaField
-
+767
 
 0
 0
 - EntranceWestClockTownFromSouthClockTownSouthern
-
+785
 
 0
 0
 - EntranceWestClockTownFromSouthClockTownNorthern
-
+785
 
 0
 0
 - EntranceWestClockTownFromSwordsmansSchool
-
+670
 
 0
 0
 - EntranceWestClockTownFromCuriosityShop
-
+451
 
 0
 0
 - EntranceWestClockTownFromTradingPost
-
+585
 
 0
 0
 - EntranceWestClockTownFromBombShop
-
+699
 
 0
 0
 - EntranceWestClockTownFromPostOffice
-
+572
 
 0
 0
 - EntranceWestClockTownFromLotteryShop
-
+612
 
 0
 0
 - EntranceNorthClockTownFromTerminaField
-
+767
 
 0
 0
@@ -3630,27 +3630,27 @@
 0
 0
 - EntranceNorthClockTownFromSouthClockTown
-
+785
 
 0
 0
 - EntranceNorthClockTownFromFairysFountain
-
+537
 
 0
 0
 - EntranceNorthClockTownFromDekuScrubPlayground
-
+514
 
 0
 0
 - EntranceSouthClockTownFromClockTowerInterior
 
-
+690;691
 0
 0
 - EntranceSouthClockTownFromTerminaField
-
+767
 
 0
 0
@@ -3660,22 +3660,22 @@
 0
 0
 - EntranceSouthClockTownFromWestClockTownNorthern
-
+783
 
 0
 0
 - EntranceSouthClockTownFromNorthClockTown
-
+784
 
 0
 0
 - EntranceSouthClockTownFromWestClockTownSouthern
-
+783
 
 0
 0
 - EntranceSouthClockTownFromLaundryPool
-
+786
 
 0
 0
@@ -3690,18 +3690,18 @@
 0
 0
 - EntranceSouthClockTownFromOwlStatue
-
+785,789
 
 0
 0
 - EntranceLaundryPoolFromSouthClockTown
-
+785
 
 0
 0
 - EntranceLaundryPoolFromKafeisHideout
 
-
+452;454
 0
 0
 - Magic Meter
@@ -3816,12 +3816,12 @@
 0
 - AccessIkanaCastleInterior
 
-510;511;512;513
+510;511;512;4,120,513,741
 0
 0
 - AccessMilkRoad
 
-518;519;520;521;522
+518;519;521;522
 0
 0
 - AccessAstralObservatory
@@ -3942,5 +3942,15 @@
 - AccessIkanaCanyonUpper
 
 471;472;473;474;475;477;478;479;481
+0
+0
+- Hit Owl
+95
+787;748
+0
+0
+- AccessInn
+
+688;689
 0
 0
