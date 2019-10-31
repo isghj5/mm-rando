@@ -3300,5 +3300,457 @@ namespace MMRando.GameObjects
 
         //[GetItemIndex(0x1A1)]
 
+        EntranceMayorsResidenceFromEastClockTown,
+        //EntranceMayorsResidenceFromMayorsResidence, // after talking with couple's mask
+
+        EntranceMajorasLairFromTheMoon, // one way
+
+        EntranceMagicHagsPotionShopFromSouthernSwamp,
+
+        EntranceRanchBarnFromRomaniRanch,
+        EntranceRanchHouseFromRomaniRanch,
+        //EntranceRanchHouseBarnFromCrash, // maybe during abduction cutscene
+
+        EntranceHoneyDarlingsShopFromEastClockTown,
+
+        EntranceBeneathGraveyardFromIkanaGraveyardNight2,
+        EntranceBeneathGraveyardFromIkanaGraveyardNight1,
+
+        EntranceSouthernSwampFromRoadtoSouthernSwamp,
+        EntranceSouthernSwampFromTouristInformation,
+        EntranceSouthernSwampFromWoodfall,
+        EntranceSouthernSwampFromDekuPalaceLower,
+        EntranceSouthernSwampFromDekuPalaceUpper,
+        EntranceSouthernSwampFromMagicHagsPotionShop,
+        //EntranceBoatArcheryFromTouristInformation, // photo cruise / boat archery
+        EntranceSouthernSwampFromWoodsofMystery,
+        EntranceSouthernSwampFromSwampSpiderHouse,
+        EntranceSouthernSwampFromIkanaCanyon, // one way
+        EntranceSouthernSwampFromOwlStatue, // one way
+
+        EntranceCuriosityShopFromWestClockTown,
+        EntranceKafeisHideoutFromLaundryPool,
+        EntranceCuriosityShopFromKafeisHideout, // peep hole
+        EntranceKafeisHideoutFromCuriosityShop, // peep hole
+
+        EntranceGrottoGossipOceanFromTerminaField,
+        EntranceGrottoGossipSwampFromTerminaField,
+        EntranceGrottoGossipCanyonFromTerminaField,
+        EntranceGrottoGossipMountainFromTerminaField,
+        EntranceGrottoHotSpringWaterFromTwinIslands,
+        EntranceGrottoPalaceStraightFromDekuPalaceA,
+        EntranceGrottoDodongoFromTerminaField,
+        EntranceGrottoPalaceVinesFromDekuPalaceLower,
+        EntranceGrottoDekuMerchantFromTerminaField,
+        EntranceGrottoBioBabaFromTerminaField,
+        EntranceGrottoBeanSellerFromDekuPalace,
+        EntranceGrottoPeahatFromTerminaField,
+        EntranceGrottoPalaceStraightFromDekuPalaceB,
+        EntranceGrottoPalaceVinesFromDekuPalaceUpper,
+        EntranceGrottoLensCaveFromGoronVillage,
+
+        EntranceIkanaCanyonFromRoadtoIkana,
+        EntranceIkanaCanyonFromPoeHut,
+        EntranceIkanaCanyonFromMusicBoxHouse,
+        EntranceIkanaCanyonFromStoneTower,
+        EntranceIkanaCanyonFromOwlStatue, // one way
+        EntranceIkanaCanyonFromBeneaththeWell,
+        EntranceIkanaCanyonFromSakonsHideout,
+        EntranceIkanaCanyonFromIkanaClear,
+        EntranceIkanaCanyonFromAncientCastleofIkanaCourtyard,
+        //EntranceCutsceneIkanaCanyonFromSpringWaterCave, // one way
+        //EntranceSpringWaterCaveFromMusicBoxCutscene, // one way
+        EntranceIkanaCanyonFromFairysFountain,
+        EntranceIkanaCanyonFromSecretShrine,
+        EntranceIkanaCanyonFromSpringWaterCave,
+        EntranceSpringWaterCaveFromIkanaCanyon,
+
+        EntrancePiratesFortressFromMainEntrance,
+        EntrancePiratesFortressFromHookshotRoomLower,
+        EntrancePiratesFortressFromHookshotRoomUpper,
+        EntrancePiratesFortressFromGuardRoomFront,
+        EntrancePiratesFortressFromGuardRoomBack,
+        EntrancePiratesFortressFromBarrelMazeFront,
+        EntrancePiratesFortressFromBarrelMazeBack,
+        EntrancePiratesFortressFromOnePatrolFront,
+        EntrancePiratesFortressFromOnePatrolBack,
+        EntrancePiratesFortressFromTelescope,
+        EntrancePiratesFortressFromPiratesFortressExteriorBalcony,
+
+        EntranceMilkBarFromEastClockTown,
+
+        EntranceStoneTowerTempleFromStoneTower, // should use the No Intro version if shorten cutscenes is enabled
+
+        EntranceTreasureChestShopFromEastClockTown,
+        //EntranceTreasureChestShopFromTreasureChestShop, // after opening the chest
+
+        EntranceStoneTowerTempleInvertedFromStoneTowerInverted,
+        EntranceStoneTowerTempleInvertedBossRoomFromStoneTowerTempleInverted, // one way
+
+        EntranceClockTowerRooftopFromSouthClockTown, // one way
+        //EntranceClockTowerRooftopFromClockTowerRooftop, // after receiving-song-of-time cutscene // one way
+
+        //EntranceBeforethePortaltoTerminaFromLostWoods, // todo accessible via wrong-warp
+        EntranceBeforethePortaltoTerminaFromClockTowerInterior, // glitched logic only
+        EntranceBeforethePortaltoTerminaFromBeforethePortaltoTermina, // void respawn // one way?
+
+        EntranceWoodfallTempleFromWoodfall,
+        EntranceWoodfallTemplePrisonFromOdolwasLair, // one way
+        EntranceWoodfallTemplePrisonFromWoodfall,
+
+        EntrancePathtoMountainVillageFromTerminaField,
+        EntrancePathtoMountainVillageFromMountainVillage,
+
+        EntranceAncientCastleofIkanaCourtyardFromBeneaththeWell,
+        EntranceAncientCastleofIkanaCourtyardFromIkanaCanyon,
+        EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana,
+        EntranceAncientCastleofIkanaFromCourtyard,
+        EntranceAncientCastleofIkanaFromBlockHole, // one way
+        EntranceAncientCastleofIkanaFromKegHole, // one way
+        EntranceAncientCastleofIkanaFromIgosduIkanasLair,
+
+        EntranceDekuScrubPlaygroundFromNorthClockTown,
+        //EntranceDekuScrubPlaygroundFromDekuScrubPlayground, // after minigame
+
+        EntranceOdolwasLairFromWoodfallTemple, // one way
+
+        EntranceTownShootingGalleryFromEastClockTown,
+
+        EntranceSnowheadTempleFromSnowhead, // should use the No Intro version if shorten cutscenes is enabled
+
+        EntranceMilkRoadFromTerminaField,
+        EntranceMilkRoadFromRomaniRanch,
+        EntranceMilkRoadFromGormanRacetrackTrack,
+        EntranceMilkRoadFromGormanRacetrackMain,
+        EntranceMilkRoadFromOwlStatue, // one way
+        //EntranceMilkRoadFrom, // maybe during cremia escort?
+        //EntranceMilkRoadFrom, // maybe during cremia escort?
+
+        EntrancePiratesFortressHookshotRoomFromLowerDoor,
+        EntrancePiratesFortressHookshotRoomFromUpperDoor,
+        EntrancePiratesFortressGuardRoomFromFrontDoor,
+        EntrancePiratesFortressGuardRoomFromBackDoor,
+        EntrancePiratesFortressBarrelMazeFromFrontDoor,
+        EntrancePiratesFortressBarrelMazeFromBackDoor,
+        EntrancePiratesFortressOneGuardFrontFromPiratesFortress,
+        EntrancePiratesFortressOneGuardRearFromPiratesFortress,
+        EntrancePiratesFortressSewerFromTelescope,
+        EntrancePiratesFortressSewerFromWater,
+        EntrancePiratesFortressSewerFromRear,
+
+        EntranceSwampShootingGalleryFromRoadtoSouthernSwamp,
+
+        EntrancePinnacleRockFromGreatBayCoast,
+        EntrancePinnacleRockFromPinnacleRock, // void respawn // one way?
+
+        EntranceFairysFountainFromNorthClockTown,
+        EntranceFairysFountainFromWoodfall,
+        EntranceFairysFountainFromSnowhead,
+        EntranceFairysFountainFromZoraCape,
+        EntranceFairysFountainFromIkanaCanyon,
+
+        EntranceSwampSpiderHouseFromSouthernSwamp,
+
+        EntranceOceansideSpiderHouseFromGreatBayCoast,
+
+        EntranceAstralObservatoryFromEastClockTown,
+        EntranceAstralObservatoryFromTerminaField,
+        EntranceAstralObservatoryFromTelescope,
+
+        EntranceDekuTrialFromTheMoon,
+
+        EntranceDekuPalaceFromSouthernSwampLower,
+        EntranceDekuPalaceFromDekuPalace, // thrown out // one way
+        EntranceDekuPalaceFromDekuKingsChamberMain,
+        EntranceDekuPalaceFromDekuKingsChamberGardenWest,
+        EntranceDekuPalaceFromDekuShrine,
+        EntranceDekuPalaceFromSouthernSwampUpper,
+        EntranceDekuPalaceGardenWestFromPalaceVinesGrotto, // one way
+        EntranceDekuPalaceGardenWestFromPalaceStraightGrotto, // one way
+        EntranceDekuPalaceGardenEastFromPalaceStraightGrotto, // one way
+        EntranceDekuPalaceGardenEastFromBeanSellerGrotto,
+        EntranceDekuPalaceGardenEastFromPalaceVinesGrotto, // one way
+
+        EntranceMountainSmithyFromMountainVillage,
+
+        EntranceTerminaFieldFromWestClockTown,
+        EntranceTerminaFieldFromRoadtoSouthernSwamp,
+        EntranceTerminaFieldFromGreatBayCoast,
+        EntranceTerminaFieldFromPathtoMountainVillage,
+        EntranceTerminaFieldFromRoadtoIkana,
+        EntranceTerminaFieldFromMilkRoad,
+        EntranceTerminaFieldFromSouthClockTown,
+        EntranceTerminaFieldFromEastClockTown,
+        EntranceTerminaFieldFromNorthClockTown,
+        EntranceTerminaFieldFromAstralObservatory,
+        EntranceTerminaFieldFromAstralObservatoryTelescope,
+        //EntranceTerminaFieldFromTerminaField, // todo moon crash - accessible via precise exit from telescope // one way
+        EntranceTerminaFieldFromCremiaEscort, // one way
+        //EntranceTerminaFieldFromTerminaField, // after tatl/tael/skullkid cutscene // one way
+
+        EntrancePostOfficeFromWestClockTown,
+
+        EntranceMarineResearchLabFromGreatBayCoast,
+
+        EntranceDampsHouseFromIkanaGraveyardGrave,
+        EntranceDampsHouseFromIkanaGraveyardDoor, // glitched logic only
+
+        EntranceGoronShrineFromGoronVillage,
+        EntranceGoronShrineFromGoronShop,
+        //EntranceGoronShrineFromGoronShrine, // after lullaby cutscene // one way
+
+        EntranceZoraHallFromZoraCapeLand,
+        EntranceZoraHallFromZoraCapeWater,
+        EntranceZoraHallFromZoraShop,
+        EntranceZoraHallFromLulusRoom,
+        EntranceZoraHallFromEvansRoom,
+        EntranceZoraHallFromJapasRoom,
+        EntranceZoraHallFromMikauTijosRoom,
+
+        EntranceTradingPostFromWestClockTown,
+
+        EntranceRomaniRanchFromMilkRoad,
+        //EntranceRomaniRanchFromRomaniRanch, // after minigame
+        EntranceRomaniRanchFromBarn,
+        EntranceRomaniRanchFromRanchHouse,
+        EntranceRomaniRanchFromCuccoShack,
+        EntranceRomaniRanchFromDoggyRacetrack,
+        // todo add after aliens defense entrance
+
+        EntranceTwinmoldsLairFromStoneTowerTempleInverted, // one way
+
+        EntranceGreatBayCoastFromTerminaField,
+        EntranceGreatBayCoastFromZoraCape,
+        EntranceGreatBayCoastFromGreatBayCoastBeach, // void respawn beach // one way?
+        EntranceGreatBayCoastFromPinnacleRock,
+        EntranceGreatBayCoastFromFishermansHut,
+        EntranceGreatBayCoastFromPiratesFortress,
+        EntranceGreatBayCoastFromGreatBayCoastNearFortress, // void respawn near fortress // one way?
+        EntranceGreatBayCoastFromMarineResearchLab,
+        EntranceGreatBayCoastFromOceansideSpiderHouse,
+        EntranceGreatBayCoastFromOwlStatue, // one way
+        EntranceGreatBayCoastFromPiratesFortressThrownOut, // one way
+        //EntranceGreatBayCoastFromZoraCape, // after fisherman minigame
+
+        EntranceZoraCapeFromGreatBayCoast,
+        EntranceZoraCapeFromZoraHallLand,
+        EntranceZoraCapeFromZoraHallWater,
+        EntranceZoraCapeFromZoraCape, // void respawn // one way?
+        EntranceZoraCapeFromWaterfallRapids,
+        EntranceZoraCapeFromFairysFountain,
+        EntranceZoraCapeFromOwlStatue, // one way
+        EntranceZoraCapeFromGreatBayTemple,
+        EntranceZoraCapeFromGreatBayTempleClear, // one way
+
+        EntranceLotteryShopFromWestClockTown,
+
+        EntrancePiratesFortressExteriorFromGreatBayCoast,
+        EntrancePiratesFortressExteriorFromPiratesFortressMain,
+        EntrancePiratesFortressExteriorFromPiratesFortressSewerMain,
+        EntrancePiratesFortressExteriorFromPiratesFortressSewerExhaust, // one way?
+        EntrancePiratesFortressExteriorFromThrownOut, // one way
+        EntrancePiratesFortressExteriorFromPiratesFortressBalcony,
+        EntrancePiratesFortressExteriorFromPiratesFortressSewerDoor,
+
+        EntranceFishermansHutFromGreatBayCoast,
+
+        EntranceGoronShopFromGoronVillage,
+
+        EntranceDekuKingsChamberFromDekuPalace,
+        EntranceDekuKingsChamberFromDekuPalaceWestGarden,
+        //EntranceDekuKingsChamberFromDekuKingsChamber, // cutscene monkey being released // one way
+
+        EntranceGoronTrialFromTheMoon,
+
+        EntranceRoadtoSouthernSwampFromTerminaField,
+        EntranceRoadtoSouthernSwampFromSouthernSwamp,
+        EntranceRoadtoSouthernSwampFromSwampShootingGallery,
+
+        EntranceDoggyRacetrackFromRomaniRanch,
+
+        EntranceCuccoShackFromRomaniRanch,
+        //EntranceCuccoShackFromCuccoShack, // after chickens grow up // one way
+
+        EntranceIkanaGraveyardFromRoadtoIkana,
+        EntranceIkanaGraveyardFromDay3Grave, // exit only
+        EntranceIkanaGraveyardFromDay2Grave,
+        EntranceIkanaGraveyardFromDay1Grave,
+        EntranceIkanaGraveyardFromDampesHouse,
+        //EntranceIkanaGraveyardFromIkanaGraveyard, // captain keeta defeated // one way
+
+        EntranceGohtsLairFromSnowheadTemple, // one way
+
+        EntranceWoodfallFromSouthernSwamp,
+        EntranceWoodfallFromWoodfallTempleEntrance,
+        EntranceWoodfallFromFairysFountain,
+        EntranceWoodfallFromWoodfallTempleExit,
+        EntranceWoodfallFromOwlStatue, // one way
+
+        EntranceZoraTrialFromTheMoon,
+        EntranceZoraTrialFromZoraTrial, // void respawn // one way?
+
+        EntranceGoronVillageFromPathtoGoronVillage,
+        EntranceGoronVillageFromGoronShrine,
+        EntranceGoronVillageFromLonePeakShrine,
+
+        EntranceGreatBayTempleFromZoraCape,
+
+        EntranceWaterfallRapidsFromZoraCape,
+        //EntranceWaterfallRapidsFromWaterfallRapids, // beaver race start // one way
+        //EntranceWaterfallRapidsFromWaterfallRapids, // beaver race end // one way
+
+        EntranceBeneaththeWellFromIkanaCanyon,
+        EntranceBeneaththeWellFromAncientCastleofIkana,
+
+        EntranceZoraHallRoomsMikauTijosRoomFromZoraHall,
+        EntranceZoraHallRoomsJapasRoomFromZoraHall,
+        EntranceZoraHallRoomsLulusRoomFromZoraHall,
+        EntranceZoraHallRoomsEvansRoomFromZoraHall,
+        EntranceZoraHallRoomsJapasRoomFromJapasRoom,
+        EntranceZoraHallRoomsZoraShopFromZoraHall,
+        //EntranceZoraHallRoomsEvansRoomFromEvansRoom, // after song cutscene
+
+        EntranceGoronGraveyardFromMountainVillage,
+        //EntranceGoronGraveyardFromGoronGraveyard, // after darmina cutscene
+
+        EntranceSakonsHideoutFromIkanaCanyon,
+
+        EntranceMountainVillageFromMountainSmithy,
+        EntranceMountainVillageFromPathtoGoronVillage,
+        EntranceMountainVillageFromGoronGraveyard,
+        EntranceMountainVillageFromPathtoSnowhead,
+        //EntranceMountainVillageFromBehindWaterfall, // unused // one way
+        EntranceMountainVillageFromPathtoMountainVillage,
+        EntranceMountainVillageFromSnowheadClear, // one way
+        EntranceMountainVillageFromOwlStatue, // one way
+
+        EntrancePoeHutFromIkanaCanyon,
+        //EntrancePoeHutFromPoeHut, // fighting poes
+        //EntrancePoeHutFromPoeHut, // after fighting poes
+
+        EntranceDekuShrineFromDekuPalace,
+
+        EntranceRoadtoIkanaFromTerminaField,
+        EntranceRoadtoIkanaFromIkanaCanyon,
+        EntranceRoadtoIkanaFromIkanaGraveyard,
+
+        EntranceSwordsmansSchoolFromWestClockTown,
+
+        EntranceMusicBoxHouseFromIkanaCanyon,
+
+        EntranceIgosduIkanasLairFromAncientCastleofIkana,
+
+        EntranceTouristInformationFromSouthernSwamp,
+
+        EntranceStoneTowerFromIkanaCanyon,
+        //EntranceStoneTowerFrom, // after flip
+        EntranceStoneTowerFromStoneTowerTemple,
+        EntranceStoneTowerFromOwlStatue, // one way
+
+        //EntranceStoneTowerInvertedFrom, // after flip?
+        //EntranceStoneTowerInvertedFrom, // from temple?
+
+        EntrancePathtoSnowheadFromMountainVillage,
+        EntrancePathtoSnowheadFromSnowhead,
+        // todo void respawn // one way
+
+        EntranceSnowheadFromPathtoSnowhead,
+        EntranceSnowheadFromSnowheadTemple,
+        EntranceSnowheadFromFairysFountain,
+        EntranceSnowheadFromOwlStatue, // one way
+        // todo void respawn // one way
+
+        EntrancePathtoGoronVillageFromMountainVillage,
+        EntrancePathtoGoronVillageFromGoronVillage,
+        EntrancePathtoGoronVillageFromGoronRacetrack,
+
+        EntranceGyorgsLairFromGreatBayTemple, // one way
+
+        EntranceSecretShrineFromIkanaCanyon,
+
+        EntranceStockPotInnLowerFromEastClockTown,
+        EntranceStockPotInnUpperFromEastClockTown,
+        //EntranceStockPotInnFromStockPotInn, // after grandma story // one way
+        //EntranceStockPotInnFromStockPotInn, // after midnight meeting // one way
+        //EntranceStockPotInnFromStockPotInn, // eavesdropping on anju
+        //EntranceStockPotInnFromStockPotInn, // after eavesdropping on anju
+
+        EntranceClockTowerInteriorFromBeforethePortaltoTermina,
+        EntranceClockTowerInteriorFromSouthClockTown,
+        //EntranceClockTowerInteriorFrom, // cutscenes
+        //EntranceClockTowerInteriorFrom, // cutscenes
+        //EntranceClockTowerInteriorFrom, // cutscenes
+        //EntranceClockTowerInteriorFrom, // cutscenes
+        //EntranceClockTowerInteriorFrom, // cutscenes
+
+        EntranceWoodsofMysteryFromSouthernSwamp,
+
+        //EntranceLostWoodsFrom, // cutscenes
+        //EntranceLostWoodsFrom, // cutscenes
+
+        EntranceLinkTrialFromTheMoon,
+
+        EntranceTheMoonFromClockTowerRooftop, // one way
+        EntranceTheMoonFromDekuTrial, // one way
+        EntranceTheMoonFromGoronTrial, // one way
+        EntranceTheMoonFromZoraTrial, // one way
+        EntranceTheMoonFromLinkTrial, // one way
+
+        EntranceBombShopFromWestClockTown,
+
+        //EntranceGiantsChamberFrom, // cutscene // one way?
+
+        EntranceGormanTrackFromMilkRoadMain,
+        EntranceGormanTrackFromMilkRoadGated,
+        // EntranceGormanTrackFrom, // race?
+
+        EntranceGoronRacetrackFromPathtoMountainVillage,
+        //EntranceGoronRacetrackFromGoronRacetrack, // race start // one way
+        //EntranceGoronRacetrackFromGoronRacetrack, // race end // one way
+
+        EntranceEastClockTownFromTerminaField,
+        EntranceEastClockTownFromSouthClockTownNorthern,
+        EntranceEastClockTownFromAstralObservatory,
+        EntranceEastClockTownFromSouthClockTownSouthern,
+        EntranceEastClockTownFromTreasureChestShop,
+        EntranceEastClockTownFromNorthClockTown,
+        EntranceEastClockTownFromHoneyDarlingsShop,
+        EntranceEastClockTownFromMayorsResidence,
+        EntranceEastClockTownFromShootingGalleryClockTown,
+        EntranceEastClockTownFromStockPotInnLower,
+        EntranceEastClockTownFromStockPotInnUpper,
+        EntranceEastClockTownFromMilkBar,
+
+        EntranceWestClockTownFromTerminaField,
+        EntranceWestClockTownFromSouthClockTownSouthern,
+        EntranceWestClockTownFromSouthClockTownNorthern,
+        EntranceWestClockTownFromSwordsmansSchool,
+        EntranceWestClockTownFromCuriosityShop,
+        EntranceWestClockTownFromTradingPost,
+        EntranceWestClockTownFromBombShop,
+        EntranceWestClockTownFromPostOffice,
+        EntranceWestClockTownFromLotteryShop,
+
+        EntranceNorthClockTownFromTerminaField,
+        EntranceNorthClockTownFromEastClockTown,
+        EntranceNorthClockTownFromSouthClockTown,
+        EntranceNorthClockTownFromFairysFountain,
+        EntranceNorthClockTownFromDekuScrubPlayground,
+        //EntranceNorthClockTownFromBombersGame, // after catching kids // one way
+        //EntranceNorthClockTownFromSavingLady, // after saving old lady // one way
+
+        EntranceSouthClockTownFromClockTowerInterior,
+        EntranceSouthClockTownFromTerminaField,
+        EntranceSouthClockTownFromEastClockTownNorthern,
+        EntranceSouthClockTownFromWestClockTownNorthern,
+        EntranceSouthClockTownFromNorthClockTown,
+        EntranceSouthClockTownFromWestClockTownSouthern,
+        EntranceSouthClockTownFromLaundryPool,
+        EntranceSouthClockTownFromEastClockTownSouthern,
+        EntranceSouthClockTownFromClockTowerRooftop,
+        EntranceSouthClockTownFromOwlStatue, // one way
+
+        EntranceLaundryPoolFromSouthClockTown,
+        EntranceLaundryPoolFromKafeisHideout,
     }
 }
