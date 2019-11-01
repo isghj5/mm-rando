@@ -1800,6 +1800,9 @@ namespace MMRando
                 worker.ReportProgress(30, "Shuffling items...");
                 RandomizeItems();
 
+                EntranceSwapUtils.ReadMapData();
+                EntranceSwapUtils.WriteMapData();
+
                 foreach (var itemLogic in _randomized.Logic)
                 {
                     if (_settings.CustomStartingItemList.Contains((Item)itemLogic.ItemId) && !ItemList[itemLogic.ItemId].IsRandomized)

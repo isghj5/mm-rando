@@ -1519,1609 +1519,1877 @@
       "RegionName": "Clock Tower",
       "ExitName": "Clock Tower: South Clock Town",
       "ExitIndex": 1,
-      "SpawnName": "Clock Tower: South Clock Town"
+      "SpawnName": "Clock Tower: South Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: Clock Tower",
       "ExitIndex": 0,
-      "SpawnName": "South Clock Town: Clock Tower"
+      "SpawnName": "South Clock Town: Clock Tower",
+      "LogicIndex": 0
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: Termina Field",
       "ExitIndex": 1,
-      "SpawnName": "South Clock Town: Termina Field"
+      "SpawnName": "South Clock Town: Termina Field",
+      "LogicIndex": 0
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: East Clock Town",
       "ExitIndex": 2,
-      "SpawnName": "South Clock Town: East Clock Town"
+      "SpawnName": "South Clock Town: East Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: West Clock Town",
       "ExitIndex": 3,
-      "SpawnName": "South Clock Town: West Clock Town"
+      "SpawnName": "South Clock Town: West Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: North Clock Town",
       "ExitIndex": 4,
-      "SpawnName": "South Clock Town: North Clock Town"
+      "SpawnName": "South Clock Town: North Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: South West Connection",
       "ExitIndex": 5,
-      "SpawnName": "South Clock Town: South West Connection"
+      "SpawnName": "South Clock Town: South West Connection",
+      "LogicIndex": 0
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: Laundry Pool",
       "ExitIndex": 6,
-      "SpawnName": "South Clock Town: Laundry Pool"
+      "SpawnName": "South Clock Town: Laundry Pool",
+      "LogicIndex": 0
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: South East Connection",
       "ExitIndex": 7,
-      "SpawnName": "South Clock Town: South East Connection"
+      "SpawnName": "South Clock Town: South East Connection",
+      "LogicIndex": 0
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: Clock Tower Roof",
       "ExitIndex": 8,
-      "SpawnName": "South Clock Town: Clock Tower Roof"
+      "SpawnName": "South Clock Town: Clock Tower Roof",
+      "LogicIndex": 0
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: Owl Warp",
       "ExitIndex": 11,
-      "SpawnName": "South Clock Town: Owl Warp"
+      "SpawnName": "South Clock Town: Owl Warp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "North Clock Town",
       "ExitName": "North Clock Town: Termina Field",
       "ExitIndex": 0,
-      "SpawnName": "North Clock Town: Termina Field"
+      "SpawnName": "North Clock Town: Termina Field",
+      "LogicIndex": 0
     },
     {
       "RegionName": "North Clock Town",
       "ExitName": "North Clock Town: East Clock Town",
       "ExitIndex": 1,
-      "SpawnName": "North Clock Town: East Clock Town"
+      "SpawnName": "North Clock Town: East Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "North Clock Town",
       "ExitName": "North Clock Town: South Clock Town",
       "ExitIndex": 2,
-      "SpawnName": "North Clock Town: South Clock Town"
+      "SpawnName": "North Clock Town: South Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "North Clock Town",
       "ExitName": "North Clock Town: Clock Town Fairy",
       "ExitIndex": 3,
-      "SpawnName": "North Clock Town: Clock Town Fairy"
+      "SpawnName": "North Clock Town: Clock Town Fairy",
+      "LogicIndex": 0
     },
     {
       "RegionName": "North Clock Town",
       "ExitName": "North Clock Town: Deku Playground",
       "ExitIndex": 4,
-      "SpawnName": "North Clock Town: Deku Playground"
+      "SpawnName": "North Clock Town: Deku Playground",
+      "LogicIndex": 0
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Termina Field",
       "ExitIndex": 0,
-      "SpawnName": "West Clock Town: Termina Field"
+      "SpawnName": "West Clock Town: Termina Field",
+      "LogicIndex": 0
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: South West Connection",
       "ExitIndex": 1,
-      "SpawnName": "West Clock Town: South West Connection"
+      "SpawnName": "West Clock Town: South West Connection",
+      "LogicIndex": 0
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: South Clock Town",
       "ExitIndex": 2,
-      "SpawnName": "West Clock Town: South Clock Town"
+      "SpawnName": "West Clock Town: South Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Swordsman's School",
       "ExitIndex": 3,
-      "SpawnName": "West Clock Town: Swordsman's School"
+      "SpawnName": "West Clock Town: Swordsman's School",
+      "LogicIndex": 0
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Curiosity Shop",
       "ExitIndex": 4,
-      "SpawnName": "West Clock Town: Curiosity Shop"
+      "SpawnName": "West Clock Town: Curiosity Shop",
+      "LogicIndex": 0
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Trading Post",
       "ExitIndex": 5,
-      "SpawnName": "West Clock Town: Trading Post"
+      "SpawnName": "West Clock Town: Trading Post",
+      "LogicIndex": 0
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Bomb Shop",
       "ExitIndex": 6,
-      "SpawnName": "West Clock Town: Bomb Shop"
+      "SpawnName": "West Clock Town: Bomb Shop",
+      "LogicIndex": 0
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Post Office",
       "ExitIndex": 7,
-      "SpawnName": "West Clock Town: Post Office"
+      "SpawnName": "West Clock Town: Post Office",
+      "LogicIndex": 0
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Lottery Shop",
       "ExitIndex": 8,
-      "SpawnName": "West Clock Town: Lottery Shop"
+      "SpawnName": "West Clock Town: Lottery Shop",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Termina Field",
       "ExitIndex": 0,
-      "SpawnName": "East Clock Town: Termina Field"
+      "SpawnName": "East Clock Town: Termina Field",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: South East Connection",
       "ExitIndex": 1,
-      "SpawnName": "East Clock Town: South East Connection"
+      "SpawnName": "East Clock Town: South East Connection",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Observatory",
       "ExitIndex": 2,
-      "SpawnName": "East Clock Town: Observatory"
+      "SpawnName": "East Clock Town: Observatory",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: South Clock Town",
       "ExitIndex": 3,
-      "SpawnName": "East Clock Town: South Clock Town"
+      "SpawnName": "East Clock Town: South Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Treasure Chest Game",
       "ExitIndex": 4,
-      "SpawnName": "East Clock Town: Treasure Chest Game"
+      "SpawnName": "East Clock Town: Treasure Chest Game",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: North Clock Town",
       "ExitIndex": 5,
-      "SpawnName": "East Clock Town: North Clock Town"
+      "SpawnName": "East Clock Town: North Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Honey & Darling",
       "ExitIndex": 6,
-      "SpawnName": "East Clock Town: Honey & Darling"
+      "SpawnName": "East Clock Town: Honey & Darling",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Mayor's Residence",
       "ExitIndex": 7,
-      "SpawnName": "East Clock Town: Mayor's Residence"
+      "SpawnName": "East Clock Town: Mayor's Residence",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Town Shooting Gallery",
       "ExitIndex": 8,
-      "SpawnName": "East Clock Town: Town Shooting Gallery"
+      "SpawnName": "East Clock Town: Town Shooting Gallery",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Stock Pot Inn",
       "ExitIndex": 9,
-      "SpawnName": "East Clock Town: Stock Pot Inn"
+      "SpawnName": "East Clock Town: Stock Pot Inn",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Stock Pot Roof",
       "ExitIndex": 10,
-      "SpawnName": "East Clock Town: Stock Pot Roof"
+      "SpawnName": "East Clock Town: Stock Pot Roof",
+      "LogicIndex": 0
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Milk Bar",
       "ExitIndex": 12,
-      "SpawnName": "East Clock Town: Milk Bar"
+      "SpawnName": "East Clock Town: Milk Bar",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Laundry Pool",
       "ExitName": "Laundry Pool: South Clock Town",
       "ExitIndex": 0,
-      "SpawnName": "Laundry Pool: South Clock Town"
+      "SpawnName": "Laundry Pool: South Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Laundry Pool",
       "ExitName": "Laundry Pool: Kafei's House",
       "ExitIndex": 2,
-      "SpawnName": "Laundry Pool: Kafei's House"
+      "SpawnName": "Laundry Pool: Kafei's House",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Bomb Shop",
       "ExitName": "Bomb Shop Exit",
       "ExitIndex": 0,
-      "SpawnName": "Bomb Shop Exit"
+      "SpawnName": "Bomb Shop Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Trading Post",
       "ExitName": "Trading Post Exit",
       "ExitIndex": 0,
-      "SpawnName": "Trading Post Exit"
+      "SpawnName": "Trading Post Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Swordsman's School",
       "ExitName": "Swordsman's School Exit",
       "ExitIndex": 0,
-      "SpawnName": "Swordsman's School Exit"
+      "SpawnName": "Swordsman's School Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Curiosity Shop",
       "ExitName": "Curiosity Shop Exit",
       "ExitIndex": 0,
-      "SpawnName": "Curiosity Shop Exit"
+      "SpawnName": "Curiosity Shop Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Kafei's House",
       "ExitName": "Kafei's House Exit",
       "ExitIndex": 1,
-      "SpawnName": "Kafei's House Exit"
+      "SpawnName": "Kafei's House Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Post Office",
       "ExitName": "Post Office Exit",
       "ExitIndex": 0,
-      "SpawnName": "Post Office Exit"
+      "SpawnName": "Post Office Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Lottery Shop",
       "ExitName": "Lottery Shop Exit",
       "ExitIndex": 0,
-      "SpawnName": "Lottery Shop Exit"
+      "SpawnName": "Lottery Shop Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Treasure Chest Game",
       "ExitName": "Treasure Chest Game Exit",
       "ExitIndex": 0,
-      "SpawnName": "Treasure Chest Game Exit"
+      "SpawnName": "Treasure Chest Game Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Honey & Darling",
       "ExitName": "Honey & Darling Exit",
       "ExitIndex": 0,
-      "SpawnName": "Honey & Darling Exit"
+      "SpawnName": "Honey & Darling Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Mayor's Residence",
       "ExitName": "Mayor's Residence Exit",
       "ExitIndex": 0,
-      "SpawnName": "Mayor's Residence Exit"
+      "SpawnName": "Mayor's Residence Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Town Shooting Gallery",
       "ExitName": "Town Shooting Gallery Exit",
       "ExitIndex": 0,
-      "SpawnName": "Town Shooting Gallery Exit"
+      "SpawnName": "Town Shooting Gallery Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Stock Pot Inn",
       "ExitName": "Stock Pot Inn Exit",
       "ExitIndex": 0,
-      "SpawnName": "Stock Pot Inn Exit"
+      "SpawnName": "Stock Pot Inn Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Stock Pot Inn",
       "ExitName": "Stock Pot Roof Exit",
       "ExitIndex": 1,
-      "SpawnName": "Stock Pot Roof Exit"
+      "SpawnName": "Stock Pot Roof Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Milk Bar",
       "ExitName": "Milk Bar Exit",
       "ExitIndex": 0,
-      "SpawnName": "Milk Bar Exit"
+      "SpawnName": "Milk Bar Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku Playground",
       "ExitName": "Deku Playground Exit",
       "ExitIndex": 0,
-      "SpawnName": "Deku Playground Exit"
+      "SpawnName": "Deku Playground Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Clock Tower Roof",
       "ExitName": "Clock Tower Roof Exit",
       "ExitIndex": 0,
-      "SpawnName": "Clock Tower Roof Exit"
+      "SpawnName": "Clock Tower Roof Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Clock Tower Roof",
       "ExitName": "Clock Tower Roof: Moon",
       "ExitIndex": 0,
-      "SpawnName": "Clock Tower Roof: Moon"
+      "SpawnName": "Clock Tower Roof: Moon",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: West Clock Town",
       "ExitIndex": 0,
-      "SpawnName": "Termina Field: West Clock Town"
+      "SpawnName": "Termina Field: West Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: Swamp Path",
       "ExitIndex": 1,
-      "SpawnName": "Termina Field: Swamp Path"
+      "SpawnName": "Termina Field: Swamp Path",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: Great Bay Coast",
       "ExitIndex": 2,
-      "SpawnName": "Termina Field: Great Bay Coast"
+      "SpawnName": "Termina Field: Great Bay Coast",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: Mountain Path",
       "ExitIndex": 3,
-      "SpawnName": "Termina Field: Mountain Path"
+      "SpawnName": "Termina Field: Mountain Path",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: Ikana Path",
       "ExitIndex": 4,
-      "SpawnName": "Termina Field: Ikana Path"
+      "SpawnName": "Termina Field: Ikana Path",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: Milk Road",
       "ExitIndex": 5,
-      "SpawnName": "Termina Field: Milk Road"
+      "SpawnName": "Termina Field: Milk Road",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: South Clock Town",
       "ExitIndex": 6,
-      "SpawnName": "Termina Field: South Clock Town"
+      "SpawnName": "Termina Field: South Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: East Clock Town",
       "ExitIndex": 7,
-      "SpawnName": "Termina Field: East Clock Town"
+      "SpawnName": "Termina Field: East Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: North Clock Town",
       "ExitIndex": 8,
-      "SpawnName": "Termina Field: North Clock Town"
+      "SpawnName": "Termina Field: North Clock Town",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: Observatory",
       "ExitIndex": 9,
-      "SpawnName": "Termina Field: Observatory"
+      "SpawnName": "Termina Field: Observatory",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Observatory",
       "ExitName": "Observatory: East Clock Town Exit",
       "ExitIndex": 0,
-      "SpawnName": "Observatory: East Clock Town Exit"
+      "SpawnName": "Observatory: East Clock Town Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Observatory",
       "ExitName": "Observatory: Termina Field Exit",
       "ExitIndex": 1,
-      "SpawnName": "Observatory: Termina Field Exit"
+      "SpawnName": "Observatory: Termina Field Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Swamp Path",
       "ExitName": "Swamp Path: Termina Field",
       "ExitIndex": 0,
-      "SpawnName": "Swamp Path: Termina Field"
+      "SpawnName": "Swamp Path: Termina Field",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Swamp Path",
       "ExitName": "Swamp Path: Southern Swamp",
       "ExitIndex": 1,
-      "SpawnName": "Swamp Path: Southern Swamp"
+      "SpawnName": "Swamp Path: Southern Swamp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Swamp Path",
       "ExitName": "Swamp Path: Swamp Shooting Gallery",
       "ExitIndex": 2,
-      "SpawnName": "Swamp Path: Swamp Shooting Gallery"
+      "SpawnName": "Swamp Path: Swamp Shooting Gallery",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Southern Swamp",
       "ExitName": "Southern Swamp: Swamp Path",
       "ExitIndex": 0,
-      "SpawnName": "Southern Swamp: Swamp Path"
+      "SpawnName": "Southern Swamp: Swamp Path",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Southern Swamp",
       "ExitName": "Southern Swamp: Tourist Center",
       "ExitIndex": 1,
-      "SpawnName": "Southern Swamp: Tourist Center"
+      "SpawnName": "Southern Swamp: Tourist Center",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Southern Swamp",
       "ExitName": "Southern Swamp: Woodfall",
       "ExitIndex": 2,
-      "SpawnName": "Southern Swamp: Woodfall"
+      "SpawnName": "Southern Swamp: Woodfall",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Southern Swamp",
       "ExitName": "Southern Swamp: Deku Palace",
       "ExitIndex": 3,
-      "SpawnName": "Southern Swamp: Deku Palace"
+      "SpawnName": "Southern Swamp: Deku Palace",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Southern Swamp",
       "ExitName": "Southern Swamp: Deku Shortcut",
       "ExitIndex": 4,
-      "SpawnName": "Southern Swamp: Deku Shortcut"
+      "SpawnName": "Southern Swamp: Deku Shortcut",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Southern Swamp",
       "ExitName": "Southern Swamp: Potion Shop",
       "ExitIndex": 5,
-      "SpawnName": "Southern Swamp: Potion Shop"
+      "SpawnName": "Southern Swamp: Potion Shop",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Southern Swamp",
       "ExitName": "Southern Swamp: Woods of Mystery",
       "ExitIndex": 7,
-      "SpawnName": "Southern Swamp: Woods of Mystery"
+      "SpawnName": "Southern Swamp: Woods of Mystery",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Southern Swamp",
       "ExitName": "Southern Swamp: Swamp Spider House",
       "ExitIndex": 8,
-      "SpawnName": "Southern Swamp: Swamp Spider House"
+      "SpawnName": "Southern Swamp: Swamp Spider House",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Southern Swamp",
       "ExitName": "Southern Swamp: Owl Warp",
       "ExitIndex": 5,
-      "SpawnName": "Southern Swamp: Owl Warp"
+      "SpawnName": "Southern Swamp: Owl Warp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Southern Swamp: Ikana Canyon",
       "ExitIndex": 4,
-      "SpawnName": "Southern Swamp: Ikana Canyon"
+      "SpawnName": "Southern Swamp: Ikana Canyon",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Ikana Path",
       "ExitIndex": 0,
-      "SpawnName": "Ikana Canyon: Ikana Path"
+      "SpawnName": "Ikana Canyon: Ikana Path",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Poe Hut",
       "ExitIndex": 1,
-      "SpawnName": "Ikana Canyon: Poe Hut"
+      "SpawnName": "Ikana Canyon: Poe Hut",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Music Box",
       "ExitIndex": 2,
-      "SpawnName": "Ikana Canyon: Music Box"
+      "SpawnName": "Ikana Canyon: Music Box",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Stone Tower",
       "ExitIndex": 3,
-      "SpawnName": "Ikana Canyon: Stone Tower"
+      "SpawnName": "Ikana Canyon: Stone Tower",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Owl Warp",
       "ExitIndex": 1,
-      "SpawnName": "Ikana Canyon: Owl Warp"
+      "SpawnName": "Ikana Canyon: Owl Warp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Well",
       "ExitIndex": 5,
-      "SpawnName": "Ikana Canyon: Well"
+      "SpawnName": "Ikana Canyon: Well",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Sakon's Hideout",
       "ExitIndex": 6,
-      "SpawnName": "Ikana Canyon: Sakon's Hideout"
+      "SpawnName": "Ikana Canyon: Sakon's Hideout",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Ikana Castle",
       "ExitIndex": 7,
-      "SpawnName": "Ikana Canyon: Ikana Castle"
+      "SpawnName": "Ikana Canyon: Ikana Castle",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Stone Tower Fairy",
       "ExitIndex": 8,
-      "SpawnName": "Ikana Canyon: Stone Tower Fairy"
+      "SpawnName": "Ikana Canyon: Stone Tower Fairy",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Secret Shrine",
       "ExitIndex": 9,
-      "SpawnName": "Ikana Canyon: Secret Shrine"
+      "SpawnName": "Ikana Canyon: Secret Shrine",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Cursed Area Exit",
       "ExitIndex": 11,
-      "SpawnName": "Ikana Canyon: Cursed Area Exit"
+      "SpawnName": "Ikana Canyon: Cursed Area Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Cursed Area",
       "ExitIndex": 10,
-      "SpawnName": "Ikana Canyon: Cursed Area"
+      "SpawnName": "Ikana Canyon: Cursed Area",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Canyon",
       "ExitName": "Ikana Canyon: Dungeon Clear",
       "ExitIndex": 255,
-      "SpawnName": "Ikana Canyon: Dungeon Clear"
+      "SpawnName": "Ikana Canyon: Dungeon Clear",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Majora's Lair",
       "ExitName": "Majora's Lair",
       "ExitIndex": 1,
-      "SpawnName": "Majora's Lair"
+      "SpawnName": "Majora's Lair",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Moon",
       "ExitName": "Moon: Clock Tower",
       "ExitIndex": 0,
-      "SpawnName": "Moon: Clock Tower"
+      "SpawnName": "Moon: Clock Tower",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Moon",
       "ExitName": "Moon: Majora's Lair",
       "ExitIndex": 1,
-      "SpawnName": "Moon: Majora's Lair"
+      "SpawnName": "Moon: Majora's Lair",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Moon",
       "ExitName": "Moon: Link Trial",
       "ExitIndex": 4,
-      "SpawnName": "Moon: Link Trial"
+      "SpawnName": "Moon: Link Trial",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Moon",
       "ExitName": "Moon: Deku Trial",
       "ExitIndex": 1,
-      "SpawnName": "Moon: Deku Trial"
+      "SpawnName": "Moon: Deku Trial",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Moon",
       "ExitName": "Moon: Goron Trial",
       "ExitIndex": 2,
-      "SpawnName": "Moon: Goron Trial"
+      "SpawnName": "Moon: Goron Trial",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Moon",
       "ExitName": "Moon: Zora Trial",
       "ExitIndex": 3,
-      "SpawnName": "Moon: Zora Trial"
+      "SpawnName": "Moon: Zora Trial",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Link Trial",
       "ExitName": "Link Trial Exit",
       "ExitIndex": 0,
-      "SpawnName": "Link Trial Exit"
+      "SpawnName": "Link Trial Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku Trial",
       "ExitName": "Deku Trial Exit",
       "ExitIndex": 0,
-      "SpawnName": "Deku Trial Exit"
+      "SpawnName": "Deku Trial Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Goron Trial",
       "ExitName": "Goron Trial Exit",
       "ExitIndex": 0,
-      "SpawnName": "Goron Trial Exit"
+      "SpawnName": "Goron Trial Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Trial",
       "ExitName": "Zora Trial Exit",
       "ExitIndex": 0,
-      "SpawnName": "Zora Trial Exit"
+      "SpawnName": "Zora Trial Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Woodfall Temple",
       "ExitName": "Woodfall Temple Exit",
       "ExitIndex": 0,
-      "SpawnName": "Woodfall Temple Exit"
+      "SpawnName": "Woodfall Temple Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Woodfall Temple",
       "ExitName": "Odolwa's Boss Lair",
       "ExitIndex": 1,
-      "SpawnName": "Odolwa's Boss Lair"
+      "SpawnName": "Odolwa's Boss Lair",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku Princess Room",
       "ExitName": "Deku Princess Room Exit",
       "ExitIndex": 2,
-      "SpawnName": "Deku Princess Room Exit"
+      "SpawnName": "Deku Princess Room Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Snowhead Temple",
       "ExitName": "Snowhead Temple Exit",
       "ExitIndex": 0,
-      "SpawnName": "Snowhead Temple Exit"
+      "SpawnName": "Snowhead Temple Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Snowhead Temple",
       "ExitName": "Goht's Boss Lair",
       "ExitIndex": 1,
-      "SpawnName": "Goht's Boss Lair"
+      "SpawnName": "Goht's Boss Lair",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Temple",
       "ExitName": "Great Bay Temple Exit",
       "ExitIndex": 0,
-      "SpawnName": "Great Bay Temple Exit"
+      "SpawnName": "Great Bay Temple Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Temple",
       "ExitName": "Gyorg's Boss Lair",
       "ExitIndex": 1,
-      "SpawnName": "Gyorg's Boss Lair"
+      "SpawnName": "Gyorg's Boss Lair",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Stone Tower Temple",
       "ExitName": "Stone Tower Temple Exit",
       "ExitIndex": 0,
-      "SpawnName": "Stone Tower Temple Exit"
+      "SpawnName": "Stone Tower Temple Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Inverted Stone Tower Temple",
       "ExitName": "Inverted Stone Tower Temple Exit",
       "ExitIndex": 0,
-      "SpawnName": "Inverted Stone Tower Temple Exit"
+      "SpawnName": "Inverted Stone Tower Temple Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Inverted Stone Tower Temple",
       "ExitName": "Twinmold's Boss Lair",
       "ExitIndex": 1,
-      "SpawnName": "Twinmold's Boss Lair"
+      "SpawnName": "Twinmold's Boss Lair",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku Palace",
       "ExitName": "Deku Palace: Southern Swamp",
       "ExitIndex": 0,
-      "SpawnName": "Deku Palace: Southern Swamp"
+      "SpawnName": "Deku Palace: Southern Swamp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku Palace",
       "ExitName": "Deku Palace: Caught",
       "ExitIndex": 1,
-      "SpawnName": "Deku Palace: Caught"
+      "SpawnName": "Deku Palace: Caught",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku King Chamber",
       "ExitName": "Deku King Chamber: Caught",
       "ExitIndex": 1,
-      "SpawnName": "Deku Palace: Caught"
+      "SpawnName": "Deku Palace: Caught",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku Palace",
       "ExitName": "Deku Palace: Deku King Chamber",
       "ExitIndex": 1,
-      "SpawnName": "Deku Palace: Deku King Chamber"
+      "SpawnName": "Deku Palace: Deku King Chamber",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku Palace",
       "ExitName": "Deku Palace: Sonata Monkey",
       "ExitIndex": 2,
-      "SpawnName": "Deku Palace: Sonata Monkey"
+      "SpawnName": "Deku Palace: Sonata Monkey",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku Palace",
       "ExitName": "Deku Palace: Deku Shrine",
       "ExitIndex": 3,
-      "SpawnName": "Deku Palace: Deku Shrine"
+      "SpawnName": "Deku Palace: Deku Shrine",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku Palace",
       "ExitName": "Deku Palace: Deku Shortcut",
       "ExitIndex": 9,
-      "SpawnName": "Deku Palace: Deku Shortcut"
+      "SpawnName": "Deku Palace: Deku Shortcut",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Potion Shop",
       "ExitName": "Potion Shop Exit",
       "ExitIndex": 0,
-      "SpawnName": "Potion Shop Exit"
+      "SpawnName": "Potion Shop Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Swamp Shooting Gallery",
       "ExitName": "Swamp Shooting Gallery Exit",
       "ExitIndex": 0,
-      "SpawnName": "Swamp Shooting Gallery Exit"
+      "SpawnName": "Swamp Shooting Gallery Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Swamp Spider House",
       "ExitName": "Swamp Spider House Exit",
       "ExitIndex": 0,
-      "SpawnName": "Swamp Spider House Exit"
+      "SpawnName": "Swamp Spider House Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Woods of Mystery",
       "ExitName": "Woods of Mystery Exit",
       "ExitIndex": 0,
-      "SpawnName": "Woods of Mystery Exit"
+      "SpawnName": "Woods of Mystery Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Tourist Center",
       "ExitName": "Tourist Center Exit",
       "ExitIndex": 0,
-      "SpawnName": "Tourist Center Exit"
+      "SpawnName": "Tourist Center Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku King Chamber",
       "ExitName": "Deku King Chamber Exit",
       "ExitIndex": 0,
-      "SpawnName": "Deku King Chamber Exit"
+      "SpawnName": "Deku King Chamber Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Sonata Monkey",
       "ExitName": "Sonata Monkey Exit",
       "ExitIndex": 1,
-      "SpawnName": "Sonata Monkey Exit"
+      "SpawnName": "Sonata Monkey Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Deku Shrine",
       "ExitName": "Deku Shrine Exit",
       "ExitIndex": 0,
-      "SpawnName": "Deku Shrine Exit"
+      "SpawnName": "Deku Shrine Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Woodfall",
       "ExitName": "Woodfall: Southern Swamp",
       "ExitIndex": 0,
-      "SpawnName": "Woodfall: Southern Swamp"
+      "SpawnName": "Woodfall: Southern Swamp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Woodfall",
       "ExitName": "Woodfall: Temple",
       "ExitIndex": 1,
-      "SpawnName": "Woodfall: Temple"
+      "SpawnName": "Woodfall: Temple",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Woodfall",
       "ExitName": "Woodfall: Woodfall Fairy",
       "ExitIndex": 2,
-      "SpawnName": "Woodfall: Woodfall Fairy"
+      "SpawnName": "Woodfall: Woodfall Fairy",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Woodfall Temple",
       "ExitName": "Woodfall Temple: Dungeon Clear",
       "ExitIndex": 255,
-      "SpawnName": "Woodfall Temple: Dungeon Clear"
+      "SpawnName": "Woodfall Temple: Dungeon Clear",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Woodfall",
       "ExitName": "Woodfall: Deku Princess Room",
       "ExitIndex": 3,
-      "SpawnName": "Woodfall: Deku Princess Room"
+      "SpawnName": "Woodfall: Deku Princess Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Woodfall",
       "ExitName": "Woodfall: Owl Warp",
       "ExitIndex": 6,
-      "SpawnName": "Woodfall: Owl Warp"
+      "SpawnName": "Woodfall: Owl Warp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Mountain Path",
       "ExitName": "Mountain Path: Termina Field",
       "ExitIndex": 0,
-      "SpawnName": "Mountain Path: Termina Field"
+      "SpawnName": "Mountain Path: Termina Field",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Mountain Path",
       "ExitName": "Mountain Path: Mountain Village",
       "ExitIndex": 1,
-      "SpawnName": "Mountain Path: Mountain Village"
+      "SpawnName": "Mountain Path: Mountain Village",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Mountain Village",
       "ExitName": "Mountain Village: Smithy",
       "ExitIndex": 1,
-      "SpawnName": "Mountain Village: Smithy"
+      "SpawnName": "Mountain Village: Smithy",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Mountain Village",
       "ExitName": "Mountain Village: Twin Islands",
       "ExitIndex": 2,
-      "SpawnName": "Mountain Village: Twin Islands"
+      "SpawnName": "Mountain Village: Twin Islands",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Mountain Village",
       "ExitName": "Mountain Village: Goron Grave",
       "ExitIndex": 3,
-      "SpawnName": "Mountain Village: Goron Grave"
+      "SpawnName": "Mountain Village: Goron Grave",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Mountain Village",
       "ExitName": "Mountain Village: Snowhead Path",
       "ExitIndex": 4,
-      "SpawnName": "Mountain Village: Snowhead Path"
+      "SpawnName": "Mountain Village: Snowhead Path",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Mountain Village",
       "ExitName": "Mountain Village: Mountain Path",
       "ExitIndex": 0,
-      "SpawnName": "Mountain Village: Mountain Path"
+      "SpawnName": "Mountain Village: Mountain Path",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Mountain Village",
       "ExitName": "Mountain Village: Owl Warp",
       "ExitIndex": 7,
-      "SpawnName": "Mountain Village: Owl Warp"
+      "SpawnName": "Mountain Village: Owl Warp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Mountain Village",
       "ExitName": "Mountain Village: Dungeon Clear",
       "ExitIndex": 255,
-      "SpawnName": "Mountain Village: Dungeon Clear"
+      "SpawnName": "Mountain Village: Dungeon Clear",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Twin Islands",
       "ExitName": "Twin Islands: Mountain Village",
       "ExitIndex": 0,
-      "SpawnName": "Twin Islands: Mountain Village"
+      "SpawnName": "Twin Islands: Mountain Village",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Twin Islands",
       "ExitName": "Twin Islands: Goron Village",
       "ExitIndex": 1,
-      "SpawnName": "Twin Islands: Goron Village"
+      "SpawnName": "Twin Islands: Goron Village",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Twin Islands",
       "ExitName": "Twin Islands: Goron Racetrack",
       "ExitIndex": 2,
-      "SpawnName": "Twin Islands: Goron Racetrack"
+      "SpawnName": "Twin Islands: Goron Racetrack",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Goron Village",
       "ExitName": "Goron Village: Twin Islands",
       "ExitIndex": 0,
-      "SpawnName": "Goron Village: Twin Islands"
+      "SpawnName": "Goron Village: Twin Islands",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Goron Village",
       "ExitName": "Goron Village: Goron Shrine",
       "ExitIndex": 2,
-      "SpawnName": "Goron Village: Goron Shrine"
+      "SpawnName": "Goron Village: Goron Shrine",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Goron Village",
       "ExitName": "Goron Village: Lens Grotto",
       "ExitIndex": 3,
-      "SpawnName": "Goron Village: Lens Grotto"
+      "SpawnName": "Goron Village: Lens Grotto",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Lens Grotto",
       "ExitName": "Lens Grotto Exit",
       "ExitIndex": 1,
-      "SpawnName": "Lens Grotto Exit"
+      "SpawnName": "Lens Grotto Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Goron Grave",
       "ExitName": "Goron Grave Exit",
       "ExitIndex": 0,
-      "SpawnName": "Goron Grave Exit"
+      "SpawnName": "Goron Grave Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Smithy",
       "ExitName": "Smithy Exit",
       "ExitIndex": 0,
-      "SpawnName": "Smithy Exit"
+      "SpawnName": "Smithy Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Goron Racetrack",
       "ExitName": "Goron Racetrack Exit",
       "ExitIndex": 0,
-      "SpawnName": "Goron Racetrack Exit"
+      "SpawnName": "Goron Racetrack Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Goron Shrine",
       "ExitName": "Goron Shrine Exit",
       "ExitIndex": 0,
-      "SpawnName": "Goron Shrine Exit"
+      "SpawnName": "Goron Shrine Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Snowhead Path",
       "ExitName": "Snowhead Path: Mountain Village",
       "ExitIndex": 0,
-      "SpawnName": "Snowhead Path: Mountain Village"
+      "SpawnName": "Snowhead Path: Mountain Village",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Snowhead Path",
       "ExitName": "Snowhead Path: Snowhead",
       "ExitIndex": 1,
-      "SpawnName": "Snowhead Path: Snowhead"
+      "SpawnName": "Snowhead Path: Snowhead",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Snowhead",
       "ExitName": "Snowhead: Snowhead Path",
       "ExitIndex": 0,
-      "SpawnName": "Snowhead: Snowhead Path"
+      "SpawnName": "Snowhead: Snowhead Path",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Snowhead",
       "ExitName": "Snowhead: Temple",
       "ExitIndex": 1,
-      "SpawnName": "Snowhead: Temple"
+      "SpawnName": "Snowhead: Temple",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Snowhead",
       "ExitName": "Snowhead: Snowhead Fairy",
       "ExitIndex": 2,
-      "SpawnName": "Snowhead: Snowhead Fairy"
+      "SpawnName": "Snowhead: Snowhead Fairy",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Snowhead",
       "ExitName": "Snowhead: Owl Warp",
       "ExitIndex": 10,
-      "SpawnName": "Snowhead: Owl Warp"
+      "SpawnName": "Snowhead: Owl Warp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Milk Road",
       "ExitName": "Milk Road: Termina Field",
       "ExitIndex": 0,
-      "SpawnName": "Milk Road: Termina Field"
+      "SpawnName": "Milk Road: Termina Field",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Milk Road",
       "ExitName": "Milk Road: Romani Ranch",
       "ExitIndex": 1,
-      "SpawnName": "Milk Road: Romani Ranch"
+      "SpawnName": "Milk Road: Romani Ranch",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Milk Road",
       "ExitName": "Milk Road: Gorman Track",
       "ExitIndex": 3,
-      "SpawnName": "Milk Road: Gorman Track"
+      "SpawnName": "Milk Road: Gorman Track",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Milk Road",
       "ExitName": "Milk Road: Owl Warp",
       "ExitIndex": 2,
-      "SpawnName": "Milk Road: Owl Warp"
+      "SpawnName": "Milk Road: Owl Warp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Romani Ranch",
       "ExitName": "Romani Ranch: Milk Road",
       "ExitIndex": 0,
-      "SpawnName": "Romani Ranch: Milk Road"
+      "SpawnName": "Romani Ranch: Milk Road",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Romani Ranch",
       "ExitName": "Romani Ranch: Stable",
       "ExitIndex": 2,
-      "SpawnName": "Romani Ranch: Stable"
+      "SpawnName": "Romani Ranch: Stable",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Romani Ranch",
       "ExitName": "Romani Ranch: Ranch House",
       "ExitIndex": 3,
-      "SpawnName": "Romani Ranch: Ranch House"
+      "SpawnName": "Romani Ranch: Ranch House",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Romani Ranch",
       "ExitName": "Romani Ranch: Cucco Shack",
       "ExitIndex": 4,
-      "SpawnName": "Romani Ranch: Cucco Shack"
+      "SpawnName": "Romani Ranch: Cucco Shack",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Romani Ranch",
       "ExitName": "Romani Ranch: Doggy Racetrack",
       "ExitIndex": 5,
-      "SpawnName": "Romani Ranch: Doggy Racetrack"
+      "SpawnName": "Romani Ranch: Doggy Racetrack",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Stable",
       "ExitName": "Stable Exit",
       "ExitIndex": 0,
-      "SpawnName": "Stable Exit"
+      "SpawnName": "Stable Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ranch House",
       "ExitName": "Ranch House Exit",
       "ExitIndex": 1,
-      "SpawnName": "Ranch House Exit"
+      "SpawnName": "Ranch House Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Cucco Shack",
       "ExitName": "Cucco Shack Exit",
       "ExitIndex": 0,
-      "SpawnName": "Cucco Shack Exit"
+      "SpawnName": "Cucco Shack Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Doggy Racetrack",
       "ExitName": "Doggy Racetrack Exit",
       "ExitIndex": 0,
-      "SpawnName": "Doggy Racetrack Exit"
+      "SpawnName": "Doggy Racetrack Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Gorman Track",
       "ExitName": "Gorman Track Exit",
       "ExitIndex": 0,
-      "SpawnName": "Gorman Track Exit"
+      "SpawnName": "Gorman Track Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Coast",
       "ExitName": "Great Bay Coast: Termina Field",
       "ExitIndex": 0,
-      "SpawnName": "Great Bay Coast: Termina Field"
+      "SpawnName": "Great Bay Coast: Termina Field",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Coast",
       "ExitName": "Great Bay Coast: Zora Cape",
       "ExitIndex": 1,
-      "SpawnName": "Great Bay Coast: Zora Cape"
+      "SpawnName": "Great Bay Coast: Zora Cape",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Coast",
       "ExitName": "Great Bay Coast: Pinnacle Rock",
       "ExitIndex": 3,
-      "SpawnName": "Great Bay Coast: Pinnacle Rock"
+      "SpawnName": "Great Bay Coast: Pinnacle Rock",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Coast",
       "ExitName": "Great Bay Coast: Fisherman's Hut",
       "ExitIndex": 4,
-      "SpawnName": "Great Bay Coast: Fisherman's Hut"
+      "SpawnName": "Great Bay Coast: Fisherman's Hut",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Coast",
       "ExitName": "Great Bay Coast: Pirate's Fortress",
       "ExitIndex": 5,
-      "SpawnName": "Great Bay Coast: Pirate's Fortress"
+      "SpawnName": "Great Bay Coast: Pirate's Fortress",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Coast",
       "ExitName": "Great Bay Coast: Marine Lab",
       "ExitIndex": 7,
-      "SpawnName": "Great Bay Coast: Marine Lab"
+      "SpawnName": "Great Bay Coast: Marine Lab",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Coast",
       "ExitName": "Great Bay Coast: Ocean Spider House",
       "ExitIndex": 8,
-      "SpawnName": "Great Bay Coast: Ocean Spider House"
+      "SpawnName": "Great Bay Coast: Ocean Spider House",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Coast",
       "ExitName": "Great Bay Coast: Owl Warp",
       "ExitIndex": 3,
-      "SpawnName": "Great Bay Coast: Owl Warp"
+      "SpawnName": "Great Bay Coast: Owl Warp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Coast",
       "ExitName": "Great Bay Coast: Caught",
       "ExitIndex": 12,
-      "SpawnName": "Great Bay Coast: Caught"
+      "SpawnName": "Great Bay Coast: Caught",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Pinnacle Rock",
       "ExitName": "Pinnacle Rock Exit",
       "ExitIndex": 0,
-      "SpawnName": "Pinnacle Rock Exit"
+      "SpawnName": "Pinnacle Rock Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Fisherman's Hut",
       "ExitName": "Fisherman's Hut Exit",
       "ExitIndex": 0,
-      "SpawnName": "Fisherman's Hut Exit"
+      "SpawnName": "Fisherman's Hut Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Marine Lab",
       "ExitName": "Marine Lab Exit",
       "ExitIndex": 0,
-      "SpawnName": "Marine Lab Exit"
+      "SpawnName": "Marine Lab Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ocean Spider House",
       "ExitName": "Ocean Spider House Exit",
       "ExitIndex": 0,
-      "SpawnName": "Ocean Spider House Exit"
+      "SpawnName": "Ocean Spider House Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Outside PF",
       "ExitName": "Outside PF: Great Bay Coast",
       "ExitIndex": 0,
-      "SpawnName": "Outside PF: Great Bay Coast"
+      "SpawnName": "Outside PF: Great Bay Coast",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Outside PF",
       "ExitName": "Outside PF: Pirate's Fortress",
       "ExitIndex": 1,
-      "SpawnName": "Outside PF: Pirate's Fortress"
+      "SpawnName": "Outside PF: Pirate's Fortress",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Outside PF",
       "ExitName": "Outside PF: Pirate Tunnel",
       "ExitIndex": 2,
-      "SpawnName": "Outside PF: Pirate Tunnel"
+      "SpawnName": "Outside PF: Pirate Tunnel",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Outside PF",
       "ExitName": "Outside PF: Caught",
       "ExitIndex": 10,
-      "SpawnName": "Outside PF: Caught"
+      "SpawnName": "Outside PF: Caught",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Outside PF",
       "ExitName": "Outside PF: Pirate Platform Exit",
       "ExitIndex": 5,
-      "SpawnName": "Outside PF: Pirate Platform Exit"
+      "SpawnName": "Outside PF: Pirate Platform Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Pirate's Fortress",
       "ExitName": "Pirate's Fortress: Outside PF",
       "ExitIndex": 0,
-      "SpawnName": "Pirate's Fortress: Outside PF"
+      "SpawnName": "Pirate's Fortress: Outside PF",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Pirate's Fortress",
       "ExitName": "Hookshot Room",
       "ExitIndex": 0,
-      "SpawnName": "Hookshot Room"
+      "SpawnName": "Hookshot Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Pirate's Fortress",
       "ExitName": "Hookshot Room Upper",
       "ExitIndex": 1,
-      "SpawnName": "Hookshot Room Upper"
+      "SpawnName": "Hookshot Room Upper",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Pirate's Fortress",
       "ExitName": "Well Guarded Room",
       "ExitIndex": 2,
-      "SpawnName": "Well Guarded Room"
+      "SpawnName": "Well Guarded Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Pirate's Fortress",
       "ExitName": "Well Guarded Exit",
       "ExitIndex": 3,
-      "SpawnName": "Well Guarded Exit"
+      "SpawnName": "Well Guarded Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Pirate's Fortress",
       "ExitName": "Barrel Room",
       "ExitIndex": 4,
-      "SpawnName": "Barrel Room"
+      "SpawnName": "Barrel Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Pirate's Fortress",
       "ExitName": "Barrel Room Exit",
       "ExitIndex": 5,
-      "SpawnName": "Barrel Room Exit"
+      "SpawnName": "Barrel Room Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Pirate's Fortress",
       "ExitName": "Twin Barrel Room",
       "ExitIndex": 6,
-      "SpawnName": "Twin Barrel Room"
+      "SpawnName": "Twin Barrel Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Pirate's Fortress",
       "ExitName": "Twin Barrel Room Exit",
       "ExitIndex": 7,
-      "SpawnName": "Twin Barrel Room Exit"
+      "SpawnName": "Twin Barrel Room Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Pirate's Fortress",
       "ExitName": "Pirate's Fortress: Pirate Platform",
       "ExitIndex": 12,
-      "SpawnName": "Pirate's Fortress: Pirate Platform"
+      "SpawnName": "Pirate's Fortress: Pirate Platform",
+      "LogicIndex": 0
     },
     {
       "RegionName": "PF Hookshot Room",
       "ExitName": "Pirate's Fortress: Hookshot Room",
       "ExitIndex": 0,
-      "SpawnName": "Pirate's Fortress: Hookshot Room"
+      "SpawnName": "Pirate's Fortress: Hookshot Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "PF Hookshot Room Upper",
       "ExitName": "Pirate's Fortress: Hookshot Room Upper",
       "ExitIndex": 1,
-      "SpawnName": "Pirate's Fortress: Hookshot Room Upper"
+      "SpawnName": "Pirate's Fortress: Hookshot Room Upper",
+      "LogicIndex": 0
     },
     {
       "RegionName": "PF Twin Barrel Room",
       "ExitName": "Pirate's Fortress: Twin Barrel Room",
       "ExitIndex": 6,
-      "SpawnName": "Pirate's Fortress: Twin Barrel Room"
+      "SpawnName": "Pirate's Fortress: Twin Barrel Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "PF Twin Barrel Room",
       "ExitName": "Pirate's Fortress: Twin Barrel Room Exit",
       "ExitIndex": 7,
-      "SpawnName": "Pirate's Fortress: Twin Barrel Room Exit"
+      "SpawnName": "Pirate's Fortress: Twin Barrel Room Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "PF Guarded Room",
       "ExitName": "Pirate's Fortress: Well Guarded Room",
       "ExitIndex": 2,
-      "SpawnName": "Pirate's Fortress: Well Guarded Room"
+      "SpawnName": "Pirate's Fortress: Well Guarded Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "PF Guarded Room",
       "ExitName": "Pirate's Fortress: Well Guarded Exit",
       "ExitIndex": 3,
-      "SpawnName": "Pirate's Fortress: Well Guarded Exit"
+      "SpawnName": "Pirate's Fortress: Well Guarded Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "PF Barrel Room",
       "ExitName": "Pirate's Fortress: Barrel Room",
       "ExitIndex": 4,
-      "SpawnName": "Pirate's Fortress: Barrel Room"
+      "SpawnName": "Pirate's Fortress: Barrel Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "PF Barrel Room",
       "ExitName": "Pirate's Fortress: Barrel Room Exit",
       "ExitIndex": 5,
-      "SpawnName": "Pirate's Fortress: Barrel Room Exit"
+      "SpawnName": "Pirate's Fortress: Barrel Room Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Cape",
       "ExitName": "Zora Cape: Great Bay Coast",
       "ExitIndex": 0,
-      "SpawnName": "Zora Cape: Great Bay Coast"
+      "SpawnName": "Zora Cape: Great Bay Coast",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Cape",
       "ExitName": "Zora Cape: Zora Hall Water",
       "ExitIndex": 1,
-      "SpawnName": "Zora Cape: Zora Hall Water"
+      "SpawnName": "Zora Cape: Zora Hall Water",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Cape",
       "ExitName": "Zora Cape: Zora Hall",
       "ExitIndex": 2,
-      "SpawnName": "Zora Cape: Zora Hall"
+      "SpawnName": "Zora Cape: Zora Hall",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Cape",
       "ExitName": "Zora Cape: Waterfall Rapids",
       "ExitIndex": 4,
-      "SpawnName": "Zora Cape: Waterfall Rapids"
+      "SpawnName": "Zora Cape: Waterfall Rapids",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Cape",
       "ExitName": "Zora Cape: Great Bay Fairy",
       "ExitIndex": 5,
-      "SpawnName": "Zora Cape: Great Bay Fairy"
+      "SpawnName": "Zora Cape: Great Bay Fairy",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Cape",
       "ExitName": "Zora Cape: Owl Warp",
       "ExitIndex": 4,
-      "SpawnName": "Zora Cape: Owl Warp"
+      "SpawnName": "Zora Cape: Owl Warp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Cape",
       "ExitName": "Zora Cape: Temple",
       "ExitIndex": 255,
-      "SpawnName": "Zora Cape: Temple"
+      "SpawnName": "Zora Cape: Temple",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Cape",
       "ExitName": "Zora Cape: Dungeon Clear",
       "ExitIndex": 255,
-      "SpawnName": "Zora Cape: Dungeon Clear"
+      "SpawnName": "Zora Cape: Dungeon Clear",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Hall",
       "ExitName": "Zora Hall: Water",
       "ExitIndex": 0,
-      "SpawnName": "Zora Hall: Water"
+      "SpawnName": "Zora Hall: Water",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Hall",
       "ExitName": "Zora Hall: Zora Cape",
       "ExitIndex": 1,
-      "SpawnName": "Zora Hall: Zora Cape"
+      "SpawnName": "Zora Hall: Zora Cape",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Hall",
       "ExitName": "Zora Hall: Zora Shop",
       "ExitIndex": 2,
-      "SpawnName": "Zora Hall: Zora Shop"
+      "SpawnName": "Zora Hall: Zora Shop",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Hall",
       "ExitName": "Zora Hall: Lulu's Room",
       "ExitIndex": 3,
-      "SpawnName": "Zora Hall: Lulu's Room"
+      "SpawnName": "Zora Hall: Lulu's Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Hall",
       "ExitName": "Zora Hall: Evan's Room",
       "ExitIndex": 4,
-      "SpawnName": "Zora Hall: Evan's Room"
+      "SpawnName": "Zora Hall: Evan's Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Hall",
       "ExitName": "Zora Hall: Japas's Room",
       "ExitIndex": 5,
-      "SpawnName": "Zora Hall: Japas's Room"
+      "SpawnName": "Zora Hall: Japas's Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Hall",
       "ExitName": "Zora Hall: Mikau's Room",
       "ExitIndex": 6,
-      "SpawnName": "Zora Hall: Mikau's Room"
+      "SpawnName": "Zora Hall: Mikau's Room",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Waterfall Rapids",
       "ExitName": "Waterfall Rapids Exit",
       "ExitIndex": 0,
-      "SpawnName": "Waterfall Rapids Exit"
+      "SpawnName": "Waterfall Rapids Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Zora Shop",
       "ExitName": "Zora Shop Exit",
       "ExitIndex": 4,
-      "SpawnName": "Zora Shop Exit"
+      "SpawnName": "Zora Shop Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Lulu's Room",
       "ExitName": "Lulu's Room Exit",
       "ExitIndex": 2,
-      "SpawnName": "Lulu's Room Exit"
+      "SpawnName": "Lulu's Room Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Evan's Room",
       "ExitName": "Evan's Room Exit",
       "ExitIndex": 3,
-      "SpawnName": "Evan's Room Exit"
+      "SpawnName": "Evan's Room Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Japas's Room",
       "ExitName": "Japas's Room Exit",
       "ExitIndex": 1,
-      "SpawnName": "Japas's Room Exit"
+      "SpawnName": "Japas's Room Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Mikau's Room",
       "ExitName": "Mikau's Room Exit",
       "ExitIndex": 0,
-      "SpawnName": "Mikau's Room Exit"
+      "SpawnName": "Mikau's Room Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Path",
       "ExitName": "Ikana Path: Termina Field",
       "ExitIndex": 0,
-      "SpawnName": "Ikana Path: Termina Field"
+      "SpawnName": "Ikana Path: Termina Field",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Path",
       "ExitName": "Ikana Path: Ikana Canyon",
       "ExitIndex": 1,
-      "SpawnName": "Ikana Path: Ikana Canyon"
+      "SpawnName": "Ikana Path: Ikana Canyon",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Path",
       "ExitName": "Ikana Path: Ikana Graveyard",
       "ExitIndex": 2,
-      "SpawnName": "Ikana Path: Ikana Graveyard"
+      "SpawnName": "Ikana Path: Ikana Graveyard",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Graveyard",
       "ExitName": "Ikana Graveyard: Ikana Path",
       "ExitIndex": 0,
-      "SpawnName": "Ikana Graveyard: Ikana Path"
+      "SpawnName": "Ikana Graveyard: Ikana Path",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Graveyard",
       "ExitName": "Ikana Graveyard: Night 3 Grave",
       "ExitIndex": 1,
-      "SpawnName": "Ikana Graveyard: Night 3 Grave"
+      "SpawnName": "Ikana Graveyard: Night 3 Grave",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Graveyard",
       "ExitName": "Ikana Graveyard: Night 2 Grave",
       "ExitIndex": 2,
-      "SpawnName": "Ikana Graveyard: Night 2 Grave"
+      "SpawnName": "Ikana Graveyard: Night 2 Grave",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Graveyard",
       "ExitName": "Ikana Graveyard: Night 1 Grave",
       "ExitIndex": 3,
-      "SpawnName": "Ikana Graveyard: Night 1 Grave"
+      "SpawnName": "Ikana Graveyard: Night 1 Grave",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Night 2 Grave",
       "ExitName": "Night 2 Grave Exit",
       "ExitIndex": 0,
-      "SpawnName": "Night 2 Grave Exit"
+      "SpawnName": "Night 2 Grave Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Night 1 Grave",
       "ExitName": "Night 1 Grave Exit",
       "ExitIndex": 1,
-      "SpawnName": "Night 1 Grave Exit"
+      "SpawnName": "Night 1 Grave Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Dampe's House",
       "ExitName": "Dampe's House Exit",
       "ExitIndex": 1,
-      "SpawnName": "Dampe's House Exit"
+      "SpawnName": "Dampe's House Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Castle",
       "ExitName": "Ikana Castle: Well",
       "ExitIndex": 0,
-      "SpawnName": "Ikana Castle: Well"
+      "SpawnName": "Ikana Castle: Well",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Castle",
       "ExitName": "Ikana Castle: Ikana Canyon",
       "ExitIndex": 1,
-      "SpawnName": "Ikana Castle: Ikana Canyon"
+      "SpawnName": "Ikana Castle: Ikana Canyon",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Ikana Castle",
       "ExitName": "Ikana Castle: Igos",
       "ExitIndex": 6,
-      "SpawnName": "Ikana Castle: Igos"
+      "SpawnName": "Ikana Castle: Igos",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Well",
       "ExitName": "Well: Ikana Canyon",
       "ExitIndex": 0,
-      "SpawnName": "Well: Ikana Canyon"
+      "SpawnName": "Well: Ikana Canyon",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Well",
       "ExitName": "Well: Ikana Castle",
       "ExitIndex": 1,
-      "SpawnName": "Well: Ikana Castle"
+      "SpawnName": "Well: Ikana Castle",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Stone Tower",
       "ExitName": "Stone Tower: Ikana Canyon",
       "ExitIndex": 0,
-      "SpawnName": "Stone Tower: Ikana Canyon"
+      "SpawnName": "Stone Tower: Ikana Canyon",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Stone Tower",
       "ExitName": "Stone Tower: Temple",
       "ExitIndex": 1,
-      "SpawnName": "Stone Tower: Temple"
+      "SpawnName": "Stone Tower: Temple",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Stone Tower",
       "ExitName": "Stone Tower: Owl Warp",
       "ExitIndex": 8,
-      "SpawnName": "Stone Tower: Owl Warp"
+      "SpawnName": "Stone Tower: Owl Warp",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Inverted Stone Tower",
       "ExitName": "Inverted Stone Tower: Temple",
       "ExitIndex": 0,
-      "SpawnName": "Inverted Stone Tower: Temple"
+      "SpawnName": "Inverted Stone Tower: Temple",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Music Box",
       "ExitName": "Music Box Exit",
       "ExitIndex": 0,
-      "SpawnName": "Music Box Exit"
+      "SpawnName": "Music Box Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Igos",
       "ExitName": "Igos Exit",
       "ExitIndex": 0,
-      "SpawnName": "Igos Exit"
+      "SpawnName": "Igos Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Secret Shrine",
       "ExitName": "Secret Shrine Exit",
       "ExitIndex": 0,
-      "SpawnName": "Secret Shrine Exit"
+      "SpawnName": "Secret Shrine Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Poe Hut",
       "ExitName": "Poe Hut Exit",
       "ExitIndex": 0,
-      "SpawnName": "Poe Hut Exit"
+      "SpawnName": "Poe Hut Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Sakon's Hideout",
       "ExitName": "Sakon's Hideout Exit",
       "ExitIndex": 0,
-      "SpawnName": "Sakon's Hideout Exit"
+      "SpawnName": "Sakon's Hideout Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Clock Town Fairy Fountain",
       "ExitName": "Clock Town Fairy Exit",
       "ExitIndex": 0,
-      "SpawnName": "Clock Town Fairy Exit"
+      "SpawnName": "Clock Town Fairy Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Woodfall Fairy Fountain",
       "ExitName": "Woodfall Fairy Exit",
       "ExitIndex": 1,
-      "SpawnName": "Woodfall Fairy Exit"
+      "SpawnName": "Woodfall Fairy Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Snowhead Fairy Fountain",
       "ExitName": "Snowhead Fairy Exit",
       "ExitIndex": 2,
-      "SpawnName": "Snowhead Fairy Exit"
+      "SpawnName": "Snowhead Fairy Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Great Bay Fairy Fountain",
       "ExitName": "Great Bay Fairy Exit",
       "ExitIndex": 3,
-      "SpawnName": "Great Bay Fairy Exit"
+      "SpawnName": "Great Bay Fairy Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Stone Tower Fairy Fountain",
       "ExitName": "Stone Tower Fairy Exit",
       "ExitIndex": 4,
-      "SpawnName": "Stone Tower Fairy Exit"
+      "SpawnName": "Stone Tower Fairy Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Goron Shrine",
       "ExitName": "Goron Shrine: Goron Shop",
       "ExitIndex": 1,
-      "SpawnName": "Goron Shrine: Goron Shop"
+      "SpawnName": "Goron Shrine: Goron Shop",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Goron Shop",
       "ExitName": "Goron Shop Exit",
       "ExitIndex": 0,
-      "SpawnName": "Goron Shop Exit"
+      "SpawnName": "Goron Shop Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Outside PF",
       "ExitName": "Outside PF: Underwater Entrance",
       "ExitIndex": 2,
-      "SpawnName": "Outside PF: Underwater Entrance"
+      "SpawnName": "Outside PF: Underwater Entrance",
+      "LogicIndex": 0
     },
     {
       "RegionName": "PF Tunnel",
       "ExitName": "Underwater Tunnel Exit",
       "ExitIndex": 9,
-      "SpawnName": "Underwater Tunnel Exit"
+      "SpawnName": "Underwater Tunnel Exit",
+      "LogicIndex": 0
     },
     {
       "RegionName": "Outside PF",
       "ExitName": "Outside PF: Sewer Tunnel",
       "ExitIndex": 3,
-      "SpawnName": "Outside PF: Sewer Tunnel"
+      "SpawnName": "Outside PF: Sewer Tunnel",
+      "LogicIndex": 0
     },
     {
       "RegionName": "PF Tunnel",
       "ExitName": "Sewer Tunnel Exit",
       "ExitIndex": 12,
-      "SpawnName": "Sewer Tunnel Exit"
+      "SpawnName": "Sewer Tunnel Exit",
+      "LogicIndex": 0
     }
   ],
   "spawns": [
@@ -5883,7 +6151,9 @@
       "ReturnSpawnName": "Pinnacle Rock Exit",
       "ReturnExitName": "Pinnacle Rock Exit",
       "Type": "Interior",
-      "Properties": ["Water"]
+      "Properties": [
+        "Water"
+      ]
     },
     {
       "EntranceName": "Great Bay Coast: Fisherman's Hut",
@@ -5901,7 +6171,9 @@
       "ReturnSpawnName": "Outside PF: Great Bay Coast",
       "ReturnExitName": "Outside PF: Great Bay Coast",
       "Type": "Overworld",
-      "Properties": ["Water"]
+      "Properties": [
+        "Water"
+      ]
     },
     {
       "EntranceName": "Great Bay Coast: Marine Lab",
@@ -5928,7 +6200,9 @@
       "ReturnSpawnName": "Great Bay Coast: Pinnacle Rock",
       "ReturnExitName": "Great Bay Coast: Pinnacle Rock",
       "Type": "Interior Exit",
-      "Properties": ["Water"]
+      "Properties": [
+        "Water"
+      ]
     },
     {
       "EntranceName": "Fisherman's Hut Exit",
@@ -5964,7 +6238,9 @@
       "ReturnSpawnName": "Great Bay Coast: Pirate's Fortress",
       "ReturnExitName": "Great Bay Coast: Pirate's Fortress",
       "Type": "Overworld",
-      "Properties": ["Water"]
+      "Properties": [
+        "Water"
+      ]
     },
     {
       "EntranceName": "Outside PF: Pirate's Fortress",
@@ -6063,7 +6339,9 @@
       "ReturnSpawnName": "Pirate's Fortress: Twin Barrel Room Exit",
       "ReturnExitName": "Pirate's Fortress: Twin Barrel Room Exit",
       "Type": "Interior",
-      "Properties": ["Permanent"]
+      "Properties": [
+        "Permanent"
+      ]
     },
     {
       "EntranceName": "Pirate's Fortress: Pirate Platform",
@@ -6162,7 +6440,9 @@
       "ReturnSpawnName": "Zora Hall: Water",
       "ReturnExitName": "Zora Hall: Water",
       "Type": "Overworld",
-      "Properties": ["Water"]
+      "Properties": [
+        "Water"
+      ]
     },
     {
       "EntranceName": "Zora Cape: Zora Hall",
@@ -6216,7 +6496,9 @@
       "ReturnSpawnName": "Zora Cape: Zora Hall Water",
       "ReturnExitName": "Zora Cape: Zora Hall Water",
       "Type": "Overworld",
-      "Properties": ["Water"]
+      "Properties": [
+        "Water"
+      ]
     },
     {
       "EntranceName": "Zora Hall: Zora Cape",
@@ -6603,7 +6885,9 @@
       "ReturnSpawnName": "Underwater Tunnel Exit",
       "ReturnExitName": "Underwater Tunnel Exit",
       "Type": "Interior",
-      "Properties": ["Water"]
+      "Properties": [
+        "Water"
+      ]
     },
     {
       "EntranceName": "Underwater Tunnel Exit",
@@ -6612,7 +6896,9 @@
       "ReturnSpawnName": "Outside PF: Underwater Entrance",
       "ReturnExitName": "Outside PF: Underwater Entrance",
       "Type": "Interior Exit",
-      "Properties": ["Water"]
+      "Properties": [
+        "Water"
+      ]
     },
     {
       "EntranceName": "PF Sewer Tunnel",
@@ -6632,6 +6918,5 @@
       "Type": "Interior Exit",
       "Properties": []
     }
-  ],
-  "internalSceneSwitches": null
+  ]
 }

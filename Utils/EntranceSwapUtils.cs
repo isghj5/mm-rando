@@ -25,7 +25,7 @@ namespace MMRando.Utils
             file.Close();
         }
 
-        private static void WriteMapData()
+        internal static void WriteMapData()
         {
             JsonSerializerSettings settings = new JsonSerializerSettings();
             string spawnJson = JsonConvert.SerializeObject(TerminaMapData, Formatting.Indented);
@@ -115,7 +115,7 @@ namespace MMRando.Utils
         internal static string LookupItemExitName(Item item)
         {
             Exit exit = TerminaMapData.exits.Find(x => item.Equals(x.LogicIndex));
-            if(exit != null)
+            if(exit != null && exit.LogicIndex != 0)
             {
                 Entrance ent = TerminaMapData.entrances.Find(e => exit.ExitName.Equals(e.ExitName));
                 if(ent != null)
@@ -153,7 +153,6 @@ namespace MMRando.Utils
                     EntranceUtils.WriteSceneExits(sceneIndex, ShuffledEntranceList[sceneIndex], ExitListIndices[sceneIndex]);
                 }
             }
-            WriteMapData();
         }
 
         //private void ShuffleEntrances()
