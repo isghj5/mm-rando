@@ -132,7 +132,9 @@ namespace MMRando.Utils
             string chosenEntrance = LookupItemExitName(value);
             if (!"".Equals(selectionEntrance) && !"".Equals(chosenEntrance))
             {
-                bool success = TerminaMapData.ConnectEntrance(selectionEntrance, chosenEntrance);
+                string s = TerminaMapData.ReverseEntrance(selectionEntrance);
+                string c = TerminaMapData.ReverseEntrance(chosenEntrance);
+                if (!"".Equals(s) && !"".Equals(c)) { bool success = TerminaMapData.ConnectEntrance(s, c); }
             }
         }
 
