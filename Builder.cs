@@ -233,32 +233,11 @@ namespace MMRando
         {
             if (_settings.AreEntrancesRandomized())
             {
-                SceneUtils.ReadSceneTable();
-                SceneUtils.GetMaps();
-                // boss lairs
-                foreach (int i in new int[] { 31, 68, 95, 54 }) EntranceUtils.ReadSceneExits(i, 16);
-                // pirate's fortress
-                foreach (int i in new int[] { 20, 35, 59 }) EntranceUtils.ReadSceneExits(i, 16);
-                foreach (int i in new int[] { 8 }) EntranceUtils.ReadSceneExits(i, 16);
                 ReadWriteUtils.WriteToROM(0xC5CDFA, 0x3);
                 ReadWriteUtils.WriteToROM(0xC5CDFB, 0xFF);
                 ReadWriteUtils.WriteToROM(0xBDB882, (ushort)0xD430);
                 ReadWriteUtils.WriteToROM(0xE9F4BC, (ushort)0x0200);
-                foreach (int sceneIndex in RomData.SceneList.Select(s=>s.Number))
-                {
-                    if (_randomized.ShuffledEntranceList.ContainsKey(sceneIndex) && _randomized.ExitListIndices.ContainsKey(sceneIndex) )
-                    {
-                        EntranceUtils.WriteSceneExits(sceneIndex, _randomized.ShuffledEntranceList[sceneIndex], _randomized.ExitListIndices[sceneIndex]);
-                    }
-                }
-            }
-        }
-
-        private void WriteOwlStatues()
-        {
-            if (_settings.RandomizeOwlStatues)
-            {
-
+                EntranceSwapUtils.WriteEntrancesToROM();
             }
         }
 
@@ -634,6 +613,11 @@ namespace MMRando
                 return;
             }
 
+            if (_settings.AreEntrancesRandomized())
+            {
+                EntranceSwapUtils.ReadMapData();
+            }
+
             //write free item (start item default = Deku Mask)
             freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.MaskDeku).Item);
             freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.SongHealing).Item);
@@ -671,7 +655,7 @@ namespace MMRando
 
                 if (item.Item.IsEntrance())
                 {
-                    //EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
+                    EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
                 }
                 else if (ItemUtils.IsBottleCatchContent(item.Item))
                 {
@@ -1110,14 +1094,8 @@ namespace MMRando
                 worker.ReportProgress(62, "Writing cutscenes...");
                 WriteCutscenes();
 
-                worker.ReportProgress(63, "Writing entrances...");
-                WriteEntrances();
-
                 worker.ReportProgress(63, "Writing dungeons...");
                 WriteDungeons();
-
-                worker.ReportProgress(63, "Writing owl statues...");
-                WriteOwlStatues();
 
                 worker.ReportProgress(64, "Writing gimmicks...");
                 WriteGimmicks();
@@ -1135,6 +1113,9 @@ namespace MMRando
 
                 worker.ReportProgress(67, "Writing items...");
                 WriteItems();
+
+                worker.ReportProgress(63, "Writing entrances...");
+                WriteEntrances();
 
                 worker.ReportProgress(68, "Writing messages...");
                 WriteGossipQuotes();

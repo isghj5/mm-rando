@@ -28,6 +28,7 @@ namespace MMRando.Models
         public string ExitName { get; set; }
         public byte ExitIndex { get; set; }
         public string SpawnName { get; set; }
+        public int LogicIndex { get; set; }
     }
 
     public class Spawn
@@ -87,7 +88,6 @@ namespace MMRando.Models
         public List<Exit> exits;
         public List<Spawn> spawns;
         public List<Entrance> entrances;
-        public Dictionary<string, string> internalSceneSwitches;
         public EntranceData(EntranceData Copy)
         {
             if(Copy != null)

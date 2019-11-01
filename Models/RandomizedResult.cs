@@ -19,8 +19,6 @@ namespace MMRando.Models
         public ReadOnlyCollection<Item> AllItemsOnPathToMoon { get; set; }
         public ReadOnlyCollection<Item> ItemsRequiredForMoonAccess { get; set; }
 
-        public Dictionary<int, List<int>> ExitListIndices { get; set; }
-        public Dictionary<int, List<ushort>> ShuffledEntranceList { get; set; }
         public List<SpoilerEntrance> EntranceSpoilers { get; set; }
         public int[] OwlStatueList { get; set; }
 
