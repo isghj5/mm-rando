@@ -126,15 +126,6 @@ namespace MMRando.Utils
                 }
             }
 
-            log.AppendLine($" {"Location",-50}    {"Item"}");
-            foreach (var item in spoiler.EntranceList)
-            {
-                log.AppendLine($"{item.OriginalEntrance,-50} -> {item.ShuffledEntrance}");
-            }
-
-            log.AppendLine();
-            log.AppendLine();
-
             using (StreamWriter sw = new StreamWriter(path))
             {
                 sw.Write(log.ToString());

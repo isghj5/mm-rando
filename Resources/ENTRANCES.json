@@ -1520,385 +1520,385 @@
       "ExitName": "Clock Tower: South Clock Town",
       "ExitIndex": 1,
       "SpawnName": "Clock Tower: South Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 729
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: Clock Tower",
       "ExitIndex": 0,
       "SpawnName": "South Clock Town: Clock Tower",
-      "LogicIndex": 0
+      "LogicIndex": 691
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: Termina Field",
       "ExitIndex": 1,
       "SpawnName": "South Clock Town: Termina Field",
-      "LogicIndex": 0
+      "LogicIndex": 566
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: East Clock Town",
       "ExitIndex": 2,
       "SpawnName": "South Clock Town: East Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 704
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: West Clock Town",
       "ExitIndex": 3,
       "SpawnName": "South Clock Town: West Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 717
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: North Clock Town",
       "ExitIndex": 4,
       "SpawnName": "South Clock Town: North Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 726
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: South West Connection",
       "ExitIndex": 5,
       "SpawnName": "South Clock Town: South West Connection",
-      "LogicIndex": 0
+      "LogicIndex": 716
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: Laundry Pool",
       "ExitIndex": 6,
       "SpawnName": "South Clock Town: Laundry Pool",
-      "LogicIndex": 0
+      "LogicIndex": 739
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: South East Connection",
       "ExitIndex": 7,
       "SpawnName": "South Clock Town: South East Connection",
-      "LogicIndex": 0
+      "LogicIndex": 706
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: Clock Tower Roof",
       "ExitIndex": 8,
       "SpawnName": "South Clock Town: Clock Tower Roof",
-      "LogicIndex": 0
+      "LogicIndex": 737
     },
     {
       "RegionName": "South Clock Town",
       "ExitName": "South Clock Town: Owl Warp",
       "ExitIndex": 11,
       "SpawnName": "South Clock Town: Owl Warp",
-      "LogicIndex": 0
+      "LogicIndex": 738
     },
     {
       "RegionName": "North Clock Town",
       "ExitName": "North Clock Town: Termina Field",
       "ExitIndex": 0,
       "SpawnName": "North Clock Town: Termina Field",
-      "LogicIndex": 0
+      "LogicIndex": 568
     },
     {
       "RegionName": "North Clock Town",
       "ExitName": "North Clock Town: East Clock Town",
       "ExitIndex": 1,
       "SpawnName": "North Clock Town: East Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 708
     },
     {
       "RegionName": "North Clock Town",
       "ExitName": "North Clock Town: South Clock Town",
       "ExitIndex": 2,
       "SpawnName": "North Clock Town: South Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 733
     },
     {
       "RegionName": "North Clock Town",
       "ExitName": "North Clock Town: Clock Town Fairy",
       "ExitIndex": 3,
       "SpawnName": "North Clock Town: Clock Town Fairy",
-      "LogicIndex": 0
+      "LogicIndex": 537
     },
     {
       "RegionName": "North Clock Town",
       "ExitName": "North Clock Town: Deku Playground",
       "ExitIndex": 4,
       "SpawnName": "North Clock Town: Deku Playground",
-      "LogicIndex": 0
+      "LogicIndex": 514
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Termina Field",
       "ExitIndex": 0,
       "SpawnName": "West Clock Town: Termina Field",
-      "LogicIndex": 0
+      "LogicIndex": 560
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: South West Connection",
       "ExitIndex": 1,
       "SpawnName": "West Clock Town: South West Connection",
-      "LogicIndex": 0
+      "LogicIndex": 734
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: South Clock Town",
       "ExitIndex": 2,
       "SpawnName": "West Clock Town: South Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 732
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Swordsman's School",
       "ExitIndex": 3,
       "SpawnName": "West Clock Town: Swordsman's School",
-      "LogicIndex": 0
+      "LogicIndex": 670
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Curiosity Shop",
       "ExitIndex": 4,
       "SpawnName": "West Clock Town: Curiosity Shop",
-      "LogicIndex": 0
+      "LogicIndex": 451
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Trading Post",
       "ExitIndex": 5,
       "SpawnName": "West Clock Town: Trading Post",
-      "LogicIndex": 0
+      "LogicIndex": 585
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Bomb Shop",
       "ExitIndex": 6,
       "SpawnName": "West Clock Town: Bomb Shop",
-      "LogicIndex": 0
+      "LogicIndex": 699
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Post Office",
       "ExitIndex": 7,
       "SpawnName": "West Clock Town: Post Office",
-      "LogicIndex": 0
+      "LogicIndex": 572
     },
     {
       "RegionName": "West Clock Town",
       "ExitName": "West Clock Town: Lottery Shop",
       "ExitIndex": 8,
       "SpawnName": "West Clock Town: Lottery Shop",
-      "LogicIndex": 0
+      "LogicIndex": 723
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Termina Field",
       "ExitIndex": 0,
       "SpawnName": "East Clock Town: Termina Field",
-      "LogicIndex": 0
+      "LogicIndex": 567
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: South East Connection",
       "ExitIndex": 1,
       "SpawnName": "East Clock Town: South East Connection",
-      "LogicIndex": 0
+      "LogicIndex": 731
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Observatory",
       "ExitIndex": 2,
       "SpawnName": "East Clock Town: Observatory",
-      "LogicIndex": 0
+      "LogicIndex": 544
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: South Clock Town",
       "ExitIndex": 3,
       "SpawnName": "East Clock Town: South Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 736
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Treasure Chest Game",
       "ExitIndex": 4,
       "SpawnName": "East Clock Town: Treasure Chest Game",
-      "LogicIndex": 0
+      "LogicIndex": 496
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: North Clock Town",
       "ExitIndex": 5,
       "SpawnName": "East Clock Town: North Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 725
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Honey & Darling",
       "ExitIndex": 6,
       "SpawnName": "East Clock Town: Honey & Darling",
-      "LogicIndex": 0
+      "LogicIndex": 438
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Mayor's Residence",
       "ExitIndex": 7,
       "SpawnName": "East Clock Town: Mayor's Residence",
-      "LogicIndex": 0
+      "LogicIndex": 433
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Town Shooting Gallery",
       "ExitIndex": 8,
       "SpawnName": "East Clock Town: Town Shooting Gallery",
-      "LogicIndex": 0
+      "LogicIndex": 516
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Stock Pot Inn",
       "ExitIndex": 9,
       "SpawnName": "East Clock Town: Stock Pot Inn",
-      "LogicIndex": 0
+      "LogicIndex": 688
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Stock Pot Roof",
       "ExitIndex": 10,
       "SpawnName": "East Clock Town: Stock Pot Roof",
-      "LogicIndex": 0
+      "LogicIndex": 689
     },
     {
       "RegionName": "East Clock Town",
       "ExitName": "East Clock Town: Milk Bar",
       "ExitIndex": 12,
       "SpawnName": "East Clock Town: Milk Bar",
-      "LogicIndex": 0
+      "LogicIndex": 494
     },
     {
       "RegionName": "Laundry Pool",
       "ExitName": "Laundry Pool: South Clock Town",
       "ExitIndex": 0,
       "SpawnName": "Laundry Pool: South Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 735
     },
     {
       "RegionName": "Laundry Pool",
       "ExitName": "Laundry Pool: Kafei's House",
       "ExitIndex": 2,
       "SpawnName": "Laundry Pool: Kafei's House",
-      "LogicIndex": 0
+      "LogicIndex": 452
     },
     {
       "RegionName": "Bomb Shop",
       "ExitName": "Bomb Shop Exit",
       "ExitIndex": 0,
       "SpawnName": "Bomb Shop Exit",
-      "LogicIndex": 0
+      "LogicIndex": 721
     },
     {
       "RegionName": "Trading Post",
       "ExitName": "Trading Post Exit",
       "ExitIndex": 0,
       "SpawnName": "Trading Post Exit",
-      "LogicIndex": 0
+      "LogicIndex": 720
     },
     {
       "RegionName": "Swordsman's School",
       "ExitName": "Swordsman's School Exit",
       "ExitIndex": 0,
       "SpawnName": "Swordsman's School Exit",
-      "LogicIndex": 0
+      "LogicIndex": 718
     },
     {
       "RegionName": "Curiosity Shop",
       "ExitName": "Curiosity Shop Exit",
       "ExitIndex": 0,
       "SpawnName": "Curiosity Shop Exit",
-      "LogicIndex": 0
+      "LogicIndex": 719
     },
     {
       "RegionName": "Kafei's House",
       "ExitName": "Kafei's House Exit",
       "ExitIndex": 1,
       "SpawnName": "Kafei's House Exit",
-      "LogicIndex": 0
+      "LogicIndex": 740
     },
     {
       "RegionName": "Post Office",
       "ExitName": "Post Office Exit",
       "ExitIndex": 0,
       "SpawnName": "Post Office Exit",
-      "LogicIndex": 0
+      "LogicIndex": 722
     },
     {
       "RegionName": "Lottery Shop",
       "ExitName": "Lottery Shop Exit",
       "ExitIndex": 0,
       "SpawnName": "Lottery Shop Exit",
-      "LogicIndex": 0
+      "LogicIndex": 723
     },
     {
       "RegionName": "Treasure Chest Game",
       "ExitName": "Treasure Chest Game Exit",
       "ExitIndex": 0,
       "SpawnName": "Treasure Chest Game Exit",
-      "LogicIndex": 0
+      "LogicIndex": 707
     },
     {
       "RegionName": "Honey & Darling",
       "ExitName": "Honey & Darling Exit",
       "ExitIndex": 0,
       "SpawnName": "Honey & Darling Exit",
-      "LogicIndex": 0
+      "LogicIndex": 709
     },
     {
       "RegionName": "Mayor's Residence",
       "ExitName": "Mayor's Residence Exit",
       "ExitIndex": 0,
       "SpawnName": "Mayor's Residence Exit",
-      "LogicIndex": 0
+      "LogicIndex": 710
     },
     {
       "RegionName": "Town Shooting Gallery",
       "ExitName": "Town Shooting Gallery Exit",
       "ExitIndex": 0,
       "SpawnName": "Town Shooting Gallery Exit",
-      "LogicIndex": 0
+      "LogicIndex": 711
     },
     {
       "RegionName": "Stock Pot Inn",
       "ExitName": "Stock Pot Inn Exit",
       "ExitIndex": 0,
       "SpawnName": "Stock Pot Inn Exit",
-      "LogicIndex": 0
+      "LogicIndex": 712
     },
     {
       "RegionName": "Stock Pot Inn",
       "ExitName": "Stock Pot Roof Exit",
       "ExitIndex": 1,
       "SpawnName": "Stock Pot Roof Exit",
-      "LogicIndex": 0
+      "LogicIndex": 713
     },
     {
       "RegionName": "Milk Bar",
       "ExitName": "Milk Bar Exit",
       "ExitIndex": 0,
       "SpawnName": "Milk Bar Exit",
-      "LogicIndex": 0
+      "LogicIndex": 714
     },
     {
       "RegionName": "Deku Playground",
       "ExitName": "Deku Playground Exit",
       "ExitIndex": 0,
       "SpawnName": "Deku Playground Exit",
-      "LogicIndex": 0
+      "LogicIndex": 728
     },
     {
       "RegionName": "Clock Tower Roof",
       "ExitName": "Clock Tower Roof Exit",
       "ExitIndex": 0,
       "SpawnName": "Clock Tower Roof Exit",
-      "LogicIndex": 0
+      "LogicIndex": 737
     },
     {
       "RegionName": "Clock Tower Roof",
@@ -1912,7 +1912,7 @@
       "ExitName": "Termina Field: West Clock Town",
       "ExitIndex": 0,
       "SpawnName": "Termina Field: West Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 715
     },
     {
       "RegionName": "Termina Field",
@@ -1954,21 +1954,21 @@
       "ExitName": "Termina Field: South Clock Town",
       "ExitIndex": 6,
       "SpawnName": "Termina Field: South Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 730
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: East Clock Town",
       "ExitIndex": 7,
       "SpawnName": "Termina Field: East Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 703
     },
     {
       "RegionName": "Termina Field",
       "ExitName": "Termina Field: North Clock Town",
       "ExitIndex": 8,
       "SpawnName": "Termina Field: North Clock Town",
-      "LogicIndex": 0
+      "LogicIndex": 724
     },
     {
       "RegionName": "Termina Field",
@@ -3319,7 +3319,7 @@
       "ExitName": "Clock Town Fairy Exit",
       "ExitIndex": 0,
       "SpawnName": "Clock Town Fairy Exit",
-      "LogicIndex": 0
+      "LogicIndex": 727
     },
     {
       "RegionName": "Woodfall Fairy Fountain",

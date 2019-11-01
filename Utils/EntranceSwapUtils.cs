@@ -114,7 +114,7 @@ namespace MMRando.Utils
 
         internal static string LookupItemExitName(Item item)
         {
-            Exit exit = TerminaMapData.exits.Find(x => item.Equals(x.LogicIndex));
+            Exit exit = TerminaMapData.exits.Find(x => (int)item == x.LogicIndex);
             if(exit != null && exit.LogicIndex != 0)
             {
                 Entrance ent = TerminaMapData.entrances.Find(e => exit.ExitName.Equals(e.ExitName));
@@ -128,7 +128,7 @@ namespace MMRando.Utils
 
         internal static void WriteNewEntrance(Item value, Item item)
         {
-            string selectionEntrance = LookupItemExitName(value);
+            string selectionEntrance = LookupItemExitName(item);
             string chosenEntrance = LookupItemExitName(value);
             if (!"".Equals(selectionEntrance) && !"".Equals(chosenEntrance))
             {
