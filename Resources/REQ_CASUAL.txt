@@ -410,47 +410,47 @@
 0
 0
 - Romani Mask
-120,109
+571
 
 0
 8
 - Circus Leader's Mask
-0,92,93,82
+0,92,93,82,494
 
 0
 10
 - Kafei's Mask
-
+433
 
 0
 15
 - Couple's Mask
-39,84,38,114
-37;0
+39,84,38,792,657
+
 0
 32
 - Mask of Truth
-103,286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315
+286,287,288,289,290,291,292,293,294,295,296,297,298,299,300,301,302,303,304,305,306,307,308,309,310,311,312,313,314,315,542
 
 0
 0
 - Kamaro's Mask
-94
+94,767
 
 0
 42
 - Gibdo Mask
-94,115,97
+94,671
 
 0
 0
 - Garo Mask
-96
+96,700
 
 0
 21
 - Captain's Hat
-98,120,96,748
+98,120,748,774
 
 0
 0
@@ -460,12 +460,12 @@
 0
 0
 - Goron Mask
-94,106,9,741
+94,9,741,656
 
 0
 0
 - Zora Mask
-94,110
+94,770
 
 0
 0
@@ -475,38 +475,38 @@
 0
 0
 - Song of Soaring
-103,0
+0,759
 
 0
 0
 - Epona's Song
-109
+769
 
 0
 1
 - Song of Storms
-90,96,748
+748,440
 
 0
 2
 - Sonata of Awakening
-103,0,757
+0,623
 
 0
 0
 - Goron Lullaby
-106,92
+92,794
 
 0
 0
 - New Wave Bossa Nova
-174,93,110
+174,93,573
 
 0
 0
 - Elegy of Emptiness
-115,120,2,25,748,741
-4;0,7,92
+120,2,25,748,741,672
+
 0
 0
 - Oath to Order
@@ -525,8 +525,8 @@
 0
 0
 - Woodfall clear
-104,120,128
-0;10
+515,748
+
 0
 0
 - North access
@@ -540,7 +540,7 @@
 0
 0
 - Snowhead clear
-107,120,2,132,92,741
+635,2,120,741,92
 
 0
 0
@@ -565,7 +565,7 @@
 0
 0
 - Great Bay clear
-112,120,3,138,93,10,2,741
+93,741,686
 
 0
 0
@@ -590,7 +590,7 @@
 0
 0
 - Ikana clear
-117,10,0,120,4,142,745,741,91
+741,91,591
 274;23;24
 0
 0
@@ -735,97 +735,97 @@
 0
 0
 - Trading Post Red Potion
-
+585
 
 0
 0
 - Trading Post Green Potion
-
+585
 
 0
 0
 - Trading Post Shield
-
+585
 
 0
 0
 - Trading Post Fairy
-
+585
 
 0
 0
 - Trading Post Stick
-
+585
 
 0
 0
 - Trading Post Arrow 30
-
+585
 
 0
 0
 - Trading Post Nut 10
-
+585
 
 0
 0
 - Trading Post Arrow 50
-
+585
 
 0
 0
 - Witch Shop Blue Potion
-175
+175,435
 
 0
 0
 - Witch Shop Red Potion
-
+435
 
 0
 0
 - Witch Shop Green Potion
-
+435
 
 0
 0
 - Bomb Shop Bomb 10
-
+699
 
 0
 0
 - Bomb Shop Chu 10
-
+699
 
 0
 0
 - Goron Shop Bomb 10
-106
+621
 
 0
 0
 - Goron Shop Arrow 10
-106
+621
 
 0
 0
 - Goron Shop Red Potion
-106
+621
 
 0
 0
 - Zora Shop Shield
-93,110
+655
 
 0
 0
 - Zora Shop Arrow 10
-93,110
+655
 
 0
 0
 - Zora Shop Red Potion
-93,110
+655
 
 0
 0
@@ -835,8 +835,8 @@
 0
 0
 - Bottle: Deku Princess
-105,758
-
+758
+503;504
 0
 0
 - Bottle: Fish
@@ -856,7 +856,7 @@
 0
 - Bottle: Big Poe
 174,169,168,115,88,746,748,749
-4,120,741;4,93,741;0,103,120;0,93,103
+4,120,649,741;4,93,649,741;120,465,648;93,465,648
 0
 0
 - Bottle: Spring Water
@@ -865,13 +865,13 @@
 0
 0
 - Bottle: Hot Spring Water
-106,746,741
-9,92;2,120
+746
+459;92,656
 0
 0
 - Bottle: Zora Egg
-111,10,746,748
-0;120
+10,746,748,523,524,525,526,527,528,529,530,93
+0,741;120
 0
 0
 - Bottle: Mushroom
@@ -880,208 +880,208 @@
 0
 0
 - Lens Cave 20r
-106
-9,741;95
+469
+
 0
 0
 - Lens Cave 50r
-106,119
-9,741;95
+119,469
+
 0
 0
 - Bean Grotto 20r
-103,0
+465
 10;757
 0
 0
 - HSW Grotto 20r
-106,119
-95,173;2,120,741
+119,459
+
 0
 0
 - Graveyard Bad Bats
-96,90,748
+748,440
 
 0
 2
 - Ikana Grotto
-114
+760
 
 0
 0
 - PF 20r Lower
-111
-10;92
+761
+
 0
 0
 - PF 20r Upper
-111,10
+10,761
 
 0
 0
 - PF Tank 20r
-111,10,748
-
+10,93
+527;528
 0
 0
 - PF Guard Room 100r
-111,10
-
+10
+525;526
 0
 0
 - PF HP Room 20r
-111,92
+532,93
 
 0
 0
 - PF HP Room 5r
-111,92
+93,532
 
 0
 0
 - PF Maze 20r
-111,92
+93,532
 
 0
 0
 - PR 20r (1)
-111
+93,795
 
 0
 0
 - PR 20r (2)
-111
+93,795
 
 0
 0
 - Bombers' Hideout 100r
-119
-0,741;93;10;120
+119,765
+
 0
 0
 - Termina Bombchu Grotto
-
+767
 
 0
 0
 - Termina 20r Grotto
-
+767
 
 0
 0
 - Termina Underwater 20r
-93
+93,767
 
 0
 0
 - Termina Grass 20r
-
+767
 
 0
 0
 - Termina Stump 20r
-
+767
 10;756,757
 0
 0
 - Great Bay Coast Grotto
-110
+770
 
 0
 0
 - Great Bay Cape Ledge (1)
-110,10
+10,771
 
 0
 0
 - Great Bay Cape Ledge (2)
-110,10
+10,771
 
 0
 0
 - Great Bay Cape Grotto
-110
+771
 92;119
 0
 0
 - Great Bay Cape Underwater
-110,93
+93,771
 
 0
 0
 - PF Exterior 20r (1)
-111
+93,772
 
 0
 0
 - PF Exterior 20r (2)
-111
+93,772
 
 0
 0
 - PF Exterior 20r (3)
-111
+93,772
 
 0
 0
 - Path to Swamp Grotto
-
+773
 
 0
 0
 - Doggy Racetrack 50r
-
+628
 93;10;756,757
 0
 16
 - Graveyard Grotto
-119,96
+119,774
 
 0
 0
 - Swamp Grotto
-103
+759
 93;0
 0
 0
 - Woodfall 5r
-103,0
+0,775
 
 0
 0
 - Woodfall 20r
-103,0
+775
 
 0
 0
 - Well Right Path 50r
-115,88,169
-4;0,103,168
+88,169
+4,649;168,465,648
 0
 0
 - Well Left Path 50r
-115,88,172,169,755
-
+88,172,169,755
+648;649
 0
 0
 - Mountain Village Chest (Spring)
-108
+108,777
 
 0
 0
 - Mountain Village Grotto (Spring) 20r
-108
+108,777
 
 0
 0
 - Path to Ikana 20r
 10
-
+667;96,778
 0
 0
 - Path to Ikana Grotto
 92
-
+667;96,778
 0
 0
 - Stone Tower 100r
@@ -1100,207 +1100,207 @@
 0
 0
 - Path to Snowhead Grotto
-106,119,92,741
-
+119
+92,677,741;678
 0
 0
 - Twin Islands 20r
-108,93
+108,93,780
 
 0
 0
 - Secret Shrine HP
-120,4,114,748,741
+120,4,748,741,687
 119;10
 0
 0
 - Secret Shrine Dinolfos
-120,4,114,748,741
+120,4,748,741,687
 
 0
 0
 - Secret Shrine Wizzrobe
-120,4,114,748,741
+120,4,748,741,687
 
 0
 0
 - Secret Shrine Wart
-120,4,114,748,741
+120,4,748,741,687
 119;10
 0
 0
 - Secret Shrine Garo Master
-120,4,114,748,741
+120,4,748,741,687
 
 0
 0
 - Inn Staff Room
-
+790
 
 0
 32
 - Inn Guest Room
-37
+37,790
 
 0
 0
 - Mystery Woods Grotto
-
+692
 
 0
 12
 - East Clock Town 100r
-
+782
 
 0
 0
 - South Clock Town 20r
-10
+10,785
 
 0
 0
 - South Clock Town 50r
-
+785
 10;0,32
 0
 32
 - Bank HP
-
+783
 30;31
 0
 0
 - South Clock Town HP
-
+785
 
 0
 0
 - North Clock Town HP
-
+784
 
 0
 0
 - Path to Swamp HP
-
+773
 0,741;120;10;93
 0
 0
 - Swamp Scrub HP
-0,33
+0,33,759
 
 0
 0
 - Deku Palace HP
-103,0
+0,766
 
 0
 0
 - Goron Village Scrub HP
-106,0,34
+0,34,776
 
 0
 0
 - Bio Baba Grotto HP
-93
-92;119
+93,464
+
 0
 0
 - Lab Fish HP
-110,168
+168,573
 
 0
 0
 - Great Bay Like-Like HP
-111
+93,771
 
 0
 0
 - Pirates' Fortress HP
-111,92
+93,532
 
 0
 0
 - Zora Hall Scrub HP
-111,92,35,0
+92,35,0,652
 
 0
 0
 - Path to Snowhead HP
-106,92,10,9,741
-
+92,10,9,741,796
+677;678
 0
 0
 - Great Bay Coast HP
-110,10,756,757
+10,756,757,770,796
 
 0
 0
 - Ikana Scrub HP
-93,36,0,114
+93,36,0,760
 
 0
 0
 - Ikana Castle HP
-115,120,0,2,741
+120,0,2,741,762
 4;25
 0
 0
 - Odolwa Heart Container
-104,120,128
-0;10
+515,748
+
 0
 0
 - Goht Heart Container
-107,120,2,92,132,741
+120,2,92,741,635
 
 0
 0
 - Gyorg Heart Container
-112,93,120,3,10,138,2,741
+93,741,686
 
 0
 0
 - Twinmold Heart Container
-117,0,10,120,4,142,745,741,91
+741,91,591
 274;23;24
 0
 0
 - Map: Clock Town
-
-0,741;10;120;93
+797
+784;788
 0
 0
 - Map: Woodfall
-
-0,741;10;120;93
+797
+773;784
 0
 0
 - Map: Snowhead
-
-0,741;10;120;93
+797
+773;780
 0
 0
 - Map: Romani Ranch
-
-0,741;10;93;120
+797
+780;764
 0
 0
 - Map: Great Bay
 
-10;0,741;93;120
+764,797;770,798
 0
 0
 - Map: Stone Tower
-96
-10;120
+
+770,798;788,797
 0
 0
 - Goron Racetrack Grotto
-106,119
-92;10
+119
+685;92,780;10,780,796
 0
 0
 - Ikana Scrub 200r
-114,93,36
+93,36,760
 
 0
 0
@@ -1330,43 +1330,43 @@
 0
 0
 - Deku Trial HP
-265,0,261
+0,547
 
 0
 0
 - Goron Trial HP
-265,92,262,741
+92,741,624
 
 0
 0
 - Zora Trial HP
-265,93,263
-
+93
+641;642
 0
 0
 - Link Trial HP
-265,264,119,120,2,10,741
+119,120,2,10,741,693
 
 0
 0
 - Fierce Deity's Mask
-265,0,92,93,119,120,2,10,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,741
+0,92,93,119,120,2,10,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,741,781,547,624,641,693,695,696,697,698
 
 0
 0
 - Link Trial 30 Arrows
-265,264,10
+10,693
 
 0
 0
 - Link Trial 10 Bombchu
-265,264,10
+10,693
 
 0
 0
 - Pre-Clocktown 10 Deku Nuts
-265
 
+500;501
 0
 0
 - Starting Sword
@@ -1390,12 +1390,12 @@
 0
 0
 - Ranch Cow #1 Milk
-96,109
+96,436
 
 0
 0
 - Ranch Cow #2 Milk
-96,109
+96,436
 
 0
 0
@@ -1405,177 +1405,177 @@
 0
 0
 - Well Cow Milk
-96,115,88,95,173
-4;0,103
+96,88,95,173
+4,649;465,648
 0
 0
 - Termina Grotto Cow #1 Milk
-96,119
+96,119,767
 
 0
 0
 - Termina Grotto Cow #2 Milk
-96,119
+96,119,767
 
 0
 0
 - Great Bay Coast Grotto Cow #1 Milk
-110,10
+10,770
 
 0
 0
 - Great Bay Coast Grotto Cow #2 Milk
-110,10
+10,770
 
 0
 0
 - Swamp Skulltula Main Room Near Ceiling
-103
+542
 10;0,120;0,741;93;0,749
 0
 0
 - Swamp Skulltula Gold Room Near Ceiling
-103
-10;93;0,757
+542
+10;93;756,757
 0
 0
 - Swamp Skulltula Monument Room Torch
-103
+542
 
 0
 0
 - Swamp Skulltula Gold Room Pillar
-103
+542
 
 0
 0
 - Swamp Skulltula Pot Room Jar
-103
+542
 
 0
 0
 - Swamp Skulltula Tree Room Grass 1
-750
+542
 
 0
 0
 - Swamp Skulltula Tree Room Grass 2
-750
+542
 
 0
 0
 - Swamp Skulltula Main Room Water
-103
+542
 
 0
 0
 - Swamp Skulltula Main Room Lower Left Soft Soil
-103,169
+542,169
 
 0
 0
 - Swamp Skulltula Monument Room Crate 1
-103
+542
 
 0
 0
 - Swamp Skulltula Main Room Upper Soft Soil
-103,169
+542,169
 
 0
 0
 - Swamp Skulltula Main Room Lower Right Soft Soil
-103,169
+542,169
 
 0
 0
 - Swamp Skulltula Monument Room Lower Wall
-103
+542
 10;93;92,756,757;119,756,757
 0
 0
 - Swamp Skulltula Monument Room On Monument
-103
+542
 
 0
 0
 - Swamp Skulltula Main Room Pillar
-103
+542
 
 0
 0
 - Swamp Skulltula Pot Room Pot 1
-103
+542
 
 0
 0
 - Swamp Skulltula Pot Room Pot 2
-103
+542
 
 0
 0
 - Swamp Skulltula Gold Room Hive
-103
+542
 120;10;93;0,741
 0
 0
 - Swamp Skulltula Main Room Upper Pillar
-103
+542
 
 0
 0
 - Swamp Skulltula Pot Room Behind Vines
-103,748
+542,748
 
 0
 0
 - Swamp Skulltula Tree Room Tree 1
-750
+542
 
 0
 0
 - Swamp Skulltula Pot Room Wall
-103
+542
 
 0
 0
 - Swamp Skulltula Pot Room Hive 1
-103
+542
 0,741;120;10;93
 0
 0
 - Swamp Skulltula Tree Room Tree 2
-750
+542
 
 0
 0
 - Swamp Skulltula Gold Room Wall
-103
+542
 
 0
 0
 - Swamp Skulltula Tree Room Hive
-750
+542
 0,741;10;93;120
 0
 0
 - Swamp Skulltula Monument Room Crate 2
-103
+542
 
 0
 0
 - Swamp Skulltula Pot Room Hive 2
-103
+542
 0,741;120;10;93
 0
 0
 - Swamp Skulltula Tree Room Tree 3
-750
+542
 
 0
 0
 - Swamp Skulltula Main Room Jar
-103
+542
 
 0
 0
@@ -1635,12 +1635,12 @@
 0
 0
 - Ocean Skulltula Entrance Right Wall
-110,119
+119,543
 10;93
 0
 0
 - Ocean Skulltula Entrance Left Wall
-110,119
+119,543
 10;93
 0
 0
@@ -1650,7 +1650,7 @@
 0
 0
 - Ocean Skulltula Entrance Web
-110,2,741,119
+2,741,119,543
 10;93
 0
 0
@@ -1731,7 +1731,7 @@
 0
 - Clock Town Stray Fairy
 
-
+786;0,782
 0
 0
 - Woodfall Pre-Boss Lower Right Bubble
@@ -2035,133 +2035,133 @@
 0
 0
 - Lottery 50r
-
+612
 
 0
 42
 - Bank 5r
-
+783
 
 0
 0
 - Milk Bar Chateau
-82
+82,494
 30;31
 0
 42
 - Milk Bar Milk
-82
+82,494
 
 0
 42
 - Deku Playground 50r
-0
+0,514
 
 0
 0
 - Honey and Darling 50r
-
-120;749
+438
+120;749;0,741
 0
 16
 - Kotake Mushroom Sale 20r
-175
+175,435
 
 0
 0
 - Pictograph Contest 5r
-8
+8,673,759
 
 0
 0
 - Pictograph Contest 20r
-8
+8,673,759
 
 0
 0
 - Swamp Scrub Magic Bean
-0
+0,759
 
 0
 0
 - Ocean Scrub Green Potion
-93,110
+93,652
 
 0
 0
 - Canyon Scrub Blue Potion
-114
+760
 30;31
 0
 0
 - Zora Hall Stage Lights 5r
-93,2,120,741,110
+2,120,741,768
 
 0
 0
 - Gorman Bros Purchase Milk
-
+700
 
 0
 21
 - Ocean Spider House 50r
-110,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345
+316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,543
 
 0
 12
 - Ocean Spider House 20r
-110,316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345
+316,317,318,319,320,321,322,323,324,325,326,327,328,329,330,331,332,333,334,335,336,337,338,339,340,341,342,343,344,345,543
 
 0
 48
 - Lulu Pictograph 5r
-8,93,110
+8,93,768,771
 
 0
 0
 - Lulu Pictograph 20r
-8,93,110
+8,93,768,771
 
 0
 0
 - Treasure Chest Game 50r
-
+496
 
 0
 21
 - Treasure Chest Game 20r
-93
+93,496
 
 0
 21
 - Treasure Chest Game Deku Nuts
-0
+0,496
 
 0
 21
 - Curiosity Shop 5r
-
+451
 175;753
 0
 42
 - Curiosity Shop 20r
-
+451
 168;169;166;172;173;174;752;753;754;755;150
 0
 42
 - Curiosity Shop 50r
-170
+170,451
 
 0
 42
 - Curiosity Shop 200r
-
+451
 18;171;21;409,746
 0
 42
 - Seahorse
-8,110,111
-
+8,620
+761;772
 0
 0
 - EntranceMayorsResidenceFromEastClockTown
@@ -2515,7 +2515,7 @@
 0
 0
 - EntranceWoodfallTemplePrisonFromOdolwasLair
-
+105
 
 0
 0
@@ -2955,7 +2955,7 @@
 0
 0
 - EntranceTwinmoldsLairFromStoneTowerTempleInverted
-
+0,4,10,117,120,142,741,745
 
 0
 0
@@ -3175,7 +3175,7 @@
 0
 0
 - EntranceGohtsLairFromSnowheadTemple
-
+107,2,120,132,92,741
 
 0
 0
@@ -3430,7 +3430,7 @@
 0
 0
 - EntranceGyorgsLairFromGreatBayTemple
-
+2,3,10,120,138,741,112
 
 0
 0
@@ -3646,7 +3646,7 @@
 0
 - EntranceSouthClockTownFromClockTowerInterior
 
-690;691
+
 0
 0
 - EntranceSouthClockTownFromTerminaField
@@ -3755,7 +3755,7 @@
 0
 0
 - Ocean Skulltulas
-10,119,110
+10,119,543
 
 0
 0
@@ -3972,5 +3972,25 @@
 - AccessGoronShrine
 
 576;577
+0
+0
+- AccessPinnacleRock
+
+535;536
+0
+0
+- Scarecrow's Song
+
+765;585
+0
+0
+- Short Ranged Weapon
+
+0,741;10;120;93
+0
+0
+- Long Ranged Weapon
+
+120;10
 0
 0
