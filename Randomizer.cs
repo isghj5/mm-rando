@@ -1,3 +1,4 @@
+using MMRando.Attributes;
 using MMRando.Constants;
 using MMRando.Extensions;
 using MMRando.GameObjects;
@@ -1191,21 +1192,21 @@ namespace MMRando
                 return;
             }
 
-            var availableItems = targets.ToList();
+            var availableLocations = targets.ToList();
             if (currentItem > Item.SongOath)
             {
-                availableItems.Remove(Item.MaskDeku);
-                availableItems.Remove(Item.SongHealing);
+                availableLocations.Remove(Item.MaskDeku);
+                availableLocations.Remove(Item.SongHealing);
             }
 
             while (true)
             {
-                if (availableItems.Count == 0)
+                if (availableLocations.Count == 0)
                 {
-                    throw new Exception($"Unable to place {currentItem.Name()} anywhere.");
+                    throw new Exception($"Unable to place {currentItem} anywhere.");
                 }
 
-                var targetLocation = availableItems.Random(Random);// Random.Next(availableItems.Count);
+                var targetLocation = availableLocations.Random(Random);// Random.Next(availableItems.Count);
 
                 Debug.WriteLine($"----Attempting to place {currentItem.Name()} at {targetLocation.Location()}.---");
 
@@ -1217,12 +1218,25 @@ namespace MMRando
                     Debug.WriteLine($"----Placed {currentItem.Name()} at {targetLocation.Location()}----");
 
                     targets.Remove(targetLocation);
+
+                    var currentEntranceAttribute = currentItem.GetAttribute<EntranceAttribute>();
+                    if (currentEntranceAttribute != null)
+                    {
+                        var targetEntranceAttribute = targetLocation.GetAttribute<EntranceAttribute>();
+                        if (currentEntranceAttribute.Pair.HasValue && targetEntranceAttribute.Pair.HasValue)
+                        {
+                            ItemList[(int)targetEntranceAttribute.Pair].NewLocation = currentEntranceAttribute.Pair;
+                            targets.Remove(currentEntranceAttribute.Pair.Value);
+                        }
+                        //var currentPair = GetEntrancePair(currentItem);
+                        //var targetPair = GetEntrancePair(targetLocation);
+                    }
                     return;
                 }
                 else
                 {
                     Debug.WriteLine($"----Failed to place {currentItem.Name()} at {targetLocation.Location()}----");
-                    availableItems.Remove(targetLocation);
+                    availableLocations.Remove(targetLocation);
                 }
             }
         }
@@ -1239,6 +1253,10 @@ namespace MMRando
             }
 
             UpdateLogicForSettings();
+
+            PlaceOneWayEntrances();
+
+            PlacePairedEntrances();
 
             var itemPool = new List<Item>();
 
@@ -1264,6 +1282,36 @@ namespace MMRando
             PlaceTingleMaps(itemPool);
 
             _randomized.ItemList = ItemList;
+        }
+
+        private void PlaceOneWayEntrances()
+        {
+            var entrancesToPlace = ItemUtils.AllEntrances().Where(item => !item.GetAttribute<EntranceAttribute>().Pair.HasValue).ToList();
+            var entrancePool = entrancesToPlace.ToList();
+            // todo remove already-placed entrances
+            foreach (var entrance in entrancesToPlace)
+            {
+                PlaceItem(entrance, entrancePool);
+            }
+        }
+
+        private void PlacePairedEntrances()
+        {
+            var entrancesToPlace = ItemUtils.AllEntrances().Where(item => item.GetAttribute<EntranceAttribute>().Pair.HasValue).ToList();
+            var entrancePool = entrancesToPlace.ToList();
+            // todo remove already-placed entrances
+            foreach (var entrance in entrancesToPlace)
+            {
+                PlaceItem(entrance, entrancePool);
+            }
+        }
+
+        private void PlaceEntrances(List<Item> itemPool)
+        {
+            for (var i = Item.EntranceMayorsResidenceFromEastClockTown; i <= Item.EntranceLaundryPoolFromKafeisHideout; i++)
+            {
+                PlaceItem(i, itemPool);
+            }
         }
 
         /// <summary>
@@ -1497,6 +1545,11 @@ namespace MMRando
         private void AddAllItems(List<Item> itemPool)
         {
             itemPool.AddRange(ItemUtils.AllLocations().Where(location => !ItemList.Any(io => io.NewLocation == location)));
+        }
+
+        private void AddAllEntrances(List<Item> itemPool)
+        {
+            itemPool.AddRange(ItemUtils.AllEntrances().Where(location => !ItemList.Any(io => io.NewLocation == location)));
         }
 
         /// <summary>

@@ -129,7 +129,7 @@ namespace MMRando.GameObjects
 
         [StartingItem(0xC5CDF6, 0x01)]
         [StartingItem(0xC5CE87, 0x14)]
-        [ItemName("Double Defense"), LocationName("Ocean Great Fairy"), RegionName("Great Bay Cape")]
+        [ItemName("Double Defense"), LocationName("Ocean Great Fairy"), RegionName("Zora Cape")]
         [GossipLocationHint("a magical being"), GossipItemHint("magical defense"), GossipCompetitiveHint(2, true)]
         [ShopText("Take half as much damage from enemies.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -173,7 +173,7 @@ namespace MMRando.GameObjects
         ItemBottleGoronRace,
 
         //[StartingItem(0xC5CE39, 0x12)]
-        [ItemName("Empty Bottle"), LocationName("Beaver Race #1"), RegionName("Great Bay Cape")]
+        [ItemName("Empty Bottle"), LocationName("Beaver Race #1"), RegionName("Zora Cape")]
         [GossipLocationHint("a river dweller"), GossipItemHint("an empty vessel", "a glass container"), GossipCompetitiveHint(-1)]
         [ShopText("Carry various items in this.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -524,7 +524,7 @@ namespace MMRando.GameObjects
 
         [RupeeRepeatable]
         [StartingItem(0xC5CE70, 0x10, true)]
-        [ItemName("Piece of Heart"), LocationName("Beaver Race #2"), RegionName("Great Bay Cape")]
+        [ItemName("Piece of Heart"), LocationName("Beaver Race #2"), RegionName("Zora Cape")]
         [GossipLocationHint("a river dweller", "a race in the water"), GossipItemHint("a segment of health"), GossipCompetitiveHint(1, true)]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -1523,7 +1523,7 @@ namespace MMRando.GameObjects
         ChestGreatBayCoastGrotto, //contents? 
 
         [Repeatable]
-        [ItemName("Red Rupee"), LocationName("Great Bay Cape Ledge Without Tree Chest"), RegionName("Great Bay Cape")]
+        [ItemName("Red Rupee"), LocationName("Zora Cape Ledge Without Tree Chest"), RegionName("Zora Cape")]
         [GossipLocationHint("a high place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), Chest(0x02715000 + 0x42A, ChestAttribute.AppearanceType.Normal, 0x02715000 + 0xB16)]
@@ -1531,7 +1531,7 @@ namespace MMRando.GameObjects
         ChestGreatBayCapeLedge1, //contents? 
 
         [Repeatable]
-        [ItemName("Red Rupee"), LocationName("Great Bay Cape Ledge With Tree Chest"), RegionName("Great Bay Cape")]
+        [ItemName("Red Rupee"), LocationName("Zora Cape Ledge With Tree Chest"), RegionName("Zora Cape")]
         [GossipLocationHint("a high place"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), Chest(0x02715000 + 0x43A, ChestAttribute.AppearanceType.Normal, 0x02715000 + 0xB26)]
@@ -1539,7 +1539,7 @@ namespace MMRando.GameObjects
         ChestGreatBayCapeLedge2, //contents? 
 
         [Repeatable, CycleRepeatable]
-        [ItemName("Bombchu"), LocationName("Great Bay Cape Grotto"), RegionName("Great Bay Cape")]
+        [ItemName("Bombchu"), LocationName("Zora Cape Grotto"), RegionName("Zora Cape")]
         [GossipLocationHint("a beach cave"), GossipItemHint("explosive mice")]
         [ShopText("Mouse-shaped bomb that is practical, sleek and self-propelled.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), GrottoChest(0x02715000 + 0x45B, 0x02715000 + 0xB47)]
@@ -1547,7 +1547,7 @@ namespace MMRando.GameObjects
         ChestGreatBayCapeGrotto, //contents? 
 
         [Repeatable]
-        [ItemName("Purple Rupee"), LocationName("Great Bay Cape Underwater Chest"), RegionName("Great Bay Cape")]
+        [ItemName("Purple Rupee"), LocationName("Zora Cape Underwater Chest"), RegionName("Zora Cape")]
         [GossipLocationHint("a sunken chest"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), Chest(0x02715000 + 0x48A, ChestAttribute.AppearanceType.Normal, 0x02715000 + 0xB56)]
@@ -1876,7 +1876,7 @@ namespace MMRando.GameObjects
         HeartPieceLabFish,
 
         [StartingItem(0xC5CE70, 0x10, true)]
-        [ItemName("Piece of Heart"), LocationName("Great Bay Like-Like"), RegionName("Great Bay Cape")]
+        [ItemName("Piece of Heart"), LocationName("Great Bay Like-Like"), RegionName("Zora Cape")]
         [GossipLocationHint("a shield eater"), GossipItemHint("a segment of health")]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -3300,5 +3300,765 @@ namespace MMRando.GameObjects
 
         //[GetItemIndex(0x1A1)]
 
+        [Entrance(EntranceEastClockTownFromMayorsResidence), RegionName("East Clock Town")]
+        EntranceMayorsResidenceFromEastClockTown,
+        //EntranceMayorsResidenceFromMayorsResidence, // after talking with couple's mask
+
+        [Entrance, RegionName("The Moon")]
+        EntranceMajorasLairFromTheMoon, // one way
+
+        [Entrance(EntranceSouthernSwampFromMagicHagsPotionShop), RegionName("Southern Swamp")]
+        EntranceMagicHagsPotionShopFromSouthernSwamp,
+
+        [Entrance(EntranceRomaniRanchFromBarn), RegionName("Romani Ranch")]
+        EntranceRanchBarnFromRomaniRanch,
+        [Entrance(EntranceRomaniRanchFromRanchHouse), RegionName("Romani Ranch")]
+        EntranceRanchHouseFromRomaniRanch,
+        //EntranceRanchHouseBarnFromCrash, // maybe during abduction cutscene
+
+        [Entrance(EntranceEastClockTownFromHoneyDarlingsShop), RegionName("East Clock Town")]
+        EntranceHoneyDarlingsShopFromEastClockTown,
+
+        [Entrance(EntranceIkanaGraveyardFromDay2Grave), RegionName("Ikana Graveyard")]
+        EntranceBeneathGraveyardFromIkanaGraveyardNight2,
+        [Entrance(EntranceIkanaGraveyardFromDay1Grave), RegionName("Ikana Graveyard")]
+        EntranceBeneathGraveyardFromIkanaGraveyardNight1,
+
+        [Entrance(EntranceRoadtoSouthernSwampFromSouthernSwamp), RegionName("Road to Southern Swamp")]
+        EntranceSouthernSwampFromRoadtoSouthernSwamp,
+        [Entrance(EntranceTouristInformationFromSouthernSwamp), RegionName("Interior")]
+        EntranceSouthernSwampFromTouristInformation,
+        [Entrance(EntranceWoodfallFromSouthernSwamp), RegionName("Woodfall")]
+        EntranceSouthernSwampFromWoodfall,
+        [Entrance(EntranceDekuPalaceFromSouthernSwampLower), RegionName("Deku Palace")]
+        EntranceSouthernSwampFromDekuPalaceLower,
+        [Entrance(EntranceDekuPalaceFromSouthernSwampUpper), RegionName("Deku Palace")]
+        EntranceSouthernSwampFromDekuPalaceUpper,
+        [Entrance(EntranceMagicHagsPotionShopFromSouthernSwamp), RegionName("Interior")]
+        EntranceSouthernSwampFromMagicHagsPotionShop,
+        //EntranceBoatArcheryFromTouristInformation, // photo cruise / boat archery
+        [Entrance(EntranceWoodsofMysteryFromSouthernSwamp), RegionName("Interior")]
+        EntranceSouthernSwampFromWoodsofMystery,
+        [Entrance(EntranceSwampSpiderHouseFromSouthernSwamp), RegionName("Interior")]
+        EntranceSouthernSwampFromSwampSpiderHouse,
+        [Entrance, RegionName("Ikana Canyon")]
+        EntranceSouthernSwampFromIkanaCanyon, // one way
+        [Entrance, RegionName("Owl Warp")]
+        EntranceSouthernSwampFromOwlStatue, // one way
+
+        [Entrance(EntranceWestClockTownFromCuriosityShop), RegionName("West Clock Town")]
+        EntranceCuriosityShopFromWestClockTown,
+        [Entrance(EntranceLaundryPoolFromKafeisHideout), RegionName("Laundry Pool")]
+        EntranceKafeisHideoutFromLaundryPool,
+        [Entrance(EntranceKafeisHideoutFromCuriosityShop), RegionName("Interior")]
+        EntranceCuriosityShopFromKafeisHideout, // peep hole
+        [Entrance(EntranceCuriosityShopFromKafeisHideout), RegionName("Interior")]
+        EntranceKafeisHideoutFromCuriosityShop, // peep hole
+
+        [Entrance, RegionName("Termina Field")] // todo pair entrance
+        EntranceGrottoGossipOceanFromTerminaField,
+        [Entrance, RegionName("Termina Field")] // todo pair entrance
+        EntranceGrottoGossipSwampFromTerminaField,
+        [Entrance, RegionName("Termina Field")] // todo pair entrance
+        EntranceGrottoGossipCanyonFromTerminaField,
+        [Entrance, RegionName("Termina Field")] // todo pair entrance
+        EntranceGrottoGossipMountainFromTerminaField,
+        [Entrance, RegionName("Twin Islands")] // todo pair entrance
+        EntranceGrottoHotSpringWaterFromTwinIslands,
+        [Entrance(EntranceDekuPalaceGardenWestFromPalaceStraightGrotto), RegionName("Deku Palace")] // todo double check the pair
+        EntranceGrottoPalaceStraightFromDekuPalaceA,
+        [Entrance, RegionName("Termina Field")] // todo pair entrance
+        EntranceGrottoDodongoFromTerminaField,
+        [Entrance(EntranceDekuPalaceGardenWestFromPalaceVinesGrotto), RegionName("Deku Palace")] // todo double check the pair
+        EntranceGrottoPalaceVinesFromDekuPalaceLower,
+        [Entrance, RegionName("Termina Field")]
+        EntranceGrottoDekuMerchantFromTerminaField,
+        [Entrance, RegionName("Termina Field")]
+        EntranceGrottoBioBabaFromTerminaField,
+        [Entrance(EntranceDekuPalaceGardenEastFromBeanSellerGrotto), RegionName("Deku Palace")]
+        EntranceGrottoBeanSellerFromDekuPalace,
+        [Entrance, RegionName("Termina Field")]
+        EntranceGrottoPeahatFromTerminaField,
+        [Entrance(EntranceDekuPalaceGardenEastFromPalaceStraightGrotto), RegionName("Deku Palace")] // todo double check the pair
+        EntranceGrottoPalaceStraightFromDekuPalaceB,
+        [Entrance(EntranceDekuPalaceGardenEastFromPalaceVinesGrotto), RegionName("Deku Palace")] // todo double check the pair
+        EntranceGrottoPalaceVinesFromDekuPalaceUpper,
+        [Entrance(EntranceGoronVillageFromLensCave), RegionName("Goron Village")]
+        EntranceGrottoLensCaveFromGoronVillage,
+
+        [Entrance(EntranceRoadtoIkanaFromIkanaCanyon), RegionName("Road to Ikana")]
+        EntranceIkanaCanyonFromRoadtoIkana,
+        [Entrance(EntrancePoeHutFromIkanaCanyon), RegionName("Interior")]
+        EntranceIkanaCanyonFromPoeHut,
+        [Entrance(EntranceMusicBoxHouseFromIkanaCanyon), RegionName("Interior")]
+        EntranceIkanaCanyonFromMusicBoxHouse,
+        [Entrance(EntranceStoneTowerFromIkanaCanyon), RegionName("Stone Tower")]
+        EntranceIkanaCanyonFromStoneTower,
+        [Entrance, RegionName("Owl Warp")]
+        EntranceIkanaCanyonFromOwlStatue, // one way
+        [Entrance(EntranceBeneaththeWellFromIkanaCanyon), RegionName("Beneath the Well")]
+        EntranceIkanaCanyonFromBeneaththeWell,
+        [Entrance(EntranceSakonsHideoutFromIkanaCanyon), RegionName("Interior")]
+        EntranceIkanaCanyonFromSakonsHideout,
+        [Entrance, RegionName("")]
+        EntranceIkanaCanyonFromIkanaClear, // one way
+        [Entrance(EntranceAncientCastleofIkanaCourtyardFromIkanaCanyon), RegionName("Ikana Castle")]
+        EntranceIkanaCanyonFromAncientCastleofIkanaCourtyard,
+        //EntranceCutsceneIkanaCanyonFromSpringWaterCave, // one way
+        //EntranceSpringWaterCaveFromMusicBoxCutscene, // one way
+        [Entrance(EntranceFairysFountainFromIkanaCanyon), RegionName("Interior")]
+        EntranceIkanaCanyonFromFairysFountain,
+        [Entrance(EntranceSecretShrineFromIkanaCanyon), RegionName("Interior")]
+        EntranceIkanaCanyonFromSecretShrine,
+        [Entrance(EntranceSpringWaterCaveFromIkanaCanyon), RegionName("Interior")]
+        EntranceIkanaCanyonFromSpringWaterCave,
+        [Entrance(EntranceIkanaCanyonFromSpringWaterCave), RegionName("Ikana Canyon")]
+        EntranceSpringWaterCaveFromIkanaCanyon,
+
+        [Entrance(EntrancePiratesFortressExteriorFromPiratesFortressMain), RegionName("Pirates' Fortress Exterior")]
+        EntrancePiratesFortressFromMainEntrance,
+        [Entrance(EntrancePiratesFortressHookshotRoomFromLowerDoor), RegionName("Interior")]
+        EntrancePiratesFortressFromHookshotRoomLower,
+        [Entrance(EntrancePiratesFortressHookshotRoomFromUpperDoor), RegionName("Interior")]
+        EntrancePiratesFortressFromHookshotRoomUpper,
+        [Entrance(EntrancePiratesFortressGuardRoomFromFrontDoor), RegionName("Interior")]
+        EntrancePiratesFortressFromGuardRoomFront,
+        [Entrance(EntrancePiratesFortressGuardRoomFromBackDoor), RegionName("Interior")]
+        EntrancePiratesFortressFromGuardRoomBack,
+        [Entrance(EntrancePiratesFortressBarrelMazeFromFrontDoor), RegionName("Interior")]
+        EntrancePiratesFortressFromBarrelMazeFront,
+        [Entrance(EntrancePiratesFortressBarrelMazeFromBackDoor), RegionName("Interior")]
+        EntrancePiratesFortressFromBarrelMazeBack,
+        [Entrance(EntrancePiratesFortressOneGuardFrontFromPiratesFortress), RegionName("Interior")]
+        EntrancePiratesFortressFromOnePatrolFront,
+        [Entrance(EntrancePiratesFortressOneGuardRearFromPiratesFortress), RegionName("Interior")]
+        EntrancePiratesFortressFromOnePatrolBack,
+        [Entrance(EntrancePiratesFortressSewerFromTelescope), RegionName("Interior")]
+        EntrancePiratesFortressFromTelescope,
+        [Entrance(EntrancePiratesFortressExteriorFromPiratesFortressBalcony), RegionName("Pirates' Fortress Exterior")]
+        EntrancePiratesFortressFromPiratesFortressExteriorBalcony,
+
+        [Entrance(EntranceEastClockTownFromMilkBar), RegionName("East Clock Town")]
+        EntranceMilkBarFromEastClockTown,
+
+        [Entrance(EntranceStoneTowerFromStoneTowerTemple), RegionName("Stone Tower")]
+        EntranceStoneTowerTempleFromStoneTower, // should use the No Intro version if shorten cutscenes is enabled
+
+        [Entrance(EntranceEastClockTownFromTreasureChestShop), RegionName("East Clock Town")]
+        EntranceTreasureChestShopFromEastClockTown,
+        //EntranceTreasureChestShopFromTreasureChestShop, // after opening the chest
+
+        [Entrance, RegionName("Stone Tower")] // todo pair entrance
+        EntranceStoneTowerTempleInvertedFromStoneTowerInverted,
+        [Entrance, RegionName("")]
+        EntranceStoneTowerTempleInvertedBossRoomFromStoneTowerTempleInverted, // one way
+
+        [Entrance(EntranceSouthClockTownFromClockTowerRooftop), RegionName("South Clock Town")]
+        EntranceClockTowerRooftopFromSouthClockTown, // todo one way?
+        //EntranceClockTowerRooftopFromClockTowerRooftop, // after receiving-song-of-time cutscene // one way
+
+        //EntranceBeforethePortaltoTerminaFromLostWoods, // todo accessible via wrong-warp
+        [Entrance(EntranceClockTowerInteriorFromBeforethePortaltoTermina), RegionName("Interior")]
+        EntranceBeforethePortaltoTerminaFromClockTowerInterior, // glitched logic only
+        [Entrance, RegionName("Beneath Clocktown")]
+        EntranceBeforethePortaltoTerminaFromBeforethePortaltoTermina, // void respawn // one way?
+
+        [Entrance(EntranceWoodfallFromWoodfallTempleEntrance), RegionName("Woodfall")]
+        EntranceWoodfallTempleFromWoodfall,
+        [Entrance, RegionName("")]
+        EntranceWoodfallTemplePrisonFromOdolwasLair, // one way
+        [Entrance(EntranceWoodfallFromWoodfallTempleExit), RegionName("Woodfall")]
+        EntranceWoodfallTemplePrisonFromWoodfall,
+
+        [Entrance(EntranceTerminaFieldFromPathtoMountainVillage), RegionName("Termina Field")]
+        EntrancePathtoMountainVillageFromTerminaField,
+        [Entrance(EntranceMountainVillageFromPathtoMountainVillage), RegionName("Mountain Village")]
+        EntrancePathtoMountainVillageFromMountainVillage,
+
+        [Entrance(EntranceBeneaththeWellFromAncientCastleofIkana), RegionName("Beneath the Well")]
+        EntranceAncientCastleofIkanaCourtyardFromBeneaththeWell,
+        [Entrance(EntranceIkanaCanyonFromAncientCastleofIkanaCourtyard), RegionName("Ikana Canyon")]
+        EntranceAncientCastleofIkanaCourtyardFromIkanaCanyon,
+        [Entrance(EntranceAncientCastleofIkanaFromCourtyard), RegionName("Ikana Castle")]
+        EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana,
+        [Entrance(EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana), RegionName("Ikana Castle")]
+        EntranceAncientCastleofIkanaFromCourtyard,
+        [Entrance, RegionName("Ikana Castle")]
+        EntranceAncientCastleofIkanaFromBlockHole, // one way
+        [Entrance, RegionName("Ikana Castle")]
+        EntranceAncientCastleofIkanaFromKegHole, // one way
+        [Entrance(EntranceIgosduIkanasLairFromAncientCastleofIkana), RegionName("Interior")]
+        EntranceAncientCastleofIkanaFromIgosduIkanasLair,
+
+        [Entrance(EntranceNorthClockTownFromDekuScrubPlayground), RegionName("North Clock Town")]
+        EntranceDekuScrubPlaygroundFromNorthClockTown,
+        //EntranceDekuScrubPlaygroundFromDekuScrubPlayground, // after minigame
+
+        [Entrance, RegionName("Woodfall Temple")]
+        EntranceOdolwasLairFromWoodfallTemple, // one way
+
+        [Entrance(EntranceEastClockTownFromShootingGalleryClockTown), RegionName("East Clock Town")]
+        EntranceTownShootingGalleryFromEastClockTown,
+
+        [Entrance(EntranceSnowheadFromSnowheadTemple), RegionName("Snowhead")]
+        EntranceSnowheadTempleFromSnowhead, // should use the No Intro version if shorten cutscenes is enabled
+
+        [Entrance(EntranceTerminaFieldFromMilkRoad), RegionName("Termina Field")]
+        EntranceMilkRoadFromTerminaField,
+        [Entrance(EntranceRomaniRanchFromMilkRoad), RegionName("Romani Ranch")]
+        EntranceMilkRoadFromRomaniRanch,
+        [Entrance(EntranceGormanTrackFromMilkRoadGated), RegionName("Milk Road")]
+        EntranceMilkRoadFromGormanRacetrackTrack,
+        [Entrance(EntranceGormanTrackFromMilkRoadMain), RegionName("Milk Road")]
+        EntranceMilkRoadFromGormanRacetrackMain,
+        [Entrance, RegionName("Owl Warp")]
+        EntranceMilkRoadFromOwlStatue, // one way
+        //EntranceMilkRoadFrom, // maybe during cremia escort?
+        //EntranceMilkRoadFrom, // maybe during cremia escort?
+
+        [Entrance(EntrancePiratesFortressFromHookshotRoomLower), RegionName("Pirates' Fortress Interior")]
+        EntrancePiratesFortressHookshotRoomFromLowerDoor,
+        [Entrance(EntrancePiratesFortressFromHookshotRoomUpper), RegionName("Pirates' Fortress Interior")]
+        EntrancePiratesFortressHookshotRoomFromUpperDoor,
+        [Entrance(EntrancePiratesFortressFromGuardRoomFront), RegionName("Pirates' Fortress Interior")]
+        EntrancePiratesFortressGuardRoomFromFrontDoor,
+        [Entrance(EntrancePiratesFortressFromGuardRoomBack), RegionName("Pirates' Fortress Interior")]
+        EntrancePiratesFortressGuardRoomFromBackDoor,
+        [Entrance(EntrancePiratesFortressFromBarrelMazeFront), RegionName("Pirates' Fortress Interior")]
+        EntrancePiratesFortressBarrelMazeFromFrontDoor,
+        [Entrance(EntrancePiratesFortressFromBarrelMazeBack), RegionName("Pirates' Fortress Interior")]
+        EntrancePiratesFortressBarrelMazeFromBackDoor,
+        [Entrance(EntrancePiratesFortressFromOnePatrolFront), RegionName("Pirates' Fortress Interior")]
+        EntrancePiratesFortressOneGuardFrontFromPiratesFortress,
+        [Entrance(EntrancePiratesFortressFromOnePatrolBack), RegionName("Pirates' Fortress Interior")]
+        EntrancePiratesFortressOneGuardRearFromPiratesFortress,
+        [Entrance(EntrancePiratesFortressFromTelescope), RegionName("Pirates' Fortress Sewer")]
+        EntrancePiratesFortressSewerFromTelescope,
+        [Entrance(EntrancePiratesFortressExteriorFromPiratesFortressSewerMain), RegionName("Pirates' Fortress Exterior")]
+        EntrancePiratesFortressSewerFromWater,
+        [Entrance(EntrancePiratesFortressExteriorFromPiratesFortressSewerDoor), RegionName("Pirates' Fortress Exterior")]
+        EntrancePiratesFortressSewerFromRear,
+
+        [Entrance(EntranceRoadtoSouthernSwampFromSwampShootingGallery), RegionName("Road to Southern Swamp")]
+        EntranceSwampShootingGalleryFromRoadtoSouthernSwamp,
+
+        [Entrance(EntranceGreatBayCoastFromPinnacleRock), RegionName("Great Bay Coast")]
+        EntrancePinnacleRockFromGreatBayCoast,
+        [Entrance, RegionName("Pinnacle Rock")]
+        EntrancePinnacleRockFromPinnacleRock, // void respawn // one way?
+
+        [Entrance(EntranceNorthClockTownFromFairysFountain), RegionName("North Clock Town")]
+        EntranceFairysFountainFromNorthClockTown,
+        [Entrance(EntranceWoodfallFromFairysFountain), RegionName("Woodfall")]
+        EntranceFairysFountainFromWoodfall,
+        [Entrance(EntranceSnowheadFromFairysFountain), RegionName("Snowhead")]
+        EntranceFairysFountainFromSnowhead,
+        [Entrance(EntranceZoraCapeFromFairysFountain), RegionName("Zora Cape")]
+        EntranceFairysFountainFromZoraCape,
+        [Entrance(EntranceIkanaCanyonFromFairysFountain), RegionName("Ikana Canyon")]
+        EntranceFairysFountainFromIkanaCanyon,
+
+        [Entrance(EntranceSouthernSwampFromSwampSpiderHouse), RegionName("Southern Swamp")]
+        EntranceSwampSpiderHouseFromSouthernSwamp,
+
+        [Entrance(EntranceGreatBayCoastFromOceansideSpiderHouse), RegionName("Great Bay Coast")]
+        EntranceOceansideSpiderHouseFromGreatBayCoast,
+
+        [Entrance(EntranceEastClockTownFromAstralObservatory), RegionName("East Clock Town")]
+        EntranceAstralObservatoryFromEastClockTown,
+        [Entrance(EntranceTerminaFieldFromAstralObservatory), RegionName("Termina Field")]
+        EntranceAstralObservatoryFromTerminaField,
+        [Entrance(EntranceTerminaFieldFromAstralObservatoryTelescope), RegionName("Astral Observatory")]
+        EntranceAstralObservatoryFromTelescope,
+
+        [Entrance(EntranceTheMoonFromDekuTrial), RegionName("The Moon")]
+        EntranceDekuTrialFromTheMoon,
+
+        [Entrance(EntranceSouthernSwampFromDekuPalaceLower), RegionName("Southern Swamp")]
+        EntranceDekuPalaceFromSouthernSwampLower,
+        [Entrance, RegionName("Deku Palace")]
+        EntranceDekuPalaceFromDekuPalace, // thrown out // one way
+        [Entrance(EntranceDekuKingsChamberFromDekuPalace), RegionName("Interior")]
+        EntranceDekuPalaceFromDekuKingsChamberMain,
+        [Entrance(EntranceDekuKingsChamberFromDekuPalaceWestGarden), RegionName("Interior")]
+        EntranceDekuPalaceFromDekuKingsChamberGardenWest,
+        [Entrance(EntranceDekuShrineFromDekuPalace), RegionName("Interior")]
+        EntranceDekuPalaceFromDekuShrine,
+        [Entrance(EntranceSouthernSwampFromDekuPalaceUpper), RegionName("Southern Swamp")]
+        EntranceDekuPalaceFromSouthernSwampUpper,
+        [Entrance(EntranceGrottoPalaceVinesFromDekuPalaceLower), RegionName("Grottos")]
+        EntranceDekuPalaceGardenWestFromPalaceVinesGrotto, // todo one way?
+        [Entrance(EntranceGrottoPalaceStraightFromDekuPalaceA), RegionName("Grottos")]
+        EntranceDekuPalaceGardenWestFromPalaceStraightGrotto, // todo one way?
+        [Entrance(EntranceGrottoPalaceStraightFromDekuPalaceB), RegionName("Grottos")]
+        EntranceDekuPalaceGardenEastFromPalaceStraightGrotto, // todo one way?
+        [Entrance(EntranceGrottoBeanSellerFromDekuPalace), RegionName("Grottos")]
+        EntranceDekuPalaceGardenEastFromBeanSellerGrotto,
+        [Entrance(EntranceGrottoPalaceVinesFromDekuPalaceUpper), RegionName("Grottos")]
+        EntranceDekuPalaceGardenEastFromPalaceVinesGrotto, // todo one way?
+
+        [Entrance(EntranceMountainVillageFromMountainSmithy), RegionName("Mountain Village")]
+        EntranceMountainSmithyFromMountainVillage,
+
+        [Entrance(EntranceWestClockTownFromTerminaField), RegionName("West Clock Town")]
+        EntranceTerminaFieldFromWestClockTown,
+        [Entrance(EntranceRoadtoSouthernSwampFromTerminaField), RegionName("Road to Southern Swamp")]
+        EntranceTerminaFieldFromRoadtoSouthernSwamp,
+        [Entrance(EntranceGreatBayCoastFromTerminaField), RegionName("Great Bay Coast")]
+        EntranceTerminaFieldFromGreatBayCoast,
+        [Entrance(EntrancePathtoMountainVillageFromTerminaField), RegionName("Path to Mountain Village")]
+        EntranceTerminaFieldFromPathtoMountainVillage,
+        [Entrance(EntranceRoadtoIkanaFromTerminaField), RegionName("Road to Ikana")]
+        EntranceTerminaFieldFromRoadtoIkana,
+        [Entrance(EntranceMilkRoadFromTerminaField), RegionName("Milk Road")]
+        EntranceTerminaFieldFromMilkRoad,
+        [Entrance(EntranceSouthClockTownFromTerminaField), RegionName("South Clock Town")]
+        EntranceTerminaFieldFromSouthClockTown,
+        [Entrance(EntranceEastClockTownFromTerminaField), RegionName("East Clock Town")]
+        EntranceTerminaFieldFromEastClockTown,
+        [Entrance(EntranceNorthClockTownFromTerminaField), RegionName("North Clock Town")]
+        EntranceTerminaFieldFromNorthClockTown,
+        [Entrance(EntranceAstralObservatoryFromTerminaField), RegionName("Astral Observatory")]
+        EntranceTerminaFieldFromAstralObservatory,
+        [Entrance(EntranceAstralObservatoryFromTelescope), RegionName("Astral Observatory")]
+        EntranceTerminaFieldFromAstralObservatoryTelescope,
+        //EntranceTerminaFieldFromTerminaField, // todo moon crash - accessible via precise exit from telescope // one way
+        [Entrance, RegionName("Romani Ranch")]
+        EntranceTerminaFieldFromCremiaEscort, // one way
+        //EntranceTerminaFieldFromTerminaField, // after tatl/tael/skullkid cutscene // one way
+
+        [Entrance(EntranceWestClockTownFromPostOffice), RegionName("West Clock Town")]
+        EntrancePostOfficeFromWestClockTown,
+
+        [Entrance(EntranceGreatBayCoastFromMarineResearchLab), RegionName("Great Bay Coast")]
+        EntranceMarineResearchLabFromGreatBayCoast,
+
+        [Entrance(EntranceIkanaGraveyardFromDay3Grave), RegionName("Ikana Graveyard")]
+        EntranceDampesHouseFromIkanaGraveyardGrave,
+        [Entrance(EntranceIkanaGraveyardFromDampesHouse), RegionName("Ikana Graveyard")]
+        EntranceDampesHouseFromIkanaGraveyardDoor, // glitched logic only
+
+        [Entrance(EntranceGoronVillageFromGoronShrine), RegionName("Goron Village")]
+        EntranceGoronShrineFromGoronVillage,
+        [Entrance(EntranceGoronShopFromGoronVillage), RegionName("Interior")]
+        EntranceGoronShrineFromGoronShop,
+        //EntranceGoronShrineFromGoronShrine, // after lullaby cutscene // one way
+
+        [Entrance(EntranceZoraCapeFromZoraHallLand), RegionName("Zora Cape")]
+        EntranceZoraHallFromZoraCapeLand,
+        [Entrance(EntranceZoraCapeFromZoraHallWater), RegionName("Zora Cape")]
+        EntranceZoraHallFromZoraCapeWater,
+        [Entrance(EntranceZoraHallRoomsZoraShopFromZoraHall), RegionName("Interior")]
+        EntranceZoraHallFromZoraShop,
+        [Entrance(EntranceZoraHallRoomsLulusRoomFromZoraHall), RegionName("Interior")]
+        EntranceZoraHallFromLulusRoom,
+        [Entrance(EntranceZoraHallRoomsEvansRoomFromZoraHall), RegionName("Interior")]
+        EntranceZoraHallFromEvansRoom,
+        [Entrance(EntranceZoraHallRoomsJapasRoomFromZoraHall), RegionName("Interior")]
+        EntranceZoraHallFromJapasRoom,
+        [Entrance(EntranceZoraHallRoomsMikauTijosRoomFromZoraHall), RegionName("Interior")]
+        EntranceZoraHallFromMikauTijosRoom,
+
+        [Entrance(EntranceWestClockTownFromTradingPost), RegionName("West Clock Town")]
+        EntranceTradingPostFromWestClockTown,
+
+        [Entrance(EntranceMilkRoadFromRomaniRanch), RegionName("Milk Road")]
+        EntranceRomaniRanchFromMilkRoad,
+        //EntranceRomaniRanchFromRomaniRanch, // after minigame
+        [Entrance(EntranceRanchBarnFromRomaniRanch), RegionName("Interior")]
+        EntranceRomaniRanchFromBarn,
+        [Entrance(EntranceRanchHouseFromRomaniRanch), RegionName("Interior")]
+        EntranceRomaniRanchFromRanchHouse,
+        [Entrance(EntranceCuccoShackFromRomaniRanch), RegionName("Interior")]
+        EntranceRomaniRanchFromCuccoShack,
+        [Entrance(EntranceDoggyRacetrackFromRomaniRanch), RegionName("Interior")]
+        EntranceRomaniRanchFromDoggyRacetrack,
+        // todo add after aliens defense entrance
+
+        [Entrance, RegionName("Stone Tower Temple")]
+        EntranceTwinmoldsLairFromStoneTowerTempleInverted, // one way
+
+        [Entrance(EntranceTerminaFieldFromGreatBayCoast), RegionName("Termina Field")]
+        EntranceGreatBayCoastFromTerminaField,
+        [Entrance(EntranceZoraCapeFromGreatBayCoast), RegionName("Zora Cape")]
+        EntranceGreatBayCoastFromZoraCape,
+        [Entrance, RegionName("Great Bay Coast")]
+        EntranceGreatBayCoastFromGreatBayCoastBeach, // void respawn beach // one way?
+        [Entrance(EntrancePinnacleRockFromGreatBayCoast), RegionName("Pinnacle Rock")]
+        EntranceGreatBayCoastFromPinnacleRock,
+        [Entrance(EntranceFishermansHutFromGreatBayCoast), RegionName("Interior")]
+        EntranceGreatBayCoastFromFishermansHut,
+        [Entrance(EntrancePiratesFortressExteriorFromGreatBayCoast), RegionName("Pirates' Fortress Exterior")]
+        EntranceGreatBayCoastFromPiratesFortress,
+        [Entrance, RegionName("Great Bay Coast")]
+        EntranceGreatBayCoastFromGreatBayCoastNearFortress, // void respawn near fortress // one way?
+        [Entrance(EntranceMarineResearchLabFromGreatBayCoast), RegionName("Interior")]
+        EntranceGreatBayCoastFromMarineResearchLab,
+        [Entrance(EntranceOceansideSpiderHouseFromGreatBayCoast), RegionName("Interior")]
+        EntranceGreatBayCoastFromOceansideSpiderHouse,
+        [Entrance, RegionName("Owl Warp")]
+        EntranceGreatBayCoastFromOwlStatue, // one way
+        [Entrance, RegionName("Pirates' Fortress Exterior")]
+        EntranceGreatBayCoastFromPiratesFortressThrownOut, // one way
+        //EntranceGreatBayCoastFromZoraCape, // after fisherman minigame
+
+        [Entrance(EntranceGreatBayCoastFromZoraCape), RegionName("Great Bay Coast")]
+        EntranceZoraCapeFromGreatBayCoast,
+        [Entrance(EntranceZoraHallFromZoraCapeLand), RegionName("Zora Hall")]
+        EntranceZoraCapeFromZoraHallLand,
+        [Entrance(EntranceZoraHallFromZoraCapeWater), RegionName("Zora Hall")]
+        EntranceZoraCapeFromZoraHallWater,
+        [Entrance, RegionName("Zora Cape")]
+        EntranceZoraCapeFromZoraCape, // void respawn // one way?
+        [Entrance(EntranceWaterfallRapidsFromZoraCape), RegionName("Interior")]
+        EntranceZoraCapeFromWaterfallRapids,
+        [Entrance(EntranceFairysFountainFromZoraCape), RegionName("Interior")]
+        EntranceZoraCapeFromFairysFountain,
+        [Entrance, RegionName("Owl Warp")]
+        EntranceZoraCapeFromOwlStatue, // one way
+        [Entrance(EntranceGreatBayTempleFromZoraCape), RegionName("Great Bay Temple")]
+        EntranceZoraCapeFromGreatBayTemple,
+        [Entrance, RegionName("")]
+        EntranceZoraCapeFromGreatBayTempleClear, // one way
+
+        [Entrance(EntranceWestClockTownFromLotteryShop), RegionName("West Clock Town")]
+        EntranceLotteryShopFromWestClockTown,
+
+        [Entrance(EntranceGreatBayCoastFromPiratesFortress), RegionName("Great Bay Coast")]
+        EntrancePiratesFortressExteriorFromGreatBayCoast,
+        [Entrance(EntrancePiratesFortressFromMainEntrance), RegionName("Pirates' Fortress Interior")]
+        EntrancePiratesFortressExteriorFromPiratesFortressMain,
+        [Entrance(EntrancePiratesFortressSewerFromWater), RegionName("Pirates' Fortress Sewer")]
+        EntrancePiratesFortressExteriorFromPiratesFortressSewerMain,
+        [Entrance, RegionName("Pirates' Fortress Sewer")]
+        EntrancePiratesFortressExteriorFromPiratesFortressSewerExhaust, // one way?
+        [Entrance, RegionName("Pirates' Fortress Interior")]
+        EntrancePiratesFortressExteriorFromThrownOut, // one way
+        [Entrance(EntrancePiratesFortressFromPiratesFortressExteriorBalcony), RegionName("Pirates' Fortress Interior")]
+        EntrancePiratesFortressExteriorFromPiratesFortressBalcony,
+        [Entrance(EntrancePiratesFortressSewerFromRear), RegionName("Pirates' Fortress Sewer")]
+        EntrancePiratesFortressExteriorFromPiratesFortressSewerDoor,
+
+        [Entrance(EntranceGreatBayCoastFromFishermansHut), RegionName("Great Bay Coast")]
+        EntranceFishermansHutFromGreatBayCoast,
+
+        [Entrance(EntranceGoronShrineFromGoronShop), RegionName("Goron Village")]
+        EntranceGoronShopFromGoronVillage,
+
+        [Entrance(EntranceDekuPalaceFromDekuKingsChamberMain), RegionName("Deku Palace")]
+        EntranceDekuKingsChamberFromDekuPalace,
+        [Entrance(EntranceDekuPalaceFromDekuKingsChamberGardenWest), RegionName("Deku Palace")]
+        EntranceDekuKingsChamberFromDekuPalaceWestGarden,
+        //EntranceDekuKingsChamberFromDekuKingsChamber, // cutscene monkey being released // one way
+
+        [Entrance(EntranceTheMoonFromGoronTrial), RegionName("The Moon")]
+        EntranceGoronTrialFromTheMoon,
+
+        [Entrance(EntranceTerminaFieldFromRoadtoSouthernSwamp), RegionName("Termina Field")]
+        EntranceRoadtoSouthernSwampFromTerminaField,
+        [Entrance(EntranceSouthernSwampFromRoadtoSouthernSwamp), RegionName("Southern Swamp")]
+        EntranceRoadtoSouthernSwampFromSouthernSwamp,
+        [Entrance(EntranceSwampShootingGalleryFromRoadtoSouthernSwamp), RegionName("Interior")]
+        EntranceRoadtoSouthernSwampFromSwampShootingGallery,
+
+        [Entrance(EntranceRomaniRanchFromDoggyRacetrack), RegionName("Romani Ranch")]
+        EntranceDoggyRacetrackFromRomaniRanch,
+
+        [Entrance(EntranceRomaniRanchFromCuccoShack), RegionName("Romani Ranch")]
+        EntranceCuccoShackFromRomaniRanch,
+        //EntranceCuccoShackFromCuccoShack, // after chickens grow up // one way
+
+        [Entrance(EntranceRoadtoIkanaFromIkanaGraveyard), RegionName("Road to Ikana")]
+        EntranceIkanaGraveyardFromRoadtoIkana,
+        [Entrance(EntranceDampesHouseFromIkanaGraveyardGrave), RegionName("Interior")]
+        EntranceIkanaGraveyardFromDay3Grave, // exit only
+        [Entrance(EntranceBeneathGraveyardFromIkanaGraveyardNight2), RegionName("Interior")]
+        EntranceIkanaGraveyardFromDay2Grave,
+        [Entrance(EntranceBeneathGraveyardFromIkanaGraveyardNight1), RegionName("Interior")]
+        EntranceIkanaGraveyardFromDay1Grave,
+        [Entrance(EntranceDampesHouseFromIkanaGraveyardDoor), RegionName("Interior")]
+        EntranceIkanaGraveyardFromDampesHouse,
+        //EntranceIkanaGraveyardFromIkanaGraveyard, // captain keeta defeated // one way
+
+        [Entrance, RegionName("Snowhead Temple")]
+        EntranceGohtsLairFromSnowheadTemple, // one way
+
+        [Entrance(EntranceSouthernSwampFromWoodfall), RegionName("Southern Swamp")]
+        EntranceWoodfallFromSouthernSwamp,
+        [Entrance, RegionName("Woodfall Temple")] // todo pair entrance
+        EntranceWoodfallFromWoodfallTempleEntrance,
+        [Entrance(EntranceFairysFountainFromWoodfall), RegionName("Interior")]
+        EntranceWoodfallFromFairysFountain,
+        [Entrance(EntranceWoodfallTemplePrisonFromWoodfall), RegionName("Woodfall Temple")]
+        EntranceWoodfallFromWoodfallTempleExit,
+        [Entrance, RegionName("Owl Warp")]
+        EntranceWoodfallFromOwlStatue, // one way
+
+        [Entrance(EntranceTheMoonFromZoraTrial), RegionName("The Moon")]
+        EntranceZoraTrialFromTheMoon,
+        [Entrance, RegionName("The Moon")]
+        EntranceZoraTrialFromZoraTrial, // void respawn // one way?
+
+        [Entrance(EntrancePathtoGoronVillageFromGoronVillage), RegionName("Twin Islands")]
+        EntranceGoronVillageFromPathtoGoronVillage,
+        [Entrance(EntranceGoronShrineFromGoronVillage), RegionName("Goron Village")]
+        EntranceGoronVillageFromGoronShrine,
+        [Entrance(EntranceGrottoLensCaveFromGoronVillage), RegionName("Grottos")]
+        EntranceGoronVillageFromLensCave,
+
+        [Entrance(EntranceZoraCapeFromGreatBayTemple), RegionName("Zora Cape")]
+        EntranceGreatBayTempleFromZoraCape,
+
+        [Entrance(EntranceZoraCapeFromWaterfallRapids), RegionName("Zora Cape")]
+        EntranceWaterfallRapidsFromZoraCape,
+        //EntranceWaterfallRapidsFromWaterfallRapids, // beaver race start // one way
+        //EntranceWaterfallRapidsFromWaterfallRapids, // beaver race end // one way
+
+        [Entrance(EntranceIkanaCanyonFromBeneaththeWell), RegionName("Ikana Canyon")]
+        EntranceBeneaththeWellFromIkanaCanyon,
+        [Entrance(EntranceAncientCastleofIkanaCourtyardFromBeneaththeWell), RegionName("Ikana Castle")]
+        EntranceBeneaththeWellFromAncientCastleofIkana,
+
+        [Entrance(EntranceZoraHallFromMikauTijosRoom), RegionName("Zora Hall")]
+        EntranceZoraHallRoomsMikauTijosRoomFromZoraHall,
+        [Entrance(EntranceZoraHallFromJapasRoom), RegionName("Zora Hall")]
+        EntranceZoraHallRoomsJapasRoomFromZoraHall,
+        [Entrance(EntranceZoraHallFromLulusRoom), RegionName("Zora Hall")]
+        EntranceZoraHallRoomsLulusRoomFromZoraHall,
+        [Entrance(EntranceZoraHallFromEvansRoom), RegionName("Zora Hall")]
+        EntranceZoraHallRoomsEvansRoomFromZoraHall,
+        [Entrance, RegionName("Interior")]
+        EntranceZoraHallRoomsJapasRoomFromJapasRoom, // after jam session // one way?
+        [Entrance(EntranceZoraHallFromZoraShop), RegionName("Interior")]
+        EntranceZoraHallRoomsZoraShopFromZoraHall,
+        //EntranceZoraHallRoomsEvansRoomFromEvansRoom, // after song cutscene
+
+        [Entrance(EntranceMountainVillageFromGoronGraveyard), RegionName("Mountain Village")]
+        EntranceGoronGraveyardFromMountainVillage,
+        //EntranceGoronGraveyardFromGoronGraveyard, // after darmina cutscene
+
+        [Entrance(EntranceIkanaCanyonFromSakonsHideout), RegionName("Ikana Canyon")]
+        EntranceSakonsHideoutFromIkanaCanyon,
+
+        [Entrance(EntranceMountainSmithyFromMountainVillage), RegionName("Interior")]
+        EntranceMountainVillageFromMountainSmithy,
+        [Entrance(EntrancePathtoGoronVillageFromMountainVillage), RegionName("Twin Islands")]
+        EntranceMountainVillageFromPathtoGoronVillage,
+        [Entrance(EntranceGoronGraveyardFromMountainVillage), RegionName("Interior")]
+        EntranceMountainVillageFromGoronGraveyard,
+        [Entrance(EntrancePathtoSnowheadFromMountainVillage), RegionName("Path to Snowhead")]
+        EntranceMountainVillageFromPathtoSnowhead,
+        //EntranceMountainVillageFromBehindWaterfall, // unused // one way
+        [Entrance(EntrancePathtoMountainVillageFromMountainVillage), RegionName("Path to Mountain Village")]
+        EntranceMountainVillageFromPathtoMountainVillage,
+        [Entrance, RegionName("")]
+        EntranceMountainVillageFromSnowheadClear, // one way
+        [Entrance, RegionName("Owl Warp")]
+        EntranceMountainVillageFromOwlStatue, // one way
+
+        [Entrance(EntranceIkanaCanyonFromPoeHut), RegionName("Ikana Canyon")]
+        EntrancePoeHutFromIkanaCanyon,
+        //EntrancePoeHutFromPoeHut, // fighting poes
+        //EntrancePoeHutFromPoeHut, // after fighting poes
+
+        [Entrance(EntranceDekuPalaceFromDekuShrine), RegionName("Deku Palace")]
+        EntranceDekuShrineFromDekuPalace,
+
+        [Entrance(EntranceTerminaFieldFromRoadtoIkana), RegionName("Termina Field")]
+        EntranceRoadtoIkanaFromTerminaField,
+        [Entrance(EntranceIkanaCanyonFromRoadtoIkana), RegionName("Ikana Canyon")]
+        EntranceRoadtoIkanaFromIkanaCanyon,
+        [Entrance(EntranceIkanaGraveyardFromRoadtoIkana), RegionName("Ikana Graveyard")]
+        EntranceRoadtoIkanaFromIkanaGraveyard,
+
+        [Entrance(EntranceWestClockTownFromSwordsmansSchool), RegionName("West Clock Town")]
+        EntranceSwordsmansSchoolFromWestClockTown,
+
+        [Entrance(EntranceIkanaCanyonFromMusicBoxHouse), RegionName("Ikana Canyon")]
+        EntranceMusicBoxHouseFromIkanaCanyon,
+
+        [Entrance(EntranceAncientCastleofIkanaFromIgosduIkanasLair), RegionName("Ikana Castle")]
+        EntranceIgosduIkanasLairFromAncientCastleofIkana,
+
+        [Entrance(EntranceSouthernSwampFromTouristInformation), RegionName("Southern Swamp")]
+        EntranceTouristInformationFromSouthernSwamp,
+
+        [Entrance(EntranceIkanaCanyonFromStoneTower), RegionName("Ikana Canyon")]
+        EntranceStoneTowerFromIkanaCanyon,
+        //EntranceStoneTowerFrom, // after flip
+        [Entrance(EntranceStoneTowerTempleFromStoneTower), RegionName("Stone Tower Temple")]
+        EntranceStoneTowerFromStoneTowerTemple,
+        [Entrance, RegionName("Owl Warp")]
+        EntranceStoneTowerFromOwlStatue, // one way
+
+        //EntranceStoneTowerInvertedFrom, // after flip?
+        //EntranceStoneTowerInvertedFrom, // from temple?
+
+        [Entrance(EntranceMountainVillageFromPathtoSnowhead), RegionName("Mountain Village")]
+        EntrancePathtoSnowheadFromMountainVillage,
+        [Entrance(EntranceSnowheadFromPathtoSnowhead), RegionName("Snowhead")]
+        EntrancePathtoSnowheadFromSnowhead,
+        // todo void respawn // one way
+
+        [Entrance(EntrancePathtoSnowheadFromSnowhead), RegionName("Path to Snowhead")]
+        EntranceSnowheadFromPathtoSnowhead,
+        [Entrance(EntranceSnowheadTempleFromSnowhead), RegionName("Snowhead Temple")]
+        EntranceSnowheadFromSnowheadTemple,
+        [Entrance(EntranceFairysFountainFromSnowhead), RegionName("Interior")]
+        EntranceSnowheadFromFairysFountain,
+        [Entrance, RegionName("Owl Warp")]
+        EntranceSnowheadFromOwlStatue, // one way
+        // todo void respawn // one way
+
+        [Entrance(EntranceMountainVillageFromPathtoGoronVillage), RegionName("Mountain Village")]
+        EntrancePathtoGoronVillageFromMountainVillage,
+        [Entrance(EntranceGoronVillageFromPathtoGoronVillage), RegionName("Goron Village")]
+        EntrancePathtoGoronVillageFromGoronVillage,
+        [Entrance(EntranceGoronRacetrackFromPathtoGoronVillage), RegionName("Interior")]
+        EntrancePathtoGoronVillageFromGoronRacetrack,
+
+        [Entrance, RegionName("Great Bay Temple")]
+        EntranceGyorgsLairFromGreatBayTemple, // one way
+
+        [Entrance(EntranceIkanaCanyonFromSecretShrine), RegionName("Ikana Canyon")]
+        EntranceSecretShrineFromIkanaCanyon,
+
+        [Entrance(EntranceEastClockTownFromStockPotInnLower), RegionName("East Clock Town")]
+        EntranceStockPotInnLowerFromEastClockTown,
+        [Entrance(EntranceEastClockTownFromStockPotInnUpper), RegionName("East Clock Town")]
+        EntranceStockPotInnUpperFromEastClockTown,
+        //EntranceStockPotInnFromStockPotInn, // after grandma story // one way
+        //EntranceStockPotInnFromStockPotInn, // after midnight meeting // one way
+        //EntranceStockPotInnFromStockPotInn, // eavesdropping on anju
+        //EntranceStockPotInnFromStockPotInn, // after eavesdropping on anju
+
+        [Entrance(EntranceBeforethePortaltoTerminaFromClockTowerInterior), RegionName("Beneath Clocktown")]
+        EntranceClockTowerInteriorFromBeforethePortaltoTermina,
+        [Entrance(EntranceSouthClockTownFromClockTowerInterior), RegionName("South Clock Town")]
+        EntranceClockTowerInteriorFromSouthClockTown,
+        //EntranceClockTowerInteriorFrom, // cutscenes
+        //EntranceClockTowerInteriorFrom, // cutscenes
+        //EntranceClockTowerInteriorFrom, // cutscenes
+        //EntranceClockTowerInteriorFrom, // cutscenes
+        //EntranceClockTowerInteriorFrom, // cutscenes
+
+        [Entrance(EntranceSouthernSwampFromWoodsofMystery), RegionName("Southern Swamp")]
+        EntranceWoodsofMysteryFromSouthernSwamp,
+
+        //EntranceLostWoodsFrom, // cutscenes
+        //EntranceLostWoodsFrom, // cutscenes
+
+        [Entrance(EntranceTheMoonFromLinkTrial), RegionName("The Moon")]
+        EntranceLinkTrialFromTheMoon,
+
+        [Entrance, RegionName("The Moon")]
+        EntranceTheMoonFromClockTowerRooftop, // one way
+        [Entrance(EntranceDekuTrialFromTheMoon), RegionName("The Moon")]
+        EntranceTheMoonFromDekuTrial,
+        [Entrance(EntranceGoronTrialFromTheMoon), RegionName("The Moon")]
+        EntranceTheMoonFromGoronTrial,
+        [Entrance(EntranceZoraTrialFromTheMoon), RegionName("The Moon")]
+        EntranceTheMoonFromZoraTrial,
+        [Entrance(EntranceLinkTrialFromTheMoon), RegionName("The Moon")]
+        EntranceTheMoonFromLinkTrial,
+
+        [Entrance(EntranceWestClockTownFromBombShop), RegionName("West Clock Town")]
+        EntranceBombShopFromWestClockTown,
+
+        //EntranceGiantsChamberFrom, // cutscene // one way?
+
+        [Entrance(EntranceMilkRoadFromGormanRacetrackMain), RegionName("Milk Road")]
+        EntranceGormanTrackFromMilkRoadMain,
+        [Entrance(EntranceMilkRoadFromGormanRacetrackTrack), RegionName("Milk Road")]
+        EntranceGormanTrackFromMilkRoadGated,
+        // [Entrance, RegionName("")] EntranceGormanTrackFrom, // race?
+
+        [Entrance(EntrancePathtoGoronVillageFromGoronRacetrack), RegionName("Twin Islands")]
+        EntranceGoronRacetrackFromPathtoGoronVillage,
+        //EntranceGoronRacetrackFromGoronRacetrack, // race start // one way
+        //EntranceGoronRacetrackFromGoronRacetrack, // race end // one way
+
+        [Entrance(EntranceTerminaFieldFromEastClockTown), RegionName("Termina Field")]
+        EntranceEastClockTownFromTerminaField,
+        [Entrance(EntranceSouthClockTownFromEastClockTownNorthern), RegionName("South Clock Town")]
+        EntranceEastClockTownFromSouthClockTownNorthern,
+        [Entrance(EntranceAstralObservatoryFromEastClockTown), RegionName("Astral Observatory")]
+        EntranceEastClockTownFromAstralObservatory,
+        [Entrance(EntranceSouthClockTownFromEastClockTownSouthern), RegionName("South Clock Town")]
+        EntranceEastClockTownFromSouthClockTownSouthern,
+        [Entrance(EntranceTreasureChestShopFromEastClockTown), RegionName("Interior")]
+        EntranceEastClockTownFromTreasureChestShop,
+        [Entrance(EntranceNorthClockTownFromEastClockTown), RegionName("North Clock Town")]
+        EntranceEastClockTownFromNorthClockTown,
+        [Entrance(EntranceHoneyDarlingsShopFromEastClockTown), RegionName("Interior")]
+        EntranceEastClockTownFromHoneyDarlingsShop,
+        [Entrance(EntranceMayorsResidenceFromEastClockTown), RegionName("Interior")]
+        EntranceEastClockTownFromMayorsResidence,
+        [Entrance(EntranceTownShootingGalleryFromEastClockTown), RegionName("Interior")]
+        EntranceEastClockTownFromShootingGalleryClockTown,
+        [Entrance(EntranceStockPotInnLowerFromEastClockTown), RegionName("Interior")]
+        EntranceEastClockTownFromStockPotInnLower,
+        [Entrance(EntranceStockPotInnUpperFromEastClockTown), RegionName("Interior")]
+        EntranceEastClockTownFromStockPotInnUpper,
+        [Entrance(EntranceMilkBarFromEastClockTown), RegionName("Interior")]
+        EntranceEastClockTownFromMilkBar,
+
+        [Entrance(EntranceTerminaFieldFromWestClockTown), RegionName("Termina Field")]
+        EntranceWestClockTownFromTerminaField,
+        [Entrance(EntranceSouthClockTownFromWestClockTownSouthern), RegionName("South Clock Town")]
+        EntranceWestClockTownFromSouthClockTownSouthern,
+        [Entrance(EntranceSouthClockTownFromWestClockTownNorthern), RegionName("South Clock Town")]
+        EntranceWestClockTownFromSouthClockTownNorthern,
+        [Entrance(EntranceSwordsmansSchoolFromWestClockTown), RegionName("Interior")]
+        EntranceWestClockTownFromSwordsmansSchool,
+        [Entrance(EntranceCuriosityShopFromWestClockTown), RegionName("Interior")]
+        EntranceWestClockTownFromCuriosityShop,
+        [Entrance(EntranceTradingPostFromWestClockTown), RegionName("Interior")]
+        EntranceWestClockTownFromTradingPost,
+        [Entrance(EntranceBombShopFromWestClockTown), RegionName("Interior")]
+        EntranceWestClockTownFromBombShop,
+        [Entrance(EntrancePostOfficeFromWestClockTown), RegionName("Interior")]
+        EntranceWestClockTownFromPostOffice,
+        [Entrance(EntranceWestClockTownFromLotteryShop), RegionName("Interior")]
+        EntranceWestClockTownFromLotteryShop,
+
+        [Entrance(EntranceTerminaFieldFromNorthClockTown), RegionName("Termina Field")]
+        EntranceNorthClockTownFromTerminaField,
+        [Entrance(EntranceEastClockTownFromNorthClockTown), RegionName("East Clock Town")]
+        EntranceNorthClockTownFromEastClockTown,
+        [Entrance(EntranceSouthClockTownFromNorthClockTown), RegionName("South Clock Town")]
+        EntranceNorthClockTownFromSouthClockTown,
+        [Entrance(EntranceFairysFountainFromNorthClockTown), RegionName("Interior")]
+        EntranceNorthClockTownFromFairysFountain,
+        [Entrance(EntranceDekuScrubPlaygroundFromNorthClockTown), RegionName("Interior")]
+        EntranceNorthClockTownFromDekuScrubPlayground,
+        //EntranceNorthClockTownFromBombersGame, // after catching kids // one way
+        //EntranceNorthClockTownFromSavingLady, // after saving old lady // one way
+
+        [Entrance(EntranceClockTowerInteriorFromSouthClockTown), RegionName("Interior")]
+        EntranceSouthClockTownFromClockTowerInterior, // spawn point
+        [Entrance(EntranceTerminaFieldFromSouthClockTown), RegionName("Termina Field")]
+        EntranceSouthClockTownFromTerminaField,
+        [Entrance(EntranceEastClockTownFromSouthClockTownNorthern), RegionName("East Clock Town")]
+        EntranceSouthClockTownFromEastClockTownNorthern,
+        [Entrance(EntranceWestClockTownFromSouthClockTownNorthern), RegionName("West Clock Town")]
+        EntranceSouthClockTownFromWestClockTownNorthern,
+        [Entrance(EntranceNorthClockTownFromSouthClockTown), RegionName("North Clock Town")]
+        EntranceSouthClockTownFromNorthClockTown,
+        [Entrance(EntranceWestClockTownFromSouthClockTownSouthern), RegionName("West Clock Town")]
+        EntranceSouthClockTownFromWestClockTownSouthern,
+        [Entrance(EntranceLaundryPoolFromSouthClockTown), RegionName("Laundry Pool")]
+        EntranceSouthClockTownFromLaundryPool,
+        [Entrance(EntranceEastClockTownFromSouthClockTownSouthern), RegionName("East Clock Town")]
+        EntranceSouthClockTownFromEastClockTownSouthern,
+        [Entrance(EntranceClockTowerRooftopFromSouthClockTown), RegionName("The Moon")] // todo not paired?
+        EntranceSouthClockTownFromClockTowerRooftop,
+        [Entrance, RegionName("Owl Warp")]
+        EntranceSouthClockTownFromOwlStatue, // one way
+
+        [Entrance(EntranceSouthClockTownFromLaundryPool), RegionName("South Clock Town")]
+        EntranceLaundryPoolFromSouthClockTown,
+        [Entrance(EntranceKafeisHideoutFromLaundryPool), RegionName("Interior")]
+        EntranceLaundryPoolFromKafeisHideout,
     }
 }

@@ -26,7 +26,7 @@ namespace MMRando.Extensions
 
         public static string Location(this Item item)
         {
-            return item.GetAttribute<LocationNameAttribute>()?.Name;
+            return item.GetAttribute<LocationNameAttribute>()?.Name ?? item.ToString();
         }
 
         public static string Region(this Item item)
@@ -81,7 +81,12 @@ namespace MMRando.Extensions
 
         public static bool IsFake(this Item item)
         {
-            return item.Name() == null;
+            return item.Name() == null && !item.IsEntrance();
+        }
+
+        public static bool IsEntrance(this Item item)
+        {
+            return item.HasAttribute<EntranceAttribute>();
         }
     }
 }

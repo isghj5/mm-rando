@@ -117,7 +117,13 @@ namespace MMRando.Utils
         private static List<Item> _allLocations;
         public static IEnumerable<Item> AllLocations()
         {
-            return _allLocations ?? (_allLocations = Enum.GetValues(typeof(Item)).Cast<Item>().Where(item => item.Location() != null).ToList());
+            return _allLocations ?? (_allLocations = Enum.GetValues(typeof(Item)).Cast<Item>().Where(item => item.HasAttribute<LocationNameAttribute>()).ToList());
+        }
+
+        private static List<Item> _allEntrances;
+        public static IEnumerable<Item> AllEntrances()
+        {
+            return _allEntrances ?? (_allEntrances = Enum.GetValues(typeof(Item)).Cast<Item>().Where(item => item.HasAttribute<EntranceAttribute>()).ToList());
         }
 
         // todo cache

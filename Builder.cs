@@ -669,7 +669,11 @@ namespace MMRando
                     continue;
                 }
 
-                if (ItemUtils.IsBottleCatchContent(item.Item))
+                if (item.Item.IsEntrance())
+                {
+                    //EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
+                }
+                else if (ItemUtils.IsBottleCatchContent(item.Item))
                 {
                     ItemSwapUtils.WriteNewBottle(item.NewLocation.Value, item.Item);
                 }
