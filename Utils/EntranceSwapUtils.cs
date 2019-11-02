@@ -27,6 +27,18 @@ namespace MMRando.Utils
 
         internal static void WriteMapData()
         {
+            List<Entrance> entranceList = new List<Entrance>();
+            Entrance ent;
+            TerminaMapData.entrances.ForEach(e => {
+                ent = new Entrance(e.EntranceName, e.ReturnExitName, e.ExitName, e.Type)
+                {
+                    SpawnName = e.ReturnSpawnName,
+                    ReturnSpawnName = e.SpawnName,
+                    Properties = e.Properties
+                };
+                entranceList.Add(ent);
+            });
+            TerminaMapData.entrances = entranceList;
             JsonSerializerSettings settings = new JsonSerializerSettings();
             string spawnJson = JsonConvert.SerializeObject(TerminaMapData, Formatting.Indented);
             Debug.WriteLine(spawnJson);
