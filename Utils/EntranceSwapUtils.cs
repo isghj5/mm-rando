@@ -30,7 +30,7 @@ namespace MMRando.Utils
             List<Entrance> entranceList = new List<Entrance>();
             Entrance ent;
             TerminaMapData.entrances.ForEach(e => {
-                ent = new Entrance(e.EntranceName, e.ReturnExitName, e.ExitName, e.Type)
+                ent = new Entrance(e.EntranceName, e.ExitName, e.ReturnExitName, e.Type)
                 {
                     SpawnName = e.ReturnSpawnName,
                     ReturnSpawnName = e.SpawnName,
@@ -124,15 +124,21 @@ namespace MMRando.Utils
             return pools;
         }
 
-        internal static string LookupItemExitName(Item item)
+        internal static Exit LookupItemExitName(Item item)
         {
             Exit exit = TerminaMapData.exits.Find(x => (int)item == x.LogicIndex);
-            if(exit != null && exit.LogicIndex != 0)
+            return (exit != null && exit.LogicIndex != 0) ? exit : null;
+        }
+
+        internal static string LookupItemSpawnName(Item item)
+        {
+            Exit exit = TerminaMapData.exits.Find(x => (int)item == x.LogicIndex);
+            if (exit != null && exit.LogicIndex != 0)
             {
                 Entrance ent = TerminaMapData.entrances.Find(e => exit.ExitName.Equals(e.ExitName));
-                if(ent != null)
+                if (ent != null)
                 {
-                    return ent.EntranceName;
+                    return ent.SpawnName;
                 }
             }
             return "";
@@ -140,13 +146,12 @@ namespace MMRando.Utils
 
         internal static void WriteNewEntrance(Item value, Item item)
         {
-            string selectionEntrance = LookupItemExitName(item);
-            string chosenEntrance = LookupItemExitName(value);
-            if (!"".Equals(selectionEntrance) && !"".Equals(chosenEntrance))
+            Exit x = LookupItemExitName(value);
+            string chosenEntrance = LookupItemSpawnName(item);
+            if (x != null && !"".Equals(chosenEntrance))
             {
-                string s = TerminaMapData.ReverseEntrance(selectionEntrance);
-                string c = TerminaMapData.ReverseEntrance(chosenEntrance);
-                if (!"".Equals(s) && !"".Equals(c)) { bool success = TerminaMapData.ConnectEntrance(s, c); }
+                //bool success = TerminaMapData.ConnectEntrance(selectionEntrance, chosenEntrance);
+                x.SpawnName = chosenEntrance;
             }
         }
 
