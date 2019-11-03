@@ -130,6 +130,12 @@ namespace MMRando.Utils
             return (exit != null && exit.LogicIndex != 0) ? exit : null;
         }
 
+        internal static bool IsEntranceAvailable(Item item)
+        {
+            Exit exit = TerminaMapData.exits.Find(x => (int)item == x.LogicIndex);
+            return exit != null && exit.LogicIndex != 0;
+        }
+
         internal static string LookupItemSpawnName(Item item)
         {
             Exit exit = TerminaMapData.exits.Find(x => (int)item == x.LogicIndex);

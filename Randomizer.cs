@@ -431,18 +431,6 @@ namespace MMRando
             return lines;
         }
 
-        private string[] ReadEntranceRulesetFromResources()
-        {
-            string[] lines = null;
-            var mode = _settings.LogicMode;
-
-            if (mode == LogicMode.Casual)
-            {
-                //lines = Properties.Resources.ENT_REQ_CASUAL.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-            }
-            return lines;
-        }
-
         private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath)
         {
             Debug.WriteLine($"CheckDependence({currentItem}, {target})");
@@ -1013,6 +1001,8 @@ namespace MMRando
 
             UpdateLogicForSettings();
 
+            PlaceUnimplementedEntrances();
+
             PlaceOneWayEntrances();
 
             PlacePairedEntrances();
@@ -1043,9 +1033,22 @@ namespace MMRando
             _randomized.ItemList = ItemList;
         }
 
+        private void PlaceUnimplementedEntrances()
+        {
+            var entrancesToPlace = ItemUtils.AllEntrances().Where(item => !EntranceSwapUtils.IsEntranceAvailable(item)).ToList();
+            var entrancePool = entrancesToPlace.ToList();
+            // todo remove already-placed entrances
+            foreach (var entrance in entrancesToPlace)
+            {
+                PlaceItem(entrance, new List<Item>() { entrance });
+            }
+        }
+
         private void PlaceOneWayEntrances()
         {
-            var entrancesToPlace = ItemUtils.AllEntrances().Where(item => !item.GetAttribute<EntranceAttribute>().Pair.HasValue).ToList();
+            var entrancesToPlace = ItemUtils.AllEntrances()
+                .Where(item => EntranceSwapUtils.IsEntranceAvailable(item))
+                .Where(item => !item.GetAttribute<EntranceAttribute>().Pair.HasValue).ToList();
             var entrancePool = entrancesToPlace.ToList();
             // todo remove already-placed entrances
             foreach (var entrance in entrancesToPlace)
@@ -1056,7 +1059,9 @@ namespace MMRando
 
         private void PlacePairedEntrances()
         {
-            var entrancesToPlace = ItemUtils.AllEntrances().Where(item => item.GetAttribute<EntranceAttribute>().Pair.HasValue).ToList();
+            var entrancesToPlace = ItemUtils.AllEntrances()
+                .Where(item => EntranceSwapUtils.IsEntranceAvailable(item))
+                .Where(item => item.GetAttribute<EntranceAttribute>().Pair.HasValue).ToList();
             var entrancePool = entrancesToPlace.ToList();
             // todo remove already-placed entrances
             foreach (var entrance in entrancesToPlace)
@@ -1415,6 +1420,11 @@ namespace MMRando
             if (_settings.LogicMode == LogicMode.Casual)
             {
                 PreserveGlitchedCowMilk();
+            }
+
+            if (_settings.AreEntrancesRandomized())
+            {
+                EntranceSwapUtils.ReadMapData();
             }
         }
 

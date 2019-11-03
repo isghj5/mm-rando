@@ -613,11 +613,6 @@ namespace MMRando
                 return;
             }
 
-            if (_settings.AreEntrancesRandomized())
-            {
-                EntranceSwapUtils.ReadMapData();
-            }
-
             //write free item (start item default = Deku Mask)
             freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.MaskDeku).Item);
             freeItems.Add(_randomized.ItemList.Find(u => u.NewLocation == Item.SongHealing).Item);
