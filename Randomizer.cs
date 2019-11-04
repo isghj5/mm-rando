@@ -879,6 +879,11 @@ namespace MMRando
 
         private bool CheckMatch(Item currentItem, Item target)
         {
+            if (ItemList.Any(io => io.NewLocation == target))
+            {
+                return false;
+            }
+
             if (_settings.CustomStartingItemList.Contains(currentItem))
             {
                 return true;
@@ -1099,25 +1104,55 @@ namespace MMRando
             }
         }
 
+        private List<Item> GetUnconnectedEntrances(Item item)
+        {
+            var itemObject = ItemList[(int)item];
+            return (itemObject.DependsOnItems?.SelectMany(d =>
+            {
+                if (d.IsEntrance() && ItemList[(int)d].NewLocation == null)
+                {
+                    return new List<Item> { d };
+                }
+                if (d.IsFake())
+                {
+                    return GetUnconnectedEntrances(d);
+                }
+                return Enumerable.Empty<Item>();
+            }) ?? new List<Item>())
+            .Concat(itemObject.Conditionals?.SelectMany(cs => cs.SelectMany(d =>
+            {
+                if (d.IsEntrance() && ItemList[(int)d].NewLocation == null)
+                {
+                    return new List<Item> { d };
+                }
+                if (d.IsFake())
+                {
+                    return GetUnconnectedEntrances(d);
+                }
+                return Enumerable.Empty<Item>();
+            })) ?? new List<Item>()).ToList();
+        }
+
         private void PlacePairedEntrances()
         {
             var entrancesToPlace = ItemUtils.AllEntrances()
-                .Where(item => EntranceSwapUtils.IsEntranceAvailable(item))
-                .Where(item => item.GetAttribute<EntranceAttribute>().Pair.HasValue).ToList();
-            var entrancePool = entrancesToPlace.ToList();
-            var interiors = entrancesToPlace
-                .Where(item => item.Region() == "Interior" && item.GetAttribute<EntranceAttribute>()?.Pair.HasValue == true)
-                .Select(item => item.GetAttribute<EntranceAttribute>().Pair.Value)
+                .Where(item => item.GetAttribute<EntranceAttribute>().Pair.HasValue)
+                .Where(item => EntranceSwapUtils.IsEntranceAvailable(item) && EntranceSwapUtils.IsEntranceAvailable(item.Pair().Value))
                 .ToList();
+            var entrancePool = entrancesToPlace.ToList();
 
-            foreach (var entrance in interiors)
-            {
-                PlaceItem(entrance, entrancePool);
-            }
+            var unconnectedEntrances = entrancesToPlace.ToDictionary(item => item, item => GetUnconnectedEntrances(item));
 
-            foreach (var entrance in entrancesToPlace)
+            while (unconnectedEntrances.Any())
             {
-                PlaceItem(entrance, entrancePool);
+                var currentEntrance = unconnectedEntrances.Where(g => g.Value.Count > 0).OrderBy(g => g.Value.Count).First().Value.Random(Random);
+                PlaceItem(currentEntrance, entrancePool);
+                foreach (var kvp in unconnectedEntrances)
+                {
+                    kvp.Value.Remove(currentEntrance);
+                    kvp.Value.Remove(ItemList[(int)currentEntrance].NewLocation.Value.Pair().Value);
+                }
+                unconnectedEntrances = unconnectedEntrances.Where(kvp => kvp.Value.Count > 0).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             }
         }
 
@@ -1871,7 +1906,7 @@ namespace MMRando
                     }
                 }
 
-                _randomized.AllItemsOnPathToMoon = GetRequiredItems(Item.AreaMoonAccess, _randomized.Logic)?.Where(item => !item.IsFake()).ToList().AsReadOnly();
+                _randomized.AllItemsOnPathToMoon = GetRequiredItems(Item.EntranceMajorasLairFromTheMoon, _randomized.Logic)?.Where(item => !item.IsFake() && !item.IsEntrance()).ToList().AsReadOnly();
                 if (_randomized.AllItemsOnPathToMoon == null)
                 {
                     throw new Exception("Moon Access is unobtainable.");
