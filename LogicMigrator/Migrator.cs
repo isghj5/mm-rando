@@ -7,7 +7,7 @@ namespace MMRando.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 14;
+        public const int CurrentVersion = 15;
 
         public static string ApplyMigrations(string logic)
         {
@@ -86,6 +86,11 @@ namespace MMRando.LogicMigrator
             if (GetVersion(lines) < 14)
             {
                 AddEntrances(lines);
+            }
+
+            if (GetVersion(lines) < 15)
+            {
+                AddEntrances2(lines);
             }
 
             return string.Join("\r\n", lines);
@@ -1968,6 +1973,47 @@ namespace MMRando.LogicMigrator
             foreach (var item in newItems)
             {
                 lines.Insert(item.ID * 5 + 1, $"- {itemNames[item.ID - 433]}");
+                lines.Insert(item.ID * 5 + 2, string.Join(",", item.DependsOnItems));
+                lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
+                lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
+                lines.Insert(item.ID * 5 + 5, "0");
+            }
+        }
+
+        private static void AddEntrances2(List<string> lines)
+        {
+            lines[0] = "-version 15";
+            var itemNames = new string[]
+            {
+                "EntranceStoneTowerInvertedFromStoneTowerTempleInverted",
+            };
+            var newItems = itemNames.Select((itemName, index) => new MigrationItem
+            {
+                ID = 741 + index
+            }).ToArray();
+            for (var i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.StartsWith("-") || string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+                var updatedItemSections = line
+                    .Split(';')
+                    .Select(section => section.Split(',').Select(id =>
+                    {
+                        var itemId = int.Parse(id);
+                        if (itemId >= 741)
+                        {
+                            itemId += newItems.Length;
+                        }
+                        return itemId;
+                    }).ToList()).ToList();
+                lines[i] = string.Join(";", updatedItemSections.Select(section => string.Join(",", section)));
+            }
+            foreach (var item in newItems)
+            {
+                lines.Insert(item.ID * 5 + 1, $"- {itemNames[item.ID - 741]}");
                 lines.Insert(item.ID * 5 + 2, string.Join(",", item.DependsOnItems));
                 lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
                 lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");

@@ -11,7 +11,7 @@
 0
 - Fire Arrow
 107
-2,92,120,741;2,93,120,741;10,92,741;10,93;92,119,741,742;92,93,119,741,743
+2,92,120,742;2,93,120,742;10,92,742;10,93;92,119,742,743;92,93,119,742,744
 0
 0
 - Ice Arrow
@@ -21,7 +21,7 @@
 0
 - Light Arrow
 116
-4,120,744,741;25,119,745
+4,120,745,742;25,119,746
 0
 0
 - Bomb Bag (20)
@@ -35,13 +35,13 @@
 0
 0
 - Powder Keg
-92,776,780
-2,120,741;108
+92,777,781
+2,120,742;108
 0
 0
 - Pictobox
 692,673
-752;755
+753;756
 0
 0
 - Lens of Truth
@@ -51,7 +51,7 @@
 0
 - Hookshot
 523,524
-120;0,741
+120;0,742
 0
 0
 - Great Fairy Magic Meter
@@ -85,12 +85,12 @@
 0
 0
 - Aliens Bottle
-120,769
+120,770
 
 0
 2
 - Goron Race Bottle
-108,702,92,741
+108,702,92,742
 
 12
 0
@@ -110,23 +110,23 @@
 0
 32
 - Bombers' Notebook
-782,783,784
-0,741;93;120;10
+783,784,785
+0,742;93;120;10
 0
 0
 - Razor Sword
 559
-2,30,120,741;2,31,120,741;30,95,173;31,95,173
+2,30,120,742;2,31,120,742;30,95,173;31,95,173
 0
 12
 - Gilded Sword
 18,559
-2,120,741;95,173
+2,120,742;95,173
 0
 48
 - Mirror Shield
 
-2,4,120,649,741;4,38,39,88,120,171,649,741,753,787;38,39,88,168,171,465,753
+2,4,120,649,742;4,38,39,88,120,171,649,742,754,788;38,39,88,168,171,465,754
 0
 0
 - Town Archery Quiver (40)
@@ -141,16 +141,16 @@
 0
 - Town Bomb Bag (30)
 38,39,699
-92;93;748
+92;93;749
 0
 62
 - Mountain Bomb Bag (40)
-92,776
+92,777
 30;31
 0
 0
 - Town Wallet (200)
-783
+784
 
 0
 0
@@ -160,22 +160,22 @@
 0
 3
 - Moon's Tear
-570,765
-569;0,767
+570,766
+569;0,768
 0
 0
 - Land Title Deed
-32,785
+32,786
 
 0
 0
 - Swamp Title Deed
-33,759
+33,760
 
 0
 0
 - Mountain Title Deed
-0,34,776
+0,34,777
 
 0
 0
@@ -185,17 +185,17 @@
 0
 0
 - Room Key
-790
+791
 
 3
 1
 - Letter to Kafei
-84,792
+84,793
 
 3
 2
 - Pendant of Memories
-38,791
+38,792
 452;454
 12
 12
@@ -215,28 +215,28 @@
 0
 15
 - Rosa Sisters HP
-87,783
+87,784
 
 0
 10
 - ??? HP
-792
+793
 33;34;35;36;38
 0
 42
 - Grandma Short Story HP
-73,790
+73,791
 
 0
 5
 - Grandma Long Story HP
-73,790
+73,791
 
 0
 20
 - Keaton Quiz HP
 77
-784;764;777
+785;765;778
 0
 0
 - Deku Playground HP
@@ -260,7 +260,7 @@
 0
 31
 - Postbox HP
-72,791
+72,792
 
 0
 0
@@ -270,7 +270,7 @@
 0
 0
 - Termina Field Business Scrub HP
-463,793
+463,794
 
 0
 0
@@ -281,16 +281,16 @@
 21
 - Pictograph Contest HP
 8,673
-784;773;764;120,770;10,770;120,788;10,788;780
+785;774;765;120,771;10,771;120,789;10,789;781
 0
 0
 - Boat Archery HP
 105,673,692
-752;755
+753;756
 0
 0
 - Frog Choir HP
-80,108,104,112,10,3,0,93,120,741,2,759,777,786
+80,108,104,112,10,3,0,93,120,742,2,760,778,787
 
 0
 0
@@ -300,12 +300,12 @@
 0
 0
 - Seahorse HP
-93,432,746
+93,432,747
 535;536
 0
 0
 - Fisherman Game HP
-113,10,770
+113,10,771
 
 0
 21
@@ -320,7 +320,7 @@
 0
 16
 - Poe Hut HP
-748,120,665
+749,120,665
 
 0
 0
@@ -330,53 +330,53 @@
 0
 21
 - Peahat Grotto HP
-748,466
+749,466
 
 0
 21
 - Dodongo Grotto HP
-748,461
+749,461
 
 0
 0
 - Woodfall Chest HP
-0,775
+0,776
 
 0
 0
 - Twin Islands Chest HP
-108,93,780
+108,93,781
 
 0
 0
 - Ocean Spider House HP
-120,10,90,119,748,543
+120,10,90,119,749,543
 
 0
 0
 - Graveyard Iron Knuckle HP
-119,748,439
+119,749,439
 
 0
 8
 - Postman's Hat
-40,572,782
+40,572,783
 
 0
 32
 - All Night Mask
-31,451,784
-120;10;748;92;93;119
+31,451,785
+120;10;749;92;93;119
 0
 32
 - Blast Mask
-38,39,784
-92;93;748
+38,39,785
+92;93;749
 0
 2
 - Stone Mask
-9,96,741,778
-752;755
+9,96,742,779
+753;756
 0
 0
 - Great Fairy's Mask
@@ -390,7 +390,7 @@
 0
 16
 - Bremen Mask
-786
+787
 
 0
 10
@@ -400,13 +400,13 @@
 0
 16
 - Don Gero's Mask
-92,741,777,794
+92,742,778,795
 
 0
 0
 - Mask of Scents
 167,666,0,622
-120;741;10;93
+120;742;10;93
 0
 0
 - Romani Mask
@@ -425,7 +425,7 @@
 0
 15
 - Couple's Mask
-39,84,38,792,657
+39,84,38,793,657
 
 0
 32
@@ -435,7 +435,7 @@
 0
 0
 - Kamaro's Mask
-94,767
+94,768
 
 0
 42
@@ -450,22 +450,22 @@
 0
 21
 - Captain's Hat
-98,120,748,774
+98,120,749,775
 
 0
 0
 - Giant's Mask
-117,10,0,4,120,745,741
+117,10,0,4,120,746,742
 
 0
 0
 - Goron Mask
-94,9,741,656
+94,9,742,656
 
 0
 0
 - Zora Mask
-94,770
+94,771
 
 0
 0
@@ -475,17 +475,17 @@
 0
 0
 - Song of Soaring
-0,759
+0,760
 
 0
 0
 - Epona's Song
-769
+770
 
 0
 1
 - Song of Storms
-748,440
+749,440
 
 0
 2
@@ -495,7 +495,7 @@
 0
 0
 - Goron Lullaby
-92,794
+92,795
 
 0
 0
@@ -505,7 +505,7 @@
 0
 0
 - Elegy of Emptiness
-120,2,25,748,741,672
+120,2,25,749,742,672
 
 0
 0
@@ -516,31 +516,31 @@
 0
 - Poison swamp access
 
-93;0,10;0,120;0,8;0,752
+93;0,10;0,120;0,8;0,753
 0
 0
 - Woodfall Temple access
-748,502
+749,502
 
 0
 0
 - Woodfall clear
-515,748
+515,749
 
 0
 0
 - North access
 
-95,119,173;92,95,173;119,120;2,120,741;92,120
+95,119,173;92,95,173;119,120;2,120,742;92,120
 0
 0
 - Snowhead Temple access
-748,517
+749,517
 
 0
 0
 - Snowhead clear
-635,2,120,741,92
+635,2,120,742,92
 
 0
 0
@@ -560,12 +560,12 @@
 0
 0
 - Great Bay Temple access
-748,646
+749,646
 
 0
 0
 - Great Bay clear
-93,741,686
+93,742,686
 
 0
 0
@@ -575,12 +575,12 @@
 0
 0
 - Ikana Canyon access
-114,3,120,741
+114,3,120,742
 
 0
 0
 - Stone Tower Temple access
-748,495
+749,495
 
 0
 0
@@ -590,7 +590,7 @@
 0
 0
 - Ikana clear
-741,91,591
+742,91,591
 274;23;24
 0
 0
@@ -610,12 +610,12 @@
 0
 0
 - (Unused)
-107,92,119,120,2,741
+107,92,119,120,2,742
 
 0
 0
 - (Unused)
-112,93,10,120,3,2,741
+112,93,10,120,3,2,742
 
 0
 0
@@ -625,7 +625,7 @@
 0
 0
 - (Unused)
-117,119,120,4,0,92,93,101,10,741
+117,119,120,4,0,92,93,101,10,742
 
 0
 0
@@ -651,32 +651,32 @@
 0
 - Snowhead Map
 107
-92,741;93
+92,742;93
 0
 0
 - Snowhead Compass
 107
-10,92,741;93;92,741,743
+10,92,742;93;92,742,744
 0
 0
 - Snowhead Boss Key
-107,741
-2,92,120;2,93,120,743
+107,742
+2,92,120;2,93,120,744
 0
 0
 - Snowhead Key 1 - block room
 107
-92,741;93
+92,742;93
 0
 0
 - Snowhead Key 2 - icicle room
 107
-10,92,119,741;93,119;10,92,741,743;92,119,741,743;2,92,120,743,741;2,93,120,743,741
+10,92,119,742;93,119;10,92,742,744;92,119,742,744;2,92,120,744,742;2,93,120,744,742
 0
 0
 - Snowhead Key 3 - bridge room
 107
-2,92,120,741;10,92,741;93
+2,92,120,742;10,92,742;93
 0
 0
 - Great Bay Map
@@ -690,7 +690,7 @@
 0
 0
 - Great Bay Boss Key
-112,120,3,93,10,741,2
+112,120,3,93,10,742,2
 
 0
 0
@@ -701,36 +701,36 @@
 0
 - Stone Tower Map
 116
-25,119;4,119,120,741;4,120,744,741
+25,119;4,119,120,742;4,120,745,742
 0
 0
 - Stone Tower Compass
 116
-4,120,741;25,744
+4,120,742;25,745
 0
 0
 - Stone Tower Boss Key
-117,4,120,0,10,744,741
+117,4,120,0,10,745,742
 
 0
 0
 - Stone Tower Key 1 - armos room
 116
-25,119;4,119,120,741;4,120,744,741
+25,119;4,119,120,742;4,120,745,742
 0
 0
 - Stone Tower Key 2 - eyegore room
 116
-4,120,741;119,744
+4,120,742;119,745
 0
 0
 - Stone Tower Key 3 - updraft room
-117,120,4,741
+117,120,4,742
 
 0
 0
 - Stone Tower Key 4 - death armos maze
-117,0,120,4,10,744,741
+117,0,120,4,10,745,742
 
 0
 0
@@ -830,52 +830,52 @@
 0
 0
 - Bottle: Fairy
-746
+747
 
 0
 0
 - Bottle: Deku Princess
-758
+759
 503;504
 0
 0
 - Bottle: Fish
-746
+747
 
 0
 0
 - Bottle: Bug
-746
+747
 
 0
 0
 - Bottle: Poe
-117,120,4,0,744,746,748,741,10
+117,120,4,0,745,747,749,742,10
 
 0
 0
 - Bottle: Big Poe
-174,169,168,115,88,746,748,749
-4,120,649,741;4,93,649,741;120,465,648;93,465,648
+174,169,168,115,88,747,749,750
+4,120,649,742;4,93,649,742;120,465,648;93,465,648
 0
 0
 - Bottle: Spring Water
-746
+747
 
 0
 0
 - Bottle: Hot Spring Water
-746
+747
 459;92,656
 0
 0
 - Bottle: Zora Egg
-10,746,748,523,524,525,526,527,528,529,530,93
-0,741;120
+10,747,749,523,524,525,526,527,528,529,530,93
+0,742;120
 0
 0
 - Bottle: Mushroom
-81,746
+81,747
 
 0
 0
@@ -891,7 +891,7 @@
 0
 - Bean Grotto 20r
 465
-10;757
+10;758
 0
 0
 - HSW Grotto 20r
@@ -900,22 +900,22 @@
 0
 0
 - Graveyard Bad Bats
-748,440
+749,440
 
 0
 2
 - Ikana Grotto
-760
-
-0
-0
-- PF 20r Lower
 761
 
 0
 0
+- PF 20r Lower
+762
+
+0
+0
 - PF 20r Upper
-10,761
+10,762
 
 0
 0
@@ -945,112 +945,112 @@
 0
 0
 - PR 20r (1)
-93,795
+93,796
 
 0
 0
 - PR 20r (2)
-93,795
+93,796
 
 0
 0
 - Bombers' Hideout 100r
-119,765
+119,766
 
 0
 0
 - Termina Bombchu Grotto
-767
+768
 
 0
 0
 - Termina 20r Grotto
-767
+768
 
 0
 0
 - Termina Underwater 20r
-93,767
+93,768
 
 0
 0
 - Termina Grass 20r
-767
+768
 
 0
 0
 - Termina Stump 20r
-767
-10;756,757
+768
+10;757,758
 0
 0
 - Great Bay Coast Grotto
-770
+771
 
 0
 0
 - Great Bay Cape Ledge (1)
-10,771
+10,772
 
 0
 0
 - Great Bay Cape Ledge (2)
-10,771
+10,772
 
 0
 0
 - Great Bay Cape Grotto
-771
+772
 92;119
 0
 0
 - Great Bay Cape Underwater
-93,771
+93,772
 
 0
 0
 - PF Exterior 20r (1)
-93,772
+93,773
 
 0
 0
 - PF Exterior 20r (2)
-93,772
+93,773
 
 0
 0
 - PF Exterior 20r (3)
-93,772
+93,773
 
 0
 0
 - Path to Swamp Grotto
-773
+774
 
 0
 0
 - Doggy Racetrack 50r
 628
-93;10;756,757
+93;10;757,758
 0
 16
 - Graveyard Grotto
-119,774
+119,775
 
 0
 0
 - Swamp Grotto
-759
+760
 93;0
 0
 0
 - Woodfall 5r
-0,775
+0,776
 
 0
 0
 - Woodfall 20r
-775
+776
 
 0
 0
@@ -1060,87 +1060,87 @@
 0
 0
 - Well Left Path 50r
-88,172,169,755
+88,172,169,756
 648;649
 0
 0
 - Mountain Village Chest (Spring)
-108,777
+108,778
 
 0
 0
 - Mountain Village Grotto (Spring) 20r
-108,777
+108,778
 
 0
 0
 - Path to Ikana 20r
 10
-667;96,778
+667;96,779
 0
 0
 - Path to Ikana Grotto
 92
-667;96,778
+667;96,779
 0
 0
 - Stone Tower 100r
-116,120,4,741,756,757
+116,120,4,742,757,758
 
 0
 0
 - Stone Tower Bombchu 10
-116,120,4,741,756,757
+116,120,4,742,757,758
 
 0
 0
 - Stone Tower Magic Bean
-116,120,4,741,756,757
+116,120,4,742,757,758
 
 0
 0
 - Path to Snowhead Grotto
 119
-92,677,741;678
+92,677,742;678
 0
 0
 - Twin Islands 20r
-108,93,780
+108,93,781
 
 0
 0
 - Secret Shrine HP
-120,4,748,741,687
+120,4,749,742,687
 119;10
 0
 0
 - Secret Shrine Dinolfos
-120,4,748,741,687
+120,4,749,742,687
 
 0
 0
 - Secret Shrine Wizzrobe
-120,4,748,741,687
+120,4,749,742,687
 
 0
 0
 - Secret Shrine Wart
-120,4,748,741,687
+120,4,749,742,687
 119;10
 0
 0
 - Secret Shrine Garo Master
-120,4,748,741,687
+120,4,749,742,687
 
 0
 0
 - Inn Staff Room
-790
+791
 
 0
 32
 - Inn Guest Room
-37,790
+37,791
 
 0
 0
@@ -1150,52 +1150,52 @@
 0
 12
 - East Clock Town 100r
-782
+783
 
 0
 0
 - South Clock Town 20r
-10,785
+10,786
 
 0
 0
 - South Clock Town 50r
-785
+786
 10;0,32
 0
 32
 - Bank HP
-783
+784
 30;31
 0
 0
 - South Clock Town HP
-785
+786
 
 0
 0
 - North Clock Town HP
-784
+785
 
 0
 0
 - Path to Swamp HP
-773
-0,741;120;10;93
+774
+0,742;120;10;93
 0
 0
 - Swamp Scrub HP
-0,33,759
+0,33,760
 
 0
 0
 - Deku Palace HP
-0,766
+0,767
 
 0
 0
 - Goron Village Scrub HP
-0,34,776
+0,34,777
 
 0
 0
@@ -1210,7 +1210,7 @@
 0
 0
 - Great Bay Like-Like HP
-93,771
+93,772
 
 0
 0
@@ -1225,82 +1225,82 @@
 0
 0
 - Path to Snowhead HP
-92,10,9,741,796
+92,10,9,742,797
 677;678
 0
 0
 - Great Bay Coast HP
-10,756,757,770,796
+10,757,758,771,797
 
 0
 0
 - Ikana Scrub HP
-93,36,0,760
+93,36,0,761
 
 0
 0
 - Ikana Castle HP
-120,0,2,741,762
+120,0,2,742,763
 4;25
 0
 0
 - Odolwa Heart Container
-515,748
+515,749
 
 0
 0
 - Goht Heart Container
-120,2,92,741,635
+120,2,92,742,635
 
 0
 0
 - Gyorg Heart Container
-93,741,686
+93,742,686
 
 0
 0
 - Twinmold Heart Container
-741,91,591
+742,91,591
 274;23;24
 0
 0
 - Map: Clock Town
-797
-784;788
+798
+785;789
 0
 0
 - Map: Woodfall
-797
-773;784
+798
+774;785
 0
 0
 - Map: Snowhead
-797
-773;780
+798
+774;781
 0
 0
 - Map: Romani Ranch
-797
-780;764
+798
+781;765
 0
 0
 - Map: Great Bay
 
-764,797;770,798
+765,798;771,799
 0
 0
 - Map: Stone Tower
 
-770,798;788,797
+771,799;789,798
 0
 0
 - Goron Racetrack Grotto
 119
-685;92,780;10,780,796
+685;92,781;10,781,797
 0
 0
 - Ikana Scrub 200r
-93,36,760
+93,36,761
 
 0
 0
@@ -1335,7 +1335,7 @@
 0
 0
 - Goron Trial HP
-92,741,624
+92,742,624
 
 0
 0
@@ -1345,12 +1345,12 @@
 0
 0
 - Link Trial HP
-119,120,2,10,741,693
+119,120,2,10,742,693
 
 0
 0
 - Fierce Deity's Mask
-0,92,93,119,120,2,10,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,741,781,547,624,641,693,695,696,697,698
+0,92,93,119,120,2,10,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,742,782,547,624,641,693,695,696,697,698
 
 0
 0
@@ -1410,33 +1410,33 @@
 0
 0
 - Termina Grotto Cow #1 Milk
-96,119,767
+96,119,768
 
 0
 0
 - Termina Grotto Cow #2 Milk
-96,119,767
+96,119,768
 
 0
 0
 - Great Bay Coast Grotto Cow #1 Milk
-10,770
+10,771
 
 0
 0
 - Great Bay Coast Grotto Cow #2 Milk
-10,770
+10,771
 
 0
 0
 - Swamp Skulltula Main Room Near Ceiling
 542
-10;0,120;0,741;93;0,749
+10;0,120;0,742;93;0,750
 0
 0
 - Swamp Skulltula Gold Room Near Ceiling
 542
-10;93;756,757
+10;93;757,758
 0
 0
 - Swamp Skulltula Monument Room Torch
@@ -1491,7 +1491,7 @@
 0
 - Swamp Skulltula Monument Room Lower Wall
 542
-10;93;92,756,757;119,756,757
+10;93;92,757,758;119,757,758
 0
 0
 - Swamp Skulltula Monument Room On Monument
@@ -1516,7 +1516,7 @@
 0
 - Swamp Skulltula Gold Room Hive
 542
-120;10;93;0,741
+120;10;93;0,742
 0
 0
 - Swamp Skulltula Main Room Upper Pillar
@@ -1525,7 +1525,7 @@
 0
 0
 - Swamp Skulltula Pot Room Behind Vines
-542,748
+542,749
 
 0
 0
@@ -1541,7 +1541,7 @@
 0
 - Swamp Skulltula Pot Room Hive 1
 542
-0,741;120;10;93
+0,742;120;10;93
 0
 0
 - Swamp Skulltula Tree Room Tree 2
@@ -1556,7 +1556,7 @@
 0
 - Swamp Skulltula Tree Room Hive
 542
-0,741;10;93;120
+0,742;10;93;120
 0
 0
 - Swamp Skulltula Monument Room Crate 2
@@ -1566,7 +1566,7 @@
 0
 - Swamp Skulltula Pot Room Hive 2
 542
-0,741;120;10;93
+0,742;120;10;93
 0
 0
 - Swamp Skulltula Tree Room Tree 3
@@ -1580,57 +1580,57 @@
 0
 0
 - Ocean Skulltula Storage Room Behind Boat
-751
+752
 
 0
 0
 - Ocean Skulltula Library Hole Behind Picture
-751
+752
 
 0
 0
 - Ocean Skulltula Library Hole Behind Cabinet
-751
+752
 
 0
 0
 - Ocean Skulltula Library On Corner Bookshelf
-751
+752
 
 0
 0
 - Ocean Skulltula 2nd Room Ceiling Edge
-751
+752
 
 0
 0
 - Ocean Skulltula 2nd Room Ceiling Plank
-751
+752
 
 0
 0
 - Ocean Skulltula Colored Skulls Ceiling Edge
-751
+752
 
 0
 0
 - Ocean Skulltula Library Ceiling Edge
-751
+752
 
 0
 0
 - Ocean Skulltula Storage Room Ceiling Web
-751,2,120,741
+752,2,120,742
 
 0
 0
 - Ocean Skulltula Storage Room Behind Crate
-751
+752
 
 0
 0
 - Ocean Skulltula 2nd Room Jar
-751
+752
 
 0
 0
@@ -1645,93 +1645,93 @@
 0
 0
 - Ocean Skulltula 2nd Room Webbed Hole
-751
+752
 
 0
 0
 - Ocean Skulltula Entrance Web
-2,741,119,543
+2,742,119,543
 10;93
 0
 0
 - Ocean Skulltula Colored Skulls Chandelier 1
-751
+752
 
 0
 0
 - Ocean Skulltula Colored Skulls Chandelier 2
-751
+752
 
 0
 0
 - Ocean Skulltula Colored Skulls Chandelier 3
-751
+752
 
 0
 0
 - Ocean Skulltula Colored Skulls Behind Picture
-751
+752
 
 0
 0
 - Ocean Skulltula Library Behind Picture
-751
+752
 
 0
 0
 - Ocean Skulltula Library Behind Bookcase 1
-751
+752
 
 0
 0
 - Ocean Skulltula Storage Room Crate
-751
+752
 
 0
 0
 - Ocean Skulltula 2nd Room Webbed Pot
-751
+752
 
 0
 0
 - Ocean Skulltula 2nd Room Upper Pot
-751
+752
 
 0
 0
 - Ocean Skulltula Colored Skulls Pot
-751
+752
 
 0
 0
 - Ocean Skulltula Storage Room Jar
-751
+752
 
 0
 0
 - Ocean Skulltula 2nd Room Lower Pot
-751
+752
 
 0
 0
 - Ocean Skulltula Library Behind Bookcase 2
-751
+752
 
 0
 0
 - Ocean Skulltula 2nd Room Behind Skull 1
-751
+752
 
 0
 0
 - Ocean Skulltula 2nd Room Behind Skull 2
-751
+752
 
 0
 0
 - Clock Town Stray Fairy
 
-786;0,782
+787;0,783
 0
 0
 - Woodfall Pre-Boss Lower Right Bubble
@@ -1801,87 +1801,87 @@
 0
 - Woodfall Bridge Room Hive
 104
-0,129,741;0,120;10
+0,129,742;0,120;10
 0
 0
 - Woodfall Platform Room Hive
 104
-0,741;10,76;0,120;0,76,93
+0,742;10,76;0,120;0,76,93
 0
 0
 - Snowhead Snow Room Bubble
-107,92,741,2,120,743,76
+107,92,742,2,120,744,76
 
 0
 0
 - Snowhead Ceiling Bubble
 107,76
-92,119,120,742;10,92,119,743;93,119,120,743;2,92,120,741;2,93,120,741
+92,119,120,743;10,92,119,744;93,119,120,744;2,92,120,742;2,93,120,742
 0
 0
 - Snowhead Dinolfos 1
-107,92,741,2,120,743
+107,92,742,2,120,744
 
 0
 0
 - Snowhead Bridge Room Ledge Bubble
 107
-76,92,120;92,10;92,741;93
+76,92,120;92,10;92,742;93
 0
 0
 - Snowhead Bridge Room Pillar Bubble
 107
-76,92,120;92,10;92,741;93
+76,92,120;92,10;92,742;93
 0
 0
 - Snowhead Dinolfos 2
-107,92,741,2,120,743
+107,92,742,2,120,744
 
 0
 0
 - Snowhead Map Room Fairy
 107
-93;92,741;92,10;92,119,742
+93;92,742;92,10;92,119,743
 0
 0
 - Snowhead Map Room Ledge
-107,92,741
-2,120;10,119,743;93,119,743;119,742
+107,92,742
+2,120;10,119,744;93,119,744;119,743
 0
 0
 - Snowhead Basement
 107,92
-741;10;119,742
+742;10;119,743
 0
 0
 - Snowhead Twin Block
 107,92
-10,741;10,743;2,120,741,743;93
+10,742;10,744;2,120,742,744;93
 0
 0
 - Snowhead Icicle Room Wall
 107
-92,119,743;92,741,2,120,743;10,92,119;93,119
+92,119,744;92,742,2,120,744;10,92,119;93,119
 0
 0
 - Snowhead Main Room Wall
 107
-92,10;93,10;92,741,2,120
+92,10;93,10;92,742,2,120
 0
 0
 - Snowhead Pillar Freezards
-107,741,2,120
+107,742,2,120
 92;93
 0
 0
 - Snowhead Ice Puzzle
-107,741,2,120
-92,743;92,10;93
+107,742,2,120
+92,744;92,10;93
 0
 0
 - Snowhead Crate
 107
-92,2,120,741,743,749;92,76,743,749;10,92;93,119;92,93
+92,2,120,742,744,750;92,76,744,750;10,92;93,119;92,93
 0
 0
 - Great Bay Skulltula
@@ -1890,7 +1890,7 @@
 0
 0
 - Great Bay Pre-Boss Room Underwater Bubble
-112,93,120,3,741,10
+112,93,120,3,742,10
 
 0
 0
@@ -1900,27 +1900,27 @@
 0
 0
 - Great Bay Pre-Boss Room Bubble
-112,93,120,3,741,10
+112,93,120,3,742,10
 
 0
 0
 - Great Bay Waterwheel Room Upper
-112,93,120,3,741,10
+112,93,120,3,742,10
 
 0
 0
 - Great Bay Green Valve
-112,93,120,3,741,10
+112,93,120,3,742,10
 
 0
 0
 - Great Bay Seesaw Room
-112,93,120,3,741,10,2
+112,93,120,3,742,10,2
 
 0
 0
 - Great Bay Waterwheel Room Lower
-112,93,120,3,741,10
+112,93,120,3,742,10
 
 0
 0
@@ -1935,7 +1935,7 @@
 0
 0
 - Great Bay Underwater Barrel
-112,93,120,3,741,10
+112,93,120,3,742,10
 
 0
 0
@@ -1956,62 +1956,62 @@
 0
 - Great Bay Ledge Jar
 112,93,10
-76;3,120,741
+76;3,120,742
 0
 0
 - Stone Tower Mirror Sun Block
 116
-25,119,745;4,120,741,744
+25,119,746;4,120,742,745
 0
 0
 - Stone Tower Eyegore
 116
-0,25,119,745;4,120,741,744
+0,25,119,746;4,120,742,745
 0
 0
 - Stone Tower Lava Room Fire Ring
 116
-0,25,119,745;4,120,741,744
+0,25,119,746;4,120,742,745
 0
 0
 - Stone Tower Updraft Fire Ring
-117,116,4,120,741,0
+117,116,4,120,742,0
 
 0
 0
 - Stone Tower Mirror Sun Switch
 116
-25,119,745;4,120,741,744
+25,119,746;4,120,742,745
 0
 0
 - Stone Tower Boss Warp
-117,4,120,741
+117,4,120,742
 
 0
 0
 - Stone Tower Wizzrobe
-117,0,92,4,120,741,744,10
+117,0,92,4,120,742,745,10
 
 0
 0
 - Stone Tower Death Armos
-117,0,4,120,741,744,116
+117,0,4,120,742,745,116
 
 0
 0
 - Stone Tower Updraft Frozen Eye
-117,0,2,4,120,741
+117,0,2,4,120,742
 
 0
 0
 - Stone Tower Thin Bridge
-117,0,4,120,741,745,116
+117,0,4,120,742,746,116
 
 0
 0
 - Stone Tower Basement Ledge
 116
-119;4,120,741,744
+119;4,120,742,745
 0
 0
 - Stone Tower Statue Eye
@@ -2020,18 +2020,18 @@
 0
 0
 - Stone Tower Underwater
-117,116,4,120,741
+117,116,4,120,742
 
 0
 0
 - Stone Tower Bridge Crystal
-116,4,120,741
+116,4,120,742
 
 0
 0
 - Stone Tower Lava Room Ledge
 116,0
-25,119,745;4,120,741,744
+25,119,746;4,120,742,745
 0
 0
 - Lottery 50r
@@ -2040,7 +2040,7 @@
 0
 42
 - Bank 5r
-783
+784
 
 0
 0
@@ -2061,7 +2061,7 @@
 0
 - Honey and Darling 50r
 438
-120;749;0,741
+120;750;0,742
 0
 16
 - Kotake Mushroom Sale 20r
@@ -2070,17 +2070,17 @@
 0
 0
 - Pictograph Contest 5r
-8,673,759
+8,673,760
 
 0
 0
 - Pictograph Contest 20r
-8,673,759
+8,673,760
 
 0
 0
 - Swamp Scrub Magic Bean
-0,759
+0,760
 
 0
 0
@@ -2090,12 +2090,12 @@
 0
 0
 - Canyon Scrub Blue Potion
-760
+761
 30;31
 0
 0
 - Zora Hall Stage Lights 5r
-2,120,741,768
+2,120,742,769
 
 0
 0
@@ -2115,12 +2115,12 @@
 0
 48
 - Lulu Pictograph 5r
-8,93,768,771
+8,93,769,772
 
 0
 0
 - Lulu Pictograph 20r
-8,93,768,771
+8,93,769,772
 
 0
 0
@@ -2141,12 +2141,12 @@
 21
 - Curiosity Shop 5r
 451
-175;753
+175;754
 0
 42
 - Curiosity Shop 20r
 451
-168;169;166;172;173;174;752;753;754;755;150
+168;169;166;172;173;174;753;754;755;756;150
 0
 42
 - Curiosity Shop 50r
@@ -2156,56 +2156,56 @@
 42
 - Curiosity Shop 200r
 451
-18;171;21;409,746
+18;171;21;409,747
 0
 42
 - Seahorse
 8,620
-761;772
+762;773
 0
 0
 - EntranceMayorsResidenceFromEastClockTown
-782
+783
 
 0
 0
 - EntranceMajorasLairFromTheMoon
-781
-
-0
-0
-- EntranceMagicHagsPotionShopFromSouthernSwamp
-759
-
-0
-0
-- EntranceRanchBarnFromRomaniRanch
-769
-
-0
-0
-- EntranceRanchHouseFromRomaniRanch
-769
-
-0
-0
-- EntranceHoneyDarlingsShopFromEastClockTown
 782
 
 0
 0
+- EntranceMagicHagsPotionShopFromSouthernSwamp
+760
+
+0
+0
+- EntranceRanchBarnFromRomaniRanch
+770
+
+0
+0
+- EntranceRanchHouseFromRomaniRanch
+770
+
+0
+0
+- EntranceHoneyDarlingsShopFromEastClockTown
+783
+
+0
+0
 - EntranceBeneathGraveyardFromIkanaGraveyardNight2
-774,90
+775,90
 
 0
 0
 - EntranceBeneathGraveyardFromIkanaGraveyardNight1
-774,90
+775,90
 
 0
 0
 - EntranceSouthernSwampFromRoadtoSouthernSwamp
-773
+774
 
 0
 0
@@ -2215,17 +2215,17 @@
 0
 0
 - EntranceSouthernSwampFromWoodfall
-775
+776
 
 0
 0
 - EntranceSouthernSwampFromDekuPalaceLower
-766
+767
 
 0
 0
 - EntranceSouthernSwampFromDekuPalaceUpper
-766,0
+767,0
 
 0
 0
@@ -2245,22 +2245,22 @@
 0
 0
 - EntranceSouthernSwampFromIkanaCanyon
-760
+761
 
 0
 0
 - EntranceSouthernSwampFromOwlStatue
-759,95
-787;748
+760,95
+788;749
 0
 0
 - EntranceCuriosityShopFromWestClockTown
-783
+784
 
 0
 0
 - EntranceKafeisHideoutFromLaundryPool
-786
+787
 
 0
 0
@@ -2275,28 +2275,28 @@
 0
 0
 - EntranceGrottoGossipOceanFromTerminaField
-767,119
+768,119
 
 0
 0
 - EntranceGrottoGossipSwampFromTerminaField
-767
+768
 
 0
 0
 - EntranceGrottoGossipCanyonFromTerminaField
-767
+768
 
 0
 0
 - EntranceGrottoGossipMountainFromTerminaField
-767
+768
 
 0
 0
 - EntranceGrottoHotSpringWaterFromTwinIslands
-780
-2,120,741;95,173;108
+781
+2,120,742;95,173;108
 0
 0
 - EntranceGrottoPalaceStraightFromDekuPalaceA
@@ -2305,7 +2305,7 @@
 0
 0
 - EntranceGrottoDodongoFromTerminaField
-767
+768
 
 0
 0
@@ -2315,22 +2315,22 @@
 0
 0
 - EntranceGrottoDekuMerchantFromTerminaField
-767
+768
 
 0
 0
 - EntranceGrottoBioBabaFromTerminaField
-767
+768
 119;92
 0
 0
 - EntranceGrottoBeanSellerFromDekuPalace
-766
+767
 
 0
 0
 - EntranceGrottoPeahatFromTerminaField
-767
+768
 
 0
 0
@@ -2345,7 +2345,7 @@
 0
 0
 - EntranceGrottoLensCaveFromGoronVillage
-776
+777
 
 0
 0
@@ -2370,8 +2370,8 @@
 0
 0
 - EntranceIkanaCanyonFromOwlStatue
-760,95
-787;748
+761,95
+788;749
 0
 0
 - EntranceIkanaCanyonFromBeneaththeWell
@@ -2385,13 +2385,13 @@
 0
 0
 - EntranceIkanaCanyonFromIkanaClear
-
-
+591,91,742
+23;24;274
 0
 0
 - EntranceIkanaCanyonFromAncientCastleofIkanaCourtyard
 
-4,120,507,741;508;4,120,509,741
+4,120,507,742;508;4,120,509,742
 0
 0
 - EntranceIkanaCanyonFromFairysFountain
@@ -2410,7 +2410,7 @@
 0
 0
 - EntranceSpringWaterCaveFromIkanaCanyon
-760
+761
 
 0
 0
@@ -2430,33 +2430,33 @@
 0
 0
 - EntrancePiratesFortressFromGuardRoomFront
-
-
+800,749
+798;75
 0
 0
 - EntrancePiratesFortressFromGuardRoomBack
-
-
+800,749
+798;75
 0
 0
 - EntrancePiratesFortressFromBarrelMazeFront
-
-
+749
+527;528
 0
 0
 - EntrancePiratesFortressFromBarrelMazeBack
-
-
+749
+527;528
 0
 0
 - EntrancePiratesFortressFromOnePatrolFront
-
-
+749
+529;530
 0
 0
 - EntrancePiratesFortressFromOnePatrolBack
-
-
+749
+529;530
 0
 0
 - EntrancePiratesFortressFromTelescope
@@ -2465,12 +2465,12 @@
 0
 0
 - EntrancePiratesFortressFromPiratesFortressExteriorBalcony
-
+773,10
 
 0
 0
 - EntranceMilkBarFromEastClockTown
-782
+783
 
 0
 0
@@ -2480,22 +2480,22 @@
 0
 0
 - EntranceTreasureChestShopFromEastClockTown
-782
+783
 
 0
 0
 - EntranceStoneTowerTempleInvertedFromStoneTowerInverted
-4,120,741,101
+4,120,742,101
 10,92,93,101,674;675;676
 0
 0
 - EntranceStoneTowerTempleInvertedBossRoomFromStoneTowerTempleInverted
-0,4,10,117,120,142,741,745
+0,4,10,117,120,142,742,746
 
 0
 0
 - EntranceClockTowerRooftopFromSouthClockTown
-785
+786
 
 0
 0
@@ -2510,57 +2510,57 @@
 0
 0
 - EntranceWoodfallTempleFromWoodfall
-775,0,98
+776,0,98
 
 0
 0
 - EntranceWoodfallTemplePrisonFromOdolwasLair
-105
+515,749
 
 0
 0
 - EntranceWoodfallTemplePrisonFromWoodfall
-775,105
+776,515,749
 
 0
 0
 - EntrancePathtoMountainVillageFromTerminaField
-767
+768
 120;95,173
 0
 0
 - EntrancePathtoMountainVillageFromMountainVillage
-777
+778
 
 0
 0
 - EntranceAncientCastleofIkanaCourtyardFromBeneaththeWell
 
-25,88,168,171,465,648,753;4,88,120,168,171,465,648,741,753;649
+25,88,168,171,465,648,754;4,88,120,168,171,465,648,742,754;649
 0
 0
 - EntranceAncientCastleofIkanaCourtyardFromIkanaCanyon
-788
+789
 
 0
 0
 - EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana
-763
+764
 
 0
 0
 - EntranceAncientCastleofIkanaFromCourtyard
-762
+763
 
 0
 0
 - EntranceAncientCastleofIkanaFromBlockHole
-762,120
+763,120
 
 0
 0
 - EntranceAncientCastleofIkanaFromKegHole
-7,92,762
+7,92,763
 
 0
 0
@@ -2570,32 +2570,32 @@
 0
 0
 - EntranceDekuScrubPlaygroundFromNorthClockTown
-784
+785
 
 0
 0
 - EntranceOdolwasLairFromWoodfallTemple
-
-
+104,128,120
+0;10
 0
 0
 - EntranceTownShootingGalleryFromEastClockTown
-782
+783
 
 0
 0
 - EntranceSnowheadTempleFromSnowhead
-779,92,99
+780,92,99
 
 0
 0
 - EntranceMilkRoadFromTerminaField
-767
+768
 
 0
 0
 - EntranceMilkRoadFromRomaniRanch
-769
+770
 
 0
 0
@@ -2610,72 +2610,72 @@
 0
 0
 - EntranceMilkRoadFromOwlStatue
-764,789
+765,790
 
 0
 0
 - EntrancePiratesFortressHookshotRoomFromLowerDoor
-761
+762
 
 0
 0
 - EntrancePiratesFortressHookshotRoomFromUpperDoor
-761
+762
 
 0
 0
 - EntrancePiratesFortressGuardRoomFromFrontDoor
-761
+762,10
 
 0
 0
 - EntrancePiratesFortressGuardRoomFromBackDoor
-
+10,762
 
 0
 0
 - EntrancePiratesFortressBarrelMazeFromFrontDoor
-
+10,762
 
 0
 0
 - EntrancePiratesFortressBarrelMazeFromBackDoor
-
+10,762
 
 0
 0
 - EntrancePiratesFortressOneGuardFrontFromPiratesFortress
-
+10,762
 
 0
 0
 - EntrancePiratesFortressOneGuardRearFromPiratesFortress
-
+10,762
 
 0
 0
 - EntrancePiratesFortressSewerFromTelescope
-
+492
 
 0
 0
 - EntrancePiratesFortressSewerFromWater
-
+773,92,93
 
 0
 0
 - EntrancePiratesFortressSewerFromRear
-
-
+773
+619;617;614;10
 0
 0
 - EntranceSwampShootingGalleryFromRoadtoSouthernSwamp
-773
+774
 
 0
 0
 - EntrancePinnacleRockFromGreatBayCoast
-770
+771
 
 0
 0
@@ -2685,48 +2685,48 @@
 0
 0
 - EntranceFairysFountainFromNorthClockTown
-784
+785
 
 0
 0
 - EntranceFairysFountainFromWoodfall
-0,775
+0,776
 
 0
 0
 - EntranceFairysFountainFromSnowhead
-92,99,779
+92,99,780
 
 0
 0
 - EntranceFairysFountainFromZoraCape
-10,119,771
+10,119,772
 
 0
 0
 - EntranceFairysFountainFromIkanaCanyon
-788
+789
 
 0
 0
 - EntranceSwampSpiderHouseFromSouthernSwamp
-759
-787;120
+760
+788;120
 0
 0
 - EntranceOceansideSpiderHouseFromGreatBayCoast
-770
+771
 
 0
 0
 - EntranceAstralObservatoryFromEastClockTown
-782,783,784
+783,784,785
 120;10;93
 0
 0
 - EntranceAstralObservatoryFromTerminaField
 
-569;0,767
+569;0,768
 0
 0
 - EntranceAstralObservatoryFromTelescope
@@ -2735,17 +2735,17 @@
 0
 0
 - EntranceDekuTrialFromTheMoon
-261,781
+261,782
 
 0
 0
 - EntranceDekuPalaceFromSouthernSwampLower
-759
+760
 
 0
 0
 - EntranceDekuPalaceFromDekuPalace
-766
+767
 
 0
 0
@@ -2765,7 +2765,7 @@
 0
 0
 - EntranceDekuPalaceFromSouthernSwampUpper
-759,0
+760,0
 
 0
 0
@@ -2795,22 +2795,22 @@
 0
 0
 - EntranceMountainSmithyFromMountainVillage
-777
+778
 
 0
 0
 - EntranceTerminaFieldFromWestClockTown
-783
+784
 
 0
 0
 - EntranceTerminaFieldFromRoadtoSouthernSwamp
-773
+774
 
 0
 0
 - EntranceTerminaFieldFromGreatBayCoast
-770
+771
 
 0
 0
@@ -2820,67 +2820,67 @@
 0
 0
 - EntranceTerminaFieldFromRoadtoIkana
-778,96
+779,96
 
 0
 0
 - EntranceTerminaFieldFromMilkRoad
-764
+765
 
 0
 0
 - EntranceTerminaFieldFromSouthClockTown
-785
+786
 
 0
 0
 - EntranceTerminaFieldFromEastClockTown
-782
-
-0
-0
-- EntranceTerminaFieldFromNorthClockTown
-784
-
-0
-0
-- EntranceTerminaFieldFromAstralObservatory
-765
-
-0
-0
-- EntranceTerminaFieldFromAstralObservatoryTelescope
-765
-
-0
-0
-- EntranceTerminaFieldFromCremiaEscort
-120,769
-
-0
-0
-- EntrancePostOfficeFromWestClockTown
 783
 
 0
 0
+- EntranceTerminaFieldFromNorthClockTown
+785
+
+0
+0
+- EntranceTerminaFieldFromAstralObservatory
+766
+
+0
+0
+- EntranceTerminaFieldFromAstralObservatoryTelescope
+766
+
+0
+0
+- EntranceTerminaFieldFromCremiaEscort
+120,770
+
+0
+0
+- EntrancePostOfficeFromWestClockTown
+784
+
+0
+0
 - EntranceMarineResearchLabFromGreatBayCoast
-770
+771
 
 0
 0
 - EntranceDampsHouseFromIkanaGraveyardGrave
-774,90
+775,90
 
 0
 0
 - EntranceDampsHouseFromIkanaGraveyardDoor
-
+775
 
 0
 0
 - EntranceGoronShrineFromGoronVillage
-776
+777
 
 0
 0
@@ -2890,12 +2890,12 @@
 0
 0
 - EntranceZoraHallFromZoraCapeLand
-771
+772
 
 0
 0
 - EntranceZoraHallFromZoraCapeWater
-93,771
+93,772
 
 0
 0
@@ -2925,12 +2925,12 @@
 0
 0
 - EntranceTradingPostFromWestClockTown
-783
+784
 
 0
 0
 - EntranceRomaniRanchFromMilkRoad
-7,92,764
+7,92,765
 
 0
 0
@@ -2960,17 +2960,17 @@
 0
 0
 - EntranceGreatBayCoastFromTerminaField
-96,767
+96,768
 
 0
 0
 - EntranceGreatBayCoastFromZoraCape
-771
+772
 
 0
 0
 - EntranceGreatBayCoastFromGreatBayCoastBeach
-770
+771
 
 0
 0
@@ -2985,12 +2985,12 @@
 0
 0
 - EntranceGreatBayCoastFromPiratesFortress
-93,772
+93,773
 
 0
 0
 - EntranceGreatBayCoastFromGreatBayCoastNearFortress
-770
+771
 
 0
 0
@@ -3005,32 +3005,32 @@
 0
 0
 - EntranceGreatBayCoastFromOwlStatue
-770,789
+771,790
 
 0
 0
 - EntranceGreatBayCoastFromPiratesFortressThrownOut
-772
+773
 
 0
 0
 - EntranceZoraCapeFromGreatBayCoast
-770
+771
 
 0
 0
 - EntranceZoraCapeFromZoraHallLand
-768
+769
 
 0
 0
 - EntranceZoraCapeFromZoraHallWater
-93,768
+93,769
 
 0
 0
 - EntranceZoraCapeFromZoraCape
-771
+772
 
 0
 0
@@ -3045,32 +3045,32 @@
 0
 0
 - EntranceZoraCapeFromOwlStatue
-771,789
+772,790
 
 0
 0
 - EntranceZoraCapeFromGreatBayTemple
-
+646
 
 0
 0
 - EntranceZoraCapeFromGreatBayTempleClear
-
+686,93,742
 
 0
 0
 - EntranceLotteryShopFromWestClockTown
-783
+784
 
 0
 0
 - EntrancePiratesFortressExteriorFromGreatBayCoast
-93,770
+93,771
 
 0
 0
 - EntrancePiratesFortressExteriorFromPiratesFortressMain
-761
+762
 
 0
 0
@@ -3085,12 +3085,12 @@
 0
 0
 - EntrancePiratesFortressExteriorFromThrownOut
-761
+762
 
 0
 0
 - EntrancePiratesFortressExteriorFromPiratesFortressBalcony
-10,761
+10,762
 
 0
 0
@@ -3100,7 +3100,7 @@
 0
 0
 - EntranceFishermansHutFromGreatBayCoast
-770
+771
 
 0
 0
@@ -3110,27 +3110,27 @@
 0
 0
 - EntranceDekuKingsChamberFromDekuPalace
-0,766
+0,767
 
 0
 0
 - EntranceDekuKingsChamberFromDekuPalaceWestGarden
-0,766
+0,767
 
 0
 0
 - EntranceGoronTrialFromTheMoon
-262,781
+262,782
 
 0
 0
 - EntranceRoadtoSouthernSwampFromTerminaField
-767
+768
 
 0
 0
 - EntranceRoadtoSouthernSwampFromSouthernSwamp
-759
+760
 
 0
 0
@@ -3140,23 +3140,23 @@
 0
 0
 - EntranceDoggyRacetrackFromRomaniRanch
-769
+770
 
 0
 0
 - EntranceCuccoShackFromRomaniRanch
-769
+770
 
 0
 0
 - EntranceIkanaGraveyardFromRoadtoIkana
-778
+779
 
 0
 0
 - EntranceIkanaGraveyardFromDay3Grave
 
-
+574;575
 0
 0
 - EntranceIkanaGraveyardFromDay2Grave
@@ -3171,21 +3171,21 @@
 0
 - EntranceIkanaGraveyardFromDampesHouse
 
-
+574;575
 0
 0
 - EntranceGohtsLairFromSnowheadTemple
-107,2,120,132,92,741
+107,2,120,132,92,742
 
 0
 0
 - EntranceWoodfallFromSouthernSwamp
-759
+760
 
 0
 0
 - EntranceWoodfallFromWoodfallTempleEntrance
-
+502
 
 0
 0
@@ -3200,12 +3200,12 @@
 0
 0
 - EntranceWoodfallFromOwlStatue
-0,775,789
+0,776,790
 
 0
 0
 - EntranceZoraTrialFromTheMoon
-263,781
+263,782
 
 0
 0
@@ -3215,7 +3215,7 @@
 0
 0
 - EntranceGoronVillageFromPathtoGoronVillage
-780
+781
 
 0
 0
@@ -3230,42 +3230,42 @@
 0
 0
 - EntranceGreatBayTempleFromZoraCape
-10,93,100,771
+10,93,100,772
 
 0
 0
 - EntranceWaterfallRapidsFromZoraCape
-10,771
+10,772
 
 0
 0
 - EntranceBeneaththeWellFromIkanaCanyon
-788
+789
 
 0
 0
 - EntranceBeneaththeWellFromAncientCastleofIkana
-762
+763
 
 0
 0
 - EntranceZoraHallRoomsMikauTijosRoomFromZoraHall
-93,768
+93,769
 
 0
 0
 - EntranceZoraHallRoomsJapasRoomFromZoraHall
-93,768
+93,769
 
 0
 0
 - EntranceZoraHallRoomsLulusRoomFromZoraHall
-93,768
+93,769
 
 0
 0
 - EntranceZoraHallRoomsEvansRoomFromZoraHall
-93,768
+93,769
 
 0
 0
@@ -3275,17 +3275,17 @@
 0
 0
 - EntranceZoraHallRoomsZoraShopFromZoraHall
-768
+769
 
 0
 0
 - EntranceGoronGraveyardFromMountainVillage
-777
-9,741;108
+778
+9,742;108
 0
 0
 - EntranceSakonsHideoutFromIkanaCanyon
-760
+761
 
 0
 0
@@ -3295,7 +3295,7 @@
 0
 0
 - EntranceMountainVillageFromPathtoGoronVillage
-780
+781
 
 0
 0
@@ -3306,7 +3306,7 @@
 0
 - EntranceMountainVillageFromPathtoSnowhead
 
-677;92,678,741
+677;92,678,742
 0
 0
 - EntranceMountainVillageFromPathtoMountainVillage
@@ -3315,92 +3315,92 @@
 0
 0
 - EntranceMountainVillageFromSnowheadClear
-
-
+635
+92,742;120
 0
 0
 - EntranceMountainVillageFromOwlStatue
-777,789
+778,790
 
 0
 0
 - EntrancePoeHutFromIkanaCanyon
-788
+789
 
 0
 0
 - EntranceDekuShrineFromDekuPalace
-766
+767
 0,120;105
 0
 0
 - EntranceRoadtoIkanaFromTerminaField
-767
+768
 
 0
 0
 - EntranceRoadtoIkanaFromIkanaCanyon
-760
+761
 
 0
 0
 - EntranceRoadtoIkanaFromIkanaGraveyard
-774
+775
 
 0
 0
 - EntranceSwordsmansSchoolFromWestClockTown
-783
+784
 
 0
 0
 - EntranceMusicBoxHouseFromIkanaCanyon
-788
+789
 118;97,482
 0
 0
 - EntranceIgosduIkanasLairFromAncientCastleofIkana
-763
-4,120,741;7,25,92
+764
+4,120,742;7,25,92
 0
 0
 - EntranceTouristInformationFromSouthernSwamp
-759
+760
 
 0
 0
 - EntranceStoneTowerFromIkanaCanyon
-788
+789
 
 0
 0
 - EntranceStoneTowerFromStoneTowerTemple
-
+116
 
 0
 0
 - EntranceStoneTowerFromOwlStatue
-788,789
+789,790
 
 0
 0
 - EntrancePathtoSnowheadFromMountainVillage
-777
+778
 
 0
 0
 - EntrancePathtoSnowheadFromSnowhead
-779
+780
 
 0
 0
 - EntranceSnowheadFromPathtoSnowhead
 
-92,677,741;678
+92,677,742;678
 0
 0
 - EntranceSnowheadFromSnowheadTemple
-
+517
 
 0
 0
@@ -3410,17 +3410,17 @@
 0
 0
 - EntranceSnowheadFromOwlStatue
-779,789
+780,790
 
 0
 0
 - EntrancePathtoGoronVillageFromMountainVillage
-777
+778
 
 0
 0
 - EntrancePathtoGoronVillageFromGoronVillage
-776
+777
 
 0
 0
@@ -3430,22 +3430,22 @@
 0
 0
 - EntranceGyorgsLairFromGreatBayTemple
-2,3,10,120,138,741,112
+2,3,10,120,138,742,112
 
 0
 0
 - EntranceSecretShrineFromIkanaCanyon
-760
+761
 
 0
 0
 - EntranceStockPotInnLowerFromEastClockTown
-782
+783
 
 0
 0
 - EntranceStockPotInnUpperFromEastClockTown
-782,0
+783,0
 
 0
 0
@@ -3455,17 +3455,17 @@
 0
 0
 - EntranceClockTowerInteriorFromSouthClockTown
-785
+786
 
 0
 0
 - EntranceWoodsofMysteryFromSouthernSwamp
-759
+760
 
 0
 0
 - EntranceLinkTrialFromTheMoon
-264,781
+264,782
 
 0
 0
@@ -3495,12 +3495,12 @@
 0
 0
 - EntranceBombShopFromWestClockTown
-783
+784
 
 0
 0
 - EntranceGormanTrackFromMilkRoadMain
-764
+765
 
 0
 0
@@ -3510,27 +3510,27 @@
 0
 0
 - EntranceGoronRacetrackFromPathtoMountainVillage
-92,780,7
+92,781,7
 
 0
 0
 - EntranceEastClockTownFromTerminaField
-767
+768
 
 0
 0
 - EntranceEastClockTownFromSouthClockTownNorthern
-785
+786
 
 0
 0
 - EntranceEastClockTownFromAstralObservatory
-765
+766
 
 0
 0
 - EntranceEastClockTownFromSouthClockTownSouthern
-785
+786
 
 0
 0
@@ -3540,7 +3540,7 @@
 0
 0
 - EntranceEastClockTownFromNorthClockTown
-784
+785
 
 0
 0
@@ -3560,12 +3560,12 @@
 0
 0
 - EntranceEastClockTownFromStockPotInnLower
-790
+791
 
 0
 0
 - EntranceEastClockTownFromStockPotInnUpper
-790
+791
 
 0
 0
@@ -3575,17 +3575,17 @@
 0
 0
 - EntranceWestClockTownFromTerminaField
-767
+768
 
 0
 0
 - EntranceWestClockTownFromSouthClockTownSouthern
-785
+786
 
 0
 0
 - EntranceWestClockTownFromSouthClockTownNorthern
-785
+786
 
 0
 0
@@ -3620,17 +3620,17 @@
 0
 0
 - EntranceNorthClockTownFromTerminaField
-767
+768
 
 0
 0
 - EntranceNorthClockTownFromEastClockTown
-782
+783
 
 0
 0
 - EntranceNorthClockTownFromSouthClockTown
-785
+786
 
 0
 0
@@ -3650,37 +3650,37 @@
 0
 0
 - EntranceSouthClockTownFromTerminaField
-767
+768
 
 0
 0
 - EntranceSouthClockTownFromEastClockTownNorthern
-782
+783
 
 0
 0
 - EntranceSouthClockTownFromWestClockTownNorthern
-783
-
-0
-0
-- EntranceSouthClockTownFromNorthClockTown
 784
 
 0
 0
+- EntranceSouthClockTownFromNorthClockTown
+785
+
+0
+0
 - EntranceSouthClockTownFromWestClockTownSouthern
-783
+784
 
 0
 0
 - EntranceSouthClockTownFromLaundryPool
-786
+787
 
 0
 0
 - EntranceSouthClockTownFromEastClockTownSouthern
-782
+783
 
 0
 0
@@ -3690,18 +3690,23 @@
 0
 0
 - EntranceSouthClockTownFromOwlStatue
-785,789
+786,790
 
 0
 0
 - EntranceLaundryPoolFromSouthClockTown
-785
+786
 
 0
 0
 - EntranceLaundryPoolFromKafeisHideout
 
 452;454
+0
+0
+- EntranceStoneTowerInvertedFromStoneTowerTempleInverted
+117
+
 0
 0
 - Magic Meter
@@ -3760,22 +3765,22 @@
 0
 0
 - Any Red Potion
-746
+747
 16;147;156;162;165
 0
 0
 - Any Milk
-746
+747
 17;278;279;280;281;282;283;284;285;410;420
 0
 0
 - Any Green Potion
-746
+747
 148;157;417
 0
 0
 - Any Blue Potion
-746
+747
 155;418
 0
 0
@@ -3811,12 +3816,12 @@
 0
 - AccessIkanaCastleExterior
 
-507;25,508;509;4,120,508,741
+507;25,508;509;4,120,508,742
 0
 0
 - AccessIkanaCastleInterior
 
-510;511;512;4,120,513,741
+510;511;512;4,120,513,742
 0
 0
 - AccessMilkRoad
@@ -3936,7 +3941,7 @@
 0
 - Deku Stick
 
-151;759
+151;760
 0
 0
 - AccessIkanaCanyonUpper
@@ -3946,7 +3951,7 @@
 0
 - Hit Owl
 95
-787;748
+788;749
 0
 0
 - AccessInn
@@ -3956,7 +3961,7 @@
 0
 - AccessPostbox
 
-782;784;785
+783;785;786
 0
 0
 - AccessInnNight
@@ -3981,16 +3986,21 @@
 0
 - Scarecrow's Song
 
-765;585
+766;585
 0
 0
 - Short Ranged Weapon
 
-0,741;10;120;93
+0,742;10;120;93
 0
 0
 - Long Ranged Weapon
 
 120;10
+0
+0
+- AccessPiratesFortressGuardRoom
+
+525;526
 0
 0
