@@ -825,6 +825,8 @@ namespace MMRando
 
             "EntranceLaundryPoolFromSouthClockTown",
             "EntranceLaundryPoolFromKafeisHideout",
+
+            "EntranceStoneTowerInvertedFromStoneTowerTempleInverted",
         };
 
         private static string[] ITEM_NAMES = DEFAULT_ITEM_NAMES.ToArray();

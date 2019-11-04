@@ -1039,6 +1039,8 @@ namespace MMRando
                 Setup();
             }
 
+            EntranceSwapUtils.ReadMapData();
+
             UpdateLogicForSettings();
 
             PlaceUnimplementedEntrances();
@@ -1103,7 +1105,16 @@ namespace MMRando
                 .Where(item => EntranceSwapUtils.IsEntranceAvailable(item))
                 .Where(item => item.GetAttribute<EntranceAttribute>().Pair.HasValue).ToList();
             var entrancePool = entrancesToPlace.ToList();
-            // todo remove already-placed entrances
+            var interiors = entrancesToPlace
+                .Where(item => item.Region() == "Interior" && item.GetAttribute<EntranceAttribute>()?.Pair.HasValue == true)
+                .Select(item => item.GetAttribute<EntranceAttribute>().Pair.Value)
+                .ToList();
+
+            foreach (var entrance in interiors)
+            {
+                PlaceItem(entrance, entrancePool);
+            }
+
             foreach (var entrance in entrancesToPlace)
             {
                 PlaceItem(entrance, entrancePool);
@@ -1460,11 +1471,6 @@ namespace MMRando
             if (_settings.LogicMode == LogicMode.Casual)
             {
                 PreserveGlitchedCowMilk();
-            }
-
-            if (_settings.AreEntrancesRandomized())
-            {
-                EntranceSwapUtils.ReadMapData();
             }
         }
 
