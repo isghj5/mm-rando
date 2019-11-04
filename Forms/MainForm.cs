@@ -699,7 +699,7 @@ namespace MMRando
             }
             else
             {
-                lCustomItemAmount.Text = $"{_settings.CustomItemList.Count}/{ItemUtils.AllLocations().Count()} items randomized";
+                lCustomItemAmount.Text = $"{_settings.CustomItemList.Count}/{ItemUtils.AllLocations().Count() + ItemUtils.AllEntrances().Count()} items randomized";
             }
         }
 
