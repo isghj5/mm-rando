@@ -1855,13 +1855,15 @@ namespace MMRando
                     DungeonShuffle();
                 }
 
+                if (_settings.AreEntrancesRandomized())
+                {
+                    EntranceSwapUtils.ReadMapData();
+                }
+
                 _randomized.Logic = ItemList.Select(io => new ItemLogic(io)).ToList();
 
                 worker.ReportProgress(30, "Shuffling items...");
                 RandomizeItems();
-
-                EntranceSwapUtils.ReadMapData();
-                EntranceSwapUtils.WriteMapData();
 
                 foreach (var itemLogic in _randomized.Logic)
                 {
