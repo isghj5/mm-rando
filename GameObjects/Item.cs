@@ -3448,7 +3448,7 @@ namespace MMRando.GameObjects
         EntranceTreasureChestShopFromEastClockTown,
         //EntranceTreasureChestShopFromTreasureChestShop, // after opening the chest
 
-        [Entrance, RegionName("Stone Tower")] // todo pair entrance
+        [Entrance(EntranceStoneTowerInvertedFromStoneTowerTempleInverted), RegionName("Stone Tower")]
         EntranceStoneTowerTempleInvertedFromStoneTowerInverted,
         [Entrance, RegionName("")]
         EntranceStoneTowerTempleInvertedBossRoomFromStoneTowerTempleInverted, // one way
@@ -3785,7 +3785,7 @@ namespace MMRando.GameObjects
 
         [Entrance(EntranceSouthernSwampFromWoodfall), RegionName("Southern Swamp")]
         EntranceWoodfallFromSouthernSwamp,
-        [Entrance, RegionName("Woodfall Temple")] // todo pair entrance
+        [Entrance(EntranceWoodfallTempleFromWoodfall), RegionName("Woodfall Temple")]
         EntranceWoodfallFromWoodfallTempleEntrance,
         [Entrance(EntranceFairysFountainFromWoodfall), RegionName("Interior")]
         EntranceWoodfallFromFairysFountain,
@@ -4060,5 +4060,8 @@ namespace MMRando.GameObjects
         EntranceLaundryPoolFromSouthClockTown,
         [Entrance(EntranceKafeisHideoutFromLaundryPool), RegionName("Interior")]
         EntranceLaundryPoolFromKafeisHideout,
+
+        [Entrance(EntranceStoneTowerTempleInvertedFromStoneTowerInverted), RegionName("Stone Tower")]
+        EntranceStoneTowerInvertedFromStoneTowerTempleInverted
     }
 }

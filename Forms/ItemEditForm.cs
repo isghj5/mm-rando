@@ -10,6 +10,7 @@ namespace MMRando.Forms
 {
     public partial class ItemEditForm : Form
     {
+        private readonly int _itemGroupCount;
         string[] ITEM_NAMES = new string[] { "Deku Mask", "Hero's Bow", "Fire Arrow", "Ice Arrow", "Light Arrow", "Bomb Bag", "Magic Bean", 
         "Powder Keg", "Pictobox", "Lens of Truth", "Hookshot", "Great Fairy Magic Meter", "Great Fairy Spin Attack", "Great Fairy Extended Magic",
         "Great Fairy Double Defense", "Great Fairy's Sword", "Witch Bottle", "Aliens Bottle", "Goron Race Bottle", 
@@ -128,6 +129,459 @@ namespace MMRando.Forms
         "Pictograph Contest 20r", "Swamp Scrub Magic Bean", "Ocean Scrub Green Potion", "Canyon Scrub Blue Potion", "Zora Hall Stage Lights 5r", "Gorman Bros Purchase Milk",
         "Ocean Spider House 50r", "Ocean Spider House 20r", "Lulu Pictograph 5r", "Lulu Pictograph 20r", "Treasure Chest Game 50r", "Treasure Chest Game 20r",
         "Treasure Chest Game Deku Nuts", "Curiosity Shop Blue Rupee", "Curiosity Shop Red Rupee", "Curiosity Shop Purple Rupee", "Curiosity Shop Gold Rupee", "Seahorse",
+
+
+        "EntranceMayorsResidenceFromEastClockTown",
+
+        "EntranceMajorasLairFromTheMoon",
+
+        "EntranceMagicHagsPotionShopFromSouthernSwamp",
+
+        "EntranceRanchBarnFromRomaniRanch",
+        "EntranceRanchHouseFromRomaniRanch",
+
+
+        "EntranceHoneyDarlingsShopFromEastClockTown",
+
+        "EntranceBeneathGraveyardFromIkanaGraveyardNight2",
+        "EntranceBeneathGraveyardFromIkanaGraveyardNight1",
+
+        "EntranceSouthernSwampFromRoadtoSouthernSwamp",
+        "EntranceSouthernSwampFromTouristInformation",
+        "EntranceSouthernSwampFromWoodfall",
+        "EntranceSouthernSwampFromDekuPalaceLower",
+        "EntranceSouthernSwampFromDekuPalaceUpper",
+        "EntranceSouthernSwampFromMagicHagsPotionShop",
+
+        "EntranceSouthernSwampFromWoodsofMystery",
+        "EntranceSouthernSwampFromSwampSpiderHouse",
+        "EntranceSouthernSwampFromIkanaCanyon",
+        "EntranceSouthernSwampFromOwlStatue",
+
+        "EntranceCuriosityShopFromWestClockTown",
+        "EntranceKafeisHideoutFromLaundryPool",
+        "EntranceCuriosityShopFromKafeisHideout",
+        "EntranceKafeisHideoutFromCuriosityShop",
+
+        "EntranceGrottoGossipOceanFromTerminaField",
+        "EntranceGrottoGossipSwampFromTerminaField",
+        "EntranceGrottoGossipCanyonFromTerminaField",
+        "EntranceGrottoGossipMountainFromTerminaField",
+        "EntranceGrottoHotSpringWaterFromTwinIslands",
+        "EntranceGrottoPalaceStraightFromDekuPalaceA",
+        "EntranceGrottoDodongoFromTerminaField",
+        "EntranceGrottoPalaceVinesFromDekuPalaceLower",
+        "EntranceGrottoDekuMerchantFromTerminaField",
+        "EntranceGrottoBioBabaFromTerminaField",
+        "EntranceGrottoBeanSellerFromDekuPalace",
+        "EntranceGrottoPeahatFromTerminaField",
+        "EntranceGrottoPalaceStraightFromDekuPalaceB",
+        "EntranceGrottoPalaceVinesFromDekuPalaceUpper",
+        "EntranceGrottoLensCaveFromGoronVillage",
+
+        "EntranceIkanaCanyonFromRoadtoIkana",
+        "EntranceIkanaCanyonFromPoeHut",
+        "EntranceIkanaCanyonFromMusicBoxHouse",
+        "EntranceIkanaCanyonFromStoneTower",
+        "EntranceIkanaCanyonFromOwlStatue",
+        "EntranceIkanaCanyonFromBeneaththeWell",
+        "EntranceIkanaCanyonFromSakonsHideout",
+        "EntranceIkanaCanyonFromIkanaClear",
+        "EntranceIkanaCanyonFromAncientCastleofIkanaCourtyard",
+
+
+        "EntranceIkanaCanyonFromFairysFountain",
+        "EntranceIkanaCanyonFromSecretShrine",
+        "EntranceIkanaCanyonFromSpringWaterCave",
+        "EntranceSpringWaterCaveFromIkanaCanyon",
+
+        "EntrancePiratesFortressFromMainEntrance",
+        "EntrancePiratesFortressFromHookshotRoomLower",
+        "EntrancePiratesFortressFromHookshotRoomUpper",
+        "EntrancePiratesFortressFromGuardRoomFront",
+        "EntrancePiratesFortressFromGuardRoomBack",
+        "EntrancePiratesFortressFromBarrelMazeFront",
+        "EntrancePiratesFortressFromBarrelMazeBack",
+        "EntrancePiratesFortressFromOnePatrolFront",
+        "EntrancePiratesFortressFromOnePatrolBack",
+        "EntrancePiratesFortressFromTelescope",
+        "EntrancePiratesFortressFromPiratesFortressExteriorBalcony",
+
+        "EntranceMilkBarFromEastClockTown",
+
+        "EntranceStoneTowerTempleFromStoneTower",
+
+        "EntranceTreasureChestShopFromEastClockTown",
+
+
+        "EntranceStoneTowerTempleInvertedFromStoneTowerInverted",
+        "EntranceStoneTowerTempleInvertedBossRoomFromStoneTowerTempleInverted",
+
+        "EntranceClockTowerRooftopFromSouthClockTown",
+
+
+
+        "EntranceBeforethePortaltoTerminaFromClockTowerInterior",
+        "EntranceBeforethePortaltoTerminaFromBeforethePortaltoTermina",
+
+        "EntranceWoodfallTempleFromWoodfall",
+        "EntranceWoodfallTemplePrisonFromOdolwasLair",
+        "EntranceWoodfallTemplePrisonFromWoodfall",
+
+        "EntrancePathtoMountainVillageFromTerminaField",
+        "EntrancePathtoMountainVillageFromMountainVillage",
+
+        "EntranceAncientCastleofIkanaCourtyardFromBeneaththeWell",
+        "EntranceAncientCastleofIkanaCourtyardFromIkanaCanyon",
+        "EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana",
+        "EntranceAncientCastleofIkanaFromCourtyard",
+        "EntranceAncientCastleofIkanaFromBlockHole",
+        "EntranceAncientCastleofIkanaFromKegHole",
+        "EntranceAncientCastleofIkanaFromIgosduIkanasLair",
+
+        "EntranceDekuScrubPlaygroundFromNorthClockTown",
+
+
+        "EntranceOdolwasLairFromWoodfallTemple",
+
+        "EntranceTownShootingGalleryFromEastClockTown",
+
+        "EntranceSnowheadTempleFromSnowhead",
+
+        "EntranceMilkRoadFromTerminaField",
+        "EntranceMilkRoadFromRomaniRanch",
+        "EntranceMilkRoadFromGormanRacetrackTrack",
+        "EntranceMilkRoadFromGormanRacetrackMain",
+        "EntranceMilkRoadFromOwlStatue",
+
+
+
+        "EntrancePiratesFortressHookshotRoomFromLowerDoor",
+        "EntrancePiratesFortressHookshotRoomFromUpperDoor",
+        "EntrancePiratesFortressGuardRoomFromFrontDoor",
+        "EntrancePiratesFortressGuardRoomFromBackDoor",
+        "EntrancePiratesFortressBarrelMazeFromFrontDoor",
+        "EntrancePiratesFortressBarrelMazeFromBackDoor",
+        "EntrancePiratesFortressOneGuardFrontFromPiratesFortress",
+        "EntrancePiratesFortressOneGuardRearFromPiratesFortress",
+        "EntrancePiratesFortressSewerFromTelescope",
+        "EntrancePiratesFortressSewerFromWater",
+        "EntrancePiratesFortressSewerFromRear",
+
+        "EntranceSwampShootingGalleryFromRoadtoSouthernSwamp",
+
+        "EntrancePinnacleRockFromGreatBayCoast",
+        "EntrancePinnacleRockFromPinnacleRock",
+
+        "EntranceFairysFountainFromNorthClockTown",
+        "EntranceFairysFountainFromWoodfall",
+        "EntranceFairysFountainFromSnowhead",
+        "EntranceFairysFountainFromZoraCape",
+        "EntranceFairysFountainFromIkanaCanyon",
+
+        "EntranceSwampSpiderHouseFromSouthernSwamp",
+
+        "EntranceOceansideSpiderHouseFromGreatBayCoast",
+
+        "EntranceAstralObservatoryFromEastClockTown",
+        "EntranceAstralObservatoryFromTerminaField",
+        "EntranceAstralObservatoryFromTelescope",
+
+        "EntranceDekuTrialFromTheMoon",
+
+        "EntranceDekuPalaceFromSouthernSwampLower",
+        "EntranceDekuPalaceFromDekuPalace",
+        "EntranceDekuPalaceFromDekuKingsChamberMain",
+        "EntranceDekuPalaceFromDekuKingsChamberGardenWest",
+        "EntranceDekuPalaceFromDekuShrine",
+        "EntranceDekuPalaceFromSouthernSwampUpper",
+        "EntranceDekuPalaceGardenWestFromPalaceVinesGrotto",
+        "EntranceDekuPalaceGardenWestFromPalaceStraightGrotto",
+        "EntranceDekuPalaceGardenEastFromPalaceStraightGrotto",
+        "EntranceDekuPalaceGardenEastFromBeanSellerGrotto",
+        "EntranceDekuPalaceGardenEastFromPalaceVinesGrotto",
+
+        "EntranceMountainSmithyFromMountainVillage",
+
+        "EntranceTerminaFieldFromWestClockTown",
+        "EntranceTerminaFieldFromRoadtoSouthernSwamp",
+        "EntranceTerminaFieldFromGreatBayCoast",
+        "EntranceTerminaFieldFromPathtoMountainVillage",
+        "EntranceTerminaFieldFromRoadtoIkana",
+        "EntranceTerminaFieldFromMilkRoad",
+        "EntranceTerminaFieldFromSouthClockTown",
+        "EntranceTerminaFieldFromEastClockTown",
+        "EntranceTerminaFieldFromNorthClockTown",
+        "EntranceTerminaFieldFromAstralObservatory",
+        "EntranceTerminaFieldFromAstralObservatoryTelescope",
+
+        "EntranceTerminaFieldFromCremiaEscort",
+
+
+        "EntrancePostOfficeFromWestClockTown",
+
+        "EntranceMarineResearchLabFromGreatBayCoast",
+
+        "EntranceDampsHouseFromIkanaGraveyardGrave",
+        "EntranceDampsHouseFromIkanaGraveyardDoor",
+
+        "EntranceGoronShrineFromGoronVillage",
+        "EntranceGoronShrineFromGoronShop",
+
+
+        "EntranceZoraHallFromZoraCapeLand",
+        "EntranceZoraHallFromZoraCapeWater",
+        "EntranceZoraHallFromZoraShop",
+        "EntranceZoraHallFromLulusRoom",
+        "EntranceZoraHallFromEvansRoom",
+        "EntranceZoraHallFromJapasRoom",
+        "EntranceZoraHallFromMikauTijosRoom",
+
+        "EntranceTradingPostFromWestClockTown",
+
+        "EntranceRomaniRanchFromMilkRoad",
+
+        "EntranceRomaniRanchFromBarn",
+        "EntranceRomaniRanchFromRanchHouse",
+        "EntranceRomaniRanchFromCuccoShack",
+        "EntranceRomaniRanchFromDoggyRacetrack",
+
+
+        "EntranceTwinmoldsLairFromStoneTowerTempleInverted",
+
+        "EntranceGreatBayCoastFromTerminaField",
+        "EntranceGreatBayCoastFromZoraCape",
+        "EntranceGreatBayCoastFromGreatBayCoastBeach",
+        "EntranceGreatBayCoastFromPinnacleRock",
+        "EntranceGreatBayCoastFromFishermansHut",
+        "EntranceGreatBayCoastFromPiratesFortress",
+        "EntranceGreatBayCoastFromGreatBayCoastNearFortress",
+        "EntranceGreatBayCoastFromMarineResearchLab",
+        "EntranceGreatBayCoastFromOceansideSpiderHouse",
+        "EntranceGreatBayCoastFromOwlStatue",
+        "EntranceGreatBayCoastFromPiratesFortressThrownOut",
+
+
+        "EntranceZoraCapeFromGreatBayCoast",
+        "EntranceZoraCapeFromZoraHallLand",
+        "EntranceZoraCapeFromZoraHallWater",
+        "EntranceZoraCapeFromZoraCape",
+        "EntranceZoraCapeFromWaterfallRapids",
+        "EntranceZoraCapeFromFairysFountain",
+        "EntranceZoraCapeFromOwlStatue",
+        "EntranceZoraCapeFromGreatBayTemple",
+        "EntranceZoraCapeFromGreatBayTempleClear",
+
+        "EntranceLotteryShopFromWestClockTown",
+
+        "EntrancePiratesFortressExteriorFromGreatBayCoast",
+        "EntrancePiratesFortressExteriorFromPiratesFortressMain",
+        "EntrancePiratesFortressExteriorFromPiratesFortressSewerMain",
+        "EntrancePiratesFortressExteriorFromPiratesFortressSewerExhaust",
+        "EntrancePiratesFortressExteriorFromThrownOut",
+        "EntrancePiratesFortressExteriorFromPiratesFortressBalcony",
+        "EntrancePiratesFortressExteriorFromPiratesFortressSewerDoor",
+
+        "EntranceFishermansHutFromGreatBayCoast",
+
+        "EntranceGoronShopFromGoronVillage",
+
+        "EntranceDekuKingsChamberFromDekuPalace",
+        "EntranceDekuKingsChamberFromDekuPalaceWestGarden",
+
+
+        "EntranceGoronTrialFromTheMoon",
+
+        "EntranceRoadtoSouthernSwampFromTerminaField",
+        "EntranceRoadtoSouthernSwampFromSouthernSwamp",
+        "EntranceRoadtoSouthernSwampFromSwampShootingGallery",
+
+        "EntranceDoggyRacetrackFromRomaniRanch",
+
+        "EntranceCuccoShackFromRomaniRanch",
+
+
+        "EntranceIkanaGraveyardFromRoadtoIkana",
+        "EntranceIkanaGraveyardFromDay3Grave",
+        "EntranceIkanaGraveyardFromDay2Grave",
+        "EntranceIkanaGraveyardFromDay1Grave",
+        "EntranceIkanaGraveyardFromDampesHouse",
+
+
+        "EntranceGohtsLairFromSnowheadTemple",
+
+        "EntranceWoodfallFromSouthernSwamp",
+        "EntranceWoodfallFromWoodfallTempleEntrance",
+        "EntranceWoodfallFromFairysFountain",
+        "EntranceWoodfallFromWoodfallTempleExit",
+        "EntranceWoodfallFromOwlStatue",
+
+        "EntranceZoraTrialFromTheMoon",
+        "EntranceZoraTrialFromZoraTrial",
+
+        "EntranceGoronVillageFromPathtoGoronVillage",
+        "EntranceGoronVillageFromGoronShrine",
+        "EntranceGoronVillageFromLonePeakShrine",
+
+        "EntranceGreatBayTempleFromZoraCape",
+
+        "EntranceWaterfallRapidsFromZoraCape",
+
+
+
+        "EntranceBeneaththeWellFromIkanaCanyon",
+        "EntranceBeneaththeWellFromAncientCastleofIkana",
+
+        "EntranceZoraHallRoomsMikauTijosRoomFromZoraHall",
+        "EntranceZoraHallRoomsJapasRoomFromZoraHall",
+        "EntranceZoraHallRoomsLulusRoomFromZoraHall",
+        "EntranceZoraHallRoomsEvansRoomFromZoraHall",
+        "EntranceZoraHallRoomsJapasRoomFromJapasRoom",
+        "EntranceZoraHallRoomsZoraShopFromZoraHall",
+
+
+        "EntranceGoronGraveyardFromMountainVillage",
+
+
+        "EntranceSakonsHideoutFromIkanaCanyon",
+
+        "EntranceMountainVillageFromMountainSmithy",
+        "EntranceMountainVillageFromPathtoGoronVillage",
+        "EntranceMountainVillageFromGoronGraveyard",
+        "EntranceMountainVillageFromPathtoSnowhead",
+
+        "EntranceMountainVillageFromPathtoMountainVillage",
+        "EntranceMountainVillageFromSnowheadClear",
+        "EntranceMountainVillageFromOwlStatue",
+
+        "EntrancePoeHutFromIkanaCanyon",
+
+
+
+        "EntranceDekuShrineFromDekuPalace",
+
+        "EntranceRoadtoIkanaFromTerminaField",
+        "EntranceRoadtoIkanaFromIkanaCanyon",
+        "EntranceRoadtoIkanaFromIkanaGraveyard",
+
+        "EntranceSwordsmansSchoolFromWestClockTown",
+
+        "EntranceMusicBoxHouseFromIkanaCanyon",
+
+        "EntranceIgosduIkanasLairFromAncientCastleofIkana",
+
+        "EntranceTouristInformationFromSouthernSwamp",
+
+        "EntranceStoneTowerFromIkanaCanyon",
+
+        "EntranceStoneTowerFromStoneTowerTemple",
+        "EntranceStoneTowerFromOwlStatue",
+
+
+
+
+        "EntrancePathtoSnowheadFromMountainVillage",
+        "EntrancePathtoSnowheadFromSnowhead",
+
+
+        "EntranceSnowheadFromPathtoSnowhead",
+        "EntranceSnowheadFromSnowheadTemple",
+        "EntranceSnowheadFromFairysFountain",
+        "EntranceSnowheadFromOwlStatue",
+
+
+        "EntrancePathtoGoronVillageFromMountainVillage",
+        "EntrancePathtoGoronVillageFromGoronVillage",
+        "EntrancePathtoGoronVillageFromGoronRacetrack",
+
+        "EntranceGyorgsLairFromGreatBayTemple",
+
+        "EntranceSecretShrineFromIkanaCanyon",
+
+        "EntranceStockPotInnLowerFromEastClockTown",
+        "EntranceStockPotInnUpperFromEastClockTown",
+
+
+
+
+
+        "EntranceClockTowerInteriorFromBeforethePortaltoTermina",
+        "EntranceClockTowerInteriorFromSouthClockTown",
+
+
+
+
+
+
+        "EntranceWoodsofMysteryFromSouthernSwamp",
+
+
+
+
+        "EntranceLinkTrialFromTheMoon",
+
+        "EntranceTheMoonFromClockTowerRooftop",
+        "EntranceTheMoonFromDekuTrial",
+        "EntranceTheMoonFromGoronTrial",
+        "EntranceTheMoonFromZoraTrial",
+        "EntranceTheMoonFromLinkTrial",
+
+        "EntranceBombShopFromWestClockTown",
+
+
+
+        "EntranceGormanTrackFromMilkRoadMain",
+        "EntranceGormanTrackFromMilkRoadGated",
+
+
+        "EntranceGoronRacetrackFromPathtoMountainVillage",
+
+
+
+        "EntranceEastClockTownFromTerminaField",
+        "EntranceEastClockTownFromSouthClockTownNorthern",
+        "EntranceEastClockTownFromAstralObservatory",
+        "EntranceEastClockTownFromSouthClockTownSouthern",
+        "EntranceEastClockTownFromTreasureChestShop",
+        "EntranceEastClockTownFromNorthClockTown",
+        "EntranceEastClockTownFromHoneyDarlingsShop",
+        "EntranceEastClockTownFromMayorsResidence",
+        "EntranceEastClockTownFromShootingGalleryClockTown",
+        "EntranceEastClockTownFromStockPotInnLower",
+        "EntranceEastClockTownFromStockPotInnUpper",
+        "EntranceEastClockTownFromMilkBar",
+
+        "EntranceWestClockTownFromTerminaField",
+        "EntranceWestClockTownFromSouthClockTownSouthern",
+        "EntranceWestClockTownFromSouthClockTownNorthern",
+        "EntranceWestClockTownFromSwordsmansSchool",
+        "EntranceWestClockTownFromCuriosityShop",
+        "EntranceWestClockTownFromTradingPost",
+        "EntranceWestClockTownFromBombShop",
+        "EntranceWestClockTownFromPostOffice",
+        "EntranceWestClockTownFromLotteryShop",
+
+        "EntranceNorthClockTownFromTerminaField",
+        "EntranceNorthClockTownFromEastClockTown",
+        "EntranceNorthClockTownFromSouthClockTown",
+        "EntranceNorthClockTownFromFairysFountain",
+        "EntranceNorthClockTownFromDekuScrubPlayground",
+
+
+
+        "EntranceSouthClockTownFromClockTowerInterior",
+        "EntranceSouthClockTownFromTerminaField",
+        "EntranceSouthClockTownFromEastClockTownNorthern",
+        "EntranceSouthClockTownFromWestClockTownNorthern",
+        "EntranceSouthClockTownFromNorthClockTown",
+        "EntranceSouthClockTownFromWestClockTownSouthern",
+        "EntranceSouthClockTownFromLaundryPool",
+        "EntranceSouthClockTownFromEastClockTownSouthern",
+        "EntranceSouthClockTownFromClockTowerRooftop",
+        "EntranceSouthClockTownFromOwlStatue",
+
+        "EntranceLaundryPoolFromSouthClockTown",
+        "EntranceLaundryPoolFromKafeisHideout",
         };
 
         bool updating = false;
@@ -138,6 +592,8 @@ namespace MMRando.Forms
             InitializeComponent();
 
             _settings = settings;
+
+            _itemGroupCount = (int) Math.Ceiling(ITEM_NAMES.Length / 32.0);
 
             for (int i = 0; i < ITEM_NAMES.Length; i++)
             {
@@ -164,8 +620,8 @@ namespace MMRando.Forms
 
         private void UpdateString(List<int> selections)
         {
-            int[] n = new int[13];
-            string[] ns = new string[13];
+            int[] n = new int[_itemGroupCount];
+            string[] ns = new string[_itemGroupCount];
             for (int i = 0; i < selections.Count; i++)
             {
                 int j = selections[i] / 32;
@@ -173,8 +629,7 @@ namespace MMRando.Forms
                 n[j] |= (int)(1 << k);
                 ns[j] = Convert.ToString(n[j], 16);
             }
-            tSetting.Text = ns[12] + "-" + ns[11] + "-" + ns[10] + "-" + ns[9] + "-" + ns[8] + "-" + ns[7] + "-" + ns[6] + "-" + ns[5] + "-" + ns[4] + "-"
-                + ns[3] + "-" + ns[2] + "-" + ns[1] + "-" + ns[0];
+            tSetting.Text = string.Join("-", ns.Reverse());
             _settings.CustomItemListString = tSetting.Text;
         }
 
@@ -187,26 +642,26 @@ namespace MMRando.Forms
                 _settings.CustomItemListString = c;
                 _settings.CustomItemList.Clear();
                 string[] v = c.Split('-');
-                int[] vi = new int[13];
+                int[] vi = new int[_itemGroupCount];
                 if (v.Length != vi.Length)
                 {
                     _settings.CustomItemList.Add(-1);
                     return;
                 }
-                for (int i = 0; i < 13; i++)
+                for (int i = 0; i < _itemGroupCount; i++)
                 {
-                    if (v[12 - i] != "")
+                    if (v[_itemGroupCount - 1 - i] != "")
                     {
-                        vi[i] = Convert.ToInt32(v[12 - i], 16);
+                        vi[i] = Convert.ToInt32(v[_itemGroupCount - 1 - i], 16);
                     }
                 }
-                for (int i = 0; i < 32*13; i++)
+                for (int i = 0; i < 32 * _itemGroupCount; i++)
                 {
                     int j = i / 32;
                     int k = i % 32;
                     if (((vi[j] >> k) & 1) > 0)
                     {
-                        if (i >= ItemUtils.AllLocations().Count())
+                        if (i >= (ItemUtils.AllLocations().Count() + ItemUtils.AllEntrances().Count()))
                         {
                             throw new IndexOutOfRangeException();
                         }
