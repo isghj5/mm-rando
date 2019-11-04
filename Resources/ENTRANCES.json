@@ -2672,9 +2672,9 @@
     },
     {
       "RegionName": "Milk Road",
-      "ExitName": "Milk Road: Gorman Track",
+      "ExitName": "Milk Road: Gorman Track Back Gate",
       "ExitIndex": 3,
-      "SpawnName": "Milk Road: Gorman Track",
+      "SpawnName": "Milk Road: Gorman Track Back Gate",
       "LogicIndex": 700
     },
     {
@@ -2753,6 +2753,13 @@
       "ExitIndex": 0,
       "SpawnName": "Gorman Track Exit",
       "LogicIndex": 521
+    },
+    {
+      "RegionName": "Gorman Track",
+      "ExitName": "Gorman Track Back Gate Exit",
+      "ExitIndex": 0,
+      "SpawnName": "Gorman Track Back Gate Exit",
+      "LogicIndex": 520
     },
     {
       "RegionName": "Great Bay Coast",
@@ -4169,6 +4176,11 @@
       "SpawnIndex": 3
     },
     {
+      "SpawnName": "Gorman Track Back Gate Exit",
+      "RegionName": "Milk Road",
+      "SpawnIndex": 2
+    },
+    {
       "SpawnName": "Milk Road: Romani Ranch",
       "RegionName": "Romani Ranch",
       "SpawnIndex": 0
@@ -4217,6 +4229,11 @@
       "SpawnName": "Milk Road: Gorman Track",
       "RegionName": "Gorman Track",
       "SpawnIndex": 0
+    },
+    {
+      "SpawnName": "Milk Road: Gorman Track Back Gate",
+      "RegionName": "Gorman Track",
+      "SpawnIndex": 1
     },
     {
       "SpawnName": "Termina Field: Great Bay Coast",
@@ -6037,6 +6054,15 @@
       "Properties": []
     },
     {
+      "EntranceName": "Milk Road: Gorman Track Back Gate",
+      "SpawnName": "Gorman Track Back Gate Exit",
+      "ExitName": "Milk Road: Gorman Track Back Gate",
+      "ReturnSpawnName": "Milk Road: Gorman Track Back Gate",
+      "ReturnExitName": "Gorman Track Back Gate Exit",
+      "Type": "Interior",
+      "Properties": []
+    },
+    {
       "EntranceName": "Romani Ranch: Milk Road",
       "SpawnName": "Milk Road: Romani Ranch",
       "ExitName": "Romani Ranch: Milk Road",
@@ -6123,6 +6149,15 @@
       "ExitName": "Gorman Track Exit",
       "ReturnSpawnName": "Gorman Track Exit",
       "ReturnExitName": "Milk Road: Gorman Track",
+      "Type": "Interior Exit",
+      "Properties": []
+    },
+    {
+      "EntranceName": "Gorman Track Back Gate Exit",
+      "SpawnName": "Milk Road: Gorman Track Back Gate",
+      "ExitName": "Gorman Track Back Gate Exit",
+      "ReturnSpawnName": "Gorman Track Back Gate Exit",
+      "ReturnExitName": "Milk Road: Gorman Track Back Gate",
       "Type": "Interior Exit",
       "Properties": []
     },
