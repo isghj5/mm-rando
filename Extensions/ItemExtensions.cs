@@ -88,5 +88,10 @@ namespace MMRando.Extensions
         {
             return item.HasAttribute<EntranceAttribute>();
         }
+
+        public static Item? Pair(this Item entrance)
+        {
+            return entrance.GetAttribute<EntranceAttribute>()?.Pair;
+        }
     }
 }
