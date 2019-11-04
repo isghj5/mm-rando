@@ -3785,7 +3785,7 @@ namespace MMRando.GameObjects
 
         [Entrance(EntranceSouthernSwampFromWoodfall), RegionName("Southern Swamp")]
         EntranceWoodfallFromSouthernSwamp,
-        [Entrance, RegionName("Woodfall Temple")] // todo pair entrance
+        [Entrance(EntranceWoodfallTempleFromWoodfall), RegionName("Woodfall Temple")]
         EntranceWoodfallFromWoodfallTempleEntrance,
         [Entrance(EntranceFairysFountainFromWoodfall), RegionName("Interior")]
         EntranceWoodfallFromFairysFountain,

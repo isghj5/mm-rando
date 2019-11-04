@@ -31,9 +31,6 @@ namespace MMRando
         public List<ItemObject> ItemList { get; set; }
 
         #region Dependence and Conditions
-        List<Item> ConditionsChecked { get; set; }
-        Dictionary<Item, Dependence> DependenceChecked { get; set; }
-        List<int[]> ConditionRemoves { get; set; }
 
         private class Dependence
         {
@@ -395,7 +392,7 @@ namespace MMRando
             return lines;
         }
 
-        private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath)
+        private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath, Dictionary<Item, Dependence> dependenciesChecked, List<int[]> conditionsToRemove)
         {
             Debug.WriteLine($"CheckDependence({currentItem}, {target})");
 
@@ -459,38 +456,38 @@ namespace MMRando
                         }
                         if (d == currentItem)
                         {
-                            DependenceChecked[d] = Dependence.Dependent;
+                            dependenciesChecked[d] = Dependence.Dependent;
                         }
                         else
                         {
                             if (dependencyPath.Contains(d))
                             {
-                                DependenceChecked[d] = Dependence.Circular(d);
+                                dependenciesChecked[d] = Dependence.Circular(d);
                             }
-                            if (!DependenceChecked.ContainsKey(d) || (DependenceChecked[d].Type == DependenceType.Circular && !DependenceChecked[d].Items.All(id => dependencyPath.Contains(id))))
+                            if (!dependenciesChecked.ContainsKey(d) || (dependenciesChecked[d].Type == DependenceType.Circular && !dependenciesChecked[d].Items.All(id => dependencyPath.Contains(id))))
                             {
                                 var childPath = dependencyPath.ToList();
                                 childPath.Add(d);
-                                DependenceChecked[d] = CheckDependence(currentItem, d, childPath);
+                                dependenciesChecked[d] = CheckDependence(currentItem, d, childPath, dependenciesChecked, conditionsToRemove);
                             }
                         }
 
-                        if (DependenceChecked[d].Type != DependenceType.NotDependent)
+                        if (dependenciesChecked[d].Type != DependenceType.NotDependent)
                         {
-                            if (!dependencyPath.Contains(d) && DependenceChecked[d].Type == DependenceType.Circular && DependenceChecked[d].Items.All(id => id == d))
+                            if (!dependencyPath.Contains(d) && dependenciesChecked[d].Type == DependenceType.Circular && dependenciesChecked[d].Items.All(id => id == d))
                             {
-                                DependenceChecked[d] = Dependence.Dependent;
+                                dependenciesChecked[d] = Dependence.Dependent;
                             }
-                            if (DependenceChecked[d].Type == DependenceType.Dependent)
+                            if (dependenciesChecked[d].Type == DependenceType.Dependent)
                             {
-                                if (!ConditionRemoves.Any(c => c.SequenceEqual(check)))
+                                if (!conditionsToRemove.Any(c => c.SequenceEqual(check)))
                                 {
-                                    ConditionRemoves.Add(check);
+                                    conditionsToRemove.Add(check);
                                 }
                             }
                             else
                             {
-                                circularDependencies = circularDependencies.Union(DependenceChecked[d].Items).ToList();
+                                circularDependencies = circularDependencies.Union(dependenciesChecked[d].Items).ToList();
                             }
                             if (!match)
                             {
@@ -554,23 +551,23 @@ namespace MMRando
 
                     if (dependencyPath.Contains(dependency))
                     {
-                        DependenceChecked[dependency] = Dependence.Circular(dependency);
-                        return DependenceChecked[dependency];
+                        dependenciesChecked[dependency] = Dependence.Circular(dependency);
+                        return dependenciesChecked[dependency];
                     }
-                    if (!DependenceChecked.ContainsKey(dependency) || (DependenceChecked[dependency].Type == DependenceType.Circular && !DependenceChecked[dependency].Items.All(id => dependencyPath.Contains(id))))
+                    if (!dependenciesChecked.ContainsKey(dependency) || (dependenciesChecked[dependency].Type == DependenceType.Circular && !dependenciesChecked[dependency].Items.All(id => dependencyPath.Contains(id))))
                     {
                         var childPath = dependencyPath.ToList();
                         childPath.Add(dependency);
-                        DependenceChecked[dependency] = CheckDependence(currentItem, dependency, childPath);
+                        dependenciesChecked[dependency] = CheckDependence(currentItem, dependency, childPath, dependenciesChecked, conditionsToRemove);
                     }
-                    if (DependenceChecked[dependency].Type != DependenceType.NotDependent)
+                    if (dependenciesChecked[dependency].Type != DependenceType.NotDependent)
                     {
-                        if (DependenceChecked[dependency].Type == DependenceType.Circular && DependenceChecked[dependency].Items.All(id => id == dependency))
+                        if (dependenciesChecked[dependency].Type == DependenceType.Circular && dependenciesChecked[dependency].Items.All(id => id == dependency))
                         {
-                            DependenceChecked[dependency] = Dependence.Dependent;
+                            dependenciesChecked[dependency] = Dependence.Dependent;
                         }
                         Debug.WriteLine($"{currentItem} is dependent on {dependency}");
-                        return DependenceChecked[dependency];
+                        return dependenciesChecked[dependency];
                     }
                 }
             }
@@ -578,21 +575,32 @@ namespace MMRando
             return Dependence.NotDependent;
         }
 
-        private void RemoveConditionals(Item currentItem)
+        private void FinalizeRemoveConditionals()
         {
-            for (int i = 0; i < ConditionRemoves.Count; i++)
+            for (int i = 0; i < ItemList.Count; i++)
             {
-                int x = ConditionRemoves[i][0];
-                int y = ConditionRemoves[i][1];
-                int z = ConditionRemoves[i][2];
+                if (ItemList[i].Conditionals != null)
+                {
+                    ItemList[i].Conditionals.RemoveAll(u => u == null);
+                }
+            }
+        }
+
+        private void PrepairRemoveConditionals(Item currentItem, List<int[]> conditionsToRemove)
+        {
+            for (int i = 0; i < conditionsToRemove.Count; i++)
+            {
+                int x = conditionsToRemove[i][0];
+                int y = conditionsToRemove[i][1];
+                int z = conditionsToRemove[i][2];
                 ItemList[x].Conditionals[y] = null;
             }
 
-            for (int i = 0; i < ConditionRemoves.Count; i++)
+            for (int i = 0; i < conditionsToRemove.Count; i++)
             {
-                int x = ConditionRemoves[i][0];
-                int y = ConditionRemoves[i][1];
-                int z = ConditionRemoves[i][2];
+                int x = conditionsToRemove[i][0];
+                int y = conditionsToRemove[i][1];
+                int z = conditionsToRemove[i][2];
 
                 for (int j = 0; j < ItemList[x].Conditionals.Count; j++)
                 {
@@ -612,14 +620,6 @@ namespace MMRando
                             }
                         }
                     }
-                }
-            }
-
-            for (int i = 0; i < ItemList.Count; i++)
-            {
-                if (ItemList[i].Conditionals != null)
-                {
-                    ItemList[i].Conditionals.RemoveAll(u => u == null);
                 }
             }
 
@@ -780,7 +780,7 @@ namespace MMRando
             }
         }
 
-        private void CheckConditionals(Item currentItem, Item target, List<Item> dependencyPath)
+        private void CheckConditionals(Item currentItem, Item target, List<Item> dependencyPath, List<Item> conditionsChecked)
         {
             if (target == Item.MaskBlast)
             {
@@ -791,7 +791,7 @@ namespace MMRando
                 }
             }
 
-            ConditionsChecked.Add(target);
+            conditionsChecked.Add(target);
             UpdateConditionals(currentItem, target);
 
             if (!ItemList[(int)target].HasDependencies)
@@ -817,11 +817,11 @@ namespace MMRando
                         dependency = ItemList[(int)dependency].NewLocation.Value;
                     }
 
-                    if (!ConditionsChecked.Contains(dependency))
+                    if (!conditionsChecked.Contains(dependency))
                     {
                         var childPath = dependencyPath.ToList();
                         childPath.Add(dependency);
-                        CheckConditionals(currentItem, dependency, childPath);
+                        CheckConditionals(currentItem, dependency, childPath, conditionsChecked);
                     }
                 }
                 else if (ItemList[(int)currentItem].TimeNeeded != 0 && dependency.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary()))
@@ -879,19 +879,58 @@ namespace MMRando
             }
 
             //check direct dependence
-            ConditionRemoves = new List<int[]>();
-            DependenceChecked = new Dictionary<Item, Dependence> { { target, new Dependence { Type = DependenceType.Dependent } } };
+            var conditionsRemoved = false;
+            var conditionsToRemove = new List<int[]>();
+            var dependenciesChecked = new Dictionary<Item, Dependence> { { target, new Dependence { Type = DependenceType.Dependent } } };
             var dependencyPath = new List<Item> { target };
 
-            if (CheckDependence(currentItem, target, dependencyPath).Type != DependenceType.NotDependent)
+            if (CheckDependence(currentItem, target, dependencyPath, dependenciesChecked, conditionsToRemove).Type != DependenceType.NotDependent)
             {
                 return false;
             }
 
+            // if (_settings.PairEntrances)
+            {
+                var currentEntranceAttribute = currentItem.GetAttribute<EntranceAttribute>();
+                var targetEntranceAttribute = target.GetAttribute<EntranceAttribute>();
+
+                if (currentEntranceAttribute?.Pair != null && targetEntranceAttribute?.Pair != null)
+                {
+                    ItemList[(int)currentItem].NewLocation = target;
+
+                    var pairItem = targetEntranceAttribute.Pair.Value;
+                    var pairTarget = currentEntranceAttribute.Pair.Value;
+                    var pairPath = new List<Item> { pairTarget };
+                    var pairConditionsToRemove = new List<int[]>();
+                    var pairDependenciesChecked = new Dictionary<Item, Dependence> { { pairTarget, new Dependence { Type = DependenceType.Dependent } } };
+                    var pairDependence = CheckDependence(pairItem, pairTarget, pairPath, pairDependenciesChecked, pairConditionsToRemove);
+                    ItemList[(int)currentItem].NewLocation = null;
+
+                    if (pairDependence.Type != DependenceType.NotDependent)
+                    {
+                        return false;
+                    }
+
+                    PrepairRemoveConditionals(pairItem, pairConditionsToRemove);
+                    PrepairRemoveConditionals(currentItem, conditionsToRemove);
+                    FinalizeRemoveConditionals();
+                    conditionsRemoved = true;
+
+                    var pairConditionsChecked = new List<Item>();
+                    CheckConditionals(pairItem, pairTarget, pairPath, pairConditionsChecked);
+                }
+            }
+
+            if (!conditionsRemoved)
+            {
+                PrepairRemoveConditionals(currentItem, conditionsToRemove);
+                FinalizeRemoveConditionals();
+            }
+
             //check conditional dependence
-            RemoveConditionals(currentItem);
-            ConditionsChecked = new List<Item>();
-            CheckConditionals(currentItem, target, dependencyPath);
+            var conditionsChecked = new List<Item>();
+            CheckConditionals(currentItem, target, dependencyPath, conditionsChecked);
+
             return true;
         }
 
@@ -930,17 +969,18 @@ namespace MMRando
 
                     targets.Remove(targetLocation);
 
-                    var currentEntranceAttribute = currentItem.GetAttribute<EntranceAttribute>();
-                    if (currentEntranceAttribute != null)
+                    // if (_settings.PairEntrances)
                     {
-                        var targetEntranceAttribute = targetLocation.GetAttribute<EntranceAttribute>();
-                        if (currentEntranceAttribute.Pair.HasValue && targetEntranceAttribute.Pair.HasValue)
+                        var currentEntranceAttribute = currentItem.GetAttribute<EntranceAttribute>();
+                        if (currentEntranceAttribute != null)
                         {
-                            ItemList[(int)targetEntranceAttribute.Pair].NewLocation = currentEntranceAttribute.Pair;
-                            targets.Remove(currentEntranceAttribute.Pair.Value);
+                            var targetEntranceAttribute = targetLocation.GetAttribute<EntranceAttribute>();
+                            if (currentEntranceAttribute.Pair.HasValue && targetEntranceAttribute.Pair.HasValue)
+                            {
+                                ItemList[(int)targetEntranceAttribute.Pair].NewLocation = currentEntranceAttribute.Pair;
+                                targets.Remove(currentEntranceAttribute.Pair.Value);
+                            }
                         }
-                        //var currentPair = GetEntrancePair(currentItem);
-                        //var targetPair = GetEntrancePair(targetLocation);
                     }
                     return;
                 }
@@ -1599,6 +1639,10 @@ namespace MMRando
         private void MakeAllItemsVanilla()
         {
             foreach (var location in ItemUtils.AllLocations())
+            {
+                ItemList[(int)location].NewLocation = location;
+            }
+            foreach (var location in ItemUtils.AllEntrances())
             {
                 ItemList[(int)location].NewLocation = location;
             }
