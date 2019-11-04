@@ -1095,7 +1095,7 @@ namespace MMRando
         {
             var entrancesToPlace = ItemUtils.AllEntrances()
                 .Where(item => EntranceSwapUtils.IsEntranceAvailable(item))
-                .Where(item => !item.GetAttribute<EntranceAttribute>().Pair.HasValue).ToList();
+                .Where(item => !item.Pair().HasValue).ToList();
             var entrancePool = entrancesToPlace.ToList();
             // todo remove already-placed entrances
             foreach (var entrance in entrancesToPlace)
@@ -1130,7 +1130,7 @@ namespace MMRando
                     return GetUnconnectedEntrances(d);
                 }
                 return Enumerable.Empty<Item>();
-            })) ?? new List<Item>()).ToList();
+            })) ?? new List<Item>()).Distinct().ToList();
         }
 
         private void PlacePairedEntrances()
@@ -1906,21 +1906,21 @@ namespace MMRando
                     }
                 }
 
-                _randomized.AllItemsOnPathToMoon = GetRequiredItems(Item.EntranceMajorasLairFromTheMoon, _randomized.Logic)?.Where(item => !item.IsFake() && !item.IsEntrance()).ToList().AsReadOnly();
-                if (_randomized.AllItemsOnPathToMoon == null)
-                {
-                    throw new Exception("Moon Access is unobtainable.");
-                }
-                var itemsRequiredForMoonAccess = new List<Item>();
-                foreach (var item in _randomized.AllItemsOnPathToMoon)
-                {
-                    var checkPaths = GetRequiredItems(Item.AreaMoonAccess, _randomized.Logic, exclude: item);
-                    if (checkPaths == null)
-                    {
-                        itemsRequiredForMoonAccess.Add(item);
-                    }
-                }
-                _randomized.ItemsRequiredForMoonAccess = itemsRequiredForMoonAccess.AsReadOnly();
+                //_randomized.AllItemsOnPathToMoon = GetRequiredItems(Item.EntranceMajorasLairFromTheMoon, _randomized.Logic)?.Where(item => !item.IsFake() && !item.IsEntrance()).ToList().AsReadOnly();
+                //if (_randomized.AllItemsOnPathToMoon == null)
+                //{
+                //    throw new Exception("Moon Access is unobtainable.");
+                //}
+                //var itemsRequiredForMoonAccess = new List<Item>();
+                //foreach (var item in _randomized.AllItemsOnPathToMoon)
+                //{
+                //    var checkPaths = GetRequiredItems(Item.AreaMoonAccess, _randomized.Logic, exclude: item);
+                //    if (checkPaths == null)
+                //    {
+                //        itemsRequiredForMoonAccess.Add(item);
+                //    }
+                //}
+                //_randomized.ItemsRequiredForMoonAccess = itemsRequiredForMoonAccess.AsReadOnly();
 
                 if (_settings.GossipHintStyle != GossipHintStyle.Default)
                 {

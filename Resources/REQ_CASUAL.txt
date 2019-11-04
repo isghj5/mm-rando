@@ -3380,8 +3380,8 @@
 0
 0
 - EntranceStoneTowerFromOwlStatue
-789,790
-
+790
+10,92,93,101,674;10,92,93,101,675;676
 0
 0
 - EntrancePathtoSnowheadFromMountainVillage
