@@ -582,6 +582,8 @@ namespace MMRando.Forms
 
         "EntranceLaundryPoolFromSouthClockTown",
         "EntranceLaundryPoolFromKafeisHideout",
+
+        "EntranceStoneTowerInvertedFromStoneTowerTempleInverted",
         };
 
         bool updating = false;
