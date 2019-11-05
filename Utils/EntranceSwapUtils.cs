@@ -152,8 +152,8 @@ namespace MMRando.Utils
 
         internal static void WriteNewEntrance(Item value, Item item)
         {
-            Exit x = LookupItemExitName(value);
-            string chosenEntrance = LookupItemSpawnName(item);
+            Exit x = LookupItemExitName(item);
+            string chosenEntrance = LookupItemSpawnName(value);
             if (x != null && !"".Equals(chosenEntrance))
             {
                 //bool success = TerminaMapData.ConnectEntrance(selectionEntrance, chosenEntrance);
