@@ -65,14 +65,14 @@ namespace MMRando.Models
         }
     }
 
-    public class Region
+    public class EntranceRegion
     {
         public string RegionName { get; set; }
         public ushort SceneId { get; set; }
         public ushort ExternalSceneId { get; set; }
         public List<string> Spawns { get; set; }
         public List<string> Exits { get; set; }
-        public Region(string RegionName, ushort SceneId, ushort ExternalSceneId)
+        public EntranceRegion(string RegionName, ushort SceneId, ushort ExternalSceneId)
         {
             this.RegionName = RegionName;
             this.SceneId = SceneId;
@@ -84,7 +84,7 @@ namespace MMRando.Models
 
     public class EntranceData
     {
-        public List<Region> regions;
+        public List<EntranceRegion> regions;
         public List<Exit> exits;
         public List<Spawn> spawns;
         public List<Entrance> entrances;
@@ -92,8 +92,8 @@ namespace MMRando.Models
         {
             if(Copy != null)
             {
-                this.regions = new List<Region>();
-                foreach (Region r in Copy.regions)
+                this.regions = new List<EntranceRegion>();
+                foreach (EntranceRegion r in Copy.regions)
                 {
                     this.regions.Add(r);
                 }
@@ -135,7 +135,7 @@ namespace MMRando.Models
                 {
                     ent.ReturnSpawnName = newSpawnName;
                 }
-                foreach (Region region in regions)
+                foreach (EntranceRegion region in regions)
                 {
                     int i = region.Spawns.FindIndex(s => oldSpawnName.Equals(s));
                     if( i != -1)
@@ -162,7 +162,7 @@ namespace MMRando.Models
                 {
                     ent.ReturnExitName = newExitName;
                 }
-                foreach (Region region in regions)
+                foreach (EntranceRegion region in regions)
                 {
                     int i = region.Exits.FindIndex(x => oldExitName.Equals(x));
                     if (i != -1)
@@ -198,7 +198,7 @@ namespace MMRando.Models
             Spawn spawn = spawns.Find(s => SpawnName.Equals(s.SpawnName));
             if (spawn != null)
             {
-                Region region = regions.Find(r => spawn.RegionName.Equals(r.RegionName));
+                EntranceRegion region = regions.Find(r => spawn.RegionName.Equals(r.RegionName));
                 if (region != null)
                 {
                     return (ushort)((region.ExternalSceneId << 9) + (spawn.SpawnIndex << 4));
@@ -213,7 +213,7 @@ namespace MMRando.Models
 
         internal int SceneIndex( string RegionName)
         {
-            Region region = regions.Find(r => RegionName.Equals(r.RegionName));
+            EntranceRegion region = regions.Find(r => RegionName.Equals(r.RegionName));
             return (region == null) ? -1 : region.SceneId;
         }
 
@@ -231,13 +231,13 @@ namespace MMRando.Models
 
         internal void AddEntrance(string EntranceName, string SpawnRegion, string SpawnName, byte SpawnIndex, byte ExitIndex, string ReturnRegion, string ReturnSpawnName, byte ReturnSpawnIndex, byte ReturnExitIndex, string Type)
         {
-            Region spawnRegion = regions.Find(r => SpawnRegion.Equals(r.RegionName));
+            EntranceRegion spawnRegion = regions.Find(r => SpawnRegion.Equals(r.RegionName));
             if (spawnRegion != null)
             {
                 spawnRegion.Spawns.Add(SpawnName);
                 spawnRegion.Exits.Add(ReturnSpawnName);
             }
-            Region returnRegion = regions.Find(r => ReturnRegion.Equals(r.RegionName));
+            EntranceRegion returnRegion = regions.Find(r => ReturnRegion.Equals(r.RegionName));
             if (returnRegion != null)
             {
                 returnRegion.Spawns.Add(ReturnSpawnName);
@@ -262,7 +262,7 @@ namespace MMRando.Models
         {
             if (regions.Find(r => RegionName.Equals(r.RegionName)) == null)
             {
-                Region r = new Region(RegionName, SceneId, ExternalSceneId);
+                EntranceRegion r = new EntranceRegion(RegionName, SceneId, ExternalSceneId);
                 regions.Add(r);
             }
         }
