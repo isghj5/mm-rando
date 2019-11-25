@@ -144,7 +144,7 @@ namespace MMRando.Utils
                 Entrance ent = TerminaMapData.entrances.Find(e => exit.ExitName.Equals(e.ExitName));
                 if (ent != null)
                 {
-                    return ent.SpawnName;
+                    return ent.ReturnSpawnName;
                 }
             }
             return "";
@@ -152,8 +152,8 @@ namespace MMRando.Utils
 
         internal static void WriteNewEntrance(Item value, Item item)
         {
-            Exit x = LookupItemExitName(item);
-            string chosenEntrance = LookupItemSpawnName(value);
+            Exit x = LookupItemExitName(value);
+            string chosenEntrance = LookupItemSpawnName(item);
             if (x != null && !"".Equals(chosenEntrance))
             {
                 //bool success = TerminaMapData.ConnectEntrance(selectionEntrance, chosenEntrance);
