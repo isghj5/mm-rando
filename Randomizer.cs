@@ -1056,6 +1056,8 @@ namespace MMRando
 
             PlacePairedEntrances();
 
+            //PreserveEntrances();
+
             var itemPool = new List<Item>();
 
             AddAllItems(itemPool);
@@ -1684,6 +1686,14 @@ namespace MMRando
         private void PreserveOwlActivations()
         {
             for (var i = Item.OwlActivationGreatBayCoast; i <= Item.OwlActivationStoneTower; i++)
+            {
+                ItemList[(int)i].NewLocation = i;
+            }
+        }
+
+        private void PreserveEntrances()
+        {
+            for (var i = Item.EntranceMayorsResidenceFromEastClockTown; i <= Item.EntranceStoneTowerInvertedFromStoneTowerTempleInverted; i++)
             {
                 ItemList[(int)i].NewLocation = i;
             }
