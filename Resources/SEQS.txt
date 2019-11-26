@@ -667,6 +667,12 @@ mk64-fs
 mk64-kb
 0,1
 1d
+xmas-skating
+0,1,2,3
+3
+xmas-christmastimeishere
+0,1,2,3
+13
 mk64-mmf
 3,4
 8
