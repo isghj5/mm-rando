@@ -4062,6 +4062,37 @@ namespace MMRando.GameObjects
         EntranceLaundryPoolFromKafeisHideout,
 
         [Entrance(EntranceStoneTowerTempleInvertedFromStoneTowerInverted), RegionName("Stone Tower")]
-        EntranceStoneTowerInvertedFromStoneTowerTempleInverted
+        EntranceStoneTowerInvertedFromStoneTowerTempleInverted,
+
+        [StartingItem(0xC5CDFA, 0x2)]
+        [ItemName("Great Bay Owl"), LocationName("Great Bay Owl Statue"), RegionName("Great Bay Coast")]
+        OwlActivationGreatBayCoast,
+        [StartingItem(0xC5CDFA, 0x1)]
+        [ItemName("Zora Cape Owl"), LocationName("Zora Cape Owl Statue"), RegionName("Zora Cape")]
+        OwlActivationZoraCape,
+        [StartingItem(0xC5CDFB, 0x8)]
+        [ItemName("Snowhead Owl"), LocationName("Snowhead Owl Statue"), RegionName("Snowhead")]
+        OwlActivationSnowhead,
+        [StartingItem(0xC5CDFB, 0x4)]
+        [ItemName("Mountain Village Owl"), LocationName("Mountain Village Owl Statue"), RegionName("Mountain Village")]
+        OwlActivationMountainVillage,
+        [StartingItem(0xC5CDFB, 0x2)]
+        [ItemName("Clock Town Owl"), LocationName("Clock Town Owl Statue"), RegionName("Clock Town")]
+        OwlActivationClockTown,
+        [StartingItem(0xC5CDFB, 0x1)]
+        [ItemName("Milk Road Owl"), LocationName("Milk Road Owl Statue"), RegionName("Milk Road")]
+        OwlActivationMilkRoad,
+        [StartingItem(0xC5CDFC, 0x8)]
+        [ItemName("Woodfall Owl"), LocationName("Woodfall Owl Statue"), RegionName("Woodfall")]
+        OwlActivationWoodfall,
+        [StartingItem(0xC5CDFC, 0x4)]
+        [ItemName("Southern Swamp Owl"), LocationName("Southern Swamp Owl Statue"), RegionName("Southern Swamp")]
+        OwlActivationSouthernSwamp,
+        [StartingItem(0xC5CDFC, 0x2)]
+        [ItemName("Ikana Canyon Owl"), LocationName("Ikana Canyon Owl Statue"), RegionName("Ikana Canyon")]
+        OwlActivationIkanaCanyon,
+        [StartingItem(0xC5CDFC, 0x1)]
+        [ItemName("Stone Tower Owl"), LocationName("Stone Tower Owl Statue"), RegionName("Stone Tower")]
+        OwlActivationStoneTower
     }
 }

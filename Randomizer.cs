@@ -1044,6 +1044,8 @@ namespace MMRando
                 Setup();
             }
 
+            PreserveOwlActivations();
+
             EntranceSwapUtils.ReadMapData();
 
             UpdateLogicForSettings();
@@ -1677,6 +1679,14 @@ namespace MMRando
         private void PreserveGlitchedCowMilk()
         {
             ItemList[(int)Item.ItemRanchBarnOtherCowMilk2].NewLocation = Item.ItemRanchBarnOtherCowMilk2;
+        }
+
+        private void PreserveOwlActivations()
+        {
+            for (var i = Item.OwlActivationGreatBayCoast; i <= Item.OwlActivationStoneTower; i++)
+            {
+                ItemList[(int)i].NewLocation = i;
+            }
         }
 
         /// <summary>
