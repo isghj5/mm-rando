@@ -112,7 +112,7 @@
     <Compile Include="Forms\StartingItemEditForm.Designer.cs">
       <DependentUpon>StartingItemEditForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Tooltips\TooltipBuilder.cs" />
+    <Compile Include="Forms\ToolTips\ToolTipBuilder.cs" />
     <Compile Include="GameObjects\GossipQuote.cs" />
     <Compile Include="GameObjects\Item.cs" />
     <Compile Include="GameObjects\MessageShopText.cs" />
