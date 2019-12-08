@@ -124,7 +124,7 @@ namespace MMRando
             TooltipBuilder.SetTooltip(bTunic, "Select the color of Link's Tunic.");
             TooltipBuilder.SetTooltip(cLink, "Select a character model to replace Link's default model.");
             TooltipBuilder.SetTooltip(cTatl, "Select a color scheme to replace Tatl's default color scheme.");
-            TooltipBuilder.SetTooltip(cGossipHints, "Select a Gossip Stone hint style\n\n - Default: Vanilla Gossip Stone hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, 3 hints about locations with logically-required items, 2 hints about locations with no logically-required items.");
+            TooltipBuilder.SetTooltip(cGossipHints, "Select a Gossip Stone hint style\n\n - Default: Vanilla Gossip Stone hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, 2 hints about locations with important items, 3 hints about locations with no important items.");
             TooltipBuilder.SetTooltip(cSkipBeaver, "Modify Beavers to not have to race the younger beaver.");
             TooltipBuilder.SetTooltip(cGoodDampeRNG, "Change Dampe ghost flames to always have two on the ground floor and one up the ladder.");
             TooltipBuilder.SetTooltip(cGoodDogRaceRNG, "Make Gold Dog always win if you have the Mask of Truth.");
@@ -163,6 +163,7 @@ namespace MMRando
             lStatus.Text = "Ready...";
             EnableAllControls(true);
             ToggleCheckBoxes();
+            TogglePatchSettings(ttOutput.SelectedTab.TabIndex == 0);
         }
 
         private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
@@ -204,6 +205,16 @@ namespace MMRando
             if (_settings.GenerateROM && !ValidateInputFile()) return;
 
             if (_settings.LogicMode == LogicMode.UserLogic && !ValidateLogicFile()) return;
+
+            if (ttOutput.SelectedTab.TabIndex == 1)
+            {
+                if (string.IsNullOrWhiteSpace(_settings.InputPatchFilename))
+                {
+                    MessageBox.Show("No patch selected.",
+                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
 
             saveROM.FileName = !string.IsNullOrWhiteSpace(_settings.InputPatchFilename)
                 ? Path.ChangeExtension(Path.GetFileName(_settings.InputPatchFilename), "z64")
@@ -808,6 +819,9 @@ namespace MMRando
                 cSpiders.Enabled = onMainTab;
                 cStrayFairies.Enabled = onMainTab;
                 cMundaneRewards.Enabled = onMainTab;
+
+                tCustomItemList.Enabled = onMainTab;
+                bItemListEditor.Enabled = onMainTab;
 
                 tStartingItemList.Enabled = onMainTab;
                 bStartingItemEditor.Enabled = onMainTab;
