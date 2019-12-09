@@ -442,9 +442,6 @@ e
 sm64-bbh
 2,3
 15
-sm64-mgr
-3,4,6
-5
 oot-f-ganondorf
 9
 3
@@ -547,9 +544,6 @@ mk64-lr
 mk64-battle
 1,3
 24
-mk64-cm
-3,4
-8
 mk64-fs
 0,1
 24
@@ -562,15 +556,6 @@ xmas-skating
 xmas-christmastimeishere
 0,1,2,3
 13
-mk64-mmf
-3,4
-8
 mk64-bc
 2,5
 25
-mk64-bb
-2,5
-3
-mk64-dkjp
-0,1
-3
