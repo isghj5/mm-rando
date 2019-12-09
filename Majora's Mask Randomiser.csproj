@@ -887,6 +887,9 @@
     <None Include="Resources\music\tp-bugcastle">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\music\tp-fahouse">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\music\bk-freezypeak">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -897,6 +900,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\music\tp-lakehylia">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\music\ff9-iifa">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\music\ff9-treno">
