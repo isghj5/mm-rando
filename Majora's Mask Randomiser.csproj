@@ -902,6 +902,9 @@
     <None Include="Resources\music\tp-lakehylia">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Resources\music\mc-minishvillage">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\music\ff9-iifa">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
