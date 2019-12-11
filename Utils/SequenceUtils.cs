@@ -74,7 +74,37 @@ namespace MMRando.Utils
                 {
                     RomData.SequenceList.Add(sourceSequence);
                 };
-            };
+            }; // end while (i < lines.Length)
+
+            // check if files were added by user to music folder
+            // we're not going to check for non-zseq here until I find an easy way to do that
+            //  Just going to trust users aren't stupid enough to think renaming a mp3 to zseq will work
+            foreach (String filePath in Directory.GetFiles(Values.MusicDirectory, "*.zseq"))
+            {
+                String filename = Path.GetFileName(filePath);
+
+                // test if file has enough delimiters to separate data into name_bank_formats
+                String[] pieces = filename.Split('_');
+                if (pieces.Length < 3 || pieces.Length > 3)
+                {
+                    continue;
+                }
+
+                var sourceName = filename;
+                var sourceTypeString = pieces[2].Substring(0, pieces[2].Length - 5);
+                var sourceInstrument = Convert.ToInt32(pieces[1], 16);
+                var sourceType = Array.ConvertAll(sourceTypeString.Split(','), int.Parse).ToList();
+
+                SequenceInfo sourceSequence = new SequenceInfo
+                {
+                    Name = sourceName,
+                    Type = sourceType,
+                    Instrument = sourceInstrument
+                };
+
+                RomData.SequenceList.Add(sourceSequence);
+            }
+
         }
 
         public static void RebuildAudioSeq(List<SequenceInfo> SequenceList)
