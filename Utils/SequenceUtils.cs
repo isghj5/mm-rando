@@ -93,7 +93,7 @@ namespace MMRando.Utils
                 var sourceName = filename;
                 var sourceTypeString = pieces[2].Substring(0, pieces[2].Length - 5);
                 var sourceInstrument = Convert.ToInt32(pieces[1], 16);
-                var sourceType = Array.ConvertAll(sourceTypeString.Split(','), int.Parse).ToList();
+                var sourceType = Array.ConvertAll(sourceTypeString.Split('-'), int.Parse).ToList();
 
                 SequenceInfo sourceSequence = new SequenceInfo
                 {
