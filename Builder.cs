@@ -47,6 +47,20 @@ namespace MMRando
             {
                 List<SequenceInfo> Unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
 
+                if (Unassigned.Count == 0)
+                {
+                    // we've run out of unassigned songs, but we still have slots to fill... how did this happen?
+                    //  fairy fountain and fileselect use the same file, one is just a pointer... great
+                    // let's just take one of the less likely songs to run into and copy it
+                    // this includes: (skipped music) chase theme, intro to forest, clock-tower, concert
+                    //Unassigned = RomData.SequenceList.FindAll(u => u.);
+                    // the way DB kept track of the data, I don't think we can tell what SLOT each song was originally in here
+
+                    // for now, let's just pick one at random, by allowing the code to search the whole set
+                    Unassigned = RomData.SequenceList;
+
+                }
+
                 int targetIndex = random.Next(RomData.TargetSequences.Count);
                 var targetSequence = RomData.TargetSequences[targetIndex];
 
