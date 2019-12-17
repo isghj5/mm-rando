@@ -38,12 +38,19 @@ namespace MMRando
 
         private void BGMShuffle(Random random)
         {
+            // in the event the user only wants MM music, we have exactly the required music to randomize
+            //  but we can run out of the classification we need, so we need to keep track music with > 1 class
+            List<SequenceInfo> assignedOverclassified = new List<SequenceInfo> ();
+            Debug.WriteLine("starting with: " + RomData.SequenceList.FindAll(u => u.Replaces == -1).Count + " and " + RomData.TargetSequences.Count);
+
             while (RomData.TargetSequences.Count > 0)
             {
                 List<SequenceInfo> Unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
 
                 int targetIndex = random.Next(RomData.TargetSequences.Count);
                 var targetSequence = RomData.TargetSequences[targetIndex];
+
+                int whileTimer = 0; // inf loop prevention
 
                 while (true)
                 {
@@ -59,6 +66,11 @@ namespace MMRando
                     {
                         if (targetSequence.Type.Contains(Unassigned[unassignedIndex].Type[i]))
                         {
+                            if (Unassigned[unassignedIndex].Type.Count > 1)
+                            {
+                                assignedOverclassified.Add(Unassigned[unassignedIndex]);
+                            }
+ 
                             Unassigned[unassignedIndex].Replaces = targetSequence.Replaces;
                             Debug.WriteLine(Unassigned[unassignedIndex].Name + " -> " + targetSequence.Name);
                             RomData.TargetSequences.RemoveAt(targetIndex);
@@ -71,6 +83,10 @@ namespace MMRando
                                 && (Unassigned[unassignedIndex].Type.Contains(10) == targetSequence.Type.Contains(10))
                                 && (!Unassigned[unassignedIndex].Type.Contains(16)))
                             {
+                                if (Unassigned[unassignedIndex].Type.Count > 1)
+                                {
+                                    assignedOverclassified.Add(Unassigned[unassignedIndex]);
+                                }
                                 Unassigned[unassignedIndex].Replaces = targetSequence.Replaces;
                                 Debug.WriteLine(Unassigned[unassignedIndex].Name + " -> " + targetSequence.Name);
                                 RomData.TargetSequences.RemoveAt(targetIndex);
@@ -80,6 +96,52 @@ namespace MMRando
                     }
 
                     if (Unassigned[unassignedIndex].Replaces != -1)
+                    {
+                        break;
+                    }
+
+                    whileTimer++;
+                    if (whileTimer > 200)
+                    {
+                        Debug.WriteLine("No remaining songs fit in " + targetSequence.Name);
+                        if (assignedOverclassified.Count == 0)
+                        {
+                            throw new System.ArgumentException("Music cannot be randomized with only MM music and this seed");
+                        }
+                        // no song fits into the target slot (by category)
+                        //  we need to go back to previous songs that have multiple categories and find a substitute that fits instead
+                        foreach (SequenceInfo potentialReplacement in assignedOverclassified)
+                        {
+                            foreach (int availableCategory in potentialReplacement.Type)
+                            {
+                                // if substitute can fit in target category
+                                if (targetSequence.Type.Contains(availableCategory))
+                                {
+                                    // if unnassigned can go in substitute's old slot
+                                    //  assumption: the unnassigned and substitute having >= 1 class in common means
+                                    //  they can be swapped without caring what the subs's slot classes were
+                                    // take substitute seq, add to target slot
+                                    // put unassigned seq into the the substitute's old slot
+                                    Unassigned[unassignedIndex].Replaces = potentialReplacement.Replaces;
+                                    Debug.WriteLine(Unassigned[unassignedIndex].Name + " *-> " + potentialReplacement.Name);
+                                    potentialReplacement.Replaces = targetSequence.Replaces;
+                                    Debug.WriteLine(potentialReplacement.Name + " -> " + targetSequence.Name);
+
+                                    RomData.TargetSequences.RemoveAt(targetIndex);
+                                    targetSequence = null;
+                                }
+                                if (targetSequence == null) // done
+                                {
+                                    break;
+                                }
+                            }
+                            if (targetSequence == null) // done
+                            {
+                                break;
+                            }
+                        }
+                    }
+                    if (targetSequence == null) // done
                     {
                         break;
                     }
