@@ -77,7 +77,7 @@ namespace MMRando.Utils
 
                 // test if file has enough delimiters to separate data into name_bank_formats
                 String[] pieces = filename.Split('_');
-                if (pieces.Length < 3 || pieces.Length > 3)
+                if (pieces.Length != 3)
                 {
                     continue;
                 }
