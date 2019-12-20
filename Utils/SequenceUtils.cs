@@ -171,7 +171,8 @@ namespace MMRando.Utils
                 addr += newentry.Size;
             }
 
-            if (addr > (RomData.MMFileList[4].End - RomData.MMFileList[4].Addr))
+            // if (addr > (RomData.MMFileList[4].End - RomData.MMFileList[4].Addr))
+            if ( true ) // TODO: figure out why leaving the audioseq in its orginal spot causes garbage audio
             {
                 int index = RomUtils.AppendFile(NewAudioSeq);
                 ResourceUtils.ApplyHack(Values.ModsDirectory + "reloc-audio");
