@@ -16,6 +16,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MMRando
@@ -36,63 +37,157 @@ namespace MMRando
 
         #region Sequences, sounds and BGM
 
+        // this function decides which songs get shuffled, choosing song -> slot
+        //  the audioseq file gets rearanged/built in SequenceUtils::RebuildAudioSeq
         private void BGMShuffle(Random random)
         {
-            while (RomData.TargetSequences.Count > 0)
+            // spoiler log output
+            StringBuilder log = new StringBuilder();
+            void WriteOutput(string str)
             {
-                List<SequenceInfo> Unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
+                Debug.WriteLine(str); // we still want debug output though
+                log.AppendLine(str);
+            }
+            string GetSpacedString(string start, int len = 50) // formating for spoiler log
+            {
+                return start + new String(' ', len - start.Length) ;
+            }
 
-                int targetIndex = random.Next(RomData.TargetSequences.Count);
-                var targetSequence = RomData.TargetSequences[targetIndex];
+            // pointerize some slots
+            // why? because fairy fountain and fileselect are the same song,
+            //  with one being a pointer at the other, so we have 78 slots and 77 songs, not enough
+            //  also some categories can get exhausted leaving slots unfillable with remaining music
+            // several slots that players will never hear are nullified (pointed at another song)
+            // this "fills" those slots, now we have fewer slots to fill with remaining music (73 fits in 77)
+            //  so pointers play the same music, but take up almost no space, and don't waste a song
+            //  but if the player does find this music in-game, it still plays sufficiently random music
+            // this has a side effect of shrinking the AudioSeq file, so that it takes less space on rom
+            ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
+            ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
+            ConvertSequenceSlotToPointer(0x03, 0x0d); // point chase(skullkid chase) at aliens
+            ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
+            ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants(meeting cs) at reunion
+            ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
 
-                while (true)
+            // we randomize both slots and songs because if we're low on variety, and we don't sort slots
+            //   then all the variety can be dried up for the later slots
+            // the biggest example is MM-only, many songs are action/boss but the boss slots are later
+            //  as a result boss music is often used up early placed into early action slots
+            // if we don't randomize remaining, then we only get upper alphabetical, same every seed
+            List<SequenceInfo> Unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
+            Unassigned = Unassigned.OrderBy(x => random.Next()).ToList();                           // random ordered songs
+            RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
+            WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + Unassigned.Count + " available songs:");
+
+            foreach (SequenceInfo targetSequence in RomData.TargetSequences)
+            {
+                bool foundValidReplacement = false; // would really have liked for/else but C# doesn't have it seems
+
+                for (int i = 0; i < Unassigned.Count; i++)
                 {
-                    int unassignedIndex = random.Next(Unassigned.Count);
-
-                    if (Unassigned[unassignedIndex].Name.StartsWith("mm")
-                        & (random.Next(100) < 50))
-                    {
+                    SequenceInfo testSeq = Unassigned[i];
+                    // increases chance of getting non-mm music, but only if we have lots of music remaining
+                    if (Unassigned.Count > 77 && testSeq.Name.StartsWith("mm") && (random.Next(100) < 25))
                         continue;
+
+                    // do the target slot and the possible match seq share a category?
+                    if (testSeq.Type.Intersect(targetSequence.Type).Any())
+                    {
+                        testSeq.Replaces = targetSequence.Replaces;
+                        WriteOutput(GetSpacedString(testSeq.Name) + " -> " + targetSequence.Name);
+                        Unassigned.Remove(testSeq);
+                        foundValidReplacement = true;
+                        break;
                     }
 
-                    for (int i = 0; i < Unassigned[unassignedIndex].Type.Count; i++)
+                    // Deathbasket wanted there to be a small chance of getting out of category music
+                    //  but not put fanfares into bgm, or visa versa
+                    // also restrict this nature to when there is plenty of music to work with
+                    // (testSeq.Type.Count > targetSequence.Type.Count) DBs code, maybe thought to be safer?
+                    else if (Unassigned.Count > 30
+                        && testSeq.Type.Count > targetSequence.Type.Count
+                        && random.Next(30) == 0
+                        && (testSeq.Type[0] & 8) == (targetSequence.Type[0] & 8)
+                        && testSeq.Type.Contains(10) == targetSequence.Type.Contains(10)
+                        && !testSeq.Type.Contains(16))
                     {
-                        if (targetSequence.Type.Contains(Unassigned[unassignedIndex].Type[i]))
-                        {
-                            Unassigned[unassignedIndex].Replaces = targetSequence.Replaces;
-                            Debug.WriteLine(Unassigned[unassignedIndex].Name + " -> " + targetSequence.Name);
-                            RomData.TargetSequences.RemoveAt(targetIndex);
-                            break;
-                        }
-                        else if (i + 1 == Unassigned[unassignedIndex].Type.Count)
-                        {
-                            if ((random.Next(30) == 0)
-                                && ((Unassigned[unassignedIndex].Type[0] & 8) == (targetSequence.Type[0] & 8))
-                                && (Unassigned[unassignedIndex].Type.Contains(10) == targetSequence.Type.Contains(10))
-                                && (!Unassigned[unassignedIndex].Type.Contains(16)))
-                            {
-                                Unassigned[unassignedIndex].Replaces = targetSequence.Replaces;
-                                Debug.WriteLine(Unassigned[unassignedIndex].Name + " -> " + targetSequence.Name);
-                                RomData.TargetSequences.RemoveAt(targetIndex);
-                                break;
-                            }
-                        }
-                    }
-
-                    if (Unassigned[unassignedIndex].Replaces != -1)
-                    {
+                        testSeq.Replaces = targetSequence.Replaces;
+                        WriteOutput(GetSpacedString(testSeq.Name, len:49) + " 🍀-> " + targetSequence.Name);
+                        Unassigned.Remove(testSeq);
+                        foundValidReplacement = true;
                         break;
                     }
                 }
-            }
 
-            RomData.SequenceList.RemoveAll(u => u.Replaces == -1);
+                if (foundValidReplacement == false) // no available songs fit in this slot category
+                {
+                    // just add one of the remaining songs,
+                    //  so long as bgm and fanfares are kept separate, should still be fine
+                    WriteOutput("No song fits in " + targetSequence.Name + " slot, with categories: " + String.Join(",", targetSequence.Type));
+
+                    // the first category of the type is the MAIN type, the rest are secondary
+                    SequenceInfo replacementSong = null;
+                    if (targetSequence.Type[0] <= 7 || targetSequence.Type[0] == 16)  // bgm or cutscene
+                        replacementSong = Unassigned.Find(u => u.Type[0] <= 7);
+                    else //if (targetSequence.Type[0] >= 8)                           // fanfares
+                        replacementSong = Unassigned.Find(u => u.Type[0] >= 8);
+
+                    if (replacementSong != null)
+                    {
+                        WriteOutput(" * generalized replacement with " + replacementSong.Name + " song, with categories: " + String.Join(",", replacementSong.Type));
+                        replacementSong.Replaces = targetSequence.Replaces;
+                        WriteOutput(GetSpacedString(replacementSong.Name, len:49) + " ~-> " + targetSequence.Name);
+                        Unassigned.Remove(replacementSong);
+                    }
+                    else
+                        throw new Exception("Cannot randomize music on this seed with available music");
+                }
+            }
+            RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
+
+            String dir = Path.GetDirectoryName(_settings.OutputROMFilename);
+            String path = $"{Path.GetFileNameWithoutExtension(_settings.OutputROMFilename)}";
+            // spoiler log should already be written by the time we reach this far
+            if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
+                path += "_SpoilerLog.txt";
+            else // TODO add HTML log compatibility
+                path += "_SongLog.txt";
+
+            using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append:true))
+            {
+                sw.WriteLine(""); // spacer
+                sw.Write(log);
+            }
         }
 
         #endregion
 
+        // turns the sequence slot into a pointer, which points at another song, in substituteSlotIndex
+        // the slot at seqSlotIndex is marked such that, instead of a new sequence being put there
+        // a pointer to another song, at substituteSlotIndex, is used instead.
+        // this frees up a song that would get stuck where we could never hear it anyway,
+        // but its not completely empty if someone bugs out and gets there somehow
+        //  this is the same concept DB used to nulify the intro song
+        private void ConvertSequenceSlotToPointer(int seqSlotIndex, int substituteSlotIndex)
+        {
+            var targetSeq = RomData.TargetSequences.Find(u => u.Replaces == seqSlotIndex);
+            var substituteSeq = RomData.TargetSequences.Find(u => u.Replaces == substituteSlotIndex);
+            if (targetSeq != null && substituteSeq != null)
+            {
+                targetSeq.PreviousSlot = targetSeq.Replaces; // we'll need at audioseq build
+                targetSeq.Replaces = substituteSeq.Replaces; // point the target at the substitute
+                RomData.PointerizedSequences.Add(targetSeq); // save the sequence for audioseq
+                RomData.TargetSequences.Remove(targetSeq);   // close the slot
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Could not convert slot to pointer:" + seqSlotIndex.ToString("X"));
+            }
+        }
+
         private void WriteAudioSeq(Random random)
         {
+            RomData.PointerizedSequences = new List<SequenceInfo>();
             if (_settings.Music != Music.Random)
             {
                 return;

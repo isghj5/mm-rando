@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
+
 
 namespace MMRando.Utils
 {
@@ -57,18 +59,57 @@ namespace MMRando.Utils
                     if (sourceSequence.Name == "mmr-f-sot")
                     {
                         sourceSequence.Replaces = 0x33;
-                    };
+                    }
 
                     i += 3;
+
+                    // if file doesn't exist, was removed by user, ignore
+                    if (File.Exists(Values.MusicDirectory + targetName) == false)
+                    {
+                        //TODO write debug to the debug log
+                        continue;
+                    }
+
                 };
 
                 if (sourceSequence.MM_seq != 0x18)
                 {
                     RomData.SequenceList.Add(sourceSequence);
                 };
-            };
+            }; // end while (i < lines.Length)
+
+            // check if files were added by user to music folder
+            // we're not going to check for non-zseq here until I find an easy way to do that
+            //  Just going to trust users aren't stupid enough to think renaming a mp3 to zseq will work
+            foreach (String filePath in Directory.GetFiles(Values.MusicDirectory, "*.zseq"))
+            {
+                String filename = Path.GetFileName(filePath);
+
+                // test if file has enough delimiters to separate data into name_bank_formats
+                String[] pieces = filename.Split('_');
+                if (pieces.Length != 3)
+                {
+                    continue;
+                }
+
+                var sourceName = filename;
+                var sourceTypeString = pieces[2].Substring(0, pieces[2].Length - 5);
+                var sourceInstrument = Convert.ToInt32(pieces[1], 16);
+                var sourceType = Array.ConvertAll(sourceTypeString.Split('-'), int.Parse).ToList();
+
+                SequenceInfo sourceSequence = new SequenceInfo
+                {
+                    Name = sourceName,
+                    Type = sourceType,
+                    Instrument = sourceInstrument
+                };
+
+                RomData.SequenceList.Add(sourceSequence);
+            }
+
         }
 
+        // gets passed RomData.SequenceList in Builder.cs::WriteAudioSeq
         public static void RebuildAudioSeq(List<SequenceInfo> SequenceList)
         {
             List<MMSequence> OldSeq = new List<MMSequence>();
@@ -78,7 +119,7 @@ namespace MMRando.Utils
             for (int i = 0; i < 128; i++)
             {
                 MMSequence entry = new MMSequence();
-                if (i == 0x1E)
+                if (i == 0x1E) // intro music when link gets ambushed
                 {
                     entry.Addr = 2;
                     entry.Size = 0;
@@ -101,7 +142,7 @@ namespace MMRando.Utils
                     {
                         if ((entry.Addr > 0) && (entry.Addr < 128))
                         {
-                            if (SequenceList[j].Replaces != 0x28)
+                            if (SequenceList[j].Replaces != 0x28) // 28 (fairy fountain)
                             {
                                 SequenceList[j].Replaces = entry.Addr;
                             }
@@ -131,15 +172,23 @@ namespace MMRando.Utils
                     newentry.Addr = addr;
                 }
 
+                int p = RomData.PointerizedSequences.FindIndex(u => u.PreviousSlot == i);
                 int j = SequenceList.FindIndex(u => u.Replaces == i);
-                if (j != -1)
+                if (p != -1) // found song we want to pointerize
                 {
-                    if (SequenceList[j].MM_seq != -1)
+                    Debug.WriteLine("Sequence slot " + i.ToString("X") + " *->  " + RomData.PointerizedSequences[p].Replaces.ToString("X"));
+                    newentry.Addr = RomData.PointerizedSequences[p].Replaces;
+                    newentry.Size = 0;
+                    // isn't there like 8 bytes of zeros here? where does that go?
+                }
+                else if (j != -1) // new song to replace old slot found
+                {
+                    if (SequenceList[j].MM_seq != -1) // old mm song, just copy over
                     {
                         newentry.Size = OldSeq[SequenceList[j].MM_seq].Size;
                         newentry.Data = OldSeq[SequenceList[j].MM_seq].Data;
                     }
-                    else
+                    else // non mm, load file and add
                     {
                         BinaryReader sequence = new BinaryReader(File.Open(SequenceList[j].Name, FileMode.Open));
                         int len = (int)sequence.BaseStream.Length;
@@ -147,6 +196,8 @@ namespace MMRando.Utils
                         sequence.Read(data, 0, len);
                         sequence.Close();
 
+                        // I think this checks if the sequence type is correct for MM
+                        //  because DB ripped sequences from SF64/SM64/MK64 without modifying them
                         if (data[1] != 0x20)
                         {
                             data[1] = 0x20;
@@ -156,13 +207,14 @@ namespace MMRando.Utils
                         newentry.Data = data;
                     }
                 }
-                else
+                else // not found, song wasn't touched by rando, just transfer over
                 {
                     newentry.Size = OldSeq[i].Size;
                     newentry.Data = OldSeq[i].Data;
                 }
-                NewSeq.Add(newentry);
 
+                NewSeq.Add(newentry);
+                // TODO is there not a better way to write this?
                 if (newentry.Data != null)
                 {
                     NewAudioSeq = NewAudioSeq.Concat(newentry.Data).ToArray();
