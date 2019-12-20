@@ -6,6 +6,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Diagnostics;
+
 
 namespace MMRando.Utils
 {
@@ -78,7 +80,7 @@ namespace MMRando.Utils
             for (int i = 0; i < 128; i++)
             {
                 MMSequence entry = new MMSequence();
-                if (i == 0x1E)
+                if (i == 0x1E) // intro music when link gets ambushed
                 {
                     entry.Addr = 2;
                     entry.Size = 0;
@@ -101,7 +103,7 @@ namespace MMRando.Utils
                     {
                         if ((entry.Addr > 0) && (entry.Addr < 128))
                         {
-                            if (SequenceList[j].Replaces != 0x28)
+                            if (SequenceList[j].Replaces != 0x28) // 28 (fairy fountain)
                             {
                                 SequenceList[j].Replaces = entry.Addr;
                             }
@@ -131,15 +133,23 @@ namespace MMRando.Utils
                     newentry.Addr = addr;
                 }
 
+                int p = RomData.PointerizedSequences.FindIndex(u => u.PreviousSlot == i);
                 int j = SequenceList.FindIndex(u => u.Replaces == i);
-                if (j != -1)
+                if (p != -1) // found song we want to pointerize
                 {
-                    if (SequenceList[j].MM_seq != -1)
+                    Debug.WriteLine("Sequence slot " + i.ToString("X") + " *->  " + RomData.PointerizedSequences[p].Replaces.ToString("X"));
+                    newentry.Addr = RomData.PointerizedSequences[p].Replaces;
+                    newentry.Size = 0;
+                    OldSeq.Add(newentry);
+                }
+                else if (j != -1) // new song to replace old slot found
+                {
+                    if (SequenceList[j].MM_seq != -1) // old mm song, just copy over
                     {
                         newentry.Size = OldSeq[SequenceList[j].MM_seq].Size;
                         newentry.Data = OldSeq[SequenceList[j].MM_seq].Data;
                     }
-                    else
+                    else // non mm, load file and add
                     {
                         BinaryReader sequence = new BinaryReader(File.Open(SequenceList[j].Name, FileMode.Open));
                         int len = (int)sequence.BaseStream.Length;
@@ -156,13 +166,13 @@ namespace MMRando.Utils
                         newentry.Data = data;
                     }
                 }
-                else
+                else // not found, song wasn't touched by rando, just transfer over
                 {
                     newentry.Size = OldSeq[i].Size;
                     newentry.Data = OldSeq[i].Data;
                 }
-                NewSeq.Add(newentry);
 
+                NewSeq.Add(newentry);
                 if (newentry.Data != null)
                 {
                     NewAudioSeq = NewAudioSeq.Concat(newentry.Data).ToArray();

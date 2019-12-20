@@ -10,5 +10,6 @@ namespace MMRando.Models.Rom
         public int MM_seq { get; set; } = -1;
         public List<int> Type { get; set; } = new List<int>();
         public int Instrument { get; set; }
+        public int PreviousSlot { get; set; } = -1;
     }
 }

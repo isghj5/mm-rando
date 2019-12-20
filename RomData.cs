@@ -7,6 +7,7 @@ namespace MMRando
     {
         public static List<SequenceInfo> SequenceList { get; set; }
         public static List<SequenceInfo> TargetSequences { get; set; }
+        public static List<SequenceInfo> PointerizedSequences { get; set; }
         public static List<MMFile> MMFileList { get; set; }
         public static List<Scene> SceneList { get; set; }
         public static Dictionary<int, GetItemEntry> GetItemList { get; set; }
