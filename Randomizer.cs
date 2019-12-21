@@ -17,7 +17,6 @@ using System.Linq;
 
 namespace MMRando
 {
-
     public class Randomizer
     {
         private Random _random { get; set; }
@@ -27,7 +26,7 @@ namespace MMRando
             set => _random = value;
         }
 
-        public List<ItemObject> ItemList { get; set; }
+        public ItemList ItemList { get; set; }
 
         #region Dependence and Conditions
         List<Item> ConditionsChecked { get; set; }
@@ -123,10 +122,10 @@ namespace MMRando
             }
 
             var areaAccessObjects = new ItemObject[] {
-                ItemList[(int)Item.AreaWoodFallTempleAccess],
-                ItemList[(int)Item.AreaSnowheadTempleAccess],
-                ItemList[(int)Item.AreaInvertedStoneTowerTempleAccess],
-                ItemList[(int)Item.AreaGreatBayTempleAccess]
+                ItemList[Item.AreaWoodFallTempleAccess],
+                ItemList[Item.AreaSnowheadTempleAccess],
+                ItemList[Item.AreaInvertedStoneTowerTempleAccess],
+                ItemList[Item.AreaGreatBayTempleAccess]
             };
 
             var areaAccessObjectIndexes = new int[] {
@@ -144,10 +143,10 @@ namespace MMRando
             }
 
             var areaClearObjects = new ItemObject[] {
-                ItemList[(int)Item.AreaWoodFallTempleClear],
-                ItemList[(int)Item.AreaSnowheadTempleClear],
-                ItemList[(int)Item.AreaStoneTowerClear],
-                ItemList[(int)Item.AreaGreatBayTempleClear]
+                ItemList[Item.AreaWoodFallTempleClear],
+                ItemList[Item.AreaSnowheadTempleClear],
+                ItemList[Item.AreaStoneTowerClear],
+                ItemList[Item.AreaGreatBayTempleClear]
             };
 
             var areaClearObjectIndexes = new int[] {
@@ -216,14 +215,24 @@ namespace MMRando
             }
             if (_settings.AddShopItems)
             {
-                ItemList[(int)Item.ShopItemWitchBluePotion].DependsOnItems?.Remove(Item.BottleCatchMushroom);
+                ItemList[Item.ShopItemWitchBluePotion].DependsOnItems?.Remove(Item.BottleCatchMushroom);
+            }
+            if (_settings.RandomizeBottleCatchContents && _settings.LogicMode == LogicMode.Casual)
+            {
+                var anyBottleIndex = ItemList.FindIndex(io => io.Name == "Any Bottle");
+                var twoBottlesIndex = ItemList.FindIndex(io => io.Name == "2 Bottles");
+                if (anyBottleIndex >= 0 && twoBottlesIndex >= 0)
+                {
+                    ItemList[Item.BottleCatchPrincess].DependsOnItems.Remove((Item)anyBottleIndex);
+                    ItemList[Item.BottleCatchPrincess].DependsOnItems.Add((Item)twoBottlesIndex);
+                }
             }
             // todo handle progressive upgrades here.
         }
 
         private void PrepareRulesetItemData()
         {
-            ItemList = new List<ItemObject>();
+            ItemList = new ItemList();
 
             if (_settings.LogicMode == LogicMode.Casual
                 || _settings.LogicMode == LogicMode.Glitched
@@ -236,7 +245,70 @@ namespace MMRando
             {
                 PopulateItemListWithoutLogic();
             }
+
+            if (_settings.UseCustomItemList)
+            {
+                UpdateCustomItemListSettings();
+            }
+
+            UpdateLogicForSettings();
+
             ItemUtils.PrepareJunkItems(ItemList);
+            if (_settings.CustomJunkLocations.Count > ItemUtils.JunkItems.Count)
+            {
+                throw new Exception($"Too many Enforced Junk Locations. Select up to {ItemUtils.JunkItems.Count}.");
+            }
+        }
+
+        private void UpdateCustomItemListSettings()
+        {
+            if (_settings.CustomItemList.Contains(-1))
+            {
+                throw new Exception("Invalid custom item string.");
+            }
+
+            // Keep shop items vanilla, unless custom item list contains a shop item
+            _settings.AddShopItems = false;
+
+            // Keep cows vanilla, unless custom item list contains a cow
+            _settings.AddCowMilk = false;
+
+            // Keep skulltula tokens vanilla, unless custom item list contains a token
+            _settings.AddSkulltulaTokens = false;
+
+            // Keep stray fairies vanilla, unless custom item list contains a fairy
+            _settings.AddStrayFairies = false;
+
+            // Keep scoops vanilla, unless custom item list contains a scoop
+            _settings.RandomizeBottleCatchContents = false;
+
+            foreach (var item in _settings.CustomItemList.Select(ItemUtils.AddItemOffset).Cast<Item>())
+            {
+                if (ItemUtils.IsShopItem(item))
+                {
+                    _settings.AddShopItems = true;
+                }
+
+                if (ItemUtils.IsCowItem(item))
+                {
+                    _settings.AddCowMilk = true;
+                }
+
+                if (ItemUtils.IsSkulltulaToken(item))
+                {
+                    _settings.AddSkulltulaTokens = true;
+                }
+
+                if (ItemUtils.IsStrayFairy(item))
+                {
+                    _settings.AddStrayFairies = true;
+                }
+
+                if (ItemUtils.IsBottleCatchContent(item))
+                {
+                    _settings.RandomizeBottleCatchContents = true;
+                }
+            }
         }
 
         /// <summary>
@@ -265,7 +337,7 @@ namespace MMRando
         {
             if (Migrator.GetVersion(data.ToList()) != Migrator.CurrentVersion)
             {
-                throw new InvalidDataException("Logic file is out of date or invalid. Open it in the Logic Editor to bring it up to date.");
+                throw new Exception("Logic file is out of date or invalid. Open it in the Logic Editor to bring it up to date.");
             }
 
             int itemId = 0;
@@ -388,37 +460,37 @@ namespace MMRando
         {
             Debug.WriteLine($"CheckDependence({currentItem}, {target})");
 
-            if (ItemList[(int)currentItem].TimeNeeded == 0 && ItemUtils.IsJunk(currentItem))
+            if (ItemList[currentItem].TimeNeeded == 0 && ItemUtils.IsJunk(currentItem))
             {
                 return Dependence.NotDependent;
             }
 
             //check timing
-            if (ItemList[(int)currentItem].TimeNeeded != 0 && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary()))
+            if (ItemList[currentItem].TimeNeeded != 0 && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary()))
             {
-                if ((ItemList[(int)currentItem].TimeNeeded & ItemList[(int)target].TimeAvailable) == 0)
+                if ((ItemList[currentItem].TimeNeeded & ItemList[target].TimeAvailable) == 0)
                 {
-                    Debug.WriteLine($"{currentItem} is needed at {ItemList[(int)currentItem].TimeNeeded} but {target} is only available at {ItemList[(int)target].TimeAvailable}");
+                    Debug.WriteLine($"{currentItem} is needed at {ItemList[currentItem].TimeNeeded} but {target} is only available at {ItemList[target].TimeAvailable}");
                     return Dependence.Dependent;
                 }
             }
 
-            if (ItemList[(int)target].HasConditionals)
+            if (ItemList[target].HasConditionals)
             {
-                if (ItemList[(int)target].Conditionals
-                    .FindAll(u => u.Contains(currentItem)).Count == ItemList[(int)target].Conditionals.Count)
+                if (ItemList[target].Conditionals
+                    .FindAll(u => u.Contains(currentItem)).Count == ItemList[target].Conditionals.Count)
                 {
                     Debug.WriteLine($"All conditionals of {target} contains {currentItem}");
                     return Dependence.Dependent;
                 }
 
-                if (ItemList[(int)currentItem].HasCannotRequireItems)
+                if (ItemList[currentItem].HasCannotRequireItems)
                 {
-                    for (int i = 0; i < ItemList[(int)currentItem].CannotRequireItems.Count; i++)
+                    for (int i = 0; i < ItemList[currentItem].CannotRequireItems.Count; i++)
                     {
-                        if (ItemList[(int)target].Conditionals
-                            .FindAll(u => u.Contains(ItemList[(int)currentItem].CannotRequireItems[i])
-                            || u.Contains(currentItem)).Count == ItemList[(int)target].Conditionals.Count)
+                        if (ItemList[target].Conditionals
+                            .FindAll(u => u.Contains(ItemList[currentItem].CannotRequireItems[i])
+                            || u.Contains(currentItem)).Count == ItemList[target].Conditionals.Count)
                         {
                             Debug.WriteLine($"All conditionals of {target} cannot be required by {currentItem}");
                             return Dependence.Dependent;
@@ -428,22 +500,22 @@ namespace MMRando
 
                 int k = 0;
                 var circularDependencies = new List<Item>();
-                for (int i = 0; i < ItemList[(int)target].Conditionals.Count; i++)
+                for (int i = 0; i < ItemList[target].Conditionals.Count; i++)
                 {
                     bool match = false;
-                    for (int j = 0; j < ItemList[(int)target].Conditionals[i].Count; j++)
+                    for (int j = 0; j < ItemList[target].Conditionals[i].Count; j++)
                     {
-                        var d = ItemList[(int)target].Conditionals[i][j];
-                        if (!d.IsFake() && !ItemList[(int)d].NewLocation.HasValue && d != currentItem)
+                        var d = ItemList[target].Conditionals[i][j];
+                        if (!d.IsFake() && !ItemList[d].NewLocation.HasValue && d != currentItem)
                         {
                             continue;
                         }
 
                         int[] check = new int[] { (int)target, i, j };
 
-                        if (ItemList[(int)d].NewLocation.HasValue)
+                        if (ItemList[d].NewLocation.HasValue)
                         {
-                            d = ItemList[(int)d].NewLocation.Value;
+                            d = ItemList[d].NewLocation.Value;
                         }
                         if (d == currentItem)
                         {
@@ -489,7 +561,7 @@ namespace MMRando
                     }
                 }
 
-                if (k == ItemList[(int)target].Conditionals.Count)
+                if (k == ItemList[target].Conditionals.Count)
                 {
                     if (circularDependencies.Any())
                     {
@@ -500,15 +572,15 @@ namespace MMRando
                 }
             }
 
-            if (ItemList[(int)target].DependsOnItems == null)
+            if (ItemList[target].DependsOnItems == null)
             {
                 return Dependence.NotDependent;
             }
 
             //cycle through all things
-            for (int i = 0; i < ItemList[(int)target].DependsOnItems.Count; i++)
+            for (int i = 0; i < ItemList[target].DependsOnItems.Count; i++)
             {
-                var dependency = ItemList[(int)target].DependsOnItems[i];
+                var dependency = ItemList[target].DependsOnItems[i];
                 if (!currentItem.IsTemporary() && target == Item.MaskBlast && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
                 {
                     // Permanent items ignore Kafei Letter and Pendant on Blast Mask check.
@@ -520,24 +592,24 @@ namespace MMRando
                     return Dependence.Dependent;
                 }
 
-                if (ItemList[(int)currentItem].HasCannotRequireItems)
+                if (ItemList[currentItem].HasCannotRequireItems)
                 {
-                    for (int j = 0; j < ItemList[(int)currentItem].CannotRequireItems.Count; j++)
+                    for (int j = 0; j < ItemList[currentItem].CannotRequireItems.Count; j++)
                     {
-                        if (ItemList[(int)target].DependsOnItems.Contains(ItemList[(int)currentItem].CannotRequireItems[j]))
+                        if (ItemList[target].DependsOnItems.Contains(ItemList[currentItem].CannotRequireItems[j]))
                         {
-                            Debug.WriteLine($"Dependence {ItemList[(int)currentItem].CannotRequireItems[j]} of {target} cannot be required by {currentItem}");
+                            Debug.WriteLine($"Dependence {ItemList[currentItem].CannotRequireItems[j]} of {target} cannot be required by {currentItem}");
                             return Dependence.Dependent;
                         }
                     }
                 }
 
                 if (dependency.IsFake()
-                    || ItemList[(int)dependency].NewLocation.HasValue)
+                    || ItemList[dependency].NewLocation.HasValue)
                 {
-                    if (ItemList[(int)dependency].NewLocation.HasValue)
+                    if (ItemList[dependency].NewLocation.HasValue)
                     {
-                        dependency = ItemList[(int)dependency].NewLocation.Value;
+                        dependency = ItemList[dependency].NewLocation.Value;
                     }
 
                     if (dependencyPath.Contains(dependency))
@@ -594,9 +666,9 @@ namespace MMRando
                             {
                                 ItemList[x].CannotRequireItems = new List<Item>();
                             }
-                            if (!ItemList[(int)d].CannotRequireItems.Contains(currentItem))
+                            if (!ItemList[d].CannotRequireItems.Contains(currentItem))
                             {
-                                ItemList[(int)d].CannotRequireItems.Add(currentItem);
+                                ItemList[d].CannotRequireItems.Add(currentItem);
                             }
                         }
                     }
@@ -774,35 +846,35 @@ namespace MMRando
             {
                 if (!currentItem.IsTemporary())
                 {
-                    ItemList[(int)target].DependsOnItems?.Remove(Item.TradeItemKafeiLetter);
-                    ItemList[(int)target].DependsOnItems?.Remove(Item.TradeItemPendant);
+                    ItemList[target].DependsOnItems?.Remove(Item.TradeItemKafeiLetter);
+                    ItemList[target].DependsOnItems?.Remove(Item.TradeItemPendant);
                 }
             }
 
             ConditionsChecked.Add(target);
             UpdateConditionals(currentItem, target);
 
-            if (!ItemList[(int)target].HasDependencies)
+            if (!ItemList[target].HasDependencies)
             {
                 return;
             }
 
-            for (int i = 0; i < ItemList[(int)target].DependsOnItems.Count; i++)
+            for (int i = 0; i < ItemList[target].DependsOnItems.Count; i++)
             {
-                var dependency = ItemList[(int)target].DependsOnItems[i];
-                if (!ItemList[(int)dependency].HasCannotRequireItems)
+                var dependency = ItemList[target].DependsOnItems[i];
+                if (!ItemList[dependency].HasCannotRequireItems)
                 {
-                    ItemList[(int)dependency].CannotRequireItems = new List<Item>();
+                    ItemList[dependency].CannotRequireItems = new List<Item>();
                 }
-                if (!ItemList[(int)dependency].CannotRequireItems.Contains(currentItem))
+                if (!ItemList[dependency].CannotRequireItems.Contains(currentItem))
                 {
-                    ItemList[(int)dependency].CannotRequireItems.Add(currentItem);
+                    ItemList[dependency].CannotRequireItems.Add(currentItem);
                 }
-                if (dependency.IsFake() || ItemList[(int)dependency].NewLocation.HasValue)
+                if (dependency.IsFake() || ItemList[dependency].NewLocation.HasValue)
                 {
-                    if (ItemList[(int)dependency].NewLocation.HasValue)
+                    if (ItemList[dependency].NewLocation.HasValue)
                     {
-                        dependency = ItemList[(int)dependency].NewLocation.Value;
+                        dependency = ItemList[dependency].NewLocation.Value;
                     }
 
                     if (!ConditionsChecked.Contains(dependency))
@@ -812,21 +884,21 @@ namespace MMRando
                         CheckConditionals(currentItem, dependency, childPath);
                     }
                 }
-                else if (ItemList[(int)currentItem].TimeNeeded != 0 && dependency.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary()))
+                else if (ItemList[currentItem].TimeNeeded != 0 && dependency.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary()))
                 {
-                    if (ItemList[(int)dependency].TimeNeeded == 0)
+                    if (ItemList[dependency].TimeNeeded == 0)
                     {
-                        ItemList[(int)dependency].TimeNeeded = ItemList[(int)currentItem].TimeNeeded;
+                        ItemList[dependency].TimeNeeded = ItemList[currentItem].TimeNeeded;
                     }
                     else
                     {
-                        ItemList[(int)dependency].TimeNeeded &= ItemList[(int)currentItem].TimeNeeded;
+                        ItemList[dependency].TimeNeeded &= ItemList[currentItem].TimeNeeded;
                     }
                 }
             }
 
             // todo double check this
-            //ItemList[(int)target].DependsOnItems.RemoveAll(u => u == -1);
+            //ItemList[target].DependsOnItems.RemoveAll(u => u == -1);
         }
 
         private bool CheckMatch(Item currentItem, Item target)
@@ -890,7 +962,7 @@ namespace MMRando
 
         private void PlaceItem(Item currentItem, List<Item> targets)
         {
-            var currentItemObject = ItemList[(int)currentItem];
+            var currentItemObject = ItemList[currentItem];
             if (currentItemObject.NewLocation.HasValue)
             {
                 return;
@@ -907,7 +979,7 @@ namespace MMRando
             {
                 if (availableItems.Count == 0)
                 {
-                    throw new Exception($"Unable to place {currentItem.Name()} anywhere.");
+                    throw new RandomizationException($"Unable to place {currentItem.Name()} anywhere.");
                 }
 
                 var targetLocation = availableItems.Random(Random);// Random.Next(availableItems.Count);
@@ -942,8 +1014,6 @@ namespace MMRando
             {
                 Setup();
             }
-
-            UpdateLogicForSettings();
 
             var itemPool = new List<Item>();
 
@@ -1168,7 +1238,7 @@ namespace MMRando
             var availableStartingItems = (_settings.NoStartingItems
                 ? ItemUtils.AllRupees()
                 : ItemUtils.StartingItems())
-                .Where(item => !ItemList[(int)item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item))
+                .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item))
                 .Cast<Item?>()
                 .ToList();
             foreach (var location in freeItemLocations)
@@ -1181,8 +1251,8 @@ namespace MMRando
                     {
                         throw new Exception("Failed to replace a starting item.");
                     }
-                    ItemList[(int)placedItem].NewLocation = location;
-                    ItemList[(int)placedItem].IsRandomized = true;
+                    ItemList[placedItem.Value].NewLocation = location;
+                    ItemList[placedItem.Value].IsRandomized = true;
                     itemPool.Remove(location);
                     availableStartingItems.Remove(placedItem.Value);
                 }
@@ -1233,7 +1303,7 @@ namespace MMRando
         {
             if (_settings.ExcludeSongOfSoaring)
             {
-                ItemList[(int)Item.SongSoaring].NewLocation = Item.SongSoaring;
+                ItemList[Item.SongSoaring].NewLocation = Item.SongSoaring;
             }
 
             if (!_settings.AddSongs)
@@ -1318,7 +1388,7 @@ namespace MMRando
         {
             for (var i = Item.BottleCatchFairy; i <= Item.BottleCatchMushroom; i++)
             {
-                ItemList[(int)i].NewLocation = i;
+                ItemList[i].NewLocation = i;
             }
         }
 
@@ -1330,7 +1400,7 @@ namespace MMRando
             var itemPool = new List<Item>();
             for (var i = Item.BottleCatchFairy; i <= Item.BottleCatchMushroom; i++)
             {
-                if (ItemList[(int)i].NewLocation.HasValue)
+                if (ItemList[i].NewLocation.HasValue)
                 {
                     continue;
                 }
@@ -1350,7 +1420,7 @@ namespace MMRando
         {
             for (var i = Item.ChestLensCaveRedRupee; i <= Item.IkanaScrubGoldRupee; i++)
             {
-                ItemList[(int)i].NewLocation = i;
+                ItemList[i].NewLocation = i;
             }
         }
 
@@ -1361,19 +1431,19 @@ namespace MMRando
         {
             for (var i = Item.ShopItemTradingPostRedPotion; i <= Item.ShopItemZoraRedPotion; i++)
             {
-                ItemList[(int)i].NewLocation = i;
+                ItemList[i].NewLocation = i;
             }
 
-            ItemList[(int)Item.ItemBombBag].NewLocation = Item.ItemBombBag;
-            ItemList[(int)Item.UpgradeBigBombBag].NewLocation = Item.UpgradeBigBombBag;
-            ItemList[(int)Item.MaskAllNight].NewLocation = Item.MaskAllNight;
+            ItemList[Item.ItemBombBag].NewLocation = Item.ItemBombBag;
+            ItemList[Item.UpgradeBigBombBag].NewLocation = Item.UpgradeBigBombBag;
+            ItemList[Item.MaskAllNight].NewLocation = Item.MaskAllNight;
 
-            ItemList[(int)Item.ShopItemMilkBarChateau].NewLocation = Item.ShopItemMilkBarChateau;
-            ItemList[(int)Item.ShopItemMilkBarMilk].NewLocation = Item.ShopItemMilkBarMilk;
-            ItemList[(int)Item.ShopItemBusinessScrubMagicBean].NewLocation = Item.ShopItemBusinessScrubMagicBean;
-            ItemList[(int)Item.ShopItemBusinessScrubGreenPotion].NewLocation = Item.ShopItemBusinessScrubGreenPotion;
-            ItemList[(int)Item.ShopItemBusinessScrubBluePotion].NewLocation = Item.ShopItemBusinessScrubBluePotion;
-            ItemList[(int)Item.ShopItemGormanBrosMilk].NewLocation = Item.ShopItemGormanBrosMilk;
+            ItemList[Item.ShopItemMilkBarChateau].NewLocation = Item.ShopItemMilkBarChateau;
+            ItemList[Item.ShopItemMilkBarMilk].NewLocation = Item.ShopItemMilkBarMilk;
+            ItemList[Item.ShopItemBusinessScrubMagicBean].NewLocation = Item.ShopItemBusinessScrubMagicBean;
+            ItemList[Item.ShopItemBusinessScrubGreenPotion].NewLocation = Item.ShopItemBusinessScrubGreenPotion;
+            ItemList[Item.ShopItemBusinessScrubBluePotion].NewLocation = Item.ShopItemBusinessScrubBluePotion;
+            ItemList[Item.ShopItemGormanBrosMilk].NewLocation = Item.ShopItemGormanBrosMilk;
         }
 
         /// <summary>
@@ -1383,7 +1453,7 @@ namespace MMRando
         {
             for (var i = Item.ItemWoodfallMap; i <= Item.ItemStoneTowerKey4; i++)
             {
-                ItemList[(int)i].NewLocation = i;
+                ItemList[i].NewLocation = i;
             };
         }
 
@@ -1394,7 +1464,7 @@ namespace MMRando
         {
             for (var i = Item.HeartPieceDekuTrial; i <= Item.ChestLinkTrialBombchu10; i++)
             {
-                ItemList[(int)i].NewLocation = i;
+                ItemList[i].NewLocation = i;
             }
         }
 
@@ -1405,9 +1475,9 @@ namespace MMRando
         {
             for (var i = Item.FairyMagic; i <= Item.ItemFairySword; i++)
             {
-                ItemList[(int)i].NewLocation = i;
+                ItemList[i].NewLocation = i;
             }
-            ItemList[(int)Item.MaskGreatFairy].NewLocation = Item.MaskGreatFairy;
+            ItemList[Item.MaskGreatFairy].NewLocation = Item.MaskGreatFairy;
         }
 
         /// <summary>
@@ -1415,7 +1485,7 @@ namespace MMRando
         /// </summary>
         private void PreserveNutChest()
         {
-            ItemList[(int)Item.ChestPreClocktownDekuNut].NewLocation = Item.ChestPreClocktownDekuNut;
+            ItemList[Item.ChestPreClocktownDekuNut].NewLocation = Item.ChestPreClocktownDekuNut;
         }
 
         /// <summary>
@@ -1425,7 +1495,7 @@ namespace MMRando
         {
             for (var i = Item.StartingSword; i <= Item.StartingHeartContainer2; i++)
             {
-                ItemList[(int)i].NewLocation = i;
+                ItemList[i].NewLocation = i;
             }
         }
 
@@ -1436,7 +1506,7 @@ namespace MMRando
         {
             for (var i = Item.ItemRanchBarnMainCowMilk; i <= Item.ItemCoastGrottoCowMilk2; i++)
             {
-                ItemList[(int)i].NewLocation = i;
+                ItemList[i].NewLocation = i;
             }
         }
 
@@ -1447,7 +1517,7 @@ namespace MMRando
         {
             for (var i = Item.CollectibleSwampSpiderToken1; i <= Item.CollectibleOceanSpiderToken30; i++)
             {
-                ItemList[(int)i].NewLocation = i;
+                ItemList[i].NewLocation = i;
             }
         }
 
@@ -1458,7 +1528,7 @@ namespace MMRando
         {
             for (var i = Item.CollectibleStrayFairyClockTown; i <= Item.CollectibleStrayFairyStoneTower15; i++)
             {
-                ItemList[(int)i].NewLocation = i;
+                ItemList[i].NewLocation = i;
             }
         }
 
@@ -1468,7 +1538,7 @@ namespace MMRando
             {
                 if (!ItemUtils.IsShopItem(i))
                 {
-                    ItemList[(int)i].NewLocation = i;
+                    ItemList[i].NewLocation = i;
                 }
             }
         }
@@ -1478,7 +1548,7 @@ namespace MMRando
         /// </summary>
         private void PreserveGlitchedCowMilk()
         {
-            ItemList[(int)Item.ItemRanchBarnOtherCowMilk2].NewLocation = Item.ItemRanchBarnOtherCowMilk2;
+            ItemList[Item.ItemRanchBarnOtherCowMilk2].NewLocation = Item.ItemRanchBarnOtherCowMilk2;
         }
 
         /// <summary>
@@ -1489,7 +1559,7 @@ namespace MMRando
             var itemPool = new List<Item>();
             for (var i = Item.SongHealing; i <= Item.SongOath; i++)
             {
-                if (ItemList[(int)i].NewLocation.HasValue)
+                if (ItemList[i].NewLocation.HasValue)
                 {
                     continue;
                 }
@@ -1507,18 +1577,6 @@ namespace MMRando
         /// </summary>
         private void SetupCustomItems()
         {
-            // Keep shop items vanilla, unless custom item list contains a shop item
-            _settings.AddShopItems = false;
-
-            // Keep cows vanilla, unless custom item list contains a cow
-            _settings.AddCowMilk = false;
-
-            // Keep skulltula tokens vanilla, unless custom item list contains a token
-            _settings.AddSkulltulaTokens = false;
-
-            // Keep stray fairies vanilla, unless custom item list contains a fairy
-            _settings.AddStrayFairies = false;
-
             // Make all items vanilla, and override using custom item list
             MakeAllItemsVanilla();
 
@@ -1541,7 +1599,7 @@ namespace MMRando
         {
             foreach (var location in ItemUtils.AllLocations())
             {
-                ItemList[(int)location].NewLocation = location;
+                ItemList[location].NewLocation = location;
             }
         }
 
@@ -1552,7 +1610,7 @@ namespace MMRando
         {
             if (_settings.CustomItemList.Contains(-1))
             {
-                throw new InvalidDataException("Invalid custom item string.");
+                throw new Exception("Invalid custom item string.");
             }
             for (int i = 0; i < _settings.CustomItemList.Count; i++)
             {
@@ -1566,34 +1624,20 @@ namespace MMRando
                 {
                     ItemList[selectedItemIndex].NewLocation = null;
                 }
-
-                if (ItemUtils.IsShopItem((Item)selectedItem))
-                {
-                    _settings.AddShopItems = true;
-                }
-
-                if (ItemUtils.IsCowItem((Item)selectedItem))
-                {
-                    _settings.AddCowMilk = true;
-                }
-
-                if (ItemUtils.IsSkulltulaToken((Item)selectedItem))
-                {
-                    _settings.AddSkulltulaTokens = true;
-                }
-
-                if (ItemUtils.IsStrayFairy((Item)selectedItem))
-                {
-                    _settings.AddStrayFairies = true;
-                }
             }
         }
 
-        private ReadOnlyCollection<Item> GetImportantItems(Item item, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, ReadOnlyCollection<Item>> checkedItems = null, params Item[] exclude)
+        public class LogicPaths
+        {
+            public ReadOnlyCollection<Item> Required { get; set; }
+            public ReadOnlyCollection<Item> Important { get; set; }
+        }
+
+        private LogicPaths GetImportantItems(Item item, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedItems = null, params Item[] exclude)
         {
             if (_settings.CustomStartingItemList.Contains(item))
             {
-                return new List<Item>().AsReadOnly();
+                return new LogicPaths();
             }
             if (exclude.Contains(item))
             {
@@ -1610,62 +1654,95 @@ namespace MMRando
             logicPath.Add(item);
             if (checkedItems == null)
             {
-                checkedItems = new Dictionary<Item, ReadOnlyCollection<Item>>();
+                checkedItems = new Dictionary<Item, LogicPaths>();
             }
             if (checkedItems.ContainsKey(item))
             {
+                if (logicPath.Intersect(checkedItems[item].Required).Any())
+                {
+                    return null;
+                }
                 return checkedItems[item];
             }
-            var itemObject = ItemList[(int)item];
+            var itemObject = ItemList[item];
             var locationId = itemObject.NewLocation.HasValue ? itemObject.NewLocation : item;
             var locationLogic = itemLogic[(int)locationId];
-            var result = new List<Item>();
+            var required = new List<Item>();
+            var important = new List<Item>();
             if (locationLogic.RequiredItemIds != null && locationLogic.RequiredItemIds.Any())
             {
                 foreach (var requiredItemId in locationLogic.RequiredItemIds)
                 {
-                    var requiredChildren = GetImportantItems((Item)requiredItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
-                    if (requiredChildren == null)
+                    var childPaths = GetImportantItems((Item)requiredItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                    if (childPaths == null)
                     {
                         return null;
                     }
-                    result.Add((Item)requiredItemId);
-                    result.AddRange(requiredChildren);
+                    required.Add((Item)requiredItemId);
+                    if (childPaths.Required != null)
+                    {
+                        required.AddRange(childPaths.Required);
+                    }
+                    if (childPaths.Important != null)
+                    {
+                        important.AddRange(childPaths.Important);
+                    }
                 }
             }
             if (locationLogic.ConditionalItemIds != null && locationLogic.ConditionalItemIds.Any())
             {
-                var found = false;
+                var logicPaths = new List<LogicPaths>();
                 foreach (var conditions in locationLogic.ConditionalItemIds)
                 {
-                    var conditionalRequirements = new List<Item>();
+                    var conditionalRequired = new List<Item>();
+                    var conditionalImportant = new List<Item>();
                     foreach (var conditionalItemId in conditions)
                     {
-                        var requiredChildren = GetImportantItems((Item)conditionalItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
-                        if (requiredChildren == null)
+                        var childPaths = GetImportantItems((Item)conditionalItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                        if (childPaths == null)
                         {
-                            conditionalRequirements = null;
+                            conditionalRequired = null;
+                            conditionalImportant = null;
                             break;
                         }
 
-                        conditionalRequirements.Add((Item)conditionalItemId);
-                        conditionalRequirements.AddRange(requiredChildren);
+                        conditionalRequired.Add((Item)conditionalItemId);
+                        if (childPaths.Required != null)
+                        {
+                            conditionalRequired.AddRange(childPaths.Required);
+                        }
+                        if (childPaths.Important != null)
+                        {
+                            conditionalImportant.AddRange(childPaths.Important);
+                        }
                     }
 
-                    if (conditionalRequirements != null)
+                    if (conditionalRequired != null && conditionalImportant != null)
                     {
-                        found = true;
-                        result.AddRange(conditionalRequirements);
+                        logicPaths.Add(new LogicPaths
+                        {
+                            Required = conditionalRequired.AsReadOnly(),
+                            Important = conditionalImportant.AsReadOnly()
+                        });
                     }
                 }
-                if (!found)
+                if (!logicPaths.Any())
                 {
                     return null;
                 }
+                required.AddRange(logicPaths.Select(lp => lp.Required.AsEnumerable()).Aggregate((a, b) => a.Intersect(b)));
+                important.AddRange(logicPaths.SelectMany(lp => lp.Required.Union(lp.Important)).Distinct());
             }
-            var readOnlyResult = result.Distinct().ToList().AsReadOnly();
-            checkedItems[item] = readOnlyResult;
-            return readOnlyResult;
+            var result = new LogicPaths
+            {
+                Required = required.Distinct().ToList().AsReadOnly(),
+                Important = important.Union(required).Distinct().ToList().AsReadOnly()
+            };
+            if (!item.IsFake())
+            {
+                checkedItems[item] = result;
+            }
+            return result;
         }
 
         /// <summary>
@@ -1753,10 +1830,10 @@ namespace MMRando
                     }).ToList()
                     : _randomized.Logic;
 
-                _randomized.ImportantItems = GetImportantItems(Item.AreaMoonAccess, _randomized.Logic)?.Where(item => !item.IsFake()).ToList().AsReadOnly();
+                _randomized.ImportantItems = GetImportantItems(Item.AreaMoonAccess, _randomized.Logic)?.Important.Where(item => !item.IsFake()).ToList().AsReadOnly();
                 if (_randomized.ImportantItems == null)
                 {
-                    throw new Exception("Moon Access is unobtainable.");
+                    throw new RandomizationException("Moon Access is unobtainable.");
                 }
                 var itemsRequiredForMoonAccess = new List<Item>();
                 foreach (var item in _randomized.ImportantItems)

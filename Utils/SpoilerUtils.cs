@@ -16,7 +16,7 @@ namespace MMRando.Utils
         {
             var itemList = randomized.ItemList
                 .Where(io => !io.Item.IsFake())
-                .Select(u => new SpoilerItem(u));
+                .Select(u => new SpoilerItem(u, ItemUtils.IsRequired(u.Item, randomized), ItemUtils.IsImportant(u.Item, randomized)));
             var settingsString = settings.ToString();
 
             var directory = Path.GetDirectoryName(settings.OutputROMFilename);
@@ -110,10 +110,10 @@ namespace MMRando.Utils
             foreach (var region in spoiler.ItemList.GroupBy(item => item.Region).OrderBy(g => g.Key))
             {
                 log.AppendLine();
-                log.AppendLine($" {region.Key}");
+                log.AppendLine($" {region.Key.Name()}");
                 foreach (var item in region.OrderBy(item => item.NewLocationName))
                 {
-                    log.AppendLine($"{item.NewLocationName,-50} -> {item.Name}");
+                    log.AppendLine($"{item.NewLocationName,-50} -> {item.Name}" + (item.IsImportant ? "*" : "") + (item.IsRequired ? "*" : ""));
                 }
             }
 
