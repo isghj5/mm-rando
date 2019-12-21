@@ -60,6 +60,14 @@ namespace MMRando.Utils
                     };
 
                     i += 3;
+
+                    // if file doesn't exist, was removed by user, ignore
+                    if (File.Exists(Values.MusicDirectory + targetName) == false)
+                    {
+                        //TODO write debug to the debug log
+                        continue;
+                    }
+
                 };
 
                 if (sourceSequence.MM_seq != 0x18)
