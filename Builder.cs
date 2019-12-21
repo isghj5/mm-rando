@@ -54,44 +54,45 @@ namespace MMRando
                 ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants at reunion
             }
 
-            while (RomData.TargetSequences.Count > 0)
+            List<SequenceInfo> Unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
+            Unassigned = Unassigned.OrderBy(x => random.Next()).ToList(); // randomize
+
+            foreach (SequenceInfo targetSequence in RomData.TargetSequences)
             {
-                List<SequenceInfo> Unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
-
-                int targetIndex = random.Next(RomData.TargetSequences.Count);
-                var targetSequence = RomData.TargetSequences[targetIndex];
-
-                foreach (SequenceInfo possibleMatch in Unassigned)
+                bool foundValidReplacement = false;
+                for (int i = 0; i < Unassigned.Count; i++)
                 {
-                    if (possibleMatch.Name.StartsWith("mm") & (random.Next(100) < 50))
+                    SequenceInfo testSeq = Unassigned[i + ];
+                    if (testSeq.Name.StartsWith("mm") & (random.Next(100) < 50))
                         continue;
 
                     // do the target slot and the possible match seq share a category?
-                    if (possibleMatch.Type.Intersect(targetSequence.Type).Any())
+                    if (testSeq.Type.Intersect(targetSequence.Type).Any())
                     {
-                        SetSequenceReplaces(targetSequence, possibleMatch);
-                        targetIndex = -1;
+                        SetSequenceReplaces(targetSequence, testSeq);
+                        Unassigned.Remove(testSeq);
+                        foundValidReplacement = true;
                         break;
 
                     }
                     // does the possibleMatch have an extra category? 1/30 chance of out of category match
                     // I think DB thought if it had an extra category it would be common enough to not be missed
-                    else if (possibleMatch.Type.Count > targetSequence.Type.Count)
+                    else if (testSeq.Type.Count > targetSequence.Type.Count)
                     {
-
                         if ((random.Next(30) == 0)
-                            && ((possibleMatch.Type[0] & 8) == (targetSequence.Type[0] & 8))
-                            && (possibleMatch.Type.Contains(10) == targetSequence.Type.Contains(10))
-                            && (!possibleMatch.Type.Contains(16)))
+                            && ((testSeq.Type[0] & 8) == (targetSequence.Type[0] & 8))
+                            && (testSeq.Type.Contains(10) == targetSequence.Type.Contains(10))
+                            && (!testSeq.Type.Contains(16)))
                         {
-                            SetSequenceReplaces(targetSequence, possibleMatch);
-                            targetIndex = -1;
+                            SetSequenceReplaces(targetSequence, testSeq);
+                            Unassigned.Remove(testSeq);
+                            foundValidReplacement = true;
                             break;
                         }
                     }
                 }
 
-                if (targetIndex != -1) // no available songs fit in this slot category
+                if (foundValidReplacement == false) // no available songs fit in this slot category
                 {
                     // for now, let's just add one of the remaining songs,
                     //  so long as bgm and fanfares are kept separate, should still be fine
@@ -104,12 +105,13 @@ namespace MMRando
                         replacementSong = Unassigned.Find(u => u.Type[0] <= 7);
 
                     if (replacementSong != null)
+                    {
                         SetSequenceReplaces(targetSequence, replacementSong);
+                        Unassigned.Remove(replacementSong);
+                    }
                     else // shouldn't happen with all those pointerized slots, but just in case
                         throw new Exception("Cannot randomize MM-only music on this seed");
                 }
-                Debug.Print("Sizes: " + RomData.TargetSequences.Count + " and " + Unassigned.Count);
-
             }
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1);
         }
