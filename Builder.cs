@@ -44,7 +44,7 @@ namespace MMRando
             //  also some categories can get exhausted leaving slots unfillable with remaining music
             // here several slots that players will never hear are nullified (pointed at another song)
             // this fills those slots, now we have more music to fill remaining slots
-            if (RomData.TargetSequences.Count > RomData.SequenceList.Count)
+            /*if (RomData.TargetSequences.Count > RomData.SequenceList.Count)
             {
                 ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
                 ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
@@ -52,7 +52,7 @@ namespace MMRando
                 ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
                 ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
                 ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants at reunion
-            }
+            }*/
 
             List<SequenceInfo> Unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
             Unassigned = Unassigned.OrderBy(x => random.Next()).ToList(); // randomize
@@ -60,9 +60,14 @@ namespace MMRando
             foreach (SequenceInfo targetSequence in RomData.TargetSequences)
             {
                 bool foundValidReplacement = false;
+                if (Unassigned.Count < 3) // DEBUG: let's just add more if we get low, since 77 < 78
+                {
+                    Unassigned = RomData.TargetSequences.FindAll(u => u.Type.Count >= 2);
+                }
+
                 for (int i = 0; i < Unassigned.Count; i++)
                 {
-                    SequenceInfo testSeq = Unassigned[i + ];
+                    SequenceInfo testSeq = Unassigned[i];
                     if (testSeq.Name.StartsWith("mm") & (random.Next(100) < 50))
                         continue;
 
@@ -147,7 +152,6 @@ namespace MMRando
         {
             substituteSeq.Replaces = targetSeq.Replaces;
             Debug.WriteLine(substituteSeq.Name + " -> " + targetSeq.Name);
-            RomData.TargetSequences.Remove(targetSeq);   // close the slot
         }
 
 
