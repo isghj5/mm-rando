@@ -178,7 +178,7 @@ namespace MMRando.Utils
                     Debug.WriteLine("Sequence slot " + i.ToString("X") + " *->  " + RomData.PointerizedSequences[p].Replaces.ToString("X"));
                     newentry.Addr = RomData.PointerizedSequences[p].Replaces;
                     newentry.Size = 0;
-                    OldSeq.Add(newentry);
+                    // isn't there like 8 bytes of zeros here? where does that go?
                 }
                 else if (j != -1) // new song to replace old slot found
                 {
@@ -195,6 +195,8 @@ namespace MMRando.Utils
                         sequence.Read(data, 0, len);
                         sequence.Close();
 
+                        // I think this checks if the sequence type is correct for MM
+                        //  because DB ripped sequences from SF64/SM64/MK64 without modifying them
                         if (data[1] != 0x20)
                         {
                             data[1] = 0x20;
@@ -211,6 +213,7 @@ namespace MMRando.Utils
                 }
 
                 NewSeq.Add(newentry);
+                // TODO is there not a better way to write this?
                 if (newentry.Data != null)
                 {
                     NewAudioSeq = NewAudioSeq.Concat(newentry.Data).ToArray();
