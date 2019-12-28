@@ -59,7 +59,7 @@ namespace MMRando.Utils
                     if (sourceSequence.Name == "mmr-f-sot")
                     {
                         sourceSequence.Replaces = 0x33;
-                    };
+                    }
 
                     i += 3;
 
@@ -109,6 +109,7 @@ namespace MMRando.Utils
 
         }
 
+        // gets passed RomData.SequenceList in Builder.cs::WriteAudioSeq
         public static void RebuildAudioSeq(List<SequenceInfo> SequenceList)
         {
             List<MMSequence> OldSeq = new List<MMSequence>();
