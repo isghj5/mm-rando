@@ -11,7 +11,7 @@ namespace MMRando.Constants
         public static string ModsDirectory = MainDirectory + @"/Resources/mods/";
         public static string AddrsDirectory = MainDirectory + @"/Resources/addresses/";
         public static string ObjsDirectory = MainDirectory + @"/Resources/models/";
-        public static string VCDirectory = MainDirectory + @"/vc/";
+        public static string VCDirectory = MainDirectory + @"\vc\";
 
         public const byte VanillaClockSpeed = 3;
 
