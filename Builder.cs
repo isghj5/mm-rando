@@ -128,7 +128,7 @@ namespace MMRando
                     // the first category of the type is the MAIN type, the rest are secondary
                     SequenceInfo replacementSong = null;
                     if (targetSequence.Type[0] <= 7 || targetSequence.Type[0] == 16)  // bgm or cutscene
-                        replacementSong = Unassigned.Find(u => u.Type[0] <= 7);
+                        replacementSong = Unassigned.Find(u => u.Type[0] <= 7 || u.Type[0] == 16);
                     else //if (targetSequence.Type[0] >= 8)                           // fanfares
                         replacementSong = Unassigned.Find(u => u.Type[0] >= 8);
 
