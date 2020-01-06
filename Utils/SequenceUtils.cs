@@ -19,8 +19,22 @@ namespace MMRando.Utils
             RomData.SequenceList = new List<SequenceInfo>();
             RomData.TargetSequences = new List<SequenceInfo>();
 
-            string[] lines = Properties.Resources.SEQS
-                .Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            // if file exists, we read the file instead of the resource
+            string[] lines = null;
+            if (File.Exists(Values.MusicDirectory + "SEQS.txt"))
+            {
+                Debug.WriteLine("We found a user SEQS.txt file that we can use");
+                var list = new List<string>();
+                string line;
+                using (StreamReader sr = new StreamReader(Values.MusicDirectory + "SEQS.txt")){
+                    while ((line = sr.ReadLine()) != null){
+                        list.Add(line);
+                    }
+                }
+                lines = list.ToArray();
+            }else // load SEQS.txt from source memory
+                lines = Properties.Resources.SEQS.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
 
             int i = 0;
             while (i < lines.Length)
