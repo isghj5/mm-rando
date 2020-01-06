@@ -64,6 +64,11 @@ namespace MMRando.Utils
                     targetSequence.Replaces = Convert.ToInt32(lines[i + 3], 16);
                     sourceSequence.MM_seq = Convert.ToInt32(lines[i + 3], 16);
                     RomData.TargetSequences.Add(targetSequence);
+                    if (lines[i+4] == "no-recycle"){
+                        Debug.WriteLine("Player does not want to reuse song: " + sourceSequence.Name);
+                        sourceSequence.Name = "drop";
+                        i += 1;
+                    }
                     i += 4;
                 }
                 else
@@ -76,7 +81,7 @@ namespace MMRando.Utils
                     i += 3;
                 };
 
-                if (sourceSequence.MM_seq != 0x18)
+                if (sourceSequence.MM_seq != 0x18 && sourceSequence.Name != "drop")
                 {
                     RomData.SequenceList.Add(sourceSequence);
                 };
