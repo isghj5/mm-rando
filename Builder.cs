@@ -139,8 +139,14 @@ namespace MMRando
                         WriteOutput(GetSpacedString(replacementSong.Name, len:49) + " ~-> " + targetSequence.Name);
                         Unassigned.Remove(replacementSong);
                     }
-                    else 
+                    else{
+                        WriteOutput(" out of remaining songs:");
+                        foreach(SequenceInfo remaining_song in Unassigned)
+                        {
+                            WriteOutput(" - " + remaining_song.Name + " with categories " + String.Join(",", remaining_song.Type));
+                        }
                         throw new Exception("Cannot randomize music on this seed with available music");
+                    }
                 }
             }
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
