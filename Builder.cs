@@ -216,9 +216,42 @@ namespace MMRando
         {
             if (_settings.Music == Music.None)
             {
-                var codeFileAddress = 0xB3C000;
+                /*var codeFileAddress = 0xB3C000;
                 var offset = 0x102350; // address for branch when scene music is loaded
-                ReadWriteUtils.WriteToROM(codeFileAddress + offset, 0x1000); // change to always branch (do not load)
+                ReadWriteUtils.WriteToROM(codeFileAddress + offset, 0x1000); // change to always branch (do not load)*/
+
+                // let's try to set channel volume of every song to zero, 
+                //  look for DB in the byte map for each song and set the following byte to 0
+                //byte[] seq_data = new byte[0x1500];
+
+                byte[] audioseq_table       = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.SeqTable)].Data;
+                byte[] audioseq             = RomData.MMFileList[RomUtils.GetFileIndexForWriting(0x00046AF0)].Data;
+                int audioseq_table_baseaddr = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.SeqTable)].Addr; // turns out the randomizer doesn't consider the table to be its own file
+
+
+
+                for (int seq = 2; seq < 128; seq += 1) {
+                    // the address of every sequence should be the first four bytes of the 16 byte dma per sequence
+                    /* int seq_location_offset = audioseq_table[seq]   << 24;
+                    seq_location_offset    += audioseq_table[seq+1] << 16;
+                    seq_location_offset    += audioseq_table[seq+2] << 8;
+                    seq_location_offset    += audioseq_table[seq+3]; */
+                    int seq_location_offset = (int)ReadWriteUtils.Arr_ReadU32(audioseq_table, (Addresses.SeqTable + seq * 16) - audioseq_table_baseaddr);
+                    //int seq_location_offset = BitConverter.ToInt32(audioseq_table, seq);
+                    Debug.WriteLine("sequence "+ seq +" is at " + seq_location_offset);
+
+                    // search first 70 bytes for the master volume indicator
+                    for (int byte_iter = 3; byte_iter < 128; byte_iter++){ 
+                        // is the byte DB
+                        if (audioseq[seq_location_offset + byte_iter] == 0xDB){
+                            audioseq[seq_location_offset + byte_iter + 1] = 0x0;
+                            Debug.WriteLine("Set to zero: " + (seq_location_offset + byte_iter + 1));
+                            continue;
+                        } //else // nah the rest of the randomizer already assumes you have the same rom, and will break before you get this far
+                    }
+
+                }
+
             }
         }
 
