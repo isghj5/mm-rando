@@ -43,14 +43,14 @@ namespace MMRando
         {
             // spoiler log output
             StringBuilder log = new StringBuilder();
-            void WriteOutput(string str) 
+            void WriteOutput(string str)
             {
                 Debug.WriteLine(str); // we still want debug output though
                 log.AppendLine(str);
             }
             string GetSpacedString(string start, int len = 50) // formating for spoiler log
             {
-                return start + new String(' ', len - start.Length) ;
+                return start + new String(' ', len - start.Length);
             }
 
             // pointerize some slots
@@ -66,7 +66,8 @@ namespace MMRando
             ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
             ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
             ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants(meeting cs) at reunion
-            if (RomData.SequenceList.Count < 80){
+            if (RomData.SequenceList.Count < 80)
+            {
                 // these are the most likely for users to run into, let's only pointerize these if using MM only
                 ConvertSequenceSlotToPointer(0x03, 0x0d); // point chase(skullkid chase) at aliens
                 ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
@@ -115,7 +116,7 @@ namespace MMRando
                         && !testSeq.Type.Contains(16))
                     {
                         testSeq.Replaces = targetSequence.Replaces;
-                        WriteOutput(GetSpacedString(testSeq.Name, len:49) + " 🍀-> " + targetSequence.Name);
+                        WriteOutput(GetSpacedString(testSeq.Name, len: 49) + " 🍀-> " + targetSequence.Name);
                         Unassigned.Remove(testSeq);
                         foundValidReplacement = true;
                         break;
@@ -139,35 +140,36 @@ namespace MMRando
                     {
                         WriteOutput(" * generalized replacement with " + replacementSong.Name + " song, with categories: " + String.Join(",", replacementSong.Type));
                         replacementSong.Replaces = targetSequence.Replaces;
-                        WriteOutput(GetSpacedString(replacementSong.Name, len:49) + " ~-> " + targetSequence.Name);
+                        WriteOutput(GetSpacedString(replacementSong.Name, len: 49) + " ~-> " + targetSequence.Name);
                         Unassigned.Remove(replacementSong);
                     }
-                    else{
+                    else
+                    {
                         WriteOutput(" out of remaining songs:");
-                        foreach(SequenceInfo remaining_song in Unassigned)
+                        foreach (SequenceInfo remaining_song in Unassigned)
                         {
                             WriteOutput(" - " + remaining_song.Name + " with categories " + String.Join(",", remaining_song.Type));
                         }
                         throw new Exception("Cannot randomize music on this seed with available music");
+                    }
+                }
+                RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
+
+                String dir = Path.GetDirectoryName(_settings.OutputROMFilename);
+                String path = $"{Path.GetFileNameWithoutExtension(_settings.OutputROMFilename)}";
+                // spoiler log should already be written by the time we reach this far
+                if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
+                    path += "_SpoilerLog.txt";
+                else // TODO add HTML log compatibility
+                    path += "_SongLog.txt";
+
+                using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
+                {
+                    sw.WriteLine(""); // spacer
+                    sw.Write(log);
                 }
             }
-            RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
-
-            String dir = Path.GetDirectoryName(_settings.OutputROMFilename);
-            String path = $"{Path.GetFileNameWithoutExtension(_settings.OutputROMFilename)}";
-            // spoiler log should already be written by the time we reach this far
-            if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
-                path += "_SpoilerLog.txt";
-            else // TODO add HTML log compatibility
-                path += "_SongLog.txt";
-
-            using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append:true))
-            {
-                sw.WriteLine(""); // spacer
-                sw.Write(log);
-            }
         }
-
         #endregion
 
         // turns the sequence slot into a pointer, which points at another song, in substituteSlotIndex
