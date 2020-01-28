@@ -221,8 +221,8 @@ namespace MMRando
                 : _settings.DefaultOutputROMFilename;
             if ((_settings.GenerateROM || _settings.OutputVC || _settings.GeneratePatch || _settings.GenerateSpoilerLog) && saveROM.ShowDialog() != DialogResult.OK)
             {
-                MessageBox.Show("No output directory selected; Nothing will be saved.",
-                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                //MessageBox.Show("No output directory selected; Nothing will be saved.",
+                //    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
