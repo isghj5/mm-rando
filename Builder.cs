@@ -64,10 +64,13 @@ namespace MMRando
             // this has a side effect of shrinking the AudioSeq file, so that it takes less space on rom
             ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
             ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
-            ConvertSequenceSlotToPointer(0x03, 0x0d); // point chase(skullkid chase) at aliens
             ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
             ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants(meeting cs) at reunion
-            ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
+            if (RomData.SequenceList.Count < 80){
+                // these are the most likely for users to run into, let's only pointerize these if using MM only
+                ConvertSequenceSlotToPointer(0x03, 0x0d); // point chase(skullkid chase) at aliens
+                ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
+            }
 
             // we randomize both slots and songs because if we're low on variety, and we don't sort slots
             //   then all the variety can be dried up for the later slots
