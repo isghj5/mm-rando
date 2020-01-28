@@ -64,10 +64,13 @@ namespace MMRando
             // this has a side effect of shrinking the AudioSeq file, so that it takes less space on rom
             ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
             ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
-            ConvertSequenceSlotToPointer(0x03, 0x0d); // point chase(skullkid chase) at aliens
             ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
             ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants(meeting cs) at reunion
-            ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1 
+            if (RomData.SequenceList.Count < 80){
+                // these are the most likely for users to run into, let's only pointerize these if using MM only
+                ConvertSequenceSlotToPointer(0x03, 0x0d); // point chase(skullkid chase) at aliens
+                ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
+            }
 
             // we randomize both slots and songs because if we're low on variety, and we don't sort slots
             //   then all the variety can be dried up for the later slots
@@ -104,20 +107,20 @@ namespace MMRando
                     //  but not put fanfares into bgm, or visa versa
                     // also restrict this nature to when there is plenty of music to work with
                     // (testSeq.Type.Count > targetSequence.Type.Count) DBs code, maybe thought to be safer?
-                    else if (Unassigned.Count > 30 
+                    else if (Unassigned.Count > 30
                         && testSeq.Type.Count > targetSequence.Type.Count
                         && random.Next(30) == 0
                         && (testSeq.Type[0] & 8) == (targetSequence.Type[0] & 8)
                         && testSeq.Type.Contains(10) == targetSequence.Type.Contains(10)
                         && !testSeq.Type.Contains(16))
-                    { 
+                    {
                         testSeq.Replaces = targetSequence.Replaces;
                         WriteOutput(GetSpacedString(testSeq.Name, len:49) + " 🍀-> " + targetSequence.Name);
                         Unassigned.Remove(testSeq);
                         foundValidReplacement = true;
                         break;
                     }
-                } 
+                }
 
                 if (foundValidReplacement == false) // no available songs fit in this slot category
                 {
@@ -146,7 +149,6 @@ namespace MMRando
                             WriteOutput(" - " + remaining_song.Name + " with categories " + String.Join(",", remaining_song.Type));
                         }
                         throw new Exception("Cannot randomize music on this seed with available music");
-                    }
                 }
             }
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
@@ -157,7 +159,7 @@ namespace MMRando
             if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
                 path += "_SpoilerLog.txt";
             else // TODO add HTML log compatibility
-                path += "_SongLog.txt"; 
+                path += "_SongLog.txt";
 
             using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append:true))
             {
