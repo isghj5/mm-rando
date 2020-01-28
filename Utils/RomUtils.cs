@@ -10,6 +10,7 @@ using System.IO.Compression;
 using MMRando.Utils.Mzxrules;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace MMRando.Utils
 {
@@ -288,8 +289,10 @@ namespace MMRando.Utils
         {
             Parallel.ForEach(RomData.MMFileList, file =>
             {
-                if (file.IsCompressed && file.WasEdited)
-                {
+                if (file.IsCompressed && file.WasEdited){
+                    // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
+                    var previous_thread_priority = Thread.CurrentThread.Priority;
+                    Thread.CurrentThread.Priority = ThreadPriority.Lowest;
                     byte[] result;
                     var newSize = Yaz.Encode(file.Data, file.Data.Length, out result);
                     if (newSize >= 0)
@@ -297,6 +300,8 @@ namespace MMRando.Utils
                         file.Data = new byte[newSize];
                         ReadWriteUtils.Arr_Insert(result, 0, newSize, file.Data, 0);
                     }
+                    // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
+                    Thread.CurrentThread.Priority = previous_thread_priority;
                 }
             });
             byte[] ROM = new byte[0x2000000];
