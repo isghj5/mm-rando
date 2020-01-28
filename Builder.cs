@@ -153,22 +153,23 @@ namespace MMRando
                         throw new Exception("Cannot randomize music on this seed with available music");
                     }
                 }
-                RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
-
-                String dir = Path.GetDirectoryName(_settings.OutputROMFilename);
-                String path = $"{Path.GetFileNameWithoutExtension(_settings.OutputROMFilename)}";
-                // spoiler log should already be written by the time we reach this far
-                if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
-                    path += "_SpoilerLog.txt";
-                else // TODO add HTML log compatibility
-                    path += "_SongLog.txt";
-
-                using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
-                {
-                    sw.WriteLine(""); // spacer
-                    sw.Write(log);
-                }
             }
+            RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
+
+            String dir = Path.GetDirectoryName(_settings.OutputROMFilename);
+            String path = $"{Path.GetFileNameWithoutExtension(_settings.OutputROMFilename)}";
+            // spoiler log should already be written by the time we reach this far
+            if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
+                path += "_SpoilerLog.txt";
+            else // TODO add HTML log compatibility
+                path += "_SongLog.txt";
+
+            using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
+            {
+                sw.WriteLine(""); // spacer
+                sw.Write(log);
+            }
+
         }
         #endregion
 
