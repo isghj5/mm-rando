@@ -11,6 +11,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Media;
 
 namespace MMRando
 {
@@ -159,8 +160,9 @@ namespace MMRando
 
         private void bgWorker_WorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            pProgress.Value = 0;
-            lStatus.Text = "Ready...";
+            // leave the progress bar full green, empty makes it look like nothing happened.
+            //pProgress.Value = 0;
+            lStatus.Text = "Build Finished! Ready for another seed...";
             EnableAllControls(true);
             ToggleCheckBoxes();
             TogglePatchSettings(ttOutput.SelectedTab.TabIndex == 0);
@@ -1102,8 +1104,15 @@ namespace MMRando
 
             _settings.InputPatchFilename = null;
 
-            MessageBox.Show("Generation complete!",
-                "Success", MessageBoxButtons.OK, MessageBoxIcon.None);
+            // garbage windows design: changes focus,
+            //  opening a "Press Ok to close" tiny popup somewhere in the middle of one of the screens,
+            //  locks the randomizer form until you deal with its bullshit
+            // the 90's are dead, you have to move on
+            //MessageBox.Show("Generation complete!",
+            //    "Success", MessageBoxButtons.OK, MessageBoxIcon.None);
+
+            SystemSounds.Exclamation.Play();
+
         }
 
         /// <summary>
