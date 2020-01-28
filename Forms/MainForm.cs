@@ -299,12 +299,18 @@ namespace MMRando
                     _settings.Seed = seed;
                 }
             }
-            catch
+            catch (OverflowException ex)
+            {
+                tSeed.Text = _seedOld.ToString(); 
+                MessageBox.Show("Invalid seed: Must be between 0 and 2.147 billion (Int32).",
+                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
             {
                 tSeed.Text = _seedOld.ToString();
-                MessageBox.Show("Invalid seed: must be a positive integer.",
+                MessageBox.Show("Invalid seed: seed could not be converted to Int32." + ex.ToString(),
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            };
+            }
             UpdateSettingsString();
             _isUpdating = false;
         }
