@@ -21,7 +21,7 @@
 0
 - Light Arrow
 116
-4,120,745,742;25,119,746
+4,120,745,742;0,25,92,93,119,746
 0
 0
 - Bomb Bag (20)
@@ -40,8 +40,8 @@
 0
 0
 - Pictobox
-692,673
-753;756
+692,673,802
+
 0
 0
 - Lens of Truth
@@ -110,8 +110,8 @@
 0
 32
 - Bombers' Notebook
-783,784,785
-0,742;93;120;10
+783,784,785,798
+
 0
 0
 - Razor Sword
@@ -140,13 +140,13 @@
 0
 0
 - Town Bomb Bag (30)
-38,39,699
+38,39,699,785
 92;93;749
 0
 62
 - Mountain Bomb Bag (40)
-92,777
-30;31
+92,777,794
+
 0
 0
 - Town Wallet (200)
@@ -190,7 +190,7 @@
 3
 1
 - Letter to Kafei
-84,793
+84,791
 
 3
 2
@@ -200,7 +200,7 @@
 12
 12
 - Letter to Mama
-38,792
+
 452;454
 16
 16
@@ -220,8 +220,8 @@
 0
 10
 - ??? HP
-793
-33;34;35;36;38
+791
+33;34;35;36;38;40
 0
 42
 - Grandma Short Story HP
@@ -250,8 +250,8 @@
 0
 21
 - Honey and Darling HP
-120,438
-5;28;29
+120,438,750
+
 0
 16
 - Swordsman's School HP
@@ -285,8 +285,8 @@
 0
 0
 - Boat Archery HP
-105,673,692
-753;756
+105,673,692,802
+
 0
 0
 - Frog Choir HP
@@ -308,7 +308,7 @@
 113,10,771
 
 0
-21
+0
 - Evan HP
 653
 
@@ -318,7 +318,7 @@
 86,628
 
 0
-16
+21
 - Poe Hut HP
 749,120,665
 
@@ -385,7 +385,7 @@
 0
 0
 - Keaton Mask
-38,792
+
 452;454
 0
 16
@@ -398,7 +398,7 @@
 78,629
 
 0
-16
+21
 - Don Gero's Mask
 92,742,778,795
 
@@ -425,7 +425,7 @@
 0
 15
 - Couple's Mask
-39,84,38,793,657
+39,84,657,791
 
 0
 32
@@ -475,8 +475,8 @@
 0
 0
 - Song of Soaring
-0,760
-
+0
+445;443
 0
 0
 - Epona's Song
@@ -516,7 +516,7 @@
 0
 - Poison swamp access
 
-93;0,10;0,120;0,8;0,753
+760,803;443;444;445;448;8,673,760;673,692,753;673,692,756
 0
 0
 - Woodfall Temple access
@@ -835,7 +835,7 @@
 0
 0
 - Bottle: Deku Princess
-759
+747
 503;504
 0
 0
@@ -1033,14 +1033,14 @@
 628
 93;10;757,758
 0
-16
+21
 - Graveyard Grotto
 119,775
 
 0
 0
 - Swamp Grotto
-760
+103
 93;0
 0
 0
@@ -1155,8 +1155,8 @@
 0
 0
 - South Clock Town 20r
-10,786
-
+786
+10;0,32
 0
 0
 - South Clock Town 50r
@@ -2070,13 +2070,13 @@
 0
 0
 - Pictograph Contest 5r
-8,673,760
-
+8,673
+103;760
 0
 0
 - Pictograph Contest 20r
-8,673,760
-
+8,673
+103;760
 0
 0
 - Swamp Scrub Magic Bean
@@ -2167,8 +2167,8 @@
 - EntranceMayorsResidenceFromEastClockTown
 783
 
-0
-0
+21
+21
 - EntranceMajorasLairFromTheMoon
 782
 
@@ -2183,12 +2183,12 @@
 770
 
 0
-0
+21
 - EntranceRanchHouseFromRomaniRanch
 770
 
 0
-0
+21
 - EntranceHoneyDarlingsShopFromEastClockTown
 783
 
@@ -2198,12 +2198,12 @@
 775,90
 
 0
-0
+8
 - EntranceBeneathGraveyardFromIkanaGraveyardNight1
 775,90
 
 0
-0
+2
 - EntranceSouthernSwampFromRoadtoSouthernSwamp
 774
 
@@ -2257,13 +2257,13 @@
 - EntranceCuriosityShopFromWestClockTown
 784
 
-0
-0
+32
+42
 - EntranceKafeisHideoutFromLaundryPool
-787
+787,38,792
 
-0
-0
+40
+60
 - EntranceCuriosityShopFromKafeisHideout
 
 452;454
@@ -2275,8 +2275,8 @@
 0
 0
 - EntranceGrottoGossipOceanFromTerminaField
-768,119
-
+768
+119;92
 0
 0
 - EntranceGrottoGossipSwampFromTerminaField
@@ -2332,7 +2332,7 @@
 - EntranceGrottoPeahatFromTerminaField
 768
 
-0
+21
 0
 - EntranceGrottoPalaceStraightFromDekuPalaceB
 
@@ -2370,7 +2370,7 @@
 0
 0
 - EntranceIkanaCanyonFromOwlStatue
-761,95
+95,789
 788;749
 0
 0
@@ -2410,7 +2410,7 @@
 0
 0
 - EntranceSpringWaterCaveFromIkanaCanyon
-761
+789
 
 0
 0
@@ -2472,8 +2472,8 @@
 - EntranceMilkBarFromEastClockTown
 783,82
 
-0
-0
+42
+42
 - EntranceStoneTowerTempleFromStoneTower
 
 10,92,93,101,674;675;676
@@ -2482,7 +2482,7 @@
 - EntranceTreasureChestShopFromEastClockTown
 783
 
-0
+31
 0
 - EntranceStoneTowerTempleInvertedFromStoneTowerInverted
 4,120,742,101
@@ -2498,7 +2498,7 @@
 786
 
 0
-0
+32
 - EntranceBeforethePortaltoTerminaFromClockTowerInterior
 
 
@@ -2506,7 +2506,7 @@
 0
 - EntranceBeforethePortaltoTerminaFromBeforethePortaltoTermina
 
-
+500;501
 0
 0
 - EntranceWoodfallTempleFromWoodfall
@@ -2520,7 +2520,7 @@
 0
 0
 - EntranceWoodfallTemplePrisonFromWoodfall
-776,515,749
+776,105
 
 0
 0
@@ -2582,8 +2582,8 @@
 - EntranceTownShootingGalleryFromEastClockTown
 783
 
-0
-0
+21
+21
 - EntranceSnowheadTempleFromSnowhead
 780,92,99
 
@@ -2621,7 +2621,7 @@
 0
 - EntrancePiratesFortressHookshotRoomFromUpperDoor
 762
-
+120;10;75
 0
 0
 - EntrancePiratesFortressGuardRoomFromFrontDoor
@@ -2673,7 +2673,7 @@
 774
 
 0
-0
+21
 - EntrancePinnacleRockFromGreatBayCoast
 771
 
@@ -2710,7 +2710,7 @@
 0
 0
 - EntranceSwampSpiderHouseFromSouthernSwamp
-760
+103,0
 788;120
 0
 0
@@ -2720,8 +2720,8 @@
 0
 0
 - EntranceAstralObservatoryFromEastClockTown
-783,784,785
-120;10;93
+783,784,785,798
+
 0
 0
 - EntranceAstralObservatoryFromTerminaField
@@ -2740,7 +2740,7 @@
 0
 0
 - EntranceDekuPalaceFromSouthernSwampLower
-760
+103
 
 0
 0
@@ -2765,7 +2765,7 @@
 0
 0
 - EntranceDekuPalaceFromSouthernSwampUpper
-760,0
+445
 
 0
 0
@@ -2850,8 +2850,8 @@
 0
 0
 - EntranceTerminaFieldFromAstralObservatoryTelescope
-766
 
+544,798;545;546
 0
 0
 - EntranceTerminaFieldFromCremiaEscort
@@ -2862,7 +2862,7 @@
 - EntrancePostOfficeFromWestClockTown
 784
 
-0
+3
 0
 - EntranceMarineResearchLabFromGreatBayCoast
 771
@@ -3451,7 +3451,7 @@
 0
 - EntranceClockTowerInteriorFromBeforethePortaltoTermina
 
-
+500;501
 0
 0
 - EntranceClockTowerInteriorFromSouthClockTown
@@ -3646,7 +3646,7 @@
 0
 - EntranceSouthClockTownFromClockTowerInterior
 
-
+690;691
 0
 0
 - EntranceSouthClockTownFromTerminaField
@@ -3801,7 +3801,7 @@
 0
 - AccessSouthernSwamp
 
-441;442;443;444;445;446;447;448;449;450
+441;442;446;447;449;450;103,803
 0
 0
 - AccessIkanaCanyon
@@ -3826,7 +3826,7 @@
 0
 - AccessMilkRoad
 
-518;519;521;522
+518;521;522
 0
 0
 - AccessAstralObservatory
@@ -3841,7 +3841,7 @@
 0
 - AccessTerminaField
 
-560;561;562;563;564;565;566;567;568;569;571
+560;561;96,562;120,563;564;565;566;567;568;569,757,758;571;95,173,563
 0
 0
 - AccessZoraHall
@@ -3852,16 +3852,16 @@
 - AccessRomaniRanch
 
 586;587;588;589;590
-0
+1
 0
 - AccessGreatBayCoast
 
-592;593;594;595;596;597;598;599;600;601;602
+592;593;594;595;596;93,597;598;599;600;601;602
 0
 0
 - AccessZoraCape
 
-603;604;605;606;607;608;609;610;611
+603;604;93,605;606;607;608;609;610;611
 0
 0
 - AccessPiratesFortressExterior
@@ -3946,7 +3946,7 @@
 0
 - AccessIkanaCanyonUpper
 
-471;472;473;474;475;477;478;479;481
+471;472;473;474;475;477;478;479;481;3,10,120,470,742;3,10,120,476,742;3,10,120,480,742
 0
 0
 - Hit Owl
@@ -4012,5 +4012,10 @@
 - Any Healing Potion
 
 753;756
+0
+0
+- Pass Big Octo
+
+0,120;93;92,120;0,10
 0
 0

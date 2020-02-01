@@ -455,6 +455,7 @@
             this.tReq.SetColumnSpan(this.lRequired, 2);
             this.lRequired.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lRequired.FormattingEnabled = true;
+            this.lRequired.HorizontalScrollbar = true;
             this.lRequired.Location = new System.Drawing.Point(3, 3);
             this.lRequired.Name = "lRequired";
             this.lRequired.Size = new System.Drawing.Size(215, 342);
@@ -588,14 +589,14 @@
             // casualToolStripMenuItem1
             // 
             this.casualToolStripMenuItem1.Name = "casualToolStripMenuItem1";
-            this.casualToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.casualToolStripMenuItem1.Size = new System.Drawing.Size(118, 22);
             this.casualToolStripMenuItem1.Text = "Casual";
             this.casualToolStripMenuItem1.Click += new System.EventHandler(this.casualToolStripMenuItem1_Click);
             // 
             // glitchedToolStripMenuItem1
             // 
             this.glitchedToolStripMenuItem1.Name = "glitchedToolStripMenuItem1";
-            this.glitchedToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.glitchedToolStripMenuItem1.Size = new System.Drawing.Size(118, 22);
             this.glitchedToolStripMenuItem1.Text = "Glitched";
             this.glitchedToolStripMenuItem1.Click += new System.EventHandler(this.glitchedToolStripMenuItem1_Click);
             // 
