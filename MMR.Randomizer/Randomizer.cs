@@ -1047,8 +1047,17 @@ namespace MMR.Randomizer
             }
         }
 
-        private List<Item> GetUnconnectedEntrances(Item item)
+        private List<Item> GetUnconnectedEntrances(Item item, List<Item> checkedEntrances = null)
         {
+            if (checkedEntrances == null)
+            {
+                checkedEntrances = new List<Item>();
+            }
+            if (checkedEntrances.Contains(item))
+            {
+                return new List<Item>();
+            }
+            checkedEntrances.Add(item);
             var itemObject = ItemList[(int)item];
             return (itemObject.DependsOnItems?.SelectMany(d =>
             {
@@ -1058,7 +1067,7 @@ namespace MMR.Randomizer
                 }
                 if (d.IsFake())
                 {
-                    return GetUnconnectedEntrances(d);
+                    return GetUnconnectedEntrances(d, checkedEntrances);
                 }
                 return Enumerable.Empty<Item>();
             }) ?? new List<Item>())
@@ -1070,7 +1079,7 @@ namespace MMR.Randomizer
                 }
                 if (d.IsFake())
                 {
-                    return GetUnconnectedEntrances(d);
+                    return GetUnconnectedEntrances(d, checkedEntrances);
                 }
                 return Enumerable.Empty<Item>();
             })) ?? new List<Item>()).Distinct().ToList();
