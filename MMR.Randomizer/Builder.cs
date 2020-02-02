@@ -237,7 +237,7 @@ namespace MMR.Randomizer
             {
                 ReadWriteUtils.WriteToROM(0xC5CDFA, 0x3);
                 ReadWriteUtils.WriteToROM(0xC5CDFB, 0xFF);
-                ReadWriteUtils.WriteToROM(0xBDB882, (ushort)0xD430);
+                EntranceSwapUtils.WriteSpawnToROM();
                 ReadWriteUtils.WriteToROM(0xE9F4BC, (ushort)0x0200);
                 EntranceSwapUtils.WriteEntrancesToROM();
             }

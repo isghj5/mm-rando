@@ -834,6 +834,22 @@ namespace MMR.Randomizer
                 return true;
             }
 
+            // todo handle pairs
+            if (target == Item.EntranceSouthClockTownFromClockTowerInterior)
+            {
+                var pair = currentItem.Pair();
+                if (!pair.HasValue)
+                {
+                    Debug.WriteLine($"{currentItem} cannot be a starting location.");
+                    return false;
+                }
+                if (!ItemList[pair.Value].DependsOnItems.Any(d => ItemList[d].Name.StartsWith("Access"))) // todo more elegantly handle spawn point requirements.
+                {
+                    Debug.WriteLine($"{currentItem} cannot be a starting location.");
+                    return false;
+                }
+            }
+
             if (_settings.CustomJunkLocations.Contains(target) && !ItemUtils.IsJunk(currentItem))
             {
                 return false;
@@ -876,7 +892,7 @@ namespace MMR.Randomizer
 
                 if (currentEntranceAttribute?.Pair != null && targetEntranceAttribute?.Pair != null)
                 {
-                    ItemList[(int)currentItem].NewLocation = target;
+                    ItemList[currentItem].NewLocation = target;
 
                     var pairItem = targetEntranceAttribute.Pair.Value;
                     var pairTarget = currentEntranceAttribute.Pair.Value;
@@ -884,7 +900,7 @@ namespace MMR.Randomizer
                     var pairConditionsToRemove = new List<int[]>();
                     var pairDependenciesChecked = new Dictionary<Item, Dependence> { { pairTarget, new Dependence { Type = DependenceType.Dependent } } };
                     var pairDependence = CheckDependence(pairItem, pairTarget, pairPath, pairDependenciesChecked, pairConditionsToRemove);
-                    ItemList[(int)currentItem].NewLocation = null;
+                    ItemList[currentItem].NewLocation = null;
 
                     if (pairDependence.Type != DependenceType.NotDependent)
                     {
@@ -1099,10 +1115,12 @@ namespace MMR.Randomizer
             {
                 var currentEntrance = unconnectedEntrances.Where(g => g.Value.Count > 0).OrderBy(g => g.Value.Count).First().Value.Random(Random);
                 PlaceItem(currentEntrance, entrancePool);
+
+                var pair = ItemList[currentEntrance].NewLocation.Value.Pair().Value;
                 foreach (var kvp in unconnectedEntrances)
                 {
                     kvp.Value.Remove(currentEntrance);
-                    kvp.Value.Remove(ItemList[(int)currentEntrance].NewLocation.Value.Pair().Value);
+                    kvp.Value.Remove(pair);
                 }
                 unconnectedEntrances = unconnectedEntrances.Where(kvp => kvp.Value.Count > 0).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             }
@@ -1935,7 +1953,7 @@ namespace MMR.Randomizer
                     }).ToList()
                     : _randomized.Logic;
 
-                //_randomized.ImportantItems = GetImportantItems(Item.AreaMoonAccess, _randomized.Logic)?.Important.Where(item => !item.IsFake() && !item.IsEntrance()).ToList().AsReadOnly();
+                //_randomized.ImportantItems = GetImportantItems(Item.EntranceMajorasLairFromTheMoon, _randomized.Logic)?.Important.Where(item => !item.IsFake() && !item.IsEntrance()).ToList().AsReadOnly();
                 //if (_randomized.ImportantItems == null)
                 //{
                 //    throw new RandomizationException("Moon Access is unobtainable.");

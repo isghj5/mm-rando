@@ -602,6 +602,8 @@ namespace MMR.UI.Forms
         "EntranceLaundryPoolFromKafeisHideout",
 
         "EntranceStoneTowerInvertedFromStoneTowerTempleInverted",
+
+        "Great Bay Owl", "Zora Cape Owl", "Snowhead Owl", "Mountain Village Owl", "Clock Town Owl", "Milk Road Owl", "Woodfall Owl", "Southern Swamp Owl", "Ikana Canyon Owl", "Stone Tower Owl",
         };
 
         string[] ITEM_NAMES = DEFAULT_ITEM_NAMES.ToArray();

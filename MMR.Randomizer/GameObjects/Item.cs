@@ -4036,7 +4036,7 @@ namespace MMR.Randomizer.GameObjects
         //EntranceNorthClockTownFromBombersGame, // after catching kids // one way
         //EntranceNorthClockTownFromSavingLady, // after saving old lady // one way
 
-        [Entrance(EntranceClockTowerInteriorFromSouthClockTown), Region(Region.Interior)]
+        [Entrance(EntranceClockTowerInteriorFromSouthClockTown), Region(Region.Misc)]
         EntranceSouthClockTownFromClockTowerInterior, // spawn point
         [Entrance(EntranceTerminaFieldFromSouthClockTown), Region(Region.TerminaField)]
         EntranceSouthClockTownFromTerminaField,

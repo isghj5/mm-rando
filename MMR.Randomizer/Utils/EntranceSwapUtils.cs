@@ -95,6 +95,13 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        internal static void WriteSpawnToROM()
+        {
+            var spawnAddress = TerminaMapData.SpawnAddress(Item.EntranceSouthClockTownFromClockTowerInterior);
+            ReadWriteUtils.WriteToROM(0xBDB882, spawnAddress);
+            //ReadWriteUtils.WriteToROM(0x02E90FD4, spawnAddress); // todo fix song of time spawn location
+        }
+
         private static void FinalizeExit(ushort spawnAddress, int sceneIndex, Exit exit)
         {
             if (exit.ExitIndex == 255) { return; }

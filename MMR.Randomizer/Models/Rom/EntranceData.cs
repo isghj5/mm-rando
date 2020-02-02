@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MMR.Randomizer.GameObjects;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 
@@ -195,6 +196,12 @@ namespace MMR.Randomizer.Models
                 }
             }
             return 0xFFFF;
+        }
+
+        internal ushort SpawnAddress(Item entrance)
+        {
+            var exit = exits.FirstOrDefault(e => e.LogicIndex == (int)entrance);
+            return SpawnAddress(exit.SpawnName);
         }
 
         internal int SceneIndex( string RegionName)

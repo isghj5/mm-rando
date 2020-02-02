@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 15;
+        public const int CurrentVersion = 16;
 
         public static string ApplyMigrations(string logic)
         {
@@ -92,6 +92,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (GetVersion(lines) < 15)
             {
                 AddEntrances2(lines);
+            }
+
+            if (GetVersion(lines) < 16)
+            {
+                AddOwlStatues(lines);
             }
 
             return string.Join("\r\n", lines);
@@ -2026,6 +2031,47 @@ namespace MMR.Randomizer.LogicMigrator
             foreach (var item in newItems)
             {
                 lines.Insert(item.ID * 5 + 1, $"- {itemNames[item.ID - 741]}");
+                lines.Insert(item.ID * 5 + 2, string.Join(",", item.DependsOnItems));
+                lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
+                lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
+                lines.Insert(item.ID * 5 + 5, "0");
+            }
+        }
+
+        private static void AddOwlStatues(List<string> lines)
+        {
+            lines[0] = "-version 16";
+            var itemNames = new string[]
+            {
+                "Great Bay Owl", "Zora Cape Owl", "Snowhead Owl", "Mountain Village Owl", "Clock Town Owl", "Milk Road Owl", "Woodfall Owl", "Southern Swamp Owl", "Ikana Canyon Owl", "Stone Tower Owl",
+            };
+            var newItems = itemNames.Select((itemName, index) => new MigrationItem
+            {
+                ID = 742 + index
+            }).ToArray();
+            for (var i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.StartsWith("-") || string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+                var updatedItemSections = line
+                    .Split(';')
+                    .Select(section => section.Split(',').Select(id =>
+                    {
+                        var itemId = int.Parse(id);
+                        if (itemId >= 742)
+                        {
+                            itemId += newItems.Length;
+                        }
+                        return itemId;
+                    }).ToList()).ToList();
+                lines[i] = string.Join(";", updatedItemSections.Select(section => string.Join(",", section)));
+            }
+            foreach (var item in newItems)
+            {
+                lines.Insert(item.ID * 5 + 1, $"- {itemNames[item.ID - 742]}");
                 lines.Insert(item.ID * 5 + 2, string.Join(",", item.DependsOnItems));
                 lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
                 lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
