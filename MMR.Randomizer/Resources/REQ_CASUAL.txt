@@ -3931,7 +3931,7 @@
 0
 - AccessWoodfall
 
-636;637;638;639;640
+636;638;640
 0
 0
 - AccessGoronVillage
