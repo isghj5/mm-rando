@@ -4065,16 +4065,16 @@ namespace MMR.Randomizer.GameObjects
         [Entrance(EntranceStoneTowerTempleInvertedFromStoneTowerInverted), Region(Region.StoneTower)]
         EntranceStoneTowerInvertedFromStoneTowerTempleInverted,
 
-        [StartingItem(0xC5CDFB, 0x1)]
+        [StartingItem(0xC5CDFB, 0x01)]
         [ItemName("Great Bay Owl"), LocationName("Great Bay Owl Statue"), Region(Region.GreatBayCoast)]
         OwlActivationGreatBayCoast,
-        [StartingItem(0xC5CDFB, 0x2)]
+        [StartingItem(0xC5CDFB, 0x02)]
         [ItemName("Zora Cape Owl"), LocationName("Zora Cape Owl Statue"), Region(Region.ZoraCape)]
         OwlActivationZoraCape,
-        [StartingItem(0xC5CDFB, 0x4)]
+        [StartingItem(0xC5CDFB, 0x04)]
         [ItemName("Snowhead Owl"), LocationName("Snowhead Owl Statue"), Region(Region.Snowhead)]
         OwlActivationSnowhead,
-        [StartingItem(0xC5CDFB, 0x8)]
+        [StartingItem(0xC5CDFB, 0x08)]
         [ItemName("Mountain Village Owl"), LocationName("Mountain Village Owl Statue"), Region(Region.MountainVillage)]
         OwlActivationMountainVillage,
         [StartingItem(0xC5CDFB, 0x10)]
@@ -4089,10 +4089,10 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CDFB, 0x80)]
         [ItemName("Southern Swamp Owl"), LocationName("Southern Swamp Owl Statue"), Region(Region.SouthernSwamp)]
         OwlActivationSouthernSwamp,
-        [StartingItem(0xC5CDFA, 0x1)]
+        [StartingItem(0xC5CDFA, 0x01)]
         [ItemName("Ikana Canyon Owl"), LocationName("Ikana Canyon Owl Statue"), Region(Region.IkanaCanyon)]
         OwlActivationIkanaCanyon,
-        [StartingItem(0xC5CDFA, 0x2)]
+        [StartingItem(0xC5CDFA, 0x02)]
         [ItemName("Stone Tower Owl"), LocationName("Stone Tower Owl Statue"), Region(Region.StoneTower)]
         OwlActivationStoneTower
     }

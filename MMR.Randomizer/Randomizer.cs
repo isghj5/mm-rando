@@ -661,7 +661,10 @@ namespace MMR.Randomizer
                 int x = conditionRemove[0];
                 int y = conditionRemove[1];
                 int z = conditionRemove[2];
-                ItemList[x].Conditionals[y] = null;
+                if (ItemList[x].Conditionals.Count(c => c != null) > 1)
+                {
+                    ItemList[x].Conditionals[y] = null;
+                }
             }
             
             foreach (var targetRemovals in conditionsToRemove.Select(cr => ItemList[cr[0]]))
@@ -1108,22 +1111,33 @@ namespace MMR.Randomizer
                 .Where(item => EntranceSwapUtils.IsEntranceAvailable(item) && EntranceSwapUtils.IsEntranceAvailable(item.Pair().Value))
                 .ToList();
             var entrancePool = entrancesToPlace.ToList();
+            entrancePool.Remove(Item.EntranceSouthClockTownFromClockTowerInterior);
 
             var unconnectedEntrances = entrancesToPlace.ToDictionary(item => item, item => GetUnconnectedEntrances(item));
 
-            while (unconnectedEntrances.Any())
+            while (unconnectedEntrances.SelectMany(kvp => kvp.Value).Distinct().Count() > 1)
             {
                 var currentEntrance = unconnectedEntrances.Where(g => g.Value.Count > 0).OrderBy(g => g.Value.Count).First().Value.Random(Random);
-                PlaceItem(currentEntrance, entrancePool);
 
-                var pair = ItemList[currentEntrance].NewLocation.Value.Pair().Value;
+                if (currentEntrance != Item.EntranceClockTowerInteriorFromSouthClockTown)
+                {
+                    PlaceItem(currentEntrance, entrancePool);
+                }
+
+                var pair = ItemList[currentEntrance].NewLocation?.Pair().Value;
                 foreach (var kvp in unconnectedEntrances)
                 {
                     kvp.Value.Remove(currentEntrance);
-                    kvp.Value.Remove(pair);
+                    if (pair.HasValue)
+                    {
+                        kvp.Value.Remove(pair.Value);
+                    }
                 }
                 unconnectedEntrances = unconnectedEntrances.Where(kvp => kvp.Value.Count > 0).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             }
+
+            // place spawn point
+            PlaceItem(Item.EntranceClockTowerInteriorFromSouthClockTown, entrancePool);
         }
 
         private void PlaceEntrances(List<Item> itemPool)
