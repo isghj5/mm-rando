@@ -86,10 +86,19 @@ namespace MMR.Randomizer.Utils
             SceneUtils.ReadSceneTable();
             SceneUtils.GetMaps();
             FinalizeEntrances();
+            int maxExitUsed;
             foreach (int sceneIndex in ShuffledEntranceList.Keys)
             {
                 if (ExitListIndices.ContainsKey(sceneIndex))
                 {
+                    maxExitUsed = 0;
+                    foreach(int exitIndex in ExitListIndices[sceneIndex] )
+                    {
+                        if (exitIndex > maxExitUsed)
+                        {
+                            maxExitUsed = exitIndex;
+                        }
+                    }
                     EntranceUtils.WriteSceneExits(sceneIndex, ShuffledEntranceList[sceneIndex], ExitListIndices[sceneIndex]);
                 }
             }
@@ -120,7 +129,7 @@ namespace MMR.Randomizer.Utils
             sceneExitIndices = ExitListIndices[sceneIndex];
             sceneExitSpawns.Add(spawnAddress);
             sceneExitIndices.Add(exit.ExitIndex);
-            Debug.WriteLine($"[{exit.RegionName}:{sceneIndex}] Exit {exit.ExitIndex} ({exit.ExitName}): {exit.SpawnName} [{spawnAddress.ToString("X4")}]");
+            Debug.WriteLine($"[Scene {sceneIndex}: {exit.RegionName}] Exit #{exit.ExitIndex}: ({exit.ExitName} [{EntranceUtils.ReadSceneExit(sceneIndex, exit.ExitIndex)}]) -> {exit.SpawnName} [{spawnAddress.ToString("X4")}]");
 
         }
 

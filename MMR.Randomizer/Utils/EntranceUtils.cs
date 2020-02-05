@@ -40,20 +40,37 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        public static ushort ReadSceneExit(int sceneNumber, int exitNumber)
+        {
+            Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
+            int f = scene.File;
+            RomUtils.CheckCompressed(f);
+            foreach (int exitAddress in scene.ExitAddr)
+            {
+                return ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + exitNumber * 2);
+            }
+            return 0xFFFF;
+        }
+
         public static void ReadSceneExits(int sceneNumber, int count)
         {
             Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
             int f = scene.File;
             RomUtils.CheckCompressed(f);
-            Debug.WriteLine($"Scene Number: {sceneNumber}");
+            Debug.WriteLine($"Scene Number: {sceneNumber.ToString("X2")}");
             ushort tempExit;
-            foreach(int exitAddress in scene.ExitAddr)
+            bool isSceneRead = false;
+            foreach (int exitAddress in scene.ExitAddr)
             {
-                for (int i = 0; i < count; i++)
+                for (int i = 0; i <= count; i++)
                 {
-                    tempExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + i * 2);
-                    System.Diagnostics.Debug.WriteLine($"{i}: {tempExit.ToString("X4")} = {tempExit}");
+                    if (!isSceneRead)
+                    {
+                        tempExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, (int)exitAddress + i * 2);
+                        System.Diagnostics.Debug.WriteLine($"{i}: {tempExit.ToString("X4")}");
+                    }
                 }
+                isSceneRead = true;
             }
         }
 
@@ -64,9 +81,6 @@ namespace MMR.Randomizer.Utils
             Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
             int f = scene.File;
             RomUtils.CheckCompressed(f);
-            if (scene.ExitAddr.Count > 1) {
-                Debug.WriteLine(scene.Number);
-            }
             foreach( int exitAddress in scene.ExitAddr)
             {
                 for (int i = 0; i < shuffledExits.Count; i++)
