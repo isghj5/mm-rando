@@ -60,11 +60,11 @@ namespace MMR.Randomizer.Utils
 
         public static void GetMaps()
         {
-            for (int i = 0; i < RomData.SceneList.Count; i++)
+            foreach (var scene in RomData.SceneList)
             {
-                int f = RomData.SceneList[i].File;
+                int f = scene.File;
                 RomUtils.CheckCompressed(f);
-                if (DEBUG) { System.Diagnostics.Debug.WriteLine($"Scene {RomData.SceneList[i].Number}"); }
+                if (DEBUG) { System.Diagnostics.Debug.WriteLine($"Scene {scene.Number}"); }
                 int j = 0;
                 while (true)
                 {
@@ -77,7 +77,7 @@ namespace MMR.Randomizer.Utils
                         {
                             Map m = new Map();
                             m.File = RomUtils.AddrToFile((int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, mapsaddr));
-                            RomData.SceneList[i].Maps.Add(m);
+                            scene.Maps.Add(m);
                             mapsaddr += 8;
                         }
                         break;
@@ -88,7 +88,11 @@ namespace MMR.Randomizer.Utils
                     }
                     j += 8;
                 }
-                CheckHeaderForExits(f, 0, RomData.SceneList[i].ExitAddr);
+                CheckHeaderForExits(f, 0, scene.ExitAddr);
+                if (scene.Number == 108) // avoid modifying unused setup in East Clock Town. doesn't seem to actually affect anything in-game, but best not to touch it.
+                {
+                    scene.ExitAddr.RemoveAt(2);
+                }
             }
         }
 

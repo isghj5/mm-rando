@@ -236,7 +236,6 @@ namespace MMR.Randomizer
             if (_settings.AreEntrancesRandomized())
             {
                 EntranceSwapUtils.WriteSpawnToROM();
-                ReadWriteUtils.WriteToROM(0xE9F4BC, (ushort)0x0200);
                 EntranceSwapUtils.WriteEntrancesToROM();
             }
         }
