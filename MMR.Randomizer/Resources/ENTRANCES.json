@@ -1699,10 +1699,10 @@
     },
     {
       "RegionName": "East Clock Town",
-      "ExitName": "East Clock Town: South Clock Town",
+      "ExitName": "East Clock Town: South East Connection",
       "ExitIndex": 1,
-      "SpawnName": "East Clock Town: South Clock Town",
-      "LogicIndex": 731
+      "SpawnName": "East Clock Town: South East Connection",
+      "LogicIndex": 736
     },
     {
       "RegionName": "East Clock Town",
@@ -1713,10 +1713,10 @@
     },
     {
       "RegionName": "East Clock Town",
-      "ExitName": "East Clock Town: South East Connection",
+      "ExitName": "East Clock Town: South Clock Town",
       "ExitIndex": 3,
-      "SpawnName": "East Clock Town: South East Connection",
-      "LogicIndex": 736
+      "SpawnName": "East Clock Town: South Clock Town",
+      "LogicIndex": 731
     },
     {
       "RegionName": "East Clock Town",
