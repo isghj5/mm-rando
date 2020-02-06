@@ -1050,8 +1050,8 @@
 0
 0
 - Woodfall 20r
-786
 
+786,0;636
 0
 0
 - Well Right Path 50r
@@ -2376,7 +2376,7 @@
 0
 - EntranceIkanaCanyonFromBeneaththeWell
 
-648;649
+648;4,120,649,752
 0
 0
 - EntranceIkanaCanyonFromSakonsHideout
@@ -2621,7 +2621,7 @@
 0
 - EntrancePiratesFortressHookshotRoomFromUpperDoor
 
-120;10;75;772,120;772,10;772,75;485
+772,120;772,10;772,75;485
 0
 0
 - EntrancePiratesFortressGuardRoomFromFrontDoor
