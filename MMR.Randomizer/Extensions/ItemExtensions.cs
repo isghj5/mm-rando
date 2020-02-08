@@ -5,6 +5,7 @@ using System.Text;
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.GameObjects;
 using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes.Entrance;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -92,7 +93,27 @@ namespace MMR.Randomizer.Extensions
 
         public static Item? Pair(this Item entrance)
         {
-            return entrance.GetAttribute<EntranceAttribute>()?.Pair;
+            return entrance.GetAttribute<PairAttribute>()?.Pair;
+        }
+
+        public static ushort SpawnId(this Item entrance)
+        {
+            return entrance.GetAttribute<SpawnAttribute>().SpawnId;
+        }
+
+        public static IEnumerable<Tuple<int, byte>> ExitIndices(this Item entrance)
+        {
+            return entrance.GetAttributes<ExitAttribute>().Select(ea => new Tuple<int, byte>(ea.SceneId, ea.ExitIndex));
+        }
+
+        public static IEnumerable<int> ExitAddresses(this Item entrance)
+        {
+            return entrance.GetAttributes<ExitAddressAttribute>().Select(eaa => eaa.Address);
+        }
+
+        public static bool IsEntranceImplemented(this Item entrance)
+        {
+            return entrance.HasAttribute<SpawnAttribute>() && (entrance.HasAttribute<ExitAttribute>() || entrance.HasAttribute<ExitAddressAttribute>());
         }
 
         public static bool IsOverwritable(this Item item)

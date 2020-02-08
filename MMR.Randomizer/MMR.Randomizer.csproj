@@ -78,9 +78,6 @@
     <None Update="Resources\addresses\tunic-forms">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="Resources\ENTRANCES.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="Resources\models\kafei">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -1,4 +1,5 @@
 ﻿using MMR.Randomizer.Attributes;
+using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.GameObjects
@@ -3301,768 +3302,2322 @@ namespace MMR.Randomizer.GameObjects
 
         //[GetItemIndex(0x1A1)]
 
-        [Entrance(EntranceEastClockTownFromMayorsResidence), Region(Region.EastClockTown)]
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceEastClockTownFromMayorsResidence)]
+        [Exit(Scene.EastClockTown, 7)]
+        [Spawn(Scene.MayorsResidence, 0)]
         EntranceMayorsResidenceFromEastClockTown,
+
         //EntranceMayorsResidenceFromMayorsResidence, // after talking with couple's mask
 
-        [Entrance, Region(Region.TheMoon)]
+        [Region(Region.TheMoon)]
+        [Entrance]
+        [Exit(Scene.TheMoon, 0)]
+        [Spawn(Scene.MajorasLair, 0)]
         EntranceMajorasLairFromTheMoon, // one way
 
-        [Entrance(EntranceSouthernSwampFromMagicHagsPotionShop), Region(Region.SouthernSwamp)]
+        [Region(Region.SouthernSwamp)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceSouthernSwampFromMagicHagsPotionShop)]
+        [Exit(Scene.SouthernSwamp, 5)]
+        [Spawn(Scene.PotionShop, 0)]
         EntranceMagicHagsPotionShopFromSouthernSwamp,
 
-        [Entrance(EntranceRomaniRanchFromBarn), Region(Region.RomaniRanch)]
+        [Region(Region.RomaniRanch)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceRomaniRanchFromBarn)]
+        [Exit(Scene.RomaniRanch, 2)]
+        [Spawn(Scene.RanchBuildings, 0)]
         EntranceRanchBarnFromRomaniRanch,
-        [Entrance(EntranceRomaniRanchFromRanchHouse), Region(Region.RomaniRanch)]
+
+        [Region(Region.RomaniRanch)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceRomaniRanchFromRanchHouse)]
+        [Exit(Scene.RomaniRanch, 3)]
+        [Spawn(Scene.RanchBuildings, 1)]
         EntranceRanchHouseFromRomaniRanch,
+
         //EntranceRanchHouseBarnFromCrash, // maybe during abduction cutscene
 
-        [Entrance(EntranceEastClockTownFromHoneyDarlingsShop), Region(Region.EastClockTown)]
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceEastClockTownFromHoneyDarlingsShop)]
+        [Exit(Scene.EastClockTown, 6)]
+        [Spawn(Scene.HoneyDarling, 0)]
         EntranceHoneyDarlingsShopFromEastClockTown,
 
-        [Entrance(EntranceIkanaGraveyardFromDay2Grave), Region(Region.IkanaGraveyard)]
+        [Region(Region.IkanaGraveyard)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceIkanaGraveyardFromDay2Grave)]
+        [Exit(Scene.IkanaGraveyard, 2)]
+        [Spawn(Scene.BeneathGraveyard, 0)]
         EntranceBeneathGraveyardFromIkanaGraveyardNight2,
-        [Entrance(EntranceIkanaGraveyardFromDay1Grave), Region(Region.IkanaGraveyard)]
+
+        [Region(Region.IkanaGraveyard)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceIkanaGraveyardFromDay1Grave)]
+        [Exit(Scene.IkanaGraveyard, 3)]
+        [Spawn(Scene.BeneathGraveyard, 1)]
         EntranceBeneathGraveyardFromIkanaGraveyardNight1,
 
-        [Entrance(EntranceRoadtoSouthernSwampFromSouthernSwamp), Region(Region.RoadToSouthernSwamp)]
+        [Region(Region.RoadToSouthernSwamp)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceRoadtoSouthernSwampFromSouthernSwamp)]
+        [Exit(Scene.RoadToSouthernSwamp, 1)]
+        [Spawn(Scene.SouthernSwamp, 0)]
         EntranceSouthernSwampFromRoadtoSouthernSwamp,
-        [Entrance(EntranceTouristInformationFromSouthernSwamp), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceTouristInformationFromSouthernSwamp)]
+        [Exit(Scene.TouristCenter, 0)]
+        [Spawn(Scene.SouthernSwamp, 1)]
         EntranceSouthernSwampFromTouristInformation,
-        [Entrance(EntranceWoodfallFromSouthernSwamp), Region(Region.Woodfall)]
+
+        [Region(Region.Woodfall)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceWoodfallFromSouthernSwamp)]
+        [Exit(Scene.Woodfall, 0)]
+        [Spawn(Scene.SouthernSwamp, 2)]
         EntranceSouthernSwampFromWoodfall,
-        [Entrance(EntranceDekuPalaceFromSouthernSwampLower), Region(Region.DekuPalace)]
+
+        [Region(Region.DekuPalace)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceDekuPalaceFromSouthernSwampLower)]
+        [Exit(Scene.DekuPalace, 0)]
+        [Spawn(Scene.SouthernSwamp, 3)]
         EntranceSouthernSwampFromDekuPalaceLower,
-        [Entrance(EntranceDekuPalaceFromSouthernSwampUpper), Region(Region.DekuPalace)]
+
+        [Region(Region.DekuPalace)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceDekuPalaceFromSouthernSwampUpper)]
+        [Exit(Scene.DekuPalace, 9)]
+        [Spawn(Scene.SouthernSwamp, 4)]
         EntranceSouthernSwampFromDekuPalaceUpper,
-        [Entrance(EntranceMagicHagsPotionShopFromSouthernSwamp), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceMagicHagsPotionShopFromSouthernSwamp)]
+        [Exit(Scene.PotionShop, 0)]
+        [Spawn(Scene.SouthernSwamp, 5)]
         EntranceSouthernSwampFromMagicHagsPotionShop,
+
+        //[Region(Region.Interior)]
+        //[Entrance]
+        //[Pair(EntranceMagicHagsPotionShopFromSouthernSwamp)] // one way?
+        //[Exit(Scene.SouthernSwamp, 6)]
+        //[Spawn(Scene.SouthernSwamp, 6)]
         //EntranceBoatArcheryFromTouristInformation, // photo cruise / boat archery
-        [Entrance(EntranceWoodsofMysteryFromSouthernSwamp), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceWoodsofMysteryFromSouthernSwamp)]
+        [Exit(Scene.WoodsOfMystery, 0)]
+        [Spawn(Scene.SouthernSwamp, 7)]
         EntranceSouthernSwampFromWoodsofMystery,
-        [Entrance(EntranceSwampSpiderHouseFromSouthernSwamp), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceSwampSpiderHouseFromSouthernSwamp)]
+        [Exit(Scene.SwampSpiderHouse, 0)]
+        [Spawn(Scene.SouthernSwamp, 8)]
         EntranceSouthernSwampFromSwampSpiderHouse,
-        [Entrance, Region(Region.IkanaCanyon)]
+
+        [Region(Region.IkanaCanyon)]
+        [Entrance(EntranceType.Overworld)]
+        [Exit(Scene.IkanaCanyon, 4)]
+        [Spawn(Scene.SouthernSwamp, 9)]
         EntranceSouthernSwampFromIkanaCanyon, // one way
-        [Entrance, Region(Region.OwlWarp)]
+
+        [Region(Region.OwlWarp)]
+        [Entrance(EntranceType.OwlWarp)]
+        [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x0E)]
+        [Spawn(Scene.SouthernSwamp, 10)]
         EntranceSouthernSwampFromOwlStatue, // one way
 
-        [Entrance(EntranceWestClockTownFromCuriosityShop), Region(Region.WestClockTown)]
+        [Region(Region.WestClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceWestClockTownFromCuriosityShop)]
+        [Exit(Scene.WestClockTown, 4)]
+        [Spawn(Scene.CuriosityShop, 0)]
         EntranceCuriosityShopFromWestClockTown,
-        [Entrance(EntranceLaundryPoolFromKafeisHideout), Region(Region.LaundryPool)]
+
+        [Region(Region.LaundryPool)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceLaundryPoolFromKafeisHideout)]
+        [Exit(Scene.LaundryPool, 2)]
+        [Spawn(Scene.CuriosityShop, 1)]
         EntranceKafeisHideoutFromLaundryPool,
-        [Entrance(EntranceKafeisHideoutFromCuriosityShop), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.Telescope)]
+        [Pair(EntranceKafeisHideoutFromCuriosityShop)]
+        [ExitAddress(0x100853A)]
+        [Spawn(Scene.CuriosityShop, 2)]
         EntranceCuriosityShopFromKafeisHideout, // peep hole
-        [Entrance(EntranceCuriosityShopFromKafeisHideout), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.Telescope)]
+        [Pair(EntranceCuriosityShopFromKafeisHideout)]
+        [ExitAddress(0xCB5102)]
+        [Spawn(Scene.CuriosityShop, 3)]
         EntranceKafeisHideoutFromCuriosityShop, // peep hole
 
-        [Entrance, Region(Region.TerminaField)] // todo pair entrance
+        [Region(Region.TerminaField)] // todo pair entrance
+        [Entrance(EntranceType.Grotto)]
+        //[Pair(EntranceTerminaFieldFromGrottoGossipOcean)]
+        //[Exit(Scene.TerminaField, )]
+        [Spawn(Scene.Grottos, 0)]
         EntranceGrottoGossipOceanFromTerminaField,
-        [Entrance, Region(Region.TerminaField)] // todo pair entrance
+
+        [Region(Region.TerminaField)] // todo pair entrance
+        [Entrance(EntranceType.Grotto)]
+        //[Pair(EntranceTerminaFieldFromGrottoGossipSwamp)]
+        //[Exit(Scene.TerminaField, )]
+        [Spawn(Scene.Grottos, 1)]
         EntranceGrottoGossipSwampFromTerminaField,
-        [Entrance, Region(Region.TerminaField)] // todo pair entrance
+
+        [Region(Region.TerminaField)] // todo pair entrance
+        [Entrance(EntranceType.Grotto)]
+        //[Pair(EntranceTerminaFieldFromGrottoGossipCanyon)]
+        //[Exit(Scene.TerminaField, )]
+        [Spawn(Scene.Grottos, 2)]
         EntranceGrottoGossipCanyonFromTerminaField,
-        [Entrance, Region(Region.TerminaField)] // todo pair entrance
+
+        [Region(Region.TerminaField)] // todo pair entrance
+        [Entrance(EntranceType.Grotto)]
+        //[Pair(EntranceTerminaFieldFromGossipGrottoMountain)]
+        //[Exit(Scene.TerminaField, )]
+        [Spawn(Scene.Grottos, 3)]
         EntranceGrottoGossipMountainFromTerminaField,
-        [Entrance, Region(Region.TwinIslands)] // todo pair entrance
+
+        // EntranceGrottoGeneric
+
+        [Region(Region.TwinIslands)] // todo pair entrance
+        [Entrance(EntranceType.Grotto)]
+        //[Pair(EntranceTwinIslandsFromGrottoHotSpringWater)]
+        //[Exit(Scene.TerminaField, )]
+        [Spawn(Scene.Grottos, 5)]
         EntranceGrottoHotSpringWaterFromTwinIslands,
-        [Entrance(EntranceDekuPalaceGardenWestFromPalaceStraightGrotto), Region(Region.DekuPalace)] // todo double check the pair
+
+        [Region(Region.DekuPalace)] // todo double check the pair
+        [Entrance(EntranceType.Grotto)]
+        [Pair(EntranceDekuPalaceGardenEastFromPalaceStraightGrotto)]
+        [Exit(Scene.DekuPalace, 5)]
+        [Spawn(Scene.Grottos, 6)]
         EntranceGrottoPalaceStraightFromDekuPalaceA,
-        [Entrance, Region(Region.TerminaField)] // todo pair entrance
+
+        [Region(Region.TerminaField)] // todo pair entrance
+        [Entrance(EntranceType.Grotto)]
+        //[Pair(EntranceTerminaFieldFromGrottoDodongo)]
+        //[Exit(Scene.TerminaField, )]
+        [Spawn(Scene.Grottos, 7)]
         EntranceGrottoDodongoFromTerminaField,
-        [Entrance(EntranceDekuPalaceGardenWestFromPalaceVinesGrotto), Region(Region.DekuPalace)] // todo double check the pair
+
+        [Region(Region.DekuPalace)] // todo double check the pair
+        [Entrance(EntranceType.Grotto)]
+        [Pair(EntranceDekuPalaceGardenEastFromPalaceVinesGrotto)]
+        [Exit(Scene.DekuPalace, 4)]
+        [Spawn(Scene.Grottos, 8)]
         EntranceGrottoPalaceVinesFromDekuPalaceLower,
-        [Entrance, Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Grotto)]
+        //[Pair(EntranceTerminaFieldFromGrottoDekuMerchant)]
+        //[Exit(Scene.TerminaField, )]
+        [Spawn(Scene.Grottos, 9)]
         EntranceGrottoDekuMerchantFromTerminaField,
-        [Entrance, Region(Region.TerminaField)]
+
+        // EntranceGrottoCows
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Grotto)]
+        //[Pair(EntranceTerminaFieldFromGrottoBioBaba)]
+        //[Exit(Scene.TerminaField, )]
+        [Spawn(Scene.Grottos, 11)]
         EntranceGrottoBioBabaFromTerminaField,
-        [Entrance(EntranceDekuPalaceGardenEastFromBeanSellerGrotto), Region(Region.DekuPalace)]
+
+        [Region(Region.DekuPalace)]
+        [Entrance(EntranceType.Grotto)]
+        [Pair(EntranceDekuPalaceGardenEastFromBeanSellerGrotto)]
+        [Exit(Scene.DekuPalace, 6)]
+        [Spawn(Scene.Grottos, 12)]
         EntranceGrottoBeanSellerFromDekuPalace,
-        [Entrance, Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Grotto)]
+        //[Pair(EntranceTerminaFieldFromGrottoPeahat)]
+        //[Exit(Scene.TerminaField, )]
+        [Spawn(Scene.Grottos, 13)]
         EntranceGrottoPeahatFromTerminaField,
-        [Entrance(EntranceDekuPalaceGardenEastFromPalaceStraightGrotto), Region(Region.DekuPalace)] // todo double check the pair
+
+        [Region(Region.DekuPalace)] // todo double check the pair
+        [Entrance(EntranceType.Grotto)]
+        [Pair(EntranceDekuPalaceGardenWestFromPalaceStraightGrotto)]
+        [Exit(Scene.DekuPalace, 8)]
+        [Spawn(Scene.Grottos, 14)]
         EntranceGrottoPalaceStraightFromDekuPalaceB,
-        [Entrance(EntranceDekuPalaceGardenEastFromPalaceVinesGrotto), Region(Region.DekuPalace)] // todo double check the pair
+
+        [Region(Region.DekuPalace)] // todo double check the pair
+        [Entrance(EntranceType.Grotto)]
+        [Pair(EntranceDekuPalaceGardenWestFromPalaceVinesGrotto)]
+        [Exit(Scene.DekuPalace, 7)]
+        [Spawn(Scene.Grottos, 15)]
         EntranceGrottoPalaceVinesFromDekuPalaceUpper,
-        [Entrance(EntranceGoronVillageFromLensCave), Region(Region.GoronVillage)]
+
+        [Region(Region.GoronVillage)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceGoronVillageFromLensCave)]
+        [Exit(Scene.GoronVillage, 3)]
+        [Spawn(Scene.Grottos, 16)]
         EntranceGrottoLensCaveFromGoronVillage,
 
-        [Entrance(EntranceRoadtoIkanaFromIkanaCanyon), Region(Region.RoadToIkana)]
+        [Region(Region.RoadToIkana)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceRoadtoIkanaFromIkanaCanyon)]
+        [Exit(Scene.RoadToIkana, 1)]
+        [Spawn(Scene.IkanaCanyon, 0)]
         EntranceIkanaCanyonFromRoadtoIkana,
-        [Entrance(EntrancePoeHutFromIkanaCanyon), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePoeHutFromIkanaCanyon)]
+        [Exit(Scene.PoeHut, 0)]
+        [Spawn(Scene.IkanaCanyon, 1)]
         EntranceIkanaCanyonFromPoeHut,
-        [Entrance(EntranceMusicBoxHouseFromIkanaCanyon), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceMusicBoxHouseFromIkanaCanyon)]
+        [Exit(Scene.MusicBoxHouse, 0)]
+        [Spawn(Scene.IkanaCanyon, 2)]
         EntranceIkanaCanyonFromMusicBoxHouse,
-        [Entrance(EntranceStoneTowerFromIkanaCanyon), Region(Region.StoneTower)]
+
+        [Region(Region.StoneTower)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceStoneTowerFromIkanaCanyon)]
+        [Exit(Scene.StoneTower, 0)]
+        [Spawn(Scene.IkanaCanyon, 3)]
         EntranceIkanaCanyonFromStoneTower,
-        [Entrance, Region(Region.OwlWarp)]
+
+        [Region(Region.OwlWarp)]
+        [Entrance(EntranceType.OwlWarp)]
+        [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x10)]
+        [Spawn(Scene.IkanaCanyon, 4)]
         EntranceIkanaCanyonFromOwlStatue, // one way
-        [Entrance(EntranceBeneaththeWellFromIkanaCanyon), Region(Region.BeneathTheWell)]
+
+        [Region(Region.BeneathTheWell)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceBeneaththeWellFromIkanaCanyon)]
+        [Exit(Scene.BeneathTheWell, 0)]
+        [Spawn(Scene.IkanaCanyon, 5)]
         EntranceIkanaCanyonFromBeneaththeWell,
-        [Entrance(EntranceSakonsHideoutFromIkanaCanyon), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceSakonsHideoutFromIkanaCanyon)]
+        [Exit(Scene.SakonsHideout, 0)]
+        [Spawn(Scene.IkanaCanyon, 6)]
         EntranceIkanaCanyonFromSakonsHideout,
-        [Entrance, Region(Region.StoneTowerTemple)]
+
+        [Region(Region.StoneTowerTemple)]
+        [Entrance(EntranceType.DungeonExit)]
+        //[Exit(Scene.SakonsHideout, 0)]
+        [Spawn(Scene.IkanaCanyon, 7)]
         EntranceIkanaCanyonFromIkanaClear, // one way
-        [Entrance(EntranceAncientCastleofIkanaCourtyardFromIkanaCanyon), Region(Region.IkanaCastle)]
+
+        [Region(Region.IkanaCastle)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceAncientCastleofIkanaCourtyardFromIkanaCanyon)]
+        [Exit(Scene.IkanaCastle, 1)]
+        [Spawn(Scene.IkanaCanyon, 8)]
         EntranceIkanaCanyonFromAncientCastleofIkanaCourtyard,
+
         //EntranceCutsceneIkanaCanyonFromSpringWaterCave, // one way
+
         //EntranceSpringWaterCaveFromMusicBoxCutscene, // one way
-        [Entrance(EntranceFairysFountainFromIkanaCanyon), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceFairysFountainFromIkanaCanyon)]
+        [Exit(Scene.FairyFountain, 4)]
+        [Spawn(Scene.IkanaCanyon, 11)]
         EntranceIkanaCanyonFromFairysFountain,
-        [Entrance(EntranceSecretShrineFromIkanaCanyon), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceSecretShrineFromIkanaCanyon)]
+        [Exit(Scene.SecretShrine, 0)]
+        [Spawn(Scene.IkanaCanyon, 12)]
         EntranceIkanaCanyonFromSecretShrine,
-        [Entrance(EntranceSpringWaterCaveFromIkanaCanyon), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceSpringWaterCaveFromIkanaCanyon)]
+        [Exit(Scene.IkanaCanyon, 11)]
+        [Spawn(Scene.IkanaCanyon, 13)]
         EntranceIkanaCanyonFromSpringWaterCave,
-        [Entrance(EntranceIkanaCanyonFromSpringWaterCave), Region(Region.IkanaCanyon)]
+
+        [Region(Region.IkanaCanyon)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceIkanaCanyonFromSpringWaterCave)]
+        [Exit(Scene.IkanaCanyon, 10)]
+        [Spawn(Scene.IkanaCanyon, 14)]
         EntranceSpringWaterCaveFromIkanaCanyon,
 
-        [Entrance(EntrancePiratesFortressExteriorFromPiratesFortressMain), Region(Region.PiratesFortressExterior)]
+
+        [Region(Region.PiratesFortressExterior)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntrancePiratesFortressExteriorFromPiratesFortressMain)]
+        [Exit(Scene.PiratesFortressExterior, 1)]
+        [Spawn(Scene.PiratesFortress, 0)]
         EntrancePiratesFortressFromMainEntrance,
-        [Entrance(EntrancePiratesFortressHookshotRoomFromLowerDoor), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePiratesFortressHookshotRoomFromLowerDoor)]
+        [Exit(Scene.PiratesFortressRooms, 0)]
+        [Spawn(Scene.PiratesFortress, 1)]
         EntrancePiratesFortressFromHookshotRoomLower,
-        [Entrance(EntrancePiratesFortressHookshotRoomFromUpperDoor), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePiratesFortressHookshotRoomFromUpperDoor)]
+        [Exit(Scene.PiratesFortressRooms, 1)]
+        [Spawn(Scene.PiratesFortress, 2)]
         EntrancePiratesFortressFromHookshotRoomUpper,
-        [Entrance(EntrancePiratesFortressGuardRoomFromFrontDoor), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePiratesFortressGuardRoomFromFrontDoor)]
+        [Exit(Scene.PiratesFortressRooms, 2)]
+        [Spawn(Scene.PiratesFortress, 3)]
         EntrancePiratesFortressFromGuardRoomFront,
-        [Entrance(EntrancePiratesFortressGuardRoomFromBackDoor), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePiratesFortressGuardRoomFromBackDoor)]
+        [Exit(Scene.PiratesFortressRooms, 3)]
+        [Spawn(Scene.PiratesFortress, 4)]
         EntrancePiratesFortressFromGuardRoomBack,
-        [Entrance(EntrancePiratesFortressBarrelMazeFromFrontDoor), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePiratesFortressBarrelMazeFromFrontDoor)]
+        [Exit(Scene.PiratesFortressRooms, 4)]
+        [Spawn(Scene.PiratesFortress, 5)]
         EntrancePiratesFortressFromBarrelMazeFront,
-        [Entrance(EntrancePiratesFortressBarrelMazeFromBackDoor), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePiratesFortressBarrelMazeFromBackDoor)]
+        [Exit(Scene.PiratesFortressRooms, 5)]
+        [Spawn(Scene.PiratesFortress, 6)]
         EntrancePiratesFortressFromBarrelMazeBack,
-        [Entrance(EntrancePiratesFortressOneGuardFrontFromPiratesFortress), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePiratesFortressOneGuardFrontFromPiratesFortress)]
+        [Exit(Scene.PiratesFortressRooms, 6)]
+        [Spawn(Scene.PiratesFortress, 7)]
         EntrancePiratesFortressFromOnePatrolFront,
-        [Entrance(EntrancePiratesFortressOneGuardRearFromPiratesFortress), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.Permanent)]
+        [Pair(EntrancePiratesFortressOneGuardRearFromPiratesFortress)]
+        [Exit(Scene.PiratesFortressRooms, 7)]
+        [Spawn(Scene.PiratesFortress, 8)]
         EntrancePiratesFortressFromOnePatrolBack,
-        [Entrance(EntrancePiratesFortressSewerFromTelescope), Region(Region.Interior)]
+
+        // EntrancePiratesFortressUnused
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.Telescope)]
+        [Pair(EntrancePiratesFortressSewerFromTelescope)]
+        //[Exit(Scene.PiratesFortressRooms, 7)]
+        [Spawn(Scene.PiratesFortress, 10)]
         EntrancePiratesFortressFromTelescope,
-        [Entrance(EntrancePiratesFortressExteriorFromPiratesFortressBalcony), Region(Region.PiratesFortressExterior)]
+
+        // EntrancePiratesFortressUnused
+
+        [Region(Region.PiratesFortressExterior)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntrancePiratesFortressExteriorFromPiratesFortressBalcony)]
+        [Exit(Scene.PiratesFortressExterior, 5)]
+        [Spawn(Scene.PiratesFortress, 12)]
         EntrancePiratesFortressFromPiratesFortressExteriorBalcony,
 
-        [Entrance(EntranceEastClockTownFromMilkBar), Region(Region.EastClockTown)]
+
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceEastClockTownFromMilkBar)]
+        [Exit(Scene.EastClockTown, 12)]
+        [Spawn(Scene.MilkBar, 0)]
         EntranceMilkBarFromEastClockTown,
 
-        [Entrance(EntranceStoneTowerFromStoneTowerTemple), Region(Region.StoneTower)]
+
+        [Region(Region.StoneTower)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceStoneTowerFromStoneTowerTemple)]
+        [Exit(Scene.StoneTower, 1)]
+        [Spawn(Scene.StoneTowerTemple, 0)]
         EntranceStoneTowerTempleFromStoneTower, // should use the No Intro version if shorten cutscenes is enabled
 
-        [Entrance(EntranceEastClockTownFromTreasureChestShop), Region(Region.EastClockTown)]
+
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceEastClockTownFromTreasureChestShop)]
+        [Exit(Scene.EastClockTown, 4)]
+        [Spawn(Scene.TreasureChestShop, 0)]
         EntranceTreasureChestShopFromEastClockTown,
+
         //EntranceTreasureChestShopFromTreasureChestShop, // after opening the chest
 
-        [Entrance(EntranceStoneTowerInvertedFromStoneTowerTempleInverted), Region(Region.StoneTower)]
+
+        [Region(Region.StoneTower)]
+        [Entrance(EntranceType.Dungeon)]
+        [Pair(EntranceStoneTowerInvertedFromStoneTowerTempleInverted)]
+        [Exit(Scene.InvertedStoneTower, 0)]
+        [Spawn(Scene.InvertedStoneTowerTemple, 0)]
         EntranceStoneTowerTempleInvertedFromStoneTowerInverted,
-        [Entrance, Region(Region.StoneTowerTemple)]
+
+        [Region(Region.StoneTowerTemple)]
+        [Entrance(EntranceType.Boss)]
+        [Exit(Scene.InvertedStoneTowerTemple, 2)]
+        [Spawn(Scene.InvertedStoneTowerTemple, 1)]
         EntranceStoneTowerTempleInvertedBossRoomFromStoneTowerTempleInverted, // one way
 
-        [Entrance(EntranceSouthClockTownFromClockTowerRooftop), Region(Region.SouthClockTown)]
+        [Region(Region.SouthClockTown)]
+        [Entrance(EntranceType.Boss)]
+        [Pair(EntranceSouthClockTownFromClockTowerRooftop)]
+        [Exit(Scene.SouthClockTown, 8)]
+        [Spawn(Scene.ClockTowerRoof, 0)]
         EntranceClockTowerRooftopFromSouthClockTown, // todo one way?
+
         //EntranceClockTowerRooftopFromClockTowerRooftop, // after receiving-song-of-time cutscene // one way
 
-        //EntranceBeforethePortaltoTerminaFromLostWoods, // todo accessible via wrong-warp
-        [Entrance(EntranceClockTowerInteriorFromBeforethePortaltoTermina), Region(Region.Interior)]
+
+        //EntranceBeforethePortaltoTerminaFromLostWoods, // todo accessible via wrong-warp?
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceClockTowerInteriorFromBeforethePortaltoTermina)]
+        [Exit(Scene.ClockTowerInterior, 0)]
+        [Spawn(Scene.BeforeThePortalToTermina, 1)]
         EntranceBeforethePortaltoTerminaFromClockTowerInterior, // glitched logic only
-        [Entrance, Region(Region.BeneathClocktown)]
+
+        [Region(Region.BeneathClocktown)]
+        [Entrance(EntranceType.VoidRespawn)]
+        [Exit(Scene.BeforeThePortalToTermina, 2)]
+        [Spawn(Scene.BeforeThePortalToTermina, 3)]
         EntranceBeforethePortaltoTerminaFromBeforethePortaltoTermina, // void respawn // one way?
 
-        [Entrance(EntranceWoodfallFromWoodfallTempleEntrance), Region(Region.Woodfall)]
+
+        [Region(Region.Woodfall)]
+        [Entrance(EntranceType.Dungeon)]
+        [Pair(EntranceWoodfallFromWoodfallTempleEntrance)]
+        [Exit(Scene.Woodfall, 1)]
+        [Spawn(Scene.WoodfallTemple, 0)]
         EntranceWoodfallTempleFromWoodfall,
-        [Entrance, Region(Region.WoodfallTemple)]
+
+        [Region(Region.WoodfallTemple)]
+        [Entrance(EntranceType.DungeonExit)]
+        //[Exit(Scene.SouthClockTown, 0)]
+        [Spawn(Scene.WoodfallTemple, 1)]
         EntranceWoodfallTemplePrisonFromOdolwasLair, // one way
-        [Entrance(EntranceWoodfallFromWoodfallTempleExit), Region(Region.Woodfall)]
+
+        [Region(Region.Woodfall)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceWoodfallFromWoodfallTempleExit)]
+        [Exit(Scene.Woodfall, 3)]
+        [Spawn(Scene.WoodfallTemple, 2)]
         EntranceWoodfallTemplePrisonFromWoodfall,
 
-        [Entrance(EntranceTerminaFieldFromPathtoMountainVillage), Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceTerminaFieldFromPathtoMountainVillage)]
+        [Exit(Scene.TerminaField, 3)]
+        [Spawn(Scene.PathToMountainVillage, 0)]
         EntrancePathtoMountainVillageFromTerminaField,
-        [Entrance(EntranceMountainVillageFromPathtoMountainVillage), Region(Region.MountainVillage)]
+
+        [Region(Region.MountainVillage)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceMountainVillageFromPathtoMountainVillage)]
+        [Exit(Scene.MountainVillage, 0)]
+        [Spawn(Scene.PathToMountainVillage, 1)]
         EntrancePathtoMountainVillageFromMountainVillage,
 
-        [Entrance(EntranceBeneaththeWellFromAncientCastleofIkana), Region(Region.BeneathTheWell)]
+
+        [Region(Region.BeneathTheWell)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceBeneaththeWellFromAncientCastleofIkana)]
+        [Exit(Scene.BeneathTheWell, 1)]
+        [Spawn(Scene.IkanaCastle, 0)]
         EntranceAncientCastleofIkanaCourtyardFromBeneaththeWell,
-        [Entrance(EntranceIkanaCanyonFromAncientCastleofIkanaCourtyard), Region(Region.IkanaCanyon)]
+
+        [Region(Region.IkanaCanyon)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceIkanaCanyonFromAncientCastleofIkanaCourtyard)]
+        [Exit(Scene.IkanaCanyon, 7)]
+        [Spawn(Scene.IkanaCastle, 1)]
         EntranceAncientCastleofIkanaCourtyardFromIkanaCanyon,
-        [Entrance(EntranceAncientCastleofIkanaFromCourtyard), Region(Region.IkanaCastle)]
+
+        [Region(Region.IkanaCastle)]
+        [Entrance]
+        [Exit(Scene.IkanaCastle, 3)]
         EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana,
-        [Entrance(EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana), Region(Region.IkanaCastle)]
+
+        [Region(Region.IkanaCastle)]
+        [Entrance]
+        [Exit(Scene.IkanaCastle, 2)]
         EntranceAncientCastleofIkanaFromCourtyard,
-        [Entrance, Region(Region.IkanaCastle)]
+
+        [Region(Region.IkanaCastle)]
+        [Entrance(EntranceType.Overworld)]
+        [Exit(Scene.IkanaCastle, 4)]
+        [Spawn(Scene.IkanaCastle, 4)]
         EntranceAncientCastleofIkanaFromBlockHole, // one way
-        [Entrance, Region(Region.IkanaCastle)]
+
+        [Region(Region.IkanaCastle)]
+        [Entrance(EntranceType.Overworld)]
+        [Exit(Scene.IkanaCastle, 5)]
+        [Spawn(Scene.IkanaCastle, 5)]
         EntranceAncientCastleofIkanaFromKegHole, // one way
-        [Entrance(EntranceIgosduIkanasLairFromAncientCastleofIkana), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceIgosduIkanasLairFromAncientCastleofIkana)]
+        [Exit(Scene.IgosDuIkanasLair, 0)]
+        [Spawn(Scene.IkanaCastle, 6)]
         EntranceAncientCastleofIkanaFromIgosduIkanasLair,
 
-        [Entrance(EntranceNorthClockTownFromDekuScrubPlayground), Region(Region.NorthClockTown)]
+
+        [Region(Region.NorthClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceNorthClockTownFromDekuScrubPlayground)]
+        [Exit(Scene.NorthClockTown, 4)]
+        [Spawn(Scene.DekuPlayground, 0)]
         EntranceDekuScrubPlaygroundFromNorthClockTown,
+
         //EntranceDekuScrubPlaygroundFromDekuScrubPlayground, // after minigame
 
-        [Entrance, Region(Region.WoodfallTemple)]
+
+        [Region(Region.WoodfallTemple)]
+        [Entrance(EntranceType.Boss)]
+        [Exit(Scene.WoodfallTemple, 1)]
+        [Spawn(Scene.OdolwasLair, 0)]
         EntranceOdolwasLairFromWoodfallTemple, // one way
 
-        [Entrance(EntranceEastClockTownFromShootingGalleryClockTown), Region(Region.EastClockTown)]
+
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceEastClockTownFromShootingGalleryClockTown)]
+        [Exit(Scene.EastClockTown, 8)]
+        [Spawn(Scene.TownShootingGallery, 0)]
         EntranceTownShootingGalleryFromEastClockTown,
 
-        [Entrance(EntranceSnowheadFromSnowheadTemple), Region(Region.Snowhead)]
+
+        [Region(Region.Snowhead)]
+        [Entrance(EntranceType.Dungeon)]
+        [Pair(EntranceSnowheadFromSnowheadTemple)]
+        [Exit(Scene.Snowhead, 1)]
+        [Spawn(Scene.SnowheadTemple, 0)]
         EntranceSnowheadTempleFromSnowhead, // should use the No Intro version if shorten cutscenes is enabled
 
-        [Entrance(EntranceTerminaFieldFromMilkRoad), Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceTerminaFieldFromMilkRoad)]
+        [Exit(Scene.TerminaField, 5)]
+        [Spawn(Scene.MilkRoad, 0)]
         EntranceMilkRoadFromTerminaField,
-        [Entrance(EntranceRomaniRanchFromMilkRoad), Region(Region.RomaniRanch)]
+
+        [Region(Region.RomaniRanch)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceRomaniRanchFromMilkRoad)]
+        [Exit(Scene.RomaniRanch, 0)]
+        [Spawn(Scene.MilkRoad, 1)]
         EntranceMilkRoadFromRomaniRanch,
-        [Entrance(EntranceGormanTrackFromMilkRoadGated), Region(Region.MilkRoad)]
+
+        [Region(Region.MilkRoad)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceGormanTrackFromMilkRoadGated)]
+        [Exit(Scene.GormanTrack, 1)]
+        [Spawn(Scene.MilkRoad, 2)]
         EntranceMilkRoadFromGormanRacetrackTrack,
-        [Entrance(EntranceGormanTrackFromMilkRoadMain), Region(Region.MilkRoad)]
+
+        [Region(Region.MilkRoad)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceGormanTrackFromMilkRoadMain)]
+        [Exit(Scene.GormanTrack, 0)]
+        [Spawn(Scene.MilkRoad, 3)]
         EntranceMilkRoadFromGormanRacetrackMain,
-        [Entrance, Region(Region.OwlWarp)]
+
+        [Region(Region.OwlWarp)]
+        [Entrance(EntranceType.OwlWarp)]
+        [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x0A)]
+        [Spawn(Scene.MilkRoad, 4)]
         EntranceMilkRoadFromOwlStatue, // one way
-        //EntranceMilkRoadFrom, // maybe during cremia escort?
+
         //EntranceMilkRoadFrom, // maybe during cremia escort?
 
-        [Entrance(EntrancePiratesFortressFromHookshotRoomLower), Region(Region.PiratesFortressInterior)]
+        //EntranceMilkRoadFrom, // maybe during cremia escort?
+
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntrancePiratesFortressFromHookshotRoomLower)]
+        [Exit(Scene.PiratesFortress, 1)]
+        [Spawn(Scene.PiratesFortressRooms, 0)]
         EntrancePiratesFortressHookshotRoomFromLowerDoor,
-        [Entrance(EntrancePiratesFortressFromHookshotRoomUpper), Region(Region.PiratesFortressInterior)]
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntrancePiratesFortressFromHookshotRoomUpper)]
+        [Exit(Scene.PiratesFortress, 2)]
+        [Spawn(Scene.PiratesFortressRooms, 1)]
         EntrancePiratesFortressHookshotRoomFromUpperDoor,
-        [Entrance(EntrancePiratesFortressFromGuardRoomFront), Region(Region.PiratesFortressInterior)]
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntrancePiratesFortressFromGuardRoomFront)]
+        [Exit(Scene.PiratesFortress, 3)]
+        [Spawn(Scene.PiratesFortressRooms, 2)]
         EntrancePiratesFortressGuardRoomFromFrontDoor,
-        [Entrance(EntrancePiratesFortressFromGuardRoomBack), Region(Region.PiratesFortressInterior)]
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntrancePiratesFortressFromGuardRoomBack)]
+        [Exit(Scene.PiratesFortress, 4)]
+        [Spawn(Scene.PiratesFortressRooms, 3)]
         EntrancePiratesFortressGuardRoomFromBackDoor,
-        [Entrance(EntrancePiratesFortressFromBarrelMazeFront), Region(Region.PiratesFortressInterior)]
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntrancePiratesFortressFromBarrelMazeFront)]
+        [Exit(Scene.PiratesFortress, 5)]
+        [Spawn(Scene.PiratesFortressRooms, 4)]
         EntrancePiratesFortressBarrelMazeFromFrontDoor,
-        [Entrance(EntrancePiratesFortressFromBarrelMazeBack), Region(Region.PiratesFortressInterior)]
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntrancePiratesFortressFromBarrelMazeBack)]
+        [Exit(Scene.PiratesFortress, 6)]
+        [Spawn(Scene.PiratesFortressRooms, 5)]
         EntrancePiratesFortressBarrelMazeFromBackDoor,
-        [Entrance(EntrancePiratesFortressFromOnePatrolFront), Region(Region.PiratesFortressInterior)]
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntrancePiratesFortressFromOnePatrolFront)]
+        [Exit(Scene.PiratesFortress, 7)]
+        [Spawn(Scene.PiratesFortressRooms, 6)]
         EntrancePiratesFortressOneGuardFrontFromPiratesFortress,
-        [Entrance(EntrancePiratesFortressFromOnePatrolBack), Region(Region.PiratesFortressInterior)]
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntrancePiratesFortressFromOnePatrolBack)]
+        [Exit(Scene.PiratesFortress, 8)]
+        [Spawn(Scene.PiratesFortressRooms, 7)]
         EntrancePiratesFortressOneGuardRearFromPiratesFortress,
-        [Entrance(EntrancePiratesFortressFromTelescope), Region(Region.PiratesFortressSewer)]
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance(EntranceType.Telescope)]
+        [Pair(EntrancePiratesFortressFromTelescope)]
+        [Exit(Scene.PiratesFortress, 9)]
+        [ExitAddress(0xCB5106)]
+        [Spawn(Scene.PiratesFortressRooms, 8)]
         EntrancePiratesFortressSewerFromTelescope,
-        [Entrance(EntrancePiratesFortressExteriorFromPiratesFortressSewerMain), Region(Region.PiratesFortressExterior)]
+
+        [Region(Region.PiratesFortressExterior)]
+        [Entrance]
+        [Pair(EntrancePiratesFortressExteriorFromPiratesFortressSewerMain)]
+        [Exit(Scene.PiratesFortressExterior, 2)]
+        [Spawn(Scene.PiratesFortressRooms, 9)]
         EntrancePiratesFortressSewerFromWater,
-        [Entrance(EntrancePiratesFortressExteriorFromPiratesFortressSewerDoor), Region(Region.PiratesFortressExterior)]
+
+        [Region(Region.PiratesFortressExterior)]
+        [Entrance]
+        [Pair(EntrancePiratesFortressExteriorFromPiratesFortressSewerDoor)]
+        [Exit(Scene.PiratesFortressExterior, 3)]
+        [Spawn(Scene.PiratesFortressRooms, 10)]
         EntrancePiratesFortressSewerFromRear,
 
-        [Entrance(EntranceRoadtoSouthernSwampFromSwampShootingGallery), Region(Region.RoadToSouthernSwamp)]
+
+        [Region(Region.RoadToSouthernSwamp)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceRoadtoSouthernSwampFromSwampShootingGallery)]
+        [Exit(Scene.RoadToSouthernSwamp, 2)]
+        [Spawn(Scene.SwampShootingGallery, 0)]
         EntranceSwampShootingGalleryFromRoadtoSouthernSwamp,
 
-        [Entrance(EntranceGreatBayCoastFromPinnacleRock), Region(Region.GreatBayCoast)]
+
+        [Region(Region.GreatBayCoast)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceGreatBayCoastFromPinnacleRock)]
+        [Exit(Scene.GreatBayCoast, 3)]
+        [Spawn(Scene.PinnacleRock, 0)]
         EntrancePinnacleRockFromGreatBayCoast,
-        [Entrance, Region(Region.PinnacleRock)]
+
+        [Region(Region.PinnacleRock)]
+        [Entrance(EntranceType.VoidRespawn)]
+        [Exit(Scene.PinnacleRock, 1)]
+        [Spawn(Scene.PinnacleRock, 1)]
         EntrancePinnacleRockFromPinnacleRock, // void respawn // one way?
 
-        [Entrance(EntranceNorthClockTownFromFairysFountain), Region(Region.NorthClockTown)]
+
+        [Region(Region.NorthClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceNorthClockTownFromFairysFountain)]
+        [Exit(Scene.NorthClockTown, 3)]
+        [Spawn(Scene.FairyFountain, 0)]
         EntranceFairysFountainFromNorthClockTown,
-        [Entrance(EntranceWoodfallFromFairysFountain), Region(Region.Woodfall)]
+
+        [Region(Region.Woodfall)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceWoodfallFromFairysFountain)]
+        [Exit(Scene.Woodfall, 2)]
+        [Spawn(Scene.FairyFountain, 1)]
         EntranceFairysFountainFromWoodfall,
-        [Entrance(EntranceSnowheadFromFairysFountain), Region(Region.Snowhead)]
+
+        [Region(Region.Snowhead)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceSnowheadFromFairysFountain)]
+        [Exit(Scene.Snowhead, 2)]
+        [Spawn(Scene.FairyFountain, 2)]
         EntranceFairysFountainFromSnowhead,
-        [Entrance(EntranceZoraCapeFromFairysFountain), Region(Region.ZoraCape)]
+
+        [Region(Region.ZoraCape)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceZoraCapeFromFairysFountain)]
+        [Exit(Scene.ZoraCape, 5)]
+        [Spawn(Scene.FairyFountain, 3)]
         EntranceFairysFountainFromZoraCape,
-        [Entrance(EntranceIkanaCanyonFromFairysFountain), Region(Region.IkanaCanyon)]
+
+        [Region(Region.IkanaCanyon)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceIkanaCanyonFromFairysFountain)]
+        [Exit(Scene.IkanaCanyon, 8)]
+        [Spawn(Scene.FairyFountain, 4)]
         EntranceFairysFountainFromIkanaCanyon,
 
-        [Entrance(EntranceSouthernSwampFromSwampSpiderHouse), Region(Region.SouthernSwamp)]
+
+        [Region(Region.SouthernSwamp)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceSouthernSwampFromSwampSpiderHouse)]
+        [Exit(Scene.SouthernSwamp, 8)]
+        [Spawn(Scene.SwampSpiderHouse, 0)]
         EntranceSwampSpiderHouseFromSouthernSwamp,
 
-        [Entrance(EntranceGreatBayCoastFromOceansideSpiderHouse), Region(Region.GreatBayCoast)]
+
+        [Region(Region.GreatBayCoast)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceGreatBayCoastFromOceansideSpiderHouse)]
+        [Exit(Scene.GreatBayCoast, 8)]
+        [Spawn(Scene.OceanSpiderHouse, 0)]
         EntranceOceansideSpiderHouseFromGreatBayCoast,
 
-        [Entrance(EntranceEastClockTownFromAstralObservatory), Region(Region.EastClockTown)]
+
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceEastClockTownFromAstralObservatory)]
+        [Exit(Scene.EastClockTown, 2)]
+        [Spawn(Scene.AstralObservatory, 0)]
         EntranceAstralObservatoryFromEastClockTown,
-        [Entrance(EntranceTerminaFieldFromAstralObservatory), Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceTerminaFieldFromAstralObservatory)]
+        [Exit(Scene.TerminaField, 9)]
+        [Spawn(Scene.AstralObservatory, 1)]
         EntranceAstralObservatoryFromTerminaField,
-        [Entrance(EntranceTerminaFieldFromAstralObservatoryTelescope), Region(Region.AstralObservatory)]
+
+        [Region(Region.AstralObservatory)]
+        [Entrance(EntranceType.Telescope)]
+        [Pair(EntranceTerminaFieldFromAstralObservatoryTelescope)]
+        [ExitAddress(0xCB50E2)]
+        [Spawn(Scene.AstralObservatory, 2)]
         EntranceAstralObservatoryFromTelescope,
 
-        [Entrance(EntranceTheMoonFromDekuTrial), Region(Region.TheMoon)]
+
+        [Region(Region.TheMoon)]
+        [Entrance(EntranceType.Trial)]
+        [Pair(EntranceTheMoonFromDekuTrial)]
+        [Exit(Scene.TheMoon, 1)]
+        [Spawn(Scene.DekuTrial, 0)]
         EntranceDekuTrialFromTheMoon,
 
-        [Entrance(EntranceSouthernSwampFromDekuPalaceLower), Region(Region.SouthernSwamp)]
+
+        [Region(Region.SouthernSwamp)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSouthernSwampFromDekuPalaceLower)]
+        [Exit(Scene.SouthernSwamp, 3)]
+        [Spawn(Scene.DekuPalace, 0)]
         EntranceDekuPalaceFromSouthernSwampLower,
-        [Entrance, Region(Region.DekuPalace)]
+
+        [Region(Region.DekuPalace)]
+        [Entrance]
+        //[Exit(Scene.DekuPalace, 1)]
+        [Spawn(Scene.DekuPalace, 1)]
         EntranceDekuPalaceFromDekuPalace, // thrown out // one way
-        [Entrance(EntranceDekuKingsChamberFromDekuPalace), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceDekuKingsChamberFromDekuPalace)]
+        [Exit(Scene.DekuKingChamber, 0)]
+        [Spawn(Scene.DekuPalace, 2)]
         EntranceDekuPalaceFromDekuKingsChamberMain,
-        [Entrance(EntranceDekuKingsChamberFromDekuPalaceWestGarden), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceDekuKingsChamberFromDekuPalaceWestGarden)]
+        [Exit(Scene.DekuKingChamber, 1)]
+        [Spawn(Scene.DekuPalace, 3)]
         EntranceDekuPalaceFromDekuKingsChamberGardenWest,
-        [Entrance(EntranceDekuShrineFromDekuPalace), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceDekuShrineFromDekuPalace)]
+        [Exit(Scene.DekuShrine, 0)]
+        [Spawn(Scene.DekuPalace, 4)]
         EntranceDekuPalaceFromDekuShrine,
-        [Entrance(EntranceSouthernSwampFromDekuPalaceUpper), Region(Region.SouthernSwamp)]
+
+        [Region(Region.SouthernSwamp)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSouthernSwampFromDekuPalaceUpper)]
+        [Exit(Scene.SouthernSwamp, 4)]
+        [Spawn(Scene.DekuPalace, 5)]
         EntranceDekuPalaceFromSouthernSwampUpper,
-        [Entrance(EntranceGrottoPalaceVinesFromDekuPalaceLower), Region(Region.Grottos)]
+
+        [Region(Region.Grottos)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceGrottoPalaceVinesFromDekuPalaceUpper)]
+        [Exit(Scene.Grottos, 5)]
+        [Spawn(Scene.DekuPalace, 6)]
         EntranceDekuPalaceGardenWestFromPalaceVinesGrotto, // todo one way?
-        [Entrance(EntranceGrottoPalaceStraightFromDekuPalaceA), Region(Region.Grottos)]
+
+        [Region(Region.Grottos)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceGrottoPalaceStraightFromDekuPalaceB)]
+        [Exit(Scene.Grottos, 3)]
+        [Spawn(Scene.DekuPalace, 7)]
         EntranceDekuPalaceGardenWestFromPalaceStraightGrotto, // todo one way?
-        [Entrance(EntranceGrottoPalaceStraightFromDekuPalaceB), Region(Region.Grottos)]
+
+        [Region(Region.Grottos)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceGrottoPalaceStraightFromDekuPalaceA)]
+        [Exit(Scene.Grottos, 2)]
+        [Spawn(Scene.DekuPalace, 8)]
         EntranceDekuPalaceGardenEastFromPalaceStraightGrotto, // todo one way?
-        [Entrance(EntranceGrottoBeanSellerFromDekuPalace), Region(Region.Grottos)]
+
+        [Region(Region.Grottos)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceGrottoBeanSellerFromDekuPalace)]
+        [Exit(Scene.Grottos, 6)]
+        [Spawn(Scene.DekuPalace, 9)]
         EntranceDekuPalaceGardenEastFromBeanSellerGrotto,
-        [Entrance(EntranceGrottoPalaceVinesFromDekuPalaceUpper), Region(Region.Grottos)]
+
+        [Region(Region.Grottos)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceGrottoPalaceVinesFromDekuPalaceLower)]
+        [Exit(Scene.Grottos, 4)]
+        [Spawn(Scene.DekuPalace, 10)]
         EntranceDekuPalaceGardenEastFromPalaceVinesGrotto, // todo one way?
 
-        [Entrance(EntranceMountainVillageFromMountainSmithy), Region(Region.MountainVillage)]
+
+        [Region(Region.MountainVillage)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceMountainVillageFromMountainSmithy)]
+        [Exit(Scene.MountainVillage, 1)]
+        [Spawn(Scene.MountainSmithy, 0)]
         EntranceMountainSmithyFromMountainVillage,
 
-        [Entrance(EntranceWestClockTownFromTerminaField), Region(Region.WestClockTown)]
+
+        [Region(Region.WestClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceWestClockTownFromTerminaField)]
+        [Exit(Scene.WestClockTown, 0)]
+        [Spawn(Scene.TerminaField, 0)]
         EntranceTerminaFieldFromWestClockTown,
-        [Entrance(EntranceRoadtoSouthernSwampFromTerminaField), Region(Region.RoadToSouthernSwamp)]
+
+        [Region(Region.RoadToSouthernSwamp)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceRoadtoSouthernSwampFromTerminaField)]
+        [Exit(Scene.RoadToSouthernSwamp, 0)]
+        [Spawn(Scene.TerminaField, 1)]
         EntranceTerminaFieldFromRoadtoSouthernSwamp,
-        [Entrance(EntranceGreatBayCoastFromTerminaField), Region(Region.GreatBayCoast)]
+
+        [Region(Region.GreatBayCoast)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceGreatBayCoastFromTerminaField)]
+        [Exit(Scene.GreatBayCoast, 0)]
+        [Spawn(Scene.TerminaField, 2)]
         EntranceTerminaFieldFromGreatBayCoast,
-        [Entrance(EntrancePathtoMountainVillageFromTerminaField), Region(Region.PathToMountainVillage)]
+
+        [Region(Region.PathToMountainVillage)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntrancePathtoMountainVillageFromTerminaField)]
+        [Exit(Scene.PathToMountainVillage, 0)]
+        [Spawn(Scene.TerminaField, 3)]
         EntranceTerminaFieldFromPathtoMountainVillage,
-        [Entrance(EntranceRoadtoIkanaFromTerminaField), Region(Region.RoadToIkana)]
+
+        [Region(Region.RoadToIkana)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceRoadtoIkanaFromTerminaField)]
+        [Exit(Scene.RoadToIkana, 0)]
+        [Spawn(Scene.TerminaField, 4)]
         EntranceTerminaFieldFromRoadtoIkana,
-        [Entrance(EntranceMilkRoadFromTerminaField), Region(Region.MilkRoad)]
+
+        [Region(Region.MilkRoad)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceMilkRoadFromTerminaField)]
+        [Exit(Scene.MilkRoad, 0)]
+        [Spawn(Scene.TerminaField, 5)]
         EntranceTerminaFieldFromMilkRoad,
-        [Entrance(EntranceSouthClockTownFromTerminaField), Region(Region.SouthClockTown)]
+
+        [Region(Region.SouthClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSouthClockTownFromTerminaField)]
+        [Exit(Scene.SouthClockTown, 1)]
+        [Spawn(Scene.TerminaField, 6)]
         EntranceTerminaFieldFromSouthClockTown,
-        [Entrance(EntranceEastClockTownFromTerminaField), Region(Region.EastClockTown)]
+
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceEastClockTownFromTerminaField)]
+        [Exit(Scene.EastClockTown, 0)]
+        [Spawn(Scene.TerminaField, 7)]
         EntranceTerminaFieldFromEastClockTown,
-        [Entrance(EntranceNorthClockTownFromTerminaField), Region(Region.NorthClockTown)]
+
+        [Region(Region.NorthClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceNorthClockTownFromTerminaField)]
+        [Exit(Scene.NorthClockTown, 0)]
+        [Spawn(Scene.TerminaField, 8)]
         EntranceTerminaFieldFromNorthClockTown,
-        [Entrance(EntranceAstralObservatoryFromTerminaField), Region(Region.AstralObservatory)]
+
+        [Region(Region.AstralObservatory)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceAstralObservatoryFromTerminaField)]
+        [Exit(Scene.AstralObservatory, 1)]
+        [Spawn(Scene.TerminaField, 9)]
         EntranceTerminaFieldFromAstralObservatory,
-        [Entrance(EntranceAstralObservatoryFromTelescope), Region(Region.AstralObservatory)]
+
+        [Region(Region.AstralObservatory)]
+        [Entrance(EntranceType.Telescope)]
+        [Pair(EntranceAstralObservatoryFromTelescope)]
+        //[Exit(Scene.AstralObservatory, 1)]
+        [Spawn(Scene.TerminaField, 10)]
         EntranceTerminaFieldFromAstralObservatoryTelescope,
+
         //EntranceTerminaFieldFromTerminaField, // todo moon crash - accessible via precise exit from telescope // one way
-        [Entrance, Region(Region.RomaniRanch)]
+
+        [Region(Region.RomaniRanch)]
+        [Entrance]
         EntranceTerminaFieldFromCremiaEscort, // one way
+
         //EntranceTerminaFieldFromTerminaField, // after tatl/tael/skullkid cutscene // one way
 
-        [Entrance(EntranceWestClockTownFromPostOffice), Region(Region.WestClockTown)]
+
+        [Region(Region.WestClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceWestClockTownFromPostOffice)]
+        [Exit(Scene.WestClockTown, 7)]
+        [Spawn(Scene.PostOffice, 0)]
         EntrancePostOfficeFromWestClockTown,
 
-        [Entrance(EntranceGreatBayCoastFromMarineResearchLab), Region(Region.GreatBayCoast)]
+
+        [Region(Region.GreatBayCoast)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceGreatBayCoastFromMarineResearchLab)]
+        [Exit(Scene.GreatBayCoast, 7)]
+        [Spawn(Scene.MarineLab, 0)]
         EntranceMarineResearchLabFromGreatBayCoast,
 
-        [Entrance(EntranceIkanaGraveyardFromDay3Grave), Region(Region.IkanaGraveyard)]
+
+        [Region(Region.IkanaGraveyard)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceIkanaGraveyardFromDay3Grave)]
+        [Exit(Scene.IkanaGraveyard, 1)]
+        [Spawn(Scene.DampesHouse, 0)]
         EntranceDampesHouseFromIkanaGraveyardGrave,
-        [Entrance(EntranceIkanaGraveyardFromDampesHouse), Region(Region.IkanaGraveyard)]
+
+        [Region(Region.IkanaGraveyard)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceIkanaGraveyardFromDampesHouse)]
+        [Exit(Scene.IkanaGraveyard, 4)]
+        [Spawn(Scene.DampesHouse, 1)]
         EntranceDampesHouseFromIkanaGraveyardDoor, // glitched logic only
 
-        [Entrance(EntranceGoronVillageFromGoronShrine), Region(Region.GoronVillage)]
+
+        [Region(Region.GoronVillage)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceGoronVillageFromGoronShrine)]
+        [Exit(Scene.GoronVillage, 2)]
+        [Spawn(Scene.GoronShrine, 0)]
         EntranceGoronShrineFromGoronVillage,
-        [Entrance(EntranceGoronShopFromGoronVillage), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceGoronShopFromGoronVillage)]
+        [Exit(Scene.GoronShop, 0)]
+        [Spawn(Scene.GoronShrine, 1)]
         EntranceGoronShrineFromGoronShop,
+
         //EntranceGoronShrineFromGoronShrine, // after lullaby cutscene // one way
 
-        [Entrance(EntranceZoraCapeFromZoraHallLand), Region(Region.ZoraCape)]
+
+        [Region(Region.ZoraCape)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceZoraCapeFromZoraHallLand)]
+        [Exit(Scene.ZoraCape, 2)]
+        [Spawn(Scene.ZoraHall, 1)]
         EntranceZoraHallFromZoraCapeLand,
-        [Entrance(EntranceZoraCapeFromZoraHallWater), Region(Region.ZoraCape)]
+
+        [Region(Region.ZoraCape)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceZoraCapeFromZoraHallWater)]
+        [Exit(Scene.ZoraCape, 1)]
+        [Spawn(Scene.ZoraHall, 0)]
         EntranceZoraHallFromZoraCapeWater,
-        [Entrance(EntranceZoraHallRoomsZoraShopFromZoraHall), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceZoraHallRoomsZoraShopFromZoraHall)]
+        [Exit(Scene.ZoraHallRooms, 4)]
+        [Spawn(Scene.ZoraHall, 2)]
         EntranceZoraHallFromZoraShop,
-        [Entrance(EntranceZoraHallRoomsLulusRoomFromZoraHall), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceZoraHallRoomsLulusRoomFromZoraHall)]
+        [Exit(Scene.ZoraHallRooms, 2)]
+        [Spawn(Scene.ZoraHall, 3)]
         EntranceZoraHallFromLulusRoom,
-        [Entrance(EntranceZoraHallRoomsEvansRoomFromZoraHall), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceZoraHallRoomsEvansRoomFromZoraHall)]
+        [Exit(Scene.ZoraHallRooms, 3)]
+        [Spawn(Scene.ZoraHall, 4)]
         EntranceZoraHallFromEvansRoom,
-        [Entrance(EntranceZoraHallRoomsJapasRoomFromZoraHall), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceZoraHallRoomsJapasRoomFromZoraHall)]
+        [Exit(Scene.ZoraHallRooms, 1)]
+        [Spawn(Scene.ZoraHall, 5)]
         EntranceZoraHallFromJapasRoom,
-        [Entrance(EntranceZoraHallRoomsMikauTijosRoomFromZoraHall), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceZoraHallRoomsMikauTijosRoomFromZoraHall)]
+        [Exit(Scene.ZoraHallRooms, 0)]
+        [Spawn(Scene.ZoraHall, 6)]
         EntranceZoraHallFromMikauTijosRoom,
 
-        [Entrance(EntranceWestClockTownFromTradingPost), Region(Region.WestClockTown)]
+
+        [Region(Region.WestClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceWestClockTownFromTradingPost)]
+        [Exit(Scene.WestClockTown, 5)]
+        [Spawn(Scene.TradingPost, 0)]
         EntranceTradingPostFromWestClockTown,
 
-        [Entrance(EntranceMilkRoadFromRomaniRanch), Region(Region.MilkRoad)]
+
+        [Region(Region.MilkRoad)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceMilkRoadFromRomaniRanch)]
+        [Exit(Scene.MilkRoad, 1)]
+        [Spawn(Scene.RomaniRanch, 0)]
         EntranceRomaniRanchFromMilkRoad,
+
         //EntranceRomaniRanchFromRomaniRanch, // after minigame
-        [Entrance(EntranceRanchBarnFromRomaniRanch), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceRanchBarnFromRomaniRanch)]
+        [Exit(Scene.RanchBuildings, 0)]
+        [Spawn(Scene.RomaniRanch, 2)]
         EntranceRomaniRanchFromBarn,
-        [Entrance(EntranceRanchHouseFromRomaniRanch), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceRanchHouseFromRomaniRanch)]
+        [Exit(Scene.RanchBuildings, 1)]
+        [Spawn(Scene.RomaniRanch, 3)]
         EntranceRomaniRanchFromRanchHouse,
-        [Entrance(EntranceCuccoShackFromRomaniRanch), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceCuccoShackFromRomaniRanch)]
+        [Exit(Scene.CuccoShack, 0)]
+        [Spawn(Scene.RomaniRanch, 4)]
         EntranceRomaniRanchFromCuccoShack,
-        [Entrance(EntranceDoggyRacetrackFromRomaniRanch), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceDoggyRacetrackFromRomaniRanch)]
+        [Exit(Scene.DoggyRacetrack, 0)]
+        [Spawn(Scene.RomaniRanch, 5)]
         EntranceRomaniRanchFromDoggyRacetrack,
+
         // todo add after aliens defense entrance
 
-        [Entrance, Region(Region.StoneTowerTemple)]
+
+        [Region(Region.StoneTowerTemple)]
+        [Entrance(EntranceType.Boss)]
+        [Exit(Scene.InvertedStoneTowerTemple, 1)]
+        [Spawn(Scene.TwinmoldsLair, 0)]
         EntranceTwinmoldsLairFromStoneTowerTempleInverted, // one way
 
-        [Entrance(EntranceTerminaFieldFromGreatBayCoast), Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceTerminaFieldFromGreatBayCoast)]
+        [Exit(Scene.TerminaField, 2)]
+        [Spawn(Scene.GreatBayCoast, 0)]
         EntranceGreatBayCoastFromTerminaField,
-        [Entrance(EntranceZoraCapeFromGreatBayCoast), Region(Region.ZoraCape)]
+
+        [Region(Region.ZoraCape)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceZoraCapeFromGreatBayCoast)]
+        [Exit(Scene.ZoraCape, 0)]
+        [Spawn(Scene.GreatBayCoast, 1)]
         EntranceGreatBayCoastFromZoraCape,
-        [Entrance, Region(Region.GreatBayCoast)]
+
+        [Region(Region.GreatBayCoast)]
+        [Entrance(EntranceType.VoidRespawn)]
+        [Exit(Scene.GreatBayCoast, 2)]
+        [Spawn(Scene.GreatBayCoast, 2)]
         EntranceGreatBayCoastFromGreatBayCoastBeach, // void respawn beach // one way?
-        [Entrance(EntrancePinnacleRockFromGreatBayCoast), Region(Region.PinnacleRock)]
+
+        [Region(Region.PinnacleRock)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePinnacleRockFromGreatBayCoast)]
+        [Exit(Scene.PinnacleRock, 0)]
+        [Spawn(Scene.GreatBayCoast, 3)]
         EntranceGreatBayCoastFromPinnacleRock,
-        [Entrance(EntranceFishermansHutFromGreatBayCoast), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceFishermansHutFromGreatBayCoast)]
+        [Exit(Scene.FishermansHut, 0)]
+        [Spawn(Scene.GreatBayCoast, 4)]
         EntranceGreatBayCoastFromFishermansHut,
-        [Entrance(EntrancePiratesFortressExteriorFromGreatBayCoast), Region(Region.PiratesFortressExterior)]
+
+        [Region(Region.PiratesFortressExterior)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntrancePiratesFortressExteriorFromGreatBayCoast)]
+        [Exit(Scene.PiratesFortressExterior, 0)]
+        [Spawn(Scene.GreatBayCoast, 5)]
         EntranceGreatBayCoastFromPiratesFortress,
-        [Entrance, Region(Region.GreatBayCoast)]
+
+        [Region(Region.GreatBayCoast)]
+        [Entrance(EntranceType.VoidRespawn)]
+        [Exit(Scene.GreatBayCoast, 6)]
+        [Spawn(Scene.GreatBayCoast, 6)]
         EntranceGreatBayCoastFromGreatBayCoastNearFortress, // void respawn near fortress // one way?
-        [Entrance(EntranceMarineResearchLabFromGreatBayCoast), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceMarineResearchLabFromGreatBayCoast)]
+        [Exit(Scene.MarineLab, 0)]
+        [Spawn(Scene.GreatBayCoast, 7)]
         EntranceGreatBayCoastFromMarineResearchLab,
-        [Entrance(EntranceOceansideSpiderHouseFromGreatBayCoast), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceOceansideSpiderHouseFromGreatBayCoast)]
+        [Exit(Scene.OceanSpiderHouse, 0)]
+        [Spawn(Scene.GreatBayCoast, 8)]
         EntranceGreatBayCoastFromOceansideSpiderHouse,
-        [Entrance, Region(Region.OwlWarp)]
+
+        [Region(Region.OwlWarp)]
+        [Entrance(EntranceType.OwlWarp)]
+        [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x00)]
+        [Spawn(Scene.GreatBayCoast, 11)]
         EntranceGreatBayCoastFromOwlStatue, // one way
-        [Entrance, Region(Region.PiratesFortressExterior)]
+
+        [Region(Region.PiratesFortressExterior)]
+        [Entrance]
+        [Exit(Scene.PiratesFortressExterior, 4)]
+        [Spawn(Scene.GreatBayCoast, 12)]
         EntranceGreatBayCoastFromPiratesFortressThrownOut, // one way
+
         //EntranceGreatBayCoastFromZoraCape, // after fisherman minigame
 
-        [Entrance(EntranceGreatBayCoastFromZoraCape), Region(Region.GreatBayCoast)]
+
+        [Region(Region.GreatBayCoast)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceGreatBayCoastFromZoraCape)]
+        [Exit(Scene.GreatBayCoast, 1)]
+        [Spawn(Scene.ZoraCape, 0)]
         EntranceZoraCapeFromGreatBayCoast,
-        [Entrance(EntranceZoraHallFromZoraCapeLand), Region(Region.ZoraHall)]
+
+        [Region(Region.ZoraHall)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceZoraHallFromZoraCapeLand)]
+        [Exit(Scene.ZoraHall, 0)]
+        [Spawn(Scene.ZoraCape, 1)]
         EntranceZoraCapeFromZoraHallLand,
-        [Entrance(EntranceZoraHallFromZoraCapeWater), Region(Region.ZoraHall)]
+
+        [Region(Region.ZoraHall)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceZoraHallFromZoraCapeWater)]
+        [Exit(Scene.ZoraHall, 1)]
+        [Spawn(Scene.ZoraCape, 2)]
         EntranceZoraCapeFromZoraHallWater,
-        [Entrance, Region(Region.ZoraCape)]
+
+        [Region(Region.ZoraCape)]
+        [Entrance(EntranceType.VoidRespawn)]
+        [Exit(Scene.ZoraCape, 3)]
+        [Spawn(Scene.ZoraCape, 3)]
         EntranceZoraCapeFromZoraCape, // void respawn // one way?
-        [Entrance(EntranceWaterfallRapidsFromZoraCape), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceWaterfallRapidsFromZoraCape)]
+        [Exit(Scene.WaterfallRapids, 0)]
+        [Spawn(Scene.ZoraCape, 4)]
         EntranceZoraCapeFromWaterfallRapids,
-        [Entrance(EntranceFairysFountainFromZoraCape), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceFairysFountainFromZoraCape)]
+        [Exit(Scene.FairyFountain, 3)]
+        [Spawn(Scene.ZoraCape, 5)]
         EntranceZoraCapeFromFairysFountain,
-        [Entrance, Region(Region.OwlWarp)]
+
+        [Region(Region.OwlWarp)]
+        [Entrance(EntranceType.OwlWarp)]
+        [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x02)]
+        [Spawn(Scene.ZoraCape, 6)]
         EntranceZoraCapeFromOwlStatue, // one way
-        [Entrance(EntranceGreatBayTempleFromZoraCape), Region(Region.GreatBayTemple)]
+
+        [Region(Region.GreatBayTemple)]
+        [Entrance(EntranceType.Dungeon)]
+        [Pair(EntranceGreatBayTempleFromZoraCape)]
+        [Exit(Scene.GreatBayTemple, 0)]
+        [Spawn(Scene.ZoraCape, 7)]
         EntranceZoraCapeFromGreatBayTemple,
-        [Entrance, Region(Region.GreatBayTemple)]
+
+        [Region(Region.GreatBayTemple)]
+        [Entrance(EntranceType.DungeonExit)]
+        //[Exit(Scene.ZoraCape, 0)]
+        [Spawn(Scene.ZoraCape, 8)]
         EntranceZoraCapeFromGreatBayTempleClear, // one way
 
-        [Entrance(EntranceWestClockTownFromLotteryShop), Region(Region.WestClockTown)]
+
+        [Region(Region.WestClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceWestClockTownFromLotteryShop)]
+        [Exit(Scene.WestClockTown, 8)]
+        [Spawn(Scene.LotteryShop, 0)]
         EntranceLotteryShopFromWestClockTown,
 
-        [Entrance(EntranceGreatBayCoastFromPiratesFortress), Region(Region.GreatBayCoast)]
+
+        [Region(Region.GreatBayCoast)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceGreatBayCoastFromPiratesFortress)]
+        [Exit(Scene.GreatBayCoast, 5)]
+        [Spawn(Scene.PiratesFortressExterior, 0)]
         EntrancePiratesFortressExteriorFromGreatBayCoast,
-        [Entrance(EntrancePiratesFortressFromMainEntrance), Region(Region.PiratesFortressInterior)]
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntrancePiratesFortressFromMainEntrance)]
+        [Exit(Scene.PiratesFortress, 0)]
+        [Spawn(Scene.PiratesFortressExterior, 1)]
         EntrancePiratesFortressExteriorFromPiratesFortressMain,
-        [Entrance(EntrancePiratesFortressSewerFromWater), Region(Region.PiratesFortressSewer)]
+
+        [Region(Region.PiratesFortressSewer)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePiratesFortressSewerFromWater)]
+        [Exit(Scene.PiratesFortressRooms, 9)]
+        [Spawn(Scene.PiratesFortressExterior, 2)]
         EntrancePiratesFortressExteriorFromPiratesFortressSewerMain,
-        [Entrance, Region(Region.PiratesFortressSewer)]
+
+        [Region(Region.PiratesFortressSewer)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Exit(Scene.PiratesFortressRooms, 10)]
+        [Spawn(Scene.PiratesFortressExterior, 3)]
         EntrancePiratesFortressExteriorFromPiratesFortressSewerExhaust, // one way?
-        [Entrance, Region(Region.PiratesFortressInterior)]
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance]
+        [Exit(Scene.PiratesFortress, 10)]
+        [Exit(Scene.PiratesFortressRooms, 11)]
+        [Spawn(Scene.PiratesFortressExterior, 4)]
         EntrancePiratesFortressExteriorFromThrownOut, // one way
-        [Entrance(EntrancePiratesFortressFromPiratesFortressExteriorBalcony), Region(Region.PiratesFortressInterior)]
+
+        [Region(Region.PiratesFortressInterior)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntrancePiratesFortressFromPiratesFortressExteriorBalcony)]
+        [Exit(Scene.PiratesFortress, 12)]
+        [Spawn(Scene.PiratesFortressExterior, 5)]
         EntrancePiratesFortressExteriorFromPiratesFortressBalcony,
-        [Entrance(EntrancePiratesFortressSewerFromRear), Region(Region.PiratesFortressSewer)]
+
+        [Region(Region.PiratesFortressSewer)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePiratesFortressSewerFromRear)]
+        [Exit(Scene.PiratesFortressRooms, 12)]
+        [Spawn(Scene.PiratesFortressExterior, 6)]
         EntrancePiratesFortressExteriorFromPiratesFortressSewerDoor,
 
-        [Entrance(EntranceGreatBayCoastFromFishermansHut), Region(Region.GreatBayCoast)]
+
+        [Region(Region.GreatBayCoast)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceGreatBayCoastFromFishermansHut)]
+        [Exit(Scene.GreatBayCoast, 4)]
+        [Spawn(Scene.FishermansHut, 0)]
         EntranceFishermansHutFromGreatBayCoast,
 
-        [Entrance(EntranceGoronShrineFromGoronShop), Region(Region.GoronVillage)]
+
+        [Region(Region.GoronVillage)]
+        [Entrance]
+        [Pair(EntranceGoronShrineFromGoronShop)]
+        [Exit(Scene.GoronShrine, 1)]
+        [Spawn(Scene.GoronShop, 0)]
         EntranceGoronShopFromGoronVillage,
 
-        [Entrance(EntranceDekuPalaceFromDekuKingsChamberMain), Region(Region.DekuPalace)]
+
+        [Region(Region.DekuPalace)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceDekuPalaceFromDekuKingsChamberMain)]
+        [Exit(Scene.DekuPalace, 1)]
+        [Spawn(Scene.DekuKingChamber, 0)]
         EntranceDekuKingsChamberFromDekuPalace,
-        [Entrance(EntranceDekuPalaceFromDekuKingsChamberGardenWest), Region(Region.DekuPalace)]
+
+        [Region(Region.DekuPalace)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceDekuPalaceFromDekuKingsChamberGardenWest)]
+        [Exit(Scene.DekuPalace, 2)]
+        [Spawn(Scene.DekuKingChamber, 1)]
         EntranceDekuKingsChamberFromDekuPalaceWestGarden,
+
         //EntranceDekuKingsChamberFromDekuKingsChamber, // cutscene monkey being released // one way
 
-        [Entrance(EntranceTheMoonFromGoronTrial), Region(Region.TheMoon)]
+
+        [Region(Region.TheMoon)]
+        [Entrance(EntranceType.Trial)]
+        [Pair(EntranceTheMoonFromGoronTrial)]
+        [Exit(Scene.TheMoon, 2)]
+        [Spawn(Scene.GoronTrial, 0)]
         EntranceGoronTrialFromTheMoon,
 
-        [Entrance(EntranceTerminaFieldFromRoadtoSouthernSwamp), Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceTerminaFieldFromRoadtoSouthernSwamp)]
+        [Exit(Scene.TerminaField, 1)]
+        [Spawn(Scene.RoadToSouthernSwamp, 0)]
         EntranceRoadtoSouthernSwampFromTerminaField,
-        [Entrance(EntranceSouthernSwampFromRoadtoSouthernSwamp), Region(Region.SouthernSwamp)]
+
+        [Region(Region.SouthernSwamp)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSouthernSwampFromRoadtoSouthernSwamp)]
+        [Exit(Scene.SouthernSwamp, 0)]
+        [Spawn(Scene.RoadToSouthernSwamp, 1)]
         EntranceRoadtoSouthernSwampFromSouthernSwamp,
-        [Entrance(EntranceSwampShootingGalleryFromRoadtoSouthernSwamp), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceSwampShootingGalleryFromRoadtoSouthernSwamp)]
+        [Exit(Scene.SwampShootingGallery, 0)]
+        [Spawn(Scene.RoadToSouthernSwamp, 2)]
         EntranceRoadtoSouthernSwampFromSwampShootingGallery,
 
-        [Entrance(EntranceRomaniRanchFromDoggyRacetrack), Region(Region.RomaniRanch)]
+
+        [Region(Region.RomaniRanch)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceRomaniRanchFromDoggyRacetrack)]
+        [Exit(Scene.RomaniRanch, 5)]
+        [Spawn(Scene.DoggyRacetrack, 0)]
         EntranceDoggyRacetrackFromRomaniRanch,
 
-        [Entrance(EntranceRomaniRanchFromCuccoShack), Region(Region.RomaniRanch)]
+
+        [Region(Region.RomaniRanch)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceRomaniRanchFromCuccoShack)]
+        [Exit(Scene.RomaniRanch, 4)]
+        [Spawn(Scene.CuccoShack, 0)]
         EntranceCuccoShackFromRomaniRanch,
+
         //EntranceCuccoShackFromCuccoShack, // after chickens grow up // one way
 
-        [Entrance(EntranceRoadtoIkanaFromIkanaGraveyard), Region(Region.RoadToIkana)]
+
+        [Region(Region.RoadToIkana)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceRoadtoIkanaFromIkanaGraveyard)]
+        [Exit(Scene.RoadToIkana, 2)]
+        [Spawn(Scene.IkanaGraveyard, 0)]
         EntranceIkanaGraveyardFromRoadtoIkana,
-        [Entrance(EntranceDampesHouseFromIkanaGraveyardGrave), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceDampesHouseFromIkanaGraveyardGrave)]
+        [Exit(Scene.DampesHouse, 0)]
+        [Spawn(Scene.IkanaGraveyard, 1)]
         EntranceIkanaGraveyardFromDay3Grave, // exit only
-        [Entrance(EntranceBeneathGraveyardFromIkanaGraveyardNight2), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceBeneathGraveyardFromIkanaGraveyardNight2)]
+        [Exit(Scene.BeneathGraveyard, 0)]
+        [Spawn(Scene.IkanaGraveyard, 2)]
         EntranceIkanaGraveyardFromDay2Grave,
-        [Entrance(EntranceBeneathGraveyardFromIkanaGraveyardNight1), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceBeneathGraveyardFromIkanaGraveyardNight1)]
+        [Exit(Scene.BeneathGraveyard, 1)]
+        [Spawn(Scene.IkanaGraveyard, 3)]
         EntranceIkanaGraveyardFromDay1Grave,
-        [Entrance(EntranceDampesHouseFromIkanaGraveyardDoor), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceDampesHouseFromIkanaGraveyardDoor)]
+        [Exit(Scene.DampesHouse, 1)]
+        [Spawn(Scene.IkanaGraveyard, 4)]
         EntranceIkanaGraveyardFromDampesHouse,
+
         //EntranceIkanaGraveyardFromIkanaGraveyard, // captain keeta defeated // one way
 
-        [Entrance, Region(Region.SnowheadTemple)]
+
+        [Region(Region.SnowheadTemple)]
+        [Entrance(EntranceType.Boss)]
+        [Exit(Scene.SnowheadTemple, 1)]
+        [Spawn(Scene.GohtsLair, 0)]
         EntranceGohtsLairFromSnowheadTemple, // one way
 
-        [Entrance(EntranceSouthernSwampFromWoodfall), Region(Region.SouthernSwamp)]
+
+        [Region(Region.SouthernSwamp)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSouthernSwampFromWoodfall)]
+        [Exit(Scene.SouthernSwamp, 2)]
+        [Spawn(Scene.Woodfall, 0)]
         EntranceWoodfallFromSouthernSwamp,
-        [Entrance(EntranceWoodfallTempleFromWoodfall), Region(Region.WoodfallTemple)]
+
+        [Region(Region.WoodfallTemple)]
+        [Entrance(EntranceType.DungeonExit)]
+        [Pair(EntranceWoodfallTempleFromWoodfall)]
+        [Exit(Scene.WoodfallTemple, 0)]
+        [Spawn(Scene.Woodfall, 1)]
         EntranceWoodfallFromWoodfallTempleEntrance,
-        [Entrance(EntranceFairysFountainFromWoodfall), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceFairysFountainFromWoodfall)]
+        [Exit(Scene.FairyFountain, 1)]
+        [Spawn(Scene.Woodfall, 2)]
         EntranceWoodfallFromFairysFountain,
-        [Entrance(EntranceWoodfallTemplePrisonFromWoodfall), Region(Region.WoodfallTemple)]
+
+        [Region(Region.WoodfallTemple)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceWoodfallTemplePrisonFromWoodfall)]
+        [Exit(Scene.WoodfallTemple, 2)]
+        [Spawn(Scene.Woodfall, 3)]
         EntranceWoodfallFromWoodfallTempleExit,
-        [Entrance, Region(Region.OwlWarp)]
+
+        [Region(Region.OwlWarp)]
+        [Entrance(EntranceType.OwlWarp)]
+        [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x0C)]
+        [Spawn(Scene.Woodfall, 4)]
         EntranceWoodfallFromOwlStatue, // one way
 
-        [Entrance(EntranceTheMoonFromZoraTrial), Region(Region.TheMoon)]
+
+        [Region(Region.TheMoon)]
+        [Entrance(EntranceType.Trial)]
+        [Pair(EntranceTheMoonFromZoraTrial)]
+        [Exit(Scene.TheMoon, 3)]
+        [Spawn(Scene.ZoraTrial, 0)]
         EntranceZoraTrialFromTheMoon,
-        [Entrance, Region(Region.TheMoon)]
+
+        [Region(Region.TheMoon)]
+        [Entrance(EntranceType.VoidRespawn)]
+        [Exit(Scene.ZoraTrial, 1)]
+        [Spawn(Scene.ZoraTrial, 1)]
         EntranceZoraTrialFromZoraTrial, // void respawn // one way?
 
-        [Entrance(EntrancePathtoGoronVillageFromGoronVillage), Region(Region.TwinIslands)]
+
+        [Region(Region.TwinIslands)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntrancePathtoGoronVillageFromGoronVillage)]
+        [Exit(Scene.TwinIslands, 1)]
+        [Spawn(Scene.GoronVillage, 0)]
         EntranceGoronVillageFromPathtoGoronVillage,
-        [Entrance(EntranceGoronShrineFromGoronVillage), Region(Region.GoronVillage)]
+
+        [Region(Region.GoronVillage)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceGoronShrineFromGoronVillage)]
+        [Exit(Scene.GoronShrine, 0)]
+        [Spawn(Scene.GoronVillage, 2)]
         EntranceGoronVillageFromGoronShrine,
-        [Entrance(EntranceGrottoLensCaveFromGoronVillage), Region(Region.Grottos)]
+
+        [Region(Region.Grottos)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceGrottoLensCaveFromGoronVillage)]
+        [Exit(Scene.Grottos, 1)]
+        [Spawn(Scene.GoronVillage, 3)]
         EntranceGoronVillageFromLensCave,
 
-        [Entrance(EntranceZoraCapeFromGreatBayTemple), Region(Region.ZoraCape)]
+
+        [Region(Region.ZoraCape)]
+        [Entrance(EntranceType.Dungeon)]
+        [Pair(EntranceZoraCapeFromGreatBayTemple)]
+        //[Exit(Scene.Grottos, 1)]
+        [Spawn(Scene.GreatBayTemple, 0)]
         EntranceGreatBayTempleFromZoraCape,
 
-        [Entrance(EntranceZoraCapeFromWaterfallRapids), Region(Region.ZoraCape)]
+
+        [Region(Region.ZoraCape)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceZoraCapeFromWaterfallRapids)]
+        [Exit(Scene.ZoraCape, 4)]
+        [Spawn(Scene.WaterfallRapids, 0)]
         EntranceWaterfallRapidsFromZoraCape,
+
         //EntranceWaterfallRapidsFromWaterfallRapids, // beaver race start // one way
+
         //EntranceWaterfallRapidsFromWaterfallRapids, // beaver race end // one way
 
-        [Entrance(EntranceIkanaCanyonFromBeneaththeWell), Region(Region.IkanaCanyon)]
+
+        [Region(Region.IkanaCanyon)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceIkanaCanyonFromBeneaththeWell)]
+        [Exit(Scene.IkanaCanyon, 5)]
+        [Spawn(Scene.BeneathTheWell, 0)]
         EntranceBeneaththeWellFromIkanaCanyon,
-        [Entrance(EntranceAncientCastleofIkanaCourtyardFromBeneaththeWell), Region(Region.IkanaCastle)]
+
+        [Region(Region.IkanaCastle)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceAncientCastleofIkanaCourtyardFromBeneaththeWell)]
+        [Exit(Scene.IkanaCastle, 0)]
+        [Spawn(Scene.BeneathTheWell, 1)]
         EntranceBeneaththeWellFromAncientCastleofIkana,
 
-        [Entrance(EntranceZoraHallFromMikauTijosRoom), Region(Region.ZoraHall)]
+
+        [Region(Region.ZoraHall)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceZoraHallFromMikauTijosRoom)]
+        [Exit(Scene.ZoraHall, 6)]
+        [Spawn(Scene.ZoraHallRooms, 0)]
         EntranceZoraHallRoomsMikauTijosRoomFromZoraHall,
-        [Entrance(EntranceZoraHallFromJapasRoom), Region(Region.ZoraHall)]
+
+        [Region(Region.ZoraHall)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceZoraHallFromJapasRoom)]
+        [Exit(Scene.ZoraHall, 5)]
+        [Spawn(Scene.ZoraHallRooms, 1)]
         EntranceZoraHallRoomsJapasRoomFromZoraHall,
-        [Entrance(EntranceZoraHallFromLulusRoom), Region(Region.ZoraHall)]
+
+        [Region(Region.ZoraHall)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceZoraHallFromLulusRoom)]
+        [Exit(Scene.ZoraHall, 3)]
+        [Spawn(Scene.ZoraHallRooms, 2)]
         EntranceZoraHallRoomsLulusRoomFromZoraHall,
-        [Entrance(EntranceZoraHallFromEvansRoom), Region(Region.ZoraHall)]
+
+        [Region(Region.ZoraHall)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceZoraHallFromEvansRoom)]
+        [Exit(Scene.ZoraHall, 4)]
+        [Spawn(Scene.ZoraHallRooms, 3)]
         EntranceZoraHallRoomsEvansRoomFromZoraHall,
-        [Entrance, Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance]
         EntranceZoraHallRoomsJapasRoomFromJapasRoom, // after jam session // one way?
-        [Entrance(EntranceZoraHallFromZoraShop), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceZoraHallFromZoraShop)]
+        [Exit(Scene.ZoraHall, 2)]
+        [Spawn(Scene.ZoraHallRooms, 5)]
         EntranceZoraHallRoomsZoraShopFromZoraHall,
+
         //EntranceZoraHallRoomsEvansRoomFromEvansRoom, // after song cutscene
 
-        [Entrance(EntranceMountainVillageFromGoronGraveyard), Region(Region.MountainVillage)]
+
+        [Region(Region.MountainVillage)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceMountainVillageFromGoronGraveyard)]
+        [Exit(Scene.MountainVillage, 3)]
+        [Spawn(Scene.GoronGrave, 0)]
         EntranceGoronGraveyardFromMountainVillage,
+
         //EntranceGoronGraveyardFromGoronGraveyard, // after darmina cutscene
 
-        [Entrance(EntranceIkanaCanyonFromSakonsHideout), Region(Region.IkanaCanyon)]
+
+        [Region(Region.IkanaCanyon)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceIkanaCanyonFromSakonsHideout)]
+        [Exit(Scene.IkanaCanyon, 6)]
+        [Spawn(Scene.SakonsHideout, 0)]
         EntranceSakonsHideoutFromIkanaCanyon,
 
-        [Entrance(EntranceMountainSmithyFromMountainVillage), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceMountainSmithyFromMountainVillage)]
+        [Exit(Scene.MountainSmithy, 0)]
+        [Spawn(Scene.MountainVillage, 1)]
         EntranceMountainVillageFromMountainSmithy,
-        [Entrance(EntrancePathtoGoronVillageFromMountainVillage), Region(Region.TwinIslands)]
+
+        [Region(Region.TwinIslands)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntrancePathtoGoronVillageFromMountainVillage)]
+        [Exit(Scene.TwinIslands, 0)]
+        [Spawn(Scene.MountainVillage, 2)]
         EntranceMountainVillageFromPathtoGoronVillage,
-        [Entrance(EntranceGoronGraveyardFromMountainVillage), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceGoronGraveyardFromMountainVillage)]
+        [Exit(Scene.GoronGrave, 0)]
+        [Spawn(Scene.MountainVillage, 3)]
         EntranceMountainVillageFromGoronGraveyard,
-        [Entrance(EntrancePathtoSnowheadFromMountainVillage), Region(Region.PathToSnowhead)]
+
+        [Region(Region.PathToSnowhead)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntrancePathtoSnowheadFromMountainVillage)]
+        [Exit(Scene.PathToSnowhead, 0)]
+        [Spawn(Scene.MountainVillage, 4)]
         EntranceMountainVillageFromPathtoSnowhead,
+
         //EntranceMountainVillageFromBehindWaterfall, // unused // one way
-        [Entrance(EntrancePathtoMountainVillageFromMountainVillage), Region(Region.PathToMountainVillage)]
+
+        [Region(Region.PathToMountainVillage)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntrancePathtoMountainVillageFromMountainVillage)]
+        [Exit(Scene.PathToMountainVillage, 1)]
+        [Spawn(Scene.MountainVillage, 6)]
         EntranceMountainVillageFromPathtoMountainVillage,
-        [Entrance, Region(Region.SnowheadTemple)]
+
+        [Region(Region.SnowheadTemple)]
+        [Entrance(EntranceType.DungeonExit)]
+        //[Exit(Scene.PathToMountainVillage, 1)]
+        [Spawn(Scene.MountainVillage, 7)]
         EntranceMountainVillageFromSnowheadClear, // one way
-        [Entrance, Region(Region.OwlWarp)]
+
+        [Region(Region.OwlWarp)]
+        [Entrance(EntranceType.OwlWarp)]
+        [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x06)]
+        [Spawn(Scene.MountainVillage, 8)]
         EntranceMountainVillageFromOwlStatue, // one way
 
-        [Entrance(EntranceIkanaCanyonFromPoeHut), Region(Region.IkanaCanyon)]
+
+        [Region(Region.IkanaCanyon)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceIkanaCanyonFromPoeHut)]
+        [Exit(Scene.IkanaCanyon, 1)]
+        [Spawn(Scene.PoeHut, 0)]
         EntrancePoeHutFromIkanaCanyon,
+
         //EntrancePoeHutFromPoeHut, // fighting poes
+
         //EntrancePoeHutFromPoeHut, // after fighting poes
 
-        [Entrance(EntranceDekuPalaceFromDekuShrine), Region(Region.DekuPalace)]
+
+        [Region(Region.DekuPalace)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceDekuPalaceFromDekuShrine)]
+        [Exit(Scene.DekuPalace, 3)]
+        [Spawn(Scene.DekuShrine, 0)]
         EntranceDekuShrineFromDekuPalace,
 
-        [Entrance(EntranceTerminaFieldFromRoadtoIkana), Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceTerminaFieldFromRoadtoIkana)]
+        [Exit(Scene.TerminaField, 4)]
+        [Spawn(Scene.RoadToIkana, 0)]
         EntranceRoadtoIkanaFromTerminaField,
-        [Entrance(EntranceIkanaCanyonFromRoadtoIkana), Region(Region.IkanaCanyon)]
+
+        [Region(Region.IkanaCanyon)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceIkanaCanyonFromRoadtoIkana)]
+        [Exit(Scene.IkanaCanyon, 0)]
+        [Spawn(Scene.RoadToIkana, 1)]
         EntranceRoadtoIkanaFromIkanaCanyon,
-        [Entrance(EntranceIkanaGraveyardFromRoadtoIkana), Region(Region.IkanaGraveyard)]
+
+        [Region(Region.IkanaGraveyard)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceIkanaGraveyardFromRoadtoIkana)]
+        [Exit(Scene.IkanaGraveyard, 0)]
+        [Spawn(Scene.RoadToIkana, 2)]
         EntranceRoadtoIkanaFromIkanaGraveyard,
 
-        [Entrance(EntranceWestClockTownFromSwordsmansSchool), Region(Region.WestClockTown)]
+
+        [Region(Region.WestClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceWestClockTownFromSwordsmansSchool)]
+        [Exit(Scene.WestClockTown, 3)]
+        [Spawn(Scene.SwordsmansSchool, 0)]
         EntranceSwordsmansSchoolFromWestClockTown,
 
-        [Entrance(EntranceIkanaCanyonFromMusicBoxHouse), Region(Region.IkanaCanyon)]
+
+        [Region(Region.IkanaCanyon)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceIkanaCanyonFromMusicBoxHouse)]
+        [Exit(Scene.IkanaCanyon, 2)]
+        [Spawn(Scene.MusicBoxHouse, 0)]
         EntranceMusicBoxHouseFromIkanaCanyon,
 
-        [Entrance(EntranceAncientCastleofIkanaFromIgosduIkanasLair), Region(Region.IkanaCastle)]
+
+        [Region(Region.IkanaCastle)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceAncientCastleofIkanaFromIgosduIkanasLair)]
+        [Exit(Scene.IkanaCastle, 6)]
+        [Spawn(Scene.IgosDuIkanasLair, 0)]
         EntranceIgosduIkanasLairFromAncientCastleofIkana,
 
-        [Entrance(EntranceSouthernSwampFromTouristInformation), Region(Region.SouthernSwamp)]
+
+        [Region(Region.SouthernSwamp)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceSouthernSwampFromTouristInformation)]
+        [Exit(Scene.SouthernSwamp, 1)]
+        [Spawn(Scene.TouristCenter, 0)]
         EntranceTouristInformationFromSouthernSwamp,
 
-        [Entrance(EntranceIkanaCanyonFromStoneTower), Region(Region.IkanaCanyon)]
+
+        [Region(Region.IkanaCanyon)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceIkanaCanyonFromStoneTower)]
+        [Exit(Scene.IkanaCanyon, 3)]
+        [Spawn(Scene.StoneTower, 0)]
         EntranceStoneTowerFromIkanaCanyon,
+
         //EntranceStoneTowerFrom, // after flip
-        [Entrance(EntranceStoneTowerTempleFromStoneTower), Region(Region.StoneTowerTemple)]
+
+        [Region(Region.StoneTowerTemple)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceStoneTowerTempleFromStoneTower)]
+        [Exit(Scene.StoneTowerTemple, 0)]
+        [Spawn(Scene.StoneTower, 2)]
         EntranceStoneTowerFromStoneTowerTemple,
-        [Entrance, Region(Region.OwlWarp)]
+
+        [Region(Region.OwlWarp)]
+        [Entrance(EntranceType.OwlWarp)]
+        [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x12)]
+        [Spawn(Scene.StoneTower, 3)]
         EntranceStoneTowerFromOwlStatue, // one way
 
+
         //EntranceStoneTowerInvertedFrom, // after flip?
+
         //EntranceStoneTowerInvertedFrom, // from temple?
 
-        [Entrance(EntranceMountainVillageFromPathtoSnowhead), Region(Region.MountainVillage)]
+
+        [Region(Region.MountainVillage)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceMountainVillageFromPathtoSnowhead)]
+        [Exit(Scene.MountainVillage, 4)]
+        [Spawn(Scene.PathToSnowhead, 0)]
         EntrancePathtoSnowheadFromMountainVillage,
-        [Entrance(EntranceSnowheadFromPathtoSnowhead), Region(Region.Snowhead)]
+
+        [Region(Region.Snowhead)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSnowheadFromPathtoSnowhead)]
+        [Exit(Scene.Snowhead, 0)]
+        [Spawn(Scene.PathToSnowhead, 1)]
         EntrancePathtoSnowheadFromSnowhead,
-        // todo void respawn // one way
 
-        [Entrance(EntrancePathtoSnowheadFromSnowhead), Region(Region.PathToSnowhead)]
+        // todo // void respawn // one way
+
+
+        [Region(Region.PathToSnowhead)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntrancePathtoSnowheadFromSnowhead)]
+        [Exit(Scene.PathToSnowhead, 1)]
+        [Spawn(Scene.Snowhead, 0)]
         EntranceSnowheadFromPathtoSnowhead,
-        [Entrance(EntranceSnowheadTempleFromSnowhead), Region(Region.SnowheadTemple)]
-        EntranceSnowheadFromSnowheadTemple,
-        [Entrance(EntranceFairysFountainFromSnowhead), Region(Region.Interior)]
-        EntranceSnowheadFromFairysFountain,
-        [Entrance, Region(Region.OwlWarp)]
-        EntranceSnowheadFromOwlStatue, // one way
-        // todo void respawn // one way
 
-        [Entrance(EntranceMountainVillageFromPathtoGoronVillage), Region(Region.MountainVillage)]
+        [Region(Region.SnowheadTemple)]
+        [Entrance(EntranceType.DungeonExit)]
+        [Pair(EntranceSnowheadTempleFromSnowhead)]
+        [Exit(Scene.SnowheadTemple, 0)]
+        [Spawn(Scene.Snowhead, 1)]
+        EntranceSnowheadFromSnowheadTemple,
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceFairysFountainFromSnowhead)]
+        [Exit(Scene.FairyFountain, 2)]
+        [Spawn(Scene.Snowhead, 2)]
+        EntranceSnowheadFromFairysFountain,
+
+        [Region(Region.OwlWarp)]
+        [Entrance(EntranceType.OwlWarp)]
+        [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x04)]
+        [Spawn(Scene.Snowhead, 3)]
+        EntranceSnowheadFromOwlStatue, // one way
+
+        //[Region(Region.Snowhead)]
+        //[Entrance(EntranceType.VoidRespawn)]
+        //[Exit(Scene.Snowhead, 3)]
+        //[Spawn(Scene.Snowhead, 0)]
+        // EntranceSnowheadFromSnowhead, // void respawn // one way
+
+
+        [Region(Region.MountainVillage)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceMountainVillageFromPathtoGoronVillage)]
+        [Exit(Scene.MountainVillage, 2)]
+        [Spawn(Scene.TwinIslands, 0)]
         EntrancePathtoGoronVillageFromMountainVillage,
-        [Entrance(EntranceGoronVillageFromPathtoGoronVillage), Region(Region.GoronVillage)]
+
+        [Region(Region.GoronVillage)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceGoronVillageFromPathtoGoronVillage)]
+        [Exit(Scene.GoronVillage, 0)]
+        [Spawn(Scene.TwinIslands, 1)]
         EntrancePathtoGoronVillageFromGoronVillage,
-        [Entrance(EntranceGoronRacetrackFromPathtoGoronVillage), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceGoronRacetrackFromPathtoGoronVillage)]
+        [Exit(Scene.GoronRacetrack, 0)]
+        [Spawn(Scene.TwinIslands, 2)]
         EntrancePathtoGoronVillageFromGoronRacetrack,
 
-        [Entrance, Region(Region.GreatBayTemple)]
+
+        [Region(Region.GreatBayTemple)]
+        [Entrance(EntranceType.Boss)]
+        [Exit(Scene.GreatBayTemple, 1)]
+        [Spawn(Scene.GyorgsLair, 0)]
         EntranceGyorgsLairFromGreatBayTemple, // one way
 
-        [Entrance(EntranceIkanaCanyonFromSecretShrine), Region(Region.IkanaCanyon)]
+
+        [Region(Region.IkanaCanyon)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceIkanaCanyonFromSecretShrine)]
+        [Exit(Scene.IkanaCanyon, 9)]
+        [Spawn(Scene.SecretShrine, 0)]
         EntranceSecretShrineFromIkanaCanyon,
 
-        [Entrance(EntranceEastClockTownFromStockPotInnLower), Region(Region.EastClockTown)]
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceEastClockTownFromStockPotInnLower)]
+        [Exit(Scene.EastClockTown, 9)]
+        [Spawn(Scene.StockPotInn, 0)]
         EntranceStockPotInnLowerFromEastClockTown,
-        [Entrance(EntranceEastClockTownFromStockPotInnUpper), Region(Region.EastClockTown)]
+
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceEastClockTownFromStockPotInnUpper)]
+        [Exit(Scene.EastClockTown, 10)]
+        [Spawn(Scene.StockPotInn, 1)]
         EntranceStockPotInnUpperFromEastClockTown,
+
         //EntranceStockPotInnFromStockPotInn, // after grandma story // one way
+
         //EntranceStockPotInnFromStockPotInn, // after midnight meeting // one way
+
         //EntranceStockPotInnFromStockPotInn, // eavesdropping on anju
+
         //EntranceStockPotInnFromStockPotInn, // after eavesdropping on anju
 
-        [Entrance(EntranceBeforethePortaltoTerminaFromClockTowerInterior), Region(Region.BeneathClocktown)]
+
+        // EntranceGreatBayCutsceneFromZoraCape, // pirates going to temple?
+
+
+        [Region(Region.BeneathClocktown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceBeforethePortaltoTerminaFromClockTowerInterior)]
+        [Exit(Scene.BeforeThePortalToTermina, 1)]
+        [Spawn(Scene.ClockTowerInterior, 0)]
         EntranceClockTowerInteriorFromBeforethePortaltoTermina,
-        [Entrance(EntranceSouthClockTownFromClockTowerInterior), Region(Region.SouthClockTown)]
+
+        [Region(Region.SouthClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceSouthClockTownFromClockTowerInterior)]
+        [Exit(Scene.SouthClockTown, 0)]
+        [Spawn(Scene.ClockTowerInterior, 1)]
         EntranceClockTowerInteriorFromSouthClockTown,
+
         //EntranceClockTowerInteriorFrom, // cutscenes
         //EntranceClockTowerInteriorFrom, // cutscenes
         //EntranceClockTowerInteriorFrom, // cutscenes
         //EntranceClockTowerInteriorFrom, // cutscenes
         //EntranceClockTowerInteriorFrom, // cutscenes
 
-        [Entrance(EntranceSouthernSwampFromWoodsofMystery), Region(Region.SouthernSwamp)]
+
+        [Region(Region.SouthernSwamp)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceSouthernSwampFromWoodsofMystery)]
+        [Exit(Scene.SouthernSwamp, 7)]
+        [Spawn(Scene.WoodsOfMystery, 0)]
         EntranceWoodsofMysteryFromSouthernSwamp,
 
+        
         //EntranceLostWoodsFrom, // cutscenes
         //EntranceLostWoodsFrom, // cutscenes
 
-        [Entrance(EntranceTheMoonFromLinkTrial), Region(Region.TheMoon)]
+
+        [Region(Region.TheMoon)]
+        [Entrance(EntranceType.Trial)]
+        [Pair(EntranceTheMoonFromLinkTrial)]
+        [Exit(Scene.TheMoon, 4)]
+        [Spawn(Scene.LinkTrial, 0)]
         EntranceLinkTrialFromTheMoon,
 
-        [Entrance, Region(Region.TheMoon)]
+
+        [Region(Region.TheMoon)]
+        [Entrance]
+        //[Exit(Scene.DekuTrial, 0)]
+        [Spawn(Scene.TheMoon, 0)]
         EntranceTheMoonFromClockTowerRooftop, // one way
-        [Entrance(EntranceDekuTrialFromTheMoon), Region(Region.TheMoon)]
+
+        [Region(Region.TheMoon)]
+        [Entrance(EntranceType.TrialExit)]
+        [Pair(EntranceDekuTrialFromTheMoon)]
+        [Exit(Scene.DekuTrial, 0)]
+        [Spawn(Scene.TheMoon, 0)]
         EntranceTheMoonFromDekuTrial,
-        [Entrance(EntranceGoronTrialFromTheMoon), Region(Region.TheMoon)]
+
+        [Region(Region.TheMoon)]
+        [Entrance(EntranceType.TrialExit)]
+        [Pair(EntranceGoronTrialFromTheMoon)]
+        [Exit(Scene.GoronTrial, 0)]
+        [Spawn(Scene.TheMoon, 0)]
         EntranceTheMoonFromGoronTrial,
-        [Entrance(EntranceZoraTrialFromTheMoon), Region(Region.TheMoon)]
+
+        [Region(Region.TheMoon)]
+        [Entrance(EntranceType.TrialExit)]
+        [Pair(EntranceZoraTrialFromTheMoon)]
+        [Exit(Scene.ZoraTrial, 0)]
+        [Spawn(Scene.TheMoon, 0)]
         EntranceTheMoonFromZoraTrial,
-        [Entrance(EntranceLinkTrialFromTheMoon), Region(Region.TheMoon)]
+
+        [Region(Region.TheMoon)]
+        [Entrance(EntranceType.TrialExit)]
+        [Pair(EntranceLinkTrialFromTheMoon)]
+        [Exit(Scene.LinkTrial, 0)]
+        [Spawn(Scene.TheMoon, 0)]
         EntranceTheMoonFromLinkTrial,
 
-        [Entrance(EntranceWestClockTownFromBombShop), Region(Region.WestClockTown)]
+
+        [Region(Region.WestClockTown)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceWestClockTownFromBombShop)]
+        [Exit(Scene.WestClockTown, 6)]
+        [Spawn(Scene.BombShop, 0)]
         EntranceBombShopFromWestClockTown,
+
 
         //EntranceGiantsChamberFrom, // cutscene // one way?
 
-        [Entrance(EntranceMilkRoadFromGormanRacetrackMain), Region(Region.MilkRoad)]
-        EntranceGormanTrackFromMilkRoadMain,
-        [Entrance(EntranceMilkRoadFromGormanRacetrackTrack), Region(Region.MilkRoad)]
-        EntranceGormanTrackFromMilkRoadGated,
-        // [Entrance, Region(Region.MilkRoad)] EntranceGormanTrackFrom, // race?
 
-        [Entrance(EntrancePathtoGoronVillageFromGoronRacetrack), Region(Region.TwinIslands)]
+        [Region(Region.MilkRoad)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceMilkRoadFromGormanRacetrackMain)]
+        [Exit(Scene.MilkRoad, 3)]
+        [Spawn(Scene.GormanTrack, 0)]
+        EntranceGormanTrackFromMilkRoadMain,
+
+        [Region(Region.MilkRoad)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntranceMilkRoadFromGormanRacetrackTrack)]
+        [Exit(Scene.MilkRoad, 2)]
+        [Spawn(Scene.GormanTrack, 3)]
+        EntranceGormanTrackFromMilkRoadGated,
+
+        // [// race?
+
+
+        [Region(Region.TwinIslands)]
+        [Entrance(EntranceType.Interior)]
+        [Pair(EntrancePathtoGoronVillageFromGoronRacetrack)]
+        [Exit(Scene.TwinIslands, 2)]
+        [Spawn(Scene.GoronRacetrack, 0)]
         EntranceGoronRacetrackFromPathtoGoronVillage,
+
         //EntranceGoronRacetrackFromGoronRacetrack, // race start // one way
+
         //EntranceGoronRacetrackFromGoronRacetrack, // race end // one way
 
-        [Entrance(EntranceTerminaFieldFromEastClockTown), Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceTerminaFieldFromEastClockTown)]
+        [Exit(Scene.TerminaField, 7)]
+        [Spawn(Scene.EastClockTown, 0)]
         EntranceEastClockTownFromTerminaField,
-        [Entrance(EntranceSouthClockTownFromEastClockTownNorthern), Region(Region.SouthClockTown)]
+
+        [Region(Region.SouthClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSouthClockTownFromEastClockTownNorthern)]
+        [Exit(Scene.SouthClockTown, 2)]
+        [Spawn(Scene.EastClockTown, 3)]
         EntranceEastClockTownFromSouthClockTownNorthern,
-        [Entrance(EntranceAstralObservatoryFromEastClockTown), Region(Region.AstralObservatory)]
+
+        [Region(Region.AstralObservatory)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceAstralObservatoryFromEastClockTown)]
+        [Exit(Scene.AstralObservatory, 0)]
+        [Spawn(Scene.EastClockTown, 2)]
         EntranceEastClockTownFromAstralObservatory,
-        [Entrance(EntranceSouthClockTownFromEastClockTownSouthern), Region(Region.SouthClockTown)]
+
+        [Region(Region.SouthClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSouthClockTownFromEastClockTownSouthern)]
+        [Exit(Scene.SouthClockTown, 7)]
+        [Spawn(Scene.EastClockTown, 1)]
         EntranceEastClockTownFromSouthClockTownSouthern,
-        [Entrance(EntranceTreasureChestShopFromEastClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceTreasureChestShopFromEastClockTown)]
+        [Exit(Scene.TreasureChestShop, 0)]
+        [Spawn(Scene.EastClockTown, 4)]
         EntranceEastClockTownFromTreasureChestShop,
-        [Entrance(EntranceNorthClockTownFromEastClockTown), Region(Region.NorthClockTown)]
+
+        [Region(Region.NorthClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceNorthClockTownFromEastClockTown)]
+        [Exit(Scene.NorthClockTown, 1)]
+        [Spawn(Scene.EastClockTown, 5)]
         EntranceEastClockTownFromNorthClockTown,
-        [Entrance(EntranceHoneyDarlingsShopFromEastClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceHoneyDarlingsShopFromEastClockTown)]
+        [Exit(Scene.HoneyDarling, 0)]
+        [Spawn(Scene.EastClockTown, 6)]
         EntranceEastClockTownFromHoneyDarlingsShop,
-        [Entrance(EntranceMayorsResidenceFromEastClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceMayorsResidenceFromEastClockTown)]
+        [Exit(Scene.MayorsResidence, 0)]
+        [Spawn(Scene.EastClockTown, 7)]
         EntranceEastClockTownFromMayorsResidence,
-        [Entrance(EntranceTownShootingGalleryFromEastClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceTownShootingGalleryFromEastClockTown)]
+        [Exit(Scene.TownShootingGallery, 0)]
+        [Spawn(Scene.EastClockTown, 8)]
         EntranceEastClockTownFromShootingGalleryClockTown,
-        [Entrance(EntranceStockPotInnLowerFromEastClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceStockPotInnLowerFromEastClockTown)]
+        [Exit(Scene.StockPotInn, 0)]
+        [Spawn(Scene.EastClockTown, 9)]
         EntranceEastClockTownFromStockPotInnLower,
-        [Entrance(EntranceStockPotInnUpperFromEastClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceStockPotInnUpperFromEastClockTown)]
+        [Exit(Scene.StockPotInn, 1)]
+        [Spawn(Scene.EastClockTown, 10)]
         EntranceEastClockTownFromStockPotInnUpper,
-        [Entrance(EntranceMilkBarFromEastClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceMilkBarFromEastClockTown)]
+        [Exit(Scene.MilkBar, 0)]
+        [Spawn(Scene.EastClockTown, 11)]
         EntranceEastClockTownFromMilkBar,
 
-        [Entrance(EntranceTerminaFieldFromWestClockTown), Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceTerminaFieldFromWestClockTown)]
+        [Exit(Scene.TerminaField, 0)]
+        [Spawn(Scene.WestClockTown, 0)]
         EntranceWestClockTownFromTerminaField,
-        [Entrance(EntranceSouthClockTownFromWestClockTownSouthern), Region(Region.SouthClockTown)]
+
+        [Region(Region.SouthClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSouthClockTownFromWestClockTownSouthern)]
+        [Exit(Scene.SouthClockTown, 5)]
+        [Spawn(Scene.WestClockTown, 1)]
         EntranceWestClockTownFromSouthClockTownSouthern,
-        [Entrance(EntranceSouthClockTownFromWestClockTownNorthern), Region(Region.SouthClockTown)]
+
+        [Region(Region.SouthClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSouthClockTownFromWestClockTownNorthern)]
+        [Exit(Scene.SouthClockTown, 3)]
+        [Spawn(Scene.WestClockTown, 2)]
         EntranceWestClockTownFromSouthClockTownNorthern,
-        [Entrance(EntranceSwordsmansSchoolFromWestClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceSwordsmansSchoolFromWestClockTown)]
+        [Exit(Scene.SwordsmansSchool, 0)]
+        [Spawn(Scene.WestClockTown, 3)]
         EntranceWestClockTownFromSwordsmansSchool,
-        [Entrance(EntranceCuriosityShopFromWestClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceCuriosityShopFromWestClockTown)]
+        [Exit(Scene.CuriosityShop, 0)]
+        [Spawn(Scene.WestClockTown, 4)]
         EntranceWestClockTownFromCuriosityShop,
-        [Entrance(EntranceTradingPostFromWestClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceTradingPostFromWestClockTown)]
+        [Exit(Scene.TradingPost, 0)]
+        [Spawn(Scene.WestClockTown, 5)]
         EntranceWestClockTownFromTradingPost,
-        [Entrance(EntranceBombShopFromWestClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceBombShopFromWestClockTown)]
+        [Exit(Scene.BombShop, 0)]
+        [Spawn(Scene.WestClockTown, 6)]
         EntranceWestClockTownFromBombShop,
-        [Entrance(EntrancePostOfficeFromWestClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntrancePostOfficeFromWestClockTown)]
+        [Exit(Scene.PostOffice, 0)]
+        [Spawn(Scene.WestClockTown, 7)]
         EntranceWestClockTownFromPostOffice,
-        [Entrance(EntranceWestClockTownFromLotteryShop), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceWestClockTownFromLotteryShop)]
+        [Exit(Scene.LotteryShop, 0)]
+        [Spawn(Scene.WestClockTown, 8)]
         EntranceWestClockTownFromLotteryShop,
 
-        [Entrance(EntranceTerminaFieldFromNorthClockTown), Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceTerminaFieldFromNorthClockTown)]
+        [Exit(Scene.TerminaField, 8)]
+        [Spawn(Scene.NorthClockTown, 0)]
         EntranceNorthClockTownFromTerminaField,
-        [Entrance(EntranceEastClockTownFromNorthClockTown), Region(Region.EastClockTown)]
+
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceEastClockTownFromNorthClockTown)]
+        [Exit(Scene.EastClockTown, 5)]
+        [Spawn(Scene.NorthClockTown, 1)]
         EntranceNorthClockTownFromEastClockTown,
-        [Entrance(EntranceSouthClockTownFromNorthClockTown), Region(Region.SouthClockTown)]
+
+        [Region(Region.SouthClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSouthClockTownFromNorthClockTown)]
+        [Exit(Scene.SouthClockTown, 4)]
+        [Spawn(Scene.NorthClockTown, 2)]
         EntranceNorthClockTownFromSouthClockTown,
-        [Entrance(EntranceFairysFountainFromNorthClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceFairysFountainFromNorthClockTown)]
+        [Exit(Scene.FairyFountain, 0)]
+        [Spawn(Scene.NorthClockTown, 3)]
         EntranceNorthClockTownFromFairysFountain,
-        [Entrance(EntranceDekuScrubPlaygroundFromNorthClockTown), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceDekuScrubPlaygroundFromNorthClockTown)]
+        [Exit(Scene.DekuPlayground, 0)]
+        [Spawn(Scene.NorthClockTown, 4)]
         EntranceNorthClockTownFromDekuScrubPlayground,
+
         //EntranceNorthClockTownFromBombersGame, // after catching kids // one way
+
         //EntranceNorthClockTownFromSavingLady, // after saving old lady // one way
 
-        [Entrance(EntranceClockTowerInteriorFromSouthClockTown), Region(Region.Misc)]
+
+        [Region(Region.Misc)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceClockTowerInteriorFromSouthClockTown)]
+        [Exit(Scene.ClockTowerInterior, 1)]
+        [Spawn(Scene.SouthClockTown, 0)]
         EntranceSouthClockTownFromClockTowerInterior, // spawn point
-        [Entrance(EntranceTerminaFieldFromSouthClockTown), Region(Region.TerminaField)]
+
+        [Region(Region.TerminaField)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceTerminaFieldFromSouthClockTown)]
+        [Exit(Scene.TerminaField, 6)]
+        [Spawn(Scene.SouthClockTown, 1)]
         EntranceSouthClockTownFromTerminaField,
-        [Entrance(EntranceEastClockTownFromSouthClockTownNorthern), Region(Region.EastClockTown)]
+
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceEastClockTownFromSouthClockTownNorthern)]
+        [Exit(Scene.EastClockTown, 3)]
+        [Spawn(Scene.SouthClockTown, 2)]
         EntranceSouthClockTownFromEastClockTownNorthern,
-        [Entrance(EntranceWestClockTownFromSouthClockTownNorthern), Region(Region.WestClockTown)]
+
+        [Region(Region.WestClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceWestClockTownFromSouthClockTownNorthern)]
+        [Exit(Scene.WestClockTown, 2)]
+        [Spawn(Scene.SouthClockTown, 3)]
         EntranceSouthClockTownFromWestClockTownNorthern,
-        [Entrance(EntranceNorthClockTownFromSouthClockTown), Region(Region.NorthClockTown)]
+
+        [Region(Region.NorthClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceNorthClockTownFromSouthClockTown)]
+        [Exit(Scene.NorthClockTown, 2)]
+        [Spawn(Scene.SouthClockTown, 4)]
         EntranceSouthClockTownFromNorthClockTown,
-        [Entrance(EntranceWestClockTownFromSouthClockTownSouthern), Region(Region.WestClockTown)]
+
+        [Region(Region.WestClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceWestClockTownFromSouthClockTownSouthern)]
+        [Exit(Scene.WestClockTown, 1)]
+        [Spawn(Scene.SouthClockTown, 5)]
         EntranceSouthClockTownFromWestClockTownSouthern,
-        [Entrance(EntranceLaundryPoolFromSouthClockTown), Region(Region.LaundryPool)]
+
+        [Region(Region.LaundryPool)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceLaundryPoolFromSouthClockTown)]
+        [Exit(Scene.LaundryPool, 0)]
+        [Spawn(Scene.SouthClockTown, 6)]
         EntranceSouthClockTownFromLaundryPool,
-        [Entrance(EntranceEastClockTownFromSouthClockTownSouthern), Region(Region.EastClockTown)]
+
+        [Region(Region.EastClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceEastClockTownFromSouthClockTownSouthern)]
+        [Exit(Scene.EastClockTown, 1)]
+        [Spawn(Scene.SouthClockTown, 7)]
         EntranceSouthClockTownFromEastClockTownSouthern,
-        [Entrance(EntranceClockTowerRooftopFromSouthClockTown), Region(Region.TheMoon)] // todo not paired?
+
+        [Region(Region.TheMoon)]
+        [Entrance(EntranceType.Permanent)]
+        [Pair(EntranceClockTowerRooftopFromSouthClockTown)]
+        [Spawn(Scene.SouthClockTown, 8)]
         EntranceSouthClockTownFromClockTowerRooftop,
-        [Entrance, Region(Region.OwlWarp)]
+
+        [Region(Region.OwlWarp)]
+        [Entrance]
+        [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x08)]
+        [Spawn(Scene.SouthClockTown, 9)]
         EntranceSouthClockTownFromOwlStatue, // one way
 
-        [Entrance(EntranceSouthClockTownFromLaundryPool), Region(Region.SouthClockTown)]
+
+        [Region(Region.SouthClockTown)]
+        [Entrance(EntranceType.Overworld)]
+        [Pair(EntranceSouthClockTownFromLaundryPool)]
+        [Exit(Scene.SouthClockTown, 6)]
+        [Spawn(Scene.LaundryPool, 0)]
         EntranceLaundryPoolFromSouthClockTown,
-        [Entrance(EntranceKafeisHideoutFromLaundryPool), Region(Region.Interior)]
+
+        [Region(Region.Interior)]
+        [Entrance(EntranceType.InteriorExit)]
+        [Pair(EntranceKafeisHideoutFromLaundryPool)]
+        [Exit(Scene.CuriosityShop, 1)]
+        [Spawn(Scene.LaundryPool, 1)]
         EntranceLaundryPoolFromKafeisHideout,
 
-        [Entrance(EntranceStoneTowerTempleInvertedFromStoneTowerInverted), Region(Region.StoneTower)]
+
+        [Region(Region.StoneTower)]
+        [Entrance(EntranceType.DungeonExit)]
+        [Pair(EntranceStoneTowerTempleInvertedFromStoneTowerInverted)]
+        [Exit(Scene.InvertedStoneTowerTemple, 0)]
+        [Spawn(Scene.InvertedStoneTower, 1)]
         EntranceStoneTowerInvertedFromStoneTowerTempleInverted,
 
         [StartingItem(0xC5CDFB, 0x01)]

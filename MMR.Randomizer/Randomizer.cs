@@ -1,5 +1,6 @@
 using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes;
+using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
@@ -890,15 +891,15 @@ namespace MMR.Randomizer
 
             // if (_settings.PairEntrances)
             {
-                var currentEntranceAttribute = currentItem.GetAttribute<EntranceAttribute>();
-                var targetEntranceAttribute = target.GetAttribute<EntranceAttribute>();
+                var currentEntrancePair = currentItem.Pair();
+                var targetPair = target.Pair();
 
-                if (currentEntranceAttribute?.Pair != null && targetEntranceAttribute?.Pair != null)
+                if (currentEntrancePair != null && targetPair != null)
                 {
                     ItemList[currentItem].NewLocation = target;
 
-                    var pairItem = targetEntranceAttribute.Pair.Value;
-                    var pairTarget = currentEntranceAttribute.Pair.Value;
+                    var pairItem = targetPair.Value;
+                    var pairTarget = currentEntrancePair.Value;
                     var pairPath = new List<Item> { pairTarget };
                     var pairConditionsToRemove = new List<int[]>();
                     var pairDependenciesChecked = new Dictionary<Item, Dependence> { { pairTarget, new Dependence { Type = DependenceType.Dependent } } };
@@ -970,15 +971,14 @@ namespace MMR.Randomizer
 
                     // if (_settings.PairEntrances)
                     {
-                        var currentEntranceAttribute = currentItem.GetAttribute<EntranceAttribute>();
-                        if (currentEntranceAttribute != null)
+                        var currentEntrancePair = currentItem.Pair();
+                        var targetEntrancePair = targetLocation.Pair();
+                        if (currentEntrancePair != null && targetEntrancePair != null)
                         {
-                            var targetEntranceAttribute = targetLocation.GetAttribute<EntranceAttribute>();
-                            if (currentEntranceAttribute.Pair.HasValue && targetEntranceAttribute.Pair.HasValue)
-                            {
-                                ItemList[(int)targetEntranceAttribute.Pair].NewLocation = currentEntranceAttribute.Pair;
-                                targets.Remove(currentEntranceAttribute.Pair.Value);
-                            }
+                            var targetPairItemObject = ItemList[targetEntrancePair.Value];
+                            targetPairItemObject.NewLocation = currentEntrancePair;
+                            targetPairItemObject.IsRandomized = true;
+                            targets.Remove(currentEntrancePair.Value);
                         }
                     }
                     return;
@@ -1003,8 +1003,6 @@ namespace MMR.Randomizer
             }
 
             PreserveOwlActivations();
-
-            EntranceSwapUtils.ReadMapData();
 
             UpdateLogicForSettings();
 
@@ -1044,19 +1042,22 @@ namespace MMR.Randomizer
 
         private void PlaceUnimplementedEntrances()
         {
-            var entrancesToPlace = ItemUtils.AllEntrances().Where(item => !EntranceSwapUtils.IsEntranceAvailable(item)).ToList();
+            var entrancesToPlace = ItemUtils.AllEntrances()
+                .Where(item => !item.IsEntranceImplemented())
+                .ToList();
             var entrancePool = entrancesToPlace.ToList();
             // todo remove already-placed entrances
             foreach (var entrance in entrancesToPlace)
             {
                 PlaceItem(entrance, new List<Item>() { entrance });
+                ItemList[entrance].IsRandomized = false;
             }
         }
 
         private void PlaceOneWayEntrances()
         {
             var entrancesToPlace = ItemUtils.AllEntrances()
-                .Where(item => EntranceSwapUtils.IsEntranceAvailable(item))
+                .Where(item => item.IsEntranceImplemented())
                 .Where(item => !item.Pair().HasValue).ToList();
             var entrancePool = entrancesToPlace.ToList();
             // todo remove already-placed entrances
@@ -1107,8 +1108,8 @@ namespace MMR.Randomizer
         private void PlacePairedEntrances()
         {
             var entrancesToPlace = ItemUtils.AllEntrances()
-                .Where(item => item.GetAttribute<EntranceAttribute>().Pair.HasValue)
-                .Where(item => EntranceSwapUtils.IsEntranceAvailable(item) && EntranceSwapUtils.IsEntranceAvailable(item.Pair().Value))
+                .Where(item => item.Pair().HasValue)
+                .Where(item => item.IsEntranceImplemented() && item.Pair().Value.IsEntranceImplemented())
                 .ToList();
             var entrancePool = entrancesToPlace.ToList();
             entrancePool.Remove(Item.EntranceSouthClockTownFromClockTowerInterior);
@@ -1895,11 +1896,6 @@ namespace MMR.Randomizer
                 {
                     progressReporter.ReportProgress(10, "Shuffling dungeons...");
                     DungeonShuffle();
-                }
-
-                if (_settings.AreEntrancesRandomized())
-                {
-                    EntranceSwapUtils.ReadMapData();
                 }
 
                 _randomized.Logic = ItemList.Select(io => new ItemLogic(io)).ToList();

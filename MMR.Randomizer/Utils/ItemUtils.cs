@@ -1,5 +1,4 @@
-﻿using MMR.Randomizer.Constants;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MMR.Randomizer.GameObjects;
 using System;
 using System.Linq;
@@ -8,6 +7,7 @@ using MMR.Randomizer.Attributes;
 using System.Collections.ObjectModel;
 using MMR.Randomizer.Models;
 using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes.Entrance;
 
 namespace MMR.Randomizer.Utils
 {
@@ -127,7 +127,7 @@ namespace MMR.Randomizer.Utils
         private static List<Item> _allLocations;
         public static IEnumerable<Item> AllLocations()
         {
-            return _allLocations ?? (_allLocations = Enum.GetValues(typeof(Item)).Cast<Item>().Where(item => item.HasAttribute<LocationNameAttribute>()).ToList());
+            return _allLocations ?? (_allLocations = Enum.GetValues(typeof(Item)).Cast<Item>().Where(item => item.HasAttribute<GetItemIndexAttribute>() || item.HasAttribute<GetBottleItemIndicesAttribute>()).ToList());
         }
 
         private static List<Item> _allEntrances;

@@ -213,71 +213,7 @@ namespace MMR.Randomizer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to - 5 : South Clock Town -&gt; Clock Tower
-        ///
-        ///
-        ///0
-        ///0
-        ///- 6 : South Clock Town -&gt; Termina Field
-        ///
-        ///
-        ///0
-        ///0
-        ///- 7 : South Clock Town -&gt; East Clock Town
-        ///
-        ///
-        ///0
-        ///0
-        ///- 8 : South Clock Town -&gt; West Clock Town
-        ///
-        ///
-        ///0
-        ///0
-        ///- 9 : South Clock Town -&gt; North Clock Town
-        ///
-        ///
-        ///0
-        ///0
-        ///- 10 : South Clock Town -&gt; South West Connection
-        ///
-        ///
-        ///0
-        ///0
-        ///- 11 : South Clock Town -&gt; Laundry Pool
-        ///
-        ///
-        ///0
-        ///0
-        ///- 12 : South Clock Town -&gt; South East Connection
-        ///
-        ///
-        ///0
-        ///0
-        ///- 13 : South Clock Town -&gt; Clock Tower Roof
-        ///
-        ///
-        ///0
-        ///0
-        ///- 14 : South Clock Town -&gt; [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string ENT_REQ_CASUAL {
-            get {
-                return ResourceManager.GetString("ENT_REQ_CASUAL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Byte[].
-        /// </summary>
-        public static byte[] ENTRANCES {
-            get {
-                object obj = ResourceManager.GetObject("ENTRANCES", resourceCulture);
-                return ((byte[])(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to -version 15
+        ///   Looks up a localized string similar to -version 16
         ///- Deku Mask
         ///
         ///
@@ -290,7 +226,7 @@ namespace MMR.Randomizer.Properties {
         ///0
         ///- Fire Arrow
         ///107
-        ///2,92,120,742;2,93,120,742;10,92,742;10,93;92,119,742,743;92,93,119,742,744
+        ///2,92,120,752;2,93,120,752;10,92,752;10,93;92,119,752,753;92,93,119,752,754
         ///0
         ///0
         ///- Ice Arrow
@@ -300,7 +236,7 @@ namespace MMR.Randomizer.Properties {
         ///0
         ///- Light Arrow
         ///116
-        ///4,120,745,742;25,119,746
+        ///4,120,755,752;0,25,92,93,119,756
         ///0
         ///0
         ///- Bomb Bag (20)
@@ -314,13 +250,13 @@ namespace MMR.Randomizer.Properties {
         ///0
         ///0
         ///- Powder Keg
-        ///92,777,781
-        ///2,120,742;108
+        ///92,787,791
+        ///2,120,752;108
         ///0
         ///0
         ///- Pictobox
-        ///692,673
-        ///753;756
+        ///692,673,812
+        ///
         ///0
         ///0
         ///- Lens of Truth
@@ -330,12 +266,11 @@ namespace MMR.Randomizer.Properties {
         ///0
         ///- Hookshot
         ///523,524
-        ///120;0,742
+        ///120;0,752
         ///0
         ///0
         ///- Great Fairy Magic Meter
-        ///346,537
-        ///0; [rest of string was truncated]&quot;;.
+        ///346,53 [rest of string was truncated]&quot;;.
         /// </summary>
         public static string REQ_CASUAL {
             get {

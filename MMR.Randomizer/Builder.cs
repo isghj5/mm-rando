@@ -11,7 +11,6 @@ using MMR.Randomizer.Models.SoundEffects;
 using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.IO;
@@ -235,8 +234,16 @@ namespace MMR.Randomizer
         {
             if (_settings.AreEntrancesRandomized())
             {
-                EntranceSwapUtils.WriteSpawnToROM();
-                EntranceSwapUtils.WriteEntrancesToROM();
+                var newSpawn = _randomized.ItemList.Single(io => io.NewLocation == Item.EntranceSouthClockTownFromClockTowerInterior).Item;
+                EntranceSwapUtils.WriteSpawnToROM(newSpawn);
+
+                SceneUtils.ReadSceneTable();
+                SceneUtils.GetMaps();
+
+                foreach (var item in _randomized.ItemList.Where(io => io.Item.IsEntrance() && io.IsRandomized))
+                {
+                    EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
+                }
             }
         }
 
@@ -675,9 +682,10 @@ namespace MMR.Randomizer
 
                 if (item.Item.IsEntrance())
                 {
-                    EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
+                    continue;
                 }
-                else if (ItemUtils.IsBottleCatchContent(item.Item))
+
+                if (ItemUtils.IsBottleCatchContent(item.Item))
                 {
                     ItemSwapUtils.WriteNewBottle(item.NewLocation.Value, item.Item);
                 }
