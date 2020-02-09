@@ -1078,10 +1078,10 @@ namespace MMR.Randomizer
                 return new List<Item>();
             }
             checkedEntrances.Add(item);
-            var itemObject = ItemList[(int)item];
+            var itemObject = ItemList[item];
             return (itemObject.DependsOnItems?.SelectMany(d =>
             {
-                if (d.IsEntrance() && ItemList[(int)d].NewLocation == null)
+                if (d.IsEntrance() && ItemList[d].NewLocation == null)
                 {
                     return new List<Item> { d };
                 }
@@ -1093,7 +1093,7 @@ namespace MMR.Randomizer
             }) ?? new List<Item>())
             .Concat(itemObject.Conditionals?.SelectMany(cs => cs.SelectMany(d =>
             {
-                if (d.IsEntrance() && ItemList[(int)d].NewLocation == null)
+                if (d.IsEntrance() && ItemList[d].NewLocation == null)
                 {
                     return new List<Item> { d };
                 }
