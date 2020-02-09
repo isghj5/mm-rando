@@ -4559,15 +4559,15 @@ namespace MMR.Randomizer.GameObjects
         [Region(Region.ZoraHall)]
         [Entrance(EntranceType.Overworld)]
         [Pair(EntranceZoraHallFromZoraCapeLand)]
-        [Exit(Scene.ZoraHall, 0)]
-        [Spawn(Scene.ZoraCape, 1)]
+        [Exit(Scene.ZoraHall, 1)]
+        [Spawn(Scene.ZoraCape, 2)]
         EntranceZoraCapeFromZoraHallLand,
 
         [Region(Region.ZoraHall)]
         [Entrance(EntranceType.Overworld)]
         [Pair(EntranceZoraHallFromZoraCapeWater)]
-        [Exit(Scene.ZoraHall, 1)]
-        [Spawn(Scene.ZoraCape, 2)]
+        [Exit(Scene.ZoraHall, 0)]
+        [Spawn(Scene.ZoraCape, 1)]
         EntranceZoraCapeFromZoraHallWater,
 
         [Region(Region.ZoraCape)]
