@@ -943,10 +943,9 @@ namespace MMR.Randomizer
             }
 
             var availableItems = targets.ToList();
-            if (currentItem > Item.SongOath)
+            if (!currentItem.HasAttribute<StartingItemAttribute>())
             {
-                availableItems.Remove(Item.MaskDeku);
-                availableItems.Remove(Item.SongHealing);
+                availableItems.RemoveAll(item => ItemUtils.IsStartingLocation(item));
             }
 
             while (true)
@@ -1046,20 +1045,25 @@ namespace MMR.Randomizer
                 .Where(item => !item.IsEntranceImplemented())
                 .ToList();
             var entrancePool = entrancesToPlace.ToList();
-            // todo remove already-placed entrances
             foreach (var entrance in entrancesToPlace)
             {
                 PlaceItem(entrance, new List<Item>() { entrance });
                 ItemList[entrance].IsRandomized = false;
+                var pair = ItemList[entrance].NewLocation?.Pair();
+                if (pair != null)
+                {
+                    ItemList[pair.Value].IsRandomized = false;
+                }
             }
         }
 
         private void PlaceOneWayEntrances()
         {
-            var entrancesToPlace = ItemUtils.AllEntrances()
+            var allOneWays = ItemUtils.AllEntrances()
                 .Where(item => item.IsEntranceImplemented())
                 .Where(item => !item.Pair().HasValue).ToList();
-            var entrancePool = entrancesToPlace.ToList();
+            var entrancesToPlace = allOneWays.Where(item => ItemList[item].NewLocation == null).ToList();
+            var entrancePool = allOneWays.Where(location => !ItemList.Any(io => io.NewLocation == location)).ToList();
             // todo remove already-placed entrances
             foreach (var entrance in entrancesToPlace)
             {
@@ -1107,11 +1111,13 @@ namespace MMR.Randomizer
 
         private void PlacePairedEntrances()
         {
-            var entrancesToPlace = ItemUtils.AllEntrances()
+            var allPairedEntrances = ItemUtils.AllEntrances()
                 .Where(item => item.Pair().HasValue)
                 .Where(item => item.IsEntranceImplemented() && item.Pair().Value.IsEntranceImplemented())
                 .ToList();
-            var entrancePool = entrancesToPlace.ToList();
+            var entrancesToPlace = allPairedEntrances.Where(item => ItemList[item].NewLocation == null).ToList();
+            var entrancePool = allPairedEntrances.Where(location => !ItemList.Any(io => io.NewLocation == location)).ToList();
+
             entrancePool.Remove(Item.EntranceSouthClockTownFromClockTowerInterior);
 
             var unconnectedEntrances = entrancesToPlace.ToDictionary(item => item, item => GetUnconnectedEntrances(item));
@@ -1756,6 +1762,17 @@ namespace MMR.Randomizer
                 if (selectedItemIndex != -1)
                 {
                     ItemList[selectedItemIndex].NewLocation = null;
+                }
+            }
+            foreach (var io in ItemList)
+            {
+                if (io.NewLocation.HasValue)
+                {
+                    var pair = io.Item.Pair();
+                    if (pair.HasValue)
+                    {
+                        ItemList[pair.Value].NewLocation = pair;
+                    }
                 }
             }
         }

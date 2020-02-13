@@ -2265,10 +2265,10 @@
 40
 60
 - EntranceCuriosityShopFromKafeisHideout
-
+38,802
 452;454
 0
-0
+12
 - EntranceKafeisHideoutFromCuriosityShop
 453
 

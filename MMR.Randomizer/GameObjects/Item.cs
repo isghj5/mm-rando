@@ -3866,11 +3866,13 @@ namespace MMR.Randomizer.GameObjects
 
         [Region(Region.IkanaCastle)]
         [Entrance]
+        [Pair(EntranceAncientCastleofIkanaFromCourtyard)]
         [Exit(Scene.IkanaCastle, 3)]
         EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana,
 
         [Region(Region.IkanaCastle)]
         [Entrance]
+        [Pair(EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana)]
         [Exit(Scene.IkanaCastle, 2)]
         EntranceAncientCastleofIkanaFromCourtyard,
 
@@ -5483,7 +5485,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Region(Region.Interior)]
         [Entrance(EntranceType.InteriorExit)]
-        [Pair(EntranceWestClockTownFromLotteryShop)]
+        [Pair(EntranceLotteryShopFromWestClockTown)]
         [Exit(Scene.LotteryShop, 0)]
         [Spawn(Scene.WestClockTown, 8)]
         EntranceWestClockTownFromLotteryShop,
