@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-
 namespace MMRando.Utils
 {
     public class SequenceUtils
@@ -40,12 +39,10 @@ namespace MMRando.Utils
             while (i < lines.Length)
             {
                 var sourceName = lines[i];
-                var sourceType = Array.ConvertAll(lines[i + 1].Split(','), int.Parse).ToList();
+                List<int> sourceType = new List<int>();
+                foreach (String part in lines[i + 1].Split(','))
+                    sourceType.Add(Convert.ToInt32(part, 16));
                 var sourceInstrument = Convert.ToInt32(lines[i + 2], 16);
-
-                var targetName = lines[i];
-                var targetType = Array.ConvertAll(lines[i + 1].Split(','), int.Parse).ToList();
-                var targetInstrument = Convert.ToInt32(lines[i + 2], 16);
 
                 SequenceInfo sourceSequence = new SequenceInfo
                 {
@@ -56,9 +53,9 @@ namespace MMRando.Utils
 
                 SequenceInfo targetSequence = new SequenceInfo
                 {
-                    Name = targetName,
-                    Type = targetType,
-                    Instrument = targetInstrument
+                    Name = sourceName,
+                    Type = sourceType,
+                    Instrument = sourceInstrument
                 };
 
                 if (sourceSequence.Name.StartsWith("mm-"))
@@ -83,7 +80,7 @@ namespace MMRando.Utils
                     i += 3;
 
                     // if file doesn't exist, was removed by user, ignore
-                    if (File.Exists(Values.MusicDirectory + targetName) == false)
+                    if (File.Exists(Values.MusicDirectory + sourceName) == false)
                     {
                         //TODO write debug to the debug log
                         continue;
