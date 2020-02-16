@@ -286,16 +286,6 @@ namespace MMR.Randomizer.Utils
                         {
                             ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, cutsceneAddress + 4, 0x0200);
                         }
-                        // moon crash?? to swamp spider house???
-                        //else if (cutsceneExit == 0x54C0)
-                        //{
-                        //    ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, cutsceneAddress + 4, 0x4800);
-                        //}
-                        //// starting room?
-                        //else if (cutsceneExit == 0xD800 || cutsceneExit == 0xD8A0)
-                        //{
-                        //    ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, cutsceneAddress + 4, 0x0200);
-                        //}
                         else if (cutsceneExit != 0xFFFF && DEBUG)
                         {
                             System.Diagnostics.Debug.WriteLine(cutsceneExit.ToString("X4"));
