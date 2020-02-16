@@ -73,6 +73,13 @@ namespace MMRando
                 ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
             }
 
+            // if we have lots of music, let's randomize skulltula house and ikana well to have something unique that isn't cave music
+            if (RomData.SequenceList.FindAll(u => u.Type.Contains(2)).Count >= 8 + 1)
+            { // tested by asking for all targetseq that have a category of 2, counted (8)
+                WriteOutput("Enough Music detected for adding variety to Dungeon music");
+                SequenceUtils.ReassignSkulltulaHousesMusic();
+            }
+
             // we randomize both slots and songs because if we're low on variety, and we don't sort slots
             //   then all the variety can be dried up for the later slots
             // the biggest example is MM-only, many songs are action/boss but the boss slots are later
@@ -83,20 +90,61 @@ namespace MMRando
             RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
             WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + Unassigned.Count + " available songs:");
 
+            // DEBUG: if the user has a test sequence it always get put into fileselect
+            SequenceInfo test_sequence = RomData.SequenceList.Find(u => u.Name.Contains("songtest") == true);
+            if (test_sequence != null)
+            {
+                if (test_sequence.SequenceBinaryList != null && test_sequence.SequenceBinaryList[0] != null && test_sequence.SequenceBinaryList[0].InstrumentSet != null)
+                {
+                    RomData.InstrumentSetList[test_sequence.Instrument] = test_sequence.SequenceBinaryList[0].InstrumentSet;
+                    WriteOutput(" -- v -- Instrument set number " + test_sequence.Instrument.ToString("X") + " has been claimed -- v --");
+                }
+                SequenceInfo slot = RomData.TargetSequences.Find(u => u.Name.Contains("fileselect"));
+                test_sequence.Replaces = slot.Replaces;
+                WriteOutput(GetSpacedString(test_sequence.Name, len: 44) + " DEBUG -> " + slot.Name);
+                RomData.TargetSequences.Remove(slot);
+                Unassigned.Remove(test_sequence);
+            }
+
             foreach (SequenceInfo targetSequence in RomData.TargetSequences)
             {
                 bool foundValidReplacement = false; // would really have liked for/else but C# doesn't have it seems
 
+                // we could replace this with a findall(compatible types) but then we lose the small chance of random category music
                 for (int i = 0; i < Unassigned.Count; i++)
                 {
                     SequenceInfo testSeq = Unassigned[i];
                     // increases chance of getting non-mm music, but only if we have lots of music remaining
-                    if (Unassigned.Count > 77 && testSeq.Name.StartsWith("mm") && (random.Next(100) < 25))
+                    if (Unassigned.Count > 77 && testSeq.Name.StartsWith("mm") && (random.Next(100) < 33))
                         continue;
+
+                    // test if the testSeq can be used with available instrument set slots
+                    if (testSeq.SequenceBinaryList != null && testSeq.SequenceBinaryList.Count > 0 && testSeq.SequenceBinaryList[0].InstrumentSet != null)
+                    {
+                        // randomize instrument sets last second, so the early banks don't get ravaged based on order
+                        if (testSeq.SequenceBinaryList.Count > 1)
+                            testSeq.SequenceBinaryList.OrderBy(x => random.Next()).ToList();
+
+                        // remove all instances of sequences that require custom audiobanks but are already taken
+                        testSeq.SequenceBinaryList = testSeq.SequenceBinaryList.FindAll(u => RomData.InstrumentSetList[u.InstrumentSet.BankSlot].Modified == false);
+                        if (testSeq.SequenceBinaryList.Count == 0) // all removed, song is dead.
+                        {
+                            WriteOutput(GetSpacedString(testSeq.Name) + " cannot be used because it requires custom audiobank(s) already claimed ");
+                            Unassigned.Remove(testSeq);
+                            continue;
+                        }
+                    }
+
 
                     // do the target slot and the possible match seq share a category?
                     if (testSeq.Type.Intersect(targetSequence.Type).Any())
                     {
+                        if (testSeq.SequenceBinaryList != null && testSeq.SequenceBinaryList[0] != null && testSeq.SequenceBinaryList[0].InstrumentSet != null)
+                        {
+                            RomData.InstrumentSetList[testSeq.Instrument] = testSeq.SequenceBinaryList[0].InstrumentSet;
+                            WriteOutput(" -- v -- Instrument set number " + testSeq.Instrument.ToString("X") + " has been claimed -- v --");
+                        }
+
                         testSeq.Replaces = targetSequence.Replaces;
                         WriteOutput(GetSpacedString(testSeq.Name) + " -> " + targetSequence.Name);
                         Unassigned.Remove(testSeq);
@@ -112,9 +160,14 @@ namespace MMRando
                         && testSeq.Type.Count > targetSequence.Type.Count
                         && random.Next(30) == 0
                         && (testSeq.Type[0] & 8) == (targetSequence.Type[0] & 8)
-                        && testSeq.Type.Contains(10) == targetSequence.Type.Contains(10)
-                        && !testSeq.Type.Contains(16))
+                        && testSeq.Type.Contains(0x10) == targetSequence.Type.Contains(0x10)
+                        && !testSeq.Type.Contains(0x16))
                     {
+                        if (testSeq.SequenceBinaryList != null && testSeq.SequenceBinaryList[0] != null && testSeq.SequenceBinaryList[0].InstrumentSet != null)
+                        {
+                            RomData.InstrumentSetList[testSeq.Instrument] = testSeq.SequenceBinaryList[0].InstrumentSet;
+                            WriteOutput(" -- v -- Instrument set number " + testSeq.Instrument.ToString("X") + " has been claimed -- v --");
+                        }
                         testSeq.Replaces = targetSequence.Replaces;
                         WriteOutput(GetSpacedString(testSeq.Name, len: 49) + " 🍀-> " + targetSequence.Name);
                         Unassigned.Remove(testSeq);
@@ -132,9 +185,9 @@ namespace MMRando
                     // the first category of the type is the MAIN type, the rest are secondary
                     SequenceInfo replacementSong = null;
                     if (targetSequence.Type[0] <= 7 || targetSequence.Type[0] == 16)  // bgm or cutscene
-                        replacementSong = Unassigned.Find(u => u.Type[0] <= 7 || u.Type[0] == 16);
-                    else //if (targetSequence.Type[0] >= 8)                           // fanfares
-                        replacementSong = Unassigned.Find(u => u.Type[0] >= 8);
+                        replacementSong = Unassigned.Find(u => u.Type[0] <= 7 || u.Type[0] == 16 && u.SequenceBinaryList == null);
+                    else //if (targetSequence.Type[0] <= 8)                           // fanfares
+                        replacementSong = Unassigned.Find(u => u.Type[0] >= 8 && u.SequenceBinaryList == null );
 
                     if (replacementSong != null)
                     {
@@ -154,6 +207,7 @@ namespace MMRando
                     }
                 }
             }
+
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
 
             String dir = Path.GetDirectoryName(_settings.OutputROMFilename);
@@ -205,6 +259,7 @@ namespace MMRando
             }
 
             SequenceUtils.ReadSequenceInfo();
+            SequenceUtils.ReadInstrumentSetList();
             BGMShuffle(random);
 
             foreach (SequenceInfo s in RomData.SequenceList)
@@ -215,6 +270,7 @@ namespace MMRando
             ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-music");
             ResourceUtils.ApplyHack(Values.ModsDirectory + "inst24-swap-guitar");
             SequenceUtils.RebuildAudioSeq(RomData.SequenceList);
+            SequenceUtils.RebuildAudioBank(RomData.InstrumentSetList);
         }
 
         private void WriteMuteMusic()
