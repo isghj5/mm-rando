@@ -3309,6 +3309,8 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.MayorsResidence, 0)]
         EntranceMayorsResidenceFromEastClockTown,
 
+        //[ExitAddress(0x104F506)]
+        //[Spawn(Scene.MayorsResidence, 1)]
         //EntranceMayorsResidenceFromMayorsResidence, // after talking with couple's mask
 
         [Region(Region.TheMoon)]
@@ -3400,6 +3402,8 @@ namespace MMR.Randomizer.GameObjects
         [Entrance(EntranceType.InteriorExit)]
         [Pair(EntranceMagicHagsPotionShopFromSouthernSwamp)]
         [Exit(Scene.PotionShop, 0)]
+        [ExitAddress(0xEF55C6)] // kicked out when witch is out. to clear swamp
+        [ExitAddress(0xEF55AE)] // kicked out when witch is out. to poison swamp
         [Spawn(Scene.SouthernSwamp, 5)]
         EntranceSouthernSwampFromMagicHagsPotionShop,
 
@@ -3407,6 +3411,9 @@ namespace MMR.Randomizer.GameObjects
         //[Entrance]
         //[Pair(EntranceMagicHagsPotionShopFromSouthernSwamp)] // one way?
         //[Exit(Scene.SouthernSwamp, 6)]
+        //[ExitAddress(0xEBA86E)] // only boat archery? from witch?
+        //[ExitAddress(0xEBA882)] // only boat ride?    from witch?
+        //[ExitAddress(0xF4BBA2)] // boat ride          from guy
         //[Spawn(Scene.SouthernSwamp, 6)]
         //EntranceBoatArcheryFromTouristInformation, // photo cruise / boat archery
 
@@ -3433,6 +3440,7 @@ namespace MMR.Randomizer.GameObjects
         [Region(Region.OwlWarp)]
         [Entrance(EntranceType.OwlWarp)]
         [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x0E)]
+        [ExitAddress(0xF577D2)] // target is altered if swamp is cleared
         [Spawn(Scene.SouthernSwamp, 10)]
         EntranceSouthernSwampFromOwlStatue, // one way
 
@@ -3591,6 +3599,7 @@ namespace MMR.Randomizer.GameObjects
         [Entrance(EntranceType.InteriorExit)]
         [Pair(EntranceMusicBoxHouseFromIkanaCanyon)]
         [Exit(Scene.MusicBoxHouse, 0)]
+        [ExitAddress(0x103EC1E)] // kicked out by pamela
         [Spawn(Scene.IkanaCanyon, 2)]
         EntranceIkanaCanyonFromMusicBoxHouse,
 
@@ -3618,6 +3627,8 @@ namespace MMR.Randomizer.GameObjects
         [Entrance(EntranceType.InteriorExit)]
         [Pair(EntranceSakonsHideoutFromIkanaCanyon)]
         [Exit(Scene.SakonsHideout, 0)]
+        [ExitAddress(0xC00416)] // todo check kafei still appears in ECT/Inn and remove the cutscene id.
+        [ExitAddress(0xF57732)] // exit via song of soaring
         [Spawn(Scene.IkanaCanyon, 6)]
         EntranceIkanaCanyonFromSakonsHideout,
 
@@ -3735,7 +3746,7 @@ namespace MMR.Randomizer.GameObjects
         [Region(Region.Interior)]
         [Entrance(EntranceType.Telescope)]
         [Pair(EntrancePiratesFortressSewerFromTelescope)]
-        //[Exit(Scene.PiratesFortressRooms, 7)]
+        [ExitAddress(0xECE51A)]
         [Spawn(Scene.PiratesFortress, 10)]
         EntrancePiratesFortressFromTelescope,
 
@@ -3772,6 +3783,8 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.TreasureChestShop, 0)]
         EntranceTreasureChestShopFromEastClockTown,
 
+        //[ExitAddress(0xF449DA)]
+        //[Spawn(Scene.TreasureChestShop, 1)]
         //EntranceTreasureChestShopFromTreasureChestShop, // after opening the chest
 
 
@@ -3792,6 +3805,7 @@ namespace MMR.Randomizer.GameObjects
         [Entrance(EntranceType.Boss)]
         [Pair(EntranceSouthClockTownFromClockTowerRooftop)]
         [Exit(Scene.SouthClockTown, 8)]
+        //[ExitAddress(0xED4ABE)] // todo check en_fall
         [Spawn(Scene.ClockTowerRoof, 0)]
         EntranceClockTowerRooftopFromSouthClockTown, // todo one way?
 
@@ -3823,7 +3837,8 @@ namespace MMR.Randomizer.GameObjects
 
         [Region(Region.WoodfallTemple)]
         [Entrance(EntranceType.DungeonExit)]
-        //[Exit(Scene.SouthClockTown, 0)]
+        [ExitAddress(0xB81AB6)]
+        [ExitAddress(0xD34536)]
         [Spawn(Scene.WoodfallTemple, 1)]
         EntranceWoodfallTemplePrisonFromOdolwasLair, // one way
 
@@ -3963,8 +3978,12 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.MilkRoad, 4)]
         EntranceMilkRoadFromOwlStatue, // one way
 
+        //[ExitAddress(0xFDF11A)]
+        //[Spawn(Scene.MilkRoad, 5)]
         //EntranceMilkRoadFrom, // maybe during cremia escort?
 
+        //[ExitAddress(0xFDF6E2)]
+        //[Spawn(Scene.MilkRoad, 6)]
         //EntranceMilkRoadFrom, // maybe during cremia escort?
 
 
@@ -4160,7 +4179,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Region(Region.DekuPalace)]
         [Entrance]
-        //[Exit(Scene.DekuPalace, 1)]
+        [ExitAddress(0xDA050A)] // thrown out of king's chamber?
         [Spawn(Scene.DekuPalace, 1)]
         EntranceDekuPalaceFromDekuPalace, // thrown out // one way
 
@@ -4309,7 +4328,7 @@ namespace MMR.Randomizer.GameObjects
         [Region(Region.AstralObservatory)]
         [Entrance(EntranceType.Telescope)]
         [Pair(EntranceAstralObservatoryFromTelescope)]
-        //[Exit(Scene.AstralObservatory, 1)]
+        [ExitAddress(0xE3EB82)]
         [Spawn(Scene.TerminaField, 10)]
         EntranceTerminaFieldFromAstralObservatoryTelescope,
 
@@ -4317,6 +4336,8 @@ namespace MMR.Randomizer.GameObjects
 
         [Region(Region.RomaniRanch)]
         [Entrance]
+        [ExitAddress(0xFF573E)]
+        [Spawn(Scene.TerminaField, 13)]
         EntranceTerminaFieldFromCremiaEscort, // one way
 
         //EntranceTerminaFieldFromTerminaField, // after tatl/tael/skullkid cutscene // one way
@@ -4435,6 +4456,8 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.RomaniRanch, 0)]
         EntranceRomaniRanchFromMilkRoad,
 
+        //[ExitAddress(0xF24E86)]
+        //[Spawn(Scene.RomaniRanch, 1)]
         //EntranceRomaniRanchFromRomaniRanch, // after minigame
 
         [Region(Region.Interior)]
@@ -4548,6 +4571,8 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.GreatBayCoast, 12)]
         EntranceGreatBayCoastFromPiratesFortressThrownOut, // one way
 
+        //[ExitAddress(0x1079476)]
+        //[Spawn(Scene.GreatBayCoast, 13)]
         //EntranceGreatBayCoastFromZoraCape, // after fisherman minigame
 
 
@@ -4602,12 +4627,14 @@ namespace MMR.Randomizer.GameObjects
         [Entrance(EntranceType.Dungeon)]
         [Pair(EntranceGreatBayTempleFromZoraCape)]
         [Exit(Scene.GreatBayTemple, 0)]
+        [ExitAddress(0xF155BA)]
         [Spawn(Scene.ZoraCape, 7)]
         EntranceZoraCapeFromGreatBayTemple,
 
         [Region(Region.GreatBayTemple)]
         [Entrance(EntranceType.DungeonExit)]
-        //[Exit(Scene.ZoraCape, 0)]
+        [ExitAddress(0xD34606)]
+        [ExitAddress(0xD345EE)]
         [Spawn(Scene.ZoraCape, 8)]
         EntranceZoraCapeFromGreatBayTempleClear, // one way
 
@@ -5000,13 +5027,15 @@ namespace MMR.Randomizer.GameObjects
 
         [Region(Region.SnowheadTemple)]
         [Entrance(EntranceType.DungeonExit)]
-        //[Exit(Scene.PathToMountainVillage, 1)]
+        [ExitAddress(0xB81B3A)]
+        [ExitAddress(0xD345B2)]
         [Spawn(Scene.MountainVillage, 7)]
         EntranceMountainVillageFromSnowheadClear, // one way
 
         [Region(Region.OwlWarp)]
         [Entrance(EntranceType.OwlWarp)]
         [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x06)]
+        [ExitAddress(0xF57802)] // target is altered if mountain village is spring time
         [Spawn(Scene.MountainVillage, 8)]
         EntranceMountainVillageFromOwlStatue, // one way
 
@@ -5018,8 +5047,12 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.PoeHut, 0)]
         EntrancePoeHutFromIkanaCanyon,
 
+        //[ExitAddress(0xF7514A)]
+        //[Spawn(Scene.PoeHut, 1)]
         //EntrancePoeHutFromPoeHut, // fighting poes
 
+        //[ExitAddress(0xF7519A)]
+        //[Spawn(Scene.PoeHut, 2)]
         //EntrancePoeHutFromPoeHut, // after fighting poes
 
 
@@ -5084,6 +5117,17 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.TouristCenter, 0)]
         EntranceTouristInformationFromSouthernSwamp,
 
+        //[ExitAddress(0xCB61AE)]
+        //[ExitAddress(0xDC70B2)]
+        //[ExitAddress(0xFDBD7A)]
+        //[Spawn(Scene.TouristCenter, 1)]
+        //EntranceTouristInformationFromWitchBoatRide,
+
+        //[ExitAddress(0xCB61A2)]
+        //[ExitAddress(0xDC7092)]
+        //[Spawn(Scene.TouristCenter, 2)]
+        //EntranceTouristInformationFromPictoBoatRide,
+
 
         [Region(Region.IkanaCanyon)]
         [Entrance(EntranceType.Overworld)]
@@ -5092,7 +5136,9 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.StoneTower, 0)]
         EntranceStoneTowerFromIkanaCanyon,
 
-        //EntranceStoneTowerFrom, // after flip
+        //[ExitAddress(0xD21F3A)]
+        //[Spawn(Scene.StoneTower, 1)]
+        //EntranceStoneTowerFromFlipSwitch, // after flip
 
         [Region(Region.StoneTowerTemple)]
         [Entrance(EntranceType.InteriorExit)]
@@ -5108,9 +5154,13 @@ namespace MMR.Randomizer.GameObjects
         EntranceStoneTowerFromOwlStatue, // one way
 
 
-        //EntranceStoneTowerInvertedFrom, // after flip?
+        //[ExitAddress(0xD21F4E)]
+        //[Spawn(Scene.InvertedStoneTower, 0)]
+        //EntranceStoneTowerInvertedFromFlipSwitch,
 
-        //EntranceStoneTowerInvertedFrom, // from temple?
+        //[Exit(Scene.InvertedStoneTowerTemple, 0)]
+        //[Spawn(Scene.InvertedStoneTower, 1)]
+        //EntranceStoneTowerInvertedFromStoneTowerTemple, // from temple?
 
 
         [Region(Region.MountainVillage)]
@@ -5214,12 +5264,20 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.StockPotInn, 1)]
         EntranceStockPotInnUpperFromEastClockTown,
 
+        //[ExitAddress(0x10253E6)]
+        //[Spawn(Scene.StockPotInn, 2)]
         //EntranceStockPotInnFromStockPotInn, // after grandma story // one way
 
+        //[ExitAddress(0xFB9D8E)]
+        //[Spawn(Scene.StockPotInn, 3)]
         //EntranceStockPotInnFromStockPotInn, // after midnight meeting // one way
 
+        //[ExitAddress(0x1087702)]
+        //[Spawn(Scene.StockPotInn, 4)]
         //EntranceStockPotInnFromStockPotInn, // eavesdropping on anju
 
+        //[ExitAddress(0x1087666)]
+        //[Spawn(Scene.StockPotInn, 5)]
         //EntranceStockPotInnFromStockPotInn, // after eavesdropping on anju
 
 
@@ -5327,7 +5385,18 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.GormanTrack, 3)]
         EntranceGormanTrackFromMilkRoadGated,
 
-        // [// race?
+        //[ExitAddress(0xD7312E)]
+        //[Spawn(Scene.GormanTrack, 2)]
+        //EntranceGormanTrackFromGormanBrosRace,
+
+        //[ExitAddress(0xFDF476)]
+        //[Spawn(Scene.GormanTrack, 4)]
+        //EntranceGormanTrackFromCremiaEscort,
+
+        //[ExitAddress(0xD6EBD6)]
+        //[ExitAddress(0xD6F46E)]
+        //[Spawn(Scene.GormanTrack, 5)]
+        //EntranceGormanTrackRaceFromGormanTrack,
 
 
         [Region(Region.TwinIslands)]
@@ -5337,8 +5406,13 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.GoronRacetrack, 0)]
         EntranceGoronRacetrackFromPathtoGoronVillage,
 
+        //[ExitAddress(0xE413AE)]
+        //[ExitAddress(0xFB6D62)]
+        //[Spawn(Scene.GoronRacetrack, 1)]
         //EntranceGoronRacetrackFromGoronRacetrack, // race start // one way
 
+        //[ExitAddress(0xE40D8E)]
+        //[Spawn(Scene.GoronRacetrack, 2)]
         //EntranceGoronRacetrackFromGoronRacetrack, // race end // one way
 
 
