@@ -106,6 +106,11 @@ namespace MMR.Randomizer.Extensions
             return entrance.GetAttributes<ExitAttribute>().Select(ea => new Tuple<int, byte>(ea.SceneId, ea.ExitIndex));
         }
 
+        public static IEnumerable<Tuple<int, byte, byte>> ExitCutscenes(this Item entrance)
+        {
+            return entrance.GetAttributes<ExitCutsceneAttribute>().Select(eca => new Tuple<int, byte, byte>(eca.SceneId, eca.SetupIndex, eca.CutsceneIndex));
+        }
+
         public static IEnumerable<int> ExitAddresses(this Item entrance)
         {
             return entrance.GetAttributes<ExitAddressAttribute>().Select(eaa => eaa.Address);
@@ -113,7 +118,11 @@ namespace MMR.Randomizer.Extensions
 
         public static bool IsEntranceImplemented(this Item entrance)
         {
-            return entrance.HasAttribute<SpawnAttribute>() && (entrance.HasAttribute<ExitAttribute>() || entrance.HasAttribute<ExitAddressAttribute>());
+            return entrance.HasAttribute<SpawnAttribute>() && 
+                (entrance.HasAttribute<ExitAttribute>() 
+                || entrance.HasAttribute<ExitAddressAttribute>() 
+                || entrance.HasAttribute<ExitCutsceneAttribute>()
+                );
         }
 
         public static bool IsOverwritable(this Item item)

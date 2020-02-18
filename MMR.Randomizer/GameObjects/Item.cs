@@ -5327,7 +5327,9 @@ namespace MMR.Randomizer.GameObjects
 
         [Region(Region.TheMoon)]
         [Entrance]
-        //[Exit(Scene.DekuTrial, 0)]
+        [ExitCutscene(Scene.ClockTowerRoof, 2, 0)]
+        [ExitCutscene(Scene.ClockTowerRoof, 2, 1)]
+        [ExitCutscene(Scene.ClockTowerRoof, 2, 2)]
         [Spawn(Scene.TheMoon, 0)]
         EntranceTheMoonFromClockTowerRooftop, // one way
 

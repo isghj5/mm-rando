@@ -88,10 +88,10 @@ namespace MMR.Randomizer.Utils
                     }
                     j += 8;
                 }
-                CheckHeaderForExits(f, 0, scene.ExitAddr);
+                CheckHeaderForExits(f, 0, scene);
                 if (scene.Number == 108) // avoid modifying unused setup in East Clock Town. doesn't seem to actually affect anything in-game, but best not to touch it.
                 {
-                    scene.ExitAddr.RemoveAt(2);
+                    scene.Setups.RemoveAt(2);
                 }
             }
         }
@@ -257,40 +257,25 @@ namespace MMR.Randomizer.Utils
             }
         }
         
-        private static void CheckHeaderForExits(int f, int headeraddr, List<int> exits)
+        private static void CheckHeaderForExits(int f, int headeraddr, Scene scene)
         {
             int j = headeraddr;
             int setupsaddr = -1;
             int nextlowest = -1;
-            byte numCutscenes = 0xFF;
-            int cutsceneAddress = 0x8FFFFFF;
-            ushort cutsceneExit = 0xFFFF;
             byte s;
             if (DEBUG) { System.Diagnostics.Debug.WriteLine("Header"); }
+            var setup = new SceneSetup();
+            scene.Setups.Add(setup);
             while (true)
             {
                 byte cmd = RomData.MMFileList[f].Data[j];
                 if (cmd == 0x13)
                 {
-                    exits.Add((int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF);
+                    setup.ExitListAddress = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
                 }
                 else if (cmd == 0x17)
                 {
-                    numCutscenes = (byte)(ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, j) & 0xFF);
-                    cutsceneAddress = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
-                    for( int i = 0; i < numCutscenes; i++, cutsceneAddress += 8)
-                    {
-                        cutsceneExit = ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[f].Data, cutsceneAddress + 4);
-                        // oath cutscene which warps to moon, point instead to majora
-                        if (cutsceneExit == 0xC800)
-                        {
-                            ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, cutsceneAddress + 4, 0x0200);
-                        }
-                        else if (cutsceneExit != 0xFFFF && DEBUG)
-                        {
-                            System.Diagnostics.Debug.WriteLine(cutsceneExit.ToString("X4"));
-                        }
-                    }
+                    setup.CutsceneListAddress = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
                 }
                 else if (cmd == 0x18)
                 {
@@ -320,7 +305,7 @@ namespace MMR.Randomizer.Utils
                 while (s == 0x02)
                 {
                     int p = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j) & 0xFFFFFF;
-                    CheckHeaderForExits(f, p, exits);
+                    CheckHeaderForExits(f, p, scene);
                     j += 4;
                     s = RomData.MMFileList[f].Data[j];
                 }

@@ -43,14 +43,30 @@ namespace MMR.Randomizer.Utils
         {
             Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
             int f = scene.File;
-            if (scene.ExitAddr.Count > 1)
+            if (scene.Setups.Count > 1)
             {
                 Debug.WriteLine(scene.Number);
             }
-            foreach (int exitAddress in scene.ExitAddr)
+            foreach (var setup in scene.Setups)
             {
-                ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, (int)exitAddress + exitIndex * 2, spawnId);
+                if (setup.ExitListAddress == null)
+                {
+                    continue;
+                }
+                ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, setup.ExitListAddress.Value + exitIndex * 2, spawnId);
             }
+        }
+
+        public static void WriteCutsceneExits(int sceneNumber, byte setupIndex, byte cutsceneIndex, ushort spawnId)
+        {
+            Scene scene = RomData.SceneList.Single(u => u.Number == sceneNumber);
+            int f = scene.File;
+            var setup = scene.Setups[setupIndex];
+            if (setup.CutsceneListAddress == null)
+            {
+                return;
+            }
+            ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[f].Data, setup.CutsceneListAddress.Value + cutsceneIndex * 8 + 4, spawnId);
         }
     }
 }

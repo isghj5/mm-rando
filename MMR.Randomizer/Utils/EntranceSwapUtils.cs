@@ -26,6 +26,17 @@ namespace MMR.Randomizer.Utils
                     EntranceUtils.WriteSceneExits(sceneSync[sceneNumber], exitIndex, spawnId);
                 }
             }
+            foreach (var cutsceneExitInfo in exit.ExitCutscenes())
+            {
+                var sceneNumber = cutsceneExitInfo.Item1;
+                var setupIndex = cutsceneExitInfo.Item2;
+                var cutsceneIndex = cutsceneExitInfo.Item3;
+                EntranceUtils.WriteCutsceneExits(sceneNumber, setupIndex, cutsceneIndex, spawnId);
+                if (sceneSync.ContainsKey(sceneNumber))
+                {
+                    EntranceUtils.WriteCutsceneExits(sceneSync[sceneNumber], setupIndex, cutsceneIndex, 0x0200);
+                }
+            }
             foreach (var address in exit.ExitAddresses())
             {
                 ReadWriteUtils.WriteToROM(address, spawnId);
