@@ -62,15 +62,16 @@ namespace MMRando
             //  so pointers play the same music, but take up almost no space, and don't waste a song
             //  but if the player does find this music in-game, it still plays sufficiently random music
             // this has a side effect of shrinking the AudioSeq file, so that it takes less space on rom
-            ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
-            ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
-            ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
-            ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants(meeting cs) at reunion
             if (RomData.SequenceList.Count < 80)
             {
                 // these are the most likely for users to run into, let's only pointerize these if using MM only
                 ConvertSequenceSlotToPointer(0x03, 0x0d); // point chase(skullkid chase) at aliens
                 ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
+                ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
+                ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
+                ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
+                ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants(meeting cs) at reunion
+
             }
 
             // if we have lots of music, let's randomize skulltula house and ikana well to have something unique that isn't cave music
@@ -97,7 +98,9 @@ namespace MMRando
             {
                 if (test_sequence.SequenceBinaryList != null && test_sequence.SequenceBinaryList[0] != null && test_sequence.SequenceBinaryList[0].InstrumentSet != null)
                 {
+                    test_sequence.Instrument = test_sequence.SequenceBinaryList[0].InstrumentSet.BankSlot;
                     RomData.InstrumentSetList[test_sequence.Instrument] = test_sequence.SequenceBinaryList[0].InstrumentSet;
+                    test_sequence.SequenceBinaryList = new List<SequenceBinaryData> { test_sequence.SequenceBinaryList[0] }; // lock the one we want
                     WriteOutput(" -- v -- Instrument set number " + test_sequence.Instrument.ToString("X") + " has been claimed -- v --");
                 }
                 SequenceInfo slot = RomData.TargetSequences.Find(u => u.Name.Contains("fileselect"));
@@ -142,7 +145,9 @@ namespace MMRando
                     {
                         if (testSeq.SequenceBinaryList != null && testSeq.SequenceBinaryList[0] != null && testSeq.SequenceBinaryList[0].InstrumentSet != null)
                         {
+                            testSeq.Instrument = testSeq.SequenceBinaryList[0].InstrumentSet.BankSlot;
                             RomData.InstrumentSetList[testSeq.Instrument] = testSeq.SequenceBinaryList[0].InstrumentSet;
+                            testSeq.SequenceBinaryList = new List<SequenceBinaryData> { testSeq.SequenceBinaryList[0] }; // lock the one we want
                             WriteOutput(" -- v -- Instrument set number " + testSeq.Instrument.ToString("X") + " has been claimed -- v --");
                         }
 
@@ -166,7 +171,9 @@ namespace MMRando
                     {
                         if (testSeq.SequenceBinaryList != null && testSeq.SequenceBinaryList[0] != null && testSeq.SequenceBinaryList[0].InstrumentSet != null)
                         {
+                            testSeq.Instrument = testSeq.SequenceBinaryList[0].InstrumentSet.BankSlot;
                             RomData.InstrumentSetList[testSeq.Instrument] = testSeq.SequenceBinaryList[0].InstrumentSet;
+                            testSeq.SequenceBinaryList = new List<SequenceBinaryData> { testSeq.SequenceBinaryList[0] }; // lock the one we want
                             WriteOutput(" -- v -- Instrument set number " + testSeq.Instrument.ToString("X") + " has been claimed -- v --");
                         }
                         testSeq.Replaces = targetSequence.Replaces;
@@ -270,7 +277,7 @@ namespace MMRando
 
             ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-music");
             ResourceUtils.ApplyHack(Values.ModsDirectory + "inst24-swap-guitar");
-            SequenceUtils.RebuildAudioSeq(RomData.SequenceList);
+            SequenceUtils.RebuildAudioSeq(RomData.SequenceList, _settings);
             SequenceUtils.RebuildAudioBank(RomData.InstrumentSetList);
         }
 

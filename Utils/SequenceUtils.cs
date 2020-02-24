@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 using System.IO.Compression;
+using MMRando.Models.Settings;
 
 namespace MMRando.Utils
 {
@@ -282,8 +283,16 @@ namespace MMRando.Utils
         }
 
         // gets passed RomData.SequenceList in Builder.cs::WriteAudioSeq
-        public static void RebuildAudioSeq(List<SequenceInfo> SequenceList)
+        public static void RebuildAudioSeq(List<SequenceInfo> SequenceList, SettingsObject _settings)
         {
+            // spoiler log output DEBUG
+            StringBuilder log = new StringBuilder();
+            void WriteOutput(string str)
+            {
+                Debug.WriteLine(str); // we still want debug output though
+                log.AppendLine(str);
+            }
+
             List<MMSequence> OldSeq = new List<MMSequence>();
             int f = RomUtils.GetFileIndexForWriting(Addresses.SeqTable);
             int basea = RomData.MMFileList[f].Addr;
@@ -359,6 +368,7 @@ namespace MMRando.Utils
                     {
                         newentry.Size = OldSeq[SequenceList[j].MM_seq].Size;
                         newentry.Data = OldSeq[SequenceList[j].MM_seq].Data;
+                        WriteOutput("Slot " + i.ToString("X") + " -> " + Path.GetFileName(SequenceList[j].Name));
                     }
                     else if (SequenceList[j].SequenceBinaryList != null && SequenceList[j].SequenceBinaryList[0] != null)
                     {
@@ -368,6 +378,7 @@ namespace MMRando.Utils
                             Debug.WriteLine("Warning: writing song with multiple sequences possible, selecting at random");
                         newentry.Size = SequenceList[j].SequenceBinaryList[0].SequenceBinary.Length;
                         newentry.Data = SequenceList[j].SequenceBinaryList[0].SequenceBinary;
+                        WriteOutput("Slot " + i.ToString("X") + " := " + Path.GetFileName(SequenceList[j].Name) + " *");
                     }
 
                     else // non mm, load file and add
@@ -391,6 +402,8 @@ namespace MMRando.Utils
 
                         newentry.Size = data.Length;
                         newentry.Data = data;
+                        WriteOutput("Slot " + i.ToString("X") + " := " + Path.GetFileName(SequenceList[j].Name));
+
                     }
                 }
                 else // not found, song wasn't touched by rando, just transfer over
@@ -454,6 +467,21 @@ namespace MMRando.Utils
                     RomData.MMFileList[f].Data[paddr] = (byte)SequenceList[j].Instrument;
                 }
 
+            }
+
+            // DEBUG spoiler log output
+            String dir = Path.GetDirectoryName(_settings.OutputROMFilename);
+            String path = $"{Path.GetFileNameWithoutExtension(_settings.OutputROMFilename)}";
+            // spoiler log should already be written by the time we reach this far
+            if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
+                path += "_SpoilerLog.txt";
+            else // TODO add HTML log compatibility
+                path += "_SongLog.txt";
+
+            using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
+            {
+                sw.WriteLine(""); // spacer
+                sw.Write(log);
             }
         }
 
