@@ -5,6 +5,11 @@
     <Version>1.11.0.0</Version>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <None Remove="Templates\HtmlSpoiler.tt" />
   </ItemGroup>
@@ -240,6 +245,9 @@
     <None Update="Resources\mods\reloc-audio">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\mods\remove-tatl-interrupts">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\mods\replace-gi-table">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -265,6 +273,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\mods\update-chests">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\mods\ztargetinghold">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\music\botw-hyrulecastle">

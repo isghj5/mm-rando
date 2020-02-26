@@ -24,7 +24,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [ReplacableByTags(Long)]
         WolfHowlEvening = 0x20AE,
 
-        [Replacable(0x00DFC776)]
+        [Replacable(0x00DFC776, 0xDFCC3A, 0xDFDCF6)]
         [Tags(Short, LowHpBeep)]
         [ReplacableByTags(Short)]
         DogBark = 0x20D8,
@@ -42,6 +42,11 @@ namespace MMR.Randomizer.Models.SoundEffects
         [ReplacableByTags(Short)]
         DogBarkAngry = 0x2110,
 
+        [Replacable(0xDFC80A, 0xDFD5E6)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        DogWhine = 0x2113,
+
         [Replacable(0x00D01186, 0x00CFE0A6, 0x00CF969A, 0x00CFA602, 0x00CFA816, 0x00CFA482, 0x00CF91E2, 0x00CFC43A)]
         [Tags(Short, LowHpBeep)]
         [ReplacableByTags(Short)]
@@ -57,6 +62,31 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         DinolfosAttack = 0x302A,
 
+        [Replacable(0xE89EA6, 0xE8A336, 0xE03C66, 0xE03E36, 0xE060FE)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        WolfosAppear = 0x303C,
+
+        [Replacable(0xE041A2, 0xE04496, 0xE046B2, 0xE04876, 0xE0511A, 0xE05AD6, 0xE060BA, 0xE0628E, 0xE064A2)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        WolfosCry = 0x303E,
+
+        [Replacable(0xE04AD6)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        WolfosAttack = 0x303F,
+
+        [Replacable(0xE0523E)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        WolfosTakeDamage = 0x3043,
+
+        [Replacable(0xE8A426, 0xE05B26)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        WolfosDie = 0x304B,
+
         [Tags(Short)]
         BombchuAim = 0x3055,
 
@@ -66,31 +96,80 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         PoeDisappear = 0x3074,
 
+        [Replacable(0xE95C6E, 0xE960FA, 0xD3809E, 0xD38502)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        MadScrubTakeDamage = 0x3080,
+
+        [Replacable(0xE96196, 0xD386A6)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        MadScrubDie = 0x3081,
+
         [Tags(Short)]
         MajoraGrowHead = 0x3088,
 
         [Tags(Long)]
         WallmasterAim = 0x3090,
 
-        [Replacable(0xE0DBBE, 0x00E3C002, 0x01048266, 0x01048416, 0x0104852E)]
+        [Replacable(0xE0DBBE, 0xE3BD7A, 0x00E3C002, 0x01048266, 0x01048416, 0x0104852E)]
         [Tags(Short)]
         [ReplacableByTags(Short)]
         GuayCroak = 0x30B6,
 
+        [Replacable(0xCE57CE, 0xCE5A22)]
+        [ReplacableByTags(Short)]
         [Tags(Short)]
         FrogRibbit = 0x30D2,
 
+        [Replacable(0xCE50F2, 0xCE603A, 0xCE6F7E)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        FrogTakeDamage = 0x30D3,
+
+        [Replacable(0xCE6026)]
+        [ReplacableByTags(Long)]
+        [Tags(Long)]
+        FrogDie = 0x30D6,
+
+        [Replacable(0xD4E78E, 0xD4E996, 0xD4EB9E, 0xD4EBF6, 0xD4EE1A, 0xD4EEAE, 0xD4F0DA, 0xD4F57A, 0xD4F81A, 0xD4FA26)]
+        [ReplacableByTags(Long)]
         [Tags(Long)]
         RedeadMoan = 0x30E4,
 
+        [Replacable(0xD4F3E2, 0xD4FF36)]
+        [ReplacableByTags(Short)]
         [Tags(Short)]
         RedeadAim = 0x30E5,
+
+        [Replacable(0xD4FD26)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        RedeadAttack = 0x30E8,
 
         [Replacable(0x00FB719E, 0x00FB72D6)]
         [Effect(0x000)]
         [Tags(Looping)]
         [ReplacableByTags(Long)]
         GoronKidCry = 0x30EA,
+
+        [Replacable(0xE3C096)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        GuayDie = 0x30EB,
+
+        [Tags(Short)]
+        IronKnuckleSwing = 0x3129,
+
+        [Replacable(0xCE5E22, 0xCE717E)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        FrogGreet = 0x315C,
+
+        [Replacable(0xCE5286)]
+        [ReplacableByTags(Short)]
+        [Tags(Short)]
+        FrogVoice2 = 0x31A1,
 
         [Tags(Short)]
         GoronSleepy = 0x31AD,
@@ -154,7 +233,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [ReplacableByTags(Short)]
         FileSelectDecideLong = 0x403B,
 
-        [Replacable(0xC83C3E, 0xC83BEA, 0xC83FEA, 0xC8CD76, 0xC8CDE6, 0xC7E716, 0xC80886, 0xC7EE0A, 0xC7F80A, 0xC8120E, 0xC81982)]
+        [Replacable(0xC83C3E, 0xC83BEA, 0xC83FEA, 0xC8CD76, 0xC8CDE6, 0xC7E716, 0xC80886, 0xC7EE0A, 0xC7F80A, 0xC8120E, 0xC81982, 0xC83B4A)]
         [Tags(SystemSound)]
         [ReplacableByTags(Short)]
         FileSelectCancel = 0x403C,
@@ -211,9 +290,13 @@ namespace MMR.Randomizer.Models.SoundEffects
         [ReplacableByTags(Short)]
         TatlMessage = 0x6045,
 
+        [Replacable(0xD6DA1E)]
+        [ReplacableByTags(Long)]
         [Tags(Long)]
         GormanBrosLongYell = 0x6054,
 
+        [Replacable(0xD6DC72, 0xD6FF12)]
+        [ReplacableByTags(Long)]
         [Tags(Long)]
         GormanBrosLost = 0x6055,
 
@@ -229,6 +312,8 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         GreatFairyLaugh = 0x6059,
 
+        [Replacable(0xD6DC82, 0xD6FF36)]
+        [ReplacableByTags(Long)]
         [Tags(Long)]
         GormanBrosLaugh = 0x607C,
 

@@ -5,6 +5,7 @@ using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models;
+using MMR.Randomizer.Models.Colors;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Models.SoundEffects;
@@ -16,153 +17,331 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MMR.Randomizer
 {
-
     public class Builder
     {
         private RandomizedResult _randomized;
-        private SettingsObject _settings;
+        private CosmeticSettings _cosmeticSettings;
         private MessageTable _messageTable;
 
-        public Builder(RandomizedResult randomized)
+        public Builder(RandomizedResult randomized, CosmeticSettings cosmeticSettings)
         {
             _randomized = randomized;
-            _settings = randomized.Settings;
+            _cosmeticSettings = cosmeticSettings;
             _messageTable = new MessageTable();
         }
 
         #region Sequences, sounds and BGM
 
-        private void BGMShuffle(Random random)
+        // this function decides which songs get shuffled, choosing song -> slot
+        //  the audioseq file gets rearanged/built in SequenceUtils::RebuildAudioSeq
+        private void BGMShuffle(Random random, OutputSettings _settings)
         {
-            while (RomData.TargetSequences.Count > 0)
+            // spoiler log output
+            StringBuilder log = new StringBuilder();
+            void WriteOutput(string str)
             {
-                List<SequenceInfo> Unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
+                Debug.WriteLine(str); // we still want debug output though
+                log.AppendLine(str);
+            }
+            string GetSpacedString(string start, int len = 50) // formating for spoiler log
+            {
+                return start + new String(' ', len - start.Length);
+            }
 
-                int targetIndex = random.Next(RomData.TargetSequences.Count);
-                var targetSequence = RomData.TargetSequences[targetIndex];
+            // pointerize some slots
+            // why? because fairy fountain and fileselect are the same song,
+            //  with one being a pointer at the other, so we have 78 slots and 77 songs, not enough
+            //  also some categories can get exhausted leaving slots unfillable with remaining music
+            // several slots that players will never hear are nullified (pointed at another song)
+            // this "fills" those slots, now we have fewer slots to fill with remaining music (73 fits in 77)
+            //  so pointers play the same music, but take up almost no space, and don't waste a song
+            //  but if the player does find this music in-game, it still plays sufficiently random music
+            // this has a side effect of shrinking the AudioSeq file, so that it takes less space on rom
+            if (RomData.SequenceList.Count < 80)
+            {
+                // these are the most likely for users to run into, let's only pointerize these if using MM only
+                ConvertSequenceSlotToPointer(0x03, 0x0d); // point chase(skullkid chase) at aliens
+                ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
+                ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
+                ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants(meeting cs) at reunion
+                ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
+                ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
+            }
 
-                while (true)
+            // we randomize both slots and songs because if we're low on variety, and we don't sort slots
+            //   then all the variety can be dried up for the later slots
+            // the biggest example is MM-only, many songs are action/boss but the boss slots are later
+            //  as a result boss music is often used up early placed into early action slots
+            // if we don't randomize remaining, then we only get upper alphabetical, same every seed
+            List<SequenceInfo> Unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
+            Unassigned = Unassigned.OrderBy(x => random.Next()).ToList();                           // random ordered songs
+            RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
+            WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + Unassigned.Count + " available songs:");
+
+            // if we have lots of music, let's randomize skulltula house and ikana well to have something unique that isn't cave music
+            /*if (RomData.SequenceList.Count > 80 &&RomData.SequenceList.FindAll(u => u.Type.Contains(2)).Count >= 8 + 1){ // tested by asking for all targetseq that have a category of 2, counted (8)
+                WriteOutput("Enough Music detected for adding variety to Dungeon music");
+                SequenceUtils.ReassignSkulltulaHousesMusic();
+            }*/
+
+            // DEBUG: if the user has a test sequence it always get put into fileselect
+            SequenceInfo test_sequence = RomData.SequenceList.Find(u => u.Name.Contains("songtest") == true);
+            if (test_sequence != null){
+                if (test_sequence.SequenceBinaryList != null && test_sequence.SequenceBinaryList[0] != null && test_sequence.SequenceBinaryList[0].InstrumentSet != null)
                 {
-                    int unassignedIndex = random.Next(Unassigned.Count);
+                    test_sequence.Instrument = test_sequence.SequenceBinaryList[0].InstrumentSet.BankSlot;
+                    RomData.InstrumentSetList[test_sequence.Instrument] = test_sequence.SequenceBinaryList[0].InstrumentSet;
+                    test_sequence.SequenceBinaryList = new List<SequenceBinaryData> { test_sequence.SequenceBinaryList[0] }; // lock the one we want
+                    WriteOutput(" -- v -- Instrument set number " + test_sequence.Instrument.ToString("X") + " has been claimed -- v --");
+                }
+                SequenceInfo slot = RomData.TargetSequences.Find(u => u.Name.Contains("fileselect"));
+                test_sequence.Replaces = slot.Replaces;
+                WriteOutput(GetSpacedString(test_sequence.Name, len:44) + " DEBUG -> " + slot.Name);
+                RomData.TargetSequences.Remove(slot);
+                Unassigned.Remove(test_sequence);
+            }
 
-                    if (Unassigned[unassignedIndex].Name.StartsWith("mm")
-                        & (random.Next(100) < 50))
-                    {
+            foreach (SequenceInfo targetSequence in RomData.TargetSequences)
+            {
+                bool foundValidReplacement = false; // would really have liked for/else but C# doesn't have it seems
+
+                // we could replace this with a findall(compatible types) but then we lose the small chance of random category music
+                for (int i = 0; i < Unassigned.Count; i++)
+                {
+                    SequenceInfo testSeq = Unassigned[i];
+                    // increases chance of getting non-mm music, but only if we have lots of music remaining
+                    if (Unassigned.Count > 77 && testSeq.Name.StartsWith("mm") && (random.Next(100) < 33))
                         continue;
-                    }
 
-                    for (int i = 0; i < Unassigned[unassignedIndex].Type.Count; i++)
+                    // test if the testSeq can be used with available instrument set slots
+                    if (testSeq.SequenceBinaryList != null  && testSeq.SequenceBinaryList.Count > 0 && testSeq.SequenceBinaryList[0].InstrumentSet != null)
                     {
-                        if (targetSequence.Type.Contains(Unassigned[unassignedIndex].Type[i]))
+                        // randomize instrument sets last second, so the early banks don't get ravaged based on order
+                        if (testSeq.SequenceBinaryList.Count > 1)
+                            testSeq.SequenceBinaryList.OrderBy(x => random.Next()).ToList();
+
+                        // remove all instances of sequences that require custom audiobanks but are already taken
+                        testSeq.SequenceBinaryList = testSeq.SequenceBinaryList.FindAll(u => RomData.InstrumentSetList[u.InstrumentSet.BankSlot].Modified == false);
+                        if (testSeq.SequenceBinaryList.Count == 0) // all removed, song is dead.
                         {
-                            Unassigned[unassignedIndex].Replaces = targetSequence.Replaces;
-                            Debug.WriteLine(Unassigned[unassignedIndex].Name + " -> " + targetSequence.Name);
-                            RomData.TargetSequences.RemoveAt(targetIndex);
-                            break;
-                        }
-                        else if (i + 1 == Unassigned[unassignedIndex].Type.Count)
-                        {
-                            if ((random.Next(30) == 0)
-                                && ((Unassigned[unassignedIndex].Type[0] & 8) == (targetSequence.Type[0] & 8))
-                                && (Unassigned[unassignedIndex].Type.Contains(10) == targetSequence.Type.Contains(10))
-                                && (!Unassigned[unassignedIndex].Type.Contains(16)))
-                            {
-                                Unassigned[unassignedIndex].Replaces = targetSequence.Replaces;
-                                Debug.WriteLine(Unassigned[unassignedIndex].Name + " -> " + targetSequence.Name);
-                                RomData.TargetSequences.RemoveAt(targetIndex);
-                                break;
-                            }
+                            WriteOutput(GetSpacedString(testSeq.Name) + " cannot be used because it requires custom audiobank(s) already claimed ");
+                            Unassigned.Remove(testSeq);
+                            continue;
                         }
                     }
 
-                    if (Unassigned[unassignedIndex].Replaces != -1)
-                    {
+
+                    // do the target slot and the possible match seq share a category?
+                    if (testSeq.Type.Intersect(targetSequence.Type).Any()){
+                        if (testSeq.SequenceBinaryList != null && testSeq.SequenceBinaryList[0] != null && testSeq.SequenceBinaryList[0].InstrumentSet != null)
+                        {
+                            testSeq.Instrument = testSeq.SequenceBinaryList[0].InstrumentSet.BankSlot;
+                            RomData.InstrumentSetList[testSeq.Instrument] = testSeq.SequenceBinaryList[0].InstrumentSet;
+                            testSeq.SequenceBinaryList = new List<SequenceBinaryData> { testSeq.SequenceBinaryList[0]  }; // lock the one we want
+                            WriteOutput(" -- v -- Instrument set number " + testSeq.Instrument.ToString("X") + " has been claimed -- v --");
+                        }
+
+                        testSeq.Replaces = targetSequence.Replaces;
+                        WriteOutput(GetSpacedString(testSeq.Name) + " -> " + targetSequence.Name);
+                        Unassigned.Remove(testSeq);
+                        foundValidReplacement = true;
                         break;
+                    }
+
+                    // Deathbasket wanted there to be a small chance of getting out of category music
+                    //  but not put fanfares into bgm, or visa versa
+                    // also restrict this nature to when there is plenty of music to work with
+                    // (testSeq.Type.Count > targetSequence.Type.Count) DBs code, maybe thought to be safer?
+                    else if (Unassigned.Count > 30
+                        && testSeq.Type.Count > targetSequence.Type.Count
+                        && random.Next(30) == 0
+                        && (testSeq.Type[0] & 8) == (targetSequence.Type[0] & 8)
+                        && testSeq.Type.Contains(0x10) == targetSequence.Type.Contains(0x10)
+                        && !testSeq.Type.Contains(0x16))
+                    {
+                        if (testSeq.SequenceBinaryList != null && testSeq.SequenceBinaryList[0] != null && testSeq.SequenceBinaryList[0].InstrumentSet != null)
+                        {
+                            testSeq.Instrument = testSeq.SequenceBinaryList[0].InstrumentSet.BankSlot;
+                            RomData.InstrumentSetList[testSeq.Instrument] = testSeq.SequenceBinaryList[0].InstrumentSet;
+                            testSeq.SequenceBinaryList = new List<SequenceBinaryData> { testSeq.SequenceBinaryList[0] }; // lock the one we want
+                            WriteOutput(" -- v -- Instrument set number " + testSeq.Instrument.ToString("X") + " has been claimed -- v --");
+                        }
+                        testSeq.Replaces = targetSequence.Replaces;
+                        WriteOutput(GetSpacedString(testSeq.Name, len: 49) + " 🍀-> " + targetSequence.Name);
+                        Unassigned.Remove(testSeq);
+                        foundValidReplacement = true;
+                        break;
+                    }
+                }
+
+                if (foundValidReplacement == false) // no available songs fit in this slot category
+                {
+                    // just add one of the remaining songs,
+                    //  so long as bgm and fanfares are kept separate, should still be fine
+                    WriteOutput("No song fits in " + targetSequence.Name + " slot, with categories: " + String.Join(",", targetSequence.Type));
+
+                    // the first category of the type is the MAIN type, the rest are secondary
+                    SequenceInfo replacementSong = null;
+                    if (targetSequence.Type[0] <= 7 || targetSequence.Type[0] == 16)  // bgm or cutscene
+                        replacementSong = Unassigned.Find(u => u.Type[0] <= 7 || u.Type[0] == 16 && u.SequenceBinaryList == null);
+                    else //if (targetSequence.Type[0] <= 8)                           // fanfares
+                        replacementSong = Unassigned.Find(u => u.Type[0] >= 8 && u.SequenceBinaryList == null);
+
+                    if (replacementSong != null)
+                    {
+                        WriteOutput(" * generalized replacement with " + replacementSong.Name + " song, with categories: " + String.Join(",", replacementSong.Type));
+                        replacementSong.Replaces = targetSequence.Replaces;
+                        WriteOutput(GetSpacedString(replacementSong.Name, len: 49) + " ~-> " + targetSequence.Name);
+                        Unassigned.Remove(replacementSong);
+                    }
+                    else
+                    {
+                        WriteOutput(" out of remaining songs:");
+                        foreach (SequenceInfo remaining_song in Unassigned)
+                        {
+                            WriteOutput(" - " + remaining_song.Name + " with categories " + String.Join(",", remaining_song.Type));
+                        }
+                        throw new Exception("Cannot randomize music on this seed with available music");
                     }
                 }
             }
 
-            RomData.SequenceList.RemoveAll(u => u.Replaces == -1);
-        }
+            RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
 
+            String dir = Path.GetDirectoryName(_settings.OutputROMFilename);
+            String path = $"{Path.GetFileNameWithoutExtension(_settings.OutputROMFilename)}";
+            // spoiler log should already be written by the time we reach this far
+            if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
+                path += "_SpoilerLog.txt";
+            else // TODO add HTML log compatibility
+                path += "_SongLog.txt";
+
+            using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
+            {
+                sw.WriteLine(""); // spacer
+                sw.Write(log);
+            }
+
+        }
         #endregion
 
-        private void WriteAudioSeq(Random random)
+        // turns the sequence slot into a pointer, which points at another song, in substituteSlotIndex
+        // the slot at seqSlotIndex is marked such that, instead of a new sequence being put there
+        // a pointer to another song, at substituteSlotIndex, is used instead.
+        // this frees up a song slot but its not completely empty if someone bugs out and gets there somehow
+        //  this is the same concept DB used to nulify the intro song
+        private void ConvertSequenceSlotToPointer(int seqSlotIndex, int substituteSlotIndex)
         {
-            if (_settings.Music != Music.Random)
+            var targetSeq = RomData.TargetSequences.Find(u => u.Replaces == seqSlotIndex);
+            var substituteSeq = RomData.TargetSequences.Find(u => u.Replaces == substituteSlotIndex);
+            if (targetSeq != null && substituteSeq != null)
+            {
+                targetSeq.PreviousSlot = targetSeq.Replaces; // we'll need at audioseq build
+                targetSeq.Replaces = substituteSeq.Replaces; // point the target at the substitute
+                RomData.PointerizedSequences.Add(targetSeq); // save the sequence for audioseq
+                RomData.TargetSequences.Remove(targetSeq);   // close the slot
+            }
+            else
+            {
+                throw new IndexOutOfRangeException("Could not convert slot to pointer:" + seqSlotIndex.ToString("X"));
+            }
+        }
+
+        private void WriteAudioSeq(Random random, OutputSettings _settings)
+        {
+            RomData.PointerizedSequences = new List<SequenceInfo>();
+            if (_cosmeticSettings.Music != Music.Random)
             {
                 return;
             }
 
+            RomData.PointerizedSequences = new List<SequenceInfo>();
             SequenceUtils.ReadSequenceInfo();
-            BGMShuffle(random);
+            SequenceUtils.ReadInstrumentSetList();
+            BGMShuffle(random, _settings);
 
             foreach (SequenceInfo s in RomData.SequenceList)
             {
-                s.Name = Values.MusicDirectory + s.Name;
+                s.Name = Path.Combine(Values.MusicDirectory, s.Name);
             }
 
-            ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-music");
-            ResourceUtils.ApplyHack(Values.ModsDirectory + "inst24-swap-guitar");
-            SequenceUtils.RebuildAudioSeq(RomData.SequenceList);
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-music");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "inst24-swap-guitar");
+            SequenceUtils.RebuildAudioSeq(RomData.SequenceList, _settings);
+            SequenceUtils.RebuildAudioBank(RomData.InstrumentSetList);
         }
 
         private void WriteMuteMusic()
         {
-            if (_settings.Music == Music.None)
+            if (_cosmeticSettings.Music == Music.None)
             {
-                var codeFileAddress = 0xB3C000;
-                var offset = 0x102350; // address for branch when scene music is loaded
-                ReadWriteUtils.WriteToROM(codeFileAddress + offset, 0x1000); // change to always branch (do not load)
+                // Traverse the audioseq index table to get the locations of all sequences
+                byte[] audioseq_table = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.SeqTable)].Data;
+                // turns out the randomizer doesn't consider the table to be its own file, we need the offset
+                int audioseq_table_baseaddr = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.SeqTable)].Addr;
+                byte[] audioseq = RomData.MMFileList[RomUtils.GetFileIndexForWriting(0x00046AF0)].Data; // 46AF0 is audioseq starting location
+                // for each sequence, search for the master volume byte and change to zero
+                for (int seq = 2; seq < 128; seq += 1){
+                    if (seq == 0x54) // It was requested that the bar band minigame not be silenced
+                        continue;
+                    int seq_location_offset = (int)ReadWriteUtils.Arr_ReadU32(audioseq_table, (Addresses.SeqTable + seq * 16) - audioseq_table_baseaddr);
+                    for (int byte_iter = 3; byte_iter < 128; byte_iter++){
+                        if (audioseq[seq_location_offset + byte_iter] == 0xDB){
+                            audioseq[seq_location_offset + byte_iter + 1] = 0x0;
+                            continue;
+                        }
+                    }
+                }
             }
         }
 
         private void WritePlayerModel()
         {
-            if (_settings.Character == Character.LinkMM)
+            if (_randomized.Settings.Character == Character.LinkMM)
             {
                 return;
             }
 
-            int characterIndex = (int)_settings.Character;
+            int characterIndex = (int)_randomized.Settings.Character;
 
-            using (var b = new BinaryReader(File.Open($"{Values.ObjsDirectory}link-{characterIndex}", FileMode.Open)))
+            using (var b = new BinaryReader(File.Open(Path.Combine(Values.ObjsDirectory, $"link-{characterIndex}"), FileMode.Open)))
             {
                 var obj = new byte[b.BaseStream.Length];
                 b.Read(obj, 0, obj.Length);
 
-                ResourceUtils.ApplyHack($"{Values.ModsDirectory}fix-link-{characterIndex}");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, $"fix-link-{characterIndex}");
                 ObjUtils.InsertObj(obj, 0x11);
             }
 
-            if (_settings.Character == Character.Kafei)
+            if (_randomized.Settings.Character == Character.Kafei)
             {
-                using (var b = new BinaryReader(File.Open($"{Values.ObjsDirectory}kafei", FileMode.Open)))
+                using (var b = new BinaryReader(File.Open(Path.Combine(Values.ObjsDirectory, "kafei"), FileMode.Open)))
                 {
                     var obj = new byte[b.BaseStream.Length];
                     b.Read(obj, 0, obj.Length);
 
                     ObjUtils.InsertObj(obj, 0x1C);
-                    ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-kafei");
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-kafei");
                 }
             }
         }
 
         private void WriteTunicColor()
         {
-            Color t = _settings.TunicColor;
+            Color t = _cosmeticSettings.TunicColor;
             byte[] color = { t.R, t.G, t.B };
 
-            var otherTunics = ResourceUtils.GetAddresses(Values.AddrsDirectory + "tunic-forms");
-            TunicUtils.UpdateFormTunics(otherTunics, _settings.TunicColor);
+            var otherTunics = ResourceUtils.GetAddresses(Values.AddrsDirectory, "tunic-forms");
+            TunicUtils.UpdateFormTunics(otherTunics, _cosmeticSettings.TunicColor);
 
             var playerModel = DeterminePlayerModel();
             var characterIndex = (int)playerModel;
-            var locations = ResourceUtils.GetAddresses($"{Values.AddrsDirectory}tunic-{characterIndex}");
+            var locations = ResourceUtils.GetAddresses(Values.AddrsDirectory, $"tunic-{characterIndex}");
             var objectIndex = playerModel == Character.Kafei ? 0x1C : 0x11;
             var objectData = ObjUtils.GetObjectData(objectIndex);
             for (int j = 0; j < locations.Count; j++)
@@ -170,6 +349,14 @@ namespace MMR.Randomizer
                 ReadWriteUtils.WriteFileAddr(locations[j], color, objectData);
             }
             ObjUtils.InsertObj(objectData, objectIndex);
+        }
+
+        private void WriteMiscellaneousChanges()
+        {
+            if (_cosmeticSettings.EnableHoldZTargeting)
+            {
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "ztargetinghold");
+            }
         }
 
         private Character DeterminePlayerModel()
@@ -194,13 +381,36 @@ namespace MMR.Randomizer
             throw new Exception("Unable to determine player's model.");
         }
 
-        private void WriteTatlColour()
+        private void SetTatlColour(Random random)
         {
-            if (_settings.TatlColorSchema != TatlColorSchema.Random)
+            if (_cosmeticSettings.TatlColorSchema == TatlColorSchema.Rainbow)
             {
-                var selectedColorSchemaIndex = (int)_settings.TatlColorSchema;
+                for (int i = 0; i < 10; i++)
+                {
+                    byte[] c = new byte[4];
+                    random.NextBytes(c);
+
+                    if ((i % 2) == 0)
+                    {
+                        c[0] = 0xFF;
+                    }
+                    else
+                    {
+                        c[0] = 0;
+                    }
+
+                    Values.TatlColours[4, i] = BitConverter.ToUInt32(c, 0);
+                }
+            }
+        }
+
+        private void WriteTatlColour(Random random)
+        {
+            if (_cosmeticSettings.TatlColorSchema != TatlColorSchema.Random)
+            {
+                var selectedColorSchemaIndex = (int)_cosmeticSettings.TatlColorSchema;
                 byte[] c = new byte[8];
-                List<int[]> locs = ResourceUtils.GetAddresses(Values.AddrsDirectory + "tatl-colour");
+                List<int[]> locs = ResourceUtils.GetAddresses(Values.AddrsDirectory, "tatl-colour");
                 for (int i = 0; i < locs.Count; i++)
                 {
                     ReadWriteUtils.Arr_WriteU32(c, 0, Values.TatlColours[selectedColorSchemaIndex, i << 1]);
@@ -210,29 +420,34 @@ namespace MMR.Randomizer
             }
             else
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "rainbow-tatl");
+                SetTatlColour(random);
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "rainbow-tatl");
             }
         }
 
         private void WriteQuickText()
         {
-            if (_settings.QuickTextEnabled)
+            if (_randomized.Settings.QuickTextEnabled)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "quick-text");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "quick-text");
             }
         }
 
         private void WriteCutscenes()
         {
-            if (_settings.ShortenCutscenes)
+            if (_randomized.Settings.ShortenCutscenes)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "short-cutscenes");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "short-cutscenes");
+            //}
+            // if (_randomized.Settings.RemoveTatlInterrupts)
+            //{
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "remove-tatl-interrupts");
             }
         }
 
         private void WriteEntrances()
         {
-            if (_settings.AreEntrancesRandomized())
+            if (_randomized.Settings.AreEntrancesRandomized())
             {
                 var newSpawn = _randomized.ItemList.Single(io => io.NewLocation == Item.EntranceSouthClockTownFromClockTowerInterior).Item;
                 EntranceSwapUtils.WriteSpawnToROM(newSpawn);
@@ -249,7 +464,7 @@ namespace MMR.Randomizer
 
         private void WriteDungeons()
         {
-            if ((_settings.LogicMode == LogicMode.Vanilla) || (!_settings.RandomizeDungeonEntrances))
+            if ((_randomized.Settings.LogicMode == LogicMode.Vanilla) || (!_randomized.Settings.RandomizeDungeonEntrances))
             {
                 return;
             }
@@ -258,15 +473,15 @@ namespace MMR.Randomizer
             EntranceUtils.WriteEntrances(Values.OldExits.ToArray(), _randomized.NewExits);
             byte[] li = new byte[] { 0x24, 0x02, 0x00, 0x00 };
             List<int[]> addr = new List<int[]>();
-            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory + "d-check");
+            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory, "d-check");
             for (int i = 0; i < addr.Count; i++)
             {
                 li[3] = (byte)_randomized.NewExitIndices[i];
                 ReadWriteUtils.WriteROMAddr(addr[i], li);
             }
 
-            ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-dungeons");
-            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory + "d-exit");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-dungeons");
+            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory, "d-exit");
 
             for (int i = 0; i < addr.Count; i++)
             {
@@ -284,13 +499,13 @@ namespace MMR.Randomizer
                 }
             }
 
-            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory + "dc-flagload");
+            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory, "dc-flagload");
             for (int i = 0; i < addr.Count; i++)
             {
                 ReadWriteUtils.WriteROMAddr(addr[i], new byte[] { (byte)((_randomized.NewDCFlags[i] & 0xFF00) >> 8), (byte)(_randomized.NewDCFlags[i] & 0xFF) });
             }
 
-            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory + "dc-flagmask");
+            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory, "dc-flagmask");
             for (int i = 0; i < addr.Count; i++)
             {
                 ReadWriteUtils.WriteROMAddr(addr[i], new byte[] {
@@ -301,9 +516,9 @@ namespace MMR.Randomizer
 
         private void WriteSpeedUps()
         {
-            if (_settings.SpeedupBeavers)
+            if (_randomized.Settings.SpeedupBeavers)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "speedup-beavers");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "speedup-beavers");
                 _messageTable.UpdateMessages(new MessageEntry
                 {
                     Id = 0x10D6,
@@ -324,64 +539,64 @@ namespace MMR.Randomizer
                 });
             }
 
-            if (_settings.SpeedupDampe)
+            if (_randomized.Settings.SpeedupDampe)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "speedup-dampe");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "speedup-dampe");
             }
 
-            if (_settings.SpeedupLabFish)
+            if (_randomized.Settings.SpeedupLabFish)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "speedup-labfish");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "speedup-labfish");
             }
 
-            if (_settings.SpeedupDogRace)
+            if (_randomized.Settings.SpeedupDogRace)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "speedup-dograce");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "speedup-dograce");
             }
         }
 
         private void WriteGimmicks()
         {
-            int damageMultiplier = (int)_settings.DamageMode;
+            int damageMultiplier = (int)_randomized.Settings.DamageMode;
             if (damageMultiplier > 0)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "dm-" + damageMultiplier.ToString());
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "dm-" + damageMultiplier.ToString());
             }
 
-            int damageEffect = (int)_settings.DamageEffect;
+            int damageEffect = (int)_randomized.Settings.DamageEffect;
             if (damageEffect > 0)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "de-" + damageEffect.ToString());
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "de-" + damageEffect.ToString());
             }
 
-            int gravityType = (int)_settings.MovementMode;
+            int gravityType = (int)_randomized.Settings.MovementMode;
             if (gravityType > 0)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "movement-" + gravityType.ToString());
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "movement-" + gravityType.ToString());
             }
 
-            int floorType = (int)_settings.FloorType;
+            int floorType = (int)_randomized.Settings.FloorType;
             if (floorType > 0)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "floor-" + floorType.ToString());
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "floor-" + floorType.ToString());
             }
 
-            if (_settings.ClockSpeed != ClockSpeed.Default)
+            if (_randomized.Settings.ClockSpeed != ClockSpeed.Default)
             {
-                WriteClockSpeed(_settings.ClockSpeed);
+                WriteClockSpeed(_randomized.Settings.ClockSpeed);
             }
 
-            if (_settings.HideClock)
+            if (_randomized.Settings.HideClock)
             {
                 WriteHideClock();
             }
 
-            if (_settings.BlastMaskCooldown != BlastMaskCooldown.Default)
+            if (_randomized.Settings.BlastMaskCooldown != BlastMaskCooldown.Default)
             {
                 WriteBlastMaskCooldown();
             }
 
-            if (_settings.EnableSunsSong)
+            if (_randomized.Settings.EnableSunsSong)
             {
                 WriteSunsSong();
             }
@@ -396,13 +611,13 @@ namespace MMR.Randomizer
                 Message = $"You played the {TextCommands.ColorYellow}Sun's Song{TextCommands.ColorWhite}!\xBF"
             });
 
-            ResourceUtils.ApplyHack(Values.ModsDirectory + "enable-sunssong");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "enable-sunssong");
         }
 
         private void WriteBlastMaskCooldown()
         {
             ushort value;
-            switch (_settings.BlastMaskCooldown)
+            switch (_randomized.Settings.BlastMaskCooldown)
             {
                 default:
                 case BlastMaskCooldown.Default:
@@ -474,7 +689,7 @@ namespace MMR.Randomizer
                     break;
             }
 
-            ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-clock-speed");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-clock-speed");
 
             var codeFileAddress = 0xB3C000;
             var hackAddressOffset = 0x8A674;
@@ -504,7 +719,7 @@ namespace MMR.Randomizer
 
         private void WriteSoundEffects(Random random)
         {
-            if (!_randomized.Settings.RandomizeSounds)
+            if (!_cosmeticSettings.RandomizeSounds)
             {
                 return;
             }
@@ -545,9 +760,9 @@ namespace MMR.Randomizer
 
         private void WriteEnemies()
         {
-            if (_settings.RandomizeEnemies)
+            if (_randomized.Settings.RandomizeEnemies)
             {
-                Enemies.ShuffleEnemies(_randomized.Random);
+                Enemies.ShuffleEnemies(new Random(_randomized.Seed));
             }
         }
 
@@ -564,16 +779,16 @@ namespace MMR.Randomizer
         {
             Dictionary<int, byte> startingItems = new Dictionary<int, byte>();
             PutOrCombine(startingItems, 0xC5CE72, 0x10); // add Song of Time
-            if (_settings.EnableSunsSong)
+            if (_randomized.Settings.EnableSunsSong)
             {
                 PutOrCombine(startingItems, 0xC5CE71, 0x02);
             }
 
             var itemList = items.ToList();
 
-            if (_settings.CustomStartingItemList != null)
+            if (_randomized.Settings.CustomStartingItemList != null)
             {
-                itemList.AddRange(_settings.CustomStartingItemList);
+                itemList.AddRange(_randomized.Settings.CustomStartingItemList);
             }
 
             itemList.Add(Item.StartingHeartContainer1);
@@ -595,7 +810,7 @@ namespace MMR.Randomizer
             foreach (var item in itemList)
             {
                 var startingItemValues = item.GetAttributes<StartingItemAttribute>();
-                if (!startingItemValues.Any() && !_settings.NoStartingItems)
+                if (!startingItemValues.Any() && !_randomized.Settings.NoStartingItems)
                 {
                     throw new Exception($@"Invalid starting item ""{item}""");
                 }
@@ -619,7 +834,7 @@ namespace MMR.Randomizer
         private void WriteItems()
         {
             var freeItems = new List<Item>();
-            if (_settings.LogicMode == LogicMode.Vanilla)
+            if (_randomized.Settings.LogicMode == LogicMode.Vanilla)
             {
                 freeItems.Add(Item.FairyMagic);
                 freeItems.Add(Item.MaskDeku);
@@ -629,7 +844,7 @@ namespace MMR.Randomizer
                 freeItems.Add(Item.StartingHeartContainer1);
                 freeItems.Add(Item.StartingHeartContainer2);
 
-                if (_settings.ShortenCutscenes)
+                if (_randomized.Settings.ShortenCutscenes)
                 {
                     //giants cs were removed
                     freeItems.Add(Item.SongOath);
@@ -650,20 +865,20 @@ namespace MMR.Randomizer
             WriteFreeItems(freeItems.ToArray());
 
             //write everything else
-            ItemSwapUtils.ReplaceGetItemTable(Values.ModsDirectory);
+            ItemSwapUtils.ReplaceGetItemTable();
             ItemSwapUtils.InitItems();
 
-            if (_settings.FixEponaSword)
+            if (_randomized.Settings.FixEponaSword)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-epona");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-epona");
             }
-            if (_settings.PreventDowngrades)
+            if (_randomized.Settings.PreventDowngrades)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-downgrades");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-downgrades");
             }
-            if (_settings.AddCowMilk)
+            if (_randomized.Settings.AddCowMilk)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-cow-bottle-check");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-cow-bottle-check");
             }
 
             var newMessages = new List<MessageEntry>();
@@ -696,7 +911,7 @@ namespace MMR.Randomizer
                     {
                         overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
                     }
-                    ItemSwapUtils.WriteNewItem(item.NewLocation.Value, item.Item, newMessages, _settings.UpdateShopAppearance, _settings.PreventDowngrades, _settings.UpdateChests && item.IsRandomized, overrideChestType, _settings.CustomStartingItemList.Contains(item.Item));
+                    ItemSwapUtils.WriteNewItem(item.NewLocation.Value, item.Item, newMessages, _randomized.Settings.UpdateShopAppearance, _randomized.Settings.PreventDowngrades, _randomized.Settings.UpdateChests && item.IsRandomized, overrideChestType, _randomized.Settings.CustomStartingItemList.Contains(item.Item));
                 }
             }
 
@@ -711,7 +926,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_settings.UpdateShopAppearance)
+            if (_randomized.Settings.UpdateShopAppearance)
             {
                 // update tingle shops
                 foreach (var messageShopText in Enum.GetValues(typeof(MessageShopText)).Cast<MessageShopText>())
@@ -904,9 +1119,9 @@ namespace MMR.Randomizer
                 Message = "\u0017What's this? You've already saved\u0011up \u00011000 Rupees\u0000?!\u0018\u0011\u0013\u0012Well, little guy, I can't take any\u0011more deposits. Sorry, but this is\u0011all I can give you.\u00E0\u00BF",
             });
 
-            if (_settings.AddSkulltulaTokens)
+            if (_randomized.Settings.AddSkulltulaTokens)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-skulltula-tokens");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-skulltula-tokens");
 
                 newMessages.Add(new MessageEntry
                 {
@@ -922,9 +1137,9 @@ namespace MMR.Randomizer
                 });
             }
 
-            if (_settings.AddStrayFairies)
+            if (_randomized.Settings.AddStrayFairies)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-fairies");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-fairies");
             }
 
             var dungeonItemMessageIds = new byte[] {
@@ -973,25 +1188,25 @@ namespace MMR.Randomizer
 
             _messageTable.UpdateMessages(newMessages);
 
-            if (_settings.AddShopItems)
+            if (_randomized.Settings.AddShopItems)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-shop-checks");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-shop-checks");
             }
         }
 
         private void WriteGossipQuotes()
         {
-            if (_settings.LogicMode == LogicMode.Vanilla)
+            if (_randomized.Settings.LogicMode == LogicMode.Vanilla)
             {
                 return;
             }
 
-            if (_settings.FreeHints)
+            if (_randomized.Settings.FreeHints)
             {
                 WriteFreeHints();
             }
 
-            if (_settings.GossipHintStyle != GossipHintStyle.Default)
+            if (_randomized.Settings.GossipHintStyle != GossipHintStyle.Default)
             {
                 _messageTable.UpdateMessages(_randomized.GossipQuotes);
             }
@@ -1000,9 +1215,9 @@ namespace MMR.Randomizer
 
         private void WriteFileSelect()
         {
-            ResourceUtils.ApplyHack(Values.ModsDirectory + "file-select");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "file-select");
             byte[] SkyboxDefault = new byte[] { 0x91, 0x78, 0x9B, 0x28, 0x00, 0x28 };
-            List<int[]> Addrs = ResourceUtils.GetAddresses(Values.AddrsDirectory + "skybox-init");
+            List<int[]> Addrs = ResourceUtils.GetAddresses(Values.AddrsDirectory, "skybox-init");
             Random R = new Random();
             int rot = R.Next(360);
             for (int i = 0; i < 2; i++)
@@ -1024,7 +1239,7 @@ namespace MMR.Randomizer
 
             rot = R.Next(360);
             byte[] FSDefault = new byte[] { 0x64, 0x96, 0xFF, 0x96, 0xFF, 0xFF, 0x64, 0xFF, 0xFF };
-            Addrs = ResourceUtils.GetAddresses(Values.AddrsDirectory + "fs-colour");
+            Addrs = ResourceUtils.GetAddresses(Values.AddrsDirectory, "fs-colour");
             for (int i = 0; i < 3; i++)
             {
                 Color c = Color.FromArgb(FSDefault[i * 3], FSDefault[i * 3 + 1], FSDefault[i * 3 + 2]);
@@ -1051,13 +1266,13 @@ namespace MMR.Randomizer
 
         private void WriteStartupStrings()
         {
-            if (_settings.LogicMode == LogicMode.Vanilla)
+            if (_randomized.Settings.LogicMode == LogicMode.Vanilla)
             {
                 //ResourceUtils.ApplyHack(ModsDir + "postman-testing");
                 return;
             }
             Version v = Assembly.GetExecutingAssembly().GetName().Version;
-            RomUtils.SetStrings(Values.ModsDirectory + "logo-text", $"v{v}", _settings.ToString());
+            RomUtils.SetStrings(Values.ModsDirectory, "logo-text", $"v{v}", _randomized.Settings.ToString());
         }
 
         private void WriteShopObjects()
@@ -1083,31 +1298,58 @@ namespace MMR.Randomizer
             RomData.MMFileList[1142].Data = data.ToArray();
         }
 
-        private void WriteAsmPatch()
+        private void WriteAsmPatch(AsmContext asm)
         {
-            // Load patcher from internal resource file
-            var patcher = Patcher.Load();
-            var options = _settings.PatcherOptions;
-
             // Load the symbols and use them to apply the patch data
-            patcher.Apply(options);
+            var options = _randomized.Settings.AsmOptions;
+            asm.ApplyPatch(options);
         }
 
-        private void WriteAsmConfigPostPatch()
+        private void WriteAsmConfig(AsmContext asm, byte[] hash)
         {
-            // Parse Symbols data from the ROM (specific MMFile)
-            Symbols symbols = Symbols.FromROM();
+            UpdateHudColorOverrides(hash);
 
-            if (symbols != null)
-            {
-                // Apply current configuration on top of existing Asm patch file
-                symbols.TryApplyConfiguration(_settings.PatcherOptions);
-            }
+            // Apply Asm configuration (after hash has been calculated)
+            var options = _cosmeticSettings.AsmOptions;
+            options.Hash = hash;
+            asm.ApplyPostConfiguration(options, false);
         }
 
-        public void MakeROM(string InFile, string FileName, IProgressReporter progressReporter)
+        private void WriteAsmConfigPostPatch(AsmContext asm, byte[] hash)
         {
-            using (BinaryReader OldROM = new BinaryReader(File.Open(InFile, FileMode.Open, FileAccess.Read)))
+            UpdateHudColorOverrides(hash);
+
+            // Apply current configuration on top of existing Asm patch file
+            var options = _cosmeticSettings.AsmOptions;
+            options.Hash = hash;
+            asm.ApplyPostConfiguration(options, true);
+        }
+
+        /// <summary>
+        /// Update the HUD colors override options.
+        /// </summary>
+        /// <param name="hash">Hash which is used with <see cref="Random"/></param>
+        private void UpdateHudColorOverrides(byte[] hash)
+        {
+            var config = _cosmeticSettings.AsmOptions.HudColorsConfig;
+            var random = new Random(BitConverter.ToInt32(hash, 0));
+
+            // Update override for heart colors
+            if (_cosmeticSettings.HeartsSelection != null)
+                config.HeartsOverride = ColorSelectionManager.Hearts.GetItems().FirstOrDefault(csi => csi.Name == _cosmeticSettings.HeartsSelection)?.GetColors(random);
+            else
+                config.HeartsOverride = null;
+
+            // Update override for magic meter colors
+            if (_cosmeticSettings.MagicSelection != null)
+                config.MagicOverride = ColorSelectionManager.MagicMeter.GetItems().FirstOrDefault(csi => csi.Name == _cosmeticSettings.HeartsSelection)?.GetColors(random);
+            else
+                config.MagicOverride = null;
+        }
+
+        public void MakeROM(OutputSettings outputSettings, IProgressReporter progressReporter)
+        {
+            using (BinaryReader OldROM = new BinaryReader(File.Open(outputSettings.InputROMFilename, FileMode.Open, FileAccess.Read)))
             {
                 RomUtils.ReadFileTable(OldROM);
                 _messageTable.InitializeTable();
@@ -1116,30 +1358,33 @@ namespace MMR.Randomizer
             var originalMMFileList = RomData.MMFileList.Select(file => file.Clone()).ToList();
 
             byte[] hash;
-            if (!string.IsNullOrWhiteSpace(_settings.InputPatchFilename))
+            if (!string.IsNullOrWhiteSpace(outputSettings.InputPatchFilename))
             {
                 progressReporter.ReportProgress(50, "Applying patch...");
-                hash = RomUtils.ApplyPatch(_settings.InputPatchFilename);
+                hash = RomUtils.ApplyPatch(outputSettings.InputPatchFilename);
+
+                // Parse Symbols data from the ROM (specific MMFile)
+                var asm = AsmContext.LoadFromROM();
 
                 // Apply Asm configuration post-patch
-                WriteAsmConfigPostPatch();
+                WriteAsmConfigPostPatch(asm, hash);
             }
             else
             {
                 progressReporter.ReportProgress(55, "Writing player model...");
                 WritePlayerModel();
 
-                if (_settings.LogicMode != LogicMode.Vanilla)
+                if (_randomized.Settings.LogicMode != LogicMode.Vanilla)
                 {
                     progressReporter.ReportProgress(60, "Applying hacks...");
-                    ResourceUtils.ApplyHack(Values.ModsDirectory + "title-screen");
-                    ResourceUtils.ApplyHack(Values.ModsDirectory + "misc-changes");
-                    ResourceUtils.ApplyHack(Values.ModsDirectory + "cm-cs");
-                    ResourceUtils.ApplyHack(Values.ModsDirectory + "fix-song-of-healing");
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "title-screen");
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "misc-changes");
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "cm-cs");
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-song-of-healing");
                     WriteFileSelect();
                 }
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "init-file");
-                ResourceUtils.ApplyHack(Values.ModsDirectory + "fierce-deity-anywhere");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "init-file");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fierce-deity-anywhere");
 
                 progressReporter.ReportProgress(61, "Writing quick text...");
                 WriteQuickText();
@@ -1173,45 +1418,51 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(68, "Writing messages...");
                 WriteGossipQuotes();
 
-                MessageTable.WriteMessageTable(_messageTable, _settings.QuickTextEnabled);
+                MessageTable.WriteMessageTable(_messageTable, _randomized.Settings.QuickTextEnabled);
 
                 progressReporter.ReportProgress(69, "Writing startup...");
                 WriteStartupStrings();
 
+                // Load Asm data from internal resource files and apply
+                var asm = AsmContext.LoadInternal();
                 progressReporter.ReportProgress(70, "Writing ASM patch...");
-                WriteAsmPatch();
+                WriteAsmPatch(asm);
                 
-                progressReporter.ReportProgress(71, _settings.GeneratePatch ? "Generating patch..." : "Computing hash...");
-                hash = RomUtils.CreatePatch(_settings.GeneratePatch ? FileName : null, originalMMFileList);
+                progressReporter.ReportProgress(71, outputSettings.GeneratePatch ? "Generating patch..." : "Computing hash...");
+                hash = RomUtils.CreatePatch(outputSettings.GeneratePatch ? outputSettings.OutputROMFilename : null, originalMMFileList);
+
+                // Write subset of Asm config post-patch
+                WriteAsmConfig(asm, hash);
             }
+            WriteMiscellaneousChanges();
 
             progressReporter.ReportProgress(72, "Writing cosmetics...");
-            WriteTatlColour();
+            WriteTatlColour(new Random(BitConverter.ToInt32(hash, 0)));
             WriteTunicColor();
 
             progressReporter.ReportProgress(73, "Writing music...");
-            WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)));
+            WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
             WriteMuteMusic();
 
             progressReporter.ReportProgress(74, "Writing sound effects...");
             WriteSoundEffects(new Random(BitConverter.ToInt32(hash, 0)));
 
-            if (_settings.GenerateROM || _settings.OutputVC)
+            if (outputSettings.GenerateROM || outputSettings.OutputVC)
             {
                 progressReporter.ReportProgress(75, "Building ROM...");
 
                 byte[] ROM = RomUtils.BuildROM();
 
-                if (_settings.GenerateROM)
+                if (outputSettings.GenerateROM)
                 {
                     progressReporter.ReportProgress(85, "Writing ROM...");
-                    RomUtils.WriteROM(FileName, ROM);
+                    RomUtils.WriteROM(outputSettings.OutputROMFilename, ROM);
                 }
 
-                if (_settings.OutputVC)
+                if (outputSettings.OutputVC)
                 {
                     progressReporter.ReportProgress(90, "Writing VC...");
-                    VCInjectionUtils.BuildVC(ROM, _settings.PatcherOptions, Values.VCDirectory, Path.ChangeExtension(FileName, "wad"));
+                    VCInjectionUtils.BuildVC(ROM, _cosmeticSettings.AsmOptions.DPadConfig, Values.VCDirectory, Path.ChangeExtension(outputSettings.OutputROMFilename, "wad"));
                 }
             }
             progressReporter.ReportProgress(100, "Done!");

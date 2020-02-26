@@ -7,7 +7,7 @@
     <ProjectGuid>{57EE31E9-2CCE-48F0-B518-85222C31465A}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>MMR.UI</RootNamespace>
-    <AssemblyName>MMR.UI</AssemblyName>
+    <AssemblyName>MM Randomizer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -25,7 +25,7 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
+    <DebugType>none</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
@@ -64,6 +64,12 @@
     </Compile>
     <Compile Include="Forms\DPadForm.Designer.cs">
       <DependentUpon>DPadForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HudConfigForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HudConfigForm.Designer.cs">
+      <DependentUpon>HudConfigForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\ItemEditForm.cs">
       <SubType>Form</SubType>
@@ -113,6 +119,7 @@
     <Compile Include="Forms\StartingItemEditForm.Designer.cs">
       <DependentUpon>StartingItemEditForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Utils\FormUtils.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ToolTips\ToolTipBuilder.cs" />
@@ -121,6 +128,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\DPadForm.resx">
       <DependentUpon>DPadForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HudConfigForm.resx">
+      <DependentUpon>HudConfigForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ItemEditForm.resx">
       <DependentUpon>ItemEditForm.cs</DependentUpon>
@@ -171,13 +181,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="200px_majoramask_rtw_icon.ico" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\MMR.Common\MMR.Common.csproj">
+      <Project>{2FD5DE88-CEAC-45DD-BDF2-B3F3A3B2DD56}</Project>
+      <Name>MMR.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\MMR.Randomizer\MMR.Randomizer.csproj">
       <Project>{ada8c910-f308-4767-9b5c-b261d22dcd45}</Project>
       <Name>MMR.Randomizer</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="200px_majoramask_rtw_icon.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

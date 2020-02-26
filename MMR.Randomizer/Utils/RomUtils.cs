@@ -10,6 +10,7 @@ using System.IO.Compression;
 using MMR.Randomizer.Utils.Mzxrules;
 using System.Diagnostics;
 using System.Security.Cryptography;
+using System.Threading;
 
 namespace MMR.Randomizer.Utils
 {
@@ -18,9 +19,9 @@ namespace MMR.Randomizer.Utils
     {
         const int FILE_TABLE = 0x1A500;
         const int SIGNATURE_ADDRESS = 0x1A4D0;
-        public static void SetStrings(string filename, string ver, string setting)
+        public static void SetStrings(string path, string filename, string ver, string setting)
         {
-            ResourceUtils.ApplyHack(filename);
+            ResourceUtils.ApplyHack(path, filename);
             int veraddr = 0xC44E30;
             int settingaddr = 0xC44E70;
             string verstring = $"MM Rando {ver}\x00";
@@ -38,10 +39,10 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.Arr_Insert(buffer, 0, buffer.Length, file.Data, addr);
         }
 
-        public static int AddNewFile(string filename)
+        public static int AddNewFile(string path, string filename)
         {
             byte[] buffer;
-            using (BinaryReader data = new BinaryReader(File.Open(filename, FileMode.Open)))
+            using (BinaryReader data = new BinaryReader(File.Open(Path.Combine(path, filename), FileMode.Open)))
             {
                 int len = (int)data.BaseStream.Length;
                 buffer = new byte[len];
@@ -145,8 +146,8 @@ namespace MMR.Randomizer.Utils
                 using (var compressStream = new GZipStream(cryptoStream, CompressionMode.Compress))
                 using (var writer = new BinaryWriter(compressStream))
                 {
-                    writer.Write(ReadWriteUtils.Byteswap32(PatchUtil.PATCH_MAGIC));
-                    writer.Write(ReadWriteUtils.Byteswap32((uint)PatchUtil.PATCH_VERSION));
+                    writer.Write(ReadWriteUtils.Byteswap32(PatchUtils.PATCH_MAGIC));
+                    writer.Write(ReadWriteUtils.Byteswap32((uint)PatchUtils.PATCH_VERSION));
                     for (var fileIndex = 0; fileIndex < RomData.MMFileList.Count; fileIndex++)
                     {
                         var file = RomData.MMFileList[fileIndex];
@@ -231,17 +232,8 @@ namespace MMR.Randomizer.Utils
                     var magic = ReadWriteUtils.ReadU32(reader);
                     var version = ReadWriteUtils.ReadU32(reader);
 
-                    // Make sure this is a patch file by checking the magic value
-                    if (magic != PatchUtil.PATCH_MAGIC)
-                    {
-                        throw new PatchMagicException(magic);
-                    }
-
-                    // Check that this patch version is supported
-                    if (version != (uint)PatchUtil.PATCH_VERSION)
-                    {
-                        throw new PatchVersionException(PatchUtil.PATCH_VERSION, (PatchVersion)version);
-                    }
+                    // Validate patch magic and version values
+                    PatchUtils.Validate(magic, version);
 
                     while (reader.BaseStream.Position != reader.BaseStream.Length)
                     {
@@ -294,10 +286,13 @@ namespace MMR.Randomizer.Utils
 
         public static byte[] BuildROM()
         {
+            // yaz0 encode all of the files for the rom
             Parallel.ForEach(RomData.MMFileList, file =>
             {
-                if (file.IsCompressed && file.WasEdited)
-                {
+                if (file.IsCompressed && file.WasEdited){
+                    // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
+                    var previous_thread_priority = Thread.CurrentThread.Priority;
+                    Thread.CurrentThread.Priority = ThreadPriority.Lowest;
                     byte[] result;
                     var newSize = Yaz.Encode(file.Data, file.Data.Length, out result);
                     if (newSize >= 0)
@@ -305,10 +300,13 @@ namespace MMR.Randomizer.Utils
                         file.Data = new byte[newSize];
                         ReadWriteUtils.Arr_Insert(result, 0, newSize, file.Data, 0);
                     }
+                    // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
+                    Thread.CurrentThread.Priority = previous_thread_priority;
                 }
             });
             byte[] ROM = new byte[0x2000000];
             int ROMAddr = 0;
+            // write all files to rom
             for (int i = 0; i < RomData.MMFileList.Count; i++)
             {
                 if (RomData.MMFileList[i].Cmp_Addr == -1)
