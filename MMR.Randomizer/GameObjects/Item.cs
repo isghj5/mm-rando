@@ -3599,7 +3599,9 @@ namespace MMR.Randomizer.GameObjects
         [Entrance(EntranceType.InteriorExit)]
         [Pair(EntranceMusicBoxHouseFromIkanaCanyon)]
         [Exit(Scene.MusicBoxHouse, 0)]
-        [ExitAddress(0x103EC1E)] // kicked out by pamela
+        [ExitAddress(0x103EC1E)] // not sure
+        [ExitCutscene(Scene.MusicBoxHouse, 0, 1)] // kicked out by pamela?
+        [ExitCutscene(Scene.MusicBoxHouse, 0, 3)] // kicked out by pamela?
         [Spawn(Scene.IkanaCanyon, 2)]
         EntranceIkanaCanyonFromMusicBoxHouse,
 
