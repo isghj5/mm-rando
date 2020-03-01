@@ -3631,12 +3631,13 @@ namespace MMR.Randomizer.GameObjects
         [Exit(Scene.SakonsHideout, 0)]
         [ExitAddress(0xC00416)] // todo check kafei still appears in ECT/Inn and remove the cutscene id.
         [ExitAddress(0xF57732)] // exit via song of soaring
+        [ExitCutscene(Scene.SakonsHideout, 0, 1)]
         [Spawn(Scene.IkanaCanyon, 6)]
         EntranceIkanaCanyonFromSakonsHideout,
 
         [Region(Region.StoneTowerTemple)]
         [Entrance(EntranceType.DungeonExit)]
-        //[Exit(Scene.SakonsHideout, 0)]
+        [ExitCutscene(Scene.IkanaCanyon, 2, 0)] // 0x2073 normally
         [Spawn(Scene.IkanaCanyon, 7)]
         EntranceIkanaCanyonFromIkanaClear, // one way
 
@@ -3841,6 +3842,7 @@ namespace MMR.Randomizer.GameObjects
         [Entrance(EntranceType.DungeonExit)]
         [ExitAddress(0xB81AB6)]
         [ExitAddress(0xD34536)]
+        [ExitCutscene(Scene.Woodfall, 1, 0)]
         [Spawn(Scene.WoodfallTemple, 1)]
         EntranceWoodfallTemplePrisonFromOdolwasLair, // one way
 
@@ -4181,7 +4183,9 @@ namespace MMR.Randomizer.GameObjects
 
         [Region(Region.DekuPalace)]
         [Entrance]
-        [ExitAddress(0xDA050A)] // thrown out of king's chamber?
+        [ExitAddress(0xDA050A)] // thrown out of king's chamber
+        [ExitCutscene(Scene.DekuKingChamber, 0, 3)] // after receiving sonata check
+        [ExitCutscene(Scene.DekuKingChamber, 0, 6)] // after receiving sonata check
         [Spawn(Scene.DekuPalace, 1)]
         EntranceDekuPalaceFromDekuPalace, // thrown out // one way
 
@@ -4898,7 +4902,10 @@ namespace MMR.Randomizer.GameObjects
         [Region(Region.ZoraCape)]
         [Entrance(EntranceType.Dungeon)]
         [Pair(EntranceZoraCapeFromGreatBayTemple)]
-        //[Exit(Scene.Grottos, 1)]
+        [ExitCutscene(Scene.ZoraCape, 0, 1)]
+        [ExitCutscene(Scene.ZoraCape, 0, 2)]
+        [ExitCutscene(Scene.ZoraCape, 1, 2)]
+        [ExitCutscene(Scene.GreatBayCutscene, 0, 0)]
         [Spawn(Scene.GreatBayTemple, 0)]
         EntranceGreatBayTempleFromZoraCape,
 
@@ -4960,6 +4967,8 @@ namespace MMR.Randomizer.GameObjects
 
         [Region(Region.Interior)]
         [Entrance]
+        [ExitCutscene(Scene.ZoraHall, 1, 0)]
+        [Spawn(Scene.ZoraHallRooms, 4)]
         EntranceZoraHallRoomsJapasRoomFromJapasRoom, // after jam session // one way?
 
         [Region(Region.Interior)]
@@ -5031,6 +5040,7 @@ namespace MMR.Randomizer.GameObjects
         [Entrance(EntranceType.DungeonExit)]
         [ExitAddress(0xB81B3A)]
         [ExitAddress(0xD345B2)]
+        [ExitCutscene(Scene.MountainVillageSpring, 1, 0)] // goron thawing
         [Spawn(Scene.MountainVillage, 7)]
         EntranceMountainVillageFromSnowheadClear, // one way
 
@@ -5394,6 +5404,7 @@ namespace MMR.Randomizer.GameObjects
         //EntranceGormanTrackFromGormanBrosRace,
 
         //[ExitAddress(0xFDF476)]
+        //[ExitCutscene(Scene.RomaniRanch, 0, 2)]
         //[Spawn(Scene.GormanTrack, 4)]
         //EntranceGormanTrackFromCremiaEscort,
 

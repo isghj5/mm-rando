@@ -254,7 +254,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x59)]
         InvertedStoneTower = 0x56,
 
-        // MountainVillageSpring = 0x57,
+        [SceneInternalId(0x5A)]
+        MountainVillageSpring = 0x57,
 
         [SceneInternalId(0x5B)]
         PathToSnowhead = 0x58,
@@ -275,6 +276,9 @@ namespace MMR.Randomizer.GameObjects
 
         [SceneInternalId(0x61)]
         StockPotInn = 0x5E,
+
+        [SceneInternalId(0x62)]
+        GreatBayCutscene = 0x5F,
 
         [SceneInternalId(0x63)]
         ClockTowerInterior = 0x60,
