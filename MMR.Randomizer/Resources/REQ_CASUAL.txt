@@ -3030,8 +3030,8 @@
 0
 0
 - EntranceZoraCapeFromZoraCape
-782
 
+782,93;604;610;611;609
 0
 0
 - EntranceZoraCapeFromWaterfallRapids
@@ -3181,7 +3181,7 @@
 0
 - EntranceWoodfallFromSouthernSwamp
 
-103,0;443
+443;445,0
 0
 0
 - EntranceWoodfallFromWoodfallTempleEntrance
