@@ -3155,8 +3155,8 @@
 0
 0
 - EntranceIkanaGraveyardFromDay3Grave
+814
 
-574;575
 0
 0
 - EntranceIkanaGraveyardFromDay2Grave
