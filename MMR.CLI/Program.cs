@@ -50,7 +50,7 @@ namespace MMR.CLI
                 }
                 outputSettings.OutputROMFilename = outputArg.SingleOrDefault();
             }
-            outputSettings.OutputROMFilename ??= Path.Combine("output", FileUtils.MakeFilenameValid(DateTime.UtcNow.ToString("o")));
+            if (outputSettings.OutputROMFilename == null) outputSettings.OutputROMFilename = Path.Combine("output", FileUtils.MakeFilenameValid(DateTime.UtcNow.ToString("o")));
 
             var inputArg = argsDictionary.GetValueOrDefault("-input");
             if (inputArg != null)
@@ -61,7 +61,7 @@ namespace MMR.CLI
                 }
                 outputSettings.InputROMFilename = inputArg.SingleOrDefault();
             }
-            outputSettings.InputROMFilename ??= "input.z64";
+            if(outputSettings.InputROMFilename == null) outputSettings.InputROMFilename = "input.z64";
 
             var validationResult = settings.Validate();
             if (validationResult != null)
