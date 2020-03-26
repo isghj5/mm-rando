@@ -1,3 +1,4 @@
+using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
 using System.Collections.Generic;
@@ -40,6 +41,15 @@ namespace MMR.Randomizer.Utils
             foreach (var address in exit.ExitAddresses())
             {
                 ReadWriteUtils.WriteToROM(address, spawnId);
+            }
+
+            // special cases
+            if (exit != newSpawn)
+            {
+                if (exit == Item.EntranceTerminaFieldFromAstralObservatoryTelescope)
+                {
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-telescope-music");
+                }
             }
         }
 

@@ -142,6 +142,9 @@
     <None Update="Resources\mods\fierce-deity-anywhere">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\mods\fix-telescope-music">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\mods\file-select">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
