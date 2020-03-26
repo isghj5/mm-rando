@@ -1313,6 +1313,9 @@ namespace MMR.Randomizer
             {
                 PlaceItem(i, itemPool);
             }
+
+            PlaceItem(Item.ChestInvertedStoneTowerBean, itemPool);
+            PlaceItem(Item.ShopItemBusinessScrubMagicBean, itemPool);
         }
 
         /// <summary>
