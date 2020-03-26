@@ -14,6 +14,13 @@ namespace MMR.Randomizer.Asm
         AlwaysOff,
     }
 
+    public enum QuestConsumeState : byte
+    {
+        Default,
+        Always,
+        Never,
+    }
+
     /// <summary>
     /// Miscellaneous flags.
     /// </summary>
@@ -33,6 +40,11 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
+        /// Whether or not to use the closest cow to the player when giving an item (not yet implemented).
+        /// </summary>
+        public bool CloseCows { get; set; }
+
+        /// <summary>
         /// Whether or not to draw hash icons on the file select screen.
         /// </summary>
         public bool DrawHash { get; set; } = true;
@@ -43,9 +55,19 @@ namespace MMR.Randomizer.Asm
         public bool FastPush { get; set; }
 
         /// <summary>
+        /// Whether or not to enable freestanding models.
+        /// </summary>
+        public bool FreestandingModels { get; set; } = true;
+
+        /// <summary>
         /// Whether or not to allow using the ocarina underwater.
         /// </summary>
         public bool OcarinaUnderwater { get; set; }
+
+        /// <summary>
+        /// Behaviour of how quest items should be consumed.
+        /// </summary>
+        public QuestConsumeState QuestConsume => this.QuestItemStorage ? QuestConsumeState.Always : QuestConsumeState.Default;
 
         /// <summary>
         /// Whether or not to enable Quest Item Storage.
@@ -72,6 +94,8 @@ namespace MMR.Randomizer.Asm
             this.FastPush = ((flags >> 28) & 1) == 1;
             this.OcarinaUnderwater = ((flags >> 27) & 1) == 1;
             this.QuestItemStorage = ((flags >> 26) & 1) == 1;
+            this.CloseCows = ((flags >> 25) & 1) == 1;
+            this.FreestandingModels = ((flags >> 24) & 1) == 1;
         }
 
         /// <summary>
@@ -86,6 +110,9 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FastPush ? (uint)1 : 0) << 28;
             flags |= (this.OcarinaUnderwater ? (uint)1 : 0) << 27;
             flags |= (this.QuestItemStorage ? (uint)1 : 0) << 26;
+            flags |= (this.CloseCows ? (uint)1 : 0) << 25;
+            flags |= (this.FreestandingModels ? (uint)1 : 0) << 24;
+            flags |= (((uint)this.QuestConsume) & 3) << 22;
             return flags;
         }
     }
@@ -108,7 +135,7 @@ namespace MMR.Randomizer.Asm
             using (var memStream = new MemoryStream())
             using (var writer = new BinaryWriter(memStream))
             {
-                writer.Write(this.Version);
+                ReadWriteUtils.WriteU32(writer, this.Version);
 
                 // Version 0
                 writer.Write(this.Hash);

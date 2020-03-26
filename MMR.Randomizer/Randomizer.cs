@@ -440,7 +440,7 @@ namespace MMR.Randomizer
             }
             else if (mode == LogicMode.UserLogic)
             {
-                using (StreamReader Req = new StreamReader(File.Open(_settings.UserLogicFileName, FileMode.Open)))
+                using (StreamReader Req = new StreamReader(File.OpenRead(_settings.UserLogicFileName)))
                 {
                     var logic = Req.ReadToEnd();
                     if (logic.StartsWith("{"))
@@ -1992,6 +1992,11 @@ namespace MMR.Randomizer
                     SeedRNG();
                     MakeGossipQuotes();
                 }
+
+                SeedRNG();
+                _randomized.FileSelectSkybox = Random.Next(360);
+                _randomized.FileSelectColor = Random.Next(360);
+                _randomized.TitleLogoColor = Random.Next(360);
             }
 
             return _randomized;

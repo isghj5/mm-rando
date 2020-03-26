@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
@@ -8,6 +7,9 @@ using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 using MMR.Common.Utils;
+using MMR.DiscordBot.Data;
+using MMR.DiscordBot.Data.Entities;
+using ServiceStack.OrmLite;
 
 namespace MMR.DiscordBot
 {
@@ -22,6 +24,7 @@ namespace MMR.DiscordBot
         private readonly Random _random = new Random();
         private readonly string _cliPath;
         private readonly string _discordBotToken;
+        private readonly ConnectionFactory _connectionFactory = new ConnectionFactory();
 
         static int Main(string[] args)
         {
@@ -87,8 +90,6 @@ namespace MMR.DiscordBot
             return Task.CompletedTask;
         }
 
-        private Dictionary<ulong, DateTime> _lastRequestedSeed = new Dictionary<ulong, DateTime>();
-
         // This is not the recommended way to write a bot - consider
         // reading over the Commands Framework sample.
         private async Task MessageReceivedAsync(SocketMessage message)
@@ -97,64 +98,81 @@ namespace MMR.DiscordBot
             if (message.Author.Id == _client.CurrentUser.Id)
                 return;
 
-            if (message.Content.StartsWith("!spoiler"))
+            using (var db = _connectionFactory.Open())
             {
-                if (!_lastRequestedSeed.ContainsKey(message.Author.Id))
+                var lastRequestedSeed = (await db.SingleByIdAsync<UserSeedEntity>(message.Author.Id))?.LastSeedRequest;
+                if (message.Content.StartsWith("!spoiler"))
                 {
-                    await message.Channel.SendMessageAsync("You haven't generated any seeds recently.");
-                    return;
-                }
-                var requestedLog = FileUtils.MakeFilenameValid(_lastRequestedSeed[message.Author.Id].ToString("o"));
-                var spoilerLogFilename = Path.Combine(_cliPath, $@"output\{requestedLog}_SpoilerLog.txt");
-                if (File.Exists(spoilerLogFilename))
-                {
-                    var result = await message.Channel.SendFileAsync(spoilerLogFilename);
-                    File.Delete(spoilerLogFilename);
-                }
-                else
-                {
-                    await message.Channel.SendMessageAsync("Spoiler log not found.");
-                }
-            }
-            if (message.Content == "!seed")
-            {
-                if (_lastRequestedSeed.ContainsKey(message.Author.Id) && (DateTime.UtcNow - _lastRequestedSeed[message.Author.Id]).TotalHours < 6)
-                {
-                    await message.Channel.SendMessageAsync("You may only request a seed once every 6 hours.");
-                    return;
-                }
-                var now = DateTime.UtcNow;
-                _lastRequestedSeed[message.Author.Id] = now;
-                var messageResult = await message.Channel.SendMessageAsync("Generating seed...");
-                new Thread(async () =>
-                {
-                    var filename = FileUtils.MakeFilenameValid(now.ToString("o"));
-                    var success = false;
-                    try
+                    if (!lastRequestedSeed.HasValue)
                     {
-                        success = await GenerateSeed(filename);
-                        var patchPath = Path.Combine(_cliPath, $@"output\{filename}.mmr");
-                        if (File.Exists(patchPath))
+                        await message.Channel.SendMessageAsync("You haven't generated any seeds recently.");
+                        return;
+                    }
+                    var requestedLog = FileUtils.MakeFilenameValid(lastRequestedSeed.Value.ToString("o"));
+                    var spoilerLogFilename = Path.Combine(_cliPath, $@"output\{requestedLog}_SpoilerLog.txt");
+                    if (File.Exists(spoilerLogFilename))
+                    {
+                        var result = await message.Channel.SendFileAsync(spoilerLogFilename);
+                        File.Delete(spoilerLogFilename);
+                    }
+                    else
+                    {
+                        await message.Channel.SendMessageAsync("Spoiler log not found.");
+                    }
+                }
+                if (message.Content == "!seed")
+                {
+                    if (lastRequestedSeed.HasValue && (DateTime.UtcNow - lastRequestedSeed.Value).TotalHours < 6)
+                    {
+                        await message.Channel.SendMessageAsync("You may only request a seed once every 6 hours.");
+                        return;
+                    }
+                    var now = DateTime.UtcNow;
+                    await db.SaveAsync(new UserSeedEntity
+                    {
+                        UserId = message.Author.Id,
+                        LastSeedRequest = now
+                    });
+                    var messageResult = await message.Channel.SendMessageAsync("Generating seed...");
+                    new Thread(async () =>
+                    {
+                        var filename = FileUtils.MakeFilenameValid(now.ToString("o"));
+                        var success = false;
+                        try
                         {
-                            var result = await message.Channel.SendFileAsync(patchPath);
-                            File.Delete(patchPath);
-                            await messageResult.DeleteAsync();
+                            success = await GenerateSeed(filename);
+                            if (success)
+                            {
+                                var patchPath = Path.Combine(_cliPath, $@"output\{filename}.mmr");
+                                var hashIconPath = Path.ChangeExtension(patchPath, "png");
+                                if (File.Exists(patchPath) && File.Exists(hashIconPath))
+                                {
+                                    await message.Channel.SendFileAsync(patchPath);
+                                    await message.Channel.SendFileAsync(hashIconPath);
+                                    File.Delete(patchPath);
+                                    File.Delete(hashIconPath);
+                                    await messageResult.DeleteAsync();
+                                }
+                                else
+                                {
+                                    success = false;
+                                }
+                            }
                         }
-                        else
+                        catch
                         {
                             success = false;
                         }
-                    }
-                    catch
-                    {
-                        success = false;
-                    }
-                    if (!success)
-                    {
-                        _lastRequestedSeed.Remove(message.Author.Id);
-                        await messageResult.ModifyAsync(mp => mp.Content = "An error occured.");
-                    }
-                }).Start();
+                        if (!success)
+                        {
+                            using (var db = _connectionFactory.Open())
+                            {
+                                db.DeleteById<UserSeedEntity>(message.Author.Id);
+                            }
+                            await messageResult.ModifyAsync(mp => mp.Content = "An error occured.");
+                        }
+                    }).Start();
+                }
             }
         }
 
@@ -163,7 +181,7 @@ namespace MMR.DiscordBot
             var seed = await GetSeed();
             var processInfo = new ProcessStartInfo(Path.Combine(_cliPath, @"MMR.CLI.exe"));
             processInfo.WorkingDirectory = _cliPath;
-            processInfo.Arguments = $"-output \"output/{filename}.mmr\" -seed {seed} -spoiler -patch";
+            processInfo.Arguments = $"-output \"output\\{filename}.z64\" -seed {seed} -spoiler -patch";
             processInfo.ErrorDialog = false;
             processInfo.UseShellExecute = false;
             processInfo.RedirectStandardOutput = true;
@@ -192,7 +210,10 @@ namespace MMR.DiscordBot
             {
                 seed = _random.Next();
             }
-            _semaphore.Release();
+            finally
+            {
+                _semaphore.Release();
+            }
             return seed;
         }
     }

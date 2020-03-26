@@ -842,7 +842,7 @@ namespace MMR.UI.Forms
         {
             if (openLogic.ShowDialog() == DialogResult.OK)
             {
-                using (var logicFile = new StreamReader(File.Open(openLogic.FileName, FileMode.Open)))
+                using (var logicFile = new StreamReader(File.OpenRead(openLogic.FileName)))
                 {
                     var logicString = logicFile.ReadToEnd();
                     LoadLogic(logicString);

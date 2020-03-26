@@ -17,12 +17,12 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Hearts color selection used for HUD color override.
         /// </summary>
-        public string HeartsSelection { get; set; }
+        public string HeartsSelection { get; set; } = ColorSelectionManager.Hearts.GetItems()[0].Name;
 
         /// <summary>
         /// Magic color selection used for HUD color override.
         /// </summary>
-        public string MagicSelection { get; set; }
+        public string MagicSelection { get; set; } = ColorSelectionManager.MagicMeter.GetItems()[0].Name;
 
         /// <summary>
         /// Randomize sound effects

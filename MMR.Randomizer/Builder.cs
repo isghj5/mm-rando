@@ -10,15 +10,20 @@ using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Models.SoundEffects;
 using MMR.Randomizer.Utils;
+using SixLabors.ImageSharp;
+using SixLabors.ImageSharp.PixelFormats;
+using SixLabors.ImageSharp.Processing;
+using Point = SixLabors.Primitives.Point;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
+using Color = System.Drawing.Color;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using SixLabors.ImageSharp.Formats.Png;
 
 namespace MMR.Randomizer
 {
@@ -91,7 +96,8 @@ namespace MMR.Randomizer
 
             // DEBUG: if the user has a test sequence it always get put into fileselect
             SequenceInfo test_sequence = RomData.SequenceList.Find(u => u.Name.Contains("songtest") == true);
-            if (test_sequence != null){
+            if (test_sequence != null)
+            {
                 if (test_sequence.SequenceBinaryList != null && test_sequence.SequenceBinaryList[0] != null && test_sequence.SequenceBinaryList[0].InstrumentSet != null)
                 {
                     test_sequence.Instrument = test_sequence.SequenceBinaryList[0].InstrumentSet.BankSlot;
@@ -101,7 +107,7 @@ namespace MMR.Randomizer
                 }
                 SequenceInfo slot = RomData.TargetSequences.Find(u => u.Name.Contains("fileselect"));
                 test_sequence.Replaces = slot.Replaces;
-                WriteOutput(GetSpacedString(test_sequence.Name, len:44) + " DEBUG -> " + slot.Name);
+                WriteOutput(GetSpacedString(test_sequence.Name, len: 44) + " DEBUG -> " + slot.Name);
                 RomData.TargetSequences.Remove(slot);
                 Unassigned.Remove(test_sequence);
             }
@@ -213,20 +219,22 @@ namespace MMR.Randomizer
 
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
 
-            String dir = Path.GetDirectoryName(_settings.OutputROMFilename);
-            String path = $"{Path.GetFileNameWithoutExtension(_settings.OutputROMFilename)}";
-            // spoiler log should already be written by the time we reach this far
-            if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
-                path += "_SpoilerLog.txt";
-            else // TODO add HTML log compatibility
-                path += "_SongLog.txt";
-
-            using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
+            if (_cosmeticSettings.Music == Music.Random)
             {
-                sw.WriteLine(""); // spacer
-                sw.Write(log);
-            }
+                String dir = Path.GetDirectoryName(_settings.OutputROMFilename);
+                String path = $"{Path.GetFileNameWithoutExtension(_settings.OutputROMFilename)}";
+                // spoiler log should already be written by the time we reach this far
+                if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
+                    path += "_SpoilerLog.txt";
+                else // TODO add HTML log compatibility
+                    path += "_SongLog.txt";
 
+                using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
+                {
+                    sw.WriteLine(""); // spacer
+                    sw.Write(log);
+                }
+            }
         }
         #endregion
 
@@ -254,8 +262,7 @@ namespace MMR.Randomizer
 
         private void WriteAudioSeq(Random random, OutputSettings _settings)
         {
-            RomData.PointerizedSequences = new List<SequenceInfo>();
-            if (_cosmeticSettings.Music != Music.Random)
+            if (_cosmeticSettings.Music == Music.None)
             {
                 return;
             }
@@ -263,11 +270,9 @@ namespace MMR.Randomizer
             RomData.PointerizedSequences = new List<SequenceInfo>();
             SequenceUtils.ReadSequenceInfo();
             SequenceUtils.ReadInstrumentSetList();
-            BGMShuffle(random, _settings);
-
-            foreach (SequenceInfo s in RomData.SequenceList)
+            if (_cosmeticSettings.Music == Music.Random)
             {
-                s.Name = Path.Combine(Values.MusicDirectory, s.Name);
+                BGMShuffle(random, _settings);
             }
 
             ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-music");
@@ -309,24 +314,37 @@ namespace MMR.Randomizer
 
             int characterIndex = (int)_randomized.Settings.Character;
 
-            using (var b = new BinaryReader(File.Open(Path.Combine(Values.ObjsDirectory, $"link-{characterIndex}"), FileMode.Open)))
+            using (var b = new BinaryReader(File.OpenRead(Path.Combine(Values.ObjsDirectory, $"link-{characterIndex}"))))
             {
                 var obj = new byte[b.BaseStream.Length];
                 b.Read(obj, 0, obj.Length);
-
                 ResourceUtils.ApplyHack(Values.ModsDirectory, $"fix-link-{characterIndex}");
                 ObjUtils.InsertObj(obj, 0x11);
             }
 
             if (_randomized.Settings.Character == Character.Kafei)
             {
-                using (var b = new BinaryReader(File.Open(Path.Combine(Values.ObjsDirectory, "kafei"), FileMode.Open)))
+                using (var b = new BinaryReader(File.OpenRead(Path.Combine(Values.ObjsDirectory, "kafei"))))
                 {
                     var obj = new byte[b.BaseStream.Length];
                     b.Read(obj, 0, obj.Length);
-
                     ObjUtils.InsertObj(obj, 0x1C);
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-kafei");
+                }
+
+                using (var b = new BinaryReader(File.OpenRead(Path.Combine(Values.ObjsDirectory, "link-mask"))))
+                {
+                    var obj = new byte[b.BaseStream.Length];
+                    b.Read(obj, 0, obj.Length);
+                    ObjUtils.InsertObj(obj, 0x1FF);
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "update-kafei-mask-icon");
+                }
+
+                using (var b = new BinaryReader(File.OpenRead(Path.Combine(Values.ObjsDirectory, "gi-link-mask"))))
+                {
+                    var obj = new byte[b.BaseStream.Length];
+                    b.Read(obj, 0, obj.Length);
+                    ObjUtils.InsertObj(obj, 0x258);
                 }
             }
         }
@@ -340,15 +358,23 @@ namespace MMR.Randomizer
             TunicUtils.UpdateFormTunics(otherTunics, _cosmeticSettings.TunicColor);
 
             var playerModel = DeterminePlayerModel();
-            var characterIndex = (int)playerModel;
-            var locations = ResourceUtils.GetAddresses(Values.AddrsDirectory, $"tunic-{characterIndex}");
-            var objectIndex = playerModel == Character.Kafei ? 0x1C : 0x11;
-            var objectData = ObjUtils.GetObjectData(objectIndex);
-            for (int j = 0; j < locations.Count; j++)
+            var characterIndex = (int)playerModel;          
+            if (playerModel == Character.Kafei)
             {
-                ReadWriteUtils.WriteFileAddr(locations[j], color, objectData);
+                var objectData = ObjUtils.GetObjectData(0x11);
+                TunicUtils.UpdateKafeiTunic(ref objectData, t);
+                ObjUtils.InsertObj(objectData, 0x11);
             }
-            ObjUtils.InsertObj(objectData, objectIndex);
+            else
+            {
+                var locations = ResourceUtils.GetAddresses(Values.AddrsDirectory, $"tunic-{characterIndex}");
+                var objectData = ObjUtils.GetObjectData(0x11);
+                for (int j = 0; j < locations.Count; j++)
+                {
+                    ReadWriteUtils.WriteFileAddr(locations[j], color, objectData);
+                }
+                ObjUtils.InsertObj(objectData, 0x11);
+            };
         }
 
         private void WriteMiscellaneousChanges()
@@ -1212,19 +1238,49 @@ namespace MMR.Randomizer
             }
         }
 
+        private void WriteTitleScreen()
+        {
+            var titleScreen = ResourceUtils.ReadHack(Values.ModsDirectory, "title-screen");
+
+            int rot = _randomized.TitleLogoColor;
+            Color l;
+            float h;
+            for (int i = 0; i < 144 * 64; i++)
+            {
+                int p = (i * 4) + 8;
+                l = Color.FromArgb(titleScreen[p + 3], titleScreen[p], titleScreen[p + 1], titleScreen[p + 2]);
+                h = l.GetHue();
+                h += rot;
+                h %= 360f;
+                l = ColorUtils.FromAHSB(l.A, h, l.GetSaturation(), l.GetBrightness());
+                titleScreen[p] = l.R;
+                titleScreen[p + 1] = l.G;
+                titleScreen[p + 2] = l.B;
+                titleScreen[p + 3] = l.A;
+            }
+            l = Color.FromArgb(titleScreen[0x1FE72], titleScreen[0x1FE73], titleScreen[0x1FE76]);
+            h = l.GetHue();
+            h += rot;
+            h %= 360f;
+            l = ColorUtils.FromAHSB(255, h, l.GetSaturation(), l.GetBrightness());
+            titleScreen[0x1FE72] = l.R;
+            titleScreen[0x1FE73] = l.G;
+            titleScreen[0x1FE76] = l.B;
+
+            ResourceUtils.ApplyHack(titleScreen);
+        }
+
 
         private void WriteFileSelect()
         {
             ResourceUtils.ApplyHack(Values.ModsDirectory, "file-select");
             byte[] SkyboxDefault = new byte[] { 0x91, 0x78, 0x9B, 0x28, 0x00, 0x28 };
             List<int[]> Addrs = ResourceUtils.GetAddresses(Values.AddrsDirectory, "skybox-init");
-            Random R = new Random();
-            int rot = R.Next(360);
             for (int i = 0; i < 2; i++)
             {
                 Color c = Color.FromArgb(SkyboxDefault[i * 3], SkyboxDefault[i * 3 + 1], SkyboxDefault[i * 3 + 2]);
                 float h = c.GetHue();
-                h += rot;
+                h += _randomized.FileSelectSkybox;
                 h %= 360f;
                 c = ColorUtils.FromAHSB(c.A, h, c.GetSaturation(), c.GetBrightness());
                 SkyboxDefault[i * 3] = c.R;
@@ -1237,14 +1293,13 @@ namespace MMR.Randomizer
                 ReadWriteUtils.WriteROMAddr(Addrs[i], new byte[] { SkyboxDefault[i * 2], SkyboxDefault[i * 2 + 1] });
             }
 
-            rot = R.Next(360);
             byte[] FSDefault = new byte[] { 0x64, 0x96, 0xFF, 0x96, 0xFF, 0xFF, 0x64, 0xFF, 0xFF };
             Addrs = ResourceUtils.GetAddresses(Values.AddrsDirectory, "fs-colour");
             for (int i = 0; i < 3; i++)
             {
                 Color c = Color.FromArgb(FSDefault[i * 3], FSDefault[i * 3 + 1], FSDefault[i * 3 + 2]);
                 float h = c.GetHue();
-                h += rot;
+                h += _randomized.FileSelectColor;
                 h %= 360f;
                 c = ColorUtils.FromAHSB(c.A, h, c.GetSaturation(), c.GetBrightness());
                 FSDefault[i * 3] = c.R;
@@ -1298,6 +1353,26 @@ namespace MMR.Randomizer
             RomData.MMFileList[1142].Data = data.ToArray();
         }
 
+        public void OutputHashIcons(IEnumerable<byte> iconFileIndices, string filename)
+        {
+            var iconFiles = RomUtils.GetFilesFromArchive(19);
+            var numberOfHashIcons = iconFileIndices.Count();
+            var margin = 8;
+            using (var image = new Image<Argb32>(32 * numberOfHashIcons + margin * (numberOfHashIcons - 1), 32))
+            {
+                var i = 0;
+                foreach (var iconFileIndex in iconFileIndices)
+                {
+                    using (var icon = Image.LoadPixelData<Rgba32>(iconFiles[iconFileIndex], 32, 32))
+                    {
+                        image.Mutate(o => o.DrawImage(icon, new Point(i * 32 + i * margin, 0), 1f));
+                    }
+                    i++;
+                }
+                image.Save(filename, new PngEncoder());
+            }
+        }
+
         private void WriteAsmPatch(AsmContext asm)
         {
             // Load the symbols and use them to apply the patch data
@@ -1349,7 +1424,7 @@ namespace MMR.Randomizer
 
         public void MakeROM(OutputSettings outputSettings, IProgressReporter progressReporter)
         {
-            using (BinaryReader OldROM = new BinaryReader(File.Open(outputSettings.InputROMFilename, FileMode.Open, FileAccess.Read)))
+            using (BinaryReader OldROM = new BinaryReader(File.OpenRead(outputSettings.InputROMFilename)))
             {
                 RomUtils.ReadFileTable(OldROM);
                 _messageTable.InitializeTable();
@@ -1358,13 +1433,14 @@ namespace MMR.Randomizer
             var originalMMFileList = RomData.MMFileList.Select(file => file.Clone()).ToList();
 
             byte[] hash;
+            AsmContext asm;
             if (!string.IsNullOrWhiteSpace(outputSettings.InputPatchFilename))
             {
                 progressReporter.ReportProgress(50, "Applying patch...");
                 hash = RomUtils.ApplyPatch(outputSettings.InputPatchFilename);
 
                 // Parse Symbols data from the ROM (specific MMFile)
-                var asm = AsmContext.LoadFromROM();
+                asm = AsmContext.LoadFromROM();
 
                 // Apply Asm configuration post-patch
                 WriteAsmConfigPostPatch(asm, hash);
@@ -1378,6 +1454,7 @@ namespace MMR.Randomizer
                 {
                     progressReporter.ReportProgress(60, "Applying hacks...");
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "title-screen");
+                    WriteTitleScreen();
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "misc-changes");
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "cm-cs");
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-song-of-healing");
@@ -1424,7 +1501,7 @@ namespace MMR.Randomizer
                 WriteStartupStrings();
 
                 // Load Asm data from internal resource files and apply
-                var asm = AsmContext.LoadInternal();
+                asm = AsmContext.LoadInternal();
                 progressReporter.ReportProgress(70, "Writing ASM patch...");
                 WriteAsmPatch(asm);
                 
@@ -1433,6 +1510,12 @@ namespace MMR.Randomizer
 
                 // Write subset of Asm config post-patch
                 WriteAsmConfig(asm, hash);
+
+                if (_randomized.Settings.DrawHash || outputSettings.GeneratePatch)
+                {
+                    var iconStripIcons = asm.Symbols.ReadHashIconsTable();
+                    OutputHashIcons(ImageUtils.GetIconIndices(hash).Select(index => iconStripIcons[index]), Path.ChangeExtension(outputSettings.OutputROMFilename, "png"));
+                }
             }
             WriteMiscellaneousChanges();
 

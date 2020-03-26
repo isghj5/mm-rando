@@ -24,5 +24,19 @@ namespace MMR.Common.Tests
             CollectionAssert.AreEqual(new List<string> { "c", "c" }, result["-c"]);
             CollectionAssert.AreEqual(new List<string> { }, result["-d"]);
         }
+
+        [Test]
+        public void TestQuotes()
+        {
+            var commandArgument = "-a \"\" -b \"hello\" -c \"hello world\" -d \"\"\"";
+            var args = commandArgument.Split(' ');
+            var result = DictionaryHelper.FromProgramArguments(args);
+
+            CollectionAssert.AreEqual(new List<string> { "-a", "-b", "-c", "-d" }, result.Keys);
+            CollectionAssert.AreEqual(new List<string> { "" }, result["-a"]);
+            CollectionAssert.AreEqual(new List<string> { "hello" }, result["-b"]);
+            CollectionAssert.AreEqual(new List<string> { "hello world" }, result["-c"]);
+            CollectionAssert.AreEqual(new List<string> { "\"" }, result["-d"]);
+        }
     }
 }

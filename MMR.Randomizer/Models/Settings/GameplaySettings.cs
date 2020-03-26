@@ -16,7 +16,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Filepath to the input logic file
         /// </summary>
-        public string UserLogicFileName { get; set; }
+        public string UserLogicFileName { get; set; } = "";
 
         public string Logic { get; set; }
 
@@ -57,6 +57,14 @@ namespace MMR.Randomizer.Models.Settings
         public bool FastPush {
             get { return this.AsmOptions.MiscConfig.Flags.FastPush; }
             set { this.AsmOptions.MiscConfig.Flags.FastPush = value; }
+        }
+
+        /// <summary>
+        /// Whether or not to enable freestanding models.
+        /// </summary>
+        public bool UpdateWorldModels {
+            get { return this.AsmOptions.MiscConfig.Flags.FreestandingModels; }
+            set { this.AsmOptions.MiscConfig.Flags.FreestandingModels = value; }
         }
 
         /// <summary>
@@ -595,6 +603,18 @@ namespace MMR.Randomizer.Models.Settings
             if (LogicMode == LogicMode.UserLogic && !File.Exists(UserLogicFileName))
             {
                 return "User Logic not found or invalid, please load User Logic or change logic mode.";
+            }
+            if (UseCustomItemList && CustomItemList == null)
+            {
+                return "Invalid custom item list.";
+            }
+            if (CustomStartingItemList == null)
+            {
+                return "Invalid custom starting item list.";
+            }
+            if (CustomJunkLocations == null)
+            {
+                return "Invalid junk locations list.";
             }
             return null;
         }

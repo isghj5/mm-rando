@@ -18,6 +18,9 @@ namespace MMR.Randomizer.Models
         public List<ItemLogic> Logic { get; set; }
         public ReadOnlyCollection<Item> ImportantItems { get; set; }
         public ReadOnlyCollection<Item> ItemsRequiredForMoonAccess { get; set; }
+        public int FileSelectSkybox { get; internal set; }
+        public int FileSelectColor { get; internal set; }
+        public int TitleLogoColor { get; internal set; }
 
         public List<SpoilerEntrance> EntranceSpoilers { get; set; }
         public int[] OwlStatueList { get; set; }

@@ -13,19 +13,48 @@ namespace MMR.Common.Utils
                 return result;
             }
             string currentArgument = null;
+            string currentParameter = string.Empty;
+            bool inQuote = false;
             foreach (var arg in args)
             {
-                if (arg.StartsWith("-"))
+                var processingArg = arg;
+                if (processingArg.StartsWith("-"))
                 {
-                    currentArgument = arg;
+                    currentArgument = processingArg;
                     result[currentArgument] = new List<string>();
                     continue;
                 }
                 if (currentArgument == null)
                 {
-                    throw new ArgumentException($"Error: unnamed argument '{arg}'");
+                    throw new ArgumentException($"Error: unnamed argument '{processingArg}'");
                 }
-                result[currentArgument].Add(arg);
+
+                if (!inQuote)
+                {
+                    if (processingArg.StartsWith("\""))
+                    {
+                        processingArg = processingArg.Substring(1);
+                        inQuote = true;
+                    }
+                }
+                if (inQuote)
+                {
+                    if (processingArg.EndsWith("\""))
+                    {
+                        processingArg = processingArg.Substring(0, processingArg.Length - 1);
+                        inQuote = false;
+                    }
+                }
+
+                if (inQuote)
+                {
+                    currentParameter += processingArg + " ";
+                }
+                else
+                {
+                    result[currentArgument].Add(currentParameter + processingArg);
+                    currentParameter = string.Empty;
+                }
             }
             return result;
         }

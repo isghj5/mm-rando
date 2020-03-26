@@ -47,7 +47,7 @@ namespace MMR.Randomizer.Models.Settings
 
         public string Validate()
         {
-            if (!GenerateROM && !OutputVC && !GeneratePatch && !GenerateSpoilerLog)
+            if (!GenerateROM && !OutputVC && (InputPatchFilename != null || (!GeneratePatch && !GenerateSpoilerLog && !GenerateHTMLLog)))
             {
                 return "No output selected.";
             }

@@ -1,4 +1,5 @@
 ﻿using MMR.Randomizer.Models.Settings;
+using MMR.Randomizer.Models;
 using MMR.Randomizer;
 using MMR.Randomizer.GameObjects;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ using System.Linq;
 using MMR.Randomizer.Extensions;
 using MMR.Common.Utils;
 using System.IO;
+using System.Linq.Expressions;
+using MMR.Randomizer.Models.Colors;
 
 namespace MMR.CLI
 {
@@ -16,20 +19,84 @@ namespace MMR.CLI
         static int Main(string[] args)
         {
             var argsDictionary = DictionaryHelper.FromProgramArguments(args);
-            var settings = new GameplaySettings();
-            var outputSettings = new OutputSettings();
-            settings.Update("fz1mr--16psr-lc-f");
-            settings.CustomItemListString = "81-80000000----3fff-ffffffff-ffffffff-fe000000-6619ff-7fffffff-f378ffff-ffffffff";
-            settings.CustomItemList = ConvertIntString(settings.CustomItemListString);
-            settings.CustomStartingItemListString = "-3fc04000-";
-            settings.CustomStartingItemList = ConvertItemString(ItemUtils.StartingItems().Where(item => !item.Name().Contains("Heart")).ToList(), settings.CustomStartingItemListString);
-            settings.CustomJunkLocationsString = "----------200000--f000";
-            settings.CustomJunkLocations = ConvertItemString(ItemUtils.AllLocations().ToList(), settings.CustomJunkLocationsString);
+            if (argsDictionary.ContainsKey("-help"))
+            {
+                Console.WriteLine("All arguments are optional.");
+                var helpTexts = new Dictionary<string, string>
+                {
+                    { "-help", "See this help text." },
+                    { "-settings <path>", "Path to a settings JSON file. Only the GameplaySettings will be loaded. Other settings will be loaded from your default settings.json file." },
+                    { "-patch", "Output a .mmr patch file." },
+                    { "-spoiler", "Output a .txt spoiler log." },
+                    { "-html", "Output a .html item tracker." },
+                    { "-rom", "Output a .z64 ROM file." },
+                    { "-seed", "Set the seed for the randomizer." },
+                    { "-output <path>", "Path to output the output ROM. Other outputs will be based on the filename in this path. If omitted, will output to \"output/{timestamp}.z64\"" },
+                    { "-input <path>", "Path to the input Majora's Mask (U) ROM. If omitted, will try to use \"input.z64\"." },
+                    { "-save", "Save the settings to the default settings.json file." },
+                };
+                foreach (var kvp in helpTexts)
+                {
+                    Console.WriteLine("{0, -17} {1}", kvp.Key, kvp.Value);
+                }
+                Console.WriteLine("settings.json details:");
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.LogicMode));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.DamageMode));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.DamageEffect));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.MovementMode));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.FloorType));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.ClockSpeed));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.BlastMaskCooldown));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.GossipHintStyle));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.TatlColorSchema));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.Music));
+                Console.WriteLine(GetEnumArraySettingDescription(cfg => cfg.CosmeticSettings.DPad.Pad.Values) + " Array length of 4.");
+                Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.HeartsSelection), ColorSelectionManager.Hearts.GetItems().Select(csi => csi.Name)));
+                Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.MagicSelection), ColorSelectionManager.MagicMeter.GetItems().Select(csi => csi.Name)));
+                return 0;
+            }
+            var configuration = LoadSettings();
+            if (configuration == null)
+            {
+                Console.WriteLine("Default settings file not found. Generating...");
+                configuration = new Configuration
+                {
+                    CosmeticSettings = new CosmeticSettings(),
+                    GameplaySettings = new GameplaySettings(),
+                    OutputSettings = new OutputSettings()
+                    {
+                        InputROMFilename = "input.z64",
+                    },
+                };
+                SaveSettings(configuration);
+                Console.WriteLine($"Generated {Path.ChangeExtension(DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION)}. Edit it to set your settings.");
+            }
+            var settingsPath = argsDictionary.GetValueOrDefault("-settings")?.FirstOrDefault();
+            if (settingsPath != null)
+            {
+                var loadedConfiguration = LoadSettings(settingsPath);
+                if (loadedConfiguration == null)
+                {
+                    Console.WriteLine($"File not found \"{settingsPath}\".");
+                    return -1;
+                }
+                if (loadedConfiguration.GameplaySettings == null)
+                {
+                    Console.WriteLine($"Error loading GameplaySettings from \"{settingsPath}\".");
+                    return -1;
+                }
+                configuration.GameplaySettings = loadedConfiguration.GameplaySettings;
+                Console.WriteLine($"Loaded GameplaySettings from \"{settingsPath}\".");
+            }
 
-            outputSettings.GeneratePatch = argsDictionary.ContainsKey("-patch");
-            outputSettings.GenerateSpoilerLog = argsDictionary.ContainsKey("-spoiler");
-            outputSettings.GenerateHTMLLog = argsDictionary.ContainsKey("-html");
-            outputSettings.GenerateROM = argsDictionary.ContainsKey("-rom");
+            configuration.GameplaySettings.CustomItemList = ConvertIntString(configuration.GameplaySettings.CustomItemListString);
+            configuration.GameplaySettings.CustomStartingItemList = ConvertItemString(ItemUtils.StartingItems().Where(item => !item.Name().Contains("Heart")).ToList(), configuration.GameplaySettings.CustomStartingItemListString);
+            configuration.GameplaySettings.CustomJunkLocations = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomJunkLocationsString);
+
+            configuration.OutputSettings.GeneratePatch |= argsDictionary.ContainsKey("-patch");
+            configuration.OutputSettings.GenerateSpoilerLog |= argsDictionary.ContainsKey("-spoiler");
+            configuration.OutputSettings.GenerateHTMLLog |= argsDictionary.ContainsKey("-html");
+            configuration.OutputSettings.GenerateROM |= argsDictionary.ContainsKey("-rom");
 
             int seed;
             if (argsDictionary.ContainsKey("-seed"))
@@ -48,9 +115,13 @@ namespace MMR.CLI
                 {
                     throw new ArgumentException("Invalid argument.", "-output");
                 }
-                outputSettings.OutputROMFilename = outputArg.SingleOrDefault();
+                configuration.OutputSettings.OutputROMFilename = outputArg.SingleOrDefault();
             }
-            outputSettings.OutputROMFilename ??= Path.Combine("output", FileUtils.MakeFilenameValid(DateTime.UtcNow.ToString("o")));
+            configuration.OutputSettings.OutputROMFilename ??= Path.Combine("output", FileUtils.MakeFilenameValid(DateTime.UtcNow.ToString("o")));
+            if (Path.GetExtension(configuration.OutputSettings.OutputROMFilename) != ".z64")
+            {
+                configuration.OutputSettings.OutputROMFilename += ".z64";
+            }
 
             var inputArg = argsDictionary.GetValueOrDefault("-input");
             if (inputArg != null)
@@ -59,11 +130,16 @@ namespace MMR.CLI
                 {
                     throw new ArgumentException("Invalid argument.", "-input");
                 }
-                outputSettings.InputROMFilename = inputArg.SingleOrDefault();
+                configuration.OutputSettings.InputROMFilename = inputArg.SingleOrDefault();
             }
-            outputSettings.InputROMFilename ??= "input.z64";
+            configuration.OutputSettings.InputROMFilename ??= "input.z64";
 
-            var validationResult = settings.Validate();
+            if (argsDictionary.ContainsKey("-save"))
+            {
+                SaveSettings(configuration);
+            }
+
+            var validationResult = configuration.GameplaySettings.Validate() ?? configuration.OutputSettings.Validate();
             if (validationResult != null)
             {
                 Console.WriteLine(validationResult);
@@ -77,11 +153,7 @@ namespace MMR.CLI
                 {
                     //var progressReporter = new TextWriterProgressReporter(Console.Out);
                     var progressReporter = new ProgressBarProgressReporter(progressBar);
-                    result = ConfigurationProcessor.Process(new Configuration
-                    {
-                        GameplaySettings = settings,
-                        OutputSettings = outputSettings,
-                    }, seed, progressReporter);
+                    result = ConfigurationProcessor.Process(configuration, seed, progressReporter);
                 }
                 if (result != null)
                 {
@@ -104,6 +176,10 @@ namespace MMR.CLI
         private static List<int> ConvertIntString(string c)
         {
             var result = new List<int>();
+            if (string.IsNullOrWhiteSpace(c))
+            {
+                return result;
+            }
             try
             {
                 result.Clear();
@@ -111,7 +187,6 @@ namespace MMR.CLI
                 int[] vi = new int[13];
                 if (v.Length != vi.Length)
                 {
-                    result.Add(-1);
                     return null;
                 }
                 for (int i = 0; i < 13; i++)
@@ -137,8 +212,7 @@ namespace MMR.CLI
             }
             catch
             {
-                result.Clear();
-                result.Add(-1);
+                return null;
             }
             return result;
         }
@@ -147,14 +221,16 @@ namespace MMR.CLI
         {
             var sectionCount = (int)Math.Ceiling(items.Count / 32.0);
             var result = new List<Item>();
+            if (string.IsNullOrWhiteSpace(c))
+            {
+                return result;
+            }
             try
             {
-                result.Clear();
                 string[] v = c.Split('-');
                 int[] vi = new int[sectionCount];
                 if (v.Length != vi.Length)
                 {
-                    //result.Add(-1);
                     return null;
                 }
                 for (int i = 0; i < sectionCount; i++)
@@ -180,10 +256,87 @@ namespace MMR.CLI
             }
             catch
             {
-                result.Clear();
-                //result.Add(-1);
+                return null;
             }
             return result;
+        }
+
+        private const string DEFAULT_SETTINGS_FILENAME = "settings";
+        private const string SETTINGS_EXTENSION = "json";
+        private static void SaveSettings(Configuration configuration, string filename = null)
+        {
+            var path = Path.ChangeExtension(filename ?? DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION);
+            string logicFilePath = null;
+            //if (filename != null)
+            //{
+            //    logicFilePath = configuration.GameplaySettings.UserLogicFileName;
+            //    configuration.GameplaySettings.UserLogicFileName = null;
+            //    if (configuration.GameplaySettings.LogicMode == LogicMode.UserLogic && logicFilePath != null && File.Exists(logicFilePath))
+            //    {
+            //        using (StreamReader Req = new StreamReader(File.OpenRead(logicFilePath)))
+            //        {
+            //            configuration.GameplaySettings.Logic = Req.ReadToEnd();
+            //            if (configuration.GameplaySettings.Logic.StartsWith("{"))
+            //            {
+            //                var logicConfiguration = Configuration.FromJson(configuration.GameplaySettings.Logic);
+            //                configuration.GameplaySettings.Logic = logicConfiguration.GameplaySettings.Logic;
+            //            }
+            //        }
+            //    }
+            //    configurationToSave = new Configuration
+            //    {
+            //        GameplaySettings = configuration.GameplaySettings,
+            //    };
+            //}
+            using (var settingsFile = new StreamWriter(File.Open(path, FileMode.Create)))
+            {
+                settingsFile.Write(configuration.ToString());
+            }
+            //if (logicFilePath != null)
+            //{
+            //    configuration.GameplaySettings.UserLogicFileName = logicFilePath;
+            //    configuration.GameplaySettings.Logic = null;
+            //}
+        }
+
+        private static Configuration LoadSettings(string filename = null)
+        {
+            var path = Path.ChangeExtension(filename ?? DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION);
+            if (File.Exists(path))
+            {
+                Configuration configuration;
+                using (StreamReader Req = new StreamReader(File.OpenRead(path)))
+                {
+                    configuration = Configuration.FromJson(Req.ReadToEnd());
+                }
+
+                if (configuration.GameplaySettings.Logic != null)
+                {
+                    configuration.GameplaySettings.UserLogicFileName = path;
+                    configuration.GameplaySettings.Logic = null;
+                }
+                if (!File.Exists(configuration.GameplaySettings.UserLogicFileName))
+                {
+                    configuration.GameplaySettings.UserLogicFileName = string.Empty;
+                }
+                return configuration;
+            }
+            return null;
+        }
+
+        private static string GetEnumSettingDescription<T>(Expression<Func<Configuration, T>> propertySelector) where T : struct
+        {
+            return $"{((MemberExpression)propertySelector.Body).Member.Name, -17} {string.Join('|', Enum.GetNames(typeof(T)))}";
+        }
+
+        private static string GetEnumArraySettingDescription<T>(Expression<Func<Configuration, T[]>> propertySelector) where T : struct
+        {
+            return $"{((MemberExpression)propertySelector.Body).Member.Name, -17} [{string.Join('|', Enum.GetNames(typeof(T)))}]";
+        }
+
+        private static string GetArrayValueDescription(string name, IEnumerable<string> values)
+        {
+            return $"{name, -17} {string.Join('|', values)}";
         }
     }
 }

@@ -27,6 +27,7 @@ namespace MMR.Randomizer.Models.Settings
         {
             ContractResolver = new WritablePropertiesOnlyResolver(),
             NullValueHandling = NullValueHandling.Ignore,
+            Formatting = Formatting.Indented,
         };
 
         static Configuration()

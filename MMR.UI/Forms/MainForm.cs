@@ -128,7 +128,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cUpdateChests, "Chest appearance will be updated to match the item they contain.");
             TooltipBuilder.SetTooltip(cEponaSword, "Change Epona's B button behavior to prevent you from losing your sword if you don't have a bow.\nMay affect vanilla glitches that use Epona's B button.");
             TooltipBuilder.SetTooltip(cDrawHash, "Draw hash icons on the File Select screen.");
-            TooltipBuilder.SetTooltip(cQuestItemStorage, "Enable Quest Item Storage, which allows for storing multiple quest items in their dedicated inventory slot.");
+            TooltipBuilder.SetTooltip(cQuestItemStorage, "Enable Quest Item Storage, which allows for storing multiple quest items in their dedicated inventory slot. Quest items will also always be consumed when used.");
             TooltipBuilder.SetTooltip(cDisableCritWiggle, "Disable crit wiggle movement modification when 1 heart of health or less.");
             TooltipBuilder.SetTooltip(bTunic, "Select the color of Link's Tunic.");
             TooltipBuilder.SetTooltip(cLink, "Select a character model to replace Link's default model.");
@@ -139,6 +139,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cGoodDogRaceRNG, "Make Gold Dog always win if you have the Mask of Truth.");
             TooltipBuilder.SetTooltip(cFasterLabFish, "Change Lab Fish to only need to be fed one fish.");
             TooltipBuilder.SetTooltip(cFastPush, "Increase the speed of pushing and pulling blocks and faucets.");
+            TooltipBuilder.SetTooltip(cFreestanding, "Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.");
         }
 
         /// <summary>
@@ -226,7 +227,7 @@ namespace MMR.UI.Forms
 
         private void Randomize()
         {
-            var validationResult = _configuration.GameplaySettings.Validate();
+            var validationResult = _configuration.GameplaySettings.Validate() ?? _configuration.OutputSettings.Validate();
             if (validationResult != null)
             {
                 MessageBox.Show(validationResult, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -399,14 +400,27 @@ namespace MMR.UI.Forms
 
             // Misc config options
             cDisableCritWiggle.Checked = _configuration.GameplaySettings.CritWiggleDisable;
-            cDrawHash.Checked = _configuration.GameplaySettings.DrawHash;
+            _drawHashChecked = _configuration.GameplaySettings.DrawHash;
+            cDrawHash.Checked = _configuration.OutputSettings.GeneratePatch || (_drawHashChecked && (_configuration.OutputSettings.GenerateROM || _configuration.OutputSettings.OutputVC));
             cFastPush.Checked = _configuration.GameplaySettings.FastPush;
             cQuestItemStorage.Checked = _configuration.GameplaySettings.QuestItemStorage;
             cUnderwaterOcarina.Checked = _configuration.GameplaySettings.OcarinaUnderwater;
+            cFreestanding.Checked = _configuration.GameplaySettings.UpdateWorldModels;
 
             // HUD config options
-            cHUDHeartsComboBox.SelectedIndex = Array.FindIndex(ColorSelectionManager.Hearts.GetItems(), csi => csi.Name == _configuration.CosmeticSettings.HeartsSelection);
-            cHUDMagicComboBox.SelectedIndex = Array.FindIndex(ColorSelectionManager.MagicMeter.GetItems(), csi => csi.Name == _configuration.CosmeticSettings.MagicSelection);
+            var heartItems = ColorSelectionManager.Hearts.GetItems();
+            var heartSelection = heartItems.FirstOrDefault(csi => csi.Name == _configuration.CosmeticSettings.HeartsSelection);
+            if (heartSelection != null)
+            {
+                cHUDHeartsComboBox.SelectedIndex = Array.IndexOf(heartItems, heartSelection);
+            }
+
+            var magicItems = ColorSelectionManager.MagicMeter.GetItems();
+            var magicSelection = magicItems.FirstOrDefault(csi => csi.Name == _configuration.CosmeticSettings.MagicSelection);
+            if (magicSelection != null)
+            {
+                cHUDMagicComboBox.SelectedIndex = Array.IndexOf(magicItems, magicSelection);
+            }
         }
 
         private void tSeed_KeyDown(object sender, KeyEventArgs e)
@@ -462,19 +476,16 @@ namespace MMR.UI.Forms
         private void cSpoiler_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.OutputSettings.GenerateSpoilerLog = cSpoiler.Checked);
-            UpdateSingleSetting(() => cHTMLLog.Enabled = cSpoiler.Checked);
-
-            if (cHTMLLog.Checked)
-            {
-                cHTMLLog.Checked = false;
-                UpdateSingleSetting(() => _configuration.OutputSettings.GenerateHTMLLog = false);
-            }
-
         }
 
+        private bool _drawHashChecked;
         private void cPatch_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.OutputSettings.GeneratePatch = cPatch.Checked);
+
+            cDrawHash.CheckedChanged -= cDrawHash_CheckedChanged;
+            cDrawHash.Checked = cPatch.Checked ? true : _drawHashChecked && (_configuration.OutputSettings.GenerateROM || _configuration.OutputSettings.OutputVC);
+            cDrawHash.CheckedChanged += cDrawHash_CheckedChanged;
         }
 
         private void cHTMLLog_CheckedChanged(object sender, EventArgs e)
@@ -681,6 +692,7 @@ namespace MMR.UI.Forms
         private void cDrawHash_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.DrawHash = cDrawHash.Checked);
+            _drawHashChecked = cDrawHash.Checked;
         }
 
         private void cQuestItemStorage_CheckedChanged(object sender, EventArgs e)
@@ -701,6 +713,11 @@ namespace MMR.UI.Forms
         private void cUnderwaterOcarina_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.OcarinaUnderwater = cUnderwaterOcarina.Checked);
+        }
+
+        private void cFreestanding_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.UpdateWorldModels = cFreestanding.Checked);
         }
 
         private void cTargettingStyle_CheckedChanged(object sender, EventArgs e)
@@ -873,6 +890,7 @@ namespace MMR.UI.Forms
                 cBottled.Enabled = false;
                 cShop.Enabled = false;
                 cSpoiler.Enabled = false;
+                cHTMLLog.Enabled = false;
                 cGossipHints.Enabled = false;
                 cAdditional.Enabled = false;
                 cUserItems.Enabled = false;
@@ -894,6 +912,7 @@ namespace MMR.UI.Forms
                 cMixSongs.Enabled = onMainTab;
                 cDEnt.Enabled = onMainTab;
                 cSpoiler.Enabled = onMainTab;
+                cHTMLLog.Enabled = onMainTab;
                 cGossipHints.Enabled = onMainTab;
                 cUserItems.Enabled = onMainTab;
 
@@ -928,7 +947,16 @@ namespace MMR.UI.Forms
                 }
             }
 
-            cHTMLLog.Enabled = onMainTab && _configuration.OutputSettings.GenerateSpoilerLog;
+            bLoadLogic.Enabled = _configuration.GameplaySettings.LogicMode == LogicMode.UserLogic;
+
+            var oldEnabled = cDrawHash.Enabled;
+            cDrawHash.Enabled = onMainTab && !_configuration.OutputSettings.GeneratePatch && (_configuration.OutputSettings.GenerateROM || _configuration.OutputSettings.OutputVC);
+            if (onMainTab && cDrawHash.Enabled != oldEnabled)
+            {
+                cDrawHash.CheckedChanged -= cDrawHash_CheckedChanged;
+                cDrawHash.Checked = cDrawHash.Enabled ? _drawHashChecked : false;
+                cDrawHash.CheckedChanged += cDrawHash_CheckedChanged;
+            }
 
             if (_configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Default || _configuration.GameplaySettings.LogicMode == LogicMode.Vanilla)
             {
@@ -969,73 +997,92 @@ namespace MMR.UI.Forms
 
         private void EnableAllControls(bool v)
         {
-            cAdditional.Enabled = v;
-            cSFX.Enabled = v;
-            cMusic.Enabled = v;
-            cBottled.Enabled = v;
-            cCutsc.Enabled = v;
-            cDChests.Enabled = v;
-            cDEnt.Enabled = v;
             cMode.Enabled = v;
-            cDMult.Enabled = v;
-            cDType.Enabled = v;
-            cDummy.Enabled = v;
-            cEnemy.Enabled = v;
-            cFloors.Enabled = v;
-            cClockSpeed.Enabled = v;
-            cGossipHints.Enabled = v;
-            cBlastCooldown.Enabled = v;
-            cHideClock.Enabled = v;
-            cSunsSong.Enabled = v;
-            cGravity.Enabled = v;
-            cLink.Enabled = v;
-            cMixSongs.Enabled = v;
-            cSoS.Enabled = v;
-            cShop.Enabled = v;
+            bLoadLogic.Enabled = v;
+            bStartingItemEditor.Enabled = v;
+            tStartingItemList.Enabled = v;
+            bJunkLocationsEditor.Enabled = v;
+            tJunkLocationsList.Enabled = v;
+
             cUserItems.Enabled = v;
-            cVC.Enabled = v;
-            cQText.Enabled = v;
-            cSpoiler.Enabled = v;
+            bItemListEditor.Enabled = v;
+            tCustomItemList.Enabled = v;
+
+            cDEnt.Enabled = v;
+            cNoStartingItems.Enabled = v;
+            cMixSongs.Enabled = v;
+            cEnemy.Enabled = v;
+
+            bTunic.Enabled = v;
             cTatl.Enabled = v;
+            cMusic.Enabled = v;
+            cLink.Enabled = v;
+
+            cHUDHeartsComboBox.Enabled = v;
+            cHUDMagicComboBox.Enabled = v;
+            btn_hud.Enabled = v;
+
+            cGossipHints.Enabled = v;
             cFreeHints.Enabled = v;
             cClearHints.Enabled = v;
-            cNoDowngrades.Enabled = v;
+
+            cTargettingStyle.Enabled = v;
+            cSFX.Enabled = v;
+            cDisableCritWiggle.Enabled = v;
+            cCutsc.Enabled = v;
+            cQText.Enabled = v;
+            cFastPush.Enabled = v;
             cShopAppearance.Enabled = v;
-            cEponaSword.Enabled = v;
-            cHTMLLog.Enabled = v;
-            cN64.Enabled = v;
-            cMoonItems.Enabled = v;
-            cFairyRewards.Enabled = v;
-            cNutChest.Enabled = v;
-            cCrazyStartingItems.Enabled = v;
-            cNoStartingItems.Enabled = v;
-            cCowMilk.Enabled = v;
-            cSpiders.Enabled = v;
-            cStrayFairies.Enabled = v;
-            cMundaneRewards.Enabled = v;
-            cPatch.Enabled = v;
-            bApplyPatch.Enabled = v;
             cUpdateChests.Enabled = v;
-            tStartingItemList.Enabled = v;
-            bStartingItemEditor.Enabled = v;
+            cNoDowngrades.Enabled = v;
+            cEponaSword.Enabled = v;
+            cQuestItemStorage.Enabled = v;
+            cFreestanding.Enabled = v;
+
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
-            cGoodDogRaceRNG.Enabled = v;
             cFasterLabFish.Enabled = v;
-            cTargettingStyle.Enabled = v;
+            cGoodDogRaceRNG.Enabled = v;
 
-            cDrawHash.Enabled = v;
-            cQuestItemStorage.Enabled = v;
-            cDisableCritWiggle.Enabled = v;
-            cFastPush.Enabled = v;
+            cDMult.Enabled = v;
+            cDType.Enabled = v;
+            cGravity.Enabled = v;
+            cFloors.Enabled = v;
+            cClockSpeed.Enabled = v;
+            cBlastCooldown.Enabled = v;
+            cHideClock.Enabled = v;
             cUnderwaterOcarina.Enabled = v;
+            cSunsSong.Enabled = v;
 
+            cSoS.Enabled = v;
+            cDChests.Enabled = v;
+            cShop.Enabled = v;
+            cBottled.Enabled = v;
+            cCowMilk.Enabled = v;
+            cSpiders.Enabled = v;
+            cMundaneRewards.Enabled = v;
+            cMoonItems.Enabled = v;
+            cFairyRewards.Enabled = v;
+            cAdditional.Enabled = v;
+            cNutChest.Enabled = v;
+            cCrazyStartingItems.Enabled = v;
+            cStrayFairies.Enabled = v;
+
+            cDummy.Enabled = v;
             bopen.Enabled = v;
-            bRandomise.Enabled = v;
-            bTunic.Enabled = v;
 
+            cN64.Enabled = v;
+            cVC.Enabled = v;
+            cPatch.Enabled = v;
+            cSpoiler.Enabled = v;
+            cHTMLLog.Enabled = v;
+            cDrawHash.Enabled = v;
+
+            bRandomise.Enabled = v;
             tSeed.Enabled = v;
-            tSString.Enabled = v;
+            tSettings.Enabled = v;
+            bLoadPatch.Enabled = v;
+            bApplyPatch.Enabled = v;
         }
 
         private void mDPadConfig_Click(object sender, EventArgs e)
@@ -1135,46 +1182,43 @@ namespace MMR.UI.Forms
 
         private void TogglePatchSettings(bool v)
         {
-            // ROM Settings
-            cPatch.Enabled = v;
+            // Output Settings
+            cPatch.Visible = v;
+            cDrawHash.Visible = v;
+            cSpoiler.Visible = v;
+            cHTMLLog.Visible = v;
 
-            // Main Settings
-            cMode.Enabled = v;
-            cEnemy.Enabled = v;
-
-            //Gimmicks
-            cDMult.Enabled = v;
-            cDType.Enabled = v;
-            cGravity.Enabled = v;
-            cFloors.Enabled = v;
-            cClockSpeed.Enabled = v;
-            cHideClock.Enabled = v;
-            cSunsSong.Enabled = v;
-            cBlastCooldown.Enabled = v;
-            cUnderwaterOcarina.Enabled = v;
-
+            // Tabs
+            if (v)
+            {
+                if (!tSettings.TabPages.Contains(tabMain))
+                {
+                    tSettings.TabPages.Insert(0, tabMain);
+                    tSettings.TabPages.Add(tabGimmicks);
+                }
+            }
+            else
+            {
+                tSettings.TabPages.Remove(tabMain);
+                tSettings.TabPages.Remove(tabGimmicks);
+            }
 
             // Comfort/Cosmetics
-            cCutsc.Enabled = v;
-            cQText.Enabled = v;
-            cFreeHints.Enabled = v;
-            cNoDowngrades.Enabled = v;
-            cShopAppearance.Enabled = v;
-            cUpdateChests.Enabled = v;
-            cEponaSword.Enabled = v;
-            cClearHints.Enabled = _configuration.GameplaySettings.LogicMode != LogicMode.Vanilla && _configuration.GameplaySettings.GossipHintStyle != GossipHintStyle.Default && v;
-            cGossipHints.Enabled = _configuration.GameplaySettings.LogicMode != LogicMode.Vanilla && v;
-            cDisableCritWiggle.Enabled = v;
-            cDrawHash.Enabled = v;
-            cQuestItemStorage.Enabled = v;
+            cCutsc.Visible = v;
+            cQText.Visible = v;
+            cNoDowngrades.Visible = v;
+            cShopAppearance.Visible = v;
+            cUpdateChests.Visible = v;
+            cEponaSword.Visible = v;
+            cDisableCritWiggle.Visible = v;
+            cQuestItemStorage.Visible = v;
+            cFastPush.Visible = v;
+            cFreestanding.Visible = v;
+            cLink.Visible = v;
+            lLink.Visible = v;
 
-            cSkipBeaver.Enabled = v;
-            cGoodDampeRNG.Enabled = v;
-            cGoodDogRaceRNG.Enabled = v;
-            cFasterLabFish.Enabled = v;
-            cFastPush.Enabled = v;
-
-            cLink.Enabled = v;
+            gHints.Visible = v;
+            gSpeedUps.Visible = v;
 
             // Other..?
             cDummy.Enabled = v;
@@ -1195,7 +1239,7 @@ namespace MMR.UI.Forms
                 _configuration.GameplaySettings.UserLogicFileName = null;
                 if (_configuration.GameplaySettings.LogicMode == LogicMode.UserLogic && logicFilePath != null && File.Exists(logicFilePath))
                 {
-                    using (StreamReader Req = new StreamReader(File.Open(logicFilePath, FileMode.Open)))
+                    using (StreamReader Req = new StreamReader(File.OpenRead(logicFilePath)))
                     {
                         _configuration.GameplaySettings.Logic = Req.ReadToEnd();
                         if (_configuration.GameplaySettings.Logic.StartsWith("{"))
@@ -1227,7 +1271,7 @@ namespace MMR.UI.Forms
             if (File.Exists(path))
             {
                 Configuration newConfiguration;
-                using (StreamReader Req = new StreamReader(File.Open(path, FileMode.Open)))
+                using (StreamReader Req = new StreamReader(File.OpenRead(path)))
                 {
                     newConfiguration = Configuration.FromJson(Req.ReadToEnd());
                 }

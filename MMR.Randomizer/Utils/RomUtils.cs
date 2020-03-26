@@ -42,7 +42,7 @@ namespace MMR.Randomizer.Utils
         public static int AddNewFile(string path, string filename)
         {
             byte[] buffer;
-            using (BinaryReader data = new BinaryReader(File.Open(Path.Combine(path, filename), FileMode.Open)))
+            using (BinaryReader data = new BinaryReader(File.OpenRead(Path.Combine(path, filename))))
             {
                 int len = (int)data.BaseStream.Length;
                 buffer = new byte[len];
@@ -75,6 +75,29 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        public static List<byte[]> GetFilesFromArchive(int fileIndex)
+        {
+            CheckCompressed(fileIndex);
+            var data = RomData.MMFileList[fileIndex].Data;
+            var headerLength = ReadWriteUtils.Arr_ReadS32(data, 0);
+            var pointer = headerLength;
+            var files = new List<byte[]>();
+            for (var i = 4; i < headerLength; i += 4)
+            {
+                var nextFileOffset = headerLength + ReadWriteUtils.Arr_ReadS32(data, i);
+                var fileLength = nextFileOffset - pointer;
+                var dest = new byte[fileLength];
+                ReadWriteUtils.Arr_Insert(data, pointer, fileLength, dest, 0);
+                pointer += fileLength;
+                using (var stream = new MemoryStream(dest))
+                {
+                    var decompressed = Yaz.Decode(stream, dest.Length);
+                    files.Add(decompressed);
+                }
+            }
+            return files;
+        }
+
         public static int GetFileIndexForWriting(int rAddr)
         {
             int index = AddrToFile(rAddr);
@@ -84,7 +107,7 @@ namespace MMR.Randomizer.Utils
 
         public static int ByteswapROM(string filename)
         {
-            using (BinaryReader ROM = new BinaryReader(File.Open(filename, FileMode.Open)))
+            using (BinaryReader ROM = new BinaryReader(File.OpenRead(filename)))
             {
                 if (ROM.BaseStream.Length % 4 != 0)
                 {
@@ -220,7 +243,7 @@ namespace MMR.Randomizer.Utils
         public static byte[] ApplyPatch(string filename)
         {
             var hashAlg = new SHA256Managed();
-            using (var filestream = File.Open(filename, FileMode.Open))
+            using (var filestream = File.OpenRead(filename))
             using (var cryptoStream = new CryptoStream(filestream, hashAlg, CryptoStreamMode.Read))
             using (var decompressStream = new GZipStream(cryptoStream, CompressionMode.Decompress))
             using (var memoryStream = new MemoryStream())
@@ -431,7 +454,7 @@ namespace MMR.Randomizer.Utils
         public static bool ValidateROM(string FileName)
         {
             bool res = false;
-            using (BinaryReader ROM = new BinaryReader(File.Open(FileName, FileMode.Open, FileAccess.Read)))
+            using (BinaryReader ROM = new BinaryReader(File.OpenRead(FileName)))
             {
                 if (ROM.BaseStream.Length == 0x2000000)
                 {

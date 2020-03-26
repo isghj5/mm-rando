@@ -175,6 +175,15 @@ namespace MMR.Randomizer.Utils
             return RomData.MMFileList[f].Data[src];
         }
 
+        public static byte[] ReadBytes(int address, uint count)
+        {
+            var f = RomUtils.GetFileIndexForWriting(address);
+            var src = address - RomData.MMFileList[f].Addr;
+            var bytes = new byte[count];
+            Array.Copy(RomData.MMFileList[f].Data, src, bytes, 0, count);
+            return bytes;
+        }
+
         /// <summary>
         /// Copy bytes from a source array to a dest array of a specific length.
         /// </summary>

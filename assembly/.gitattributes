@@ -1,0 +1,8 @@
+* text=auto
+*.asm text eol=lf
+*.c text eol=lf
+*.h text eol=lf
+*.py text eol=lf
+*.bin binary
+/build/* binary linguist-generated=true
+/build/*.txt text -diff linguist-generated=true

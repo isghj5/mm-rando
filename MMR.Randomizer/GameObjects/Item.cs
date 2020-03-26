@@ -2643,6 +2643,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("Return it to the Fairy Fountain in North Clock Town.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x3B)]
+        //[GetItemIndex(0x1A1)] // used as a flag to track if the actual fairy has been collected.
         CollectibleStrayFairyClockTown,
 
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Pre-Boss Lower Right Bubble"), Region(Region.WoodfallTemple)]
@@ -2708,8 +2709,6 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x17F)]
         CollectibleStrayFairyWoodfall9,
 
-        // 80 - 83 empty
-
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Main Room Switch"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Woodfall.")]
@@ -2730,8 +2729,6 @@ namespace MMR.Randomizer.GameObjects
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x0222E000 + 0x1AA, ChestAttribute.AppearanceType.AppearsClear)]
         [GetItemIndex(0x186)]
         CollectibleStrayFairyWoodfall12,
-
-        // 87 - 88 empty
 
         [ItemName("Woodfall Stray Fairy"), LocationName("Woodfall Jar Fairy"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -2774,8 +2771,6 @@ namespace MMR.Randomizer.GameObjects
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x18E)]
         CollectibleStrayFairySnowhead3,
-
-        // 8F empty
 
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Bridge Room Ledge Bubble"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -2854,16 +2849,12 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x19A)]
         CollectibleStrayFairySnowhead14,
 
-        // 9B - 9E empty
-
         [ItemName("Snowhead Stray Fairy"), LocationName("Snowhead Crate"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Snowhead.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x19F)]
         CollectibleStrayFairySnowhead15,
-
-        // A0 - A3 empty
 
         [ItemName("Great Bay Stray Fairy"), LocationName("Great Bay Skulltula"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
@@ -3088,7 +3079,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Repeatable]
         [ItemName("Blue Rupee"), LocationName("Bank Reward #2"), Region(Region.WestClockTown)]
-        [GossipLocationHint(""), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
+        [GossipLocationHint("interest"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x13D)]

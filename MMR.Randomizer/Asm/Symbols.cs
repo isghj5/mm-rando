@@ -363,5 +363,15 @@ namespace MMR.Randomizer.Asm
             // Try and write the MiscConfig hash
             this.TryWriteMiscHash(options.Hash);
         }
+
+        public byte[] ReadHashIconsTable()
+        {
+            var addr = this["HASH_ICONS"];
+            var count = ReadWriteUtils.ReadU16((int)(addr + 4));
+            if (count != 0x40)
+                throw new Exception("Bad symbol count for hash icons");
+            var bytes = ReadWriteUtils.ReadBytes((int)(addr + 6), count);
+            return bytes;
+        }
     }
 }

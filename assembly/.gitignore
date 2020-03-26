@@ -1,0 +1,13 @@
+/inject
+**/roms/*
+**/c/*.o
+armips*
+**/__pycache__/*
+!.gitkeep
+
+# Ignore private vagrant directory
+.vagrant*
+
+# Ignore ROM files
+*.z64
+*.n64
