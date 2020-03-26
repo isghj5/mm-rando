@@ -35,7 +35,7 @@ namespace MMR.Randomizer.Utils
                 EntranceUtils.WriteCutsceneExits(sceneNumber, setupIndex, cutsceneIndex, spawnId);
                 if (sceneSync.ContainsKey(sceneNumber))
                 {
-                    EntranceUtils.WriteCutsceneExits(sceneSync[sceneNumber], setupIndex, cutsceneIndex, 0x0200);
+                    EntranceUtils.WriteCutsceneExits(sceneSync[sceneNumber], setupIndex, cutsceneIndex, spawnId);
                 }
             }
             foreach (var address in exit.ExitAddresses())
