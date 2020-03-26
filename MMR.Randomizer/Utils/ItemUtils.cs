@@ -69,12 +69,6 @@ namespace MMR.Randomizer.Utils
             return itemId;
         }
 
-        public static bool IsBottleCatchContent(Item item)
-        {
-            return item >= Item.BottleCatchFairy
-                   && item <= Item.BottleCatchMushroom;
-        }
-
         public static bool IsMoonLocation(Item location)
         {
             return location >= Item.HeartPieceDekuTrial && location <= Item.ChestLinkTrialBombchu10;

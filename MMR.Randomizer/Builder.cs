@@ -926,7 +926,7 @@ namespace MMR.Randomizer
                     continue;
                 }
 
-                if (ItemUtils.IsBottleCatchContent(item.Item))
+                if (item.Item.IsBottleCatchContent())
                 {
                     ItemSwapUtils.WriteNewBottle(item.NewLocation.Value, item.Item);
                 }

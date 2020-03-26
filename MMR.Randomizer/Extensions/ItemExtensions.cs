@@ -129,5 +129,17 @@ namespace MMR.Randomizer.Extensions
         {
             return item.HasAttribute<OverwritableAttribute>();
         }
+
+        public static bool IsBottleCatchContent(this Item item)
+        {
+            return item >= Item.BottleCatchFairy
+                   && item <= Item.BottleCatchMushroom;
+        }
+
+        public static bool IsSameType(this Item item, Item other)
+        {
+            return item.IsEntrance() == other.IsEntrance()
+                && item.IsBottleCatchContent() == other.IsBottleCatchContent();
+        }
     }
 }

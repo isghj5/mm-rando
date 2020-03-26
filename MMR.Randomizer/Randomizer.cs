@@ -311,7 +311,7 @@ namespace MMR.Randomizer
                     _settings.AddStrayFairies = true;
                 }
 
-                if (ItemUtils.IsBottleCatchContent(item))
+                if (item.IsBottleCatchContent())
                 {
                     _settings.RandomizeBottleCatchContents = true;
                 }
