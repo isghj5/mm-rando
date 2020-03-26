@@ -917,6 +917,14 @@ namespace MMR.Randomizer
         private void PlaceItem(Item currentItem, List<Item> targets)
         {
             var currentItemObject = ItemList[currentItem];
+            if (currentItem.IsFake())
+            {
+                foreach (var requiredItem in currentItemObject.DependsOnItems.Where(item => item.IsSameType(currentItem)))
+                {
+                    PlaceItem(requiredItem, targets);
+                }
+                return;
+            }
             if (currentItemObject.NewLocation.HasValue)
             {
                 return;
@@ -960,12 +968,20 @@ namespace MMR.Randomizer
                             targets.Remove(currentEntrancePair.Value);
                         }
                     }
-                    return;
+                    break;
                 }
                 else
                 {
                     Debug.WriteLine($"----Failed to place {currentItem.Name()} at {targetLocation.Location()}----");
                     availableItems.Remove(targetLocation);
+                }
+            }
+
+            if (!currentItem.IsEntrance() && targets.Any())
+            {
+                foreach (var requiredItem in ItemList[currentItemObject.NewLocation.Value].DependsOnItems.Where(item => item.IsSameType(currentItem)))
+                {
+                    PlaceItem(requiredItem, targets);
                 }
             }
         }
