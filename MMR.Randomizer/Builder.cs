@@ -1326,6 +1326,45 @@ namespace MMR.Randomizer
             RomData.MMFileList[1142].Data = data.ToArray();
         }
 
+        public static void DisableCombatMusicOnActor(int RomAddr)
+        {
+            /// use a bitmask to unset the combat music bit in the actor init flag int
+            int ActorFID = RomUtils.GetFileIndexForWriting(RomAddr);
+            RomUtils.CheckCompressed(ActorFID);
+            int ActorFlagLocation = RomAddr - RomData.MMFileList[ActorFID].Addr; // file offset
+            byte FlagByte = RomData.MMFileList[ActorFID].Data[ActorFlagLocation];
+            if ((FlagByte & 0x4) == 0)
+            {
+                Debug.WriteLine("Actor at " + RomAddr.ToString("X") + " does not have a combat flag");
+                return;
+            }
+            RomData.MMFileList[ActorFID].Data[ActorFlagLocation] = (byte)(FlagByte & 0xFB);
+        }
+
+        public static void DisableEnemyBGM()
+        {
+            /// each enemy has one int flag that contains a single bit that enables combat music
+            /// to get these values I used the used the starting rom addr of the enemy actor
+            ///  searched the ram table for the rom addr, there it lists the ram addr, calculate the difference
+            DisableCombatMusicOnActor(0xE9B630 + 0x7); // chuchu
+            DisableCombatMusicOnActor(0xEDD65C + 0x7); // skullfish
+            DisableCombatMusicOnActor(0xD2EF50 + 0x7); // dekubaba
+            DisableCombatMusicOnActor(0xD6CF40 + 0x7); // dekubaba withered/smol <<<<< minor bug, if it auto-respaws combat music re-enables itself
+            DisableCombatMusicOnActor(0xD762F0 + 0x7); // like like
+            DisableCombatMusicOnActor(0xEC1EC0 + 0x7); // real blast pikachu
+            DisableCombatMusicOnActor(0xE0EDD0 + 0x7); // guay/crow
+            DisableCombatMusicOnActor(0xE06ED0 + 0x7); // wolfos
+            DisableCombatMusicOnActor(0xCF5670 + 0x7); // keese
+            DisableCombatMusicOnActor(0xFE3660 + 0x7); // leever
+            DisableCombatMusicOnActor(0xEB91E0 + 0x7); // bo
+            DisableCombatMusicOnActor(0xD5EFB0 + 0x7); // razor clam shell
+            DisableCombatMusicOnActor(0xD10CD0 + 0x7); // tektites
+            DisableCombatMusicOnActor(0xEAE4D0 + 0x7); // BAD BAT
+            DisableCombatMusicOnActor(0xF7ECE0 + 0x7); //  eenos
+            DisableCombatMusicOnActor(0xD39100 + 0x7); //  mad shrub
+            DisableCombatMusicOnActor(0xEA5E20 + 0x7); //  nejiron
+        }
+
         public void OutputHashIcons(IEnumerable<byte> iconFileIndices, string filename)
         {
             var iconFiles = RomUtils.GetFilesFromArchive(19);
@@ -1503,6 +1542,8 @@ namespace MMR.Randomizer
             if (outputSettings.GenerateROM || outputSettings.OutputVC)
             {
                 progressReporter.ReportProgress(75, "Building ROM...");
+
+                DisableEnemyBGM();
 
                 byte[] ROM = RomUtils.BuildROM();
 
