@@ -1,3 +1,4 @@
+#include "misc.h"
 #include "mmr.h"
 #include "util.h"
 
@@ -19,5 +20,8 @@ mmr_gi_t * mmr_get_gi_entry(u32 index) {
 }
 
 void mmr_init(void) {
-    mmr_load_gi_table();
+    // If using vanilla layout, gi-table mod file is not included.
+    if (!MISC_CONFIG.vanilla_layout) {
+        mmr_load_gi_table();
+    }
 }

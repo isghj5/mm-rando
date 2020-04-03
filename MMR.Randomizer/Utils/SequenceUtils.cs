@@ -268,7 +268,6 @@ namespace MMR.Randomizer.Utils
                     Debug.WriteLine("Error attempting to read archive: " + filePath  + " -- " + e);
                 }
             }
-
         }
 
         // turns the sequence slot into a pointer, which points at another song, in substituteSlotIndex

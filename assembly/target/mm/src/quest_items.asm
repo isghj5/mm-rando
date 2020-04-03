@@ -34,3 +34,26 @@ quest_items_time_tag_check_hook:
 
     jr      ra
     addiu   sp, sp, 0x20
+
+quest_items_fix_trade_prompt_hook:
+    ; Displaced code
+    sll     a1, a1, 16
+
+    addiu   sp, sp, -0x20
+    sw      ra, 0x001C (sp)
+    sw      a1, 0x0010 (sp)
+    sw      a2, 0x0014 (sp)
+    sw      v1, 0x0018 (sp)
+
+    or      a2, a0, r0
+    lw      a0, 0x0020 (sp)
+    lw      a1, 0x0024 (sp)
+    jal     quest_items_fix_trade_prompt
+    or      a3, t2, r0
+
+    lw      a1, 0x0010 (sp)
+    lw      a2, 0x0014 (sp)
+    lw      v1, 0x0018 (sp)
+    lw      ra, 0x001C (sp)
+    jr      ra
+    addiu   sp, sp, 0x20

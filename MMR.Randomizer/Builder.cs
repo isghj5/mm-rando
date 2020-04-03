@@ -392,6 +392,88 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "ztargetinghold");
             }
+
+            if (_cosmeticSettings.EnableNightBGM)
+            {
+                SceneUtils.ReenableNightBGM();
+            }
+
+        }
+
+        private void WriteMiscText()
+        {
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3108,
+                Header = null,
+                Message = "Say...Did you come to have some\u0011items fashioned?\u0019\u00BF"
+            });
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3130,
+                Header = null,
+                Message = "Gabora, fetch our customer some\u0011coffee, quick-like.\u0011\u0013\u0012Now then, let me take a look at\u0011our offers.\u0011\u0013\u0012Hmmm...\u0019\u00BF"
+            });
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3131,
+                Header = null,
+                Message = "All right... For today's \u0001hot deal\u0000,\u0011it will cost you \u0006100 Rupees\0. It'll\u0011be ready at \u0001sunrise.\u0011\0\u0012So how about it? Wanna grab a\u0011hot item for \u0006100 Rupees\u0000?\u0011\u0002\u00C2I'll do it\u0011No thanks\u00BF"
+            });
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3133,
+                Header = null,
+                Message = "This is a secret, but I'll let you in\u0011on it... The strongest sword out\u0011there was forged using \u0001gold\u0011dust\u0000.... I made it! Me!\u00E0\u00BF"
+            });
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3134,
+                Header = null,
+                Message = "Wanna grab a deal? \u0011\u0002 \u0011\u00C2Yes\u0011No thanks\u00BF"
+            });
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3140,
+                Header = null,
+                Message = "Hey! It's gonna be ready \u0001tomorrow\u0011morning\0. We'll take good care of\u0011it, so don't worry.\u0019\u00BF"
+            });
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3141,
+                Header = null,
+                Message = "Hey! For today's special product\u0011we'll need to get hold of some \u0011\u0001gold dust\u0000.\u0019\u00BF"
+            });
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3142,
+                Header = null,
+                Message = "Why, if it isn't \u0001gold dust\0! And it's\u0011even top quality!!!\u0011\u0013\u0012Why, even if I use it to craft\u0011a nifty item, there'll still be some\u0011left...\u0011\u0012All right! Just for you, I'll do this\u0011for free. But don't tell anyone!\u0019\u00BF"
+            });
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3147,
+                Header = null,
+                Message = "To make our item for you today,\u0011I'll need \u0001gold dust\0, which just so\u0011happens to be first prize at the\u0011Goron racetrack.\u0010If I can just get some gold dust...\u0011and this is just between us...I can\u0011make you the \u0001hottest item\u0011in the lands\u0000... Really!!\u00E0\u00BF"
+            });
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3150,
+                Header = null,
+                Message = "Huh? \u001f\0\nLook, I'm working on\u0011making this item for you. I'm\u0011busy, so don't bother me.\u00E0\u00BF"
+            });
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3153,
+                Header = null,
+                Message = "Behold! My skills in craftsmanship\u0011are truly unrivalled!\u0019\u00BF"
+            });
+            _messageTable.UpdateMessages(new MessageEntry
+            {
+                Id = 3155,
+                Header = null,
+                Message = "Ah! My finest work!\u0011The look in your eye, I can\u0011tell you really wanted this!!\u0019\u00BF"
+            });
         }
 
         private Character DeterminePlayerModel()
@@ -617,6 +699,11 @@ namespace MMR.Randomizer
             if (_randomized.Settings.EnableSunsSong)
             {
                 WriteSunsSong();
+            }
+
+            if (_randomized.Settings.AllowFierceDeityAnywhere)
+            {
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fierce-deity-anywhere");
             }
         }
 
@@ -1359,6 +1446,10 @@ namespace MMR.Randomizer
         {
             // Load the symbols and use them to apply the patch data
             var options = _randomized.Settings.AsmOptions;
+
+            // Update internal flags
+            options.MiscConfig.InternalFlags.VanillaLayout = _randomized.Settings.LogicMode == LogicMode.Vanilla;
+
             asm.ApplyPatch(options);
         }
 
@@ -1438,12 +1529,12 @@ namespace MMR.Randomizer
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "title-screen");
                     WriteTitleScreen();
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "misc-changes");
+                    WriteMiscText();
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "cm-cs");
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-song-of-healing");
                     WriteFileSelect();
                 }
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "init-file");
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fierce-deity-anywhere");
 
                 progressReporter.ReportProgress(61, "Writing quick text...");
                 WriteQuickText();

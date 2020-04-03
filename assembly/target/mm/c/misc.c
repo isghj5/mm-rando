@@ -3,7 +3,7 @@
 
 struct misc_config MISC_CONFIG = {
     .magic = MISC_CONFIG_MAGIC,
-    .version = 0,
+    .version = 1,
 
     // Version 0 flags
     .crit_wiggle = CRIT_WIGGLE_DEFAULT,
@@ -16,6 +16,7 @@ struct misc_config MISC_CONFIG = {
     .close_cows = 1,
     .freestanding = 1,
     .quest_consume = QUEST_CONSUME_DEFAULT,
+    .arrow_cycle = 1,
 };
 
 union faucet_speed {
@@ -185,5 +186,12 @@ bool misc_crit_wiggle_check(z2_camera_t *camera, s16 health) {
         case CRIT_WIGGLE_DEFAULT:
         default:
             return health <= 0x10;
+    }
+}
+
+void misc_init(void) {
+    if (MISC_CONFIG.vanilla_layout) {
+        // Mod files with code required for freestanding models are not included if using vanilla layout.
+        MISC_CONFIG.freestanding = 0;
     }
 }

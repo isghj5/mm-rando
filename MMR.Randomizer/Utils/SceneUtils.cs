@@ -1,5 +1,7 @@
 ﻿using MMR.Randomizer.Models.Rom;
 using System.Collections.Generic;
+using System.Linq;
+using MMR.Randomizer.Extensions;
 
 namespace MMR.Randomizer.Utils
 {
@@ -28,7 +30,7 @@ namespace MMR.Randomizer.Utils
             }
 
             int bit = 1 << (num & 7);
-            int f =RomUtils. GetFileIndexForWriting(SCENE_FLAG_MASKS);
+            int f = RomUtils.GetFileIndexForWriting(SCENE_FLAG_MASKS);
             int addr = SCENE_FLAG_MASKS - RomData.MMFileList[f].Addr + offset;
             RomData.MMFileList[f].Data[addr] |= (byte)bit;
         }
@@ -250,6 +252,62 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-    }
+        public static void ReenableNightBGMSingle(int SceneFileID, byte NewMusicByte = 0x13)
+        {
+            // search for the bgm music header in the scene headers and replace the night sfx with a value that plays day BGM
+            RomUtils.CheckCompressed(SceneFileID);
+            for (int Byte = 0; Byte < 0x10 * 70; Byte += 8)
+            {
+                if (RomData.MMFileList[SceneFileID].Data[Byte] == 0x15) // header command starts with 0x15
+                {
+                    RomData.MMFileList[SceneFileID].Data[Byte + 0x6] = NewMusicByte; // 6th/8 byte is night BGM behavior, 0x13 is daytime BGM
+                    return;
+                }
+            }
+        }
 
+        public static void ReenableNightBGM()
+        {
+            // summary: there is a scene header which has a single byte that determines what plays at night, setting to 13 re-enables BGM at night
+
+            // since scene table is only read previously on enemizer, if not loaded we have to load now
+            if (RomData.SceneList == null)
+            {
+                ReadSceneTable();
+            }
+
+            // TODO since this is static, it can be moved
+            var TargetSceneEnums = new GameObjects.Scene[] 
+            { 
+                GameObjects.Scene.TerminaField,
+                GameObjects.Scene.RoadToSouthernSwamp,
+                GameObjects.Scene.SouthernSwamp,
+                GameObjects.Scene.SouthernSwampClear,
+                GameObjects.Scene.PathToMountainVillage,
+                GameObjects.Scene.MountainVillage,
+                GameObjects.Scene.MountainVillageSpring,
+                GameObjects.Scene.TwinIslands,
+                GameObjects.Scene.TwinIslandsSpring,
+                GameObjects.Scene.GoronVillage,
+                GameObjects.Scene.GoronVillageSpring,
+                GameObjects.Scene.PathToSnowhead,
+                GameObjects.Scene.MilkRoad,
+                GameObjects.Scene.GreatBayCoast,
+                GameObjects.Scene.PinnacleRock,
+                GameObjects.Scene.ZoraCape,
+                GameObjects.Scene.WaterfallRapids,
+                GameObjects.Scene.RoadToIkana,
+                GameObjects.Scene.EastClockTown,
+                GameObjects.Scene.WestClockTown,
+                GameObjects.Scene.NorthClockTown,
+                GameObjects.Scene.SouthClockTown,
+                GameObjects.Scene.LaundryPool
+            }.ToList();
+
+            foreach (var SceneEnum in TargetSceneEnums)
+            {
+                ReenableNightBGMSingle(RomData.SceneList.Find(u => u.Number == SceneEnum.Id()).File);
+            }
+        }
+    }
 }
