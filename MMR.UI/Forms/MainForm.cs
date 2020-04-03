@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using System.Media;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Utils;
 using MMR.Randomizer.Asm;
@@ -187,8 +188,14 @@ namespace MMR.UI.Forms
 
         private void bgWorker_WorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            pProgress.Value = 0;
-            lStatus.Text = "Ready...";
+            if (pProgress.Value < pProgress.Maximum)
+            {
+                lStatus.Text = "Build failed! Ready for another seed...";
+            }
+            else
+            {
+                lStatus.Text = "Build finished! Ready for another seed...";
+            }
             EnableAllControls(true);
             ToggleCheckBoxes();
             TogglePatchSettings(ttOutput.SelectedTab.TabIndex == 0);
@@ -1169,7 +1176,10 @@ namespace MMR.UI.Forms
 
             _configuration.OutputSettings.InputPatchFilename = null;
 
-            MessageBox.Show("Generation complete!", "Success", MessageBoxButtons.OK, MessageBoxIcon.None);
+            SystemSounds.Asterisk.Play(); // plays audio notification that build is done
+            // TODO replace this with a sound effect from MM
+            //SoundPlayer simpleSound = new SoundPlayer(@"Resources\seed_done.wav");
+            //simpleSound.Play();
         }
 
         private bool ValidateSettingsFile(String[] lines)
