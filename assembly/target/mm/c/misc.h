@@ -44,16 +44,26 @@ struct misc_config {
             u32 close_cows         : 1;
             u32 freestanding       : 1;
             u32 quest_consume      : 2;
-            u32                    : 22;
+            u32 arrow_cycle        : 1;
+            u32                    : 21;
         };
         u32 flags;          /* 0x0018 */
     };
-};                          /* 0x001C */
+    union {
+        struct {
+            // Version 1 flags
+            u32 vanilla_layout     : 1;
+            u32                    : 31;
+        };
+        u32 internal;
+    };                      /* 0x001C */
+};                          /* 0x0020 */
 
 extern struct misc_config MISC_CONFIG;
 
 bool misc_can_use_ocarina_underwater();
 struct misc_config* misc_get_config();
 f32 misc_get_push_block_speed(z2_actor_t *actor, z2_game_t *game);
+void misc_init(void);
 
 #endif // MISC_H

@@ -49,6 +49,11 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool EnableHoldZTargeting { get; set; }
 
+        /// <summary>
+        /// Enables playing BGM at night for scenes that switch to night sfx
+        /// </summary>
+        public bool EnableNightBGM { get; set; }
+
         #region Asm Getters / Setters
 
         /// <summary>

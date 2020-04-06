@@ -22,7 +22,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x0C)]
         BeneathGraveyard = 0x05,
 
-        // SouthernSwampClear = 0x06,
+        [SceneInternalId(0x00)]
+        SouthernSwampClear = 0x06,
 
         [SceneInternalId(0x0D)]
         CuriosityShop = 0x07,
@@ -201,7 +202,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x47)]
         ZoraTrial = 0x44,
 
-        // GoronVillageSpring = 0x45,
+        [SceneInternalId(0x48)]
+        GoronVillageSpring = 0x45,
 
         [SceneInternalId(0x49)]
         GreatBayTemple = 0x46,
@@ -266,7 +268,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x5D)]
         TwinIslands = 0x5A,
 
-        // TwinIslandsSpring = 0x5B,
+        [SceneInternalId(0x5E)]
+        TwinIslandsSpring = 0x5B,
 
         [SceneInternalId(0x5F)]
         GyorgsLair = 0x5C,

@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include "extended_objects.h"
 #include "linheap.h"
 #include "loaded_models.h"
 #include "misc.h"
@@ -23,7 +24,7 @@ struct loaded_object {
 static struct loaded_object object_slots[slot_count] = { 0 };
 
 static void load_object_file(u32 object_id, u8 *buf) {
-    z2_obj_file_t *entry = &(z2_obj_table[object_id]);
+    z2_obj_file_t *entry = extended_objects_get((s16)object_id);
     u32 vrom_start = entry->vrom_start;
     u32 size = entry->vrom_end - vrom_start;
     z2_ReadFile(buf, vrom_start, size);
@@ -35,7 +36,7 @@ static void load_object(struct loaded_object *object, u32 object_id) {
 }
 
 static size_t get_object_size(u32 object_id) {
-    z2_obj_file_t info = z2_obj_table[object_id];
+    z2_obj_file_t info = *extended_objects_get((s16)object_id);
     return (size_t)(info.vrom_end - info.vrom_start);
 }
 
@@ -176,10 +177,10 @@ void models_draw_skulltula_token(z2_actor_t *actor, z2_game_t *game) {
 }
 
 /**
- * Check whether or not a model draws a Stray Fairy.
+ * Check whether or not a Get-Item entry draws a Stray Fairy.
  **/
-static bool models_is_stray_fairy_model(struct model model) {
-    return model.graphic_id == 0x4F && model.object_id == 0x13A;
+static bool models_is_stray_fairy_gi(mmr_gi_t *gi) {
+    return gi->item == 0x9D && gi->graphic == 0x4F;
 }
 
 /**
@@ -217,13 +218,16 @@ void models_before_stray_fairy_main(z2_actor_t *actor, z2_game_t *game) {
     // If not a Stray Fairy, rotate like En_Item00 does.
     bool draw = models_should_override_stray_fairy_draw(actor, game);
     if (MISC_CONFIG.freestanding && draw) {
+        mmr_gi_t *entry;
         struct model model;
         u32 gi_index = models_get_stray_fairy_gi_index(actor, game);
         models_set_loaded_actor_model(&model, actor, game, gi_index);
-        // Check that we are not drawing a stray fairy.
-        if (!models_is_stray_fairy_model(model)) {
-            // Rotate at the same speed of a Heart Piece actor.
-            actor->rot_2.y = (u16)(actor->rot_2.y + 0x3C0);
+        if (loaded_models_get_actor_model(&model, (void**)&entry, actor)) {
+            // Check that we are not drawing a stray fairy.
+            if (!models_is_stray_fairy_gi(entry)) {
+                // Rotate at the same speed of a Heart Piece actor.
+                actor->rot_2.y = (u16)(actor->rot_2.y + 0x3C0);
+            }
         }
     }
 }
@@ -245,7 +249,7 @@ bool models_draw_stray_fairy(z2_actor_t *actor, z2_game_t *game) {
         }
 
         // Check if we are drawing a stray fairy.
-        if (models_is_stray_fairy_model(model)) {
+        if (models_is_stray_fairy_gi(entry)) {
             // Update stray fairy actor according to type, and perform original draw.
             z2_en_elforg_t *elforg = (z2_en_elforg_t *)actor;
             u8 fairy_type = entry->type >> 4;
@@ -316,10 +320,12 @@ void models_write_boss_remains_object_segment(z2_game_t *game, u32 graphic_id_mi
 
 /**
  * Hook function for drawing Boss Remain actors as their new item.
+ * Currently draws the item on the Oath to Order check. Will need
+ * to be updated if Boss Remains are randomized.
  **/
 void models_draw_boss_remains(z2_actor_t *actor, z2_game_t *game, u32 graphic_id_minus_1) {
-    if (MISC_CONFIG.freestanding) {
-        draw_model_low_level(actor, game, graphic_id_minus_1);
+    if (MISC_CONFIG.freestanding && (actor->attached_a->attached_a == NULL || actor->attached_a->attached_a->id != 0)) {
+        models_draw_from_gi_table(actor, game, 1.0, 0x77);
     } else {
         draw_model_low_level(actor, game, graphic_id_minus_1);
     }
@@ -346,14 +352,15 @@ static bool models_should_override_moons_tear_draw(z2_actor_t *actor, z2_game_t 
  * Hook function called before a Moon's Tear actor's main function.
  **/
 void models_before_moons_tear_main(z2_actor_t *actor, z2_game_t *game) {
-    bool draw = models_should_override_moons_tear_draw(actor, game);
-    if (MISC_CONFIG.freestanding && draw) {
-        // If the Moon's Tear on display, reposition and rotate.
-        if (actor->variable == 0) {
-            actor->pos_2.x = 157.0;
-            actor->pos_2.y = -32.0;
-            actor->pos_2.z = -103.0;
-            actor->rot_2.y = (u16)(actor->rot_2.y + 0x3C0);
+    if (MISC_CONFIG.freestanding) {
+        if (models_should_override_moons_tear_draw(actor, game)) {
+            // If the Moon's Tear on display, reposition and rotate.
+            if (actor->variable == 0) {
+                actor->pos_2.x = 157.0;
+                actor->pos_2.y = -32.0;
+                actor->pos_2.z = -103.0;
+                actor->rot_2.y = (u16)(actor->rot_2.y + 0x3C0);
+            }
         }
     }
 }
@@ -362,26 +369,27 @@ void models_before_moons_tear_main(z2_actor_t *actor, z2_game_t *game) {
  * Hook function for drawing Moon's Tear actor as its new item.
  **/
 bool models_draw_moons_tear(z2_actor_t *actor, z2_game_t *game) {
-    bool draw = models_should_override_moons_tear_draw(actor, game);
-    if (MISC_CONFIG.freestanding && draw) {
-        struct model model;
-        bool resolve;
+    if (MISC_CONFIG.freestanding) {
+        if (models_should_override_moons_tear_draw(actor, game)) {
+            struct model model;
+            bool resolve;
 
-        if (actor->variable == 0) {
-            // Moon's Tear on display in observatory (not collectible).
-            resolve = false;
-        } else {
-            // Moon's Tear on ground outside observatory (collectible).
-            resolve = true;
+            if (actor->variable == 0) {
+                // Moon's Tear on display in observatory (not collectible).
+                resolve = false;
+            } else {
+                // Moon's Tear on ground outside observatory (collectible).
+                resolve = true;
+            }
+
+            mmr_gi_t *entry = models_prepare_gi_entry(&model, game, 0x96, resolve);
+            z2_CallSetupDList(z2_game.common.gfx);
+            draw_model(model, actor, game, 1.0);
+            return true;
         }
-
-        mmr_gi_t *entry = models_prepare_gi_entry(&model, game, 0x96, resolve);
-        z2_CallSetupDList(z2_game.common.gfx);
-        draw_model(model, actor, game, 1.0);
-        return true;
-    } else {
-        return false;
     }
+
+    return false;
 }
 
 /**
@@ -419,9 +427,10 @@ static bool models_should_override_seahorse_draw(z2_actor_t *actor, z2_game_t *g
  * Hook function called before a Seahorse actor's main function.
  **/
 void models_before_seahorse_main(z2_actor_t *actor, z2_game_t *game) {
-    bool draw = models_should_override_seahorse_draw(actor, game);
-    if (MISC_CONFIG.freestanding && draw) {
-        actor->rot_2.y = (u16)(actor->rot_2.y + 0x3C0);
+    if (MISC_CONFIG.freestanding) {
+        if (models_should_override_seahorse_draw(actor, game)) {
+            actor->rot_2.y = (u16)(actor->rot_2.y + 0x3C0);
+        }
     }
 }
 
@@ -429,13 +438,14 @@ void models_before_seahorse_main(z2_actor_t *actor, z2_game_t *game) {
  * Hook function for drawing Seahorse actor as its new item.
  **/
 bool models_draw_seahorse(z2_actor_t *actor, z2_game_t *game) {
-    bool draw = models_should_override_seahorse_draw(actor, game);
-    if (MISC_CONFIG.freestanding && draw) {
-        models_draw_from_gi_table(actor, game, 50.0, 0x95);
-        return true;
-    } else {
-        return false;
+    if (MISC_CONFIG.freestanding) {
+        if (models_should_override_seahorse_draw(actor, game)) {
+            models_draw_from_gi_table(actor, game, 50.0, 0x95);
+            return true;
+        }
     }
+
+    return false;
 }
 
 void models_after_actor_dtor(z2_actor_t *actor) {

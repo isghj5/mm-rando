@@ -297,7 +297,6 @@ namespace MMR.Randomizer.Utils
                     Debug.WriteLine("Error attempting to read archive: " + filePath  + " -- " + e);
                 }
             }
-
         }
 
         // gets passed RomData.SequenceList in Builder.cs::WriteAudioSeq

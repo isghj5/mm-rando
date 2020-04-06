@@ -125,10 +125,10 @@ Thanks to: Jimmie1717 and KiKe
 
 Maintained by the Majora's Mask Randomizer Community Discord.
 
-Currently developed by: ZoeyZolotova
-Thanks to: mzxrules, Kjelli, ZMarotrix
+Currently developed by: ZoeyZolotova and Cat
+Thanks to: mzxrules, Kjelli, ZMarotrix, Isghj
 
-D-pad by saneki. Thanks to MelonSpeedruns for the texture.</value>
+Thanks to MelonSpeedruns for the D-pad texture.</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">

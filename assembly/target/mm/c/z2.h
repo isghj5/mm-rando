@@ -382,6 +382,8 @@ typedef enum {
 typedef enum {
     // Item "pickup", such as a rupee, arrows, magic, deku stick, etc.
     Z2_ACTOR_EN_ITEM00 = 0xE,
+    // Arrow.
+    Z2_ACTOR_EN_ARROW = 0xF,
     // Fairy.
     Z2_ACTOR_EN_ELF = 0x10,
     // Gold skulltula token.
@@ -1570,7 +1572,7 @@ typedef struct {
     u16              max_health;                     /* 0x0034 */
     u16              current_health;                 /* 0x0036 */
     u8               magic_level;                    /* 0x0038 */
-    u8               current_magic;                  /* 0x0039 */
+    s8               current_magic;                  /* 0x0039 */
     u16              rupees;                         /* 0x003A */
     u32              tatl_timer;                     /* 0x003C */
     u8               has_magic;                      /* 0x0040 */
@@ -1731,9 +1733,12 @@ typedef struct {
     u8               buttons_usable[0x05];           /* 0x3F18, B, C-left, C-down, C-right, A buttons. */
     u8               unk_0x3F1D[0x03];               /* 0x3F1D */
     z2_buttons_state_t buttons_state;                /* 0x3F20 */
-    u8               unk_0x3F28[0x06];               /* 0x3F28 */
+    s16              special_arrow_state;            /* 0x3F28 */
+    u8               unk_0x3F2A[0x04];               /* 0x3F2A */
     u16              magic_meter_size;               /* 0x3F2E */
-    u8               unk_0x3F30[0x38];               /* 0x3F30 */
+    u8               unk_0x3F30[0x02];               /* 0x3F30 */
+    s16              arrow_magic_cost;               /* 0x3F32 */
+    u8               unk_0x3F34[0x34];               /* 0x3F34 */
     z2_scene_flags_t scene_flags[0x78];              /* 0x3F68 */
     u8               unk_0x48C8[0x1010];             /* 0x48C8 */
     z2_color_rgb16_t heart_dd_beating_rgb;           /* 0x58D8 */
@@ -1850,6 +1855,17 @@ struct z2_actor_s {
     void            *code_entry;                     /* 0x0140 */
 };                                                   /* 0x0144 */
 
+typedef void (*z2_ActorProc)(z2_actor_t *actor, z2_game_t *game);
+
+typedef struct {
+    u16              id;
+    u8               unk_0x02[0x0E];
+    z2_ActorProc     ctor;
+    z2_ActorProc     dtor;
+    z2_ActorProc     main;
+    z2_ActorProc     draw;
+} z2_actor_init_t;
+
 /// =============================================================
 /// Link Actor
 /// =============================================================
@@ -1865,9 +1881,11 @@ struct z2_actor_s {
 typedef struct {
     z2_actor_t       common;                         /* 0x0000 */
     u8               unk_0x144[0x02];                /* 0x0144 */
-    u8               pre_use;                        /* 0x0146 */
-    u8               unk_0x147[0x03];                /* 0x0147 */
-    u8               item_out;                       /* 0x014A, which item Link currently has out? */
+    u8               item_button;                    /* 0x0146 */
+    u8               unk_0x147;                      /* 0x0147 */
+    u8               unk_0x148;                      /* 0x0148 */
+    u8               unk_0x149;                      /* 0x0149 */
+    u8               unk_0x14A;                      /* 0x014A, which item Link currently has out? */
                                                      /* 0x14 = Ocarina, 0x15 = Bottle, 0x9 = Bow, 0xD = Hookshot */
     u8               form;                           /* 0x014B */
     u8               unk_0x14C[0x07];                /* 0x014C */
@@ -2124,6 +2142,7 @@ typedef struct {
 /* Data Addresses */
 #define z2_arena_addr                    0x8009CD20
 #define z2_file_table_addr               0x8009F8B0
+#define z2_actor_ovl_table_addr          0x801AEFD0
 #define z2_gi_graphic_table_addr         0x801BB170 /* Get-Item graphics table. */
 #define z2_gamestate_addr                0x801BD910
 #define z2_item_segaddr_table_addr       0x801C1E6C /* Segment address table used for item textures. */
@@ -2138,6 +2157,7 @@ typedef struct {
 #define z2_link_addr                     0x803FFDB0
 
 /* Data */
+#define z2_actor_ovl_table               ((z2_actor_ovl_table_t*)    z2_actor_ovl_table_addr)
 #define z2_ctxt                          (*(z2_ctxt_t*)              z2_ctxt_addr)
 #define z2_file                          (*(z2_file_t*)              z2_file_addr)
 #define z2_file_table                    ((z2_file_table_t*)         z2_file_table_addr)
@@ -2170,6 +2190,10 @@ typedef struct {
 #define z2_UpdateButtonUsability_addr    0x80110038
 #define z2_WriteHeartColors_addr         0x8010069C
 #define z2_RemoveItem_addr               0x801149A0
+
+/* Function Addresses (Actors) */
+#define z2_ActorDtor_addr                0x800B6948
+#define z2_ActorRemove_addr              0x800BB498
 
 /* Function Addresses (Drawing) */
 #define z2_BaseDrawCollectable_addr      0x800A7128
@@ -2239,6 +2263,10 @@ typedef void (*z2_UseItem_proc)(z2_game_t *game, z2_link_t *link, u8 item);
 typedef void (*z2_WriteHeartColors_proc)(z2_game_t *game);
 typedef void (*z2_RemoveItem_proc)(u32 item, u8 slot);
 
+/* Function Prototypes (Actors) */
+typedef void (*z2_ActorProc_proc)(z2_actor_t *actor, z2_game_t *game);
+typedef void (*z2_ActorRemove_proc)(z2_actor_ctxt_t *ctxt, z2_actor_t *actor, z2_game_t *game);
+
 /* Function Prototypes (Drawing) */
 typedef void (*z2_ActorDraw_proc)(z2_actor_t *actor, z2_game_t *game);
 typedef void (*z2_BaseDrawGiModel_proc)(z2_game_t *game, u32 graphic_id_minus_1);
@@ -2292,6 +2320,10 @@ typedef void (*z2_UnloadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt);
 #define z2_UpdateButtonUsability         ((z2_UpdateButtonUsability_proc) z2_UpdateButtonUsability_addr)
 #define z2_WriteHeartColors              ((z2_WriteHeartColors_proc)      z2_WriteHeartColors_addr)
 #define z2_RemoveItem                    ((z2_RemoveItem_proc)            z2_RemoveItem_addr)
+
+/* Functions (Actors) */
+#define z2_ActorDtor                     ((z2_ActorProc_proc)             z2_ActorDtor_addr)
+#define z2_ActorRemove                   ((z2_ActorRemove_proc)           z2_ActorRemove_addr)
 
 /* Functions (Drawing) */
 #define z2_BaseDrawCollectable           ((z2_ActorDraw_proc)             z2_BaseDrawCollectable_addr)

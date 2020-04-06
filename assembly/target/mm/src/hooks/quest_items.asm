@@ -55,6 +55,26 @@
     bnez    v0, 0x80ACA998
 
 ;==================================================================================================
+; Quest Item Inventory Checks (Trade Prompt)
+;==================================================================================================
+
+.headersize (G_CODE_RAM - G_CODE_FILE)
+
+; Still show trade prompts for items which are in storage but not on inventory slot.
+; Replaces:
+;   addu    t3, t3, t2
+;   lbu     t3, 0xF6E0 (t3)
+;   or      a1, t0, t1
+;   sll     a1, a1, 16
+;   bne     a0, t3, 0x8010B8D8
+.org 0x8010B8B8
+    sw      ra, 0x0008 (sp)
+    jal     quest_items_fix_trade_prompt_hook
+    or      a1, t0, t1
+    lw      ra, 0x0008 (sp)
+    beqz    v0, 0x8010B8D8
+
+;==================================================================================================
 ; Quest Inventory Slot Clear (Song of Time)
 ;==================================================================================================
 

@@ -104,7 +104,7 @@ def write_pj64_symbols(f, symbols):
 
 def get_parser():
     parser = argparse.ArgumentParser()
-    parser.add_argument('-t', '--target', default='oot', help='Target directory name')
+    parser.add_argument('-t', '--target', default='mm', help='Target directory name')
     parser.add_argument('--pj64sym', help="Output path for PJ64 debugging symbols")
     parser.add_argument('--compile-c', action='store_true', help="Recompile C modules")
     parser.add_argument('--virtual', action='store_true', help='Use virtual addresses in diff')

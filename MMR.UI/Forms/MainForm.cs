@@ -115,6 +115,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cSunsSong, "Enable using the Sun's Song, which speeds up time to 400 units per frame (normal time speed is 3 units per frame) until dawn or dusk or a loading zone.");
             TooltipBuilder.SetTooltip(cUnderwaterOcarina, "Enable using the ocarina underwater.");
             TooltipBuilder.SetTooltip(cTargettingStyle, "Default Z-Targeting style to Hold.");
+            TooltipBuilder.SetTooltip(cFDAnywhere, "Allow the Fierce Deity's Mask to be used anywhere. Also addresses some softlocks caused by Fierce Deity.");
 
             // Comforts/cosmetics
             TooltipBuilder.SetTooltip(cCutsc, "Enable shortened cutscenes.\n\nCertain cutscenes are skipped or otherwise shortened.\nDISCLAIMER: This may cause crashing in certain emulators.");
@@ -140,6 +141,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFasterLabFish, "Change Lab Fish to only need to be fed one fish.");
             TooltipBuilder.SetTooltip(cFastPush, "Increase the speed of pushing and pulling blocks and faucets.");
             TooltipBuilder.SetTooltip(cFreestanding, "Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.");
+            TooltipBuilder.SetTooltip(cEnableNightMusic, "Enables playing daytime Background music during nighttime in the field.\n(Clocktown night music can be weird)");
+            TooltipBuilder.SetTooltip(cArrowCycling, "Cycle through arrow types when pressing R while an arrow is out when using the bow.");
         }
 
         /// <summary>
@@ -368,6 +371,7 @@ namespace MMR.UI.Forms
             cClearHints.Checked = _configuration.GameplaySettings.ClearHints;
             cHideClock.Checked = _configuration.GameplaySettings.HideClock;
             cSunsSong.Checked = _configuration.GameplaySettings.EnableSunsSong;
+            cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
             cNoDowngrades.Checked = _configuration.GameplaySettings.PreventDowngrades;
             cShopAppearance.Checked = _configuration.GameplaySettings.UpdateShopAppearance;
@@ -397,6 +401,8 @@ namespace MMR.UI.Forms
             cMusic.SelectedIndex = (int)_configuration.CosmeticSettings.Music;
             bTunic.BackColor = _configuration.CosmeticSettings.TunicColor;
             cTargettingStyle.Checked = _configuration.CosmeticSettings.EnableHoldZTargeting;
+            cEnableNightMusic.Checked = _configuration.CosmeticSettings.EnableNightBGM;
+
 
             // Misc config options
             cDisableCritWiggle.Checked = _configuration.GameplaySettings.CritWiggleDisable;
@@ -406,6 +412,7 @@ namespace MMR.UI.Forms
             cQuestItemStorage.Checked = _configuration.GameplaySettings.QuestItemStorage;
             cUnderwaterOcarina.Checked = _configuration.GameplaySettings.OcarinaUnderwater;
             cFreestanding.Checked = _configuration.GameplaySettings.UpdateWorldModels;
+            cArrowCycling.Checked = _configuration.GameplaySettings.ArrowCycling;
 
             // HUD config options
             var heartItems = ColorSelectionManager.Hearts.GetItems();
@@ -544,6 +551,11 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.CosmeticSettings.RandomizeSounds = cSFX.Checked);
         }
 
+        private void cEnableNightMusic_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.EnableNightBGM = cEnableNightMusic.Checked);
+        }
+
         private void cMusic_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.CosmeticSettings.Music = (Music)cMusic.SelectedIndex);
@@ -644,6 +656,11 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.EnableSunsSong = cSunsSong.Checked);
         }
 
+        private void cFDAnywhere_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.AllowFierceDeityAnywhere = cFDAnywhere.Checked);
+        }
+
         private void cNoStartingItems_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.NoStartingItems = cNoStartingItems.Checked);
@@ -723,6 +740,11 @@ namespace MMR.UI.Forms
         private void cTargettingStyle_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.CosmeticSettings.EnableHoldZTargeting = cTargettingStyle.Checked);
+        }
+
+        private void cArrowCycling_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.ArrowCycling = cArrowCycling.Checked);
         }
 
         private void cMode_SelectedIndexChanged(object sender, EventArgs e)
@@ -1016,6 +1038,8 @@ namespace MMR.UI.Forms
             bTunic.Enabled = v;
             cTatl.Enabled = v;
             cMusic.Enabled = v;
+            cEnableNightMusic.Enabled = v;
+            cBottled.Enabled = v;
             cLink.Enabled = v;
 
             cHUDHeartsComboBox.Enabled = v;
@@ -1038,6 +1062,7 @@ namespace MMR.UI.Forms
             cEponaSword.Enabled = v;
             cQuestItemStorage.Enabled = v;
             cFreestanding.Enabled = v;
+            cArrowCycling.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
@@ -1053,6 +1078,7 @@ namespace MMR.UI.Forms
             cHideClock.Enabled = v;
             cUnderwaterOcarina.Enabled = v;
             cSunsSong.Enabled = v;
+            cFDAnywhere.Enabled = v;
 
             cSoS.Enabled = v;
             cDChests.Enabled = v;
@@ -1214,6 +1240,7 @@ namespace MMR.UI.Forms
             cQuestItemStorage.Visible = v;
             cFastPush.Visible = v;
             cFreestanding.Visible = v;
+            cArrowCycling.Visible = v;
             cLink.Visible = v;
             lLink.Visible = v;
 
