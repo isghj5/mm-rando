@@ -398,6 +398,8 @@ namespace MMR.Randomizer
                 SceneUtils.ReenableNightBGM();
             }
 
+            AddNut();
+
         }
 
         private void WriteMiscText()
@@ -541,6 +543,20 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "rainbow-tatl");
             }
         }
+
+        private void AddNut()
+        {
+            // add single nut to drop table for the termina field
+            // c444b8  will become deku nut, gives us 1/16 chance of a nut
+            int fid = RomUtils.GetFileIndexForWriting(0xC444B8);
+            int offset = 0xC444B8 - RomData.MMFileList[fid].Addr;
+            RomUtils.CheckCompressed(fid);
+            RomData.MMFileList[fid].Data[offset] = 0x0C; // 0x0c is deku nut
+            RomData.MMFileList[fid].Data[offset+0x110] = 0x05; // this should change the ammount dropped to 5
+
+            // debug... add something else weird to other areas for debugging?
+        }
+
 
         private void WriteQuickText()
         {
