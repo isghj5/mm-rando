@@ -346,6 +346,11 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool SpeedupLabFish { get; set; }
 
+        /// <summary>
+        /// Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000.
+        /// </summary>
+        public bool SpeedupBank { get; set; }
+
         #endregion
 
         #region Functions
@@ -445,7 +450,7 @@ namespace MMR.Randomizer.Models.Settings
             SpeedupLabFish = (part5 & (1 << 3)) > 0;
 
             CritWiggleDisable = (part5 & (1 << 4)) > 0;
-            //DrawHash = (part5 & (1 << 5)) > 0;
+            SpeedupBank = (part5 & (1 << 5)) > 0;
             FastPush = (part5 & (1 << 6)) > 0;
             OcarinaUnderwater = (part5 & (1 << 7)) > 0;
             QuestItemStorage = (part5 & (1 << 8)) > 0;
@@ -532,7 +537,7 @@ namespace MMR.Randomizer.Models.Settings
             if (SpeedupLabFish) { parts[4] += (1 << 3); }
 
             if (CritWiggleDisable) { parts[4] += (1 << 4); }
-            // if (DrawHash) { parts[4] += (1 << 5); }
+            if (SpeedupBank) { parts[4] += (1 << 5); }
             if (FastPush) { parts[4] += (1 << 6); }
             if (OcarinaUnderwater) { parts[4] += (1 << 7); }
             if (QuestItemStorage) { parts[4] += (1 << 8); }

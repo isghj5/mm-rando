@@ -1,4 +1,5 @@
 #include <stdbool.h>
+#include "extended_objects.h"
 #include "linheap.h"
 #include "loaded_models.h"
 #include "misc.h"
@@ -23,7 +24,7 @@ struct loaded_object {
 static struct loaded_object object_slots[slot_count] = { 0 };
 
 static void load_object_file(u32 object_id, u8 *buf) {
-    z2_obj_file_t *entry = &(z2_obj_table[object_id]);
+    z2_obj_file_t *entry = extended_objects_get((s16)object_id);
     u32 vrom_start = entry->vrom_start;
     u32 size = entry->vrom_end - vrom_start;
     z2_ReadFile(buf, vrom_start, size);
@@ -35,7 +36,7 @@ static void load_object(struct loaded_object *object, u32 object_id) {
 }
 
 static size_t get_object_size(u32 object_id) {
-    z2_obj_file_t info = z2_obj_table[object_id];
+    z2_obj_file_t info = *extended_objects_get((s16)object_id);
     return (size_t)(info.vrom_end - info.vrom_start);
 }
 
@@ -176,10 +177,10 @@ void models_draw_skulltula_token(z2_actor_t *actor, z2_game_t *game) {
 }
 
 /**
- * Check whether or not a model draws a Stray Fairy.
+ * Check whether or not a Get-Item entry draws a Stray Fairy.
  **/
-static bool models_is_stray_fairy_model(struct model model) {
-    return model.graphic_id == 0x4F && model.object_id == 0x13A;
+static bool models_is_stray_fairy_gi(mmr_gi_t *gi) {
+    return gi->item == 0x9D && gi->graphic == 0x4F;
 }
 
 /**
@@ -217,13 +218,16 @@ void models_before_stray_fairy_main(z2_actor_t *actor, z2_game_t *game) {
     // If not a Stray Fairy, rotate like En_Item00 does.
     bool draw = models_should_override_stray_fairy_draw(actor, game);
     if (MISC_CONFIG.freestanding && draw) {
+        mmr_gi_t *entry;
         struct model model;
         u32 gi_index = models_get_stray_fairy_gi_index(actor, game);
         models_set_loaded_actor_model(&model, actor, game, gi_index);
-        // Check that we are not drawing a stray fairy.
-        if (!models_is_stray_fairy_model(model)) {
-            // Rotate at the same speed of a Heart Piece actor.
-            actor->rot_2.y = (u16)(actor->rot_2.y + 0x3C0);
+        if (loaded_models_get_actor_model(&model, (void**)&entry, actor)) {
+            // Check that we are not drawing a stray fairy.
+            if (!models_is_stray_fairy_gi(entry)) {
+                // Rotate at the same speed of a Heart Piece actor.
+                actor->rot_2.y = (u16)(actor->rot_2.y + 0x3C0);
+            }
         }
     }
 }
@@ -245,7 +249,7 @@ bool models_draw_stray_fairy(z2_actor_t *actor, z2_game_t *game) {
         }
 
         // Check if we are drawing a stray fairy.
-        if (models_is_stray_fairy_model(model)) {
+        if (models_is_stray_fairy_gi(entry)) {
             // Update stray fairy actor according to type, and perform original draw.
             z2_en_elforg_t *elforg = (z2_en_elforg_t *)actor;
             u8 fairy_type = entry->type >> 4;

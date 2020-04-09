@@ -32,12 +32,14 @@ namespace MMR.Randomizer
         private RandomizedResult _randomized;
         private CosmeticSettings _cosmeticSettings;
         private MessageTable _messageTable;
+        private ExtendedObjects _extendedObjects;
 
         public Builder(RandomizedResult randomized, CosmeticSettings cosmeticSettings)
         {
             _randomized = randomized;
             _cosmeticSettings = cosmeticSettings;
             _messageTable = new MessageTable();
+            _extendedObjects = null;
         }
 
         #region Sequences, sounds and BGM
@@ -669,6 +671,23 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "speedup-dograce");
             }
+
+            if (_randomized.Settings.SpeedupBank)
+            {
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "speedup-bank");
+                _messageTable.UpdateMessages(new MessageEntry
+                {
+                    Id = 0x45C,
+                    Header = null,
+                    Message = "\u0017What's this? You've already saved\u0011up \u0001500 Rupees\u0000!?!\u0018\u0011\u0013\u0012Well, little guy, here's your special\u0011gift. Take it!\u00E0\u00BF",
+                });
+                _messageTable.UpdateMessages(new MessageEntry
+                {
+                    Id = 0x45D,
+                    Header = null,
+                    Message = "\u0017What's this? You've already saved\u0011up \u00011000 Rupees\u0000?!\u0018\u0011\u0013\u0012Well, little guy, I can't take any\u0011more deposits. Sorry, but this is\u0011all I can give you.\u00E0\u00BF",
+                });
+            }
         }
 
         private void WriteGimmicks()
@@ -989,6 +1008,9 @@ namespace MMR.Randomizer
             ItemSwapUtils.ReplaceGetItemTable();
             ItemSwapUtils.InitItems();
 
+            // Write extended object indexes to Get-Item list entries.
+            WriteExtendedObjects();
+
             if (_randomized.Settings.FixEponaSword)
             {
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-epona");
@@ -1214,20 +1236,6 @@ namespace MMR.Randomizer
                 Id = 0xC8,
                 Header = null,
                 Message = $"\u0017You've been granted \u0002Magic Power\u0000!\u0018\u0011Replenish it with \u0001Magic Jars\u0000\u0011and \u0001Potions\u0000.\u00BF",
-            });
-
-            // update Bank Reward messages
-            newMessages.Add(new MessageEntry
-            {
-                Id = 0x45C,
-                Header = null,
-                Message = "\u0017What's this? You've already saved\u0011up \u0001500 Rupees\u0000!?!\u0018\u0011\u0013\u0012Well, little guy, here's your special\u0011gift. Take it!\u00E0\u00BF",
-            });
-            newMessages.Add(new MessageEntry
-            {
-                Id = 0x45D,
-                Header = null,
-                Message = "\u0017What's this? You've already saved\u0011up \u00011000 Rupees\u0000?!\u0018\u0011\u0013\u0012Well, little guy, I can't take any\u0011more deposits. Sorry, but this is\u0011all I can give you.\u00E0\u00BF",
             });
 
             if (_randomized.Settings.AddSkulltulaTokens)
@@ -1506,6 +1514,13 @@ namespace MMR.Randomizer
             options.MiscConfig.InternalFlags.VanillaLayout = _randomized.Settings.LogicMode == LogicMode.Vanilla;
 
             asm.ApplyPatch(options);
+
+            // Add extended objects file and write addresses to table in ROM
+            var extended = _extendedObjects;
+            var fileIndex = RomUtils.AppendFile(extended.Bundle.GetFull());
+            var file = RomData.MMFileList[fileIndex];
+            var baseAddr = (uint)file.Addr;
+            asm.Symbols.WriteExtendedObjects(extended.GetAddresses(baseAddr));
         }
 
         private void WriteAsmConfig(AsmContext asm, byte[] hash)
@@ -1548,6 +1563,45 @@ namespace MMR.Randomizer
                 config.MagicOverride = ColorSelectionManager.MagicMeter.GetItems().FirstOrDefault(csi => csi.Name == _cosmeticSettings.HeartsSelection)?.GetColors(random);
             else
                 config.MagicOverride = null;
+        }
+
+        /// <summary>
+        /// Build <see cref="ExtendedObjects"/> and write object indexes to Get-Item list entries.
+        /// </summary>
+        private void WriteExtendedObjects()
+        {
+            var addFairies = _randomized.Settings.AddStrayFairies;
+            var addSkulltulas = _randomized.Settings.AddSkulltulaTokens;
+            var extended = _extendedObjects = ExtendedObjects.Create(addFairies, addSkulltulas);
+
+            foreach (var e in RomData.GetItemList.Values)
+            {
+                // Update gi-table for Skulltula Tokens.
+                if (e.ItemGained == 0x6E && e.Object == 0x125 && extended.Indexes.Skulltula != null)
+                {
+                    var index = e.Message == 0x51 ? 1 : 0;
+                    e.Object = (short)(extended.Indexes.Skulltula.Value + index);
+                }
+
+                // Update gi-table for Stray Fairies.
+                if (e.ItemGained == 0x9D && e.Object == 0x13A && extended.Indexes.Fairies != null)
+                {
+                    var index = e.Type >> 4;
+                    e.Object = (short)(extended.Indexes.Fairies.Value + index);
+                }
+
+                // Update gi-table for Double Defense.
+                if (e.ItemGained == 0x9E && e.Object == 0x96 && extended.Indexes.DoubleDefense != null)
+                {
+                    e.Object = extended.Indexes.DoubleDefense.Value;
+                }
+
+                // Update gi-table for Notes.
+                if (((e.ItemGained >= 0x66 && e.ItemGained <= 0x6C) || e.ItemGained == 0x62) && e.Object == 0x8F && extended.Indexes.MusicNotes != null)
+                {
+                    e.Object = extended.Indexes.MusicNotes.Value;
+                }
+            }
         }
 
         public void MakeROM(OutputSettings outputSettings, IProgressReporter progressReporter)

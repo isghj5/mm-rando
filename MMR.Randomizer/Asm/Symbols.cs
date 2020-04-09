@@ -117,6 +117,24 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
+        /// Write extended object virtual ROM addresses to the ROM.
+        /// </summary>
+        /// <param name="addresses">Tuples containing the virtual ROM start and end addresses</param>
+        public void WriteExtendedObjects((uint start, uint end)[] addresses)
+        {
+            var addr = (int)this["EXT_OBJECTS"];
+            for (int i = 0; i < addresses.Length; i++)
+            {
+                var offset = addr + (i + 1) * 8;
+                var pair = addresses[i];
+
+                // Write start and end VROM addresses for object.
+                ReadWriteUtils.WriteToROM(offset + 0, ConvertUtils.IntToBytes((int)pair.start));
+                ReadWriteUtils.WriteToROM(offset + 4, ConvertUtils.IntToBytes((int)pair.end));
+            }
+        }
+
+        /// <summary>
         /// Write a <see cref="HudColorsConfig"/> to the ROM.
         /// </summary>
         /// <param name="config">HUD colors config</param>

@@ -178,6 +178,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
+            this.cFasterBank = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -745,13 +746,14 @@ namespace MMR.UI.Forms
             // 
             // gSpeedUps
             // 
+            this.gSpeedUps.Controls.Add(this.cFasterBank);
             this.gSpeedUps.Controls.Add(this.cSkipBeaver);
             this.gSpeedUps.Controls.Add(this.cFasterLabFish);
             this.gSpeedUps.Controls.Add(this.cGoodDogRaceRNG);
             this.gSpeedUps.Controls.Add(this.cGoodDampeRNG);
-            this.gSpeedUps.Location = new System.Drawing.Point(373, 223);
+            this.gSpeedUps.Location = new System.Drawing.Point(373, 203);
             this.gSpeedUps.Name = "gSpeedUps";
-            this.gSpeedUps.Size = new System.Drawing.Size(286, 77);
+            this.gSpeedUps.Size = new System.Drawing.Size(286, 97);
             this.gSpeedUps.TabIndex = 37;
             this.gSpeedUps.TabStop = false;
             this.gSpeedUps.Text = "Speed Ups";
@@ -1094,7 +1096,7 @@ namespace MMR.UI.Forms
             this.groupBox7.Controls.Add(this.cNoDowngrades);
             this.groupBox7.Location = new System.Drawing.Point(373, 6);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(286, 211);
+            this.groupBox7.Size = new System.Drawing.Size(286, 191);
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
@@ -1124,7 +1126,7 @@ namespace MMR.UI.Forms
             // cEnableNightMusic
             // 
             this.cEnableNightMusic.AutoSize = true;
-            this.cEnableNightMusic.Location = new System.Drawing.Point(9, 160);
+            this.cEnableNightMusic.Location = new System.Drawing.Point(9, 68);
             this.cEnableNightMusic.Name = "cEnableNightMusic";
             this.cEnableNightMusic.Size = new System.Drawing.Size(114, 17);
             this.cEnableNightMusic.TabIndex = 35;
@@ -1135,7 +1137,7 @@ namespace MMR.UI.Forms
             // cFastPush
             // 
             this.cFastPush.AutoSize = true;
-            this.cFastPush.Location = new System.Drawing.Point(9, 137);
+            this.cFastPush.Location = new System.Drawing.Point(9, 160);
             this.cFastPush.Name = "cFastPush";
             this.cFastPush.Size = new System.Drawing.Size(125, 17);
             this.cFastPush.TabIndex = 31;
@@ -1149,7 +1151,7 @@ namespace MMR.UI.Forms
             this.cQText.BackColor = System.Drawing.Color.Transparent;
             this.cQText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cQText.ForeColor = System.Drawing.Color.Black;
-            this.cQText.Location = new System.Drawing.Point(9, 114);
+            this.cQText.Location = new System.Drawing.Point(9, 137);
             this.cQText.Name = "cQText";
             this.cQText.Size = new System.Drawing.Size(74, 17);
             this.cQText.TabIndex = 6;
@@ -1229,7 +1231,7 @@ namespace MMR.UI.Forms
             // 
             this.cDisableCritWiggle.AutoSize = true;
             this.cDisableCritWiggle.BackColor = System.Drawing.Color.Transparent;
-            this.cDisableCritWiggle.Location = new System.Drawing.Point(9, 68);
+            this.cDisableCritWiggle.Location = new System.Drawing.Point(9, 91);
             this.cDisableCritWiggle.Name = "cDisableCritWiggle";
             this.cDisableCritWiggle.Size = new System.Drawing.Size(111, 17);
             this.cDisableCritWiggle.TabIndex = 29;
@@ -1255,7 +1257,7 @@ namespace MMR.UI.Forms
             this.cCutsc.BackColor = System.Drawing.Color.Transparent;
             this.cCutsc.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cCutsc.ForeColor = System.Drawing.Color.Black;
-            this.cCutsc.Location = new System.Drawing.Point(9, 91);
+            this.cCutsc.Location = new System.Drawing.Point(9, 114);
             this.cCutsc.Name = "cCutsc";
             this.cCutsc.Size = new System.Drawing.Size(115, 17);
             this.cCutsc.TabIndex = 5;
@@ -1921,6 +1923,17 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
+            // cFasterBank
+            // 
+            this.cFasterBank.AutoSize = true;
+            this.cFasterBank.Location = new System.Drawing.Point(9, 67);
+            this.cFasterBank.Name = "cFasterBank";
+            this.cFasterBank.Size = new System.Drawing.Size(83, 17);
+            this.cFasterBank.TabIndex = 4;
+            this.cFasterBank.Text = "Faster Bank";
+            this.cFasterBank.UseVisualStyleBackColor = true;
+            this.cFasterBank.CheckedChanged += new System.EventHandler(this.cFasterBank_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2134,6 +2147,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFreestanding;
         private System.Windows.Forms.CheckBox cFDAnywhere;
         private System.Windows.Forms.CheckBox cArrowCycling;
+        private System.Windows.Forms.CheckBox cFasterBank;
     }
 }
 

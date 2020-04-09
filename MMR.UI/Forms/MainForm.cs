@@ -140,6 +140,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cGoodDampeRNG, "Change Dampe ghost flames to always have two on the ground floor and one up the ladder.");
             TooltipBuilder.SetTooltip(cGoodDogRaceRNG, "Make Gold Dog always win if you have the Mask of Truth.");
             TooltipBuilder.SetTooltip(cFasterLabFish, "Change Lab Fish to only need to be fed one fish.");
+            TooltipBuilder.SetTooltip(cFasterBank, "Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000. Also reduces maximum bank capacity from 5000 to 1000.");
             TooltipBuilder.SetTooltip(cFastPush, "Increase the speed of pushing and pulling blocks and faucets.");
             TooltipBuilder.SetTooltip(cFreestanding, "Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.");
             TooltipBuilder.SetTooltip(cEnableNightMusic, "Enables playing daytime Background music during nighttime in the field.\n(Clocktown night music can be weird)");
@@ -395,6 +396,7 @@ namespace MMR.UI.Forms
             cGoodDampeRNG.Checked = _configuration.GameplaySettings.SpeedupDampe;
             cGoodDogRaceRNG.Checked = _configuration.GameplaySettings.SpeedupDogRace;
             cFasterLabFish.Checked = _configuration.GameplaySettings.SpeedupLabFish;
+            cFasterBank.Checked = _configuration.GameplaySettings.SpeedupBank;
 
             cDMult.SelectedIndex = (int)_configuration.GameplaySettings.DamageMode;
             cDType.SelectedIndex = (int)_configuration.GameplaySettings.DamageEffect;
@@ -713,6 +715,11 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupLabFish = cFasterLabFish.Checked);
         }
 
+        private void cFasterBank_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupBank = cFasterBank.Checked);
+        }
+
         private void cDrawHash_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.DrawHash = cDrawHash.Checked);
@@ -908,8 +915,6 @@ namespace MMR.UI.Forms
         /// </summary>
         private void ToggleCheckBoxes()
         {
-            var onMainTab = ttOutput.SelectedTab.TabIndex == 0;
-
             if (_configuration.GameplaySettings.LogicMode == LogicMode.Vanilla)
             {
                 cMixSongs.Enabled = false;
@@ -938,38 +943,38 @@ namespace MMR.UI.Forms
             }
             else
             {
-                cMixSongs.Enabled = onMainTab;
-                cDEnt.Enabled = onMainTab;
-                cSpoiler.Enabled = onMainTab;
-                cHTMLLog.Enabled = onMainTab;
-                cGossipHints.Enabled = onMainTab;
-                cUserItems.Enabled = onMainTab;
+                cMixSongs.Enabled = true;
+                cDEnt.Enabled = true;
+                cSpoiler.Enabled = true;
+                cHTMLLog.Enabled = true;
+                cGossipHints.Enabled = true;
+                cUserItems.Enabled = true;
 
-                cSoS.Enabled = onMainTab;
-                cDChests.Enabled = onMainTab;
-                cBottled.Enabled = onMainTab;
-                cShop.Enabled = onMainTab;
-                cAdditional.Enabled = onMainTab;
-                cMoonItems.Enabled = onMainTab;
-                cFairyRewards.Enabled = onMainTab;
-                cNutChest.Enabled = onMainTab && _configuration.GameplaySettings.LogicMode != LogicMode.Casual;
-                cCrazyStartingItems.Enabled = onMainTab;
-                cCowMilk.Enabled = onMainTab;
-                cSpiders.Enabled = onMainTab;
-                cStrayFairies.Enabled = onMainTab;
-                cMundaneRewards.Enabled = onMainTab;
+                cSoS.Enabled = true;
+                cDChests.Enabled = true;
+                cBottled.Enabled = true;
+                cShop.Enabled = true;
+                cAdditional.Enabled = true;
+                cMoonItems.Enabled = true;
+                cFairyRewards.Enabled = true;
+                cNutChest.Enabled = _configuration.GameplaySettings.LogicMode != LogicMode.Casual;
+                cCrazyStartingItems.Enabled = true;
+                cCowMilk.Enabled = true;
+                cSpiders.Enabled = true;
+                cStrayFairies.Enabled = true;
+                cMundaneRewards.Enabled = true;
 
-                tCustomItemList.Enabled = onMainTab;
-                bItemListEditor.Enabled = onMainTab;
+                tCustomItemList.Enabled = true;
+                bItemListEditor.Enabled = true;
 
-                tStartingItemList.Enabled = onMainTab;
-                bStartingItemEditor.Enabled = onMainTab;
+                tStartingItemList.Enabled = true;
+                bStartingItemEditor.Enabled = true;
 
-                tJunkLocationsList.Enabled = onMainTab && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
-                bJunkLocationsEditor.Enabled = onMainTab && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
+                tJunkLocationsList.Enabled = _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
+                bJunkLocationsEditor.Enabled = _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
 
-                cNoStartingItems.Enabled = onMainTab && (_configuration.GameplaySettings.AddOther || _configuration.GameplaySettings.UseCustomItemList);
-                if (!cNoStartingItems.Enabled && onMainTab)
+                cNoStartingItems.Enabled = _configuration.GameplaySettings.AddOther || _configuration.GameplaySettings.UseCustomItemList;
+                if (!cNoStartingItems.Enabled)
                 {
                     cNoStartingItems.Checked = false;
                     _configuration.GameplaySettings.NoStartingItems = false;
@@ -979,8 +984,8 @@ namespace MMR.UI.Forms
             bLoadLogic.Enabled = _configuration.GameplaySettings.LogicMode == LogicMode.UserLogic;
 
             var oldEnabled = cDrawHash.Enabled;
-            cDrawHash.Enabled = onMainTab && !_configuration.OutputSettings.GeneratePatch && (_configuration.OutputSettings.GenerateROM || _configuration.OutputSettings.OutputVC);
-            if (onMainTab && cDrawHash.Enabled != oldEnabled)
+            cDrawHash.Enabled = !_configuration.OutputSettings.GeneratePatch && (_configuration.OutputSettings.GenerateROM || _configuration.OutputSettings.OutputVC);
+            if (cDrawHash.Enabled != oldEnabled)
             {
                 cDrawHash.CheckedChanged -= cDrawHash_CheckedChanged;
                 cDrawHash.Checked = cDrawHash.Enabled ? _drawHashChecked : false;
@@ -993,7 +998,7 @@ namespace MMR.UI.Forms
             }
             else
             {
-                cClearHints.Enabled = onMainTab;
+                cClearHints.Enabled = true;
             }
         }
 
@@ -1075,6 +1080,7 @@ namespace MMR.UI.Forms
             cGoodDampeRNG.Enabled = v;
             cFasterLabFish.Enabled = v;
             cGoodDogRaceRNG.Enabled = v;
+            cFasterBank.Enabled = v;
 
             cDMult.Enabled = v;
             cDType.Enabled = v;
