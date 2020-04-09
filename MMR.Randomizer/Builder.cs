@@ -116,7 +116,7 @@ namespace MMR.Randomizer
             WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + Unassigned.Count + " available songs:");
 
             // if we have lots of music, let's randomize skulltula house and ikana well to have something unique that isn't cave music
-            if (RomData.SequenceList.Count > 80 &&RomData.SequenceList.FindAll(u => u.Type.Contains(2)).Count >= 8 + 1){ // tested by asking for all targetseq that have a category of 2, counted (8)
+            if (RomData.SequenceList.Count > 80 &&RomData.SequenceList.FindAll(u => u.Type.Contains(2)).Count >= 8 + 2){ // tested by asking for all targetseq that have a category of 2, counted (8)
                 WriteOutput("Enough Music detected for adding variety to Dungeon music");
                 SequenceUtils.ReassignSkulltulaHousesMusic();
                 SequenceUtils.ReassignPinnacleRock();

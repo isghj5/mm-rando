@@ -362,9 +362,10 @@ namespace MMR.Randomizer.Utils
                     newentry.Addr = addr;
                 }
 
-                if (SequenceList.FindAll(u => u.Replaces == i).Count > 1)
+                var multiple_sequences = SequenceList.FindAll(u => u.Replaces == i);
+                if (multiple_sequences.Count > 1)
                 {
-                    WriteOutput("Error: Slot " + i.ToString("X") + " has multiple songs pointing at it!");
+                    WriteOutput("Error: Slot " + i.ToString("X2") + " has multiple songs pointing at it!");
                 }
 
                 int p = RomData.PointerizedSequences.FindIndex(u => u.PreviousSlot == i);
@@ -533,7 +534,7 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteToROM(0x00C2739C, new byte[] { 0x3C, 0x08, 0x80, 0x0A, 0x8D, 0x05, (byte) (offset >> 8), (byte)(offset & 0xFF) });
         }
 
-        public static void ReassignSkulltulaHousesMusic(byte replacement_slot = 0x61)
+        public static void ReassignSkulltulaHousesMusic(byte replacement_slot = 0x1e)
         {
             // changes the skulltulla house BGM to a separate slot so it plays a new music that isn't generic cave music (overused)
             // the BGM for a scene is specified by a single byte in the scene headers
@@ -572,7 +573,7 @@ namespace MMR.Randomizer.Utils
 
             SequenceInfo new_music_slot = new SequenceInfo
             {
-                Name = "mm-spiderhouse-replacement",
+                Name = "mmr-spiderhouse-replacement",
                 MM_seq = replacement_slot,
                 Replaces = replacement_slot,
                 Type = new List<int> { 2 },
@@ -596,17 +597,16 @@ namespace MMR.Randomizer.Utils
             RomUtils.CheckCompressed(pinnacle_rock_fid);
             for (int b = 0; b < 0x10 * 70; b += 8)
             {
-                if (RomData.MMFileList[pinnacle_rock_fid].Data[b] == 0x15)
+                if (RomData.MMFileList[pinnacle_rock_fid].Data[b] == 0x15) //&& RomData.MMFileList[pinnacle_rock_fid].Data[b + 0x7] == 0x13)
                 {
                     RomData.MMFileList[pinnacle_rock_fid].Data[b + 0x7] = replacement_slot;
                     break;
                 }
             }
 
-
             SequenceInfo new_music_slot = new SequenceInfo
             {
-                Name = "mm-pinnacle-replacement",
+                Name = "mmr-pinnacle-replacement",
                 MM_seq = replacement_slot,
                 Replaces = replacement_slot,
                 Type = new List<int> { 0, 2 },
@@ -614,7 +614,6 @@ namespace MMR.Randomizer.Utils
             };
 
             RomData.TargetSequences.Add(new_music_slot);
-
         }
 
         public static void ReadInstrumentSetList()
