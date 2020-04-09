@@ -551,12 +551,14 @@ namespace MMR.Randomizer
             // add single nut to drop table for the termina field
             // c444b8  will become deku nut, gives us 1/16 chance of a nut
             int fid = RomUtils.GetFileIndexForWriting(0xC444B8);
-            int offset = 0xC444B8 - RomData.MMFileList[fid].Addr;
             RomUtils.CheckCompressed(fid);
+            int offset = 0xC444B8 - RomData.MMFileList[fid].Addr;
             RomData.MMFileList[fid].Data[offset] = 0x0C; // 0x0c is deku nut
             RomData.MMFileList[fid].Data[offset+0x110] = 0x05; // this should change the ammount dropped to 5
 
-            // debug... add something else weird to other areas for debugging?
+            // ADD BOMBCHUS 10 (because single is broken) and with the forced textbox popup getting only one would suck
+            RomData.MMFileList[fid].Data[offset + 1] = 0x46; 
+
         }
 
 
