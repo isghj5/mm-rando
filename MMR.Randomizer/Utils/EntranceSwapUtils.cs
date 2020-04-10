@@ -16,6 +16,19 @@ namespace MMR.Randomizer.Utils
             };
         internal static void WriteNewEntrance(Item exit, Item newSpawn)
         {
+            // special cases
+            if (exit != newSpawn)
+            {
+                if (exit == Item.EntranceTerminaFieldFromAstralObservatoryTelescope)
+                {
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-telescope-music");
+                }
+                if (exit == Item.EntranceDekuPalaceFromDekuPalace)
+                {
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-deku-patrol-exit");
+                }
+            }
+
             var spawnId = newSpawn.SpawnId();
             foreach (var exitInfo in exit.ExitIndices())
             {
@@ -41,15 +54,6 @@ namespace MMR.Randomizer.Utils
             foreach (var address in exit.ExitAddresses())
             {
                 ReadWriteUtils.WriteToROM(address, spawnId);
-            }
-
-            // special cases
-            if (exit != newSpawn)
-            {
-                if (exit == Item.EntranceTerminaFieldFromAstralObservatoryTelescope)
-                {
-                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-telescope-music");
-                }
             }
         }
 

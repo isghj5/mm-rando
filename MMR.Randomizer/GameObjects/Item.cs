@@ -4177,6 +4177,7 @@ namespace MMR.Randomizer.GameObjects
         [ExitAddress(0xDA050A)] // thrown out of king's chamber
         [ExitCutscene(Scene.DekuKingChamber, 0, 3)] // after receiving sonata check
         [ExitCutscene(Scene.DekuKingChamber, 0, 6)] // after receiving sonata check
+        [ExitAddress(0xED02E6)] // thrown out by patrol guards. must apply fix-deku-patrol-exit mod for this to work
         [Spawn(Scene.DekuPalace, 1)]
         EntranceDekuPalaceFromDekuPalace, // thrown out // one way
 
