@@ -73,6 +73,56 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteToROM(0x02E90FDC, spawnAddress);
         }
 
+        internal static void WriteOwlRegionNameTable()
+        {
+            int soarTextTableAddress = 0x00C66C54;
+            int soarTextSizeTableAddress = 0x00C66D04;
+            int soarFile = RomUtils.GetFileIndexForWriting(soarTextTableAddress);
+            List<string> newNames = new List<string>
+            {
+                "Boss Lair", "Pirate's Fortress", "The Moon", "Ikana Graveyard", "West Clock Town", 
+                "Zora Hall", "Pinnacle Rock", "Stock Pot Inn", "Lottery Shop", "Termina Field",
+            };
+            for( int owl = 0; owl < 10; owl ++)
+            {
+                byte[] nameData = new byte[16];
+                string name = newNames[owl];
+                for(int i = 0; i< 16;i++)
+                {
+                    byte t;
+                    if( i < name.Length)
+                    {
+                        t = (byte)name[i];
+                    } else
+                    {
+                        t = 0;
+                    }
+                    nameData[i] = t;
+                }
+                ReadWriteUtils.WriteToROM(soarTextTableAddress + (owl << 4), nameData);
+                ReadWriteUtils.WriteToROM(soarTextSizeTableAddress + (owl << 1), (ushort)newNames[owl].Length);
+            }
+            ReadOwlRegionNameTable();
+        }
+
+        internal static void ReadOwlRegionNameTable()
+        {
+            int soarNameOffset = 0x00C66C54;
+            int soarSizeOffset = 0x00C66D04;
+            List<string> tableNames = new List<string>(10);
+            for (int owl = 0; owl < 10; owl++)
+            {
+                tableNames.Add("");
+                byte[] name = ReadWriteUtils.ReadBytes(soarNameOffset + (owl << 4), 16);
+                for (int i = 0; i < 0x10; i++)
+                {
+                    tableNames[owl] += name[i]== 0 ? '?' : System.Convert.ToChar(name[i]);
+                }
+                ushort t = ReadWriteUtils.ReadU16(soarSizeOffset + (owl << 1));
+                System.Diagnostics.Debug.WriteLine("'" + tableNames[owl] + "' = " + t);
+            }
+        }
+
         //private static void FinalizeEntrances()
         //{
         //    ShuffledEntranceList = new Dictionary<int, List<ushort>>();
