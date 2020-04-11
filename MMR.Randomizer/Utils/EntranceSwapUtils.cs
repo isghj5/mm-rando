@@ -1,3 +1,5 @@
+using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
@@ -5,6 +7,7 @@ using MMR.Randomizer.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MMR.Randomizer.Utils
 {
@@ -78,34 +81,37 @@ namespace MMR.Randomizer.Utils
 
         internal static void WriteOwlRegionNameTable(IEnumerable<ItemObject> allLocations)
         {
-            List<Item> owlStatues = new List<Item> {
+            var owlStatues = new List<Item> {
                     Item.EntranceGreatBayCoastFromOwlStatue, Item.EntranceZoraCapeFromOwlStatue,
                     Item.EntranceSnowheadFromOwlStatue, Item.EntranceMountainVillageFromOwlStatue,
                     Item.EntranceSouthClockTownFromOwlStatue,Item.EntranceMilkRoadFromOwlStatue,
                     Item.EntranceWoodfallFromOwlStatue, Item.EntranceSouthernSwampFromOwlStatue,
                     Item.EntranceIkanaCanyonFromOwlStatue, Item.EntranceStoneTowerFromOwlStatue
                 };
-            List<ItemObject> owlLocations = allLocations.Where(io => io.NewLocation.HasValue && owlStatues.Contains(io.NewLocation.Value)).ToList();
-            int soarTextTableAddress = 0x00C66C54;
-            int soarTextSizeTableAddress = 0x00C66D04;
+            var owlLocations = allLocations.Where(io => io.NewLocation.HasValue && owlStatues.Contains(io.NewLocation.Value)).ToList();
+            var soarTextTableAddress = 0x00C66C54;
+            var soarTextSizeTableAddress = 0x00C66D04;
 
-            List<string> newNames = new List<string>();
-            foreach (Item owl in owlStatues)
+            var newNames = new List<string>();
+            var addSpaceRegex = new Regex("([A-Z]+)");
+            foreach (var owl in owlStatues)
             {
-                ItemObject item = owlLocations.Single(io => io.NewLocation.Value == owl);
-                newNames.Add(item.Item.Region().Value.Name());
+                var item = owlLocations.Single(io => io.NewLocation.Value == owl);
+                var spawn = item.Item.GetAttribute<SpawnAttribute>();
+                newNames.Add(addSpaceRegex.Replace(spawn.Scene.ToString(), " $1").Trim());
             }
-            for ( int owl = 0; owl < 10; owl ++)
+            for (var owl = 0; owl < 10; owl ++)
             {
                 byte[] nameData = new byte[16];
                 string name = newNames[owl];
-                for(int i = 0; i< 16;i++)
+                for(var i = 0; i< 16;i++)
                 {
                     byte t;
-                    if( i < name.Length)
+                    if(i < name.Length)
                     {
                         t = (byte)name[i];
-                    } else
+                    }
+                    else
                     {
                         t = 0;
                     }
@@ -121,62 +127,18 @@ namespace MMR.Randomizer.Utils
         {
             int soarNameOffset = 0x00C66C54;
             int soarSizeOffset = 0x00C66D04;
-            List<string> tableNames = new List<string>(10);
-            for (int owl = 0; owl < 10; owl++)
+            var tableNames = new List<string>(10);
+            for (var owl = 0; owl < 10; owl++)
             {
                 tableNames.Add("");
-                byte[] name = ReadWriteUtils.ReadBytes(soarNameOffset + (owl << 4), 16);
-                for (int i = 0; i < 0x10; i++)
+                var name = ReadWriteUtils.ReadBytes(soarNameOffset + (owl << 4), 16);
+                for (var i = 0; i < 0x10; i++)
                 {
                     tableNames[owl] += name[i]== 0 ? '?' : System.Convert.ToChar(name[i]);
                 }
-                ushort t = ReadWriteUtils.ReadU16(soarSizeOffset + (owl << 1));
+                var t = ReadWriteUtils.ReadU16(soarSizeOffset + (owl << 1));
                 System.Diagnostics.Debug.WriteLine("'" + tableNames[owl] + "' = " + t);
             }
         }
-
-        //private static void FinalizeEntrances()
-        //{
-        //    ShuffledEntranceList = new Dictionary<int, List<ushort>>();
-        //    ExitListIndices = new Dictionary<int, List<int>>();
-        //    Dictionary<int, int> sceneSync = new Dictionary<int, int>()
-        //    {
-        //        { 69, 0 },     // swamp
-        //        { 80, 90 },     // mountain village
-        //        { 93, 94 },     // twin islands
-        //        { 77, 72 }      // goron village
-        //    };
-        //    ushort spawnAddress;
-        //    int sceneIndex;
-        //    foreach (Exit exit in TerminaMapData.exits)
-        //    {
-        //        spawnAddress = TerminaMapData.SpawnAddress(exit.SpawnName);
-        //        sceneIndex = TerminaMapData.SceneIndex(exit.RegionName);
-        //        if (spawnAddress != 0xFFFF && sceneIndex != -1)
-        //        {
-        //            FinalizeExit(spawnAddress, sceneIndex, exit);
-        //            if (sceneSync.ContainsKey(sceneIndex))
-        //            {
-        //                if (!"Goron Village: Lens Grotto".Equals(exit.ExitName))
-        //                {
-        //                    FinalizeExit(spawnAddress, sceneSync[sceneIndex], exit);
-        //                }
-        //            }
-        //        }
-        //        else
-        //        {
-        //            Debug.WriteLine($"{exit.ExitName} not placed: {spawnAddress}, {sceneIndex}");
-        //        }
-        //    }
-        //    // correct spring lens grotto to return to the void out spawn instead of above nothing
-        //    foreach( List<ushort> exitSpawns in ShuffledEntranceList.Values)
-        //    {
-        //        while( exitSpawns.Contains(0x8A30))
-        //        {
-        //            int i = exitSpawns.IndexOf(0x8A30);
-        //            exitSpawns[i] = 0x8A40;
-        //        }
-        //    }
-        //}
     }
 }
