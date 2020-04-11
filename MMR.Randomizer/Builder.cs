@@ -557,9 +557,6 @@ namespace MMR.Randomizer
             RomData.MMFileList[fid].Data[offset] = 0x0C; // 0x0c is deku nut
             RomData.MMFileList[fid].Data[offset+0x110] = 0x05; // this should change the ammount dropped to 5
 
-            // ADD BOMBCHUS 10 (because single is broken) and with the forced textbox popup getting only one would suck
-            RomData.MMFileList[fid].Data[offset + 1] = 0x46; 
-
         }
 
 
