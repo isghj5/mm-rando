@@ -81,7 +81,7 @@ namespace MMR.Randomizer
                     ReplacementSequence.SequenceBinaryList = new List<SequenceBinaryData> { ReplacementSequence.SequenceBinaryList[0] }; // lock the one we want
                 }
                 ReplacementSequence.Replaces = SlotSequence.Replaces; // tells the rando later what song to put into slot_seq
-                WriteOutput(GetSpacedString(SlotSequence.Name, Width: 50, DebugCharacters) + " -> " + ReplacementSequence.Name);
+                WriteOutput(GetSpacedString(SlotSequence.Name, Width: 50, DebugText: DebugCharacters) + " -> " + ReplacementSequence.Name);
                 RemainingSongs.Remove(ReplacementSequence);
             }
 
@@ -211,7 +211,7 @@ namespace MMR.Randomizer
                     {
                         WriteOutput(" * generalized replacement with " + replacementSong.Name + " song, with categories: " + String.Join(",", replacementSong.Type));
                         replacementSong.Replaces = targetSequence.Replaces;
-                        WriteOutput(GetSpacedString(targetSequence.Name, Width: 50, "APROX") + " -> " + replacementSong.Name);
+                        WriteOutput(GetSpacedString(targetSequence.Name, Width: 50, DebugText: "APROX") + " -> " + replacementSong.Name);
                         Unassigned.Remove(replacementSong);
                     }
                     else
@@ -236,7 +236,7 @@ namespace MMR.Randomizer
                             );
 
                             WriteOutput(" * double dipping with song " + replacementSong.Name + ", with categories: " + String.Join(",", replacementSong.Type));
-                            WriteOutput(GetSpacedString(targetSequence.Name, Width: 50, "COPY") + " -> " + replacementSong.Name);
+                            WriteOutput(GetSpacedString(targetSequence.Name, Width: 50, DebugText: "COPY") + " -> " + replacementSong.Name);
                         }
                         else
                         {
