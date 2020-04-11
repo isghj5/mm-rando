@@ -1,4 +1,4 @@
-﻿using MMR.Common.Extensions;
+using MMR.Common.Extensions;
 using MMR.Randomizer.Asm;
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Constants;
@@ -569,6 +569,8 @@ namespace MMR.Randomizer
                 {
                     EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
                 }
+                EntranceSwapUtils.WriteOwlRegionNameTable( _randomized.ItemList );
+
 
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-spring-lens-cave-spawn");
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-poisoned-woodfall-spawns");
