@@ -93,6 +93,9 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         BombchuAim = 0x3055,
 
+        [Tags(Long)]
+        TektiteDeath = 0x306e,
+
         [Tags(Short)]
         PoeAppear = 0x3073,
 
@@ -173,7 +176,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         GoronSitStand = 0x30FD,
 
         [Tags(Long)]
-        PoeLaughing = 0x311e, // Poe laughing at you, regular version
+        PoeLaughingRegular = 0x311e, // Poe laughing at you, regular version
 
         [Tags(Long)]
         PoeLaughingSinister = 0x3122, // Poe laughing at you, sinister version (oot paintings)
@@ -224,8 +227,27 @@ namespace MMR.Randomizer.Models.SoundEffects
         //[Tags(Long)]
         //MajoraWrathWhipEffect4 = 0x31ce, 
 
+        //[Tags(Long)]
+        //MajoraWrathWhipSliding = 0x31cd, // Wrath Whip sliding on the ground   
+
         [Tags(Long)]
-        MajoraWrathWhipSliding = 0x31cd, // Wrath Whip sliding on the ground   
+        PeahatLiftoff = 0x31e7,
+
+        //[Tags(Long)]
+        //MajoraWrathWhip7 = 0x31ec,    
+
+        //[Tags(Long)]
+        //MajoraWrathWhip8 = 0x31ed,   
+
+        //[Tags(Long)]
+        //MajoraWrathWhip6 = 0x31ef,    
+
+        //[Tags(Long)]
+        //MajoraWrathWhip5 = 0x31f1,  
+
+        //[Tags(Long)]
+        //UnknownBugSfx = 0x31f2,   
+
 
         [Tags(Long)]
         DekuLinkPanicScream = 0x3200, // when he sees his reflection
@@ -248,15 +270,14 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         MajoraWrathShortGaspPain = 0x3254,
 
-        [Tags(Short)]
-        MajoraWrathWhipHit = 0x3255, // Majora Wrath hitting link with a whip
+        //[Tags(Short)]
+        //MajoraWrathWhipHit = 0x3255,  // kinda annoying to hear in the world
 
-        //[Tags(Long)]
-        //[Tags(Looping)]
-        //RealBombchuFuseHiss = 0x3256,  // uhhh this was near a bunch of majora wrath stuff, why was it a bombchu sfx?
+        //[Tags(Short)]
+        //MajoraWrathHorribleScreech = 0x3256,  // loud and annoying to hear 
 
-        //[Tags(Long)]
-        //GyorgSwimmingEffect1 = 0x3257,
+        [Tags(Long)]
+        MajoraWrathLaughing = 0x3257,
 
         [Tags(Long)]
         MajoraWrathStunDamage = 0x3258, // damage that leads to a stun (arrow/beam)
@@ -287,9 +308,6 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Long)]
         SkullKidLaugh3 = 0x3277,
-
-        [Tags(Long)]
-        TektiteDeath = 0x386e,
 
         #endregion
 
