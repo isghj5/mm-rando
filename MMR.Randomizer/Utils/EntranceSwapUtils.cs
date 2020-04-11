@@ -27,6 +27,10 @@ namespace MMR.Randomizer.Utils
                 {
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-deku-patrol-exit");
                 }
+                if (exit == Item.EntranceIkanaCanyonFromIkanaClear)
+                {
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-ikana-clear-exit");
+                }
             }
 
             var spawnId = newSpawn.SpawnId();
