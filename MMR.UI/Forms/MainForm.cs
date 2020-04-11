@@ -1319,6 +1319,9 @@ namespace MMR.UI.Forms
                     newConfiguration = Configuration.FromJson(Req.ReadToEnd());
                 }
 
+                // for some reason the json is corrupted, and it trying to read it returns null
+                if (newConfiguration == null) return;
+
                 if (newConfiguration.GameplaySettings.Logic != null)
                 {
                     newConfiguration.GameplaySettings.UserLogicFileName = path;
