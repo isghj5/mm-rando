@@ -197,6 +197,22 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         SkullKidLaugh3 = 0x3277,
 
+        [Tags(Long)]
+        TektiteDead = 0x386e,
+
+        [Tags(Long)]
+        LikeLikeRoar = 0x3191,
+
+        [Tags(Long)]
+        PirateLaughZZZ = 0x3271,
+
+        [Tags(Long)]
+        FreezardDeath = 0x31a6,
+
+        [Tags(Short)]
+        PirateDamage = 0x3199,
+
+
         #endregion
 
         #region System SFX
@@ -381,6 +397,9 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Short)]
         PirateScream2 = 0x6119,
+
+        [Tags(Long)]
+        PirateDead = 0x319a,
 
         [Tags(Short)]
         RosaSigh1 = 0x611C,
