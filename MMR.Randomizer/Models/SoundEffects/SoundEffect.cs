@@ -172,6 +172,12 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         GoronSitStand = 0x30FD,
 
+        [Tags(Long)]
+        PoeLaughing = 0x311e, // Poe laughing at you, regular version
+
+        [Tags(Long)]
+        PoeLaughingSinister = 0x3122, // Poe laughing at you, sinister version (oot paintings)
+
         [Tags(Short)]
         IronKnuckleSwing = 0x3129,
 
@@ -180,13 +186,98 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         FrogGreet = 0x315C,
 
+        [Tags(Long)]
+        LikeLikeRoar = 0x3191, // sound of the like like trying to suck up link
+
+        [Tags(Short)]
+        PirateDamage = 0x3199,
+
+        [Tags(Long)]
+        PirateDead = 0x319a,
+
         [Replacable(0xCE5286)]
         [ReplacableByTags(Short)]
         [Tags(Short)]
         FrogVoice2 = 0x31A1,
 
+        [Tags(Long)]
+        FreezardIceBreath = 0x31a4,
+
+        [Tags(Long)]
+        FreezardDamage = 0x31a5,
+
+        [Tags(Long)]
+        FreezardDeath = 0x31a6,
+
         [Tags(Short)]
         GoronSleepy = 0x31AD,
+
+        //[Tags(Short)]
+        //MajoraWrathWhipSFX3 = 0x31ca,
+
+        //[Tags(Short)]
+        //MajoraWrathWhipSFX4 = 0x31cb, 
+
+        //[Tags(Long)]
+        //MajoraWrathWhipEffect2 = 0x31cc, 
+
+        //[Tags(Long)]
+        //MajoraWrathWhipEffect4 = 0x31ce, 
+
+        [Tags(Long)]
+        MajoraWrathWhipSliding = 0x31cd, // Wrath Whip sliding on the ground   
+
+        [Tags(Long)]
+        DekuLinkPanicScream = 0x3200, // when he sees his reflection
+
+        //[Tags(Long)]
+        //MajoraWrathSpinningTopLoop = 0x322c,
+
+        [Tags(Long)]
+        IgosMinionLaugh = 0x3238,
+
+        [Tags(Short)]
+        KingIgosSwordSwing = 0x3239, // King igos swinging his sword at you
+
+        [Tags(Long)]
+        PoeLaugh2 = 0x3241, // laugh used by igos or his minions
+
+        [Tags(Short)]
+        MajoraWrathVengfulWhip = 0x3253,
+
+        [Tags(Short)]
+        MajoraWrathShortGaspPain = 0x3254,
+
+        [Tags(Short)]
+        MajoraWrathWhipHit = 0x3255, // Majora Wrath hitting link with a whip
+
+        //[Tags(Long)]
+        //[Tags(Looping)]
+        //RealBombchuFuseHiss = 0x3256,  // uhhh this was near a bunch of majora wrath stuff, why was it a bombchu sfx?
+
+        //[Tags(Long)]
+        //GyorgSwimmingEffect1 = 0x3257,
+
+        [Tags(Long)]
+        MajoraWrathStunDamage = 0x3258, // damage that leads to a stun (arrow/beam)
+
+        [Tags(Long)]
+        MajoraWrathTakeDamage = 0x3259, // damage while in stun
+
+        [Tags(Long)]
+        MajoraWrathDramaticDeath = 0x325a, // when the witch is splashed with water
+
+        [Tags(Long)]
+        MajoraIncantationTaunting = 0x3268,
+
+        [Tags(Short)]
+        UnknownShortQuack = 0x3269,
+
+        [Tags(Short)]
+        MajoraIncantationShortChant = 0x326a, // the first of 'Coo CAh CAh Coo CAh CAh' chanting after transforming
+
+        [Tags(Long)]
+        PirateLaugh = 0x3271, // smug laugh when they catch you pretending to be a stone
 
         [Tags(Long)]
         SkullKidLaugh1 = 0x3275,
@@ -198,20 +289,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         SkullKidLaugh3 = 0x3277,
 
         [Tags(Long)]
-        TektiteDead = 0x386e,
-
-        [Tags(Long)]
-        LikeLikeRoar = 0x3191,
-
-        [Tags(Long)]
-        PirateLaughZZZ = 0x3271,
-
-        [Tags(Long)]
-        FreezardDeath = 0x31a6,
-
-        [Tags(Short)]
-        PirateDamage = 0x3199,
-
+        TektiteDeath = 0x386e,
 
         #endregion
 
@@ -398,8 +476,6 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         PirateScream2 = 0x6119,
 
-        [Tags(Long)]
-        PirateDead = 0x319a,
 
         [Tags(Short)]
         RosaSigh1 = 0x611C,
