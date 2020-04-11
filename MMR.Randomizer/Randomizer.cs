@@ -466,6 +466,11 @@ namespace MMR.Randomizer
                 return Dependence.NotDependent;
             }
 
+            if (currentItem.IsEntrance() && target == Item.EntranceMajorasLairFromTheMoon)
+            {
+                return Dependence.Dependent;
+            }
+
             //check timing
             if (currentItemObject.TimeNeeded != 0 && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary()))
             {
@@ -977,11 +982,20 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (!currentItem.IsEntrance() && targets.Any())
+            if (!currentItem.IsEntrance() && targets.Any() && !ItemUtils.IsJunk(currentItem))
             {
-                foreach (var requiredItem in ItemList[currentItemObject.NewLocation.Value].DependsOnItems.Where(item => item.IsSameType(currentItem)))
+                var location = ItemList[currentItemObject.NewLocation.Value];
+                foreach (var requiredItem in location.DependsOnItems.Where(item => item.IsSameType(currentItem)))
                 {
                     PlaceItem(requiredItem, targets);
+                }
+                var conditional = location.Conditionals.RandomOrDefault(Random);
+                if (conditional != null)
+                {
+                    foreach (var item in conditional.Where(item => item.IsSameType(currentItem)))
+                    {
+                        PlaceItem(item, targets);
+                    }
                 }
             }
         }
@@ -1117,6 +1131,31 @@ namespace MMR.Randomizer
             entrancePool.Remove(Item.EntranceSouthClockTownFromClockTowerInterior);
 
             var unconnectedEntrances = entrancesToPlace.ToDictionary(item => item, item => GetUnconnectedEntrances(item));
+
+            var disconnectedEntrances = entrancesToPlace.Where(item => !unconnectedEntrances.Any(kvp => kvp.Value.Contains(item))).ToList();
+            disconnectedEntrances.Remove(Item.EntranceClockTowerInteriorFromSouthClockTown);
+
+            while (disconnectedEntrances.Any())
+            {
+                var currentEntrance = disconnectedEntrances.Random(Random);
+
+                PlaceItem(currentEntrance, entrancePool);
+
+                var pair = ItemList[currentEntrance].NewLocation?.Pair().Value;
+                foreach (var kvp in unconnectedEntrances)
+                {
+                    kvp.Value.Remove(currentEntrance);
+                    if (pair.HasValue)
+                    {
+                        kvp.Value.Remove(pair.Value);
+                    }
+                }
+                disconnectedEntrances.Remove(currentEntrance);
+                if (pair.HasValue)
+                {
+                    disconnectedEntrances.Remove(pair.Value);
+                }
+            }
 
             while (unconnectedEntrances.SelectMany(kvp => kvp.Value).Distinct().Count() > 1)
             {
