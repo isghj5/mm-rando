@@ -3740,8 +3740,8 @@
 0
 0
 - Woodfall Owl
-0,786,800
-
+800
+0,786;637
 0
 0
 - Southern Swamp Owl
@@ -3931,7 +3931,7 @@
 0
 - AccessWoodfall
 
-636;638;640
+636;638;640;637;639
 0
 0
 - AccessGoronVillage

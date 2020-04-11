@@ -145,6 +145,9 @@
     <None Update="Resources\mods\fix-deku-patrol-exit">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\mods\fix-poisoned-woodfall-spawns">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\mods\fix-spring-lens-cave-spawn">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

@@ -569,6 +569,9 @@ namespace MMR.Randomizer
                 {
                     EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
                 }
+
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-spring-lens-cave-spawn");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-poisoned-woodfall-spawns");
             }
         }
 

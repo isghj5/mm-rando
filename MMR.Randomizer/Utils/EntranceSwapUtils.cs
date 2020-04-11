@@ -27,10 +27,6 @@ namespace MMR.Randomizer.Utils
                 {
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-deku-patrol-exit");
                 }
-                if (exit == Item.EntranceGoronVillageFromLensCave)
-                {
-                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-spring-lens-cave-spawn");
-                }
             }
 
             var spawnId = newSpawn.SpawnId();
