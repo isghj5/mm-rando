@@ -466,7 +466,7 @@ namespace MMR.Randomizer
                 return Dependence.NotDependent;
             }
 
-            if (currentItem.IsEntrance() && target == Item.EntranceMajorasLairFromTheMoon && !isEntrancePair)
+            if (currentItem.IsEntrance() && currentTargetObject.Name == "Inaccessible" && !isEntrancePair) // todo handle this more nicely with other logic.
             {
                 return Dependence.Dependent;
             }
@@ -818,11 +818,6 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            if (_settings.LogicMode == LogicMode.NoLogic)
-            {
-                return true;
-            }
-
             // todo handle pairs
             if (target == Item.EntranceSouthClockTownFromClockTowerInterior)
             {
@@ -832,11 +827,11 @@ namespace MMR.Randomizer
                     Debug.WriteLine($"{currentItem} cannot be a starting location.");
                     return false;
                 }
-                if (!ItemList[pair.Value].DependsOnItems.Any(d => ItemList[d].Name.StartsWith("Access"))) // todo more elegantly handle spawn point requirements.
-                {
-                    Debug.WriteLine($"{currentItem} cannot be a starting location.");
-                    return false;
-                }
+            }
+
+            if (_settings.LogicMode == LogicMode.NoLogic)
+            {
+                return true;
             }
 
             if (_settings.CustomJunkLocations.Contains(target) && !ItemUtils.IsJunk(currentItem))
@@ -1057,11 +1052,12 @@ namespace MMR.Randomizer
             var entrancePool = entrancesToPlace.ToList();
             foreach (var entrance in entrancesToPlace)
             {
-                PlaceItem(entrance, new List<Item>() { entrance });
+                ItemList[entrance].NewLocation = entrance;
                 ItemList[entrance].IsRandomized = false;
                 var pair = ItemList[entrance].NewLocation?.Pair();
                 if (pair != null)
                 {
+                    ItemList[pair.Value].NewLocation = pair;
                     ItemList[pair.Value].IsRandomized = false;
                 }
             }
