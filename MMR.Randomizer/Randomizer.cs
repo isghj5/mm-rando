@@ -455,7 +455,7 @@ namespace MMR.Randomizer
             return lines;
         }
 
-        private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath, Dictionary<Item, Dependence> dependenciesChecked, List<int[]> conditionsToRemove)
+        private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath, Dictionary<Item, Dependence> dependenciesChecked, List<int[]> conditionsToRemove, bool isEntrancePair = false)
         {
             Debug.WriteLine($"CheckDependence({currentItem}, {target})");
             var currentItemObject = ItemList[currentItem];
@@ -466,7 +466,7 @@ namespace MMR.Randomizer
                 return Dependence.NotDependent;
             }
 
-            if (currentItem.IsEntrance() && target == Item.EntranceMajorasLairFromTheMoon)
+            if (currentItem.IsEntrance() && target == Item.EntranceMajorasLairFromTheMoon && !isEntrancePair)
             {
                 return Dependence.Dependent;
             }
@@ -531,7 +531,7 @@ namespace MMR.Randomizer
                             {
                                 var childPath = dependencyPath.ToList();
                                 childPath.Add(d);
-                                dependenciesChecked[d] = CheckDependence(currentItem, d, childPath, dependenciesChecked, conditionsToRemove);
+                                dependenciesChecked[d] = CheckDependence(currentItem, d, childPath, dependenciesChecked, conditionsToRemove, isEntrancePair);
                             }
                         }
 
@@ -614,7 +614,7 @@ namespace MMR.Randomizer
                     {
                         var childPath = dependencyPath.ToList();
                         childPath.Add(location);
-                        dependenciesChecked[location] = CheckDependence(currentItem, location, childPath, dependenciesChecked, conditionsToRemove);
+                        dependenciesChecked[location] = CheckDependence(currentItem, location, childPath, dependenciesChecked, conditionsToRemove, isEntrancePair);
                     }
                     if (dependenciesChecked[location].Type != DependenceType.NotDependent)
                     {
@@ -888,7 +888,7 @@ namespace MMR.Randomizer
                     var pairPath = new List<Item> { pairTarget };
                     var pairConditionsToRemove = new List<int[]>();
                     var pairDependenciesChecked = new Dictionary<Item, Dependence> { { pairTarget, new Dependence { Type = DependenceType.Dependent } } };
-                    var pairDependence = CheckDependence(pairItem, pairTarget, pairPath, pairDependenciesChecked, pairConditionsToRemove);
+                    var pairDependence = CheckDependence(pairItem, pairTarget, pairPath, pairDependenciesChecked, pairConditionsToRemove, true);
                     ItemList[currentItem].NewLocation = null;
 
                     if (pairDependence.Type != DependenceType.NotDependent)
@@ -1095,7 +1095,7 @@ namespace MMR.Randomizer
             var itemObject = ItemList[item];
             return (itemObject.DependsOnItems?.SelectMany(d =>
             {
-                if (d.IsEntrance() && ItemList[d].NewLocation == null)
+                if (d.IsEntrance())
                 {
                     return new List<Item> { d };
                 }
@@ -1107,7 +1107,7 @@ namespace MMR.Randomizer
             }) ?? new List<Item>())
             .Concat(itemObject.Conditionals?.SelectMany(cs => cs.SelectMany(d =>
             {
-                if (d.IsEntrance() && ItemList[d].NewLocation == null)
+                if (d.IsEntrance())
                 {
                     return new List<Item> { d };
                 }
@@ -1132,6 +1132,18 @@ namespace MMR.Randomizer
 
             var unconnectedEntrances = entrancesToPlace.ToDictionary(item => item, item => GetUnconnectedEntrances(item));
 
+            var inaccessibleEntrances = unconnectedEntrances.Where(kvp => kvp.Value.Contains(Item.EntranceMajorasLairFromTheMoon)).Select(kvp => kvp.Key).ToList();
+
+            foreach (var entrance in inaccessibleEntrances)
+            {
+                PlaceEntrance(entrance.Pair().Value, entrancePool, unconnectedEntrances);
+            }
+
+            foreach (var kvp in unconnectedEntrances)
+            {
+                kvp.Value.RemoveAll(item => ItemList[item].NewLocation != null);
+            }
+
             var disconnectedEntrances = entrancesToPlace.Where(item => !unconnectedEntrances.Any(kvp => kvp.Value.Contains(item))).ToList();
             disconnectedEntrances.Remove(Item.EntranceClockTowerInteriorFromSouthClockTown);
 
@@ -1139,17 +1151,10 @@ namespace MMR.Randomizer
             {
                 var currentEntrance = disconnectedEntrances.Random(Random);
 
-                PlaceItem(currentEntrance, entrancePool);
+                PlaceEntrance(currentEntrance, entrancePool, unconnectedEntrances);
 
                 var pair = ItemList[currentEntrance].NewLocation?.Pair().Value;
-                foreach (var kvp in unconnectedEntrances)
-                {
-                    kvp.Value.Remove(currentEntrance);
-                    if (pair.HasValue)
-                    {
-                        kvp.Value.Remove(pair.Value);
-                    }
-                }
+
                 disconnectedEntrances.Remove(currentEntrance);
                 if (pair.HasValue)
                 {
@@ -1161,33 +1166,30 @@ namespace MMR.Randomizer
             {
                 var currentEntrance = unconnectedEntrances.Where(g => g.Value.Count > 0).OrderBy(g => g.Value.Count).First().Value.Random(Random);
 
-                if (currentEntrance != Item.EntranceClockTowerInteriorFromSouthClockTown)
-                {
-                    PlaceItem(currentEntrance, entrancePool);
-                }
-
-                var pair = ItemList[currentEntrance].NewLocation?.Pair().Value;
-                foreach (var kvp in unconnectedEntrances)
-                {
-                    kvp.Value.Remove(currentEntrance);
-                    if (pair.HasValue)
-                    {
-                        kvp.Value.Remove(pair.Value);
-                    }
-                }
-                unconnectedEntrances = unconnectedEntrances.Where(kvp => kvp.Value.Count > 0).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
+                PlaceEntrance(currentEntrance, entrancePool, unconnectedEntrances);
             }
 
             // place spawn point
             PlaceItem(Item.EntranceClockTowerInteriorFromSouthClockTown, entrancePool);
         }
 
-        private void PlaceEntrances(List<Item> itemPool)
+        private void PlaceEntrance(Item entrance, List<Item> entrancePool, Dictionary<Item, List<Item>> unconnectedEntrances)
         {
-            for (var i = Item.EntranceMayorsResidenceFromEastClockTown; i <= Item.EntranceLaundryPoolFromKafeisHideout; i++)
+            if (entrance != Item.EntranceClockTowerInteriorFromSouthClockTown)
             {
-                PlaceItem(i, itemPool);
+                PlaceItem(entrance, entrancePool);
             }
+
+            var pair = ItemList[entrance].NewLocation?.Pair().Value;
+            foreach (var kvp in unconnectedEntrances)
+            {
+                kvp.Value.Remove(entrance);
+                if (pair.HasValue)
+                {
+                    kvp.Value.Remove(pair.Value);
+                }
+            }
+            unconnectedEntrances = unconnectedEntrances.Where(kvp => kvp.Value.Count > 0).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         /// <summary>

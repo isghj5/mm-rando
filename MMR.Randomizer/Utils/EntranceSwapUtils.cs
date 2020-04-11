@@ -1,7 +1,10 @@
 using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
+using MMR.Randomizer.Models;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MMR.Randomizer.Utils
 {
@@ -26,6 +29,14 @@ namespace MMR.Randomizer.Utils
                 if (exit == Item.EntranceDekuPalaceFromDekuPalace)
                 {
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-deku-patrol-exit");
+                }
+                if (exit == Item.EntranceZoraCapeFromGreatBayTempleClear)
+                {
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-greatbay-clear-exit");
+                }
+                if (exit == Item.EntranceIkanaCanyonFromIkanaClear)
+                {
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-ikana-clear-exit");
                 }
             }
 
@@ -65,17 +76,26 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteToROM(0x02E90FDC, spawnAddress);
         }
 
-        internal static void WriteOwlRegionNameTable()
+        internal static void WriteOwlRegionNameTable(IEnumerable<ItemObject> allLocations)
         {
+            List<Item> owlStatues = new List<Item> {
+                    Item.EntranceGreatBayCoastFromOwlStatue, Item.EntranceZoraCapeFromOwlStatue,
+                    Item.EntranceSnowheadFromOwlStatue, Item.EntranceMountainVillageFromOwlStatue,
+                    Item.EntranceSouthClockTownFromOwlStatue,Item.EntranceMilkRoadFromOwlStatue,
+                    Item.EntranceWoodfallFromOwlStatue, Item.EntranceSouthernSwampFromOwlStatue,
+                    Item.EntranceIkanaCanyonFromOwlStatue, Item.EntranceStoneTowerFromOwlStatue
+                };
+            List<ItemObject> owlLocations = allLocations.Where(io => io.NewLocation.HasValue && owlStatues.Contains(io.NewLocation.Value)).ToList();
             int soarTextTableAddress = 0x00C66C54;
             int soarTextSizeTableAddress = 0x00C66D04;
-            int soarFile = RomUtils.GetFileIndexForWriting(soarTextTableAddress);
-            List<string> newNames = new List<string>
+
+            List<string> newNames = new List<string>();
+            foreach (Item owl in owlStatues)
             {
-                "Boss Lair", "Pirate's Fortress", "The Moon", "Ikana Graveyard", "West Clock Town", 
-                "Zora Hall", "Pinnacle Rock", "Stock Pot Inn", "Lottery Shop", "Termina Field",
-            };
-            for( int owl = 0; owl < 10; owl ++)
+                ItemObject item = owlLocations.Single(io => io.NewLocation.Value == owl);
+                newNames.Add(item.Item.Region().Value.Name());
+            }
+            for ( int owl = 0; owl < 10; owl ++)
             {
                 byte[] nameData = new byte[16];
                 string name = newNames[owl];
@@ -92,7 +112,7 @@ namespace MMR.Randomizer.Utils
                     nameData[i] = t;
                 }
                 ReadWriteUtils.WriteToROM(soarTextTableAddress + (owl << 4), nameData);
-                ReadWriteUtils.WriteToROM(soarTextSizeTableAddress + (owl << 1), (ushort)newNames[owl].Length);
+                ReadWriteUtils.WriteToROM(soarTextSizeTableAddress + (owl << 1), (ushort)Math.Min(newNames[owl].Length, 16));
             }
             ReadOwlRegionNameTable();
         }

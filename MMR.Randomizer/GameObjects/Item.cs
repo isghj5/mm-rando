@@ -3629,6 +3629,7 @@ namespace MMR.Randomizer.GameObjects
         [Region(Region.StoneTowerTemple)]
         [Entrance(EntranceType.DungeonExit)]
         [ExitCutscene(Scene.IkanaCanyon, 2, 0)] // 0x2073 normally
+        [ExitAddress(0xD34692)]
         [Spawn(Scene.IkanaCanyon, 7)]
         EntranceIkanaCanyonFromIkanaClear, // one way
 
