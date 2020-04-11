@@ -203,8 +203,8 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         FrogVoice2 = 0x31A1,
 
-        [Tags(Long)]
-        FreezardIceBreath = 0x31a4,
+        [Tags(Looping)]
+        FreezardIceBreath = 0x31A4,
 
         [Tags(Long)]
         FreezardDamage = 0x31a5,
