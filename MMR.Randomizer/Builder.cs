@@ -878,9 +878,11 @@ namespace MMR.Randomizer
                 }
             }
 
+            /*
             SoundEffect DebugSFX = SoundEffects.All().Find(u => u.ToString().Contains("DEBUG"));
             var DebugSLOT = SoundEffects.FilterByTags(DebugSFX.ReplacableByTags());
             if (DebugSFX != 0 && DebugSLOT.Count > 0) shuffledSoundEffects[DebugSLOT[0]] = DebugSFX;
+            */
 
             foreach (var sounds in shuffledSoundEffects)
             {
