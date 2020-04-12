@@ -878,10 +878,9 @@ namespace MMR.Randomizer
                 }
             }
 
-            var DebugSFX = SoundEffects.All().Find(u => u.ToString().Contains("DEBUG"));
+            SoundEffect DebugSFX = SoundEffects.All().Find(u => u.ToString().Contains("DEBUG"));
             var DebugSLOT = SoundEffects.FilterByTags(DebugSFX.ReplacableByTags());
-            if (DebugSLOT.Count > 0) shuffledSoundEffects[DebugSLOT[0]] = DebugSFX;
-            else throw new Exception("Cannot find a slot to fit that effect");
+            if (DebugSFX != 0 && DebugSLOT.Count > 0) shuffledSoundEffects[DebugSLOT[0]] = DebugSFX;
 
             foreach (var sounds in shuffledSoundEffects)
             {
