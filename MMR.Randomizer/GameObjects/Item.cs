@@ -3431,7 +3431,6 @@ namespace MMR.Randomizer.GameObjects
         [Region(Region.OwlWarp)]
         [Entrance(EntranceType.OwlWarp)]
         [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x0E)]
-        [ExitAddress(0xF577D2)] // target is altered if swamp is cleared
         [Spawn(Scene.SouthernSwamp, 10)]
         EntranceSouthernSwampFromOwlStatue, // one way
 
@@ -5041,7 +5040,6 @@ namespace MMR.Randomizer.GameObjects
         [Region(Region.OwlWarp)]
         [Entrance(EntranceType.OwlWarp)]
         [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x06)]
-        [ExitAddress(0xF57802)] // target is altered if mountain village is spring time
         [Spawn(Scene.MountainVillage, 8)]
         EntranceMountainVillageFromOwlStatue, // one way
 

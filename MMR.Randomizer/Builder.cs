@@ -574,6 +574,7 @@ namespace MMR.Randomizer
 
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-spring-lens-cave-spawn");
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-poisoned-woodfall-spawns");
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-song-of-soaring-exits"); // todo maybe NOP all the code, instead of just the SH commands.
             }
         }
 
