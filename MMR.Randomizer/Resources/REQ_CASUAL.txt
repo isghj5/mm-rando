@@ -21,7 +21,7 @@
 0
 - Light Arrow
 116
-4,120,755,752;0,25,92,93,119,756
+4,120,755,752;92,93,0,119,756,25,101
 0
 0
 - Bomb Bag (20)
@@ -2476,7 +2476,7 @@
 42
 - EntranceStoneTowerTempleFromStoneTower
 
-10,92,93,101,674;675;676
+10,92,93,101,674;675;92,93,676,101
 0
 0
 - EntranceTreasureChestShopFromEastClockTown
