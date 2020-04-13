@@ -270,25 +270,45 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        // turns the sequence slot into a pointer, which points at another song, in substituteSlotIndex
-        // the slot at seqSlotIndex is marked such that, instead of a new sequence being put there
-        // a pointer to another song, at substituteSlotIndex, is used instead.
-        // this frees up a song slot but its not completely empty if someone bugs out and gets there somehow
-        //  this is the same concept DB used to nulify the intro song
-        public static void ConvertSequenceSlotToPointer(int seqSlotIndex, int substituteSlotIndex)
+        public static void PointerizeSequenceSlots()
         {
-            var targetSeq = RomData.TargetSequences.Find(u => u.Replaces == seqSlotIndex);
-            var substituteSeq = RomData.TargetSequences.Find(u => u.Replaces == substituteSlotIndex);
-            if (targetSeq != null && substituteSeq != null)
+            // if music availablilty is low, pointerize some slots
+            // why? because in MM fairy fountain and fileselect are the same song,
+            //  with one being a pointer at the other, so we have 78 slots and 77 songs, not enough
+            //  also some categories can get exhausted leaving slots unfillable with remaining music,
+            // several slots that players will never/rarely hear are nullified (pointed at another song)
+            // this "fills" those slots, now we have fewer slots to fill with remaining music (73 fits in 77)
+            //  so pointers play the same music, and don't waste a song
+            //  but if the player does find this music in-game, it still plays sufficiently random music
+            if (RomData.SequenceList.Count < 85)
             {
-                targetSeq.PreviousSlot = targetSeq.Replaces; // we'll need at audioseq build
-                targetSeq.Replaces = substituteSeq.Replaces; // point the target at the substitute
-                RomData.PointerizedSequences.Add(targetSeq); // save the sequence for audioseq
-                RomData.TargetSequences.Remove(targetSeq);   // close the slot
+                ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
+                ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
+                ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants(meeting cs) at reunion
+                ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
+                ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
+            }
+        }
+
+        public static void ConvertSequenceSlotToPointer(int SeqSlotIndex, int SubstituteSlotIndex)
+        {
+            // turns the sequence slot into a pointer, which points at another song, at SubstituteSlotIndex
+            // the slot at SeqSlotIndex is marked such that, instead of a new sequence being put there
+            //  a pointer to another song, at SubstituteSlotIndex, is used instead.
+            // this frees up a song slot but its not completely empty if someone finds it
+            //  this is the same concept DB used to nulify the intro song
+            var TargetSeq = RomData.TargetSequences.Find(u => u.Replaces == SeqSlotIndex);
+            var SubstituteSeq = RomData.TargetSequences.Find(u => u.Replaces == SubstituteSlotIndex);
+            if (TargetSeq != null && SubstituteSeq != null)
+            {
+                TargetSeq.PreviousSlot = TargetSeq.Replaces; // we'll need at audioseq build
+                TargetSeq.Replaces = SubstituteSeq.Replaces; // point the target at the substitute
+                RomData.PointerizedSequences.Add(TargetSeq); // save the sequence for audioseq
+                RomData.TargetSequences.Remove(TargetSeq);   // close the slot
             }
             else
             {
-                throw new IndexOutOfRangeException("Could not convert slot to pointer:" + seqSlotIndex.ToString("X"));
+                throw new IndexOutOfRangeException("Could not convert slot to pointer:" + SeqSlotIndex.ToString("X2"));
             }
         }
 
