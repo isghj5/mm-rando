@@ -10,7 +10,7 @@
 ;   or      t5, t4, at
 .org 0x80118DFC ; In rom: 0xAFEE5C
     jal     hud_colors_get_a_button_color_hook
-    nop
+    andi    t4, t3, 0x00FF
 
 ; Custom color for B button.
 ; Replaces:
@@ -278,3 +278,83 @@
 .org 0x801063D0 ; In rom: 0xAEC430
     jal     hud_colors_get_map_entrance_cursor_color_hook
     nop
+
+;==================================================================================================
+; Song A + C Button Note Colors
+;==================================================================================================
+
+; Write colors for A, C button note icons.
+; Replaces:
+;   jal     0x80147564
+.org 0x80151F90
+    jal     hud_colors_update_button_note_colors
+
+; Replaces:
+;   jal     0x80147564
+.org 0x80154614
+    jal     hud_colors_update_button_note_colors
+
+; Replaces:
+;   jal     0x80147564
+.org 0x80155178
+    jal     hud_colors_update_button_note_colors
+
+;==================================================================================================
+; Song A + C Button Note Colors (Pause Menu)
+;==================================================================================================
+
+.headersize (G_KALEIDO_SCOPE_VRAM - G_KALEIDO_SCOPE_FILE)
+
+; Get "A" button note color (when not playing).
+; RDRAM: 0x8074C2AC, offset: 0x138C
+; Replaces:
+;   lui     t8, 0x5096
+;   ori     t8, t8, 0xFFC8
+.org 0x8081742C
+    jal     hud_colors_pause_1_get_note_a_color_hook
+    ori     at, r0, 0
+
+; Get "C" button note color (when not playing).
+; RDRAM: 0x8074C2D0, offset: 0x13B0
+; Replaces:
+;   lui     t9, 0xFFFF
+;   ori     t9, t9, 0x32C8
+.org 0x80817450
+    jal     hud_colors_pause_1_get_note_c_color_hook
+    ori     at, r0, 1
+
+; Get "A" button note color (when playing).
+; RDRAM: 0x8074C0D4, offset: 0x11B4
+; Replaces:
+;   lui     at, 0x5096
+;   ori     at, at, 0xFF00
+.org 0x80817254
+    jal     hud_colors_pause_2_get_note_color_hook
+    ori     at, r0, 0
+
+; Get "C" button note color (when playing).
+; RDRAM: 0x8074C104, offset: 0x11E4
+; Replaces:
+;   lui     at, 0xFFFF
+;   ori     at, at, 0x3200
+.org 0x80817284
+    jal     hud_colors_pause_2_get_note_color_hook
+    ori     at, r0, 1
+
+; Get "A" button note color (when replaying).
+; RDRAM: 0x8074C4D4, offset: 0x15B4
+; Replaces:
+;   lui     at, 0x5096
+;   ori     at, at, 0xFF00
+.org 0x80817654
+    jal     hud_colors_pause_2_get_note_color_hook
+    ori     at, r0, 0
+
+; Get "C" button note color (when replaying).
+; RDRAM: 0x8074C504, offset: 0x15E4
+; Replaces:
+;   lui     at, 0xFFFF
+;   ori     at, at, 0x3200
+.org 0x80817684
+    jal     hud_colors_pause_2_get_note_color_hook
+    ori     at, r0, 1

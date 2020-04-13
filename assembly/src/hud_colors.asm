@@ -304,9 +304,10 @@ hud_colors_get_a_button_color_hook:
     sw      v0, 0x0014 (sp)
     sw      a2, 0x0018 (sp)
     sw      t2, 0x001C (sp)
+    sw      t7, 0x0020 (sp)
 
     jal     hud_colors_get_a_button_color
-    sw      t7, 0x0020 (sp)
+    or      a0, t4, r0
 
     ; Put return value in T5
     or      t5, v0, r0
@@ -429,3 +430,52 @@ hud_colors_get_c_button_triangle_color_hook:
 
     jr      ra
     addiu   sp, sp, 0x28
+
+hud_colors_pause_1_get_note_a_color_hook:
+    sw      ra, -0x0004 (sp)
+    jal     hud_colors_pause_get_note_color_hook
+    ori     t9, r0, 0xC8
+    lw      ra, -0x0004 (sp)
+    jr      ra
+    or      t8, v0, r0
+
+hud_colors_pause_1_get_note_c_color_hook:
+    sw      ra, -0x0004 (sp)
+    jal     hud_colors_pause_get_note_color_hook
+    ori     t9, r0, 0xC8
+    lw      ra, -0x0004 (sp)
+    jr      ra
+    or      t9, v0, r0
+
+hud_colors_pause_2_get_note_color_hook:
+    sw      ra, -0x0004 (sp)
+    jal     hud_colors_pause_get_note_color_hook
+    ori     t9, r0, 0x00
+    lw      ra, -0x0004 (sp)
+    jr      ra
+    or      at, v0, r0
+
+hud_colors_pause_get_note_color_hook:
+    addiu   sp, sp, -0x0030
+    sw      ra, 0x0028 (sp)
+    sw      a0, 0x0010 (sp)
+    sw      a1, 0x0014 (sp)
+    sw      a2, 0x0018 (sp)
+    sw      a3, 0x001C (sp)
+    sw      t0, 0x0020 (sp)
+    sw      t2, 0x0024 (sp)
+
+    ; Get color (uses index in AT, alpha in T9)
+    or      a0, at, r0
+    jal     hud_colors_get_note_button_color
+    or      a1, t9, r0
+
+    lw      a0, 0x0010 (sp)
+    lw      a1, 0x0014 (sp)
+    lw      a2, 0x0018 (sp)
+    lw      a3, 0x001C (sp)
+    lw      t0, 0x0020 (sp)
+    lw      t2, 0x0024 (sp)
+    lw      ra, 0x0028 (sp)
+    jr      ra
+    addiu   sp, sp, 0x0030

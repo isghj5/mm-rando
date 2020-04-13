@@ -58,3 +58,8 @@ pause_menu_select_item_show_a_button_enabled_hook:
 
     jr      ra
     addiu   sp, sp, 0x18
+
+pause_menu_before_update_hook:
+    j       pause_menu_before_update
+    ; Displaced code
+    or      s0, a0, r0

@@ -19,10 +19,10 @@
 ;==================================================================================================
 
 .orga G_GI_TABLE_VROM
-.incbin("../../../../../MMR.Randomizer/Resources/mods/gi-table")
+.incbin("../../../MMR.Randomizer/Resources/mods/gi-table")
 
 .orga G_CHEST_TABLE_VROM
-.incbin("../../../../../MMR.Randomizer/Resources/mods/chest-table")
+.incbin("../../../MMR.Randomizer/Resources/mods/chest-table")
 
 ;==================================================================================================
 ; Include Mod Files Converted to Assembly

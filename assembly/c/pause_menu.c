@@ -1,3 +1,4 @@
+#include "hud_colors.h"
 #include "misc.h"
 #include "quest_item_storage.h"
 #include "quest_items.h"
@@ -180,6 +181,14 @@ bool pause_menu_select_item_show_a_button_enabled(z2_game_t *game) {
         return true;
     } else {
         // Perform original check.
-        return game->unk_0x16818 == 0;
+        return game->msgbox_ctxt.unk_0x1F10 == 0;
     }
+}
+
+/**
+ * Hook function called while on pause menu before processing each frame.
+ **/
+void pause_menu_before_update(z2_game_t *game) {
+    // Update pause menu colors.
+    hud_colors_update_pause_menu_colors(game);
 }

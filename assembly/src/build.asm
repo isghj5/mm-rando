@@ -24,6 +24,7 @@
 .include "boot.asm"
 .include "hacks.asm"
 .include "hooks/actor.asm"
+.include "hooks/arrow_magic.asm"
 .include "hooks/business_scrub.asm"
 .include "hooks/cows.asm"
 .include "hooks/dpad.asm"
@@ -58,6 +59,7 @@ PAYLOAD_START:
 
 .include "init.asm"
 .include "actor.asm"
+.include "arrow_magic.asm"
 .include "business_scrub.asm"
 .include "cows.asm"
 .include "damage.asm"
@@ -79,7 +81,7 @@ PAYLOAD_START:
 .importobj "../build/bundle.o"
 .align 8
 DPAD_TEXTURE:
-.incbin("../../../resources/dpad32.bin")
+.incbin("../resources/dpad32.bin")
 
 .align 0x10
 PAYLOAD_END:
