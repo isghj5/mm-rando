@@ -85,6 +85,12 @@ namespace MMR.Randomizer
                 RemainingSongs.Remove(ReplacementSequence);
             }
 
+            // these are places the player may never visit, if they do they are visited very briefly, and very little music is heard
+            // 0F:sharpkillsyou, 05:clock tower, 7C:giantsleave, 04:skullkidtheme
+            // 42:gormonbrothers, 27:musicboxhouse, 31:mayorsoffice, 45:kaepora's theme
+            // 72:wagonride, 0E:boatcruise, 29:zelda, 2D:giants, 
+            // 2E:guruguru, 7B:maskreveal(gaints summon cutscene), 73:keaton
+            List<int> LowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04, 0x42, 0x27, 0x31, 0x45, 0x72, 0x0E, 0x29, 0x2D, 0x2E, 0x7B, 0x73}; 
 
             // we randomize both slots and songs because if we're low on variety, and we don't sort slots
             //   then all the variety can be dried up for the later slots
@@ -121,7 +127,7 @@ namespace MMR.Randomizer
                 {
                     SequenceInfo testSeq = Unassigned[i];
                     // increases chance of getting non-mm music, but only if we have lots of music remaining
-                    if (Unassigned.Count > 77 && testSeq.Name.StartsWith("mm") && (random.Next(100) < 33))
+                    if (Unassigned.Count > 77 && testSeq.Name.StartsWith("mm") && (random.Next(100) < 40))
                         continue;
 
                     // test if the testSeq can be used with available instrument set slots
@@ -143,6 +149,14 @@ namespace MMR.Randomizer
                         {
                             WriteOutput(GetSpacedString(testSeq.Name) + " cannot be used because it requires custom audiobank(s) already claimed ");
                             Unassigned.Remove(testSeq);
+                            continue;
+                        }
+
+                        // if the slot we are checking is a rarely used slot, and this song requires a custom instrument set
+                        //  skip so we don't waste precious instrument set slots on rarely heard music
+                        if (LowUseMusicSlots.Contains(targetSequence.Replaces) && ! testSeq.SequenceBinaryList.Any(u => u.InstrumentSet == null))
+                        {
+                            WriteOutput(GetSpacedString(testSeq.Name) + " skipped for slot " + targetSequence.Replaces.ToString("X2") + " because it's a low use slot and requires a custom bank");
                             continue;
                         }
                     }

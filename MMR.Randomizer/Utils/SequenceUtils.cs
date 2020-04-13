@@ -287,6 +287,7 @@ namespace MMR.Randomizer.Utils
                 ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants(meeting cs) at reunion
                 ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
                 ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
+                ConvertSequenceSlotToPointer(0x72, 0x45); // point wagonride at dungeonclearshort (cutscenes must be turned on to hear)
             }
         }
 
