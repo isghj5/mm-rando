@@ -270,7 +270,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void PointerizeSequenceSlots()
+        public static void PointerizeSequenceSlots(bool ShortenedCutscenes)
         {
             // if music availablilty is low, pointerize some slots
             // why? because in MM fairy fountain and fileselect are the same song,
@@ -280,14 +280,23 @@ namespace MMR.Randomizer.Utils
             // this "fills" those slots, now we have fewer slots to fill with remaining music (73 fits in 77)
             //  so pointers play the same music, and don't waste a song
             //  but if the player does find this music in-game, it still plays sufficiently random music
-            if (RomData.SequenceList.Count < 85)
+            ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
+
+            if (ShortenedCutscenes)
+            {
+                // these cutcscene songs are never heard if shorten cutscenes is enabled, just pointerize it
+                ConvertSequenceSlotToPointer(0x04, 0x45); // point skullkid's theme, during skullkid's backstory cutscene, at kaepora
+                ConvertSequenceSlotToPointer(0x72, 0x45); // point wagonride at kaeopora 
+                ConvertSequenceSlotToPointer(0x2D, 0x3A); // point giants world (oath get cutscene) at observatory
+                ConvertSequenceSlotToPointer(0x70, 0x7D); // point call the giants( cutscene confronting skullkid) at reunion
+                ConvertSequenceSlotToPointer(0x7B, 0x0D); // point maskreveal, the song that plays when the mask shows its alive during moon cutscene, at aliens
+            }
+
+            if (RomData.TargetSequences.Count + 30 > RomData.SequenceList.Count )
             {
                 ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
-                ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
-                ConvertSequenceSlotToPointer(0x70, 0x7d); // point giants(meeting cs) at reunion
                 ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
                 ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
-                ConvertSequenceSlotToPointer(0x72, 0x45); // point wagonride at dungeonclearshort (cutscenes must be turned on to hear)
             }
         }
 

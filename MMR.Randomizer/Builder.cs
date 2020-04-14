@@ -86,11 +86,11 @@ namespace MMR.Randomizer
             }
 
             // these are places the player may never visit, if they do they are visited very briefly, and very little music is heard
-            // 0F:sharpkillsyou, 05:clock tower, 7C:giantsleave, 04:skullkidtheme
-            // 42:gormonbrothers, 27:musicboxhouse, 31:mayorsoffice, 45:kaepora's theme
+            // 0F:sharp kills you, 05:clock tower, 7C:giantsleave, 04:skullkid theme
+            // 42:gormon brothers, 27:musicbox house, 31:mayor's office, 45:kaepora's theme
             // 72:wagonride, 0E:boatcruise, 29:zelda, 2D:giants, 
-            // 2E:guruguru, 7B:maskreveal(gaints summon cutscene), 73:keaton
-            List<int> LowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04, 0x42, 0x27, 0x31, 0x45, 0x72, 0x0E, 0x29, 0x2D, 0x2E, 0x7B, 0x73}; 
+            // 2E:guruguru, 7B:maskreveal(gaints summon cutscene), 73:keaton, 70:calling giants
+            List<int> LowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04, 0x42, 0x27, 0x31, 0x45, 0x72, 0x0E, 0x29, 0x2D, 0x2E, 0x7B, 0x73, 0x70}; 
 
             // we randomize both slots and songs because if we're low on variety, and we don't sort slots
             //   then all the variety can be dried up for the later slots
@@ -279,7 +279,7 @@ namespace MMR.Randomizer
             SequenceUtils.ReadInstrumentSetList();
             if (_cosmeticSettings.Music == Music.Random)
             {
-                SequenceUtils.PointerizeSequenceSlots();
+                SequenceUtils.PointerizeSequenceSlots(_randomized.Settings.ShortenCutscenes);
                 BGMShuffle(random, _settings);
             }
 
