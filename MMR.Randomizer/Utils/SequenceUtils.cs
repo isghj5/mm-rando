@@ -565,7 +565,7 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteToROM(0x00C2739C, new byte[] { 0x3C, 0x08, 0x80, 0x0A, 0x8D, 0x05, (byte) (offset >> 8), (byte)(offset & 0xFF) });
         }
 
-        public static void ReassignSkulltulaHousesMusic(byte replacement_slot = 0x1e)
+        public static void ReassignSkulltulaHousesMusic(byte replacement_slot = 0x5A)
         {
             // changes the skulltulla house BGM to a separate slot so it plays a new music that isn't generic cave music (overused)
             // the BGM for a scene is specified by a single byte in the scene headers
