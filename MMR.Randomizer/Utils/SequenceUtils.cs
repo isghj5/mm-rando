@@ -404,6 +404,7 @@ namespace MMR.Randomizer.Utils
                 {
                     // found song we want to pointerize
                     newentry.Addr = RomData.PointerizedSequences[p].Replaces;
+                    WriteOutput("Slot " + i.ToString("X2") + " => " + RomData.PointerizedSequences[p].Replaces.ToString("X2"));
                 }
                 else if (j != -1)
                 {
