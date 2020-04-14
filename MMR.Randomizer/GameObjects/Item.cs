@@ -4200,6 +4200,7 @@ namespace MMR.Randomizer.GameObjects
         [Entrance(EntranceType.InteriorExit)]
         [Pair(EntranceDekuShrineFromDekuPalace)]
         [Exit(Scene.DekuShrine, 0)]
+        [Exit(Scene.DekuShrine, 2)]
         [Spawn(Scene.DekuPalace, 4)]
         EntranceDekuPalaceFromDekuShrine,
 
