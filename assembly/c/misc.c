@@ -17,6 +17,7 @@ struct misc_config MISC_CONFIG = {
     .freestanding = 1,
     .quest_consume = QUEST_CONSUME_DEFAULT,
     .arrow_cycle = 1,
+    .arrow_magic_show = 1,
 };
 
 union faucet_speed {
