@@ -21,16 +21,15 @@ namespace MMR.Randomizer.Attributes.Entrance
     {
         Interior,
         Overworld,
-        InteriorExit,
-        Permanent,
-        Dungeon,
-        Boss,
-        Trial,
+        DungeonEntrance,
         DungeonExit,
-        TrialExit,
-        OwlWarp,
-        Telescope,
         Grotto,
-        VoidRespawn
+        Trial,
+        Telescope,
+        VoidRespawn,
+        BossRoom,
+        OwlWarp,
+        MajorasLair,
+        CallGiants,
     }
 }

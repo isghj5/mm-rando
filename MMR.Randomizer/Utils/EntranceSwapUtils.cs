@@ -93,12 +93,11 @@ namespace MMR.Randomizer.Utils
             var soarTextSizeTableAddress = 0x00C66D04;
 
             var newNames = new List<string>();
-            var addSpaceRegex = new Regex("([A-Z]+)");
             foreach (var owl in owlStatues)
             {
                 var item = owlLocations.Single(io => io.NewLocation.Value == owl);
                 var spawn = item.Item.GetAttribute<SpawnAttribute>();
-                newNames.Add(addSpaceRegex.Replace(spawn.Scene.ToString(), " $1").Trim());
+                newNames.Add(spawn.Scene.ToString().AddSpaces());
             }
             for (var owl = 0; owl < 10; owl ++)
             {

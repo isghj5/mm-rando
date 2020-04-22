@@ -3305,7 +3305,7 @@ namespace MMR.Randomizer.GameObjects
         //EntranceMayorsResidenceFromMayorsResidence, // after talking with couple's mask
 
         [Region(Region.TheMoon)]
-        [Entrance]
+        [Entrance(EntranceType.MajorasLair)]
         [Exit(Scene.TheMoon, 0)]
         [Spawn(Scene.MajorasLair, 0)]
         EntranceMajorasLairFromTheMoon, // one way
@@ -3362,7 +3362,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceSouthernSwampFromRoadtoSouthernSwamp,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceTouristInformationFromSouthernSwamp)]
         [Exit(Scene.TouristCenter, 0)]
         [Spawn(Scene.SouthernSwamp, 1)]
@@ -3390,7 +3390,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceSouthernSwampFromDekuPalaceUpper,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceMagicHagsPotionShopFromSouthernSwamp)]
         [Exit(Scene.PotionShop, 0)]
         [ExitAddress(0xEF55C6)] // kicked out when witch is out. to clear swamp
@@ -3409,14 +3409,14 @@ namespace MMR.Randomizer.GameObjects
         //EntranceBoatArcheryFromTouristInformation, // photo cruise / boat archery
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceWoodsofMysteryFromSouthernSwamp)]
         [Exit(Scene.WoodsOfMystery, 0)]
         [Spawn(Scene.SouthernSwamp, 7)]
         EntranceSouthernSwampFromWoodsofMystery,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceSwampSpiderHouseFromSouthernSwamp)]
         [Exit(Scene.SwampSpiderHouse, 0)]
         [Spawn(Scene.SouthernSwamp, 8)]
@@ -3579,14 +3579,14 @@ namespace MMR.Randomizer.GameObjects
         EntranceIkanaCanyonFromRoadtoIkana,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePoeHutFromIkanaCanyon)]
         [Exit(Scene.PoeHut, 0)]
         [Spawn(Scene.IkanaCanyon, 1)]
         EntranceIkanaCanyonFromPoeHut,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceMusicBoxHouseFromIkanaCanyon)]
         [Exit(Scene.MusicBoxHouse, 0)]
         [ExitAddress(0x103EC1E)] // not sure
@@ -3609,14 +3609,14 @@ namespace MMR.Randomizer.GameObjects
         EntranceIkanaCanyonFromOwlStatue, // one way
 
         [Region(Region.BeneathTheWell)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceBeneaththeWellFromIkanaCanyon)]
         [Exit(Scene.BeneathTheWell, 0)]
         [Spawn(Scene.IkanaCanyon, 5)]
         EntranceIkanaCanyonFromBeneaththeWell,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceSakonsHideoutFromIkanaCanyon)]
         [Exit(Scene.SakonsHideout, 0)]
         [ExitAddress(0xC00416)] // todo check kafei still appears in ECT/Inn and remove the cutscene id.
@@ -3644,21 +3644,21 @@ namespace MMR.Randomizer.GameObjects
         //EntranceSpringWaterCaveFromMusicBoxCutscene, // one way
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceFairysFountainFromIkanaCanyon)]
         [Exit(Scene.FairyFountain, 4)]
         [Spawn(Scene.IkanaCanyon, 11)]
         EntranceIkanaCanyonFromFairysFountain,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceSecretShrineFromIkanaCanyon)]
         [Exit(Scene.SecretShrine, 0)]
         [Spawn(Scene.IkanaCanyon, 12)]
         EntranceIkanaCanyonFromSecretShrine,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceSpringWaterCaveFromIkanaCanyon)]
         [Exit(Scene.IkanaCanyon, 11)]
         [Spawn(Scene.IkanaCanyon, 13)]
@@ -3680,56 +3680,56 @@ namespace MMR.Randomizer.GameObjects
         EntrancePiratesFortressFromMainEntrance,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressHookshotRoomFromLowerDoor)]
         [Exit(Scene.PiratesFortressRooms, 0)]
         [Spawn(Scene.PiratesFortress, 1)]
         EntrancePiratesFortressFromHookshotRoomLower,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressHookshotRoomFromUpperDoor)]
         [Exit(Scene.PiratesFortressRooms, 1)]
         [Spawn(Scene.PiratesFortress, 2)]
         EntrancePiratesFortressFromHookshotRoomUpper,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressGuardRoomFromFrontDoor)]
         [Exit(Scene.PiratesFortressRooms, 2)]
         [Spawn(Scene.PiratesFortress, 3)]
         EntrancePiratesFortressFromGuardRoomFront,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressGuardRoomFromBackDoor)]
         [Exit(Scene.PiratesFortressRooms, 3)]
         [Spawn(Scene.PiratesFortress, 4)]
         EntrancePiratesFortressFromGuardRoomBack,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressBarrelMazeFromFrontDoor)]
         [Exit(Scene.PiratesFortressRooms, 4)]
         [Spawn(Scene.PiratesFortress, 5)]
         EntrancePiratesFortressFromBarrelMazeFront,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressBarrelMazeFromBackDoor)]
         [Exit(Scene.PiratesFortressRooms, 5)]
         [Spawn(Scene.PiratesFortress, 6)]
         EntrancePiratesFortressFromBarrelMazeBack,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressOneGuardFrontFromPiratesFortress)]
         [Exit(Scene.PiratesFortressRooms, 6)]
         [Spawn(Scene.PiratesFortress, 7)]
         EntrancePiratesFortressFromOnePatrolFront,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.Permanent)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressOneGuardRearFromPiratesFortress)]
         [Exit(Scene.PiratesFortressRooms, 7)]
         [Spawn(Scene.PiratesFortress, 8)]
@@ -3783,20 +3783,20 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.StoneTower)]
-        [Entrance(EntranceType.Dungeon)]
+        [Entrance(EntranceType.DungeonEntrance)]
         [Pair(EntranceStoneTowerInvertedFromStoneTowerTempleInverted)]
         [Exit(Scene.InvertedStoneTower, 0)]
         [Spawn(Scene.InvertedStoneTowerTemple, 0)]
         EntranceStoneTowerTempleInvertedFromStoneTowerInverted,
 
         [Region(Region.StoneTowerTemple)]
-        [Entrance(EntranceType.Boss)]
+        [Entrance(EntranceType.BossRoom)]
         [Exit(Scene.InvertedStoneTowerTemple, 2)]
         [Spawn(Scene.InvertedStoneTowerTemple, 1)]
         EntranceStoneTowerTempleInvertedBossRoomFromStoneTowerTempleInverted, // one way
 
         [Region(Region.SouthClockTown)]
-        [Entrance(EntranceType.Boss)]
+        [Entrance(EntranceType.BossRoom)]
         [Pair(EntranceSouthClockTownFromClockTowerRooftop)]
         [Exit(Scene.SouthClockTown, 8)]
         //[ExitAddress(0xED4ABE)] // todo check en_fall
@@ -3823,7 +3823,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.Woodfall)]
-        [Entrance(EntranceType.Dungeon)]
+        [Entrance(EntranceType.DungeonEntrance)]
         [Pair(EntranceWoodfallFromWoodfallTempleEntrance)]
         [Exit(Scene.Woodfall, 1)]
         [Spawn(Scene.WoodfallTemple, 0)]
@@ -3861,7 +3861,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.BeneathTheWell)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceBeneaththeWellFromAncientCastleofIkana)]
         [Exit(Scene.BeneathTheWell, 1)]
         [Spawn(Scene.IkanaCastle, 0)]
@@ -3899,7 +3899,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceAncientCastleofIkanaFromKegHole, // one way
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceIgosduIkanasLairFromAncientCastleofIkana)]
         [Exit(Scene.IgosDuIkanasLair, 0)]
         [Spawn(Scene.IkanaCastle, 6)]
@@ -3917,7 +3917,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.WoodfallTemple)]
-        [Entrance(EntranceType.Boss)]
+        [Entrance(EntranceType.BossRoom)]
         [Exit(Scene.WoodfallTemple, 1)]
         [Spawn(Scene.OdolwasLair, 0)]
         EntranceOdolwasLairFromWoodfallTemple, // one way
@@ -3932,7 +3932,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.Snowhead)]
-        [Entrance(EntranceType.Dungeon)]
+        [Entrance(EntranceType.DungeonEntrance)]
         [Pair(EntranceSnowheadFromSnowheadTemple)]
         [Exit(Scene.Snowhead, 1)]
         [Spawn(Scene.SnowheadTemple, 0)]
@@ -3954,14 +3954,14 @@ namespace MMR.Randomizer.GameObjects
         EntranceMilkRoadFromRomaniRanch,
 
         [Region(Region.MilkRoad)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGormanTrackFromMilkRoadGated)]
         [Exit(Scene.GormanTrack, 1)]
         [Spawn(Scene.MilkRoad, 2)]
         EntranceMilkRoadFromGormanRacetrackTrack,
 
         [Region(Region.MilkRoad)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGormanTrackFromMilkRoadMain)]
         [Exit(Scene.GormanTrack, 0)]
         [Spawn(Scene.MilkRoad, 3)]
@@ -4047,14 +4047,14 @@ namespace MMR.Randomizer.GameObjects
         EntrancePiratesFortressSewerFromTelescope,
 
         [Region(Region.PiratesFortressExterior)]
-        [Entrance]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressExteriorFromPiratesFortressSewerMain)]
         [Exit(Scene.PiratesFortressExterior, 2)]
         [Spawn(Scene.PiratesFortressRooms, 9)]
         EntrancePiratesFortressSewerFromWater,
 
         [Region(Region.PiratesFortressExterior)]
-        [Entrance]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressExteriorFromPiratesFortressSewerDoor)]
         [Exit(Scene.PiratesFortressExterior, 3)]
         [Spawn(Scene.PiratesFortressRooms, 10)]
@@ -4173,7 +4173,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceDekuPalaceFromSouthernSwampLower,
 
         [Region(Region.DekuPalace)]
-        [Entrance]
+        [Entrance(EntranceType.Overworld)]
         [ExitAddress(0xDA050A)] // thrown out of king's chamber
         [ExitCutscene(Scene.DekuKingChamber, 0, 3)] // after receiving sonata check
         [ExitCutscene(Scene.DekuKingChamber, 0, 6)] // after receiving sonata check
@@ -4183,21 +4183,21 @@ namespace MMR.Randomizer.GameObjects
         EntranceDekuPalaceFromDekuPalace, // thrown out // one way
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceDekuKingsChamberFromDekuPalace)]
         [Exit(Scene.DekuKingChamber, 0)]
         [Spawn(Scene.DekuPalace, 2)]
         EntranceDekuPalaceFromDekuKingsChamberMain,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceDekuKingsChamberFromDekuPalaceWestGarden)]
         [Exit(Scene.DekuKingChamber, 1)]
         [Spawn(Scene.DekuPalace, 3)]
         EntranceDekuPalaceFromDekuKingsChamberGardenWest,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceDekuShrineFromDekuPalace)]
         [Exit(Scene.DekuShrine, 0)]
         [Exit(Scene.DekuShrine, 2)]
@@ -4212,35 +4212,35 @@ namespace MMR.Randomizer.GameObjects
         EntranceDekuPalaceFromSouthernSwampUpper,
 
         [Region(Region.Grottos)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGrottoPalaceVinesFromDekuPalaceUpper)]
         [Exit(Scene.Grottos, 5)]
         [Spawn(Scene.DekuPalace, 6)]
         EntranceDekuPalaceGardenWestFromPalaceVinesGrotto, // todo one way?
 
         [Region(Region.Grottos)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGrottoPalaceStraightFromDekuPalaceB)]
         [Exit(Scene.Grottos, 3)]
         [Spawn(Scene.DekuPalace, 7)]
         EntranceDekuPalaceGardenWestFromPalaceStraightGrotto, // todo one way?
 
         [Region(Region.Grottos)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGrottoPalaceStraightFromDekuPalaceA)]
         [Exit(Scene.Grottos, 2)]
         [Spawn(Scene.DekuPalace, 8)]
         EntranceDekuPalaceGardenEastFromPalaceStraightGrotto, // todo one way?
 
         [Region(Region.Grottos)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGrottoBeanSellerFromDekuPalace)]
         [Exit(Scene.Grottos, 6)]
         [Spawn(Scene.DekuPalace, 9)]
         EntranceDekuPalaceGardenEastFromBeanSellerGrotto,
 
         [Region(Region.Grottos)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGrottoPalaceVinesFromDekuPalaceLower)]
         [Exit(Scene.Grottos, 4)]
         [Spawn(Scene.DekuPalace, 10)]
@@ -4319,7 +4319,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceTerminaFieldFromNorthClockTown,
 
         [Region(Region.AstralObservatory)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceAstralObservatoryFromTerminaField)]
         [Exit(Scene.AstralObservatory, 1)]
         [Spawn(Scene.TerminaField, 9)]
@@ -4335,7 +4335,7 @@ namespace MMR.Randomizer.GameObjects
         //EntranceTerminaFieldFromTerminaField, // todo moon crash - accessible via precise exit from telescope // one way
 
         [Region(Region.RomaniRanch)]
-        [Entrance]
+        [Entrance(EntranceType.Overworld)]
         [ExitAddress(0xFF573E)]
         [Spawn(Scene.TerminaField, 13)]
         EntranceTerminaFieldFromCremiaEscort, // one way
@@ -4382,7 +4382,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceGoronShrineFromGoronVillage,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGoronShopFromGoronVillage)]
         [Exit(Scene.GoronShop, 0)]
         [Spawn(Scene.GoronShrine, 1)]
@@ -4406,35 +4406,35 @@ namespace MMR.Randomizer.GameObjects
         EntranceZoraHallFromZoraCapeWater,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceZoraHallRoomsZoraShopFromZoraHall)]
         [Exit(Scene.ZoraHallRooms, 4)]
         [Spawn(Scene.ZoraHall, 2)]
         EntranceZoraHallFromZoraShop,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceZoraHallRoomsLulusRoomFromZoraHall)]
         [Exit(Scene.ZoraHallRooms, 2)]
         [Spawn(Scene.ZoraHall, 3)]
         EntranceZoraHallFromLulusRoom,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceZoraHallRoomsEvansRoomFromZoraHall)]
         [Exit(Scene.ZoraHallRooms, 3)]
         [Spawn(Scene.ZoraHall, 4)]
         EntranceZoraHallFromEvansRoom,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceZoraHallRoomsJapasRoomFromZoraHall)]
         [Exit(Scene.ZoraHallRooms, 1)]
         [Spawn(Scene.ZoraHall, 5)]
         EntranceZoraHallFromJapasRoom,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceZoraHallRoomsMikauTijosRoomFromZoraHall)]
         [Exit(Scene.ZoraHallRooms, 0)]
         [Spawn(Scene.ZoraHall, 6)]
@@ -4461,28 +4461,28 @@ namespace MMR.Randomizer.GameObjects
         //EntranceRomaniRanchFromRomaniRanch, // after minigame
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceRanchBarnFromRomaniRanch)]
         [Exit(Scene.RanchBuildings, 0)]
         [Spawn(Scene.RomaniRanch, 2)]
         EntranceRomaniRanchFromBarn,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceRanchHouseFromRomaniRanch)]
         [Exit(Scene.RanchBuildings, 1)]
         [Spawn(Scene.RomaniRanch, 3)]
         EntranceRomaniRanchFromRanchHouse,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceCuccoShackFromRomaniRanch)]
         [Exit(Scene.CuccoShack, 0)]
         [Spawn(Scene.RomaniRanch, 4)]
         EntranceRomaniRanchFromCuccoShack,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceDoggyRacetrackFromRomaniRanch)]
         [Exit(Scene.DoggyRacetrack, 0)]
         [Spawn(Scene.RomaniRanch, 5)]
@@ -4492,7 +4492,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.StoneTowerTemple)]
-        [Entrance(EntranceType.Boss)]
+        [Entrance(EntranceType.BossRoom)]
         [Exit(Scene.InvertedStoneTowerTemple, 1)]
         [Spawn(Scene.TwinmoldsLair, 0)]
         EntranceTwinmoldsLairFromStoneTowerTempleInverted, // one way
@@ -4519,14 +4519,14 @@ namespace MMR.Randomizer.GameObjects
         EntranceGreatBayCoastFromGreatBayCoastBeach, // void respawn beach // one way?
 
         [Region(Region.PinnacleRock)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePinnacleRockFromGreatBayCoast)]
         [Exit(Scene.PinnacleRock, 0)]
         [Spawn(Scene.GreatBayCoast, 3)]
         EntranceGreatBayCoastFromPinnacleRock,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceFishermansHutFromGreatBayCoast)]
         [Exit(Scene.FishermansHut, 0)]
         [Spawn(Scene.GreatBayCoast, 4)]
@@ -4546,14 +4546,14 @@ namespace MMR.Randomizer.GameObjects
         EntranceGreatBayCoastFromGreatBayCoastNearFortress, // void respawn near fortress // one way?
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceMarineResearchLabFromGreatBayCoast)]
         [Exit(Scene.MarineLab, 0)]
         [Spawn(Scene.GreatBayCoast, 7)]
         EntranceGreatBayCoastFromMarineResearchLab,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceOceansideSpiderHouseFromGreatBayCoast)]
         [Exit(Scene.OceanSpiderHouse, 0)]
         [Spawn(Scene.GreatBayCoast, 8)]
@@ -4566,7 +4566,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceGreatBayCoastFromOwlStatue, // one way
 
         [Region(Region.PiratesFortressExterior)]
-        [Entrance]
+        [Entrance(EntranceType.Overworld)]
         [Exit(Scene.PiratesFortressExterior, 4)]
         [Spawn(Scene.GreatBayCoast, 12)]
         EntranceGreatBayCoastFromPiratesFortressThrownOut, // one way
@@ -4604,14 +4604,14 @@ namespace MMR.Randomizer.GameObjects
         EntranceZoraCapeFromZoraCape, // void respawn // one way?
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceWaterfallRapidsFromZoraCape)]
         [Exit(Scene.WaterfallRapids, 0)]
         [Spawn(Scene.ZoraCape, 4)]
         EntranceZoraCapeFromWaterfallRapids,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceFairysFountainFromZoraCape)]
         [Exit(Scene.FairyFountain, 3)]
         [Spawn(Scene.ZoraCape, 5)]
@@ -4624,7 +4624,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceZoraCapeFromOwlStatue, // one way
 
         [Region(Region.GreatBayTemple)]
-        [Entrance(EntranceType.Dungeon)]
+        [Entrance(EntranceType.DungeonEntrance)]
         [Pair(EntranceGreatBayTempleFromZoraCape)]
         [Exit(Scene.GreatBayTemple, 0)]
         [ExitAddress(0xF155BA)]
@@ -4662,20 +4662,20 @@ namespace MMR.Randomizer.GameObjects
         EntrancePiratesFortressExteriorFromPiratesFortressMain,
 
         [Region(Region.PiratesFortressSewer)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressSewerFromWater)]
         [Exit(Scene.PiratesFortressRooms, 9)]
         [Spawn(Scene.PiratesFortressExterior, 2)]
         EntrancePiratesFortressExteriorFromPiratesFortressSewerMain,
 
         [Region(Region.PiratesFortressSewer)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Exit(Scene.PiratesFortressRooms, 10)]
         [Spawn(Scene.PiratesFortressExterior, 3)]
         EntrancePiratesFortressExteriorFromPiratesFortressSewerExhaust, // one way?
 
         [Region(Region.PiratesFortressInterior)]
-        [Entrance]
+        [Entrance(EntranceType.Overworld)]
         [Exit(Scene.PiratesFortress, 10)]
         [Exit(Scene.PiratesFortressRooms, 11)]
         [Spawn(Scene.PiratesFortressExterior, 4)]
@@ -4689,7 +4689,7 @@ namespace MMR.Randomizer.GameObjects
         EntrancePiratesFortressExteriorFromPiratesFortressBalcony,
 
         [Region(Region.PiratesFortressSewer)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePiratesFortressSewerFromRear)]
         [Exit(Scene.PiratesFortressRooms, 12)]
         [Spawn(Scene.PiratesFortressExterior, 6)]
@@ -4705,7 +4705,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.GoronVillage)]
-        [Entrance]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGoronShrineFromGoronShop)]
         [Exit(Scene.GoronShrine, 1)]
         [Spawn(Scene.GoronShop, 0)]
@@ -4752,7 +4752,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceRoadtoSouthernSwampFromSouthernSwamp,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceSwampShootingGalleryFromRoadtoSouthernSwamp)]
         [Exit(Scene.SwampShootingGallery, 0)]
         [Spawn(Scene.RoadToSouthernSwamp, 2)]
@@ -4785,28 +4785,28 @@ namespace MMR.Randomizer.GameObjects
         EntranceIkanaGraveyardFromRoadtoIkana,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceDampesHouseFromIkanaGraveyardGrave)]
         [Exit(Scene.DampesHouse, 0)]
         [Spawn(Scene.IkanaGraveyard, 1)]
         EntranceIkanaGraveyardFromDay3Grave, // exit only
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceBeneathGraveyardFromIkanaGraveyardNight2)]
         [Exit(Scene.BeneathGraveyard, 0)]
         [Spawn(Scene.IkanaGraveyard, 2)]
         EntranceIkanaGraveyardFromDay2Grave,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceBeneathGraveyardFromIkanaGraveyardNight1)]
         [Exit(Scene.BeneathGraveyard, 1)]
         [Spawn(Scene.IkanaGraveyard, 3)]
         EntranceIkanaGraveyardFromDay1Grave,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceDampesHouseFromIkanaGraveyardDoor)]
         [Exit(Scene.DampesHouse, 1)]
         [Spawn(Scene.IkanaGraveyard, 4)]
@@ -4816,7 +4816,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.SnowheadTemple)]
-        [Entrance(EntranceType.Boss)]
+        [Entrance(EntranceType.BossRoom)]
         [Exit(Scene.SnowheadTemple, 1)]
         [Spawn(Scene.GohtsLair, 0)]
         EntranceGohtsLairFromSnowheadTemple, // one way
@@ -4830,21 +4830,21 @@ namespace MMR.Randomizer.GameObjects
         EntranceWoodfallFromSouthernSwamp,
 
         [Region(Region.WoodfallTemple)]
-        [Entrance(EntranceType.DungeonExit)]
+        [Entrance(EntranceType.DungeonEntrance)]
         [Pair(EntranceWoodfallTempleFromWoodfall)]
         [Exit(Scene.WoodfallTemple, 0)]
         [Spawn(Scene.Woodfall, 1)]
         EntranceWoodfallFromWoodfallTempleEntrance,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceFairysFountainFromWoodfall)]
         [Exit(Scene.FairyFountain, 1)]
         [Spawn(Scene.Woodfall, 2)]
         EntranceWoodfallFromFairysFountain,
 
         [Region(Region.WoodfallTemple)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceWoodfallTemplePrisonFromWoodfall)]
         [Exit(Scene.WoodfallTemple, 2)]
         [Spawn(Scene.Woodfall, 3)]
@@ -4886,7 +4886,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceGoronVillageFromGoronShrine,
 
         [Region(Region.Grottos)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGrottoLensCaveFromGoronVillage)]
         [Exit(Scene.Grottos, 1)]
         [Spawn(Scene.GoronVillage, 3)]
@@ -4894,7 +4894,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.ZoraCape)]
-        [Entrance(EntranceType.Dungeon)]
+        [Entrance(EntranceType.DungeonEntrance)]
         [Pair(EntranceZoraCapeFromGreatBayTemple)]
         [ExitCutscene(Scene.ZoraCape, 0, 1)]
         [ExitCutscene(Scene.ZoraCape, 0, 2)]
@@ -4960,7 +4960,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceZoraHallRoomsEvansRoomFromZoraHall,
 
         [Region(Region.Interior)]
-        [Entrance]
+        [Entrance(EntranceType.Interior)]
         [ExitCutscene(Scene.ZoraHall, 1, 0)]
         [Spawn(Scene.ZoraHallRooms, 4)]
         EntranceZoraHallRoomsJapasRoomFromJapasRoom, // after jam session // one way?
@@ -4994,7 +4994,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceMountainSmithyFromMountainVillage)]
         [Exit(Scene.MountainSmithy, 0)]
         [Spawn(Scene.MountainVillage, 1)]
@@ -5008,7 +5008,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceMountainVillageFromPathtoGoronVillage,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGoronGraveyardFromMountainVillage)]
         [Exit(Scene.GoronGrave, 0)]
         [Spawn(Scene.MountainVillage, 3)]
@@ -5146,7 +5146,7 @@ namespace MMR.Randomizer.GameObjects
         //EntranceStoneTowerFromFlipSwitch, // after flip
 
         [Region(Region.StoneTowerTemple)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceStoneTowerTempleFromStoneTower)]
         [Exit(Scene.StoneTowerTemple, 0)]
         [Spawn(Scene.StoneTower, 2)]
@@ -5193,14 +5193,14 @@ namespace MMR.Randomizer.GameObjects
         EntranceSnowheadFromPathtoSnowhead,
 
         [Region(Region.SnowheadTemple)]
-        [Entrance(EntranceType.DungeonExit)]
+        [Entrance(EntranceType.DungeonEntrance)]
         [Pair(EntranceSnowheadTempleFromSnowhead)]
         [Exit(Scene.SnowheadTemple, 0)]
         [Spawn(Scene.Snowhead, 1)]
         EntranceSnowheadFromSnowheadTemple,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceFairysFountainFromSnowhead)]
         [Exit(Scene.FairyFountain, 2)]
         [Spawn(Scene.Snowhead, 2)]
@@ -5234,7 +5234,7 @@ namespace MMR.Randomizer.GameObjects
         EntrancePathtoGoronVillageFromGoronVillage,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceGoronRacetrackFromPathtoGoronVillage)]
         [Exit(Scene.GoronRacetrack, 0)]
         [Spawn(Scene.TwinIslands, 2)]
@@ -5242,7 +5242,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.GreatBayTemple)]
-        [Entrance(EntranceType.Boss)]
+        [Entrance(EntranceType.BossRoom)]
         [Exit(Scene.GreatBayTemple, 1)]
         [Spawn(Scene.GyorgsLair, 0)]
         EntranceGyorgsLairFromGreatBayTemple, // one way
@@ -5331,7 +5331,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.TheMoon)]
-        [Entrance]
+        [Entrance(EntranceType.CallGiants)]
         [ExitCutscene(Scene.ClockTowerRoof, 2, 0)]
         [ExitCutscene(Scene.ClockTowerRoof, 2, 1)]
         [ExitCutscene(Scene.ClockTowerRoof, 2, 2)]
@@ -5339,28 +5339,28 @@ namespace MMR.Randomizer.GameObjects
         EntranceTheMoonFromClockTowerRooftop, // one way
 
         [Region(Region.TheMoon)]
-        [Entrance(EntranceType.TrialExit)]
+        [Entrance(EntranceType.Trial)]
         [Pair(EntranceDekuTrialFromTheMoon)]
         [Exit(Scene.DekuTrial, 0)]
         [Spawn(Scene.TheMoon, 0)]
         EntranceTheMoonFromDekuTrial,
 
         [Region(Region.TheMoon)]
-        [Entrance(EntranceType.TrialExit)]
+        [Entrance(EntranceType.Trial)]
         [Pair(EntranceGoronTrialFromTheMoon)]
         [Exit(Scene.GoronTrial, 0)]
         [Spawn(Scene.TheMoon, 0)]
         EntranceTheMoonFromGoronTrial,
 
         [Region(Region.TheMoon)]
-        [Entrance(EntranceType.TrialExit)]
+        [Entrance(EntranceType.Trial)]
         [Pair(EntranceZoraTrialFromTheMoon)]
         [Exit(Scene.ZoraTrial, 0)]
         [Spawn(Scene.TheMoon, 0)]
         EntranceTheMoonFromZoraTrial,
 
         [Region(Region.TheMoon)]
-        [Entrance(EntranceType.TrialExit)]
+        [Entrance(EntranceType.Trial)]
         [Pair(EntranceLinkTrialFromTheMoon)]
         [Exit(Scene.LinkTrial, 0)]
         [Spawn(Scene.TheMoon, 0)]
@@ -5439,7 +5439,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceEastClockTownFromSouthClockTownNorthern,
 
         [Region(Region.AstralObservatory)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceAstralObservatoryFromEastClockTown)]
         [Exit(Scene.AstralObservatory, 0)]
         [Spawn(Scene.EastClockTown, 2)]
@@ -5453,7 +5453,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceEastClockTownFromSouthClockTownSouthern,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceTreasureChestShopFromEastClockTown)]
         [Exit(Scene.TreasureChestShop, 0)]
         [Spawn(Scene.EastClockTown, 4)]
@@ -5467,42 +5467,42 @@ namespace MMR.Randomizer.GameObjects
         EntranceEastClockTownFromNorthClockTown,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceHoneyDarlingsShopFromEastClockTown)]
         [Exit(Scene.HoneyDarling, 0)]
         [Spawn(Scene.EastClockTown, 6)]
         EntranceEastClockTownFromHoneyDarlingsShop,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceMayorsResidenceFromEastClockTown)]
         [Exit(Scene.MayorsResidence, 0)]
         [Spawn(Scene.EastClockTown, 7)]
         EntranceEastClockTownFromMayorsResidence,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceTownShootingGalleryFromEastClockTown)]
         [Exit(Scene.TownShootingGallery, 0)]
         [Spawn(Scene.EastClockTown, 8)]
         EntranceEastClockTownFromShootingGalleryClockTown,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceStockPotInnLowerFromEastClockTown)]
         [Exit(Scene.StockPotInn, 0)]
         [Spawn(Scene.EastClockTown, 9)]
         EntranceEastClockTownFromStockPotInnLower,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceStockPotInnUpperFromEastClockTown)]
         [Exit(Scene.StockPotInn, 1)]
         [Spawn(Scene.EastClockTown, 10)]
         EntranceEastClockTownFromStockPotInnUpper,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceMilkBarFromEastClockTown)]
         [Exit(Scene.MilkBar, 0)]
         [Spawn(Scene.EastClockTown, 11)]
@@ -5531,42 +5531,42 @@ namespace MMR.Randomizer.GameObjects
         EntranceWestClockTownFromSouthClockTownNorthern,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceSwordsmansSchoolFromWestClockTown)]
         [Exit(Scene.SwordsmansSchool, 0)]
         [Spawn(Scene.WestClockTown, 3)]
         EntranceWestClockTownFromSwordsmansSchool,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceCuriosityShopFromWestClockTown)]
         [Exit(Scene.CuriosityShop, 0)]
         [Spawn(Scene.WestClockTown, 4)]
         EntranceWestClockTownFromCuriosityShop,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceTradingPostFromWestClockTown)]
         [Exit(Scene.TradingPost, 0)]
         [Spawn(Scene.WestClockTown, 5)]
         EntranceWestClockTownFromTradingPost,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceBombShopFromWestClockTown)]
         [Exit(Scene.BombShop, 0)]
         [Spawn(Scene.WestClockTown, 6)]
         EntranceWestClockTownFromBombShop,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntrancePostOfficeFromWestClockTown)]
         [Exit(Scene.PostOffice, 0)]
         [Spawn(Scene.WestClockTown, 7)]
         EntranceWestClockTownFromPostOffice,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceLotteryShopFromWestClockTown)]
         [Exit(Scene.LotteryShop, 0)]
         [Spawn(Scene.WestClockTown, 8)]
@@ -5595,14 +5595,14 @@ namespace MMR.Randomizer.GameObjects
         EntranceNorthClockTownFromSouthClockTown,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceFairysFountainFromNorthClockTown)]
         [Exit(Scene.FairyFountain, 0)]
         [Spawn(Scene.NorthClockTown, 3)]
         EntranceNorthClockTownFromFairysFountain,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceDekuScrubPlaygroundFromNorthClockTown)]
         [Exit(Scene.DekuPlayground, 0)]
         [Spawn(Scene.NorthClockTown, 4)]
@@ -5614,7 +5614,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.Misc)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceClockTowerInteriorFromSouthClockTown)]
         [Exit(Scene.ClockTowerInterior, 1)]
         [Spawn(Scene.SouthClockTown, 0)]
@@ -5670,13 +5670,13 @@ namespace MMR.Randomizer.GameObjects
         EntranceSouthClockTownFromEastClockTownSouthern,
 
         [Region(Region.TheMoon)]
-        [Entrance(EntranceType.Permanent)]
+        [Entrance]
         [Pair(EntranceClockTowerRooftopFromSouthClockTown)]
         [Spawn(Scene.SouthClockTown, 8)]
         EntranceSouthClockTownFromClockTowerRooftop,
 
         [Region(Region.OwlWarp)]
-        [Entrance]
+        [Entrance(EntranceType.OwlWarp)]
         [ExitAddress((int)ExitAddressAttribute.BaseAddress.SongOfSoaring + 0x08)]
         [Spawn(Scene.SouthClockTown, 9)]
         EntranceSouthClockTownFromOwlStatue, // one way
@@ -5690,7 +5690,7 @@ namespace MMR.Randomizer.GameObjects
         EntranceLaundryPoolFromSouthClockTown,
 
         [Region(Region.Interior)]
-        [Entrance(EntranceType.InteriorExit)]
+        [Entrance(EntranceType.Interior)]
         [Pair(EntranceKafeisHideoutFromLaundryPool)]
         [Exit(Scene.CuriosityShop, 1)]
         [Spawn(Scene.LaundryPool, 1)]
@@ -5698,7 +5698,7 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Region(Region.StoneTower)]
-        [Entrance(EntranceType.DungeonExit)]
+        [Entrance(EntranceType.DungeonEntrance)]
         [Pair(EntranceStoneTowerTempleInvertedFromStoneTowerInverted)]
         [Exit(Scene.InvertedStoneTowerTemple, 0)]
         [Spawn(Scene.InvertedStoneTower, 1)]

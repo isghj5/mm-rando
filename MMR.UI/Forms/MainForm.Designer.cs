@@ -79,6 +79,7 @@ namespace MMR.UI.Forms
             this.cMoonItems = new System.Windows.Forms.CheckBox();
             this.tabComfort = new System.Windows.Forms.TabPage();
             this.gSpeedUps = new System.Windows.Forms.GroupBox();
+            this.cFasterBank = new System.Windows.Forms.CheckBox();
             this.cSkipBeaver = new System.Windows.Forms.CheckBox();
             this.cFasterLabFish = new System.Windows.Forms.CheckBox();
             this.cGoodDogRaceRNG = new System.Windows.Forms.CheckBox();
@@ -137,6 +138,18 @@ namespace MMR.UI.Forms
             this.label4 = new System.Windows.Forms.Label();
             this.cClockSpeed = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.tabEntrances = new System.Windows.Forms.TabPage();
+            this.gEntranceOther = new System.Windows.Forms.GroupBox();
+            this.cEntranceSwapMajora = new System.Windows.Forms.CheckBox();
+            this.cEntranceDecouple = new System.Windows.Forms.CheckBox();
+            this.cEntranceMixPools = new System.Windows.Forms.CheckBox();
+            this.gEntrancePools = new System.Windows.Forms.GroupBox();
+            this.bEntranceEdit = new System.Windows.Forms.Button();
+            this.tEntrancePool = new System.Windows.Forms.TextBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.bEntranceOpenLogic = new System.Windows.Forms.Button();
+            this.tEntranceUserLogic = new System.Windows.Forms.TextBox();
+            this.cEntranceMode = new System.Windows.Forms.ComboBox();
             this.cDrawHash = new System.Windows.Forms.CheckBox();
             this.gGameOutput = new System.Windows.Forms.GroupBox();
             this.cHTMLLog = new System.Windows.Forms.CheckBox();
@@ -178,7 +191,6 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cFasterBank = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -195,6 +207,10 @@ namespace MMR.UI.Forms
             this.cHUDTableLayoutPanel.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tabGimmicks.SuspendLayout();
+            this.tabEntrances.SuspendLayout();
+            this.gEntranceOther.SuspendLayout();
+            this.gEntrancePools.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.gGameOutput.SuspendLayout();
             this.mMenu.SuspendLayout();
             this.ttOutput.SuspendLayout();
@@ -245,6 +261,7 @@ namespace MMR.UI.Forms
             this.tSettings.Controls.Add(this.tabMain);
             this.tSettings.Controls.Add(this.tabComfort);
             this.tSettings.Controls.Add(this.tabGimmicks);
+            this.tSettings.Controls.Add(this.tabEntrances);
             this.tSettings.Location = new System.Drawing.Point(3, 24);
             this.tSettings.Name = "tSettings";
             this.tSettings.SelectedIndex = 0;
@@ -757,6 +774,17 @@ namespace MMR.UI.Forms
             this.gSpeedUps.TabIndex = 37;
             this.gSpeedUps.TabStop = false;
             this.gSpeedUps.Text = "Speed Ups";
+            // 
+            // cFasterBank
+            // 
+            this.cFasterBank.AutoSize = true;
+            this.cFasterBank.Location = new System.Drawing.Point(9, 67);
+            this.cFasterBank.Name = "cFasterBank";
+            this.cFasterBank.Size = new System.Drawing.Size(83, 17);
+            this.cFasterBank.TabIndex = 4;
+            this.cFasterBank.Text = "Faster Bank";
+            this.cFasterBank.UseVisualStyleBackColor = true;
+            this.cFasterBank.CheckedChanged += new System.EventHandler(this.cFasterBank_CheckedChanged);
             // 
             // cSkipBeaver
             // 
@@ -1527,6 +1555,148 @@ namespace MMR.UI.Forms
             this.label6.TabIndex = 16;
             this.label6.Text = "Clock speed:";
             // 
+            // tabEntrances
+            // 
+            this.tabEntrances.Controls.Add(this.gEntranceOther);
+            this.tabEntrances.Controls.Add(this.gEntrancePools);
+            this.tabEntrances.Controls.Add(this.groupBox1);
+            this.tabEntrances.Location = new System.Drawing.Point(4, 22);
+            this.tabEntrances.Name = "tabEntrances";
+            this.tabEntrances.Padding = new System.Windows.Forms.Padding(3);
+            this.tabEntrances.Size = new System.Drawing.Size(667, 311);
+            this.tabEntrances.TabIndex = 4;
+            this.tabEntrances.Text = "Entrances (Beta)";
+            this.tabEntrances.UseVisualStyleBackColor = true;
+            // 
+            // gEntranceOther
+            // 
+            this.gEntranceOther.Controls.Add(this.cEntranceSwapMajora);
+            this.gEntranceOther.Controls.Add(this.cEntranceDecouple);
+            this.gEntranceOther.Controls.Add(this.cEntranceMixPools);
+            this.gEntranceOther.Location = new System.Drawing.Point(337, 6);
+            this.gEntranceOther.Name = "gEntranceOther";
+            this.gEntranceOther.Size = new System.Drawing.Size(322, 85);
+            this.gEntranceOther.TabIndex = 17;
+            this.gEntranceOther.TabStop = false;
+            this.gEntranceOther.Text = "Other Customizations";
+            // 
+            // cEntranceSwapMajora
+            // 
+            this.cEntranceSwapMajora.AutoSize = true;
+            this.cEntranceSwapMajora.BackColor = System.Drawing.Color.Transparent;
+            this.cEntranceSwapMajora.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cEntranceSwapMajora.ForeColor = System.Drawing.Color.Black;
+            this.cEntranceSwapMajora.Location = new System.Drawing.Point(9, 19);
+            this.cEntranceSwapMajora.Name = "cEntranceSwapMajora";
+            this.cEntranceSwapMajora.Size = new System.Drawing.Size(189, 17);
+            this.cEntranceSwapMajora.TabIndex = 20;
+            this.cEntranceSwapMajora.Text = "Swap Majora\'s Lair and Call Giants";
+            this.cEntranceSwapMajora.UseVisualStyleBackColor = false;
+            this.cEntranceSwapMajora.CheckedChanged += new System.EventHandler(this.cEntranceSwapMajora_CheckedChanged);
+            // 
+            // cEntranceDecouple
+            // 
+            this.cEntranceDecouple.AutoSize = true;
+            this.cEntranceDecouple.BackColor = System.Drawing.Color.Transparent;
+            this.cEntranceDecouple.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cEntranceDecouple.ForeColor = System.Drawing.Color.Black;
+            this.cEntranceDecouple.Location = new System.Drawing.Point(169, 42);
+            this.cEntranceDecouple.Name = "cEntranceDecouple";
+            this.cEntranceDecouple.Size = new System.Drawing.Size(72, 17);
+            this.cEntranceDecouple.TabIndex = 7;
+            this.cEntranceDecouple.Text = "Decouple";
+            this.cEntranceDecouple.UseVisualStyleBackColor = false;
+            this.cEntranceDecouple.CheckedChanged += new System.EventHandler(this.cEntranceDecouple_CheckedChanged);
+            // 
+            // cEntranceMixPools
+            // 
+            this.cEntranceMixPools.AutoSize = true;
+            this.cEntranceMixPools.BackColor = System.Drawing.Color.Transparent;
+            this.cEntranceMixPools.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cEntranceMixPools.ForeColor = System.Drawing.Color.Black;
+            this.cEntranceMixPools.Location = new System.Drawing.Point(9, 42);
+            this.cEntranceMixPools.Name = "cEntranceMixPools";
+            this.cEntranceMixPools.Size = new System.Drawing.Size(115, 17);
+            this.cEntranceMixPools.TabIndex = 3;
+            this.cEntranceMixPools.Text = "Mix entrance pools";
+            this.cEntranceMixPools.UseVisualStyleBackColor = false;
+            this.cEntranceMixPools.CheckedChanged += new System.EventHandler(this.cEntranceMixPools_CheckedChanged);
+            // 
+            // gEntrancePools
+            // 
+            this.gEntrancePools.Controls.Add(this.bEntranceEdit);
+            this.gEntrancePools.Controls.Add(this.tEntrancePool);
+            this.gEntrancePools.Location = new System.Drawing.Point(6, 97);
+            this.gEntrancePools.Name = "gEntrancePools";
+            this.gEntrancePools.Size = new System.Drawing.Size(652, 208);
+            this.gEntrancePools.TabIndex = 1;
+            this.gEntrancePools.TabStop = false;
+            this.gEntrancePools.Text = "Entrance Pool Options";
+            // 
+            // bEntranceEdit
+            // 
+            this.bEntranceEdit.Location = new System.Drawing.Point(568, 19);
+            this.bEntranceEdit.Name = "bEntranceEdit";
+            this.bEntranceEdit.Size = new System.Drawing.Size(75, 22);
+            this.bEntranceEdit.TabIndex = 1;
+            this.bEntranceEdit.Text = "Edit";
+            this.bEntranceEdit.UseVisualStyleBackColor = true;
+            this.bEntranceEdit.Click += new System.EventHandler(this.bEntranceEdit_Click);
+            // 
+            // tEntrancePool
+            // 
+            this.tEntrancePool.Location = new System.Drawing.Point(9, 20);
+            this.tEntrancePool.Name = "tEntrancePool";
+            this.tEntrancePool.Size = new System.Drawing.Size(553, 20);
+            this.tEntrancePool.TabIndex = 0;
+            this.tEntrancePool.TextChanged += new System.EventHandler(this.tEntrancePool_TextChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.bEntranceOpenLogic);
+            this.groupBox1.Controls.Add(this.tEntranceUserLogic);
+            this.groupBox1.Controls.Add(this.cEntranceMode);
+            this.groupBox1.Location = new System.Drawing.Point(6, 6);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(325, 85);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Mode / Logic";
+            // 
+            // bEntranceOpenLogic
+            // 
+            this.bEntranceOpenLogic.Location = new System.Drawing.Point(8, 48);
+            this.bEntranceOpenLogic.Name = "bEntranceOpenLogic";
+            this.bEntranceOpenLogic.Size = new System.Drawing.Size(68, 24);
+            this.bEntranceOpenLogic.TabIndex = 20;
+            this.bEntranceOpenLogic.Text = "Open Logic";
+            this.bEntranceOpenLogic.UseVisualStyleBackColor = true;
+            this.bEntranceOpenLogic.Click += new System.EventHandler(this.bLoadEntranceLogic_Click);
+            // 
+            // tEntranceUserLogic
+            // 
+            this.tEntranceUserLogic.Location = new System.Drawing.Point(82, 50);
+            this.tEntranceUserLogic.Name = "tEntranceUserLogic";
+            this.tEntranceUserLogic.ReadOnly = true;
+            this.tEntranceUserLogic.Size = new System.Drawing.Size(233, 20);
+            this.tEntranceUserLogic.TabIndex = 19;
+            // 
+            // cEntranceMode
+            // 
+            this.cEntranceMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cEntranceMode.FormattingEnabled = true;
+            this.cEntranceMode.Items.AddRange(new object[] {
+            "Vanilla Layout",
+            "Casual",
+            "Glitched",
+            "User Logic",
+            "No Logic"});
+            this.cEntranceMode.Location = new System.Drawing.Point(9, 21);
+            this.cEntranceMode.Name = "cEntranceMode";
+            this.cEntranceMode.Size = new System.Drawing.Size(306, 21);
+            this.cEntranceMode.TabIndex = 0;
+            this.cEntranceMode.SelectedIndexChanged += new System.EventHandler(this.cEntranceMode_SelectedIndexChanged);
+            // 
             // cDrawHash
             // 
             this.cDrawHash.AutoSize = true;
@@ -1923,17 +2093,6 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cFasterBank
-            // 
-            this.cFasterBank.AutoSize = true;
-            this.cFasterBank.Location = new System.Drawing.Point(9, 67);
-            this.cFasterBank.Name = "cFasterBank";
-            this.cFasterBank.Size = new System.Drawing.Size(83, 17);
-            this.cFasterBank.TabIndex = 4;
-            this.cFasterBank.Text = "Faster Bank";
-            this.cFasterBank.UseVisualStyleBackColor = true;
-            this.cFasterBank.CheckedChanged += new System.EventHandler(this.cFasterBank_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1985,6 +2144,13 @@ namespace MMR.UI.Forms
             this.groupBox7.PerformLayout();
             this.tabGimmicks.ResumeLayout(false);
             this.tabGimmicks.PerformLayout();
+            this.tabEntrances.ResumeLayout(false);
+            this.gEntranceOther.ResumeLayout(false);
+            this.gEntranceOther.PerformLayout();
+            this.gEntrancePools.ResumeLayout(false);
+            this.gEntrancePools.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.gGameOutput.ResumeLayout(false);
             this.gGameOutput.PerformLayout();
             this.mMenu.ResumeLayout(false);
@@ -2148,6 +2314,18 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFDAnywhere;
         private System.Windows.Forms.CheckBox cArrowCycling;
         private System.Windows.Forms.CheckBox cFasterBank;
+        private System.Windows.Forms.TabPage tabEntrances;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox gEntrancePools;
+        private System.Windows.Forms.Button bEntranceOpenLogic;
+        private System.Windows.Forms.TextBox tEntranceUserLogic;
+        private System.Windows.Forms.ComboBox cEntranceMode;
+        private System.Windows.Forms.GroupBox gEntranceOther;
+        private System.Windows.Forms.CheckBox cEntranceSwapMajora;
+        private System.Windows.Forms.CheckBox cEntranceDecouple;
+        private System.Windows.Forms.CheckBox cEntranceMixPools;
+        private System.Windows.Forms.Button bEntranceEdit;
+        private System.Windows.Forms.TextBox tEntrancePool;
     }
 }
 

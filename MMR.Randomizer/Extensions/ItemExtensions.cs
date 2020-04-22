@@ -91,6 +91,11 @@ namespace MMR.Randomizer.Extensions
             return item.HasAttribute<EntranceAttribute>();
         }
 
+        public static EntranceType? Type(this Item entrance)
+        {
+            return entrance.GetAttribute<EntranceAttribute>().Type;
+        }
+
         public static Item? Pair(this Item entrance)
         {
             return entrance.GetAttribute<PairAttribute>()?.Pair;

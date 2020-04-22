@@ -14,6 +14,8 @@ using MMR.Randomizer.Utils;
 using MMR.Randomizer.Asm;
 using MMR.Randomizer.Models.Colors;
 using MMR.Common.Utils;
+using MMR.Randomizer.Extensions;
+using System.Collections.Generic;
 
 namespace MMR.UI.Forms
 {
@@ -31,6 +33,7 @@ namespace MMR.UI.Forms
         public ItemEditForm ItemEditor { get; private set; }
         public StartingItemEditForm StartingItemEditor { get; private set; }
         public JunkLocationEditForm JunkLocationEditor { get; private set; }
+        public CustomItemListEditForm EntranceEditor { get; private set; }
         public HudConfigForm HudConfig { get; private set; }
 
 
@@ -52,6 +55,7 @@ namespace MMR.UI.Forms
             InitializeSettings();
             InitializeTooltips();
             InitializeHUDGroupBox();
+            InitializeEntrancePoolGroupBox();
 
             ItemEditor = new ItemEditForm();
             UpdateCustomItemAmountLabel();
@@ -61,6 +65,8 @@ namespace MMR.UI.Forms
 
             JunkLocationEditor = new JunkLocationEditForm();
             UpdateJunkLocationAmountLabel();
+
+            EntranceEditor = new CustomItemListEditForm(ItemUtils.AllEntrances(), item => item.ToString());
 
             LogicEditor = new LogicEditorForm();
             Manual = new ManualForm();
@@ -160,6 +166,79 @@ namespace MMR.UI.Forms
             cHUDMagicComboBox.SelectedIndex = 0;
         }
 
+        private void InitializeEntrancePoolGroupBox()
+        {
+            var baseX = 9;
+            var baseY = 47;
+            var deltaX = 160;
+            var deltaY = 23;
+
+            var entrancePools = ItemUtils.AllEntrances().GroupBy(e => e.Type());
+
+            var x = baseX;
+            var y = baseY;
+            foreach (var pool in entrancePools.Where(g => g.Key.HasValue).OrderBy(g => g.Key.Value))
+            {
+                var checkbox = new CheckBox();
+                checkbox.Location = new Point(x, y);
+                checkbox.Size = new Size(144, 17);
+                checkbox.Tag = pool.ToList();
+                checkbox.Text = pool.Key.ToString().AddSpaces();
+                checkbox.CheckedChanged += cEntrancePoolItem_CheckedChanged;
+                gEntrancePools.Controls.Add(checkbox);
+                x += deltaX;
+                if (x > gEntrancePools.Width - 144 - 10)
+                {
+                    x = baseX;
+                    y += deltaY;
+                }
+            }
+        }
+
+        private void cEntrancePoolItem_CheckedChanged(object sender, EventArgs e)
+        {
+            var checkbox = (CheckBox)sender;
+            var entrances = (List<MMR.Randomizer.GameObjects.Item>)checkbox.Tag;
+            if (checkbox.CheckState == CheckState.Checked)
+            {
+                _configuration.GameplaySettings.RandomizedEntrances = _configuration.GameplaySettings.RandomizedEntrances.Union(entrances).ToList();
+            }
+            if (checkbox.CheckState == CheckState.Unchecked)
+            {
+                _configuration.GameplaySettings.RandomizedEntrances = _configuration.GameplaySettings.RandomizedEntrances.Except(entrances).ToList();
+            }
+
+            tEntrancePool.TextChanged -= tEntrancePool_TextChanged;
+            tEntrancePool.Text = ItemUtils.ConvertItemListToString(ItemUtils.AllEntrances().ToList(), _configuration.GameplaySettings.RandomizedEntrances);
+            tEntrancePool.TextChanged += tEntrancePool_TextChanged;
+            _configuration.GameplaySettings.RandomizedEntrancesString = tEntrancePool.Text;
+            EntranceEditor.UpdateChecks(tEntrancePool.Text);
+        }
+
+        private void tEntrancePool_TextChanged(object sender, EventArgs _e)
+        {
+            _configuration.GameplaySettings.RandomizedEntrancesString = tEntrancePool.Text;
+            _configuration.GameplaySettings.RandomizedEntrances = ItemUtils.ConvertStringToItemList(ItemUtils.AllEntrances().ToList(), _configuration.GameplaySettings.RandomizedEntrancesString);
+            foreach (var checkbox in gEntrancePools.Controls.Cast<Control>().Where(c => c is CheckBox).Cast<CheckBox>())
+            {
+                checkbox.CheckedChanged -= cEntrancePoolItem_CheckedChanged;
+                if (_configuration.GameplaySettings.RandomizedEntrances == null)
+                {
+                    checkbox.CheckState = CheckState.Indeterminate;
+                }
+                else
+                {
+                    var entrances = (List<MMR.Randomizer.GameObjects.Item>)checkbox.Tag;
+                    var count = _configuration.GameplaySettings.RandomizedEntrances.Count(e => entrances.Contains(e));
+                    checkbox.CheckState = count == entrances.Count ? CheckState.Checked
+                        : count == 0 ? CheckState.Unchecked
+                        : CheckState.Indeterminate;
+                }
+                checkbox.CheckedChanged += cEntrancePoolItem_CheckedChanged;
+            }
+            EntranceEditor.UpdateChecks(tEntrancePool.Text);
+        }
+
         #region Forms Code
 
         private void mmrMain_Load(object sender, EventArgs e)
@@ -226,6 +305,15 @@ namespace MMR.UI.Forms
             {
                 _configuration.GameplaySettings.UserLogicFileName = openLogic.FileName;
                 tbUserLogic.Text = Path.GetFileNameWithoutExtension(_configuration.GameplaySettings.UserLogicFileName);
+            }
+        }
+
+        private void bLoadEntranceLogic_Click(object sender, EventArgs e)
+        {
+            if (openLogic.ShowDialog() == DialogResult.OK)
+            {
+                _configuration.GameplaySettings.EntranceUserLogicFileName = openLogic.FileName;
+                tEntranceUserLogic.Text = Path.GetFileNameWithoutExtension(_configuration.GameplaySettings.EntranceUserLogicFileName);
             }
         }
 
@@ -404,6 +492,11 @@ namespace MMR.UI.Forms
             bTunic.BackColor = _configuration.CosmeticSettings.TunicColor;
             cTargettingStyle.Checked = _configuration.CosmeticSettings.EnableHoldZTargeting;
             cEnableNightMusic.Checked = _configuration.CosmeticSettings.EnableNightBGM;
+
+            cEntranceMode.SelectedIndex = (int)_configuration.GameplaySettings.EntranceLogicMode;
+            cEntranceMixPools.Checked = _configuration.GameplaySettings.MixEntrancePools;
+            cEntranceSwapMajora.Checked = _configuration.GameplaySettings.SwapMajoraAndCallGiants;
+            cEntranceDecouple.Checked = _configuration.GameplaySettings.DecoupleEntrances;
 
 
             // Misc config options
@@ -754,6 +847,39 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.ArrowCycling = cArrowCycling.Checked);
         }
 
+        private void cEntranceDecouple_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.DecoupleEntrances = cEntranceDecouple.Checked);
+        }
+
+        private void cEntranceMixPools_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.MixEntrancePools = cEntranceMixPools.Checked);
+        }
+
+        private void cEntranceSwapMajora_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.SwapMajoraAndCallGiants = cEntranceSwapMajora.Checked);
+        }
+
+        private void cEntranceMode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var logicMode = (EntranceLogicMode)cEntranceMode.SelectedIndex;
+
+            if (logicMode == EntranceLogicMode.UserLogic)
+            {
+                tEntranceUserLogic.Enabled = true;
+                bEntranceOpenLogic.Enabled = true;
+            }
+            else
+            {
+                tEntranceUserLogic.Enabled = false;
+                bEntranceOpenLogic.Enabled = false;
+            }
+
+            UpdateSingleSetting(() => _configuration.GameplaySettings.EntranceLogicMode = logicMode);
+        }
+
         private void cMode_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -855,7 +981,7 @@ namespace MMR.UI.Forms
             }
             else
             {
-                lCustomItemAmount.Text = $"{_configuration.GameplaySettings.CustomItemList.Count}/{ItemUtils.AllLocations().Count() + ItemUtils.AllEntrances().Count()} items randomized";
+                lCustomItemAmount.Text = $"{_configuration.GameplaySettings.CustomItemList.Count}/{ItemUtils.AllLocations().Count()} items randomized";
             }
         }
 
@@ -899,6 +1025,14 @@ namespace MMR.UI.Forms
             _configuration.GameplaySettings.CustomJunkLocations = JunkLocationEditor.CustomJunkLocations.ToList();
             _configuration.GameplaySettings.CustomJunkLocationsString = JunkLocationEditor.CustomJunkLocationsString;
             lJunkLocationsAmount.Text = JunkLocationEditor.ExternalLabel;
+        }
+
+        private void bEntranceEdit_Click(object sender, EventArgs e)
+        {
+            if (EntranceEditor.ShowDialog() == DialogResult.Cancel)
+            {
+                tEntrancePool.Text = EntranceEditor.ItemListString;
+            }
         }
 
 
@@ -973,6 +1107,12 @@ namespace MMR.UI.Forms
                     _configuration.GameplaySettings.NoStartingItems = false;
                 }
             }
+
+            var vanillaEntrances = _configuration.GameplaySettings.EntranceLogicMode == EntranceLogicMode.Vanilla;
+            gEntrancePools.Visible = !vanillaEntrances;
+            gEntranceOther.Visible = !vanillaEntrances;
+            bEntranceOpenLogic.Visible = _configuration.GameplaySettings.EntranceLogicMode == EntranceLogicMode.UserLogic;
+            tEntranceUserLogic.Visible = _configuration.GameplaySettings.EntranceLogicMode == EntranceLogicMode.UserLogic;
 
             bLoadLogic.Enabled = _configuration.GameplaySettings.LogicMode == LogicMode.UserLogic;
 
@@ -1191,6 +1331,12 @@ namespace MMR.UI.Forms
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+            if (_configuration.GameplaySettings.EntranceLogicMode == EntranceLogicMode.UserLogic && !File.Exists(_configuration.GameplaySettings.EntranceUserLogicFileName))
+            {
+                MessageBox.Show("User Entrance Logic not found or invalid, please load User Entrance Logic or change logic mode.",
+                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
 
             return true;
         }
@@ -1227,12 +1373,14 @@ namespace MMR.UI.Forms
                 {
                     tSettings.TabPages.Insert(0, tabMain);
                     tSettings.TabPages.Add(tabGimmicks);
+                    tSettings.TabPages.Add(tabEntrances);
                 }
             }
             else
             {
                 tSettings.TabPages.Remove(tabMain);
                 tSettings.TabPages.Remove(tabGimmicks);
+                tSettings.TabPages.Remove(tabEntrances);
             }
 
             // Comfort/Cosmetics
@@ -1322,6 +1470,14 @@ namespace MMR.UI.Forms
                 {
                     newConfiguration.GameplaySettings.UserLogicFileName = string.Empty;
                 }
+                if (File.Exists(newConfiguration.GameplaySettings.EntranceUserLogicFileName))
+                {
+                    tEntranceUserLogic.Text = Path.GetFileNameWithoutExtension(newConfiguration.GameplaySettings.EntranceUserLogicFileName);
+                }
+                else
+                {
+                    newConfiguration.GameplaySettings.EntranceUserLogicFileName = string.Empty;
+                }
                 if (filename != null)
                 {
                     _configuration.GameplaySettings = newConfiguration.GameplaySettings;
@@ -1337,6 +1493,13 @@ namespace MMR.UI.Forms
             tStartingItemList.Text = _configuration.GameplaySettings.CustomStartingItemListString;
 
             tJunkLocationsList.Text = _configuration.GameplaySettings.CustomJunkLocationsString;
+
+            _configuration.GameplaySettings.RandomizedEntrances = ItemUtils.ConvertStringToItemList(ItemUtils.AllEntrances().ToList(), _configuration.GameplaySettings.RandomizedEntrancesString);
+            if (_configuration.GameplaySettings.RandomizedEntrances == null)
+            {
+                _configuration.GameplaySettings.RandomizedEntrancesString = ItemUtils.ConvertItemListToString(ItemUtils.AllEntrances().ToList(), new List<MMR.Randomizer.GameObjects.Item>());
+            }
+            tEntrancePool.Text = _configuration.GameplaySettings.RandomizedEntrancesString;
 
             HudConfig.Update(_configuration.CosmeticSettings.AsmOptions.HudColorsConfig.Colors);
 

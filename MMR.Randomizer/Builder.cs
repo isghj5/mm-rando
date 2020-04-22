@@ -557,7 +557,7 @@ namespace MMR.Randomizer
 
         private void WriteEntrances()
         {
-            if (_randomized.Settings.AreEntrancesRandomized())
+            if (_randomized.Settings.RandomizedEntrances.Any())
             {
                 var newSpawn = _randomized.ItemList.Single(io => io.NewLocation == Item.EntranceSouthClockTownFromClockTowerInterior).Item;
                 EntranceSwapUtils.WriteSpawnToROM(newSpawn);

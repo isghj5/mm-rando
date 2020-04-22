@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -53,6 +54,12 @@ namespace MMR.Randomizer.Extensions
             }
             str += "\u0012";
             return str;
+        }
+
+        private static readonly Regex addSpaceRegex = new Regex("([A-Z]+)");
+        public static string AddSpaces(this string str)
+        {
+            return addSpaceRegex.Replace(str, " $1").Trim();
         }
 
         private static readonly ReadOnlyCollection<int> specialCharacters = new ReadOnlyCollection<int>(new int[]

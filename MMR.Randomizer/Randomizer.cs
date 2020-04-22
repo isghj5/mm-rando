@@ -818,8 +818,7 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            // todo handle pairs
-            if (target == Item.EntranceSouthClockTownFromClockTowerInterior)
+            if (!_settings.DecoupleEntrances && target == Item.EntranceSouthClockTownFromClockTowerInterior)
             {
                 var pair = currentItem.Pair();
                 if (!pair.HasValue)
@@ -869,7 +868,7 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            // if (_settings.PairEntrances)
+            if (!_settings.DecoupleEntrances)
             {
                 var currentEntrancePair = currentItem.Pair();
                 var targetPair = target.Pair();
@@ -956,7 +955,7 @@ namespace MMR.Randomizer
 
                     targets.Remove(targetLocation);
 
-                    // if (_settings.PairEntrances)
+                    if (!_settings.DecoupleEntrances)
                     {
                         var currentEntrancePair = currentItem.Pair();
                         var targetEntrancePair = targetLocation.Pair();
@@ -1006,6 +1005,16 @@ namespace MMR.Randomizer
                 Setup();
             }
 
+            if (_settings.SwapMajoraAndCallGiants)
+            {
+                ItemList[Item.EntranceMajorasLairFromTheMoon].NewLocation = _settings.RandomizedEntrances.Contains(Item.EntranceMajorasLairFromTheMoon)
+                    ? (Item?)null
+                    : Item.EntranceTheMoonFromClockTowerRooftop;
+                ItemList[Item.EntranceTheMoonFromClockTowerRooftop].NewLocation = _settings.RandomizedEntrances.Contains(Item.EntranceTheMoonFromClockTowerRooftop)
+                    ? (Item?)null
+                    : Item.EntranceMajorasLairFromTheMoon;
+            }
+
             PreserveOwlActivations();
 
             UpdateLogicForSettings();
@@ -1014,7 +1023,10 @@ namespace MMR.Randomizer
 
             PlaceOneWayEntrances();
 
-            PlacePairedEntrances();
+            if (!_settings.DecoupleEntrances)
+            {
+                PlacePairedEntrances();
+            }
 
             //PreserveEntrances();
 
@@ -1054,11 +1066,14 @@ namespace MMR.Randomizer
             {
                 ItemList[entrance].NewLocation = entrance;
                 ItemList[entrance].IsRandomized = false;
-                var pair = ItemList[entrance].NewLocation?.Pair();
-                if (pair != null)
+                if (!_settings.DecoupleEntrances)
                 {
-                    ItemList[pair.Value].NewLocation = pair;
-                    ItemList[pair.Value].IsRandomized = false;
+                    var pair = ItemList[entrance].NewLocation?.Pair();
+                    if (pair != null)
+                    {
+                        ItemList[pair.Value].NewLocation = pair;
+                        ItemList[pair.Value].IsRandomized = false;
+                    }
                 }
             }
         }
@@ -1067,7 +1082,7 @@ namespace MMR.Randomizer
         {
             var allOneWays = ItemUtils.AllEntrances()
                 .Where(item => item.IsEntranceImplemented())
-                .Where(item => !item.Pair().HasValue).ToList();
+                .Where(item => _settings.DecoupleEntrances || !item.Pair().HasValue).ToList();
             var entrancesToPlace = allOneWays.Where(item => ItemList[item].NewLocation == null).ToList();
             var entrancePool = allOneWays.Where(location => !ItemList.Any(io => io.NewLocation == location)).ToList();
             // todo remove already-placed entrances
@@ -1180,9 +1195,12 @@ namespace MMR.Randomizer
             foreach (var kvp in unconnectedEntrances)
             {
                 kvp.Value.Remove(entrance);
-                if (pair.HasValue)
+                if (!_settings.DecoupleEntrances)
                 {
-                    kvp.Value.Remove(pair.Value);
+                    if (pair.HasValue)
+                    {
+                        kvp.Value.Remove(pair.Value);
+                    }
                 }
             }
             unconnectedEntrances = unconnectedEntrances.Where(kvp => kvp.Value.Count > 0).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
@@ -1800,14 +1818,21 @@ namespace MMR.Randomizer
                     ItemList[selectedItemIndex].NewLocation = null;
                 }
             }
-            foreach (var io in ItemList)
+            foreach (var entrance in _settings.RandomizedEntrances)
             {
-                if (io.NewLocation.HasValue)
+                ItemList[entrance].NewLocation = null;
+            }
+            if (!_settings.DecoupleEntrances)
+            {
+                foreach (var io in ItemList)
                 {
-                    var pair = io.Item.Pair();
-                    if (pair.HasValue)
+                    if (io.NewLocation.HasValue)
                     {
-                        ItemList[pair.Value].NewLocation = pair;
+                        var pair = io.Item.Pair();
+                        if (pair.HasValue)
+                        {
+                            ItemList[pair.Value].NewLocation = pair;
+                        }
                     }
                 }
             }
