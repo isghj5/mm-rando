@@ -1686,9 +1686,9 @@ namespace MMR.UI.Forms
             this.cEntranceMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cEntranceMode.FormattingEnabled = true;
             this.cEntranceMode.Items.AddRange(new object[] {
-            "Vanilla Layout",
             "Casual",
             "Glitched",
+            "Vanilla Layout",
             "User Logic",
             "No Logic"});
             this.cEntranceMode.Location = new System.Drawing.Point(9, 21);

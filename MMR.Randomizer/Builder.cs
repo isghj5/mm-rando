@@ -557,26 +557,28 @@ namespace MMR.Randomizer
 
         private void WriteEntrances()
         {
-            if (_randomized.Settings.RandomizedEntrances.Any())
+            if (_randomized.Settings.LogicMode == LogicMode.Vanilla || _randomized.Settings.EntranceLogicMode != LogicMode.Vanilla || !_randomized.Settings.RandomizedEntrances.Any())
             {
-                var newSpawn = _randomized.ItemList.Single(io => io.NewLocation == Item.EntranceSouthClockTownFromClockTowerInterior).Item;
-                EntranceSwapUtils.WriteSpawnToROM(newSpawn);
-
-                SceneUtils.ReadSceneTable();
-                SceneUtils.GetMaps();
-
-                foreach (var item in _randomized.ItemList.Where(io => io.Item.IsEntrance() && io.IsRandomized))
-                {
-                    EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
-                }
-                EntranceSwapUtils.WriteOwlRegionNameTable( _randomized.ItemList );
-
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-drown-timer");
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-skyboxes");
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-spring-lens-cave-spawn");
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-poisoned-woodfall-spawns");
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-song-of-soaring-exits"); // todo maybe NOP all the code, instead of just the SH commands.
+                return;
             }
+
+            var newSpawn = _randomized.ItemList.Single(io => io.NewLocation == Item.EntranceSouthClockTownFromClockTowerInterior).Item;
+            EntranceSwapUtils.WriteSpawnToROM(newSpawn);
+
+            SceneUtils.ReadSceneTable();
+            SceneUtils.GetMaps();
+
+            foreach (var item in _randomized.ItemList.Where(io => io.Item.IsEntrance() && io.IsRandomized))
+            {
+                EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
+            }
+            EntranceSwapUtils.WriteOwlRegionNameTable( _randomized.ItemList );
+
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-drown-timer");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-skyboxes");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-spring-lens-cave-spawn");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-poisoned-woodfall-spawns");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-song-of-soaring-exits"); // todo maybe NOP all the code, instead of just the SH commands.
         }
 
         private void WriteDungeons()

@@ -241,11 +241,17 @@ namespace MMR.Randomizer
         {
             ItemList = new ItemList();
 
-            if (_settings.LogicMode == LogicMode.Casual
-                || _settings.LogicMode == LogicMode.Glitched
-                || _settings.LogicMode == LogicMode.UserLogic)
+            var logicMode = _settings.LogicMode;
+            if (logicMode == LogicMode.NoLogic)
             {
-                string[] data = ReadRulesetFromResources();
+                logicMode = _settings.EntranceLogicMode;
+            }
+
+            if (logicMode == LogicMode.Casual
+                || logicMode == LogicMode.Glitched
+                || logicMode == LogicMode.UserLogic)
+            {
+                string[] data = ReadRulesetFromResources(logicMode);
                 PopulateItemListFromLogicData(data);
             }
             else
@@ -425,10 +431,9 @@ namespace MMR.Randomizer
             Random = new Random(_seed);
         }
 
-        private string[] ReadRulesetFromResources()
+        private string[] ReadRulesetFromResources(LogicMode mode)
         {
             string[] lines = null;
-            var mode = _settings.LogicMode;
 
             if (mode == LogicMode.Casual)
             {
@@ -828,7 +833,12 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_settings.LogicMode == LogicMode.NoLogic)
+            if (currentItem.IsEntrance() && _settings.LogicMode == LogicMode.NoLogic && _settings.EntranceLogicMode == LogicMode.NoLogic)
+            {
+                return true;
+            }
+
+            if (!currentItem.IsEntrance() && _settings.LogicMode == LogicMode.NoLogic)
             {
                 return true;
             }
@@ -1158,7 +1168,7 @@ namespace MMR.Randomizer
             var disconnectedEntrances = entrancesToPlace.Where(item => !unconnectedEntrances.Any(kvp => kvp.Value.Contains(item))).ToList();
             disconnectedEntrances.Remove(Item.EntranceClockTowerInteriorFromSouthClockTown);
 
-            while (disconnectedEntrances.Any())
+            while (disconnectedEntrances.Any() && entrancePool.Count > 1)
             {
                 var currentEntrance = disconnectedEntrances.Random(Random);
 

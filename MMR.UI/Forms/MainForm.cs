@@ -305,6 +305,7 @@ namespace MMR.UI.Forms
             {
                 _configuration.GameplaySettings.UserLogicFileName = openLogic.FileName;
                 tbUserLogic.Text = Path.GetFileNameWithoutExtension(_configuration.GameplaySettings.UserLogicFileName);
+                tEntranceUserLogic.Text = tbUserLogic.Text;
             }
         }
 
@@ -312,8 +313,8 @@ namespace MMR.UI.Forms
         {
             if (openLogic.ShowDialog() == DialogResult.OK)
             {
-                _configuration.GameplaySettings.EntranceUserLogicFileName = openLogic.FileName;
-                tEntranceUserLogic.Text = Path.GetFileNameWithoutExtension(_configuration.GameplaySettings.EntranceUserLogicFileName);
+                _configuration.GameplaySettings.UserLogicFileName = openLogic.FileName;
+                tEntranceUserLogic.Text = Path.GetFileNameWithoutExtension(_configuration.GameplaySettings.UserLogicFileName);
             }
         }
 
@@ -864,9 +865,9 @@ namespace MMR.UI.Forms
 
         private void cEntranceMode_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var logicMode = (EntranceLogicMode)cEntranceMode.SelectedIndex;
+            var logicMode = (LogicMode)cEntranceMode.SelectedIndex;
 
-            if (logicMode == EntranceLogicMode.UserLogic)
+            if (logicMode == LogicMode.UserLogic)
             {
                 tEntranceUserLogic.Enabled = true;
                 bEntranceOpenLogic.Enabled = true;
@@ -901,7 +902,11 @@ namespace MMR.UI.Forms
                 bLoadLogic.Enabled = false;
             }
 
-            UpdateSingleSetting(() => _configuration.GameplaySettings.LogicMode = logicMode);
+            UpdateSingleSetting(() =>
+            {
+                _configuration.GameplaySettings.LogicMode = logicMode;
+                _configuration.GameplaySettings.EntranceLogicMode = logicMode;
+            });
         }
 
         private void cClockSpeed_SelectedIndexChanged(object sender, EventArgs e)
@@ -1108,12 +1113,14 @@ namespace MMR.UI.Forms
                 }
             }
 
-            var vanillaEntrances = _configuration.GameplaySettings.EntranceLogicMode == EntranceLogicMode.Vanilla;
+            var vanillaEntrances = _configuration.GameplaySettings.EntranceLogicMode == LogicMode.Vanilla;
             gEntrancePools.Visible = !vanillaEntrances;
             gEntranceOther.Visible = !vanillaEntrances;
-            bEntranceOpenLogic.Visible = _configuration.GameplaySettings.EntranceLogicMode == EntranceLogicMode.UserLogic;
-            tEntranceUserLogic.Visible = _configuration.GameplaySettings.EntranceLogicMode == EntranceLogicMode.UserLogic;
+            bEntranceOpenLogic.Visible = _configuration.GameplaySettings.EntranceLogicMode == LogicMode.UserLogic;
+            tEntranceUserLogic.Visible = _configuration.GameplaySettings.EntranceLogicMode == LogicMode.UserLogic;
 
+            cEntranceMode.Enabled = _configuration.GameplaySettings.LogicMode == LogicMode.NoLogic;
+            cEntranceMode.SelectedIndex = (int)_configuration.GameplaySettings.EntranceLogicMode;
             bLoadLogic.Enabled = _configuration.GameplaySettings.LogicMode == LogicMode.UserLogic;
 
             var oldEnabled = cDrawHash.Enabled;
@@ -1331,12 +1338,6 @@ namespace MMR.UI.Forms
                     "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
-            if (_configuration.GameplaySettings.EntranceLogicMode == EntranceLogicMode.UserLogic && !File.Exists(_configuration.GameplaySettings.EntranceUserLogicFileName))
-            {
-                MessageBox.Show("User Entrance Logic not found or invalid, please load User Entrance Logic or change logic mode.",
-                    "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
 
             return true;
         }
@@ -1462,6 +1463,7 @@ namespace MMR.UI.Forms
                     newConfiguration.GameplaySettings.UserLogicFileName = path;
                     newConfiguration.GameplaySettings.Logic = null;
                 }
+
                 if (File.Exists(newConfiguration.GameplaySettings.UserLogicFileName))
                 {
                     tbUserLogic.Text = Path.GetFileNameWithoutExtension(newConfiguration.GameplaySettings.UserLogicFileName);
@@ -1470,14 +1472,12 @@ namespace MMR.UI.Forms
                 {
                     newConfiguration.GameplaySettings.UserLogicFileName = string.Empty;
                 }
-                if (File.Exists(newConfiguration.GameplaySettings.EntranceUserLogicFileName))
+
+                if (File.Exists(newConfiguration.GameplaySettings.UserLogicFileName))
                 {
-                    tEntranceUserLogic.Text = Path.GetFileNameWithoutExtension(newConfiguration.GameplaySettings.EntranceUserLogicFileName);
+                    tEntranceUserLogic.Text = Path.GetFileNameWithoutExtension(newConfiguration.GameplaySettings.UserLogicFileName);
                 }
-                else
-                {
-                    newConfiguration.GameplaySettings.EntranceUserLogicFileName = string.Empty;
-                }
+
                 if (filename != null)
                 {
                     _configuration.GameplaySettings = newConfiguration.GameplaySettings;

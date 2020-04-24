@@ -182,9 +182,7 @@ namespace MMR.Randomizer.Models.Settings
 
         public bool SwapMajoraAndCallGiants { get; set; }
 
-        public EntranceLogicMode EntranceLogicMode { get; set; } = EntranceLogicMode.Vanilla;
-
-        public string EntranceUserLogicFileName { get; set; } = "";
+        public LogicMode EntranceLogicMode { get; set; }
 
         /// <summary>
         /// Randomize overworld entrances
