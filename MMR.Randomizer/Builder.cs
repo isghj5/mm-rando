@@ -571,7 +571,7 @@ namespace MMR.Randomizer
                 }
                 EntranceSwapUtils.WriteOwlRegionNameTable( _randomized.ItemList );
 
-
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-drown-timer");
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-skyboxes");
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-spring-lens-cave-spawn");
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-poisoned-woodfall-spawns");
