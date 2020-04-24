@@ -2345,8 +2345,8 @@
 0
 0
 - EntranceGrottoLensCaveFromGoronVillage
-787
 
+787;645
 0
 0
 - EntranceIkanaCanyonFromRoadtoIkana
@@ -3936,7 +3936,7 @@
 0
 - AccessGoronVillage
 
-643;644;645
+643;644;645,9
 0
 0
 - AccessMountainVillage
