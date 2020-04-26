@@ -216,15 +216,6 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         LikeLikeRoar = 0x3191, // sound of the like like trying to suck up link
 
-        [Tags(Short, LowHpBeep)]
-        PirateDamage = 0x3199,
-
-        [Tags(Long)]
-        PirateDead = 0x319A,
-
-        [Tags(Long)]
-        LikeLikeRoar = 0x3191, // sound of the like like trying to suck up link
-
         [Tags(Short)]
         PirateDamage = 0x3199,
 
@@ -333,8 +324,6 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, Long, LowHpBeep)]
         PirateLaugh = 0x3271, // smug laugh when they catch you pretending to be a stone
 
-        [Tags(Long)]
-        PeahatLiftoff = 0x31e7,
 
         //[Tags(Long)]
         //MajoraWrathWhip7 = 0x31ec,    
@@ -352,56 +341,11 @@ namespace MMR.Randomizer.Models.SoundEffects
         //UnknownBugSfx = 0x31f2,   
 
 
-        [Tags(Long)]
-        DekuLinkPanicScream = 0x3200, // when he sees his reflection
-
-        //[Tags(Long)]
-        //MajoraWrathSpinningTopLoop = 0x322c,
-
-        [Tags(Long)]
-        IgosMinionLaugh = 0x3238,
-
-        [Tags(Short)]
-        KingIgosSwordSwing = 0x3239, // King igos swinging his sword at you
-
-        [Tags(Long)]
-        PoeLaugh2 = 0x3241, // laugh used by igos or his minions
-
-        [Tags(Short)]
-        MajoraWrathVengfulWhip = 0x3253,
-
-        [Tags(Short)]
-        MajoraWrathShortGaspPain = 0x3254,
-
         //[Tags(Short)]
         //MajoraWrathWhipHit = 0x3255,  // kinda annoying to hear in the world
 
         //[Tags(Short)]
         //MajoraWrathHorribleScreech = 0x3256,  // loud and annoying to hear 
-
-        [Tags(Long)]
-        MajoraWrathLaughing = 0x3257,
-
-        [Tags(Long)]
-        MajoraWrathStunDamage = 0x3258, // damage that leads to a stun (arrow/beam)
-
-        [Tags(Long)]
-        MajoraWrathTakeDamage = 0x3259, // damage while in stun
-
-        [Tags(Long)]
-        MajoraWrathDramaticDeath = 0x325a, // when the witch is splashed with water
-
-        [Tags(Long)]
-        MajoraIncantationTaunting = 0x3268,
-
-        [Tags(Short)]
-        UnknownShortQuack = 0x3269,
-
-        [Tags(Short)]
-        MajoraIncantationShortChant = 0x326a, // the first of 'Coo CAh CAh Coo CAh CAh' chanting after transforming
-
-        [Tags(Long)]
-        PirateLaugh = 0x3271, // smug laugh when they catch you pretending to be a stone
 
         [Tags(Long)]
         SkullKidLaugh1 = 0x3275,
