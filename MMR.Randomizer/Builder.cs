@@ -867,6 +867,23 @@ namespace MMR.Randomizer
                 }
                 Debug.WriteLine($"Writing SFX {newSound} --> {oldSound}");
             }
+
+            //foreach (var debug_sound in Enum.GetNames(typeof(SoundEffect)).ToList().FindAll(u => u.Contains("ZZZ")))
+            foreach (var debug_soundname in Enum.GetNames(typeof(SoundEffect)).ToList().FindAll(u => u.Contains("ZZZ")))
+            {
+                SoundEffect debug_soundeffect = (SoundEffect)Enum.Parse(typeof(SoundEffect), debug_soundname);
+
+                foreach (var replaceable in SoundEffects.Replacable())
+                {
+                    if ()
+                    {
+
+                    }
+                }
+
+                var compatible_slot = shuffledSoundEffects.Keys.ToList().Find(u => u.ReplacableByTags(debug_soundeffect));
+            }
+
         }
 
         private void SoundEffectShuffle()
