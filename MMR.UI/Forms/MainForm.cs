@@ -150,6 +150,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFreestanding, "Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.");
             TooltipBuilder.SetTooltip(cEnableNightMusic, "Enables playing daytime Background music during nighttime in the field.\n(Clocktown night music can be weird)");
             TooltipBuilder.SetTooltip(cArrowCycling, "Cycle through arrow types when pressing R while an arrow is out when using the bow.");
+            TooltipBuilder.SetTooltip(cCloseCows, "When playing Epona's Song for a group of cows, the closest cow will respond, instead of the default behavior.");
         }
 
         /// <summary>
@@ -509,6 +510,7 @@ namespace MMR.UI.Forms
             cUnderwaterOcarina.Checked = _configuration.GameplaySettings.OcarinaUnderwater;
             cFreestanding.Checked = _configuration.GameplaySettings.UpdateWorldModels;
             cArrowCycling.Checked = _configuration.GameplaySettings.ArrowCycling;
+            cCloseCows.Checked = _configuration.GameplaySettings.CloseCows;
 
             // HUD config options
             var heartItems = ColorSelectionManager.Hearts.GetItems();
@@ -846,6 +848,11 @@ namespace MMR.UI.Forms
         private void cArrowCycling_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.ArrowCycling = cArrowCycling.Checked);
+        }
+
+        private void cCloseCows_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.CloseCows = cCloseCows.Checked);
         }
 
         private void cEntranceDecouple_CheckedChanged(object sender, EventArgs e)
@@ -1215,6 +1222,7 @@ namespace MMR.UI.Forms
             cQuestItemStorage.Enabled = v;
             cFreestanding.Enabled = v;
             cArrowCycling.Enabled = v;
+            cCloseCows.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
@@ -1396,6 +1404,7 @@ namespace MMR.UI.Forms
             cFastPush.Visible = v;
             cFreestanding.Visible = v;
             cArrowCycling.Visible = v;
+            cCloseCows.Visible = v;
             cLink.Visible = v;
             lLink.Visible = v;
 

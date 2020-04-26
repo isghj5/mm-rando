@@ -13,8 +13,9 @@ static z2_actor_t * cows_get_closest_to_link(z2_game_t *game) {
         z2_actor_t *cur = game->actor_ctxt.actor_list[i].first;
         // Iterate actor linked list for each entry.
         for (s32 j = 0; j < count; j++, cur = cur->next) {
-            // Cow only gives milk if variable 0 or 2.
-            if (cur->id == Z2_ACTOR_EN_COW && (cur->variable == 0 || cur->variable == 2)) {
+            // In vanilla game: cow only gives milk if variable 0 or 2.
+            // In MMR, just make sure variable is not 1, since it is used for the gi-table index.
+            if (cur->id == Z2_ACTOR_EN_COW && cur->variable != 1) {
                 // Check if we already have a closest but the current actor is closer.
                 if (closest != NULL && cur->dist_from_link_xz < closest->dist_from_link_xz) {
                     closest = cur;

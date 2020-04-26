@@ -1487,12 +1487,15 @@ namespace MMR.Randomizer
 
             asm.ApplyPatch(options);
 
-            // Add extended objects file and write addresses to table in ROM
-            var extended = _extendedObjects;
-            var fileIndex = RomUtils.AppendFile(extended.Bundle.GetFull());
-            var file = RomData.MMFileList[fileIndex];
-            var baseAddr = (uint)file.Addr;
-            asm.Symbols.WriteExtendedObjects(extended.GetAddresses(baseAddr));
+            if (_extendedObjects != null)
+            {
+                // Add extended objects file and write addresses to table in ROM
+                var extended = _extendedObjects;
+                var fileIndex = RomUtils.AppendFile(extended.Bundle.GetFull());
+                var file = RomData.MMFileList[fileIndex];
+                var baseAddr = (uint)file.Addr;
+                asm.Symbols.WriteExtendedObjects(extended.GetAddresses(baseAddr));
+            }
         }
 
         private void WriteAsmConfig(AsmContext asm, byte[] hash)
