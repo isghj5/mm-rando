@@ -3878,12 +3878,14 @@ namespace MMR.Randomizer.GameObjects
         [Entrance]
         [Pair(EntranceAncientCastleofIkanaFromCourtyard)]
         [Exit(Scene.IkanaCastle, 3)]
+        [Spawn(Scene.IkanaCastle, 2)]
         EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana,
 
         [Region(Region.IkanaCastle)]
         [Entrance]
         [Pair(EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana)]
         [Exit(Scene.IkanaCastle, 2)]
+        [Spawn(Scene.IkanaCastle, 3)]
         EntranceAncientCastleofIkanaFromCourtyard,
 
         [Region(Region.IkanaCastle)]
