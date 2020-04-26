@@ -190,6 +190,9 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         GuayDie = 0x30EB,
 
+        [Tags(Long)]
+        SnapperShoutsGagwapZZZ = 0x30F3,
+
         [Tags(Short)]
         GoronWake = 0x30FC,
 
@@ -571,6 +574,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         ReceptionistMmm = 0x612C,
 
+        //romani Yeaaah!? (look at that horse archery score, so rad)
+
+        //romani Hmmm... (he thinks he's human, what a silly grasshopper)
+
         // too annoying for lowhpbeep
         [Tags(Short)]
         RomaniScream = 0x612D,
@@ -589,6 +596,12 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Long)]
         StrayFairyHelpMe = 0x6138,
+
+        [Tags(Long)]
+        UnknownRomani1ZZZ = 0x6140,
+
+        [Tags(Long)]
+        UnknownRomani2ZZZ = 0x6141,
 
         [Tags(Long)]
         DampeAfraid = 0x6143,
