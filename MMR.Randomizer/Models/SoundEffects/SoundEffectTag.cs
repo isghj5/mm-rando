@@ -10,6 +10,7 @@
         Long,
         LowHpBeep,
         SystemSound,
-        Looping
+        Looping,
+        Debug
     }
 }

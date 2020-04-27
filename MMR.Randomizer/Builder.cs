@@ -852,6 +852,16 @@ namespace MMR.Randomizer
                 }
             }
 
+            //SoundEffect DebugSFX = SoundEffects.All().Find(u => Enum.GetName(typeof(SoundEffect), u).Contains("ZZZ"));
+            SoundEffect DebugSFX = SoundEffects.All().Find(u => u.HasTag(SoundEffectTag.Debug));
+            if (DebugSFX != 0)
+            {
+                Debug.WriteLine(DebugSFX.ToString() + " is a debug sfx");
+                //var DebugSLOT = SoundEffects.Replacable(); //.FilterByTags(DebugSFX.ReplacableByTags());
+                //if (DebugSLOT.Count > 0) shuffledSoundEffects[replacableSounds[0]] = DebugSFX;
+                shuffledSoundEffects[replacableSounds[0]] = DebugSFX;
+            }
+
             foreach (var sounds in shuffledSoundEffects)
             {
                 var oldSound = sounds.Key;
@@ -866,22 +876,6 @@ namespace MMR.Randomizer
                     oldSound.ReplaceWith(newSound);
                 }
                 Debug.WriteLine($"Writing SFX {newSound} --> {oldSound}");
-            }
-
-            //foreach (var debug_sound in Enum.GetNames(typeof(SoundEffect)).ToList().FindAll(u => u.Contains("ZZZ")))
-            foreach (var debug_soundname in Enum.GetNames(typeof(SoundEffect)).ToList().FindAll(u => u.Contains("ZZZ")))
-            {
-                SoundEffect debug_soundeffect = (SoundEffect)Enum.Parse(typeof(SoundEffect), debug_soundname);
-
-                foreach (var replaceable in SoundEffects.Replacable())
-                {
-                    if ()
-                    {
-
-                    }
-                }
-
-                var compatible_slot = shuffledSoundEffects.Keys.ToList().Find(u => u.ReplacableByTags(debug_soundeffect));
             }
 
         }
