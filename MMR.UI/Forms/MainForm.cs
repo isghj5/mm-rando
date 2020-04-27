@@ -247,17 +247,19 @@ namespace MMR.UI.Forms
 
             var defaultOutputROMFilename = FileUtils.MakeFilenameValid(DateTime.UtcNow.ToString("o"));
 
+            saveROM.FileName = !string.IsNullOrWhiteSpace(_configuration.OutputSettings.InputPatchFilename)
+                             ? Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64")
+                             : defaultOutputROMFilename;
+
             if (!FastRandomSeed)
             {
-                saveROM.FileName = !string.IsNullOrWhiteSpace(_configuration.OutputSettings.InputPatchFilename)
-                    ? Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64")
-                    : defaultOutputROMFilename;
                 if (saveROM.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
-                _configuration.OutputSettings.OutputROMFilename = saveROM.FileName;
             }
+            _configuration.OutputSettings.OutputROMFilename = saveROM.FileName;
+
 
             _configuration.OutputSettings.OutputROMFilename = defaultOutputROMFilename;
 
