@@ -516,7 +516,7 @@
 0
 - Poison swamp access
 
-770,813;443;444;445;448;8,673,770;673,692,763;673,692,766
+770,813;443;444;445;448;8,673,770;673,692,812
 0
 0
 - Woodfall Temple access
@@ -525,7 +525,7 @@
 0
 0
 - Woodfall clear
-515,759
+786,0,98,818
 
 0
 0
@@ -540,7 +540,7 @@
 0
 0
 - Snowhead clear
-635,2,120,752,92
+819
 
 0
 0
@@ -565,7 +565,7 @@
 0
 0
 - Great Bay clear
-93,752,686
+820
 
 0
 0
@@ -590,8 +590,8 @@
 0
 0
 - Ikana clear
-752,91,591
-274;23;24
+821
+
 0
 0
 - Explosives
@@ -2215,8 +2215,8 @@
 0
 0
 - EntranceSouthernSwampFromWoodfall
-786
 
+786,0;636;639
 0
 0
 - EntranceSouthernSwampFromDekuPalaceLower
@@ -2490,8 +2490,8 @@
 0
 0
 - EntranceStoneTowerTempleInvertedBossRoomFromStoneTowerTempleInverted
-0,4,10,117,120,142,752,756
-
+117
+821;4,752,0,10,120,142,756
 0
 0
 - EntranceClockTowerRooftopFromSouthClockTown
@@ -2575,8 +2575,8 @@
 0
 0
 - EntranceOdolwasLairFromWoodfallTemple
-104,128,120
-0;10
+104
+818;128,120,10;120,128,0
 0
 0
 - EntranceTownShootingGalleryFromEastClockTown
@@ -2630,8 +2630,8 @@
 0
 0
 - EntrancePiratesFortressGuardRoomFromBackDoor
+487
 
-772,10;487
 0
 0
 - EntrancePiratesFortressBarrelMazeFromFrontDoor
@@ -2640,8 +2640,8 @@
 0
 0
 - EntrancePiratesFortressBarrelMazeFromBackDoor
+489
 
-772,10;489
 0
 0
 - EntrancePiratesFortressOneGuardFrontFromPiratesFortress
@@ -2650,8 +2650,8 @@
 0
 0
 - EntrancePiratesFortressOneGuardRearFromPiratesFortress
+491
 
-772,10;491
 0
 0
 - EntrancePiratesFortressSewerFromTelescope
@@ -2741,7 +2741,7 @@
 0
 - EntranceDekuPalaceFromSouthernSwampLower
 103
-
+0;444;673,8;673,692,812
 0
 0
 - EntranceDekuPalaceFromDekuPalace
@@ -3175,8 +3175,8 @@
 0
 0
 - EntranceGohtsLairFromSnowheadTemple
-107,2,120,132,92,752
-
+107
+819;2,120,132,92,752
 0
 0
 - EntranceWoodfallFromSouthernSwamp
@@ -3430,8 +3430,8 @@
 0
 0
 - EntranceGyorgsLairFromGreatBayTemple
-2,3,10,120,138,752,112
-
+112
+820;2,3,120,10,138,752
 0
 0
 - EntranceSecretShrineFromIkanaCanyon
@@ -3470,7 +3470,7 @@
 0
 0
 - EntranceTheMoonFromClockTowerRooftop
-102,105,108,113,118,499
+102,499,818,819,820,821
 
 0
 0
@@ -4087,5 +4087,25 @@
 - AccessInvertedStoneTower
 4,120,752,101
 676;674,93,92,10;675;741
+0
+0
+- Odolwa's Remains
+515,759,786,0,98
+
+0
+0
+- Goht's Remains
+635,2,120,752,92
+
+0
+0
+- Gyorg's Remains
+93,752,686
+
+0
+0
+- Twinmold's Remains
+752,91,591
+274;23;24
 0
 0
