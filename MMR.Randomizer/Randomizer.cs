@@ -1017,9 +1017,12 @@ namespace MMR.Randomizer
 
             if (_settings.SwapMajoraAndCallGiants)
             {
+                ItemList[Item.EntranceMajorasLairFromTheMoon].IsRandomized = true;
                 ItemList[Item.EntranceMajorasLairFromTheMoon].NewLocation = _settings.RandomizedEntrances.Contains(Item.EntranceMajorasLairFromTheMoon)
                     ? (Item?)null
                     : Item.EntranceTheMoonFromClockTowerRooftop;
+
+                ItemList[Item.EntranceTheMoonFromClockTowerRooftop].IsRandomized = true;
                 ItemList[Item.EntranceTheMoonFromClockTowerRooftop].NewLocation = _settings.RandomizedEntrances.Contains(Item.EntranceTheMoonFromClockTowerRooftop)
                     ? (Item?)null
                     : Item.EntranceMajorasLairFromTheMoon;
