@@ -600,14 +600,16 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         //romani Yeaaah!? (look at that horse archery score, so rad)
 
-        //romani Hmmm... (he thinks he's human, what a silly grasshopper)
-
         // too annoying for lowhpbeep
         [Tags(Short)]
         RomaniScream = 0x612D,
 
         [Tags(Short, LowHpBeep)]
         RomaniGiggle = 0x612E,
+
+        [Tags(Short)]
+        RomaniYeah = 0x612F,   // romani impressed with link's archery
+
 
         [Tags(Short)]
         PamelaScream = 0x6130,
@@ -705,6 +707,17 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Long)]
         TingleKoolooLimpah = 0x617C,
+
+        [Tags(Short)]
+        HMSChuckle = 0x617D,  // you've met with a terrible fate, haven't you
+
+        [Tags(Long)]
+        HMSOhohoho = 0x617e,  // I'm sure you will persevere
+
+
+        [Tags(Long)]
+        HMSHoHoHo = 0x617F,  // I hope you don't mind but I've been following you
+
 
         #endregion
     }
