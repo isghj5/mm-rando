@@ -260,8 +260,14 @@ namespace MMR.UI.Forms
             }
             else
             {
-                saveROM.FileName =  saveROM.FileName + "." + saveROM.DefaultExt;
-                //saveROM.FileName = _configuration.OutputSettings.OutputROMFilename;
+                var directory = "";
+                if (_configuration.OutputSettings.OutputROMFilename != null && _configuration.OutputSettings.OutputROMFilename.Length > 0)
+                {
+                    directory = Path.GetDirectoryName(_configuration.OutputSettings.OutputROMFilename);
+                }
+
+                saveROM.FileName = saveROM.FileName + "." + saveROM.DefaultExt;
+                saveROM.FileName = Path.Combine(directory, saveROM.FileName);
             }
 
             _configuration.OutputSettings.OutputROMFilename = saveROM.FileName;
