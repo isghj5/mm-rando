@@ -191,7 +191,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         GuayDie = 0x30EB,
 
         [Tags(Long)]
-        SnapperShoutsGagwapZZZ = 0x30F3,
+        SnapperShoutsGagrap = 0x30F3,
 
         [Tags(Short)]
         GoronWake = 0x30FC,
@@ -622,10 +622,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         StrayFairyHelpMe = 0x6138,
 
         [Tags(Long)]
-        UnknownRomani1ZZZ = 0x6140,
+        RomaniHmmmm = 0x6140,
 
-        [Tags(Long)]
-        UnknownRomani2ZZZ = 0x6141,
+        [Tags(Short, LowHpBeep)]
+        RomaniYesSisterSigh = 0x6141,
 
         [Tags(Long)]
         DampeAfraid = 0x6143,
