@@ -557,7 +557,7 @@ namespace MMR.Randomizer
 
         private void WriteEntrances()
         {
-            if (_randomized.Settings.LogicMode == LogicMode.Vanilla || _randomized.Settings.EntranceLogicMode != LogicMode.Vanilla || !_randomized.Settings.RandomizedEntrances.Any())
+            if (_randomized.Settings.LogicMode == LogicMode.Vanilla || _randomized.Settings.EntranceLogicMode == LogicMode.Vanilla || !_randomized.Settings.RandomizedEntrances.Any())
             {
                 return;
             }
