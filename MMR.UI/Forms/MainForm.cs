@@ -258,10 +258,13 @@ namespace MMR.UI.Forms
                     return;
                 }
             }
+            else
+            {
+                saveROM.FileName =  saveROM.FileName + "." + saveROM.DefaultExt;
+                //saveROM.FileName = _configuration.OutputSettings.OutputROMFilename;
+            }
+
             _configuration.OutputSettings.OutputROMFilename = saveROM.FileName;
-
-
-            _configuration.OutputSettings.OutputROMFilename = defaultOutputROMFilename;
 
             EnableAllControls(false);
             bgWorker.RunWorkerAsync();
@@ -278,7 +281,6 @@ namespace MMR.UI.Forms
                 tSeed.Text = Math.Abs(Environment.TickCount).ToString();
                 Randomize(true);
             }
-               
         }
 
         private void bApplyPatch_Click(object sender, EventArgs e)
