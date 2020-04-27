@@ -874,11 +874,15 @@ namespace MMR.Randomizer
                 }
             }
 
-            /*
-            SoundEffect DebugSFX = SoundEffects.All().Find(u => u.ToString().Contains("DEBUG"));
-            var DebugSLOT = SoundEffects.FilterByTags(DebugSFX.ReplacableByTags());
-            if (DebugSFX != 0 && DebugSLOT.Count > 0) shuffledSoundEffects[DebugSLOT[0]] = DebugSFX;
-            */
+            //SoundEffect DebugSFX = SoundEffects.All().Find(u => Enum.GetName(typeof(SoundEffect), u).Contains("ZZZ"));
+            SoundEffect DebugSFX = SoundEffects.All().Find(u => u.HasTag(SoundEffectTag.Debug));
+            if (DebugSFX != 0)
+            {
+                Debug.WriteLine(DebugSFX.ToString() + " is a debug sfx");
+                //var DebugSLOT = SoundEffects.Replacable(); //.FilterByTags(DebugSFX.ReplacableByTags());
+                //if (DebugSLOT.Count > 0) shuffledSoundEffects[replacableSounds[0]] = DebugSFX;
+                shuffledSoundEffects[replacableSounds[0]] = DebugSFX;
+            }
 
             foreach (var sounds in shuffledSoundEffects)
             {
@@ -895,6 +899,7 @@ namespace MMR.Randomizer
                 }
                 Debug.WriteLine($"Writing SFX {newSound} --> {oldSound}");
             }
+
         }
 
         private void SoundEffectShuffle()
