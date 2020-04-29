@@ -19,6 +19,9 @@ static void arrow_magic_update_state(struct arrow_magic_state *state, z2_link_t 
         if (z2_file.magic_consume_state == 4) {
             z2_file.magic_consume_state = 2;
         } else if (arrow->variable == 7) {
+            // Update magic consume cost, prevents Deku Bubble from taking more magic than expected
+            // if used while an elemental arrow effect is still active.
+            z2_file.magic_consume_cost = 2;
             // Deku Bubble won't set magic consumption state to 0 later, so apply magic cost manually.
             if (!z2_file.week_event_inf.infinite_magic) {
                 z2_file.current_magic -= z2_file.magic_consume_cost;

@@ -79,6 +79,7 @@ namespace MMR.UI.Forms
             this.cMoonItems = new System.Windows.Forms.CheckBox();
             this.tabComfort = new System.Windows.Forms.TabPage();
             this.gSpeedUps = new System.Windows.Forms.GroupBox();
+            this.cFasterBank = new System.Windows.Forms.CheckBox();
             this.cSkipBeaver = new System.Windows.Forms.CheckBox();
             this.cFasterLabFish = new System.Windows.Forms.CheckBox();
             this.cGoodDogRaceRNG = new System.Windows.Forms.CheckBox();
@@ -178,7 +179,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cFasterBank = new System.Windows.Forms.CheckBox();
+            this.cCloseCows = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -751,12 +752,23 @@ namespace MMR.UI.Forms
             this.gSpeedUps.Controls.Add(this.cFasterLabFish);
             this.gSpeedUps.Controls.Add(this.cGoodDogRaceRNG);
             this.gSpeedUps.Controls.Add(this.cGoodDampeRNG);
-            this.gSpeedUps.Location = new System.Drawing.Point(373, 203);
+            this.gSpeedUps.Location = new System.Drawing.Point(235, 223);
             this.gSpeedUps.Name = "gSpeedUps";
-            this.gSpeedUps.Size = new System.Drawing.Size(286, 97);
+            this.gSpeedUps.Size = new System.Drawing.Size(424, 77);
             this.gSpeedUps.TabIndex = 37;
             this.gSpeedUps.TabStop = false;
             this.gSpeedUps.Text = "Speed Ups";
+            // 
+            // cFasterBank
+            // 
+            this.cFasterBank.AutoSize = true;
+            this.cFasterBank.Location = new System.Drawing.Point(285, 19);
+            this.cFasterBank.Name = "cFasterBank";
+            this.cFasterBank.Size = new System.Drawing.Size(83, 17);
+            this.cFasterBank.TabIndex = 4;
+            this.cFasterBank.Text = "Faster Bank";
+            this.cFasterBank.UseVisualStyleBackColor = true;
+            this.cFasterBank.CheckedChanged += new System.EventHandler(this.cFasterBank_CheckedChanged);
             // 
             // cSkipBeaver
             // 
@@ -810,7 +822,7 @@ namespace MMR.UI.Forms
             this.gHints.Controls.Add(this.cClearHints);
             this.gHints.Location = new System.Drawing.Point(6, 223);
             this.gHints.Name = "gHints";
-            this.gHints.Size = new System.Drawing.Size(361, 77);
+            this.gHints.Size = new System.Drawing.Size(223, 77);
             this.gHints.TabIndex = 36;
             this.gHints.TabStop = false;
             this.gHints.Text = "Gossip Stone Hints";
@@ -838,7 +850,7 @@ namespace MMR.UI.Forms
             "Competitive"});
             this.cGossipHints.Location = new System.Drawing.Point(98, 18);
             this.cGossipHints.Name = "cGossipHints";
-            this.cGossipHints.Size = new System.Drawing.Size(250, 21);
+            this.cGossipHints.Size = new System.Drawing.Size(115, 21);
             this.cGossipHints.TabIndex = 19;
             this.cGossipHints.SelectedIndexChanged += new System.EventHandler(this.cGossipHints_SelectedIndexChanged);
             // 
@@ -848,7 +860,7 @@ namespace MMR.UI.Forms
             this.cFreeHints.BackColor = System.Drawing.Color.Transparent;
             this.cFreeHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cFreeHints.ForeColor = System.Drawing.Color.Black;
-            this.cFreeHints.Location = new System.Drawing.Point(98, 50);
+            this.cFreeHints.Location = new System.Drawing.Point(13, 50);
             this.cFreeHints.Name = "cFreeHints";
             this.cFreeHints.Size = new System.Drawing.Size(72, 17);
             this.cFreeHints.TabIndex = 15;
@@ -862,7 +874,7 @@ namespace MMR.UI.Forms
             this.cClearHints.BackColor = System.Drawing.Color.Transparent;
             this.cClearHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cClearHints.ForeColor = System.Drawing.Color.Black;
-            this.cClearHints.Location = new System.Drawing.Point(217, 50);
+            this.cClearHints.Location = new System.Drawing.Point(98, 50);
             this.cClearHints.Name = "cClearHints";
             this.cClearHints.Size = new System.Drawing.Size(75, 17);
             this.cClearHints.TabIndex = 16;
@@ -1080,6 +1092,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cCloseCows);
             this.groupBox7.Controls.Add(this.cArrowCycling);
             this.groupBox7.Controls.Add(this.cFreestanding);
             this.groupBox7.Controls.Add(this.cEnableNightMusic);
@@ -1096,7 +1109,7 @@ namespace MMR.UI.Forms
             this.groupBox7.Controls.Add(this.cNoDowngrades);
             this.groupBox7.Location = new System.Drawing.Point(373, 6);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(286, 191);
+            this.groupBox7.Size = new System.Drawing.Size(286, 211);
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
@@ -1923,16 +1936,16 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cFasterBank
+            // cCloseCows
             // 
-            this.cFasterBank.AutoSize = true;
-            this.cFasterBank.Location = new System.Drawing.Point(9, 67);
-            this.cFasterBank.Name = "cFasterBank";
-            this.cFasterBank.Size = new System.Drawing.Size(83, 17);
-            this.cFasterBank.TabIndex = 4;
-            this.cFasterBank.Text = "Faster Bank";
-            this.cFasterBank.UseVisualStyleBackColor = true;
-            this.cFasterBank.CheckedChanged += new System.EventHandler(this.cFasterBank_CheckedChanged);
+            this.cCloseCows.AutoSize = true;
+            this.cCloseCows.Location = new System.Drawing.Point(9, 183);
+            this.cCloseCows.Name = "cCloseCows";
+            this.cCloseCows.Size = new System.Drawing.Size(81, 17);
+            this.cCloseCows.TabIndex = 36;
+            this.cCloseCows.Text = "Close Cows";
+            this.cCloseCows.UseVisualStyleBackColor = true;
+            this.cCloseCows.CheckedChanged += new System.EventHandler(this.cCloseCows_CheckedChanged);
             // 
             // MainForm
             // 
@@ -2148,6 +2161,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFDAnywhere;
         private System.Windows.Forms.CheckBox cArrowCycling;
         private System.Windows.Forms.CheckBox cFasterBank;
+        private System.Windows.Forms.CheckBox cCloseCows;
     }
 }
 
