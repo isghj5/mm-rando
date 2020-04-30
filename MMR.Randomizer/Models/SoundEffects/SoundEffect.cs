@@ -346,6 +346,8 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         IronKnuckleSwing = 0x3129,
 
+        EmptySFX = 0x3152, // debug filename lists as a intro boss sfx, but it's empty
+
         [Replacable(0xCE5E22, 0xCE717E)]
         [ReplacableByTags(Long)]
         [Tags(Long)]

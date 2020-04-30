@@ -590,6 +590,11 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.CosmeticSettings.EnableNightBGM = cEnableNightMusic.Checked);
         }
 
+        private void cDisableLowHealthBeep_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.DisableLowHealthBeep = cDisableLowHealthBeep.Checked);
+        }
+
         private void cMusic_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.CosmeticSettings.Music = (Music)cMusic.SelectedIndex);
