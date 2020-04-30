@@ -878,7 +878,9 @@ namespace MMR.Randomizer
             if (DebugSFX != 0)
             {
                 Debug.WriteLine(DebugSFX.ToString() + " is a debug sfx");
-                shuffledSoundEffects[replacableSounds[0]] = DebugSFX;
+                shuffledSoundEffects[replacableSounds[0]] = DebugSFX;   // morning sfx
+                shuffledSoundEffects[replacableSounds[29]] = DebugSFX;  // low hp beep
+                shuffledSoundEffects[replacableSounds[30]] = DebugSFX;  // titlescreen
             }
 
             foreach (var sounds in shuffledSoundEffects)
