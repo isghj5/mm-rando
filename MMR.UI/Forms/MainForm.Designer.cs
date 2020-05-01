@@ -1676,7 +1676,7 @@ namespace MMR.UI.Forms
             this.bRandomise.TabIndex = 5;
             this.bRandomise.Text = "Randomize";
             this.bRandomise.UseVisualStyleBackColor = true;
-            this.bRandomise.Click += new System.EventHandler(this.bRandomise_Click);
+            this.bRandomise.MouseDown += new System.Windows.Forms.MouseEventHandler(this.bRandomise_MouseDown);
             // 
             // saveWad
             // 
