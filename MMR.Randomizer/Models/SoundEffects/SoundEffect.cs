@@ -557,6 +557,23 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         #endregion
 
+        #region Ocarina
+
+        [Tags(Long, Short, LowHpBeep)]
+        VoidOut = 0x5001,
+
+        //[Tags(Long, Debug)]
+        //GrottoWarpOut = 0x5005, // looping
+
+        [Tags(Long, Short, LowHpBeep)]
+        VoidOutReturn = 0x5006,
+
+        [Tags(Long)]
+        DawnOfTheFirstDayThud = 0x5008,
+
+
+        #endregion
+
         #region Voice SFX
 
         [Tags(Short)]
