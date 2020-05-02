@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 13;
+        public const int CurrentVersion = 14;
 
         public static string ApplyMigrations(string logic)
         {
@@ -82,6 +82,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (GetVersion(lines) < 13)
             {
                 RemoveGormanBrosRaceDayThree(lines);
+            }
+
+            if (GetVersion(lines) < 14)
+            {
+                AddTricks(lines);
             }
 
             return string.Join("\r\n", lines);
@@ -1488,6 +1493,16 @@ namespace MMR.Randomizer.LogicMigrator
                 }
 
                 lines.RemoveRange(removeId * 5 + 1, 5);
+            }
+        }
+
+        private static void AddTricks(List<string> lines)
+        {
+            lines[0] = "-version 14";
+
+            for (var i = 1; i < lines.Count; i += 6)
+            {
+                lines.Insert(i + 5, "");
             }
         }
 

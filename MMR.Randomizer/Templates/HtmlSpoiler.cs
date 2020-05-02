@@ -76,29 +76,14 @@ namespace MMR.Randomizer.Templates
 <body class=""light-mode"">
 <label><b>Version: </b></label><span>");
             this.Write(this.ToStringHelper.ToStringWithCulture(spoiler.Version));
-            this.Write("</span><br/>\r\n<label><b>Settings String: </b></label><span>");
+            this.Write("</span><br/>\r\n<label><b>Settings: </b></label><code style=\"word-break: break-all;" +
+                    "\">");
             this.Write(this.ToStringHelper.ToStringWithCulture(spoiler.SettingsString));
-            this.Write("</span><br/>\r\n<label><b>Seed: </b></label><span>");
+            this.Write("</code><br/>\r\n<label><b>Seed: </b></label><span>");
             this.Write(this.ToStringHelper.ToStringWithCulture(spoiler.Seed));
-            this.Write("</span><br/>\r\n");
- if (spoiler.CustomItemListString != null) { 
-            this.Write("<label><b>Custom Item List: </b></label><span>");
-            this.Write(this.ToStringHelper.ToStringWithCulture(spoiler.CustomItemListString));
-            this.Write("</span><br/>\r\n");
- } 
- if (spoiler.CustomStartingItemListString != null) { 
-            this.Write("<label><b>Custom Starting Item List: </b></label><span>");
-            this.Write(this.ToStringHelper.ToStringWithCulture(spoiler.CustomStartingItemListString));
-            this.Write("</span><br/>\r\n");
- } 
- if (spoiler.CustomJunkLocationsString != null) { 
-            this.Write("<label><b>Enforce Junk Locations List: </b></label><span>");
-            this.Write(this.ToStringHelper.ToStringWithCulture(spoiler.CustomJunkLocationsString));
-            this.Write("</span><br/>\r\n");
- } 
-            this.Write("<br/>\r\n<button type=\"button\" onclick=\"toggleDarkLight()\" title=\"Toggle dark/light" +
-                    " mode\">Toggle Dark Theme</button>\r\n<br/>\r\n<br/>\r\n<label><b>Spoiler Log State: </" +
-                    "b></label><input id=\"spoilerLogState\" type=\"text\"/><br/>\r\n");
+            this.Write("</span><br/>\r\n<br/>\r\n<button type=\"button\" onclick=\"toggleDarkLight()\" title=\"Tog" +
+                    "gle dark/light mode\">Toggle Dark Theme</button>\r\n<br/>\r\n<br/>\r\n<label><b>Spoiler" +
+                    " Log State: </b></label><input id=\"spoilerLogState\" type=\"text\"/><br/>\r\n");
  if (spoiler.RandomizeDungeonEntrances) { 
 
             this.Write("<h2>Dungeon Entrance Replacements</h2>\r\n<table border=\"1\" class=\"item-replacement" +
