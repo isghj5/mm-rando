@@ -1495,9 +1495,9 @@ namespace MMR.Randomizer
             DisableCombatMusicOnActor(0xD5EFB0 + 0x7); // razor clam shell
             DisableCombatMusicOnActor(0xD10CD0 + 0x7); // tektites
             DisableCombatMusicOnActor(0xEAE4D0 + 0x7); // BAD BAT
-            DisableCombatMusicOnActor(0xF7ECE0 + 0x7); //  eenos
-            DisableCombatMusicOnActor(0xD39100 + 0x7); //  mad shrub
-            DisableCombatMusicOnActor(0xEA5E20 + 0x7); //  nejiron
+            DisableCombatMusicOnActor(0xF7ECE0 + 0x7); // eenos
+            DisableCombatMusicOnActor(0xD39100 + 0x7); // mad shrub
+            DisableCombatMusicOnActor(0xEA5E20 + 0x7); // nejiron
         }
 
         public void OutputHashIcons(IEnumerable<byte> iconFileIndices, string filename)
