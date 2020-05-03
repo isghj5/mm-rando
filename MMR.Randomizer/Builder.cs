@@ -1435,7 +1435,7 @@ namespace MMR.Randomizer
                 return;
             }
             Version v = Assembly.GetExecutingAssembly().GetName().Version;
-            RomUtils.SetStrings(Values.ModsDirectory, "logo-text", $"v{v}", _randomized.Settings.ToString());
+            RomUtils.SetStrings(Values.ModsDirectory, "logo-text", $"v{v}", string.Empty);
         }
 
         private void WriteShopObjects()
