@@ -3890,14 +3890,14 @@ namespace MMR.Randomizer.GameObjects
 
         [Region(Region.IkanaCastle)]
         [Entrance(EntranceType.Overworld)]
-        [Exit(Scene.IkanaCastle, 4)]
-        [Spawn(Scene.IkanaCastle, 4)]
+        [Exit(Scene.IkanaCastle, 5)]
+        [Spawn(Scene.IkanaCastle, 5)]
         EntranceAncientCastleofIkanaFromBlockHole, // one way
 
         [Region(Region.IkanaCastle)]
         [Entrance(EntranceType.Overworld)]
-        [Exit(Scene.IkanaCastle, 5)]
-        [Spawn(Scene.IkanaCastle, 5)]
+        [Exit(Scene.IkanaCastle, 4)]
+        [Spawn(Scene.IkanaCastle, 4)]
         EntranceAncientCastleofIkanaFromKegHole, // one way
 
         [Region(Region.Interior)]
