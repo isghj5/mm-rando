@@ -74,6 +74,11 @@
             this.glitchedToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_new_item = new System.Windows.Forms.Button();
             this.button_goto = new System.Windows.Forms.Button();
+            this.bDeleteItem = new System.Windows.Forms.Button();
+            this.bRenameItem = new System.Windows.Forms.Button();
+            this.cTrick = new System.Windows.Forms.CheckBox();
+            this.tTrickDescription = new System.Windows.Forms.TextBox();
+            this.bConClone = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nItem)).BeginInit();
             this.tMain.SuspendLayout();
             this.tTimes.SuspendLayout();
@@ -108,7 +113,7 @@
             // 
             this.lIName.AutoSize = true;
             this.lIName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lIName.Location = new System.Drawing.Point(258, 56);
+            this.lIName.Location = new System.Drawing.Point(110, 38);
             this.lIName.Name = "lIName";
             this.lIName.Size = new System.Drawing.Size(70, 13);
             this.lIName.TabIndex = 2;
@@ -464,19 +469,20 @@
             // 
             // tCond
             // 
-            this.tCond.ColumnCount = 3;
-            this.tCond.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
-            this.tCond.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.34F));
-            this.tCond.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33F));
+            this.tCond.ColumnCount = 2;
+            this.tCond.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tCond.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.tCond.Controls.Add(this.bConClone, 0, 2);
             this.tCond.Controls.Add(this.bConAdd, 0, 1);
-            this.tCond.Controls.Add(this.bConClear, 2, 1);
+            this.tCond.Controls.Add(this.bConClear, 1, 1);
             this.tCond.Controls.Add(this.lConditional, 0, 0);
-            this.tCond.Controls.Add(this.bConEdit, 1, 1);
+            this.tCond.Controls.Add(this.bConEdit, 1, 2);
             this.tCond.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tCond.Location = new System.Drawing.Point(230, 31);
             this.tCond.Name = "tCond";
-            this.tCond.RowCount = 2;
+            this.tCond.RowCount = 3;
             this.tCond.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tCond.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tCond.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
             this.tCond.Size = new System.Drawing.Size(221, 384);
             this.tCond.TabIndex = 5;
@@ -484,9 +490,9 @@
             // bConAdd
             // 
             this.bConAdd.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bConAdd.Location = new System.Drawing.Point(3, 351);
+            this.bConAdd.Location = new System.Drawing.Point(3, 315);
             this.bConAdd.Name = "bConAdd";
-            this.bConAdd.Size = new System.Drawing.Size(67, 30);
+            this.bConAdd.Size = new System.Drawing.Size(104, 30);
             this.bConAdd.TabIndex = 0;
             this.bConAdd.Text = "Add";
             this.bConAdd.UseVisualStyleBackColor = true;
@@ -495,9 +501,9 @@
             // bConClear
             // 
             this.bConClear.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bConClear.Location = new System.Drawing.Point(149, 351);
+            this.bConClear.Location = new System.Drawing.Point(113, 315);
             this.bConClear.Name = "bConClear";
-            this.bConClear.Size = new System.Drawing.Size(69, 30);
+            this.bConClear.Size = new System.Drawing.Size(105, 30);
             this.bConClear.TabIndex = 1;
             this.bConClear.Text = "Remove";
             this.bConClear.UseVisualStyleBackColor = true;
@@ -505,22 +511,22 @@
             // 
             // lConditional
             // 
-            this.tCond.SetColumnSpan(this.lConditional, 3);
+            this.tCond.SetColumnSpan(this.lConditional, 2);
             this.lConditional.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lConditional.FormattingEnabled = true;
             this.lConditional.HorizontalScrollbar = true;
             this.lConditional.Location = new System.Drawing.Point(3, 3);
             this.lConditional.Name = "lConditional";
-            this.lConditional.Size = new System.Drawing.Size(215, 342);
+            this.lConditional.Size = new System.Drawing.Size(215, 306);
             this.lConditional.TabIndex = 2;
             this.lConditional.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lConditional_MouseDoubleClick);
             // 
             // bConEdit
             // 
             this.bConEdit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bConEdit.Location = new System.Drawing.Point(76, 351);
+            this.bConEdit.Location = new System.Drawing.Point(113, 351);
             this.bConEdit.Name = "bConEdit";
-            this.bConEdit.Size = new System.Drawing.Size(67, 30);
+            this.bConEdit.Size = new System.Drawing.Size(105, 30);
             this.bConEdit.TabIndex = 3;
             this.bConEdit.Text = "Edit";
             this.bConEdit.UseVisualStyleBackColor = true;
@@ -612,7 +618,7 @@
             // 
             // button_goto
             // 
-            this.button_goto.Location = new System.Drawing.Point(261, 81);
+            this.button_goto.Location = new System.Drawing.Point(60, 81);
             this.button_goto.Name = "button_goto";
             this.button_goto.Size = new System.Drawing.Size(47, 23);
             this.button_goto.TabIndex = 6;
@@ -620,11 +626,72 @@
             this.button_goto.UseVisualStyleBackColor = true;
             this.button_goto.Click += new System.EventHandler(this.button_goto_Click);
             // 
+            // bDeleteItem
+            // 
+            this.bDeleteItem.Location = new System.Drawing.Point(240, 81);
+            this.bDeleteItem.Name = "bDeleteItem";
+            this.bDeleteItem.Size = new System.Drawing.Size(75, 23);
+            this.bDeleteItem.TabIndex = 7;
+            this.bDeleteItem.Text = "Delete";
+            this.bDeleteItem.UseVisualStyleBackColor = true;
+            this.bDeleteItem.Visible = false;
+            this.bDeleteItem.Click += new System.EventHandler(this.bDeleteItem_Click);
+            // 
+            // bRenameItem
+            // 
+            this.bRenameItem.Location = new System.Drawing.Point(322, 81);
+            this.bRenameItem.Name = "bRenameItem";
+            this.bRenameItem.Size = new System.Drawing.Size(75, 23);
+            this.bRenameItem.TabIndex = 8;
+            this.bRenameItem.Text = "Rename";
+            this.bRenameItem.UseVisualStyleBackColor = true;
+            this.bRenameItem.Visible = false;
+            this.bRenameItem.Click += new System.EventHandler(this.bRenameItem_Click);
+            // 
+            // cTrick
+            // 
+            this.cTrick.AutoSize = true;
+            this.cTrick.Location = new System.Drawing.Point(403, 85);
+            this.cTrick.Name = "cTrick";
+            this.cTrick.Size = new System.Drawing.Size(50, 17);
+            this.cTrick.TabIndex = 9;
+            this.cTrick.Text = "Trick";
+            this.cTrick.UseVisualStyleBackColor = true;
+            this.cTrick.Visible = false;
+            this.cTrick.CheckedChanged += new System.EventHandler(this.cTrick_CheckedChanged);
+            // 
+            // tTrickDescription
+            // 
+            this.tTrickDescription.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.tTrickDescription.Location = new System.Drawing.Point(459, 83);
+            this.tTrickDescription.Name = "tTrickDescription";
+            this.tTrickDescription.Size = new System.Drawing.Size(235, 20);
+            this.tTrickDescription.TabIndex = 10;
+            this.tTrickDescription.Text = "(optional tooltip)";
+            this.tTrickDescription.TextChanged += new System.EventHandler(this.tTrickDescription_TextChanged);
+            this.tTrickDescription.Enter += new System.EventHandler(this.tTrickDescription_Enter);
+            this.tTrickDescription.Leave += new System.EventHandler(this.tTrickDescription_Leave);
+            // 
+            // bConClone
+            // 
+            this.bConClone.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bConClone.Location = new System.Drawing.Point(3, 351);
+            this.bConClone.Name = "bConClone";
+            this.bConClone.Size = new System.Drawing.Size(104, 30);
+            this.bConClone.TabIndex = 4;
+            this.bConClone.Text = "Clone";
+            this.bConClone.UseVisualStyleBackColor = true;
+            this.bConClone.Click += new System.EventHandler(this.bConClone_Click);
+            // 
             // LogicEditorForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(706, 539);
+            this.Controls.Add(this.tTrickDescription);
+            this.Controls.Add(this.cTrick);
+            this.Controls.Add(this.bRenameItem);
+            this.Controls.Add(this.bDeleteItem);
             this.Controls.Add(this.button_goto);
             this.Controls.Add(this.btn_new_item);
             this.Controls.Add(this.tMain);
@@ -699,5 +766,10 @@
         private System.Windows.Forms.ToolStripMenuItem casualToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem glitchedToolStripMenuItem1;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
+        private System.Windows.Forms.Button bDeleteItem;
+        private System.Windows.Forms.Button bRenameItem;
+        private System.Windows.Forms.CheckBox cTrick;
+        private System.Windows.Forms.TextBox tTrickDescription;
+        private System.Windows.Forms.Button bConClone;
     }
 }

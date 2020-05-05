@@ -840,6 +840,16 @@ namespace MMR.UI.Forms
             ITEM_NAMES = newList.ToArray();
         }
 
+        public static void RenameItem(int index, string itemName)
+        {
+            ITEM_NAMES[index] = itemName;
+        }
+
+        public static void RemoveItem(int index)
+        {
+            ITEM_NAMES = ITEM_NAMES.Where((_, i) => i != index).ToArray();
+        }
+
         public static void ResetItems()
         {
             ITEM_NAMES = DEFAULT_ITEM_NAMES.ToArray();

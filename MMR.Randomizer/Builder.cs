@@ -746,6 +746,11 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "fierce-deity-anywhere");
             }
+
+            if (_randomized.Settings.ByoAmmo)
+            {
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "byo-ammo");
+            }
         }
 
         private void WriteSunsSong()
@@ -1436,7 +1441,7 @@ namespace MMR.Randomizer
                 return;
             }
             Version v = Assembly.GetExecutingAssembly().GetName().Version;
-            RomUtils.SetStrings(Values.ModsDirectory, "logo-text", $"v{v}", _randomized.Settings.ToString());
+            RomUtils.SetStrings(Values.ModsDirectory, "logo-text", $"v{v}", string.Empty);
         }
 
         private void WriteShopObjects()

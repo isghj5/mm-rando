@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 16;
+        public const int CurrentVersion = 17;
 
         public static string ApplyMigrations(string logic)
         {
@@ -97,6 +97,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (GetVersion(lines) < 16)
             {
                 AddOwlStatues(lines);
+            }
+
+            if (GetVersion(lines) < 17)
+            {
+                AddTricks(lines);
             }
 
             return string.Join("\r\n", lines);
@@ -2076,6 +2081,16 @@ namespace MMR.Randomizer.LogicMigrator
                 lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
                 lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
                 lines.Insert(item.ID * 5 + 5, "0");
+            }
+        }
+
+        private static void AddTricks(List<string> lines)
+        {
+            lines[0] = "-version 17";
+
+            for (var i = 1; i < lines.Count; i += 6)
+            {
+                lines.Insert(i + 5, "");
             }
         }
 

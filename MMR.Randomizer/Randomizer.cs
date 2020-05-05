@@ -212,18 +212,25 @@ namespace MMR.Randomizer
 
         private void UpdateLogicForSettings()
         {
-            if (_settings.CustomStartingItemList != null)
+            foreach (var itemObject in ItemList)
             {
-                foreach (var itemObject in ItemList)
+                if (_settings.CustomStartingItemList != null)
                 {
                     itemObject.DependsOnItems?.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
                     itemObject.Conditionals?.ForEach(c => c.RemoveAll(item => _settings.CustomStartingItemList.Contains(item)));
                 }
+
+                if (itemObject.Conditionals != null)
+                {
+                    itemObject.Conditionals.RemoveAll(c => c.Any(item => ItemList[item].IsTrick && !_settings.EnabledTricks.Contains((int)item)));
+                }
             }
+
             if (_settings.AddShopItems)
             {
                 ItemList[Item.ShopItemWitchBluePotion].DependsOnItems?.Remove(Item.BottleCatchMushroom);
             }
+
             if (_settings.RandomizeBottleCatchContents && _settings.LogicMode == LogicMode.Casual)
             {
                 var anyBottleIndex = ItemList.FindIndex(io => io.Name == "Any Bottle");
@@ -234,13 +241,83 @@ namespace MMR.Randomizer
                     ItemList[Item.BottleCatchPrincess].DependsOnItems.Add((Item)twoBottlesIndex);
                 }
             }
+
+            if (_settings.ByoAmmo && _settings.LogicMode != LogicMode.NoLogic)
+            {
+                var arrows40 = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    Conditionals = new List<List<Item>>
+                    {
+                        new List<Item>
+                        {
+                            Item.UpgradeBigQuiver,
+                        },
+                        new List<Item>
+                        {
+                            Item.UpgradeBiggestQuiver,
+                        },
+                    },
+                };
+                ItemList.Add(arrows40);
+
+                ItemList[Item.ChestInvertedStoneTowerBombchu10].TimeNeeded = 1;
+                ItemList[Item.ChestLinkTrialBombchu10].TimeNeeded = 1;
+                ItemList[Item.ShopItemBombsBombchu10].TimeNeeded = 1;
+                var bombchu10 = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    Conditionals = new List<List<Item>>
+                    {
+                        new List<Item>
+                        {
+                            Item.ChestInvertedStoneTowerBombchu10,
+                        },
+                        new List<Item>
+                        {
+                            Item.ChestLinkTrialBombchu10,
+                        },
+                        new List<Item>
+                        {
+                            Item.ShopItemBombsBombchu10,
+                        },
+                    },
+                };
+                ItemList.Add(bombchu10);
+
+                ItemList[Item.UpgradeBigQuiver].DependsOnItems.Add(arrows40.Item);
+                ItemList[Item.UpgradeBiggestQuiver].DependsOnItems.Add(arrows40.Item);
+                ItemList[Item.HeartPieceSwampArchery].DependsOnItems.Add(arrows40.Item);
+                ItemList[Item.HeartPieceTownArchery].DependsOnItems.Add(Item.UpgradeBiggestQuiver);
+                ItemList[Item.HeartPieceHoneyAndDarling].DependsOnItems.Add(bombchu10.Item);
+                
+                var escortCremia = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    Conditionals = new List<List<Item>>
+                    {
+                        new List<Item>
+                        {
+                            Item.OtherArrow,
+                        },
+                        new List<Item>
+                        {
+                            Item.MaskCircusLeader,
+                        },
+                    },
+                };
+                ItemList.Add(escortCremia);
+                ItemList[Item.MaskRomani].DependsOnItems.Add(escortCremia.Item);
+            }
+
             // todo handle progressive upgrades here.
         }
 
         private void PrepareRulesetItemData()
         {
-            ItemList = new ItemList();
-
             var logicMode = _settings.LogicMode;
             if (logicMode == LogicMode.NoLogic)
             {
@@ -251,12 +328,12 @@ namespace MMR.Randomizer
                 || logicMode == LogicMode.Glitched
                 || logicMode == LogicMode.UserLogic)
             {
-                string[] data = ReadRulesetFromResources(logicMode);
-                PopulateItemListFromLogicData(data);
+                string[] data = LogicUtils.ReadRulesetFromResources(logicMode, _settings.UserLogicFileName);
+                ItemList = LogicUtils.PopulateItemListFromLogicData(data);
             }
             else
             {
-                PopulateItemListWithoutLogic();
+                ItemList = LogicUtils.PopulateItemListWithoutLogic();
             }
 
             if (_settings.UseCustomItemList)
@@ -324,140 +401,9 @@ namespace MMR.Randomizer
             }
         }
 
-        /// <summary>
-        /// Populates item list without logic. Default TimeAvailable = 63
-        /// </summary>
-        private void PopulateItemListWithoutLogic()
-        {
-            foreach (var item in Enum.GetValues(typeof(Item)).Cast<Item>())
-            {
-                var currentItem = new ItemObject
-                {
-                    ID = (int)item,
-                    Name = item.Name() ?? item.ToString(),
-                    TimeAvailable = 63
-                };
-
-                ItemList.Add(currentItem);
-            }
-        }
-
-        /// <summary>
-        /// Populates the item list using the lines from a logic file, processes them 4 lines per item. 
-        /// </summary>
-        /// <param name="data">The lines from a logic file</param>
-        private void PopulateItemListFromLogicData(string[] data)
-        {
-            if (Migrator.GetVersion(data.ToList()) != Migrator.CurrentVersion)
-            {
-                throw new Exception("Logic file is out of date or invalid. Open it in the Logic Editor to bring it up to date.");
-            }
-
-            int itemId = 0;
-            int lineNumber = 0;
-
-            var currentItem = new ItemObject();
-
-            // Process lines in groups of 4
-            foreach (string line in data)
-            {
-                if (line.StartsWith("#"))
-                {
-                    continue;
-                }
-                if (line.Contains("-"))
-                {
-                    currentItem.Name = line.Substring(2);
-                    continue;
-                }
-
-                switch (lineNumber)
-                {
-                    case 0:
-                        //dependence
-                        ProcessDependenciesForItem(currentItem, line);
-                        break;
-                    case 1:
-                        //conditionals
-                        ProcessConditionalsForItem(currentItem, line);
-                        break;
-                    case 2:
-                        //time needed
-                        currentItem.TimeNeeded = Convert.ToInt32(line);
-                        break;
-                    case 3:
-                        //time available
-                        currentItem.TimeAvailable = Convert.ToInt32(line);
-                        if (currentItem.TimeAvailable == 0)
-                        {
-                            currentItem.TimeAvailable = 63;
-                        }
-                        break;
-                }
-
-                lineNumber++;
-
-                if (lineNumber == 4)
-                {
-                    currentItem.ID = itemId;
-                    ItemList.Add(currentItem);
-
-                    currentItem = new ItemObject();
-
-                    itemId++;
-                    lineNumber = 0;
-                }
-            }
-        }
-
-        private void ProcessConditionalsForItem(ItemObject currentItem, string line)
-        {
-            foreach (string conditions in line.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                currentItem.Conditionals.Add(Array.ConvertAll(conditions.Split(','), int.Parse).Select(i => (Item)i).ToList());
-            }
-        }
-
-        private void ProcessDependenciesForItem(ItemObject currentItem, string line)
-        {
-            foreach (string dependency in line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                currentItem.DependsOnItems.Add((Item)Convert.ToInt32(dependency));
-            }
-        }
-
         private void SeedRNG()
         {
             Random = new Random(_seed);
-        }
-
-        private string[] ReadRulesetFromResources(LogicMode mode)
-        {
-            string[] lines = null;
-
-            if (mode == LogicMode.Casual)
-            {
-                lines = Properties.Resources.REQ_CASUAL.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-            }
-            else if (mode == LogicMode.Glitched)
-            {
-                lines = Properties.Resources.REQ_GLITCH.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-            }
-            else if (mode == LogicMode.UserLogic)
-            {
-                using (StreamReader Req = new StreamReader(File.OpenRead(_settings.UserLogicFileName)))
-                {
-                    var logic = Req.ReadToEnd();
-                    if (logic.StartsWith("{"))
-                    {
-                        var configurationLogic = Configuration.FromJson(logic);
-                        logic = configurationLogic.GameplaySettings.Logic;
-                    }
-                    lines = logic.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
-                }
-            }
-
-            return lines;
         }
 
         private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath, Dictionary<Item, Dependence> dependenciesChecked, List<int[]> conditionsToRemove, bool isEntrancePair = false)
@@ -465,6 +411,11 @@ namespace MMR.Randomizer
             Debug.WriteLine($"CheckDependence({currentItem}, {target})");
             var currentItemObject = ItemList[currentItem];
             var currentTargetObject = ItemList[target];
+
+            if (currentTargetObject.IsTrick && !_settings.EnabledTricks.Contains(currentTargetObject.ID))
+            {
+                return Dependence.Dependent;
+            }
 
             if (currentItemObject.TimeNeeded == 0 && ItemUtils.IsJunk(currentItem))
             {
@@ -2053,10 +2004,7 @@ namespace MMR.Randomizer
                         var itemLogic = new ItemLogic(il);
 
                         // prevent Giant's Mask from being Way of the Hero.
-                        if (il.ItemId == (int)Item.AreaStoneTowerClear || il.ItemId == (int)Item.HeartContainerStoneTower)
-                        {
-                            itemLogic.RequiredItemIds.Remove((int)Item.MaskGiant);
-                        }
+                        itemLogic.RequiredItemIds.Remove((int)Item.MaskGiant);
 
                         return itemLogic;
                     }).ToList()

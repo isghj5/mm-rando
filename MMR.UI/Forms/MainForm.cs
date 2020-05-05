@@ -23,7 +23,6 @@ namespace MMR.UI.Forms
     public partial class MainForm : Form
     {
         private bool _isUpdating = false;
-        private string _oldSettingsString = "";
         private int _seedOld = 0;
         public Configuration _configuration { get; set; }
 
@@ -122,6 +121,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cUnderwaterOcarina, "Enable using the ocarina underwater.");
             TooltipBuilder.SetTooltip(cTargettingStyle, "Default Z-Targeting style to Hold.");
             TooltipBuilder.SetTooltip(cFDAnywhere, "Allow the Fierce Deity's Mask to be used anywhere. Also addresses some softlocks caused by Fierce Deity.");
+            TooltipBuilder.SetTooltip(cByoAmmo, "Arrows, Bombs, and Bombchu will not be provided. You must bring your own. Logic Modes other than No Logic will account for this.");
 
             // Comforts/cosmetics
             TooltipBuilder.SetTooltip(cCutsc, "Enable shortened cutscenes.\n\nCertain cutscenes are skipped or otherwise shortened.\nDISCLAIMER: This may cause crashing in certain emulators.");
@@ -287,7 +287,6 @@ namespace MMR.UI.Forms
             cTunic.ShowDialog();
             _configuration.CosmeticSettings.TunicColor = cTunic.Color;
             bTunic.BackColor = cTunic.Color;
-            UpdateSettingsString();
 
             _isUpdating = false;
         }
@@ -354,40 +353,6 @@ namespace MMR.UI.Forms
             Randomize();
         }
 
-        private void tSString_Enter(object sender, EventArgs e)
-        {
-            _oldSettingsString = tSString.Text;
-            _isUpdating = true;
-        }
-
-        private void tSString_Leave(object sender, EventArgs e)
-        {
-            try
-            {
-                _configuration.GameplaySettings.Update(tSString.Text);
-                UpdateCheckboxes();
-                ToggleCheckBoxes();
-                tSString.Text = _configuration.GameplaySettings.ToString();
-            }
-            catch
-            {
-                tSString.Text = _oldSettingsString;
-                _configuration.GameplaySettings.Update(_oldSettingsString);
-                MessageBox.Show("Settings string is invalid; reverted to previous settings.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-
-            _isUpdating = false;
-        }
-
-        private void tSString_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyData == Keys.Enter)
-            {
-                cDummy.Select();
-            };
-        }
-
         private void tSeed_Enter(object sender, EventArgs e)
         {
             _seedOld = Convert.ToInt32(tSeed.Text);
@@ -411,30 +376,9 @@ namespace MMR.UI.Forms
                 MessageBox.Show("Invalid seed: must be a positive integer.",
                     "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             };
-            UpdateSettingsString();
             _isUpdating = false;
         }
 
-        public void UpdateSettingString()
-        {
-            try
-            {
-                //_configuration.GameplaySettings.Update(tSString.Text);
-                UpdateCheckboxes();
-                ToggleCheckBoxes();
-                tSString.Text = _configuration.GameplaySettings.ToString();
-                tROMName.Text = _configuration.OutputSettings.InputROMFilename;
-            }
-            catch
-            {
-                tSString.Text = _oldSettingsString;
-                _configuration.GameplaySettings.Update(_oldSettingsString);
-                UpdateCheckboxes();
-                ToggleCheckBoxes();
-                MessageBox.Show("There was an issue updating your setting string. Returning to old Setting String.",
-                    "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
 
         private void UpdateCheckboxes()
         {
@@ -463,6 +407,7 @@ namespace MMR.UI.Forms
             cHideClock.Checked = _configuration.GameplaySettings.HideClock;
             cSunsSong.Checked = _configuration.GameplaySettings.EnableSunsSong;
             cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
+            cByoAmmo.Checked = _configuration.GameplaySettings.ByoAmmo;
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
             cNoDowngrades.Checked = _configuration.GameplaySettings.PreventDowngrades;
             cShopAppearance.Checked = _configuration.GameplaySettings.UpdateShopAppearance;
@@ -759,6 +704,11 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.AllowFierceDeityAnywhere = cFDAnywhere.Checked);
         }
 
+        private void cByoAmmo_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.ByoAmmo = cByoAmmo.Checked);
+        }
+
         private void cNoStartingItems_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.NoStartingItems = cNoStartingItems.Checked);
@@ -911,6 +861,10 @@ namespace MMR.UI.Forms
 
             UpdateSingleSetting(() =>
             {
+                if (_configuration.GameplaySettings.EntranceLogicMode != logicMode)
+                {
+                    _configuration.GameplaySettings.EnabledTricks.Clear();
+                }
                 _configuration.GameplaySettings.LogicMode = logicMode;
                 _configuration.GameplaySettings.EntranceLogicMode = logicMode;
             });
@@ -1079,6 +1033,7 @@ namespace MMR.UI.Forms
 
                 tJunkLocationsList.Enabled = false;
                 bJunkLocationsEditor.Enabled = false;
+                bToggleTricks.Enabled = false;
             }
             else
             {
@@ -1111,6 +1066,8 @@ namespace MMR.UI.Forms
 
                 tJunkLocationsList.Enabled = _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
                 bJunkLocationsEditor.Enabled = _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
+
+                bToggleTricks.Enabled = _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
 
                 cNoStartingItems.Enabled = _configuration.GameplaySettings.AddOther || _configuration.GameplaySettings.UseCustomItemList;
                 if (!cNoStartingItems.Enabled)
@@ -1165,15 +1122,9 @@ namespace MMR.UI.Forms
             _isUpdating = true;
 
             update?.Invoke();
-            UpdateSettingsString();
             ToggleCheckBoxes();
 
             _isUpdating = false;
-        }
-
-        private void UpdateSettingsString()
-        {
-            tSString.Text = _configuration.GameplaySettings.ToString();
         }
 
         private void EnableAllControls(bool v)
@@ -1240,6 +1191,7 @@ namespace MMR.UI.Forms
             cUnderwaterOcarina.Enabled = v;
             cSunsSong.Enabled = v;
             cFDAnywhere.Enabled = v;
+            cByoAmmo.Enabled = v;
 
             cSoS.Enabled = v;
             cDChests.Enabled = v;
@@ -1304,10 +1256,6 @@ namespace MMR.UI.Forms
 
             tbUserLogic.Enabled = false;
             bLoadLogic.Enabled = false;
-
-            var oldSettingsString = tSString.Text;
-            UpdateSettingsString();
-            _oldSettingsString = oldSettingsString;
         }
 
 
@@ -1515,7 +1463,9 @@ namespace MMR.UI.Forms
             UpdateJunkLocationAmountLabel();
             UpdateCustomStartingItemAmountLabel();
             UpdateCustomItemAmountLabel();
-            UpdateSettingString();
+            UpdateCheckboxes();
+            ToggleCheckBoxes();
+            tROMName.Text = _configuration.OutputSettings.InputROMFilename;
         }
 
         private void SaveSettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1560,6 +1510,23 @@ namespace MMR.UI.Forms
             var combobox = (ComboBox)sender;
             var selected = (ColorSelectionItem)combobox.SelectedItem;
             _configuration.CosmeticSettings.MagicSelection = selected.Name;
+        }
+
+        private void bToggleTricks_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dialog = new ToggleTricksForm(_configuration.GameplaySettings.LogicMode, _configuration.GameplaySettings.UserLogicFileName, _configuration.GameplaySettings.EnabledTricks);
+                var result = dialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    _configuration.GameplaySettings.EnabledTricks = dialog.Result;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }
