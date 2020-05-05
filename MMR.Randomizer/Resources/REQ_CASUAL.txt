@@ -570,8 +570,8 @@
 0
 
 - Song of Soaring
-103,0
-
+103
+0;93,494
 0
 0
 
@@ -619,7 +619,7 @@
 
 - Poison swamp access
 
-454,516;0,10;0,120;0,8;0,444
+454,516;516,521;0,10;0,120;0,8;0,444
 0
 0
 
@@ -642,8 +642,8 @@
 0
 
 - Snowhead Temple access
-106,99,92
-471;433
+106,92
+99,471;99,433;522
 0
 0
 
@@ -853,7 +853,7 @@
 
 - Stone Tower Boss Key
 117,4,120,433
-484,0;0,436,10;484,468
+0,484,516;0,436,10;468,484,516
 0
 0
 
@@ -877,7 +877,7 @@
 
 - Stone Tower Key 4 - death armos maze
 117,0,120,4,433
-484;436,10
+484,516;436,10
 0
 0
 
@@ -1021,7 +1021,7 @@
 
 - Bottle: Poe
 117,120,4,438,433
-484,0;468,484,467;10,436,0
+0,484,516;467,468,484,516;10,436,0
 0
 0
 
@@ -1249,7 +1249,7 @@
 
 - Swamp Grotto
 103
-
+0;93;494
 0
 0
 
@@ -1902,14 +1902,14 @@
 0
 
 - Ocean Skulltula Library Hole Behind Picture
-443
+443,10
 
 0
 0
 
 - Ocean Skulltula Library Hole Behind Cabinet
 443
-
+10;93
 0
 0
 
@@ -1921,25 +1921,25 @@
 
 - Ocean Skulltula 2nd Room Ceiling Edge
 443
-
+10;93
 0
 0
 
 - Ocean Skulltula 2nd Room Ceiling Plank
 443
-
+10;93
 0
 0
 
 - Ocean Skulltula Colored Skulls Ceiling Edge
 443
-
+10;93
 0
 0
 
 - Ocean Skulltula Library Ceiling Edge
 443
-
+10;93
 0
 0
 
@@ -1951,7 +1951,7 @@
 
 - Ocean Skulltula Storage Room Behind Crate
 443
-
+10;93;92
 0
 0
 
@@ -1974,7 +1974,7 @@
 0
 
 - Ocean Skulltula 2nd Room Webbed Hole
-443
+443,10
 
 0
 0
@@ -2005,7 +2005,7 @@
 
 - Ocean Skulltula Colored Skulls Behind Picture
 443
-
+10;93
 0
 0
 
@@ -2065,13 +2065,13 @@
 
 - Ocean Skulltula 2nd Room Behind Skull 1
 443
-
+10;93
 0
 0
 
 - Ocean Skulltula 2nd Room Behind Skull 2
 443
-
+10;93
 0
 0
 
@@ -2389,13 +2389,13 @@
 
 - Stone Tower Wizzrobe
 117,0
-4,120,433,484;4,10,92,120,433,436;4,10,120,433,436,516;10,494
+4,120,433,484,516;4,10,92,120,433,436;4,10,120,433,436,516;10,494
 0
 0
 
 - Stone Tower Death Armos
 117,116
-494;0,4,120,433,484;0,4,10,92,120,433,436;0,120,4,10,433,436,516;4,120,0,433,484;4,10,120,433,467
+494;4,120,433,484,0,516;0,4,10,92,120,433,436;0,120,4,10,433,436,516;4,120,433,484,0,516;10,120,4,433,467,479,468,516
 0
 0
 
@@ -2658,8 +2658,8 @@
 0
 
 - Ocean Skulltulas
-10,119,110,499
-
+119,110,499
+10;472
 0
 0
 
@@ -2723,7 +2723,7 @@
 0
 0
 ;Using Scarecrow's Song where not normally required.
-- Walk through Poisoned Water
+- Poisoned Water as Zora
 93
 
 0
@@ -2905,7 +2905,7 @@
 ;Jump to the Boss Key chest using an ice platform.
 - ISTT Early Boss Key
 
-
+0;440;462;93
 0
 0
 ;Drop down from the Dexihand either as Deku or with a sidehop and jump slash.
@@ -3007,7 +3007,7 @@
 ;Walk and shoot through false walls without Lens of Truth.
 - Night Inn Access
 
-0;37;494
+0;37;494;520;93,506
 0
 0
 
@@ -3031,7 +3031,7 @@
 ;Slowly walk up the seam of the stump.
 - Bio Baba Hive Luck
 
-
+10;441
 0
 0
 ;Hope the item lands on a lilypad.
@@ -3118,3 +3118,22 @@
 92;93;440;462
 0
 0
+
+- Inn Balcony as Zora
+93
+
+0
+0
+;Jump to the Inn balcony as Zora.
+- Poisoned Water as Goron
+92
+
+0
+0
+;Enter poisoned swamp by rolling as Goron. You aren't guaranteed to have enough health to make it.
+- Lullaby Skip
+92,433
+
+0
+0
+;Roll up past the ramp with Goron Spikes. Then use C-Up on enemies to not be blown off.

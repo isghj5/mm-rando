@@ -116,6 +116,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cUnderwaterOcarina, "Enable using the ocarina underwater.");
             TooltipBuilder.SetTooltip(cTargettingStyle, "Default Z-Targeting style to Hold.");
             TooltipBuilder.SetTooltip(cFDAnywhere, "Allow the Fierce Deity's Mask to be used anywhere. Also addresses some softlocks caused by Fierce Deity.");
+            TooltipBuilder.SetTooltip(cByoAmmo, "Arrows, Bombs, and Bombchu will not be provided. You must bring your own. Logic Modes other than No Logic will account for this.");
 
             // Comforts/cosmetics
             TooltipBuilder.SetTooltip(cCutsc, "Enable shortened cutscenes.\n\nCertain cutscenes are skipped or otherwise shortened.\nDISCLAIMER: This may cause crashing in certain emulators.");
@@ -347,6 +348,7 @@ namespace MMR.UI.Forms
             cHideClock.Checked = _configuration.GameplaySettings.HideClock;
             cSunsSong.Checked = _configuration.GameplaySettings.EnableSunsSong;
             cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
+            cByoAmmo.Checked = _configuration.GameplaySettings.ByoAmmo;
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
             cNoDowngrades.Checked = _configuration.GameplaySettings.PreventDowngrades;
             cShopAppearance.Checked = _configuration.GameplaySettings.UpdateShopAppearance;
@@ -641,6 +643,11 @@ namespace MMR.UI.Forms
         private void cFDAnywhere_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.AllowFierceDeityAnywhere = cFDAnywhere.Checked);
+        }
+
+        private void cByoAmmo_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.ByoAmmo = cByoAmmo.Checked);
         }
 
         private void cNoStartingItems_CheckedChanged(object sender, EventArgs e)
@@ -1075,6 +1082,7 @@ namespace MMR.UI.Forms
             cUnderwaterOcarina.Enabled = v;
             cSunsSong.Enabled = v;
             cFDAnywhere.Enabled = v;
+            cByoAmmo.Enabled = v;
 
             cSoS.Enabled = v;
             cDChests.Enabled = v;

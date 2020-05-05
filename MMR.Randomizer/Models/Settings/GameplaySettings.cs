@@ -280,6 +280,11 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool AllowFierceDeityAnywhere { get; set; }
 
+        /// <summary>
+        /// Arrows, Bombs, and Bombchu will not be provided. You must bring your own. Logic Modes other than No Logic will account for this.
+        /// </summary>
+        public bool ByoAmmo { get; set; }
+
         #endregion
 
         #region Comfort / Cosmetics

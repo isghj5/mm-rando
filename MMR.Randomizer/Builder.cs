@@ -736,6 +736,11 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "fierce-deity-anywhere");
             }
+
+            if (_randomized.Settings.ByoAmmo)
+            {
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "byo-ammo");
+            }
         }
 
         private void WriteSunsSong()

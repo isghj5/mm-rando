@@ -194,10 +194,12 @@ namespace MMR.Randomizer
                     itemObject.Conditionals.RemoveAll(c => c.Any(item => ItemList[item].IsTrick && !_settings.EnabledTricks.Contains((int)item)));
                 }
             }
+
             if (_settings.AddShopItems)
             {
                 ItemList[Item.ShopItemWitchBluePotion].DependsOnItems?.Remove(Item.BottleCatchMushroom);
             }
+
             if (_settings.RandomizeBottleCatchContents && _settings.LogicMode == LogicMode.Casual)
             {
                 var anyBottleIndex = ItemList.FindIndex(io => io.Name == "Any Bottle");
@@ -208,6 +210,78 @@ namespace MMR.Randomizer
                     ItemList[Item.BottleCatchPrincess].DependsOnItems.Add((Item)twoBottlesIndex);
                 }
             }
+
+            if (_settings.ByoAmmo && _settings.LogicMode != LogicMode.NoLogic)
+            {
+                var arrows40 = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    Conditionals = new List<List<Item>>
+                    {
+                        new List<Item>
+                        {
+                            Item.UpgradeBigQuiver,
+                        },
+                        new List<Item>
+                        {
+                            Item.UpgradeBiggestQuiver,
+                        },
+                    },
+                };
+                ItemList.Add(arrows40);
+
+                ItemList[Item.ChestInvertedStoneTowerBombchu10].TimeNeeded = 1;
+                ItemList[Item.ChestLinkTrialBombchu10].TimeNeeded = 1;
+                ItemList[Item.ShopItemBombsBombchu10].TimeNeeded = 1;
+                var bombchu10 = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    Conditionals = new List<List<Item>>
+                    {
+                        new List<Item>
+                        {
+                            Item.ChestInvertedStoneTowerBombchu10,
+                        },
+                        new List<Item>
+                        {
+                            Item.ChestLinkTrialBombchu10,
+                        },
+                        new List<Item>
+                        {
+                            Item.ShopItemBombsBombchu10,
+                        },
+                    },
+                };
+                ItemList.Add(bombchu10);
+
+                ItemList[Item.UpgradeBigQuiver].DependsOnItems.Add(arrows40.Item);
+                ItemList[Item.UpgradeBiggestQuiver].DependsOnItems.Add(arrows40.Item);
+                ItemList[Item.HeartPieceSwampArchery].DependsOnItems.Add(arrows40.Item);
+                ItemList[Item.HeartPieceTownArchery].DependsOnItems.Add(Item.UpgradeBiggestQuiver);
+                ItemList[Item.HeartPieceHoneyAndDarling].DependsOnItems.Add(bombchu10.Item);
+                
+                var escortCremia = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    Conditionals = new List<List<Item>>
+                    {
+                        new List<Item>
+                        {
+                            Item.OtherArrow,
+                        },
+                        new List<Item>
+                        {
+                            Item.MaskCircusLeader,
+                        },
+                    },
+                };
+                ItemList.Add(escortCremia);
+                ItemList[Item.MaskRomani].DependsOnItems.Add(escortCremia.Item);
+            }
+
             // todo handle progressive upgrades here.
         }
 
