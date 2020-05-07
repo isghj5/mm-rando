@@ -1511,9 +1511,19 @@ namespace MMR.Randomizer.LogicMigrator
             }
         }
 
-        private static void AddEntrances(List<string> lines)
+        private static void AddTricks(List<string> lines)
         {
             lines[0] = "-version 14";
+
+            for (var i = 1; i < lines.Count; i += 6)
+            {
+                lines.Insert(i + 5, "");
+            }
+        }
+
+        private static void AddEntrances(List<string> lines)
+        {
+            lines[0] = "-version 15";
             var itemNames = new string[]
             {
                 "EntranceMayorsResidenceFromEastClockTown",
@@ -1999,12 +2009,13 @@ namespace MMR.Randomizer.LogicMigrator
                 lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
                 lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
                 lines.Insert(item.ID * 5 + 5, "0");
+                lines.Insert(item.ID * 5 + 6, "");
             }
         }
 
         private static void AddEntrances2(List<string> lines)
         {
-            lines[0] = "-version 15";
+            lines[0] = "-version 16";
             var itemNames = new string[]
             {
                 "EntranceStoneTowerInvertedFromStoneTowerTempleInverted",
@@ -2040,12 +2051,13 @@ namespace MMR.Randomizer.LogicMigrator
                 lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
                 lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
                 lines.Insert(item.ID * 5 + 5, "0");
+                lines.Insert(item.ID * 5 + 6, "");
             }
         }
 
         private static void AddOwlStatues(List<string> lines)
         {
-            lines[0] = "-version 16";
+            lines[0] = "-version 17";
             var itemNames = new string[]
             {
                 "Great Bay Owl", "Zora Cape Owl", "Snowhead Owl", "Mountain Village Owl", "Clock Town Owl", "Milk Road Owl", "Woodfall Owl", "Southern Swamp Owl", "Ikana Canyon Owl", "Stone Tower Owl",
@@ -2081,16 +2093,7 @@ namespace MMR.Randomizer.LogicMigrator
                 lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
                 lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
                 lines.Insert(item.ID * 5 + 5, "0");
-            }
-        }
-
-        private static void AddTricks(List<string> lines)
-        {
-            lines[0] = "-version 17";
-
-            for (var i = 1; i < lines.Count; i += 6)
-            {
-                lines.Insert(i + 5, "");
+                lines.Insert(item.ID * 5 + 6, "");
             }
         }
 
