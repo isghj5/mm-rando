@@ -3900,26 +3900,26 @@
 0
 
 - EntranceZoraHallRoomsMikauTijosRoomFromZoraHall
-93,779
-
+779
+93;113
 0
 0
 
 - EntranceZoraHallRoomsJapasRoomFromZoraHall
-93,779
-
+779
+93;113
 0
 0
 
 - EntranceZoraHallRoomsLulusRoomFromZoraHall
-93,779
-
+779
+93;113
 0
 0
 
 - EntranceZoraHallRoomsEvansRoomFromZoraHall
-93,779
-
+779
+93;113
 0
 0
 
