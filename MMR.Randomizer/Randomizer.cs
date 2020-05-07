@@ -1482,7 +1482,10 @@ namespace MMR.Randomizer
                 PreserveFairyRewards();
             }
 
-            if (!_settings.AddNutChest || _settings.LogicMode == LogicMode.Casual)
+            if (!_settings.AddNutChest 
+                || (_settings.LogicMode == LogicMode.Casual 
+                    && !_settings.RandomizedEntrances.Contains(Item.EntranceBeforethePortaltoTerminaFromBeforethePortaltoTermina)
+                    && !_settings.RandomizedEntrances.Contains(Item.EntranceBeforethePortaltoTerminaFromClockTowerInterior)))
             {
                 PreserveNutChest();
             }
