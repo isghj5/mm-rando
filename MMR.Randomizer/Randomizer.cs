@@ -1181,7 +1181,7 @@ namespace MMR.Randomizer
                 PreserveMundaneRewards();
             }
 
-            if (_settings.LogicMode == LogicMode.Casual)
+            if (_settings.LogicMode == LogicMode.Casual && ItemList[Item.ItemRanchBarnOtherCowMilk2].Conditionals.Count == 1)
             {
                 PreserveGlitchedCowMilk();
             }
