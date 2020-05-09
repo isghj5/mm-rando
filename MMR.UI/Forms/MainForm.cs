@@ -1075,10 +1075,10 @@ namespace MMR.UI.Forms
 
             _settings.InputPatchFilename = null;
 
-            SystemSounds.Asterisk.Play(); // plays audio notification that build is done
-            // TODO replace this with a sound effect from MM
-            //SoundPlayer simpleSound = new SoundPlayer(@"Resources\seed_done.wav");
-            //simpleSound.Play();
+            if (File.Exists("SeedDone.wav"))
+                new SoundPlayer("SeedDone.wav").Play();  // specific sfx file
+            else
+                SystemSounds.Asterisk.Play();             // System sound
         }
 
         private bool ValidateSettingsFile(String[] lines)
