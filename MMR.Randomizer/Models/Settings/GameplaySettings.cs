@@ -285,6 +285,11 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool ByoAmmo { get; set; }
 
+        /// <summary>
+        /// Dying causes the moon to crash, with all that that implies.
+        /// </summary>
+        public bool DeathMoonCrash { get; set; }
+
         #endregion
 
         #region Comfort / Cosmetics

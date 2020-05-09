@@ -2,6 +2,7 @@
 #include "buttons.h"
 #include "dpad.h"
 #include "gfx.h"
+#include "hud_colors.h"
 #include "reloc.h"
 #include "util.h"
 #include "z2.h"
@@ -45,10 +46,10 @@ const static u16 g_position[2][2] = {
 
 // Positions of D-Pad item textures, relative to main texture.
 const static s16 g_positions[4][2] = {
-    { 1, -15 },
+    { 1, -16 },
     { 15, 0 },
     { 1, 13 },
-    { -14, 0 },
+    { -15, 0 },
 };
 
 // Whether or not D-Pad items are usable, according to z2_UpdateButtonUsability.
@@ -307,10 +308,13 @@ void dpad_draw(z2_game_t *game) {
     u16 y = g_position[posidx][1];
     y = update_y_position(x, y, 10);
 
+    // Main sprite color
+    z2_color_rgb8_t color = HUD_COLOR_CONFIG.dpad;
+
     z2_disp_buf_t *db = &(game->common.gfx->overlay);
     gSPDisplayList(db->p++, &setup_db);
     gDPPipeSync(db->p++);
-    gDPSetPrimColor(db->p++, 0, 0, 0xFF, 0xFF, 0xFF, prim_alpha);
+    gDPSetPrimColor(db->p++, 0, 0, color.r, color.g, color.b, prim_alpha);
     gDPSetCombineMode(db->p++, G_CC_MODULATEIA_PRIM, G_CC_MODULATEIA_PRIM);
     sprite_load(db, &dpad_sprite, 0, 1);
     sprite_draw(db, &dpad_sprite, 0, x, y, 16, 16);

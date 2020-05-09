@@ -61,6 +61,7 @@ namespace MMR.Randomizer.Asm
         public Color PromptGlow { get; set; } = Color.FromArgb(0x00, 0x82, 0xFF);
         public Color ScoreLines { get; set; } = Color.FromArgb(0xFF, 0x00, 0x00);
         public Color ScoreNote { get; set; } = Color.FromArgb(0xFF, 0x64, 0x00);
+        public Color DPad { get; set; } = Color.FromArgb(0x80, 0x80, 0x80);
 
         /// <summary>
         /// Get all colors in the order of serialization.
@@ -113,6 +114,7 @@ namespace MMR.Randomizer.Asm
             PromptGlow,
             ScoreLines,
             ScoreNote,
+            DPad,
         };
 
         public HudColors()
@@ -139,9 +141,13 @@ namespace MMR.Randomizer.Asm
             {
                 return this.All.Take(20).ToArray();
             }
-            else
+            else if (version == 1)
             {
                 return this.All.Take(46).ToArray();
+            }
+            else
+            {
+                return this.All.Take(47).ToArray();
             }
         }
 

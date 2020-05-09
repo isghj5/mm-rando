@@ -53,6 +53,7 @@ namespace MMR.CLI
                 Console.WriteLine(GetEnumArraySettingDescription(cfg => cfg.CosmeticSettings.DPad.Pad.Values) + " Array length of 4.");
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.HeartsSelection), ColorSelectionManager.Hearts.GetItems().Select(csi => csi.Name)));
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.MagicSelection), ColorSelectionManager.MagicMeter.GetItems().Select(csi => csi.Name)));
+                Console.WriteLine(GetSettingDescription(nameof(GameplaySettings.EnabledTricks), "Array of trick IDs."));
                 return 0;
             }
             var configuration = LoadSettings();
@@ -326,17 +327,22 @@ namespace MMR.CLI
 
         private static string GetEnumSettingDescription<T>(Expression<Func<Configuration, T>> propertySelector) where T : struct
         {
-            return $"{((MemberExpression)propertySelector.Body).Member.Name, -17} {string.Join('|', Enum.GetNames(typeof(T)))}";
+            return GetSettingDescription(((MemberExpression)propertySelector.Body).Member.Name, string.Join('|', Enum.GetNames(typeof(T))));
         }
 
         private static string GetEnumArraySettingDescription<T>(Expression<Func<Configuration, T[]>> propertySelector) where T : struct
         {
-            return $"{((MemberExpression)propertySelector.Body).Member.Name, -17} [{string.Join('|', Enum.GetNames(typeof(T)))}]";
+            return GetSettingDescription(((MemberExpression)propertySelector.Body).Member.Name, $"[{string.Join('|', Enum.GetNames(typeof(T)))}]");
         }
 
         private static string GetArrayValueDescription(string name, IEnumerable<string> values)
         {
-            return $"{name, -17} {string.Join('|', values)}";
+            return GetSettingDescription(name, string.Join('|', values));
+        }
+
+        private static string GetSettingDescription(string name, string description)
+        {
+            return $"{name,-17} {description}";
         }
     }
 }
