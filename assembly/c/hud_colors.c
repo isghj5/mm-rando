@@ -5,7 +5,7 @@
 
 struct hud_color_config HUD_COLOR_CONFIG = {
     .magic = HUD_COLOR_CONFIG_MAGIC,
-    .version = 1,
+    .version = 2,
 
     // Version 0
     .button_a                = { 0x64, 0xC8, 0xFF },
@@ -58,6 +58,9 @@ struct hud_color_config HUD_COLOR_CONFIG = {
     .prompt_glow             = { 0x00, 0x82, 0xFF },
     .score_lines             = { 0xFF, 0x00, 0x00 },
     .score_note              = { 0xFF, 0x64, 0x00 },
+
+    // Version 2
+    .dpad                    = { 0x80, 0x80, 0x80 },
 };
 
 struct pause_cursor_colors {

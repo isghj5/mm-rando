@@ -278,7 +278,7 @@ namespace MMR.Randomizer
             SequenceUtils.ReadInstrumentSetList();
             if (_cosmeticSettings.Music == Music.Random)
             {
-                SequenceUtils.PointerizeSequenceSlots(_randomized.Settings.ShortenCutscenes);
+                SequenceUtils.PointerizeSequenceSlots();
                 BGMShuffle(random, _settings);
             }
 
@@ -750,6 +750,11 @@ namespace MMR.Randomizer
             if (_randomized.Settings.ByoAmmo)
             {
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "byo-ammo");
+            }
+
+            if (_randomized.Settings.DeathMoonCrash)
+            {
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "death-moon-crash");
             }
         }
 

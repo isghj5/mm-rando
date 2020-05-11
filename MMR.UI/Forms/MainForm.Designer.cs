@@ -123,6 +123,7 @@ namespace MMR.UI.Forms
             this.cCutsc = new System.Windows.Forms.CheckBox();
             this.cNoDowngrades = new System.Windows.Forms.CheckBox();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
+            this.cByoAmmo = new System.Windows.Forms.CheckBox();
             this.cFDAnywhere = new System.Windows.Forms.CheckBox();
             this.cUnderwaterOcarina = new System.Windows.Forms.CheckBox();
             this.cGravity = new System.Windows.Forms.ComboBox();
@@ -191,7 +192,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cByoAmmo = new System.Windows.Forms.CheckBox();
+            this.cDeathMoonCrash = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -1333,6 +1334,7 @@ namespace MMR.UI.Forms
             // 
             // tabGimmicks
             // 
+            this.tabGimmicks.Controls.Add(this.cDeathMoonCrash);
             this.tabGimmicks.Controls.Add(this.cByoAmmo);
             this.tabGimmicks.Controls.Add(this.cFDAnywhere);
             this.tabGimmicks.Controls.Add(this.cUnderwaterOcarina);
@@ -1358,6 +1360,20 @@ namespace MMR.UI.Forms
             this.tabGimmicks.TabIndex = 3;
             this.tabGimmicks.Text = "Gimmicks";
             this.tabGimmicks.UseVisualStyleBackColor = true;
+            // 
+            // cByoAmmo
+            // 
+            this.cByoAmmo.AutoSize = true;
+            this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
+            this.cByoAmmo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
+            this.cByoAmmo.Location = new System.Drawing.Point(393, 184);
+            this.cByoAmmo.Name = "cByoAmmo";
+            this.cByoAmmo.Size = new System.Drawing.Size(80, 17);
+            this.cByoAmmo.TabIndex = 24;
+            this.cByoAmmo.Text = "BYO Ammo";
+            this.cByoAmmo.UseVisualStyleBackColor = false;
+            this.cByoAmmo.CheckedChanged += new System.EventHandler(this.cByoAmmo_CheckedChanged);
             // 
             // cFDAnywhere
             // 
@@ -2094,19 +2110,19 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cByoAmmo
+            // cDeathMoonCrash
             // 
-            this.cByoAmmo.AutoSize = true;
-            this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
-            this.cByoAmmo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
-            this.cByoAmmo.Location = new System.Drawing.Point(393, 184);
-            this.cByoAmmo.Name = "cByoAmmo";
-            this.cByoAmmo.Size = new System.Drawing.Size(80, 17);
-            this.cByoAmmo.TabIndex = 24;
-            this.cByoAmmo.Text = "BYO Ammo";
-            this.cByoAmmo.UseVisualStyleBackColor = false;
-            this.cByoAmmo.CheckedChanged += new System.EventHandler(this.cByoAmmo_CheckedChanged);
+            this.cDeathMoonCrash.AutoSize = true;
+            this.cDeathMoonCrash.BackColor = System.Drawing.Color.Transparent;
+            this.cDeathMoonCrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cDeathMoonCrash.ForeColor = System.Drawing.Color.Black;
+            this.cDeathMoonCrash.Location = new System.Drawing.Point(393, 207);
+            this.cDeathMoonCrash.Name = "cDeathMoonCrash";
+            this.cDeathMoonCrash.Size = new System.Drawing.Size(125, 17);
+            this.cDeathMoonCrash.TabIndex = 25;
+            this.cDeathMoonCrash.Text = "Death is Moon Crash";
+            this.cDeathMoonCrash.UseVisualStyleBackColor = false;
+            this.cDeathMoonCrash.CheckedChanged += new System.EventHandler(this.cDeathMoonCrash_CheckedChanged);
             // 
             // MainForm
             // 
@@ -2342,6 +2358,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.TextBox tEntrancePool;
         private System.Windows.Forms.Button bToggleTricks;
         private System.Windows.Forms.CheckBox cByoAmmo;
+        private System.Windows.Forms.CheckBox cDeathMoonCrash;
     }
 }
 
