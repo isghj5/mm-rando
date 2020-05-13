@@ -333,7 +333,8 @@ namespace MMR.Randomizer.Utils
             }
             else
             {
-                throw new IndexOutOfRangeException("Could not convert slot to pointer:" + SeqSlotIndex.ToString("X2"));
+                //throw new IndexOutOfRangeException("Could not convert slot to pointer:" + SeqSlotIndex.ToString("X2"));
+                Debug.WriteLine("Cannot pointerize a songslot that does not exist: " + SeqSlotIndex + " and " + SubstituteSlotIndex);
             }
         }
 
