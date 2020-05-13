@@ -715,7 +715,7 @@
 
 - Explosives
 
-5;28;29;74
+5;28;29;74,523;74,516
 0
 0
 
@@ -3137,3 +3137,8 @@
 0
 0
 ;Roll up past the ramp with Goron Spikes. Then use C-Up on enemies to not be blown off.
+- Any Shield
+
+25;149;163;275
+0
+0
