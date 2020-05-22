@@ -399,6 +399,8 @@ namespace MMR.Randomizer
 
             Add5NutsToField();
             AddSingleStickToField();
+            ShortenLabEggCutscene();
+
         }
 
         private void WriteMiscText()
@@ -564,6 +566,55 @@ namespace MMR.Randomizer
             int offset = replacement_slot - RomData.MMFileList[fid].Addr;
             RomData.MMFileList[fid].Data[offset] = 0x0D; // 0x0D is deku stick
             //RomData.MMFileList[fid].Data[offset + 0x110] = 0x05; // this should change the amount dropped to 5
+        }
+
+        private void ShortenLabEggCutscene()
+        {
+            int labscene_fid = 1314;
+            int cutscene_offset = 0;
+            RomUtils.CheckCompressed(labscene_fid);
+
+            // first we need to know what the list looks like
+            for (int b = 0; b < 0x10 * 70; b += 8)
+            {
+                if (RomData.MMFileList[labscene_fid].Data[b] == 0x1B)
+                {
+                    Debug.WriteLine("We found our byte data at: " + b);
+                    Debug.WriteLine("  number of actor cutsc: " + RomData.MMFileList[labscene_fid].Data[b + 1]);
+                    cutscene_offset |= RomData.MMFileList[labscene_fid].Data[b + 7];
+                    cutscene_offset |= RomData.MMFileList[labscene_fid].Data[b + 6] << 8;
+                    cutscene_offset |= RomData.MMFileList[labscene_fid].Data[b + 5] << 16;
+                    //cutscene_offset |= RomData.MMFileList[labscene_fid].Data[b + 4] << 24; // this is just the segment table index, which is "02" or scene for us, we can skip this
+
+                    Debug.WriteLine("  offset: " + cutscene_offset);
+
+                    break;
+                }
+            }
+
+            for (int b = 0; b < 0xf; b += 1)
+            {
+                // first two bytes are unknown
+                // next two are lengh of cutscene
+
+                int cutscene_location = cutscene_offset + b * 0x10;
+
+                Debug.WriteLine("Cutscene number: " + b);
+                Debug.WriteLine("  frame length: " + (RomData.MMFileList[labscene_fid].Data[cutscene_location + 2] << 8 + RomData.MMFileList[labscene_fid].Data[cutscene_location + 3]).ToString("X"));
+                Debug.WriteLine("  camera type: 0x" + (RomData.MMFileList[labscene_fid].Data[cutscene_location + 4] << 8 + RomData.MMFileList[labscene_fid].Data[cutscene_location + 5]).ToString("X"));
+                Debug.WriteLine("  cutscene index: 0x" + (RomData.MMFileList[labscene_fid].Data[cutscene_location + 6] << 8 + RomData.MMFileList[labscene_fid].Data[cutscene_location + 7]).ToString("X"));
+                Debug.WriteLine("    following cutscene index: 0x" + (RomData.MMFileList[labscene_fid].Data[cutscene_location + 8] << 8 + RomData.MMFileList[labscene_fid].Data[cutscene_location + 9]).ToString("X"));
+
+                if (b == 9) // egg dropping through water animation
+                {
+                    RomData.MMFileList[labscene_fid].Data[cutscene_location + 2] = 0;
+                    RomData.MMFileList[labscene_fid].Data[cutscene_location + 3] = 0x0;
+
+                }
+            }
+
+            Debug.WriteLine("We found our byte data at: " );
+
         }
 
         private void WriteQuickText()
