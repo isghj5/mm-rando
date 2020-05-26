@@ -54,6 +54,8 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool EnableNightBGM { get; set; }
 
+        public CombatMusic DisableCombatMusic { get; set; }
+
         #region Asm Getters / Setters
 
         /// <summary>

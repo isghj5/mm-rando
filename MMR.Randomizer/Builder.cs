@@ -312,6 +312,16 @@ namespace MMR.Randomizer
             }
         }
 
+        private void WriteEnemyCombatMusicMute()
+        {
+            if (_cosmeticSettings.DisableCombatMusic == CombatMusic.Normal)
+            {
+                return;
+            }
+
+            Enemies.DisableEnemyCombatMusic(_cosmeticSettings.DisableCombatMusic == CombatMusic.WeakEnemies);
+        }
+
         private void WritePlayerModel()
         {
             if (_randomized.Settings.Character == Character.LinkMM)
@@ -1659,6 +1669,7 @@ namespace MMR.Randomizer
             progressReporter.ReportProgress(73, "Writing music...");
             WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
             WriteMuteMusic();
+            WriteEnemyCombatMusicMute();
 
             progressReporter.ReportProgress(74, "Writing sound effects...");
             WriteSoundEffects(new Random(BitConverter.ToInt32(hash, 0)));

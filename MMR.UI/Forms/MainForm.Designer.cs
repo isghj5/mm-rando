@@ -112,6 +112,7 @@ namespace MMR.UI.Forms
             this.cFreestanding = new System.Windows.Forms.CheckBox();
             this.cEnableNightMusic = new System.Windows.Forms.CheckBox();
             this.cFastPush = new System.Windows.Forms.CheckBox();
+            this.cCombatMusicDisable = new System.Windows.Forms.CheckBox();
             this.cQText = new System.Windows.Forms.CheckBox();
             this.cShopAppearance = new System.Windows.Forms.CheckBox();
             this.cSFX = new System.Windows.Forms.CheckBox();
@@ -123,6 +124,7 @@ namespace MMR.UI.Forms
             this.cCutsc = new System.Windows.Forms.CheckBox();
             this.cNoDowngrades = new System.Windows.Forms.CheckBox();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
+            this.cDeathMoonCrash = new System.Windows.Forms.CheckBox();
             this.cByoAmmo = new System.Windows.Forms.CheckBox();
             this.cFDAnywhere = new System.Windows.Forms.CheckBox();
             this.cUnderwaterOcarina = new System.Windows.Forms.CheckBox();
@@ -180,7 +182,6 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cDeathMoonCrash = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -1109,6 +1110,7 @@ namespace MMR.UI.Forms
             this.groupBox7.Controls.Add(this.cFreestanding);
             this.groupBox7.Controls.Add(this.cEnableNightMusic);
             this.groupBox7.Controls.Add(this.cFastPush);
+            this.groupBox7.Controls.Add(this.cCombatMusicDisable);
             this.groupBox7.Controls.Add(this.cQText);
             this.groupBox7.Controls.Add(this.cShopAppearance);
             this.groupBox7.Controls.Add(this.cSFX);
@@ -1180,6 +1182,17 @@ namespace MMR.UI.Forms
             this.cFastPush.Text = "Increase push speed";
             this.cFastPush.UseVisualStyleBackColor = true;
             this.cFastPush.CheckedChanged += new System.EventHandler(this.cFastPush_CheckedChanged);
+            // 
+            // cCombatMusicDisable
+            // 
+            this.cCombatMusicDisable.AutoSize = true;
+            this.cCombatMusicDisable.Location = new System.Drawing.Point(147, 183);
+            this.cCombatMusicDisable.Name = "cCombatMusicDisable";
+            this.cCombatMusicDisable.Size = new System.Drawing.Size(131, 17);
+            this.cCombatMusicDisable.TabIndex = 37;
+            this.cCombatMusicDisable.Text = "Combat Music Disable";
+            this.cCombatMusicDisable.UseVisualStyleBackColor = true;
+            this.cCombatMusicDisable.CheckedChanged += new System.EventHandler(this.cCombatMusicDisable_CheckedChanged);
             // 
             // cQText
             // 
@@ -1343,6 +1356,20 @@ namespace MMR.UI.Forms
             this.tabGimmicks.TabIndex = 3;
             this.tabGimmicks.Text = "Gimmicks";
             this.tabGimmicks.UseVisualStyleBackColor = true;
+            // 
+            // cDeathMoonCrash
+            // 
+            this.cDeathMoonCrash.AutoSize = true;
+            this.cDeathMoonCrash.BackColor = System.Drawing.Color.Transparent;
+            this.cDeathMoonCrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cDeathMoonCrash.ForeColor = System.Drawing.Color.Black;
+            this.cDeathMoonCrash.Location = new System.Drawing.Point(393, 207);
+            this.cDeathMoonCrash.Name = "cDeathMoonCrash";
+            this.cDeathMoonCrash.Size = new System.Drawing.Size(125, 17);
+            this.cDeathMoonCrash.TabIndex = 25;
+            this.cDeathMoonCrash.Text = "Death is Moon Crash";
+            this.cDeathMoonCrash.UseVisualStyleBackColor = false;
+            this.cDeathMoonCrash.CheckedChanged += new System.EventHandler(this.cDeathMoonCrash_CheckedChanged);
             // 
             // cByoAmmo
             // 
@@ -1789,7 +1816,7 @@ namespace MMR.UI.Forms
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mLogicEdit});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // mLogicEdit
@@ -1950,20 +1977,6 @@ namespace MMR.UI.Forms
             this.bLoadPatch.Text = "Load Patch...";
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
-            // 
-            // cDeathMoonCrash
-            // 
-            this.cDeathMoonCrash.AutoSize = true;
-            this.cDeathMoonCrash.BackColor = System.Drawing.Color.Transparent;
-            this.cDeathMoonCrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cDeathMoonCrash.ForeColor = System.Drawing.Color.Black;
-            this.cDeathMoonCrash.Location = new System.Drawing.Point(393, 207);
-            this.cDeathMoonCrash.Name = "cDeathMoonCrash";
-            this.cDeathMoonCrash.Size = new System.Drawing.Size(125, 17);
-            this.cDeathMoonCrash.TabIndex = 25;
-            this.cDeathMoonCrash.Text = "Death is Moon Crash";
-            this.cDeathMoonCrash.UseVisualStyleBackColor = false;
-            this.cDeathMoonCrash.CheckedChanged += new System.EventHandler(this.cDeathMoonCrash_CheckedChanged);
             // 
             // MainForm
             // 
@@ -2179,6 +2192,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFasterBank;
         private System.Windows.Forms.CheckBox cCloseCows;
         private System.Windows.Forms.Button bToggleTricks;
+        private System.Windows.Forms.CheckBox cCombatMusicDisable;
         private System.Windows.Forms.CheckBox cByoAmmo;
         private System.Windows.Forms.CheckBox cDeathMoonCrash;
     }
