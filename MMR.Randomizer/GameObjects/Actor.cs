@@ -46,6 +46,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1D30)]
         MadShrub = 81,
 
+        [ActorInitVarOffset(0x1AF0)]
         RedBubble = 82,
 
         [ActorInitVarOffset(0x1A40)]
@@ -92,6 +93,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2D30)]
         ChuChu = 296,
 
+        [ActorInitVarOffset(0x16C4)] 
         Desbreko = 297,
 
         // Rolling exploding rock in Ikana
@@ -116,6 +118,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1FD0)]
         Dexihand = 426,
 
+        // does not work
+        [ActorInitVarOffset(0x2940)]
         GibdoWell = 435,
 
         [ActorInitVarOffset(0x2EE0)]
@@ -125,6 +129,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x3794)]
         Hiploop = 449,
 
+        [ActorInitVarOffset(0x2F70)]
         Poe = 459,
 
         [ActorInitVarOffset(0xAD4)]
@@ -133,6 +138,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1C50)]
         Leever = 493,
 
+        // does not work
+        [ActorInitVarOffset(0x2CA0)]
         GibdoIkana = 524,
 
         [ActorInitVarOffset(0x2E30)]

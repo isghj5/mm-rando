@@ -332,6 +332,11 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Freezard,
                 GameObjects.Actor.Armos,
                 GameObjects.Actor.Snapper,
+                GameObjects.Actor.Desbreko,
+                GameObjects.Actor.Poe,
+                GameObjects.Actor.GibdoIkana,
+                GameObjects.Actor.GibdoWell,
+                GameObjects.Actor.RedBubble
 
             }.ToList();
 
