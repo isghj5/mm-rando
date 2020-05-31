@@ -212,6 +212,7 @@ namespace MMR.Randomizer
                     else if (Unassigned.Count > 30
                         && testSeq.Type.Count > targetSequence.Type.Count
                         && random.Next(30) == 0
+                        && targetSequence.Type[0] <= 16
                         && (testSeq.Type[0] & 8) == (targetSequence.Type[0] & 8)
                         && testSeq.Type.Contains(0x10) == targetSequence.Type.Contains(0x10)
                         && !testSeq.Type.Contains(0x16))

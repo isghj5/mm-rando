@@ -314,6 +314,10 @@ mm-combat
 4,5
 3
 1a
+mm-kamaros-mask
+171
+a
+71
 oot-kokiriforest
 1,3
 3
