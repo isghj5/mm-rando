@@ -5,7 +5,8 @@ namespace MMR.Randomizer.GameObjects
     public enum GossipQuote
     {
         //It seems the crows that fly near the town walls are fond of musical instruments...
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.IkanaScrubGoldRupee)] // or random? or silver rupees?
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongTime)] // or random? or silver rupees?
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemOcarina)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongSonata)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongLullaby)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongNewWaveBossaNova)]

@@ -816,16 +816,16 @@ namespace MMR.Randomizer.GameObjects
         //song
         [StartingItem(0xC5CE24, 0x00)]
         [ItemName("Ocarina of Time"), LocationName("Skull Kid"), Region(Region.SouthClockTown)]
-        [GossipLocationHint("a stolen possession"), GossipItemHint("a musical instrument")]
-        [ShopText("This musical instrument is filled with memories of Princess Zelda.")]
+        [GossipLocationHint("a forest imp"), GossipItemHint("a childhood gift")]
+        [ShopText("It's a flute!.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x4C)]
         ItemOcarina,
 
         [StartingItem(0xC5CE72, 0x10)]
         [ItemName("Song of Time"), LocationName("Skull Kid Song"), Region(Region.SouthClockTown)]
-        [GossipLocationHint("a distant memory"), GossipItemHint("a forgotten melody")]
-        [ShopText("This melody is a song of memories of Princess Zelda.", isDefinite: true)]
+        [GossipLocationHint("a distant memory"), GossipItemHint("a childhood memory")]
+        [ShopText("A great time saver.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x1CB)]
         SongTime,
