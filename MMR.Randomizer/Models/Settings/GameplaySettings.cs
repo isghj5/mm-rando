@@ -1,6 +1,7 @@
 ﻿using MMR.Randomizer.Asm;
 using MMR.Randomizer.Utils;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -34,6 +35,15 @@ namespace MMR.Randomizer.Models.Settings
         #endregion
 
         #region Asm Getters / Setters
+
+        /// <summary>
+        /// Whether or not to change Cow response behavior.
+        /// </summary>
+        public bool CloseCows
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.CloseCows; }
+            set { this.AsmOptions.MiscConfig.Flags.CloseCows = value; }
+        }
 
         /// <summary>
         /// Whether or not to enable cycling arrow types while using the bow.
@@ -99,6 +109,8 @@ namespace MMR.Randomizer.Models.Settings
         /// Selected mode of logic (affects randomization rules)
         /// </summary>
         public LogicMode LogicMode { get; set; }
+
+        public List<int> EnabledTricks { get; set; } = new List<int>();
 
         /// <summary>
         /// Add songs to the randomization pool
@@ -272,6 +284,16 @@ namespace MMR.Randomizer.Models.Settings
         /// Allow's using Fierce Deity's Mask anywhere
         /// </summary>
         public bool AllowFierceDeityAnywhere { get; set; }
+
+        /// <summary>
+        /// Arrows, Bombs, and Bombchu will not be provided. You must bring your own. Logic Modes other than No Logic will account for this.
+        /// </summary>
+        public bool ByoAmmo { get; set; }
+
+        /// <summary>
+        /// Dying causes the moon to crash, with all that that implies.
+        /// </summary>
+        public bool DeathMoonCrash { get; set; }
 
         #endregion
 
@@ -549,20 +571,20 @@ namespace MMR.Randomizer.Models.Settings
             if (QuestItemStorage) { parts[4] += (1 << 8); }
 
             return parts;
-        }
-
-        private string EncodeSettings()
-        {
-            var partsEncoded = BuildSettingsBytes()
-                .Select(p => Base36Utils.Encode(p))
-                .ToArray();
-
-            return string.Join("-", partsEncoded);
-        }
-
         public override string ToString()
         {
-            return EncodeSettings();
+            return JsonConvert.SerializeObject(this, _jsonSerializerSettings);
+        }
+
+        private static JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        {
+            ContractResolver = new WritablePropertiesOnlyResolver(),
+            NullValueHandling = NullValueHandling.Ignore,
+        };
+
+        static GameplaySettings()
+        {
+            _jsonSerializerSettings.Converters.Add(new StringEnumConverter());
         }
 
         public string Validate()

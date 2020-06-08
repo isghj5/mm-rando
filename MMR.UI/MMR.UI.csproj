@@ -141,6 +141,12 @@
     <Compile Include="Forms\ManualForm.Designer.cs">
       <DependentUpon>ManualForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\ToggleTricksForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\ToggleTricksForm.Designer.cs">
+      <DependentUpon>ToggleTricksForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Forms\NewItemForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -183,6 +189,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\ManualForm.resx">
       <DependentUpon>ManualForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\ToggleTricksForm.resx">
+      <DependentUpon>ToggleTricksForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewItemForm.resx">
       <DependentUpon>NewItemForm.cs</DependentUpon>

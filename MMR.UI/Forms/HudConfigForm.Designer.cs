@@ -54,6 +54,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.ctxtMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.btn_dpad = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btn_hearts
@@ -341,6 +342,18 @@
             this.ctxtMenu.Name = "ctxtMenu";
             this.ctxtMenu.Size = new System.Drawing.Size(61, 4);
             // 
+            // btn_dpad
+            // 
+            this.btn_dpad.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btn_dpad.ForeColor = System.Drawing.Color.White;
+            this.btn_dpad.Location = new System.Drawing.Point(13, 149);
+            this.btn_dpad.Name = "btn_dpad";
+            this.btn_dpad.Size = new System.Drawing.Size(48, 48);
+            this.btn_dpad.TabIndex = 23;
+            this.btn_dpad.Text = "D-Pad";
+            this.btn_dpad.UseVisualStyleBackColor = true;
+            this.btn_dpad.Click += new System.EventHandler(this.btn_dpad_Click);
+            // 
             // HudConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -348,6 +361,7 @@
             this.BackColor = System.Drawing.Color.ForestGreen;
             this.ClientSize = new System.Drawing.Size(624, 441);
             this.ContextMenuStrip = this.ctxtMenu;
+            this.Controls.Add(this.btn_dpad);
             this.Controls.Add(this.btn_inverted2);
             this.Controls.Add(this.btn_inverted);
             this.Controls.Add(this.btn_clockemblem);
@@ -408,5 +422,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ContextMenuStrip ctxtMenu;
+        private System.Windows.Forms.Button btn_dpad;
     }
 }

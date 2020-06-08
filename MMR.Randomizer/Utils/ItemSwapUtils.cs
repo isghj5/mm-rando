@@ -104,7 +104,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void WriteNewItem(Item location, Item item, List<MessageEntry> newMessages, bool updateShop, bool preventDowngrades, bool updateChest, ChestTypeAttribute.ChestType? overrideChestType, bool isExtraStartingItem)
+        public static void WriteNewItem(Item location, Item item, List<MessageEntry> newMessages, bool updateShop, bool preventDowngrades, bool updateChest, ChestTypeAttribute.ChestType? overrideChestType, bool isExtraStartingItem, bool questItemExtraStorageEnabled)
         {
             System.Diagnostics.Debug.WriteLine($"Writing {item.Name()} --> {location.Location()}");
 
@@ -129,9 +129,18 @@ namespace MMR.Randomizer.Utils
                 (byte)(newItem.Object & 0xFF),
             };
             ReadWriteUtils.Arr_Insert(data, 0, data.Length, fileData, offset);
-            
+
             // todo use Logic Editor to handle which locations should be repeatable and which shouldn't.
-            if ((item.IsCycleRepeatable() && location != Item.HeartPieceNotebookMayor) || (item.Name().Contains("Rupee") && location.IsRupeeRepeatable()))
+            var isCycleRepeatable = item.IsCycleRepeatable();
+            if (item.Name().Contains("Rupee") && location.IsRupeeRepeatable())
+            {
+                isCycleRepeatable = true;
+            }
+            if (item.ToString().StartsWith("Trade") && questItemExtraStorageEnabled)
+            {
+                isCycleRepeatable = false;
+            }
+            if (isCycleRepeatable)
             {
                 ReadWriteUtils.WriteToROM(cycle_repeat, (ushort)getItemIndex);
                 cycle_repeat += 2;

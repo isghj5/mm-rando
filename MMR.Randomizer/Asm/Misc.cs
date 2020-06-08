@@ -32,6 +32,11 @@ namespace MMR.Randomizer.Asm
         public bool ArrowCycling { get; set; }
 
         /// <summary>
+        /// Whether or not to show magic being consumed ahead of time when using elemental arrows.
+        /// </summary>
+        public bool ArrowMagic => ArrowCycling;
+
+        /// <summary>
         /// Behaviour of crit wiggle.
         /// </summary>
         public CritWiggleState CritWiggle { get; set; }
@@ -120,6 +125,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FreestandingModels ? (uint)1 : 0) << 24;
             flags |= (((uint)this.QuestConsume) & 3) << 22;
             flags |= (this.ArrowCycling ? (uint)1 : 0) << 21;
+            flags |= (this.ArrowMagic ? (uint)1 : 0) << 20;
             return flags;
         }
     }

@@ -105,7 +105,7 @@
             this.tRules.Location = new System.Drawing.Point(4, 25);
             this.tRules.Name = "tRules";
             this.tRules.Padding = new System.Windows.Forms.Padding(3);
-            this.tRules.Size = new System.Drawing.Size(400, 271);
+            this.tRules.Size = new System.Drawing.Size(400, 465);
             this.tRules.TabIndex = 1;
             this.tRules.Text = "Rulesets";
             this.tRules.UseVisualStyleBackColor = true;
@@ -133,7 +133,7 @@
             // 
             this.lBaseGame.Location = new System.Drawing.Point(6, 3);
             this.lBaseGame.Name = "lBaseGame";
-            this.lBaseGame.Size = new System.Drawing.Size(372, 346);
+            this.lBaseGame.Size = new System.Drawing.Size(372, 304);
             this.lBaseGame.TabIndex = 2;
             this.lBaseGame.Text = resources.GetString("lBaseGame.Text");
             // 
@@ -144,7 +144,7 @@
             this.tLogic.Location = new System.Drawing.Point(4, 25);
             this.tLogic.Name = "tLogic";
             this.tLogic.Padding = new System.Windows.Forms.Padding(3);
-            this.tLogic.Size = new System.Drawing.Size(400, 271);
+            this.tLogic.Size = new System.Drawing.Size(400, 465);
             this.tLogic.TabIndex = 7;
             this.tLogic.Text = "Logic editor";
             this.tLogic.UseVisualStyleBackColor = true;
@@ -163,7 +163,7 @@
             this.tItem.Location = new System.Drawing.Point(4, 25);
             this.tItem.Name = "tItem";
             this.tItem.Padding = new System.Windows.Forms.Padding(3);
-            this.tItem.Size = new System.Drawing.Size(400, 271);
+            this.tItem.Size = new System.Drawing.Size(400, 465);
             this.tItem.TabIndex = 8;
             this.tItem.Text = "Item list";
             this.tItem.UseVisualStyleBackColor = true;
@@ -182,7 +182,7 @@
             this.tShuffles.Controls.Add(this.lShuffle);
             this.tShuffles.Location = new System.Drawing.Point(4, 25);
             this.tShuffles.Name = "tShuffles";
-            this.tShuffles.Size = new System.Drawing.Size(400, 271);
+            this.tShuffles.Size = new System.Drawing.Size(400, 465);
             this.tShuffles.TabIndex = 2;
             this.tShuffles.Text = "Shuffles";
             this.tShuffles.UseVisualStyleBackColor = true;
@@ -201,7 +201,7 @@
             this.tGimmicks.Controls.Add(this.lGimmick);
             this.tGimmicks.Location = new System.Drawing.Point(4, 25);
             this.tGimmicks.Name = "tGimmicks";
-            this.tGimmicks.Size = new System.Drawing.Size(400, 271);
+            this.tGimmicks.Size = new System.Drawing.Size(400, 465);
             this.tGimmicks.TabIndex = 3;
             this.tGimmicks.Text = "Gimmicks";
             this.tGimmicks.UseVisualStyleBackColor = true;
@@ -210,7 +210,7 @@
             // 
             this.lGimmick.Location = new System.Drawing.Point(6, 3);
             this.lGimmick.Name = "lGimmick";
-            this.lGimmick.Size = new System.Drawing.Size(372, 622);
+            this.lGimmick.Size = new System.Drawing.Size(372, 717);
             this.lGimmick.TabIndex = 2;
             this.lGimmick.Text = resources.GetString("lGimmick.Text");
             // 
@@ -229,7 +229,7 @@
             // 
             this.lCosmetic.Location = new System.Drawing.Point(6, 3);
             this.lCosmetic.Name = "lCosmetic";
-            this.lCosmetic.Size = new System.Drawing.Size(372, 1164);
+            this.lCosmetic.Size = new System.Drawing.Size(372, 1830);
             this.lCosmetic.TabIndex = 2;
             this.lCosmetic.Text = resources.GetString("lCosmetic.Text");
             // 
@@ -239,7 +239,7 @@
             this.tHow.Location = new System.Drawing.Point(4, 25);
             this.tHow.Name = "tHow";
             this.tHow.Padding = new System.Windows.Forms.Padding(3);
-            this.tHow.Size = new System.Drawing.Size(400, 271);
+            this.tHow.Size = new System.Drawing.Size(400, 465);
             this.tHow.TabIndex = 6;
             this.tHow.Text = "How it works";
             this.tHow.UseVisualStyleBackColor = true;

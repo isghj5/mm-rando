@@ -15,6 +15,9 @@ namespace MMR.Randomizer.Models
         public int TimeAvailable { get; set; }
         public Item? NewLocation { get; set; }
 
+        public bool IsTrick { get; set; }
+        public string TrickTooltip { get; set; }
+
         public bool IsRandomized { get; set; }
     }
 }

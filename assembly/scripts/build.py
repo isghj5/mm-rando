@@ -110,9 +110,6 @@ def get_parser():
     parser.add_argument('--virtual', action='store_true', help='Use virtual addresses in diff')
     return parser
 
-def get_target_relpath(path):
-    return os.path.join('target', path)
-
 def main():
     args = get_parser().parse_args()
     pj64_sym_path = args.pj64sym
@@ -123,7 +120,7 @@ def main():
     os.chdir(run_dir)
 
     # Target relative path
-    relpath = get_target_relpath(args.target)
+    relpath = os.path.join('.')
 
     # Compile code
 

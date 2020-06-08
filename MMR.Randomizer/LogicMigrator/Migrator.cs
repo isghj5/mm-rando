@@ -87,6 +87,10 @@ namespace MMR.Randomizer.LogicMigrator
             if (GetVersion(lines) < 14)
             {
                 AddSongOfTimeAndOcarina(lines);
+            }  
+            if (GetVersion(lines) < 15
+            {
+              AddTricks(lines);
             }
 
             return string.Join("\r\n", lines);
@@ -1534,6 +1538,14 @@ namespace MMR.Randomizer.LogicMigrator
                 lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
                 lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
                 lines.Insert(item.ID * 5 + 5, "0");
+            ]  
+        private static void AddTricks(List<string> lines)
+        {
+            lines[0] = "-version 15";
+
+            for (var i = 1; i < lines.Count; i += 6)
+            {
+                lines.Insert(i + 5, "");
             }
         }
 

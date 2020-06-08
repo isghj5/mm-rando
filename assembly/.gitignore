@@ -5,6 +5,12 @@ armips*
 **/__pycache__/*
 !.gitkeep
 
+# Ignore build files
+build/*.o
+build/*.txt
+data/generated/*.json
+data/generated/*.txt
+
 # Ignore private vagrant directory
 .vagrant*
 
