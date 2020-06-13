@@ -230,7 +230,7 @@ namespace MMR.UI.Forms
             }
         }
 
-        private void Randomize()
+        private void Randomize(bool FastRandomSeed = false)
         {
             var validationResult = _configuration.GameplaySettings.Validate() ?? _configuration.OutputSettings.Validate();
             if (validationResult != null)
@@ -242,11 +242,26 @@ namespace MMR.UI.Forms
             var defaultOutputROMFilename = FileUtils.MakeFilenameValid(DateTime.UtcNow.ToString("o"));
 
             saveROM.FileName = !string.IsNullOrWhiteSpace(_configuration.OutputSettings.InputPatchFilename)
-                ? Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64")
-                : defaultOutputROMFilename;
-            if (saveROM.ShowDialog() != DialogResult.OK)
+                             ? Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64")
+                             : defaultOutputROMFilename;
+
+            if (!FastRandomSeed)
             {
-                return;
+                if (saveROM.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                var directory = "";
+                if (_configuration.OutputSettings.OutputROMFilename != null && _configuration.OutputSettings.OutputROMFilename.Length > 0)
+                {
+                    directory = Path.GetDirectoryName(_configuration.OutputSettings.OutputROMFilename);
+                }
+
+                saveROM.FileName = saveROM.FileName + "." + saveROM.DefaultExt;
+                saveROM.FileName = Path.Combine(directory, saveROM.FileName);
             }
 
             _configuration.OutputSettings.OutputROMFilename = saveROM.FileName;
@@ -255,9 +270,17 @@ namespace MMR.UI.Forms
             bgWorker.RunWorkerAsync();
         }
 
-        private void bRandomise_Click(object sender, EventArgs e)
+        private void bRandomise_MouseDown(object sender, MouseEventArgs e)
         {
-            Randomize();
+            if (e.Button == MouseButtons.Left)
+            {
+                Randomize();
+            }
+            if (e.Button == MouseButtons.Right)  // user wants a faster seed, less waiting
+            {
+                tSeed.Text = Math.Abs(Environment.TickCount).ToString();
+                Randomize(true);
+            }
         }
 
         private void bApplyPatch_Click(object sender, EventArgs e)
