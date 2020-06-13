@@ -1133,7 +1133,7 @@ namespace MMR.UI.Forms
             // cCloseCows
             // 
             this.cCloseCows.AutoSize = true;
-            this.cCloseCows.Location = new System.Drawing.Point(9, 183);
+            this.cCloseCows.Location = new System.Drawing.Point(9, 171);
             this.cCloseCows.Name = "cCloseCows";
             this.cCloseCows.Size = new System.Drawing.Size(81, 17);
             this.cCloseCows.TabIndex = 36;
@@ -1177,7 +1177,7 @@ namespace MMR.UI.Forms
             // cFastPush
             // 
             this.cFastPush.AutoSize = true;
-            this.cFastPush.Location = new System.Drawing.Point(9, 160);
+            this.cFastPush.Location = new System.Drawing.Point(9, 154);
             this.cFastPush.Name = "cFastPush";
             this.cFastPush.Size = new System.Drawing.Size(125, 17);
             this.cFastPush.TabIndex = 31;
@@ -1333,7 +1333,7 @@ namespace MMR.UI.Forms
             // cDisableLowHealthBeep
             // 
             this.cDisableLowHealthBeep.AutoSize = true;
-            this.cDisableLowHealthBeep.Location = new System.Drawing.Point(147, 183);
+            this.cDisableLowHealthBeep.Location = new System.Drawing.Point(9, 188);
             this.cDisableLowHealthBeep.Name = "cDisableLowHealthBeep";
             this.cDisableLowHealthBeep.Size = new System.Drawing.Size(133, 17);
             this.cDisableLowHealthBeep.TabIndex = 45;
