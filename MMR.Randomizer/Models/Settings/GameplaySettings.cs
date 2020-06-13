@@ -544,7 +544,7 @@ namespace MMR.Randomizer.Models.Settings
                 | ((byte)DamageMode << 28)
                 ;
 
-            parts[2] = 
+            parts[2] =
                 //(TunicColor.R << 16) |
                 //(TunicColor.G << 8) |
                 //(TunicColor.B) |
@@ -552,7 +552,7 @@ namespace MMR.Randomizer.Models.Settings
                 ((byte)MovementMode << 28)
                 ;
 
-            parts[3] = 
+            parts[3] =
                 (byte)ClockSpeed |
                 ((byte)GossipHintStyle << 8) |
                 ((byte)BlastMaskCooldown << 16)
@@ -571,6 +571,7 @@ namespace MMR.Randomizer.Models.Settings
             if (QuestItemStorage) { parts[4] += (1 << 8); }
 
             return parts;
+        }
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this, _jsonSerializerSettings);
