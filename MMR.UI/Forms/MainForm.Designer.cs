@@ -111,6 +111,7 @@ namespace MMR.UI.Forms
             this.cArrowCycling = new System.Windows.Forms.CheckBox();
             this.cFreestanding = new System.Windows.Forms.CheckBox();
             this.cEnableNightMusic = new System.Windows.Forms.CheckBox();
+            this.cDisableLowHealthBeep = new System.Windows.Forms.CheckBox();
             this.cFastPush = new System.Windows.Forms.CheckBox();
             this.cCombatMusicDisable = new System.Windows.Forms.CheckBox();
             this.cQText = new System.Windows.Forms.CheckBox();
@@ -1121,6 +1122,7 @@ namespace MMR.UI.Forms
             this.groupBox7.Controls.Add(this.cQuestItemStorage);
             this.groupBox7.Controls.Add(this.cCutsc);
             this.groupBox7.Controls.Add(this.cNoDowngrades);
+            this.groupBox7.Controls.Add(this.cDisableLowHealthBeep);
             this.groupBox7.Location = new System.Drawing.Point(373, 6);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(286, 211);
@@ -1171,6 +1173,17 @@ namespace MMR.UI.Forms
             this.cEnableNightMusic.Text = "Enable Night BGM";
             this.cEnableNightMusic.UseVisualStyleBackColor = true;
             this.cEnableNightMusic.CheckedChanged += new System.EventHandler(this.cEnableNightMusic_CheckedChanged);
+            //
+            // cDisableLowHealthBeep
+            //
+            this.cDisableLowHealthBeep.AutoSize = true;
+            this.cDisableLowHealthBeep.Location = new System.Drawing.Point(147, 183);
+            this.cDisableLowHealthBeep.Name = "cDisableLowHealthBeep";
+            this.cDisableLowHealthBeep.Size = new System.Drawing.Size(114, 17);
+            this.cDisableLowHealthBeep.TabIndex = 45;
+            this.cDisableLowHealthBeep.Text = "Disable LowHeart SFX";
+            this.cDisableLowHealthBeep.UseVisualStyleBackColor = true;
+            this.cDisableLowHealthBeep.CheckedChanged += new System.EventHandler(this.cDisableLowHealthBeep_CheckedChanged);
             // 
             // cFastPush
             // 
@@ -2185,7 +2198,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.GroupBox gSpeedUps;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mLogicEdit;
-        private System.Windows.Forms.CheckBox cEnableNightMusic; 
+        private System.Windows.Forms.CheckBox cEnableNightMusic;
+        private System.Windows.Forms.CheckBox cDisableLowHealthBeep;
         private System.Windows.Forms.CheckBox cFreestanding;
         private System.Windows.Forms.CheckBox cFDAnywhere;
         private System.Windows.Forms.CheckBox cArrowCycling;

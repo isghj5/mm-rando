@@ -383,7 +383,7 @@ namespace MMR.UI.Forms
             bTunic.BackColor = _configuration.CosmeticSettings.TunicColor;
             cTargettingStyle.Checked = _configuration.CosmeticSettings.EnableHoldZTargeting;
             cEnableNightMusic.Checked = _configuration.CosmeticSettings.EnableNightBGM;
-
+            cDisableLowHealthBeep.Checked = _configuration.CosmeticSettings.DisableLowHealthBeep;
 
             // Misc config options
             cDisableCritWiggle.Checked = _configuration.GameplaySettings.CritWiggleDisable;
@@ -537,6 +537,11 @@ namespace MMR.UI.Forms
         private void cEnableNightMusic_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.CosmeticSettings.EnableNightBGM = cEnableNightMusic.Checked);
+        }
+
+        private void cDisableLowHealthBeep_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.DisableLowHealthBeep = cDisableLowHealthBeep.Checked);
         }
 
         private void cMusic_SelectedIndexChanged(object sender, EventArgs e)

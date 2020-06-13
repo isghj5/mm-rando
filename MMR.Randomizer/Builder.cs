@@ -894,6 +894,14 @@ namespace MMR.Randomizer
             }
         }
 
+        private void WriteMutedLowHeartBeep()
+        {
+            if (_cosmeticSettings.DisableLowHealthBeep)
+            {
+                SoundEffect.LowHealthBeep.ReplaceWith(SoundEffect.EmptySFX);
+            }
+        }
+
         private void SoundEffectShuffle()
         {
         }
@@ -1673,6 +1681,8 @@ namespace MMR.Randomizer
 
             progressReporter.ReportProgress(74, "Writing sound effects...");
             WriteSoundEffects(new Random(BitConverter.ToInt32(hash, 0)));
+
+            WriteMutedLowHeartBeep();
 
             if (outputSettings.GenerateROM || outputSettings.OutputVC)
             {
