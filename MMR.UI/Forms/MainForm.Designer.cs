@@ -111,7 +111,6 @@ namespace MMR.UI.Forms
             this.cArrowCycling = new System.Windows.Forms.CheckBox();
             this.cFreestanding = new System.Windows.Forms.CheckBox();
             this.cEnableNightMusic = new System.Windows.Forms.CheckBox();
-            this.cDisableLowHealthBeep = new System.Windows.Forms.CheckBox();
             this.cFastPush = new System.Windows.Forms.CheckBox();
             this.cCombatMusicDisable = new System.Windows.Forms.CheckBox();
             this.cQText = new System.Windows.Forms.CheckBox();
@@ -124,6 +123,7 @@ namespace MMR.UI.Forms
             this.cQuestItemStorage = new System.Windows.Forms.CheckBox();
             this.cCutsc = new System.Windows.Forms.CheckBox();
             this.cNoDowngrades = new System.Windows.Forms.CheckBox();
+            this.cDisableLowHealthBeep = new System.Windows.Forms.CheckBox();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.cDeathMoonCrash = new System.Windows.Forms.CheckBox();
             this.cByoAmmo = new System.Windows.Forms.CheckBox();
@@ -1173,17 +1173,6 @@ namespace MMR.UI.Forms
             this.cEnableNightMusic.Text = "Enable Night BGM";
             this.cEnableNightMusic.UseVisualStyleBackColor = true;
             this.cEnableNightMusic.CheckedChanged += new System.EventHandler(this.cEnableNightMusic_CheckedChanged);
-            //
-            // cDisableLowHealthBeep
-            //
-            this.cDisableLowHealthBeep.AutoSize = true;
-            this.cDisableLowHealthBeep.Location = new System.Drawing.Point(147, 183);
-            this.cDisableLowHealthBeep.Name = "cDisableLowHealthBeep";
-            this.cDisableLowHealthBeep.Size = new System.Drawing.Size(114, 17);
-            this.cDisableLowHealthBeep.TabIndex = 45;
-            this.cDisableLowHealthBeep.Text = "Disable LowHeart SFX";
-            this.cDisableLowHealthBeep.UseVisualStyleBackColor = true;
-            this.cDisableLowHealthBeep.CheckedChanged += new System.EventHandler(this.cDisableLowHealthBeep_CheckedChanged);
             // 
             // cFastPush
             // 
@@ -1199,7 +1188,7 @@ namespace MMR.UI.Forms
             // cCombatMusicDisable
             // 
             this.cCombatMusicDisable.AutoSize = true;
-            this.cCombatMusicDisable.Location = new System.Drawing.Point(147, 183);
+            this.cCombatMusicDisable.Location = new System.Drawing.Point(146, 0);
             this.cCombatMusicDisable.Name = "cCombatMusicDisable";
             this.cCombatMusicDisable.Size = new System.Drawing.Size(131, 17);
             this.cCombatMusicDisable.TabIndex = 37;
@@ -1340,6 +1329,17 @@ namespace MMR.UI.Forms
             this.cNoDowngrades.Text = "No downgrades";
             this.cNoDowngrades.UseVisualStyleBackColor = false;
             this.cNoDowngrades.CheckedChanged += new System.EventHandler(this.cNoDowngrades_CheckedChanged);
+            // 
+            // cDisableLowHealthBeep
+            // 
+            this.cDisableLowHealthBeep.AutoSize = true;
+            this.cDisableLowHealthBeep.Location = new System.Drawing.Point(147, 183);
+            this.cDisableLowHealthBeep.Name = "cDisableLowHealthBeep";
+            this.cDisableLowHealthBeep.Size = new System.Drawing.Size(133, 17);
+            this.cDisableLowHealthBeep.TabIndex = 45;
+            this.cDisableLowHealthBeep.Text = "Disable LowHeart SFX";
+            this.cDisableLowHealthBeep.UseVisualStyleBackColor = true;
+            this.cDisableLowHealthBeep.CheckedChanged += new System.EventHandler(this.cDisableLowHealthBeep_CheckedChanged);
             // 
             // tabGimmicks
             // 
