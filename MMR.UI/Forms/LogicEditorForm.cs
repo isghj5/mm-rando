@@ -632,7 +632,7 @@ namespace MMR.UI.Forms
                         };
                     };
                     l.Time_Needed = Convert.ToInt32(lines[i + 2]);
-                    l.Time_Available = Convert.ToInt32(lines[i + 4]);
+                    l.Time_Available = Convert.ToInt32(lines[i + 3]);
                     var trickInfo = lines[i + 4].Split(new char[] { ';' }, 2);
                     l.IsTrick = trickInfo.Length > 1;
                     l.TrickTooltip = l.IsTrick ? trickInfo[1] : null;
