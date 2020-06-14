@@ -578,7 +578,7 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteToROM(0x00C2739C, new byte[] { 0x3C, 0x08, 0x80, 0x0A, 0x8D, 0x05, (byte) (offset >> 8), (byte)(offset & 0xFF) });
         }
 
-        public static void ReassignSkulltulaHousesMusic(byte replacement_slot = 0x75)
+        public static void ReassignSkulltulaHousesMusic(byte replacement_slot = 0x5A)
         {
             // changes the skulltulla house BGM to a separate slot so it plays a new music that isn't generic cave music (overused)
             // the BGM for a scene is specified by a single byte in the scene headers
@@ -617,7 +617,7 @@ namespace MMR.Randomizer.Utils
 
             SequenceInfo new_music_slot = new SequenceInfo
             {
-                Name = "mm-spiderhouse-replacement",
+                Name = "mmr-spiderhouse-replacement",
                 MM_seq = replacement_slot,
                 Replaces = replacement_slot,
                 Type = new List<int> { 2 },
@@ -626,6 +626,38 @@ namespace MMR.Randomizer.Utils
 
             RomData.TargetSequences.Add(new_music_slot);
 
+        }
+
+        public static void ReassignPinnacleRock(byte replacement_slot = 0x51)
+        {
+            // to modify the scene header, which is in the scene, we need the scene as a file
+            //  we can get this from the Romdata.SceneList but this only gets populated on enemizer
+            //  and we don't NEED to populate it since vanilla scenes are static, we can just hard code it here
+            //  at re-encode, we'll have fewer decoded files to re-encode too
+            int pinnacle_rock_fid = 1276; // taken from ultimate MM spreadsheet (US File list -> A column)
+
+            // scan the files for the header that contains scene music (0x15 first byte)
+            // 15xx0000 0000yyzz where zz is the sequence pointer byte
+            RomUtils.CheckCompressed(pinnacle_rock_fid);
+            for (int b = 0; b < 0x10 * 70; b += 8)
+            {
+                if (RomData.MMFileList[pinnacle_rock_fid].Data[b] == 0x15) //&& RomData.MMFileList[pinnacle_rock_fid].Data[b + 0x7] == 0x13)
+                {
+                    RomData.MMFileList[pinnacle_rock_fid].Data[b + 0x7] = replacement_slot;
+                    break;
+                }
+            }
+
+            SequenceInfo new_music_slot = new SequenceInfo
+            {
+                Name = "mmr-pinnacle-replacement",
+                MM_seq = replacement_slot,
+                Replaces = replacement_slot,
+                Type = new List<int> { 0, 2 },
+                Instrument = 3
+            };
+
+            RomData.TargetSequences.Add(new_music_slot);
         }
 
         public static void ReadInstrumentSetList()
