@@ -328,7 +328,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         GuayDie = 0x30EB,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         SnapperShoutsGagrap = 0x30F3,
 
         [Tags(Short)]
@@ -356,11 +356,11 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         LikeLikeRoar = 0x3191, // sound of the like like trying to suck up link
 
-        [Tags(Short, LowHpBeep)]
+        [Tags(Short)]
         PirateDamage = 0x3199,
 
         [Tags(Long)]
-        PirateDead = 0x319A,
+        PirateDead = 0x319a,
 
         [Replacable(0xCE5286)]
         [ReplacableByTags(Short)]
@@ -418,13 +418,13 @@ namespace MMR.Randomizer.Models.SoundEffects
         //[Tags(Long)]
         //MajoraWrathSpinningTopLoop = 0x322C,
 
-        [Tags(Long)]
+        [Tags(Short)]
         IgosMinionLaugh = 0x3238,
 
         [Tags(Short)]
         KingIgosSwordSwing = 0x3239, // King igos swinging his sword at you
 
-        [Tags(Long)]
+        [Tags(Short)]
         PoeLaugh2 = 0x3241, // laugh used by igos or his minions
 
         /*[Tags(Short)]
@@ -440,10 +440,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         //[Tags(Short)]
         //MajoraWrathHorribleScreech = 0x3256,  // loud and annoying to hear
 
-        [Tags(Long)]
+        [Tags(Short)]
         MajoraWrathLaughing = 0x3257,
 
-        [Tags(Long, LowHpBeep)]
+        [Tags(Short, LowHpBeep)]
         MajoraWrathStunDamage = 0x3258, // damage that leads to a stun (arrow/beam)
 
         //[Tags(Long)]
@@ -464,13 +464,36 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, Long, LowHpBeep)]
         PirateLaugh = 0x3271, // smug laugh when they catch you pretending to be a stone
 
+
+        //[Tags(Long)]
+        //MajoraWrathWhip7 = 0x31ec,    
+
+        //[Tags(Long)]
+        //MajoraWrathWhip8 = 0x31ed,   
+
+        //[Tags(Long)]
+        //MajoraWrathWhip6 = 0x31ef,    
+
+        //[Tags(Long)]
+        //MajoraWrathWhip5 = 0x31f1,  
+
+        //[Tags(Long)]
+        //UnknownBugSfx = 0x31f2,   
+
+
+        //[Tags(Short)]
+        //MajoraWrathWhipHit = 0x3255,  // kinda annoying to hear in the world
+
+        //[Tags(Short)]
+        //MajoraWrathHorribleScreech = 0x3256,  // loud and annoying to hear 
+
         [Tags(Long)]
         SkullKidLaugh1 = 0x3275,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         SkullKidLaugh2 = 0x3276,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         SkullKidLaugh3 = 0x3277,
 
         #endregion
@@ -534,6 +557,23 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         #endregion
 
+        #region Ocarina
+
+        [Tags(Long, Short, LowHpBeep)]
+        VoidOut = 0x5001,
+
+        //[Tags(Long, Debug)]
+        //GrottoWarpOut = 0x5005, // looping
+
+        [Tags(Long, Short, LowHpBeep)]
+        VoidOutReturn = 0x5006,
+
+        [Tags(Long)]
+        DawnOfTheFirstDayThud = 0x5008,
+
+
+        #endregion
+
         #region Voice SFX
 
         [Tags(Short)]
@@ -572,10 +612,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(LowHpBeep)] // its kinda quiet to use for anything short
         ChildLinkPantLowHealth = 0x6029,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ChildLinkFallDamage = 0x603A,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ChildLinkKnockedOffHorse = 0x603E,
 
         [Replacable(0x00BABCF6)]
@@ -624,13 +664,13 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         DekuFallLong = 0x6088,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         DekuFallDamage = 0x609A,
 
         [Tags(Short, LowHpBeep)]
         DekuHorror = 0x6096,
 
-        [Tags(Long, LowHpBeep)]
+        [Tags(Short, Long, LowHpBeep)]
         ZoraFallDamage = 0x60BA,
 
         [Tags(Short, LowHpBeep)]
@@ -645,7 +685,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         GoronFallLong = 0x60C8,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         GoronFallDamage = 0x60DA, // might also get reused as goron recognizing darmani
 
         [Tags(Short, LowHpBeep)]
@@ -666,7 +706,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         AveilFrustrated = 0x6115,
 
-        [Tags(Long, LowHpBeep)]
+        [Tags(Short, Long, LowHpBeep)]
         AveilLaugh = 0x6116,
 
         [Tags(Short)]
@@ -723,13 +763,13 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         CremiaSurprised = 0x6129,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ReceptionistMmHmm = 0x612A,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ReceptionistSwoon = 0x612B,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ReceptionistMmm = 0x612C,
 
         // too annoying for lowhpbeep
@@ -763,10 +803,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         DekuPrincessAngerBuilding = 0x6136, // second half of outburst at king, before jumping
 
-        [Tags(Long)]
+        [Tags(Short)]
         DekuPrincessStressed = 0x6137, // bottle talking, and start of angry outburst at king
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         StrayFairyHelpMe = 0x6138,
 
         [Tags(Long)]
@@ -775,10 +815,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         RomaniYesSisterSigh = 0x6141,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         DampeAfraid = 0x6143,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         DampeUrgh = 0x6144,
 
         [Tags(Short)]
@@ -805,7 +845,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         CuriosityShopGuyLaugh = 0x6152,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         CuriosityShopGuyRefuse = 0x6153, // we don't serve bunny people here
 
         [Tags(Long, Short)]
@@ -854,7 +894,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         TingleFall = 0x6177,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         TingleChuckle = 0x617A,
 
         [Tags(Long)]
@@ -878,7 +918,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         UnknownMaleSorrowOoohhhh = 0x6181,  // ??? Not sure this was ever used
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         UnknownMaleCuriousQuestionHmmm = 0x6182,  // ??? Not sure this was ever used
 
         [Tags(Long)]
