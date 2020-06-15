@@ -360,8 +360,8 @@ namespace MMR.Randomizer
 
             }.ToList();
 
-            var WholeList = WeakEnemiesOnly ? WeakEnemyList : WeakEnemyList.Concat(AnnoyingEnemyList);
-            //var WholeList = WeakEnemyList;
+            //var WholeList = WeakEnemiesOnly ? WeakEnemyList : WeakEnemyList.Concat(AnnoyingEnemyList);
+            var WholeList = WeakEnemyList;
 
             foreach (GameObjects.Actor enemy in WholeList)
             {
