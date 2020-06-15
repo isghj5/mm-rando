@@ -628,7 +628,7 @@ namespace MMR.Randomizer.Utils
 
         }
 
-        public static void ReassignPinnacleRock(byte replacement_slot = 0x51)
+        public static void ReassignPinnacleRock(byte replacement_slot = 0x04)
         {
             // to modify the scene header, which is in the scene, we need the scene as a file
             //  we can get this from the Romdata.SceneList but this only gets populated on enemizer
