@@ -328,7 +328,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         GuayDie = 0x30EB,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         SnapperShoutsGagrap = 0x30F3,
 
         [Tags(Short)]
@@ -570,10 +570,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(LowHpBeep)] // its kinda quiet to use for anything short
         ChildLinkPantLowHealth = 0x6029,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ChildLinkFallDamage = 0x603A,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ChildLinkKnockedOffHorse = 0x603E,
 
         [Replacable(0x00BABCF6)]
@@ -622,13 +622,13 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         DekuFallLong = 0x6088,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         DekuFallDamage = 0x609A,
 
         [Tags(Short, LowHpBeep)]
         DekuHorror = 0x6096,
 
-        [Tags(Long, LowHpBeep)]
+        [Tags(Short, Long, LowHpBeep)]
         ZoraFallDamage = 0x60BA,
 
         [Tags(Short, LowHpBeep)]
@@ -643,7 +643,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         GoronFallLong = 0x60C8,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         GoronFallDamage = 0x60DA, // might also get reused as goron recognizing darmani
 
         [Tags(Short, LowHpBeep)]
@@ -685,7 +685,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         AveilFrustrated = 0x6115,
 
-        [Tags(Long, LowHpBeep)]
+        [Tags(Short, Long, LowHpBeep)]
         AveilLaugh = 0x6116,
 
         [Tags(Short)]
@@ -742,13 +742,13 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         CremiaSurprised = 0x6129,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ReceptionistMmHmm = 0x612A,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ReceptionistSwoon = 0x612B,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ReceptionistMmm = 0x612C,
 
         //romani Yeaaah!? (look at that horse archery score, so rad)
@@ -786,10 +786,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         DekuPrincessAngerBuilding = 0x6136, // second half of outburst at king, before jumping
 
-        [Tags(Long)]
+        [Tags(Short)]
         DekuPrincessStressed = 0x6137, // bottle talking, and start of angry outburst at king
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         StrayFairyHelpMe = 0x6138,
 
         [Tags(Long)]
@@ -798,10 +798,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         RomaniYesSisterSigh = 0x6141,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         DampeAfraid = 0x6143,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         DampeUrgh = 0x6144,
 
         [Tags(Short)]
@@ -883,7 +883,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         TingleFall = 0x6177,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         TingleChuckle = 0x617A,
 
         [Tags(Long)]
@@ -907,7 +907,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         UnknownMaleSorrowOoohhhh = 0x6181,  // ??? Not sure this was ever used
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         UnknownMaleCuriousQuestionHmmm = 0x6182,  // ??? Not sure this was ever used
 
         [Tags(Long)]
