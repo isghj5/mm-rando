@@ -337,6 +337,27 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         GoronSitStand = 0x30FD,
 
+        [Tags(Short)]
+        KotakePainShout = 0x3100, // don't you have something to help me???
+
+        [Tags(Short)]
+        KotakeDrinkFinished = 0x3101, // Hoy! as the a cloud of red potion leaves her mouth
+
+        //[Tags(Short, Debug)]
+        //KotakePotionSwallow = 0x3102, // potion drink swollow sound
+
+        [Tags(Long)]
+        KotakeWitchCackle = 0x3103,
+
+        //[Tags(Short, Debug)]
+        //KotakeSwirl = 0x3104, // looping, broom circling sfx before merging from OOT
+
+        [Tags(Long)]
+        KotakeBlastingOff = 0x3105,
+
+        //[Tags(Long, Debug)]
+        //KotakeConjureBroom = 0x3106, // looping, summon broom and then hovering on broom while talking
+
         [Tags(Long)]
         PoeLaughingRegular = 0x311A, // Poe laughing at you, regular version
 
