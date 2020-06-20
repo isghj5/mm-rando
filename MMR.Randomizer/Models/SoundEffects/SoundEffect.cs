@@ -633,6 +633,12 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         CuriosityShopGuyLaugh = 0x6152,
 
+        [Tags(Short, Long)]
+        KamaroOoohhh = 0x6154,
+
+        [Tags(Short, Long)]
+        KamaroAaagh = 0x6155,
+
         [ReplacableInMessage(0x6959, 10540, 10541, 10543, 10547, 10573, 10574)]
         [Tags(Long, LowHpBeep)]
         [ReplacableByTags(Long)]
