@@ -859,7 +859,10 @@ namespace MMR.Randomizer
                 Debug.WriteLine(DebugSFX.ToString() + " is a debug sfx");
                 //var DebugSLOT = SoundEffects.Replacable(); //.FilterByTags(DebugSFX.ReplacableByTags());
                 //if (DebugSLOT.Count > 0) shuffledSoundEffects[replacableSounds[0]] = DebugSFX;
-                shuffledSoundEffects[replacableSounds[0]] = DebugSFX;
+                shuffledSoundEffects[replacableSounds[0]] = DebugSFX; // morning chicken crow
+                shuffledSoundEffects[replacableSounds[29]] = DebugSFX; // low health beep
+                shuffledSoundEffects[replacableSounds[30]] = DebugSFX; // intro splash summon
+                shuffledSoundEffects[replacableSounds[3]] = DebugSFX; // dog
             }
 
             foreach (var sounds in shuffledSoundEffects)
