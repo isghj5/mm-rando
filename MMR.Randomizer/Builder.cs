@@ -278,7 +278,7 @@ namespace MMR.Randomizer
             SequenceUtils.ReadInstrumentSetList();
             if (_cosmeticSettings.Music == Music.Random)
             {
-                SequenceUtils.PointerizeSequenceSlots(_randomized.Settings.ShortenCutscenes);
+                SequenceUtils.PointerizeSequenceSlots();
                 BGMShuffle(random, _settings);
             }
 
@@ -719,6 +719,16 @@ namespace MMR.Randomizer
             if (_randomized.Settings.AllowFierceDeityAnywhere)
             {
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "fierce-deity-anywhere");
+            }
+
+            if (_randomized.Settings.ByoAmmo)
+            {
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "byo-ammo");
+            }
+
+            if (_randomized.Settings.DeathMoonCrash)
+            {
+                ResourceUtils.ApplyHack(Values.ModsDirectory, "death-moon-crash");
             }
         }
 
@@ -1414,7 +1424,7 @@ namespace MMR.Randomizer
                 return;
             }
             Version v = Assembly.GetExecutingAssembly().GetName().Version;
-            RomUtils.SetStrings(Values.ModsDirectory, "logo-text", $"v{v}", _randomized.Settings.ToString());
+            RomUtils.SetStrings(Values.ModsDirectory, "logo-text", $"v{v}", string.Empty);
         }
 
         private void WriteShopObjects()

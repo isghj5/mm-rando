@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 13;
+        public const int CurrentVersion = 15;
 
         public static string ApplyMigrations(string logic)
         {
@@ -82,6 +82,16 @@ namespace MMR.Randomizer.LogicMigrator
             if (GetVersion(lines) < 13)
             {
                 RemoveGormanBrosRaceDayThree(lines);
+            }
+
+            if (GetVersion(lines) < 14)
+            {
+                AddTricks(lines);
+            }
+
+            if (GetVersion(lines) < 15)
+            {
+                AddGossipStones(lines);
             }
 
             return string.Join("\r\n", lines);
@@ -1488,6 +1498,85 @@ namespace MMR.Randomizer.LogicMigrator
                 }
 
                 lines.RemoveRange(removeId * 5 + 1, 5);
+            }
+        }
+
+        private static void AddTricks(List<string> lines)
+        {
+            lines[0] = "-version 14";
+
+            for (var i = 1; i < lines.Count; i += 6)
+            {
+                lines.Insert(i + 5, "");
+            }
+        }
+
+        private static void AddGossipStones(List<string> lines)
+        {
+            lines[0] = "-version 15";
+            var itemNames = new string[]
+            {
+                "GossipTerminaSouth",
+                "GossipSwampPotionShop",
+                "GossipMountainSpringPath",
+                "GossipMountainPath",
+                "GossipOceanZoraGame",
+                "GossipCanyonRoad",
+                "GossipCanyonDock",
+                "GossipCanyonSpiritHouse",
+                "GossipTerminaMilk",
+                "GossipTerminaWest",
+                "GossipTerminaNorth",
+                "GossipTerminaEast",
+                "GossipRanchTree",
+                "GossipRanchBarn",
+                "GossipMilkRoad",
+                "GossipOceanFortress",
+                "GossipSwampRoad",
+                "GossipTerminaObservatory",
+                "GossipRanchCuccoShack",
+                "GossipRanchRacetrack",
+                "GossipRanchEntrance",
+                "GossipCanyonRavine",
+                "GossipMountainSpringFrog",
+                "GossipSwampSpiderHouse",
+                "GossipTerminaGossipLarge",
+                "GossipTerminaGossipGuitar",
+                "GossipTerminaGossipPipes",
+                "GossipTerminaGossipDrums",
+            };
+            var newItems = itemNames.Select((itemName, index) => new MigrationItem
+            {
+                ID = 433 + index
+            }).ToArray();
+            for (var i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.StartsWith("-") || string.IsNullOrWhiteSpace(line) || line.StartsWith(";"))
+                {
+                    continue;
+                }
+                var updatedItemSections = line
+                    .Split(';')
+                    .Select(section => section.Split(',').Select(id =>
+                    {
+                        var itemId = int.Parse(id);
+                        if (itemId >= 433)
+                        {
+                            itemId += newItems.Length;
+                        }
+                        return itemId;
+                    }).ToList()).ToList();
+                lines[i] = string.Join(";", updatedItemSections.Select(section => string.Join(",", section)));
+            }
+            foreach (var item in newItems)
+            {
+                lines.Insert(item.ID * 6 + 1, $"- {itemNames[item.ID - 433]}");
+                lines.Insert(item.ID * 6 + 2, string.Join(",", item.DependsOnItems));
+                lines.Insert(item.ID * 6 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
+                lines.Insert(item.ID * 6 + 4, $"{item.TimeNeeded}");
+                lines.Insert(item.ID * 6 + 5, "0");
+                lines.Insert(item.ID * 6 + 6, "");
             }
         }
 

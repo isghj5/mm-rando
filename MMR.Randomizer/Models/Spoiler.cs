@@ -25,12 +25,6 @@ namespace MMR.Randomizer.Models
 
         public Dictionary<GossipQuote, string> GossipHints { get; set; }
 
-        public string CustomItemListString { get; set; }
-
-        public string CustomStartingItemListString { get; set; }
-
-        public string CustomJunkLocationsString { get; set; }
-
         public string LogicJson
         {
             get

@@ -158,6 +158,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable, Temporary, Overwritable] // specially handled to turn into Milk on subsequent times
         [ItemName("Bottle with Milk"), LocationName("Aliens Defense"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch girl", "a good deed"), GossipItemHint("a dairy product", "the produce of cows")]
+        [GossipCombineOrder(0), GossipCombine(MaskRomani, "Ranch Sisters Defense")]
         [ShopText("Recover five hearts with one drink. Contains two helpings. Comes with an Empty Bottle.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x60)]
@@ -167,7 +168,7 @@ namespace MMR.Randomizer.GameObjects
         //[StartingItem(0xC5CE38, 0x12)]
         [Repeatable, Temporary, Overwritable] // specially handled to turn into Gold Dust on subsequent times
         [ItemName("Bottle with Gold Dust"), LocationName("Goron Race"), Region(Region.TwinIslands)]
-        [GossipLocationHint("a sporting event"), GossipItemHint("a gleaming powder"), GossipCompetitiveHint]
+        [GossipLocationHint("a sporting event"), GossipItemHint("a gleaming powder"), GossipCompetitiveHint(-2)]
         [ShopText("It's very high quality. Comes with an Empty Bottle.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x6A)]
@@ -176,6 +177,7 @@ namespace MMR.Randomizer.GameObjects
         //[StartingItem(0xC5CE39, 0x12)]
         [ItemName("Empty Bottle"), LocationName("Beaver Race #1"), Region(Region.ZoraCape)]
         [GossipLocationHint("a river dweller"), GossipItemHint("an empty vessel", "a glass container"), GossipCompetitiveHint(-2)]
+        [GossipCombineOrder(0), GossipCombine(HeartPieceBeaverRace, "Beaver Races")]
         [ShopText("Carry various items in this.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x5A)]
@@ -241,6 +243,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE6F, 0x02)]
         [ItemName("Large Quiver"), LocationName("Town Archery #1"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town activity"), GossipItemHint("a projectile", "a ranged weapon")]
+        [GossipCombineOrder(0), GossipCombine(HeartPieceTownArchery, "Town Archery")]
         [ShopText("This can hold up to a maximum of 40 arrows.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x23)]
@@ -252,6 +255,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE6F, 0x03)]
         [ItemName("Largest Quiver"), LocationName("Swamp Archery #1"), Region(Region.RoadToSouthernSwamp)]
         [GossipLocationHint("a swamp game"), GossipItemHint("a projectile", "a ranged weapon")]
+        [GossipCombineOrder(0), GossipCombine(HeartPieceSwampArchery, "Swamp Archery")]
         [ShopText("This can hold up to a maximum of 50 arrows.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x24)]
@@ -293,6 +297,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE6E, 0x20)]
         [ItemName("Giant Wallet"), LocationName("Ocean Spider House Day 1 Reward"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a gold spider"), GossipItemHint("a coin case", "great wealth"), GossipCompetitiveHint(0, nameof(GameplaySettings.AddSkulltulaTokens))]
+        [GossipCombineOrder(0), GossipCombine(MundaneItemOceanSpiderHouseDay2PurpleRupee, "Ocean Spider House"), GossipCombine(MundaneItemOceanSpiderHouseDay3RedRupee, "Ocean Spider House")]
         [ShopText("This can hold up to a maximum of 500 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x09)]
@@ -434,6 +439,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Deku Playground Three Days"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("a segment of health"), GossipCompetitiveHint]
+        [GossipCombineOrder(1), GossipCombine(MundaneItemDekuPlaygroundPurpleRupee, "Deku Playground")]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x31)]
@@ -443,6 +449,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Town Archery #2"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town game"), GossipItemHint("a segment of health"), GossipCompetitiveHint(1)]
+        [GossipCombineOrder(1), GossipCombine(UpgradeBigQuiver, "Town Archery")]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x90)]
@@ -451,6 +458,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Honey and Darling Three Days"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town game"), GossipItemHint("a segment of health"), GossipCompetitiveHint(-2)]
+        [GossipCombineOrder(1), GossipCombine(MundaneItemHoneyAndDarlingPurpleRupee, "Honey and Darling")]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x94)]
@@ -493,6 +501,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Swamp Archery #2"), Region(Region.RoadToSouthernSwamp)]
         [GossipLocationHint("a swamp game"), GossipItemHint("a segment of health"), GossipCompetitiveHint(1)]
+        [GossipCombineOrder(1), GossipCombine(UpgradeBiggestQuiver, "Swamp Archery")]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0xA6)]
@@ -527,6 +536,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Beaver Race #2"), Region(Region.ZoraCape)]
         [GossipLocationHint("a river dweller", "a race in the water"), GossipItemHint("a segment of health"), GossipCompetitiveHint(1)]
+        [GossipCombineOrder(1), GossipCombine(ItemBottleBeavers, "Beaver Races")]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0xAD)]
@@ -534,7 +544,7 @@ namespace MMR.Randomizer.GameObjects
 
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Seahorses"), Region(Region.PinnacleRock)]
-        [GossipLocationHint("a reunion"), GossipItemHint("a segment of health")]
+        [GossipLocationHint("a reunion"), GossipItemHint("a segment of health"), GossipCompetitiveHint(-2)]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0xAE)]
@@ -719,6 +729,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE48, 0x3C)]
         [ItemName("Romani's Mask"), LocationName("Cremia"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch lady", "an older sister"), GossipItemHint("proof of membership", "a cow's mask"), GossipCompetitiveHint]
+        [GossipCombineOrder(1), GossipCombine(ItemBottleAliens, "Ranch Sisters Defense")]
         [ShopText("Wear it to show you're a member of the Milk Bar, Latte.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x82)]
@@ -3104,6 +3115,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [ItemName("Purple Rupee"), LocationName("Deku Playground Any Day"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
+        [GossipCombineOrder(0), GossipCombine(HeartPieceDekuPlayground, "Deku Playground")]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x133)]
@@ -3113,6 +3125,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [ItemName("Purple Rupee"), LocationName("Honey and Darling Any Day"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
+        [GossipCombineOrder(0), GossipCombine(HeartPieceHoneyAndDarling, "Honey and Darling")]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x183)]
@@ -3188,6 +3201,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [ItemName("Purple Rupee"), LocationName("Ocean Spider House Day 2 Reward"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(0, nameof(GameplaySettings.AddSkulltulaTokens))]
+        [GossipCombineOrder(1), GossipCombine(UpgradeGiantWallet, "Ocean Spider House"), GossipCombine(MundaneItemOceanSpiderHouseDay3RedRupee, "Ocean Spider House")]
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x134)]
@@ -3196,6 +3210,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable]
         [ItemName("Red Rupee"), LocationName("Ocean Spider House Day 3 Reward"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a gold spider"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff"), GossipCompetitiveHint(0, nameof(GameplaySettings.AddSkulltulaTokens))]
+        [GossipCombineOrder(2), GossipCombine(MundaneItemOceanSpiderHouseDay2PurpleRupee, "Ocean Spider House"), GossipCombine(UpgradeGiantWallet, "Ocean Spider House")]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x1A3)]
@@ -3291,6 +3306,35 @@ namespace MMR.Randomizer.GameObjects
         MundaneItemSeahorse,
 
         //[GetItemIndex(0x1A1)]
+
+        GossipTerminaSouth,
+        GossipSwampPotionShop,
+        GossipMountainSpringPath,
+        GossipMountainPath,
+        GossipOceanZoraGame,
+        GossipCanyonRoad,
+        GossipCanyonDock,
+        GossipCanyonSpiritHouse,
+        GossipTerminaMilk,
+        GossipTerminaWest,
+        GossipTerminaNorth,
+        GossipTerminaEast,
+        GossipRanchTree,
+        GossipRanchBarn,
+        GossipMilkRoad,
+        GossipOceanFortress,
+        GossipSwampRoad,
+        GossipTerminaObservatory,
+        GossipRanchCuccoShack,
+        GossipRanchRacetrack,
+        GossipRanchEntrance,
+        GossipCanyonRavine,
+        GossipMountainSpringFrog,
+        GossipSwampSpiderHouse,
+        GossipTerminaGossipLarge,
+        GossipTerminaGossipGuitar,
+        GossipTerminaGossipPipes,
+        GossipTerminaGossipDrums,
 
     }
 }

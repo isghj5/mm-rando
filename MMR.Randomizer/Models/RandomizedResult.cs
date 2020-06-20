@@ -13,7 +13,7 @@ namespace MMR.Randomizer.Models
         public GameplaySettings Settings { get; private set; }
         public int Seed { get; set; }
 
-        public List<ItemObject> ItemList { get; set; }
+        public ItemList ItemList { get; set; }
         public List<MessageEntry> GossipQuotes { get; set; }
         public List<ItemLogic> Logic { get; set; }
         public ReadOnlyCollection<Item> ImportantItems { get; set; }

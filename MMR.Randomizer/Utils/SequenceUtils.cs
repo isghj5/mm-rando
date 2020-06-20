@@ -270,7 +270,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void PointerizeSequenceSlots(bool ShortenedCutscenes)
+        public static void PointerizeSequenceSlots()
         {
             // if music availablilty is low, pointerize some slots
             // why? because in MM fairy fountain and fileselect are the same song,
@@ -278,9 +278,24 @@ namespace MMR.Randomizer.Utils
             //  also some categories can get exhausted leaving slots unfillable with remaining music,
             // several slots that players will never/rarely hear are nullified (pointed at another song)
             // this "fills" those slots, now we have fewer slots to fill with remaining music (73 fits in 77)
-            //  so pointers play the same music, and don't waste a song
+            //  so pointerized slots play the same music, and don't waste a song
             //  but if the player does find this music in-game, it still plays sufficiently random music
             ConvertSequenceSlotToPointer(0x29, 0x7d); // point zelda(SOTime get cs) at reunion
+
+            // with shortened cutscenes, we pointerize more slots that the player would not hear
+            // if using a patch, _randomized is not set, lookup a shortened cutscene byte instead
+            // =========================================================
+            // File: 0x02CBF000, Address: 0x02CBFD48, Offset: 0x00000D48
+            // Name: Z2_KONPEKI_ENT::Great Bay(Cutscene) -Scene File
+            // =========================================================
+            // Replaces:
+            //   .dw 0x00010294  94
+            // .orga 0x02CBFD48     ->
+            //   .dw 0x00010000        00
+            // checking if not 94 instead if 00 because 94 is vanilla and 00 is replacement
+            //  thinking ahead, it's possible the adjusted value will change one day, but vanilla is static
+            // if the file's data is null, nothing in that file was changed and therefore it is vanilla.
+            bool ShortenedCutscenes = RomData.MMFileList[1472].Data != null && RomData.MMFileList[1472].Data[0xD48 + 3] != 0x94;
 
             if (ShortenedCutscenes)
             {

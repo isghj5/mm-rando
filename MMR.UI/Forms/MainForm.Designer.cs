@@ -43,6 +43,7 @@ namespace MMR.UI.Forms
             this.tabMain = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.bToggleTricks = new System.Windows.Forms.Button();
             this.cMode = new System.Windows.Forms.ComboBox();
             this.bLoadLogic = new System.Windows.Forms.Button();
             this.lMode = new System.Windows.Forms.Label();
@@ -106,6 +107,7 @@ namespace MMR.UI.Forms
             this.cMusic = new System.Windows.Forms.ComboBox();
             this.lTunic = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cCloseCows = new System.Windows.Forms.CheckBox();
             this.cArrowCycling = new System.Windows.Forms.CheckBox();
             this.cFreestanding = new System.Windows.Forms.CheckBox();
             this.cEnableNightMusic = new System.Windows.Forms.CheckBox();
@@ -121,6 +123,7 @@ namespace MMR.UI.Forms
             this.cCutsc = new System.Windows.Forms.CheckBox();
             this.cNoDowngrades = new System.Windows.Forms.CheckBox();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
+            this.cByoAmmo = new System.Windows.Forms.CheckBox();
             this.cFDAnywhere = new System.Windows.Forms.CheckBox();
             this.cUnderwaterOcarina = new System.Windows.Forms.CheckBox();
             this.cGravity = new System.Windows.Forms.ComboBox();
@@ -170,8 +173,6 @@ namespace MMR.UI.Forms
             this.lStatus = new System.Windows.Forms.Label();
             this.tSeed = new System.Windows.Forms.TextBox();
             this.lSeed = new System.Windows.Forms.Label();
-            this.tSString = new System.Windows.Forms.TextBox();
-            this.lSString = new System.Windows.Forms.Label();
             this.cDummy = new System.Windows.Forms.CheckBox();
             this.openPatch = new System.Windows.Forms.OpenFileDialog();
             this.ttOutput = new System.Windows.Forms.TabControl();
@@ -179,7 +180,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cCloseCows = new System.Windows.Forms.CheckBox();
+            this.cDeathMoonCrash = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -278,6 +279,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.bToggleTricks);
             this.groupBox9.Controls.Add(this.cMode);
             this.groupBox9.Controls.Add(this.bLoadLogic);
             this.groupBox9.Controls.Add(this.lMode);
@@ -288,6 +290,16 @@ namespace MMR.UI.Forms
             this.groupBox9.TabIndex = 29;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Generation Settings";
+            // 
+            // bToggleTricks
+            // 
+            this.bToggleTricks.Location = new System.Drawing.Point(232, 20);
+            this.bToggleTricks.Name = "bToggleTricks";
+            this.bToggleTricks.Size = new System.Drawing.Size(82, 23);
+            this.bToggleTricks.TabIndex = 19;
+            this.bToggleTricks.Text = "Toggle Tricks";
+            this.bToggleTricks.UseVisualStyleBackColor = true;
+            this.bToggleTricks.Click += new System.EventHandler(this.bToggleTricks_Click);
             // 
             // cMode
             // 
@@ -301,7 +313,7 @@ namespace MMR.UI.Forms
             "No Logic"});
             this.cMode.Location = new System.Drawing.Point(82, 21);
             this.cMode.Name = "cMode";
-            this.cMode.Size = new System.Drawing.Size(233, 21);
+            this.cMode.Size = new System.Drawing.Size(144, 21);
             this.cMode.TabIndex = 1;
             this.cMode.SelectedIndexChanged += new System.EventHandler(this.cMode_SelectedIndexChanged);
             // 
@@ -1114,6 +1126,17 @@ namespace MMR.UI.Forms
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
             // 
+            // cCloseCows
+            // 
+            this.cCloseCows.AutoSize = true;
+            this.cCloseCows.Location = new System.Drawing.Point(9, 183);
+            this.cCloseCows.Name = "cCloseCows";
+            this.cCloseCows.Size = new System.Drawing.Size(81, 17);
+            this.cCloseCows.TabIndex = 36;
+            this.cCloseCows.Text = "Close Cows";
+            this.cCloseCows.UseVisualStyleBackColor = true;
+            this.cCloseCows.CheckedChanged += new System.EventHandler(this.cCloseCows_CheckedChanged);
+            // 
             // cArrowCycling
             // 
             this.cArrowCycling.AutoSize = true;
@@ -1294,6 +1317,8 @@ namespace MMR.UI.Forms
             // 
             // tabGimmicks
             // 
+            this.tabGimmicks.Controls.Add(this.cDeathMoonCrash);
+            this.tabGimmicks.Controls.Add(this.cByoAmmo);
             this.tabGimmicks.Controls.Add(this.cFDAnywhere);
             this.tabGimmicks.Controls.Add(this.cUnderwaterOcarina);
             this.tabGimmicks.Controls.Add(this.cGravity);
@@ -1318,6 +1343,20 @@ namespace MMR.UI.Forms
             this.tabGimmicks.TabIndex = 3;
             this.tabGimmicks.Text = "Gimmicks";
             this.tabGimmicks.UseVisualStyleBackColor = true;
+            // 
+            // cByoAmmo
+            // 
+            this.cByoAmmo.AutoSize = true;
+            this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
+            this.cByoAmmo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
+            this.cByoAmmo.Location = new System.Drawing.Point(393, 184);
+            this.cByoAmmo.Name = "cByoAmmo";
+            this.cByoAmmo.Size = new System.Drawing.Size(80, 17);
+            this.cByoAmmo.TabIndex = 24;
+            this.cByoAmmo.Text = "BYO Ammo";
+            this.cByoAmmo.UseVisualStyleBackColor = false;
+            this.cByoAmmo.CheckedChanged += new System.EventHandler(this.cByoAmmo_CheckedChanged);
             // 
             // cFDAnywhere
             // 
@@ -1841,28 +1880,6 @@ namespace MMR.UI.Forms
             this.lSeed.TabIndex = 3;
             this.lSeed.Text = "Random seed:";
             // 
-            // tSString
-            // 
-            this.tSString.Location = new System.Drawing.Point(77, 35);
-            this.tSString.Name = "tSString";
-            this.tSString.Size = new System.Drawing.Size(223, 20);
-            this.tSString.TabIndex = 6;
-            this.tSString.Enter += new System.EventHandler(this.tSString_Enter);
-            this.tSString.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tSString_KeyDown);
-            this.tSString.Leave += new System.EventHandler(this.tSString_Leave);
-            // 
-            // lSString
-            // 
-            this.lSString.AutoSize = true;
-            this.lSString.BackColor = System.Drawing.Color.Transparent;
-            this.lSString.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lSString.ForeColor = System.Drawing.Color.Black;
-            this.lSString.Location = new System.Drawing.Point(1, 35);
-            this.lSString.Name = "lSString";
-            this.lSString.Size = new System.Drawing.Size(76, 13);
-            this.lSString.TabIndex = 7;
-            this.lSString.Text = "Settings string:";
-            // 
             // cDummy
             // 
             this.cDummy.AutoSize = true;
@@ -1895,8 +1912,6 @@ namespace MMR.UI.Forms
             this.tpOutputSettings.Controls.Add(this.bRandomise);
             this.tpOutputSettings.Controls.Add(this.tSeed);
             this.tpOutputSettings.Controls.Add(this.lSeed);
-            this.tpOutputSettings.Controls.Add(this.tSString);
-            this.tpOutputSettings.Controls.Add(this.lSString);
             this.tpOutputSettings.Location = new System.Drawing.Point(4, 22);
             this.tpOutputSettings.Name = "tpOutputSettings";
             this.tpOutputSettings.Padding = new System.Windows.Forms.Padding(3);
@@ -1936,16 +1951,19 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cCloseCows
+            // cDeathMoonCrash
             // 
-            this.cCloseCows.AutoSize = true;
-            this.cCloseCows.Location = new System.Drawing.Point(9, 183);
-            this.cCloseCows.Name = "cCloseCows";
-            this.cCloseCows.Size = new System.Drawing.Size(81, 17);
-            this.cCloseCows.TabIndex = 36;
-            this.cCloseCows.Text = "Close Cows";
-            this.cCloseCows.UseVisualStyleBackColor = true;
-            this.cCloseCows.CheckedChanged += new System.EventHandler(this.cCloseCows_CheckedChanged);
+            this.cDeathMoonCrash.AutoSize = true;
+            this.cDeathMoonCrash.BackColor = System.Drawing.Color.Transparent;
+            this.cDeathMoonCrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cDeathMoonCrash.ForeColor = System.Drawing.Color.Black;
+            this.cDeathMoonCrash.Location = new System.Drawing.Point(393, 207);
+            this.cDeathMoonCrash.Name = "cDeathMoonCrash";
+            this.cDeathMoonCrash.Size = new System.Drawing.Size(125, 17);
+            this.cDeathMoonCrash.TabIndex = 25;
+            this.cDeathMoonCrash.Text = "Death is Moon Crash";
+            this.cDeathMoonCrash.UseVisualStyleBackColor = false;
+            this.cDeathMoonCrash.CheckedChanged += new System.EventHandler(this.cDeathMoonCrash_CheckedChanged);
             // 
             // MainForm
             // 
@@ -2071,8 +2089,6 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lStatus;
         private System.Windows.Forms.TextBox tSeed;
         private System.Windows.Forms.Label lSeed;
-        private System.Windows.Forms.TextBox tSString;
-        private System.Windows.Forms.Label lSString;
         private System.Windows.Forms.CheckBox cDummy;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
@@ -2162,6 +2178,9 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cArrowCycling;
         private System.Windows.Forms.CheckBox cFasterBank;
         private System.Windows.Forms.CheckBox cCloseCows;
+        private System.Windows.Forms.Button bToggleTricks;
+        private System.Windows.Forms.CheckBox cByoAmmo;
+        private System.Windows.Forms.CheckBox cDeathMoonCrash;
     }
 }
 

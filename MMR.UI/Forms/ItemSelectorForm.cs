@@ -373,6 +373,36 @@ namespace MMR.UI.Forms
             "Pictograph Contest 20r", "Swamp Scrub Magic Bean", "Ocean Scrub Green Potion", "Canyon Scrub Blue Potion", "Zora Hall Stage Lights 5r", "Gorman Bros Purchase Milk",
             "Ocean Spider House 50r", "Ocean Spider House 20r", "Lulu Pictograph 5r", "Lulu Pictograph 20r", "Treasure Chest Game 50r", "Treasure Chest Game 20r",
             "Treasure Chest Game Deku Nuts", "Curiosity Shop 5r", "Curiosity Shop 20r", "Curiosity Shop 50r", "Curiosity Shop 200r", "Seahorse",
+
+
+            "GossipTerminaSouth",
+            "GossipSwampPotionShop",
+            "GossipMountainSpringPath",
+            "GossipMountainPath",
+            "GossipOceanZoraGame",
+            "GossipCanyonRoad",
+            "GossipCanyonDock",
+            "GossipCanyonSpiritHouse",
+            "GossipTerminaMilk",
+            "GossipTerminaWest",
+            "GossipTerminaNorth",
+            "GossipTerminaEast",
+            "GossipRanchTree",
+            "GossipRanchBarn",
+            "GossipMilkRoad",
+            "GossipOceanFortress",
+            "GossipSwampRoad",
+            "GossipTerminaObservatory",
+            "GossipRanchCuccoShack",
+            "GossipRanchRacetrack",
+            "GossipRanchEntrance",
+            "GossipCanyonRavine",
+            "GossipMountainSpringFrog",
+            "GossipSwampSpiderHouse",
+            "GossipTerminaGossipLarge",
+            "GossipTerminaGossipGuitar",
+            "GossipTerminaGossipPipes",
+            "GossipTerminaGossipDrums",
         };
 
         private static string[] ITEM_NAMES = DEFAULT_ITEM_NAMES.ToArray();
@@ -384,6 +414,16 @@ namespace MMR.UI.Forms
             ITEM_NAMES = newList.ToArray();
         }
 
+        public static void RenameItem(int index, string itemName)
+        {
+            ITEM_NAMES[index] = itemName;
+        }
+
+        public static void RemoveItem(int index)
+        {
+            ITEM_NAMES = ITEM_NAMES.Where((_, i) => i != index).ToArray();
+        }
+
         public static void ResetItems()
         {
             ITEM_NAMES = DEFAULT_ITEM_NAMES.ToArray();
@@ -391,35 +431,33 @@ namespace MMR.UI.Forms
 
         public static List<int> ReturnItems;
 
+        private List<string> _filteredItems;
+        private List<int> _selectedItems;
+
         public ItemSelectorForm(List<int> selectedItems = null, bool checkboxes = true, List<int> highlightedItems = null)
         {
             InitializeComponent();
-            for (int i = 0; i < ITEM_NAMES.Length; i++)
-            {
-                var item = new ListViewItem(ITEM_NAMES[i]);
-                item.Checked = selectedItems?.Contains(i) ?? false;
-                lItems.Items.Add(item);
-                if (highlightedItems != null)
-                {
-                    item.ForeColor = highlightedItems.Contains(i)
-                        ? Color.Black
-                        : Color.LightGray;
-                }
-            };
+            _filteredItems = ITEM_NAMES.Where((item, index) => highlightedItems?.Contains(index) ?? true).ToList();
+            _selectedItems = selectedItems?.ToList() ?? new List<int>();
+            UpdateItems();
             this.ActiveControl = textBoxFilter;
             lItems.CheckBoxes = checkboxes;
         }
 
+        private void UpdateItems()
+        {
+            lItems.Clear();
+            foreach (var filteredItem in _filteredItems)
+            {
+                var item = new ListViewItem(filteredItem);
+                item.Checked = _selectedItems.Contains(Array.IndexOf(ITEM_NAMES, filteredItem));
+                lItems.Items.Add(item);
+            }
+        }
+
         private void bDone_Click(object sender, EventArgs e)
         {
-            ReturnItems = new List<int>();
-            foreach (ListViewItem l in lItems.Items)
-            {
-                if (l.Checked)
-                {
-                    ReturnItems.Add(l.Index);
-                };
-            };
+            ReturnItems = _selectedItems.ToList();
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -427,12 +465,8 @@ namespace MMR.UI.Forms
         private void textBoxFilter_TextChanged(object sender, EventArgs e)
         {
             var filter = textBoxFilter.Text.ToLower();
-            foreach (var item in lItems.Items.Cast<ListViewItem>())
-            {
-                item.ForeColor = item.Text.ToLower().Contains(filter)
-                    ? Color.Black
-                    : Color.LightGray;
-            }
+            _filteredItems = ITEM_NAMES.Where(item => item.ToLower().Contains(filter)).ToList();
+            UpdateItems();
         }
 
         private void lItems_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -441,9 +475,22 @@ namespace MMR.UI.Forms
             {
                 return;
             }
-            ReturnItems = lItems.SelectedIndices.Cast<int>().ToList();
+            ReturnItems = new List<int> { Array.IndexOf(ITEM_NAMES, _filteredItems[lItems.SelectedIndices.Cast<int>().First()]) };
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void lItems_ItemChecked(object sender, ItemCheckedEventArgs e)
+        {
+            var index = Array.IndexOf(ITEM_NAMES, e.Item.Text);
+            if (e.Item.Checked)
+            {
+                _selectedItems.Add(index);
+            }
+            else
+            {
+                _selectedItems.Remove(index);
+            }
         }
     }
 }

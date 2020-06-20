@@ -50,6 +50,7 @@
             this.lItems.TabIndex = 1;
             this.lItems.UseCompatibleStateImageBehavior = false;
             this.lItems.View = System.Windows.Forms.View.List;
+            this.lItems.ItemChecked += new System.Windows.Forms.ItemCheckedEventHandler(this.lItems_ItemChecked);
             this.lItems.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lItems_MouseDoubleClick);
             // 
             // columnHeader1

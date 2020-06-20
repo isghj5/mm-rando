@@ -148,6 +148,35 @@ namespace MMR.UI.Forms
         "Pictograph Contest 20r", "Swamp Scrub Magic Bean", "Ocean Scrub Green Potion", "Canyon Scrub Blue Potion", "Zora Hall Stage Lights 5r", "Gorman Bros Purchase Milk",
         "Ocean Spider House 50r", "Ocean Spider House 20r", "Lulu Pictograph 5r", "Lulu Pictograph 20r", "Treasure Chest Game 50r", "Treasure Chest Game 20r",
         "Treasure Chest Game Deku Nuts", "Curiosity Shop 5r", "Curiosity Shop 20r", "Curiosity Shop 50r", "Curiosity Shop 200r", "Seahorse",
+
+        "GossipTerminaSouth",
+        "GossipSwampPotionShop",
+        "GossipMountainSpringPath",
+        "GossipMountainPath",
+        "GossipOceanZoraGame",
+        "GossipCanyonRoad",
+        "GossipCanyonDock",
+        "GossipCanyonSpiritHouse",
+        "GossipTerminaMilk",
+        "GossipTerminaWest",
+        "GossipTerminaNorth",
+        "GossipTerminaEast",
+        "GossipRanchTree",
+        "GossipRanchBarn",
+        "GossipMilkRoad",
+        "GossipOceanFortress",
+        "GossipSwampRoad",
+        "GossipTerminaObservatory",
+        "GossipRanchCuccoShack",
+        "GossipRanchRacetrack",
+        "GossipRanchEntrance",
+        "GossipCanyonRavine",
+        "GossipMountainSpringFrog",
+        "GossipSwampSpiderHouse",
+        "GossipTerminaGossipLarge",
+        "GossipTerminaGossipGuitar",
+        "GossipTerminaGossipPipes",
+        "GossipTerminaGossipDrums",
         };
 
         string[] ITEM_NAMES = DEFAULT_ITEM_NAMES.ToArray();
@@ -161,6 +190,8 @@ namespace MMR.UI.Forms
             public List<List<int>> Conditional = new List<List<int>>();
             public int Time_Needed = new int();
             public int Time_Available = new int();
+            public bool IsTrick = false;
+            public string TrickTooltip = null;
         }
 
         List<ItemLogic> ItemList;
@@ -290,6 +321,13 @@ namespace MMR.UI.Forms
             ItemList[n].Time_Needed = Ne;
         }
 
+        private void FillTrick(int n)
+        {
+            cTrick.Checked = ItemList[n].IsTrick;
+            tTrickDescription.Text = ItemList[n].TrickTooltip ?? "(optional tooltip)";
+            tTrickDescription.ForeColor = ItemList[n].TrickTooltip != null ? SystemColors.WindowText : SystemColors.WindowFrame;
+        }
+
         public LogicEditorForm()
         {
             InitializeComponent();
@@ -326,6 +364,11 @@ namespace MMR.UI.Forms
             FillDependence(n);
             FillConditional(n);
             FillTime(n);
+            FillTrick(n);
+            bRenameItem.Visible = index >= DEFAULT_ITEM_NAMES.Length;
+            bDeleteItem.Visible = index >= DEFAULT_ITEM_NAMES.Length;
+            cTrick.Visible = index >= DEFAULT_ITEM_NAMES.Length;
+            tTrickDescription.Visible = index >= DEFAULT_ITEM_NAMES.Length;
             updating = false;
         }
 
@@ -398,48 +441,76 @@ namespace MMR.UI.Forms
         {
             if (saveLogic.ShowDialog() == DialogResult.OK)
             {
-                StreamWriter LogicFile = new StreamWriter(File.Open(saveLogic.FileName, FileMode.Create));
-                LogicFile.WriteLine($"-version {Migrator.CurrentVersion}");
+                var builder = new StringBuilder();
+                builder.AppendLine($"-version {Migrator.CurrentVersion}");
                 for (int i = 0; i < ItemList.Count; i++)
                 {
-                    LogicFile.WriteLine("- " + ITEM_NAMES[i]);
-                    for (int j = 0; j < ItemList[i].Dependence.Count; j++)
+                    var itemLogic = ItemList[i];
+
+                    if (itemLogic.Dependence.Any(item => ItemList[item].IsTrick))
                     {
-                        LogicFile.Write(ItemList[i].Dependence[j].ToString());
-                        if (j != ItemList[i].Dependence.Count - 1)
-                        {
-                            LogicFile.Write(",");
-                        };
-                    };
-                    LogicFile.WriteLine();
-                    for (int j = 0; j < ItemList[i].Conditional.Count; j++)
+                        MessageBox.Show($"Dependencies of {ITEM_NAMES[i]} are not valid. Cannot have tricks as Dependencies.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    if (itemLogic.Conditional.Any() && itemLogic.Conditional.All(c => c.Any(item => ItemList[item].IsTrick)))
                     {
-                        for (int k = 0; k < ItemList[i].Conditional[j].Count; k++)
+                        MessageBox.Show($"Conditionals of {ITEM_NAMES[i]} are not valid. Must have at least one conditional that isn't a trick.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    builder.AppendLine("- " + ITEM_NAMES[i]);
+                    for (int j = 0; j < itemLogic.Dependence.Count; j++)
+                    {
+                        builder.Append(itemLogic.Dependence[j].ToString());
+                        if (j != itemLogic.Dependence.Count - 1)
                         {
-                            LogicFile.Write(ItemList[i].Conditional[j][k].ToString());
-                            if (k != ItemList[i].Conditional[j].Count - 1)
+                            builder.Append(",");
+                        }
+                    }
+                    builder.AppendLine();
+                    for (int j = 0; j < itemLogic.Conditional.Count; j++)
+                    {
+                        for (int k = 0; k < itemLogic.Conditional[j].Count; k++)
+                        {
+                            builder.Append(itemLogic.Conditional[j][k].ToString());
+                            if (k != itemLogic.Conditional[j].Count - 1)
                             {
-                                LogicFile.Write(",");
-                            };
-                        };
-                        if (j != ItemList[i].Conditional.Count - 1)
+                                builder.Append(",");
+                            }
+                        }
+                        if (j != itemLogic.Conditional.Count - 1)
                         {
-                            LogicFile.Write(";");
-                        };
-                    };
-                    LogicFile.WriteLine();
-                    LogicFile.WriteLine(ItemList[i].Time_Needed);
+                            builder.Append(";");
+                        }
+                    }
+                    builder.AppendLine();
+                    builder.AppendLine(itemLogic.Time_Needed.ToString());
+                    builder.AppendLine(itemLogic.Time_Available.ToString());
+
+                    var lastLine = "";
+                    if (itemLogic.IsTrick)
+                    {
+                        lastLine += ";";
+                        if (itemLogic.TrickTooltip != null)
+                        {
+                            lastLine += itemLogic.TrickTooltip;
+                        }
+                    }
                     if (i != ItemList.Count - 1)
                     {
-                        LogicFile.WriteLine(ItemList[i].Time_Available);
+                        builder.AppendLine(lastLine);
                     }
                     else
                     {
-                        LogicFile.Write(ItemList[i].Time_Available);
-                    };
-                };
-                LogicFile.Close();
-            };
+                        builder.Append(lastLine);
+                    }
+                }
+
+                using (var writer = new StreamWriter(File.Open(saveLogic.FileName, FileMode.Create)))
+                {
+                    writer.Write(builder);
+                }
+            }
         }
 
         private void btn_new_item_Click(object sender, EventArgs e)
@@ -513,6 +584,16 @@ namespace MMR.UI.Forms
             }
         }
 
+        private void bConClone_Click(object sender, EventArgs e)
+        {
+            var index = lConditional.SelectedIndex;
+            if (index != ListBox.NoMatches)
+            {
+                ItemList[n].Conditional.Insert(index + 1, ItemList[n].Conditional[index]);
+                FillConditional(n);
+            }
+        }
+
         private void casualToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             LoadLogic(Resources.REQ_CASUAL);
@@ -581,13 +662,120 @@ namespace MMR.UI.Forms
                     };
                     l.Time_Needed = Convert.ToInt32(lines[i + 2]);
                     l.Time_Available = Convert.ToInt32(lines[i + 3]);
+                    var trickInfo = lines[i + 4].Split(new char[] { ';' }, 2);
+                    l.IsTrick = trickInfo.Length > 1;
+                    l.TrickTooltip = l.IsTrick ? trickInfo[1] : null;
+                    if (string.IsNullOrWhiteSpace(l.TrickTooltip))
+                    {
+                        l.TrickTooltip = null;
+                    }
                     ItemList.Add(l);
-                    i += 4;
+                    i += 5;
                 };
             };
             
             nItem.Maximum = ITEM_NAMES.Length - 1;
             SetIndex((int)nItem.Value);
+        }
+
+        private void bRenameItem_Click(object sender, EventArgs e)
+        {
+            using (var newItemForm = new NewItemForm())
+            {
+                var result = newItemForm.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    ITEM_NAMES[n] = newItemForm.ReturnValue;
+                    ItemSelectorForm.RenameItem(n, newItemForm.ReturnValue);
+                    lIName.Text = newItemForm.ReturnValue;
+                }
+            }
+        }
+
+        private void bDeleteItem_Click(object sender, EventArgs e)
+        {
+            string message;
+            string caption;
+            MessageBoxButtons buttons;
+            var usedBy = ItemList.Where(il => il.Dependence.Contains(n) || il.Conditional.Any(c => c.Contains(n))).ToList();
+            if (usedBy.Any())
+            {
+                // in use
+                caption = "Error";
+                message = "This item is in use by:\n"+ string.Join("\n", usedBy.Take(5).Select(il => "* " + ITEM_NAMES[ItemList.IndexOf(il)]));
+                if (usedBy.Count > 5)
+                {
+                    message += $"\nand {usedBy.Count-5} other{(usedBy.Count > 6 ? "s" : "")}.";
+                }
+                buttons = MessageBoxButtons.OK;
+            }
+            else
+            {
+                // not in use
+                caption = "Warning";
+                message = "Are you sure you want to delete this item?";
+                buttons = MessageBoxButtons.YesNo;
+            }
+            var result = MessageBox.Show(message, caption, buttons);
+            if (result == DialogResult.Yes)
+            {
+                ItemList.RemoveAt(n);
+                ITEM_NAMES = ITEM_NAMES.Where((_, i) => i != n).ToArray();
+                ItemSelectorForm.RemoveItem(n);
+                foreach (var itemLogic in ItemList)
+                {
+                    for (var i = 0; i < itemLogic.Dependence.Count; i++)
+                    {
+                        if (itemLogic.Dependence[i] > n)
+                        {
+                            itemLogic.Dependence[i]--;
+                        }
+                    }
+                    foreach (var conditionals in itemLogic.Conditional)
+                    {
+                        for (var i = 0; i < conditionals.Count; i++)
+                        {
+                            if (conditionals[i] > n)
+                            {
+                                conditionals[i]--;
+                            }
+                        }
+                    }
+                }
+                SetIndex(n);
+            }
+        }
+
+        private const string DEFAULT_TRICK_TOOLTIP = "(optional tooltip)";
+
+        private void tTrickDescription_TextChanged(object sender, EventArgs e)
+        {
+            ItemList[n].TrickTooltip = string.IsNullOrWhiteSpace(tTrickDescription.Text) || tTrickDescription.Text == DEFAULT_TRICK_TOOLTIP
+                ? null
+                : tTrickDescription.Text;
+        }
+
+        private void tTrickDescription_Enter(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ItemList[n].TrickTooltip))
+            {
+                tTrickDescription.Text = string.Empty;
+                tTrickDescription.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        private void cTrick_CheckedChanged(object sender, EventArgs e)
+        {
+            ItemList[n].IsTrick = cTrick.Checked;
+        }
+
+        private void tTrickDescription_Leave(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(ItemList[n].TrickTooltip))
+            {
+                tTrickDescription.Text = DEFAULT_TRICK_TOOLTIP;
+                tTrickDescription.ForeColor = SystemColors.WindowFrame;
+            }
         }
     }
 }

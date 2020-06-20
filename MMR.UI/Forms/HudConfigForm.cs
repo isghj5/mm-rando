@@ -100,6 +100,7 @@ namespace MMR.UI.Forms
             btn_wallet99.BackColor = colors.RupeeIcon1;
             btn_wallet200.BackColor = colors.RupeeIcon2;
             btn_wallet500.BackColor = colors.RupeeIcon3;
+            btn_dpad.BackColor = colors.DPad;
         }
 
         /// <summary>
@@ -129,6 +130,7 @@ namespace MMR.UI.Forms
             colors.RupeeIcon1 = btn_wallet99.BackColor;
             colors.RupeeIcon2 = btn_wallet200.BackColor;
             colors.RupeeIcon3 = btn_wallet500.BackColor;
+            colors.DPad = btn_dpad.BackColor;
             return colors;
         }
 
@@ -244,6 +246,11 @@ namespace MMR.UI.Forms
         }
 
         private void btn_wallet500_Click(object sender, EventArgs e)
+        {
+            SelectColor((Button)sender);
+        }
+
+        private void btn_dpad_Click(object sender, EventArgs e)
         {
             SelectColor((Button)sender);
         }
@@ -391,6 +398,7 @@ namespace MMR.UI.Forms
             ctxtMenu_RandomizeMagic(sender, e);
             ctxtMenu_RandomizeMap(sender, e);
             ctxtMenu_RandomizeRupees(sender, e);
+            RandomizeControlColor(btn_dpad);
         }
 
         void ctxtMenu_RandomizeCurrent(object sender, EventArgs e)
@@ -514,6 +522,7 @@ namespace MMR.UI.Forms
                 new ColorControl(btn_wallet99, ColorMode.Back, defaultColors.RupeeIcon1),
                 new ColorControl(btn_wallet200, ColorMode.Back, defaultColors.RupeeIcon2),
                 new ColorControl(btn_wallet500, ColorMode.Back, defaultColors.RupeeIcon3),
+                new ColorControl(btn_dpad, ColorMode.Back, defaultColors.DPad),
             };
         }
 

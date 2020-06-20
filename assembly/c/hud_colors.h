@@ -57,7 +57,12 @@ struct hud_color_config {
     z2_color_rgb8_t prompt_glow;
     z2_color_rgb8_t score_lines;
     z2_color_rgb8_t score_note;
+
+    // Version 2
+    z2_color_rgb8_t dpad;
 };
+
+extern struct hud_color_config HUD_COLOR_CONFIG;
 
 void hud_colors_init(void);
 void hud_colors_main_menu_init(void);
