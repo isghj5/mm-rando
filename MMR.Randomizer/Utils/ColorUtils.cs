@@ -96,16 +96,6 @@ namespace MMR.Randomizer.Utils
         }
 
         /// <summary>
-        /// Get a <see cref="Color"/> as bytes in RGBA order.
-        /// </summary>
-        /// <param name="color">Color</param>
-        /// <returns>Bytes</returns>
-        public static byte[] GetBytesRGBA(Color color)
-        {
-            return new byte[] { color.R, color.G, color.B, color.A };
-        }
-
-        /// <summary>
         /// Check if the supplied <see cref="int"/>s are in the allowable range for 8-bit colour channels. If not, update them.
         /// </summary>
         /// <param name="r">Red</param>

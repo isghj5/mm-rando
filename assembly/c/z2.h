@@ -1454,6 +1454,33 @@ typedef struct {
 } z2_static_ctxt_t;                                  /* 0x0112 */
 
 /// =============================================================
+/// Messagebox Context
+/// =============================================================
+
+typedef struct z2_msgbox_ctxt_s {
+    u8               unk_0x00[0x1F00];               /* 0x0000 */
+    z2_song_ctxt_t  *song_ctxt;                      /* 0x1F00 */
+    u8               unk_0x1F04[0x0C];               /* 0x1F04 */
+    u32              unk_0x1F10;                     /* 0x1F10 */
+    u8               unk_0x1F14[0x0E];               /* 0x1F14 */
+    u8               message_state_1;                /* 0x1F22 */
+    u8               unk_0x1F23[0xF5];               /* 0x1F23 */
+    z2_color_rgb16_t cur_char_color;                 /* 0x2018 */
+    s16              cur_char_alpha;                 /* 0x201E */
+    u8               message_state_2;                /* 0x2020 */
+    u8               unk_0x2021[0x02];               /* 0x2021 */
+    u8               message_state_3;                /* 0x2023 */
+    u8               unk_0x2024[0x10];               /* 0x2024 */
+    z2_color_rgb16_t score_line_color;               /* 0x2034 */
+    u8               unk_0x203A[0x02];               /* 0x203A */
+    s16              score_line_alpha;               /* 0x203C */
+    u8               unk_0x203E[0x82];               /* 0x203E */
+    u8               unk_0x20C0[0x08];               /* 0x20C0 */
+    z2_color_rgb16_t normal_char_color;              /* 0x20C8 */
+    u8               unk_0x20CE[0x12];               /* 0x20CE */
+} z2_msgbox_ctxt_t;                                  /* 0x20E0 */
+
+/// =============================================================
 /// Game Structure
 /// =============================================================
 
@@ -1475,18 +1502,8 @@ struct z2_game_s {
     u8               unk_0x1F24[0x04];               /* 0x01F24 */
     void            *cutscene_ptr;                   /* 0x01F28 */
     s8               cutscene_state;                 /* 0x01F2C */
-    u8               unk_0x1F2D[0x148DB];            /* 0x01F2D */
-    z2_song_ctxt_t  *song_ctxt;                      /* 0x16808 */
-    u8               unk_0x1680C[0x0C];              /* 0x1680C */
-    u32              unk_0x16818;                    /* 0x16818 */
-    u8               unk_0x1681C[0x0E];              /* 0x1681C */
-    u8               message_state_1;                /* 0x1682A */
-    u8               unk_0x1682B[0xFD];              /* 0x1682B */
-    u8               message_state_2;                /* 0x16928 */
-    u8               unk_0x16829[0x02];              /* 0x16929 */
-    u8               message_state_3;                /* 0x1692B */
-    u8               unk_0x1692C[0x9C];              /* 0x1692C */
-    u8               unk_0x169C8[0x20];              /* 0x169C8 */
+    u8               unk_0x1F2D[0x129DB];            /* 0x01F2D */
+    z2_msgbox_ctxt_t msgbox_ctxt;                    /* 0x14908 */
     z2_hud_ctxt_t    hud_ctxt;                       /* 0x169E8 */
     z2_pause_ctxt_t  pause_ctxt;                     /* 0x16D30 */
     u8               unk_0x16F30[0xDE8];             /* 0x16FA0 */
@@ -1733,11 +1750,11 @@ typedef struct {
     u8               buttons_usable[0x05];           /* 0x3F18, B, C-left, C-down, C-right, A buttons. */
     u8               unk_0x3F1D[0x03];               /* 0x3F1D */
     z2_buttons_state_t buttons_state;                /* 0x3F20 */
-    s16              special_arrow_state;            /* 0x3F28 */
+    s16              magic_consume_state;            /* 0x3F28 */
     u8               unk_0x3F2A[0x04];               /* 0x3F2A */
     u16              magic_meter_size;               /* 0x3F2E */
     u8               unk_0x3F30[0x02];               /* 0x3F30 */
-    s16              arrow_magic_cost;               /* 0x3F32 */
+    s16              magic_consume_cost;             /* 0x3F32 */
     u8               unk_0x3F34[0x34];               /* 0x3F34 */
     z2_scene_flags_t scene_flags[0x78];              /* 0x3F68 */
     u8               unk_0x48C8[0x1010];             /* 0x48C8 */
@@ -2219,6 +2236,7 @@ typedef struct {
 #define z2_UpdateButtonsState_addr       0x8010EF68
 #define z2_ReloadButtonTexture_addr      0x80112B40
 #define z2_HudSetAButtonText_addr        0x8011552C
+#define z2_InitButtonNoteColors_addr     0x80147564
 
 /* Function Addresses (Objects) */
 #define z2_GetObjectIndex_addr           0x8012F608
@@ -2287,6 +2305,7 @@ typedef void (*z2_SetGetItem_proc)(z2_actor_t *actor, z2_game_t *game, s32 unk2,
 
 /* Function Prototypes (HUD) */
 typedef void (*z2_HudSetAButtonText_proc)(z2_game_t *game, u16 text_id);
+typedef void (*z2_InitButtonNoteColors_proc)(z2_game_t *game);
 typedef void (*z2_ReloadButtonTexture_proc)(z2_game_t *game, u8 idx);
 typedef void (*z2_UpdateButtonsState_proc)(u32 state);
 
@@ -2347,6 +2366,7 @@ typedef void (*z2_UnloadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt);
 
 /* Functions (HUD) */
 #define z2_HudSetAButtonText             ((z2_HudSetAButtonText_proc)     z2_HudSetAButtonText_addr)
+#define z2_InitButtonNoteColors          ((z2_InitButtonNoteColors_proc)  z2_InitButtonNoteColors_addr)
 #define z2_ReloadButtonTexture           ((z2_ReloadButtonTexture_proc)   z2_ReloadButtonTexture_addr)
 #define z2_UpdateButtonsState            ((z2_UpdateButtonsState_proc)    z2_UpdateButtonsState_addr)
 

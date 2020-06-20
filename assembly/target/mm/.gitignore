@@ -1,4 +1,0 @@
-build/*.o
-build/*.txt
-data/generated/*.json
-data/generated/*.txt

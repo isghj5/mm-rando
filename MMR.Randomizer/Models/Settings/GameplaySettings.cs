@@ -36,6 +36,15 @@ namespace MMR.Randomizer.Models.Settings
         #region Asm Getters / Setters
 
         /// <summary>
+        /// Whether or not to change Cow response behavior.
+        /// </summary>
+        public bool CloseCows
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.CloseCows; }
+            set { this.AsmOptions.MiscConfig.Flags.CloseCows = value; }
+        }
+
+        /// <summary>
         /// Whether or not to enable cycling arrow types while using the bow.
         /// </summary>
         public bool ArrowCycling {
@@ -418,10 +427,10 @@ namespace MMR.Randomizer.Models.Settings
             FreeHints = (part1 & 16384) > 0;
             // 8192 - UseCustomItemList, see above
             AllowFierceDeityAnywhere = (part1 & 2048) > 0;
-            // = (part1 & 512) > 0;
+            UpdateWorldModels = (part1 & 512) > 0;
             AddSongs = (part1 & 256) > 0;
             RandomizeDungeonEntrances = (part1 & 16) > 0;
-            // = (part1 & 8) > 0;
+            ArrowCycling = (part1 & 8) > 0;
             RandomizeEnemies = (part1 & 4) > 0;
             ShortenCutscenes = (part1 & 2) > 0;
             QuickTextEnabled = (part1 & 1) > 0;
@@ -454,6 +463,7 @@ namespace MMR.Randomizer.Models.Settings
             FastPush = (part5 & (1 << 6)) > 0;
             OcarinaUnderwater = (part5 & (1 << 7)) > 0;
             QuestItemStorage = (part5 & (1 << 8)) > 0;
+            CloseCows = (part5 & (1 << 9)) > 0;
 
             DamageMode = (DamageMode)damageMultiplierIndex;
             DamageEffect = (DamageEffect)damageTypeIndex;
@@ -501,10 +511,10 @@ namespace MMR.Randomizer.Models.Settings
             if (ClearHints) { parts[0] += 65536; };
             if (FreeHints) { parts[0] += 16384; };
             if (AllowFierceDeityAnywhere) { parts[0] += 2048; }
-            // { parts[0] += 512; };
+            if (UpdateWorldModels) { parts[0] += 512; };
             if (AddSongs) { parts[0] += 256; };
             if (RandomizeDungeonEntrances) { parts[0] += 16; };
-            // { parts[0] += 8; };
+            if (ArrowCycling) { parts[0] += 8; };
             if (RandomizeEnemies) { parts[0] += 4; };
             if (ShortenCutscenes) { parts[0] += 2; };
             if (QuickTextEnabled) { parts[0] += 1; };
@@ -541,6 +551,7 @@ namespace MMR.Randomizer.Models.Settings
             if (FastPush) { parts[4] += (1 << 6); }
             if (OcarinaUnderwater) { parts[4] += (1 << 7); }
             if (QuestItemStorage) { parts[4] += (1 << 8); }
+            if (CloseCows) { parts[4] += (1 << 9); }
 
             return parts;
         }

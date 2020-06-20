@@ -53,3 +53,16 @@
     jal     pause_menu_select_item_show_a_button_enabled_hook
     or      a0, t8, r0
     beqzl    v0, 0x8081C224
+
+;==================================================================================================
+; Pause Menu Update
+;==================================================================================================
+
+; Replaces:
+;   sw      s0, 0x0014 (sp)
+;   or      s0, a0, r0
+;   sw      ra, 0x001C (sp)
+.org 0x808283DC
+    sw      ra, 0x001C (sp)
+    jal     pause_menu_before_update_hook
+    sw      s0, 0x0014 (sp)

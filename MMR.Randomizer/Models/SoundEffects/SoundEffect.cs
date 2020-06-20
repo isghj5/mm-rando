@@ -32,18 +32,74 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         #endregion
 
-
         #region Environment SFX
+
+        [Tags(Long)]
+        CuccoClucking = 0x2011,
+
+        [Tags(Long)]
+        CuccoCluckingRunningFromYou = 0x2012,
 
         [Replacable(0x00EABA46, 0x00EABC3A, 0x00EACACA)]
         [Tags(Long)]
         [ReplacableByTags(Long)]
         CuccoMorning = 0x2013,
 
+        [Tags(Short)]
+        TatlEmerges = 0x201B,
+
+        [Tags(Short)]
+        PhantomGannonSpikedFence = 0x203C, // left over from oot
+
+        [Replacable(0x00D01186, 0x00CFE0A6, 0x00CF969A, 0x00CFA602, 0x00CFA816, 0x00CFA482, 0x00CF91E2, 0x00CFC43A)]
+        [Tags(Short, LowHpBeep)]
+        [ReplacableByTags(Short)]
+        EponaNeigh = 0x2044,
+
+        // TODO turn this into a slot, good comedy hearing something weird living in the mailbox
+        [Tags(Short)]
+        PostBoxOpen = 0x204C, // opening a cash register
+
+        [Tags(Short, LowHpBeep)]
+        TatlHides = 0x205F,
+
+        [Tags(Short, LowHpBeep)]
+        FishFlop = 0x2069,
+
+        [Tags(Short, LowHpBeep)]
+        TatlAttacksDoor = 0x2072,
+
+        [Tags(Long)] // very long
+        TreasureChestAppear = 0x207B,
+
+        [Tags(Short, LowHpBeep)]
+        PotBreak = 0x2087,
+
+        [Tags(Short, LowHpBeep)]
+        BigStoneDoorOpensThud = 0x2093,
+
+        //[Tags(Long, Debug)]
+        //MoonEarthQuake= 0x2098, // loops, damnit
+
+        [Tags(Long)]
+        BeehiveFall = 0x20A0,
+
+        [Tags(Short)]
+        WoodenCrateBreak = 0x20AA,
+
         [Replacable(0x00EABC4A, 0x00EACABE)]
         [Tags(Long)]
         [ReplacableByTags(Long)]
         WolfHowlEvening = 0x20AE,
+
+        [Tags(Short)]
+        FrogJumpCroak = 0x20B1,
+
+        [Tags(Long)]
+        JabuJabuDeepBreath = 0x20B6, // wow this is still in here??
+
+        [Tags(Long)]
+        FrogIncreaseSize = 0x20CC, // wow this is still in here??
 
         [Replacable(0x00DFC776, 0xDFCC3A, 0xDFDCF6)]
         [Tags(Short, LowHpBeep)]
@@ -52,6 +108,9 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Long)]
         CowMoo = 0x20DF,
+
+        [Tags(Short, LowHpBeep)]
+        SilverRupeeGet = 0x20E8, // from oot, red coin style puzzle
 
         [Tags(Short)]
         [ReplacableByTags(Short)]
@@ -68,10 +127,77 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         DogWhine = 0x2113,
 
-        [Replacable(0x00D01186, 0x00CFE0A6, 0x00CF969A, 0x00CFA602, 0x00CFA816, 0x00CFA482, 0x00CF91E2, 0x00CFC43A)]
+        [Tags(Short)] // maybe lowhpbeep
+        TatlUrgentRing= 0x2125,    // notices skullkid left her behind
+
+        [Tags(Long)]
+        TatlSoundTheAlarm = 0x2126,
+
+        [Tags(Short)]
+        BomberWalking= 0x212C,
+
+        [Tags(Short)]
+        TatlSigh = 0x2135,  // fairies can't use doors
+
+        [Tags(Short)]
+        TatlFlyingBrake = 0x2136, // tatl has arrived
+
+        //[Tags(Short, Debug)]
+        //SmallFairyHeal = 0x2138, // looping, cannot use without stopping that
+
+        [Tags(Long)]
+        ClockTowerBounce = 0x2140,
+
+        [Tags(Short, Long)]
+        ClockTowerStairsDrop = 0x2145,
+
+        //[Tags(Short, Debug)]
+        //UFOAppear = 0x217b, // loops
+
+        //[Tags(Long, Debug)] // ??? not used I don't think, I think this was meant for when you beat them but they went with fanfare instead
+        //UFODash = 0x217c,
+
         [Tags(Short, LowHpBeep)]
-        [ReplacableByTags(Short)]
-        EponaNeigh = 0x2044,
+        MilkPotDamage = 0x217E,
+
+        [Tags(Long)]
+        MoonStoneFalling = 0x2186,
+
+        [Tags(Short, LowHpBeep)]
+        BankStampHand = 0x2193,
+
+        [Tags(Short, LowHpBeep)]
+        LittleChickChirp = 0x2194,
+
+        [Tags(Long)]
+        SecretLadderAppears = 0x2197, // woodfall ladder
+
+        //[Tags(Short, Debug)]
+        //MoonEyesFlash = 0x219C, // unused I think
+
+        //[Tags(Debug)]
+        //MoonGrumble= 0x219D,
+
+        //[Tags(Debug)]
+        //MoonU2= 0x219E, // looping moon quake
+
+        [Tags(Short, LowHpBeep)]
+        TatlDashNormal = 0x219F,
+
+        [Tags(Short, LowHpBeep)]
+        STBlockCollide = 0x21A4, // CLANG
+
+        //[Tags(Short, Debug)]
+        //TatlAngryAtSakon = 0x21A5, // looping version of a previous sample
+
+        //[Tags(Short, Debug)]
+        //UFOLight = 0x21A8, // looping
+
+        //[Tags(Short, Debug)]
+        //FireworksLaunched = 0x21B9, // looping
+
+        [Tags(Short)]
+        SwordForgeClang = 0x21C2,
 
         #endregion
 
@@ -79,6 +205,12 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Short)]
         GaroAppear = 0x3012,
+
+        [Tags(Long)]
+        TwinMoldAppears = 0x3019,
+
+        [Tags(Short, Long)]
+        TwinMoldDamage = 0x301A,
 
         [Tags(Short)]
         DinolfosCry = 0x3029,
@@ -114,6 +246,9 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         BombchuAim = 0x3055,
 
+        [Tags(Short)]
+        TektiteDamage = 0x306D,
+
         [Tags(Long)]
         TektiteDeath = 0x306E,
 
@@ -122,6 +257,9 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Short)]
         PoeDisappear = 0x3074,
+
+        [Tags(Short)]
+        PoeDamage = 0x3075,
 
         [Replacable(0xE95C6E, 0xE960FA, 0xD3809E, 0xD38502)]
         [ReplacableByTags(Short)]
@@ -191,7 +329,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         GuayDie = 0x30EB,
 
         [Tags(Long)]
-        SnapperShoutsGagwapZZZ = 0x30F3,
+        SnapperShoutsGagrap = 0x30F3,
 
         [Tags(Short)]
         GoronWake = 0x30FC,
@@ -556,6 +694,12 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         PirateScream2 = 0x6119,
 
+        //[Tags(Short)]
+        //PirateScreamTerror = 0x611A, // ??? never heard in game?
+
+        //[Tags(Short, Debug)]
+        //PirateScreamLongYell = 0x611B, // ??? never heard in game?
+
         [Tags(Short)]
         RosaSigh1 = 0x611C,
 
@@ -569,13 +713,22 @@ namespace MMR.Randomizer.Models.SoundEffects
         RosaGiggle2 = 0x611F,
 
         [Tags(Short)]
-        RosaAnnoyed = 0x6120,
+        RosaAnnoyed = 0x6120, // stop interupting our dance
 
         [Tags(Short)]
         RosaLaugh = 0x6121,
 
         [Tags(Short)]
+        AnjuSigh1 = 0x6122,  // do you have a reservation?
+
+        [Tags(Short)]
         AnjuSurprised = 0x6123,
+
+        [Tags(Short)]
+        AnjuSigh2 = 0x6124,  // you do have a reservation? that's good
+
+        [Tags(Short)]
+        AnjuShocked = 0x6125, // you're looking for kafei too?
 
         [Tags(Short, LowHpBeep)]
         CremiaInquisitive = 0x6126,
@@ -593,6 +746,9 @@ namespace MMR.Randomizer.Models.SoundEffects
         ReceptionistMmHmm = 0x612A,
 
         [Tags(Long)]
+        ReceptionistSwoon = 0x612B,
+
+        [Tags(Long)]
         ReceptionistMmm = 0x612C,
 
         //romani Yeaaah!? (look at that horse archery score, so rad)
@@ -607,6 +763,9 @@ namespace MMR.Randomizer.Models.SoundEffects
         RomaniGiggle = 0x612E,
 
         [Tags(Short)]
+        RomaniYeah = 0x612F,   // romani impressed with link's archery
+
+        [Tags(Short)]
         PamelaScream = 0x6130,
 
         [Tags(Long)]
@@ -615,14 +774,29 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         PamelaSniffle = 0x6132,
 
+        [Tags(Short, LowHpBeep)]
+        DekuPrincessGasp = 0x6133, // unused I think? kind of a "taken aback" gasp
+
+        [Tags(Short)]
+        DekuPrincessGiggle = 0x6134, // I think this was unused, I don't remember hearing it in game
+
+        [Tags(Short)]
+        DekuPrincessHmph = 0x6135,  // more of a cough
+
+        [Tags(Short)]
+        DekuPrincessAngerBuilding = 0x6136, // second half of outburst at king, before jumping
+
+        [Tags(Long)]
+        DekuPrincessStressed = 0x6137, // bottle talking, and start of angry outburst at king
+
         [Tags(Long)]
         StrayFairyHelpMe = 0x6138,
 
         [Tags(Long)]
-        UnknownRomani1ZZZ = 0x6140,
+        RomaniHmmmm = 0x6140,
 
-        [Tags(Long)]
-        UnknownRomani2ZZZ = 0x6141,
+        [Tags(Short, LowHpBeep)]
+        RomaniYesSisterSigh = 0x6141,
 
         [Tags(Long)]
         DampeAfraid = 0x6143,
@@ -654,11 +828,20 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         CuriosityShopGuyLaugh = 0x6152,
 
+        [Tags(Long)]
+        CuriosityShopGuyRefuse = 0x6153, // we don't serve bunny people here
+        
         [Tags(Short, Long)]
         KamaroOoohhh = 0x6154,
 
         [Tags(Short, Long)]
         KamaroAaagh = 0x6155,
+
+        [Tags(Long, Short)]
+        JuglerChuckleOhHoHoHo = 0x6156,
+
+        [Tags(Long)]
+        MayorSlowHmmm = 0x6158,
 
         [ReplacableInMessage(0x6959, 10540, 10541, 10543, 10547, 10573, 10574)]
         [Tags(Long, LowHpBeep)]
@@ -708,6 +891,27 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Long)]
         TingleKoolooLimpah = 0x617C,
+
+        [Tags(Short)]
+        HMSChuckle = 0x617D,  // you've met with a terrible fate, haven't you
+
+        [Tags(Long)]
+        HMSOhohoho = 0x617e,  // I'm sure you will persevere
+
+        [Tags(Long)]
+        HMSHoHoHo = 0x617F,  // I hope you don't mind but I've been following you
+
+        [Tags(Short)]
+        GormanAngryEh = 0x6180,  // EH?! bother, bother, I am busy
+
+        [Tags(Long)]
+        UnknownMaleSorrowOoohhhh = 0x6181,  // ??? Not sure this was ever used
+
+        [Tags(Long)]
+        UnknownMaleCuriousQuestionHmmm = 0x6182,  // ??? Not sure this was ever used
+
+        [Tags(Long)]
+        UnknownMaleIThinkIUnderstandUmmmHmm = 0x6183,  // ??? Not sure this was ever used
 
         #endregion
     }

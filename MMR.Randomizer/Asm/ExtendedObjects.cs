@@ -187,8 +187,8 @@ namespace MMR.Randomizer.Asm
             var colors = new StrayFairyColors
             {
                 OuterPrimColor = Color.FromArgb(0xFF, 0xA5, 0x00),
-                InnerPrimColor = Color.FromArgb(0xFF, 0xFF, 0xFF),
-                InnerEnvColor = Color.FromArgb(0xFF, 0xB7, 0x32),
+                InnerPrimColor = Color.FromArgb(0xFF, 0xFF, 0xDC),
+                InnerEnvColor = Color.FromArgb(0xFF, 0x80, 0x00),
             };
             return AddStrayFairy(colors);
         }
@@ -202,8 +202,8 @@ namespace MMR.Randomizer.Asm
             var colors = new StrayFairyColors
             {
                 OuterPrimColor = Color.FromArgb(0xFF, 0x69, 0xB4),
-                InnerPrimColor = Color.FromArgb(0xFF, 0xFF, 0xFF),
-                InnerEnvColor = Color.FromArgb(0xFF, 0x15, 0x93),
+                InnerPrimColor = Color.FromArgb(0xFF, 0xDC, 0xFF),
+                InnerEnvColor = Color.FromArgb(0xFF, 0x00, 0x64),
             };
             return AddStrayFairy(colors);
         }
@@ -217,8 +217,8 @@ namespace MMR.Randomizer.Asm
             var colors = new StrayFairyColors
             {
                 OuterPrimColor = Color.FromArgb(0x00, 0xC0, 0x00),
-                InnerPrimColor = Color.FromArgb(0xFF, 0xFF, 0xFF),
-                InnerEnvColor = Color.FromArgb(0x00, 0xFF, 0x00),
+                InnerPrimColor = Color.FromArgb(0xDC, 0xFF, 0xFF),
+                InnerEnvColor = Color.FromArgb(0x00, 0xFF, 0x32),
             };
             return AddStrayFairy(colors);
         }
@@ -232,8 +232,8 @@ namespace MMR.Randomizer.Asm
             var colors = new StrayFairyColors
             {
                 OuterPrimColor = Color.FromArgb(0x18, 0x74, 0xCD),
-                InnerPrimColor = Color.FromArgb(0xFF, 0xFF, 0xFF),
-                InnerEnvColor = Color.FromArgb(0x00, 0x00, 0xFF),
+                InnerPrimColor = Color.FromArgb(0xDC, 0xFF, 0xFF),
+                InnerEnvColor = Color.FromArgb(0x00, 0x64, 0xFF),
             };
             return AddStrayFairy(colors);
         }
@@ -247,7 +247,7 @@ namespace MMR.Randomizer.Asm
             var colors = new StrayFairyColors
             {
                 OuterPrimColor = Color.FromArgb(0xFF, 0xFF, 0x00),
-                InnerPrimColor = Color.FromArgb(0xFF, 0xFF, 0xFF),
+                InnerPrimColor = Color.FromArgb(0xFF, 0xFF, 0xDC),
                 InnerEnvColor = Color.FromArgb(0xFF, 0xFF, 0x00),
             };
             return AddStrayFairy(colors);
@@ -269,13 +269,15 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Add a Skulltula Token with a specific flame color.
         /// </summary>
-        /// <param name="color">Flame color</param>
+        /// <param name="prim">Primitive color</param>
+        /// <param name="env">Environment color</param>
         /// <returns>Offsets</returns>
-        (uint, uint) AddSkulltulaToken(Color color)
+        (uint, uint) AddSkulltulaToken(Color prim, Color env)
         {
             var data = CloneExistingData(808);
 
-            WriteByte(data, 0x45C, color.ToBytesRGB());
+            WriteByte(data, 0x454, prim.ToBytesRGB());
+            WriteByte(data, 0x45C, env.ToBytesRGB());
 
             return this.Bundle.Append(data);
         }
@@ -286,7 +288,9 @@ namespace MMR.Randomizer.Asm
         /// <returns>Offsets</returns>
         (uint, uint) AddOceanSkulltulaToken()
         {
-            return AddSkulltulaToken(Color.FromArgb(0x00, 0x00, 0xFF));
+            var prim = Color.FromArgb(0xAA, 0xFF, 0xFF);
+            var env = Color.FromArgb(0x00, 0x00, 0xFF);
+            return AddSkulltulaToken(prim, env);
         }
 
         /// <summary>
@@ -295,7 +299,9 @@ namespace MMR.Randomizer.Asm
         /// <returns>Offsets</returns>
         (uint, uint) AddSwampSkulltulaToken()
         {
-            return AddSkulltulaToken(Color.FromArgb(0x00, 0xFF, 0x00));
+            var prim = Color.FromArgb(0xAA, 0xFF, 0xFF);
+            var env = Color.FromArgb(0x00, 0xFF, 0x00);
+            return AddSkulltulaToken(prim, env);
         }
 
         #endregion
