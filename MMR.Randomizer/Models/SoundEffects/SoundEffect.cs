@@ -358,6 +358,24 @@ namespace MMR.Randomizer.Models.SoundEffects
         //[Tags(Long, Debug)]
         //KotakeConjureBroom = 0x3106, // looping, summon broom and then hovering on broom while talking
 
+        [Tags(Long, Short)]
+        BigGoronFallsAsleepFinal = 0x3107,
+
+        [Tags(Long)]
+        PoeLaughingRegular2 = 0x310A, // Poe laughing at you, regular version 2, slightly different, not skull kid though
+
+        [Tags(Short)]
+        SkullKidSurprised = 0x310D,
+
+        //[Tags(Long, Debug)]
+        //Unknown4 = 0x3111,  // kinda wet scraping sound
+
+        [Tags(Short)]
+        StallchildTakeDamage = 0x3112, // stallchild takes small damage
+
+        //[Tags(Long, Debug)]
+        //RegularEnemyDamage = 0x3114, // marked as for twinrova, but sounds like regular damage taken 
+
         [Tags(Long)]
         PoeLaughingRegular = 0x311A, // Poe laughing at you, regular version
 
