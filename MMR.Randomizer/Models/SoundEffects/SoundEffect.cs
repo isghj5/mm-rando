@@ -416,6 +416,12 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         GoronSleepy = 0x31AD,
 
+        //[Tags(Long, Debug)]
+        //IronKnuckleUnknown = 0x31B0, // very short and quiet grunt
+
+        [Tags(Short)]
+        IronKnuckleDeathGroan = 0x31B1, // Iron Knuckle death 
+
         //[Tags(Short)]
         //MajoraWrathWhipSFX3 = 0x31CA,
 
@@ -448,6 +454,18 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         //[Tags(Long)]
         //UnknownBugSfx = 0x31F2,
+
+        [Tags(Long, Short)]
+        KoumeShocked = 0x31FB, // skull kid kills koutake
+
+        [Tags(Long)]
+        ChuChuEmergeFromGround = 0x31FE,
+
+        [Tags(Long)]
+        KoumeSnoring = 0x31FF,
+
+        [Tags(Short)]
+        KoumeStartledAwake = 0x3200,
 
         [Tags(Long)]
         DekuLinkPanicScream = 0x3200, // when he sees his reflection
