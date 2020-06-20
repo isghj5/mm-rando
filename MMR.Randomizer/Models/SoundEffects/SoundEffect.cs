@@ -520,6 +520,27 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         BomberEhh = 0x6103,
 
+        [Tags(Short)]
+        BomberSurprise = 0x6105,
+
+        //[Tags(Short, Debug)]
+        //HagVoice1Unused = 0x6106,  // japanese iiya "No!" (suprised)
+
+        [Tags(Long)]
+        GrandmaRobbedShout = 0x6107, // Just as sakon contacts
+
+        //[Tags(Short, Debug)]
+        //GrandmaRobbedHelpMe = 0x6108, // as sakon is getting away "someone please stop him"
+
+        //[Tags(Short, Debug)]
+        //GrandmaRobbedAcceptance = 0x6109, // you failed to stop sakon, or blew him up, either way shes tired
+
+        [Tags(Long)]
+        GrandmaChuckle = 0x610A,
+
+        //[Tags(Short, Debug)]
+        //GrandmaOhIsee = 0x610B, // unused? sounds like you explained something to her and she understands now
+
         [Tags(Short, LowHpBeep)]
         MamamuYanCelebratory = 0x6112,
 
