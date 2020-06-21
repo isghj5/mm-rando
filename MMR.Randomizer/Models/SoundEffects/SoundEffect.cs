@@ -528,6 +528,31 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         SkullKidLaugh3 = 0x3277,
 
+        [Tags(Short, Long)]
+        DeathScythe = 0x32AC,
+
+        [Tags(Short, LowHpBeep)]
+        DeathScythe2 = 0x32AD,
+
+        [Tags(Long)]
+        DeathLaughs = 0x32B0,
+
+        [Tags(Short, Long)]
+        DeathDamageTaken = 0x32B1,
+
+        //[Tags(Short, Debug)]
+        //DeathHeartBreak = 0x32B5, // I guess part of his death cinematic? not sure it was used
+
+        [Tags(Short, Long)]
+        CptKeetaAcceptingOrder = 0x32C5,
+
+        [Tags(Long)]
+        GaroMasterLaugh = 0x32C6,
+
+        //[Tags(Short, Debug)]
+        //KoumeLaughing2 = 0x32CB, // off pitch koume laughing, not used? these are marked as copies too
+
+
         #endregion
 
         #region System SFX
