@@ -78,6 +78,9 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         BigStoneDoorOpensThud = 0x2093,
 
+        [Tags(Long)]
+        ToiletHandFlush = 0x2097,
+
         //[Tags(Long, Debug)]
         //MoonEarthQuake= 0x2098, // loops, damnit
 
@@ -99,7 +102,13 @@ namespace MMR.Randomizer.Models.SoundEffects
         JabuJabuDeepBreath = 0x20B6, // wow this is still in here??
 
         [Tags(Long)]
-        FrogIncreaseSize = 0x20CC, // wow this is still in here??
+        FrogIncreaseSize = 0x20CC,
+
+        [Tags(LowHpBeep, Short)]
+        ToiletHandAppear = 0x20D0,
+
+        [Tags(LowHpBeep, Short)]
+        ToiletHandVanish = 0x20D1,
 
         [Replacable(0x00DFC776, 0xDFCC3A, 0xDFDCF6)]
         [Tags(Short, LowHpBeep)]
@@ -904,13 +913,13 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         MutohScoff = 0x614F,
 
-        [Tags(Short, LowHpBeep)]
+        [Tags(Long, LowHpBeep)]
         CuriosityShopGuyHii = 0x6151,
 
-        [Tags(Long)]
+        [Tags(Long, Short, LowHpBeep)]
         CuriosityShopGuyLaugh = 0x6152,
 
-        [Tags(Long)]
+        [Tags(Long, Short)]
         CuriosityShopGuyRefuse = 0x6153, // we don't serve bunny people here
         
         [Tags(Short, Long)]
@@ -945,6 +954,16 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         GaboraHurrgh = 0x6166,
 
+        [Tags(Long, LowHpBeep)] // quiet enough to work for lowhp
+        GrogSigh = 0x616C,
+
+        [Tags(Long)] // too quiet to use in my opinion
+        GrogHehHeh= 0x616D,
+
+
+        [Tags(Short, LowHpBeep)]
+        ViscenAhQuestion = 0x616E, // the guard in the meeting "have you not noticed the giant moon???"
+
         [ReplacableInMessage(0x696F, 10100, 10101, 10107, 10111, 10114, 10123, 10141, 10149, 10155, 10427, 10429, 10431, 10589)]
         [Tags(Short, LowHpBeep)]
         [ReplacableByTags(Short)]
@@ -956,11 +975,14 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         DarlingMmm = 0x6171,
 
-        [Tags(Long, LowHpBeep)]
+        [Tags(Short)]
+        MikauOwww = 0x6174, // also used by toilet hand "p p paper!"
+
+        [Tags(Long, Short, LowHpBeep)]
         MikauBaybee = 0x6175,
 
-        [Tags(Long)]
-        MikauYay = 0x6176,
+        [Tags(Short, Long, LowHpBeep)]
+        MikauYay = 0x6176, // also used by toilet hand
 
         [Tags(Long)]
         TingleFall = 0x6177,
