@@ -212,8 +212,29 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         #region Enemy SFX
 
+        [Tags(Long)]
+        DodongoExhale = 0x3001,
+
+        [Tags(Short)]
+        DodongoTakeDamage = 0x3003,
+
+        [Tags(Short, LowHpBeep)]
+        OdolwaTakeDamage = 0x3009,
+
+        [Tags(Long)]
+        OdolwaDefeated = 0x300B,
+
         [Tags(Short)]
         GaroAppear = 0x3012,
+
+        //[Tags(Looping, Debug)]
+        //OdolwaTaunt1 = 0x3015, // ooh-ah-la-dai, summoning bugs, looping
+
+        //[Tags(Looping, Debug)]
+        //OdolwaTaunt2 = 0x3016, // keh-laaaah-veh! taunting you to attack, looping
+
+        //[Tags(Looping, Debug)]
+        //OdolwaTaunt3 = 0x3017, // hey-dah-vah! summoning moths, looping
 
         [Tags(Long)]
         TwinMoldAppears = 0x3019,
@@ -226,6 +247,9 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Short)]
         DinolfosAttack = 0x302A,
+
+        [Tags(Short, LowHpBeep)]
+        DinolfosLaugh = 0x302C, // dodgeing your arrows
 
         [Replacable(0xE89EA6, 0xE8A336, 0xE03C66, 0xE03E36, 0xE060FE)]
         [ReplacableByTags(Short)]
@@ -527,6 +551,12 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Short, Long, LowHpBeep)]
         PirateLaugh = 0x3271, // smug laugh when they catch you pretending to be a stone
+
+        //[Tags(Short, Long, Debug)]
+        //PiratePain = 0x3273, // suffering damage after fight "Don't think this ends here -> escape"
+
+        [Tags(Short)]
+        PirateShout = 0x3274, // throws a deku nut to escape
 
         [Tags(Long)]
         SkullKidLaugh1 = 0x3275,
