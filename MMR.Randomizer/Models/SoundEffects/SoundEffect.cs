@@ -503,6 +503,16 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         DekuLinkPanicScream = 0x3200, // when he sees his reflection
 
+        [Replacable(0x1057882)]
+        [ReplacableByTags(Long)] 
+        [Tags(Long)]
+        GoronSnore1 = 0x321A,
+
+        [Replacable(0x10578A6)]
+        [ReplacableByTags(Long)]
+        //[Tags(Long)]           // this air sucking sound, we don't want it in the pool
+        GoronSnore2 = 0x321B,
+
         //[Tags(Long)]
         //MajoraWrathSpinningTopLoop = 0x322C,
 
