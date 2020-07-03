@@ -304,7 +304,11 @@ namespace MMR.Randomizer
             ///  searched the ram for the actor overlay table that has rom and ram per actor,
             ///  there it lists the actor init var ram and actor ram locations, diff, apply to rom start
             ///  the combat music flag is part of the seventh byte of the actor init variables, but our fuction knows this
-             
+
+            // we always disable wizrobe because he's a miniboss, 
+            // but when you enter his room you hear regular combat music for a few frames before his fight really starts
+            DisableCombatMusicOnEnemy(GameObjects.Actor.Wizrobe);
+
             var WeakEnemyList = new GameObjects.Actor[]
             {
                 GameObjects.Actor.ChuChu,
@@ -336,8 +340,8 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Poe,
                 GameObjects.Actor.GibdoIkana,
                 GameObjects.Actor.GibdoWell,
-                GameObjects.Actor.RedBubble
-
+                GameObjects.Actor.RedBubble,
+                GameObjects.Actor.Stalchild
             }.ToList();
 
             var AnnoyingEnemyList = new GameObjects.Actor[]
@@ -357,7 +361,8 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Peahat,
                 GameObjects.Actor.Dodongo,
                 GameObjects.Actor.Takkuri,
-
+                GameObjects.Actor.Eyegore,
+                GameObjects.Actor.Garo
             }.ToList();
 
             //var WholeList = WeakEnemiesOnly ? WeakEnemyList : WeakEnemyList.Concat(AnnoyingEnemyList);

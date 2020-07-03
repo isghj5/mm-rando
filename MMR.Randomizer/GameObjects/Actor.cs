@@ -81,11 +81,17 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x3E40)]
         Wolfos = 222,
 
+        [ActorInitVarOffset(0x2D60)]
+        Stalchild = 223,
+
         [ActorInitVarOffset(0x1520)]
         Guay = 226,
 
         [ActorInitVarOffset(0x2A7C)]
         DragonFly = 241,
+
+        [ActorInitVarOffset(0x3688)]
+        Garo = 248,
 
         [ActorInitVarOffset(0x3760)]
         BioDekuBaba = 271,
@@ -111,6 +117,9 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorInitVarOffset(0x1C6C)]
         SkullFish = 346,
+
+        [ActorInitVarOffset(0x445C)]
+        Eyegore = 250,
 
         [ActorInitVarOffset(0x21C0)]
         Snapper = 406,
