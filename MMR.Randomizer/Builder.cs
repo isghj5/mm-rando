@@ -76,6 +76,7 @@ namespace MMR.Randomizer
                     else
                     {
                         RomData.InstrumentSetList[ReplacementSequence.Instrument] = ReplacementSequence.SequenceBinaryList[0].InstrumentSet;
+                        RomData.InstrumentSetList[ReplacementSequence.Instrument].InstrumentSamples = ReplacementSequence.InstrumentSamples;
                         WriteOutput(" -- v -- Instrument set number " + ReplacementSequence.Instrument.ToString("X2") + " has been claimed -- v --");
                     }
                     ReplacementSequence.SequenceBinaryList = new List<SequenceBinaryData> { ReplacementSequence.SequenceBinaryList[0] }; // lock the one we want
@@ -299,6 +300,7 @@ namespace MMR.Randomizer
             ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-music");
             ResourceUtils.ApplyHack(Values.ModsDirectory, "inst24-swap-guitar");
             SequenceUtils.RebuildAudioSeq(RomData.SequenceList, _settings);
+            SequenceUtils.WriteNewSoundSamples(RomData.InstrumentSetList);
             SequenceUtils.RebuildAudioBank(RomData.InstrumentSetList);
         }
 

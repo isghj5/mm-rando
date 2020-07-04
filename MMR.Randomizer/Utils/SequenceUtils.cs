@@ -180,6 +180,7 @@ namespace MMR.Randomizer.Utils
             //    if the song requires a custom audiobank, the bank and bank meta data are also here
             //  the user should be able to pack the archive with multiple sequences and multiple banks to match,
             //   where the redundancy increases likley hood of a song being able to be placed in a free audiobank slot
+            MD5 md5lib = MD5.Create();
 
             foreach (String filePath in Directory.GetFiles(directory, "*.mmrs"))
             {
@@ -212,7 +213,30 @@ namespace MMR.Randomizer.Utils
                             continue;
                         }
 
-                        MD5 md5lib = MD5.Create();
+                        // read list of sound samples
+                        List<SequenceSoundSampleBinaryData> Samples = new List<SequenceSoundSampleBinaryData>();
+                        foreach (ZipArchiveEntry zip_item in zip.Entries) {
+                            if (zip_item.Name.Contains("zsound"))
+                            {
+                                byte[] sample_data = new byte[zip_item.Length];
+                                zip_item.Open().Read(sample_data, 0, sample_data.Length);
+                                String[] split_name = zip_item.Name.Split('_'); // everything before _ is a comment, readability, discard here
+                                String sample_name = split_name.Length > 1 ? split_name[split_name.Length - 1] : zip_item.Name;
+                                sample_name = sample_name.Split('.')[0];        // we don't need the filetype
+                                uint sample_int = Convert.ToUInt32(sample_name,16);
+                                Samples.Add( 
+                                    new SequenceSoundSampleBinaryData()
+                                    {
+                                        BinaryData  = sample_data,
+                                        Name        = sample_int,
+                                        Hash        = BitConverter.ToInt64(md5lib.ComputeHash(sample_data), 0)
+                                    }
+                                );
+                            }
+                        }
+                        new_song.InstrumentSamples = Samples;
+
+                        // per sequence, read sequence and banks if needed
                         foreach (ZipArchiveEntry zip_item in zip.Entries) {
                             if (zip_item.Name.Contains("zseq"))
                             {
@@ -273,7 +297,7 @@ namespace MMR.Randomizer.Utils
         public static void PointerizeSequenceSlots()
         {
             // if music availablilty is low, pointerize some slots
-            // why? because in MM fairy fountain and fileselect are the same song,
+            // why? because in Z64 fairy fountain and fileselect are the same song,
             //  with one being a pointer at the other, so we have 78 slots and 77 songs, not enough
             //  also some categories can get exhausted leaving slots unfillable with remaining music,
             // several slots that players will never/rarely hear are nullified (pointed at another song)
@@ -689,6 +713,95 @@ namespace MMR.Randomizer.Utils
             }
             RomData.InstrumentSetList = InstrumentSets;
         }
+
+        public static byte[] UpdateBankInstrumentAddr( byte[] BankData, uint SampleMarker, uint SampleAddr )
+        {
+            // our bank using this new sample needs to have the address (SampleMarker) in the bank (BankData) updated to our new file (SampleAddr)
+            // keep in mind the pointer is an offset from the soundbank/soundtable starting location
+            //   and yes I tested it working at the end of the rom, its fine indexing that far away from vanilla
+            byte[] address_offset_bytes = BitConverter.GetBytes(SampleAddr - 0x97F70);
+            byte[] sample_marker_bytes = BitConverter.GetBytes(SampleMarker);
+
+            // find the location in the bank where samplemarker is
+            // per byte, replace with the bytes from address_offset
+            for ( int i = 0; i < BankData.Length - 4; i += 4)
+            {
+                if (   BankData[i + 0] == sample_marker_bytes[3]
+                    && BankData[i + 1] == sample_marker_bytes[2]
+                    && BankData[i + 2] == sample_marker_bytes[1]
+                    && BankData[i + 3] == sample_marker_bytes[0] )
+                {
+                    BankData[i + 0] = address_offset_bytes[3];
+                    BankData[i + 1] = address_offset_bytes[2];
+                    BankData[i + 2] = address_offset_bytes[1];
+                    BankData[i + 3] = address_offset_bytes[0];
+                    return BankData;
+                }
+            }
+
+            Debug.WriteLine("Warning: We did not find the address for our sample to replace");
+            return BankData;
+        }
+
+
+        public static void WriteNewSoundSamples(List<InstrumentSetInfo> InstrumentSetList)
+        {
+            // after audioseq is written, we can write our new samples at the end
+            List<SequenceSoundSampleBinaryData> AlreadyWrittenSamples = new List<SequenceSoundSampleBinaryData>();
+            int fid = RomUtils.AppendFile(new byte[0x10]); // issue: cannot find a way to convert from vrom to rom addr
+            //int fid = 4;
+            //RomData.MMFileList[4].Addr = 0x80000; // ~0x17000 space for samples
+            //RomData.MMFileList[4].Data = new byte[0x10];
+            /*RomData.MMFileList[4] = new MMFile()
+            {
+                Addr = 0x80000,
+                End = 0x97f70,
+                Cmp_Addr = 0x80000,
+                Cmp_End = 0,
+                IsCompressed = false,
+                WasEdited = true,
+                IsStatic = true,
+                Data = new byte[0]
+            };*/
+
+            // for each custom instrument set that needs a custom sample
+            foreach (InstrumentSetInfo bank in InstrumentSetList)
+            {
+                if (bank.InstrumentSamples != null && bank.InstrumentSamples.Count > 0)
+                {
+                    // check if the sample already exists
+                    foreach(SequenceSoundSampleBinaryData sample in bank.InstrumentSamples)
+                    {
+                        uint sample_marker = sample.Name; // starting name is the marker for this bank, gets re-used for address
+                        SequenceSoundSampleBinaryData PreviouslyWritten = AlreadyWrittenSamples.Find(u => sample.Hash == u.Hash);
+                        
+                        if (PreviouslyWritten == null) // if it does not, add the filelist
+                        {
+                            // get the rom addr of our new file
+                            sample.Name = (uint) (RomData.MMFileList[fid].Addr + RomData.MMFileList[fid].Data.Length);
+                            // concat our sample to sample collection file
+                            RomData.MMFileList[fid].Data = RomData.MMFileList[fid].Data.Concat(sample.BinaryData).ToArray();
+                            // pad to nearest 0x10 in case ther are hidden rules about loading files besides DMA reqs
+                            int padding_remainder = RomData.MMFileList[fid].Data.Length % 0x10;
+                            if ( padding_remainder > 0 )
+                              RomData.MMFileList[fid].Data = RomData.MMFileList[fid].Data.Concat(new byte[padding_remainder]).ToArray();
+                            // samples are often reused, save in a easily checked list for the future
+                            AlreadyWrittenSamples.Add(sample);
+                            Debug.WriteLine("New sample placed at addr: 0x" + sample.Name.ToString("X2"));
+                        }
+                        else // get address of previously used sample
+                        {
+                            sample.Name = PreviouslyWritten.Name;
+                            Debug.WriteLine("Reusing sample at addr: 0x" + sample.Name.ToString("X2"));
+                        }
+
+                        bank.BankBinary = UpdateBankInstrumentAddr(bank.BankBinary, SampleMarker: sample_marker, SampleAddr: sample.Name);
+                    }
+                }
+            }
+
+        }
+
 
         public static void RebuildAudioBank(List<InstrumentSetInfo> InstrumentSetList)
         {
