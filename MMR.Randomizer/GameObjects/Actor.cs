@@ -109,6 +109,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1500)]
         BadBat = 313,
 
+        [ActorInitVarOffset(0x37D0)]
+        Wizrobe = 315,
+
         [ActorInitVarOffset(0x1830)]
         Bo = 322,
 
@@ -117,6 +120,9 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorInitVarOffset(0x1C6C)]
         SkullFish = 346,
+
+        [ActorInitVarOffset(0x4228)]
+        GaroMaster = 348,
 
         [ActorInitVarOffset(0x445C)]
         Eyegore = 250,
