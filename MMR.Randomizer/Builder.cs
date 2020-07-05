@@ -124,13 +124,27 @@ namespace MMR.Randomizer
             }
 
             // DEBUG: if the user has a test sequence it always get put into fileselect
-            SequenceInfo test_sequence = RomData.SequenceList.Find(u => u.Name.Contains("songtest") == true);
-            if (test_sequence != null)
+            SequenceInfo TestSequence = RomData.SequenceList.Find(u => u.Name.Contains("songtest") == true);
+            if (TestSequence != null)
             {
-                SequenceInfo slot = RomData.TargetSequences.Find(u => u.Name.Contains("fileselect"));
-                AssignSequenceSlot(slot, test_sequence, Unassigned, "SONGTEST");
-                RomData.TargetSequences.Remove(slot);
+                SequenceInfo TargetSlot = RomData.TargetSequences.Find(u => u.Name.Contains("fileselect"));
+                AssignSequenceSlot(TargetSlot, TestSequence, Unassigned, "SONGTEST");
+                RomData.TargetSequences.Remove(TargetSlot);
             }
+
+            // MORE DEBUG: if the user wants to force a song to always show up each seed, but in random slots
+            List<SequenceInfo> ForcedSequences = RomData.SequenceList.FindAll(u => u.Name.Contains("songforce") == true);
+            if (ForcedSequences != null && ForcedSequences.Count > 0)
+            {
+                foreach(SequenceInfo seq in ForcedSequences)
+                {
+                    WriteOutput("Forcing song (" + seq.Name + ") to top of the song pool");
+                    Unassigned.Remove(seq);
+                    Unassigned.Insert(0, seq);
+                }
+            }
+
+
 
             foreach (SequenceInfo targetSequence in RomData.TargetSequences)
             {
