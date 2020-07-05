@@ -336,14 +336,22 @@ namespace MMR.Randomizer.Utils
                 {
                     continue;
                 }
-                RomData.MMFileList[i].Cmp_Addr = ROMAddr;
                 int file_len = RomData.MMFileList[i].Data.Length;
-                if (RomData.MMFileList[i].IsCompressed)
+                if ( RomData.MMFileList[i].HardRomAddr)
                 {
-                    RomData.MMFileList[i].Cmp_End = ROMAddr + file_len;
+                    ReadWriteUtils.Arr_Insert(RomData.MMFileList[i].Data, 0, file_len, ROM, RomData.MMFileList[i].Addr);
                 }
-                ReadWriteUtils.Arr_Insert(RomData.MMFileList[i].Data, 0, file_len, ROM, ROMAddr);
-                ROMAddr += file_len;
+                else
+                {
+                    RomData.MMFileList[i].Cmp_Addr = ROMAddr;
+                    if (RomData.MMFileList[i].IsCompressed)
+                    {
+                        RomData.MMFileList[i].Cmp_End = ROMAddr + file_len;
+                    }
+                    ReadWriteUtils.Arr_Insert(RomData.MMFileList[i].Data, 0, file_len, ROM, ROMAddr);
+                    ROMAddr += file_len;
+                }
+
             }
             UpdateFileTable(ROM);
             SignROM(ROM);

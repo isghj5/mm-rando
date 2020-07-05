@@ -268,7 +268,7 @@ namespace MMR.Randomizer.Utils
                                         BankSlot = new_song.Instrument,
                                         BankMetaData = meta_data,
                                         Modified = 1,
-                                        Hash = BitConverter.ToInt64(md5lib.ComputeHash(bank_data), 0)
+                                        Hash = BitConverter.ToInt64(md5lib.ComputeHash(bank_data), 0),
                                     };
                                 }//if requires bank
 
@@ -748,14 +748,14 @@ namespace MMR.Randomizer.Utils
         {
             // after audioseq is written, we can write our new samples at the end
             List<SequenceSoundSampleBinaryData> AlreadyWrittenSamples = new List<SequenceSoundSampleBinaryData>();
-            int fid = RomUtils.AppendFile(new byte[0x10]); // issue: cannot find a way to convert from vrom to rom addr
-            //int fid = 4;
+            int fid = RomUtils.AppendFile(new byte[0x0]); // issue: cannot find a way to convert from vrom to rom addr
+            RomData.MMFileList[fid].Addr = 0x01f00000;
+            RomData.MMFileList[fid].HardRomAddr = true;
             //RomData.MMFileList[4].Addr = 0x80000; // ~0x17000 space for samples
-            //RomData.MMFileList[4].Data = new byte[0x10];
             /*RomData.MMFileList[4] = new MMFile()
             {
                 Addr = 0x80000,
-                End = 0x97f70,
+                End = 0x97f70,limes
                 Cmp_Addr = 0x80000,
                 Cmp_End = 0,
                 IsCompressed = false,
