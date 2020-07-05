@@ -10,13 +10,12 @@ using System.Diagnostics;
 using System.IO.Compression;
 using MMR.Randomizer.Models.Settings;
 using System.Security.Cryptography;
-
+using System.Runtime.CompilerServices;
 
 namespace MMR.Randomizer.Utils
 {
     public class SequenceUtils
     {
-
         public static void ReadSequenceInfo()
         {
             RomData.SequenceList = new List<SequenceInfo>();
@@ -228,7 +227,8 @@ namespace MMR.Randomizer.Utils
                                     new SequenceSoundSampleBinaryData()
                                     {
                                         BinaryData  = sample_data,
-                                        Name        = sample_int,
+                                        Addr        = sample_int,
+                                        Marker      = sample_int,
                                         Hash        = BitConverter.ToInt64(md5lib.ComputeHash(sample_data), 0)
                                     }
                                 );
@@ -714,55 +714,59 @@ namespace MMR.Randomizer.Utils
             RomData.InstrumentSetList = InstrumentSets;
         }
 
-        public static byte[] UpdateBankInstrumentAddr( byte[] BankData, uint SampleMarker, uint SampleAddr )
+        public static void UpdateBankInstrumentPointers( byte[] ROM)
         {
-            // our bank using this new sample needs to have the address (SampleMarker) in the bank (BankData) updated to our new file (SampleAddr)
-            // keep in mind the pointer is an offset from the soundbank/soundtable starting location
-            //   and yes I tested it working at the end of the rom, its fine indexing that far away from vanilla
-            byte[] address_offset_bytes = BitConverter.GetBytes(SampleAddr - 0x97F70);
-            byte[] sample_marker_bytes = BitConverter.GetBytes(SampleMarker);
+            // the audiobank and new samples are already written to rom, now we need to go back and update all the pointers
+            //   since we cannot know where those samples are on the rom until A the soundbank is written, and B the sample file is written
+            //   because the pointer is an offset of the soundbank rom location
 
-            // find the location in the bank where samplemarker is
-            // per byte, replace with the bytes from address_offset
-            for ( int i = 0; i < BankData.Length - 4; i += 4)
+            int soundbank_addr = RomData.MMFileList[5].Cmp_Addr; // in vanilla its 0x97f70 but MMR can shift it up because AudioSeq gets re-located
+
+            int audiobank_addr = RomData.MMFileList[3].Cmp_Addr; // this is static NOW, but one day we might need more DMA slots
+            foreach(InstrumentSetInfo bank in RomData.InstrumentSetList)
             {
-                if (   BankData[i + 0] == sample_marker_bytes[3]
-                    && BankData[i + 1] == sample_marker_bytes[2]
-                    && BankData[i + 2] == sample_marker_bytes[1]
-                    && BankData[i + 3] == sample_marker_bytes[0] )
+                if (bank.InstrumentSamples != null && bank.InstrumentSamples.Count > 0)
                 {
-                    BankData[i + 0] = address_offset_bytes[3];
-                    BankData[i + 1] = address_offset_bytes[2];
-                    BankData[i + 2] = address_offset_bytes[1];
-                    BankData[i + 3] = address_offset_bytes[0];
-                    return BankData;
-                }
-            }
+                    foreach (SequenceSoundSampleBinaryData sample in bank.InstrumentSamples)
+                    {
+                        // look up sample in previous list
+                        Debug.WriteLine("sample collection location on rom: " + (RomData.MMFileList[RomData.SamplesFileID].Cmp_Addr).ToString("X2"));
 
-            Debug.WriteLine("Warning: We did not find the address for our sample to replace");
-            return BankData;
+                        uint sample_address_offset = RomData.ListOfSamples.Find(u => u.Hash == sample.Hash).Addr + (uint) RomData.MMFileList[ RomData.SamplesFileID ].Cmp_Addr;
+                        Debug.WriteLine("sample location on rom: " + (sample_address_offset).ToString("X2"));
+
+                        byte[] address_offset_bytes = BitConverter.GetBytes(sample_address_offset - soundbank_addr); // offset
+                        Debug.WriteLine("sample ofset from soundbank: " + (sample_address_offset - soundbank_addr).ToString("X2"));
+                        byte[] sample_marker_bytes = BitConverter.GetBytes(sample.Marker);
+
+                        // find the location in the bank where samplemarker is
+                        // per byte, replace with the bytes from address_offset
+                        for (int i = 0; i < bank.BankBinary.Length - 4; i += 1)
+                        {
+                            if (   ROM[audiobank_addr + i + 0] == sample_marker_bytes[3]
+                                && ROM[audiobank_addr + i + 1] == sample_marker_bytes[2]
+                                && ROM[audiobank_addr + i + 2] == sample_marker_bytes[1]
+                                && ROM[audiobank_addr + i + 3] == sample_marker_bytes[0])
+                            {
+                                ROM[audiobank_addr + i + 0] = address_offset_bytes[3];
+                                ROM[audiobank_addr + i + 1] = address_offset_bytes[2];
+                                ROM[audiobank_addr + i + 2] = address_offset_bytes[1];
+                                ROM[audiobank_addr + i + 3] = address_offset_bytes[0];
+                                Debug.WriteLine("Updated sample pointer at " + (sample_address_offset - soundbank_addr));
+                            }
+                        }
+                    }
+                }
+                audiobank_addr += bank.BankBinary.Length;
+            }
         }
 
 
         public static void WriteNewSoundSamples(List<InstrumentSetInfo> InstrumentSetList)
         {
             // after audioseq is written, we can write our new samples at the end
-            List<SequenceSoundSampleBinaryData> AlreadyWrittenSamples = new List<SequenceSoundSampleBinaryData>();
-            int fid = RomUtils.AppendFile(new byte[0x0]); // issue: cannot find a way to convert from vrom to rom addr
-            RomData.MMFileList[fid].Addr = 0x01f00000;
-            RomData.MMFileList[fid].HardRomAddr = true;
-            //RomData.MMFileList[4].Addr = 0x80000; // ~0x17000 space for samples
-            /*RomData.MMFileList[4] = new MMFile()
-            {
-                Addr = 0x80000,
-                End = 0x97f70,limes
-                Cmp_Addr = 0x80000,
-                Cmp_End = 0,
-                IsCompressed = false,
-                WasEdited = true,
-                IsStatic = true,
-                Data = new byte[0]
-            };*/
+            RomData.ListOfSamples = new List<SequenceSoundSampleBinaryData>();
+            int fid = RomData.SamplesFileID = RomUtils.AppendFile(new byte[0x0]); // issue: cannot find a way to convert from vrom to rom addr
 
             // for each custom instrument set that needs a custom sample
             foreach (InstrumentSetInfo bank in InstrumentSetList)
@@ -772,30 +776,29 @@ namespace MMR.Randomizer.Utils
                     // check if the sample already exists
                     foreach(SequenceSoundSampleBinaryData sample in bank.InstrumentSamples)
                     {
-                        uint sample_marker = sample.Name; // starting name is the marker for this bank, gets re-used for address
-                        SequenceSoundSampleBinaryData PreviouslyWritten = AlreadyWrittenSamples.Find(u => sample.Hash == u.Hash);
+                        SequenceSoundSampleBinaryData PreviouslyWritten = RomData.ListOfSamples.Find(u => sample.Hash == u.Hash);
                         
                         if (PreviouslyWritten == null) // if it does not, add the filelist
                         {
                             // get the rom addr of our new file
-                            sample.Name = (uint) (RomData.MMFileList[fid].Addr + RomData.MMFileList[fid].Data.Length);
+                            sample.Addr = (uint)RomData.MMFileList[fid].Data.Length;
                             // concat our sample to sample collection file
                             RomData.MMFileList[fid].Data = RomData.MMFileList[fid].Data.Concat(sample.BinaryData).ToArray();
                             // pad to nearest 0x10 in case ther are hidden rules about loading files besides DMA reqs
                             int padding_remainder = RomData.MMFileList[fid].Data.Length % 0x10;
                             if ( padding_remainder > 0 )
                               RomData.MMFileList[fid].Data = RomData.MMFileList[fid].Data.Concat(new byte[padding_remainder]).ToArray();
+                            Debug.WriteLine("New sample placed at addr: +0x" + sample.Addr.ToString("X2"));
                             // samples are often reused, save in a easily checked list for the future
-                            AlreadyWrittenSamples.Add(sample);
-                            Debug.WriteLine("New sample placed at addr: 0x" + sample.Name.ToString("X2"));
+                            RomData.ListOfSamples.Add(sample);
                         }
                         else // get address of previously used sample
                         {
-                            sample.Name = PreviouslyWritten.Name;
-                            Debug.WriteLine("Reusing sample at addr: 0x" + sample.Name.ToString("X2"));
+                            sample.Addr = PreviouslyWritten.Addr;
+                            Debug.WriteLine("Reusing sample at addr: +0x" + PreviouslyWritten.Addr.ToString("X2"));
                         }
 
-                        bank.BankBinary = UpdateBankInstrumentAddr(bank.BankBinary, SampleMarker: sample_marker, SampleAddr: sample.Name);
+                        //bank.BankBinary = UpdateBankInstrumentPointers(bank.BankBinary, SampleMarker: sample_marker, SampleAddr: sample.Name);
                     }
                 }
             }

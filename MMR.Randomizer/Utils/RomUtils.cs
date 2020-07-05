@@ -353,6 +353,7 @@ namespace MMR.Randomizer.Utils
                 }
 
             }
+            SequenceUtils.UpdateBankInstrumentPointers(ROM);
             UpdateFileTable(ROM);
             SignROM(ROM);
             FixCRC(ROM);
