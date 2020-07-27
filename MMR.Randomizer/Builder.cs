@@ -112,10 +112,9 @@ namespace MMR.Randomizer
                     SequenceUtils.ReassignSkulltulaHousesMusic(available_pointerized_slot);
                     WriteOutput("Enough Music detected for adding Spiderhouse variety, slot: " + available_pointerized_slot.ToString("X2"));
                 }
-
                 if (RomData.PointerizedSequences.Count > 0)
                 {
-                    byte available_pointerized_slot = (byte) RomData.PointerizedSequences[0].PreviousSlot;
+                    byte available_pointerized_slot = (byte)RomData.PointerizedSequences[0].PreviousSlot;
                     RomData.PointerizedSequences.RemoveAt(0); // I didn't see a pop function
                     SequenceUtils.ReassignPinnacleRock(available_pointerized_slot);
                     WriteOutput("Enough Music detected for adding Pinnacle rock music variety, slot: " + available_pointerized_slot.ToString("X2"));
@@ -123,12 +122,24 @@ namespace MMR.Randomizer
 
             }
 
-            // DEBUG: if the user has a test sequence it always get put into fileselect
-            SequenceInfo TestSequence = RomData.SequenceList.Find(u => u.Name.Contains("songtest") == true);
-            if (TestSequence != null)
+            // DEBUG: if the user has a test sequence it always get put into fileselect, ctd1, and combat for testing
+            SequenceInfo TestSequenceFileselect = RomData.SequenceList.Find(u => u.Name.Contains("songtest") == true);
+            if (TestSequenceFileselect != null)
             {
-                SequenceInfo TargetSlot = RomData.TargetSequences.Find(u => u.Name.Contains("fileselect"));
-                AssignSequenceSlot(TargetSlot, TestSequence, Unassigned, "SONGTEST");
+                SequenceInfo TestSequenceCombat = TestSequenceFileselect.SequenceCopy();
+                SequenceInfo TestSequenceCTD1 = TestSequenceFileselect.SequenceCopy();
+                SequenceInfo TargetSlot = RomData.TargetSequences.Find(u => u.Name.Contains("mm-fileselect"));
+                AssignSequenceSlot(TargetSlot, TestSequenceFileselect, Unassigned, "SONGTEST"); // file select
+                RomData.TargetSequences.Remove(TargetSlot);
+                TargetSlot = RomData.TargetSequences.Find(u => u.Name.Contains("mm-combat"));
+                Unassigned.Add(TestSequenceCombat); 
+                RomData.SequenceList.Add(TestSequenceCombat);
+                AssignSequenceSlot(TargetSlot, TestSequenceCombat, Unassigned, "SONGTEST"); // combat
+                RomData.TargetSequences.Remove(TargetSlot);
+                TargetSlot = RomData.TargetSequences.Find(u => u.Name.Contains("mm-clocktown1"));
+                Unassigned.Add(TestSequenceCTD1);
+                RomData.SequenceList.Add(TestSequenceCTD1);
+                AssignSequenceSlot(TargetSlot, TestSequenceCTD1, Unassigned, "SONGTEST"); // CTD1
                 RomData.TargetSequences.Remove(TargetSlot);
             }
 
