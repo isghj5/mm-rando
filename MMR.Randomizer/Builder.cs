@@ -144,7 +144,7 @@ namespace MMR.Randomizer
             }
 
             // MORE DEBUG: if the user wants to force a song to always show up each seed, but in random slots
-            List<SequenceInfo> ForcedSequences = RomData.SequenceList.FindAll(u => u.Name.Contains("songforce") == true);
+            List<SequenceInfo> ForcedSequences = RomData.SequenceList.FindAll(u => u.Name.Contains("songforce") == true).OrderBy(x => random.Next()).ToList();
             if (ForcedSequences != null && ForcedSequences.Count > 0)
             {
                 foreach(SequenceInfo seq in ForcedSequences)
@@ -154,8 +154,6 @@ namespace MMR.Randomizer
                     Unassigned.Insert(0, seq);
                 }
             }
-
-
 
             foreach (SequenceInfo targetSequence in RomData.TargetSequences)
             {
