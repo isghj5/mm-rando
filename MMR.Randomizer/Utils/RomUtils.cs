@@ -348,6 +348,18 @@ namespace MMR.Randomizer.Utils
                     {
                         RomData.MMFileList[i].Cmp_End = ROMAddr + file_len;
                     }
+                    if (ROMAddr + file_len > ROM.Length) // rom must be expanded
+                    {
+                        // untested
+                        Debug.WriteLine("Expanding rom");
+                        // todo calc a better romexpandsion amount instead of full 64 expansion
+                        int ExpansionLen = 0x2000000;
+                        byte[] NewROM = new byte[ROM.Length + ExpansionLen];
+                        Buffer.BlockCopy(ROM, 0, NewROM, 0, ROM.Length);
+                        Buffer.BlockCopy(new byte[ExpansionLen], 0, NewROM, ROM.Length, ExpansionLen);
+                        ROM = NewROM;
+                    }
+
                     ReadWriteUtils.Arr_Insert(RomData.MMFileList[i].Data, 0, file_len, ROM, ROMAddr);
                     ROMAddr += file_len;
                 }
