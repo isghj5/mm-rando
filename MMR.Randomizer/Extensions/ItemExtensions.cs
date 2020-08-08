@@ -6,6 +6,7 @@ using MMR.Randomizer.Attributes;
 using MMR.Randomizer.GameObjects;
 using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes.Entrance;
+using System.Text.RegularExpressions;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -26,9 +27,28 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<ItemNameAttribute>()?.Name;
         }
 
+        private static Regex entranceLocationNameRegex = new Regex("Entrance(.+)From(.+)");
         public static string Location(this Item item)
         {
-            return item.GetAttribute<LocationNameAttribute>()?.Name ?? item.ToString();
+            var locationName = item.GetAttribute<LocationNameAttribute>()?.Name;
+
+            if (locationName != null)
+            {
+                return locationName;
+            }
+
+            locationName = item.ToString();
+
+            if (item.IsEntrance())
+            {
+                var match = entranceLocationNameRegex.Match(locationName);
+                if (match.Success)
+                {
+                    locationName = $"Exit{match.Groups[2]}To{match.Groups[1]}";
+                }
+            }
+
+            return locationName;
         }
 
         public static Region? Region(this Item item)
