@@ -336,33 +336,27 @@ namespace MMR.Randomizer.Utils
                 {
                     continue;
                 }
-                int file_len = RomData.MMFileList[i].Data.Length;
-                if ( RomData.MMFileList[i].HardRomAddr)
+                RomData.MMFileList[i].Cmp_Addr = ROMAddr;
+                int FileLength = RomData.MMFileList[i].Data.Length;
+                if (RomData.MMFileList[i].IsCompressed)
                 {
-                    ReadWriteUtils.Arr_Insert(RomData.MMFileList[i].Data, 0, file_len, ROM, RomData.MMFileList[i].Addr);
+                    RomData.MMFileList[i].Cmp_End = ROMAddr + FileLength;
                 }
-                else
+                if (ROMAddr + FileLength > ROM.Length) // rom too small
                 {
-                    RomData.MMFileList[i].Cmp_Addr = ROMAddr;
-                    if (RomData.MMFileList[i].IsCompressed)
-                    {
-                        RomData.MMFileList[i].Cmp_End = ROMAddr + file_len;
-                    }
-                    if (ROMAddr + file_len > ROM.Length) // rom must be expanded
-                    {
-                        // untested
-                        Debug.WriteLine("Expanding rom");
-                        // todo calc a better romexpandsion amount instead of full 64 expansion
-                        int ExpansionLen = 0x2000000;
-                        byte[] NewROM = new byte[ROM.Length + ExpansionLen];
-                        Buffer.BlockCopy(ROM, 0, NewROM, 0, ROM.Length);
-                        Buffer.BlockCopy(new byte[ExpansionLen], 0, NewROM, ROM.Length, ExpansionLen);
-                        ROM = NewROM;
-                    }
+                    // assuming the largest file isn't the last one, we still want some extra space for further files
+                    //  padding will reduce the requirements for further resizes
+                    int ExpansionIncrementSize = 0x40000; // 1mb might be too large, not sure if there is a hardware compatiblity issue here
+                    int ExpansionLength = (((ROMAddr + FileLength - ROM.Length) / ExpansionIncrementSize) + 1) * ExpansionIncrementSize;
+                    byte[] NewROM = new byte[ROM.Length + ExpansionLength];
+                    Buffer.BlockCopy(ROM, 0, NewROM, 0, ROM.Length);
+                    Buffer.BlockCopy(new byte[ExpansionLength], 0, NewROM, ROM.Length, ExpansionLength);
+                    ROM = NewROM;
+                    Debug.WriteLine("*** Expanding rom to size 0x" + ROM.Length.ToString("X2") + "***");
+                }
 
-                    ReadWriteUtils.Arr_Insert(RomData.MMFileList[i].Data, 0, file_len, ROM, ROMAddr);
-                    ROMAddr += file_len;
-                }
+                ReadWriteUtils.Arr_Insert(RomData.MMFileList[i].Data, 0, FileLength, ROM, ROMAddr);
+                ROMAddr += FileLength;
 
             }
             SequenceUtils.UpdateBankInstrumentPointers(ROM);
