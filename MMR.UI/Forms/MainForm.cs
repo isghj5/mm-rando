@@ -167,7 +167,11 @@ namespace MMR.UI.Forms
 
         private void bgWorker_WorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if (pProgress.Value < pProgress.Maximum)
+            if ((_settings.GenerateSpoilerLog || _settings.GenerateHTMLLog) && !_settings.GeneratePatch && !_settings.GenerateROM)
+            {
+                lStatus.Text = "Log generated! Ready for another seed...";
+            }
+            else if (pProgress.Value < pProgress.Maximum)
             {
                 lStatus.Text = "Build failed! Ready for another seed...";
             }
