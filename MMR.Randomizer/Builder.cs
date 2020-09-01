@@ -584,6 +584,15 @@ namespace MMR.Randomizer
             ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-spring-lens-cave-spawn");
             ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-poisoned-woodfall-spawns");
             ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-song-of-soaring-exits"); // todo maybe NOP all the code, instead of just the SH commands.
+
+            if (_randomized.ItemList.Any(io => io.IsRandomized && io.Item.IsEntrance() && io.Item.Region() == Region.TheMoon))
+            {
+                SceneUtils.SetSceneTimeSettingsToDefault(GameObjects.Scene.TheMoon);
+                SceneUtils.SetSceneTimeSettingsToDefault(GameObjects.Scene.DekuTrial);
+                SceneUtils.SetSceneTimeSettingsToDefault(GameObjects.Scene.GoronTrial);
+                SceneUtils.SetSceneTimeSettingsToDefault(GameObjects.Scene.ZoraTrial);
+                SceneUtils.SetSceneTimeSettingsToDefault(GameObjects.Scene.LinkTrial);
+            }
         }
 
         private void WriteDungeons()

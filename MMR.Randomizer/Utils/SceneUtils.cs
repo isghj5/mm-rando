@@ -371,5 +371,34 @@ namespace MMR.Randomizer.Utils
                 ReenableNightBGMSingle(RomData.SceneList.Find(u => u.Number == SceneEnum.Id()).File);
             }
         }
+
+        private static readonly byte[] defaultTimeSettings = new byte[] { 0xFF, 0xFF, 0x03, 0x00 };
+        public static void SetSceneTimeSettingsToDefault(GameObjects.Scene scene)
+        {
+            foreach (var map in RomData.SceneList.Find(s => s.Number == scene.Id()).Maps)
+            {
+                RomUtils.CheckCompressed(map.File);
+                var offset = FindHeaderOffset(RomData.MMFileList[map.File].Data, 0x10);
+                if (offset.HasValue)
+                {
+                    ReadWriteUtils.Arr_Insert(defaultTimeSettings, 0, defaultTimeSettings.Length, RomData.MMFileList[map.File].Data, offset.Value);
+                }
+            }
+        }
+
+        // Doesn't find alternate headers.
+        private static int? FindHeaderOffset(byte[] data, byte headerCommand)
+        {
+            int i;
+            byte currentHeader;
+            for (i = 0, currentHeader = data[i]; currentHeader != 0x13; i += 8, currentHeader = data[i])
+            {
+                if (currentHeader == headerCommand)
+                {
+                    return i;
+                }
+            }
+            return null;
+        }
     }
 }
