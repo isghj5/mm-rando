@@ -381,7 +381,7 @@ namespace MMR.Randomizer.Utils
                 var offset = FindHeaderOffset(RomData.MMFileList[map.File].Data, 0x10);
                 if (offset.HasValue)
                 {
-                    ReadWriteUtils.Arr_Insert(defaultTimeSettings, 0, defaultTimeSettings.Length, RomData.MMFileList[map.File].Data, offset.Value);
+                    ReadWriteUtils.Arr_Insert(defaultTimeSettings, 0, defaultTimeSettings.Length, RomData.MMFileList[map.File].Data, offset.Value + 4);
                 }
             }
         }
