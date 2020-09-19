@@ -268,7 +268,7 @@ namespace MMR.Randomizer
                                 }
                             );
 
-                            WriteOutput(" * double dipping with song " + replacementSong.Name + ", with categories: " + String.Join(",", replacementSong.Type));
+                            WriteOutput(" * double dipping with song " + replacementSong.Name + ", with categories: " + String.Join(", ", replacementSong.Type.Select(x => "0x" + x.ToString("X2"))));
                             WriteOutput(GetSpacedString(targetSequence.Name, Width: 50, "COPY") + " -> " + replacementSong.Name);
                         }
                         else
