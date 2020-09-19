@@ -193,7 +193,11 @@ namespace MMR.Randomizer
                         //  skip so we don't waste precious instrument set slots on rarely heard music
                         if (LowUseMusicSlots.Contains(targetSequence.Replaces) && ! testSeq.SequenceBinaryList.Any(u => u.InstrumentSet == null))
                         {
-                            WriteOutput(GetSpacedString(testSeq.Name) + " skipped for slot " + targetSequence.Replaces.ToString("X2") + " because it's a low use slot and requires a custom bank");
+                            if(targetSequence.Type[0] < 8) // to reduce spam, limit this only to the regular categories
+                            {
+                                WriteOutput(GetSpacedString(testSeq.Name) + " skipped for slot " + targetSequence.Replaces.ToString("X2") + " because it's a low use slot and requires a custom bank");
+                            }
+
                             continue;
                         }
                     }
@@ -227,7 +231,7 @@ namespace MMR.Randomizer
                 {
                     // just add one of the remaining songs,
                     //  so long as bgm and fanfares are kept separate, should still be fine
-                    WriteOutput("No song fits in " + targetSequence.Name + " slot, with categories: " + String.Join(",", targetSequence.Type));
+                    WriteOutput("No song fits in " + targetSequence.Name + " slot, with categories: " + String.Join(", ", targetSequence.Type.Select(x => "0x" + x.ToString("X2"))));
 
                     // the first category of the type is the MAIN type, the rest are secondary
                     SequenceInfo replacementSong = null;
@@ -242,7 +246,7 @@ namespace MMR.Randomizer
 
                     if (replacementSong != null)
                     {
-                        WriteOutput(" * generalized replacement with " + replacementSong.Name + " song, with categories: " + String.Join(",", replacementSong.Type));
+                        WriteOutput(" * generalized replacement with " + replacementSong.Name + " song, with categories: " + String.Join(", ", replacementSong.Type.Select(x => "0x" + x.ToString("X2"))));
                         replacementSong.Replaces = targetSequence.Replaces;
                         WriteOutput(GetSpacedString(targetSequence.Name, Width: 50, "APROX") + " -> " + replacementSong.Name);
                         Unassigned.Remove(replacementSong);
