@@ -24,6 +24,7 @@ namespace MMR.Randomizer
         private Random Random { get; set; }
 
         public ItemList ItemList { get; set; }
+        public List<Item> PlandoPlacedItems;
 
         #region Dependence and Conditions
         List<Item> ConditionsChecked { get; set; }
@@ -87,6 +88,7 @@ namespace MMR.Randomizer
                 ForbiddenReplacedBy[Item.MaskKeaton].AddRange(ItemUtils.DowngradableItems());
                 ForbiddenStartingItems.AddRange(ItemUtils.DowngradableItems());
             }
+            PlandoPlacedItems = new List<Item>();
         }
 
         //rando functions
@@ -769,7 +771,7 @@ namespace MMR.Randomizer
         private void PlaceItem(Item currentItem, List<Item> targets)
         {
             var currentItemObject = ItemList[currentItem];
-            if (currentItemObject.NewLocation.HasValue)
+            if (currentItemObject.NewLocation.HasValue || PlandoPlacedItems.Contains(currentItem))
             {
                 return;
             }
@@ -824,6 +826,17 @@ namespace MMR.Randomizer
             var itemPool = new List<Item>();
 
             AddAllItems(itemPool);
+
+            List<(Item, Item)> PlandoItemCombos = PlandoUtils.GetRandomizedItemPlacements(this.Random, itemPool);
+            if (PlandoItemCombos != null)
+            {
+                foreach ((Item item, Item check) in PlandoItemCombos)
+                {
+                    PlaceItem(item, new List<Item> { check });
+                    itemPool.Remove(check); // PlaceItem removes from the list you give it, not from Randomizer::itemPool
+                    PlandoPlacedItems.Add(item);
+                }
+            }
 
             PlaceFreeItems(itemPool);
             PlaceQuestItems(itemPool);
