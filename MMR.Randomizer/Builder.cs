@@ -104,22 +104,7 @@ namespace MMR.Randomizer
 
             // if we have lots of music, let's randomize skulltula house and ikana well to have something unique that isn't cave music
             if (RomData.SequenceList.Count > 80 &&RomData.SequenceList.FindAll(u => u.Type.Contains(2)).Count >= 8 + 2){ // tested by asking for all targetseq that have a category of 2, counted (8)
-                if (RomData.PointerizedSequences.Count > 0)
-                {
-                    byte available_pointerized_slot = (byte)RomData.PointerizedSequences[0].PreviousSlot;
-                    RomData.PointerizedSequences.RemoveAt(0); // I didn't see a pop function
-                    SequenceUtils.ReassignSkulltulaHousesMusic(available_pointerized_slot);
-                    WriteOutput("Enough Music detected for adding Spiderhouse variety, slot: " + available_pointerized_slot.ToString("X2"));
-                }
-
-                if (RomData.PointerizedSequences.Count > 0)
-                {
-                    byte available_pointerized_slot = (byte) RomData.PointerizedSequences[0].PreviousSlot;
-                    RomData.PointerizedSequences.RemoveAt(0); // I didn't see a pop function
-                    SequenceUtils.ReassignPinnacleRock(available_pointerized_slot);
-                    WriteOutput("Enough Music detected for adding Pinnacle rock music variety, slot: " + available_pointerized_slot.ToString("X2"));
-                }
-
+                SequenceUtils.ReassignSongSlots();
             }
 
             // DEBUG: if the user has a test sequence it always get put into fileselect
