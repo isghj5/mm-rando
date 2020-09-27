@@ -272,16 +272,20 @@ namespace MMR.UI.Forms
 
         private void bRandomise_MouseDown(object sender, MouseEventArgs e)
         {
-            if (e.Button == MouseButtons.Left)
+            // if right click, generate quickly without file select
+            Randomize(e.Button == MouseButtons.Right);
+        }
+
+        private void bReroll_MouseDown(object sender, MouseEventArgs e)
+        {
+            tSeed.Text = (new Random()).Next(2147483647).ToString();
+
+            if (e.Button == MouseButtons.Right)  // reroll seed and instant re-generate
             {
-                Randomize();
-            }
-            if (e.Button == MouseButtons.Right)  // user wants a faster seed, less waiting
-            {
-                tSeed.Text = Math.Abs(Environment.TickCount).ToString();
                 Randomize(true);
             }
         }
+
 
         private void bApplyPatch_Click(object sender, EventArgs e)
         {
