@@ -395,12 +395,6 @@ namespace MMR.Randomizer.Utils
             for (int i = 0; i < 128; i++)
             {
                 MMSequence entry = new MMSequence();
-                if (i == 0x1E) // intro music when link gets ambushed
-                {
-                    entry.Addr = 2;
-                    OldSeq.Add(entry);
-                    continue;
-                }
 
                 int entryaddr = Addresses.SeqTable + (i * 16);
                 entry.Addr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, entryaddr - basea);
