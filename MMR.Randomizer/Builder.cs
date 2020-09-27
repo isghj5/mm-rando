@@ -129,6 +129,14 @@ namespace MMR.Randomizer
                 RomData.TargetSequences.Remove(TargetSlot);
             }
 
+            // music plando, user has selected they want an easier time specifying where and what songs are placed in specific spots
+            List<(SequenceInfo, SequenceInfo)> PlandoSongs = PlandoUtils.GetRandomizedSongPlacements(random, log);
+            foreach ((SequenceInfo song, SequenceInfo slot) in PlandoSongs)
+            {
+                AssignSequenceSlot(slot, song, Unassigned, "PLANDO");
+                RomData.TargetSequences.Remove(slot);
+            }
+
             // MORE DEBUG: if the user wants to force a song to always show up each seed, but in random slots
             List<SequenceInfo> ForcedSequences = RomData.SequenceList.FindAll(u => u.Name.Contains("songforce") == true).OrderBy(x => random.Next()).ToList();
             if (ForcedSequences != null && ForcedSequences.Count > 0)
@@ -139,14 +147,6 @@ namespace MMR.Randomizer
                     Unassigned.Remove(seq);
                     Unassigned.Insert(0, seq);
                 }
-            }
-
-            // music plando, user has selected they want an easier time specifying where and what songs are placed in specific spots
-            List<(SequenceInfo, SequenceInfo)> PlandoSongs = PlandoUtils.GetRandomizedSongPlacements(random, log);
-            foreach ((SequenceInfo song, SequenceInfo slot) in PlandoSongs)
-            {
-                AssignSequenceSlot(slot, song, Unassigned, "PLANDO");
-                RomData.TargetSequences.Remove(slot);
             }
 
             foreach (SequenceInfo targetSequence in RomData.TargetSequences)
