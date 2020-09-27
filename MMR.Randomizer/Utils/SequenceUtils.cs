@@ -11,9 +11,21 @@ using System.IO.Compression;
 using MMR.Randomizer.Models.Settings;
 using System.Security.Cryptography;
 using System.Runtime.CompilerServices;
+using Newtonsoft.Json;
 
 namespace MMR.Randomizer.Utils
 {
+    /// <summary>
+    /// Used for reading from JSON file
+    /// </summary>
+    public class ReplacementSongSlot
+    {
+        public string          Name;
+        public string          Notes;
+        public List<int>       SceneFIDToModify;
+        public List<string>    NewSlotCategories; // string because they are base 16 which json cannot handle
+    }
+
     public class SequenceUtils
     {
         public static void ReadSequenceInfo()
@@ -605,86 +617,81 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteToROM(0x00C2739C, new byte[] { 0x3C, 0x08, 0x80, 0x0A, 0x8D, 0x05, (byte) (offset >> 8), (byte)(offset & 0xFF) });
         }
 
-        public static void ReassignSkulltulaHousesMusic(byte replacement_slot = 0x5A)
+        public static bool SearchAndReplaceSceneBGM(int scene_fid, byte replacement_slot)
         {
-            // changes the skulltulla house BGM to a separate slot so it plays a new music that isn't generic cave music (overused)
-            // the BGM for a scene is specified by a single byte in the scene headers
-
             // to modify the scene header, which is in the scene, we need the scene as a file
             //  we can get this from the Romdata.SceneList but this only gets populated on enemizer
             //  and we don't NEED to populate it since vanilla scenes are static, we can just hard code it here
             //  at re-encode, we'll have fewer decoded files to re-encode too
-            int swamp_spider_house_fid = 1284; // taken from ultimate MM spreadsheet (US File list -> A column)
 
             // scan the files for the header that contains scene music (0x15 first byte)
             // 15xx0000 0000yyzz where zz is the sequence pointer byte
-            RomUtils.CheckCompressed(swamp_spider_house_fid);
+            RomUtils.CheckCompressed(scene_fid);
             for (int b = 0; b < 0x10 * 70; b += 8)
             {
-                if (RomData.MMFileList[swamp_spider_house_fid].Data[b] == 0x15
-                    && RomData.MMFileList[swamp_spider_house_fid].Data[b + 0x7] == 0x3B)
+                if (RomData.MMFileList[scene_fid].Data[b] == 0x15) //&& RomData.MMFileList[scene_fid].Data[b + 0x7] == 0x3B)
                 {
-                    RomData.MMFileList[swamp_spider_house_fid].Data[b + 0x7] = replacement_slot;
-                    break;
+                    Debug.WriteLine("Replacing previous music index byte: " + RomData.MMFileList[scene_fid].Data[b + 0x7].ToString("X2"));
+                    RomData.MMFileList[scene_fid].Data[b + 0x7] = replacement_slot;
+
+                    return true;
                 }
             }
-
-            int ocean_spider_house_fid = 1291; // taken from ultimate MM spreadsheet
-            RomUtils.CheckCompressed(ocean_spider_house_fid);
-            for (int b = 0; b < 0x10 * 70; b += 8)
-            {
-                if (RomData.MMFileList[ocean_spider_house_fid].Data[b] == 0x15
-                    && RomData.MMFileList[ocean_spider_house_fid].Data[b + 0x7] == 0x3B)
-                {
-                    RomData.MMFileList[ocean_spider_house_fid].Data[b + 0x7] = replacement_slot;
-                    break;
-                }
-            }
-
-
-            SequenceInfo new_music_slot = new SequenceInfo
-            {
-                Name = "mmr-spiderhouse-replacement",
-                MM_seq = replacement_slot,
-                Replaces = replacement_slot,
-                Type = new List<int> { 2 },
-                Instrument = 3
-            };
-
-            RomData.TargetSequences.Add(new_music_slot);
-
+            return false;
         }
 
-        public static void ReassignPinnacleRock(byte replacement_slot = 0x51)
+        public static void ReassignSongSlots()
         {
-            // to modify the scene header, which is in the scene, we need the scene as a file
-            //  we can get this from the Romdata.SceneList but this only gets populated on enemizer
-            //  and we don't NEED to populate it since vanilla scenes are static, we can just hard code it here
-            //  at re-encode, we'll have fewer decoded files to re-encode too
-            int pinnacle_rock_fid = 1276; // taken from ultimate MM spreadsheet (US File list -> A column)
-
-            // scan the files for the header that contains scene music (0x15 first byte)
-            // 15xx0000 0000yyzz where zz is the sequence pointer byte
-            RomUtils.CheckCompressed(pinnacle_rock_fid);
-            for (int b = 0; b < 0x10 * 70; b += 8)
+            // read all assginement slots from json files
+            List<ReplacementSongSlot> NewReplacementSongSlots = new List<ReplacementSongSlot>();
+            // resources folder got nuked, for now lets assume this will be in the main folder
+            foreach (string file_path in Directory.GetFiles(".", "*AdditionalSongSlots.json"))
             {
-                if (RomData.MMFileList[pinnacle_rock_fid].Data[b] == 0x15) //&& RomData.MMFileList[pinnacle_rock_fid].Data[b + 0x7] == 0x13)
+                try
                 {
-                    RomData.MMFileList[pinnacle_rock_fid].Data[b + 0x7] = replacement_slot;
-                    break;
+                    string filetext = File.ReadAllText(file_path);
+                    List<ReplacementSongSlot> tmplist = JsonConvert.DeserializeObject<List<ReplacementSongSlot>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
+                    NewReplacementSongSlots = NewReplacementSongSlots.Concat(tmplist).ToList();
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error reading file: " + file_path + ", error: " + e.ToString());
                 }
             }
 
-            SequenceInfo new_music_slot = new SequenceInfo
+            for (int i = 0; i < NewReplacementSongSlots.Count && i < RomData.PointerizedSequences.Count; i++)
             {
-                Name = "mmr-pinnacle-replacement",
-                MM_seq = replacement_slot,
-                Replaces = replacement_slot,
-                Type = new List<int> { 0, 2 },
-                Instrument = 3
-            };
+                ReplacementSongSlot newslot = NewReplacementSongSlots[i];
+                SequenceInfo unused_slot = RomData.PointerizedSequences.ElementAt(0);
+                Debug.WriteLine("Attempting to add new song slot:" + newslot.Name + " at previously unused location " + unused_slot.PreviousSlot);
+                RomData.PointerizedSequences.RemoveAt(0);
+                foreach (int scene_fid in newslot.SceneFIDToModify)
+                {
+                    bool sucess_result = SearchAndReplaceSceneBGM(scene_fid, (byte)unused_slot.PreviousSlot);
+                    if (!sucess_result)
+                    {
+                        Debug.WriteLine("Error: could not replace teh bgm byte in scene fid: " + scene_fid);
+                    }
+                }
+                try
+                {
+                    SequenceInfo new_music_slot = new SequenceInfo
+                    {
+                        // we add mmr- because if the user adds mm- it will confuse our weak parser later
+                        Name = "mmr-" + newslot.Name,
+                        MM_seq = unused_slot.PreviousSlot,
+                        Replaces = unused_slot.PreviousSlot,
+                        Type = newslot.NewSlotCategories.Select(int.Parse).ToList(),
+                        Instrument = 0
+                    };
+                    RomData.TargetSequences.Add(new_music_slot);
+                }
 
-            RomData.TargetSequences.Add(new_music_slot);
+                catch (Exception e)
+                {
+                    Debug.WriteLine("Error while converting an additional song slot to a sequence for music rando");
+                }
+            }
         }
 
         public static void ReadInstrumentSetList()
