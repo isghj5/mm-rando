@@ -6,6 +6,7 @@ using Newtonsoft.Json;
 using System.Diagnostics;
 using System.Linq;
 using MMR.Randomizer.Models.Rom;
+using MMR.Randomizer.Constants;
 
 namespace MMR.Randomizer.Utils
 {
@@ -108,7 +109,7 @@ namespace MMR.Randomizer.Utils
             }
 
             List<(SequenceInfo, SequenceInfo)> ReturnSongTupleList = new List<(SequenceInfo, SequenceInfo)>();
-            List<PlandoMusicCombo> AllPlandoMusicCombos = ReadAllMusicPlandoFiles();
+            List<PlandoMusicCombo> AllPlandoMusicCombos = ReadAllMusicPlandoFiles(Values.MusicDirectory);
 
             foreach(PlandoMusicCombo music_combo in AllPlandoMusicCombos)
             {
