@@ -351,6 +351,9 @@ namespace MMR.Randomizer.Utils
                 ConvertSequenceSlotToPointer(0x08, 0x09); // point chasefail(skullkid chase) at fail
                 ConvertSequenceSlotToPointer(0x19, 0x78); // point clearshort(epona get cs) at dungeonclearshort
             }
+
+            // create some pointerized slots that are otherwise ignored, beacuse this pool gets re-used later for new song slots
+            RomData.PointerizedSequences.Add(new SequenceInfo() { Name = "mm-introcutscene1", MM_seq = 0x1E, PreviousSlot = 0x1E,  Replaces = 0x76});
         }
 
         public static void ConvertSequenceSlotToPointer(int SeqSlotIndex, int SubstituteSlotIndex)
