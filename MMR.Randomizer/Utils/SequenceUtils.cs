@@ -653,11 +653,11 @@ namespace MMR.Randomizer.Utils
                 }
             }
 
-            for (int i = 0; i < NewReplacementSongSlots.Count && i < RomData.PointerizedSequences.Count; i++)
+            for (int i = 0; i < NewReplacementSongSlots.Count && RomData.PointerizedSequences.Count > 0; i++)
             {
                 ReplacementSongSlot newslot = NewReplacementSongSlots[i];
                 SequenceInfo unused_slot = RomData.PointerizedSequences.ElementAt(0);
-                Debug.WriteLine("Attempting to add new song slot:" + newslot.Name + " at previously unused location " + unused_slot.PreviousSlot);
+                Debug.WriteLine("Attempting to add new song slot:" + newslot.Name + " at previously unused location " + unused_slot.PreviousSlot.ToString("X2"));
                 RomData.PointerizedSequences.RemoveAt(0);
                 foreach (int scene_fid in newslot.SceneFIDToModify)
                 {
