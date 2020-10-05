@@ -20,15 +20,16 @@ namespace MMR.Randomizer.Utils
 
     public class PlandoItemCombo : PlandoCombo
     {
-        public List<Item>  ItemList;
-        public List<Item>  CheckList;
+        public List<Item>   ItemList;
+        public List<Item>   CheckList;
+        public bool         SkipLogic = false;
 
-        /*PlandoItemCombo(string name, string notes, List<Item> itemList, List<Item> checkList, int count = -1 )
+        /*PlandoItemCombo(string Name, string Notes, List<Item> ItemList, List<Item> CheckList, int count = -1 )
         {
-            this.Name = name;
-            this.Notes = notes;
-            this.ItemList = itemList;
-            this.CheckList = checkList;
+            this.Name = Name;
+            this.Notes = Notes;
+            this.ItemList = ItemList;
+            this.CheckList = CheckList;
             this.ItemDrawCount = count;
         }*/
     }
@@ -51,21 +52,34 @@ namespace MMR.Randomizer.Utils
     class PlandoUtils
     {
         // read plando list(s) from file
-        public static List<PlandoItemCombo> ReadAllItemPlandoFiles(string directory = ".")
+        public static List<PlandoItemCombo> ReadAllItemPlandoFiles(List<Item> randomizerItemList)
         {
-            // any file with FILENAME_Plando.json in the base directory is a plando file
+            // any file with FILEName_Plando.json in the base directory is a plando file
             // resource folders getting nuked, cannot use, just assume base directory is best places for now
-            List<PlandoItemCombo> PlandoList = new List<PlandoItemCombo>();
-            foreach (String filePath in Directory.GetFiles(directory, "*Plando.json"))
+            List<PlandoItemCombo> itemPlandoList = new List<PlandoItemCombo>();
+            foreach (String filePath in Directory.GetFiles(Values.MainDirectory, "*ItemPlando.json"))
             {
-                String filename = Path.GetFileName(filePath);
+                String fileName = Path.GetFileName(filePath);
                 try
                 {
-                    string filetext = File.ReadAllText(filename);
+                    string filetext = File.ReadAllText(fileName);
                     // the string enum converter reads the item enumerators as strings rather than their int values, so we can read item/checks by enum
                     // eg, the json can have ItemList: ["MaskBunnyHood"] instead of ItemList: [ 22 ]
-                    List<PlandoItemCombo> tmp_list = JsonConvert.DeserializeObject<List<PlandoItemCombo>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
-                    PlandoList = PlandoList.Concat(tmp_list).ToList();
+                    List<PlandoItemCombo> workingList = JsonConvert.DeserializeObject<List<PlandoItemCombo>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
+                    // for item in workingList, get object reference from ItemList, beacuse we need to modify these later
+                    foreach(PlandoItemCombo p in workingList)
+                    {
+                        for(int i = 0; i < p.ItemList.Count; i++)
+                        {
+                            p.ItemList[i] = randomizerItemList.Find(u => u == p.ItemList[i]);
+                        }
+                        for (int i = 0; i < p.CheckList.Count; i++)
+                        {
+                            p.CheckList[i] = randomizerItemList.Find(u => u == p.CheckList[i]);
+                        }
+
+                    }
+                    itemPlandoList = itemPlandoList.Concat(workingList).ToList();
                 }
                 catch (Exception e)
                 {
@@ -75,19 +89,19 @@ namespace MMR.Randomizer.Utils
                     #endif
                 }
             }
-            return PlandoList;
+            return itemPlandoList;
         }
 
         public static List<PlandoMusicCombo> ReadAllMusicPlandoFiles(string directory = "Resources/music")
         {
-            List<PlandoMusicCombo> PlandoList = new List<PlandoMusicCombo>();
+            List<PlandoMusicCombo> musicPlandoList = new List<PlandoMusicCombo>();
             foreach (String filePath in Directory.GetFiles(directory, "*MusicPlando.json"))
             {
                 try
                 {
                     string filetext = File.ReadAllText(filePath);
-                    List<PlandoMusicCombo> tmp_list = JsonConvert.DeserializeObject<List<PlandoMusicCombo>>(filetext);
-                    PlandoList = PlandoList.Concat(tmp_list).ToList();
+                    List<PlandoMusicCombo> workingList = JsonConvert.DeserializeObject<List<PlandoMusicCombo>>(filetext);
+                    musicPlandoList = musicPlandoList.Concat(workingList).ToList();
                 }
                 catch (Exception e)
                 {
@@ -97,7 +111,7 @@ namespace MMR.Randomizer.Utils
                     #endif
                 }
             }
-            return PlandoList;
+            return musicPlandoList;
         }
 
         public static List<(SequenceInfo, SequenceInfo)> GetRandomizedSongPlacements(Random random, System.Text.StringBuilder song_log)
@@ -108,139 +122,114 @@ namespace MMR.Randomizer.Utils
                 song_log.AppendLine(s);
             }
 
-            List<(SequenceInfo, SequenceInfo)> ReturnSongTupleList = new List<(SequenceInfo, SequenceInfo)>();
-            List<PlandoMusicCombo> AllPlandoMusicCombos = ReadAllMusicPlandoFiles(Values.MusicDirectory);
+            List<(SequenceInfo, SequenceInfo)> returnSongTupleList = new List<(SequenceInfo, SequenceInfo)>();
+            List<PlandoMusicCombo> allPlandoMusicCombos = ReadAllMusicPlandoFiles(Values.MusicDirectory);
 
-            foreach(PlandoMusicCombo music_combo in AllPlandoMusicCombos)
+            foreach(PlandoMusicCombo musicCombo in allPlandoMusicCombos)
             {
                 // shuffle songs and slots based on our random seed
-                music_combo.SongsList = music_combo.SongsList.OrderBy(x => random.Next()).ToList();
-                music_combo.SlotsList = music_combo.SlotsList.OrderBy(x => random.Next()).ToList();
+                musicCombo.SongsList = musicCombo.SongsList.OrderBy(x => random.Next()).ToList();
+                musicCombo.SlotsList = musicCombo.SlotsList.OrderBy(x => random.Next()).ToList();
 
                 // clean combo of already placed items and checks
-                List<string> PreviouslyUsedSongs = ReturnSongTupleList.Select(u => u.Item1.Name).ToList();
-                foreach (string i in music_combo.SongsList.ToList())
+                List<string> previouslyUsedSongs = returnSongTupleList.Select(u => u.Item1.Name).ToList();
+                foreach (string i in musicCombo.SongsList.ToList())
                 {
-                    if (PreviouslyUsedSongs.Contains(i))
+                    if (previouslyUsedSongs.Contains(i))
                     {
                         DebugOut("Song already placed, removed from combo: " + i);
-                        music_combo.SongsList.Remove(i);
+                        musicCombo.SongsList.Remove(i);
                     }
                     else if (! RomData.SequenceList.Any(u => u.Name == i))
                     {
-                        DebugOut("Song does not exist in sequence pool, did you misspell the song name? " + i);
-                        music_combo.SongsList.Remove(i);
+                        DebugOut("Song does not exist in sequence pool, did you misspell the song Name? " + i);
+                        musicCombo.SongsList.Remove(i);
                     }
                 }
 
-                List<string> PreviouslyUsedSlots = ReturnSongTupleList.Select(u => u.Item2.Name).ToList();
-                foreach (string i in music_combo.SlotsList.ToList())
+                List<string> previouslyUsedSlots = returnSongTupleList.Select(u => u.Item2.Name).ToList();
+                foreach (string i in musicCombo.SlotsList.ToList())
                 {
-                    if (PreviouslyUsedSlots.Contains(i))
+                    if (previouslyUsedSlots.Contains(i))
                     {
                         DebugOut("Slot already used, removed from combo: " + i);
-                        music_combo.SlotsList.Remove(i);
+                        musicCombo.SlotsList.Remove(i);
                     }
                     else if (!RomData.TargetSequences.Any(u => u.Name == i))
                     {
-                        DebugOut("Slot does not exist in slot pool, did you misspell the slot name or forget to add it to seqs.txt? " + i);
-                        music_combo.SlotsList.Remove(i);
+                        DebugOut("Slot does not exist in slot pool, did you misspell the slot Name or forget to add it to seqs.txt? " + i);
+                        musicCombo.SlotsList.Remove(i);
                     }
                 }
 
-                if (music_combo.SongsList.Count == 0)
+                if (musicCombo.SongsList.Count == 0)
                 {
-                    DebugOut("Plando Music Combo is starved, all songs have already been placed: " + music_combo.Name);
+                    DebugOut("Plando Music Combo is starved, all songs have already been placed: " + musicCombo.Name);
                     continue;
                 }
-                if (music_combo.SlotsList.Count == 0)
+                if (musicCombo.SlotsList.Count == 0)
                 {
-                    DebugOut("Plando Music Combo is starved, all slots are already filled: " + music_combo.Name);
+                    DebugOut("Plando Music Combo is starved, all slots are already filled: " + musicCombo.Name);
                     continue;
                 }
 
-                if (music_combo.ItemDrawCount <= -1 || music_combo.ItemDrawCount > music_combo.SongsList.Count)
-                    music_combo.ItemDrawCount = music_combo.SongsList.Count;
+                if (musicCombo.ItemDrawCount <= -1 || musicCombo.ItemDrawCount > musicCombo.SongsList.Count)
+                    musicCombo.ItemDrawCount = musicCombo.SongsList.Count;
 
-                for (int i = 0; i < music_combo.ItemDrawCount && i < music_combo.SlotsList.Count; i++)
+                for (int i = 0; i < musicCombo.ItemDrawCount && i < musicCombo.SlotsList.Count; i++)
                 {
-                    SequenceInfo song = RomData.SequenceList.Find(u => u.Name == music_combo.SongsList[i]);
-                    SequenceInfo slot = RomData.TargetSequences.Find(u => u.Name == music_combo.SlotsList[i]);
+                    SequenceInfo song = RomData.SequenceList.Find(u => u.Name == musicCombo.SongsList[i]);
+                    SequenceInfo slot = RomData.TargetSequences.Find(u => u.Name == musicCombo.SlotsList[i]);
 
-                    ReturnSongTupleList.Add((song, slot));
+                    returnSongTupleList.Add((song, slot));
                     DebugOut("* Song placed: " + song.Name + " placed in slot " + slot.Name);
                 }
             }
 
-            return ReturnSongTupleList;
+            return returnSongTupleList;
         }
 
-        /// with seed, get list of item->check tuples for randomizer.cs::RandomizeItems()
-        public static List<(Item, Item)> GetRandomizedItemPlacements(Random random, List<Item> itemPool)
+        // remove items and checks already taken
+        public static PlandoItemCombo CleanItemCombo(PlandoItemCombo itemCombo, Random random, List<Item> randomizerItemPool, ItemList randomizerItemList)
         {
+            // shuffle item and check order
+            itemCombo.ItemList  = itemCombo.ItemList.OrderBy(x => random.Next()).ToList();
+            itemCombo.CheckList = itemCombo.CheckList.OrderBy(x => random.Next()).ToList();
 
-            List<(Item, Item)> ReturnItemTupleList = new List<(Item item, Item check)>();
-            List<PlandoItemCombo> AllPlandoItemCombos = ReadAllItemPlandoFiles();
-
-            foreach(PlandoItemCombo item_combo in AllPlandoItemCombos)
+            // clean combo of already placed items and checks
+            foreach (Item item in itemCombo.ItemList.ToList()) 
             {
-                // shuffle item and check order
-                item_combo.ItemList  = item_combo.ItemList.OrderBy(x => random.Next()).ToList();
-                item_combo.CheckList = item_combo.CheckList.OrderBy(x => random.Next()).ToList();
-
-                // clean combo of already placed items and checks
-                List<Item> PreviouslyUsedItems = ReturnItemTupleList.Select(u => u.Item1).ToList();
-                foreach (Item i in item_combo.ItemList.ToList()) 
+                if(randomizerItemList[item].NewLocation.HasValue)
                 {
-                    if (PreviouslyUsedItems.Contains(i))
-                    {
-                        Debug.WriteLine("Item already placed, removed from combo: " + i);
-                        item_combo.ItemList.Remove(i);
-                    }
-                    else if ( !itemPool.Contains(i))
-                    {
-                        Debug.WriteLine("Item does not exist in randomized item pool, did you forget to randomize it? " + i);
-                        item_combo.ItemList.Remove(i);
-                    }
-                }
-
-                List<Item> PreviouslyUsedChecks = ReturnItemTupleList.Select(u => u.Item2).ToList();
-                foreach (Item i in item_combo.CheckList.ToList())
-                {
-                    if (PreviouslyUsedChecks.Contains(i))
-                    {
-                        Debug.WriteLine("Check already used, removed from combo: " + i);
-                        item_combo.CheckList.Remove(i);
-                    }
-                    else if ( !itemPool.Contains(i))
-                    {
-                        Debug.WriteLine("Check does not exist in randomized item pool, did you forget to randomize it? " + i);
-                        item_combo.CheckList.Remove(i);
-                    }
-                }
-
-                if (item_combo.ItemList.Count == 0)
-                {
-                    Debug.WriteLine("Plando Item Combo is starved, all items have already been placed: " + item_combo.Name);
-                    continue;
-                }
-                if (item_combo.CheckList.Count == 0)
-                {
-                    Debug.WriteLine("Plando Item Combo is starved, all checks are already filled: " + item_combo.Name);
-                    continue;
-                }
-
-                if (item_combo.ItemDrawCount <= -1 || item_combo.ItemDrawCount > item_combo.ItemList.Count)
-                    item_combo.ItemDrawCount = item_combo.ItemList.Count;
-
-                for (int i = 0; i < item_combo.ItemDrawCount && i < item_combo.CheckList.Count; i++)
-                {
-                    ReturnItemTupleList.Add((item_combo.ItemList[i], item_combo.CheckList[i]));
-                    Debug.WriteLine("* Item placed: " + item_combo.ItemList[i] + " placed in check " + item_combo.CheckList[i]);
+                    Debug.WriteLine("Item has already been placed. " + item);
+                    itemCombo.ItemList.Remove(item);
                 }
             }
 
-            return ReturnItemTupleList;
+            foreach (Item check in itemCombo.CheckList.ToList())
+            {
+                if ( ! randomizerItemPool.Contains(check))
+                {
+                    Debug.WriteLine("Check does not exist in randomized item pool, either already taken or not randomized: " + check);
+                    itemCombo.CheckList.Remove(check);
+                }
+            }
+
+            if (itemCombo.ItemList.Count == 0)
+            {
+                Debug.WriteLine("Plando Item Combo is starved, all items have already been placed: " + itemCombo.Name);
+                return null;
+            }
+            if (itemCombo.CheckList.Count == 0)
+            {
+                Debug.WriteLine("Plando Item Combo is starved, all checks are already filled: " + itemCombo.Name);
+                return null;
+            }
+
+            if (itemCombo.ItemDrawCount <= -1)
+                itemCombo.ItemDrawCount = itemCombo.ItemList.Count;
+
+            return itemCombo;
         }
 
     }

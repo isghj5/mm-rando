@@ -14,6 +14,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace MMR.Randomizer
 {
@@ -24,7 +25,6 @@ namespace MMR.Randomizer
         private Random Random { get; set; }
 
         public ItemList ItemList { get; set; }
-        public List<Item> PlandoPlacedItems;
 
         #region Dependence and Conditions
         List<Item> ConditionsChecked { get; set; }
@@ -88,7 +88,6 @@ namespace MMR.Randomizer
                 ForbiddenReplacedBy[Item.MaskKeaton].AddRange(ItemUtils.DowngradableItems());
                 ForbiddenStartingItems.AddRange(ItemUtils.DowngradableItems());
             }
-            PlandoPlacedItems = new List<Item>();
         }
 
         //rando functions
@@ -771,7 +770,7 @@ namespace MMR.Randomizer
         private void PlaceItem(Item currentItem, List<Item> targets)
         {
             var currentItemObject = ItemList[currentItem];
-            if (currentItemObject.NewLocation.HasValue || PlandoPlacedItems.Contains(currentItem))
+            if (currentItemObject.NewLocation.HasValue)
             {
                 return;
             }
@@ -827,17 +826,7 @@ namespace MMR.Randomizer
 
             AddAllItems(itemPool);
 
-            List<(Item, Item)> PlandoItemCombos = PlandoUtils.GetRandomizedItemPlacements(this.Random, itemPool);
-            if (PlandoItemCombos != null)
-            {
-                foreach ((Item item, Item check) in PlandoItemCombos)
-                {
-                    PlaceItem(item, new List<Item> { check });
-                    itemPool.Remove(check); // PlaceItem removes from the list you give it, not from Randomizer::itemPool
-                    PlandoPlacedItems.Add(item);
-                }
-            }
-
+            PlacePlandoItems(itemPool);
             PlaceFreeItems(itemPool);
             PlaceQuestItems(itemPool);
             PlaceTradeItems(itemPool);
@@ -859,6 +848,57 @@ namespace MMR.Randomizer
 
             _randomized.ItemList = ItemList;
         }
+
+        /// <summary>
+        /// Places plando items in the randomization pool
+        ///   re-implements PlaceItem for plando
+        ///   reasons: we need pass a different list of checks, but itemPool still needs to be decremented
+        ///            we want a different error, stating plando failed not just any randomization
+        ///            for plando, we want the ability to bypass logic
+        /// </summary>
+        /// <param name="itemPool"></param>
+        private void PlacePlandoItems(List<Item> itemPool)
+        {
+            List<PlandoItemCombo> plandoItemCombos = PlandoUtils.ReadAllItemPlandoFiles(itemPool);
+            if (plandoItemCombos != null)
+            {
+                foreach (PlandoItemCombo itemCombo in plandoItemCombos)
+                {
+                    PlandoItemCombo cleaned = PlandoUtils.CleanItemCombo(itemCombo, Random, itemPool, ItemList);
+                    if (cleaned == null)
+                    {
+                        throw new Exception("Error: Plando failed to build with this seed: " + itemCombo.Name);
+                    }
+
+                    int drawCount = 0;
+                    for(int itemCount = 0; drawCount < cleaned.ItemDrawCount && itemCount < cleaned.ItemList.Count; itemCount++)
+                    {
+                        /// for all items, attempt to add, count successes
+                        Item item = cleaned.ItemList[itemCount];
+                        foreach (Item check in cleaned.CheckList)
+                        {
+                            if (itemCombo.SkipLogic || CheckMatch(item, check))
+                            {
+                                ItemList[item].NewLocation = check;
+                                ItemList[item].IsRandomized = true;
+
+                                Debug.WriteLine($"----Plando Placed {item.Name()} at {check.Location()}----");
+
+                                itemPool.Remove(check);
+                                cleaned.CheckList.Remove(check);
+                                drawCount++;
+                                break;
+                            }
+                        }
+                    }
+                    if (drawCount < cleaned.ItemDrawCount)
+                    {
+                        throw new Exception("Error: Plando could not find enough checks to match this plandos items with this seed: " + itemCombo.Name);
+                    }
+                }
+            }
+        }
+
 
         /// <summary>
         /// Places starting items in the randomization pool.
