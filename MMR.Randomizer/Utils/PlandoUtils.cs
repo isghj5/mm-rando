@@ -67,15 +67,21 @@ namespace MMR.Randomizer.Utils
                     // eg, the json can have ItemList: ["MaskBunnyHood"] instead of ItemList: [ 22 ]
                     List<PlandoItemCombo> workingList = JsonConvert.DeserializeObject<List<PlandoItemCombo>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
                     // for item in workingList, get object reference from ItemList, beacuse we need to modify these later
-                    foreach(PlandoItemCombo p in workingList)
+                    foreach (PlandoItemCombo p in workingList)
                     {
-                        for(int i = 0; i < p.ItemList.Count; i++)
+                        for (int i = 0; i < p.ItemList.Count; i++)
                         {
-                            p.ItemList[i] = randomizerItemList.Find(u => u == p.ItemList[i]);
+                            if (randomizerItemList.Contains(p.ItemList[i]))
+                            {
+                                p.ItemList[i] = randomizerItemList.Find(u => u == p.ItemList[i]);
+                            }
                         }
                         for (int i = 0; i < p.CheckList.Count; i++)
                         {
-                            p.CheckList[i] = randomizerItemList.Find(u => u == p.CheckList[i]);
+                            if (randomizerItemList.Contains(p.CheckList[i]))
+                            {
+                                p.CheckList[i] = randomizerItemList.Find(u => u == p.CheckList[i]);
+                            }
                         }
 
                     }
@@ -125,7 +131,7 @@ namespace MMR.Randomizer.Utils
             List<(SequenceInfo, SequenceInfo)> returnSongTupleList = new List<(SequenceInfo, SequenceInfo)>();
             List<PlandoMusicCombo> allPlandoMusicCombos = ReadAllMusicPlandoFiles(Values.MusicDirectory);
 
-            foreach(PlandoMusicCombo musicCombo in allPlandoMusicCombos)
+            foreach (PlandoMusicCombo musicCombo in allPlandoMusicCombos)
             {
                 // shuffle songs and slots based on our random seed
                 musicCombo.SongsList = musicCombo.SongsList.OrderBy(x => random.Next()).ToList();
@@ -199,7 +205,7 @@ namespace MMR.Randomizer.Utils
             // clean combo of already placed items and checks
             foreach (Item item in itemCombo.ItemList.ToList()) 
             {
-                if(randomizerItemList[item].NewLocation.HasValue)
+                if (randomizerItemList[item].NewLocation.HasValue)
                 {
                     Debug.WriteLine("Item has already been placed. " + item);
                     itemCombo.ItemList.Remove(item);
