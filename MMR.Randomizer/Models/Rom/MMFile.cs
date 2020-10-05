@@ -12,7 +12,6 @@ namespace MMR.Randomizer.Models.Rom
         public bool IsCompressed;
         public bool WasEdited;
         public bool IsStatic;
-        public bool HardRomAddr;
 
         public MMFile Clone()
         {
@@ -26,7 +25,6 @@ namespace MMR.Randomizer.Models.Rom
                 WasEdited = WasEdited,
                 IsStatic = IsStatic,
                 Data = Data?.ToArray(),
-                HardRomAddr = HardRomAddr
             };
         }
     }
