@@ -24,6 +24,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using SixLabors.ImageSharp.Formats.Png;
+using System.Windows.Forms;
 
 namespace MMR.Randomizer
 {
@@ -1723,6 +1724,14 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(75, "Building ROM...");
 
                 byte[] ROM = RomUtils.BuildROM();
+
+                if (ROM.Length > 0x4000000)// over 64mb
+                {
+                    MessageBox.Show("The rom has expanded beyond 64MB, and may not work on hardware or WiiVC, reduce custom music that uses samples to shrink.", 
+                                    "Size Warning", 
+                                    MessageBoxButtons.OK, 
+                                    MessageBoxIcon.None);
+                }
 
                 if (outputSettings.GenerateROM)
                 {
