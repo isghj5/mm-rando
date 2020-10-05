@@ -855,6 +855,7 @@ namespace MMR.Randomizer
         ///   reasons: we need pass a different list of checks, but itemPool still needs to be decremented
         ///            we want a different error, stating plando failed not just any randomization
         ///            for plando, we want the ability to bypass logic
+        ///            for skipped logic, we still need to make sure certain items are not placed in starting slots
         /// </summary>
         /// <param name="itemPool"></param>
         private void PlacePlandoItems(List<Item> itemPool)
@@ -877,6 +878,12 @@ namespace MMR.Randomizer
                         Item item = cleaned.ItemList[itemCount];
                         foreach (Item check in cleaned.CheckList)
                         {
+                            if (itemCombo.SkipLogic && ItemUtils.IsStartingLocation(check) && ForbiddenStartingItems.Contains(item))
+                            {
+                                Debug.WriteLine("Cannot place forbidden item in starting location: " + item.Name());
+                                continue;
+                            }
+
                             if (itemCombo.SkipLogic || CheckMatch(item, check))
                             {
                                 ItemList[item].NewLocation = check;
