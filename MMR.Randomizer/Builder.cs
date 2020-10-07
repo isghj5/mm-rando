@@ -24,6 +24,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using SixLabors.ImageSharp.Formats.Png;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 
 namespace MMR.Randomizer
@@ -1725,22 +1726,30 @@ namespace MMR.Randomizer
 
                 byte[] ROM = RomUtils.BuildROM();
 
-                if (ROM.Length > 0x4000000)// over 64mb
-                {
-                    MessageBox.Show("The rom has expanded beyond 64MB, and may not work on hardware or WiiVC, reduce custom music that uses samples to shrink.", 
-                                    "Size Warning", 
-                                    MessageBoxButtons.OK, 
-                                    MessageBoxIcon.None);
-                }
-
                 if (outputSettings.GenerateROM)
                 {
+                    if (ROM.Length > 0x4000000) // over 64mb
+                    {
+                        throw new Exception("Error: Rom has expanded past 64 MB,\n" +
+                                            "and cannot be played on hardware (Everdrive).\n " +
+                                            "This is most likely caused by sound sample injection for music.\n" +
+                                            "Please try another seed, for a different music roll\n" +
+                                            "or consider reducing how much custom sample music is used.");
+                    }
                     progressReporter.ReportProgress(85, "Writing ROM...");
                     RomUtils.WriteROM(outputSettings.OutputROMFilename, ROM);
                 }
 
                 if (outputSettings.OutputVC)
                 {
+                    if (ROM.Length > 0x2000000) // over 32mb
+                    {
+                        throw new Exception("Error: Rom has expanded past 32 MB,\n" +
+                                            "and cannot be played on WiiVC.\n" +
+                                            "This is most likely caused by sound sample injection for music.\n" +
+                                            "Please try another seed, for a different music roll\n" +
+                                            "or consider reducing how much custom sample music is used.");
+                    }
                     progressReporter.ReportProgress(90, "Writing VC...");
                     VCInjectionUtils.BuildVC(ROM, _cosmeticSettings.AsmOptions.DPadConfig, Values.VCDirectory, Path.ChangeExtension(outputSettings.OutputROMFilename, "wad"));
                 }
