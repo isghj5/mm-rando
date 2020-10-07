@@ -54,6 +54,19 @@ namespace MMR.Randomizer
                 {
                     builder.MakeROM(configuration.OutputSettings, progressReporter);
                 }
+                catch (ROMOverflow ex)
+                {
+                    string nl           = Environment.NewLine;
+                    string[] splitStr   = ex.Message.Split(',');
+                    string size         = splitStr[0];
+                    string platform     = splitStr.Length > 1 ? ex.Message.Split(',')[1] : "anything";
+
+                    return $"Error: Rom has expanded past {size},{nl}" +
+                            $"and cannot be played on {platform}.{nl}" +
+                            $"This is most likely caused by sound sample injection for music.{nl}" +
+                            $"Please try another seed, for a different music roll{nl}" +
+                            "or consider reducing how much custom sample music is used.";
+                }
                 catch (PatchMagicException)
                 {
                     return $"Error applying patch: Not a valid patch file";

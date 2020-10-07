@@ -1730,11 +1730,7 @@ namespace MMR.Randomizer
                 {
                     if (ROM.Length > 0x4000000) // over 64mb
                     {
-                        throw new Exception("Error: Rom has expanded past 64 MB,\n" +
-                                            "and cannot be played on hardware (Everdrive).\n " +
-                                            "This is most likely caused by sound sample injection for music.\n" +
-                                            "Please try another seed, for a different music roll\n" +
-                                            "or consider reducing how much custom sample music is used.");
+                        throw new ROMOverflow("64 MB,hardware (Everdrive)");
                     }
                     progressReporter.ReportProgress(85, "Writing ROM...");
                     RomUtils.WriteROM(outputSettings.OutputROMFilename, ROM);
@@ -1744,11 +1740,7 @@ namespace MMR.Randomizer
                 {
                     if (ROM.Length > 0x2000000) // over 32mb
                     {
-                        throw new Exception("Error: Rom has expanded past 32 MB,\n" +
-                                            "and cannot be played on WiiVC.\n" +
-                                            "This is most likely caused by sound sample injection for music.\n" +
-                                            "Please try another seed, for a different music roll\n" +
-                                            "or consider reducing how much custom sample music is used.");
+                        throw new ROMOverflow("32 MB,WiiVC");
                     }
                     progressReporter.ReportProgress(90, "Writing VC...");
                     VCInjectionUtils.BuildVC(ROM, _cosmeticSettings.AsmOptions.DPadConfig, Values.VCDirectory, Path.ChangeExtension(outputSettings.OutputROMFilename, "wad"));

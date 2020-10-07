@@ -8,4 +8,11 @@ namespace MMR.Randomizer
         {
         }
     }
+    public class ROMOverflow : Exception
+    {
+        public ROMOverflow(string message) : base(message)
+        {
+        }
+    }
+
 }
