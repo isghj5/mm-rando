@@ -126,8 +126,8 @@ namespace MMR.Randomizer
             }
 
             // music plando, user has selected they want an easier time specifying where and what songs are placed in specific spots
-            List<(SequenceInfo, SequenceInfo)> PlandoSongs = PlandoUtils.GetRandomizedSongPlacements(random, log);
-            foreach ((SequenceInfo song, SequenceInfo slot) in PlandoSongs)
+            var plandoPlacements = PlandoUtils.GetRandomizedSongPlacements(random, log);
+            foreach ((var song, var slot) in plandoPlacements)
             {
                 AssignSequenceSlot(slot, song, Unassigned, "PLANDO");
                 RomData.TargetSequences.Remove(slot);

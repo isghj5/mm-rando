@@ -23,15 +23,6 @@ namespace MMR.Randomizer.Utils
         public List<Item>   ItemList;
         public List<Item>   CheckList;
         public bool         SkipLogic = false;
-
-        /*PlandoItemCombo(string Name, string Notes, List<Item> ItemList, List<Item> CheckList, int count = -1 )
-        {
-            this.Name = Name;
-            this.Notes = Notes;
-            this.ItemList = ItemList;
-            this.CheckList = CheckList;
-            this.ItemDrawCount = count;
-        }*/
     }
 
     public class PlandoMusicCombo : PlandoCombo
@@ -56,28 +47,33 @@ namespace MMR.Randomizer.Utils
         {
             // any file with FILEName_Plando.json in the base directory is a plando file
             // resource folders getting nuked, cannot use, just assume base directory is best places for now
-            List<PlandoItemCombo> itemPlandoList = new List<PlandoItemCombo>();
+            var itemPlandoList = new List<PlandoItemCombo>();
             foreach (String filePath in Directory.GetFiles(Values.MainDirectory, "*ItemPlando.json"))
             {
-                String fileName = Path.GetFileName(filePath);
+                var fileName = Path.GetFileName(filePath);
                 try
                 {
                     string filetext = File.ReadAllText(fileName);
                     // the string enum converter reads the item enumerators as strings rather than their int values, so we can read item/checks by enum
                     // eg, the json can have ItemList: ["MaskBunnyHood"] instead of ItemList: [ 22 ]
-                    List<PlandoItemCombo> workingList = JsonConvert.DeserializeObject<List<PlandoItemCombo>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
+                    var workingList = JsonConvert.DeserializeObject<List<PlandoItemCombo>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
                     // for item in workingList, get object reference from ItemList, beacuse we need to modify these later
-                    foreach(PlandoItemCombo p in workingList)
+                    foreach (PlandoItemCombo pic in workingList)
                     {
-                        for(int i = 0; i < p.ItemList.Count; i++)
+                        for (int i = 0; i < pic.ItemList.Count; i++)
                         {
-                            p.ItemList[i] = randomizerItemList.Find(u => u == p.ItemList[i]);
+                            if (randomizerItemList.Contains(pic.ItemList[i]))
+                            {
+                                pic.ItemList[i] = randomizerItemList.Find(u => u == pic.ItemList[i]);
+                            }
                         }
-                        for (int i = 0; i < p.CheckList.Count; i++)
+                        for (int i = 0; i < pic.CheckList.Count; i++)
                         {
-                            p.CheckList[i] = randomizerItemList.Find(u => u == p.CheckList[i]);
+                            if (randomizerItemList.Contains(pic.CheckList[i]))
+                            {
+                                pic.CheckList[i] = randomizerItemList.Find(u => u == pic.CheckList[i]);
+                            }
                         }
-
                     }
                     itemPlandoList = itemPlandoList.Concat(workingList).ToList();
                 }
@@ -94,45 +90,45 @@ namespace MMR.Randomizer.Utils
 
         public static List<PlandoMusicCombo> ReadAllMusicPlandoFiles(string directory = "Resources/music")
         {
-            List<PlandoMusicCombo> musicPlandoList = new List<PlandoMusicCombo>();
+            var musicPlandoList = new List<PlandoMusicCombo>();
             foreach (String filePath in Directory.GetFiles(directory, "*MusicPlando.json"))
             {
                 try
                 {
-                    string filetext = File.ReadAllText(filePath);
-                    List<PlandoMusicCombo> workingList = JsonConvert.DeserializeObject<List<PlandoMusicCombo>>(filetext);
+                    var fileText = File.ReadAllText(filePath);
+                    var workingList = JsonConvert.DeserializeObject<List<PlandoMusicCombo>>(fileText);
                     musicPlandoList = musicPlandoList.Concat(workingList).ToList();
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    Debug.Print("Error: exception occurred reading plando file: " + e.ToString());
+                    Debug.Print("Error: exception occurred reading plando file: " + ex.ToString());
                     #if DEBUG
-                      throw new Exception("plando file read error: " + e.ToString() + " file: " + Path.GetFileName(filePath));
+                      throw new Exception("plando file read error: " + ex.ToString() + " file: " + Path.GetFileName(filePath));
                     #endif
                 }
             }
             return musicPlandoList;
         }
 
-        public static List<(SequenceInfo, SequenceInfo)> GetRandomizedSongPlacements(Random random, System.Text.StringBuilder song_log)
+        public static List<(SequenceInfo, SequenceInfo)> GetRandomizedSongPlacements(Random random, System.Text.StringBuilder songLog)
         {
-            void DebugOut(String s)
+            void DebugOut(string s)
             {
                 Debug.WriteLine(s);
-                song_log.AppendLine(s);
+                songLog.AppendLine(s);
             }
 
-            List<(SequenceInfo, SequenceInfo)> returnSongTupleList = new List<(SequenceInfo, SequenceInfo)>();
-            List<PlandoMusicCombo> allPlandoMusicCombos = ReadAllMusicPlandoFiles(Values.MusicDirectory);
+            var returnSongTupleList = new List<(SequenceInfo, SequenceInfo)>();
+            var allPlandoMusicCombos = ReadAllMusicPlandoFiles(Values.MusicDirectory);
 
-            foreach(PlandoMusicCombo musicCombo in allPlandoMusicCombos)
+            foreach (PlandoMusicCombo musicCombo in allPlandoMusicCombos)
             {
                 // shuffle songs and slots based on our random seed
                 musicCombo.SongsList = musicCombo.SongsList.OrderBy(x => random.Next()).ToList();
                 musicCombo.SlotsList = musicCombo.SlotsList.OrderBy(x => random.Next()).ToList();
 
                 // clean combo of already placed items and checks
-                List<string> previouslyUsedSongs = returnSongTupleList.Select(u => u.Item1.Name).ToList();
+                var previouslyUsedSongs = returnSongTupleList.Select(u => u.Item1.Name).ToList();
                 foreach (string i in musicCombo.SongsList.ToList())
                 {
                     if (previouslyUsedSongs.Contains(i))
@@ -147,7 +143,7 @@ namespace MMR.Randomizer.Utils
                     }
                 }
 
-                List<string> previouslyUsedSlots = returnSongTupleList.Select(u => u.Item2.Name).ToList();
+                var previouslyUsedSlots = returnSongTupleList.Select(u => u.Item2.Name).ToList();
                 foreach (string i in musicCombo.SlotsList.ToList())
                 {
                     if (previouslyUsedSlots.Contains(i))
@@ -199,7 +195,7 @@ namespace MMR.Randomizer.Utils
             // clean combo of already placed items and checks
             foreach (Item item in itemCombo.ItemList.ToList()) 
             {
-                if(randomizerItemList[item].NewLocation.HasValue)
+                if (randomizerItemList[item].NewLocation.HasValue)
                 {
                     Debug.WriteLine("Item has already been placed. " + item);
                     itemCombo.ItemList.Remove(item);

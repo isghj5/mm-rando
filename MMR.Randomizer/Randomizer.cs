@@ -14,7 +14,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace MMR.Randomizer
 {
@@ -855,6 +854,7 @@ namespace MMR.Randomizer
         ///   reasons: we need pass a different list of checks, but itemPool still needs to be decremented
         ///            we want a different error, stating plando failed not just any randomization
         ///            for plando, we want the ability to bypass logic
+        ///            for skipped logic, we still need to make sure certain items are not placed in starting slots
         /// </summary>
         /// <param name="itemPool"></param>
         private void PlacePlandoItems(List<Item> itemPool)
@@ -862,21 +862,27 @@ namespace MMR.Randomizer
             List<PlandoItemCombo> plandoItemCombos = PlandoUtils.ReadAllItemPlandoFiles(itemPool);
             if (plandoItemCombos != null)
             {
-                foreach (PlandoItemCombo itemCombo in plandoItemCombos)
+                foreach (PlandoItemCombo pic in plandoItemCombos)
                 {
-                    PlandoItemCombo cleaned = PlandoUtils.CleanItemCombo(itemCombo, Random, itemPool, ItemList);
-                    if (cleaned == null)
+                    var itemCombo = PlandoUtils.CleanItemCombo(pic, Random, itemPool, ItemList);
+                    if (itemCombo == null)
                     {
-                        throw new Exception("Error: Plando failed to build with this seed: " + itemCombo.Name);
+                        throw new Exception("Error: Plando failed to build with this seed, combo: " + pic.Name);
                     }
 
                     int drawCount = 0;
-                    for(int itemCount = 0; drawCount < cleaned.ItemDrawCount && itemCount < cleaned.ItemList.Count; itemCount++)
+                    for(int itemCount = 0; drawCount < itemCombo.ItemDrawCount && itemCount < itemCombo.ItemList.Count; itemCount++)
                     {
-                        /// for all items, attempt to add, count successes
-                        Item item = cleaned.ItemList[itemCount];
-                        foreach (Item check in cleaned.CheckList)
+                        /// for all items, attempt to add; count successes
+                        Item item = itemCombo.ItemList[itemCount];
+                        foreach (Item check in itemCombo.CheckList)
                         {
+                            if (itemCombo.SkipLogic && ItemUtils.IsStartingLocation(check) && ForbiddenStartingItems.Contains(item))
+                            {
+                                Debug.WriteLine("Cannot place forbidden item in starting location: " + item.Name());
+                                continue;
+                            }
+
                             if (itemCombo.SkipLogic || CheckMatch(item, check))
                             {
                                 ItemList[item].NewLocation = check;
@@ -885,20 +891,19 @@ namespace MMR.Randomizer
                                 Debug.WriteLine($"----Plando Placed {item.Name()} at {check.Location()}----");
 
                                 itemPool.Remove(check);
-                                cleaned.CheckList.Remove(check);
+                                itemCombo.CheckList.Remove(check);
                                 drawCount++;
                                 break;
                             }
                         }
                     }
-                    if (drawCount < cleaned.ItemDrawCount)
+                    if (drawCount < itemCombo.ItemDrawCount)
                     {
                         throw new Exception("Error: Plando could not find enough checks to match this plandos items with this seed: " + itemCombo.Name);
                     }
                 }
             }
         }
-
 
         /// <summary>
         /// Places starting items in the randomization pool.
