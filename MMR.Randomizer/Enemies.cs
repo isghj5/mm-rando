@@ -297,7 +297,7 @@ namespace MMR.Randomizer
         }
 
 
-        public static void DisableEnemyCombatMusic(bool WeakEnemiesOnly = false)
+        public static void DisableEnemyCombatMusic(bool weakEnemiesOnly = false)
         {
             /// each enemy has one int flag that contains a single bit that enables combat music
             /// to get these values I used the starting rom addr of the enemy actor
@@ -307,9 +307,10 @@ namespace MMR.Randomizer
 
             // we always disable wizrobe because he's a miniboss, 
             // but when you enter his room you hear regular combat music for a few frames before his fight really starts
+            // this isn't noticed in vanilla because vanilla combat starts slow
             DisableCombatMusicOnEnemy(GameObjects.Actor.Wizrobe);
 
-            var WeakEnemyList = new GameObjects.Actor[]
+            var weakEnemyList = new GameObjects.Actor[]
             {
                 GameObjects.Actor.ChuChu,
                 GameObjects.Actor.SkullFish,
@@ -344,7 +345,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Stalchild
             }.ToList();
 
-            var AnnoyingEnemyList = new GameObjects.Actor[]
+            var annoyingEnemyList = new GameObjects.Actor[]
             {
                 GameObjects.Actor.BlueBubble,
                 GameObjects.Actor.LikeLike,
@@ -365,10 +366,10 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Garo
             }.ToList();
 
-            //var WholeList = WeakEnemiesOnly ? WeakEnemyList : WeakEnemyList.Concat(AnnoyingEnemyList);
-            var WholeList = WeakEnemyList;
+            //var wholeList = WeakEnemiesOnly ? WeakEnemyList : WeakEnemyList.Concat(AnnoyingEnemyList);
+            var wholeList = weakEnemyList;
 
-            foreach (GameObjects.Actor enemy in WholeList)
+            foreach (GameObjects.Actor enemy in wholeList)
             {
                 DisableCombatMusicOnEnemy(enemy);
             }
