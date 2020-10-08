@@ -614,22 +614,17 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteToROM(0x00C2739C, new byte[] { 0x3C, 0x08, 0x80, 0x0A, 0x8D, 0x05, (byte) (offset >> 8), (byte)(offset & 0xFF) });
         }
 
-        public static bool SearchAndReplaceSceneBGM(int scene_fid, byte replacement_slot)
+        public static bool SearchAndReplaceSceneBGM(int sceneFID, byte slotReplacement)
         {
-            // to modify the scene header, which is in the scene, we need the scene as a file
-            //  we can get this from the Romdata.SceneList but this only gets populated on enemizer
-            //  and we don't NEED to populate it since vanilla scenes are static, we can just hard code it here
-            //  at re-encode, we'll have fewer decoded files to re-encode too
-
-            // scan the files for the header that contains scene music (0x15 first byte)
+            /// scan the files for the header that contains scene music (0x15 first byte)
             // 15xx0000 0000yyzz where zz is the sequence pointer byte
-            RomUtils.CheckCompressed(scene_fid);
+            RomUtils.CheckCompressed(sceneFID);
             for (int b = 0; b < 0x10 * 70; b += 8)
             {
-                if (RomData.MMFileList[scene_fid].Data[b] == 0x15) //&& RomData.MMFileList[scene_fid].Data[b + 0x7] == 0x3B)
+                if (RomData.MMFileList[sceneFID].Data[b] == 0x15)
                 {
-                    Debug.WriteLine("Replacing previous music index byte: " + RomData.MMFileList[scene_fid].Data[b + 0x7].ToString("X2"));
-                    RomData.MMFileList[scene_fid].Data[b + 0x7] = replacement_slot;
+                    Debug.WriteLine("Replacing previous music index byte: " + RomData.MMFileList[sceneFID].Data[b + 0x7].ToString("X2"));
+                    RomData.MMFileList[sceneFID].Data[b + 0x7] = slotReplacement;
 
                     return true;
                 }
@@ -640,53 +635,53 @@ namespace MMR.Randomizer.Utils
         public static void ReassignSongSlots()
         {
             // read all assginement slots from json files
-            List<ReplacementSongSlot> NewReplacementSongSlots = new List<ReplacementSongSlot>();
+            var replacementSongSlots = new List<ReplacementSongSlot>();
             // resources folder got nuked, for now lets assume this will be in the main folder
-            foreach (string file_path in Directory.GetFiles(".", "*AdditionalSongSlots.json"))
+            foreach (var filePath in Directory.GetFiles(".", "*AdditionalSongSlots.json"))
             {
                 try
                 {
-                    string filetext = File.ReadAllText(file_path);
-                    List<ReplacementSongSlot> tmplist = JsonConvert.DeserializeObject<List<ReplacementSongSlot>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
-                    NewReplacementSongSlots = NewReplacementSongSlots.Concat(tmplist).ToList();
+                    var filetext = File.ReadAllText(filePath);
+                    // the json string enum converter lets us read strings as songnames instead of int(slots) for readability
+                    var buildingList = JsonConvert.DeserializeObject<List<ReplacementSongSlot>>(filetext, new Newtonsoft.Json.Converters.StringEnumConverter());
+                    replacementSongSlots = replacementSongSlots.Concat(buildingList).ToList();
                 }
-                catch (Exception e)
+                catch (IOException ex)
                 {
-                    Debug.WriteLine("Error reading file: " + file_path + ", error: " + e.ToString());
+                    Debug.WriteLine("Error reading file: " + filePath + ", error: " + ex.ToString());
                 }
             }
 
-            for (int i = 0; i < NewReplacementSongSlots.Count && RomData.PointerizedSequences.Count > 0; i++)
+            for (int i = 0; i < replacementSongSlots.Count && RomData.PointerizedSequences.Count > 0; i++)
             {
-                ReplacementSongSlot newslot = NewReplacementSongSlots[i];
-                SequenceInfo unused_slot = RomData.PointerizedSequences.ElementAt(0);
-                Debug.WriteLine("Attempting to add new song slot:" + newslot.Name + " at previously unused location " + unused_slot.PreviousSlot.ToString("X2"));
+                ReplacementSongSlot newslot = replacementSongSlots[i];
+                SequenceInfo availableSlot = RomData.PointerizedSequences.ElementAt(0);
+                Debug.WriteLine("Attempting to add new song slot:" + newslot.Name + " at previously unused location " + availableSlot.PreviousSlot.ToString("X2"));
                 RomData.PointerizedSequences.RemoveAt(0);
-                foreach (int scene_fid in newslot.SceneFIDToModify)
+                foreach (int sceneFID in newslot.SceneFIDToModify)
                 {
-                    bool sucess_result = SearchAndReplaceSceneBGM(scene_fid, (byte)unused_slot.PreviousSlot);
-                    if (!sucess_result)
+                    bool result = SearchAndReplaceSceneBGM(sceneFID, (byte)availableSlot.PreviousSlot);
+                    if (!result)
                     {
-                        Debug.WriteLine("Error: could not replace teh bgm byte in scene fid: " + scene_fid);
+                        Debug.WriteLine("Error: could not replace teh bgm byte in scene fid: " + sceneFID);
                     }
                 }
                 try
                 {
-                    SequenceInfo new_music_slot = new SequenceInfo
+                    SequenceInfo newMusicSlot = new SequenceInfo
                     {
                         // we add mmr- because if the user adds mm- it will confuse our weak parser later
                         Name = "mmr-" + newslot.Name,
-                        MM_seq = unused_slot.PreviousSlot,
-                        Replaces = unused_slot.PreviousSlot,
+                        MM_seq = availableSlot.PreviousSlot,
+                        Replaces = availableSlot.PreviousSlot,
                         Type = newslot.NewSlotCategories.Select(int.Parse).ToList(),
                         Instrument = 0
                     };
-                    RomData.TargetSequences.Add(new_music_slot);
+                    RomData.TargetSequences.Add(newMusicSlot);
                 }
-
                 catch (Exception e)
                 {
-                    Debug.WriteLine("Error while converting an additional song slot to a sequence for music rando");
+                    Debug.WriteLine("Error while converting an additional song slot to a sequence for music rando, slot: " + newslot.Name);
                 }
             }
         }
