@@ -14,7 +14,6 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace MMR.Randomizer
 {
@@ -863,20 +862,20 @@ namespace MMR.Randomizer
             List<PlandoItemCombo> plandoItemCombos = PlandoUtils.ReadAllItemPlandoFiles(itemPool);
             if (plandoItemCombos != null)
             {
-                foreach (PlandoItemCombo itemCombo in plandoItemCombos)
+                foreach (PlandoItemCombo pic in plandoItemCombos)
                 {
-                    PlandoItemCombo cleaned = PlandoUtils.CleanItemCombo(itemCombo, Random, itemPool, ItemList);
-                    if (cleaned == null)
+                    var itemCombo = PlandoUtils.CleanItemCombo(pic, Random, itemPool, ItemList);
+                    if (itemCombo == null)
                     {
-                        throw new Exception("Error: Plando failed to build with this seed: " + itemCombo.Name);
+                        throw new Exception("Error: Plando failed to build with this seed, combo: " + pic.Name);
                     }
 
                     int drawCount = 0;
-                    for(int itemCount = 0; drawCount < cleaned.ItemDrawCount && itemCount < cleaned.ItemList.Count; itemCount++)
+                    for(int itemCount = 0; drawCount < itemCombo.ItemDrawCount && itemCount < itemCombo.ItemList.Count; itemCount++)
                     {
-                        /// for all items, attempt to add, count successes
-                        Item item = cleaned.ItemList[itemCount];
-                        foreach (Item check in cleaned.CheckList)
+                        /// for all items, attempt to add; count successes
+                        Item item = itemCombo.ItemList[itemCount];
+                        foreach (Item check in itemCombo.CheckList)
                         {
                             if (itemCombo.SkipLogic && ItemUtils.IsStartingLocation(check) && ForbiddenStartingItems.Contains(item))
                             {
@@ -892,20 +891,19 @@ namespace MMR.Randomizer
                                 Debug.WriteLine($"----Plando Placed {item.Name()} at {check.Location()}----");
 
                                 itemPool.Remove(check);
-                                cleaned.CheckList.Remove(check);
+                                itemCombo.CheckList.Remove(check);
                                 drawCount++;
                                 break;
                             }
                         }
                     }
-                    if (drawCount < cleaned.ItemDrawCount)
+                    if (drawCount < itemCombo.ItemDrawCount)
                     {
                         throw new Exception("Error: Plando could not find enough checks to match this plandos items with this seed: " + itemCombo.Name);
                     }
                 }
             }
         }
-
 
         /// <summary>
         /// Places starting items in the randomization pool.
