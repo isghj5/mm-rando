@@ -238,7 +238,7 @@ namespace MMR.UI.Forms
             }
         }
 
-        private void Randomize(bool FilePromptBypass = false)
+        private void Randomize(bool filePromptBypass = false)
         {
             var validationResult = _configuration.GameplaySettings.Validate() ?? _configuration.OutputSettings.Validate();
             if (validationResult != null)
@@ -253,7 +253,7 @@ namespace MMR.UI.Forms
                              ? Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64")
                              : defaultOutputROMFilename;
 
-            if (!FilePromptBypass)
+            if (!filePromptBypass)
             {
                 if (saveROM.ShowDialog() != DialogResult.OK)
                 {
@@ -297,7 +297,6 @@ namespace MMR.UI.Forms
                 Randomize(true);
             }
         }
-
 
         private void bApplyPatch_Click(object sender, EventArgs e)
         {
