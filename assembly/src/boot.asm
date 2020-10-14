@@ -32,12 +32,12 @@
 
     ; Load first code file from ROM
     lui     a0, hi(G_PAYLOAD_ADDR)
-    ori     a0, lo(G_PAYLOAD_ADDR)
+    addiu   a0, lo(G_PAYLOAD_ADDR)
     lui     a1, hi(G_PAYLOAD_VROM)
-    ori     a1, lo(G_PAYLOAD_VROM)
+    addiu   a1, lo(G_PAYLOAD_VROM)
     lui     a2, hi(PAYLOAD_END - PAYLOAD_START)
     jal     0x80080C90
-    ori     a2, lo(PAYLOAD_END - PAYLOAD_START)
+    addiu   a2, lo(PAYLOAD_END - PAYLOAD_START)
 
     jal     init
     sw      s0, 0x0018 (sp)
@@ -52,7 +52,7 @@
 ;   addiu   v1, v1, 0x1528
 .org 0x80174C4C
     lui     t8, hi(G_PAYLOAD_ADDR)
-    ori     t8, lo(G_PAYLOAD_ADDR)
+    addiu   t8, lo(G_PAYLOAD_ADDR)
 
 ; Replaces:
 ;   sw      a1, 0x0000 (v1)

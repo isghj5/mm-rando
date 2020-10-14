@@ -3,7 +3,7 @@
 
 struct misc_config MISC_CONFIG = {
     .magic = MISC_CONFIG_MAGIC,
-    .version = 1,
+    .version = 3,
 
     // Version 0 flags
     .crit_wiggle = CRIT_WIGGLE_DEFAULT,
@@ -18,6 +18,9 @@ struct misc_config MISC_CONFIG = {
     .quest_consume = QUEST_CONSUME_DEFAULT,
     .arrow_cycle = 1,
     .arrow_magic_show = 1,
+
+    // Version 2 flags
+    .elegy_speedup = 1,
 };
 
 union faucet_speed {

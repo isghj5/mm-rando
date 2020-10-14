@@ -1,8 +1,10 @@
 ﻿using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Utils;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace MMR.Randomizer.Asm
@@ -38,6 +40,16 @@ namespace MMR.Randomizer.Asm
             get {
                 return this._symbols[name];
             }
+        }
+
+        private Symbols()
+            : this(new Dictionary<string, uint>())
+        {
+        }
+
+        private Symbols(Dictionary<string, uint> symbols)
+        {
+            this._symbols = symbols;
         }
 
         /// <summary>
@@ -251,36 +263,11 @@ namespace MMR.Randomizer.Asm
         /// <returns>Symbols</returns>
         public static Symbols FromJSON(string json)
         {
-            var symbols = new Symbols();
-
-            // This is a horrible hack for this specific JSON input
-            var lines = json.Split('\n');
-            foreach (var line in lines)
-            {
-                var trimmed = line.Trim();
-
-                // Ignore empty line, brackets
-                if (trimmed == "" || trimmed == "{" || trimmed == "}")
-                    continue;
-
-                // Get name & value fields
-                var fields = trimmed.Split(':');
-                var name = fields[0].Trim();
-                var value = fields[1].Trim();
-
-                // If ends with "," remove it
-                if (value.EndsWith(","))
-                    value = value.Substring(0, value.Length - 1).Trim();
-
-                // Remove surrounding quotes
-                name = name.Replace("\"", "");
-                value = value.Replace("\"", "");
-
-                // Add result to dictionary
-                symbols._symbols.Add(name, Convert.ToUInt32(value, 16));
-            }
-
-            return symbols;
+            var jobject = JObject.Parse(json);
+            var result = jobject.ToObject<Dictionary<string, string>>()
+                .Select(x => new KeyValuePair<string, uint>(x.Key, Convert.ToUInt32(x.Value, 16)))
+                .ToDictionary(x => x.Key, x => x.Value);
+            return new Symbols(result);
         }
 
         /// <summary>

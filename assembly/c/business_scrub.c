@@ -46,3 +46,40 @@ u32 business_scrub_consume_item(z2_actor_t *actor, z2_game_t *game) {
         return 0;
     }
 }
+
+u16 business_scrub_set_initial_message(z2_en_akindonuts_t *actor, z2_game_t *game) {
+    u16 type = actor->common.variable & 3;
+    bool flyAway = false;
+    u16 result;
+    if (type == 0) {
+        result = 0x15E0;
+        u8 landDeed = *(u8*)(0x801F05A5);
+        if ((landDeed & 0x10) != 0) {
+            flyAway = true;
+        }
+    } else if (type == 1) {
+        result = 0x15F4;
+        u8 swampDeed = *(u8*)(0x801F05A5);
+        if ((swampDeed & 0x80) != 0) {
+            flyAway = true;
+        }
+    } else if (type == 2) {
+        result = 0x1607;
+        u8 mountainDeed = *(u8*)(0x801F05A6);
+        if ((mountainDeed & 0x04) != 0) {
+            flyAway = true;
+        }
+    } else {
+        result = 0x161B;
+        u8 oceanDeed = *(u8*)(0x801F05A6);
+        if ((oceanDeed & 0x20) != 0) {
+            flyAway = true;
+        }
+    }
+    if (flyAway) {
+        result = 0x1638;
+        actor->state |= 0x20;
+    }
+    actor->last_message_id = result;
+    return result;
+}

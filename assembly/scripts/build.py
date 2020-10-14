@@ -16,7 +16,7 @@ Offsets = collections.namedtuple('Offsets', ('table', 'file_start', 'ram_start',
 # Hardcoded fields per target for added data:
 # (Table Start, File Address, RAM Start, RAM End)
 OOT_OFFSETS=Offsets(0x00007400, 0x03480000, 0x80400000, 0x80420000)
-MM_OFFSETS=Offsets(0x0001A500, 0x03800000, 0x80750000, 0x80780000)
+MM_OFFSETS=Offsets(0x0001A500, 0x03800000, 0x80720000, 0x80780000)
 
 def build_data_symbols(symbols, offsets):
     data_symbols = {}

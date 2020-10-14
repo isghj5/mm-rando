@@ -51,6 +51,13 @@ namespace MMR.Randomizer.Models
                     RequiredItemIds?.Remove((int)Item.TradeItemKafeiLetter);
                     RequiredItemIds?.Remove((int)Item.TradeItemPendant);
                     break;
+                case Item.UpgradeMirrorShield:
+                    ConditionalItemIds?.ForEach(c =>
+                    {
+                        c.Remove((int)Item.TradeItemKafeiLetter);
+                        c.Remove((int)Item.TradeItemPendant);
+                    });
+                    break;
                 case Item.BottleCatchPrincess:
                 case Item.BottleCatchBigPoe:
                     RequiredItemIds?.Remove((int)Item.BottleCatchEgg);

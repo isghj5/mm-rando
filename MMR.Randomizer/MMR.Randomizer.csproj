@@ -322,6 +322,9 @@
     <None Update="Resources\mods\update-kafei-mask-icon">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\mods\update-trade-scrubs">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\mods\ztargetinghold">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

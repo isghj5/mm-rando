@@ -70,6 +70,14 @@ namespace MMR.Randomizer.Models.Settings
         }
 
         /// <summary>
+        /// Whether or not to apply Elegy of Emptiness speedups.
+        /// </summary>
+        public bool ElegySpeedup {
+            get { return this.AsmOptions.MiscConfig.Flags.ElegySpeedup; }
+            set { this.AsmOptions.MiscConfig.Flags.ElegySpeedup = value; }
+        }
+
+        /// <summary>
         /// Whether or not to enable faster pushing and pulling speeds.
         /// </summary>
         public bool FastPush {

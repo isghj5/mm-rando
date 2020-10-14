@@ -4,7 +4,7 @@ extended_objects_lookup_gi_hook:
 @@normal_item:
     lui     t0, hi(G_NORMAL_OBJ_TABLE)
     jr      ra
-    ori     t0, lo(G_NORMAL_OBJ_TABLE)
+    addiu   t0, lo(G_NORMAL_OBJ_TABLE)
 @@extended_item:
     la      t0, EXT_OBJECTS
     jr      ra
@@ -16,7 +16,7 @@ extended_objects_lookup_load_hook:
 @@normal_item:
     lui     v0, hi(G_NORMAL_OBJ_TABLE)
     jr      ra
-    ori     v0, lo(G_NORMAL_OBJ_TABLE)
+    addiu   v0, lo(G_NORMAL_OBJ_TABLE)
 @@extended_item:
     la      v0, EXT_OBJECTS
     jr      ra
@@ -28,11 +28,11 @@ extended_objects_lookup_unknown_hook:
 @@normal_item:
     lui     s5, hi(G_NORMAL_OBJ_TABLE)
     jr      ra
-    ori     s5, lo(G_NORMAL_OBJ_TABLE)
+    addiu   s5, lo(G_NORMAL_OBJ_TABLE)
 @@extended_item:
     lui     s5, hi(EXT_OBJECTS)
     bnez    t6, @@return
-    ori     s5, lo(EXT_OBJECTS)
+    addiu   s5, lo(EXT_OBJECTS)
 @@update_index:
     addiu   s2, s2, -(G_NORMAL_OBJ_COUNT - 1)
 @@return:
@@ -45,7 +45,7 @@ extended_objects_lookup_unpause_hook:
 @@normal_item:
     lui     s2, hi(G_NORMAL_OBJ_TABLE)
     jr      ra
-    ori     s2, lo(G_NORMAL_OBJ_TABLE)
+    addiu   s2, lo(G_NORMAL_OBJ_TABLE)
 @@extended_item:
     la      s2, EXT_OBJECTS
     jr      ra

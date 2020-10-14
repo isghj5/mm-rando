@@ -107,6 +107,7 @@ namespace MMR.UI.Forms
             this.cMusic = new System.Windows.Forms.ComboBox();
             this.lTunic = new System.Windows.Forms.Label();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cElegySpeedups = new System.Windows.Forms.CheckBox();
             this.cCloseCows = new System.Windows.Forms.CheckBox();
             this.cArrowCycling = new System.Windows.Forms.CheckBox();
             this.cFreestanding = new System.Windows.Forms.CheckBox();
@@ -1124,6 +1125,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cElegySpeedups);
             this.groupBox7.Controls.Add(this.cCloseCows);
             this.groupBox7.Controls.Add(this.cArrowCycling);
             this.groupBox7.Controls.Add(this.cFreestanding);
@@ -1147,6 +1149,17 @@ namespace MMR.UI.Forms
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
+            // 
+            // cElegySpeedups
+            // 
+            this.cElegySpeedups.AutoSize = true;
+            this.cElegySpeedups.Location = new System.Drawing.Point(147, 183);
+            this.cElegySpeedups.Name = "cElegySpeedups";
+            this.cElegySpeedups.Size = new System.Drawing.Size(101, 17);
+            this.cElegySpeedups.TabIndex = 37;
+            this.cElegySpeedups.Text = "Elegy speedups";
+            this.cElegySpeedups.UseVisualStyleBackColor = true;
+            this.cElegySpeedups.CheckedChanged += new System.EventHandler(this.cElegySpeedups_CheckedChanged);
             // 
             // cCloseCows
             // 
@@ -2400,6 +2413,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cCombatMusicDisable;
         private System.Windows.Forms.CheckBox cByoAmmo;
         private System.Windows.Forms.CheckBox cDeathMoonCrash;
+        private System.Windows.Forms.CheckBox cElegySpeedups;
     }
 }
 
