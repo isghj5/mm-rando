@@ -615,8 +615,43 @@ namespace MMR.Randomizer
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
 
-                //this is single direction, need to do both ways
-                EntranceSwapUtils.WriteNewEntrance(Item.EntranceClockTowerInteriorFromSouthClockTown, Item.EntranceZoraHallFromJapasRoom);
+
+                // if you somehow talk to bass guy and do his thing, you get a secret path to the moon
+                // I just thing secrets are neat
+                //EntranceSwapUtils.WriteNewEntrance(Item.EntranceZoraHallRoomsJapasRoomFromJapasRoom, Item.EntranceTheMoonFromLinkTrial);
+                EntranceSwapUtils.WriteNewEntrance(Item.EntranceZoraHallRoomsJapasRoomFromJapasRoom, Item.EntranceZoraTrialFromTheMoon);
+
+
+                //                                                Item.EntranceGrottoPalaceStraightFromDekuPalaceB, Item.EntranceDekuPalaceGardenWestFromPalaceStraightGrotto,
+
+                // not doing clocktower because its the easist to hit by accident, also the entrance is default 
+                // if I had to choose special places, I would put GBT->pirates balcony and WF->WFGF or WF->
+                var enlist = new List<Item>() {  Item.EntranceZoraHallFromMikauTijosRoom, Item.EntranceZoraHallRoomsMikauTijosRoomFromZoraHall,
+                                                Item.EntranceRomaniRanchFromRanchHouse, Item.EntranceRanchHouseFromRomaniRanch,
+                                                Item.EntranceFairysFountainFromWoodfall, Item.EntranceWoodfallFromFairysFountain,
+                                                Item.EntranceSnowheadFromFairysFountain, Item.EntranceFairysFountainFromSnowhead,
+                                                Item.EntranceZoraCapeFromFairysFountain, Item.EntranceFairysFountainFromZoraCape,
+                                                Item.EntranceFairysFountainFromIkanaCanyon, Item.EntranceIkanaCanyonFromFairysFountain,
+                                                Item.EntranceLotteryShopFromWestClockTown, Item.EntranceWestClockTownFromLotteryShop,
+                                                Item.EntranceZoraHallRoomsMikauTijosRoomFromZoraHall, Item.EntranceZoraHallFromMikauTijosRoom,
+                                                Item.EntranceSakonsHideoutFromIkanaCanyon, Item.EntranceIkanaCanyonFromSakonsHideout,
+                                                Item.EntranceGrottoPalaceVinesFromDekuPalaceLower, Item.EntranceDekuPalaceGardenEastFromPalaceVinesGrotto,
+                                                Item.EntranceIkanaGraveyardFromDampesHouse, Item.EntranceDampesHouseFromIkanaGraveyardDoor,
+                                                Item.EntranceCuriosityShopFromKafeisHideout, Item.EntranceKafeisHideoutFromCuriosityShop,
+                                                Item.EntrancePiratesFortressFromTelescope, Item.EntrancePiratesFortressSewerFromTelescope,
+                                                Item.EntrancePiratesFortressExteriorFromPiratesFortressBalcony, Item.EntrancePiratesFortressFromPiratesFortressExteriorBalcony,
+                                                Item.EntranceGormanTrackFromMilkRoadGated, Item.EntranceMilkRoadFromGormanRacetrackTrack,
+                                                Item.EntranceIkanaCanyonFromBeneaththeWell, Item.EntranceBeneaththeWellFromIkanaCanyon,
+                                                Item.EntranceMusicBoxHouseFromIkanaCanyon, Item.EntranceIkanaCanyonFromMusicBoxHouse,
+                };
+                var rand = new Random();
+                var exlist = enlist.OrderBy(x => rand.Next()).ToList();
+
+                for(int i = 0; i < enlist.Count; i++)
+                {
+                    EntranceSwapUtils.WriteNewEntrance(enlist[i], exlist[i]);
+                    Debug.WriteLine("Entrando :" + enlist[i].ToString() + " -> " + exlist[i].ToString());
+                }
 
                 return;
             }
