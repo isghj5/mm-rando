@@ -2,7 +2,6 @@
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
-using System;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -29,6 +28,7 @@ namespace MMR.Randomizer.Utils
                 SettingsString = settingsString,
                 Seed = randomized.Seed,
                 RandomizeDungeonEntrances = settings.RandomizeDungeonEntrances,
+                EntranceList = randomized.EntranceSpoilers,
                 ItemList = itemList.Where(u => !u.Item.IsFake()).ToList(),
                 NewDestinationIndices = randomized.NewDestinationIndices,
                 Logic = randomized.Logic,

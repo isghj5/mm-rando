@@ -8,6 +8,7 @@ namespace MMR.Randomizer.Utils
 
     public class SceneUtils
     {
+        const bool DEBUG = false;
         const int SCENE_TABLE = 0xC5A1E0;
         const int SCENE_FLAG_MASKS = 0xC5C500;
         public static void ResetSceneFlagMask()
@@ -61,10 +62,11 @@ namespace MMR.Randomizer.Utils
 
         public static void GetMaps()
         {
-            for (int i = 0; i < RomData.SceneList.Count; i++)
+            foreach (var scene in RomData.SceneList)
             {
-                int f = RomData.SceneList[i].File;
+                int f = scene.File;
                 RomUtils.CheckCompressed(f);
+                if (DEBUG) { System.Diagnostics.Debug.WriteLine($"Scene {scene.Number}"); }
                 int j = 0;
                 while (true)
                 {
@@ -77,7 +79,7 @@ namespace MMR.Randomizer.Utils
                         {
                             Map m = new Map();
                             m.File = RomUtils.AddrToFile((int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, mapsaddr));
-                            RomData.SceneList[i].Maps.Add(m);
+                            scene.Maps.Add(m);
                             mapsaddr += 8;
                         }
                         break;
@@ -87,6 +89,11 @@ namespace MMR.Randomizer.Utils
                         break;
                     }
                     j += 8;
+                }
+                CheckHeaderForExits(f, 0, scene);
+                if (scene.Number == 108) // avoid modifying unused setup in East Clock Town. doesn't seem to actually affect anything in-game, but best not to touch it.
+                {
+                    scene.Setups.RemoveAt(2);
                 }
             }
         }
@@ -251,6 +258,61 @@ namespace MMR.Randomizer.Utils
                 }
             }
         }
+        
+        private static void CheckHeaderForExits(int f, int headeraddr, Scene scene)
+        {
+            int j = headeraddr;
+            int setupsaddr = -1;
+            int nextlowest = -1;
+            byte s;
+            if (DEBUG) { System.Diagnostics.Debug.WriteLine("Header"); }
+            var setup = new SceneSetup();
+            scene.Setups.Add(setup);
+            while (true)
+            {
+                byte cmd = RomData.MMFileList[f].Data[j];
+                if (cmd == 0x13)
+                {
+                    setup.ExitListAddress = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                }
+                else if (cmd == 0x17)
+                {
+                    setup.CutsceneListAddress = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                }
+                else if (cmd == 0x18)
+                {
+                    setupsaddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                }
+                else if (cmd == 0x14)
+                {
+                    break;
+                }
+                else
+                {
+                    if (RomData.MMFileList[f].Data[j + 4] == 0x02)
+                    {
+                        int p = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                        if (((p < nextlowest) || (nextlowest == -1)) && ((p > setupsaddr) && (setupsaddr != -1)))
+                        {
+                            nextlowest = p;
+                        }
+                    }
+                }
+                j += 8;
+            }
+            if ((setupsaddr != -1) && nextlowest != -1)
+            {
+                j = setupsaddr;
+                s = RomData.MMFileList[f].Data[j];
+                while (s == 0x02)
+                {
+                    int p = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j) & 0xFFFFFF;
+                    CheckHeaderForExits(f, p, scene);
+                    j += 4;
+                    s = RomData.MMFileList[f].Data[j];
+                }
+            }
+        }
 
         public static void ReenableNightBGMSingle(int SceneFileID, byte NewMusicByte = 0x13)
         {
@@ -308,6 +370,35 @@ namespace MMR.Randomizer.Utils
             {
                 ReenableNightBGMSingle(RomData.SceneList.Find(u => u.Number == SceneEnum.Id()).File);
             }
+        }
+
+        private static readonly byte[] defaultTimeSettings = new byte[] { 0xFF, 0xFF, 0x03, 0x00 };
+        public static void SetSceneTimeSettingsToDefault(GameObjects.Scene scene)
+        {
+            foreach (var map in RomData.SceneList.Find(s => s.Number == scene.Id()).Maps)
+            {
+                RomUtils.CheckCompressed(map.File);
+                var offset = FindHeaderOffset(RomData.MMFileList[map.File].Data, 0x10);
+                if (offset.HasValue)
+                {
+                    ReadWriteUtils.Arr_Insert(defaultTimeSettings, 0, defaultTimeSettings.Length, RomData.MMFileList[map.File].Data, offset.Value + 4);
+                }
+            }
+        }
+
+        // Doesn't find alternate headers.
+        private static int? FindHeaderOffset(byte[] data, byte headerCommand)
+        {
+            int i;
+            byte currentHeader;
+            for (i = 0, currentHeader = data[i]; currentHeader != 0x13; i += 8, currentHeader = data[i])
+            {
+                if (currentHeader == headerCommand)
+                {
+                    return i;
+                }
+            }
+            return null;
         }
     }
 }

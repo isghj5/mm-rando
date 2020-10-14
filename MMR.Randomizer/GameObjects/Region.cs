@@ -31,6 +31,9 @@ namespace MMR.Randomizer.GameObjects
         [RegionName("Laundry Pool")]
         LaundryPool,
 
+        [RegionName("Astral Observatory")]
+        AstralObservatory,
+
         [RegionName("Termina Field")]
         TerminaField,
 
@@ -48,6 +51,9 @@ namespace MMR.Randomizer.GameObjects
 
         [RegionName("Woodfall Temple")]
         WoodfallTemple,
+
+        [RegionName("Path to Mountain Village")]
+        PathToMountainVillage,
 
         [RegionName("Mountain Village")]
         MountainVillage,
@@ -123,5 +129,14 @@ namespace MMR.Randomizer.GameObjects
 
         [RegionName("The Moon")]
         TheMoon,
+
+        [RegionName("Interior")]
+        Interior,
+
+        [RegionName("Owl Warp")]
+        OwlWarp,
+
+        [RegionName("Grottos")]
+        Grottos,
     }
 }

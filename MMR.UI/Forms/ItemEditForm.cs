@@ -9,6 +9,7 @@ namespace MMR.UI.Forms
 {
     public partial class ItemEditForm : Form
     {
+        private readonly int _itemGroupCount;
         string[] ITEM_NAMES = new string[] { "Deku Mask", "Hero's Bow", "Fire Arrow", "Ice Arrow", "Light Arrow", "Bomb Bag", "Magic Bean", 
         "Powder Keg", "Pictobox", "Lens of Truth", "Hookshot", "Great Fairy Magic Meter", "Great Fairy Spin Attack", "Great Fairy Extended Magic",
         "Great Fairy Double Defense", "Great Fairy's Sword", "Witch Bottle", "Aliens Bottle", "Goron Race Bottle", 
@@ -138,6 +139,8 @@ namespace MMR.UI.Forms
         {
             InitializeComponent();
 
+            _itemGroupCount = (int) Math.Ceiling(ITEM_NAMES.Length / 32.0);
+
             for (int i = 0; i < ITEM_NAMES.Length; i++)
             {
                 lItems.Items.Add(ITEM_NAMES[i]);
@@ -163,8 +166,8 @@ namespace MMR.UI.Forms
 
         private void UpdateString(List<int> selections)
         {
-            int[] n = new int[13];
-            string[] ns = new string[13];
+            int[] n = new int[_itemGroupCount];
+            string[] ns = new string[_itemGroupCount];
             for (int i = 0; i < selections.Count; i++)
             {
                 int j = selections[i] / 32;
@@ -172,8 +175,7 @@ namespace MMR.UI.Forms
                 n[j] |= (int)(1 << k);
                 ns[j] = Convert.ToString(n[j], 16);
             }
-            tSetting.Text = ns[12] + "-" + ns[11] + "-" + ns[10] + "-" + ns[9] + "-" + ns[8] + "-" + ns[7] + "-" + ns[6] + "-" + ns[5] + "-" + ns[4] + "-"
-                + ns[3] + "-" + ns[2] + "-" + ns[1] + "-" + ns[0];
+            tSetting.Text = string.Join("-", ns.Reverse());
             CustomItemListString = tSetting.Text;
         }
 
@@ -186,26 +188,26 @@ namespace MMR.UI.Forms
                 CustomItemListString = c;
                 CustomItemList.Clear();
                 string[] v = c.Split('-');
-                int[] vi = new int[13];
+                int[] vi = new int[_itemGroupCount];
                 if (v.Length != vi.Length)
                 {
                     CustomItemList.Add(-1);
                     return;
                 }
-                for (int i = 0; i < 13; i++)
+                for (int i = 0; i < _itemGroupCount; i++)
                 {
-                    if (v[12 - i] != "")
+                    if (v[_itemGroupCount - 1 - i] != "")
                     {
-                        vi[i] = Convert.ToInt32(v[12 - i], 16);
+                        vi[i] = Convert.ToInt32(v[_itemGroupCount - 1 - i], 16);
                     }
                 }
-                for (int i = 0; i < 32*13; i++)
+                for (int i = 0; i < 32 * _itemGroupCount; i++)
                 {
                     int j = i / 32;
                     int k = i % 32;
                     if (((vi[j] >> k) & 1) > 0)
                     {
-                        if (i >= ItemUtils.AllLocations().Count())
+                        if (i >= (ItemUtils.AllLocations().Count() + ItemUtils.AllEntrances().Count()))
                         {
                             throw new IndexOutOfRangeException();
                         }

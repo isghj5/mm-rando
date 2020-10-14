@@ -1,5 +1,4 @@
-﻿using MMR.Randomizer.Constants;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using MMR.Randomizer.GameObjects;
 using System;
 using System.Linq;
@@ -8,6 +7,7 @@ using MMR.Randomizer.Attributes;
 using System.Collections.ObjectModel;
 using MMR.Randomizer.Models;
 using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes.Entrance;
 
 namespace MMR.Randomizer.Utils
 {
@@ -69,12 +69,6 @@ namespace MMR.Randomizer.Utils
             return itemId;
         }
 
-        public static bool IsBottleCatchContent(Item item)
-        {
-            return item >= Item.BottleCatchFairy
-                   && item <= Item.BottleCatchMushroom;
-        }
-
         public static bool IsMoonLocation(Item location)
         {
             return location >= Item.HeartPieceDekuTrial && location <= Item.ChestLinkTrialBombchu10;
@@ -127,7 +121,13 @@ namespace MMR.Randomizer.Utils
         private static List<Item> _allLocations;
         public static IEnumerable<Item> AllLocations()
         {
-            return _allLocations ?? (_allLocations = Enum.GetValues(typeof(Item)).Cast<Item>().Where(item => item.Location() != null).ToList());
+            return _allLocations ?? (_allLocations = Enum.GetValues(typeof(Item)).Cast<Item>().Where(item => item.HasAttribute<GetItemIndexAttribute>() || item.HasAttribute<GetBottleItemIndicesAttribute>()).ToList());
+        }
+
+        private static List<Item> _allEntrances;
+        public static IEnumerable<Item> AllEntrances()
+        {
+            return _allEntrances ?? (_allEntrances = Enum.GetValues(typeof(Item)).Cast<Item>().Where(item => item.HasAttribute<EntranceAttribute>()).ToList());
         }
 
         // todo cache
@@ -160,15 +160,18 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsRequired(Item item, RandomizedResult randomizedResult)
         {
-            return !item.Name().Contains("Heart")
-                        && !IsStrayFairy(item)
-                        && !IsSkulltulaToken(item)
-                        && randomizedResult.ItemsRequiredForMoonAccess.Contains(item);
+            return randomizedResult.ItemsRequiredForMoonAccess != null
+                && randomizedResult.ItemsRequiredForMoonAccess.Contains(item)
+                && !item.Name().Contains("Heart")
+                && !IsStrayFairy(item)
+                && !IsSkulltulaToken(item);
         }
 
         public static bool IsImportant(Item item, RandomizedResult randomizedResult)
         {
-            return !item.Name().Contains("Heart") && randomizedResult.ImportantItems.Contains(item);
+            return randomizedResult.ImportantItems != null
+                && randomizedResult.ImportantItems.Contains(item)
+                && !item.Name().Contains("Heart");
         }
 
         public static readonly ReadOnlyCollection<ReadOnlyCollection<Item>> ForbiddenStartTogether = new List<List<Item>>()
@@ -209,5 +212,114 @@ namespace MMR.Randomizer.Utils
                 Item.FairyDoubleMagic,
             },
         }.Select(list => list.AsReadOnly()).ToList().AsReadOnly();
+
+        public static List<int> ConvertStringToIntList(string c)
+        {
+            var result = new List<int>();
+            if (string.IsNullOrWhiteSpace(c))
+            {
+                return result;
+            }
+            try
+            {
+                result.Clear();
+                string[] v = c.Split('-');
+                int[] vi = new int[13];
+                if (v.Length != vi.Length)
+                {
+                    return null;
+                }
+                for (int i = 0; i < 13; i++)
+                {
+                    if (v[12 - i] != "")
+                    {
+                        vi[i] = Convert.ToInt32(v[12 - i], 16);
+                    }
+                }
+                for (int i = 0; i < 32 * 13; i++)
+                {
+                    int j = i / 32;
+                    int k = i % 32;
+                    if (((vi[j] >> k) & 1) > 0)
+                    {
+                        if (i >= ItemUtils.AllLocations().Count())
+                        {
+                            throw new IndexOutOfRangeException();
+                        }
+                        result.Add(i);
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            return result;
+        }
+
+        public static List<Item> ConvertStringToItemList(List<Item> baseItemList, string c)
+        {
+            if (string.IsNullOrWhiteSpace(c))
+            {
+                return new List<Item>();
+            }
+            var sectionCount = (int)Math.Ceiling(baseItemList.Count / 32.0);
+            var result = new List<Item>();
+            if (string.IsNullOrWhiteSpace(c))
+            {
+                return result;
+            }
+            try
+            {
+                string[] v = c.Split('-');
+                int[] vi = new int[sectionCount];
+                if (v.Length != vi.Length)
+                {
+                    return null;
+                }
+                for (int i = 0; i < sectionCount; i++)
+                {
+                    if (v[sectionCount - 1 - i] != "")
+                    {
+                        vi[i] = Convert.ToInt32(v[sectionCount - 1 - i], 16);
+                    }
+                }
+                for (int i = 0; i < 32 * sectionCount; i++)
+                {
+                    int j = i / 32;
+                    int k = i % 32;
+                    if (((vi[j] >> k) & 1) > 0)
+                    {
+                        if (i >= baseItemList.Count)
+                        {
+                            throw new IndexOutOfRangeException();
+                        }
+                        result.Add(baseItemList[i]);
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            return result;
+        }
+
+        public static string ConvertItemListToString(List<Item> baseItemList, List<Item> itemList)
+        {
+            var groupCount = (int)Math.Ceiling(baseItemList.Count / 32.0);
+            int[] n = new int[groupCount];
+            string[] ns = new string[groupCount];
+            foreach (var item in itemList)
+            {
+                var i = baseItemList.IndexOf(item);
+                int j = i / 32;
+                int k = i % 32;
+                n[j] |= (int)(1 << k);
+                ns[j] = Convert.ToString(n[j], 16);
+            }
+
+            return string.Join("-", ns.Reverse());
+        }
     }
 }

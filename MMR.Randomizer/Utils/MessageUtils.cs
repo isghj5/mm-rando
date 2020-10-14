@@ -36,6 +36,11 @@ namespace MMR.Randomizer.Utils
                     continue;
                 }
 
+                if (item.Item.IsEntrance())
+                {
+                    continue;
+                }
+
                 if (randomizedResult.Settings.ClearHints)
                 {
                     // skip free items

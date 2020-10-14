@@ -188,6 +188,25 @@ namespace MMR.Randomizer.Models.Settings
         public bool RandomizeDungeonEntrances { get; set; }
 
         /// <summary>
+        /// Randomize all entrances between pools
+        /// </summary>
+        public bool MixEntrancePools { get; set; }
+
+        public bool SwapMajoraAndCallGiants { get; set; }
+
+        public LogicMode EntranceLogicMode { get; set; }
+
+        /// <summary>
+        /// Randomize overworld entrances
+        /// </summary>
+        public bool DecoupleEntrances { get; set; }
+
+        public string RandomizedEntrancesString { get; set; }
+
+        [JsonIgnore]
+        public List<GameObjects.Item> RandomizedEntrances { get; set; } = new List<GameObjects.Item>();
+
+        /// <summary>
         /// (Beta) Randomize enemies
         /// </summary>
         public bool RandomizeEnemies { get; set; }

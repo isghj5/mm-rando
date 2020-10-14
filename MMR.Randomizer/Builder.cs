@@ -1,4 +1,4 @@
-﻿using MMR.Common.Extensions;
+using MMR.Common.Extensions;
 using MMR.Randomizer.Asm;
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Constants;
@@ -25,7 +25,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using SixLabors.ImageSharp.Formats.Png;
 using System.Security.Cryptography;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 
 namespace MMR.Randomizer
 {
@@ -606,6 +606,41 @@ namespace MMR.Randomizer
             }
         }
 
+        private void WriteEntrances()
+        {
+            if (_randomized.Settings.LogicMode == LogicMode.Vanilla || _randomized.Settings.EntranceLogicMode == LogicMode.Vanilla || !_randomized.Settings.RandomizedEntrances.Any())
+            {
+                return;
+            }
+
+            var newSpawn = _randomized.ItemList.Single(io => io.NewLocation == Item.EntranceSouthClockTownFromClockTowerInterior).Item;
+            EntranceSwapUtils.WriteSpawnToROM(newSpawn);
+
+            SceneUtils.ReadSceneTable();
+            SceneUtils.GetMaps();
+
+            foreach (var item in _randomized.ItemList.Where(io => io.Item.IsEntrance() && io.IsRandomized))
+            {
+                EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
+            }
+            EntranceSwapUtils.WriteOwlRegionNameTable( _randomized.ItemList );
+
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-drown-timer");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-skyboxes");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-spring-lens-cave-spawn");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-poisoned-woodfall-spawns");
+            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-song-of-soaring-exits"); // todo maybe NOP all the code, instead of just the SH commands.
+
+            if (_randomized.ItemList.Any(io => io.IsRandomized && io.Item.IsEntrance() && io.Item.Region() == Region.TheMoon))
+            {
+                SceneUtils.SetSceneTimeSettingsToDefault(GameObjects.Scene.TheMoon);
+                SceneUtils.SetSceneTimeSettingsToDefault(GameObjects.Scene.DekuTrial);
+                SceneUtils.SetSceneTimeSettingsToDefault(GameObjects.Scene.GoronTrial);
+                SceneUtils.SetSceneTimeSettingsToDefault(GameObjects.Scene.ZoraTrial);
+                SceneUtils.SetSceneTimeSettingsToDefault(GameObjects.Scene.LinkTrial);
+            }
+        }
+
         private void WriteDungeons()
         {
             if ((_randomized.Settings.LogicMode == LogicMode.Vanilla) || (!_randomized.Settings.RandomizeDungeonEntrances))
@@ -1077,7 +1112,17 @@ namespace MMR.Randomizer
                     continue;
                 }
 
-                if (ItemUtils.IsBottleCatchContent(item.Item))
+                if (item.Item.ToString().StartsWith("OwlActivation"))
+                {
+                    continue;
+                }
+
+                if (item.Item.IsEntrance())
+                {
+                    continue;
+                }
+
+                if (item.Item.IsBottleCatchContent())
                 {
                     ItemSwapUtils.WriteNewBottle(item.NewLocation.Value, item.Item);
                 }
@@ -1678,6 +1723,9 @@ namespace MMR.Randomizer
 
                 progressReporter.ReportProgress(67, "Writing items...");
                 WriteItems();
+
+                progressReporter.ReportProgress(67, "Writing entrances...");
+                WriteEntrances();
 
                 progressReporter.ReportProgress(68, "Writing messages...");
                 WriteGossipQuotes();

@@ -22,9 +22,11 @@ namespace MMR.Randomizer.Models
         public int FileSelectColor { get; internal set; }
         public int TitleLogoColor { get; internal set; }
 
+        public List<SpoilerEntrance> EntranceSpoilers { get; set; }
+        public int[] OwlStatueList { get; set; }
+
         public int[] NewEntrances = new int[] { -1, -1, -1, -1 };
         public int[] NewExits = new int[] { -1, -1, -1, -1 };
-
         public int[] NewExitIndices = new int[] { -1, -1, -1, -1 };
         public int[] NewDCFlags = new int[] { -1, -1, -1, -1 };
         public int[] NewDCMasks = new int[] { -1, -1, -1, -1 };

@@ -21,6 +21,8 @@ namespace MMR.Randomizer.Models
 
         public List<SpoilerItem> ItemList { get; set; }
 
+        public List<SpoilerEntrance> EntranceList { get; set; }
+
         public List<ItemLogic> Logic { get; set; }
 
         public Dictionary<GossipQuote, string> GossipHints { get; set; }

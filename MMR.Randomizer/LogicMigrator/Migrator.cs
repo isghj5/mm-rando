@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 15;
+        public const int CurrentVersion = 17;
 
         public static string ApplyMigrations(string logic)
         {
@@ -85,6 +85,21 @@ namespace MMR.Randomizer.LogicMigrator
             }
 
             if (GetVersion(lines) < 14)
+            {
+                AddEntrances(lines);
+            }
+
+            if (GetVersion(lines) < 15)
+            {
+                AddEntrances2(lines);
+            }
+
+            if (GetVersion(lines) < 16)
+            {
+                AddOwlStatues(lines);
+            }
+
+            if (GetVersion(lines) < 17)
             {
                 AddTricks(lines);
             }
@@ -1508,6 +1523,582 @@ namespace MMR.Randomizer.LogicMigrator
             for (var i = 1; i < lines.Count; i += 6)
             {
                 lines.Insert(i + 5, "");
+            }
+        }
+
+        private static void AddEntrances(List<string> lines)
+        {
+            lines[0] = "-version 15";
+            var itemNames = new string[]
+            {
+                "EntranceMayorsResidenceFromEastClockTown",
+
+                "EntranceMajorasLairFromTheMoon",
+
+                "EntranceMagicHagsPotionShopFromSouthernSwamp",
+
+                "EntranceRanchBarnFromRomaniRanch",
+                "EntranceRanchHouseFromRomaniRanch",
+
+
+                "EntranceHoneyDarlingsShopFromEastClockTown",
+
+                "EntranceBeneathGraveyardFromIkanaGraveyardNight2",
+                "EntranceBeneathGraveyardFromIkanaGraveyardNight1",
+
+                "EntranceSouthernSwampFromRoadtoSouthernSwamp",
+                "EntranceSouthernSwampFromTouristInformation",
+                "EntranceSouthernSwampFromWoodfall",
+                "EntranceSouthernSwampFromDekuPalaceLower",
+                "EntranceSouthernSwampFromDekuPalaceUpper",
+                "EntranceSouthernSwampFromMagicHagsPotionShop",
+
+                "EntranceSouthernSwampFromWoodsofMystery",
+                "EntranceSouthernSwampFromSwampSpiderHouse",
+                "EntranceSouthernSwampFromIkanaCanyon",
+                "EntranceSouthernSwampFromOwlStatue",
+
+                "EntranceCuriosityShopFromWestClockTown",
+                "EntranceKafeisHideoutFromLaundryPool",
+                "EntranceCuriosityShopFromKafeisHideout",
+                "EntranceKafeisHideoutFromCuriosityShop",
+
+                "EntranceGrottoGossipOceanFromTerminaField",
+                "EntranceGrottoGossipSwampFromTerminaField",
+                "EntranceGrottoGossipCanyonFromTerminaField",
+                "EntranceGrottoGossipMountainFromTerminaField",
+                "EntranceGrottoHotSpringWaterFromTwinIslands",
+                "EntranceGrottoPalaceStraightFromDekuPalaceA",
+                "EntranceGrottoDodongoFromTerminaField",
+                "EntranceGrottoPalaceVinesFromDekuPalaceLower",
+                "EntranceGrottoDekuMerchantFromTerminaField",
+                "EntranceGrottoBioBabaFromTerminaField",
+                "EntranceGrottoBeanSellerFromDekuPalace",
+                "EntranceGrottoPeahatFromTerminaField",
+                "EntranceGrottoPalaceStraightFromDekuPalaceB",
+                "EntranceGrottoPalaceVinesFromDekuPalaceUpper",
+                "EntranceGrottoLensCaveFromGoronVillage",
+
+                "EntranceIkanaCanyonFromRoadtoIkana",
+                "EntranceIkanaCanyonFromPoeHut",
+                "EntranceIkanaCanyonFromMusicBoxHouse",
+                "EntranceIkanaCanyonFromStoneTower",
+                "EntranceIkanaCanyonFromOwlStatue",
+                "EntranceIkanaCanyonFromBeneaththeWell",
+                "EntranceIkanaCanyonFromSakonsHideout",
+                "EntranceIkanaCanyonFromIkanaClear",
+                "EntranceIkanaCanyonFromAncientCastleofIkanaCourtyard",
+
+
+                "EntranceIkanaCanyonFromFairysFountain",
+                "EntranceIkanaCanyonFromSecretShrine",
+                "EntranceIkanaCanyonFromSpringWaterCave",
+                "EntranceSpringWaterCaveFromIkanaCanyon",
+
+                "EntrancePiratesFortressFromMainEntrance",
+                "EntrancePiratesFortressFromHookshotRoomLower",
+                "EntrancePiratesFortressFromHookshotRoomUpper",
+                "EntrancePiratesFortressFromGuardRoomFront",
+                "EntrancePiratesFortressFromGuardRoomBack",
+                "EntrancePiratesFortressFromBarrelMazeFront",
+                "EntrancePiratesFortressFromBarrelMazeBack",
+                "EntrancePiratesFortressFromOnePatrolFront",
+                "EntrancePiratesFortressFromOnePatrolBack",
+                "EntrancePiratesFortressFromTelescope",
+                "EntrancePiratesFortressFromPiratesFortressExteriorBalcony",
+
+                "EntranceMilkBarFromEastClockTown",
+
+                "EntranceStoneTowerTempleFromStoneTower",
+
+                "EntranceTreasureChestShopFromEastClockTown",
+
+
+                "EntranceStoneTowerTempleInvertedFromStoneTowerInverted",
+                "EntranceStoneTowerTempleInvertedBossRoomFromStoneTowerTempleInverted",
+
+                "EntranceClockTowerRooftopFromSouthClockTown",
+
+
+
+                "EntranceBeforethePortaltoTerminaFromClockTowerInterior",
+                "EntranceBeforethePortaltoTerminaFromBeforethePortaltoTermina",
+
+                "EntranceWoodfallTempleFromWoodfall",
+                "EntranceWoodfallTemplePrisonFromOdolwasLair",
+                "EntranceWoodfallTemplePrisonFromWoodfall",
+
+                "EntrancePathtoMountainVillageFromTerminaField",
+                "EntrancePathtoMountainVillageFromMountainVillage",
+
+                "EntranceAncientCastleofIkanaCourtyardFromBeneaththeWell",
+                "EntranceAncientCastleofIkanaCourtyardFromIkanaCanyon",
+                "EntranceAncientCastleofIkanaCourtyardFromAncientCastleofIkana",
+                "EntranceAncientCastleofIkanaFromCourtyard",
+                "EntranceAncientCastleofIkanaFromBlockHole",
+                "EntranceAncientCastleofIkanaFromKegHole",
+                "EntranceAncientCastleofIkanaFromIgosduIkanasLair",
+
+                "EntranceDekuScrubPlaygroundFromNorthClockTown",
+
+
+                "EntranceOdolwasLairFromWoodfallTemple",
+
+                "EntranceTownShootingGalleryFromEastClockTown",
+
+                "EntranceSnowheadTempleFromSnowhead",
+
+                "EntranceMilkRoadFromTerminaField",
+                "EntranceMilkRoadFromRomaniRanch",
+                "EntranceMilkRoadFromGormanRacetrackTrack",
+                "EntranceMilkRoadFromGormanRacetrackMain",
+                "EntranceMilkRoadFromOwlStatue",
+
+
+
+                "EntrancePiratesFortressHookshotRoomFromLowerDoor",
+                "EntrancePiratesFortressHookshotRoomFromUpperDoor",
+                "EntrancePiratesFortressGuardRoomFromFrontDoor",
+                "EntrancePiratesFortressGuardRoomFromBackDoor",
+                "EntrancePiratesFortressBarrelMazeFromFrontDoor",
+                "EntrancePiratesFortressBarrelMazeFromBackDoor",
+                "EntrancePiratesFortressOneGuardFrontFromPiratesFortress",
+                "EntrancePiratesFortressOneGuardRearFromPiratesFortress",
+                "EntrancePiratesFortressSewerFromTelescope",
+                "EntrancePiratesFortressSewerFromWater",
+                "EntrancePiratesFortressSewerFromRear",
+
+                "EntranceSwampShootingGalleryFromRoadtoSouthernSwamp",
+
+                "EntrancePinnacleRockFromGreatBayCoast",
+                "EntrancePinnacleRockFromPinnacleRock",
+
+                "EntranceFairysFountainFromNorthClockTown",
+                "EntranceFairysFountainFromWoodfall",
+                "EntranceFairysFountainFromSnowhead",
+                "EntranceFairysFountainFromZoraCape",
+                "EntranceFairysFountainFromIkanaCanyon",
+
+                "EntranceSwampSpiderHouseFromSouthernSwamp",
+
+                "EntranceOceansideSpiderHouseFromGreatBayCoast",
+
+                "EntranceAstralObservatoryFromEastClockTown",
+                "EntranceAstralObservatoryFromTerminaField",
+                "EntranceAstralObservatoryFromTelescope",
+
+                "EntranceDekuTrialFromTheMoon",
+
+                "EntranceDekuPalaceFromSouthernSwampLower",
+                "EntranceDekuPalaceFromDekuPalace",
+                "EntranceDekuPalaceFromDekuKingsChamberMain",
+                "EntranceDekuPalaceFromDekuKingsChamberGardenWest",
+                "EntranceDekuPalaceFromDekuShrine",
+                "EntranceDekuPalaceFromSouthernSwampUpper",
+                "EntranceDekuPalaceGardenWestFromPalaceVinesGrotto",
+                "EntranceDekuPalaceGardenWestFromPalaceStraightGrotto",
+                "EntranceDekuPalaceGardenEastFromPalaceStraightGrotto",
+                "EntranceDekuPalaceGardenEastFromBeanSellerGrotto",
+                "EntranceDekuPalaceGardenEastFromPalaceVinesGrotto",
+
+                "EntranceMountainSmithyFromMountainVillage",
+
+                "EntranceTerminaFieldFromWestClockTown",
+                "EntranceTerminaFieldFromRoadtoSouthernSwamp",
+                "EntranceTerminaFieldFromGreatBayCoast",
+                "EntranceTerminaFieldFromPathtoMountainVillage",
+                "EntranceTerminaFieldFromRoadtoIkana",
+                "EntranceTerminaFieldFromMilkRoad",
+                "EntranceTerminaFieldFromSouthClockTown",
+                "EntranceTerminaFieldFromEastClockTown",
+                "EntranceTerminaFieldFromNorthClockTown",
+                "EntranceTerminaFieldFromAstralObservatory",
+                "EntranceTerminaFieldFromAstralObservatoryTelescope",
+
+                "EntranceTerminaFieldFromCremiaEscort",
+
+
+                "EntrancePostOfficeFromWestClockTown",
+
+                "EntranceMarineResearchLabFromGreatBayCoast",
+
+                "EntranceDampsHouseFromIkanaGraveyardGrave",
+                "EntranceDampsHouseFromIkanaGraveyardDoor",
+
+                "EntranceGoronShrineFromGoronVillage",
+                "EntranceGoronShrineFromGoronShop",
+
+
+                "EntranceZoraHallFromZoraCapeLand",
+                "EntranceZoraHallFromZoraCapeWater",
+                "EntranceZoraHallFromZoraShop",
+                "EntranceZoraHallFromLulusRoom",
+                "EntranceZoraHallFromEvansRoom",
+                "EntranceZoraHallFromJapasRoom",
+                "EntranceZoraHallFromMikauTijosRoom",
+
+                "EntranceTradingPostFromWestClockTown",
+
+                "EntranceRomaniRanchFromMilkRoad",
+
+                "EntranceRomaniRanchFromBarn",
+                "EntranceRomaniRanchFromRanchHouse",
+                "EntranceRomaniRanchFromCuccoShack",
+                "EntranceRomaniRanchFromDoggyRacetrack",
+
+
+                "EntranceTwinmoldsLairFromStoneTowerTempleInverted",
+
+                "EntranceGreatBayCoastFromTerminaField",
+                "EntranceGreatBayCoastFromZoraCape",
+                "EntranceGreatBayCoastFromGreatBayCoastBeach",
+                "EntranceGreatBayCoastFromPinnacleRock",
+                "EntranceGreatBayCoastFromFishermansHut",
+                "EntranceGreatBayCoastFromPiratesFortress",
+                "EntranceGreatBayCoastFromGreatBayCoastNearFortress",
+                "EntranceGreatBayCoastFromMarineResearchLab",
+                "EntranceGreatBayCoastFromOceansideSpiderHouse",
+                "EntranceGreatBayCoastFromOwlStatue",
+                "EntranceGreatBayCoastFromPiratesFortressThrownOut",
+
+
+                "EntranceZoraCapeFromGreatBayCoast",
+                "EntranceZoraCapeFromZoraHallLand",
+                "EntranceZoraCapeFromZoraHallWater",
+                "EntranceZoraCapeFromZoraCape",
+                "EntranceZoraCapeFromWaterfallRapids",
+                "EntranceZoraCapeFromFairysFountain",
+                "EntranceZoraCapeFromOwlStatue",
+                "EntranceZoraCapeFromGreatBayTemple",
+                "EntranceZoraCapeFromGreatBayTempleClear",
+
+                "EntranceLotteryShopFromWestClockTown",
+
+                "EntrancePiratesFortressExteriorFromGreatBayCoast",
+                "EntrancePiratesFortressExteriorFromPiratesFortressMain",
+                "EntrancePiratesFortressExteriorFromPiratesFortressSewerMain",
+                "EntrancePiratesFortressExteriorFromPiratesFortressSewerExhaust",
+                "EntrancePiratesFortressExteriorFromThrownOut",
+                "EntrancePiratesFortressExteriorFromPiratesFortressBalcony",
+                "EntrancePiratesFortressExteriorFromPiratesFortressSewerDoor",
+
+                "EntranceFishermansHutFromGreatBayCoast",
+
+                "EntranceGoronShopFromGoronVillage",
+
+                "EntranceDekuKingsChamberFromDekuPalace",
+                "EntranceDekuKingsChamberFromDekuPalaceWestGarden",
+
+
+                "EntranceGoronTrialFromTheMoon",
+
+                "EntranceRoadtoSouthernSwampFromTerminaField",
+                "EntranceRoadtoSouthernSwampFromSouthernSwamp",
+                "EntranceRoadtoSouthernSwampFromSwampShootingGallery",
+
+                "EntranceDoggyRacetrackFromRomaniRanch",
+
+                "EntranceCuccoShackFromRomaniRanch",
+
+
+                "EntranceIkanaGraveyardFromRoadtoIkana",
+                "EntranceIkanaGraveyardFromDay3Grave",
+                "EntranceIkanaGraveyardFromDay2Grave",
+                "EntranceIkanaGraveyardFromDay1Grave",
+                "EntranceIkanaGraveyardFromDampesHouse",
+
+
+                "EntranceGohtsLairFromSnowheadTemple",
+
+                "EntranceWoodfallFromSouthernSwamp",
+                "EntranceWoodfallFromWoodfallTempleEntrance",
+                "EntranceWoodfallFromFairysFountain",
+                "EntranceWoodfallFromWoodfallTempleExit",
+                "EntranceWoodfallFromOwlStatue",
+
+                "EntranceZoraTrialFromTheMoon",
+                "EntranceZoraTrialFromZoraTrial",
+
+                "EntranceGoronVillageFromPathtoGoronVillage",
+                "EntranceGoronVillageFromGoronShrine",
+                "EntranceGoronVillageFromLonePeakShrine",
+
+                "EntranceGreatBayTempleFromZoraCape",
+
+                "EntranceWaterfallRapidsFromZoraCape",
+
+
+
+                "EntranceBeneaththeWellFromIkanaCanyon",
+                "EntranceBeneaththeWellFromAncientCastleofIkana",
+
+                "EntranceZoraHallRoomsMikauTijosRoomFromZoraHall",
+                "EntranceZoraHallRoomsJapasRoomFromZoraHall",
+                "EntranceZoraHallRoomsLulusRoomFromZoraHall",
+                "EntranceZoraHallRoomsEvansRoomFromZoraHall",
+                "EntranceZoraHallRoomsJapasRoomFromJapasRoom",
+                "EntranceZoraHallRoomsZoraShopFromZoraHall",
+
+
+                "EntranceGoronGraveyardFromMountainVillage",
+
+
+                "EntranceSakonsHideoutFromIkanaCanyon",
+
+                "EntranceMountainVillageFromMountainSmithy",
+                "EntranceMountainVillageFromPathtoGoronVillage",
+                "EntranceMountainVillageFromGoronGraveyard",
+                "EntranceMountainVillageFromPathtoSnowhead",
+
+                "EntranceMountainVillageFromPathtoMountainVillage",
+                "EntranceMountainVillageFromSnowheadClear",
+                "EntranceMountainVillageFromOwlStatue",
+
+                "EntrancePoeHutFromIkanaCanyon",
+
+
+
+                "EntranceDekuShrineFromDekuPalace",
+
+                "EntranceRoadtoIkanaFromTerminaField",
+                "EntranceRoadtoIkanaFromIkanaCanyon",
+                "EntranceRoadtoIkanaFromIkanaGraveyard",
+
+                "EntranceSwordsmansSchoolFromWestClockTown",
+
+                "EntranceMusicBoxHouseFromIkanaCanyon",
+
+                "EntranceIgosduIkanasLairFromAncientCastleofIkana",
+
+                "EntranceTouristInformationFromSouthernSwamp",
+
+                "EntranceStoneTowerFromIkanaCanyon",
+
+                "EntranceStoneTowerFromStoneTowerTemple",
+                "EntranceStoneTowerFromOwlStatue",
+
+
+
+
+                "EntrancePathtoSnowheadFromMountainVillage",
+                "EntrancePathtoSnowheadFromSnowhead",
+
+
+                "EntranceSnowheadFromPathtoSnowhead",
+                "EntranceSnowheadFromSnowheadTemple",
+                "EntranceSnowheadFromFairysFountain",
+                "EntranceSnowheadFromOwlStatue",
+
+
+                "EntrancePathtoGoronVillageFromMountainVillage",
+                "EntrancePathtoGoronVillageFromGoronVillage",
+                "EntrancePathtoGoronVillageFromGoronRacetrack",
+
+                "EntranceGyorgsLairFromGreatBayTemple",
+
+                "EntranceSecretShrineFromIkanaCanyon",
+
+                "EntranceStockPotInnLowerFromEastClockTown",
+                "EntranceStockPotInnUpperFromEastClockTown",
+
+
+
+
+
+                "EntranceClockTowerInteriorFromBeforethePortaltoTermina",
+                "EntranceClockTowerInteriorFromSouthClockTown",
+
+
+
+
+
+
+                "EntranceWoodsofMysteryFromSouthernSwamp",
+
+
+
+
+                "EntranceLinkTrialFromTheMoon",
+
+                "EntranceTheMoonFromClockTowerRooftop",
+                "EntranceTheMoonFromDekuTrial",
+                "EntranceTheMoonFromGoronTrial",
+                "EntranceTheMoonFromZoraTrial",
+                "EntranceTheMoonFromLinkTrial",
+
+                "EntranceBombShopFromWestClockTown",
+
+
+
+                "EntranceGormanTrackFromMilkRoadMain",
+                "EntranceGormanTrackFromMilkRoadGated",
+
+
+                "EntranceGoronRacetrackFromPathtoMountainVillage",
+
+
+
+                "EntranceEastClockTownFromTerminaField",
+                "EntranceEastClockTownFromSouthClockTownNorthern",
+                "EntranceEastClockTownFromAstralObservatory",
+                "EntranceEastClockTownFromSouthClockTownSouthern",
+                "EntranceEastClockTownFromTreasureChestShop",
+                "EntranceEastClockTownFromNorthClockTown",
+                "EntranceEastClockTownFromHoneyDarlingsShop",
+                "EntranceEastClockTownFromMayorsResidence",
+                "EntranceEastClockTownFromShootingGalleryClockTown",
+                "EntranceEastClockTownFromStockPotInnLower",
+                "EntranceEastClockTownFromStockPotInnUpper",
+                "EntranceEastClockTownFromMilkBar",
+
+                "EntranceWestClockTownFromTerminaField",
+                "EntranceWestClockTownFromSouthClockTownSouthern",
+                "EntranceWestClockTownFromSouthClockTownNorthern",
+                "EntranceWestClockTownFromSwordsmansSchool",
+                "EntranceWestClockTownFromCuriosityShop",
+                "EntranceWestClockTownFromTradingPost",
+                "EntranceWestClockTownFromBombShop",
+                "EntranceWestClockTownFromPostOffice",
+                "EntranceWestClockTownFromLotteryShop",
+
+                "EntranceNorthClockTownFromTerminaField",
+                "EntranceNorthClockTownFromEastClockTown",
+                "EntranceNorthClockTownFromSouthClockTown",
+                "EntranceNorthClockTownFromFairysFountain",
+                "EntranceNorthClockTownFromDekuScrubPlayground",
+
+
+
+                "EntranceSouthClockTownFromClockTowerInterior",
+                "EntranceSouthClockTownFromTerminaField",
+                "EntranceSouthClockTownFromEastClockTownNorthern",
+                "EntranceSouthClockTownFromWestClockTownNorthern",
+                "EntranceSouthClockTownFromNorthClockTown",
+                "EntranceSouthClockTownFromWestClockTownSouthern",
+                "EntranceSouthClockTownFromLaundryPool",
+                "EntranceSouthClockTownFromEastClockTownSouthern",
+                "EntranceSouthClockTownFromClockTowerRooftop",
+                "EntranceSouthClockTownFromOwlStatue",
+
+                "EntranceLaundryPoolFromSouthClockTown",
+                "EntranceLaundryPoolFromKafeisHideout",
+            };
+            var newItems = itemNames.Select((itemName, index) => new MigrationItem
+            {
+                ID = 433 + index
+            }).ToArray();
+            for (var i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.StartsWith("-") || string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+                var updatedItemSections = line
+                    .Split(';')
+                    .Select(section => section.Split(',').Select(id =>
+                    {
+                        var itemId = int.Parse(id);
+                        if (itemId >= 433)
+                        {
+                            itemId += newItems.Length;
+                        }
+                        return itemId;
+                    }).ToList()).ToList();
+                lines[i] = string.Join(";", updatedItemSections.Select(section => string.Join(",", section)));
+            }
+            foreach (var item in newItems)
+            {
+                lines.Insert(item.ID * 5 + 1, $"- {itemNames[item.ID - 433]}");
+                lines.Insert(item.ID * 5 + 2, string.Join(",", item.DependsOnItems));
+                lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
+                lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
+                lines.Insert(item.ID * 5 + 5, "0");
+                lines.Insert(item.ID * 5 + 6, "");
+            }
+        }
+
+        private static void AddEntrances2(List<string> lines)
+        {
+            lines[0] = "-version 16";
+            var itemNames = new string[]
+            {
+                "EntranceStoneTowerInvertedFromStoneTowerTempleInverted",
+            };
+            var newItems = itemNames.Select((itemName, index) => new MigrationItem
+            {
+                ID = 741 + index
+            }).ToArray();
+            for (var i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.StartsWith("-") || string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+                var updatedItemSections = line
+                    .Split(';')
+                    .Select(section => section.Split(',').Select(id =>
+                    {
+                        var itemId = int.Parse(id);
+                        if (itemId >= 741)
+                        {
+                            itemId += newItems.Length;
+                        }
+                        return itemId;
+                    }).ToList()).ToList();
+                lines[i] = string.Join(";", updatedItemSections.Select(section => string.Join(",", section)));
+            }
+            foreach (var item in newItems)
+            {
+                lines.Insert(item.ID * 5 + 1, $"- {itemNames[item.ID - 741]}");
+                lines.Insert(item.ID * 5 + 2, string.Join(",", item.DependsOnItems));
+                lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
+                lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
+                lines.Insert(item.ID * 5 + 5, "0");
+                lines.Insert(item.ID * 5 + 6, "");
+            }
+        }
+
+        private static void AddOwlStatues(List<string> lines)
+        {
+            lines[0] = "-version 17";
+            var itemNames = new string[]
+            {
+                "Great Bay Owl", "Zora Cape Owl", "Snowhead Owl", "Mountain Village Owl", "Clock Town Owl", "Milk Road Owl", "Woodfall Owl", "Southern Swamp Owl", "Ikana Canyon Owl", "Stone Tower Owl",
+            };
+            var newItems = itemNames.Select((itemName, index) => new MigrationItem
+            {
+                ID = 742 + index
+            }).ToArray();
+            for (var i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.StartsWith("-") || string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+                var updatedItemSections = line
+                    .Split(';')
+                    .Select(section => section.Split(',').Select(id =>
+                    {
+                        var itemId = int.Parse(id);
+                        if (itemId >= 742)
+                        {
+                            itemId += newItems.Length;
+                        }
+                        return itemId;
+                    }).ToList()).ToList();
+                lines[i] = string.Join(";", updatedItemSections.Select(section => string.Join(",", section)));
+            }
+            foreach (var item in newItems)
+            {
+                lines.Insert(item.ID * 5 + 1, $"- {itemNames[item.ID - 742]}");
+                lines.Insert(item.ID * 5 + 2, string.Join(",", item.DependsOnItems));
+                lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
+                lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
+                lines.Insert(item.ID * 5 + 5, "0");
+                lines.Insert(item.ID * 5 + 6, "");
             }
         }
 

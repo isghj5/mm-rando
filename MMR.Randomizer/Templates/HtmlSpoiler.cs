@@ -213,27 +213,27 @@ namespace MMR.Randomizer.Templates
             this.Write(";\r\n\r\n    for (var i = 0; i < logic.length; i++) {\r\n        var item = logic[i];\r\n" +
                     "        if (item.Acquired) {\r\n            item.Checked = true;\r\n\t        documen" +
                     "t.querySelector(\"tr[data-newlocationid=\'\" + i + \"\'] input\").checked = true;\r\n   " +
-                    "     }\r\n    }\r\n\r\n    var startingLocations = [0, 94, 274, 275, 276, 277];\r\n    f" +
-                    "or (var id of startingLocations) {\r\n\t    logic[id].Checked = true;\r\n\t    logic[d" +
-                    "ocument.querySelector(\"tr[data-newlocationid=\'\" + id + \"\']\").dataset.id].Acquire" +
-                    "d = true;\r\n\t    document.querySelector(\"tr[data-newlocationid=\'\" + id + \"\'] inpu" +
-                    "t\").checked = true;\r\n    }\r\n\r\n\trecalculateItems();\r\n\r\n\tvar rows = document.query" +
-                    "SelectorAll(\"tr\");\r\n\tfor (var i = 1; i < rows.length; i++) {\r\n\t\tvar row = rows[i" +
-                    "];\r\n\t\tvar checkbox = row.querySelector(\"input\");\r\n\t\tif (checkbox) {\r\n\t\t\tcheckbox" +
-                    ".addEventListener(\"click\", function(e) {\r\n\t\t\t\tvar row = e.target.closest(\"tr\");\r" +
-                    "\n                var rowId = parseInt(row.dataset.id);\r\n\t\t\t\tvar newLocationId = " +
-                    "parseInt(row.dataset.newlocationid);\r\n\t\t\t\tlogic[newLocationId].Checked = e.targe" +
-                    "t.checked;\r\n                logic[rowId].Acquired = e.target.checked;\r\n\t\t\t\trecal" +
-                    "culateItems();\r\n\t\t\t});\r\n\t\t}\r\n\t}\r\n\r\n\tdocument.querySelector(\"#highlight-checks\")." +
-                    "addEventListener(\"click\", function(e) {\r\n        var tables = document.querySele" +
-                    "ctorAll(\"table.item-replacements\");\r\n        for (var i = 0; i < tables.length; " +
-                    "i++) {\r\n            if (e.target.checked) {\r\n                tables[i].classList" +
-                    ".add(\"show-highlight\");\r\n            } else {\r\n                tables[i].classLi" +
-                    "st.remove(\"show-highlight\");\r\n            }\r\n        }\r\n\t});\r\n\r\n    function tog" +
-                    "gleDarkLight() {\r\n\t    var body = document.getElementsByTagName(\'body\')[0];\r\n\t  " +
-                    "  var currentClassBody = body.className;\r\n\t    body.className = currentClassBody" +
-                    " === \"dark-mode\" ? \"light-mode\" : \"dark-mode\";\r\n    }\r\n</script>\r\n</body>\r\n</htm" +
-                    "l>");
+                    "     }\r\n    }\r\n\r\n    var startingLocations = [0, 94, 274, 275, 276, 277, 729];\r\n" +
+                    "    for (var id of startingLocations) {\r\n\t    logic[id].Checked = true;\r\n\t    lo" +
+                    "gic[document.querySelector(\"tr[data-newlocationid=\'\" + id + \"\']\").dataset.id].Ac" +
+                    "quired = true;\r\n\t    document.querySelector(\"tr[data-newlocationid=\'\" + id + \"\']" +
+                    " input\").checked = true;\r\n    }\r\n\r\n\trecalculateItems();\r\n\r\n\tvar rows = document." +
+                    "querySelectorAll(\"tr\");\r\n\tfor (var i = 1; i < rows.length; i++) {\r\n\t\tvar row = r" +
+                    "ows[i];\r\n\t\tvar checkbox = row.querySelector(\"input\");\r\n\t\tif (checkbox) {\r\n\t\t\tche" +
+                    "ckbox.addEventListener(\"click\", function(e) {\r\n\t\t\t\tvar row = e.target.closest(\"t" +
+                    "r\");\r\n                var rowId = parseInt(row.dataset.id);\r\n\t\t\t\tvar newLocation" +
+                    "Id = parseInt(row.dataset.newlocationid);\r\n\t\t\t\tlogic[newLocationId].Checked = e." +
+                    "target.checked;\r\n                logic[rowId].Acquired = e.target.checked;\r\n\t\t\t\t" +
+                    "recalculateItems();\r\n\t\t\t});\r\n\t\t}\r\n\t}\r\n\r\n\tdocument.querySelector(\"#highlight-chec" +
+                    "ks\").addEventListener(\"click\", function(e) {\r\n        var tables = document.quer" +
+                    "ySelectorAll(\"table.item-replacements\");\r\n        for (var i = 0; i < tables.len" +
+                    "gth; i++) {\r\n            if (e.target.checked) {\r\n                tables[i].clas" +
+                    "sList.add(\"show-highlight\");\r\n            } else {\r\n                tables[i].cl" +
+                    "assList.remove(\"show-highlight\");\r\n            }\r\n        }\r\n\t});\r\n\r\n    functio" +
+                    "n toggleDarkLight() {\r\n\t    var body = document.getElementsByTagName(\'body\')[0];" +
+                    "\r\n\t    var currentClassBody = body.className;\r\n\t    body.className = currentClas" +
+                    "sBody === \"dark-mode\" ? \"light-mode\" : \"dark-mode\";\r\n    }\r\n</script>\r\n</body>\r\n" +
+                    "</html>");
             return this.GenerationEnvironment.ToString();
         }
     }

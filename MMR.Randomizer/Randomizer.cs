@@ -1,4 +1,6 @@
 using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes;
+using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
@@ -26,9 +28,6 @@ namespace MMR.Randomizer
         public ItemList ItemList { get; set; }
 
         #region Dependence and Conditions
-        List<Item> ConditionsChecked { get; set; }
-        Dictionary<Item, Dependence> DependenceChecked { get; set; }
-        List<int[]> ConditionRemoves { get; set; }
 
         private class Dependence
         {
@@ -95,13 +94,12 @@ namespace MMR.Randomizer
 
         private void MakeGossipQuotes()
         {
-            _randomized.GossipQuotes = MessageUtils.MakeGossipQuotes
-                (_randomized);
+            _randomized.GossipQuotes = MessageUtils.MakeGossipQuotes(_randomized);
         }
 
         #endregion
 
-        private void EntranceShuffle()
+        private void DungeonShuffle()
         {
             var newDCFlags = new int[] { -1, -1, -1, -1 };
             var newDCMasks = new int[] { -1, -1, -1, -1 };
@@ -177,6 +175,39 @@ namespace MMR.Randomizer
             _randomized.NewExitIndices = newExitIndices;
             _randomized.NewDCFlags = newDCFlags;
             _randomized.NewDCMasks = newDCMasks;
+        }
+
+        private void OwlShuffle(bool hidden)
+        {
+            int size = 12;
+            int poolSize = size;
+            _randomized.OwlStatueList = new int[size];
+            for (int i = 0; i < _randomized.OwlStatueList.Length; i++)
+            {
+                _randomized.OwlStatueList[i] = -1;
+            }
+            if (!hidden)
+            {
+                _randomized.OwlStatueList[0] = 0;
+                _randomized.OwlStatueList[8] = 8;
+                _randomized.OwlStatueList[10] = 10;
+            }
+            int owl = 0;
+            while (owl < _randomized.OwlStatueList.Length)
+            {
+                if (_randomized.OwlStatueList[owl] == -1)
+                {
+                    int n;
+                    do
+                    {
+                        n = Random.Next(_randomized.OwlStatueList.Length);
+                    } while (_randomized.OwlStatueList.Contains(n));
+
+                    _randomized.OwlStatueList[owl] = n;
+                    _randomized.OwlStatueList[n] = owl;
+                }
+                owl++;
+            }
         }
 
         private void UpdateLogicForSettings()
@@ -287,11 +318,17 @@ namespace MMR.Randomizer
 
         private void PrepareRulesetItemData()
         {
-            if (_settings.LogicMode == LogicMode.Casual
-                || _settings.LogicMode == LogicMode.Glitched
-                || _settings.LogicMode == LogicMode.UserLogic)
+            var logicMode = _settings.LogicMode;
+            if (logicMode == LogicMode.NoLogic)
             {
-                string[] data = LogicUtils.ReadRulesetFromResources(_settings.LogicMode, _settings.UserLogicFileName);
+                logicMode = _settings.EntranceLogicMode;
+            }
+
+            if (logicMode == LogicMode.Casual
+                || logicMode == LogicMode.Glitched
+                || logicMode == LogicMode.UserLogic)
+            {
+                string[] data = LogicUtils.ReadRulesetFromResources(logicMode, _settings.UserLogicFileName);
                 ItemList = LogicUtils.PopulateItemListFromLogicData(data);
             }
             else
@@ -357,7 +394,7 @@ namespace MMR.Randomizer
                     _settings.AddStrayFairies = true;
                 }
 
-                if (ItemUtils.IsBottleCatchContent(item))
+                if (item.IsBottleCatchContent())
                 {
                     _settings.RandomizeBottleCatchContents = true;
                 }
@@ -369,7 +406,7 @@ namespace MMR.Randomizer
             Random = new Random(_seed);
         }
 
-        private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath)
+        private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath, Dictionary<Item, Dependence> dependenciesChecked, List<int[]> conditionsToRemove, bool isEntrancePair = false)
         {
             Debug.WriteLine($"CheckDependence({currentItem}, {target})");
             var currentItemObject = ItemList[currentItem];
@@ -383,6 +420,11 @@ namespace MMR.Randomizer
             if (currentItemObject.TimeNeeded == 0 && ItemUtils.IsJunk(currentItem))
             {
                 return Dependence.NotDependent;
+            }
+
+            if (currentItem.IsEntrance() && currentTargetObject.Name == "Inaccessible" && !isEntrancePair) // todo handle this more nicely with other logic.
+            {
+                return Dependence.Dependent;
             }
 
             //check timing
@@ -433,38 +475,38 @@ namespace MMR.Randomizer
                         }
                         if (d == currentItem)
                         {
-                            DependenceChecked[d] = Dependence.Dependent;
+                            dependenciesChecked[d] = Dependence.Dependent;
                         }
                         else
                         {
                             if (dependencyPath.Contains(d))
                             {
-                                DependenceChecked[d] = Dependence.Circular(d);
+                                dependenciesChecked[d] = Dependence.Circular(d);
                             }
-                            if (!DependenceChecked.ContainsKey(d) || (DependenceChecked[d].Type == DependenceType.Circular && !DependenceChecked[d].Items.All(id => dependencyPath.Contains(id))))
+                            if (!dependenciesChecked.ContainsKey(d) || (dependenciesChecked[d].Type == DependenceType.Circular && !dependenciesChecked[d].Items.All(id => dependencyPath.Contains(id))))
                             {
                                 var childPath = dependencyPath.ToList();
                                 childPath.Add(d);
-                                DependenceChecked[d] = CheckDependence(currentItem, d, childPath);
+                                dependenciesChecked[d] = CheckDependence(currentItem, d, childPath, dependenciesChecked, conditionsToRemove, isEntrancePair);
                             }
                         }
 
-                        if (DependenceChecked[d].Type != DependenceType.NotDependent)
+                        if (dependenciesChecked[d].Type != DependenceType.NotDependent)
                         {
-                            if (!dependencyPath.Contains(d) && DependenceChecked[d].Type == DependenceType.Circular && DependenceChecked[d].Items.All(id => id == d))
+                            if (!dependencyPath.Contains(d) && dependenciesChecked[d].Type == DependenceType.Circular && dependenciesChecked[d].Items.All(id => id == d))
                             {
-                                DependenceChecked[d] = Dependence.Dependent;
+                                dependenciesChecked[d] = Dependence.Dependent;
                             }
-                            if (DependenceChecked[d].Type == DependenceType.Dependent)
+                            if (dependenciesChecked[d].Type == DependenceType.Dependent)
                             {
-                                if (!ConditionRemoves.Any(c => c.SequenceEqual(check)))
+                                if (!conditionsToRemove.Any(c => c.SequenceEqual(check)))
                                 {
-                                    ConditionRemoves.Add(check);
+                                    conditionsToRemove.Add(check);
                                 }
                             }
                             else
                             {
-                                circularDependencies = circularDependencies.Union(DependenceChecked[d].Items).ToList();
+                                circularDependencies = circularDependencies.Union(dependenciesChecked[d].Items).ToList();
                             }
                             if (!match)
                             {
@@ -521,23 +563,23 @@ namespace MMR.Randomizer
 
                     if (dependencyPath.Contains(location))
                     {
-                        DependenceChecked[location] = Dependence.Circular(location);
-                        return DependenceChecked[location];
+                        dependenciesChecked[location] = Dependence.Circular(location);
+                        return dependenciesChecked[location];
                     }
-                    if (!DependenceChecked.ContainsKey(location) || (DependenceChecked[location].Type == DependenceType.Circular && !DependenceChecked[location].Items.All(id => dependencyPath.Contains(id))))
+                    if (!dependenciesChecked.ContainsKey(location) || (dependenciesChecked[location].Type == DependenceType.Circular && !dependenciesChecked[location].Items.All(id => dependencyPath.Contains(id))))
                     {
                         var childPath = dependencyPath.ToList();
                         childPath.Add(location);
-                        DependenceChecked[location] = CheckDependence(currentItem, location, childPath);
+                        dependenciesChecked[location] = CheckDependence(currentItem, location, childPath, dependenciesChecked, conditionsToRemove, isEntrancePair);
                     }
-                    if (DependenceChecked[location].Type != DependenceType.NotDependent)
+                    if (dependenciesChecked[location].Type != DependenceType.NotDependent)
                     {
-                        if (DependenceChecked[location].Type == DependenceType.Circular && DependenceChecked[location].Items.All(id => id == location))
+                        if (dependenciesChecked[location].Type == DependenceType.Circular && dependenciesChecked[location].Items.All(id => id == location))
                         {
-                            DependenceChecked[location] = Dependence.Dependent;
+                            dependenciesChecked[location] = Dependence.Dependent;
                         }
                         Debug.WriteLine($"{currentItem} is dependent on {location}");
-                        return DependenceChecked[location];
+                        return dependenciesChecked[location];
                     }
                 }
             }
@@ -545,17 +587,29 @@ namespace MMR.Randomizer
             return Dependence.NotDependent;
         }
 
-        private void RemoveConditionals(Item currentItem)
+        private void FinalizeRemoveConditionals()
         {
-            foreach (var conditionRemove in ConditionRemoves)
+            foreach (var itemObject in ItemList)
+            {
+                itemObject.Conditionals.RemoveAll(u => u == null);
+            }
+
+        }
+
+        private void PrepairRemoveConditionals(Item currentItem, List<int[]> conditionsToRemove)
+        {
+            foreach (var conditionRemove in conditionsToRemove)
             {
                 int x = conditionRemove[0];
                 int y = conditionRemove[1];
                 int z = conditionRemove[2];
-                ItemList[x].Conditionals[y] = null;
+                if (ItemList[x].Conditionals.Count(c => c != null) > 1)
+                {
+                    ItemList[x].Conditionals[y] = null;
+                }
             }
             
-            foreach (var targetRemovals in ConditionRemoves.Select(cr => ItemList[cr[0]]))
+            foreach (var targetRemovals in conditionsToRemove.Select(cr => ItemList[cr[0]]))
             {
                 foreach (var conditionals in targetRemovals.Conditionals)
                 {
@@ -570,11 +624,6 @@ namespace MMR.Randomizer
                         }
                     }
                 }
-            }
-
-            foreach (var itemObject in ItemList)
-            {
-                itemObject.Conditionals.RemoveAll(u => u == null);
             }
         }
 
@@ -657,7 +706,7 @@ namespace MMR.Randomizer
             }
         }
 
-        private void CheckConditionals(Item currentItem, Item target, List<Item> dependencyPath)
+        private void CheckConditionals(Item currentItem, Item target, List<Item> dependencyPath, List<Item> conditionsChecked)
         {
             var targetItemObject = ItemList[target];
             if (target == Item.MaskBlast)
@@ -669,7 +718,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            ConditionsChecked.Add(target);
+            conditionsChecked.Add(target);
             UpdateConditionals(currentItem, target);
 
             foreach (var dependency in targetItemObject.DependsOnItems)
@@ -683,11 +732,11 @@ namespace MMR.Randomizer
                 {
                     var location = dependencyObject.NewLocation ?? dependency;
 
-                    if (!ConditionsChecked.Contains(location))
+                    if (!conditionsChecked.Contains(location))
                     {
                         var childPath = dependencyPath.ToList();
                         childPath.Add(location);
-                        CheckConditionals(currentItem, location, childPath);
+                        CheckConditionals(currentItem, location, childPath, conditionsChecked);
                     }
                 }
                 else if (ItemList[currentItem].TimeNeeded != 0 && dependency.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary()))
@@ -709,6 +758,11 @@ namespace MMR.Randomizer
 
         private bool CheckMatch(Item currentItem, Item target)
         {
+            if (ItemList.Any(io => io.NewLocation == target))
+            {
+                return false;
+            }
+
             if (_settings.CustomStartingItemList.Contains(currentItem))
             {
                 return true;
@@ -720,7 +774,22 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            if (_settings.LogicMode == LogicMode.NoLogic)
+            if (!_settings.DecoupleEntrances && target == Item.EntranceSouthClockTownFromClockTowerInterior)
+            {
+                var pair = currentItem.Pair();
+                if (!pair.HasValue)
+                {
+                    Debug.WriteLine($"{currentItem} cannot be a starting location.");
+                    return false;
+                }
+            }
+
+            if (currentItem.IsEntrance() && _settings.LogicMode == LogicMode.NoLogic && _settings.EntranceLogicMode == LogicMode.NoLogic)
+            {
+                return true;
+            }
+
+            if (!currentItem.IsEntrance() && _settings.LogicMode == LogicMode.NoLogic)
             {
                 return true;
             }
@@ -750,42 +819,90 @@ namespace MMR.Randomizer
             }
 
             //check direct dependence
-            ConditionRemoves = new List<int[]>();
-            DependenceChecked = new Dictionary<Item, Dependence> { { target, new Dependence { Type = DependenceType.Dependent } } };
+            var conditionsRemoved = false;
+            var conditionsToRemove = new List<int[]>();
+            var dependenciesChecked = new Dictionary<Item, Dependence> { { target, new Dependence { Type = DependenceType.Dependent } } };
             var dependencyPath = new List<Item> { target };
 
-            if (CheckDependence(currentItem, target, dependencyPath).Type != DependenceType.NotDependent)
+
+
+            if (   CheckDependence(currentItem, target, dependencyPath, dependenciesChecked, conditionsToRemove).Type != DependenceType.NotDependent)
             {
                 return false;
             }
 
+            if (!_settings.DecoupleEntrances)
+            {
+                var currentEntrancePair = currentItem.Pair();
+                var targetPair = target.Pair();
+
+                if (currentEntrancePair != null && targetPair != null)
+                {
+                    ItemList[currentItem].NewLocation = target;
+
+                    var pairItem = targetPair.Value;
+                    var pairTarget = currentEntrancePair.Value;
+                    var pairPath = new List<Item> { pairTarget };
+                    var pairConditionsToRemove = new List<int[]>();
+                    var pairDependenciesChecked = new Dictionary<Item, Dependence> { { pairTarget, new Dependence { Type = DependenceType.Dependent } } };
+                    var pairDependence = CheckDependence(pairItem, pairTarget, pairPath, pairDependenciesChecked, pairConditionsToRemove, true);
+                    ItemList[currentItem].NewLocation = null;
+
+                    if (pairDependence.Type != DependenceType.NotDependent)
+                    {
+                        return false;
+                    }
+
+                    PrepairRemoveConditionals(pairItem, pairConditionsToRemove);
+                    PrepairRemoveConditionals(currentItem, conditionsToRemove);
+                    FinalizeRemoveConditionals();
+                    conditionsRemoved = true;
+
+                    var pairConditionsChecked = new List<Item>();
+                    CheckConditionals(pairItem, pairTarget, pairPath, pairConditionsChecked);
+                }
+            }
+
+            if (!conditionsRemoved)
+            {
+                PrepairRemoveConditionals(currentItem, conditionsToRemove);
+                FinalizeRemoveConditionals();
+            }
+
             //check conditional dependence
-            RemoveConditionals(currentItem);
-            ConditionsChecked = new List<Item>();
-            CheckConditionals(currentItem, target, dependencyPath);
+            var conditionsChecked = new List<Item>();
+            CheckConditionals(currentItem, target, dependencyPath, conditionsChecked);
+
             return true;
         }
 
         private void PlaceItem(Item currentItem, List<Item> targets)
         {
             var currentItemObject = ItemList[currentItem];
+            if (currentItem.IsFake())
+            {
+                foreach (var requiredItem in currentItemObject.DependsOnItems.Where(item => item.IsSameType(currentItem)))
+                {
+                    PlaceItem(requiredItem, targets);
+                }
+                return;
+            }
             if (currentItemObject.NewLocation.HasValue)
             {
                 return;
             }
 
             var availableItems = targets.ToList();
-            if (currentItem > Item.SongOath)
+            if (!currentItem.HasAttribute<StartingItemAttribute>())
             {
-                availableItems.Remove(Item.MaskDeku);
-                availableItems.Remove(Item.SongHealing);
+                availableItems.RemoveAll(item => ItemUtils.IsStartingLocation(item));
             }
 
             while (true)
             {
                 if (availableItems.Count == 0)
                 {
-                    throw new RandomizationException($"Unable to place {currentItem.Name()} anywhere.");
+                    throw new RandomizationException($"Unable to place {currentItem.Name() ?? currentItem.Entrance() ?? currentItem.ToString()} anywhere.");
                 }
 
                 var targetLocation = availableItems.Random(Random);// Random.Next(availableItems.Count);
@@ -800,12 +917,42 @@ namespace MMR.Randomizer
                     Debug.WriteLine($"----Placed {currentItem.Name()} at {targetLocation.Location()}----");
 
                     targets.Remove(targetLocation);
-                    return;
+
+                    if (!_settings.DecoupleEntrances)
+                    {
+                        var currentEntrancePair = currentItem.Pair();
+                        var targetEntrancePair = targetLocation.Pair();
+                        if (currentEntrancePair != null && targetEntrancePair != null)
+                        {
+                            var targetPairItemObject = ItemList[targetEntrancePair.Value];
+                            targetPairItemObject.NewLocation = currentEntrancePair;
+                            targetPairItemObject.IsRandomized = true;
+                            targets.Remove(currentEntrancePair.Value);
+                        }
+                    }
+                    break;
                 }
                 else
                 {
                     Debug.WriteLine($"----Failed to place {currentItem.Name()} at {targetLocation.Location()}----");
                     availableItems.Remove(targetLocation);
+                }
+            }
+
+            if (!currentItem.IsEntrance() && targets.Any() && !ItemUtils.IsJunk(currentItem))
+            {
+                var location = ItemList[currentItemObject.NewLocation.Value];
+                foreach (var requiredItem in location.DependsOnItems.Where(item => item.IsSameType(currentItem)))
+                {
+                    PlaceItem(requiredItem, targets);
+                }
+                var conditional = location.Conditionals.RandomOrDefault(Random);
+                if (conditional != null)
+                {
+                    foreach (var item in conditional.Where(item => item.IsSameType(currentItem)))
+                    {
+                        PlaceItem(item, targets);
+                    }
                 }
             }
         }
@@ -821,9 +968,43 @@ namespace MMR.Randomizer
                 Setup();
             }
 
+            if (_settings.SwapMajoraAndCallGiants)
+            {
+                ItemList[Item.EntranceMajorasLairFromTheMoon].IsRandomized = true;
+                ItemList[Item.EntranceMajorasLairFromTheMoon].NewLocation = _settings.RandomizedEntrances.Contains(Item.EntranceMajorasLairFromTheMoon)
+                    ? (Item?)null
+                    : Item.EntranceTheMoonFromClockTowerRooftop;
+
+                ItemList[Item.EntranceTheMoonFromClockTowerRooftop].IsRandomized = true;
+                ItemList[Item.EntranceTheMoonFromClockTowerRooftop].NewLocation = _settings.RandomizedEntrances.Contains(Item.EntranceTheMoonFromClockTowerRooftop)
+                    ? (Item?)null
+                    : Item.EntranceMajorasLairFromTheMoon;
+            }
+
+            PreserveOwlActivations();
+
+            UpdateLogicForSettings();
+
+            PlaceUnimplementedEntrances();
+
+            PlaceOneWayEntrances();
+
+            if (!_settings.DecoupleEntrances)
+            {
+                PlacePairedEntrances();
+            }
+            //PreserveEntrances(); // the fuck is this
+
             var itemPool = new List<Item>();
 
             AddAllItems(itemPool);
+
+            // if entrando is OFF, NO ENTRANCES I swear who wrong this code
+            var entrances = ItemUtils.AllEntrances();
+            if ((!_randomized.Settings.RandomizedEntrances.Any()))
+            {
+                itemPool.RemoveAll(u => entrances.Contains(u));
+            }
 
             PlacePlandoItems(itemPool);
             PlaceFreeItems(itemPool);
@@ -846,6 +1027,156 @@ namespace MMR.Randomizer
             PlaceTingleMaps(itemPool);
 
             _randomized.ItemList = ItemList;
+        }
+
+        private void PlaceUnimplementedEntrances()
+        {
+            var entrancesToPlace = ItemUtils.AllEntrances()
+                .Where(item => !item.IsEntranceImplemented())
+                .ToList();
+            var entrancePool = entrancesToPlace.ToList();
+            foreach (var entrance in entrancesToPlace)
+            {
+                ItemList[entrance].NewLocation = entrance;
+                ItemList[entrance].IsRandomized = false;
+                if (!_settings.DecoupleEntrances)
+                {
+                    var pair = ItemList[entrance].NewLocation?.Pair();
+                    if (pair != null)
+                    {
+                        ItemList[pair.Value].NewLocation = pair;
+                        ItemList[pair.Value].IsRandomized = false;
+                    }
+                }
+            }
+        }
+
+        private void PlaceOneWayEntrances()
+        {
+            var allOneWays = ItemUtils.AllEntrances()
+                .Where(item => item.IsEntranceImplemented())
+                .Where(item => _settings.DecoupleEntrances || !item.Pair().HasValue).ToList();
+            var entrancesToPlace = allOneWays.Where(item => ItemList[item].NewLocation == null).ToList();
+            var entrancePool = allOneWays.Where(location => !ItemList.Any(io => io.NewLocation == location)).ToList();
+            // todo remove already-placed entrances
+            foreach (var entrance in entrancesToPlace)
+            {
+                PlaceItem(entrance, entrancePool);
+            }
+        }
+
+        private List<Item> GetUnconnectedEntrances(Item item, List<Item> checkedEntrances = null)
+        {
+            if (checkedEntrances == null)
+            {
+                checkedEntrances = new List<Item>();
+            }
+            if (checkedEntrances.Contains(item))
+            {
+                return new List<Item>();
+            }
+            checkedEntrances.Add(item);
+            var itemObject = ItemList[item];
+            return (itemObject.DependsOnItems?.SelectMany(d =>
+            {
+                if (d.IsEntrance())
+                {
+                    return new List<Item> { d };
+                }
+                if (d.IsFake())
+                {
+                    return GetUnconnectedEntrances(d, checkedEntrances);
+                }
+                return Enumerable.Empty<Item>();
+            }) ?? new List<Item>())
+            .Concat(itemObject.Conditionals?.SelectMany(cs => cs.SelectMany(d =>
+            {
+                if (d.IsEntrance())
+                {
+                    return new List<Item> { d };
+                }
+                if (d.IsFake())
+                {
+                    return GetUnconnectedEntrances(d, checkedEntrances);
+                }
+                return Enumerable.Empty<Item>();
+            })) ?? new List<Item>()).Distinct().ToList();
+        }
+
+        private void PlacePairedEntrances()
+        {
+            var allPairedEntrances = ItemUtils.AllEntrances()
+                .Where(item => item.Pair().HasValue)
+                .Where(item => item.IsEntranceImplemented() && item.Pair().Value.IsEntranceImplemented())
+                .ToList();
+            var entrancesToPlace = allPairedEntrances.Where(item => ItemList[item].NewLocation == null).ToList();
+            var entrancePool = allPairedEntrances.Where(location => !ItemList.Any(io => io.NewLocation == location)).ToList();
+
+            entrancePool.Remove(Item.EntranceSouthClockTownFromClockTowerInterior);
+
+            var unconnectedEntrances = entrancesToPlace.ToDictionary(item => item, item => GetUnconnectedEntrances(item));
+
+            var inaccessibleEntrances = unconnectedEntrances.Where(kvp => kvp.Value.Contains(Item.EntranceMajorasLairFromTheMoon)).Select(kvp => kvp.Key).ToList();
+
+            foreach (var entrance in inaccessibleEntrances)
+            {
+                PlaceEntrance(entrance.Pair().Value, entrancePool, unconnectedEntrances);
+            }
+
+            foreach (var kvp in unconnectedEntrances)
+            {
+                kvp.Value.RemoveAll(item => ItemList[item].NewLocation != null);
+            }
+
+            var disconnectedEntrances = entrancesToPlace.Where(item => !unconnectedEntrances.Any(kvp => kvp.Value.Contains(item))).ToList();
+            disconnectedEntrances.Remove(Item.EntranceClockTowerInteriorFromSouthClockTown);
+
+            while (disconnectedEntrances.Any() && entrancePool.Count > 1)
+            {
+                var currentEntrance = disconnectedEntrances.Random(Random);
+
+                PlaceEntrance(currentEntrance, entrancePool, unconnectedEntrances);
+
+                var pair = ItemList[currentEntrance].NewLocation?.Pair().Value;
+
+                disconnectedEntrances.Remove(currentEntrance);
+                if (pair.HasValue)
+                {
+                    disconnectedEntrances.Remove(pair.Value);
+                }
+            }
+
+            while (unconnectedEntrances.SelectMany(kvp => kvp.Value).Distinct().Count() > 1)
+            {
+                var currentEntrance = unconnectedEntrances.Where(g => g.Value.Count > 0).OrderBy(g => g.Value.Count).First().Value.Random(Random);
+
+                PlaceEntrance(currentEntrance, entrancePool, unconnectedEntrances);
+            }
+
+            // place spawn point
+            PlaceItem(Item.EntranceClockTowerInteriorFromSouthClockTown, entrancePool);
+        }
+
+        private void PlaceEntrance(Item entrance, List<Item> entrancePool, Dictionary<Item, List<Item>> unconnectedEntrances)
+        {
+            if (entrance != Item.EntranceClockTowerInteriorFromSouthClockTown)
+            {
+                PlaceItem(entrance, entrancePool);
+            }
+
+            var pair = ItemList[entrance].NewLocation?.Pair().Value;
+            foreach (var kvp in unconnectedEntrances)
+            {
+                kvp.Value.Remove(entrance);
+                if (!_settings.DecoupleEntrances)
+                {
+                    if (pair.HasValue)
+                    {
+                        kvp.Value.Remove(pair.Value);
+                    }
+                }
+            }
+            unconnectedEntrances = unconnectedEntrances.Where(kvp => kvp.Value.Count > 0).ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
         }
 
         /// <summary>
@@ -1083,6 +1414,9 @@ namespace MMR.Randomizer
             {
                 PlaceItem(i, itemPool);
             }
+
+            PlaceItem(Item.ChestInvertedStoneTowerBean, itemPool);
+            PlaceItem(Item.ShopItemBusinessScrubMagicBean, itemPool);
         }
 
         /// <summary>
@@ -1136,6 +1470,11 @@ namespace MMR.Randomizer
         private void AddAllItems(List<Item> itemPool)
         {
             itemPool.AddRange(ItemUtils.AllLocations().Where(location => !ItemList.Any(io => io.NewLocation == location)));
+        }
+
+        private void AddAllEntrances(List<Item> itemPool)
+        {
+            itemPool.AddRange(ItemUtils.AllEntrances().Where(location => !ItemList.Any(io => io.NewLocation == location)));
         }
 
         /// <summary>
@@ -1209,7 +1548,10 @@ namespace MMR.Randomizer
                 PreserveFairyRewards();
             }
 
-            if (!_settings.AddNutChest || _settings.LogicMode == LogicMode.Casual)
+            if (!_settings.AddNutChest 
+                || (_settings.LogicMode == LogicMode.Casual 
+                    && !_settings.RandomizedEntrances.Contains(Item.EntranceBeforethePortaltoTerminaFromBeforethePortaltoTermina)
+                    && !_settings.RandomizedEntrances.Contains(Item.EntranceBeforethePortaltoTerminaFromClockTowerInterior)))
             {
                 PreserveNutChest();
             }
@@ -1415,6 +1757,22 @@ namespace MMR.Randomizer
             ItemList[Item.ItemRanchBarnOtherCowMilk2].NewLocation = Item.ItemRanchBarnOtherCowMilk2;
         }
 
+        private void PreserveOwlActivations()
+        {
+            for (var i = Item.OwlActivationGreatBayCoast; i <= Item.OwlActivationStoneTower; i++)
+            {
+                ItemList[i].NewLocation = i;
+            }
+        }
+
+        private void PreserveEntrances()
+        {
+            for (var i = Item.EntranceMayorsResidenceFromEastClockTown; i <= Item.EntranceStoneTowerInvertedFromStoneTowerTempleInverted; i++)
+            {
+                ItemList[i].NewLocation = i;
+            }
+        }
+
         /// <summary>
         /// Randomizes songs with other songs
         /// </summary>
@@ -1465,6 +1823,10 @@ namespace MMR.Randomizer
             {
                 ItemList[location].NewLocation = location;
             }
+            foreach (var location in ItemUtils.AllEntrances())
+            {
+                ItemList[location].NewLocation = location;
+            }
         }
 
         /// <summary>
@@ -1489,6 +1851,24 @@ namespace MMR.Randomizer
                     ItemList[selectedItemIndex].NewLocation = null;
                 }
             }
+            foreach (var entrance in _settings.RandomizedEntrances)
+            {
+                ItemList[entrance].NewLocation = null;
+            }
+            if (!_settings.DecoupleEntrances)
+            {
+                foreach (var io in ItemList)
+                {
+                    if (io.NewLocation.HasValue)
+                    {
+                        var pair = io.Item.Pair();
+                        if (pair.HasValue)
+                        {
+                            ItemList[pair.Value].NewLocation = pair;
+                        }
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -1507,8 +1887,8 @@ namespace MMR.Randomizer
 
                 if (_settings.RandomizeDungeonEntrances)
                 {
-                    progressReporter.ReportProgress(10, "Shuffling entrances...");
-                    EntranceShuffle();
+                    progressReporter.ReportProgress(10, "Shuffling dungeons...");
+                    DungeonShuffle();
                 }
 
                 _randomized.Logic = ItemList.Select(io => new ItemLogic(io)).ToList();
@@ -1576,21 +1956,21 @@ namespace MMR.Randomizer
                     }).ToList()
                     : _randomized.Logic;
 
-                _randomized.ImportantItems = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic)?.Important.Where(item => !item.IsFake()).ToList().AsReadOnly();
-                if (_randomized.ImportantItems == null)
-                {
-                    throw new RandomizationException("Moon Access is unobtainable.");
-                }
-                var itemsRequiredForMoonAccess = new List<Item>();
-                foreach (var item in _randomized.ImportantItems)
-                {
-                    var checkPaths = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: item);
-                    if (checkPaths == null)
-                    {
-                        itemsRequiredForMoonAccess.Add(item);
-                    }
-                }
-                _randomized.ItemsRequiredForMoonAccess = itemsRequiredForMoonAccess.AsReadOnly();
+                //_randomized.ImportantItems = GetImportantItems(Item.EntranceMajorasLairFromTheMoon, _randomized.Logic)?.Important.Where(item => !item.IsFake() && !item.IsEntrance()).ToList().AsReadOnly();
+                //if (_randomized.ImportantItems == null)
+                //{
+                //    throw new RandomizationException("Moon Access is unobtainable.");
+                //}
+                //var itemsRequiredForMoonAccess = new List<Item>();
+                //foreach (var item in _randomized.ImportantItems)
+                //{
+                //    var checkPaths = GetImportantItems(Item.AreaMoonAccess, logicForRequiredItems, exclude: item);
+                //    if (checkPaths == null)
+                //    {
+                //        itemsRequiredForMoonAccess.Add(item);
+                //    }
+                //}
+                //_randomized.ItemsRequiredForMoonAccess = itemsRequiredForMoonAccess.AsReadOnly();
 
                 if (_settings.GossipHintStyle != GossipHintStyle.Default)
                 {

@@ -45,6 +45,7 @@
             this.lItems.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.lItems.Location = new System.Drawing.Point(3, 3);
             this.lItems.Name = "lItems";
+            this.lItems.ShowItemToolTips = true;
             this.lItems.Size = new System.Drawing.Size(1076, 469);
             this.lItems.TabIndex = 1;
             this.lItems.UseCompatibleStateImageBehavior = false;
