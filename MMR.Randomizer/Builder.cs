@@ -443,7 +443,11 @@ namespace MMR.Randomizer
             }
 
             Add5NutsToField();
+            Add5NutsToField(0xC444B7);
+            Add5NutsToField(0xC444BB);
             AddSingleStickToField();
+            AddSingleStickToField(0xC444C0);
+            AddSingleStickToField(0xC444BF);
         }
 
         private void WriteMiscText()
@@ -597,10 +601,9 @@ namespace MMR.Randomizer
             int offset = replacement_slot - RomData.MMFileList[fid].Addr;
             RomData.MMFileList[fid].Data[offset] = 0x0C; // 0x0C is deku nut
             RomData.MMFileList[fid].Data[offset+0x110] = 0x05; // this should change the amount dropped to 5
-            //RomData.MMFileList[fid].Data[offset - 1] = 0x17; // 0x17 is deku nut x10
         }
 
-        private void AddSingleStickToField(int replacement_slot = 0xC444C2)
+        private void AddSingleStickToField(int replacement_slot = 0xC444C1)
         {
             // add single nut to drop table for the termina field
             // replacement drop slot will become single stick, gives us 1/16 chance of a stick
@@ -608,7 +611,7 @@ namespace MMR.Randomizer
             RomUtils.CheckCompressed(fid);
             int offset = replacement_slot - RomData.MMFileList[fid].Addr;
             RomData.MMFileList[fid].Data[offset] = 0x0D; // 0x0D is deku stick
-            //RomData.MMFileList[fid].Data[offset + 0x110] = 0x05; // this should change the amount dropped to 5
+            RomData.MMFileList[fid].Data[offset + 0x110] = 0x02; // this should change the amount dropped to 5
         }
 
         private void WriteQuickText()
