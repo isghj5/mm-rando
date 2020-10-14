@@ -610,6 +610,14 @@ namespace MMR.Randomizer
         {
             if (_randomized.Settings.LogicMode == LogicMode.Vanilla || _randomized.Settings.EntranceLogicMode == LogicMode.Vanilla || !_randomized.Settings.RandomizedEntrances.Any())
             {
+                // hi chat
+                // EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
+                SceneUtils.ReadSceneTable();
+                SceneUtils.GetMaps();
+
+                //this is single direction, need to do both ways
+                EntranceSwapUtils.WriteNewEntrance(Item.EntranceClockTowerInteriorFromSouthClockTown, Item.EntranceZoraHallFromJapasRoom);
+
                 return;
             }
 
