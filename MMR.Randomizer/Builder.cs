@@ -442,6 +442,8 @@ namespace MMR.Randomizer
                 SceneUtils.ReenableNightBGM();
             }
 
+            Add5NutsToField();
+            AddSingleStickToField();
         }
 
         private void WriteMiscText()
@@ -584,6 +586,29 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "rainbow-tatl");
             }
+        }
+
+        private void Add5NutsToField(int replacement_slot = 0xC444B8)
+        {
+            // add 5 x single nuts to drop table for the termina field
+            // replacement drop slot  will become deku nut, gives us 1/16 chance of a nut
+            int fid = RomUtils.GetFileIndexForWriting(replacement_slot);
+            RomUtils.CheckCompressed(fid);
+            int offset = replacement_slot - RomData.MMFileList[fid].Addr;
+            RomData.MMFileList[fid].Data[offset] = 0x0C; // 0x0C is deku nut
+            RomData.MMFileList[fid].Data[offset+0x110] = 0x05; // this should change the amount dropped to 5
+            //RomData.MMFileList[fid].Data[offset - 1] = 0x17; // 0x17 is deku nut x10
+        }
+
+        private void AddSingleStickToField(int replacement_slot = 0xC444C2)
+        {
+            // add single nut to drop table for the termina field
+            // replacement drop slot will become single stick, gives us 1/16 chance of a stick
+            int fid = RomUtils.GetFileIndexForWriting(replacement_slot);
+            RomUtils.CheckCompressed(fid);
+            int offset = replacement_slot - RomData.MMFileList[fid].Addr;
+            RomData.MMFileList[fid].Data[offset] = 0x0D; // 0x0D is deku stick
+            //RomData.MMFileList[fid].Data[offset + 0x110] = 0x05; // this should change the amount dropped to 5
         }
 
         private void WriteQuickText()
