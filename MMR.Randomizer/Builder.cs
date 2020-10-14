@@ -652,6 +652,9 @@ namespace MMR.Randomizer
                                                 Item.EntranceGormanTrackFromMilkRoadGated, Item.EntranceMilkRoadFromGormanRacetrackTrack,
                                                 Item.EntranceMusicBoxHouseFromIkanaCanyon, Item.EntranceIkanaCanyonFromMusicBoxHouse,
                                                 Item.EntranceIkanaCanyonFromSpringWaterCave, Item.EntranceSpringWaterCaveFromIkanaCanyon,
+                                                Item.EntranceGreatBayCoastFromPinnacleRock, Item.EntrancePinnacleRockFromGreatBayCoast,
+                                                Item.EntranceCuriosityShopFromKafeisHideout, Item.EntranceKafeisHideoutFromCuriosityShop
+
                 };
                 var rand = new Random();
                 var exlist = enlist.OrderBy(x => rand.Next()).ToList();
