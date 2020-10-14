@@ -621,13 +621,23 @@ namespace MMR.Randomizer
                 //EntranceSwapUtils.WriteNewEntrance(Item.EntranceZoraHallRoomsJapasRoomFromJapasRoom, Item.EntranceTheMoonFromLinkTrial);
                 EntranceSwapUtils.WriteNewEntrance(Item.EntranceZoraHallRoomsJapasRoomFromJapasRoom, Item.EntranceZoraTrialFromTheMoon);
 
+                // hardcode actual dungeons, randomize the rest
+                // woodfall
+                EntranceSwapUtils.WriteNewEntrance(Item.EntranceDekuPalaceGardenEastFromPalaceVinesGrotto, Item.EntranceWoodfallFromWoodfallTempleEntrance);
+                EntranceSwapUtils.WriteNewEntrance(Item.EntranceWoodfallTempleFromWoodfall, Item.EntranceGrottoPalaceVinesFromDekuPalaceLower); //fake out ent
+                EntranceSwapUtils.WriteNewEntrance(Item.EntranceWoodfallFromWoodfallTempleEntrance, Item.EntranceRomaniRanchFromRanchHouse);
+                EntranceSwapUtils.WriteNewEntrance(Item.EntranceRanchHouseFromRomaniRanch, Item.EntranceWoodfallTempleFromWoodfall);            // actual ent
 
-                //                                                Item.EntranceGrottoPalaceStraightFromDekuPalaceB, Item.EntranceDekuPalaceGardenWestFromPalaceStraightGrotto,
+                //GBT
+                EntranceSwapUtils.WriteNewEntrance(Item.EntranceGreatBayTempleFromZoraCape, Item.EntrancePiratesFortressFromTelescope); //fake out ent
+                EntranceSwapUtils.WriteNewEntrance(Item.EntrancePiratesFortressSewerFromTelescope, Item.EntranceZoraCapeFromGreatBayTemple);
+                EntranceSwapUtils.WriteNewEntrance(Item.EntrancePiratesFortressExteriorFromPiratesFortressBalcony, Item.EntranceGreatBayTempleFromZoraCape); // actual ent
+                EntranceSwapUtils.WriteNewEntrance(Item.EntranceZoraCapeFromGreatBayTemple, Item.EntrancePiratesFortressFromPiratesFortressExteriorBalcony);
 
+                //                                                
                 // not doing clocktower because its the easist to hit by accident, also the entrance is default 
                 // if I had to choose special places, I would put GBT->pirates balcony and WF->WFGF or WF->
-                var enlist = new List<Item>() {  Item.EntranceZoraHallFromMikauTijosRoom, Item.EntranceZoraHallRoomsMikauTijosRoomFromZoraHall,
-                                                Item.EntranceRomaniRanchFromRanchHouse, Item.EntranceRanchHouseFromRomaniRanch,
+                var enlist = new List<Item>() { Item.EntranceZoraHallFromMikauTijosRoom, Item.EntranceZoraHallRoomsMikauTijosRoomFromZoraHall,
                                                 Item.EntranceFairysFountainFromWoodfall, Item.EntranceWoodfallFromFairysFountain,
                                                 Item.EntranceSnowheadFromFairysFountain, Item.EntranceFairysFountainFromSnowhead,
                                                 Item.EntranceZoraCapeFromFairysFountain, Item.EntranceFairysFountainFromZoraCape,
@@ -635,14 +645,13 @@ namespace MMR.Randomizer
                                                 Item.EntranceLotteryShopFromWestClockTown, Item.EntranceWestClockTownFromLotteryShop,
                                                 Item.EntranceZoraHallRoomsMikauTijosRoomFromZoraHall, Item.EntranceZoraHallFromMikauTijosRoom,
                                                 Item.EntranceSakonsHideoutFromIkanaCanyon, Item.EntranceIkanaCanyonFromSakonsHideout,
-                                                Item.EntranceGrottoPalaceVinesFromDekuPalaceLower, Item.EntranceDekuPalaceGardenEastFromPalaceVinesGrotto,
+                                                Item.EntranceGrottoPalaceStraightFromDekuPalaceB, Item.EntranceDekuPalaceGardenWestFromPalaceStraightGrotto,
                                                 Item.EntranceIkanaGraveyardFromDampesHouse, Item.EntranceDampesHouseFromIkanaGraveyardDoor,
                                                 Item.EntranceCuriosityShopFromKafeisHideout, Item.EntranceKafeisHideoutFromCuriosityShop,
-                                                Item.EntrancePiratesFortressFromTelescope, Item.EntrancePiratesFortressSewerFromTelescope,
-                                                Item.EntrancePiratesFortressExteriorFromPiratesFortressBalcony, Item.EntrancePiratesFortressFromPiratesFortressExteriorBalcony,
+                                                Item.EntranceBeneaththeWellFromIkanaCanyon, Item.EntranceIkanaCanyonFromBeneaththeWell,
                                                 Item.EntranceGormanTrackFromMilkRoadGated, Item.EntranceMilkRoadFromGormanRacetrackTrack,
-                                                Item.EntranceIkanaCanyonFromBeneaththeWell, Item.EntranceBeneaththeWellFromIkanaCanyon,
                                                 Item.EntranceMusicBoxHouseFromIkanaCanyon, Item.EntranceIkanaCanyonFromMusicBoxHouse,
+                                                Item.EntranceIkanaCanyonFromSpringWaterCave, Item.EntranceSpringWaterCaveFromIkanaCanyon,
                 };
                 var rand = new Random();
                 var exlist = enlist.OrderBy(x => rand.Next()).ToList();
@@ -650,7 +659,9 @@ namespace MMR.Randomizer
                 for(int i = 0; i < enlist.Count; i++)
                 {
                     EntranceSwapUtils.WriteNewEntrance(enlist[i], exlist[i]);
-                    Debug.WriteLine("Entrando :" + enlist[i].ToString() + " -> " + exlist[i].ToString());
+                    //EntranceSwapUtils.WriteNewEntrance(enlist[i].Exit(), exlist[i]);
+                    string important = exlist[i].ToString().Contains("Temple") ? " ****" : " ";
+                    Debug.WriteLine("Entrando :" + enlist[i].ToString() + " -> " + exlist[i].ToString() + important);
                 }
 
                 return;
