@@ -606,18 +606,25 @@ namespace MMR.Randomizer
             }
         }
 
-        private void WriteEntrances()
+        private void WriteEntrances(OutputSettings settings)
         {
             if (_randomized.Settings.LogicMode == LogicMode.Vanilla || _randomized.Settings.EntranceLogicMode == LogicMode.Vanilla || !_randomized.Settings.RandomizedEntrances.Any())
             {
-                // hi chat
+
+                StringBuilder log = new StringBuilder();
+                void WriteOutput(string str)
+                {
+                    Debug.WriteLine(str);
+                    log.AppendLine(str);
+                }
+
+                // dont look here
                 // EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
 
-
                 // if you somehow talk to bass guy and do his thing, you get a secret path to the moon
-                // I just thing secrets are neat
+                // I just think secrets are neat
                 //EntranceSwapUtils.WriteNewEntrance(Item.EntranceZoraHallRoomsJapasRoomFromJapasRoom, Item.EntranceTheMoonFromLinkTrial);
                 EntranceSwapUtils.WriteNewEntrance(Item.EntranceZoraHallRoomsJapasRoomFromJapasRoom, Item.EntranceZoraTrialFromTheMoon);
 
@@ -629,7 +636,7 @@ namespace MMR.Randomizer
                 EntranceSwapUtils.WriteNewEntrance(Item.EntranceRanchHouseFromRomaniRanch, Item.EntranceWoodfallTempleFromWoodfall);            // actual ent
 
                 //GBT
-                EntranceSwapUtils.WriteNewEntrance(Item.EntranceGreatBayTempleFromZoraCape, Item.EntrancePiratesFortressFromTelescope); //fake out ent
+                EntranceSwapUtils.WriteNewEntrance(Item.EntranceGreatBayTempleFromZoraCape, Item.EntrancePiratesFortressFromTelescope);         //fake out ent
                 EntranceSwapUtils.WriteNewEntrance(Item.EntrancePiratesFortressSewerFromTelescope, Item.EntranceZoraCapeFromGreatBayTemple);
                 EntranceSwapUtils.WriteNewEntrance(Item.EntrancePiratesFortressExteriorFromPiratesFortressBalcony, Item.EntranceGreatBayTempleFromZoraCape); // actual ent
                 EntranceSwapUtils.WriteNewEntrance(Item.EntranceZoraCapeFromGreatBayTemple, Item.EntrancePiratesFortressFromPiratesFortressExteriorBalcony);
@@ -662,9 +669,14 @@ namespace MMR.Randomizer
                 for(int i = 0; i < enlist.Count; i++)
                 {
                     EntranceSwapUtils.WriteNewEntrance(enlist[i], exlist[i]);
-                    //EntranceSwapUtils.WriteNewEntrance(enlist[i].Exit(), exlist[i]);
                     string important = exlist[i].ToString().Contains("Temple") ? " ****" : " ";
-                    Debug.WriteLine("Entrando :" + enlist[i].ToString() + " -> " + exlist[i].ToString() + important);
+                    WriteOutput("Entrando :" + enlist[i].ToString() + " -> " + exlist[i].ToString() + important);
+                }
+
+                using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_PlandoLog.txt", append: true))
+                {
+                    sw.WriteLine(""); // spacer
+                    sw.Write(log);
                 }
 
                 return;
@@ -1782,7 +1794,7 @@ namespace MMR.Randomizer
                 WriteItems();
 
                 progressReporter.ReportProgress(67, "Writing entrances...");
-                WriteEntrances();
+                WriteEntrances(outputSettings);
 
                 progressReporter.ReportProgress(68, "Writing messages...");
                 WriteGossipQuotes();
