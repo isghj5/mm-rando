@@ -427,6 +427,12 @@ namespace MMR.Randomizer
                 return Dependence.Dependent;
             }
 
+            if (target.IsEntrance()) // fuck let me meme
+            {
+                return Dependence.NotDependent;
+            }
+
+
             //check timing
             if (currentItemObject.TimeNeeded != 0 && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary()))
             {
@@ -892,6 +898,8 @@ namespace MMR.Randomizer
                 return;
             }
 
+            targets = targets.FindAll(u => ! u.IsEntrance() );
+
             var availableItems = targets.ToList();
             if (!currentItem.HasAttribute<StartingItemAttribute>())
             {
@@ -998,13 +1006,6 @@ namespace MMR.Randomizer
             var itemPool = new List<Item>();
 
             AddAllItems(itemPool);
-
-            // if entrando is OFF, NO ENTRANCES I swear who wrong this code
-            var entrances = ItemUtils.AllEntrances();
-            if ((!_randomized.Settings.RandomizedEntrances.Any()))
-            {
-                itemPool.RemoveAll(u => entrances.Contains(u));
-            }
 
             PlacePlandoItems(itemPool);
             PlaceFreeItems(itemPool);
@@ -1980,8 +1981,11 @@ namespace MMR.Randomizer
                     SeedRNG();
                     MakeGossipQuotes();
                 }
+                else
+                {
+                    SeedRNG();
+                }
 
-                SeedRNG();
                 _randomized.FileSelectSkybox = Random.Next(360);
                 _randomized.FileSelectColor = Random.Next(360);
                 _randomized.TitleLogoColor = Random.Next(360);
