@@ -45,7 +45,7 @@ namespace MMR.UI.Forms
             get
             {
                 Version v = typeof(Randomizer).Assembly.GetName().Version;
-                return $"Majora's Mask Randomizer v{v} + Isghj's Cosmetic Build";
+                return $"Majora's Mask Randomizer v{v} + Isghj's Meme build";
             }
         }
 
