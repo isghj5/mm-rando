@@ -1957,20 +1957,22 @@ namespace MMR.Randomizer
                     }).ToList()
                     : _randomized.Logic;
 
-                //_randomized.ImportantItems = GetImportantItems(Item.EntranceMajorasLairFromTheMoon, _randomized.Logic)?.Important.Where(item => !item.IsFake() && !item.IsEntrance()).ToList().AsReadOnly();
-                //if (_randomized.ImportantItems == null)
-                //{
-                //    throw new RandomizationException("Moon Access is unobtainable.");
-                //}
-                //var itemsRequiredForMoonAccess = new List<Item>();
-                //foreach (var item in _randomized.ImportantItems)
-                //{
-                //    var checkPaths = GetImportantItems(Item.AreaMoonAccess, logicForRequiredItems, exclude: item);
-                //    if (checkPaths == null)
-                //    {
-                //        itemsRequiredForMoonAccess.Add(item);
-                //    }
-                //}
+                //_randomized.ImportantItems = LogicUtils.GetImportantItems(Item.EntranceMajorasLairFromTheMoon, _randomized.Logic)?.Important.Where(item => !item.IsFake() && !item.IsEntrance()).ToList().AsReadOnly();
+                /*_randomized.ImportantItems = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic)?.Important.Where(item => !item.IsFake()).ToList().AsReadOnly();
+                if (_randomized.ImportantItems == null)
+                {
+                    throw new RandomizationException("Moon Access is unobtainable.");
+                }
+                var itemsRequiredForMoonAccess = new List<Item>();
+                foreach (var item in _randomized.ImportantItems)
+                {
+                    //var checkPaths = GetImportantItems(Item.AreaMoonAccess, logicForRequiredItems, exclude: item);
+                    var checkPaths = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: item);
+                    if (checkPaths == null)
+                    {
+                        itemsRequiredForMoonAccess.Add(item);
+                    }
+                }*/
                 //_randomized.ItemsRequiredForMoonAccess = itemsRequiredForMoonAccess.AsReadOnly();
 
                 if (_settings.GossipHintStyle != GossipHintStyle.Default)
