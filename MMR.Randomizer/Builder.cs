@@ -646,7 +646,8 @@ namespace MMR.Randomizer
                     log.AppendLine(str);
                 }
 
-                // dont look here
+                // how could this happen
+
                 // EntranceSwapUtils.WriteNewEntrance(item.NewLocation.Value, item.Item);
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
@@ -669,7 +670,7 @@ namespace MMR.Randomizer
                 EntranceSwapUtils.WriteNewEntrance(Item.EntrancePiratesFortressExteriorFromPiratesFortressBalcony, Item.EntranceGreatBayTempleFromZoraCape); // actual ent
                 EntranceSwapUtils.WriteNewEntrance(Item.EntranceZoraCapeFromGreatBayTemple, Item.EntrancePiratesFortressFromPiratesFortressExteriorBalcony);
 
-                //                                                
+                //    Item.EntranceGreatBayCoastFromPinnacleRock, Item.EntrancePinnacleRockFromGreatBayCoast,                                            
                 // not doing clocktower because its the easist to hit by accident, also the entrance is default 
                 // if I had to choose special places, I would put GBT->pirates balcony and WF->WFGF or WF->
                 var enlist = new List<Item>() { Item.EntranceZoraHallFromMikauTijosRoom, Item.EntranceZoraHallRoomsMikauTijosRoomFromZoraHall,
@@ -687,7 +688,7 @@ namespace MMR.Randomizer
                                                 Item.EntranceGormanTrackFromMilkRoadGated, Item.EntranceMilkRoadFromGormanRacetrackTrack,
                                                 Item.EntranceMusicBoxHouseFromIkanaCanyon, Item.EntranceIkanaCanyonFromMusicBoxHouse,
                                                 Item.EntranceIkanaCanyonFromSpringWaterCave, Item.EntranceSpringWaterCaveFromIkanaCanyon,
-                                                Item.EntranceGreatBayCoastFromPinnacleRock, Item.EntrancePinnacleRockFromGreatBayCoast,
+                                                Item.EntranceClockTowerInteriorFromBeforethePortaltoTermina, Item.EntranceBeforethePortaltoTerminaFromClockTowerInterior,
                                                 Item.EntranceCuriosityShopFromKafeisHideout, Item.EntranceKafeisHideoutFromCuriosityShop
 
                 };
