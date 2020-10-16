@@ -22,6 +22,10 @@ DefineDmaFile G_KALEIDO_SCOPE_DMA, G_KALEIDO_SCOPE_FILE, 37
 DefineDmaFile G_PLAYER_ACTOR_DMA, G_PLAYER_ACTOR_FILE, 38
 .definelabel  G_PLAYER_ACTOR_VRAM, 0x8082DA90
 
+; ovl_En_Box (Treasure Chest)
+DefineDmaFile G_EN_BOX_DMA, G_EN_BOX_FILE, 44
+.definelabel  G_EN_BOX_VRAM, 0x80867BD0
+
 ; ovl_En_Torch2 (Elegy Statue)
 DefineDmaFile G_EN_TORCH2_DMA, G_EN_TORCH2_FILE, 65
 .definelabel  G_EN_TORCH2_VRAM, 0x808A31B0

@@ -116,6 +116,11 @@ namespace MMR.Randomizer.Asm
         public bool FreestandingModels { get; set; } = true;
 
         /// <summary>
+        /// Whether or not ice traps should behave slightly differently from other items in certain situations.
+        /// </summary>
+        public bool IceTrapQuirks { get; set; }
+
+        /// <summary>
         /// Whether or not to allow using the ocarina underwater.
         /// </summary>
         public bool OcarinaUnderwater { get; set; }
@@ -153,6 +158,7 @@ namespace MMR.Randomizer.Asm
             this.CloseCows = ((flags >> 25) & 1) == 1;
             this.FreestandingModels = ((flags >> 24) & 1) == 1;
             this.ArrowCycling = ((flags >> 21) & 1) == 1;
+            this.IceTrapQuirks = ((flags >> 18) & 1) == 1;
         }
 
         /// <summary>
@@ -173,6 +179,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.ArrowCycling ? (uint)1 : 0) << 21;
             flags |= (this.ArrowMagic ? (uint)1 : 0) << 20;
             flags |= (this.ElegySpeedup ? (uint)1 : 0) << 19;
+            flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 18;
             return flags;
         }
     }

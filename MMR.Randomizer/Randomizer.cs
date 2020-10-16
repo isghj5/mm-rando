@@ -1191,6 +1191,13 @@ namespace MMR.Randomizer
         /// <param name="itemPool"></param>
         private void PlacePlandoItems(List<Item> itemPool)
         {
+
+            // place special ice traps first
+            //create new ice trap
+            // place trap in location
+            // remove other ice trap from the list of traps already created?
+
+
             List<PlandoItemCombo> plandoItemCombos = PlandoUtils.ReadAllItemPlandoFiles(itemPool);
             if (plandoItemCombos != null)
             {
@@ -1873,6 +1880,68 @@ namespace MMR.Randomizer
         }
 
         /// <summary>
+        /// Overwrite junk items with ice traps.
+        /// </summary>
+        /// <param name="iceTraps">Ice traps amount setting</param>
+        /// <param name="appearance">Ice traps appearance setting</param>
+        public void AddIceTraps(IceTraps iceTraps, IceTrapAppearance appearance)
+        {
+            var random = this.Random;
+
+            // Select replaceable junk items of specified amount.
+            var items = IceTrapUtils.SelectJunkItems(_randomized.ItemList, iceTraps, random);
+
+            // Dynamically generate appearance set for ice traps.
+            // Only mimic song items if they are included in the main randomization pool (not in their own pool).
+            var mimics = IceTrapUtils.BuildIceTrapMimicSet(_randomized.ItemList, appearance, _randomized.Settings.AddSongs)
+                .ToArray();
+
+            //if (!items.Any(u => u.NewLocation == Item.HeartPieceNorthClockTown))
+            //    first = items.items.ToList().Find(u => u.NewLocation == Item.HeartPieceNorthClockTown);
+            var new_items = new ItemObject[3];
+            new_items[0] = ItemList.Find(u => u.NewLocation == Item.HeartPieceNorthClockTown);
+            new_items[1] = ItemList.Find(u => u.NewLocation == Item.HeartPieceToSwamp);
+            new_items[2] = ItemList.Find(u => u.NewLocation == Item.ShopItemTradingPostNut10);
+            int items_length = items.Length;
+            items = items.ToList().Concat(new_items.ToList()).ToArray();
+
+            var list = new List<ItemObject>();
+            foreach (var item in items)
+            {
+                // If check is visible (can be seen via world model), add "graphic override" for imitating other item.
+                var mimic = mimics[random.Next(mimics.Length)];
+                item.ID = (int)Item.IceTrap;
+                item.Mimic = mimic;
+
+                var newLocation = item.NewLocation.Value;
+                if (newLocation.IsVisible() || newLocation.IsShop() || newLocation.IsPurchaseable())
+                {
+                    // Store name override for logging in HTML tracker.
+                    item.NameOverride = $"{Item.IceTrap.Name()} ({mimic.Item.Name()})";
+
+                    // If ice trap quirks enabled and placed as a shop item, use a fake shop item name.
+                    if (_settings.IceTrapQuirks && (newLocation.IsShop() || newLocation.IsPurchaseable()))
+                    {
+                        item.Mimic.FakeName = FakeNameUtils.CreateFakeName(item.Mimic.Item.Name(), random);
+                    }
+                }
+
+                if (_randomized.Settings.UpdateChests)
+                {
+                    // Choose chest type for ice trap appearance.
+                    item.Mimic.ChestType = IceTrapUtils.GetIceTrapChestTypeOverride(appearance, random);
+                }
+
+                list.Add(item);
+            }
+            items[items_length   ].Mimic    = mimics[22]; // tree is sword
+            items[items_length +1].Mimic    = mimics[81]; // swamp is FD
+            items[items_length +2].Mimic    = mimics[42]; // shop is blast mask
+
+            _randomized.IceTraps = list.AsReadOnly();
+        }
+
+        /// <summary>
         /// Randomizes the ROM with respect to the configured ruleset.
         /// </summary>
         public RandomizedResult Randomize(IProgressReporter progressReporter)
@@ -1896,6 +1965,9 @@ namespace MMR.Randomizer
 
                 progressReporter.ReportProgress(30, "Shuffling items...");
                 RandomizeItems();
+
+                // Replace junk items with ice traps according to settings.
+                AddIceTraps(_randomized.Settings.IceTraps, _randomized.Settings.IceTrapAppearance);
                 
                 var freeItemIds = _settings.CustomStartingItemList
                     .Cast<int>()
@@ -1957,6 +2029,7 @@ namespace MMR.Randomizer
                     }).ToList()
                     : _randomized.Logic;
 
+                //_randomized.ItemsRequiredForMoonAccess = new List<Item>();
                 //_randomized.ImportantItems = LogicUtils.GetImportantItems(Item.EntranceMajorasLairFromTheMoon, _randomized.Logic)?.Important.Where(item => !item.IsFake() && !item.IsEntrance()).ToList().AsReadOnly();
                 /*_randomized.ImportantItems = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic)?.Important.Where(item => !item.IsFake()).ToList().AsReadOnly();
                 if (_randomized.ImportantItems == null)

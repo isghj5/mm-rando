@@ -25,7 +25,7 @@ namespace MMR.Randomizer.Models
         {
             Item = itemObject.Item;
             Id = itemObject.ID;
-            Name = itemObject.Item.Name() ?? itemObject.Name;
+            Name = itemObject.NameOverride ?? itemObject.Item.Name() ?? itemObject.Name;
             NewLocationId = (int)itemObject.NewLocation.Value;
             NewLocationName = itemObject.NewLocation.Value.Location();
             Region = itemObject.NewLocation.Value.Region().Value;

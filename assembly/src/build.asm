@@ -1,6 +1,12 @@
 .n64
 .relativeinclude on
 
+;; Force armips version 0.11 or later for fix to MIPS LO/HI ELF symbol relocation.
+.if (version() < 110)
+.notice version()
+.error "Detected armips build is too old. Please install https://github.com/Kingcom/armips version 0.11 or later."
+.endif
+
 .create "../roms/patched.z64", 0
 .incbin "../roms/base.z64"
 
@@ -26,17 +32,21 @@
 .include "hooks/actor.asm"
 .include "hooks/arrow_magic.asm"
 .include "hooks/business_scrub.asm"
+.include "hooks/chest.asm"
 .include "hooks/cows.asm"
 .include "hooks/dpad.asm"
 .include "hooks/elegy_speedup.asm"
 .include "hooks/extended_objects.asm"
 .include "hooks/file_select.asm"
+.include "hooks/game.asm"
 .include "hooks/general.asm"
 .include "hooks/hud_colors.asm"
 .include "hooks/items.asm"
+.include "hooks/message_table.asm"
 .include "hooks/misc.asm"
 .include "hooks/models.asm"
 .include "hooks/pause.asm"
+.include "hooks/player_actor.asm"
 .include "hooks/pushblock.asm"
 .include "hooks/quest_items.asm"
 .include "hooks/rooms.asm"
@@ -66,6 +76,7 @@ PAYLOAD_START:
 .include "actor.asm"
 .include "arrow_magic.asm"
 .include "business_scrub.asm"
+.include "chest.asm"
 .include "cows.asm"
 .include "damage.asm"
 .include "dpad.asm"
@@ -74,6 +85,7 @@ PAYLOAD_START:
 .include "file_select.asm"
 .include "hud_colors.asm"
 .include "items.asm"
+.include "message_table.asm"
 .include "misc.asm"
 .include "mmr.asm"
 .include "models.asm"
@@ -89,6 +101,8 @@ PAYLOAD_START:
 .align 8
 DPAD_TEXTURE:
 .incbin("../resources/dpad32.bin")
+FONT_TEXTURE:
+.incbin("../resources/font.bin")
 
 .align 0x10
 PAYLOAD_END:

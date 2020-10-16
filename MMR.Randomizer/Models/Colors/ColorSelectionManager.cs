@@ -1,4 +1,5 @@
-﻿using MMR.Randomizer.Asm;
+﻿using MMR.Common.Extensions;
+using MMR.Randomizer.Asm;
 using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
@@ -113,7 +114,7 @@ namespace MMR.Randomizer.Models.Colors
         {
             return new ColorSelectionFuncItem("Random Choice", (random) =>
             {
-                var selected = RandomUtils.Select(Pairs, random);
+                var selected = Pairs.Random(random);
                 return selected.Colors;
             });
         }

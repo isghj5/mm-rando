@@ -1,4 +1,5 @@
-﻿using MMR.Randomizer.Models.Rom;
+﻿using MMR.Randomizer.GameObjects;
+using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Utils;
 using Newtonsoft.Json.Linq;
 using System;
@@ -81,6 +82,53 @@ namespace MMR.Randomizer.Asm
             };
 
             return file;
+        }
+
+        /// <summary>
+        /// Create initial mimic item table for ice traps.
+        /// </summary>
+        /// <returns>Mimic table.</returns>
+        public MimicItemTable CreateMimicItemTable()
+        {
+            var addr = this["ITEM_OVERRIDE_COUNT"];
+            var count = ReadWriteUtils.ReadU32((int)addr);
+            return new MimicItemTable((int)count);
+        }
+
+        /// <summary>
+        /// Write <see cref="MimicItemTable"/> table to ROM.
+        /// </summary>
+        /// <param name="table">Table</param>
+        public void WriteMimicItemTable(MimicItemTable table)
+        {
+            var addr = this["ITEM_OVERRIDE_ENTRIES"];
+            ReadWriteUtils.WriteToROM((int)addr, table.Build());
+        }
+
+        /// <summary>
+        /// Create initial extended <see cref="MessageTable"/> for extra messages.
+        /// </summary>
+        /// <returns>Extended MessageTable</returns>
+        public MessageTable CreateInitialExtMessageTable()
+        {
+            var addr = this["EXT_MSG_TABLE_COUNT"];
+            var count = ReadWriteUtils.ReadU32((int)addr);
+            return new MessageTable(count);
+        }
+
+        /// <summary>
+        /// Write extended <see cref="MessageTable"/>.
+        /// </summary>
+        /// <param name="table">Extended MessageTable</param>
+        public void WriteExtMessageTable(MessageTable table)
+        {
+            // Write extended message table entries, and append new file for extended message table data.
+            var addr = this["EXT_MSG_TABLE"];
+            var index = MessageTable.WriteExtended(table, addr);
+
+            // Write index of message table data.
+            var fileIndexAddr = this["EXT_MSG_DATA_FILE"];
+            ReadWriteUtils.WriteU32ToROM((int)fileIndexAddr, (uint)index);
         }
 
         /// <summary>

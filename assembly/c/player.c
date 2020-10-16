@@ -24,3 +24,19 @@ bool player_can_receive_item(z2_game_t *game) {
     }
     return result;
 }
+
+/**
+ * Hook function to check whether or not freezing should void Zora.
+ **/
+bool player_should_ice_void_zora(z2_link_t *link, z2_game_t *game) {
+    u16 scene = game->scene_index;
+    switch (scene) {
+        case 0x1F: // Odolwa Boss Room
+        case 0x44: // Goht Boss Room
+        case 0x5F: // Gyorg Boss Room
+        case 0x36: // Twinmold Boss Room
+            return false;
+        default:
+            return true;
+    }
+}

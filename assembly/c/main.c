@@ -10,6 +10,7 @@
 #include "misc.h"
 #include "mmr.h"
 #include "models.h"
+#include "text.h"
 #include "util.h"
 #include "z2.h"
 
@@ -22,6 +23,7 @@ void c_init() {
     models_init();
     mmr_init();
     misc_init();
+    text_init();
 }
 
 void before_player_actor_update(z2_link_t *link, z2_game_t *game) {

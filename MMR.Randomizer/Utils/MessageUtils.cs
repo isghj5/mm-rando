@@ -391,7 +391,14 @@ namespace MMR.Randomizer.Utils
             }
             else
             {
-                if (isMoonGossipStone || gossipHintStyle == GossipHintStyle.Competitive || random.Next(100) >= 5) // 5% chance of fake/junk hint if it's not a moon gossip stone or competitive style
+                if (item.Mimic != null)
+                {
+                    // If item has a mimic and not using clear hints, always use a fake hint.
+                    soundEffectId = 0x690A; // grandma laugh
+                    itemNames.Add(item.Mimic.Item.ItemHints().Random(random));
+                    locationNames.Add(item.NewLocation.Value.LocationHints().Random(random));
+                }
+                else if (isMoonGossipStone || gossipHintStyle == GossipHintStyle.Competitive || random.Next(100) >= 5) // 5% chance of fake/junk hint if it's not a moon gossip stone or competitive style
                 {
                     itemNames.Add(item.Item.ItemHints().Random(random));
                     locationNames.Add(item.NewLocation.Value.LocationHints().Random(random));
@@ -465,31 +472,31 @@ namespace MMR.Randomizer.Utils
             return $"{title}: {cost} Rupees\x11 \x11\x02\xC2I'll buy {GetPronoun(item)}\x11No thanks\xBF";
         }
 
-        public static string GetArticle(Item item, string indefiniteArticle = null)
+        public static string GetArticle(Item item, string indefiniteArticle = null, string name = null)
         {
             var shopTexts = item.ShopTexts();
             return shopTexts.IsMultiple
                 ? ""
                 : shopTexts.IsDefinite
                     ? "the "
-                    : indefiniteArticle ?? (Regex.IsMatch(item.Name(), "^[aeiou]", RegexOptions.IgnoreCase)
+                    : indefiniteArticle ?? (Regex.IsMatch(name ?? item.Name(), "^[aeiou]", RegexOptions.IgnoreCase)
                         ? "an "
                         : "a ");
         }
 
-        public static string GetPronoun(Item item)
+        public static string GetPronoun(Item item, string name = null)
         {
             var shopTexts = item.ShopTexts();
-            var itemAmount = Regex.Replace(item.Name(), "[^0-9]", "");
+            var itemAmount = Regex.Replace(name ?? item.Name(), "[^0-9]", "");
             return shopTexts.IsMultiple && !string.IsNullOrWhiteSpace(itemAmount)
                 ? "them"
                 : "it";
         }
 
-        public static string GetPronounOrAmount(Item item, string it = " It")
+        public static string GetPronounOrAmount(Item item, string it = " It", string name = null)
         {
             var shopTexts = item.ShopTexts();
-            var itemAmount = Regex.Replace(item.Name(), "[^0-9]", "");
+            var itemAmount = Regex.Replace(name ?? item.Name(), "[^0-9]", "");
             return shopTexts.IsMultiple
                 ? string.IsNullOrWhiteSpace(itemAmount)
                     ? it
@@ -499,10 +506,10 @@ namespace MMR.Randomizer.Utils
                     : " One";
         }
 
-        public static string GetVerb(Item item)
+        public static string GetVerb(Item item, string name = null)
         {
             var shopTexts = item.ShopTexts();
-            var itemAmount = Regex.Replace(item.Name(), "[^0-9]", "");
+            var itemAmount = Regex.Replace(name ?? item.Name(), "[^0-9]", "");
             return shopTexts.IsMultiple && !string.IsNullOrWhiteSpace(itemAmount)
                 ? "are"
                 : "is";
@@ -516,9 +523,62 @@ namespace MMR.Randomizer.Utils
                 : "for";
         }
 
+        public static string GetAlternateName(string name)
+        {
+            return Regex.Replace(name, "[0-9]+ ", "");
+        }
+
         public static string GetAlternateName(Item item)
         {
-            return Regex.Replace(item.Name(), "[0-9]+ ", "");
+            return GetAlternateName(item.Name());
+        }
+
+        static string GetRawPlural(string name)
+        {
+            var useEs = "ch,i,ns,o,sh,ss,x".Split(',').Any(x => name.EndsWith(x));
+            if (useEs)
+            {
+                // Use "es" ending instead of "s".
+                return $"{name}es";
+            }
+            else if ("by,ry".Split(',').Any(x => name.EndsWith(x)))
+            {
+                // Replace "y" => "ies" in certain situations.
+                var withoutY = name.Substring(0, name.Length - 1);
+                return $"{withoutY}ies";
+            }
+            else if (name.EndsWith("s"))
+            {
+                // Assume name is already plural.
+                return name;
+            }
+            else
+            {
+                return $"{name}s";
+            }
+        }
+
+        public static string GetPlural(string name)
+        {
+            var alt = GetAlternateName(name);
+            var altSplit = alt.Split(' ');
+
+            // Check if the plural is identical to the singular.
+            var samePlural = "Bombchu".Split(',').Any(x => alt.Equals(x));
+            if (samePlural)
+            {
+                return alt;
+            }
+
+            // Check if there is a starting noun which should be pluralized instead.
+            var startingNoun = "Bottle,Elegy,Lens,Letter,Map,Mask,Oath,Pendant,Piece,Sonata,Song".Split(',').Any(x => altSplit[0].Equals(x));
+            if (startingNoun)
+            {
+                altSplit[0] = GetRawPlural(altSplit[0]);
+                return string.Join(" ", altSplit);
+            }
+
+            return GetRawPlural(alt);
         }
 
         private static string[] numberWordUnitsMap = new[] { "zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen" };

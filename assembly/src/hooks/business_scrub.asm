@@ -4,10 +4,13 @@
 
 .headersize (G_EN_AKINDONUTS_VRAM - G_EN_AKINDONUTS_FILE)
 
+; Consume quest item while getting index of get-item table for scrub item.
 ; Replaces:
-;   addiu   sp, sp, -0x18
-.org 0x80BECFBC
-    j       business_scrub_consume_item
+;   lh      v0, 0x001C (a0)
+;   addiu   at, r0, 0x0001
+.org 0x80BECFC4
+    jal     business_scrub_consume_item_hook
+    nop
 
 ;==================================================================================================
 ; Business Scrub Before Giving Item (Clock Town)

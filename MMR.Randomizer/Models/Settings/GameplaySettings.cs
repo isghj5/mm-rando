@@ -86,6 +86,14 @@ namespace MMR.Randomizer.Models.Settings
         }
 
         /// <summary>
+        /// Whether or not ice traps should behave slightly differently from other items in certain situations.
+        /// </summary>
+        public bool IceTrapQuirks {
+            get { return this.AsmOptions.MiscConfig.Flags.IceTrapQuirks; }
+            set { this.AsmOptions.MiscConfig.Flags.IceTrapQuirks = value; }
+        }
+
+        /// <summary>
         /// Whether or not to enable freestanding models.
         /// </summary>
         public bool UpdateWorldModels {
@@ -257,6 +265,16 @@ namespace MMR.Randomizer.Models.Settings
         ///  Custom junk location string
         /// </summary>
         public string CustomJunkLocationsString { get; set; }
+
+        /// <summary>
+        /// Defines number of ice traps.
+        /// </summary>
+        public IceTraps IceTraps { get; set; }
+
+        /// <summary>
+        /// Defines appearance pool for visible ice traps.
+        /// </summary>
+        public IceTrapAppearance IceTrapAppearance { get; set; }
 
         #endregion
 

@@ -3,6 +3,7 @@ using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
+using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Rom;
 using System.Collections.Generic;
 
@@ -104,7 +105,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void WriteNewItem(Item location, Item item, List<MessageEntry> newMessages, bool updateShop, bool preventDowngrades, bool updateChest, ChestTypeAttribute.ChestType? overrideChestType, bool isExtraStartingItem, bool questItemExtraStorageEnabled)
+        public static void WriteNewItem(Item location, Item item, List<MessageEntry> newMessages, bool updateShop, bool preventDowngrades, bool updateChest, ChestTypeAttribute.ChestType? overrideChestType, bool isExtraStartingItem, bool questItemExtraStorageEnabled, MimicItem mimic = null)
         {
             System.Diagnostics.Debug.WriteLine($"Writing {item.Name()} --> {location.Location()}");
 
@@ -112,10 +113,19 @@ namespace MMR.Randomizer.Utils
             int baseaddr = GET_ITEM_TABLE - RomData.MMFileList[f].Addr;
             var getItemIndex = location.GetItemIndex().Value;
             int offset = (getItemIndex - 1) * 8 + baseaddr;
-            var newItem = isExtraStartingItem 
-                ? Items.RecoveryHeart // Warning: this will not work well for starting with Bottle contents (currently impossible), because you'll first have to acquire the Recovery Heart before getting the bottle-less version. Also may interfere with future implementation of progressive upgrades.
-                : RomData.GetItemList[item.GetItemIndex().Value];
             var fileData = RomData.MMFileList[f].Data;
+
+            GetItemEntry newItem;
+            if (item.IsExclusiveItem())
+            {
+                newItem = item.ExclusiveItemEntry();
+            }
+            else
+            {
+                newItem = isExtraStartingItem
+                    ? Items.RecoveryHeart // Warning: this will not work well for starting with Bottle contents (currently impossible), because you'll first have to acquire the Recovery Heart before getting the bottle-less version. Also may interfere with future implementation of progressive upgrades.
+                    : RomData.GetItemList[item.GetItemIndex().Value];
+            }
 
             var data = new byte[]
             {
@@ -184,7 +194,7 @@ namespace MMR.Randomizer.Utils
             {
                 if (updateShop)
                 {
-                    UpdateShop(location, item, newMessages);
+                    UpdateShop(location, item, newMessages, mimic);
                 }
 
                 if (location == Item.StartingSword)
@@ -204,9 +214,21 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        private static void UpdateShop(Item location, Item item, List<MessageEntry> newMessages)
+        private static void UpdateShop(Item location, Item item, List<MessageEntry> newMessages, MimicItem mimic = null)
         {
-            var newItem = RomData.GetItemList[item.GetItemIndex().Value];
+            GetItemEntry newItem;
+            if (mimic != null)
+            {
+                newItem = RomData.GetItemList[mimic.Item.GetItemIndex().Value];
+            }
+            else if (item.IsExclusiveItem())
+            {
+                newItem = item.ExclusiveItemEntry();
+            }
+            else
+            {
+                newItem = RomData.GetItemList[item.GetItemIndex().Value];
+            }
 
             var shopRooms = location.GetAttributes<ShopRoomAttribute>();
             foreach (var shopRoom in shopRooms)
@@ -221,7 +243,7 @@ namespace MMR.Randomizer.Utils
                 var index = newItem.Index > 0x7F ? (byte)(0xFF - newItem.Index) : (byte)(newItem.Index - 1);
                 ReadWriteUtils.WriteToROM(shopInventory.ShopItemAddress + 0x03, index);
 
-                var shopTexts = item.ShopTexts();
+                var shopTexts = mimic?.Item.ShopTexts() ?? item.ShopTexts();
                 string description;
                 switch (shopInventory.Keeper)
                 {
@@ -258,19 +280,20 @@ namespace MMR.Randomizer.Utils
                     description = shopTexts.Default;
                 }
 
+                var itemName = mimic?.Name ?? item.Name();
                 var messageId = ReadWriteUtils.ReadU16(shopInventory.ShopItemAddress + 0x0A);
                 newMessages.Add(new MessageEntry
                 {
                     Id = messageId,
                     Header = null,
-                    Message = MessageUtils.BuildShopDescriptionMessage(item.Name(), 20, description)
+                    Message = MessageUtils.BuildShopDescriptionMessage(itemName, 20, description)
                 });
 
                 newMessages.Add(new MessageEntry
                 {
                     Id = (ushort)(messageId + 1),
                     Header = null,
-                    Message = MessageUtils.BuildShopPurchaseMessage(item.Name(), 20, item)
+                    Message = MessageUtils.BuildShopPurchaseMessage(itemName, 20, mimic?.Item ?? item)
                 });
             }
         }

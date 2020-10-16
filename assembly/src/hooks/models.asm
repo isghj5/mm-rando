@@ -188,3 +188,85 @@
     sw      s0, 0x0028 (sp)
     jal     models_draw_seahorse_hook
     or      s0, a0, r0
+
+;==================================================================================================
+; Model Rotation (En_Item00)
+;==================================================================================================
+
+.headersize(G_CODE_RAM - G_CODE_FILE)
+
+; Allow rotating backwards for En_Item00 (Heart Piece).
+; Replaces:
+;   lh      t7, 0x00BE (s0)
+;   lh      v1, 0x001C (s0)
+;   addiu   t8, t7, 0x03C0
+;   b       0x800A6550
+;   sh      t8, 0x00BE (s0)
+.org 0x800A6454
+    jal     models_rotate_en_item00
+    nop
+    lh      v1, 0x001C (s0)
+    b       0x800A6550
+    nop
+
+;==================================================================================================
+; Model Rotation (Skulltula Token)
+;==================================================================================================
+
+.headersize(G_EN_SI_VRAM - G_EN_SI_FILE)
+
+; Allows rotating backwards for Skulltula Tokens.
+; Replaces:
+;   addiu   t2, t1, 0x038E
+;   sh      t2, 0x00BE (a0)
+.org 0x8098CBC4
+    jal     models_rotate_skulltula_token
+    nop
+
+;==================================================================================================
+; Model Rotation (Heart Container)
+;==================================================================================================
+
+.headersize(G_ITEM_B_HEART_VRAM - G_ITEM_B_HEART_FILE)
+
+; Allows rotating backwards for Heart Containers.
+; Replaces:
+;   lh      t6, 0x00BE (s0)
+;   lui     a1, 0x3ECC
+;   lui     a2, 0x3DCC
+;   lui     a3, 0x3C23
+;   addiu   t7, t6, 0x0400
+;   sh      t7, 0x00BE (s0)
+.org 0x808BCF68
+.area 0x1C
+    jal     models_rotate_heart_container
+    nop
+    nop
+    lui     a1, 0x3ECC
+    lui     a2, 0x3DCC
+    lui     a3, 0x3C23
+.endarea
+
+;==================================================================================================
+; Model Rotation (Lab Fish Heart Piece)
+;==================================================================================================
+
+.headersize(G_EN_COL_MAN_VRAM - G_EN_COL_MAN_FILE)
+
+; Allows rotating backwards for Lab Fish Heart Piece.
+; Replaces:
+;   bnezl   t1, 0x80AFDE78
+;   sw      a0, 0x0020 (sp)
+;   lh      t2, 0x00BE (a0)
+;   addiu   t3, t2, 0x03E8
+;   sh      t3, 0x00BE (a0)
+;   sw      a0, 0x0020 (sp)
+.org 0x80AFDE60
+.area 0x1C
+    bnez    t1, 0x80AFDE78
+    sw      a0, 0x0020 (sp)
+    jal     models_rotate_lab_fish_heart_piece
+    sw      a1, 0x0024 (sp)
+    lw      a0, 0x0020 (sp)
+    lw      a1, 0x0024 (sp)
+.endarea

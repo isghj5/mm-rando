@@ -17,6 +17,10 @@ typedef struct {
 
 //sprite_t items_sprite;
 sprite_t dpad_sprite;
+sprite_t font_sprite;
+sprite_t icon_sprite;
+sprite_t icon_24_sprite;
+sprite_t fairy_sprite;
 
 void gfx_init();
 sprite_t* gfx_get_item_textures_sprite(void);

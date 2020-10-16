@@ -160,18 +160,13 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsRequired(Item item, RandomizedResult randomizedResult)
         {
-            return randomizedResult.ItemsRequiredForMoonAccess != null
-                && randomizedResult.ItemsRequiredForMoonAccess.Contains(item)
-                && !item.Name().Contains("Heart")
-                && !IsStrayFairy(item)
-                && !IsSkulltulaToken(item);
+            return false; //item != Item.IceTrap;
+                        //&& randomizedResult.ItemsRequiredForMoonAccess.Contains(item);
         }
 
         public static bool IsImportant(Item item, RandomizedResult randomizedResult)
         {
-            return randomizedResult.ImportantItems != null
-                && randomizedResult.ImportantItems.Contains(item)
-                && !item.Name().Contains("Heart");
+            return false;
         }
 
         public static readonly ReadOnlyCollection<ReadOnlyCollection<Item>> ForbiddenStartTogether = new List<List<Item>>()

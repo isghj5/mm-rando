@@ -108,9 +108,25 @@ static bool try_use_item(z2_game_t *game, z2_link_t *link, u8 item) {
     return try_use_inventory_item(game, link, item, slot);
 }
 
+/**
+ * Helper function used to check if C buttons are disabled due to the current entrance.
+ **/
+static bool dpad_are_c_items_disabled_by_entrance(z2_game_t *game) {
+    // Hardcoded entrance checks to disable C buttons, normally performed by function 0x80111CB4:
+    // Id 0x8E10: Beaver Race
+    // Id 0xD010: Goron Race
+    // Checks execute state to prevent fading D-Pad when loading scene with entrance.
+    return (z2_file.exit == 0x8E10 || z2_file.exit == 0xD010) && game->common.execute_state != 0;
+}
+
 static void get_dpad_item_usability(z2_game_t *game, bool *dest) {
-    for (int i = 0; i < 4; i++)
-        dest[i] = buttons_check_c_item_usable(game, DPAD_CONFIG.primary.values[i]);
+    for (int i = 0; i < 4; i++) {
+        if (dpad_are_c_items_disabled_by_entrance(game)) {
+            dest[i] = false;
+        } else {
+            dest[i] = buttons_check_c_item_usable(game, DPAD_CONFIG.primary.values[i]);
+        }
+    }
 }
 
 static bool is_any_item_usable(const u8 *dpad, const bool *usable) {
@@ -279,6 +295,11 @@ void dpad_draw(z2_game_t *game) {
     // Check for minigame frame, and do nothing unless transitioning into minigame
     // In which case the C-buttons alpha will be used instead for fade-in
     if (is_minigame_frame() && z2_file.buttons_state.previous_state != Z2_BUTTONS_STATE_MINIGAME)
+        return;
+
+    // Check if C button items are disabled for a specific entrance.
+    // Used to prevent drawing D-Pad during 1 frame before Goron Race.
+    if (dpad_are_c_items_disabled_by_entrance(game) && game->hud_ctxt.c_left_alpha == 0)
         return;
 
     // Use minimap alpha by default for fading textures out

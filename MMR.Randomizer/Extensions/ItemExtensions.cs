@@ -5,6 +5,7 @@ using System.Text;
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.GameObjects;
 using MMR.Common.Extensions;
+using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Attributes.Entrance;
 using System.Text.RegularExpressions;
 
@@ -153,6 +154,54 @@ namespace MMR.Randomizer.Extensions
         public static bool IsOverwritable(this Item item)
         {
             return item.HasAttribute<OverwritableAttribute>();
+        }
+
+        public static bool IsShop(this Item item)
+        {
+            return item.HasAttribute<ShopRoomAttribute>();
+        }
+
+        public static bool IsSong(this Item item)
+        {
+            return (Item.SongHealing <= item && item <= Item.SongOath);
+        }
+
+        public static ChestTypeAttribute.ChestType ChestType(this Item item)
+        {
+            return item.GetAttribute<ChestTypeAttribute>().Type;
+        }
+
+        public static bool IsPurchaseable(this Item item)
+        {
+            return item.HasAttribute<PurchaseableAttribute>();
+        }
+
+        public static bool IsVisible(this Item item)
+        {
+            return item.HasAttribute<VisibleAttribute>();
+        }
+
+        public static bool IsExclusiveItem(this Item item)
+        {
+            return item.HasAttribute<ExclusiveItemAttribute>();
+        }
+
+        public static GetItemEntry ExclusiveItemEntry(this Item item)
+        {
+            return new GetItemEntry
+            {
+                ItemGained = item.GetAttribute<ExclusiveItemAttribute>().Item,
+                Flag = item.GetAttribute<ExclusiveItemAttribute>().Flags,
+                Index = item.GetAttribute<ExclusiveItemGraphicAttribute>().Graphic,
+                Type = item.GetAttribute<ExclusiveItemAttribute>().Type,
+                Message = (short)item.GetAttribute<ExclusiveItemMessageAttribute>().Id,
+                Object = (short)item.GetAttribute<ExclusiveItemGraphicAttribute>().Object,
+            };
+        }
+
+        public static string ExclusiveItemMessage(this Item item)
+        {
+            return item.GetAttribute<ExclusiveItemMessageAttribute>().Message;
         }
 
         public static bool IsBottleCatchContent(this Item item)
