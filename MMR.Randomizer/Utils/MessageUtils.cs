@@ -348,6 +348,60 @@ namespace MMR.Randomizer.Utils
                 });
             }
 
+            // forced hints 
+            //soundEffectId = 0x690A; // grandma laugh
+            //var MikauBaybee = 0x6175;
+            var granny = 0x690C;
+            //string sfx = $"{(char)((soundEffectId >> 8) & 0xFF)}{(char)(soundEffectId & 0xFF)}";
+
+            var soundEffectMikau = $"{(char)((granny >> 8) & 0xFF)}{(char)(granny & 0xFF)}";
+            //var secret_ending_hint = $"\x1E{soundEffectMikau}{start} {string.Join(" and ", locationMessages.Select(locationName => $"\x01{locationName}\x00"))} {mid} {string.Join(hasOrder ? " then " : " and ", itemMessages.Select(itemName => $"\x06{itemName}\x00"))}...\xBF".Wrap(35, "\x11");
+            // start and mid are just "It seems" and "conceals" these are just the binders
+            // color change: $"\x01{locationName}\x00" dark red  and $"\x06{itemName}\x00" pink) TextCommands has the rest '\x03'
+            // word wrap does not happen auto, use \x11 when we want to wrap
+            var secret_ending_hint = $"\x1E{soundEffectMikau} It is said that \x03the power of music\x00\x11 can\x06 fly you to the moon\x00 ...\xBF";
+
+            //(var secret_ending_hint, var combined) = BuildItemHint(item, randomizedResult.Settings.GossipHintStyle, forceClear, randomizedResult.Settings.ClearHints, isMoonGossipStone, itemsToCombineWith, hintableItems, random);
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.SwampSpiderHouse).Message = secret_ending_hint;
+            var eggshint = $"\x1E{soundEffectMikau}It is said that \x01the children of zora\x00\x11teach \x07the power to love\x00 ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.TerminaGossipDrums).Message = eggshint;
+
+            eggshint = $"\x1E{soundEffectMikau}It seems that \x01pinnacle rock\x00\x11 contains \x07 nothing but ice traps\x00 ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.MilkRoad).Message = eggshint;
+
+            var newhint = $"\x1E{soundEffectMikau}It seems that a\x01 frozen lake\x00\x11 conceals a\x06 frozen weapon\x00 ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.CanyonDock).Message = newhint;
+
+            newhint = $"\x1E{soundEffectMikau}The reward for winning\x06 Goron Race\x00\x11 is a\x06 dangerous mask\x00 ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.RanchCuccoShack).Message = newhint;
+
+            newhint = $"\x1E{soundEffectMikau}Rumor has it a\x01 merchant\x00 is \x11selling a\x06 very sharp\x00 weapon ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.TerminaMilk).Message = newhint;
+
+            newhint = $"\x1E{soundEffectMikau}Something \x04Mysterious\x00 is happening\x11 at the\x06 Pirates Fortress\x00 ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.CanyonRavine).Message = newhint;
+
+            newhint = $"\x1E{soundEffectMikau}Something \x04Mysterious\x00 is happening\x11 at the\x06 Romani Ranch\x00 ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.CanyonSpiritHouse).Message = newhint;
+
+            newhint = $"\x1E{soundEffectMikau}Something \x01very powerful\x00 is waiting\x11 at the\x06 stockpot inn\x00 ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.MilkRoad).Message = newhint;
+
+            newhint = $"\x1E{soundEffectMikau}Masks of\x04 fallen heroes\x00 are being held\x11 by restless\x06 wandering souls\x00 ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.TerminaGossipGuitar).Message = newhint;
+
+
+            /*
+            newhint = $"\x1E{soundEffectMikau}It seems\x01 MMARO\x00 is never\x11 getting an\x11is \x06\x00 ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.TerminaGossipLarge).Message = newhint;
+
+            newhint = $"\x1E{soundEffectMikau}Something is \x04wrong\x00 in Termina\x11I can feel it ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.TerminaGossipPipes).Message = newhint;
+            */
+
+            int nothing_at_all = 0;
+
+
             return finalHints;
         }
 
@@ -452,6 +506,8 @@ namespace MMR.Randomizer.Utils
 
         private static string BuildGossipQuote(ushort soundEffectId, IEnumerable<string> locationMessages, IEnumerable<string> itemMessages, bool hasOrder, Random random)
         {
+
+
             int startIndex = random.Next(Gossip.MessageStartSentences.Count);
             int midIndex = random.Next(Gossip.MessageMidSentences.Count);
             string start = Gossip.MessageStartSentences[startIndex];
