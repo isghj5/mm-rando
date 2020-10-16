@@ -289,7 +289,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x64)]
         WoodsOfMystery = 0x61,
 
-        // LostWoods = 0x62,
+        [SceneInternalId(0x65)]
+        LostWoods = 0x62,
 
         [SceneInternalId(0x66)]
         LinkTrial = 0x63,

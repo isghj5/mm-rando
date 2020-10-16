@@ -5334,9 +5334,12 @@ namespace MMR.Randomizer.GameObjects
         [Spawn(Scene.WoodsOfMystery, 0)]
         EntranceWoodsofMysteryFromSouthernSwamp,
 
-        
+
         //EntranceLostWoodsFrom, // cutscenes
-        //EntranceLostWoodsFrom, // cutscenes
+        //[Spawn(Scene.LostWoods, 0)] // start of game, throw from horse
+        //[Spawn(Scene.LostWoods, 1)] // first song of time flashbacks, leading to you "That instrument!"
+        //[Spawn(Scene.LostWoods, 2)] // broken
+        EntranceLostWoodsFrom, // cutscenes
 
 
         [Region(Region.TheMoon)]

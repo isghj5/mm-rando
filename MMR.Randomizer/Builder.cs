@@ -692,6 +692,8 @@ namespace MMR.Randomizer
                                                 Item.EntranceCuriosityShopFromKafeisHideout, Item.EntranceKafeisHideoutFromCuriosityShop
 
                 };
+                //EntranceSwapUtils.WriteNewEntrance(Item.EntranceNorthClockTownFromDekuScrubPlayground, Item.EntranceLostWoodsFrom);
+
                 var rand = new Random();
                 var exlist = enlist.OrderBy(x => rand.Next()).ToList();
 
