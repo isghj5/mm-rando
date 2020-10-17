@@ -35,7 +35,7 @@ namespace MMR.Randomizer.GameObjects
 
         [StartingItem(0xC5CE27, 0x03)]
         [ItemName("Ice Arrow"), LocationName("Ice Arrow Chest"), Region(Region.GreatBayTemple)]
-        [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("the power of ice", "a magical item")]
+        [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("the power of ice", "a frozen weapon")]
         [ShopText("Arm your bow with arrows that freeze.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold), Chest(0x0292F000 + 0x11E, ChestAttribute.AppearanceType.AppearsClear)]
         [GetItemIndex(0x26)]
@@ -43,7 +43,7 @@ namespace MMR.Randomizer.GameObjects
 
         [StartingItem(0xC5CE28, 0x04)]
         [ItemName("Light Arrow"), LocationName("Light Arrow Chest"), Region(Region.StoneTowerTemple)]
-        [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("the power of light", "a magical item")]
+        [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a heart of gold", "a bright smile")]
         [ShopText("Arm your bow with arrows infused with sacred light.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold), Chest(0x0212B000 + 0xB2, ChestAttribute.AppearanceType.AppearsSwitch, 0x02192000 + 0x8E)]
         [GetItemIndex(0x27)]
@@ -731,7 +731,7 @@ namespace MMR.Randomizer.GameObjects
 
         [StartingItem(0xC5CE48, 0x3C)]
         [ItemName("Romani's Mask"), LocationName("Cremia"), Region(Region.RomaniRanch)]
-        [GossipLocationHint("the ranch lady", "an older sister"), GossipItemHint("proof of membership", "a cow's mask"), GossipCompetitiveHint]
+        [GossipLocationHint("the ranch sisters", "an ranch sister"), GossipItemHint("proof of membership", "a cow's mask"), GossipCompetitiveHint]
         [GossipCombineOrder(1), GossipCombine(ItemBottleAliens, "Ranch Sisters Defense")]
         [ShopText("Wear it to show you're a member of the Milk Bar, Latte.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -2124,7 +2124,7 @@ namespace MMR.Randomizer.GameObjects
 
         [StartingItem(0xC5CE53, 0x35)]
         [ItemName("Fierce Deity's Mask"), LocationName("Majora Child"), Region(Region.TheMoon)]
-        [GossipLocationHint("the lonely child"), GossipItemHint("the wrath of a god")]
+        [GossipLocationHint("the lonely child"), GossipItemHint("maskmarker")]
         [ShopText("A mask that contains the merits of all masks.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x7B)]

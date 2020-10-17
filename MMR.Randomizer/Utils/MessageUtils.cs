@@ -360,21 +360,19 @@ namespace MMR.Randomizer.Utils
             // color change: $"\x01{locationName}\x00" dark red  and $"\x06{itemName}\x00" pink) TextCommands has the rest '\x03'
             // word wrap does not happen auto, use \x11 when we want to wrap
             //(var secret_ending_hint, var combined) = BuildItemHint(item, randomizedResult.Settings.GossipHintStyle, forceClear, randomizedResult.Settings.ClearHints, isMoonGossipStone, itemsToCombineWith, hintableItems, random);
-
+            
             var secret_ending_hint = $"\x1E{soundEffectMikau} It is said that \x03the power of music\x00\x11 can\x06 fly you to the moon\x00 ...\xBF";
             finalHints.Find(u => u.Id == (ushort)GossipQuote.SwampSpiderHouse).Message = secret_ending_hint;
 
             var eggshint = $"\x1E{soundEffectMikau}It is said that \x01the children of zora\x00\x11teach \x07the power to heal\x00 ...\xBF";
-            finalHints.Find(u => u.Id == (ushort)GossipQuote.OceanZoraGame).Message = eggshint;
+            var oldhint = finalHints.Find(u => u.Message.Contains("soothing melody"));
+            if (oldhint != null)
+                oldhint.Message = eggshint;
+            else
+                finalHints.Find(u => u.Id == (ushort)GossipQuote.OceanZoraGame).Message = eggshint;
 
-            eggshint = $"\x1E{soundEffectMikau}It seems that \x01pinnacle rock\x00\x11 contains \x07 nothing but ice traps\x00 ...\xBF";
-            finalHints.Find(u => u.Id == (ushort)GossipQuote.RanchCuccoShack).Message = eggshint;
-
-            var newhint = $"\x1E{soundEffectMikau}It seems that the\x01 frozen mountains\x00\x11 conceal a\x06 heroic weapon\x00 ...\xBF";
-            finalHints.Find(u => u.Id == (ushort)GossipQuote.CanyonDock).Message = newhint;
-
-            newhint = $"\x1E{soundEffectMikau}The reward for winning\x06 Goron Race\x00\x11 is a\x06 dangerous mask\x00 ...\xBF";
-            finalHints.Find(u => u.Id == (ushort)GossipQuote.RanchCuccoShack).Message = newhint;
+            var newhint = $"\x1E{soundEffectMikau}Masks of\x04 fallen heroes\x00 are being held\x11 by\x06 restless wandering souls\x00 ...\xBF";
+            finalHints.Find(u => u.Id == (ushort)GossipQuote.TerminaGossipLarge).Message = newhint;
 
             newhint = $"\x1E{soundEffectMikau}Something \x04Mysterious\x00 is happening\x11 at the\x06 Pirates Fortress\x00 ...\xBF";
             finalHints.Find(u => u.Id == (ushort)GossipQuote.CanyonRavine).Message = newhint;
@@ -382,12 +380,37 @@ namespace MMR.Randomizer.Utils
             newhint = $"\x1E{soundEffectMikau}Something \x04Mysterious\x00 is happening\x11 at the\x06 Romani Ranch\x00 ...\xBF";
             finalHints.Find(u => u.Id == (ushort)GossipQuote.CanyonSpiritHouse).Message = newhint;
 
-            newhint = $"\x1E{soundEffectMikau}Something \x01very powerful\x00 is waiting\x11 at the\x06 stockpot inn\x00 ...\xBF";
-            finalHints.Find(u => u.Id == (ushort)GossipQuote.MilkRoad).Message = newhint;
 
-            newhint = $"\x1E{soundEffectMikau}Masks of\x04 fallen heroes\x00 are being held\x11 by\x06 restless wandering souls\x00 ...\xBF";
-            finalHints.Find(u => u.Id == (ushort)GossipQuote.TerminaGossipLarge).Message = newhint;
 
+            newhint = $"\x1E{soundEffectMikau}It seems that \x01pinnacle rock\x00\x11 contains \x07 nothing but ice traps\x00 ...\xBF";
+            oldhint = finalHints.Find(u => u.Message.Contains("spirit"));
+            if (oldhint != null)
+                oldhint.Message = newhint;
+            else
+                finalHints.Find(u => u.Id == (ushort)GossipQuote.RanchCuccoShack).Message = eggshint;
+
+            newhint = $"\x1E{soundEffectMikau}It seems that the\x01 frozen mountains\x00\x11 conceal a\x06 heroic weapon\x00 ...\xBF";
+            oldhint = finalHints.Find(u => u.Message.Contains("new file") || u.Message.Contains("quest's inception"));
+            if (oldhint != null)
+                oldhint.Message = newhint;
+            else
+              finalHints.Find(u => u.Id == (ushort)GossipQuote.CanyonDock).Message = newhint;
+
+            newhint = $"\x1E{soundEffectMikau}The reward for winning\x06 Goron Race\x00\x11 is a\x06 dangerous mask\x00 ...\xBF";
+            oldhint = finalHints.Find(u => u.Message.Contains("Blast Mask"));
+            if (oldhint != null)
+                oldhint.Message = newhint;
+            else
+                finalHints.Find(u => u.Id == (ushort)GossipQuote.RanchCuccoShack).Message = newhint;
+
+            newhint = $"\x1E{soundEffectMikau}Something \x06very powerful\x00 is waiting\x11 at the\x01 stockpot inn\x00 ...\xBF";
+            oldhint = finalHints.Find(u => u.Message.Contains("maskmarker"));
+            if (oldhint != null)
+                oldhint.Message = newhint;
+            else
+                finalHints.Find(u => u.Id == (ushort)GossipQuote.MilkRoad).Message = newhint;
+
+            
             /*
             newhint = $"\x1E{soundEffectMikau}It seems\x01 MMARO\x00 is never\x11 getting an\x11is \x06\x00 ...\xBF";
             finalHints.Find(u => u.Id == (ushort)GossipQuote.TerminaGossipLarge).Message = newhint;
