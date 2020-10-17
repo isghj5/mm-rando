@@ -102,6 +102,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (GetVersion(lines) < 17)
             {
                 AddTricks(lines);
+                AddSongOfTimeAndOcarina(lines);
+            }  
+            if (GetVersion(lines) < 15)
+            {
+              AddTricks(lines);
             }
 
             if (GetVersion(lines) < 15)
@@ -1516,13 +1521,53 @@ namespace MMR.Randomizer.LogicMigrator
             }
         }
 
-        private static void AddTricks(List<string> lines)
+        private static void AddSongOfTimeAndOcarina(List<string> lines)
         {
             lines[0] = "-version 14";
+            var itemNames = new string[]
+            {
+                "Ocarina of Time", "Song of Time",
+            };
+            var newItems = itemNames.Select((itemName, index) => new MigrationItem
+            {
+                ID = 94 + index
+            }).ToArray();
+            for (var i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.StartsWith("-") || string.IsNullOrWhiteSpace(line))
+                {
+                    continue;
+                }
+                var updatedItemSections = line
+                    .Split(';')
+                    .Select(section => section.Split(',').Select(id =>
+                    {
+                        var itemId = int.Parse(id);
+                        if (itemId >= 94)
+                        {
+                            itemId += newItems.Length;
+                        }
+                        return itemId;
+                    }).ToList()).ToList();
+                lines[i] = string.Join(";", updatedItemSections.Select(section => string.Join(",", section)));
+            }
+            foreach (var item in newItems)
+            {
+                lines.Insert(item.ID * 5 + 1, $"- {itemNames[item.ID - 94]}");
+                lines.Insert(item.ID * 5 + 2, string.Join(",", item.DependsOnItems));
+                lines.Insert(item.ID * 5 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
+                lines.Insert(item.ID * 5 + 4, $"{item.TimeNeeded}");
+                lines.Insert(item.ID * 5 + 5, "0");
+            }
+        }
+        private static void AddTricks(List<string> lines)
+        {
+            lines[0] = "-version 15";
 
             for (var i = 1; i < lines.Count; i += 6)
             {
-                lines.Insert(i + 5, "");
+                lines.Insert(i + 4, "");
             }
         }
 

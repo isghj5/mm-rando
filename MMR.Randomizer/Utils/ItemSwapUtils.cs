@@ -211,6 +211,12 @@ namespace MMR.Randomizer.Utils
                 {
                     ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-fd-mask-reset");
                 }
+
+                if (location == Item.ItemOcarina || location == Item.SongTime)
+                {
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-ocarina-checks");
+                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-song-of-time");
+                }
             }
         }
 

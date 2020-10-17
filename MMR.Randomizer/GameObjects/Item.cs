@@ -828,6 +828,22 @@ namespace MMR.Randomizer.GameObjects
         MaskZora,
 
         //song
+        [StartingItem(0xC5CE24, 0x00)]
+        [ItemName("Ocarina of Time"), LocationName("Skull Kid"), Region(Region.SouthClockTown)]
+        [GossipLocationHint("a forest imp"), GossipItemHint("a childhood gift")]
+        [ShopText("It's a flute!.")]
+        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [GetItemIndex(0x4C)]
+        ItemOcarina,
+
+        [StartingItem(0xC5CE72, 0x10)]
+        [ItemName("Song of Time"), LocationName("Skull Kid Song"), Region(Region.SouthClockTown)]
+        [GossipLocationHint("a distant memory"), GossipItemHint("a childhood memory")]
+        [ShopText("A great time saver.", isDefinite: true)]
+        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [GetItemIndex(0x1CB)]
+        SongTime,
+
         [StartingItem(0xC5CE72, 0x20)]
         [ItemName("Song of Healing"), LocationName("Starting Song"), Region(Region.Misc)]
         [GossipLocationHint("a new file", "a quest's inception"), GossipItemHint("a soothing melody")]

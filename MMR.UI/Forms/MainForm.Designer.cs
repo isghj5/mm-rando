@@ -201,6 +201,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.cIceTrapQuirks = new System.Windows.Forms.CheckBox();
+            this.cOcarinaAndSongOfTime = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -529,6 +530,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.cOcarinaAndSongOfTime);
             this.groupBox2.Controls.Add(this.cMundaneRewards);
             this.groupBox2.Controls.Add(this.cStrayFairies);
             this.groupBox2.Controls.Add(this.cSpiders);
@@ -2222,6 +2224,20 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
+            // cOcarinaAndSongOfTime
+            // 
+            this.cOcarinaAndSongOfTime.AutoSize = true;
+            this.cOcarinaAndSongOfTime.BackColor = System.Drawing.Color.Transparent;
+            this.cOcarinaAndSongOfTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cOcarinaAndSongOfTime.ForeColor = System.Drawing.Color.Black;
+            this.cOcarinaAndSongOfTime.Location = new System.Drawing.Point(169, 164);
+            this.cOcarinaAndSongOfTime.Name = "cOcarinaAndSongOfTime";
+            this.cOcarinaAndSongOfTime.Size = new System.Drawing.Size(150, 17);
+            this.cOcarinaAndSongOfTime.TabIndex = 26;
+            this.cOcarinaAndSongOfTime.Text = "Ocarina and Song of Time";
+            this.cOcarinaAndSongOfTime.UseVisualStyleBackColor = false;
+            this.cOcarinaAndSongOfTime.CheckedChanged += new System.EventHandler(this.cOcarinaAndSongOfTime_CheckedChanged);
+            // cDeathMoonCrash
             // cIceTrapQuirks
             // 
             this.cIceTrapQuirks.AutoSize = true;
@@ -2457,6 +2473,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFDAnywhere;
         private System.Windows.Forms.CheckBox cArrowCycling;
         private System.Windows.Forms.CheckBox cFasterBank;
+        private System.Windows.Forms.CheckBox cOcarinaAndSongOfTime;
         private System.Windows.Forms.CheckBox cCloseCows;
         private System.Windows.Forms.TabPage tabEntrances;
         private System.Windows.Forms.GroupBox groupBox1;

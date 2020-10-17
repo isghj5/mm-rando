@@ -253,6 +253,9 @@
     <None Update="Resources\mods\fix-music">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\mods\fix-ocarina-checks">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\mods\fix-shop-checks">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -260,6 +263,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\mods\fix-song-of-healing">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\mods\fix-song-of-time">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\mods\fix-sword-song-of-time">

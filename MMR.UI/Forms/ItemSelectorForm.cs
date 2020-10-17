@@ -104,6 +104,8 @@ namespace MMR.UI.Forms
             "Giant's Mask",
             "Goron Mask",
             "Zora Mask",
+            "Ocarina of Time",
+            "Song of Time",
             "Song of Healing",
             "Song of Soaring",
             "Epona's Song",

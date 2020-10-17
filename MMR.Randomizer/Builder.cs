@@ -1112,7 +1112,6 @@ namespace MMR.Randomizer
         private void WriteFreeItems(params Item[] items)
         {
             Dictionary<int, byte> startingItems = new Dictionary<int, byte>();
-            PutOrCombine(startingItems, 0xC5CE72, 0x10); // add Song of Time
             if (_randomized.Settings.EnableSunsSong)
             {
                 PutOrCombine(startingItems, 0xC5CE71, 0x02);
