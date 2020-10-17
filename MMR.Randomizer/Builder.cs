@@ -452,12 +452,6 @@ namespace MMR.Randomizer
                 SceneUtils.ReenableNightBGM();
             }
 
-            Add5NutsToField();
-            Add5NutsToField(0xC444B7);
-            Add5NutsToField(0xC444BB);
-            AddSingleStickToField();
-            AddSingleStickToField(0xC444C0);
-            AddSingleStickToField(0xC444BF);
         }
 
         private void WriteMiscText()
@@ -1956,6 +1950,13 @@ namespace MMR.Randomizer
 
                 progressReporter.ReportProgress(67, "Writing items...");
                 WriteItems();
+
+                Add5NutsToField();
+                Add5NutsToField(0xC444B7);
+                Add5NutsToField(0xC444BB);
+                AddSingleStickToField();
+                AddSingleStickToField(0xC444C0);
+                AddSingleStickToField(0xC444BF);
 
                 progressReporter.ReportProgress(67, "Writing entrances...");
                 WriteEntrances(outputSettings);

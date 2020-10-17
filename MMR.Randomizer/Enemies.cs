@@ -4,6 +4,7 @@ using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace MMR.Randomizer
