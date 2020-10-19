@@ -50,7 +50,7 @@ namespace MMR.Randomizer.Utils
             result.Add("Bean", "Plant,Seed");
             result.Add("Big", "Bigger,Large");
             result.Add("Biggest", "Best,Largest");
-            result.Add("Blast", "Blasting,Bomb,Bomber");
+            result.Add("Blast", "Best");
             result.Add("Bomber", "Boomer");
             result.Add("Bomb", "Boom,Bomb-omb");
             result.Add("Boss", "Big,Master");

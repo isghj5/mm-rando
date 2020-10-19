@@ -1955,6 +1955,7 @@ namespace MMR.Randomizer
             items[items_length   ].Mimic    = mimics[22]; // tree is sword
             items[items_length +1].Mimic    = mimics[81]; // swamp is FD
             items[items_length +2].Mimic    = mimics[42]; // shop is blast mask
+            items[items_length +2].Mimic.FakeName    = "Best Mask";
 
             _randomized.IceTraps = list.AsReadOnly();
         }
