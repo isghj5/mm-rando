@@ -1951,12 +1951,45 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(67, "Writing items...");
                 WriteItems();
 
+                // termina field
                 Add5NutsToField();
                 Add5NutsToField(0xC444B7);
                 Add5NutsToField(0xC444BB);
                 AddSingleStickToField();
                 AddSingleStickToField(0xC444C0);
                 AddSingleStickToField(0xC444BF);
+
+                // peathat grotto
+                Add5NutsToField(0xC44504);
+                Add5NutsToField(0xC44505);
+                Add5NutsToField(0xC44506);
+                AddSingleStickToField(0xC44508);
+                AddSingleStickToField(0xC44509);
+                AddSingleStickToField(0xC4450a);
+
+                // small change bushes
+                Add5NutsToField(0xC4453c);
+                Add5NutsToField(0xC4453d);
+                Add5NutsToField(0xC4453e);
+                AddSingleStickToField(0xC44540);
+                AddSingleStickToField(0xC44541);
+                AddSingleStickToField(0xC44542);
+
+                // bombs grotto
+                Add5NutsToField(0xC44564);
+                Add5NutsToField(0xC44565);
+                Add5NutsToField(0xC44566);
+                AddSingleStickToField(0xC44568);
+                AddSingleStickToField(0xC44569);
+                AddSingleStickToField(0xC4456a);
+
+                //  sml magic set
+                Add5NutsToField(0xC445bc);
+                Add5NutsToField(0xC445bd);
+                Add5NutsToField(0xC445be);
+                AddSingleStickToField(0xC44560);
+                AddSingleStickToField(0xC44561);
+                AddSingleStickToField(0xC44562);
 
                 progressReporter.ReportProgress(67, "Writing entrances...");
                 WriteEntrances(outputSettings);
