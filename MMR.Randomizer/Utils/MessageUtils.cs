@@ -389,28 +389,60 @@ namespace MMR.Randomizer.Utils
             else
                 finalHints.Find(u => u.Id == (ushort)GossipQuote.RanchCuccoShack).Message = eggshint;
 
-            newhint = $"\x1E{soundEffectMikau}It seems that the\x01 frozen mountains\x00\x11 conceal a\x06 heroic weapon\x00 ...\xBF";
-            oldhint = finalHints.Find(u => u.Message.Contains("new file") || u.Message.Contains("quest's inception"));
-            if (oldhint != null)
-                oldhint.Message = newhint;
-            else
-              finalHints.Find(u => u.Id == (ushort)GossipQuote.CanyonDock).Message = newhint;
 
             newhint = $"\x1E{soundEffectMikau}The reward for winning\x06 Goron Race\x00\x11 is a\x06 dangerous mask\x00 ...\xBF";
-            oldhint = finalHints.Find(u => u.Message.Contains("Blast Mask"));
+            oldhint = finalHints.Find(u => u.Message.Contains("Blast Mask") || u.Message.Contains("dangerous mask"));
             if (oldhint != null)
                 oldhint.Message = newhint;
             else
-                finalHints.Find(u => u.Id == (ushort)GossipQuote.RanchCuccoShack).Message = newhint;
+                finalHints.Find(u => u.Id == (ushort)GossipQuote.TerminaNorth).Message = newhint;
 
             newhint = $"\x1E{soundEffectMikau}Something \x06very powerful\x00 is waiting\x11 at the\x01 stockpot inn\x00 ...\xBF";
             oldhint = finalHints.Find(u => u.Message.Contains("maskmarker"));
             if (oldhint != null)
-                oldhint.Message = newhint;
+            {
+                if (   oldhint.Id == (ushort)GossipQuote.MountainSpringFrog
+                    || oldhint.Id == (ushort)GossipQuote.MountainSpringPath
+                    || oldhint.Id == (ushort)GossipQuote.OceanFortress
+                    || oldhint.Id == (ushort)GossipQuote.CanyonRavine
+                    || oldhint.Id == (ushort)GossipQuote.OceanZoraGame
+                    || oldhint.Id == (ushort)GossipQuote.CanyonDock)
+                {
+                    var othermsg = finalHints.Find(u => u.Id == (ushort)GossipQuote.MilkRoad);
+                    oldhint.Message = othermsg.Message;
+                    othermsg.Message = newhint;
+                }
+                else
+                {
+                    oldhint.Message = newhint;
+                }
+            }
             else
                 finalHints.Find(u => u.Id == (ushort)GossipQuote.MilkRoad).Message = newhint;
 
-            
+            newhint = $"\x1E{soundEffectMikau}It seems that the\x01 frozen mountains\x00\x11 conceal a\x06 heroic weapon\x00 ...\xBF";
+            oldhint = finalHints.Find(u => u.Message.Contains("new file") || u.Message.Contains("quest's inception"));
+            if (oldhint != null)
+            {
+                if (   oldhint.Id == (ushort)GossipQuote.MountainSpringFrog
+                    || oldhint.Id == (ushort)GossipQuote.MountainSpringPath
+                    || oldhint.Id == (ushort)GossipQuote.OceanFortress
+                    || oldhint.Id == (ushort)GossipQuote.CanyonRavine
+                    || oldhint.Id == (ushort)GossipQuote.OceanZoraGame
+                    || oldhint.Id == (ushort)GossipQuote.CanyonDock)
+                {
+                    var othermsg = finalHints.Find(u => u.Id == (ushort)GossipQuote.TerminaObservatory);
+                    oldhint.Message = othermsg.Message;
+                    othermsg.Message = newhint;
+                }
+                else
+                {
+                    oldhint.Message = newhint;
+                }
+            }
+            else
+                finalHints.Find(u => u.Id == (ushort)GossipQuote.CanyonDock).Message = newhint;
+
             /*
             newhint = $"\x1E{soundEffectMikau}It seems\x01 MMARO\x00 is never\x11 getting an\x11is \x06\x00 ...\xBF";
             finalHints.Find(u => u.Id == (ushort)GossipQuote.TerminaGossipLarge).Message = newhint;
