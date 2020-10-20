@@ -1991,6 +1991,17 @@ namespace MMR.Randomizer
                 AddSingleStickToField(0xC44561);
                 AddSingleStickToField(0xC44562);
 
+                // it's my seed I get to pick the music
+                SoundEffect.LowHealthBeep.ReplaceWith(SoundEffect.ChildLinkPantLowHealth); // makes sense, although he will probably just disable it
+                SoundEffect.TatlEnemyAlert.ReplaceWith(SoundEffect.TatlUrgentRing); // anything
+                SoundEffect.CuccoMorning.ReplaceWith(SoundEffect.HMSChuckle);  // something is wrong, symptom 1
+                SoundEffect.WolfHowlEvening.ReplaceWith(SoundEffect.PoeLaughingSinister);  // something is wrong, symptom 1
+                SoundEffect.DogBark.ReplaceWith(SoundEffect.LowHealthBeep);  // pet the dog pls
+                SoundEffect.GuayCroak.ReplaceWith(SoundEffect.DeathScythe2); // termina field ambiance
+                SoundEffect.GetRecoveryHeart.ReplaceWith(SoundEffect.ChildLinkGrabLedge); // uncanny valley weird
+                SoundEffect.GetRupee.ReplaceWith(SoundEffect.SilverRupeeGet); // uncanny valley weird
+                SoundEffect.GetSmallItem.ReplaceWith(SoundEffect.ZuboraShaddup); //
+
                 progressReporter.ReportProgress(67, "Writing entrances...");
                 WriteEntrances(outputSettings);
 
