@@ -192,14 +192,28 @@ namespace MMR.Randomizer
             List<ValueSwap> ObjsUpdate;
             List<List<Enemy>> Updates;
             List<List<Enemy>> Matches;
+            // search forever until you find a combo of enemies that matches your scene
+            int cycle = 0;
             while (true)
             {
+                if (cycle > 10000)
+                {
+                    throw new Exception();
+                }
                 ObjsUpdate = new List<ValueSwap>();
                 Updates = new List<List<Enemy>>();
                 Matches = new List<List<Enemy>>();
                 int oldsize = 0;
                 int newsize = 0;
-                for (int i = 0; i < Objects.Count; i++)
+
+                int already_added = 0;
+                // if certain scene, add value we want beforehand
+                if (scene.File == 1431) // ikana road
+                {
+                   // Updates.Add(EnemyList.FindAll(u => ((u.Object == Objects[i]) && (Actors.Contains(u.Actor)))));
+                }
+
+                for (int i = 0 + already_added; i < Objects.Count; i++)
                 {
                     Updates.Add(EnemyList.FindAll(u => ((u.Object == Objects[i]) && (Actors.Contains(u.Actor)))));
                     Matches.Add(GetMatchPool(Updates[i], rng));
@@ -212,6 +226,70 @@ namespace MMR.Randomizer
                     NewObject.NewV = newobj;
                     ObjsUpdate.Add(NewObject);
                 }
+
+                // yes I know this is ugly, its hardcoded because enemizer is a mess and I have a deadline
+                cycle += 1;
+                if (scene.File == 1431 && ! ObjsUpdate.Any(u => u.NewV == EnemyList[0x5].Object)) // ikana and peahat
+                {
+                    continue;
+                }
+                if (scene.File == 1310 && (ObjsUpdate.Any(u => u.NewV == EnemyList[0x6].Object)
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[12].Object)  // bubbles
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[14].Object)
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[18].Object)  // mini baba
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[22].Object)  // beamos
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[30].Object)  //boe
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[33].Object)))// termina field and ! dinofos or rbubble or stalkid or eeno
+                {
+                    continue;
+                }
+                if (scene.File == 1310 && !ObjsUpdate.Any(u => u.NewV == EnemyList[31].Object)) // termina needs bomchu dont bother me with anything less
+                {
+                    continue;
+                }
+                if (scene.File == 1310 && ObjsUpdate.Count(u => u.NewV == EnemyList[23].Object) > 1) // termina stop with everything is crows
+                {
+                    continue;
+                }
+                if (scene.File == 1522 && (ObjsUpdate.Any(u => u.NewV == EnemyList[14].Object)
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[32].Object)
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[12].Object)
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[13].Object)
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[20].Object))) // grottos and ! beamos or snapper or freezard
+                {
+                    continue;
+                }
+                if (scene.File == 1362 && ! ObjsUpdate.Any(u => u.NewV == EnemyList[1].Object)) // woodfall and walmaster
+                {
+                    continue;
+                }
+                if (ObjsUpdate.Any(u => u.NewV == EnemyList[27].Object) && scene.File != 1258) // debresco and ! pirates interior
+                {
+                    continue;
+                }
+                if (ObjsUpdate.Any(u => u.NewV == EnemyList[28].Object)) // no nejiron at all
+                {
+                    continue;
+                }
+                if (scene.File == 1347 && ! (ObjsUpdate.Any(u => u.NewV == EnemyList[35].Object) || ObjsUpdate.Any(u => u.NewV == EnemyList[36].Object))) // r-t-s poe or bee
+                {
+                    continue;
+                }
+                if (scene.File == 1145 && ObjsUpdate.Any(u => u.NewV == EnemyList[0x6].Object)) // graveyard but not dinofos
+                {
+                    continue;
+                }
+                if (scene.File == 1304 && (ObjsUpdate.Any(u => u.NewV == EnemyList[21].Object)
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[14].Object)
+                                       || ObjsUpdate.Any(u => u.NewV == EnemyList[20].Object))) // deku palace ! wolfos or beamos or freezard
+                {
+                    continue;
+                }
+
+                // deku palace without shit
+                // where can we put iron knuckle? LUL
+
+
                 if (newsize <= oldsize)
                 {
                     //this should take into account map/scene size and size of all loaded actors...
@@ -219,6 +297,14 @@ namespace MMR.Randomizer
                     break;
                 }
             }
+
+            // after we have a sucessful list to use
+            // catch here and detect the onces we want
+            if (scene.Number == 0x07)
+            {
+                int sgggggg = 4;
+            }
+
             for (int i = 0; i < ObjsUpdate.Count; i++)
             {
                 int j = 0;
