@@ -2079,10 +2079,10 @@ namespace MMR.Randomizer
                 {
                     SeedRNG();
                 }
-
-                _randomized.FileSelectSkybox = Random.Next(360);
-                _randomized.FileSelectColor = Random.Next(360);
-                _randomized.TitleLogoColor = Random.Next(360);
+                Random actual_random = new Random();
+                _randomized.FileSelectSkybox =  actual_random.Next(360);
+                _randomized.FileSelectColor = actual_random.Next(360);
+                _randomized.TitleLogoColor = actual_random.Next(360);
             }
 
             return _randomized;
