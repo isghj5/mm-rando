@@ -24,8 +24,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using SixLabors.ImageSharp.Formats.Png;
-using System.Security.Cryptography;
-using System.Windows.Forms;
 
 namespace MMR.Randomizer
 {
@@ -118,6 +116,8 @@ namespace MMR.Randomizer
                 SequenceInfo TestSequenceCTD1 = TestSequenceFileselect.SequenceCopy();
                 SequenceInfo TargetSlot = RomData.TargetSequences.Find(u => u.Name.Contains("mm-fileselect"));
                 AssignSequenceSlot(TargetSlot, TestSequenceFileselect, Unassigned, "SONGTEST"); // file select
+                SequenceUtils.ConvertSequenceSlotToPointer(0x15, 0x18);
+                SequenceUtils.ConvertSequenceSlotToPointer(0x1a, 0x18);
                 List<SequenceInfo> AllRegularSongs = RomData.SequenceList.FindAll(u =>  u.Type.Intersect(TestSequenceFileselect.Type).Any());
                 SequenceUtils.ConvertSequenceSlotToPointer(0x76, 0x18);  // titlescreen
                 foreach (SequenceInfo songslot in AllRegularSongs)
