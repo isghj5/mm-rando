@@ -1,0 +1,406 @@
+[
+  {
+    name: "free item",
+    notes: "I never play without it",
+    itemList: ["MaskBunnyHood"],
+    checkList: ["HeartPieceSouthClockTown"]
+  },
+  {
+    name: "cheap kisses",
+    notes: "arent I a generous god",
+    itemList: ["ShopItemBombsBombchu10"],
+    checkList: ["ItemTingleMapTown"]
+  },
+{
+    name: "new wave after snowhead",
+    notes: "latest",
+    itemList: ["SongNewWaveBossaNova"],
+    checkList: [ "SongOath"]
+  },
+  {
+    name: "elegy on lulliby",
+    notes: "snowhead and stonetowerfirst",
+    itemList: ["SongElegy"],
+    checkList: [ "SongLullaby"]
+  },
+  {
+    name: "lulliby on sonata",
+    notes: "snowhead and stonetowerfirst",
+    itemList: ["SongLullaby"],
+    checkList: [ "SongSonata"]
+  },
+  {
+    name: "oath on elegy",
+    notes: "last after you get mirror shield",
+    itemList: ["SongOath"],
+    checkList: [ "SongElegy"]
+  },
+  {
+    name: "soaring on eggs",
+    notes: "garbage for garbage lab",
+    itemList: ["SongHealing"],
+    checkList: [ "SongNewWaveBossaNova"]
+  },
+  {
+    name: "epona start",
+    notes: "without a sword as long as possible, sonata needs deku, soaring is free, lulliby req goron, zora req eggs, storms req epona and hat, king req storms + mirror shield + ice arrow + hookshot",
+    itemList: [ "SongEpona"],
+    checkList: [ "SongHealing"]
+  },
+  {
+    name: "sonata on storms",
+    notes: "sorry you already got something here",
+    itemList: [ "SongSonata"],
+    checkList: [ "SongStorms"]
+  },
+  {
+    name: "sonata on storms",
+    notes: "plando currently happens AFTER songs if you songsanity is on, so it has to be off and then we handle it here",
+    itemList: ["SongStorms"],
+    checkList: [ "SongEpona"]
+  },
+  {
+    name: "double magic",
+    notes: "just out of reach",
+    itemList: ["FairyDoubleMagic"],
+    checkList: [ "HeartPieceToSnowhead", "UpgradeBigQuiver", "UpgradeBiggestQuiver"]
+  },
+  {
+    name: "drink up me harties",
+    notes: "got milk?",
+    itemList: ["ItemBottleMadameAroma"],
+    checkList: ["ShopItemGoronRedPotion"]
+  },
+  {
+    name: "wallet is just too nice",
+    notes: "gotta keep this seed enjoyable somehow",
+    itemList: ["UpgradeAdultWallet"],
+    checkList: ["ShopItemTradingPostShield"]
+  },
+
+  {
+    name: "put it in the trash",
+    notes: "rip",
+    itemList: ["MaskScents"],
+    checkList: ["HeartPieceNotebookHand"]
+  },
+  {
+    name: "garo mask",
+    notes: "well is something else, do not look",
+    itemList: ["MaskGaro"],
+    checkList: ["MaskGreatFairy"]
+  },
+  {
+    name: "lost zora soul",
+    notes: "context matters",
+    itemList: ["MaskZora"],
+    checkList: [ "ChestSecretShrineHeartPiece" ]
+  },
+  {
+    name: "gorgon mask",
+    notes: "context matters",
+    itemList: ["MaskGoron"],
+    checkList: [ "ItemTingleMapStoneTower" ]
+  },
+  {
+    name: "hookshot",
+    notes: "f l o w",
+    itemList: ["ItemHookshot"],
+    checkList: [ "HeartContainerSnowhead"]
+  },
+  {
+    name: "deku mask",
+    notes: "DEKU IS DEAD GET IT HES DEAD WERE ALL DEA",
+    itemList: ["MaskDeku"],
+    checkList: [ "MaskStone"]
+  },
+  {
+    name: "the finale",
+    notes: "keep stretching HeartPieceNotebookGran2 ",
+    itemList: ["MaskFierceDeity"],
+    checkList: [ "ChestInnGuestRoom"]
+  },
+  {
+    name: "save lens",
+    notes: "visible",
+    itemList: ["HeartContainerWoodfall"],
+    checkList: [ "ShopItemTradingPostGreenPotion"]
+  },
+  {
+    name: "l to k",
+    notes: "visible",
+    itemList: ["TradeItemKafeiLetter"],
+    checkList: [ "HeartPieceSwampScrub"]
+  },
+  {
+    name: "l to m",
+    notes: "less visible",
+    itemList: ["TradeItemMamaLetter"],
+    checkList: [ "ChestTerminaUnderwaterRedRupee"]
+  },
+  {
+    name: "fire arrows",
+    notes: " maybe I'm being too nice       ",
+    itemList: ["ItemFireArrow"],
+    checkList: [ "ChestBadBatsGrottoPurpleRupee"]
+  },
+  {
+    name: "mama",
+    notes: "more checks",
+    itemList: ["MaskAllNight"],
+    checkList: [ "TradeItemMamaLetter"]
+  },
+  {
+    name: "container",
+    notes: "more checks",
+    itemList: ["HeartContainerStoneTower"],
+    checkList: [ "MaskKeaton"]
+  },
+  {
+    name: "glass",
+    notes: "more checks",
+    itemList: ["ItemBottleBeavers"],
+    checkList: [ "ShopItemWitchGreenPotion"]
+  },
+  {
+    name: "bottle",
+    notes: "zora hall is too baren",
+    itemList: ["ItemBottleAliens"],
+    checkList: [ "HeartPieceEvan"]
+  },
+  {
+    name: "now what are you going to do ",
+    notes: "a sign of things to come",
+    itemList: ["ChestInsidePiratesFortressHeartPieceRoomBlueRupee"],
+    checkList: ["ChestSouthClockTownRedRupee"]
+  },
+  {
+    name: "best quiver",
+    notes: "if you remember to check this you have done well",
+    itemList: ["UpgradeBiggestQuiver"],
+    checkList: ["ChestInvertedStoneTowerBean"]
+  },
+  {
+    name: "best bang",
+    notes: "if you remember to check this you have done well",
+    itemList: ["UpgradeBiggestBombBag"],
+    checkList: ["ItemLightArrow"]
+  },
+  {
+    name: "good alternative",
+    notes: "if you remember to check this you have done well",
+    itemList: ["UpgradeBigBombBag"],
+    checkList: ["ShopItemZoraRedPotion"]
+  },
+  
+  {
+    name: "fairy sword on ice arrow",
+    notes: "bet you he skips it",
+    itemList: ["ItemFairySword"],
+    checkList: ["ItemIceArrow"]
+  },
+  {
+    name: "wallet balance",
+    notes: "zora should always have something",
+    itemList: ["UpgradeGiantWallet"],
+    checkList: ["ShopItemZoraShield"]
+  },
+  {
+    name: "romani",
+    notes: "keeps milkbar in logic easier",
+    itemList: ["MaskRomani"],
+    checkList: ["MaskKafei"]
+  },
+  {
+    name: "keg",
+    notes: "",
+    itemList: ["ItemPowderKeg"],
+    checkList: ["UpgradeBigBombBag"]
+  },
+  {
+    name: "pictobox",
+    notes: "welp",
+    itemList: ["ItemPictobox"],
+    checkList: ["ItemPictobox"]
+  },
+  {
+    name: "mask of truth",
+    notes: "first cycle is weird",
+    itemList: ["MaskTruth"],
+    checkList: ["HeartPieceKeatonQuiz"]
+  },
+
+  {
+    name: "save her damnit",
+    notes: "just do it",
+    itemList: ["ItemLightArrow"],
+    checkList: ["MaskRomani"]
+  },
+  {
+    name: "key to your heart",
+    notes: "how could you leave her you monster",
+    itemList: ["HeartContainerSnowhead"],
+    checkList: ["ItemBottleAliens"]
+  },
+  {
+    name: "worth your time?",
+    notes: "something for your trouble, grants better sword",
+    itemList: ["ItemBottleGoronRace"],
+    checkList: ["ChestInsidePiratesFortressGuardSilverRupee"]
+  },
+  {
+    name: "razor sword",
+    notes: "after first dungeon, and maybe after secret shrine even, logic does not seem to care",
+    itemList: ["UpgradeRazorSword"],
+    checkList: ["ChestMountainVillage"]
+  },
+  {
+    name: "capt hat",
+    notes: "weirdly makes sense",
+    itemList: ["MaskCaptainHat"],
+    checkList: ["HeartPieceLabFish"]
+  },
+  {
+    name: "keaton",
+    notes: "not empty, even if it is a ruse",
+    itemList: ["MaskKeaton"],
+    checkList: ["ShopItemMilkBarMilk"]
+  },
+  {
+    name: "blastmask",
+    notes: "thats what you get for being honest",
+    itemList: ["MaskBlast"],
+    checkList: ["ItemBottleGoronRace"]
+  },
+  {
+    name: "kamaro mask",
+    notes: "chain",
+    itemList: ["MaskKamaro"],
+    checkList: ["HeartPieceNotebookGran1"]
+  },
+  {
+    name: "couples mask",
+    notes: "chain",
+    itemList: ["MaskCouple"],
+    checkList: ["HeartPieceNotebookRosa"]
+  },
+  {
+    name: "postman hat",
+    notes: "chain",
+    itemList: ["MaskPostmanHat"],
+    checkList: ["HeartPieceNotebookMayor"]
+  },
+  {
+    name: "bremen",
+    notes: "chain",
+    itemList: ["MaskBremen"],
+    checkList: ["HeartPiecePostBox"]
+  },
+  {
+    name: "kafei",
+    notes: "chain",
+    itemList: ["MaskKafei"],
+    checkList: ["MaskBunnyHood"]
+  },
+  {
+    name: "room key",
+    notes: "bleh place for it, but useable day 1",
+    itemList: ["TradeItemRoomKey"],
+    checkList: ["TradeItemKafeiLetter"]
+  },
+  {
+    name: "ice arrow",
+    notes: "visible choice",
+    itemList: ["ItemIceArrow"],
+    checkList: ["IkanaScrubGoldRupee"]
+  },
+  {
+    name: "gilded",
+    notes: "actually late in the game because of location of gold dust",
+    itemList: ["UpgradeGildedSword"],
+    checkList: ["UpgradeGildedSword"]
+  },
+  {
+    name: "moontear",
+    notes: "should make it clear its not needed here",
+    itemList: ["TradeItemMoonTear"],
+    checkList: ["ShopItemBusinessScrubBluePotion"]
+  },
+  {
+    name: "treaure",
+    notes: "not worthless",
+    itemList: ["FairySpinAttack"],
+    checkList: [ "HeartPieceTreasureChestGame"]
+  },
+  {
+    name: "mirror shield",
+    notes: "since its oath, we can make this really late",
+    itemList: ["UpgradeMirrorShield"],
+    checkList: [ "HeartContainerWoodfall"]
+  },  
+  {
+    name: "starting sword",
+    notes: " lost in the void, the reason for this seed ",
+    itemList: ["StartingSword"],
+    checkList: ["ChestPreClocktownDekuNut"],
+    skipLogic: true
+  },
+  {
+    name: "double d",
+    notes: "acceptable spots requiring some work",
+    itemList: ["FairyDoubleDefense"],
+    checkList: ["UpgradeBigQuiver", "UpgradeBiggestQuiver", "UpgradeMirrorShield", "UpgradeBiggestBombBag", "ItemHookshot", "ItemBottleBeavers"]
+  },
+
+  {
+    name: "ice traps",
+    notes: " this doesn't actually work in plando, I'm just forcing to junk here ",
+    itemList: ["HeartPieceNorthClockTown", "HeartPieceToSwamp"],
+    checkList: ["HeartPieceNorthClockTown", "HeartPieceToSwamp"],
+    skipLogic: true
+  },
+
+  {
+    name: "early bombs",
+    notes: "no longer req at all, thanks to goron weirdly ",
+    itemList: ["ItemBombBag"],
+    checkList: ["HeartPieceDekuPalace"]
+  },
+  {
+    name: "bow",
+    notes: "requires the mask above",
+    itemList: ["ItemBow"],
+    checkList: [ "HeartPieceDogRace"]
+  },
+  {
+    name: "blue pot",
+    notes: "needed for shirou",
+    itemList: ["ShopItemWitchBluePotion"],
+    checkList: [ "HeartPieceNotebookPostman"]
+  },
+  {
+    name: "early magic",
+    notes: "for lens -> deku",
+    itemList: ["FairyMagic"],
+    checkList: ["HeartPieceDodong", "ChestGreatBayCoastGrotto", "ChestTerminaStumpRedRupee", "ShopItemTradingPostStick", "ShopItemTradingPostRedPotion", "ShopItemTradingPostArrow30", "ChestEastClockTownSilverRupee"]
+  },
+  {
+    name: "weird masks",
+    notes: "hmmm",
+    itemList: ["MaskStone", "MaskCircusLeader", "ItemLens", "ShopItemTradingPostRedPotion", "TradeItemOceanDeed"],
+    checkList: ["HeartPieceDodong", "ChestGreatBayCoastGrotto", "ChestTerminaStumpRedRupee", "MundaneItemHoneyAndDarlingPurpleRupee", "ShopItemTradingPostStick", "ShopItemTradingPostRedPotion", "ShopItemTradingPostArrow30", "ChestBomberHideoutSilverRupee", "ChestGreatBayCapeGrotto", "ChestEastClockTownSilverRupee"]
+  },
+  {
+    name: "worthless",
+    notes: "do not want, this is too late for it to work for logic if rando needs it",
+    itemList: ["MaskGibdo", "MaskGreatFairy", "MaskDonGero"],
+    checkList: [ "HeartContainerGreatBay", "ItemBow", "ItemWoodfallMap", "ItemWoodfallCompass", "ItemGreatBayCompass", "ItemGreatBayMap", "HeartPieceBoatArchery", "HeartPieceFishermanGame", "MaskGibdo", "MaskScents"],
+    skipLogic: true
+  },
+  {
+    name: "last bow",
+    notes: "not req for logic, place in a decent spot",
+    itemList: [ "UpgradeBigQuiver"],
+    checkList: [ "ChestSecretShrineHeartPiece", "ChestSecretShrineDinoGrotto",  "ChestSecretShrineWizzGrotto",  "ChestSecretShrineWartGrotto",  "ChestSecretShrineGaroGrotto",  "HeartContainerStoneTower",  "HeartContainerWoodfall",  "HeartPiecePeahat",  "ChestLensCavePurpleRupee",  "ChestBeanGrottoRedRupee",  "ChestHotSpringGrottoRedRupee",  "MaskAllNight",  "MaskCircusLeader",  "MaskTruth", "ShopItemZoraShield", "ItemBow", "ItemFireArrow", "ItemSnowheadMap", "ItemSnowheadCompass", "ItemWoodfallMap", "ItemWoodfallCompass", "ItemSnowheadMap", "ItemSnowheadMap", "ItemSnowheadMap", "ItemSnowheadMap", "ItemHookshot", "MaskCaptainHat", "HeartPieceKnuckle", "UpgradeRazorSword", "HeartPieceCastle", "HeartPiecePiratesFortress", "UpgradeBiggestBombBag", "ItemBottleAliens", "HeartPiecePoeHut", "HeartPieceZoraGrotto", "HeartPieceLabFish", "TradeItemMountainDeed", "HeartPieceNotebookHand", "HeartPiecePictobox", "MaskDonGero"],
+  },
+]
