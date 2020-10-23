@@ -1131,6 +1131,7 @@ namespace MMR.UI.Forms
             cDrawHash.Enabled = v;
 
             bRandomise.Enabled = v;
+            bReroll.Enabled = v;
             tSeed.Enabled = v;
             tSettings.Enabled = v;
             bLoadPatch.Enabled = v;
