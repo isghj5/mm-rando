@@ -24,6 +24,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using SixLabors.ImageSharp.Formats.Png;
+using System.ComponentModel;
 
 namespace MMR.Randomizer
 {
@@ -441,7 +442,6 @@ namespace MMR.Randomizer
             {
                 SceneUtils.ReenableNightBGM();
             }
-
         }
 
         private void WriteMiscText()
@@ -583,6 +583,75 @@ namespace MMR.Randomizer
             else
             {
                 ResourceUtils.ApplyHack(Values.ModsDirectory, "rainbow-tatl");
+            }
+        }
+
+        private void WriteNutsAndSticks()
+        {
+            if (_randomized.Settings.NutandStickDrops == NutAndStickDrops.Default)
+            {
+                return;
+            }
+
+            // adds deku sticks and deku nuts as additional drops to the drop tables, very useful in enemizer
+            // image guide from mzxrules of the drop tables in vanilla
+            // https://pbs.twimg.com/media/Dct7fa6X4AEeYpv?format=jpg&name=large 
+
+            void AddDekuNutToDropTable(int replacement_slot = 0xC444B8, byte amount = 0)
+            {
+                // add 5 x single nuts to drop table for the termina field
+                // replacement drop slot  will become deku nut, gives us 1/16 chance of a nut
+                int fid = RomUtils.GetFileIndexForWriting(replacement_slot);
+                RomUtils.CheckCompressed(fid);
+                int offset = replacement_slot - RomData.MMFileList[fid].Addr;
+                RomData.MMFileList[fid].Data[offset] = 0x0C; // 0x0C is deku nut
+                RomData.MMFileList[fid].Data[offset + 0x110] = amount; // how many items are dropped per bush
+            }
+
+            void AddDekuStickToDropTable(int replacement_slot = 0xC444C2, byte amount = 0)
+            {
+                // add single nut to drop table for the termina field
+                // replacement drop slot will become single stick, gives us 1/16 chance of a stick
+                int fid = RomUtils.GetFileIndexForWriting(replacement_slot);
+                RomUtils.CheckCompressed(fid);
+                int offset = replacement_slot - RomData.MMFileList[fid].Addr;
+                RomData.MMFileList[fid].Data[offset] = 0x0D; // 0x0D is deku stick
+                RomData.MMFileList[fid].Data[offset + 0x110] = amount; // this cahnges the amount
+            }
+
+            int bushCount = (int)_randomized.Settings.NutandStickDrops;
+            byte nutCount = _randomized.Settings.NutandStickDrops == NutAndStickDrops.Light ? (byte) 0x1 : (byte) bushCount;
+            byte stickCount = (byte)Math.Max((int)_randomized.Settings.NutandStickDrops - 2, 1);
+            AddDekuNutToDropTable(0xC444B7, nutCount);
+            AddDekuStickToDropTable(0xC444BF, stickCount);
+            if (bushCount >= 2) // medium and higher
+            {
+                AddDekuNutToDropTable(0xC444B8, nutCount);
+                AddDekuStickToDropTable(0xC444C0, stickCount);
+            }
+            if (bushCount >= 3) // extra and mayhem
+            {
+                AddDekuNutToDropTable(0xC444BC, nutCount);
+                AddDekuStickToDropTable(0xC444C1, stickCount);
+
+                // if extra, add nuts to southern swamp bushes too
+                AddDekuNutToDropTable(0xC444CB, nutCount);   // stalchild and south swamp
+                AddDekuStickToDropTable(0xC444CC, stickCount);
+
+                AddDekuNutToDropTable(0xC44574, nutCount);   // some lens of truth grass
+                AddDekuStickToDropTable(0xC44575, stickCount);
+            }
+            if (bushCount >= 4) // mayhem
+            {
+                // nuts and sticks in weird drop tables too
+                AddDekuNutToDropTable(0xC444F8, nutCount);   // graveyard rocks
+                AddDekuStickToDropTable(0xC444F9, stickCount);
+
+                AddDekuNutToDropTable(0xC444D6, nutCount);   // snow trees and snow rocks
+                AddDekuStickToDropTable(0xC444D7, stickCount);
+
+                AddDekuNutToDropTable(0xC445BA, nutCount);   // field mice
+                AddDekuStickToDropTable(0xC445BB, stickCount);
             }
         }
 
@@ -1691,7 +1760,9 @@ namespace MMR.Randomizer
                 asm = AsmContext.LoadInternal();
                 progressReporter.ReportProgress(70, "Writing ASM patch...");
                 WriteAsmPatch(asm);
-                
+
+                WriteNutsAndSticks();
+
                 progressReporter.ReportProgress(71, outputSettings.GeneratePatch ? "Generating patch..." : "Computing hash...");
                 hash = RomUtils.CreatePatch(outputSettings.GeneratePatch ? outputSettings.OutputROMFilename : null, originalMMFileList);
 
