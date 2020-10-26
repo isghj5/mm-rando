@@ -245,6 +245,19 @@ namespace MMR.Randomizer
                                 break;
                             }
                         }
+
+                        // temporary fix to some specific scene/enemy issues
+                        // desbrekos, the giant skelefish swarm will lag southern swamp horribly
+                        if (scene.File == 1358 && ObjsUpdate.Any(u => u.NewV == EnemyList[27].Object)) // southern swamp and desbrekos
+                        {
+                            continue;
+                        }
+                        // if dinofos replaces iron knuckle, it crashes (or at least crashed for me)
+                        if (scene.File == 1145 && ObjsUpdate.Any(u => u.NewV == EnemyList[0x6].Object)) // graveyard but not dinofos
+                        {
+                            continue;
+                        }
+
                         ValueSwap NewActor = new ValueSwap();
                         NewActor.OldV = Actors[j];
                         NewActor.NewV = SubMatches[l].Actor;
