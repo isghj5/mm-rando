@@ -126,6 +126,8 @@ namespace MMR.Randomizer
                     SequenceUtils.ConvertSequenceSlotToPointer(songslot.MM_seq, 0x18);
                 }
                 RomData.TargetSequences.Remove(TargetSlot);
+                // for songtest, in the event you want to record on the file select screen, mute menu sfx
+                SoundEffect.TitleSelect.ReplaceWith(SoundEffect.EmptySFX);
             }
 
             // music plando, user has selected they want an easier time specifying where and what songs are placed in specific spots
