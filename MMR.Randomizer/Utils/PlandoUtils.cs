@@ -77,12 +77,24 @@ namespace MMR.Randomizer.Utils
                     }
                     itemPlandoList = itemPlandoList.Concat(workingList).ToList();
                 }
+                catch (Newtonsoft.Json.JsonReaderException e)
+                {
+                    Debug.Print("Error: exception occurred reading plando file: " + e.ToString());
+                    throw new Exception("The following plando file failed to parse:\n"
+                                      + Path.GetFileName(filePath) + "\n\n"
+                                      + "That means it was not in acceptable json format.\n"
+                                      + "Common reasons are missing punctuation or characters,\n"
+                                      + "   like a missing comma separating items in a list\n"
+                                      + "   or a missing comma separating parts of a single combo\n"
+                                      + "   or a missing \" character at the start/end of an item\n"
+                                      + "Sometimes the line number of the error is below the actual issue\n\n"
+                                      + "The location of the parse error was reported at\n"
+                                      + "line number: " + e.LineNumber + ", " + e.LinePosition + " characters deep.");
+                }
                 catch (Exception e)
                 {
                     Debug.Print("Error: exception occurred reading plando file: " + e.ToString());
-                    #if DEBUG
-                      throw new Exception("plando file read error: " + e.ToString() + " file: " + Path.GetFileName(filePath));
-                    #endif
+                    throw new Exception("plando file read exception:\n" + e.ToString() + "\n file: " + Path.GetFileName(filePath));
                 }
             }
             return itemPlandoList;
