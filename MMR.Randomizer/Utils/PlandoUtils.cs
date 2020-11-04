@@ -48,7 +48,7 @@ namespace MMR.Randomizer.Utils
             // any file with FILEName_Plando.json in the base directory is a plando file
             // resource folders getting nuked, cannot use, just assume base directory is best places for now
             var itemPlandoList = new List<PlandoItemCombo>();
-            foreach (String filePath in Directory.GetFiles(Values.MainDirectory, "*ItemPlando.json"))
+            foreach (var filePath in Directory.GetFiles(Values.MainDirectory, "*ItemPlando.json"))
             {
                 var fileName = Path.GetFileName(filePath);
                 try
