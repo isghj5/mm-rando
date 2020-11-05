@@ -48,7 +48,7 @@ namespace MMR.Randomizer.Utils
             // any file with FILEName_Plando.json in the base directory is a plando file
             // resource folders getting nuked, cannot use, just assume base directory is best places for now
             var itemPlandoList = new List<PlandoItemCombo>();
-            foreach (String filePath in Directory.GetFiles(Values.MainDirectory, "*ItemPlando.json"))
+            foreach (var filePath in Directory.GetFiles(Values.MainDirectory, "*ItemPlando.json"))
             {
                 var fileName = Path.GetFileName(filePath);
                 try
@@ -77,12 +77,24 @@ namespace MMR.Randomizer.Utils
                     }
                     itemPlandoList = itemPlandoList.Concat(workingList).ToList();
                 }
+                catch (Newtonsoft.Json.JsonReaderException e)
+                {
+                    Debug.Print("Error: exception occurred reading plando file: " + e.ToString());
+                    throw new Exception("The following plando file failed to parse:\n"
+                                      + Path.GetFileName(filePath) + "\n\n"
+                                      + "That means it was not in acceptable json format.\n"
+                                      + "Common reasons are missing punctuation or characters,\n"
+                                      + "   like a missing comma separating items in a list\n"
+                                      + "   or a missing comma separating parts of a single combo\n"
+                                      + "   or a missing \" character at the start/end of an item\n"
+                                      + "Sometimes the line number of the error is below the actual issue\n\n"
+                                      + "The location of the parse error was reported at\n"
+                                      + "line number: " + e.LineNumber + ", " + e.LinePosition + " characters deep.");
+                }
                 catch (Exception e)
                 {
                     Debug.Print("Error: exception occurred reading plando file: " + e.ToString());
-                    #if DEBUG
-                      throw new Exception("plando file read error: " + e.ToString() + " file: " + Path.GetFileName(filePath));
-                    #endif
+                    throw new Exception("plando file read exception:\n" + e.ToString() + "\n file: " + Path.GetFileName(filePath));
                 }
             }
             return itemPlandoList;
@@ -188,44 +200,50 @@ namespace MMR.Randomizer.Utils
         // remove items and checks already taken
         public static PlandoItemCombo CleanItemCombo(PlandoItemCombo itemCombo, Random random, List<Item> randomizerItemPool, ItemList randomizerItemList)
         {
-            // shuffle item and check order
-            itemCombo.ItemList  = itemCombo.ItemList.OrderBy(x => random.Next()).ToList();
-            itemCombo.CheckList = itemCombo.CheckList.OrderBy(x => random.Next()).ToList();
+            PlandoItemCombo returnCombo = new PlandoItemCombo 
+            {
+                ItemList = itemCombo.ItemList.OrderBy(x => random.Next()).ToList(),
+                CheckList = itemCombo.CheckList.OrderBy(x => random.Next()).ToList(),
+                SkipLogic = itemCombo.SkipLogic,
+                ItemDrawCount = itemCombo.ItemDrawCount,
+                Name = itemCombo.Name,
+                Notes = itemCombo.Notes
+            };
 
             // clean combo of already placed items and checks
-            foreach (Item item in itemCombo.ItemList.ToList()) 
+            foreach (Item item in returnCombo.ItemList.ToList()) 
             {
                 if (randomizerItemList[item].NewLocation.HasValue)
                 {
                     Debug.WriteLine("Item has already been placed. " + item);
-                    itemCombo.ItemList.Remove(item);
+                    returnCombo.ItemList.Remove(item);
                 }
             }
 
-            foreach (Item check in itemCombo.CheckList.ToList())
+            foreach (Item check in returnCombo.CheckList.ToList())
             {
                 if ( ! randomizerItemPool.Contains(check))
                 {
                     Debug.WriteLine("Check does not exist in randomized item pool, either already taken or not randomized: " + check);
-                    itemCombo.CheckList.Remove(check);
+                    returnCombo.CheckList.Remove(check);
                 }
             }
 
-            if (itemCombo.ItemList.Count == 0)
+            if (returnCombo.ItemList.Count == 0)
             {
-                Debug.WriteLine("Plando Item Combo is starved, all items have already been placed: " + itemCombo.Name);
+                Debug.WriteLine("Plando Item Combo is starved, all items have already been placed: " + returnCombo.Name);
                 return null;
             }
-            if (itemCombo.CheckList.Count == 0)
+            if (returnCombo.CheckList.Count == 0)
             {
-                Debug.WriteLine("Plando Item Combo is starved, all checks are already filled: " + itemCombo.Name);
+                Debug.WriteLine("Plando Item Combo is starved, all checks are already filled: " + returnCombo.Name);
                 return null;
             }
 
-            if (itemCombo.ItemDrawCount <= -1)
-                itemCombo.ItemDrawCount = itemCombo.ItemList.Count;
+            if (returnCombo.ItemDrawCount <= -1)
+                returnCombo.ItemDrawCount = returnCombo.ItemList.Count;
 
-            return itemCombo;
+            return returnCombo;
         }
 
     }
