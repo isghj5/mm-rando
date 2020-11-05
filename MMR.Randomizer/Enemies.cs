@@ -257,6 +257,11 @@ namespace MMR.Randomizer
                         {
                             continue;
                         }
+                        // if peathat in snowhead, it lags the whole dungeon
+                        if (scene.File == 1241 && ObjsUpdate.Any(u => u.NewV == EnemyList[0x5].Object)) // snowhead but not peahat
+                        {
+                            continue;
+                        }
 
                         ValueSwap NewActor = new ValueSwap();
                         NewActor.OldV = Actors[j];
