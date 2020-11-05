@@ -871,9 +871,24 @@ namespace MMR.Randomizer
                 foreach (PlandoItemCombo pic in plandoItemCombos)
                 {
                     var itemCombo = PlandoUtils.CleanItemCombo(pic, Random, itemPool, ItemList);
-                    if (itemCombo == null)
+                    if (itemCombo == null) // not possible to fullfill
                     {
-                        throw new Exception("Error: Plando failed to build with this seed, combo: " + pic.Name);
+                        // let's backtrack and find the items that are already assigned
+                        //   and the checks that are already taken and print them
+                        var allItems = ItemList.FindAll(u => pic.ItemList.Contains(u.Item));
+                        var previouslyPlacedItems = allItems.FindAll(u => u.IsRandomized);
+                        string picDebug = "Items that were already assigned:\n";
+                        foreach(var item in previouslyPlacedItems)
+                        {
+                            picDebug += "- [" + item.Item.Name() + "] was placed in check: [" + item.NewLocation.Value.Location() + "]\n";
+                        }
+                        var previouslyPlacedChecks = ItemList.FindAll(u => u.IsRandomized && pic.CheckList.Contains(u.NewLocation.Value));
+                        picDebug += "\nChecks that were already assigned:\n";
+                        foreach (var item in previouslyPlacedChecks)
+                        {
+                            picDebug += "- [" + item.NewLocation.Value.Location() + "] was filled with item: [" + item.Item.Name() + "]\n";
+                        }
+                        throw new Exception("Error: Plando failed to build with this seed\n combo name: [" + pic.Name + "]\n\n" + picDebug);
                     }
 
                     int drawCount = 0;

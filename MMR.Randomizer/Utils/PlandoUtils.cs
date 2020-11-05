@@ -200,44 +200,50 @@ namespace MMR.Randomizer.Utils
         // remove items and checks already taken
         public static PlandoItemCombo CleanItemCombo(PlandoItemCombo itemCombo, Random random, List<Item> randomizerItemPool, ItemList randomizerItemList)
         {
-            // shuffle item and check order
-            itemCombo.ItemList  = itemCombo.ItemList.OrderBy(x => random.Next()).ToList();
-            itemCombo.CheckList = itemCombo.CheckList.OrderBy(x => random.Next()).ToList();
+            PlandoItemCombo returnCombo = new PlandoItemCombo 
+            {
+                ItemList = itemCombo.ItemList.OrderBy(x => random.Next()).ToList(),
+                CheckList = itemCombo.CheckList.OrderBy(x => random.Next()).ToList(),
+                SkipLogic = itemCombo.SkipLogic,
+                ItemDrawCount = itemCombo.ItemDrawCount,
+                Name = itemCombo.Name,
+                Notes = itemCombo.Notes
+            };
 
             // clean combo of already placed items and checks
-            foreach (Item item in itemCombo.ItemList.ToList()) 
+            foreach (Item item in returnCombo.ItemList.ToList()) 
             {
                 if (randomizerItemList[item].NewLocation.HasValue)
                 {
                     Debug.WriteLine("Item has already been placed. " + item);
-                    itemCombo.ItemList.Remove(item);
+                    returnCombo.ItemList.Remove(item);
                 }
             }
 
-            foreach (Item check in itemCombo.CheckList.ToList())
+            foreach (Item check in returnCombo.CheckList.ToList())
             {
                 if ( ! randomizerItemPool.Contains(check))
                 {
                     Debug.WriteLine("Check does not exist in randomized item pool, either already taken or not randomized: " + check);
-                    itemCombo.CheckList.Remove(check);
+                    returnCombo.CheckList.Remove(check);
                 }
             }
 
-            if (itemCombo.ItemList.Count == 0)
+            if (returnCombo.ItemList.Count == 0)
             {
-                Debug.WriteLine("Plando Item Combo is starved, all items have already been placed: " + itemCombo.Name);
+                Debug.WriteLine("Plando Item Combo is starved, all items have already been placed: " + returnCombo.Name);
                 return null;
             }
-            if (itemCombo.CheckList.Count == 0)
+            if (returnCombo.CheckList.Count == 0)
             {
-                Debug.WriteLine("Plando Item Combo is starved, all checks are already filled: " + itemCombo.Name);
+                Debug.WriteLine("Plando Item Combo is starved, all checks are already filled: " + returnCombo.Name);
                 return null;
             }
 
-            if (itemCombo.ItemDrawCount <= -1)
-                itemCombo.ItemDrawCount = itemCombo.ItemList.Count;
+            if (returnCombo.ItemDrawCount <= -1)
+                returnCombo.ItemDrawCount = returnCombo.ItemList.Count;
 
-            return itemCombo;
+            return returnCombo;
         }
 
     }
