@@ -1,9 +1,11 @@
+----------------------------------------------------
 -actor
 -obj
 -vars - todo: may connect to switches
 -type - 0=ground, 1=water, 2=air, 3=other, 4=respawn
 -moving - 0=no, 1=yes
 -scene excludes
+----------------------------------------------------
 -octorok
 0008
 0005
