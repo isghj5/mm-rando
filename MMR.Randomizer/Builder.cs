@@ -24,7 +24,6 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using SixLabors.ImageSharp.Formats.Png;
-using System.ComponentModel;
 
 namespace MMR.Randomizer
 {
@@ -444,6 +443,7 @@ namespace MMR.Randomizer
             {
                 SceneUtils.ReenableNightBGM();
             }
+
         }
 
         private void WriteMiscText()
@@ -1764,7 +1764,7 @@ namespace MMR.Randomizer
                 WriteAsmPatch(asm);
 
                 WriteNutsAndSticks();
-
+                
                 progressReporter.ReportProgress(71, outputSettings.GeneratePatch ? "Generating patch..." : "Computing hash...");
                 hash = RomUtils.CreatePatch(outputSettings.GeneratePatch ? outputSettings.OutputROMFilename : null, originalMMFileList);
 
