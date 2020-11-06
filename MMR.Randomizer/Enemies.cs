@@ -384,7 +384,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Garo
             }.ToList();
 
-            //var wholeList = WeakEnemiesOnly ? WeakEnemyList : WeakEnemyList.Concat(AnnoyingEnemyList);
+            //var wholeList = weakEnemiesOnly ? weakEnemyList : weakEnemyList.Concat(annoyingEnemyList);
             var wholeList = weakEnemyList;
 
             foreach (GameObjects.Actor enemy in wholeList)

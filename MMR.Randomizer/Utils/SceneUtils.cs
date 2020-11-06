@@ -301,7 +301,13 @@ namespace MMR.Randomizer.Utils
                 GameObjects.Scene.WestClockTown,
                 GameObjects.Scene.NorthClockTown,
                 GameObjects.Scene.SouthClockTown,
-                GameObjects.Scene.LaundryPool
+                GameObjects.Scene.LaundryPool,
+                GameObjects.Scene.Snowhead,
+                GameObjects.Scene.IkanaCanyon,
+                GameObjects.Scene.LaundryPool,
+
+                GameObjects.Scene.StockPotInn,
+                GameObjects.Scene.PostOffice
             }.ToList();
 
             foreach (var SceneEnum in TargetSceneEnums)
