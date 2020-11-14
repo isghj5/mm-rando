@@ -178,7 +178,7 @@ namespace MMR.Randomizer.Asm
         /// <returns>Patcher</returns>
         public static Patcher Load()
         {
-            return FromString(Properties.Resources.ASM_PATCH);
+            return FromString(Resources.asm.rom_patch);
         }
 
         /// <summary>

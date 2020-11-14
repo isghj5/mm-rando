@@ -1,10 +1,7 @@
 ﻿using MMR.Randomizer.Extensions;
-using MMR.Randomizer.Utils;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
 using MMR.Randomizer.GameObjects;
 
 namespace MMR.Randomizer.Models
@@ -50,6 +47,13 @@ namespace MMR.Randomizer.Models
                 case Item.MaskBlast:
                     RequiredItemIds?.Remove((int)Item.TradeItemKafeiLetter);
                     RequiredItemIds?.Remove((int)Item.TradeItemPendant);
+                    break;
+                case Item.UpgradeMirrorShield:
+                    ConditionalItemIds?.ForEach(c =>
+                    {
+                        c.Remove((int)Item.TradeItemKafeiLetter);
+                        c.Remove((int)Item.TradeItemPendant);
+                    });
                     break;
                 case Item.BottleCatchPrincess:
                 case Item.BottleCatchBigPoe:

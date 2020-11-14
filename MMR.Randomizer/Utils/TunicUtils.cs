@@ -175,18 +175,15 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void UpdateFormTunics(List<int[]> addresses, Color targetColor)
+        public static void UpdateFormTunics(int tunicIndex, List<int[]> addresses, Color targetColor)
         {
-            for (int i = 0; i < addresses.Count; i++)
+            for (int j = 0; j < addresses[tunicIndex].Length; j++)
             {
-                for (int j = 0; j < addresses[i].Length; j++)
-                {
-                    int fileInRom = RomUtils.GetFileIndexForWriting(addresses[i][j]);
-                    int addressInFile = addresses[i][j] - RomData.MMFileList[fileInRom].Addr;
-                    Color[] colorArray = ReadColours(fileInRom, addressInFile, paletteSize[i]);
-                    colorArray = ShiftHue(colorArray, targetColor, paletteSize[i], isZora[i], isGradientImage[i], isFierceDeity[i]);
-                    WriteColours(fileInRom, addressInFile, paletteSize[i], colorArray);
-                }
+                int fileInRom = RomUtils.GetFileIndexForWriting(addresses[tunicIndex][j]);
+                int addressInFile = addresses[tunicIndex][j] - RomData.MMFileList[fileInRom].Addr;
+                Color[] colorArray = ReadColours(fileInRom, addressInFile, paletteSize[tunicIndex]);
+                colorArray = ShiftHue(colorArray, targetColor, paletteSize[tunicIndex], isZora[tunicIndex], isGradientImage[tunicIndex], isFierceDeity[tunicIndex]);
+                WriteColours(fileInRom, addressInFile, paletteSize[tunicIndex], colorArray);
             }
         }
 

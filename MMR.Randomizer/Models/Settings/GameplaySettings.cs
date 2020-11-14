@@ -70,11 +70,27 @@ namespace MMR.Randomizer.Models.Settings
         }
 
         /// <summary>
+        /// Whether or not to apply Elegy of Emptiness speedups.
+        /// </summary>
+        public bool ElegySpeedup {
+            get { return this.AsmOptions.MiscConfig.Flags.ElegySpeedup; }
+            set { this.AsmOptions.MiscConfig.Flags.ElegySpeedup = value; }
+        }
+
+        /// <summary>
         /// Whether or not to enable faster pushing and pulling speeds.
         /// </summary>
         public bool FastPush {
             get { return this.AsmOptions.MiscConfig.Flags.FastPush; }
             set { this.AsmOptions.MiscConfig.Flags.FastPush = value; }
+        }
+
+        /// <summary>
+        /// Whether or not ice traps should behave slightly differently from other items in certain situations.
+        /// </summary>
+        public bool IceTrapQuirks {
+            get { return this.AsmOptions.MiscConfig.Flags.IceTrapQuirks; }
+            set { this.AsmOptions.MiscConfig.Flags.IceTrapQuirks = value; }
         }
 
         /// <summary>
@@ -99,6 +115,33 @@ namespace MMR.Randomizer.Models.Settings
         public bool QuestItemStorage {
             get { return this.AsmOptions.MiscConfig.Flags.QuestItemStorage; }
             set { this.AsmOptions.MiscConfig.Flags.QuestItemStorage = value; }
+        }
+
+        /// <summary>
+        /// Whether or not to enable Continuous Deku Hopping.
+        /// </summary>
+        public bool ContinuousDekuHopping
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.ContinuousDekuHopping; }
+            set { this.AsmOptions.MiscConfig.Flags.ContinuousDekuHopping = value; }
+        }
+
+        /// <summary>
+        /// Updates shop models and text
+        /// </summary>
+        public bool UpdateShopAppearance
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.ShopModels; }
+            set { this.AsmOptions.MiscConfig.Flags.ShopModels = value; }
+        }
+
+        /// <summary>
+        /// Updates shop models and text
+        /// </summary>
+        public bool ProgressiveUpgrades
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.ProgressiveUpgrades; }
+            set { this.AsmOptions.MiscConfig.Flags.ProgressiveUpgrades = value; }
         }
 
         #endregion
@@ -231,6 +274,16 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public string CustomJunkLocationsString { get; set; }
 
+        /// <summary>
+        /// Defines number of ice traps.
+        /// </summary>
+        public IceTraps IceTraps { get; set; }
+
+        /// <summary>
+        /// Defines appearance pool for visible ice traps.
+        /// </summary>
+        public IceTrapAppearance IceTrapAppearance { get; set; }
+
         #endregion
 
         #region Gimmicks
@@ -287,6 +340,11 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool ByoAmmo { get; set; }
 
+        /// <summary>
+        /// Dying causes the moon to crash, with all that that implies.
+        /// </summary>
+        public bool DeathMoonCrash { get; set; }
+
         #endregion
 
         #region Comfort / Cosmetics
@@ -325,11 +383,6 @@ namespace MMR.Randomizer.Models.Settings
         /// Prevent downgrades
         /// </summary>
         public bool PreventDowngrades { get; set; } = true;
-
-        /// <summary>
-        /// Updates shop models and text
-        /// </summary>
-        public bool UpdateShopAppearance { get; set; } = true;
 
         /// <summary>
         /// Updates chest appearance to match contents

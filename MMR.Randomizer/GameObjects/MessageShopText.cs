@@ -26,21 +26,21 @@ namespace MMR.Randomizer.GameObjects
         MilkBar = 0x2B0B,
     }
 
-    public static class MessageShopStyle
+    public enum MessageShopStyle
     {
-        public const string Tingle = "\u0002\u00C3{0,-22}\u0001{1,2} Rupees\u0011\u0002{2,-22}\u0001{3,2} Rupees\u0011\u0002No Thanks\u00BF";
-        public const string MilkBar = "What'll it be?\u0011\u0013\u0013\u0012\u0002\u00C3{0}: \u0006{1} Rupees\u0011\u0002{2}: \u0006{3} Rupees\u0011\u0002Nothing\u00BF";
+        Tingle,
+        MilkBar,
     }
 
     public class MessageShopAttribute : Attribute
     {
-        public string MessageFormat { get; private set; }
-        public Item[] Items { get; private set; }
-        public int[] Prices { get; private set; }
+        public MessageShopStyle MessageShopStyle { get; }
+        public Item[] Items { get; }
+        public int[] Prices { get; }
 
-        public MessageShopAttribute(string messageFormat, Item item1, int price1, Item item2, int price2)
+        public MessageShopAttribute(MessageShopStyle messageShopStyle, Item item1, int price1, Item item2, int price2)
         {
-            MessageFormat = messageFormat;
+            MessageShopStyle = messageShopStyle;
             Items = new Item[] { item1, item2 };
             Prices = new int[] { price1, price2 };
         }

@@ -1,0 +1,322 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="byo_ammo" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\byo-ammo;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="chest_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\chest-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="cm_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\cm-cs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="death_moon_crash" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\death-moon-crash;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="de_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\de-1;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="de_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\de-2;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="de_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\de-3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="de_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\de-4;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="de_5" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\de-5;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dm_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\dm-1;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dm_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\dm-2;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dm_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\dm-3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="dm_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\dm-4;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="enable_sunssong" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\enable-sunssong;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fierce_deity_anywhere" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fierce-deity-anywhere;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="file_select" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\file-select;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_clock_speed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-clock-speed;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_cow_bottle_check" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-cow-bottle-check;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_deku_drowning" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-deku-drowning;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_deku_princess" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-deku-princess;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_downgrades" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-downgrades;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_dungeons" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-dungeons;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_epona" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-epona;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_fairies" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-fairies;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_fd_mask_reset" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-fd-mask-reset;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_fisherman" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-fisherman;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_item_checks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-item-checks;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_kafei" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-kafei;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_link_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-link-1;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_link_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-link-2;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_link_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-link-3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_music" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-music;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_shop_checks" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-shop-checks;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_skulltula_tokens" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-skulltula-tokens;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_song_of_healing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-song-of-healing;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_sword_song_of_time" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-sword-song-of-time;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="floor_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\floor-1;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="floor_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\floor-2;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="floor_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\floor-3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="floor_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\floor-4;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="gi_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\gi-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="init_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\init-file;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="inst24_swap_guitar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\inst24-swap-guitar;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="logo_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\logo-text;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="misc_changes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\misc-changes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="movement_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\movement-1;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="movement_2" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\movement-2;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="movement_3" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\movement-3;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="movement_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\movement-4;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="postman_testing" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\postman-testing;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="quick_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\quick-text;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="rainbow_tatl" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\rainbow-tatl;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="reloc_audio" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\reloc-audio;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="remove_tatl_interrupts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\remove-tatl-interrupts;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="replace_gi_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\replace-gi-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="short_cutscenes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\short-cutscenes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="speedup_bank" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\speedup-bank;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="speedup_beavers" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\speedup-beavers;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="speedup_dampe" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\speedup-dampe;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="speedup_dograce" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\speedup-dograce;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="speedup_labfish" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\speedup-labfish;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="standing_hearts" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\standing-hearts;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="title_screen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\title-screen;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="update_chests" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\update-chests;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="update_kafei_mask_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\update-kafei-mask-icon;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="update_trade_scrubs" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\update-trade-scrubs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="ztargetinghold" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\ztargetinghold;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+</root>

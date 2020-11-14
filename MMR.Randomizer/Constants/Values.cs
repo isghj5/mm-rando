@@ -8,10 +8,7 @@ namespace MMR.Randomizer.Constants
     {
 
         public static string MainDirectory = AppDomain.CurrentDomain.BaseDirectory;
-        public static string MusicDirectory = Path.Combine(MainDirectory, "Resources", "music");
-        public static string ModsDirectory = Path.Combine(MainDirectory, "Resources", "mods");
-        public static string AddrsDirectory = Path.Combine(MainDirectory, "Resources", "addresses");
-        public static string ObjsDirectory = Path.Combine(MainDirectory, "Resources", "models");
+        public static string MusicDirectory = Path.Combine(MainDirectory, "music");
         public static string VCDirectory = Path.Combine(MainDirectory, "vc");
 
         public const byte VanillaClockSpeed = 3;

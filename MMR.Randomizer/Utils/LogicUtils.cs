@@ -1,10 +1,13 @@
-﻿using MMR.Randomizer.Extensions;
+﻿using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes;
+using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.LogicMigrator;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -168,6 +171,141 @@ namespace MMR.Randomizer.Utils
                 itemList.Add(currentItem);
             }
             return itemList;
+        }
+
+        public static Dictionary<GossipQuote, ReadOnlyCollection<Item>> GetGossipStoneRequirements(ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
+        {
+            return Enum.GetValues(typeof(GossipQuote))
+                .Cast<GossipQuote>()
+                .Where(gq => gq.HasAttribute<GossipStoneAttribute>())
+                .ToDictionary(gq => gq, gq => GetGossipStoneRequirement(gq, itemList, logic, settings));
+        }
+
+        public static ReadOnlyCollection<Item> GetGossipStoneRequirement(GossipQuote gossipQuote, ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
+        {
+            var gossipStoneItem = gossipQuote.GetAttribute<GossipStoneAttribute>().Item;
+            return GetImportantItems(itemList, settings, gossipStoneItem, logic).Required;
+        }
+
+        public class LogicPaths
+        {
+            public ReadOnlyCollection<Item> Required { get; set; }
+            public ReadOnlyCollection<Item> Important { get; set; }
+        }
+
+        public static LogicPaths GetImportantItems(ItemList itemList, GameplaySettings settings, Item item, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedItems = null, params Item[] exclude)
+        {
+            if (settings.CustomStartingItemList.Contains(item))
+            {
+                return new LogicPaths();
+            }
+            if (logicPath == null)
+            {
+                logicPath = new List<Item>();
+            }
+            if (logicPath.Contains(item))
+            {
+                return null;
+            }
+            if (exclude.Contains(item))
+            {
+                if (settings.AddSongs || !ItemUtils.IsSong(item) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsSong(i)))
+                {
+                    return null;
+                }
+            }
+            logicPath.Add(item);
+            if (checkedItems == null)
+            {
+                checkedItems = new Dictionary<Item, LogicPaths>();
+            }
+            if (checkedItems.ContainsKey(item))
+            {
+                if (logicPath.Intersect(checkedItems[item].Required).Any())
+                {
+                    return null;
+                }
+                return checkedItems[item];
+            }
+            var itemObject = itemList[item];
+            var locationId = itemObject.NewLocation.HasValue ? itemObject.NewLocation : item;
+            var locationLogic = itemLogic[(int)locationId];
+            var required = new List<Item>();
+            var important = new List<Item>();
+            if (locationLogic.RequiredItemIds != null && locationLogic.RequiredItemIds.Any())
+            {
+                foreach (var requiredItemId in locationLogic.RequiredItemIds)
+                {
+                    var childPaths = GetImportantItems(itemList, settings, (Item)requiredItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                    if (childPaths == null)
+                    {
+                        return null;
+                    }
+                    required.Add((Item)requiredItemId);
+                    if (childPaths.Required != null)
+                    {
+                        required.AddRange(childPaths.Required);
+                    }
+                    if (childPaths.Important != null)
+                    {
+                        important.AddRange(childPaths.Important);
+                    }
+                }
+            }
+            if (locationLogic.ConditionalItemIds != null && locationLogic.ConditionalItemIds.Any())
+            {
+                var logicPaths = new List<LogicPaths>();
+                foreach (var conditions in locationLogic.ConditionalItemIds)
+                {
+                    var conditionalRequired = new List<Item>();
+                    var conditionalImportant = new List<Item>();
+                    foreach (var conditionalItemId in conditions)
+                    {
+                        var childPaths = GetImportantItems(itemList, settings, (Item)conditionalItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                        if (childPaths == null)
+                        {
+                            conditionalRequired = null;
+                            conditionalImportant = null;
+                            break;
+                        }
+
+                        conditionalRequired.Add((Item)conditionalItemId);
+                        if (childPaths.Required != null)
+                        {
+                            conditionalRequired.AddRange(childPaths.Required);
+                        }
+                        if (childPaths.Important != null)
+                        {
+                            conditionalImportant.AddRange(childPaths.Important);
+                        }
+                    }
+
+                    if (conditionalRequired != null && conditionalImportant != null)
+                    {
+                        logicPaths.Add(new LogicPaths
+                        {
+                            Required = conditionalRequired.AsReadOnly(),
+                            Important = conditionalImportant.AsReadOnly()
+                        });
+                    }
+                }
+                if (!logicPaths.Any())
+                {
+                    return null;
+                }
+                required.AddRange(logicPaths.Select(lp => lp.Required.AsEnumerable()).Aggregate((a, b) => a.Intersect(b)));
+                important.AddRange(logicPaths.SelectMany(lp => lp.Required.Union(lp.Important)).Distinct());
+            }
+            var result = new LogicPaths
+            {
+                Required = required.Distinct().ToList().AsReadOnly(),
+                Important = important.Union(required).Distinct().ToList().AsReadOnly()
+            };
+            if (!item.IsFake())
+            {
+                checkedItems[item] = result;
+            }
+            return result;
         }
     }
 }

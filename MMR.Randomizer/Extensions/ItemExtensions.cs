@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using MMR.Randomizer.Attributes;
+﻿using MMR.Randomizer.Attributes;
 using MMR.Randomizer.GameObjects;
 using MMR.Common.Extensions;
+using MMR.Randomizer.Models.Rom;
 
 namespace MMR.Randomizer.Extensions
 {
     public static class ItemExtensions
     {
-        public static int? GetItemIndex(this Item item)
+        public static ushort? GetItemIndex(this Item item)
         {
             return item.GetAttribute<GetItemIndexAttribute>()?.Index;
         }
@@ -23,6 +20,34 @@ namespace MMR.Randomizer.Extensions
         public static string Name(this Item item)
         {
             return item.GetAttribute<ItemNameAttribute>()?.Name;
+        }
+
+        public static string ProgressiveUpgradeName(this Item item, bool progressiveUpgradesEnabled)
+        {
+            if (progressiveUpgradesEnabled)
+            {
+                if (item == Item.StartingSword || item == Item.UpgradeRazorSword || item == Item.UpgradeGildedSword)
+                {
+                    return "Sword Upgrade";
+                }
+                if (item == Item.FairyMagic || item == Item.FairyDoubleMagic)
+                {
+                    return "Magic Power Upgrade";
+                }
+                if (item == Item.UpgradeAdultWallet || item == Item.UpgradeGiantWallet)
+                {
+                    return "Wallet Upgrade";
+                }
+                if (item == Item.ItemBombBag || item == Item.UpgradeBigBombBag || item == Item.UpgradeBiggestBombBag)
+                {
+                    return "Bomb Bag Upgrade";
+                }
+                if (item == Item.ItemBow || item == Item.UpgradeBigQuiver || item == Item.UpgradeBiggestQuiver)
+                {
+                    return "Bow Upgrade";
+                }
+            }
+            return item.Name();
         }
 
         public static string Location(this Item item)
@@ -88,6 +113,54 @@ namespace MMR.Randomizer.Extensions
         public static bool IsOverwritable(this Item item)
         {
             return item.HasAttribute<OverwritableAttribute>();
+        }
+
+        public static bool IsShop(this Item item)
+        {
+            return item.HasAttribute<ShopRoomAttribute>();
+        }
+
+        public static bool IsSong(this Item item)
+        {
+            return (Item.SongHealing <= item && item <= Item.SongOath);
+        }
+
+        public static ChestTypeAttribute.ChestType ChestType(this Item item)
+        {
+            return item.GetAttribute<ChestTypeAttribute>().Type;
+        }
+
+        public static bool IsPurchaseable(this Item item)
+        {
+            return item.HasAttribute<PurchaseableAttribute>();
+        }
+
+        public static bool IsVisible(this Item item)
+        {
+            return item.HasAttribute<VisibleAttribute>();
+        }
+
+        public static bool IsExclusiveItem(this Item item)
+        {
+            return item.HasAttribute<ExclusiveItemAttribute>();
+        }
+
+        public static GetItemEntry ExclusiveItemEntry(this Item item)
+        {
+            return new GetItemEntry
+            {
+                ItemGained = item.GetAttribute<ExclusiveItemAttribute>().Item,
+                Flag = item.GetAttribute<ExclusiveItemAttribute>().Flags,
+                Index = item.GetAttribute<ExclusiveItemGraphicAttribute>().Graphic,
+                Type = item.GetAttribute<ExclusiveItemAttribute>().Type,
+                Message = (short)item.GetAttribute<ExclusiveItemMessageAttribute>().Id,
+                Object = (short)item.GetAttribute<ExclusiveItemGraphicAttribute>().Object,
+            };
+        }
+
+        public static string ExclusiveItemMessage(this Item item)
+        {
+            return item.GetAttribute<ExclusiveItemMessageAttribute>().Message;
         }
     }
 }

@@ -10,6 +10,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongLullaby)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongNewWaveBossaNova)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongElegy)]
+        [GossipStone(Item.GossipTerminaSouth)]
         TerminaSouth = 0x20B0,
 
         //The Swamp Tourist Center will not accept pictographs taken outside the swamp.
@@ -19,6 +20,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceSwampArchery)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestWoodsGrotto)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskScents)]
+        [GossipStone(Item.GossipSwampPotionShop)]
         SwampPotionShop = 0x20B1,
 
         //The frogs that are supposed to gather in the mountain when spring arrives are elsewhere.
@@ -31,6 +33,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeGildedSword)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleGoronRace)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleGoronRace)]
+        [GossipStone(Item.GossipMountainSpringPath)]
         MountainSpringPath = 0x20B2,
 
         //The gold dust won as the prize in the Goron Races in spring can be used by the smithy to forge a sword.
@@ -40,6 +43,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeGildedSword)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleGoronRace)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleGoronRace)]
+        [GossipStone(Item.GossipMountainPath)]
         MountainPath = 0x20B3,
 
         //To get Evan to listen to Mikau and Japas's song from their music session, you should not try demonstrating it as Mikau.
@@ -49,6 +53,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceBeaverRace)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskZora)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemHookshot)]
+        [GossipStone(Item.GossipOceanZoraGame)]
         OceanZoraGame = 0x20B4,
 
         //If you use the Lens of Truth near here and speak to the man you find...
@@ -60,6 +65,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskGibdo)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskCaptainHat)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleDampe)]
+        [GossipStone(Item.GossipCanyonRoad)]
         CanyonRoad = 0x20B5,
 
         //It seems the ReDeads that appear in Ikana Castle start dancing when the Captain's Hat, Gibdo Mask or Garo's Mask are worn.
@@ -72,6 +78,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestSecretShrineGaroGrotto)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestSecretShrineWartGrotto)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestSecretShrineWizzGrotto)]
+        [GossipStone(Item.GossipCanyonDock)]
         CanyonDock = 0x20B6,
 
         //Pamela, who lives in the music box house, comes out every two minutes when the music box is playing.
@@ -81,6 +88,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongStorms)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleDampe)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongHealing)]
+        [GossipStone(Item.GossipCanyonSpiritHouse)]
         CanyonSpiritHouse = 0x20B7,
 
         //It seems that you can become a Milk Bar member if you do a good deed at the ranch.
@@ -88,6 +96,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskRomani)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskAllNight)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestTerminaUnderwaterRedRupee)]
+        [GossipStone(Item.GossipTerminaMilk)]
         TerminaMilk = 0x20B8,
 
         //The symbol of marriage, the Couple's Mask seems to have the power to calm and silence arguments.
@@ -95,6 +104,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongEpona)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskZora)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceTerminaGossipStones)]
+        [GossipStone(Item.GossipTerminaWest)]
         TerminaWest = 0x20B9,
 
         //Anju, the woman at the inn, is known for being careless and frequently mixes up guests.
@@ -103,12 +113,14 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.UpgradeBigQuiver)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.UpgradeBiggestQuiver)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskGoron)]
+        [GossipStone(Item.GossipTerminaNorth)]
         TerminaNorth = 0x20BA,
 
         //It seems that the hideout of Sakon, the thief, is tucked away at the edge of Ikana Canyon.
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskCouple)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongEpona)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleDampe)]
+        [GossipStone(Item.GossipTerminaEast)]
         TerminaEast = 0x20BB,
 
         //The animal bandleader's mask seems to have the strange power of making young animals mature.
@@ -116,6 +128,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskRomani)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleAliens)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceDekuPlayground)]
+        [GossipStone(Item.GossipRanchTree)]
         RanchTree = 0x20BC,
 
         //It seems that Kafei, whose whereabouts are unknown, is awaiting a letter from Anju...
@@ -123,6 +136,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.TradeItemPendant)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleAliens)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleAliens)]
+        [GossipStone(Item.GossipRanchBarn)]
         RanchBarn = 0x20BD,
 
         //The spirit of a charismatic dancer who died in Termina Field dances there night after night.
@@ -130,6 +144,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskKamaro)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceDekuPlayground)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskRomani)]
+        [GossipStone(Item.GossipMilkRoad)]
         MilkRoad = 0x20BE,
 
         //The reward for Romani's nighttime assistant seems to be something that holds milk...
@@ -141,8 +156,8 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleGoronRace)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceLabFish)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.SongNewWaveBossaNova)]
+        [GossipStone(Item.GossipOceanFortress)]
         OceanFortress = 0x20BF,
-        
         //It seems the veranda door of the town's Stock Pot Inn has carelessly been left unlocked...
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.TradeItemRoomKey)] // maybe make this something more useful?
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeBiggestQuiver)]
@@ -151,6 +166,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.UpgradeBigQuiver)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.UpgradeBiggestQuiver)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskScents)]
+        [GossipStone(Item.GossipSwampRoad)]
         SwampRoad = 0x20C0,
 
         //The postman puts his delivery schedule before everything else, but Priority Mail is of even greater importance.
@@ -162,6 +178,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.TradeItemSwampDeed)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.TradeItemMountainDeed)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.TradeItemOceanDeed)]
+        [GossipStone(Item.GossipTerminaObservatory)]
         TerminaObservatory = 0x20C1,
 
         //A torture device of insomnia called the All-Night Mask seems to be available at the Curiosity Shop...
@@ -170,12 +187,14 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskBunnyHood)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskBunnyHood)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskBremen)]
+        [GossipStone(Item.GossipRanchCuccoShack)]
         RanchCuccoShack = 0x20C2,
 
         //It seems that drinking Chateau Romani makes your magic power last for three days...
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleMadameAroma)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceDogRace)]
         // todo add more
+        [GossipStone(Item.GossipRanchRacetrack)]
         RanchRacetrack = 0x20C3,
 
         //It seems Keaton, the ghost fox, plays tricks in the grass...
@@ -183,6 +202,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskKeaton)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskTruth)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeGiantWallet)]
+        [GossipStone(Item.GossipRanchEntrance)]
         RanchEntrance = 0x20C4,
 
         //The Fierce Deity Mask, a mask that contains the merits of all masks seems to be...
@@ -191,6 +211,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemIceArrow)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemHookshot)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemFairySword)]
+        [GossipStone(Item.GossipCanyonRavine)]
         CanyonRavine = 0x20C5,
 
         //A small, lost horse seems to have been taken in by Romani Ranch, south of town.
@@ -199,6 +220,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeRazorSword)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeGildedSword)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleGoronRace)]
+        [GossipStone(Item.GossipMountainSpringFrog)]
         MountainSpringFrog = 0x20C6,
 
         //The mask that can see into people's hearts and minds also seems to work on animals as well...
@@ -207,6 +229,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskTruth)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeGiantWallet)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceOceanSpiderHouse)]
+        [GossipStone(Item.GossipSwampSpiderHouse)]
         SwampSpiderHouse = 0x20C7,
 
 
@@ -226,6 +249,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemStoneTowerKey4)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartContainerStoneTower)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceLinkTrial)]
+        [GossipStone(Item.GossipTerminaGossipLarge)]
         TerminaGossipLarge = 0x20F3,
 
         //It seems the face of the slightly larger, strange stone changes when the guitar of waves is played.
@@ -238,6 +262,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemGreatBayKey1)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartContainerGreatBay)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceZoraTrial)]
+        [GossipStone(Item.GossipTerminaGossipGuitar)]
         TerminaGossipGuitar = 0x20F7,
 
         //It seems the face of the slightly larger, strange stone changes when the pipes of awakening are played.
@@ -250,6 +275,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemWoodfallKey1)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartContainerWoodfall)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceDekuTrial)]
+        [GossipStone(Item.GossipTerminaGossipPipes)]
         TerminaGossipPipes = 0x20F8,
 
         //It seems the face of the slightly larger, strange stone changes when the drums of sleep are played.
@@ -264,6 +290,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemSnowheadKey3)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartContainerSnowhead)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceGoronTrial)]
+        [GossipStone(Item.GossipTerminaGossipDrums)]
         TerminaGossipDrums = 0x20F9,
 
 

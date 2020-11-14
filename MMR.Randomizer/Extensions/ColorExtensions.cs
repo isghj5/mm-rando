@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MMR.Randomizer.Utils;
+using System;
 using System.Drawing;
 
 namespace MMR.Randomizer.Extensions
@@ -94,6 +95,17 @@ namespace MMR.Randomizer.Extensions
         public static Color Darken(this Color color, float amount)
         {
             return ChangeBrightness(color, amount * -1.0f);
+        }
+
+        /// <summary>
+        /// Shift the hue of a color by a specific amount.
+        /// </summary>
+        /// <param name="color">Color</param>
+        /// <param name="amount">Amount to shift the hue</param>
+        /// <returns>Resulting color.</returns>
+        public static Color ShiftHue(this Color color, float amount)
+        {
+            return ColorUtils.FromAHSB(color.A, (color.GetHue() + amount) % 360f, color.GetSaturation(), color.GetBrightness());
         }
     }
 }

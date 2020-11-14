@@ -198,6 +198,45 @@ namespace MMR.Randomizer.Utils
                 dest[i] = src[i];
             return dest;
         }
+
+        /// <summary>
+        /// Write 16-bit <see cref="ushort"/> value to ROM as big-endian.
+        /// </summary>
+        /// <param name="addr">VROM address</param>
+        /// <param name="value">Value</param>
+        public static void WriteU16ToROM(int addr, ushort value)
+        {
+            var bytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            WriteToROM(addr, bytes);
+        }
+
+        /// <summary>
+        /// Write 32-bit <see cref="uint"/> value to ROM as big-endian.
+        /// </summary>
+        /// <param name="addr">VROM address</param>
+        /// <param name="value">Value</param>
+        public static void WriteU32ToROM(int addr, uint value)
+        {
+            var bytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            WriteToROM(addr, bytes);
+        }
+
+        /// <summary>
+        /// Write 64-bit <see cref="ulong"/> value to ROM as big-endian.
+        /// </summary>
+        /// <param name="addr">VROM address</param>
+        /// <param name="value">Value</param>
+        public static void WriteU64ToROM(int addr, ulong value)
+        {
+            var bytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            WriteToROM(addr, bytes);
+        }
     }
 
 }

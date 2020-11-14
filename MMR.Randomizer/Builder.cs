@@ -24,6 +24,7 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 using SixLabors.ImageSharp.Formats.Png;
+using System.Security.Cryptography;
 
 namespace MMR.Randomizer
 {
@@ -33,20 +34,24 @@ namespace MMR.Randomizer
         private CosmeticSettings _cosmeticSettings;
         private MessageTable _messageTable;
         private ExtendedObjects _extendedObjects;
+        private List<MessageEntry> _extraMessages;
+        private Dictionary<int, ItemGraphic> _graphicOverrides;
 
         public Builder(RandomizedResult randomized, CosmeticSettings cosmeticSettings)
         {
             _randomized = randomized;
             _cosmeticSettings = cosmeticSettings;
-            _messageTable = new MessageTable();
+            _messageTable = null;
             _extendedObjects = null;
+            _extraMessages = new List<MessageEntry>();
+            _graphicOverrides = new Dictionary<int, ItemGraphic>();
         }
 
         #region Sequences, sounds and BGM
 
         // this function decides which songs get shuffled, choosing song -> slot
         //  the audioseq file gets rearanged/built in SequenceUtils::RebuildAudioSeq
-        private void BGMShuffle(Random random, OutputSettings _settings)
+        private void BGMShuffle(Random random, OutputSettings settings)
         {
             // spoiler log output
             StringBuilder log = new StringBuilder();
@@ -55,34 +60,35 @@ namespace MMR.Randomizer
                 Debug.WriteLine(str);
                 log.AppendLine(str);
             }
-            string GetSpacedString(string Start, int Width = 50, string DebugText = "")
+            string GetSpacedString(string start, int width = 50, string debugText = "")
             {
                 // formating for spoiler log
-                int padding = Start.Length <= Width ? Width - Start.Length : 0 + DebugText.Length;
-                return Start + new String(' ', padding - DebugText.Length) + DebugText;
+                int padding = start.Length <= width ? width - start.Length : 0 + debugText.Length;
+                return start + new String(' ', padding - debugText.Length) + debugText;
             }
 
-            void AssignSequenceSlot(SequenceInfo SlotSequence, SequenceInfo ReplacementSequence, List<SequenceInfo> RemainingSongs, string DebugCharacters = "")
+            void AssignSequenceSlot(SequenceInfo slotSequence, SequenceInfo replacementSequence, List<SequenceInfo> remainingSongs, string debugCharacters = "")
             {
                 // if the song has a custom instrument set, lock the sequence, update inst set value, debug output
-                if (ReplacementSequence.SequenceBinaryList != null && ReplacementSequence.SequenceBinaryList[0] != null && ReplacementSequence.SequenceBinaryList[0].InstrumentSet != null)
+                if (replacementSequence.SequenceBinaryList != null && replacementSequence.SequenceBinaryList[0] != null && replacementSequence.SequenceBinaryList[0].InstrumentSet != null)
                 {
-                    ReplacementSequence.Instrument = ReplacementSequence.SequenceBinaryList[0].InstrumentSet.BankSlot; // update to the one we want to use
-                    if (RomData.InstrumentSetList[ReplacementSequence.Instrument].Modified > 0)
+                    replacementSequence.Instrument = replacementSequence.SequenceBinaryList[0].InstrumentSet.BankSlot; // update to the one we want to use
+                    if (RomData.InstrumentSetList[replacementSequence.Instrument].Modified > 0)
                     {
-                        RomData.InstrumentSetList[ReplacementSequence.Instrument].Modified += 1;
-                        WriteOutput(" -- v -- Instrument set number " + ReplacementSequence.Instrument.ToString("X2") + " is being reused -- v --");
+                        RomData.InstrumentSetList[replacementSequence.Instrument].Modified += 1;
+                        WriteOutput(" -- v -- Instrument set number " + replacementSequence.Instrument.ToString("X2") + " is being reused -- v --");
                     }
                     else
                     {
-                        RomData.InstrumentSetList[ReplacementSequence.Instrument] = ReplacementSequence.SequenceBinaryList[0].InstrumentSet;
-                        WriteOutput(" -- v -- Instrument set number " + ReplacementSequence.Instrument.ToString("X2") + " has been claimed -- v --");
+                        RomData.InstrumentSetList[replacementSequence.Instrument] = replacementSequence.SequenceBinaryList[0].InstrumentSet;
+                        RomData.InstrumentSetList[replacementSequence.Instrument].InstrumentSamples = replacementSequence.InstrumentSamples;
+                        WriteOutput(" -- v -- Instrument set number " + replacementSequence.Instrument.ToString("X2") + " has been claimed -- v --");
                     }
-                    ReplacementSequence.SequenceBinaryList = new List<SequenceBinaryData> { ReplacementSequence.SequenceBinaryList[0] }; // lock the one we want
+                    replacementSequence.SequenceBinaryList = new List<SequenceBinaryData> { replacementSequence.SequenceBinaryList[0] }; // lock the one we want
                 }
-                ReplacementSequence.Replaces = SlotSequence.Replaces; // tells the rando later what song to put into slot_seq
-                WriteOutput(GetSpacedString(SlotSequence.Name, Width: 50, DebugCharacters) + " -> " + ReplacementSequence.Name);
-                RemainingSongs.Remove(ReplacementSequence);
+                replacementSequence.Replaces = slotSequence.Replaces; // tells the rando later what song to put into slot_seq
+                WriteOutput(GetSpacedString(slotSequence.Name, width: 50, debugCharacters) + " -> " + replacementSequence.Name);
+                remainingSongs.Remove(replacementSequence);
             }
 
             // these are places the player may never visit, if they do they are visited very briefly, and very little music is heard
@@ -90,17 +96,18 @@ namespace MMR.Randomizer
             // 42:gormon brothers, 27:musicbox house, 31:mayor's office, 45:kaepora's theme
             // 72:wagonride, 0E:boatcruise, 29:zelda, 2D:giants, 
             // 2E:guruguru, 7B:maskreveal(gaints summon cutscene), 73:keaton, 70:calling giants
-            List<int> LowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04, 0x42, 0x27, 0x31, 0x45, 0x72, 0x0E, 0x29, 0x2D, 0x2E, 0x7B, 0x73, 0x70}; 
+            // 7D is reunion, 0x50 is sword school
+            List<int> lowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04, 0x42, 0x27, 0x31, 0x45, 0x72, 0x0E, 0x29, 0x2D, 0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50}; 
 
             // we randomize both slots and songs because if we're low on variety, and we don't sort slots
             //   then all the variety can be dried up for the later slots
             // the biggest example is MM-only, many songs are action/boss but the boss slots are later
             //  as a result boss music is often used up early placed into early action slots
             // if we don't randomize remaining, then we only get upper alphabetical, same every seed
-            List<SequenceInfo> Unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
-            Unassigned = Unassigned.OrderBy(x => random.Next()).ToList();                           // random ordered songs
+            List<SequenceInfo> unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
+            unassigned = unassigned.OrderBy(x => random.Next()).ToList();                           // random ordered songs
             RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
-            WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + Unassigned.Count + " available songs:");
+            WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + unassigned.Count + " available songs:");
 
             // if we have lots of music, let's randomize skulltula house and ikana well to have something unique that isn't cave music
             /*if (RomData.SequenceList.Count > 80 &&RomData.SequenceList.FindAll(u => u.Type.Contains(2)).Count >= 8 + 1){ // tested by asking for all targetseq that have a category of 2, counted (8)
@@ -108,13 +115,33 @@ namespace MMR.Randomizer
                 SequenceUtils.ReassignSkulltulaHousesMusic();
             }*/
 
-            // DEBUG: if the user has a test sequence it always get put into fileselect
-            SequenceInfo test_sequence = RomData.SequenceList.Find(u => u.Name.Contains("songtest") == true);
-            if (test_sequence != null)
+            // DEBUG: if the user has a test sequence it always get put into fileselect, ctd1, and combat for testing
+            SequenceInfo testSequenceFileselect = RomData.SequenceList.Find(u => u.Name.Contains("songtest") == true);
+            if (testSequenceFileselect != null)
             {
-                SequenceInfo slot = RomData.TargetSequences.Find(u => u.Name.Contains("fileselect"));
-                AssignSequenceSlot(slot, test_sequence, Unassigned, "SONGTEST");
-                RomData.TargetSequences.Remove(slot);
+                SequenceInfo targetSlot = RomData.TargetSequences.Find(u => u.Name.Contains("mm-fileselect"));
+                AssignSequenceSlot(targetSlot, testSequenceFileselect, unassigned, "SONGTEST"); // file select
+                List<SequenceInfo> allRegularSongs = RomData.SequenceList.FindAll(u =>  u.Type.Intersect(testSequenceFileselect.Type).Any());
+                SequenceUtils.ConvertSequenceSlotToPointer(0x76, 0x18);  // titlescreen
+                SequenceUtils.ConvertSequenceSlotToPointer(0x15, 0x18);  // clocktown 1
+                SequenceUtils.ConvertSequenceSlotToPointer(0x1a, 0x18);  // combat
+                foreach (SequenceInfo songslot in allRegularSongs)
+                {
+                    SequenceUtils.ConvertSequenceSlotToPointer(songslot.MM_seq, 0x18);
+                }
+                RomData.TargetSequences.Remove(targetSlot);
+            }
+
+            // MORE DEBUG: if the user wants to force a song to always show up each seed, but in random slots
+            List<SequenceInfo> forcedSequences = RomData.SequenceList.FindAll(u => u.Name.Contains("songforce") == true).OrderBy(x => random.Next()).ToList();
+            if (forcedSequences != null && forcedSequences.Count > 0)
+            {
+                foreach(SequenceInfo seq in forcedSequences)
+                {
+                    WriteOutput("Forcing song (" + seq.Name + ") to top of the song pool");
+                    unassigned.Remove(seq);
+                    unassigned.Insert(0, seq);
+                }
             }
 
             foreach (SequenceInfo targetSequence in RomData.TargetSequences)
@@ -122,11 +149,11 @@ namespace MMR.Randomizer
                 bool foundValidReplacement = false; // would really have liked for/else but C# doesn't have it seems
 
                 // we could replace this with a findall(compatible types) but then we lose the small chance of random category music
-                for (int i = 0; i < Unassigned.Count; i++)
+                for (int i = 0; i < unassigned.Count; i++)
                 {
-                    SequenceInfo testSeq = Unassigned[i];
+                    SequenceInfo testSeq = unassigned[i];
                     // increases chance of getting non-mm music, but only if we have lots of music remaining
-                    if (Unassigned.Count > 77 && testSeq.Name.StartsWith("mm") && (random.Next(100) < 40))
+                    if (unassigned.Count > 77 && testSeq.Name.StartsWith("mm") && testSeq.Type[0] < 0x100 && (random.Next(100) < 40))
                         continue;
 
                     // test if the testSeq can be used with available instrument set slots
@@ -147,22 +174,26 @@ namespace MMR.Randomizer
                         if (testSeq.SequenceBinaryList.Count == 0) // all removed, song is dead.
                         {
                             WriteOutput(GetSpacedString(testSeq.Name) + " cannot be used because it requires custom audiobank(s) already claimed ");
-                            Unassigned.Remove(testSeq);
+                            unassigned.Remove(testSeq);
                             continue;
                         }
 
                         // if the slot we are checking is a rarely used slot, and this song requires a custom instrument set
                         //  skip so we don't waste precious instrument set slots on rarely heard music
-                        if (LowUseMusicSlots.Contains(targetSequence.Replaces) && ! testSeq.SequenceBinaryList.Any(u => u.InstrumentSet == null))
+                        if (lowUseMusicSlots.Contains(targetSequence.Replaces) && ! testSeq.SequenceBinaryList.Any(u => u.InstrumentSet == null))
                         {
-                            WriteOutput(GetSpacedString(testSeq.Name) + " skipped for slot " + targetSequence.Replaces.ToString("X2") + " because it's a low use slot and requires a custom bank");
+                            if(targetSequence.Type[0] < 8) // to reduce spam, limit this only to the regular categories
+                            {
+                                WriteOutput(GetSpacedString(testSeq.Name) + " skipped for slot " + targetSequence.Replaces.ToString("X2") + " because it's a low use slot and requires a custom bank");
+                            }
+
                             continue;
                         }
                     }
 
                     // do the target slot and the possible match seq share a category?
                     if (testSeq.Type.Intersect(targetSequence.Type).Any()){
-                        AssignSequenceSlot(targetSequence, testSeq, Unassigned, "");
+                        AssignSequenceSlot(targetSequence, testSeq, unassigned, "");
                         foundValidReplacement = true;
                         break;
                     }
@@ -171,14 +202,15 @@ namespace MMR.Randomizer
                     //  but not put fanfares into bgm, or visa versa
                     // also restrict this nature to when there is plenty of music to work with
                     // (testSeq.Type.Count > targetSequence.Type.Count) DBs code, maybe thought to be safer?
-                    else if (Unassigned.Count > 30
+                    else if (unassigned.Count > 30
                         && testSeq.Type.Count > targetSequence.Type.Count
                         && random.Next(30) == 0
+                        && targetSequence.Type[0] <= 16
                         && (testSeq.Type[0] & 8) == (targetSequence.Type[0] & 8)
                         && testSeq.Type.Contains(0x10) == targetSequence.Type.Contains(0x10)
                         && !testSeq.Type.Contains(0x16))
                     {
-                        AssignSequenceSlot(targetSequence, testSeq, Unassigned, "LUCK");
+                        AssignSequenceSlot(targetSequence, testSeq, unassigned, "LUCK");
                         foundValidReplacement = true;
                         break;
                     }
@@ -188,25 +220,25 @@ namespace MMR.Randomizer
                 {
                     // just add one of the remaining songs,
                     //  so long as bgm and fanfares are kept separate, should still be fine
-                    WriteOutput("No song fits in " + targetSequence.Name + " slot, with categories: " + String.Join(",", targetSequence.Type));
+                    WriteOutput("No song fits in " + targetSequence.Name + " slot, with categories: " + String.Join(", ", targetSequence.Type.Select(x => "0x" + x.ToString("X2"))));
 
                     // the first category of the type is the MAIN type, the rest are secondary
                     SequenceInfo replacementSong = null;
                     if (targetSequence.Type[0] <= 7 || targetSequence.Type[0] == 16)  // bgm or cutscene
                     {
-                        replacementSong = Unassigned.Find(u => u.Type[0] <= 7 || u.Type[0] == 16 && u.SequenceBinaryList == null);
+                        replacementSong = unassigned.Find(u => u.Type[0] <= 7 || u.Type[0] == 16 && u.SequenceBinaryList == null);
                     }
                     else //if (targetSequence.Type[0] <= 8)                           // fanfares
                     {
-                        replacementSong = Unassigned.Find(u => u.Type[0] >= 8 && u.SequenceBinaryList == null);
+                        replacementSong = unassigned.Find(u => u.Type[0] >= 8 && u.SequenceBinaryList == null);
                     }
 
                     if (replacementSong != null)
                     {
-                        WriteOutput(" * generalized replacement with " + replacementSong.Name + " song, with categories: " + String.Join(",", replacementSong.Type));
+                        WriteOutput(" * generalized replacement with " + replacementSong.Name + " song, with categories: " + String.Join(", ", replacementSong.Type.Select(x => "0x" + x.ToString("X2"))));
                         replacementSong.Replaces = targetSequence.Replaces;
-                        WriteOutput(GetSpacedString(targetSequence.Name, Width: 50, "APROX") + " -> " + replacementSong.Name);
-                        Unassigned.Remove(replacementSong);
+                        WriteOutput(GetSpacedString(targetSequence.Name, width: 50, "APROX") + " -> " + replacementSong.Name);
+                        unassigned.Remove(replacementSong);
                     }
                     else
                     {
@@ -229,13 +261,13 @@ namespace MMR.Randomizer
                                 }
                             );
 
-                            WriteOutput(" * double dipping with song " + replacementSong.Name + ", with categories: " + String.Join(",", replacementSong.Type));
-                            WriteOutput(GetSpacedString(targetSequence.Name, Width: 50, "COPY") + " -> " + replacementSong.Name);
+                            WriteOutput(" * double dipping with song " + replacementSong.Name + ", with categories: " + String.Join(", ", replacementSong.Type.Select(x => "0x" + x.ToString("X2"))));
+                            WriteOutput(GetSpacedString(targetSequence.Name, width: 50, "COPY") + " -> " + replacementSong.Name);
                         }
                         else
                         {
                             WriteOutput(" out of remaining songs:");
-                            foreach (SequenceInfo RemainingSong in Unassigned)
+                            foreach (SequenceInfo RemainingSong in unassigned)
                             {
                                 WriteOutput(" - " + RemainingSong.Name + " with categories " + String.Join(",", RemainingSong.Type));
                             }
@@ -247,15 +279,19 @@ namespace MMR.Randomizer
 
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
 
-            if (_cosmeticSettings.Music == Music.Random && _settings.GenerateSpoilerLog)
+            if (_cosmeticSettings.Music == Music.Random && settings.GenerateSpoilerLog)
             {
-                String dir = Path.GetDirectoryName(_settings.OutputROMFilename);
-                String path = $"{Path.GetFileNameWithoutExtension(_settings.OutputROMFilename)}";
+                String dir = Path.GetDirectoryName(settings.OutputROMFilename);
+                String path = $"{Path.GetFileNameWithoutExtension(settings.OutputROMFilename)}";
                 // spoiler log should already be written by the time we reach this far
                 if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
+                {
                     path += "_SpoilerLog.txt";
+                }
                 else // TODO add HTML log compatibility
+                {
                     path += "_SongLog.txt";
+                }
 
                 using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
                 {
@@ -282,9 +318,10 @@ namespace MMR.Randomizer
                 BGMShuffle(random, _settings);
             }
 
-            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-music");
-            ResourceUtils.ApplyHack(Values.ModsDirectory, "inst24-swap-guitar");
-            SequenceUtils.RebuildAudioSeq(RomData.SequenceList, _settings);
+            ResourceUtils.ApplyHack(Resources.mods.fix_music);
+            ResourceUtils.ApplyHack(Resources.mods.inst24_swap_guitar);
+            SequenceUtils.RebuildAudioSeq(RomData.SequenceList);
+            SequenceUtils.WriteNewSoundSamples(RomData.InstrumentSetList);
             SequenceUtils.RebuildAudioBank(RomData.InstrumentSetList);
         }
 
@@ -312,6 +349,16 @@ namespace MMR.Randomizer
             }
         }
 
+        private void WriteEnemyCombatMusicMute()
+        {
+            if (_cosmeticSettings.DisableCombatMusic == CombatMusic.Normal)
+            {
+                return;
+            }
+
+            Enemies.DisableEnemyCombatMusic(_cosmeticSettings.DisableCombatMusic == CombatMusic.WeakEnemies);
+        }
+
         private void WritePlayerModel()
         {
             if (_randomized.Settings.Character == Character.LinkMM)
@@ -319,76 +366,120 @@ namespace MMR.Randomizer
                 return;
             }
 
+            if (_randomized.Settings.Character == Character.AdultLink)
+            {
+                PlayerModelUtils.ApplyAdultLinkPatches();
+                return;
+            }
+
             int characterIndex = (int)_randomized.Settings.Character;
 
-            using (var b = new BinaryReader(File.OpenRead(Path.Combine(Values.ObjsDirectory, $"link-{characterIndex}"))))
-            {
-                var obj = new byte[b.BaseStream.Length];
-                b.Read(obj, 0, obj.Length);
-                ResourceUtils.ApplyHack(Values.ModsDirectory, $"fix-link-{characterIndex}");
-                ObjUtils.InsertObj(obj, 0x11);
-            }
+            ResourceUtils.ApplyIndexedHack(characterIndex-1, Resources.mods.fix_link_1, Resources.mods.fix_link_2, Resources.mods.fix_link_3);
+            ObjUtils.InsertIndexedObj(characterIndex - 1, 0x11, Resources.models.link_1, Resources.models.link_2, Resources.models.link_3);
 
             if (_randomized.Settings.Character == Character.Kafei)
             {
-                using (var b = new BinaryReader(File.OpenRead(Path.Combine(Values.ObjsDirectory, "kafei"))))
-                {
-                    var obj = new byte[b.BaseStream.Length];
-                    b.Read(obj, 0, obj.Length);
-                    ObjUtils.InsertObj(obj, 0x1C);
-                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-kafei");
-                }
+                ObjUtils.InsertObj(Resources.models.kafei, 0x1C);
+                ResourceUtils.ApplyHack(Resources.mods.fix_kafei);
 
-                using (var b = new BinaryReader(File.OpenRead(Path.Combine(Values.ObjsDirectory, "link-mask"))))
-                {
-                    var obj = new byte[b.BaseStream.Length];
-                    b.Read(obj, 0, obj.Length);
-                    ObjUtils.InsertObj(obj, 0x1FF);
-                    ResourceUtils.ApplyHack(Values.ModsDirectory, "update-kafei-mask-icon");
-                }
+                ObjUtils.InsertObj(Resources.models.link_mask, 0x1FF);
+                ResourceUtils.ApplyHack(Resources.mods.update_kafei_mask_icon);
 
-                using (var b = new BinaryReader(File.OpenRead(Path.Combine(Values.ObjsDirectory, "gi-link-mask"))))
-                {
-                    var obj = new byte[b.BaseStream.Length];
-                    b.Read(obj, 0, obj.Length);
-                    ObjUtils.InsertObj(obj, 0x258);
-                }
+                ObjUtils.InsertObj(Resources.models.gi_link_mask, 0x258);
             }
         }
 
         private void WriteTunicColor()
         {
-            Color t = _cosmeticSettings.TunicColor;
-            byte[] color = { t.R, t.G, t.B };
-
-            var otherTunics = ResourceUtils.GetAddresses(Values.AddrsDirectory, "tunic-forms");
-            TunicUtils.UpdateFormTunics(otherTunics, _cosmeticSettings.TunicColor);
-
-            var playerModel = DeterminePlayerModel();
-            var characterIndex = (int)playerModel;          
-            if (playerModel == Character.Kafei)
+            if (_cosmeticSettings.UseTunicColors[TransformationForm.Human])
             {
-                var objectData = ObjUtils.GetObjectData(0x11);
-                TunicUtils.UpdateKafeiTunic(ref objectData, t);
-                ObjUtils.InsertObj(objectData, 0x11);
-            }
-            else
-            {
-                var locations = ResourceUtils.GetAddresses(Values.AddrsDirectory, $"tunic-{characterIndex}");
-                var objectData = ObjUtils.GetObjectData(0x11);
-                for (int j = 0; j < locations.Count; j++)
+                Color t = _cosmeticSettings.TunicColors[TransformationForm.Human];
+                byte[] color = { t.R, t.G, t.B };
+
+                var playerModel = DeterminePlayerModel();
+                var characterIndex = (int)playerModel;
+                if (playerModel == Character.Kafei)
                 {
-                    ReadWriteUtils.WriteFileAddr(locations[j], color, objectData);
+                    var objectData = ObjUtils.GetObjectData(0x11);
+                    TunicUtils.UpdateKafeiTunic(ref objectData, t);
+                    ObjUtils.InsertObj(objectData, 0x11);
                 }
-                ObjUtils.InsertObj(objectData, 0x11);
+                else
+                {
+                    var locations = ResourceUtils.GetIndexedAddresses(characterIndex, Resources.addresses.tunic_0, Resources.addresses.tunic_1, Resources.addresses.tunic_2, Resources.addresses.tunic_3);
+                    var objectData = ObjUtils.GetObjectData(0x11);
+                    for (int j = 0; j < locations.Count; j++)
+                    {
+                        ReadWriteUtils.WriteFileAddr(locations[j], color, objectData);
+                    }
+                    ObjUtils.InsertObj(objectData, 0x11);
+                };
+            }
+
+            var tunicForms = new List<TransformationForm>
+            {
+                TransformationForm.Deku,
+                TransformationForm.Goron,
+                TransformationForm.Zora,
+                TransformationForm.Zora,
+                TransformationForm.FierceDeity,
             };
+
+            var otherTunics = ResourceUtils.GetAddresses(Resources.addresses.tunic_forms);
+
+            for (var i = 0; i < tunicForms.Count; i++)
+            {
+                if (_cosmeticSettings.UseTunicColors[tunicForms[i]])
+                {
+                    var t = _cosmeticSettings.TunicColors[tunicForms[i]];
+                    TunicUtils.UpdateFormTunics(i, otherTunics, t);
+                }
+            }
+        }
+
+        private void WriteInstruments(Random random)
+        {
+            var codeFileAddress = 0xB3C000;
+            var playbackInstrumentsOffset = 0x12A8DC; // data for playback instruments
+            var freePlayInstrumentsOffset = 0x12A8E4; // data for free play instruments
+            foreach (var form in Enum.GetValues(typeof(TransformationForm)).Cast<TransformationForm>().Where(form => form != TransformationForm.FierceDeity))
+            {
+                var index = form.Id();
+
+                if (form == TransformationForm.Human)
+                {
+                    // human and FD use the same instrument indices
+                    index = 0;
+                }
+
+                var freePlayInstrument = _cosmeticSettings.FreePlayInstruments[form];
+                var playbackInstrument = _cosmeticSettings.PlaybackInstruments[form];
+
+                if (freePlayInstrument == FreePlayInstrument.Random)
+                {
+                    freePlayInstrument = Enum.GetValues(typeof(FreePlayInstrument)).Cast<FreePlayInstrument>().Skip(1).ToList().Random(random);
+                }
+
+                if (playbackInstrument == PlaybackInstrument.Random)
+                {
+                    playbackInstrument = Enum.GetValues(typeof(PlaybackInstrument)).Cast<PlaybackInstrument>().Skip(2).ToList().Random(random);
+                }
+
+                if (playbackInstrument == PlaybackInstrument.SyncedRandom)
+                {
+                    playbackInstrument = freePlayInstrument.PlaybackInstrumentPair();
+                }
+
+                ReadWriteUtils.WriteToROM(codeFileAddress + freePlayInstrumentsOffset + index, freePlayInstrument.Id());
+                ReadWriteUtils.WriteToROM(codeFileAddress + playbackInstrumentsOffset + index, playbackInstrument.Id());
+            }
         }
 
         private void WriteMiscellaneousChanges()
         {
             if (_cosmeticSettings.EnableHoldZTargeting)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "ztargetinghold");
+                ResourceUtils.ApplyHack(Resources.mods.ztargetinghold);
             }
 
             if (_cosmeticSettings.EnableNightBGM)
@@ -400,100 +491,205 @@ namespace MMR.Randomizer
 
         private void WriteMiscText()
         {
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3108,
-                Header = null,
-                Message = "Say...Did you come to have some\u0011items fashioned?\u0019\u00BF"
-            });
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3130,
-                Header = null,
-                Message = "Gabora, fetch our customer some\u0011coffee, quick-like.\u0011\u0013\u0012Now then, let me take a look at\u0011our offers.\u0011\u0013\u0012Hmmm...\u0019\u00BF"
-            });
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3131,
-                Header = null,
-                Message = "All right... For today's \u0001hot deal\u0000,\u0011it will cost you \u0006100 Rupees\0. It'll\u0011be ready at \u0001sunrise.\u0011\0\u0012So how about it? Wanna grab a\u0011hot item for \u0006100 Rupees\u0000?\u0011\u0002\u00C2I'll do it\u0011No thanks\u00BF"
-            });
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3133,
-                Header = null,
-                Message = "This is a secret, but I'll let you in\u0011on it... The strongest sword out\u0011there was forged using \u0001gold\u0011dust\u0000.... I made it! Me!\u00E0\u00BF"
-            });
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3134,
-                Header = null,
-                Message = "Wanna grab a deal? \u0011\u0002 \u0011\u00C2Yes\u0011No thanks\u00BF"
-            });
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3140,
-                Header = null,
-                Message = "Hey! It's gonna be ready \u0001tomorrow\u0011morning\0. We'll take good care of\u0011it, so don't worry.\u0019\u00BF"
-            });
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3141,
-                Header = null,
-                Message = "Hey! For today's special product\u0011we'll need to get hold of some \u0011\u0001gold dust\u0000.\u0019\u00BF"
-            });
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3142,
-                Header = null,
-                Message = "Why, if it isn't \u0001gold dust\0! And it's\u0011even top quality!!!\u0011\u0013\u0012Why, even if I use it to craft\u0011a nifty item, there'll still be some\u0011left...\u0011\u0012All right! Just for you, I'll do this\u0011for free. But don't tell anyone!\u0019\u00BF"
-            });
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3147,
-                Header = null,
-                Message = "To make our item for you today,\u0011I'll need \u0001gold dust\0, which just so\u0011happens to be first prize at the\u0011Goron racetrack.\u0010If I can just get some gold dust...\u0011and this is just between us...I can\u0011make you the \u0001hottest item\u0011in the lands\u0000... Really!!\u00E0\u00BF"
-            });
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3150,
-                Header = null,
-                Message = "Huh? \u001f\0\nLook, I'm working on\u0011making this item for you. I'm\u0011busy, so don't bother me.\u00E0\u00BF"
-            });
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3153,
-                Header = null,
-                Message = "Behold! My skills in craftsmanship\u0011are truly unrivalled!\u0019\u00BF"
-            });
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 3155,
-                Header = null,
-                Message = "Ah! My finest work!\u0011The look in your eye, I can\u0011tell you really wanted this!!\u0019\u00BF"
-            });
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3108)
+                .Message(it =>
+                {
+                    it.Text("Say...Did you come to have some").NewLine()
+                    .Text("items fashioned?")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3130)
+                .Message(it =>
+                {
+                    it.Text("Gabora, fetch our customer some").NewLine()
+                    .Text("coffee, quick-like.").EndTextBox()
+                    .Text("Now then, let me take a look at").NewLine()
+                    .Text("our offers.").EndTextBox()
+                    .Text("Hmmm...")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3131)
+                .Message(it =>
+                {
+                    it.Text("All right... For today's ").Red("hot deal").Text(",").NewLine()
+                    .Text("it will cost you ").Pink("100 Rupees").Text(". It'll").NewLine()
+                    .Text("be ready at ").Red("sunrise").Text(".")
+                    .EndTextBox()
+                    .Text("So how about it? Wanna grab a").NewLine()
+                    .Text("hot item for ").Pink("100 Rupees").Text("?").NewLine()
+                    .StartGreenText()
+                    .TwoChoices()
+                    .Text("I'll do it").NewLine()
+                    .Text("No thanks")
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3133)
+                .Message(it =>
+                {
+                    it.Text("This is a secret, but I'll let you in").NewLine()
+                    .Text("on it... The strongest sword out").NewLine()
+                    .Text("there was forged using ").Red(() => {
+                        it.Text("gold").NewLine().Text("dust");
+                    })
+                    .Text(".... I made it! Me!")
+                    .EndConversation()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3134)
+                .Message(it =>
+                {
+                    it.Text("Wanna grab a deal? ").NewLine()
+                    .StartGreenText().Text(" ").NewLine()
+                    .TwoChoices()
+                    .Text("Yes").NewLine()
+                    .Text("No thanks")
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3140)
+                .Message(it =>
+                {
+                    it.Text("Hey! It's gonna be ready ").Red(() => {
+                        it.Text("tomorrow").NewLine()
+                        .Text("morning");
+                    })
+                    .Text(". We'll take good care of").NewLine()
+                    .Text("it, so don't worry.")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3141)
+                .Message(it =>
+                {
+                    it.Text("Hey! For today's special product").NewLine()
+                    .Text("we'll need to get hold of some ").NewLine()
+                    .Red("gold dust").Text(".")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3142)
+                .Message(it =>
+                {
+                    it.Text("Why, if it isn't ").Red("gold dust").Text("! And it's").NewLine()
+                    .Text("even top quality!!!")
+                    .EndTextBox()
+                    .Text("Why, even if I use it to craft").NewLine()
+                    .Text("a nifty item, there'll still be some").NewLine()
+                    .Text("left...")
+                    .EndTextBox()
+                    .Text("All right! Just for you, I'll do this").NewLine()
+                    .Text("for free. But don't tell anyone!")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3147)
+                .Message(it =>
+                {
+                    it.Text("To make our item for you today,").NewLine()
+                    .Text("I'll need ").Red("gold dust").Text(", which just so").NewLine()
+                    .Text("happens to be first prize at the").NewLine()
+                    .Text("Goron racetrack.")
+                    .EndTextBox()
+                    .Text("If I can just get some gold dust...").NewLine()
+                    .Text("and this is just between us...I can").NewLine()
+                    .Text("make you the ").Red(() => {
+                        it.Text("hottest item").NewLine()
+                        .Text("in the lands");
+                    })
+                    .Text("... Really!!")
+                    .EndConversation()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3150)
+                .Message(it =>
+                {
+                    it.Text("Huh? ").PauseText(0x10).Text("Look, I'm working on").NewLine()
+                    .Text("making this item for you. I'm").NewLine()
+                    .Text("busy, so don't bother me.")
+                    .EndConversation()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3153)
+                .Message(it =>
+                {
+                    it.Text("Behold! My skills in craftsmanship").NewLine()
+                    .Text("are truly unrivalled!")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(3155)
+                .Message(it =>
+                {
+                    it.Text("Ah! My finest work!").NewLine()
+                    .Text("The look in your eye, I can").NewLine()
+                    .Text("tell you really wanted this!!")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
         }
 
         private Character DeterminePlayerModel()
         {
             var data = ObjUtils.GetObjectData(0x11);
-            if (data[0x107] == 0x05)
+            var hash = MD5.Create().ComputeHash(data);
+
+            if (hash.SequenceEqual(PlayerModelHash.LinkMM))
             {
                 return Character.LinkMM;
             }
-            if (data[0x107] == 0x07)
+            else if (hash.SequenceEqual(PlayerModelHash.LinkOOT))
             {
                 return Character.LinkOOT;
             }
-            if (data[0xC6] == 0x02)
+            else if (hash.SequenceEqual(PlayerModelHash.AdultLink))
             {
                 return Character.AdultLink;
             }
-            if (data[0xC5] == 0x15)
+            else if (hash.SequenceEqual(PlayerModelHash.Kafei))
             {
                 return Character.Kafei;
             }
-            throw new Exception("Unable to determine player's model.");
+            else
+            {
+                throw new Exception("Unable to determine player's model.");
+            }
         }
 
         private void SetTatlColour(Random random)
@@ -526,7 +722,7 @@ namespace MMR.Randomizer
                 SetTatlColour(random);
                 var selectedColorSchemaIndex = (int)_cosmeticSettings.TatlColorSchema;
                 byte[] c = new byte[8];
-                List<int[]> locs = ResourceUtils.GetAddresses(Values.AddrsDirectory, "tatl-colour");
+                List<int[]> locs = ResourceUtils.GetAddresses(Resources.addresses.tatl_colour);
                 for (int i = 0; i < locs.Count; i++)
                 {
                     ReadWriteUtils.Arr_WriteU32(c, 0, Values.TatlColours[selectedColorSchemaIndex, i << 1]);
@@ -536,7 +732,7 @@ namespace MMR.Randomizer
             }
             else
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "rainbow-tatl");
+                ResourceUtils.ApplyHack(Resources.mods.rainbow_tatl);
             }
         }
 
@@ -613,7 +809,7 @@ namespace MMR.Randomizer
         {
             if (_randomized.Settings.QuickTextEnabled)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "quick-text");
+                ResourceUtils.ApplyHack(Resources.mods.quick_text);
             }
         }
 
@@ -621,11 +817,11 @@ namespace MMR.Randomizer
         {
             if (_randomized.Settings.ShortenCutscenes)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "short-cutscenes");
+                ResourceUtils.ApplyHack(Resources.mods.short_cutscenes);
             //}
             // if (_randomized.Settings.RemoveTatlInterrupts)
             //{
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "remove-tatl-interrupts");
+                ResourceUtils.ApplyHack(Resources.mods.remove_tatl_interrupts);
             }
         }
 
@@ -640,15 +836,15 @@ namespace MMR.Randomizer
             EntranceUtils.WriteEntrances(Values.OldExits.ToArray(), _randomized.NewExits);
             byte[] li = new byte[] { 0x24, 0x02, 0x00, 0x00 };
             List<int[]> addr = new List<int[]>();
-            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory, "d-check");
+            addr = ResourceUtils.GetAddresses(Resources.addresses.d_check);
             for (int i = 0; i < addr.Count; i++)
             {
                 li[3] = (byte)_randomized.NewExitIndices[i];
                 ReadWriteUtils.WriteROMAddr(addr[i], li);
             }
 
-            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-dungeons");
-            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory, "d-exit");
+            ResourceUtils.ApplyHack(Resources.mods.fix_dungeons);
+            addr = ResourceUtils.GetAddresses(Resources.addresses.d_exit);
 
             for (int i = 0; i < addr.Count; i++)
             {
@@ -666,13 +862,13 @@ namespace MMR.Randomizer
                 }
             }
 
-            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory, "dc-flagload");
+            addr = ResourceUtils.GetAddresses(Resources.addresses.dc_flagload);
             for (int i = 0; i < addr.Count; i++)
             {
                 ReadWriteUtils.WriteROMAddr(addr[i], new byte[] { (byte)((_randomized.NewDCFlags[i] & 0xFF00) >> 8), (byte)(_randomized.NewDCFlags[i] & 0xFF) });
             }
 
-            addr = ResourceUtils.GetAddresses(Values.AddrsDirectory, "dc-flagmask");
+            addr = ResourceUtils.GetAddresses(Resources.addresses.dc_flagmask);
             for (int i = 0; i < addr.Count; i++)
             {
                 ReadWriteUtils.WriteROMAddr(addr[i], new byte[] {
@@ -685,57 +881,108 @@ namespace MMR.Randomizer
         {
             if (_randomized.Settings.SpeedupBeavers)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "speedup-beavers");
-                _messageTable.UpdateMessages(new MessageEntry
-                {
-                    Id = 0x10D6,
-                    Header = null,
-                    Message = "\u001E\u0029\u001AThere's a total of \u000125 rings\u0000. You must swim through them in the right order for it to count. Swim through the ring that's \u0001flashing\u0000.".Wrap(35, "\u0011") + "\u0010My big brother will show you the way, so follow him and don't get separated!\u00BF".Wrap(35, "\u0011")
-                });
-                _messageTable.UpdateMessages(new MessageEntry
-                {
-                    Id = 0x10FA,
-                    Header = null,
-                    Message = "\u001E\u0029\u0019This time, the limit is \u00011:50\u0000.".EndTextbox() + "Don't fall behind!\u00BF"
-                });
-                _messageTable.UpdateMessages(new MessageEntry
-                {
-                    Id = 0x1107,
-                    Header = null,
-                    Message = "\u001E\u0029\u0019This time around, you have to beat \u00011:40\u0000.".Wrap(35, "\u0011").EndTextbox() + "Don't fall behind!\u00BF"
-                });
+                ResourceUtils.ApplyHack(Resources.mods.speedup_beavers);
+                _messageTable.UpdateMessages(new MessageEntryBuilder()
+                    .Id(0x10D6)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x291A)
+                        .CompileTimeWrap((wrapped) =>
+                        {
+                            wrapped.Text("There's a total of ")
+                            .Red("25 rings")
+                            .Text(". You must swim through them in the right order for it to count. Swim through the ring that's ")
+                            .Red("flashing")
+                            .Text(".")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("My big brother will show you the way, so follow him and don't get separated!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                _messageTable.UpdateMessages(new MessageEntryBuilder()
+                    .Id(0x10FA)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x2919).Text("This time, the limit is ").Red("1:50").Text(".")
+                        .EndTextBox()
+                        .Text("Don't fall behind!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                _messageTable.UpdateMessages(new MessageEntryBuilder()
+                    .Id(0x1107)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x2919)
+                        .CompileTimeWrap((wrapped) =>
+                        {
+                            wrapped.Text("This time around, you have to beat ").Red("1:40").Text(".");
+                        })
+                        .EndTextBox()
+                        .Text("Don't fall behind!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
             }
 
             if (_randomized.Settings.SpeedupDampe)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "speedup-dampe");
+                ResourceUtils.ApplyHack(Resources.mods.speedup_dampe);
             }
 
             if (_randomized.Settings.SpeedupLabFish)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "speedup-labfish");
+                ResourceUtils.ApplyHack(Resources.mods.speedup_labfish);
             }
 
             if (_randomized.Settings.SpeedupDogRace)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "speedup-dograce");
+                ResourceUtils.ApplyHack(Resources.mods.speedup_dograce);
             }
 
             if (_randomized.Settings.SpeedupBank)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "speedup-bank");
-                _messageTable.UpdateMessages(new MessageEntry
-                {
-                    Id = 0x45C,
-                    Header = null,
-                    Message = "\u0017What's this? You've already saved\u0011up \u0001500 Rupees\u0000!?!\u0018\u0011\u0013\u0012Well, little guy, here's your special\u0011gift. Take it!\u00E0\u00BF",
-                });
-                _messageTable.UpdateMessages(new MessageEntry
-                {
-                    Id = 0x45D,
-                    Header = null,
-                    Message = "\u0017What's this? You've already saved\u0011up \u00011000 Rupees\u0000?!\u0018\u0011\u0013\u0012Well, little guy, I can't take any\u0011more deposits. Sorry, but this is\u0011all I can give you.\u00E0\u00BF",
-                });
+                ResourceUtils.ApplyHack(Resources.mods.speedup_bank);
+                _messageTable.UpdateMessages(new MessageEntryBuilder()
+                    .Id(0x45C)
+                    .Message(it =>
+                    {
+                        it.QuickText(() =>
+                        {
+                            it.Text("What's this? You've already saved").NewLine()
+                            .Text("up ").Red("500 Rupees").Text("!?!");
+                        })
+                        .EndTextBox()
+                        .Text("Well, little guy, here's your special").NewLine()
+                        .Text("gift. Take it!")
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                _messageTable.UpdateMessages(new MessageEntryBuilder()
+                    .Id(0x45D)
+                    .Message(it =>
+                    {
+                        it.QuickText(() =>
+                        {
+                            it.Text("What's this? You've already saved").NewLine()
+                            .Text("up ").Red("1000 Rupees").Text("?!");
+                        })
+                        .EndTextBox()
+                        .Text("Well, little guy, I can't take any").NewLine()
+                        .Text("more deposits. Sorry, but this is").NewLine()
+                        .Text("all I can give you.")
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
             }
         }
 
@@ -744,25 +991,25 @@ namespace MMR.Randomizer
             int damageMultiplier = (int)_randomized.Settings.DamageMode;
             if (damageMultiplier > 0)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "dm-" + damageMultiplier.ToString());
+                ResourceUtils.ApplyIndexedHack(damageMultiplier-1, Resources.mods.dm_1, Resources.mods.dm_2, Resources.mods.dm_3, Resources.mods.dm_4);
             }
 
             int damageEffect = (int)_randomized.Settings.DamageEffect;
             if (damageEffect > 0)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "de-" + damageEffect.ToString());
+                ResourceUtils.ApplyIndexedHack(damageEffect - 1, Resources.mods.de_1, Resources.mods.de_2, Resources.mods.de_3, Resources.mods.de_4, Resources.mods.de_5);
             }
 
             int gravityType = (int)_randomized.Settings.MovementMode;
             if (gravityType > 0)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "movement-" + gravityType.ToString());
+                ResourceUtils.ApplyIndexedHack(gravityType - 1, Resources.mods.movement_1, Resources.mods.movement_2, Resources.mods.movement_3, Resources.mods.movement_4);
             }
 
             int floorType = (int)_randomized.Settings.FloorType;
             if (floorType > 0)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "floor-" + floorType.ToString());
+                ResourceUtils.ApplyIndexedHack(floorType - 1, Resources.mods.floor_1, Resources.mods.floor_2, Resources.mods.floor_3, Resources.mods.floor_4);
             }
 
             if (_randomized.Settings.ClockSpeed != ClockSpeed.Default)
@@ -787,25 +1034,37 @@ namespace MMR.Randomizer
 
             if (_randomized.Settings.AllowFierceDeityAnywhere)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fierce-deity-anywhere");
+                ResourceUtils.ApplyHack(Resources.mods.fierce_deity_anywhere);
             }
 
             if (_randomized.Settings.ByoAmmo)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "byo-ammo");
+                ResourceUtils.ApplyHack(Resources.mods.byo_ammo);
+            }
+
+            if (_randomized.Settings.DeathMoonCrash)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.death_moon_crash);
             }
         }
 
         private void WriteSunsSong()
         {
-            _messageTable.UpdateMessages(new MessageEntry
-            {
-                Id = 0x1B7D,
-                Header = new byte[11] { 0x03, 0x00, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },
-                Message = $"You played the {TextCommands.ColorYellow}Sun's Song{TextCommands.ColorWhite}!\xBF"
-            });
+            _messageTable.UpdateMessages(new MessageEntryBuilder()
+                .Id(0x1B7D)
+                .Header(it =>
+                {
+                    it.OcarinaStaff();
+                })
+                .Message(it =>
+                {
+                    it.Text("You played the ").Yellow("Sun's Song").Text("!")
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
 
-            ResourceUtils.ApplyHack(Values.ModsDirectory, "enable-sunssong");
+            ResourceUtils.ApplyHack(Resources.mods.enable_sunssong);
         }
 
         private void WriteBlastMaskCooldown()
@@ -883,7 +1142,7 @@ namespace MMR.Randomizer
                     break;
             }
 
-            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-clock-speed");
+            ResourceUtils.ApplyHack(Resources.mods.fix_clock_speed);
 
             var codeFileAddress = 0xB3C000;
             var hackAddressOffset = 0x8A674;
@@ -978,7 +1237,7 @@ namespace MMR.Randomizer
                 PutOrCombine(startingItems, 0xC5CE71, 0x02);
             }
 
-            var itemList = items.ToList();
+            var itemList = items.Where(item => item != Item.RecoveryHeart).ToList();
 
             if (_randomized.Settings.CustomStartingItemList != null)
             {
@@ -994,6 +1253,14 @@ namespace MMR.Randomizer
                     var heartPiece = itemList.First(item => item.Name() == "Piece of Heart");
                     itemList.Remove(heartPiece);
                 }
+            }
+
+            if (_randomized.Settings.ProgressiveUpgrades)
+            {
+                itemList = itemList
+                    .GroupBy(item => ItemUtils.ForbiddenStartTogether.FirstOrDefault(fst => fst.Contains(item)))
+                    .SelectMany(g => g.Key == null || g.Key.Contains(Item.StartingShield) ? g.ToList() : g.Key.Skip(g.Count()-1).Take(1))
+                    .ToList();
             }
 
             itemList = itemList
@@ -1023,6 +1290,12 @@ namespace MMR.Randomizer
             {
                 ReadWriteUtils.WriteToROM(0x00B97E8F, 0x0C); // reduce low health beep threshold
             }
+        }
+
+        private ushort GetLocationIdOfItem(Item item)
+        {
+            var itemObject = _randomized.ItemList[item];
+            return itemObject.Item != Item.RecoveryHeart ? itemObject.NewLocation.Value.GetItemIndex().Value : (ushort)0;
         }
 
         private void WriteItems()
@@ -1067,18 +1340,21 @@ namespace MMR.Randomizer
 
             if (_randomized.Settings.FixEponaSword)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-epona");
+                ResourceUtils.ApplyHack(Resources.mods.fix_epona);
             }
             if (_randomized.Settings.PreventDowngrades)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-downgrades");
+                ResourceUtils.ApplyHack(Resources.mods.fix_downgrades);
             }
             if (_randomized.Settings.AddCowMilk)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-cow-bottle-check");
+                ResourceUtils.ApplyHack(Resources.mods.fix_cow_bottle_check);
             }
 
+            ResourceUtils.ApplyHack(Resources.mods.update_trade_scrubs);
+
             var newMessages = new List<MessageEntry>();
+            _randomized.Settings.AsmOptions.MMRConfig.CycleRepeatableLocations.Clear();
             foreach (var item in _randomized.ItemList)
             {
                 // Unused item
@@ -1098,9 +1374,32 @@ namespace MMR.Randomizer
                     {
                         overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
                     }
-                    ItemSwapUtils.WriteNewItem(item.NewLocation.Value, item.Item, newMessages, _randomized.Settings.UpdateShopAppearance, _randomized.Settings.PreventDowngrades, _randomized.Settings.UpdateChests && item.IsRandomized, overrideChestType, _randomized.Settings.CustomStartingItemList.Contains(item.Item));
+                    ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType);
                 }
             }
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleRedPotion = GetLocationIdOfItem(Item.ItemBottleWitch);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleGoldDust = GetLocationIdOfItem(Item.ItemBottleGoronRace);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleMilk = GetLocationIdOfItem(Item.ItemBottleAliens);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBottleChateau = GetLocationIdOfItem(Item.ItemBottleMadameAroma);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationSwordKokiri = GetLocationIdOfItem(Item.StartingSword);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationSwordRazor = GetLocationIdOfItem(Item.UpgradeRazorSword);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationSwordGilded = GetLocationIdOfItem(Item.UpgradeGildedSword);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationMagicSmall = GetLocationIdOfItem(Item.FairyMagic);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationMagicLarge = GetLocationIdOfItem(Item.FairyDoubleMagic);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationWalletAdult = GetLocationIdOfItem(Item.UpgradeAdultWallet);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationWalletGiant = GetLocationIdOfItem(Item.UpgradeGiantWallet);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBombBagSmall = GetLocationIdOfItem(Item.ItemBombBag);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBombBagBig = GetLocationIdOfItem(Item.UpgradeBigBombBag);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationBombBagBiggest = GetLocationIdOfItem(Item.UpgradeBiggestBombBag);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverSmall = GetLocationIdOfItem(Item.ItemBow);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLarge = GetLocationIdOfItem(Item.UpgradeBigQuiver);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLargest = GetLocationIdOfItem(Item.UpgradeBiggestQuiver);
 
             var copyRupeesRegex = new Regex(": [0-9]+ Rupees");
             foreach (var newMessage in newMessages)
@@ -1119,200 +1418,815 @@ namespace MMR.Randomizer
                 foreach (var messageShopText in Enum.GetValues(typeof(MessageShopText)).Cast<MessageShopText>())
                 {
                     var messageShop = messageShopText.GetAttribute<MessageShopAttribute>();
-                    var item1 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[0]).Item;
-                    var item2 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[1]).Item;
-                    newMessages.Add(new MessageEntry
-                    {
-                        Id = (ushort)messageShopText,
-                        Header = null,
-                        Message = string.Format(messageShop.MessageFormat, item1.Name() + " ", messageShop.Prices[0], item2.Name() + " ", messageShop.Prices[1])
-                    });
+                    var item1 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[0]);
+                    var item2 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[1]);
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id((ushort)messageShopText)
+                        .Message(it =>
+                        {
+                            switch (messageShop.MessageShopStyle)
+                            {
+                                case MessageShopStyle.Tingle:
+                                    it.StartGreenText()
+                                    .ThreeChoices()
+                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Red($"{messageShop.Prices[0]} Rupees").NewLine()
+                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Red($"{messageShop.Prices[1]} Rupees").NewLine()
+                                    .Text("No Thanks")
+                                    .EndFinalTextBox();
+                                    break;
+                                case MessageShopStyle.MilkBar:
+                                    it.Text("What'll it be?")
+                                    .EndTextBox()
+                                    .StartGreenText()
+                                    .ThreeChoices()
+                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Pink($"{messageShop.Prices[0]} Rupees").NewLine()
+                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Pink($"{messageShop.Prices[1]} Rupees").NewLine()
+                                    .Text("Nothing")
+                                    .EndFinalTextBox();
+                                    break;
+                            }
+                        })
+                        .Build()
+                    );
                 }
 
                 // update business scrub
-                var businessScrubItem = _randomized.ItemList.First(io => io.NewLocation == Item.HeartPieceTerminaBusinessScrub).Item;
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x1631,
-                    Header = null,
-                    Message = $"\x1E\x3A\xD2Please! I'll sell you {MessageUtils.GetArticle(businessScrubItem)}\u0001{businessScrubItem.Name()}\u0000 if you just keep this place a secret...\x19\xBF".Wrap(35, "\u0011")
-                });
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x1632,
-                    Header = null,
-                    Message = $"\u0006150 Rupees\u0000 for{MessageUtils.GetPronounOrAmount(businessScrubItem).ToLower()}!\u0011 \u0011\u0002\u00C2I'll buy {MessageUtils.GetPronoun(businessScrubItem)}\u0011No thanks\u00BF"
-                });
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x1634,
-                    Header = null,
-                    Message = $"What about{MessageUtils.GetPronounOrAmount(businessScrubItem, "").ToLower()} for \u0006100 Rupees\u0000?\u0011 \u0011\u0002\u00C2I'll buy {MessageUtils.GetPronoun(businessScrubItem)}\u0011No thanks\u00BF"
-                });
+                var businessScrubItem = _randomized.ItemList.First(io => io.NewLocation == Item.HeartPieceTerminaBusinessScrub);
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1631)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x3AD2)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Please! I'll sell you ")
+                            .RuntimeArticle(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(businessScrubItem.DisplayName(), businessScrubItem.NewLocation.Value);
+                            })
+                            .Text(" if you just keep this place a secret...")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1632)
+                    .Message(it =>
+                    {
+                        it.Pink("150 Rupees").Text(" for").RuntimePronounOrAmount(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value).Text("!").NewLine()
+                        .Text(" ").NewLine()
+                        .StartGreenText()
+                        .TwoChoices()
+                        .Text("I'll buy ").RuntimePronoun(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value).NewLine()
+                        .Text("No thanks")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1634)
+                    .Message(it =>
+                    {
+                        it.Text("What about for ").Pink("100 Rupees").Text("?").NewLine()
+                        .Text(" ").NewLine()
+                        .StartGreenText()
+                        .TwoChoices()
+                        .Text("I'll buy ").RuntimePronoun(businessScrubItem.DisplayItem, businessScrubItem.NewLocation.Value).NewLine()
+                        .Text("No thanks")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
                 // update biggest bomb bag purchase
-                var biggestBombBagItem = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeBiggestBombBag).Item;
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x15F5,
-                    Header = null,
-                    Message = $"I sell {MessageUtils.GetArticle(biggestBombBagItem)}\u0001{MessageUtils.GetAlternateName(biggestBombBagItem)}\u0000, but I'm focusing my marketing efforts on \u0001Gorons\u0000.".Wrap(35, "\u0011").EndTextbox() + "What I'd really like to do is go back home and do business where I'm surrounded by trees and grass.\u0019\u00BF".Wrap(35, "\u0011")
-                });
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x15FF,
-                    Header = null,
-                    Message = $"\x1E\x39\x8CRight now, I've got a \u0001special\u0011\u0000offer just for you.\u0019\u00BF"
-                });
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x1600,
-                    Header = null,
-                    Message = $"\x1E\x38\x81I'll give you {MessageUtils.GetArticle(biggestBombBagItem, "my ")}\u0001{biggestBombBagItem.Name()}\u0000, regularly priced at \u00061000 Rupees\u0000...".Wrap(35, "\u0011").EndTextbox() + "In return, you'll give me just\u0011\u0006200 Rupees\u0000!\u0019\u00BF"
-                });
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x1606,
-                    Header = null,
-                    Message = $"\x1E\x38\x81I'll give you {MessageUtils.GetArticle(biggestBombBagItem, "my ")}\u0001{biggestBombBagItem.Name()}\u0000, regularly priced at \u00061000 Rupees\u0000, for just \u0006200 Rupees\u0000!\u0019\u00BF".Wrap(35, "\u0011")
-                });
+                var biggestBombBagItem = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeBiggestBombBag);
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x15F5)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("I sell ")
+                            .RuntimeArticle(biggestBombBagItem.DisplayItem, biggestBombBagItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(biggestBombBagItem.AlternateName(), biggestBombBagItem.NewLocation.Value);
+                            })
+                            .Text(", but I'm focusing my marketing effords on ").Red("Gorons").Text(".")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("What I'd really like to do is go back home and do business where I'm surrounded by trees and grass.")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x15FF)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x398C)
+                        .Text("Right now, I've got a ").Red("special").NewLine()
+                        .Text("offer just for you.")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1600)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x3881)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("I'll give you ")
+                            .RuntimeArticle(biggestBombBagItem.DisplayItem, biggestBombBagItem.NewLocation.Value, "my ")
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(biggestBombBagItem.DisplayName(), biggestBombBagItem.NewLocation.Value);
+                            })
+                            .Text(", regularly priced at ")
+                            .Pink("1000 Rupees")
+                            .Text("...")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("In return, you'll give me just").NewLine()
+                        .Pink("200 Rupees").Text("!")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1606)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x3881)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("I'll give you ")
+                            .RuntimeArticle(biggestBombBagItem.DisplayItem, biggestBombBagItem.NewLocation.Value, "my ")
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(biggestBombBagItem.DisplayName(), biggestBombBagItem.NewLocation.Value);
+                            })
+                            .Text(", regularly priced at ")
+                            .Pink("1000 Rupees")
+                            .Text(", for just ")
+                            .Pink("200 Rupees")
+                            .Text("!")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
                 // update swamp scrub purchase
-                var magicBeanItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubMagicBean).Item;
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x15E1,
-                    Header = null,
-                    Message = $"\x1E\x39\xA7I'm selling {MessageUtils.GetArticle(magicBeanItem)}\u0001{MessageUtils.GetAlternateName(magicBeanItem)}\u0000 to Deku Scrubs, but I'd really like to leave my hometown.".Wrap(35, "\u0011").EndTextbox() + "I'm hoping to find some success in a livelier place!\u0019\u00BF".Wrap(35, "\u0011")
-                });
+                var magicBeanItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubMagicBean);
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x15E1)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x39A7)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("I'm selling ")
+                            .RuntimeArticle(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(magicBeanItem.DisplayName(), magicBeanItem.NewLocation.Value);
+                            })
+                            .Text(" to Deku Scrubs, but I'll really like to leave my hometown.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("I'm hoping to find some success in a livelier place!")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x15E9,
-                    Header = null,
-                    Message = $"\x1E\x3A\u00D2Do you know what {MessageUtils.GetArticle(magicBeanItem)}\u0001{MessageUtils.GetAlternateName(magicBeanItem)}\u0000 {MessageUtils.GetVerb(magicBeanItem)}, sir?".Wrap(35, "\u0011") + $"\u0011I'll sell you{MessageUtils.GetPronounOrAmount(magicBeanItem).ToLower()} for \u000610 Rupees\u0000.\u0019\u00BF"
-                });
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x15E9)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x3AD2)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Do you know what ")
+                            .RuntimeArticle(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(magicBeanItem.AlternateName(), magicBeanItem.NewLocation.Value);
+                            })
+                            .Text(" ")
+                            .RuntimeVerb(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
+                            .Text(", sir?")
+                            ;
+                        })
+                        .NewLine()
+                        .Text("I'll sell you").RuntimePronounOrAmount(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value).Text(" for ").Pink("10 Rupees").Text(".")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x15F3)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x3AD2)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Do you know what ")
+                            .RuntimeArticle(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(magicBeanItem.AlternateName(), magicBeanItem.NewLocation.Value);
+                            })
+                            .RuntimeVerb(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
+                            .Text("?")
+                            ;
+                        })
+                        .NewLine()
+                        .Text("I'll sell you").RuntimePronounOrAmount(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value).Text(" for ").Pink("10 Rupees").Text(".")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
                 // update ocean scrub purchase
-                var greenPotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubGreenPotion).Item;
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x1608,
-                    Header = null,
-                    Message = $"\x1E\x39\xA7I'm selling {MessageUtils.GetArticle(greenPotionItem)}\u0001{MessageUtils.GetAlternateName(greenPotionItem)}\u0000, but I'm focusing my marketing efforts on Zoras.".Wrap(35, "\u0011").EndTextbox() + "Actually, I'd like to do business someplace where it's cooler and the air is clean.\u0019\u00BF".Wrap(35, "\u0011")
-                });
+                var greenPotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubGreenPotion);
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1608)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x39A7)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("I'm selling ")
+                            .RuntimeArticle(greenPotionItem.DisplayItem, greenPotionItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(greenPotionItem.AlternateName(), greenPotionItem.NewLocation.Value);
+                            })
+                            .Text(", but I'm focusing my marketing efforts on Zoras.")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("Actually, I'd like to do business someplace where it's cooler and the air is clean.")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x1612,
-                    Header = null,
-                    Message = $"\x1E\x39\x8CI'll sell you {MessageUtils.GetArticle(greenPotionItem)}\u0001{greenPotionItem.Name()}\u0000 for \u000640 Rupees\u0000!\u00E0\u00BF".Wrap(35, "\u0011")
-                });
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1612)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x398C)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("I'll sell you ")
+                            .RuntimeArticle(greenPotionItem.DisplayItem, greenPotionItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(greenPotionItem.DisplayName(), greenPotionItem.NewLocation.Value);
+                            })
+                            .Text(" for ")
+                            .Pink("40 Rupees")
+                            .Text("!")
+                            ;
+                        })
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                var coldifyRegex = new Regex("([A-Z])");
+                var coldItemName = coldifyRegex.Replace(greenPotionItem.DisplayItem.Name(), "$1-$1");
+                // TODO coldify replacement item name
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1617)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x398C)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("I'll s-sell you ")
+                            .RuntimeArticle(greenPotionItem.DisplayItem, greenPotionItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(coldItemName, greenPotionItem.NewLocation.Value);
+                            })
+                            .Text(" for ")
+                            .Pink("40 Rupees")
+                            .Text(".")
+                            ;
+                        })
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1618)
+                    .Message(it =>
+                    {
+                        it.Text("D-Do we have a deal?").NewLine()
+                        .Text(" ").NewLine()
+                        .StartGreenText()
+                        .TwoChoices()
+                        .Text("Yes").NewLine()
+                        .Text("No")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
                 // update canyon scrub purchase
-                var bluePotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubBluePotion).Item;
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x161C,
-                    Header = null,
-                    Message = $"\x1E\x39\xA7I'm here to sell {MessageUtils.GetArticle(bluePotionItem)}\u0001{MessageUtils.GetAlternateName(bluePotionItem)}\u0000.".Wrap(35, "\u0011").EndTextbox() + "Actually, I want to do business in the sea breeze while listening to the sound of the waves.\u0019\u00BF".Wrap(35, "\u0011")
-                });
+                var bluePotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemBusinessScrubBluePotion);
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x161C)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x39A7)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("I'm here to sell ")
+                            .RuntimeArticle(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bluePotionItem.AlternateName(), bluePotionItem.NewLocation.Value);
+                            })
+                            .Text(".")
+                            ;
+                        })
+                        .EndTextBox()
+                        .CompileTimeWrap("Actually, I want to do business in the sea breeze while listening to the sound of the waves.")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x1626,
-                    Header = null,
-                    Message = $"\x1E\x3A\u00D2Don't you need {MessageUtils.GetArticle(bluePotionItem)}\u0001{MessageUtils.GetAlternateName(bluePotionItem)}\u0000? I'll sell you{MessageUtils.GetPronounOrAmount(bluePotionItem).ToLower()} for \u0006100 Rupees\u0000.\u0019\u00BF".Wrap(35, "\u0011")
-                });
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x1626)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x3AD2)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Don't you need ")
+                            .RuntimeArticle(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(bluePotionItem.AlternateName(), bluePotionItem.NewLocation.Value);
+                            })
+                            .Text("? I'll sell you")
+                            .RuntimePronounOrAmount(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
+                            .Text(" for ")
+                            .Pink("100 Rupees")
+                            .Text(".")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x15EA,
-                    Header = null,
-                    Message = $"Do we have a deal?\u0011 \u0011\u0002\u00C2Yes\u0011No\u00BF"
-                });
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x162D)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x398C)
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("I'll sell you ")
+                            .RuntimeArticle(bluePotionItem.DisplayItem, bluePotionItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.Text(bluePotionItem.DisplayName());
+                            })
+                            .Text(" for ")
+                            .Pink("100 Rupees")
+                            .Text(".")
+                            ;
+                        })
+                        .EndConversation()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x15EA)
+                    .Message(it =>
+                    {
+                        it.Text("Do we have a deal?").NewLine()
+                        .Text(" ").NewLine()
+                        .StartGreenText()
+                        .TwoChoices()
+                        .Text("Yes").NewLine()
+                        .Text("No")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
                 // update gorman bros milk purchase
-                var gormanBrosMilkItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemGormanBrosMilk).Item;
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x3463,
-                    Header = null,
-                    Message = $"Won'tcha buy {MessageUtils.GetArticle(gormanBrosMilkItem)}\u0001{MessageUtils.GetAlternateName(gormanBrosMilkItem)}\u0000?\u0019\u00BF".Wrap(35, "\u0011")
-                });
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x3466,
-                    Header = null,
-                    Message = $"\u000650 Rupees\u0000 will do ya for{MessageUtils.GetPronounOrAmount(gormanBrosMilkItem).ToLower()}.\u0011 \u0011\u0002\u00C2I'll buy {MessageUtils.GetPronoun(gormanBrosMilkItem)}\u0011No thanks\u00BF"
-                });
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x346B,
-                    Header = null,
-                    Message = $"Buyin' {MessageUtils.GetArticle(gormanBrosMilkItem)}\u0001{MessageUtils.GetAlternateName(gormanBrosMilkItem)}\u0000?\u0019\u00BF".Wrap(35, "\u0011")
-                });
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x348F,
-                    Header = null,
-                    Message = $"Seems like we're the only ones who have {MessageUtils.GetArticle(gormanBrosMilkItem)}\u0001{MessageUtils.GetAlternateName(gormanBrosMilkItem)}\u0000. Hyuh, hyuh. If you like, I'll sell you{MessageUtils.GetPronounOrAmount(gormanBrosMilkItem).ToLower()}.\u0019\u00BF".Wrap(35, "\u0011")
-                });
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x3490,
-                    Header = null,
-                    Message = $"\u000650 Rupees\u0000 will do you for{MessageUtils.GetPronounOrAmount(gormanBrosMilkItem).ToLower()}!\u0011 \u0011\u0002\u00C2I'll buy {MessageUtils.GetPronoun(gormanBrosMilkItem)}\u0011No thanks\u00BF"
-                });
+                var gormanBrosMilkItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemGormanBrosMilk);
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x3463)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("Won'tcha buy ")
+                            .RuntimeArticle(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(gormanBrosMilkItem.AlternateName(), gormanBrosMilkItem.NewLocation.Value);
+                            })
+                            .Text("?")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x3466)
+                    .Message(it =>
+                    {
+                        it.Pink("50 Rupees").Text(" will do ya for").RuntimePronounOrAmount(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).Text(".").NewLine()
+                        .Text(" ").NewLine()
+                        .StartGreenText()
+                        .TwoChoices()
+                        .Text("I'll buy ").RuntimePronoun(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).NewLine()
+                        .Text("No thanks")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x346B)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("Buyin' ")
+                            .RuntimeArticle(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(gormanBrosMilkItem.AlternateName(), gormanBrosMilkItem.NewLocation.Value);
+                            })
+                            .Text("?")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x348F)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("Seems like we're the only ones who have ")
+                            .RuntimeArticle(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(gormanBrosMilkItem.AlternateName(), gormanBrosMilkItem.NewLocation.Value);
+                            })
+                            .Text(". Hyuh, hyuh. If you like, I'll sell you")
+                            .RuntimePronounOrAmount(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value)
+                            .Text(".")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x3490)
+                    .Message(it =>
+                    {
+                        it.Pink("50 Rupees").Text(" will do you for").RuntimePronounOrAmount(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).Text("!").NewLine()
+                        .Text(" ").NewLine()
+                        .StartGreenText()
+                        .TwoChoices()
+                        .Text("I'll buy ").RuntimePronoun(gormanBrosMilkItem.DisplayItem, gormanBrosMilkItem.NewLocation.Value).NewLine()
+                        .Text("No thanks")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
                 // update lottery message
-                var lotteryItem = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemLotteryPurpleRupee).Item;
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x2B5C,
-                    Header = null,
-                    Message = $"Would you like the chance to buy your dreams for \u000610 Rupees\u0000?".Wrap(35, "\u0011").EndTextbox() + $"Pick any three numbers, and if those are picked, you'll win {MessageUtils.GetArticle(lotteryItem)}\u0001{lotteryItem.Name()}\u0000. It's only for the \u0001first\u0000 person!\u0019\u00BF".Wrap(35, "\u0011")
-                });
+                var lotteryItem = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemLotteryPurpleRupee);
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x2B5C)
+                    .Message(it =>
+                    {
+                        it.CompileTimeWrap((wrapped) =>
+                        {
+                            wrapped.Text("Would you like the chance to buy your dreams for ").Pink("10 Rupees").Text("?");
+                        })
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("Pick any three numbers, and if those are picked, you'll win ")
+                            .RuntimeArticle(lotteryItem.DisplayItem, lotteryItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(lotteryItem.DisplayName(), lotteryItem.NewLocation.Value);
+                            })
+                            .Text(". It's only for the ")
+                            .Red("first")
+                            .Text(" person!")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x2B66)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x4853)
+                        .Text("Congratulations!")
+                        .EndTextBox()
+                        .RuntimeWrap(() =>
+                        {
+                            it.Text("You win a prize of ")
+                            .RuntimeArticle(lotteryItem.DisplayItem, lotteryItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(lotteryItem.DisplayName(), lotteryItem.NewLocation.Value);
+                            })
+                            .Text("!")
+                            ;
+                        })
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
+                // Update messages to match updated world models.
+                if (_randomized.Settings.UpdateWorldModels)
+                {
+                    // Update Moon's Tear messages.
+                    var moonsTearItem = _randomized.ItemList.First(io => io.NewLocation == Item.TradeItemMoonTear);
+                    if (moonsTearItem.Item != Item.TradeItemMoonTear)
+                    {
+                        newMessages.Add(new MessageEntryBuilder()
+                            .Id(0x5E3)
+                            .Message(it =>
+                            {
+                                it.Text("That is one of the lunar objects").NewLine()
+                                .Text("that has been blazing from the").NewLine()
+                                .Text("surface of the moon lately.")
+                                .EndTextBox()
+                                .CompileTimeWrap((wrapped) =>
+                                {
+                                    wrapped.Text("They fall from what looks to be the moon's eye, I call ")
+                                    .Text(MessageUtils.GetPronoun(moonsTearItem.DisplayItem))
+                                    .Text(" ")
+                                    .Text(MessageUtils.GetArticle(moonsTearItem.DisplayItem))
+                                    .Red(moonsTearItem.DisplayName())
+                                    .Text(".")
+                                    ;
+                                })
+                                .EndTextBox()
+                                .Text("They are rare, valued by many").NewLine()
+                                .Text("in town.")
+                                .EndFinalTextBox();
+                            })
+                            .Build()
+                        );
+                        newMessages.Add(new MessageEntryBuilder()
+                            .Id(0x5ED)
+                            .Message(it =>
+                            {
+                                it.Text($"That ill-mannered troublemaker").NewLine()
+                                .Text("from the other day said he'd").NewLine()
+                                .Text("break my instruments...")
+                                .EndTextBox()
+                                .CompileTimeWrap((wrapped) =>
+                                {
+                                    wrapped.Text("He said he's steal my ")
+                                    .Red(moonsTearItem.DisplayName())
+                                    .Text("... There was no stopping him.")
+                                    ;
+                                })
+                                .DisableTextSkip2()
+                                .EndFinalTextBox();
+                            })
+                            .Build()
+                        );
+                        newMessages.Add(new MessageEntryBuilder()
+                            .Id(0x5F2)
+                            .Message(it =>
+                            {
+                                it.Text($"Well, did you find that").NewLine()
+                                .Red("troublemaker").Text("? And that loud").NewLine()
+                                .Text("noise...What was that?")
+                                .EndTextBox()
+                                .CompileTimeWrap((wrapped) =>
+                                {
+                                    wrapped.Text("Perhaps another ")
+                                    .Red(moonsTearItem.DisplayName())
+                                    .Text(" has falled nearby...Go through that door and take a look outside.")
+                                    ;
+                                })
+                                .DisableTextSkip2()
+                                .EndFinalTextBox();
+                            })
+                            .Build()
+                        );
+                    }
+
+                    // Update Seahorse messages.
+                    var seahorseItem = _randomized.ItemList.First(io => io.NewLocation == Item.MundaneItemSeahorse);
+                    if (seahorseItem.Item != Item.MundaneItemSeahorse)
+                    {
+                        newMessages.Add(new MessageEntryBuilder()
+                            .Id(0x106F)
+                            .Message(it =>
+                            {
+                                it.PlaySoundEffect(0x694C)
+                                .Text("Are you interested in that?")
+                                .EndTextBox()
+                                .RuntimeWrap(() =>
+                                {
+                                    it.Text("It's rare, isn't it? It's called ")
+                                    .RuntimeArticle(seahorseItem.DisplayItem, seahorseItem.NewLocation.Value)
+                                    .Red(() =>
+                                    {
+                                        it.RuntimeItemName(seahorseItem.DisplayName(), seahorseItem.NewLocation.Value);
+                                    })
+                                    .Text(".")
+                                    ;
+                                })
+                                .DisableTextSkip2()
+                                .EndFinalTextBox();
+                            })
+                            .Build()
+                        );
+                        newMessages.Add(new MessageEntryBuilder()
+                            .Id(0x1074)
+                            .Message(it =>
+                            {
+                                it.RuntimeWrap(() =>
+                                {
+                                    it.Text("If you want that ")
+                                    .Red(() =>
+                                    {
+                                        it.RuntimeItemName(seahorseItem.DisplayName(), seahorseItem.NewLocation.Value);
+                                    })
+                                    .Text(", bring me a ")
+                                    .Red("pictograph")
+                                    .Text(" of a ")
+                                    .Red("female pirate")
+                                    .Text(".")
+                                    ;
+                                })
+                                .DisableTextSkip2()
+                                .EndFinalTextBox();
+                            })
+                            .Build()
+                        );
+                    }
+                }
             }
 
             // replace "Razor Sword is now blunt" message with get-item message for Kokiri Sword.
-            newMessages.Add(new MessageEntry
-            {
-                Id = 0xF9,
-                Header = new byte[11] { 0x06, 0x00, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },
-                Message = $"You got the \x01Kokiri Sword\x00!\u0011This is a hidden treasure of\u0011the Kokiri, but you can borrow it\u0011for a while.\u00BF",
-            });
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0xF9)
+                .Header(it =>
+                {
+                    it.Standard2();
+                })
+                .Message(it =>
+                {
+                    it.Text("You got the ").Red("Kokiri Sword").Text("!").NewLine()
+                    .Text("This is a hidden treasure of").NewLine()
+                    .Text("the Kokiri, but you can borrow it").NewLine()
+                    .Text("for a while.")
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
 
             // replace Magic Power message
-            newMessages.Add(new MessageEntry
-            {
-                Id = 0xC8,
-                Header = null,
-                Message = $"\u0017You've been granted \u0002Magic Power\u0000!\u0018\u0011Replenish it with \u0001Magic Jars\u0000\u0011and \u0001Potions\u0000.\u00BF",
-            });
+            newMessages.Add(new MessageEntryBuilder()
+                .Id(0xC8)
+                .Message(it =>
+                {
+                    it.QuickText(() =>
+                    {
+                        it.Text("You've been granted ")
+                        .Green("Magic Power")
+                        .Text("!")
+                        ;
+                    })
+                    .NewLine()
+                    .Text("Replenish it with ")
+                    .Red("Magic Jars")
+                    .NewLine()
+                    .Text("and ")
+                    .Red("Potions")
+                    .Text(".")
+                    .EndFinalTextBox()
+                    ;
+                })
+                .Build()
+            );
 
             if (_randomized.Settings.AddSkulltulaTokens)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-skulltula-tokens");
+                ResourceUtils.ApplyHack(Resources.mods.fix_skulltula_tokens);
 
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x51,
-                    Header = new byte[11] { 0x02, 0x00, 0x52, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },
-                    Message = $"\u0017You got an \u0005Ocean Gold Skulltula\u0011Spirit\0!\u0018\u001F\u0000\u0010 This is your \u0001\u000D\u0000 one!\u00BF",
-                });
-                newMessages.Add(new MessageEntry
-                {
-                    Id = 0x52,
-                    Header = new byte[11] { 0x02, 0x00, 0x52, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },
-                    Message = $"\u0017You got a \u0006Swamp Gold Skulltula\u0011Spirit\0!\u0018\u001F\u0000\u0010 This is your \u0001\u000D\u0000 one!\u00BF",
-                });
+                MessageEntry oceanSkulltulaEntry = new MessageEntryBuilder()
+                    .Id(0x51)
+                    .Header(it => { it.FaintBlue().Icon(0x52); })
+                    .Message(it =>
+                    {
+                        it.QuickText(() =>
+                        {
+                            it.Text("You got an ")
+                            .LightBlue(() =>
+                            {
+                                it.Text("Ocean Gold Skulltula")
+                                .NewLine()
+                                .Text("Spirit");
+                            })
+                            .Text("!");
+                        })
+                        .PauseText(0x0010)
+                        .Text(" This is your ")
+                        .Red(() => { it.SkulltulaCount(); })
+                        .Text(" one!")
+                        .EndFinalTextBox();
+                    })
+                    .Build();
+                newMessages.Add(oceanSkulltulaEntry);
+
+                MessageEntry swampSkulltulaEntry = new MessageEntryBuilder()
+                    .Id(0x52)
+                    .Header(it => { it.FaintBlue().Icon(0x52); })
+                    .Message(it =>
+                    {
+                        it.QuickText(() =>
+                        {
+                            it.Text("You got a ")
+                            .Pink(() =>
+                            {
+                                it.Text("Swamp Gold Skulltula")
+                                .NewLine()
+                                .Text("Spirit");
+                            })
+                            .Text("!");
+                        })
+                        .PauseText(0x0010)
+                        .Text(" This is your ")
+                        .Red(() => { it.SkulltulaCount(); })
+                        .Text(" one!")
+                        .EndFinalTextBox();
+                    })
+                    .Build();
+
+                newMessages.Add(swampSkulltulaEntry);
             }
 
             if (_randomized.Settings.AddStrayFairies)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-fairies");
+                ResourceUtils.ApplyHack(Resources.mods.fix_fairies);
             }
 
             var dungeonItemMessageIds = new byte[] {
@@ -1322,21 +2236,21 @@ namespace MMR.Randomizer
                 0x70, 0x71, 0x72, 0x73, 0x77,
             };
 
-            var dungeonNames = new string[]
+            var dungeonNames = new (char color, string dungeonName)[]
             {
-                "\u0006Woodfall Temple\u0000",
-                "\u0002Snowhead Temple\u0000",
-                "\u0005Great Bay Temple\u0000",
-                "\u0004Stone Tower Temple\u0000"
+                (TextCommands.ColorPink, "Woodfall Temple"),
+                (TextCommands.ColorGreen, "Snowhead Temple"),
+                (TextCommands.ColorLightBlue, "Great Bay Temple"),
+                (TextCommands.ColorYellow, "Stone Tower Temple"),
             };
 
-            var dungeonItemMessages = new string[]
+            var dungeonItemNames = new (string article, string itemName)[]
             {
-                "\u0017You found a \u0001Small Key\u0000 for\u0011{0}!\u0018\u00BF",
-                "\u0017You found the \u0001Boss Key\u0000 for\u0011{0}!\u0018\u00BF",
-                "\u0017You found the \u0001Dungeon Map\u0000 for\u0011{0}!\u0018\u00BF",
-                "\u0017You found the \u0001Compass\u0000 for\u0011{0}!\u0018\u00BF",
-                "\u0017You found a \u0001Stray Fairy\u0000 from\u0011{0}!\u0018\u001F\u0000\u0010\u0011This is your \u0001\u000C\u0000 one!\u00BF",
+                ("a ", "Small Key"),
+                ("the ", "Boss Key"),
+                ("the ", "Dungeon Map"),
+                ("the ", "Compass"),
+                ("a ", "Stray Fairy"),
             };
 
             var dungeonItemIcons = new byte[]
@@ -1346,24 +2260,48 @@ namespace MMR.Randomizer
 
             for (var i = 0; i < dungeonItemMessageIds.Length; i++)
             {
+                var itemTypeIndex = i % 5;
+                var dungeonIndex = i / 5;
                 var messageId = dungeonItemMessageIds[i];
-                var icon = dungeonItemIcons[i % 5];
-                var dungeonName = dungeonNames[i / 5];
-                var message = string.Format(dungeonItemMessages[i % 5], dungeonName);
+                var icon = dungeonItemIcons[itemTypeIndex];
+                var dungeonName = dungeonNames[dungeonIndex];
 
-                newMessages.Add(new MessageEntry
-                {
-                    Id = messageId,
-                    Header = new byte[11] { 0x02, 0x00, icon, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF },
-                    Message = message
-                });
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(messageId)
+                    .Header(it =>
+                    {
+                        it.FaintBlue().Icon(icon);
+                    })
+                    .Message(it =>
+                    {
+                        it.QuickText(() =>
+                        {
+                            it.Text("You found ")
+                            .Text(dungeonItemNames[itemTypeIndex].article)
+                            .Red(dungeonItemNames[itemTypeIndex].itemName)
+                            .Text(" for")
+                            .NewLine()
+                            .TextColor(dungeonName.color, dungeonName.dungeonName)
+                            .Text("!")
+                            ;
+                        });
+                        if (itemTypeIndex == 4)
+                        {
+                            it.PauseText(0x10).NewLine()
+                            .Text("This is your ").Red(() => { it.StrayFairyCount(); }).Text(" one!")
+                            ;
+                        }
+                        it.EndFinalTextBox();
+                    })
+                    .Build()
+                );
             }
 
             _messageTable.UpdateMessages(newMessages);
 
             if (_randomized.Settings.AddShopItems)
             {
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-shop-checks");
+                ResourceUtils.ApplyHack(Resources.mods.fix_shop_checks);
             }
         }
 
@@ -1387,7 +2325,7 @@ namespace MMR.Randomizer
 
         private void WriteTitleScreen()
         {
-            var titleScreen = ResourceUtils.ReadHack(Values.ModsDirectory, "title-screen");
+            var titleScreen = Resources.mods.title_screen;
 
             int rot = _randomized.TitleLogoColor;
             Color l;
@@ -1420,9 +2358,9 @@ namespace MMR.Randomizer
 
         private void WriteFileSelect()
         {
-            ResourceUtils.ApplyHack(Values.ModsDirectory, "file-select");
+            ResourceUtils.ApplyHack(Resources.mods.file_select);
             byte[] SkyboxDefault = new byte[] { 0x91, 0x78, 0x9B, 0x28, 0x00, 0x28 };
-            List<int[]> Addrs = ResourceUtils.GetAddresses(Values.AddrsDirectory, "skybox-init");
+            List<int[]> Addrs = ResourceUtils.GetAddresses(Resources.addresses.skybox_init);
             for (int i = 0; i < 2; i++)
             {
                 Color c = Color.FromArgb(SkyboxDefault[i * 3], SkyboxDefault[i * 3 + 1], SkyboxDefault[i * 3 + 2]);
@@ -1441,7 +2379,7 @@ namespace MMR.Randomizer
             }
 
             byte[] FSDefault = new byte[] { 0x64, 0x96, 0xFF, 0x96, 0xFF, 0xFF, 0x64, 0xFF, 0xFF };
-            Addrs = ResourceUtils.GetAddresses(Values.AddrsDirectory, "fs-colour");
+            Addrs = ResourceUtils.GetAddresses(Resources.addresses.fs_colour);
             for (int i = 0; i < 3; i++)
             {
                 Color c = Color.FromArgb(FSDefault[i * 3], FSDefault[i * 3 + 1], FSDefault[i * 3 + 2]);
@@ -1473,8 +2411,7 @@ namespace MMR.Randomizer
                 //ResourceUtils.ApplyHack(ModsDir + "postman-testing");
                 return;
             }
-            Version v = Assembly.GetExecutingAssembly().GetName().Version;
-            RomUtils.SetStrings(Values.ModsDirectory, "logo-text", $"v{v}", string.Empty);
+            RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", string.Empty);
         }
 
         private void WriteShopObjects()
@@ -1525,8 +2462,8 @@ namespace MMR.Randomizer
             // Load the symbols and use them to apply the patch data
             var options = _randomized.Settings.AsmOptions;
 
-            // Update internal flags
-            options.MiscConfig.InternalFlags.VanillaLayout = _randomized.Settings.LogicMode == LogicMode.Vanilla;
+            // Finalize Misc configuration.
+            options.MiscConfig.FinalizeSettings(_randomized.Settings);
 
             asm.ApplyPatch(options);
 
@@ -1539,6 +2476,14 @@ namespace MMR.Randomizer
                 var baseAddr = (uint)file.Addr;
                 asm.Symbols.WriteExtendedObjects(extended.GetAddresses(baseAddr));
             }
+
+            // Add extra messages to message table.
+            asm.ExtraMessages.AddMessage(_extraMessages.ToArray());
+            asm.WriteExtMessageTable();
+
+            // Add item graphics to table and write to ROM.
+            asm.MimicTable.Update(_graphicOverrides);
+            asm.WriteMimicItemTable();
         }
 
         private void WriteAsmConfig(AsmContext asm, byte[] hash)
@@ -1581,6 +2526,12 @@ namespace MMR.Randomizer
                 config.MagicOverride = ColorSelectionManager.MagicMeter.GetItems().FirstOrDefault(csi => csi.Name == _cosmeticSettings.HeartsSelection)?.GetColors(random);
             else
                 config.MagicOverride = null;
+
+            // Get random values for hue shift.
+            if (_cosmeticSettings.ShiftHueMiscUI)
+            {
+                config.HueShift = new Tuple<float>((float)(random.NextDouble() * 360.0));
+            }
         }
 
         /// <summary>
@@ -1622,12 +2573,36 @@ namespace MMR.Randomizer
             }
         }
 
+        /// <summary>
+        /// Write data related to ice traps to ROM.
+        /// </summary>
+        public void WriteIceTraps()
+        {
+            // Add mimic graphic to graphic overrides table.
+            foreach (var item in _randomized.IceTraps)
+            {
+                var newLocation = item.NewLocation.Value;
+                if (newLocation.IsVisible() || newLocation.IsShop())
+                {
+                    var giIndex = item.NewLocation.Value.GetItemIndex().Value;
+                    var graphic = item.Mimic.ResolveGraphic();
+                    _graphicOverrides.Add(giIndex, graphic);
+                }
+            }
+
+            // Add "You are a FOOL!" message to extra messages table.
+            var entry = new MessageEntry(
+                Item.IceTrap.ExclusiveItemEntry().Message,
+                Item.IceTrap.ExclusiveItemMessage());
+            _extraMessages.Add(entry);
+        }
+
         public void MakeROM(OutputSettings outputSettings, IProgressReporter progressReporter)
         {
             using (BinaryReader OldROM = new BinaryReader(File.OpenRead(outputSettings.InputROMFilename)))
             {
                 RomUtils.ReadFileTable(OldROM);
-                _messageTable.InitializeTable();
+                _messageTable = MessageTable.ReadDefault();
             }
 
             var originalMMFileList = RomData.MMFileList.Select(file => file.Clone()).ToList();
@@ -1653,15 +2628,16 @@ namespace MMR.Randomizer
                 if (_randomized.Settings.LogicMode != LogicMode.Vanilla)
                 {
                     progressReporter.ReportProgress(60, "Applying hacks...");
-                    ResourceUtils.ApplyHack(Values.ModsDirectory, "title-screen");
+                    ResourceUtils.ApplyHack(Resources.mods.title_screen);
                     WriteTitleScreen();
-                    ResourceUtils.ApplyHack(Values.ModsDirectory, "misc-changes");
+                    ResourceUtils.ApplyHack(Resources.mods.misc_changes);
                     WriteMiscText();
-                    ResourceUtils.ApplyHack(Values.ModsDirectory, "cm-cs");
-                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-song-of-healing");
+                    ResourceUtils.ApplyHack(Resources.mods.cm_cs);
+                    ResourceUtils.ApplyHack(Resources.mods.fix_song_of_healing);
                     WriteFileSelect();
                 }
-                ResourceUtils.ApplyHack(Values.ModsDirectory, "init-file");
+                ResourceUtils.ApplyHack(Resources.mods.init_file);
+                ResourceUtils.ApplyHack(Resources.mods.fix_deku_drowning);
 
                 progressReporter.ReportProgress(61, "Writing quick text...");
                 WriteQuickText();
@@ -1692,19 +2668,26 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(68, "Writing messages...");
                 WriteGossipQuotes();
 
-                MessageTable.WriteMessageTable(_messageTable, _randomized.Settings.QuickTextEnabled);
+                MessageTable.WriteDefault(_messageTable, _randomized.Settings.QuickTextEnabled);
 
                 progressReporter.ReportProgress(69, "Writing startup...");
                 WriteStartupStrings();
 
+                // Overwrite existing items with ice traps.
+                if (_randomized.Settings.LogicMode != LogicMode.Vanilla && _randomized.Settings.IceTraps != IceTraps.None)
+                {
+                    progressReporter.ReportProgress(70, "Writing ice traps...");
+                    WriteIceTraps();
+                }
+
                 // Load Asm data from internal resource files and apply
                 asm = AsmContext.LoadInternal();
-                progressReporter.ReportProgress(70, "Writing ASM patch...");
+                progressReporter.ReportProgress(71, "Writing ASM patch...");
                 WriteAsmPatch(asm);
 
                 WriteNutsAndSticks();
                 
-                progressReporter.ReportProgress(71, outputSettings.GeneratePatch ? "Generating patch..." : "Computing hash...");
+                progressReporter.ReportProgress(72, outputSettings.GeneratePatch ? "Generating patch..." : "Computing hash...");
                 hash = RomUtils.CreatePatch(outputSettings.GeneratePatch ? outputSettings.OutputROMFilename : null, originalMMFileList);
 
                 // Write subset of Asm config post-patch
@@ -1721,10 +2704,12 @@ namespace MMR.Randomizer
             progressReporter.ReportProgress(72, "Writing cosmetics...");
             WriteTatlColour(new Random(BitConverter.ToInt32(hash, 0)));
             WriteTunicColor();
+            WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
             progressReporter.ReportProgress(73, "Writing music...");
             WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
             WriteMuteMusic();
+            WriteEnemyCombatMusicMute();
 
             progressReporter.ReportProgress(74, "Writing sound effects...");
             WriteSoundEffects(new Random(BitConverter.ToInt32(hash, 0)));
@@ -1737,14 +2722,27 @@ namespace MMR.Randomizer
 
                 if (outputSettings.GenerateROM)
                 {
+                    if (ROM.Length > 0x4000000) // over 64mb
+                    {
+                        throw new ROMOverflowException("64 MB", "hardware (Everdrive)");
+                    }
                     progressReporter.ReportProgress(85, "Writing ROM...");
                     RomUtils.WriteROM(outputSettings.OutputROMFilename, ROM);
                 }
 
                 if (outputSettings.OutputVC)
                 {
+                    if (ROM.Length > 0x2000000) // over 32mb
+                    {
+                        throw new ROMOverflowException("32 MB", "WiiVC");
+                    }
                     progressReporter.ReportProgress(90, "Writing VC...");
-                    VCInjectionUtils.BuildVC(ROM, _cosmeticSettings.AsmOptions.DPadConfig, Values.VCDirectory, Path.ChangeExtension(outputSettings.OutputROMFilename, "wad"));
+                    var fileName = Path.ChangeExtension(outputSettings.OutputROMFilename, "wad");
+                    if (!Path.IsPathRooted(fileName))
+                    {
+                        fileName = Path.Combine(Values.MainDirectory, fileName);
+                    }
+                    VCInjectionUtils.BuildVC(ROM, _cosmeticSettings.AsmOptions.DPadConfig, Values.VCDirectory, fileName);
                 }
             }
             progressReporter.ReportProgress(100, "Done!");

@@ -5,8 +5,6 @@ namespace MMR.Randomizer.Models
 {
     public class SpoilerItem
     {
-        public Item Item { get; }
-
         public int Id { get; }
         public string Name { get; }
 
@@ -21,15 +19,14 @@ namespace MMR.Randomizer.Models
 
         public bool IsRequired { get; }
 
-        public SpoilerItem(ItemObject itemObject, bool isRequired, bool isImportant)
+        public SpoilerItem(ItemObject itemObject, bool isRequired, bool isImportant, bool progressiveUpgrades)
         {
-            Item = itemObject.Item;
             Id = itemObject.ID;
-            Name = itemObject.Item.Name() ?? itemObject.Name;
+            Name = itemObject.NameOverride ?? itemObject.Item.ProgressiveUpgradeName(progressiveUpgrades) ?? itemObject.Name;
             NewLocationId = (int)itemObject.NewLocation.Value;
             NewLocationName = itemObject.NewLocation.Value.Location();
             Region = itemObject.NewLocation.Value.Region().Value;
-            IsJunk = Name.Contains("Rupee") || Name.Contains("Heart");
+            IsJunk = Name.Contains("Rupee") || Name.Contains("Heart") || itemObject.Item == Item.IceTrap;
             IsImportant = isImportant;
             IsRequired = isRequired;
         }

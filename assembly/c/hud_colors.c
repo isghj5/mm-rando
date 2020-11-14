@@ -5,7 +5,7 @@
 
 struct hud_color_config HUD_COLOR_CONFIG = {
     .magic = HUD_COLOR_CONFIG_MAGIC,
-    .version = 1,
+    .version = 3,
 
     // Version 0
     .button_a                = { 0x64, 0xC8, 0xFF },
@@ -58,6 +58,14 @@ struct hud_color_config HUD_COLOR_CONFIG = {
     .prompt_glow             = { 0x00, 0x82, 0xFF },
     .score_lines             = { 0xFF, 0x00, 0x00 },
     .score_note              = { 0xFF, 0x64, 0x00 },
+
+    // Version 2
+    .dpad                    = { 0x80, 0x80, 0x80 },
+
+    // Version 3
+    .menu_border_1           = { 0xB4, 0xB4, 0x78 },
+    .menu_border_2           = { 0x96, 0x8C, 0x5A },
+    .menu_subtitle_text      = { 0xFF, 0xC8, 0x00 },
 };
 
 struct pause_cursor_colors {
@@ -172,6 +180,27 @@ u32 hud_colors_get_note_button_color(u8 index, u8 alpha) {
     } else {
         return color_rgb8_to_int(HUD_COLOR_CONFIG.note_c_1, alpha);
     }
+}
+
+/**
+ * Hook function used to get the pause menu primary border color.
+ **/
+u32 hud_colors_get_menu_border_1_color(void) {
+    return color_rgb8_to_int(HUD_COLOR_CONFIG.menu_border_1, 0xFF);
+}
+
+/**
+ * Hook function used to get the pause menu secondary border color.
+ **/
+u32 hud_colors_get_menu_border_2_color(void) {
+    return color_rgb8_to_int(HUD_COLOR_CONFIG.menu_border_2, 0xFF);
+}
+
+/**
+ * Hook function used to get the pause menu subtitle text color.
+ **/
+u32 hud_colors_get_menu_subtitle_text_color(void) {
+    return color_rgb8_to_int(HUD_COLOR_CONFIG.menu_subtitle_text, 0xFF);
 }
 
 void hud_colors_update_heart_colors(z2_game_t *game) {

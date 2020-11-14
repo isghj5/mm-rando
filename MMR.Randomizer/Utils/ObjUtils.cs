@@ -29,6 +29,11 @@ namespace MMR.Randomizer.Utils
             return RomData.MMFileList[objectFileIndex].Data;
         }
 
+        public static void InsertIndexedObj(int index, int replace, params byte[][] obj)
+        {
+            InsertObj(obj[index], replace);
+        }
+
         public static void InsertObj(byte[] obj, int replace)
         {
             int f = RomUtils.GetFileIndexForWriting(OBJECT_TABLE);

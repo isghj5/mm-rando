@@ -24,6 +24,5 @@ namespace MMR.UI.Forms
                 Hide();
             };
         }
-
     }
 }

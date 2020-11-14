@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Discord;
 using Discord.WebSocket;
 using MMR.Common.Utils;
+using MMR.Common.Extensions;
 using MMR.DiscordBot.Data;
 using MMR.DiscordBot.Data.Entities;
 using ServiceStack.OrmLite;
@@ -97,6 +99,64 @@ namespace MMR.DiscordBot
             // The bot should never respond to itself.
             if (message.Author.Id == _client.CurrentUser.Id)
                 return;
+
+            if (message.Channel.Id == 709731024375906316 || message.Channel.Id == 744581433481232425)
+            {
+                if (message.Content.StartsWith("!seed"))
+                {
+                    var mentionedUsers = message.MentionedUsers.DistinctBy(u => u.Id);
+                    if (mentionedUsers.Any(u => u.Id == message.Author.Id))
+                    {
+                        await message.Channel.SendMessageAsync("Cannot generate a seed for yourself.");
+                        return;
+                    }
+                    if (mentionedUsers.Count() < 2)
+                    {
+                        await message.Channel.SendMessageAsync("Must mention at least two users.");
+                        return;
+                    }
+                    var now = DateTime.UtcNow;
+                    var messageResult = await message.Channel.SendMessageAsync("Generating seed...");
+                    new Thread(async () =>
+                    {
+                        var filename = FileUtils.MakeFilenameValid(now.ToString("o"));
+                        try
+                        {
+                            if (!await GenerateSeed(filename))
+                            {
+                                throw new Exception("MMR.CLI exited with non-zero code.");
+                            }
+                            var patchPath = Path.Combine(_cliPath, $@"output\{filename}.mmr");
+                            var hashIconPath = Path.ChangeExtension(patchPath, "png");
+                            var spoilerLogFilename = Path.Combine(_cliPath, $@"output\{filename}_SpoilerLog.txt");
+                            if (File.Exists(patchPath) && File.Exists(hashIconPath) && File.Exists(spoilerLogFilename))
+                            {
+                                foreach (var user in mentionedUsers)
+                                {
+                                    await user.SendFileAsync(patchPath, "Here is your tournament match seed! Please be sure your Hash matches and let an organizer know if you have any issues before you begin.");
+                                    await user.SendFileAsync(hashIconPath);
+                                }
+                                await message.Author.SendFileAsync(spoilerLogFilename);
+                                await message.Author.SendFileAsync(hashIconPath);
+                                File.Delete(spoilerLogFilename);
+                                File.Delete(patchPath);
+                                File.Delete(hashIconPath);
+                                await messageResult.ModifyAsync(mp => mp.Content = "Success.");
+                            }
+                            else
+                            {
+                                throw new Exception("MMR.CLI succeeded, but output files not found.");
+                            }
+                        }
+                        catch (Exception e)
+                        {
+                            // TODO log exception.
+                            await messageResult.ModifyAsync(mp => mp.Content = "An error occured.");
+                        }
+                    }).Start();
+                }
+                return;
+            }
 
             using (var db = _connectionFactory.Open())
             {

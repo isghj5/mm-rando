@@ -57,6 +57,7 @@ namespace MMR.UI.Forms
             this.bStartingItemEditor = new System.Windows.Forms.Button();
             this.tStartingItemList = new System.Windows.Forms.TextBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.cProgressiveUpgrades = new System.Windows.Forms.CheckBox();
             this.cNoStartingItems = new System.Windows.Forms.CheckBox();
             this.cDEnt = new System.Windows.Forms.CheckBox();
             this.cEnemy = new System.Windows.Forms.CheckBox();
@@ -78,51 +79,14 @@ namespace MMR.UI.Forms
             this.cShop = new System.Windows.Forms.CheckBox();
             this.cAdditional = new System.Windows.Forms.CheckBox();
             this.cMoonItems = new System.Windows.Forms.CheckBox();
-            this.tabComfort = new System.Windows.Forms.TabPage();
-            this.gSpeedUps = new System.Windows.Forms.GroupBox();
-            this.cFasterBank = new System.Windows.Forms.CheckBox();
-            this.cSkipBeaver = new System.Windows.Forms.CheckBox();
-            this.cFasterLabFish = new System.Windows.Forms.CheckBox();
-            this.cGoodDogRaceRNG = new System.Windows.Forms.CheckBox();
-            this.cGoodDampeRNG = new System.Windows.Forms.CheckBox();
-            this.gHints = new System.Windows.Forms.GroupBox();
-            this.lGossip = new System.Windows.Forms.Label();
-            this.cGossipHints = new System.Windows.Forms.ComboBox();
-            this.cFreeHints = new System.Windows.Forms.CheckBox();
-            this.cClearHints = new System.Windows.Forms.CheckBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.lLink = new System.Windows.Forms.Label();
-            this.lTatl = new System.Windows.Forms.Label();
-            this.cHUDGroupBox = new System.Windows.Forms.GroupBox();
-            this.cHUDTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
-            this.cHUDHeartsComboBox = new System.Windows.Forms.ComboBox();
-            this.cHeartsLabel = new System.Windows.Forms.Label();
-            this.cMagicLabel = new System.Windows.Forms.Label();
-            this.cHUDMagicComboBox = new System.Windows.Forms.ComboBox();
-            this.btn_hud = new System.Windows.Forms.Button();
-            this.lMusic = new System.Windows.Forms.Label();
-            this.bTunic = new System.Windows.Forms.Button();
-            this.cLink = new System.Windows.Forms.ComboBox();
-            this.cTatl = new System.Windows.Forms.ComboBox();
-            this.cMusic = new System.Windows.Forms.ComboBox();
-            this.lTunic = new System.Windows.Forms.Label();
-            this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.cCloseCows = new System.Windows.Forms.CheckBox();
-            this.cArrowCycling = new System.Windows.Forms.CheckBox();
-            this.cFreestanding = new System.Windows.Forms.CheckBox();
-            this.cEnableNightMusic = new System.Windows.Forms.CheckBox();
-            this.cFastPush = new System.Windows.Forms.CheckBox();
-            this.cQText = new System.Windows.Forms.CheckBox();
-            this.cShopAppearance = new System.Windows.Forms.CheckBox();
-            this.cSFX = new System.Windows.Forms.CheckBox();
-            this.cEponaSword = new System.Windows.Forms.CheckBox();
-            this.cTargettingStyle = new System.Windows.Forms.CheckBox();
-            this.cUpdateChests = new System.Windows.Forms.CheckBox();
-            this.cDisableCritWiggle = new System.Windows.Forms.CheckBox();
-            this.cQuestItemStorage = new System.Windows.Forms.CheckBox();
-            this.cCutsc = new System.Windows.Forms.CheckBox();
-            this.cNoDowngrades = new System.Windows.Forms.CheckBox();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
+            this.cContinuousDekuHopping = new System.Windows.Forms.CheckBox();
+            this.cIceTrapQuirks = new System.Windows.Forms.CheckBox();
+            this.lIceTraps = new System.Windows.Forms.Label();
+            this.cIceTrapsAppearance = new System.Windows.Forms.ComboBox();
+            this.cIceTraps = new System.Windows.Forms.ComboBox();
+            this.cDeathMoonCrash = new System.Windows.Forms.CheckBox();
+            this.cByoAmmo = new System.Windows.Forms.CheckBox();
             this.cFDAnywhere = new System.Windows.Forms.CheckBox();
             this.cUnderwaterOcarina = new System.Windows.Forms.CheckBox();
             this.cGravity = new System.Windows.Forms.ComboBox();
@@ -142,6 +106,55 @@ namespace MMR.UI.Forms
             this.label4 = new System.Windows.Forms.Label();
             this.cClockSpeed = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
+            this.tabComfort = new System.Windows.Forms.TabPage();
+            this.gSpeedUps = new System.Windows.Forms.GroupBox();
+            this.cFasterBank = new System.Windows.Forms.CheckBox();
+            this.cSkipBeaver = new System.Windows.Forms.CheckBox();
+            this.cFasterLabFish = new System.Windows.Forms.CheckBox();
+            this.cGoodDogRaceRNG = new System.Windows.Forms.CheckBox();
+            this.cGoodDampeRNG = new System.Windows.Forms.CheckBox();
+            this.gHints = new System.Windows.Forms.GroupBox();
+            this.lGossip = new System.Windows.Forms.Label();
+            this.cGossipHints = new System.Windows.Forms.ComboBox();
+            this.cFreeHints = new System.Windows.Forms.CheckBox();
+            this.cClearHints = new System.Windows.Forms.CheckBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.lLink = new System.Windows.Forms.Label();
+            this.cLink = new System.Windows.Forms.ComboBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cElegySpeedups = new System.Windows.Forms.CheckBox();
+            this.cCloseCows = new System.Windows.Forms.CheckBox();
+            this.cArrowCycling = new System.Windows.Forms.CheckBox();
+            this.cFreestanding = new System.Windows.Forms.CheckBox();
+            this.cFastPush = new System.Windows.Forms.CheckBox();
+            this.cQText = new System.Windows.Forms.CheckBox();
+            this.cShopAppearance = new System.Windows.Forms.CheckBox();
+            this.cEponaSword = new System.Windows.Forms.CheckBox();
+            this.cUpdateChests = new System.Windows.Forms.CheckBox();
+            this.cDisableCritWiggle = new System.Windows.Forms.CheckBox();
+            this.cQuestItemStorage = new System.Windows.Forms.CheckBox();
+            this.cCutsc = new System.Windows.Forms.CheckBox();
+            this.cNoDowngrades = new System.Windows.Forms.CheckBox();
+            this.tabCosmetics = new System.Windows.Forms.TabPage();
+            this.gCosmeticOther = new System.Windows.Forms.GroupBox();
+            this.cTatl = new System.Windows.Forms.ComboBox();
+            this.lTatl = new System.Windows.Forms.Label();
+            this.cTargettingStyle = new System.Windows.Forms.CheckBox();
+            this.gCosmeticMusicSound = new System.Windows.Forms.GroupBox();
+            this.lMusic = new System.Windows.Forms.Label();
+            this.cMusic = new System.Windows.Forms.ComboBox();
+            this.cSFX = new System.Windows.Forms.CheckBox();
+            this.cCombatMusicDisable = new System.Windows.Forms.CheckBox();
+            this.cEnableNightMusic = new System.Windows.Forms.CheckBox();
+            this.cHUDGroupBox = new System.Windows.Forms.GroupBox();
+            this.cHueShiftMiscUI = new System.Windows.Forms.CheckBox();
+            this.cHUDTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
+            this.cHUDHeartsComboBox = new System.Windows.Forms.ComboBox();
+            this.cHeartsLabel = new System.Windows.Forms.Label();
+            this.cMagicLabel = new System.Windows.Forms.Label();
+            this.cHUDMagicComboBox = new System.Windows.Forms.ComboBox();
+            this.btn_hud = new System.Windows.Forms.Button();
+            this.tFormCosmetics = new System.Windows.Forms.TabControl();
             this.cDrawHash = new System.Windows.Forms.CheckBox();
             this.gGameOutput = new System.Windows.Forms.GroupBox();
             this.cHTMLLog = new System.Windows.Forms.CheckBox();
@@ -181,7 +194,6 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cByoAmmo = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -190,14 +202,17 @@ namespace MMR.UI.Forms
             this.groupBox4.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.tabGimmicks.SuspendLayout();
             this.tabComfort.SuspendLayout();
             this.gSpeedUps.SuspendLayout();
             this.gHints.SuspendLayout();
             this.groupBox8.SuspendLayout();
+            this.groupBox7.SuspendLayout();
+            this.tabCosmetics.SuspendLayout();
+            this.gCosmeticOther.SuspendLayout();
+            this.gCosmeticMusicSound.SuspendLayout();
             this.cHUDGroupBox.SuspendLayout();
             this.cHUDTableLayoutPanel.SuspendLayout();
-            this.groupBox7.SuspendLayout();
-            this.tabGimmicks.SuspendLayout();
             this.gGameOutput.SuspendLayout();
             this.mMenu.SuspendLayout();
             this.ttOutput.SuspendLayout();
@@ -246,8 +261,9 @@ namespace MMR.UI.Forms
             // tSettings
             // 
             this.tSettings.Controls.Add(this.tabMain);
-            this.tSettings.Controls.Add(this.tabComfort);
             this.tSettings.Controls.Add(this.tabGimmicks);
+            this.tSettings.Controls.Add(this.tabComfort);
+            this.tSettings.Controls.Add(this.tabCosmetics);
             this.tSettings.Location = new System.Drawing.Point(3, 24);
             this.tSettings.Name = "tSettings";
             this.tSettings.SelectedIndex = 0;
@@ -436,16 +452,31 @@ namespace MMR.UI.Forms
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.cProgressiveUpgrades);
             this.groupBox3.Controls.Add(this.cNoStartingItems);
             this.groupBox3.Controls.Add(this.cDEnt);
             this.groupBox3.Controls.Add(this.cEnemy);
             this.groupBox3.Controls.Add(this.cMixSongs);
             this.groupBox3.Location = new System.Drawing.Point(337, 212);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(322, 71);
+            this.groupBox3.Size = new System.Drawing.Size(322, 93);
             this.groupBox3.TabIndex = 16;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Other Customizations";
+            // 
+            // cProgressiveUpgrades
+            // 
+            this.cProgressiveUpgrades.AutoSize = true;
+            this.cProgressiveUpgrades.BackColor = System.Drawing.Color.Transparent;
+            this.cProgressiveUpgrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cProgressiveUpgrades.ForeColor = System.Drawing.Color.Black;
+            this.cProgressiveUpgrades.Location = new System.Drawing.Point(9, 65);
+            this.cProgressiveUpgrades.Name = "cProgressiveUpgrades";
+            this.cProgressiveUpgrades.Size = new System.Drawing.Size(130, 17);
+            this.cProgressiveUpgrades.TabIndex = 21;
+            this.cProgressiveUpgrades.Text = "Progressive Upgrades";
+            this.cProgressiveUpgrades.UseVisualStyleBackColor = false;
+            this.cProgressiveUpgrades.CheckedChanged += new System.EventHandler(this.cProgressiveUpgrades_CheckedChanged);
             // 
             // cNoStartingItems
             // 
@@ -744,584 +775,20 @@ namespace MMR.UI.Forms
             this.cMoonItems.UseVisualStyleBackColor = false;
             this.cMoonItems.CheckedChanged += new System.EventHandler(this.cMoonItems_CheckedChanged);
             // 
-            // tabComfort
-            // 
-            this.tabComfort.Controls.Add(this.gSpeedUps);
-            this.tabComfort.Controls.Add(this.gHints);
-            this.tabComfort.Controls.Add(this.groupBox8);
-            this.tabComfort.Controls.Add(this.groupBox7);
-            this.tabComfort.Location = new System.Drawing.Point(4, 22);
-            this.tabComfort.Name = "tabComfort";
-            this.tabComfort.Padding = new System.Windows.Forms.Padding(3);
-            this.tabComfort.Size = new System.Drawing.Size(667, 311);
-            this.tabComfort.TabIndex = 1;
-            this.tabComfort.Text = "Comfort/Cosmetics";
-            this.tabComfort.UseVisualStyleBackColor = true;
-            // 
-            // gSpeedUps
-            // 
-            this.gSpeedUps.Controls.Add(this.cFasterBank);
-            this.gSpeedUps.Controls.Add(this.cSkipBeaver);
-            this.gSpeedUps.Controls.Add(this.cFasterLabFish);
-            this.gSpeedUps.Controls.Add(this.cGoodDogRaceRNG);
-            this.gSpeedUps.Controls.Add(this.cGoodDampeRNG);
-            this.gSpeedUps.Location = new System.Drawing.Point(235, 223);
-            this.gSpeedUps.Name = "gSpeedUps";
-            this.gSpeedUps.Size = new System.Drawing.Size(424, 77);
-            this.gSpeedUps.TabIndex = 37;
-            this.gSpeedUps.TabStop = false;
-            this.gSpeedUps.Text = "Speed Ups";
-            // 
-            // cFasterBank
-            // 
-            this.cFasterBank.AutoSize = true;
-            this.cFasterBank.Location = new System.Drawing.Point(285, 19);
-            this.cFasterBank.Name = "cFasterBank";
-            this.cFasterBank.Size = new System.Drawing.Size(83, 17);
-            this.cFasterBank.TabIndex = 4;
-            this.cFasterBank.Text = "Faster Bank";
-            this.cFasterBank.UseVisualStyleBackColor = true;
-            this.cFasterBank.CheckedChanged += new System.EventHandler(this.cFasterBank_CheckedChanged);
-            // 
-            // cSkipBeaver
-            // 
-            this.cSkipBeaver.AutoSize = true;
-            this.cSkipBeaver.Location = new System.Drawing.Point(9, 21);
-            this.cSkipBeaver.Name = "cSkipBeaver";
-            this.cSkipBeaver.Size = new System.Drawing.Size(127, 17);
-            this.cSkipBeaver.TabIndex = 0;
-            this.cSkipBeaver.Text = "Skip Younger Beaver";
-            this.cSkipBeaver.UseVisualStyleBackColor = true;
-            this.cSkipBeaver.CheckedChanged += new System.EventHandler(this.cSkipBeaver_CheckedChanged);
-            // 
-            // cFasterLabFish
-            // 
-            this.cFasterLabFish.AutoSize = true;
-            this.cFasterLabFish.Location = new System.Drawing.Point(9, 44);
-            this.cFasterLabFish.Name = "cFasterLabFish";
-            this.cFasterLabFish.Size = new System.Drawing.Size(98, 17);
-            this.cFasterLabFish.TabIndex = 2;
-            this.cFasterLabFish.Text = "Faster Lab Fish";
-            this.cFasterLabFish.UseVisualStyleBackColor = true;
-            this.cFasterLabFish.CheckedChanged += new System.EventHandler(this.cFasterLabFish_CheckedChanged);
-            // 
-            // cGoodDogRaceRNG
-            // 
-            this.cGoodDogRaceRNG.AutoSize = true;
-            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(147, 44);
-            this.cGoodDogRaceRNG.Name = "cGoodDogRaceRNG";
-            this.cGoodDogRaceRNG.Size = new System.Drawing.Size(131, 17);
-            this.cGoodDogRaceRNG.TabIndex = 3;
-            this.cGoodDogRaceRNG.Text = "Good Dog Race RNG";
-            this.cGoodDogRaceRNG.UseVisualStyleBackColor = true;
-            this.cGoodDogRaceRNG.CheckedChanged += new System.EventHandler(this.cGoodDogRaceRNG_CheckedChanged);
-            // 
-            // cGoodDampeRNG
-            // 
-            this.cGoodDampeRNG.AutoSize = true;
-            this.cGoodDampeRNG.Location = new System.Drawing.Point(147, 20);
-            this.cGoodDampeRNG.Name = "cGoodDampeRNG";
-            this.cGoodDampeRNG.Size = new System.Drawing.Size(116, 17);
-            this.cGoodDampeRNG.TabIndex = 1;
-            this.cGoodDampeRNG.Text = "Good Dampe RNG";
-            this.cGoodDampeRNG.UseVisualStyleBackColor = true;
-            this.cGoodDampeRNG.CheckedChanged += new System.EventHandler(this.cGoodDampeRNG_CheckedChanged);
-            // 
-            // gHints
-            // 
-            this.gHints.Controls.Add(this.lGossip);
-            this.gHints.Controls.Add(this.cGossipHints);
-            this.gHints.Controls.Add(this.cFreeHints);
-            this.gHints.Controls.Add(this.cClearHints);
-            this.gHints.Location = new System.Drawing.Point(6, 223);
-            this.gHints.Name = "gHints";
-            this.gHints.Size = new System.Drawing.Size(223, 77);
-            this.gHints.TabIndex = 36;
-            this.gHints.TabStop = false;
-            this.gHints.Text = "Gossip Stone Hints";
-            // 
-            // lGossip
-            // 
-            this.lGossip.AutoSize = true;
-            this.lGossip.BackColor = System.Drawing.Color.Transparent;
-            this.lGossip.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lGossip.ForeColor = System.Drawing.Color.Black;
-            this.lGossip.Location = new System.Drawing.Point(10, 21);
-            this.lGossip.Name = "lGossip";
-            this.lGossip.Size = new System.Drawing.Size(82, 13);
-            this.lGossip.TabIndex = 20;
-            this.lGossip.Text = "Hint distribution:";
-            // 
-            // cGossipHints
-            // 
-            this.cGossipHints.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cGossipHints.FormattingEnabled = true;
-            this.cGossipHints.Items.AddRange(new object[] {
-            "Default",
-            "Random",
-            "Relevant",
-            "Competitive"});
-            this.cGossipHints.Location = new System.Drawing.Point(98, 18);
-            this.cGossipHints.Name = "cGossipHints";
-            this.cGossipHints.Size = new System.Drawing.Size(115, 21);
-            this.cGossipHints.TabIndex = 19;
-            this.cGossipHints.SelectedIndexChanged += new System.EventHandler(this.cGossipHints_SelectedIndexChanged);
-            // 
-            // cFreeHints
-            // 
-            this.cFreeHints.AutoSize = true;
-            this.cFreeHints.BackColor = System.Drawing.Color.Transparent;
-            this.cFreeHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cFreeHints.ForeColor = System.Drawing.Color.Black;
-            this.cFreeHints.Location = new System.Drawing.Point(13, 50);
-            this.cFreeHints.Name = "cFreeHints";
-            this.cFreeHints.Size = new System.Drawing.Size(72, 17);
-            this.cFreeHints.TabIndex = 15;
-            this.cFreeHints.Text = "Free hints";
-            this.cFreeHints.UseVisualStyleBackColor = false;
-            this.cFreeHints.CheckedChanged += new System.EventHandler(this.cFreeHints_CheckedChanged);
-            // 
-            // cClearHints
-            // 
-            this.cClearHints.AutoSize = true;
-            this.cClearHints.BackColor = System.Drawing.Color.Transparent;
-            this.cClearHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cClearHints.ForeColor = System.Drawing.Color.Black;
-            this.cClearHints.Location = new System.Drawing.Point(98, 50);
-            this.cClearHints.Name = "cClearHints";
-            this.cClearHints.Size = new System.Drawing.Size(75, 17);
-            this.cClearHints.TabIndex = 16;
-            this.cClearHints.Text = "Clear hints";
-            this.cClearHints.UseVisualStyleBackColor = false;
-            this.cClearHints.CheckedChanged += new System.EventHandler(this.cClearHints_CheckedChanged);
-            // 
-            // groupBox8
-            // 
-            this.groupBox8.Controls.Add(this.lLink);
-            this.groupBox8.Controls.Add(this.lTatl);
-            this.groupBox8.Controls.Add(this.cHUDGroupBox);
-            this.groupBox8.Controls.Add(this.lMusic);
-            this.groupBox8.Controls.Add(this.bTunic);
-            this.groupBox8.Controls.Add(this.cLink);
-            this.groupBox8.Controls.Add(this.cTatl);
-            this.groupBox8.Controls.Add(this.cMusic);
-            this.groupBox8.Controls.Add(this.lTunic);
-            this.groupBox8.Location = new System.Drawing.Point(6, 6);
-            this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(361, 211);
-            this.groupBox8.TabIndex = 35;
-            this.groupBox8.TabStop = false;
-            this.groupBox8.Text = "Cosmetic Customization";
-            // 
-            // lLink
-            // 
-            this.lLink.AutoSize = true;
-            this.lLink.BackColor = System.Drawing.Color.Transparent;
-            this.lLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lLink.ForeColor = System.Drawing.Color.Black;
-            this.lLink.Location = new System.Drawing.Point(31, 104);
-            this.lLink.Name = "lLink";
-            this.lLink.Size = new System.Drawing.Size(70, 13);
-            this.lLink.TabIndex = 9;
-            this.lLink.Text = "Player model:";
-            // 
-            // lTatl
-            // 
-            this.lTatl.AutoSize = true;
-            this.lTatl.BackColor = System.Drawing.Color.Transparent;
-            this.lTatl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lTatl.ForeColor = System.Drawing.Color.Black;
-            this.lTatl.Location = new System.Drawing.Point(7, 50);
-            this.lTatl.Name = "lTatl";
-            this.lTatl.Size = new System.Drawing.Size(94, 13);
-            this.lTatl.TabIndex = 11;
-            this.lTatl.Text = "Tatl color scheme:";
-            // 
-            // cHUDGroupBox
-            // 
-            this.cHUDGroupBox.Controls.Add(this.cHUDTableLayoutPanel);
-            this.cHUDGroupBox.Location = new System.Drawing.Point(10, 128);
-            this.cHUDGroupBox.Name = "cHUDGroupBox";
-            this.cHUDGroupBox.Size = new System.Drawing.Size(341, 76);
-            this.cHUDGroupBox.TabIndex = 32;
-            this.cHUDGroupBox.TabStop = false;
-            this.cHUDGroupBox.Text = "HUD";
-            // 
-            // cHUDTableLayoutPanel
-            // 
-            this.cHUDTableLayoutPanel.ColumnCount = 3;
-            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
-            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78F));
-            this.cHUDTableLayoutPanel.Controls.Add(this.cHUDHeartsComboBox, 1, 0);
-            this.cHUDTableLayoutPanel.Controls.Add(this.cHeartsLabel, 0, 0);
-            this.cHUDTableLayoutPanel.Controls.Add(this.cMagicLabel, 0, 1);
-            this.cHUDTableLayoutPanel.Controls.Add(this.cHUDMagicComboBox, 1, 1);
-            this.cHUDTableLayoutPanel.Controls.Add(this.btn_hud, 2, 0);
-            this.cHUDTableLayoutPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cHUDTableLayoutPanel.Location = new System.Drawing.Point(3, 16);
-            this.cHUDTableLayoutPanel.Name = "cHUDTableLayoutPanel";
-            this.cHUDTableLayoutPanel.RowCount = 2;
-            this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.cHUDTableLayoutPanel.Size = new System.Drawing.Size(335, 57);
-            this.cHUDTableLayoutPanel.TabIndex = 0;
-            // 
-            // cHUDHeartsComboBox
-            // 
-            this.cHUDHeartsComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cHUDHeartsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cHUDHeartsComboBox.FormattingEnabled = true;
-            this.cHUDHeartsComboBox.Location = new System.Drawing.Point(53, 3);
-            this.cHUDHeartsComboBox.Name = "cHUDHeartsComboBox";
-            this.cHUDHeartsComboBox.Size = new System.Drawing.Size(201, 21);
-            this.cHUDHeartsComboBox.TabIndex = 32;
-            this.cHUDHeartsComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDHeartsComboBox_SelectedIndexChanged);
-            // 
-            // cHeartsLabel
-            // 
-            this.cHeartsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cHeartsLabel.AutoSize = true;
-            this.cHeartsLabel.Location = new System.Drawing.Point(3, 7);
-            this.cHeartsLabel.Name = "cHeartsLabel";
-            this.cHeartsLabel.Size = new System.Drawing.Size(41, 13);
-            this.cHeartsLabel.TabIndex = 33;
-            this.cHeartsLabel.Text = "Hearts:";
-            // 
-            // cMagicLabel
-            // 
-            this.cMagicLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.cMagicLabel.AutoSize = true;
-            this.cMagicLabel.Location = new System.Drawing.Point(3, 36);
-            this.cMagicLabel.Name = "cMagicLabel";
-            this.cMagicLabel.Size = new System.Drawing.Size(39, 13);
-            this.cMagicLabel.TabIndex = 34;
-            this.cMagicLabel.Text = "Magic:";
-            // 
-            // cHUDMagicComboBox
-            // 
-            this.cHUDMagicComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cHUDMagicComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cHUDMagicComboBox.FormattingEnabled = true;
-            this.cHUDMagicComboBox.Location = new System.Drawing.Point(53, 31);
-            this.cHUDMagicComboBox.Name = "cHUDMagicComboBox";
-            this.cHUDMagicComboBox.Size = new System.Drawing.Size(201, 21);
-            this.cHUDMagicComboBox.TabIndex = 35;
-            this.cHUDMagicComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDMagicComboBox_SelectedIndexChanged);
-            // 
-            // btn_hud
-            // 
-            this.btn_hud.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btn_hud.AutoSize = true;
-            this.btn_hud.Location = new System.Drawing.Point(263, 10);
-            this.btn_hud.Name = "btn_hud";
-            this.cHUDTableLayoutPanel.SetRowSpan(this.btn_hud, 2);
-            this.btn_hud.Size = new System.Drawing.Size(65, 37);
-            this.btn_hud.TabIndex = 31;
-            this.btn_hud.Text = "Customize";
-            this.btn_hud.UseVisualStyleBackColor = true;
-            this.btn_hud.Click += new System.EventHandler(this.btn_hud_Click);
-            // 
-            // lMusic
-            // 
-            this.lMusic.AutoSize = true;
-            this.lMusic.BackColor = System.Drawing.Color.Transparent;
-            this.lMusic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lMusic.ForeColor = System.Drawing.Color.Black;
-            this.lMusic.Location = new System.Drawing.Point(63, 77);
-            this.lMusic.Name = "lMusic";
-            this.lMusic.Size = new System.Drawing.Size(38, 13);
-            this.lMusic.TabIndex = 26;
-            this.lMusic.Text = "Music:";
-            // 
-            // bTunic
-            // 
-            this.bTunic.BackColor = System.Drawing.Color.White;
-            this.bTunic.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.bTunic.Location = new System.Drawing.Point(107, 18);
-            this.bTunic.Name = "bTunic";
-            this.bTunic.Size = new System.Drawing.Size(244, 23);
-            this.bTunic.TabIndex = 8;
-            this.bTunic.UseVisualStyleBackColor = false;
-            this.bTunic.Click += new System.EventHandler(this.bTunic_Click);
-            // 
-            // cLink
-            // 
-            this.cLink.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cLink.FormattingEnabled = true;
-            this.cLink.Items.AddRange(new object[] {
-            "Link (MM)",
-            "Link (OoT)",
-            "Adult Link (Risky!)",
-            "Kafei"});
-            this.cLink.Location = new System.Drawing.Point(107, 101);
-            this.cLink.Name = "cLink";
-            this.cLink.Size = new System.Drawing.Size(244, 21);
-            this.cLink.TabIndex = 10;
-            this.cLink.SelectedIndexChanged += new System.EventHandler(this.cLink_SelectedIndexChanged);
-            // 
-            // cTatl
-            // 
-            this.cTatl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cTatl.FormattingEnabled = true;
-            this.cTatl.Items.AddRange(new object[] {
-            "Default",
-            "Dark",
-            "Hot",
-            "Cool",
-            "Random",
-            "Rainbow (cycle)"});
-            this.cTatl.Location = new System.Drawing.Point(107, 47);
-            this.cTatl.Name = "cTatl";
-            this.cTatl.Size = new System.Drawing.Size(244, 21);
-            this.cTatl.TabIndex = 12;
-            this.cTatl.SelectedIndexChanged += new System.EventHandler(this.cTatl_SelectedIndexChanged);
-            // 
-            // cMusic
-            // 
-            this.cMusic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cMusic.FormattingEnabled = true;
-            this.cMusic.Items.AddRange(new object[] {
-            "Default",
-            "Random",
-            "None"});
-            this.cMusic.Location = new System.Drawing.Point(107, 74);
-            this.cMusic.Name = "cMusic";
-            this.cMusic.Size = new System.Drawing.Size(244, 21);
-            this.cMusic.TabIndex = 25;
-            this.cMusic.SelectedIndexChanged += new System.EventHandler(this.cMusic_SelectedIndexChanged);
-            // 
-            // lTunic
-            // 
-            this.lTunic.AutoSize = true;
-            this.lTunic.BackColor = System.Drawing.Color.Transparent;
-            this.lTunic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lTunic.ForeColor = System.Drawing.Color.Black;
-            this.lTunic.Location = new System.Drawing.Point(38, 23);
-            this.lTunic.Name = "lTunic";
-            this.lTunic.Size = new System.Drawing.Size(63, 13);
-            this.lTunic.TabIndex = 7;
-            this.lTunic.Text = "Tunic color:";
-            // 
-            // groupBox7
-            // 
-            this.groupBox7.Controls.Add(this.cCloseCows);
-            this.groupBox7.Controls.Add(this.cArrowCycling);
-            this.groupBox7.Controls.Add(this.cFreestanding);
-            this.groupBox7.Controls.Add(this.cEnableNightMusic);
-            this.groupBox7.Controls.Add(this.cFastPush);
-            this.groupBox7.Controls.Add(this.cQText);
-            this.groupBox7.Controls.Add(this.cShopAppearance);
-            this.groupBox7.Controls.Add(this.cSFX);
-            this.groupBox7.Controls.Add(this.cEponaSword);
-            this.groupBox7.Controls.Add(this.cTargettingStyle);
-            this.groupBox7.Controls.Add(this.cUpdateChests);
-            this.groupBox7.Controls.Add(this.cDisableCritWiggle);
-            this.groupBox7.Controls.Add(this.cQuestItemStorage);
-            this.groupBox7.Controls.Add(this.cCutsc);
-            this.groupBox7.Controls.Add(this.cNoDowngrades);
-            this.groupBox7.Location = new System.Drawing.Point(373, 6);
-            this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(286, 211);
-            this.groupBox7.TabIndex = 34;
-            this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Comfort Options";
-            // 
-            // cCloseCows
-            // 
-            this.cCloseCows.AutoSize = true;
-            this.cCloseCows.Location = new System.Drawing.Point(9, 183);
-            this.cCloseCows.Name = "cCloseCows";
-            this.cCloseCows.Size = new System.Drawing.Size(81, 17);
-            this.cCloseCows.TabIndex = 36;
-            this.cCloseCows.Text = "Close Cows";
-            this.cCloseCows.UseVisualStyleBackColor = true;
-            this.cCloseCows.CheckedChanged += new System.EventHandler(this.cCloseCows_CheckedChanged);
-            // 
-            // cArrowCycling
-            // 
-            this.cArrowCycling.AutoSize = true;
-            this.cArrowCycling.Location = new System.Drawing.Point(147, 160);
-            this.cArrowCycling.Name = "cArrowCycling";
-            this.cArrowCycling.Size = new System.Drawing.Size(89, 17);
-            this.cArrowCycling.TabIndex = 35;
-            this.cArrowCycling.Text = "Arrow cycling";
-            this.cArrowCycling.UseVisualStyleBackColor = true;
-            this.cArrowCycling.CheckedChanged += new System.EventHandler(this.cArrowCycling_CheckedChanged);
-            // 
-            // cFreestanding
-            // 
-            this.cFreestanding.AutoSize = true;
-            this.cFreestanding.Location = new System.Drawing.Point(147, 68);
-            this.cFreestanding.Name = "cFreestanding";
-            this.cFreestanding.Size = new System.Drawing.Size(125, 17);
-            this.cFreestanding.TabIndex = 34;
-            this.cFreestanding.Text = "Update world models";
-            this.cFreestanding.UseVisualStyleBackColor = true;
-            this.cFreestanding.CheckedChanged += new System.EventHandler(this.cFreestanding_CheckedChanged);
-            // 
-            // cEnableNightMusic
-            // 
-            this.cEnableNightMusic.AutoSize = true;
-            this.cEnableNightMusic.Location = new System.Drawing.Point(9, 68);
-            this.cEnableNightMusic.Name = "cEnableNightMusic";
-            this.cEnableNightMusic.Size = new System.Drawing.Size(114, 17);
-            this.cEnableNightMusic.TabIndex = 35;
-            this.cEnableNightMusic.Text = "Enable Night BGM";
-            this.cEnableNightMusic.UseVisualStyleBackColor = true;
-            this.cEnableNightMusic.CheckedChanged += new System.EventHandler(this.cEnableNightMusic_CheckedChanged);
-            // 
-            // cFastPush
-            // 
-            this.cFastPush.AutoSize = true;
-            this.cFastPush.Location = new System.Drawing.Point(9, 160);
-            this.cFastPush.Name = "cFastPush";
-            this.cFastPush.Size = new System.Drawing.Size(125, 17);
-            this.cFastPush.TabIndex = 31;
-            this.cFastPush.Text = "Increase push speed";
-            this.cFastPush.UseVisualStyleBackColor = true;
-            this.cFastPush.CheckedChanged += new System.EventHandler(this.cFastPush_CheckedChanged);
-            // 
-            // cQText
-            // 
-            this.cQText.AutoSize = true;
-            this.cQText.BackColor = System.Drawing.Color.Transparent;
-            this.cQText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cQText.ForeColor = System.Drawing.Color.Black;
-            this.cQText.Location = new System.Drawing.Point(9, 137);
-            this.cQText.Name = "cQText";
-            this.cQText.Size = new System.Drawing.Size(74, 17);
-            this.cQText.TabIndex = 6;
-            this.cQText.Text = "Quick text";
-            this.cQText.UseVisualStyleBackColor = false;
-            this.cQText.CheckedChanged += new System.EventHandler(this.cQText_CheckedChanged);
-            // 
-            // cShopAppearance
-            // 
-            this.cShopAppearance.AutoSize = true;
-            this.cShopAppearance.BackColor = System.Drawing.Color.Transparent;
-            this.cShopAppearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cShopAppearance.ForeColor = System.Drawing.Color.Black;
-            this.cShopAppearance.Location = new System.Drawing.Point(147, 22);
-            this.cShopAppearance.Name = "cShopAppearance";
-            this.cShopAppearance.Size = new System.Drawing.Size(92, 17);
-            this.cShopAppearance.TabIndex = 21;
-            this.cShopAppearance.Text = "Update shops";
-            this.cShopAppearance.UseVisualStyleBackColor = false;
-            this.cShopAppearance.CheckedChanged += new System.EventHandler(this.cShopAppearance_CheckedChanged);
-            // 
-            // cSFX
-            // 
-            this.cSFX.AutoSize = true;
-            this.cSFX.BackColor = System.Drawing.Color.Transparent;
-            this.cSFX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cSFX.ForeColor = System.Drawing.Color.Black;
-            this.cSFX.Location = new System.Drawing.Point(9, 45);
-            this.cSFX.Name = "cSFX";
-            this.cSFX.Size = new System.Drawing.Size(102, 17);
-            this.cSFX.TabIndex = 24;
-            this.cSFX.Text = "Randomize SFX";
-            this.cSFX.UseVisualStyleBackColor = false;
-            this.cSFX.CheckedChanged += new System.EventHandler(this.cSFX_CheckedChanged);
-            // 
-            // cEponaSword
-            // 
-            this.cEponaSword.AutoSize = true;
-            this.cEponaSword.BackColor = System.Drawing.Color.Transparent;
-            this.cEponaSword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cEponaSword.ForeColor = System.Drawing.Color.Black;
-            this.cEponaSword.Location = new System.Drawing.Point(147, 114);
-            this.cEponaSword.Name = "cEponaSword";
-            this.cEponaSword.Size = new System.Drawing.Size(104, 17);
-            this.cEponaSword.TabIndex = 22;
-            this.cEponaSword.Text = "Fix Epona sword";
-            this.cEponaSword.UseVisualStyleBackColor = false;
-            this.cEponaSword.CheckedChanged += new System.EventHandler(this.cEponaSword_CheckedChanged);
-            // 
-            // cTargettingStyle
-            // 
-            this.cTargettingStyle.AutoSize = true;
-            this.cTargettingStyle.BackColor = System.Drawing.Color.Transparent;
-            this.cTargettingStyle.Location = new System.Drawing.Point(9, 22);
-            this.cTargettingStyle.Name = "cTargettingStyle";
-            this.cTargettingStyle.Size = new System.Drawing.Size(129, 17);
-            this.cTargettingStyle.TabIndex = 33;
-            this.cTargettingStyle.Text = "Default Hold Z-Target";
-            this.cTargettingStyle.UseVisualStyleBackColor = false;
-            this.cTargettingStyle.CheckedChanged += new System.EventHandler(this.cTargettingStyle_CheckedChanged);
-            // 
-            // cUpdateChests
-            // 
-            this.cUpdateChests.AutoSize = true;
-            this.cUpdateChests.BackColor = System.Drawing.Color.Transparent;
-            this.cUpdateChests.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cUpdateChests.ForeColor = System.Drawing.Color.Black;
-            this.cUpdateChests.Location = new System.Drawing.Point(147, 45);
-            this.cUpdateChests.Name = "cUpdateChests";
-            this.cUpdateChests.Size = new System.Drawing.Size(95, 17);
-            this.cUpdateChests.TabIndex = 23;
-            this.cUpdateChests.Text = "Update chests";
-            this.cUpdateChests.UseVisualStyleBackColor = false;
-            this.cUpdateChests.CheckedChanged += new System.EventHandler(this.cUpdateChests_CheckedChanged);
-            // 
-            // cDisableCritWiggle
-            // 
-            this.cDisableCritWiggle.AutoSize = true;
-            this.cDisableCritWiggle.BackColor = System.Drawing.Color.Transparent;
-            this.cDisableCritWiggle.Location = new System.Drawing.Point(9, 91);
-            this.cDisableCritWiggle.Name = "cDisableCritWiggle";
-            this.cDisableCritWiggle.Size = new System.Drawing.Size(111, 17);
-            this.cDisableCritWiggle.TabIndex = 29;
-            this.cDisableCritWiggle.Text = "Disable crit wiggle";
-            this.cDisableCritWiggle.UseVisualStyleBackColor = false;
-            this.cDisableCritWiggle.CheckedChanged += new System.EventHandler(this.cDisableCritWiggle_CheckedChanged);
-            // 
-            // cQuestItemStorage
-            // 
-            this.cQuestItemStorage.AutoSize = true;
-            this.cQuestItemStorage.BackColor = System.Drawing.Color.Transparent;
-            this.cQuestItemStorage.Location = new System.Drawing.Point(147, 137);
-            this.cQuestItemStorage.Name = "cQuestItemStorage";
-            this.cQuestItemStorage.Size = new System.Drawing.Size(140, 17);
-            this.cQuestItemStorage.TabIndex = 30;
-            this.cQuestItemStorage.Text = "Quest item extra storage";
-            this.cQuestItemStorage.UseVisualStyleBackColor = false;
-            this.cQuestItemStorage.CheckedChanged += new System.EventHandler(this.cQuestItemStorage_CheckedChanged);
-            // 
-            // cCutsc
-            // 
-            this.cCutsc.AutoSize = true;
-            this.cCutsc.BackColor = System.Drawing.Color.Transparent;
-            this.cCutsc.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cCutsc.ForeColor = System.Drawing.Color.Black;
-            this.cCutsc.Location = new System.Drawing.Point(9, 114);
-            this.cCutsc.Name = "cCutsc";
-            this.cCutsc.Size = new System.Drawing.Size(115, 17);
-            this.cCutsc.TabIndex = 5;
-            this.cCutsc.Text = "Shorten cutscenes";
-            this.cCutsc.UseVisualStyleBackColor = false;
-            this.cCutsc.CheckedChanged += new System.EventHandler(this.cCutsc_CheckedChanged);
-            // 
-            // cNoDowngrades
-            // 
-            this.cNoDowngrades.AutoSize = true;
-            this.cNoDowngrades.BackColor = System.Drawing.Color.Transparent;
-            this.cNoDowngrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cNoDowngrades.ForeColor = System.Drawing.Color.Black;
-            this.cNoDowngrades.Location = new System.Drawing.Point(147, 91);
-            this.cNoDowngrades.Name = "cNoDowngrades";
-            this.cNoDowngrades.Size = new System.Drawing.Size(101, 17);
-            this.cNoDowngrades.TabIndex = 18;
-            this.cNoDowngrades.Text = "No downgrades";
-            this.cNoDowngrades.UseVisualStyleBackColor = false;
-            this.cNoDowngrades.CheckedChanged += new System.EventHandler(this.cNoDowngrades_CheckedChanged);
-            // 
             // tabGimmicks
             // 
+            this.tabGimmicks.Controls.Add(this.cContinuousDekuHopping);
+            this.tabGimmicks.Controls.Add(this.cIceTrapQuirks);
+            this.tabGimmicks.Controls.Add(this.lIceTraps);
+            this.tabGimmicks.Controls.Add(this.cIceTrapsAppearance);
+            this.tabGimmicks.Controls.Add(this.cIceTraps);
+            this.tabGimmicks.Controls.Add(this.cDeathMoonCrash);
             this.tabGimmicks.Controls.Add(this.cByoAmmo);
             this.tabGimmicks.Controls.Add(this.cFDAnywhere);
             this.tabGimmicks.Controls.Add(this.cUnderwaterOcarina);
             this.tabGimmicks.Controls.Add(this.cGravity);
+            this.tabGimmicks.Controls.Add(this.cNutAndStickDrops);
+            this.tabGimmicks.Controls.Add(this.lNutAndStickDrops);
             this.tabGimmicks.Controls.Add(this.cDType);
             this.tabGimmicks.Controls.Add(this.cSunsSong);
             this.tabGimmicks.Controls.Add(this.cFloors);
@@ -1331,12 +798,10 @@ namespace MMR.UI.Forms
             this.tabGimmicks.Controls.Add(this.lDType);
             this.tabGimmicks.Controls.Add(this.lBlastMask);
             this.tabGimmicks.Controls.Add(this.lGravity);
-            this.tabGimmicks.Controls.Add(this.cNutAndStickDrops);
             this.tabGimmicks.Controls.Add(this.lFloors);
             this.tabGimmicks.Controls.Add(this.cHideClock);
             this.tabGimmicks.Controls.Add(this.label4);
             this.tabGimmicks.Controls.Add(this.cClockSpeed);
-            this.tabGimmicks.Controls.Add(this.lNutAndStickDrops);
             this.tabGimmicks.Controls.Add(this.label6);
             this.tabGimmicks.Location = new System.Drawing.Point(4, 22);
             this.tabGimmicks.Name = "tabGimmicks";
@@ -1345,6 +810,101 @@ namespace MMR.UI.Forms
             this.tabGimmicks.TabIndex = 3;
             this.tabGimmicks.Text = "Gimmicks";
             this.tabGimmicks.UseVisualStyleBackColor = true;
+            // 
+            // cContinuousDekuHopping
+            // 
+            this.cContinuousDekuHopping.AutoSize = true;
+            this.cContinuousDekuHopping.BackColor = System.Drawing.Color.Transparent;
+            this.cContinuousDekuHopping.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cContinuousDekuHopping.ForeColor = System.Drawing.Color.Black;
+            this.cContinuousDekuHopping.Location = new System.Drawing.Point(393, 230);
+            this.cContinuousDekuHopping.Name = "cContinuousDekuHopping";
+            this.cContinuousDekuHopping.Size = new System.Drawing.Size(151, 17);
+            this.cContinuousDekuHopping.TabIndex = 26;
+            this.cContinuousDekuHopping.Text = "Continuous Deku Hopping";
+            this.cContinuousDekuHopping.UseVisualStyleBackColor = false;
+            this.cContinuousDekuHopping.CheckedChanged += new System.EventHandler(this.cContinuousDekuHopping_CheckedChanged);
+            // 
+            // cIceTrapQuirks
+            // 
+            this.cIceTrapQuirks.AutoSize = true;
+            this.cIceTrapQuirks.BackColor = System.Drawing.Color.Transparent;
+            this.cIceTrapQuirks.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cIceTrapQuirks.ForeColor = System.Drawing.Color.Black;
+            this.cIceTrapQuirks.Location = new System.Drawing.Point(393, 255);
+            this.cIceTrapQuirks.Name = "cIceTrapQuirks";
+            this.cIceTrapQuirks.Size = new System.Drawing.Size(92, 17);
+            this.cIceTrapQuirks.TabIndex = 29;
+            this.cIceTrapQuirks.Text = "Enable Quirks";
+            this.cIceTrapQuirks.UseVisualStyleBackColor = false;
+            this.cIceTrapQuirks.CheckedChanged += new System.EventHandler(this.cIceTrapQuirks_CheckedChanged);
+            // 
+            // lIceTraps
+            // 
+            this.lIceTraps.AutoSize = true;
+            this.lIceTraps.Location = new System.Drawing.Point(157, 256);
+            this.lIceTraps.Name = "lIceTraps";
+            this.lIceTraps.Size = new System.Drawing.Size(55, 13);
+            this.lIceTraps.TabIndex = 28;
+            this.lIceTraps.Text = "Ice Traps:";
+            // 
+            // cIceTrapsAppearance
+            // 
+            this.cIceTrapsAppearance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cIceTrapsAppearance.FormattingEnabled = true;
+            this.cIceTrapsAppearance.Items.AddRange(new object[] {
+            "Major Items",
+            "Junk Items",
+            "Anything"});
+            this.cIceTrapsAppearance.Location = new System.Drawing.Point(300, 253);
+            this.cIceTrapsAppearance.Name = "cIceTrapsAppearance";
+            this.cIceTrapsAppearance.Size = new System.Drawing.Size(76, 21);
+            this.cIceTrapsAppearance.TabIndex = 27;
+            this.cIceTrapsAppearance.SelectedIndexChanged += new System.EventHandler(this.cIceTrapsAppearance_SelectedIndexChanged);
+            // 
+            // cIceTraps
+            // 
+            this.cIceTraps.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cIceTraps.FormattingEnabled = true;
+            this.cIceTraps.Items.AddRange(new object[] {
+            "None",
+            "Normal",
+            "Extra",
+            "Mayhem",
+            "Onslaught"});
+            this.cIceTraps.Location = new System.Drawing.Point(218, 253);
+            this.cIceTraps.Name = "cIceTraps";
+            this.cIceTraps.Size = new System.Drawing.Size(76, 21);
+            this.cIceTraps.TabIndex = 26;
+            this.cIceTraps.SelectedIndexChanged += new System.EventHandler(this.cIceTraps_SelectedIndexChanged);
+            // 
+            // cDeathMoonCrash
+            // 
+            this.cDeathMoonCrash.AutoSize = true;
+            this.cDeathMoonCrash.BackColor = System.Drawing.Color.Transparent;
+            this.cDeathMoonCrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cDeathMoonCrash.ForeColor = System.Drawing.Color.Black;
+            this.cDeathMoonCrash.Location = new System.Drawing.Point(393, 207);
+            this.cDeathMoonCrash.Name = "cDeathMoonCrash";
+            this.cDeathMoonCrash.Size = new System.Drawing.Size(125, 17);
+            this.cDeathMoonCrash.TabIndex = 25;
+            this.cDeathMoonCrash.Text = "Death is Moon Crash";
+            this.cDeathMoonCrash.UseVisualStyleBackColor = false;
+            this.cDeathMoonCrash.CheckedChanged += new System.EventHandler(this.cDeathMoonCrash_CheckedChanged);
+            // 
+            // cByoAmmo
+            // 
+            this.cByoAmmo.AutoSize = true;
+            this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
+            this.cByoAmmo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
+            this.cByoAmmo.Location = new System.Drawing.Point(393, 184);
+            this.cByoAmmo.Name = "cByoAmmo";
+            this.cByoAmmo.Size = new System.Drawing.Size(80, 17);
+            this.cByoAmmo.TabIndex = 24;
+            this.cByoAmmo.Text = "BYO Ammo";
+            this.cByoAmmo.UseVisualStyleBackColor = false;
+            this.cByoAmmo.CheckedChanged += new System.EventHandler(this.cByoAmmo_CheckedChanged);
             // 
             // cFDAnywhere
             // 
@@ -1403,6 +963,16 @@ namespace MMR.UI.Forms
             this.cNutAndStickDrops.Size = new System.Drawing.Size(121, 21);
             this.cNutAndStickDrops.TabIndex = 26;
             this.cNutAndStickDrops.SelectedIndexChanged += new System.EventHandler(this.cNutAndStickDrops_SelectedIndexChanged);
+            // 
+            // lNutAndStickDrops
+            // 
+            this.lNutAndStickDrops.AutoSize = true;
+            this.lNutAndStickDrops.Location = new System.Drawing.Point(473, 14);
+            this.lNutAndStickDrops.Name = "lNutAndStickDrops";
+            this.lNutAndStickDrops.Size = new System.Drawing.Size(169, 13);
+            this.lNutAndStickDrops.TabIndex = 25;
+            this.lNutAndStickDrops.Text = "Termina Field Nut and Stick Drops";
+
             // 
             // cDType
             // 
@@ -1574,15 +1144,6 @@ namespace MMR.UI.Forms
             this.cClockSpeed.TabIndex = 15;
             this.cClockSpeed.SelectedIndexChanged += new System.EventHandler(this.cClockSpeed_SelectedIndexChanged);
             // 
-            // lNutAndStickDrops
-            // 
-            this.lNutAndStickDrops.AutoSize = true;
-            this.lNutAndStickDrops.Location = new System.Drawing.Point(473, 14);
-            this.lNutAndStickDrops.Name = "lNutAndStickDrops";
-            this.lNutAndStickDrops.Size = new System.Drawing.Size(169, 13);
-            this.lNutAndStickDrops.TabIndex = 25;
-            this.lNutAndStickDrops.Text = "Termina Field Nut and Stick Drops";
-            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -1591,6 +1152,626 @@ namespace MMR.UI.Forms
             this.label6.Size = new System.Drawing.Size(69, 13);
             this.label6.TabIndex = 16;
             this.label6.Text = "Clock speed:";
+            // 
+            // tabComfort
+            // 
+            this.tabComfort.Controls.Add(this.gSpeedUps);
+            this.tabComfort.Controls.Add(this.gHints);
+            this.tabComfort.Controls.Add(this.groupBox8);
+            this.tabComfort.Controls.Add(this.groupBox7);
+            this.tabComfort.Location = new System.Drawing.Point(4, 22);
+            this.tabComfort.Name = "tabComfort";
+            this.tabComfort.Padding = new System.Windows.Forms.Padding(3);
+            this.tabComfort.Size = new System.Drawing.Size(667, 311);
+            this.tabComfort.TabIndex = 1;
+            this.tabComfort.Text = "Comfort";
+            this.tabComfort.UseVisualStyleBackColor = true;
+            // 
+            // gSpeedUps
+            // 
+            this.gSpeedUps.Controls.Add(this.cFasterBank);
+            this.gSpeedUps.Controls.Add(this.cSkipBeaver);
+            this.gSpeedUps.Controls.Add(this.cFasterLabFish);
+            this.gSpeedUps.Controls.Add(this.cGoodDogRaceRNG);
+            this.gSpeedUps.Controls.Add(this.cGoodDampeRNG);
+            this.gSpeedUps.Location = new System.Drawing.Point(6, 6);
+            this.gSpeedUps.Name = "gSpeedUps";
+            this.gSpeedUps.Size = new System.Drawing.Size(361, 211);
+            this.gSpeedUps.TabIndex = 37;
+            this.gSpeedUps.TabStop = false;
+            this.gSpeedUps.Text = "Speed Ups";
+            // 
+            // cFasterBank
+            // 
+            this.cFasterBank.AutoSize = true;
+            this.cFasterBank.Location = new System.Drawing.Point(9, 67);
+            this.cFasterBank.Name = "cFasterBank";
+            this.cFasterBank.Size = new System.Drawing.Size(83, 17);
+            this.cFasterBank.TabIndex = 4;
+            this.cFasterBank.Text = "Faster Bank";
+            this.cFasterBank.UseVisualStyleBackColor = true;
+            this.cFasterBank.CheckedChanged += new System.EventHandler(this.cFasterBank_CheckedChanged);
+            // 
+            // cSkipBeaver
+            // 
+            this.cSkipBeaver.AutoSize = true;
+            this.cSkipBeaver.Location = new System.Drawing.Point(9, 21);
+            this.cSkipBeaver.Name = "cSkipBeaver";
+            this.cSkipBeaver.Size = new System.Drawing.Size(127, 17);
+            this.cSkipBeaver.TabIndex = 0;
+            this.cSkipBeaver.Text = "Skip Younger Beaver";
+            this.cSkipBeaver.UseVisualStyleBackColor = true;
+            this.cSkipBeaver.CheckedChanged += new System.EventHandler(this.cSkipBeaver_CheckedChanged);
+            // 
+            // cFasterLabFish
+            // 
+            this.cFasterLabFish.AutoSize = true;
+            this.cFasterLabFish.Location = new System.Drawing.Point(9, 44);
+            this.cFasterLabFish.Name = "cFasterLabFish";
+            this.cFasterLabFish.Size = new System.Drawing.Size(98, 17);
+            this.cFasterLabFish.TabIndex = 2;
+            this.cFasterLabFish.Text = "Faster Lab Fish";
+            this.cFasterLabFish.UseVisualStyleBackColor = true;
+            this.cFasterLabFish.CheckedChanged += new System.EventHandler(this.cFasterLabFish_CheckedChanged);
+            // 
+            // cGoodDogRaceRNG
+            // 
+            this.cGoodDogRaceRNG.AutoSize = true;
+            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(147, 44);
+            this.cGoodDogRaceRNG.Name = "cGoodDogRaceRNG";
+            this.cGoodDogRaceRNG.Size = new System.Drawing.Size(131, 17);
+            this.cGoodDogRaceRNG.TabIndex = 3;
+            this.cGoodDogRaceRNG.Text = "Good Dog Race RNG";
+            this.cGoodDogRaceRNG.UseVisualStyleBackColor = true;
+            this.cGoodDogRaceRNG.CheckedChanged += new System.EventHandler(this.cGoodDogRaceRNG_CheckedChanged);
+            // 
+            // cGoodDampeRNG
+            // 
+            this.cGoodDampeRNG.AutoSize = true;
+            this.cGoodDampeRNG.Location = new System.Drawing.Point(147, 20);
+            this.cGoodDampeRNG.Name = "cGoodDampeRNG";
+            this.cGoodDampeRNG.Size = new System.Drawing.Size(116, 17);
+            this.cGoodDampeRNG.TabIndex = 1;
+            this.cGoodDampeRNG.Text = "Good Dampe RNG";
+            this.cGoodDampeRNG.UseVisualStyleBackColor = true;
+            this.cGoodDampeRNG.CheckedChanged += new System.EventHandler(this.cGoodDampeRNG_CheckedChanged);
+            // 
+            // gHints
+            // 
+            this.gHints.Controls.Add(this.lGossip);
+            this.gHints.Controls.Add(this.cGossipHints);
+            this.gHints.Controls.Add(this.cFreeHints);
+            this.gHints.Controls.Add(this.cClearHints);
+            this.gHints.Location = new System.Drawing.Point(6, 223);
+            this.gHints.Name = "gHints";
+            this.gHints.Size = new System.Drawing.Size(223, 77);
+            this.gHints.TabIndex = 36;
+            this.gHints.TabStop = false;
+            this.gHints.Text = "Gossip Stone Hints";
+            // 
+            // lGossip
+            // 
+            this.lGossip.AutoSize = true;
+            this.lGossip.BackColor = System.Drawing.Color.Transparent;
+            this.lGossip.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lGossip.ForeColor = System.Drawing.Color.Black;
+            this.lGossip.Location = new System.Drawing.Point(10, 21);
+            this.lGossip.Name = "lGossip";
+            this.lGossip.Size = new System.Drawing.Size(79, 13);
+            this.lGossip.TabIndex = 20;
+            this.lGossip.Text = "Hint distribution";
+            // 
+            // cGossipHints
+            // 
+            this.cGossipHints.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cGossipHints.FormattingEnabled = true;
+            this.cGossipHints.Items.AddRange(new object[] {
+            "Default",
+            "Random",
+            "Relevant",
+            "Competitive"});
+            this.cGossipHints.Location = new System.Drawing.Point(13, 34);
+            this.cGossipHints.Name = "cGossipHints";
+            this.cGossipHints.Size = new System.Drawing.Size(115, 21);
+            this.cGossipHints.TabIndex = 19;
+            this.cGossipHints.SelectedIndexChanged += new System.EventHandler(this.cGossipHints_SelectedIndexChanged);
+            // 
+            // cFreeHints
+            // 
+            this.cFreeHints.AutoSize = true;
+            this.cFreeHints.BackColor = System.Drawing.Color.Transparent;
+            this.cFreeHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cFreeHints.ForeColor = System.Drawing.Color.Black;
+            this.cFreeHints.Location = new System.Drawing.Point(136, 17);
+            this.cFreeHints.Name = "cFreeHints";
+            this.cFreeHints.Size = new System.Drawing.Size(72, 17);
+            this.cFreeHints.TabIndex = 15;
+            this.cFreeHints.Text = "Free hints";
+            this.cFreeHints.UseVisualStyleBackColor = false;
+            this.cFreeHints.CheckedChanged += new System.EventHandler(this.cFreeHints_CheckedChanged);
+            // 
+            // cClearHints
+            // 
+            this.cClearHints.AutoSize = true;
+            this.cClearHints.BackColor = System.Drawing.Color.Transparent;
+            this.cClearHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cClearHints.ForeColor = System.Drawing.Color.Black;
+            this.cClearHints.Location = new System.Drawing.Point(136, 40);
+            this.cClearHints.Name = "cClearHints";
+            this.cClearHints.Size = new System.Drawing.Size(75, 17);
+            this.cClearHints.TabIndex = 16;
+            this.cClearHints.Text = "Clear hints";
+            this.cClearHints.UseVisualStyleBackColor = false;
+            this.cClearHints.CheckedChanged += new System.EventHandler(this.cClearHints_CheckedChanged);
+            // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.lLink);
+            this.groupBox8.Controls.Add(this.cLink);
+            this.groupBox8.Location = new System.Drawing.Point(235, 223);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(424, 77);
+            this.groupBox8.TabIndex = 35;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Cosmetic Customization";
+            // 
+            // lLink
+            // 
+            this.lLink.AutoSize = true;
+            this.lLink.BackColor = System.Drawing.Color.Transparent;
+            this.lLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lLink.ForeColor = System.Drawing.Color.Black;
+            this.lLink.Location = new System.Drawing.Point(3, 23);
+            this.lLink.Name = "lLink";
+            this.lLink.Size = new System.Drawing.Size(67, 13);
+            this.lLink.TabIndex = 9;
+            this.lLink.Text = "Player model";
+            // 
+            // cLink
+            // 
+            this.cLink.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cLink.FormattingEnabled = true;
+            this.cLink.Items.AddRange(new object[] {
+            "Link (MM)",
+            "Link (OoT)",
+            "Adult Link (Risky!)",
+            "Kafei"});
+            this.cLink.Location = new System.Drawing.Point(6, 36);
+            this.cLink.Name = "cLink";
+            this.cLink.Size = new System.Drawing.Size(111, 21);
+            this.cLink.TabIndex = 10;
+            this.cLink.SelectedIndexChanged += new System.EventHandler(this.cLink_SelectedIndexChanged);
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.cElegySpeedups);
+            this.groupBox7.Controls.Add(this.cCloseCows);
+            this.groupBox7.Controls.Add(this.cArrowCycling);
+            this.groupBox7.Controls.Add(this.cFreestanding);
+            this.groupBox7.Controls.Add(this.cFastPush);
+            this.groupBox7.Controls.Add(this.cQText);
+            this.groupBox7.Controls.Add(this.cShopAppearance);
+            this.groupBox7.Controls.Add(this.cEponaSword);
+            this.groupBox7.Controls.Add(this.cUpdateChests);
+            this.groupBox7.Controls.Add(this.cDisableCritWiggle);
+            this.groupBox7.Controls.Add(this.cQuestItemStorage);
+            this.groupBox7.Controls.Add(this.cCutsc);
+            this.groupBox7.Controls.Add(this.cNoDowngrades);
+            this.groupBox7.Location = new System.Drawing.Point(373, 6);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(286, 211);
+            this.groupBox7.TabIndex = 34;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "Comfort Options";
+            // 
+            // cElegySpeedups
+            // 
+            this.cElegySpeedups.AutoSize = true;
+            this.cElegySpeedups.Location = new System.Drawing.Point(147, 183);
+            this.cElegySpeedups.Name = "cElegySpeedups";
+            this.cElegySpeedups.Size = new System.Drawing.Size(101, 17);
+            this.cElegySpeedups.TabIndex = 37;
+            this.cElegySpeedups.Text = "Elegy speedups";
+            this.cElegySpeedups.UseVisualStyleBackColor = true;
+            this.cElegySpeedups.CheckedChanged += new System.EventHandler(this.cElegySpeedups_CheckedChanged);
+            // 
+            // cCloseCows
+            // 
+            this.cCloseCows.AutoSize = true;
+            this.cCloseCows.Location = new System.Drawing.Point(9, 114);
+            this.cCloseCows.Name = "cCloseCows";
+            this.cCloseCows.Size = new System.Drawing.Size(81, 17);
+            this.cCloseCows.TabIndex = 36;
+            this.cCloseCows.Text = "Close Cows";
+            this.cCloseCows.UseVisualStyleBackColor = true;
+            this.cCloseCows.CheckedChanged += new System.EventHandler(this.cCloseCows_CheckedChanged);
+            // 
+            // cArrowCycling
+            // 
+            this.cArrowCycling.AutoSize = true;
+            this.cArrowCycling.Location = new System.Drawing.Point(147, 160);
+            this.cArrowCycling.Name = "cArrowCycling";
+            this.cArrowCycling.Size = new System.Drawing.Size(89, 17);
+            this.cArrowCycling.TabIndex = 35;
+            this.cArrowCycling.Text = "Arrow cycling";
+            this.cArrowCycling.UseVisualStyleBackColor = true;
+            this.cArrowCycling.CheckedChanged += new System.EventHandler(this.cArrowCycling_CheckedChanged);
+            // 
+            // cFreestanding
+            // 
+            this.cFreestanding.AutoSize = true;
+            this.cFreestanding.Location = new System.Drawing.Point(147, 68);
+            this.cFreestanding.Name = "cFreestanding";
+            this.cFreestanding.Size = new System.Drawing.Size(125, 17);
+            this.cFreestanding.TabIndex = 34;
+            this.cFreestanding.Text = "Update world models";
+            this.cFreestanding.UseVisualStyleBackColor = true;
+            this.cFreestanding.CheckedChanged += new System.EventHandler(this.cFreestanding_CheckedChanged);
+            // 
+            // cFastPush
+            // 
+            this.cFastPush.AutoSize = true;
+            this.cFastPush.Location = new System.Drawing.Point(9, 91);
+            this.cFastPush.Name = "cFastPush";
+            this.cFastPush.Size = new System.Drawing.Size(125, 17);
+            this.cFastPush.TabIndex = 31;
+            this.cFastPush.Text = "Increase push speed";
+            this.cFastPush.UseVisualStyleBackColor = true;
+            this.cFastPush.CheckedChanged += new System.EventHandler(this.cFastPush_CheckedChanged);
+            // 
+            // cQText
+            // 
+            this.cQText.AutoSize = true;
+            this.cQText.BackColor = System.Drawing.Color.Transparent;
+            this.cQText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cQText.ForeColor = System.Drawing.Color.Black;
+            this.cQText.Location = new System.Drawing.Point(9, 68);
+            this.cQText.Name = "cQText";
+            this.cQText.Size = new System.Drawing.Size(74, 17);
+            this.cQText.TabIndex = 6;
+            this.cQText.Text = "Quick text";
+            this.cQText.UseVisualStyleBackColor = false;
+            this.cQText.CheckedChanged += new System.EventHandler(this.cQText_CheckedChanged);
+            // 
+            // cShopAppearance
+            // 
+            this.cShopAppearance.AutoSize = true;
+            this.cShopAppearance.BackColor = System.Drawing.Color.Transparent;
+            this.cShopAppearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cShopAppearance.ForeColor = System.Drawing.Color.Black;
+            this.cShopAppearance.Location = new System.Drawing.Point(147, 22);
+            this.cShopAppearance.Name = "cShopAppearance";
+            this.cShopAppearance.Size = new System.Drawing.Size(92, 17);
+            this.cShopAppearance.TabIndex = 21;
+            this.cShopAppearance.Text = "Update shops";
+            this.cShopAppearance.UseVisualStyleBackColor = false;
+            this.cShopAppearance.CheckedChanged += new System.EventHandler(this.cShopAppearance_CheckedChanged);
+            // 
+            // cEponaSword
+            // 
+            this.cEponaSword.AutoSize = true;
+            this.cEponaSword.BackColor = System.Drawing.Color.Transparent;
+            this.cEponaSword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cEponaSword.ForeColor = System.Drawing.Color.Black;
+            this.cEponaSword.Location = new System.Drawing.Point(147, 114);
+            this.cEponaSword.Name = "cEponaSword";
+            this.cEponaSword.Size = new System.Drawing.Size(104, 17);
+            this.cEponaSword.TabIndex = 22;
+            this.cEponaSword.Text = "Fix Epona sword";
+            this.cEponaSword.UseVisualStyleBackColor = false;
+            this.cEponaSword.CheckedChanged += new System.EventHandler(this.cEponaSword_CheckedChanged);
+            // 
+            // cUpdateChests
+            // 
+            this.cUpdateChests.AutoSize = true;
+            this.cUpdateChests.BackColor = System.Drawing.Color.Transparent;
+            this.cUpdateChests.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cUpdateChests.ForeColor = System.Drawing.Color.Black;
+            this.cUpdateChests.Location = new System.Drawing.Point(147, 45);
+            this.cUpdateChests.Name = "cUpdateChests";
+            this.cUpdateChests.Size = new System.Drawing.Size(95, 17);
+            this.cUpdateChests.TabIndex = 23;
+            this.cUpdateChests.Text = "Update chests";
+            this.cUpdateChests.UseVisualStyleBackColor = false;
+            this.cUpdateChests.CheckedChanged += new System.EventHandler(this.cUpdateChests_CheckedChanged);
+            // 
+            // cDisableCritWiggle
+            // 
+            this.cDisableCritWiggle.AutoSize = true;
+            this.cDisableCritWiggle.BackColor = System.Drawing.Color.Transparent;
+            this.cDisableCritWiggle.Location = new System.Drawing.Point(9, 22);
+            this.cDisableCritWiggle.Name = "cDisableCritWiggle";
+            this.cDisableCritWiggle.Size = new System.Drawing.Size(111, 17);
+            this.cDisableCritWiggle.TabIndex = 29;
+            this.cDisableCritWiggle.Text = "Disable crit wiggle";
+            this.cDisableCritWiggle.UseVisualStyleBackColor = false;
+            this.cDisableCritWiggle.CheckedChanged += new System.EventHandler(this.cDisableCritWiggle_CheckedChanged);
+            // 
+            // cQuestItemStorage
+            // 
+            this.cQuestItemStorage.AutoSize = true;
+            this.cQuestItemStorage.BackColor = System.Drawing.Color.Transparent;
+            this.cQuestItemStorage.Location = new System.Drawing.Point(147, 137);
+            this.cQuestItemStorage.Name = "cQuestItemStorage";
+            this.cQuestItemStorage.Size = new System.Drawing.Size(140, 17);
+            this.cQuestItemStorage.TabIndex = 30;
+            this.cQuestItemStorage.Text = "Quest item extra storage";
+            this.cQuestItemStorage.UseVisualStyleBackColor = false;
+            this.cQuestItemStorage.CheckedChanged += new System.EventHandler(this.cQuestItemStorage_CheckedChanged);
+            // 
+            // cCutsc
+            // 
+            this.cCutsc.AutoSize = true;
+            this.cCutsc.BackColor = System.Drawing.Color.Transparent;
+            this.cCutsc.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cCutsc.ForeColor = System.Drawing.Color.Black;
+            this.cCutsc.Location = new System.Drawing.Point(9, 45);
+            this.cCutsc.Name = "cCutsc";
+            this.cCutsc.Size = new System.Drawing.Size(115, 17);
+            this.cCutsc.TabIndex = 5;
+            this.cCutsc.Text = "Shorten cutscenes";
+            this.cCutsc.UseVisualStyleBackColor = false;
+            this.cCutsc.CheckedChanged += new System.EventHandler(this.cCutsc_CheckedChanged);
+            // 
+            // cNoDowngrades
+            // 
+            this.cNoDowngrades.AutoSize = true;
+            this.cNoDowngrades.BackColor = System.Drawing.Color.Transparent;
+            this.cNoDowngrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cNoDowngrades.ForeColor = System.Drawing.Color.Black;
+            this.cNoDowngrades.Location = new System.Drawing.Point(147, 91);
+            this.cNoDowngrades.Name = "cNoDowngrades";
+            this.cNoDowngrades.Size = new System.Drawing.Size(101, 17);
+            this.cNoDowngrades.TabIndex = 18;
+            this.cNoDowngrades.Text = "No downgrades";
+            this.cNoDowngrades.UseVisualStyleBackColor = false;
+            this.cNoDowngrades.CheckedChanged += new System.EventHandler(this.cNoDowngrades_CheckedChanged);
+            // 
+            // tabCosmetics
+            // 
+            this.tabCosmetics.Controls.Add(this.gCosmeticOther);
+            this.tabCosmetics.Controls.Add(this.gCosmeticMusicSound);
+            this.tabCosmetics.Controls.Add(this.cHUDGroupBox);
+            this.tabCosmetics.Controls.Add(this.tFormCosmetics);
+            this.tabCosmetics.Location = new System.Drawing.Point(4, 22);
+            this.tabCosmetics.Name = "tabCosmetics";
+            this.tabCosmetics.Size = new System.Drawing.Size(667, 311);
+            this.tabCosmetics.TabIndex = 4;
+            this.tabCosmetics.Text = "Cosmetics";
+            this.tabCosmetics.UseVisualStyleBackColor = true;
+            // 
+            // gCosmeticOther
+            // 
+            this.gCosmeticOther.Controls.Add(this.cTatl);
+            this.gCosmeticOther.Controls.Add(this.lTatl);
+            this.gCosmeticOther.Controls.Add(this.cTargettingStyle);
+            this.gCosmeticOther.Location = new System.Drawing.Point(256, 3);
+            this.gCosmeticOther.Name = "gCosmeticOther";
+            this.gCosmeticOther.Size = new System.Drawing.Size(401, 129);
+            this.gCosmeticOther.TabIndex = 47;
+            this.gCosmeticOther.TabStop = false;
+            this.gCosmeticOther.Text = "Other";
+            // 
+            // cTatl
+            // 
+            this.cTatl.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cTatl.FormattingEnabled = true;
+            this.cTatl.Items.AddRange(new object[] {
+            "Default",
+            "Dark",
+            "Hot",
+            "Cool",
+            "Random",
+            "Rainbow (cycle)"});
+            this.cTatl.Location = new System.Drawing.Point(9, 29);
+            this.cTatl.Name = "cTatl";
+            this.cTatl.Size = new System.Drawing.Size(129, 21);
+            this.cTatl.TabIndex = 41;
+            this.cTatl.SelectedIndexChanged += new System.EventHandler(this.cTatl_SelectedIndexChanged);
+            // 
+            // lTatl
+            // 
+            this.lTatl.AutoSize = true;
+            this.lTatl.BackColor = System.Drawing.Color.Transparent;
+            this.lTatl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lTatl.ForeColor = System.Drawing.Color.Black;
+            this.lTatl.Location = new System.Drawing.Point(6, 16);
+            this.lTatl.Name = "lTatl";
+            this.lTatl.Size = new System.Drawing.Size(57, 13);
+            this.lTatl.TabIndex = 40;
+            this.lTatl.Text = "Tatl theme";
+            // 
+            // cTargettingStyle
+            // 
+            this.cTargettingStyle.AutoSize = true;
+            this.cTargettingStyle.BackColor = System.Drawing.Color.Transparent;
+            this.cTargettingStyle.Location = new System.Drawing.Point(9, 56);
+            this.cTargettingStyle.Name = "cTargettingStyle";
+            this.cTargettingStyle.Size = new System.Drawing.Size(129, 17);
+            this.cTargettingStyle.TabIndex = 37;
+            this.cTargettingStyle.Text = "Default Hold Z-Target";
+            this.cTargettingStyle.UseVisualStyleBackColor = false;
+            this.cTargettingStyle.CheckedChanged += new System.EventHandler(this.cTargettingStyle_CheckedChanged);
+            // 
+            // gCosmeticMusicSound
+            // 
+            this.gCosmeticMusicSound.Controls.Add(this.lMusic);
+            this.gCosmeticMusicSound.Controls.Add(this.cMusic);
+            this.gCosmeticMusicSound.Controls.Add(this.cSFX);
+            this.gCosmeticMusicSound.Controls.Add(this.cCombatMusicDisable);
+            this.gCosmeticMusicSound.Controls.Add(this.cEnableNightMusic);
+            this.gCosmeticMusicSound.Location = new System.Drawing.Point(7, 138);
+            this.gCosmeticMusicSound.Name = "gCosmeticMusicSound";
+            this.gCosmeticMusicSound.Size = new System.Drawing.Size(243, 162);
+            this.gCosmeticMusicSound.TabIndex = 46;
+            this.gCosmeticMusicSound.TabStop = false;
+            this.gCosmeticMusicSound.Text = "Music / Sound";
+            // 
+            // lMusic
+            // 
+            this.lMusic.AutoSize = true;
+            this.lMusic.BackColor = System.Drawing.Color.Transparent;
+            this.lMusic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lMusic.ForeColor = System.Drawing.Color.Black;
+            this.lMusic.Location = new System.Drawing.Point(3, 86);
+            this.lMusic.Name = "lMusic";
+            this.lMusic.Size = new System.Drawing.Size(35, 13);
+            this.lMusic.TabIndex = 43;
+            this.lMusic.Text = "Music";
+            // 
+            // cMusic
+            // 
+            this.cMusic.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cMusic.FormattingEnabled = true;
+            this.cMusic.Items.AddRange(new object[] {
+            "Default",
+            "Random",
+            "None"});
+            this.cMusic.Location = new System.Drawing.Point(6, 99);
+            this.cMusic.Name = "cMusic";
+            this.cMusic.Size = new System.Drawing.Size(134, 21);
+            this.cMusic.TabIndex = 42;
+            this.cMusic.SelectedIndexChanged += new System.EventHandler(this.cMusic_SelectedIndexChanged);
+            // 
+            // cSFX
+            // 
+            this.cSFX.AutoSize = true;
+            this.cSFX.BackColor = System.Drawing.Color.Transparent;
+            this.cSFX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cSFX.ForeColor = System.Drawing.Color.Black;
+            this.cSFX.Location = new System.Drawing.Point(6, 20);
+            this.cSFX.Name = "cSFX";
+            this.cSFX.Size = new System.Drawing.Size(102, 17);
+            this.cSFX.TabIndex = 36;
+            this.cSFX.Text = "Randomize SFX";
+            this.cSFX.UseVisualStyleBackColor = false;
+            this.cSFX.CheckedChanged += new System.EventHandler(this.cSFX_CheckedChanged);
+            // 
+            // cCombatMusicDisable
+            // 
+            this.cCombatMusicDisable.AutoSize = true;
+            this.cCombatMusicDisable.Location = new System.Drawing.Point(6, 66);
+            this.cCombatMusicDisable.Name = "cCombatMusicDisable";
+            this.cCombatMusicDisable.Size = new System.Drawing.Size(131, 17);
+            this.cCombatMusicDisable.TabIndex = 45;
+            this.cCombatMusicDisable.Text = "Disable Combat Music";
+            this.cCombatMusicDisable.UseVisualStyleBackColor = true;
+            this.cCombatMusicDisable.CheckedChanged += new System.EventHandler(this.cCombatMusicDisable_CheckedChanged);
+            // 
+            // cEnableNightMusic
+            // 
+            this.cEnableNightMusic.AutoSize = true;
+            this.cEnableNightMusic.Location = new System.Drawing.Point(6, 43);
+            this.cEnableNightMusic.Name = "cEnableNightMusic";
+            this.cEnableNightMusic.Size = new System.Drawing.Size(114, 17);
+            this.cEnableNightMusic.TabIndex = 38;
+            this.cEnableNightMusic.Text = "Enable Night BGM";
+            this.cEnableNightMusic.UseVisualStyleBackColor = true;
+            this.cEnableNightMusic.CheckedChanged += new System.EventHandler(this.cEnableNightMusic_CheckedChanged);
+            // 
+            // cHUDGroupBox
+            // 
+            this.cHUDGroupBox.Controls.Add(this.cHueShiftMiscUI);
+            this.cHUDGroupBox.Controls.Add(this.cHUDTableLayoutPanel);
+            this.cHUDGroupBox.Location = new System.Drawing.Point(256, 138);
+            this.cHUDGroupBox.Name = "cHUDGroupBox";
+            this.cHUDGroupBox.Size = new System.Drawing.Size(401, 162);
+            this.cHUDGroupBox.TabIndex = 44;
+            this.cHUDGroupBox.TabStop = false;
+            this.cHUDGroupBox.Text = "HUD";
+            // 
+            // cHueShiftMiscUI
+            // 
+            this.cHueShiftMiscUI.AutoSize = true;
+            this.cHueShiftMiscUI.Location = new System.Drawing.Point(9, 79);
+            this.cHueShiftMiscUI.Name = "cHueShiftMiscUI";
+            this.cHueShiftMiscUI.Size = new System.Drawing.Size(109, 17);
+            this.cHueShiftMiscUI.TabIndex = 1;
+            this.cHueShiftMiscUI.Text = "Hue Shift Misc UI";
+            this.cHueShiftMiscUI.UseVisualStyleBackColor = true;
+            this.cHueShiftMiscUI.CheckedChanged += new System.EventHandler(this.cHueShiftMiscUI_CheckedChanged);
+            // 
+            // cHUDTableLayoutPanel
+            // 
+            this.cHUDTableLayoutPanel.ColumnCount = 3;
+            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78F));
+            this.cHUDTableLayoutPanel.Controls.Add(this.cHUDHeartsComboBox, 1, 0);
+            this.cHUDTableLayoutPanel.Controls.Add(this.cHeartsLabel, 0, 0);
+            this.cHUDTableLayoutPanel.Controls.Add(this.cMagicLabel, 0, 1);
+            this.cHUDTableLayoutPanel.Controls.Add(this.cHUDMagicComboBox, 1, 1);
+            this.cHUDTableLayoutPanel.Controls.Add(this.btn_hud, 2, 0);
+            this.cHUDTableLayoutPanel.Location = new System.Drawing.Point(2, 16);
+            this.cHUDTableLayoutPanel.Name = "cHUDTableLayoutPanel";
+            this.cHUDTableLayoutPanel.RowCount = 2;
+            this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
+            this.cHUDTableLayoutPanel.Size = new System.Drawing.Size(393, 57);
+            this.cHUDTableLayoutPanel.TabIndex = 0;
+            // 
+            // cHUDHeartsComboBox
+            // 
+            this.cHUDHeartsComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cHUDHeartsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cHUDHeartsComboBox.FormattingEnabled = true;
+            this.cHUDHeartsComboBox.Location = new System.Drawing.Point(53, 3);
+            this.cHUDHeartsComboBox.Name = "cHUDHeartsComboBox";
+            this.cHUDHeartsComboBox.Size = new System.Drawing.Size(259, 21);
+            this.cHUDHeartsComboBox.TabIndex = 32;
+            this.cHUDHeartsComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDHeartsComboBox_SelectedIndexChanged);
+            // 
+            // cHeartsLabel
+            // 
+            this.cHeartsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cHeartsLabel.AutoSize = true;
+            this.cHeartsLabel.Location = new System.Drawing.Point(3, 7);
+            this.cHeartsLabel.Name = "cHeartsLabel";
+            this.cHeartsLabel.Size = new System.Drawing.Size(41, 13);
+            this.cHeartsLabel.TabIndex = 33;
+            this.cHeartsLabel.Text = "Hearts:";
+            // 
+            // cMagicLabel
+            // 
+            this.cMagicLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.cMagicLabel.AutoSize = true;
+            this.cMagicLabel.Location = new System.Drawing.Point(3, 36);
+            this.cMagicLabel.Name = "cMagicLabel";
+            this.cMagicLabel.Size = new System.Drawing.Size(39, 13);
+            this.cMagicLabel.TabIndex = 34;
+            this.cMagicLabel.Text = "Magic:";
+            // 
+            // cHUDMagicComboBox
+            // 
+            this.cHUDMagicComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.cHUDMagicComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cHUDMagicComboBox.FormattingEnabled = true;
+            this.cHUDMagicComboBox.Location = new System.Drawing.Point(53, 31);
+            this.cHUDMagicComboBox.Name = "cHUDMagicComboBox";
+            this.cHUDMagicComboBox.Size = new System.Drawing.Size(259, 21);
+            this.cHUDMagicComboBox.TabIndex = 35;
+            this.cHUDMagicComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDMagicComboBox_SelectedIndexChanged);
+            // 
+            // btn_hud
+            // 
+            this.btn_hud.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.btn_hud.AutoSize = true;
+            this.btn_hud.Location = new System.Drawing.Point(321, 10);
+            this.btn_hud.Name = "btn_hud";
+            this.cHUDTableLayoutPanel.SetRowSpan(this.btn_hud, 2);
+            this.btn_hud.Size = new System.Drawing.Size(65, 37);
+            this.btn_hud.TabIndex = 31;
+            this.btn_hud.Text = "Customize";
+            this.btn_hud.UseVisualStyleBackColor = true;
+            this.btn_hud.Click += new System.EventHandler(this.btn_hud_Click);
+            // 
+            // tFormCosmetics
+            // 
+            this.tFormCosmetics.Location = new System.Drawing.Point(6, 3);
+            this.tFormCosmetics.Name = "tFormCosmetics";
+            this.tFormCosmetics.SelectedIndex = 0;
+            this.tFormCosmetics.Size = new System.Drawing.Size(244, 129);
+            this.tFormCosmetics.TabIndex = 39;
             // 
             // cDrawHash
             // 
@@ -1802,7 +1983,7 @@ namespace MMR.UI.Forms
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mLogicEdit});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // mLogicEdit
@@ -1964,20 +2145,6 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cByoAmmo
-            // 
-            this.cByoAmmo.AutoSize = true;
-            this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
-            this.cByoAmmo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
-            this.cByoAmmo.Location = new System.Drawing.Point(393, 184);
-            this.cByoAmmo.Name = "cByoAmmo";
-            this.cByoAmmo.Size = new System.Drawing.Size(80, 17);
-            this.cByoAmmo.TabIndex = 24;
-            this.cByoAmmo.Text = "BYO Ammo";
-            this.cByoAmmo.UseVisualStyleBackColor = false;
-            this.cByoAmmo.CheckedChanged += new System.EventHandler(this.cByoAmmo_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -2015,6 +2182,8 @@ namespace MMR.UI.Forms
             this.groupBox3.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.tabGimmicks.ResumeLayout(false);
+            this.tabGimmicks.PerformLayout();
             this.tabComfort.ResumeLayout(false);
             this.gSpeedUps.ResumeLayout(false);
             this.gSpeedUps.PerformLayout();
@@ -2022,13 +2191,17 @@ namespace MMR.UI.Forms
             this.gHints.PerformLayout();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
-            this.cHUDGroupBox.ResumeLayout(false);
-            this.cHUDTableLayoutPanel.ResumeLayout(false);
-            this.cHUDTableLayoutPanel.PerformLayout();
             this.groupBox7.ResumeLayout(false);
             this.groupBox7.PerformLayout();
-            this.tabGimmicks.ResumeLayout(false);
-            this.tabGimmicks.PerformLayout();
+            this.tabCosmetics.ResumeLayout(false);
+            this.gCosmeticOther.ResumeLayout(false);
+            this.gCosmeticOther.PerformLayout();
+            this.gCosmeticMusicSound.ResumeLayout(false);
+            this.gCosmeticMusicSound.PerformLayout();
+            this.cHUDGroupBox.ResumeLayout(false);
+            this.cHUDGroupBox.PerformLayout();
+            this.cHUDTableLayoutPanel.ResumeLayout(false);
+            this.cHUDTableLayoutPanel.PerformLayout();
             this.gGameOutput.ResumeLayout(false);
             this.gGameOutput.PerformLayout();
             this.mMenu.ResumeLayout(false);
@@ -2055,12 +2228,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lMode;
         private System.Windows.Forms.SaveFileDialog saveROM;
         private System.Windows.Forms.SaveFileDialog saveSettings;
-        private System.Windows.Forms.ComboBox cTatl;
-        private System.Windows.Forms.Label lTatl;
         private System.Windows.Forms.ComboBox cLink;
         private System.Windows.Forms.Label lLink;
-        private System.Windows.Forms.Button bTunic;
-        private System.Windows.Forms.Label lTunic;
         private System.Windows.Forms.CheckBox cQText;
         private System.Windows.Forms.CheckBox cCutsc;
         private System.Windows.Forms.CheckBox cEnemy;
@@ -2144,9 +2313,6 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cMundaneRewards;
         private System.Windows.Forms.ComboBox cBlastCooldown;
         private System.Windows.Forms.Label lBlastMask;
-        private System.Windows.Forms.CheckBox cSFX;
-        private System.Windows.Forms.Label lMusic;
-        private System.Windows.Forms.ComboBox cMusic;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Button bStartingItemEditor;
         private System.Windows.Forms.TextBox tStartingItemList;
@@ -2168,14 +2334,6 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cQuestItemStorage;
         private System.Windows.Forms.CheckBox cDisableCritWiggle;
         private System.Windows.Forms.CheckBox cFastPush;
-        private System.Windows.Forms.GroupBox cHUDGroupBox;
-        private System.Windows.Forms.TableLayoutPanel cHUDTableLayoutPanel;
-        private System.Windows.Forms.Button btn_hud;
-        private System.Windows.Forms.ComboBox cHUDHeartsComboBox;
-        private System.Windows.Forms.Label cHeartsLabel;
-        private System.Windows.Forms.Label cMagicLabel;
-        private System.Windows.Forms.ComboBox cHUDMagicComboBox;
-        private System.Windows.Forms.CheckBox cTargettingStyle;
         private System.Windows.Forms.GroupBox groupBox8;
         private System.Windows.Forms.GroupBox groupBox7;
         private System.Windows.Forms.GroupBox groupBox9;
@@ -2187,7 +2345,6 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.GroupBox gSpeedUps;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mLogicEdit;
-        private System.Windows.Forms.CheckBox cEnableNightMusic; 
         private System.Windows.Forms.CheckBox cFreestanding;
         private System.Windows.Forms.CheckBox cFDAnywhere;
         private System.Windows.Forms.CheckBox cArrowCycling;
@@ -2195,6 +2352,34 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cCloseCows;
         private System.Windows.Forms.Button bToggleTricks;
         private System.Windows.Forms.CheckBox cByoAmmo;
+        private System.Windows.Forms.CheckBox cDeathMoonCrash;
+        private System.Windows.Forms.CheckBox cElegySpeedups;
+        private System.Windows.Forms.CheckBox cContinuousDekuHopping;
+        private System.Windows.Forms.CheckBox cProgressiveUpgrades;
+        private System.Windows.Forms.Label lIceTraps;
+        private System.Windows.Forms.ComboBox cIceTrapsAppearance;
+        private System.Windows.Forms.ComboBox cIceTraps;
+        private System.Windows.Forms.CheckBox cIceTrapQuirks;
+        private System.Windows.Forms.TabPage tabCosmetics;
+        private System.Windows.Forms.CheckBox cEnableNightMusic;
+        private System.Windows.Forms.CheckBox cSFX;
+        private System.Windows.Forms.CheckBox cTargettingStyle;
+        private System.Windows.Forms.Label lTatl;
+        private System.Windows.Forms.GroupBox cHUDGroupBox;
+        private System.Windows.Forms.TableLayoutPanel cHUDTableLayoutPanel;
+        private System.Windows.Forms.ComboBox cHUDHeartsComboBox;
+        private System.Windows.Forms.Label cHeartsLabel;
+        private System.Windows.Forms.Label cMagicLabel;
+        private System.Windows.Forms.ComboBox cHUDMagicComboBox;
+        private System.Windows.Forms.Button btn_hud;
+        private System.Windows.Forms.Label lMusic;
+        private System.Windows.Forms.CheckBox cCombatMusicDisable;
+        private System.Windows.Forms.ComboBox cTatl;
+        private System.Windows.Forms.ComboBox cMusic;
+        private System.Windows.Forms.TabControl tFormCosmetics;
+        private System.Windows.Forms.CheckBox cHueShiftMiscUI;
+        private System.Windows.Forms.GroupBox gCosmeticOther;
+        private System.Windows.Forms.GroupBox gCosmeticMusicSound;
     }
 }
 

@@ -9,6 +9,11 @@
         /// Miscellaneous configuration.
         /// </summary>
         public MiscConfig MiscConfig { get; set; } = new MiscConfig();
+
+        /// <summary>
+        /// Miscellaneous configuration.
+        /// </summary>
+        public MMRConfig MMRConfig { get; set; } = new MMRConfig();
     }
 
     /// <summary>

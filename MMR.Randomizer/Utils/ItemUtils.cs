@@ -131,7 +131,7 @@ namespace MMR.Randomizer.Utils
         }
 
         // todo cache
-        public static IEnumerable<int> AllGetItemIndices()
+        public static IEnumerable<ushort> AllGetItemIndices()
         {
             return Enum.GetValues(typeof(Item))
                 .Cast<Item>()
@@ -155,7 +155,7 @@ namespace MMR.Randomizer.Utils
         }
         public static bool IsJunk(Item item)
         {
-            return JunkItems.Contains(item);
+            return item == Item.RecoveryHeart || JunkItems.Contains(item);
         }
 
         public static bool IsRequired(Item item, RandomizedResult randomizedResult)
@@ -163,12 +163,15 @@ namespace MMR.Randomizer.Utils
             return !item.Name().Contains("Heart")
                         && !IsStrayFairy(item)
                         && !IsSkulltulaToken(item)
+                        && item != Item.IceTrap
                         && randomizedResult.ItemsRequiredForMoonAccess.Contains(item);
         }
 
         public static bool IsImportant(Item item, RandomizedResult randomizedResult)
         {
-            return !item.Name().Contains("Heart") && randomizedResult.ImportantItems.Contains(item);
+            return !item.Name().Contains("Heart")
+                        && item != Item.IceTrap
+                        && randomizedResult.ImportantItems.Contains(item);
         }
 
         public static readonly ReadOnlyCollection<ReadOnlyCollection<Item>> ForbiddenStartTogether = new List<List<Item>>()

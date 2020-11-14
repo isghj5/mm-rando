@@ -15,8 +15,8 @@ namespace MMR.Randomizer.Utils
         public static void CreateSpoilerLog(RandomizedResult randomized, GameplaySettings settings, OutputSettings outputSettings)
         {
             var itemList = randomized.ItemList
-                .Where(io => !io.Item.IsFake())
-                .Select(u => new SpoilerItem(u, ItemUtils.IsRequired(u.Item, randomized), ItemUtils.IsImportant(u.Item, randomized)));
+                .Where(io => !io.Item.IsFake() && io.NewLocation.HasValue)
+                .Select(u => new SpoilerItem(u, ItemUtils.IsRequired(u.Item, randomized), ItemUtils.IsImportant(u.Item, randomized), settings.ProgressiveUpgrades));
             var settingsString = settings.ToString();
 
             var directory = Path.GetDirectoryName(outputSettings.OutputROMFilename);
@@ -29,7 +29,7 @@ namespace MMR.Randomizer.Utils
                 SettingsString = settingsString,
                 Seed = randomized.Seed,
                 RandomizeDungeonEntrances = settings.RandomizeDungeonEntrances,
-                ItemList = itemList.Where(u => !u.Item.IsFake()).ToList(),
+                ItemList = itemList.ToList(),
                 NewDestinationIndices = randomized.NewDestinationIndices,
                 Logic = randomized.Logic,
                 GossipHints = randomized.GossipQuotes?.ToDictionary(me => (GossipQuote) me.Id, (me) =>

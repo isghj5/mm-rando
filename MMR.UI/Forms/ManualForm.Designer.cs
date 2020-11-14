@@ -44,6 +44,8 @@
             this.lShuffle = new System.Windows.Forms.Label();
             this.tGimmicks = new System.Windows.Forms.TabPage();
             this.lGimmick = new System.Windows.Forms.Label();
+            this.tComfort = new System.Windows.Forms.TabPage();
+            this.label1 = new System.Windows.Forms.Label();
             this.tCosmetics = new System.Windows.Forms.TabPage();
             this.lCosmetic = new System.Windows.Forms.Label();
             this.tHow = new System.Windows.Forms.TabPage();
@@ -56,6 +58,7 @@
             this.tItem.SuspendLayout();
             this.tShuffles.SuspendLayout();
             this.tGimmicks.SuspendLayout();
+            this.tComfort.SuspendLayout();
             this.tCosmetics.SuspendLayout();
             this.tHow.SuspendLayout();
             this.SuspendLayout();
@@ -70,6 +73,7 @@
             this.tManual.Controls.Add(this.tItem);
             this.tManual.Controls.Add(this.tShuffles);
             this.tManual.Controls.Add(this.tGimmicks);
+            this.tManual.Controls.Add(this.tComfort);
             this.tManual.Controls.Add(this.tCosmetics);
             this.tManual.Controls.Add(this.tHow);
             this.tManual.Location = new System.Drawing.Point(12, 12);
@@ -133,7 +137,7 @@
             // 
             this.lBaseGame.Location = new System.Drawing.Point(6, 3);
             this.lBaseGame.Name = "lBaseGame";
-            this.lBaseGame.Size = new System.Drawing.Size(372, 346);
+            this.lBaseGame.Size = new System.Drawing.Size(372, 304);
             this.lBaseGame.TabIndex = 2;
             this.lBaseGame.Text = resources.GetString("lBaseGame.Text");
             // 
@@ -191,7 +195,7 @@
             // 
             this.lShuffle.Location = new System.Drawing.Point(6, 3);
             this.lShuffle.Name = "lShuffle";
-            this.lShuffle.Size = new System.Drawing.Size(372, 1635);
+            this.lShuffle.Size = new System.Drawing.Size(372, 1695);
             this.lShuffle.TabIndex = 2;
             this.lShuffle.Text = resources.GetString("lShuffle.Text");
             // 
@@ -210,9 +214,28 @@
             // 
             this.lGimmick.Location = new System.Drawing.Point(6, 3);
             this.lGimmick.Name = "lGimmick";
-            this.lGimmick.Size = new System.Drawing.Size(372, 622);
+            this.lGimmick.Size = new System.Drawing.Size(372, 749);
             this.lGimmick.TabIndex = 2;
             this.lGimmick.Text = resources.GetString("lGimmick.Text");
+            // 
+            // tComfort
+            // 
+            this.tComfort.AutoScroll = true;
+            this.tComfort.Controls.Add(this.label1);
+            this.tComfort.Location = new System.Drawing.Point(4, 25);
+            this.tComfort.Name = "tComfort";
+            this.tComfort.Size = new System.Drawing.Size(400, 271);
+            this.tComfort.TabIndex = 9;
+            this.tComfort.Text = "Comfort";
+            this.tComfort.UseVisualStyleBackColor = true;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(3, 1);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(377, 1383);
+            this.label1.TabIndex = 0;
+            this.label1.Text = resources.GetString("label1.Text");
             // 
             // tCosmetics
             // 
@@ -229,7 +252,7 @@
             // 
             this.lCosmetic.Location = new System.Drawing.Point(6, 3);
             this.lCosmetic.Name = "lCosmetic";
-            this.lCosmetic.Size = new System.Drawing.Size(372, 1164);
+            this.lCosmetic.Size = new System.Drawing.Size(372, 724);
             this.lCosmetic.TabIndex = 2;
             this.lCosmetic.Text = resources.GetString("lCosmetic.Text");
             // 
@@ -272,6 +295,7 @@
             this.tItem.ResumeLayout(false);
             this.tShuffles.ResumeLayout(false);
             this.tGimmicks.ResumeLayout(false);
+            this.tComfort.ResumeLayout(false);
             this.tCosmetics.ResumeLayout(false);
             this.tHow.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -299,5 +323,7 @@
         private System.Windows.Forms.TabPage tItem;
         private System.Windows.Forms.Label lLogic;
         private System.Windows.Forms.Label lItem;
+        private System.Windows.Forms.TabPage tComfort;
+        private System.Windows.Forms.Label label1;
     }
 }
