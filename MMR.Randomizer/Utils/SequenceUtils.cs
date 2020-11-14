@@ -58,13 +58,13 @@ namespace MMR.Randomizer.Utils
             {
                 Directory.CreateDirectory(Values.MusicDirectory); // we still need for MM-only
             }
-            directories.Add(Values.MusicDirectory);
             directories.AddRange(Directory.GetDirectories(Values.MusicDirectory).ToList());
             foreach (string d in directories.ToList()) // another layer deep to be safe
             {
                 List<String> deeper_directories = Directory.GetDirectories(d).ToList();
                 directories.AddRange(deeper_directories);
             }
+            directories.Add(Values.MusicDirectory);
 
             foreach (String directory in directories)
             {
