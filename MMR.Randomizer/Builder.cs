@@ -147,7 +147,7 @@ namespace MMR.Randomizer
             var plandoPlacements = PlandoUtils.GetRandomizedSongPlacements(random, log);
             foreach ((var song, var slot) in plandoPlacements)
             {
-                AssignSequenceSlot(slot, song, Unassigned, "PLANDO");
+                AssignSequenceSlot(slot, song, unassigned, "PLANDO");
                 RomData.TargetSequences.Remove(slot);
             }
 
