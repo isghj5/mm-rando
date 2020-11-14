@@ -449,7 +449,9 @@ namespace MMR.Randomizer
             var codeFileAddress = 0xB3C000;
             var playbackInstrumentsOffset = 0x12A8DC; // data for playback instruments
             var freePlayInstrumentsOffset = 0x12A8E4; // data for free play instruments
-            foreach (var form in Enum.GetValues(typeof(TransformationForm)).Cast<TransformationForm>().Where(form => form != TransformationForm.FierceDeity))
+            var freePlayInstrumentsArrayAddress = 0x51CBE;
+            var previouslyUsedInstruments = new List<Instrument>();
+            foreach (var form in Enum.GetValues(typeof(TransformationForm)).Cast<TransformationForm>().Where(form => form != TransformationForm.FierceDeity).OrderBy(f => _cosmeticSettings.Instruments[f] == Instrument.Random))
             {
                 var index = form.Id();
 
@@ -459,26 +461,27 @@ namespace MMR.Randomizer
                     index = 0;
                 }
 
-                var freePlayInstrument = _cosmeticSettings.FreePlayInstruments[form];
-                var playbackInstrument = _cosmeticSettings.PlaybackInstruments[form];
+                var instrument = _cosmeticSettings.Instruments[form];
 
-                if (freePlayInstrument == FreePlayInstrument.Random)
+                if (instrument == form.DefaultInstrument())
                 {
-                    freePlayInstrument = Enum.GetValues(typeof(FreePlayInstrument)).Cast<FreePlayInstrument>().Skip(1).ToList().Random(random);
+                    previouslyUsedInstruments.Add(instrument);
+                    continue;
                 }
 
-                if (playbackInstrument == PlaybackInstrument.Random)
+                if (instrument == Instrument.Random)
                 {
-                    playbackInstrument = Enum.GetValues(typeof(PlaybackInstrument)).Cast<PlaybackInstrument>().Skip(2).ToList().Random(random);
+                    instrument = Enum.GetValues(typeof(Instrument)).Cast<Instrument>()
+                        .Where(u => ! previouslyUsedInstruments.Contains(u)).Skip(1).ToList()
+                        .Random(random);
                 }
 
-                if (playbackInstrument == PlaybackInstrument.SyncedRandom)
-                {
-                    playbackInstrument = freePlayInstrument.PlaybackInstrumentPair();
-                }
+                previouslyUsedInstruments.Add(instrument);
+                var freePlayInstrumentIndex = ReadWriteUtils.Read(codeFileAddress + freePlayInstrumentsOffset + index) - 1;
+                ReadWriteUtils.WriteToROM(freePlayInstrumentsArrayAddress + freePlayInstrumentIndex, instrument.Id());
 
-                ReadWriteUtils.WriteToROM(codeFileAddress + freePlayInstrumentsOffset + index, freePlayInstrument.Id());
-                ReadWriteUtils.WriteToROM(codeFileAddress + playbackInstrumentsOffset + index, playbackInstrument.Id());
+                ReadWriteUtils.WriteToROM(codeFileAddress + playbackInstrumentsOffset + index, instrument.Id());
+                Debug.WriteLine($" form: {form} was assigned instrument: {instrument}");
             }
         }
 
@@ -1663,6 +1666,7 @@ namespace MMR.Randomizer
                             {
                                 it.RuntimeItemName(magicBeanItem.AlternateName(), magicBeanItem.NewLocation.Value);
                             })
+                            .Text(" ")
                             .RuntimeVerb(magicBeanItem.DisplayItem, magicBeanItem.NewLocation.Value)
                             .Text("?")
                             ;

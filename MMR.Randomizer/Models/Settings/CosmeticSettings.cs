@@ -78,20 +78,12 @@ namespace MMR.Randomizer.Models.Settings
             { TransformationForm.FierceDeity, Color.FromArgb(0x1E, 0x69, 0x1B) }
         };
 
-        public Dictionary<TransformationForm, FreePlayInstrument> FreePlayInstruments { get; set; } = new Dictionary<TransformationForm, FreePlayInstrument>()
+        public Dictionary<TransformationForm, Instrument> Instruments { get; set; } = new Dictionary<TransformationForm, Instrument>()
         {
-            { TransformationForm.Human, TransformationForm.Human.DefaultFreePlayInstrument().Value },
-            { TransformationForm.Deku, TransformationForm.Deku.DefaultFreePlayInstrument().Value },
-            { TransformationForm.Goron, TransformationForm.Goron.DefaultFreePlayInstrument().Value },
-            { TransformationForm.Zora, TransformationForm.Zora.DefaultFreePlayInstrument().Value },
-        };
-
-        public Dictionary<TransformationForm, PlaybackInstrument> PlaybackInstruments { get; set; } = new Dictionary<TransformationForm, PlaybackInstrument>()
-        {
-            { TransformationForm.Human, TransformationForm.Human.DefaultPlaybackInstrument().Value },
-            { TransformationForm.Deku, TransformationForm.Deku.DefaultPlaybackInstrument().Value },
-            { TransformationForm.Goron, TransformationForm.Goron.DefaultPlaybackInstrument().Value },
-            { TransformationForm.Zora, TransformationForm.Zora.DefaultPlaybackInstrument().Value },
+            { TransformationForm.Human, TransformationForm.Human.DefaultInstrument().Value },
+            { TransformationForm.Deku, TransformationForm.Deku.DefaultInstrument().Value },
+            { TransformationForm.Goron, TransformationForm.Goron.DefaultInstrument().Value },
+            { TransformationForm.Zora, TransformationForm.Zora.DefaultInstrument().Value },
         };
 
         #region Asm Getters / Setters

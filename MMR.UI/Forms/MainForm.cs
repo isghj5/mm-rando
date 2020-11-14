@@ -189,17 +189,7 @@ namespace MMR.UI.Forms
                         Location = new Point(26, 33),
                         Size = new Size(59, 13),
                     });
-                    tabPage.Controls.Add(new Label
-                    {
-                        Text = "Song Playback:",
-                        Location = new Point(3, 78),
-                        Size = new Size(82, 13),
-                    });
-                    var cPlaybackInstrument = CreatePlaybackInstrumentComboBox(form);
-                    var cFreePlayInstrument = CreateFreePlayInstrumentComboBox(form, cPlaybackInstrument);
-                    tabPage.Controls.Add(cFreePlayInstrument);
-                    tabPage.Controls.Add(cPlaybackInstrument);
-                    tabPage.Controls.Add(CreateInstrumentSyncCheckBox(form, cFreePlayInstrument, cPlaybackInstrument));
+                    tabPage.Controls.Add(CreateInstrumentComboBox(form));
                 }
                 tFormCosmetics.TabPages.Add(tabPage);
             }
@@ -236,13 +226,13 @@ namespace MMR.UI.Forms
             return button;
         }
 
-        private ComboBox CreateFreePlayInstrumentComboBox(TransformationForm transformationForm, ComboBox cPlaybackInstrument)
+        private ComboBox CreateInstrumentComboBox(TransformationForm transformationForm)
         {
-            var data = Enum.GetValues(typeof(FreePlayInstrument)).Cast<FreePlayInstrument>().ToDictionary(x => x, x => addSpacesRegex.Replace(x.ToString(), " $1"));
+            var data = Enum.GetValues(typeof(Instrument)).Cast<Instrument>().ToDictionary(x => x, x => addSpacesRegex.Replace(x.ToString() + (x == transformationForm.DefaultInstrument() ? " *" : ""), " $1"));
             var comboBox = new ComboBox
             {
                 Tag = transformationForm,
-                Name = "cFreePlayInstrument",
+                Name = "cInstrument",
                 Location = new Point(91, 30),
                 Size = new Size(135, 21),
                 DropDownStyle = ComboBoxStyle.DropDownList,
@@ -250,79 +240,16 @@ namespace MMR.UI.Forms
                 DisplayMember = "Value",
                 ValueMember = "Key",
             };
-            comboBox.SelectedIndexChanged += create_cFreePlayInstruments_SelectedIndexChanged(cPlaybackInstrument);
+            comboBox.SelectedIndexChanged += cInstruments_SelectedIndexChanged;
             return comboBox;
         }
 
-        private EventHandler create_cFreePlayInstruments_SelectedIndexChanged(ComboBox cPlaybackInstrument)
-        {
-            void cFreePlayInstruments_SelectedIndexChanged(object sender, EventArgs e)
-            {
-                var comboBox = (ComboBox)sender;
-                var form = (TransformationForm)comboBox.Tag;
-                var value = (FreePlayInstrument)comboBox.SelectedValue;
-                _configuration.CosmeticSettings.FreePlayInstruments[form] = value;
-                if (!cPlaybackInstrument.Enabled)
-                {
-                    cPlaybackInstrument.SelectedValue = value.PlaybackInstrumentPair();
-                }
-            }
-            return cFreePlayInstruments_SelectedIndexChanged;
-        }
-
-        private CheckBox CreateInstrumentSyncCheckBox(TransformationForm transformationForm, ComboBox cFreePlayInstrument, ComboBox cPlaybackInstrument)
-        {
-            var checkBox = new CheckBox
-            {
-                Tag = transformationForm,
-                Name = "cInstrumentSync",
-                Appearance = Appearance.Button,
-                Location = new Point(135, 51),
-                Size = new Size(41, 23),
-                Text = "Sync",
-            };
-            checkBox.CheckedChanged += create_cInstrumentSync_CheckedChanged(cFreePlayInstrument, cPlaybackInstrument);
-            return checkBox;
-        }
-
-        private EventHandler create_cInstrumentSync_CheckedChanged(ComboBox cFreePlayInstrument, ComboBox cPlaybackInstrument)
-        {
-            void cInstrumentSync_CheckedChanged(object sender, EventArgs e)
-            {
-                var checkBox = (CheckBox)sender;
-                cPlaybackInstrument.Enabled = !checkBox.Checked;
-                if (checkBox.Checked)
-                {
-                    cPlaybackInstrument.SelectedValue = ((FreePlayInstrument)cFreePlayInstrument.SelectedValue).PlaybackInstrumentPair();
-                }
-            }
-            return cInstrumentSync_CheckedChanged;
-        }
-
-        private ComboBox CreatePlaybackInstrumentComboBox(TransformationForm transformationForm)
-        {
-            var data = Enum.GetValues(typeof(PlaybackInstrument)).Cast<PlaybackInstrument>().ToDictionary(x => x, x => addSpacesRegex.Replace(x.ToString(), " $1"));
-            var comboBox = new ComboBox
-            {
-                Tag = transformationForm,
-                Name = "cPlaybackInstrument",
-                Location = new Point(91, 74),
-                Size = new Size(135, 21),
-                DropDownStyle = ComboBoxStyle.DropDownList,
-                DataSource = new BindingSource(data, null),
-                DisplayMember = "Value",
-                ValueMember = "Key",
-            };
-            comboBox.SelectedIndexChanged += cPlayBackInstruments_SelectedIndexChanged;
-            return comboBox;
-        }
-
-        private void cPlayBackInstruments_SelectedIndexChanged(object sender, EventArgs e)
+        private void cInstruments_SelectedIndexChanged(object sender, EventArgs e)
         {
             var comboBox = (ComboBox)sender;
             var form = (TransformationForm)comboBox.Tag;
-            var value = (PlaybackInstrument)comboBox.SelectedValue;
-            _configuration.CosmeticSettings.PlaybackInstruments[form] = value;
+            var value = (Instrument)comboBox.SelectedValue;
+            _configuration.CosmeticSettings.Instruments[form] = value;
         }
 
         #region Forms Code
@@ -596,17 +523,8 @@ namespace MMR.UI.Forms
 
                 if (form != TransformationForm.FierceDeity)
                 {
-                    var cFreePlayInstrument = (ComboBox)cosmeticFormTab.Controls.Find("cFreePlayInstrument", false)[0];
-                    cFreePlayInstrument.SelectedValue = _configuration.CosmeticSettings.FreePlayInstruments[form];
-
-                    var cPlaybackInstrument = (ComboBox)cosmeticFormTab.Controls.Find("cPlaybackInstrument", false)[0];
-                    cPlaybackInstrument.SelectedValue = _configuration.CosmeticSettings.PlaybackInstruments[form];
-
-                    if (_configuration.CosmeticSettings.FreePlayInstruments[form].PlaybackInstrumentPair() == _configuration.CosmeticSettings.PlaybackInstruments[form])
-                    {
-                        var cInstrumentSync = (CheckBox)cosmeticFormTab.Controls.Find("cInstrumentSync", false)[0];
-                        cInstrumentSync.Checked = true;
-                    }
+                    var cInstrument = (ComboBox)cosmeticFormTab.Controls.Find("cInstrument", false)[0];
+                    cInstrument.SelectedValue = _configuration.CosmeticSettings.Instruments[form];
                 }
             }
             cTargettingStyle.Checked = _configuration.CosmeticSettings.EnableHoldZTargeting;
@@ -1581,20 +1499,12 @@ namespace MMR.UI.Forms
                     // TODO unique default tunic colors
                     _configuration.CosmeticSettings.TunicColors[form] = Color.FromArgb(0x1E, 0x69, 0x1B);
                 }
-                if (!_configuration.CosmeticSettings.FreePlayInstruments.ContainsKey(form))
+                if (!_configuration.CosmeticSettings.Instruments.ContainsKey(form))
                 {
-                    var def = form.DefaultFreePlayInstrument();
+                    var def = form.DefaultInstrument();
                     if (def.HasValue)
                     {
-                        _configuration.CosmeticSettings.FreePlayInstruments[form] = def.Value;
-                    }
-                }
-                if (!_configuration.CosmeticSettings.PlaybackInstruments.ContainsKey(form))
-                {
-                    var def = form.DefaultPlaybackInstrument();
-                    if (def.HasValue)
-                    {
-                        _configuration.CosmeticSettings.PlaybackInstruments[form] = def.Value;
+                        _configuration.CosmeticSettings.Instruments[form] = def.Value;
                     }
                 }
             }

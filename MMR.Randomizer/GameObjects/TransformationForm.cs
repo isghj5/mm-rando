@@ -5,18 +5,18 @@ namespace MMR.Randomizer.GameObjects
     public enum TransformationForm
     {
         [Id(0x04)]
-        [DefaultFreePlayInstrument(FreePlayInstrument.Ocarina), DefaultPlaybackInstrument(PlaybackInstrument.Ocarina)]
+        [DefaultInstrument(Instrument.Ocarina)]
         Human,
 
-        [DefaultFreePlayInstrument(FreePlayInstrument.DekuPipes), DefaultPlaybackInstrument(PlaybackInstrument.DekuPipes)]
+        [DefaultInstrument(Instrument.DekuPipes)]
         [Id(0x03)]
         Deku,
 
-        [DefaultFreePlayInstrument(FreePlayInstrument.Drums), DefaultPlaybackInstrument(PlaybackInstrument.Drums)]
+        [DefaultInstrument(Instrument.Drums)]
         [Id(0x01)]
         Goron,
 
-        [DefaultFreePlayInstrument(FreePlayInstrument.Guitar), DefaultPlaybackInstrument(PlaybackInstrument.Guitar)]
+        [DefaultInstrument(Instrument.Guitar)]
         [Id(0x02)]
         Zora,
 

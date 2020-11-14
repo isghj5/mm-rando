@@ -9,14 +9,9 @@ namespace MMR.Randomizer.Extensions
 {
     public static class TransformationFormExtensions
     {
-        public static FreePlayInstrument? DefaultFreePlayInstrument(this TransformationForm form)
+        public static Instrument? DefaultInstrument(this TransformationForm form)
         {
-            return form.GetAttribute<DefaultFreePlayInstrumentAttribute>()?.Default;
-        }
-
-        public static PlaybackInstrument? DefaultPlaybackInstrument(this TransformationForm form)
-        {
-            return form.GetAttribute<DefaultPlaybackInstrumentAttribute>()?.Default;
+            return form.GetAttribute<DefaultInstrumentAttribute>()?.Default;
         }
 
         public static byte Id(this TransformationForm form)
