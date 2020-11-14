@@ -61,6 +61,8 @@ namespace MMR.UI.Forms
             Manual = new ManualForm();
             About = new AboutForm();
             HudConfig = new HudConfigForm();
+            this.KeyPreview = true;
+            this.KeyDown += MainForm_KeyDown_CtrlS;
 
 
             Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion}";
@@ -1561,6 +1563,17 @@ namespace MMR.UI.Forms
                 {
                     SaveSettings(saveSettings.FileName);
                 }
+            }
+        }
+
+        private void MainForm_KeyDown_CtrlS(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.S)
+            {
+                SaveSettings();
+                //this.Text = AssemblyVersion + "    --    Settings Saved: " + DateTime.Now.ToString("hh:mm:ss tt  \"GMT\"zzz"); // with GMT
+                this.Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion}" + "--    Settings Saved: " + DateTime.Now.ToString("hh:mm:ss tt"); // title bar
+                e.Handled = true;
             }
         }
 
