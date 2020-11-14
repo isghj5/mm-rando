@@ -104,6 +104,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cDMult, "Select a damage mode, affecting how much damage Link takes:\n\n - Default: Link takes normal damage.\n - 2x: Link takes double damage.\n - 4x: Link takes quadruple damage.\n - 1-hit KO: Any damage kills Link.\n - Doom: Hardcore mode. Link's hearts are slowly being drained continuously.");
             TooltipBuilder.SetTooltip(cDType, "Select an effect to occur whenever Link is being damaged:\n\n - Default: Vanilla effects occur.\n - Fire: All damage burns Link.\n - Ice: All damage freezes Link.\n - Shock: All damage shocks link.\n - Knockdown: All damage knocks Link down.\n - Random: Any random effect of the above.");
             TooltipBuilder.SetTooltip(cGravity, "Select a movement modifier:\n\n - Default: No movement modifier.\n - High speed: Link moves at a much higher velocity.\n - Super low gravity: Link can jump very high.\n - Low gravity: Link can jump high.\n - High gravity: Link can barely jump.");
+            TooltipBuilder.SetTooltip(cNutAndStickDrops, "Adds Deku nuts and Deku sticks to drop tables in the field:\n\n - Default: No change, vanilla behavior.\n - Light: one stick and nut 1/16 chance termina bush.\n - Medium: More nuts, twice the chance\n - Extra: More sticks, more nuts, more drop locations.\n - Mayhem: You're crazy in the coconut!");
             TooltipBuilder.SetTooltip(cFloors, "Select a floortype for every floor ingame:\n\n - Default: Vanilla floortypes.\n - Sand: Link sinks slowly into every floor, affecting movement speed.\n - Ice: Every floor is slippery.\n - Snow: Similar to sand. \n - Random: Any random floortypes of the above.");
             TooltipBuilder.SetTooltip(cClockSpeed, "Modify the speed of time.");
             TooltipBuilder.SetTooltip(cHideClock, "Clock UI will be hidden.");
@@ -575,6 +576,7 @@ namespace MMR.UI.Forms
             cLink.SelectedIndex = (int)_configuration.GameplaySettings.Character;
             cTatl.SelectedIndex = (int)_configuration.CosmeticSettings.TatlColorSchema;
             cGravity.SelectedIndex = (int)_configuration.GameplaySettings.MovementMode;
+            cNutAndStickDrops.SelectedIndex = (int)_configuration.GameplaySettings.NutandStickDrops;
             cFloors.SelectedIndex = (int)_configuration.GameplaySettings.FloorType;
             cGossipHints.SelectedIndex = (int)_configuration.GameplaySettings.GossipHintStyle;
             cBlastCooldown.SelectedIndex = (int)_configuration.GameplaySettings.BlastMaskCooldown;
@@ -816,6 +818,11 @@ namespace MMR.UI.Forms
         private void cGravity_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.MovementMode = (MovementMode)cGravity.SelectedIndex);
+        }
+
+        private void cNutAndStickDrops_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.NutandStickDrops = (NutAndStickDrops)cNutAndStickDrops.SelectedIndex);
         }
 
         private void cLink_SelectedIndexChanged(object sender, EventArgs e)

@@ -308,6 +308,8 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public FloorType FloorType { get; set; }
 
+        public NutAndStickDrops NutandStickDrops { get; set; }
+
         /// <summary>
         /// Sets the clock speed.
         /// </summary>
