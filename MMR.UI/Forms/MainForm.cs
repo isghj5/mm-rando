@@ -355,7 +355,7 @@ namespace MMR.UI.Forms
 
         private void bgWorker_WorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            if ((_settings.GenerateSpoilerLog || _settings.GenerateHTMLLog) && !_settings.GeneratePatch && !_settings.GenerateROM)
+            if ((_configuration.OutputSettings.GenerateSpoilerLog || _configuration.OutputSettings.GenerateHTMLLog) && !_configuration.OutputSettings.GeneratePatch && !_configuration.OutputSettings.GenerateROM)
             {
                 lStatus.Text = "Log generated! Ready for another seed...";
             }
