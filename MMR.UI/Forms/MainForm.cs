@@ -66,7 +66,7 @@ namespace MMR.UI.Forms
             this.KeyDown += MainForm_KeyDown_CtrlS;
 
 
-            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion}";
+            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Additions";
         }
 
         private void InitializeTooltips()

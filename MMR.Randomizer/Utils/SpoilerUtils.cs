@@ -25,7 +25,7 @@ namespace MMR.Randomizer.Utils
             var plainTextRegex = new Regex("[^a-zA-Z0-9' .\\-]+");
             Spoiler spoiler = new Spoiler()
             {
-                Version = Randomizer.AssemblyVersion,
+                Version = Randomizer.AssemblyVersion + " +Isghj's Beta",
                 SettingsString = settingsString,
                 Seed = randomized.Seed,
                 RandomizeDungeonEntrances = settings.RandomizeDungeonEntrances,
