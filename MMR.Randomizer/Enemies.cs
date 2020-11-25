@@ -191,6 +191,7 @@ namespace MMR.Randomizer
             List<ValueSwap> ObjsUpdate;
             List<List<Enemy>> Updates;
             List<List<Enemy>> Matches;
+            int loopsCount = 0;
             while (true)
             {
                 ObjsUpdate = new List<ValueSwap>();
@@ -246,6 +247,12 @@ namespace MMR.Randomizer
                             {
                                 break;
                             }
+                        }
+
+                        loopsCount += 1;
+                        if (loopsCount >= 1000)
+                        {
+                            throw new Exception(" Enemizer could not resolve enemies for this seed, please try another. ");
                         }
 
                         // temporary fix to some specific scene/enemy issues
