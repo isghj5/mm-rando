@@ -527,12 +527,12 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         PoeLaugh2 = 0x3241, // laugh used by igos or his minions
 
-        [Tags(Short)]
+        /*[Tags(Short)]
         MajoraWrathVengfulWhip = 0x3253,
 
         // too loud to use for lowhpbeep, if we could lower the volume it could work
         [Tags(Short)]
-        MajoraWrathShortGaspPain = 0x3254,
+        MajoraWrathShortGaspPain = 0x3254,*/
 
         //[Tags(Short)]
         //MajoraWrathWhipHit = 0x3255,  // kinda annoying to hear in the world
@@ -546,8 +546,8 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long, LowHpBeep)]
         MajoraWrathStunDamage = 0x3258, // damage that leads to a stun (arrow/beam)
 
-        [Tags(Long)]
-        MajoraWrathTakeDamage = 0x3259, // damage while in stun
+        //[Tags(Long)]
+        //MajoraWrathTakeDamage = 0x3259, // damage while in stun 
 
         [Tags(Long)]
         MajoraWrathDramaticDeath = 0x325A, // when the witch is splashed with water
@@ -894,14 +894,14 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         RomaniYeah = 0x612F,   // romani impressed with link's archery
 
-        [Tags(Short)]
+        /*[Tags(Short)]
         PamelaScream = 0x6130,
 
         [Tags(Long)]
         PamelaFather = 0x6131,
 
         [Tags(Short, LowHpBeep)]
-        PamelaSniffle = 0x6132,
+        PamelaSniffle = 0x6132,*/
 
         [Tags(Short, LowHpBeep)]
         DekuPrincessGasp = 0x6133, // unused I think? kind of a "taken aback" gasp
