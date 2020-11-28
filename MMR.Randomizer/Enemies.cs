@@ -250,9 +250,9 @@ namespace MMR.Randomizer
                         }
 
                         loopsCount += 1;
-                        if (loopsCount >= 1000)
+                        if (loopsCount >= 10000)
                         {
-                            throw new Exception(" Enemizer could not resolve enemies for this seed, please try another. ");
+                            throw new Exception(" Enemizer could not resolve enemies for this seed, please try another. \n Trouble scene: " + scene.File);
                         }
 
                         // temporary fix to some specific scene/enemy issues
@@ -267,7 +267,20 @@ namespace MMR.Randomizer
                             continue;
                         }
                         // if peathat in snowhead, it lags the whole dungeon
-                        if (scene.File == 1241 && ObjsUpdate.Any(u => u.NewV == EnemyList[0x5].Object)) // snowhead but not peahat
+                        if (Old.Actor == (int)GameObjects.Actor.RedBubble && scene.File == 1241 && ObjsUpdate.Any(u => u.NewV == EnemyList[0x5].Object)) // snowhead temple but not peahat in red bubble lava
+                        {
+                            continue;
+                        }
+                        // issue: type respawning and type flying: enemies can be both but enemies.txt can only have one per enemy
+                        // so some enemies like boes and blue bubbles can be bombchus because they are listed as respawn
+                        // but they can also be fly, and chu explodes instantly above ground
+                        // no chus replacing: guay, blue bubble
+                        if ((Old.Actor == (int)GameObjects.Actor.BlueBubble || Old.Actor == (int)GameObjects.Actor.Guay) && ObjsUpdate.Any(u => u.NewV == EnemyList[31].Object))
+                        {
+                            continue;
+                        }
+                        // no boe replacement in path to mountain village or snowhead exterior
+                        if ((scene.File == 1451 || scene.File == 1222) && (Old.Actor == (int)GameObjects.Actor.Bo) && ObjsUpdate.Any(u => u.NewV == EnemyList[31].Object))
                         {
                             continue;
                         }
