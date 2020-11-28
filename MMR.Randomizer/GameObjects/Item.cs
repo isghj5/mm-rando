@@ -1,4 +1,5 @@
 ﻿using MMR.Randomizer.Attributes;
+using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.GameObjects
@@ -918,30 +919,38 @@ namespace MMR.Randomizer.GameObjects
         AreaSouthAccess,
 
         [EntranceName("Woodfall")]
+        [DungeonEntrance(DungeonEntrance.EntranceWoodfallTempleFromWoodfall, DungeonEntrance.EntranceWoodfallFromWoodfallTempleEntrance)]
         AreaWoodFallTempleAccess,
 
+        [DungeonEntrance(DungeonEntrance.EntranceWoodfallTemplePrisonFromOdolwasLair)]
         AreaWoodFallTempleClear,
         AreaNorthAccess,
 
         [EntranceName("Snowhead")]
+        [DungeonEntrance(DungeonEntrance.EntranceSnowheadTempleFromSnowhead, DungeonEntrance.EntranceSnowheadFromSnowheadTemple)]
         AreaSnowheadTempleAccess,
 
+        [DungeonEntrance(DungeonEntrance.EntranceMountainVillageFromSnowheadClear)]
         AreaSnowheadTempleClear,
         OtherEpona,
         AreaWestAccess,
         AreaPiratesFortressAccess,
 
         [EntranceName("Great Bay")]
+        [DungeonEntrance(DungeonEntrance.EntranceGreatBayTempleFromZoraCape, DungeonEntrance.EntranceZoraCapeFromGreatBayTemple)]
         AreaGreatBayTempleAccess,
 
+        [DungeonEntrance(DungeonEntrance.EntranceZoraCapeFromGreatBayTempleClear)]
         AreaGreatBayTempleClear,
         AreaEastAccess,
         AreaIkanaCanyonAccess,
         AreaStoneTowerTempleAccess,
 
         [EntranceName("Inverted Stone Tower")]
+        [DungeonEntrance(DungeonEntrance.EntranceStoneTowerTempleInvertedFromStoneTowerInverted, DungeonEntrance.EntranceStoneTowerInvertedFromStoneTowerTempleInverted)]
         AreaInvertedStoneTowerTempleAccess,
 
+        [DungeonEntrance(DungeonEntrance.EntranceIkanaCanyonFromIkanaClear)]
         AreaStoneTowerClear,
         OtherExplosive,
         OtherArrow,

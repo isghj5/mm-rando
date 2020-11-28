@@ -184,9 +184,6 @@
   <data name="fix_downgrades" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-downgrades;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="fix_dungeons" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>mods\fix-dungeons;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="fix_epona" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-epona;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

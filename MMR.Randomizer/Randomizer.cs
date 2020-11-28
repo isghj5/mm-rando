@@ -103,80 +103,40 @@ namespace MMR.Randomizer
 
         private void EntranceShuffle()
         {
-            var newDCFlags = new int[] { -1, -1, -1, -1 };
-            var newDCMasks = new int[] { -1, -1, -1, -1 };
-            var newEntranceIndices = new int[] { -1, -1, -1, -1 };
-            var newExitIndices = new int[] { -1, -1, -1, -1 };
-
-            for (int i = 0; i < 4; i++)
+            var dungeonEntrances = new List<Item>
             {
-                int n;
-                do
-                {
-                    n = Random.Next(4);
-                } while (newEntranceIndices.Contains(n));
-
-                newEntranceIndices[i] = n;
-                newExitIndices[n] = i;
-            }
-
-            var areaAccessObjects = new ItemObject[] {
-                ItemList[Item.AreaWoodFallTempleAccess],
-                ItemList[Item.AreaSnowheadTempleAccess],
-                ItemList[Item.AreaInvertedStoneTowerTempleAccess],
-                ItemList[Item.AreaGreatBayTempleAccess]
+                Item.AreaWoodFallTempleAccess,
+                Item.AreaSnowheadTempleAccess,
+                Item.AreaGreatBayTempleAccess,
+                Item.AreaInvertedStoneTowerTempleAccess,
             };
 
-            var areaAccessObjectIndexes = new int[] {
-                (int)Item.AreaWoodFallTempleAccess,
-                (int)Item.AreaSnowheadTempleAccess,
-                (int)Item.AreaInvertedStoneTowerTempleAccess,
-                (int)Item.AreaGreatBayTempleAccess
+            var dungeonExits = new List<Item>
+            {
+                Item.AreaWoodFallTempleClear,
+                Item.AreaSnowheadTempleClear,
+                Item.AreaGreatBayTempleClear,
+                Item.AreaStoneTowerClear,
             };
 
-            for (int i = 0; i < 4; i++)
+            var randomized = Enumerable.Range(0, 4).ToList().OrderBy(_ => Random.Next()).ToList();
+
+            for (var i = 0; i < randomized.Count; i++)
             {
-                //Debug.WriteLine($"Entrance {Item.ITEM_NAMES[areaAccessObjectIndexes[newEntranceIndices[i]]]} placed at {Item.ITEM_NAMES[areaAccessObjects[i].ID]}.");
-                areaAccessObjects[i].IsRandomized = true;
-                ItemList[areaAccessObjectIndexes[newEntranceIndices[i]]] = areaAccessObjects[i];
+                var fromIndex = i;
+                var toIndex = randomized[i];
+
+                var entrance = dungeonEntrances[fromIndex];
+                var targetEntrance = dungeonEntrances[toIndex];
+
+                var exit = dungeonExits[toIndex];
+                var targetExit = dungeonExits[fromIndex];
+
+                ItemList[entrance].NewLocation = targetEntrance;
+                ItemList[entrance].IsRandomized = true;
+                ItemList[exit].NewLocation = targetExit;
+                ItemList[exit].IsRandomized = true;
             }
-
-            var areaClearObjects = new ItemObject[] {
-                ItemList[Item.AreaWoodFallTempleClear],
-                ItemList[Item.AreaSnowheadTempleClear],
-                ItemList[Item.AreaStoneTowerClear],
-                ItemList[Item.AreaGreatBayTempleClear]
-            };
-
-            var areaClearObjectIndexes = new int[] {
-                (int)Item.AreaWoodFallTempleClear,
-                (int)Item.AreaSnowheadTempleClear,
-                (int)Item.AreaStoneTowerClear,
-                (int)Item.AreaGreatBayTempleClear
-            };
-
-            for (int i = 0; i < 4; i++)
-            {
-                ItemList[areaClearObjectIndexes[i]] = areaClearObjects[newEntranceIndices[i]];
-            }
-
-            var newEntrances = new int[] { -1, -1, -1, -1 };
-            var newExits = new int[] { -1, -1, -1, -1 };
-
-            for (int i = 0; i < 4; i++)
-            {
-                newEntrances[i] = Values.OldEntrances[newEntranceIndices[i]];
-                newExits[i] = Values.OldExits[newExitIndices[i]];
-                newDCFlags[i] = Values.OldDCFlags[newExitIndices[i]];
-                newDCMasks[i] = Values.OldMaskFlags[newExitIndices[i]];
-            }
-
-            _randomized.NewEntrances = newEntrances;
-            _randomized.NewDestinationIndices = newEntranceIndices;
-            _randomized.NewExits = newExits;
-            _randomized.NewExitIndices = newExitIndices;
-            _randomized.NewDCFlags = newDCFlags;
-            _randomized.NewDCMasks = newDCMasks;
         }
 
         private void UpdateLogicForSettings()

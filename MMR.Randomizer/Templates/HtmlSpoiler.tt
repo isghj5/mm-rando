@@ -60,7 +60,7 @@
 <br/>
 <br/>
 <label><b>Spoiler Log State: </b></label><input id="spoilerLogState" type="text"/><br/>
-<# if (spoiler.RandomizeDungeonEntrances) { 
+<# if (spoiler.DungeonEntrances.Any()) { 
 #>
 <h2>Dungeon Entrance Replacements</h2>
 <table border="1" class="item-replacements">
@@ -69,9 +69,9 @@
 	    <th></th>
 		<th>New Destination</th>
 	</tr>
-<#		 for (int i = 0; i < 4; i++) {
-            var entrance = spoiler.Entrances[i];
-            var destination = spoiler.Entrances[spoiler.NewDestinationIndices[i]];#>
+<#		 foreach (var kvp in spoiler.DungeonEntrances) {
+            var entrance = kvp.Key;
+            var destination = kvp.Value;#>
 	<tr data-id="<#= (int)destination #>" data-newlocationid="<#= (int)destination #>" class="unavailable">
 		<td class="newlocation"><#= entrance.Entrance() #></td>
 	    <td><input type="checkbox"/></td>

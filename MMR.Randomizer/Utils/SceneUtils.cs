@@ -61,9 +61,9 @@ namespace MMR.Randomizer.Utils
 
         public static void GetMaps()
         {
-            for (int i = 0; i < RomData.SceneList.Count; i++)
+            foreach (var scene in RomData.SceneList)
             {
-                int f = RomData.SceneList[i].File;
+                int f = scene.File;
                 RomUtils.CheckCompressed(f);
                 int j = 0;
                 while (true)
@@ -77,7 +77,7 @@ namespace MMR.Randomizer.Utils
                         {
                             Map m = new Map();
                             m.File = RomUtils.AddrToFile((int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, mapsaddr));
-                            RomData.SceneList[i].Maps.Add(m);
+                            scene.Maps.Add(m);
                             mapsaddr += 8;
                         }
                         break;
@@ -87,6 +87,11 @@ namespace MMR.Randomizer.Utils
                         break;
                     }
                     j += 8;
+                }
+                CheckHeaderForExits(f, 0, scene);
+                if (scene.Number == 108) // avoid modifying unused setup in East Clock Town. doesn't seem to actually affect anything in-game, but best not to touch it.
+                {
+                    scene.Setups.RemoveAt(2);
                 }
             }
         }
@@ -248,6 +253,60 @@ namespace MMR.Randomizer.Utils
                         }
                         k += 8;
                     }
+                }
+            }
+        }
+
+        private static void CheckHeaderForExits(int f, int headeraddr, Scene scene)
+        {
+            int j = headeraddr;
+            int setupsaddr = -1;
+            int nextlowest = -1;
+            byte s;
+            var setup = new SceneSetup();
+            scene.Setups.Add(setup);
+            while (true)
+            {
+                byte cmd = RomData.MMFileList[f].Data[j];
+                if (cmd == 0x13)
+                {
+                    setup.ExitListAddress = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                }
+                else if (cmd == 0x17)
+                {
+                    setup.CutsceneListAddress = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                }
+                else if (cmd == 0x18)
+                {
+                    setupsaddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                }
+                else if (cmd == 0x14)
+                {
+                    break;
+                }
+                else
+                {
+                    if (RomData.MMFileList[f].Data[j + 4] == 0x02)
+                    {
+                        int p = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j + 4) & 0xFFFFFF;
+                        if (((p < nextlowest) || (nextlowest == -1)) && ((p > setupsaddr) && (setupsaddr != -1)))
+                        {
+                            nextlowest = p;
+                        }
+                    }
+                }
+                j += 8;
+            }
+            if ((setupsaddr != -1) && nextlowest != -1)
+            {
+                j = setupsaddr;
+                s = RomData.MMFileList[f].Data[j];
+                while (s == 0x02)
+                {
+                    int p = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, j) & 0xFFFFFF;
+                    CheckHeaderForExits(f, p, scene);
+                    j += 4;
+                    s = RomData.MMFileList[f].Data[j];
                 }
             }
         }

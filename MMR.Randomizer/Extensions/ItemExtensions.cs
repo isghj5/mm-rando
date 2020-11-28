@@ -2,6 +2,8 @@
 using MMR.Randomizer.GameObjects;
 using MMR.Common.Extensions;
 using MMR.Randomizer.Models.Rom;
+using MMR.Randomizer.Attributes.Entrance;
+using System.Collections.Generic;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -108,6 +110,22 @@ namespace MMR.Randomizer.Extensions
         public static bool IsFake(this Item item)
         {
             return item.Name() == null;
+        }
+
+        public static IList<DungeonEntrance> DungeonEntrances(this Item item)
+        {
+            if (!item.HasAttribute<DungeonEntranceAttribute>())
+            {
+                return null;
+            }
+            var result = new List<DungeonEntrance>();
+            var attr = item.GetAttribute<DungeonEntranceAttribute>();
+            result.Add(attr.Entrance);
+            if (attr.Pair.HasValue)
+            {
+                result.Add(attr.Pair.Value);
+            }
+            return result;
         }
 
         public static bool IsOverwritable(this Item item)

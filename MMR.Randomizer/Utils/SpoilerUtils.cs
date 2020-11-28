@@ -3,6 +3,7 @@ using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -17,6 +18,22 @@ namespace MMR.Randomizer.Utils
             var itemList = randomized.ItemList
                 .Where(io => !io.Item.IsFake() && io.NewLocation.HasValue)
                 .Select(u => new SpoilerItem(u, ItemUtils.IsRequired(u.Item, randomized), ItemUtils.IsImportant(u.Item, randomized), settings.ProgressiveUpgrades));
+
+            Dictionary<Item, Item> dungeonEntrances = new Dictionary<Item, Item>();
+            if (settings.RandomizeDungeonEntrances)
+            {
+                var entrances = new List<Item>
+                {
+                    Item.AreaWoodFallTempleAccess,
+                    Item.AreaSnowheadTempleAccess,
+                    Item.AreaGreatBayTempleAccess,
+                    Item.AreaInvertedStoneTowerTempleAccess,
+                };
+                foreach (var entrance in entrances.OrderBy(e => entrances.IndexOf(randomized.ItemList[e].NewLocation.Value)))
+                {
+                    dungeonEntrances.Add(randomized.ItemList[entrance].NewLocation.Value, entrance);
+                }
+            }
             var settingsString = settings.ToString();
 
             var directory = Path.GetDirectoryName(outputSettings.OutputROMFilename);
@@ -28,9 +45,8 @@ namespace MMR.Randomizer.Utils
                 Version = Randomizer.AssemblyVersion + " +Isghj's Beta",
                 SettingsString = settingsString,
                 Seed = randomized.Seed,
-                RandomizeDungeonEntrances = settings.RandomizeDungeonEntrances,
+                DungeonEntrances = dungeonEntrances,
                 ItemList = itemList.ToList(),
-                NewDestinationIndices = randomized.NewDestinationIndices,
                 Logic = randomized.Logic,
                 GossipHints = randomized.GossipQuotes?.ToDictionary(me => (GossipQuote) me.Id, (me) =>
                 {
@@ -78,14 +94,13 @@ namespace MMR.Randomizer.Utils
             log.AppendLine($"{"Seed:",-17} {spoiler.Seed}");
             log.AppendLine();
 
-            if (spoiler.RandomizeDungeonEntrances)
+            if (spoiler.DungeonEntrances.Any())
             {
                 log.AppendLine($" {"Entrance",-21}    {"Destination"}");
                 log.AppendLine();
-                string[] destinations = new string[] { "Woodfall", "Snowhead", "Inverted Stone Tower", "Great Bay" };
-                for (int i = 0; i < 4; i++)
+                foreach (var kvp in spoiler.DungeonEntrances)
                 {
-                    log.AppendLine($"{destinations[i],-21} -> {destinations[spoiler.NewDestinationIndices[i]]}");
+                    log.AppendLine($"{kvp.Key.Entrance(),-21} -> {kvp.Value.Entrance()}");
                 }
                 log.AppendLine("");
             }

@@ -21,24 +21,19 @@ namespace MMR.Randomizer.Constants
             { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
         };
 
-        public static readonly ReadOnlyCollection<int> OldEntrances
-            = new ReadOnlyCollection<int>(new int[] {
-            0x3000, 0x3C00, 0x2A00, 0x8C00
-        });
-
-        public static readonly ReadOnlyCollection<int> OldExits
-            = new ReadOnlyCollection<int>(new int[] {
-            0x8610, 0xB210, 0xAC10, 0x6A70
-        });
-
-        public static readonly ReadOnlyCollection<int> OldDCFlags
+        public static readonly ReadOnlyCollection<int> DCFlags
             = new ReadOnlyCollection<int>(new int[] {
                 0x57C, 0x589, 0x59C, 0x59F
         });
 
-        public static readonly ReadOnlyCollection<int> OldMaskFlags
+        public static readonly ReadOnlyCollection<int> DCFlagMasks
             = new ReadOnlyCollection<int>(new int[] {
                 0x02, 0x80, 0x20, 0x80
+        });
+
+        public static readonly ReadOnlyCollection<byte> DCSceneIds
+            = new ReadOnlyCollection<byte>(new byte[] {
+                0x1F, 0x44, 0x36, 0x5F
         });
 
     }
