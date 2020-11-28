@@ -10,6 +10,16 @@
 .org 0x800A7188
     jal     models_draw_heart_piece
 
+; Bio Baba Heart Piece rotation fix.
+; Replaces:
+;   bnez    at, 0x800A68F0
+;   addiu   at, r0, 0x0017
+;   beq     v0, at, 0x800A68F0
+.org 0x800A68B4
+    jal     models_bio_baba_heart_piece_rotation_fix_hook
+    nop
+    bnez    at, 0x800A68F0
+
 ;==================================================================================================
 ; Freestanding Models (Skulltula Token)
 ;==================================================================================================

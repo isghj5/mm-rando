@@ -1,63 +1,19 @@
 #include <stdbool.h>
-#include "extended_objects.h"
 #include "items.h"
 #include "item_override.h"
-#include "linheap.h"
 #include "loaded_models.h"
 #include "misc.h"
 #include "mmr.h"
 #include "models.h"
+#include "objheap.h"
 #include "util.h"
 #include "z2.h"
 
-#define slot_count 12
+#define OBJHEAP_SLOTS (12)
+#define OBJHEAP_SIZE  (0x20000)
 
-static struct linheap g_object_heap = {
-    .start = NULL,
-    .cur = NULL,
-    .size = 0x20000,
-};
-
-struct loaded_object {
-    u16 object_id;
-    u8 *buf;
-};
-
-static struct loaded_object object_slots[slot_count] = { 0 };
-
-static void load_object_file(u32 object_id, u8 *buf) {
-    z2_obj_file_t *entry = extended_objects_get((s16)object_id);
-    u32 vrom_start = entry->vrom_start;
-    u32 size = entry->vrom_end - vrom_start;
-    z2_ReadFile(buf, vrom_start, size);
-}
-
-static void load_object(struct loaded_object *object, u32 object_id) {
-    object->object_id = object_id;
-    load_object_file(object_id, object->buf);
-}
-
-static size_t get_object_size(u32 object_id) {
-    z2_obj_file_t info = *extended_objects_get((s16)object_id);
-    return (size_t)(info.vrom_end - info.vrom_start);
-}
-
-static struct loaded_object* get_object(u32 object_id) {
-    for (int i = 0; i < slot_count; i++) {
-        struct loaded_object *object = &(object_slots[i]);
-        if (object->object_id == object_id) {
-            return object;
-        }
-        if (object->object_id == 0) {
-            size_t objsize = get_object_size(object_id);
-            object->buf = linheap_alloc(&g_object_heap, objsize);
-            load_object(object, object_id);
-            return object;
-        }
-    }
-
-    return NULL;
-}
+struct objheap_item g_objheap_items[OBJHEAP_SLOTS] = { 0 };
+struct objheap g_objheap = { 0 };
 
 static void scale_top_matrix(f32 scale_factor) {
     f32 *matrix = z2_GetMatrixStackTop();
@@ -88,7 +44,7 @@ static void draw_model(struct model model, z2_actor_t *actor, z2_game_t *game, f
         return;
     }
 
-    struct loaded_object *object = get_object(model.object_id);
+    struct objheap_item *object = objheap_allocate(&g_objheap, model.object_id, actor->room);
     if (object) {
         // Update RDRAM segment table with object pointer during the draw function.
         // This is required by Moon's Tear (and possibly others), which programatically resolves a
@@ -573,17 +529,73 @@ void models_after_actor_dtor(z2_actor_t *actor) {
  * Reset object heap pointer and clear all loaded object slots.
  **/
 void models_clear_object_heap(void) {
-    linheap_clear(&g_object_heap);
-    for (size_t i = 0; i < slot_count; i++) {
-        object_slots[i].object_id = 0;
-        object_slots[i].buf = NULL;
-    }
+    objheap_clear(&g_objheap);
 }
 
 /**
  * Initialize object heap.
  **/
 void models_init(void) {
-    void *alloc = heap_alloc(g_object_heap.size);
-    linheap_init(&g_object_heap, alloc);
+    void *alloc = heap_alloc(OBJHEAP_SIZE);
+    objheap_init(&g_objheap, alloc, OBJHEAP_SIZE, g_objheap_items, OBJHEAP_SLOTS);
+}
+
+struct models_state {
+    // Pointer to graphics context, cannot be retrieved from normal pointer during room unload.
+    z2_gfx_t *gfx;
+    // Pointer to poly_opa, used to check if objheap should finish advance.
+    const Gfx *prev_opa;
+};
+
+static struct models_state g_state = { 0 };
+
+/**
+ * Helper function called after preparing game's display buffers for writing (write pointer set to buffer start).
+ * Used to finish advancing objheap when needed.
+ **/
+void models_after_prepare_display_buffers(z2_gfx_t *gfx) {
+    // Apparently gfx pointer cannot be retrieved during room unload, so store in global.
+    if (gfx != NULL) {
+        g_state.gfx = gfx;
+    }
+    // Note: This assumes that when the poly_opa buffer pointer has been reset to start, it has already been flushed
+    // to RDP. While this is very likely, it is not guaranteed.
+    // If alternative Opa buffer has been cleared, both DLists should be rid of pointers to object data in previous room.
+    if (g_state.prev_opa != NULL && gfx->poly_opa.buf != g_state.prev_opa) {
+        objheap_flush_operation(&g_objheap);
+        g_state.prev_opa = NULL;
+    }
+}
+
+/**
+ * Helper function called when unloading previous room, to prepare for finishing advance of objheap in a subsequent frame.
+ **/
+void models_prepare_after_room_unload(z2_game_t *game) {
+    // Note: During frame processing loop, unloads room before drawing actors.
+    // Not sure how to get alternative Opa buffer, so get current and check if non-NULL and non-equal (there are only 2).
+    g_state.prev_opa = g_state.gfx->poly_opa.buf;
+
+    // Determine operation before finish advancing or reverting.
+    // Normally, objects from previously loaded rooms would no longer draw so this isn't an issue, but is required for hack
+    // used to draw actors with 0xFF room, so that the pointer can be safely swapped to data of the relevant room.
+    s8 cur_room = (s8)game->room_ctxt.rooms[0].idx;
+    objheap_handle_room_unload(&g_objheap, cur_room);
+}
+
+/**
+ * Helper function called when loading next room, to prepare objheap for advancing.
+ **/
+void models_prepare_before_room_load(z2_room_ctxt_t *room_ctxt, s8 room_index) {
+    if ((s8)room_ctxt->rooms[0].idx == -1) {
+        // If loading first room in scene, remember room index.
+        objheap_init_room(&g_objheap, room_index);
+    } else {
+        // Safeguard: If previous Opa DList pointer is non-NULL, still waiting to flush advance or revert operation.
+        // If attempting to prepare advance before this has happened, prevent flushing advance or revert operations.
+        if (g_state.prev_opa) {
+            g_state.prev_opa = NULL;
+        }
+        // If not loading first room in scene, prepare objheap for advance.
+        objheap_prepare_advance(&g_objheap, room_index);
+    }
 }

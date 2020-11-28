@@ -31,7 +31,3 @@ player_should_ice_void_zora_hook:
 @@not_zora:
     jr      ra
     nop
-
-player_handle_linear_velocity_hook:
-    j       player_handle_linear_velocity
-    or      a0, s0, r0

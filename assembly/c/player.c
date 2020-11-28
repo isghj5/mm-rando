@@ -1,5 +1,4 @@
 #include <stdbool.h>
-#include "misc.h"
 #include "z2.h"
 
 bool player_can_receive_item(z2_game_t *game) {
@@ -45,11 +44,5 @@ bool player_should_ice_void_zora(z2_link_t *link, z2_game_t *game) {
             return false;
         default:
             return true;
-    }
-}
-
-void player_handle_linear_velocity(z2_link_t *link, f32 a1, f32 a2, f32 a3) {
-    if (!MISC_CONFIG.continuous_deku_hop || link->deku_hop_counter == 5) {
-        z2_HandleLinearVelocity(&(link->linear_velocity), a1, a2, a3);
     }
 }

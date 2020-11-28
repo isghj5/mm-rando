@@ -197,6 +197,10 @@ bool misc_crit_wiggle_check(z2_camera_t *camera, s16 health) {
     }
 }
 
+bool misc_get_vanilla_layout(void) {
+    return MISC_CONFIG.vanilla_layout;
+}
+
 void misc_init(void) {
     if (MISC_CONFIG.vanilla_layout) {
         // Mod files with code required for freestanding models are not included if using vanilla layout.

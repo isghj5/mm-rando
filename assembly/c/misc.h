@@ -82,6 +82,7 @@ struct misc_config {
 
 extern struct misc_config MISC_CONFIG;
 
+bool misc_get_vanilla_layout(void);
 bool misc_can_use_ocarina_underwater(void);
 struct misc_config* misc_get_config(void);
 f32 misc_get_push_block_speed(z2_actor_t *actor, z2_game_t *game);

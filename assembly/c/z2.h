@@ -2,6 +2,7 @@
 #define Z2_H
 
 #include <n64.h>
+#include <stdbool.h>
 #include "types.h"
 
 #define Z2_SCREEN_WIDTH      320
@@ -2372,7 +2373,28 @@ typedef struct {
 #define z2_WriteHeartColors_addr         0x8010069C
 #define z2_RemoveItem_addr               0x801149A0
 #define z2_ToggleSfxDampen_addr          0x8019C300
-#define z2_HandleLinearVelocity_addr     0x800FF2F8 // just guessing the name
+#define z2_HandleInputVelocity_addr      0x800FF2F8
+#define z2_SetGetItemLongrange_addr      0x800B8BD0
+
+/* Scene Flags */
+#define z2_get_generic_flag_addr         0x800B5BB0
+#define z2_set_generic_flag_addr         0x800B5BF4
+#define z2_remove_generic_flag_addr      0x800B5C34
+#define z2_get_chest_flag_addr           0x800B5C78
+#define z2_set_chest_flag_addr           0x800B5C90
+#define z2_set_all_chest_flags_addr      0x800B5CAC
+#define z2_get_all_chest_flags_addr      0x800B5CB8
+#define z2_get_clear_flag_addr           0x800B5CC4
+#define z2_set_clear_flag_addr           0x800B5CDC
+#define z2_remove_clear_flag_addr        0x800B5CF8
+#define z2_get_temp_clear_flag_addr      0x800B5D18
+#define z2_set_temp_clear_flag_addr      0x800B5D30
+#define z2_remove_temp_clear_flag_addr   0x800B5D4C
+#define z2_get_collectible_flag_addr     0x800B5D6C
+#define z2_set_collectibe_flag_addr      0x800B5DB0
+#define z2_load_scene_flags_addr         0x800B9170
+#define z2_check_scene_pairs_addr        0x80169CBC
+#define z2_store_scene_flags_addr        0x80169D40
 
 /* Function Addresses (Actors) */
 #define z2_ActorDtor_addr                0x800B6948
@@ -2474,7 +2496,29 @@ typedef void (*z2_UseItem_proc)(z2_game_t *game, z2_link_t *link, u8 item);
 typedef void (*z2_WriteHeartColors_proc)(z2_game_t *game);
 typedef void (*z2_RemoveItem_proc)(u32 item, u8 slot);
 typedef void (*z2_ToggleSfxDampen_proc)(int enable);
-typedef void (*z2_HandleLinearVelocity_proc)(f32 *linear_velocity, f32 a1, f32 a2, f32 a3); // unknown variables
+typedef void (*z2_HandleInputVelocity_proc)(f32 *linear_velocity, f32 input_velocity, f32 increaseBy, f32 decreaseBy);
+typedef bool (*z2_SetGetItemLongrange_proc)(z2_actor_t *actor, z2_game_t *game, u16 gi_index);
+
+/* Function Prototypes (Scene Flags) */
+// TODO parameters
+typedef void (*z2_get_generic_flag_proc)();
+typedef void (*z2_set_generic_flag_proc)();
+typedef void (*z2_remove_generic_flag_proc)(z2_game_t *game, s8 flag);
+typedef void (*z2_get_chest_flag_proc)();
+typedef void (*z2_set_chest_flag_proc)();
+typedef void (*z2_set_all_chest_flags_proc)();
+typedef void (*z2_get_all_chest_flags_proc)();
+typedef void (*z2_get_clear_flag_proc)();
+typedef void (*z2_set_clear_flag_proc)();
+typedef void (*z2_remove_clear_flag_proc)();
+typedef void (*z2_get_temp_clear_flag_proc)();
+typedef void (*z2_set_temp_clear_flag_proc)();
+typedef void (*z2_remove_temp_clear_flag_proc)();
+typedef void (*z2_get_collectible_flag_proc)();
+typedef void (*z2_set_collectibe_flag_proc)();
+typedef void (*z2_load_scene_flags_proc)();
+typedef void (*z2_check_scene_pairs_proc)();
+typedef void (*z2_store_scene_flags_proc)();
 
 /* Function Prototypes (Actors) */
 typedef void (*z2_ActorProc_proc)(z2_actor_t *actor, z2_game_t *game);
@@ -2562,7 +2606,28 @@ typedef void (*z2_UnloadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt);
 #define z2_WriteHeartColors              ((z2_WriteHeartColors_proc)      z2_WriteHeartColors_addr)
 #define z2_RemoveItem                    ((z2_RemoveItem_proc)            z2_RemoveItem_addr)
 #define z2_ToggleSfxDampen               ((z2_ToggleSfxDampen_proc)       z2_ToggleSfxDampen_addr)
-#define z2_HandleLinearVelocity          ((z2_HandleLinearVelocity_proc)  z2_HandleLinearVelocity_addr)
+#define z2_HandleInputVelocity           ((z2_HandleInputVelocity_proc)   z2_HandleInputVelocity_addr)
+#define z2_SetGetItemLongrange           ((z2_SetGetItemLongrange_proc)   z2_SetGetItemLongrange_addr)
+
+/* Functions (Scene Flags) */
+#define z2_get_generic_flag ((z2_get_generic_flag_proc) z2_get_generic_flag_addr)
+#define z2_set_generic_flag ((z2_set_generic_flag_proc) z2_set_generic_flag_addr)
+#define z2_remove_generic_flag ((z2_remove_generic_flag_proc) z2_remove_generic_flag_addr)
+#define z2_get_chest_flag ((z2_get_chest_flag_proc) z2_get_chest_flag_addr)
+#define z2_set_chest_flag ((z2_set_chest_flag_proc) z2_set_chest_flag_addr)
+#define z2_set_all_chest_flags ((z2_set_all_chest_flags_proc) z2_set_all_chest_flags_addr)
+#define z2_get_all_chest_flags ((z2_get_all_chest_flags_proc) z2_get_all_chest_flags_addr)
+#define z2_get_clear_flag ((z2_get_clear_flag_proc) z2_get_clear_flag_addr)
+#define z2_set_clear_flag ((z2_set_clear_flag_proc) z2_set_clear_flag_addr)
+#define z2_remove_clear_flag ((z2_remove_clear_flag_proc) z2_remove_clear_flag_addr)
+#define z2_get_temp_clear_flag ((z2_get_temp_clear_flag_proc) z2_get_temp_clear_flag_addr)
+#define z2_set_temp_clear_flag ((z2_set_temp_clear_flag_proc) z2_set_temp_clear_flag_addr)
+#define z2_remove_temp_clear_flag ((z2_remove_temp_clear_flag_proc) z2_remove_temp_clear_flag_addr)
+#define z2_get_collectible_flag ((z2_get_collectible_flag_proc) z2_get_collectible_flag_addr)
+#define z2_set_collectibe_flag ((z2_set_collectibe_flag_proc) z2_set_collectibe_flag_addr)
+#define z2_load_scene_flags ((z2_load_scene_flags_proc) z2_load_scene_flags_addr)
+#define z2_check_scene_pairs ((z2_check_scene_pairs_proc) z2_check_scene_pairs_addr)
+#define z2_store_scene_flags ((z2_store_scene_flags_proc) z2_store_scene_flags_addr)
 
 /* Functions (Actors) */
 #define z2_ActorDtor                     ((z2_ActorProc_proc)             z2_ActorDtor_addr)

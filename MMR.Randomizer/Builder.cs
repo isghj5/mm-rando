@@ -1056,6 +1056,11 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Resources.mods.death_moon_crash);
             }
+
+            if (_randomized.Settings.ContinuousDekuHopping)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.fast_deku_hops);
+            }
         }
 
         private void WriteSunsSong()
@@ -1253,6 +1258,8 @@ namespace MMR.Randomizer
             {
                 itemList.AddRange(_randomized.Settings.CustomStartingItemList);
             }
+
+            itemList = itemList.Distinct().ToList();
 
             itemList.Add(Item.StartingHeartContainer1);
             while (itemList.Count(item => item.Name() == "Piece of Heart") >= 4)

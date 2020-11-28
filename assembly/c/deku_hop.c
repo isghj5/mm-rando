@@ -15,7 +15,7 @@ void deku_hop_handle(z2_link_t *link, z2_game_t *game) {
         return;
     }
 
-    if (link->deku_hop_counter < 4 && link->deku_hop_counter > 0 && link->deku_hop_counter != g_deku_hop_state.last_hop) {
+    if (link->deku_hop_counter < 5 && link->deku_hop_counter > 0 && link->deku_hop_counter != g_deku_hop_state.last_hop) {
         if (game->common.input[0].pad_pressed.a) {
             game->common.input[0].pad_pressed.a = 0;
             link->deku_hop_counter++;

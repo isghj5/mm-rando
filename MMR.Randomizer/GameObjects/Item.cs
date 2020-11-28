@@ -902,7 +902,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a fallen king", "a battle in darkness"), GossipItemHint("empty shells", "skin shedding")]
         [ShopText("It's a mystical song that allows you to shed a shell shaped in your current image.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
-        [GetItemIndex(0x76)]
+        [GetItemIndex(0x1CB)] // 0x76 is a special value used for ice traps in chests
         SongElegy,
 
         [Visible]

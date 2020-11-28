@@ -38,3 +38,11 @@ void before_player_actor_update(z2_link_t *link, z2_game_t *game) {
 bool before_damage_process(z2_link_t *link, z2_game_t *game) {
     return icetrap_give(link, game);
 }
+
+/**
+ * Hook function called after preparing display buffers for writing during current frame.
+ **/
+void game_after_prepare_display_buffers(z2_gfx_t *gfx) {
+    // Check if models objheap should finish advancing.
+    models_after_prepare_display_buffers(gfx);
+}
