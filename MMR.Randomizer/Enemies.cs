@@ -266,6 +266,11 @@ namespace MMR.Randomizer
                         {
                             continue;
                         }
+                        // if dinofos replaces iron knuckle, it crashes (or at least crashed for me)
+                        if (scene.File == 1137 && ObjsUpdate.Any(u => u.NewV == EnemyList[26].Object)) // no chuchu in cleared swamp
+                        {
+                            continue;
+                        }
                         // if peathat in snowhead, it lags the whole dungeon
                         if (Old.Actor == (int)GameObjects.Actor.RedBubble && scene.File == 1241 && ObjsUpdate.Any(u => u.NewV == EnemyList[0x5].Object)) // snowhead temple but not peahat in red bubble lava
                         {
