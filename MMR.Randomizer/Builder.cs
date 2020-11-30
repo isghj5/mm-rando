@@ -1257,11 +1257,11 @@ namespace MMR.Randomizer
         {
         }
 
-        private void WriteEnemies()
+        private void WriteEnemies(OutputSettings outputSettings)
         {
             if (_randomized.Settings.RandomizeEnemies)
             {
-                Enemies.ShuffleEnemies(new Random(_randomized.Seed));
+                Enemies.ShuffleEnemies(outputSettings, new Random(_randomized.Seed));
             }
         }
 
@@ -2709,7 +2709,7 @@ namespace MMR.Randomizer
                 WriteSpeedUps();
 
                 progressReporter.ReportProgress(66, "Writing enemies...");
-                WriteEnemies();
+                WriteEnemies(outputSettings);
 
                 // if shop should match given items
                 {

@@ -1,10 +1,15 @@
 ﻿using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes.Actor;
+using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Rom;
+using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace MMR.Randomizer
 {
@@ -156,8 +161,17 @@ namespace MMR.Randomizer
             return Pool;
         }
 
-        public static void SwapSceneEnemies(Scene scene, Random rng)
+        public static void SwapSceneEnemies(OutputSettings settings, Scene scene, Random rng)
         {
+            StringBuilder log = new StringBuilder();
+            void WriteOutput(string str)
+            {
+                Debug.WriteLine(str);
+                log.AppendLine(str);
+            }
+
+            WriteOutput("For Scene: [" + ((GameObjects.Scene) scene.Number).ToString()  + "] with fid: " + scene.File);
+
             List<int> Actors = GetSceneEnemyActors(scene);
             if (Actors.Count == 0)
             {
@@ -299,10 +313,7 @@ namespace MMR.Randomizer
                         Actors.RemoveAt(j);
 
                         // print what enemy was and now is as debug for a scene
-                        if (scene.File == 1137) // 1137 = cleared swamp
-                        {
-                            Debug.WriteLine("Old Enemy actor:[" + Old.Actor + "] was replaced by new enemy: [" + NewActor.NewV.ToString() + "]");
-                        }
+                        WriteOutput("Old Enemy actor:[" + Old.Actor + "] was replaced by new enemy: [" + NewActor.NewV.ToString() + "]");
 
                     }
                     else
@@ -314,9 +325,15 @@ namespace MMR.Randomizer
             SetSceneEnemyActors(scene, ActorsUpdate);
             SetSceneEnemyObjects(scene, ObjsUpdate);
             SceneUtils.UpdateScene(scene);
+            using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename +  "_EnemizerLog.txt", append: true))
+            {
+                sw.WriteLine(""); // spacer
+                sw.Write(log);
+            }
+
         }
 
-        public static void ShuffleEnemies(Random random)
+        public static void ShuffleEnemies(OutputSettings settings,Random random)
         {
             int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69 };
             ReadEnemyList();
@@ -328,7 +345,7 @@ namespace MMR.Randomizer
             {
                 if (!SceneSkip.Contains(RomData.SceneList[i].Number))
                 {
-                    SwapSceneEnemies(RomData.SceneList[i], random);
+                    SwapSceneEnemies(settings, RomData.SceneList[i], random);
                 }
             }
         }
