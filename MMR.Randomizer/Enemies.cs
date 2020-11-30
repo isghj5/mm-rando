@@ -297,6 +297,13 @@ namespace MMR.Randomizer
                         NewVar.NewV = SubMatches[l].Variables[rng.Next(SubMatches[l].Variables.Count)];
                         ActorsUpdate.Add(new ValueSwap[] { NewActor, NewVar });
                         Actors.RemoveAt(j);
+
+                        // print what enemy was and now is as debug for a scene
+                        if (scene.File == 1137) // 1137 = cleared swamp
+                        {
+                            Debug.WriteLine("Old Enemy actor:[" + Old.Actor + "] was replaced by new enemy: [" + NewActor.NewV.ToString() + "]");
+                        }
+
                     }
                     else
                     {
