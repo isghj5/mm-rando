@@ -17,14 +17,18 @@ namespace MMR.Randomizer
     {
         public class ValueSwap
         {
+            // these are indexes of objects
+            // but also used for actor variable values, ergo any int values that need to be swapped
             public int OldV;
             public int NewV;
         }
-
+         
         private static List<Enemy> EnemyList { get; set; }
 
         public static void ReadEnemyList()
         {
+            /// read enemies.txt enemies description file
+            /// todo: delete this after we move all of enemies.txt to enemies.cs enum
             EnemyList = new List<Enemy>();
             string[] lines = Properties.Resources.ENEMIES.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             int i = 0;
@@ -62,17 +66,18 @@ namespace MMR.Randomizer
         public static List<int> GetSceneEnemyActors(Scene scene)
         {
             List<int> ActorList = new List<int>();
-            for (int i = 0; i < scene.Maps.Count; i++)
+            foreach (var sceneMap in scene.Maps)
             {
-                for (int j = 0; j < scene.Maps[i].Actors.Count; j++)
+                //for (int j = 0; j < scene.Maps[i].Actors.Count; j++)
+                foreach (var mapActor in sceneMap.Actors)
                 {
-                    int k = EnemyList.FindIndex(u => u.Actor == scene.Maps[i].Actors[j].n);
-                    if (k != -1)
+                    // check if this actor should be scene excluded from this scene (not replaced)
+                    //   if not, add
+                    //int k = EnemyList.FindIndex(u => u.Actor == mapActor.n);
+                    var matchingEnemy = EnemyList.Find(u => u.Actor == mapActor.n);
+                    if (matchingEnemy != null && ! matchingEnemy.SceneExclude.Contains(scene.Number))
                     {
-                        if (!EnemyList[k].SceneExclude.Contains(scene.Number))
-                        {
-                            ActorList.Add(EnemyList[k].Actor);
-                        }
+                        ActorList.Add(matchingEnemy.Actor);
                     }
                 }
             }
@@ -82,20 +87,16 @@ namespace MMR.Randomizer
         public static List<int> GetSceneEnemyObjects(Scene scene)
         {
             List<int> ObjList = new List<int>();
-            for (int i = 0; i < scene.Maps.Count; i++)
+            foreach (var sceneMap in scene.Maps)
             {
-                for (int j = 0; j < scene.Maps[i].Objects.Count; j++)
+                foreach (var mapObject in sceneMap.Objects)
                 {
-                    int k = EnemyList.FindIndex(u => u.Object == scene.Maps[i].Objects[j]);
-                    if (k != -1)
+                    var matchingEnemy = EnemyList.Find(u => u.Object == mapObject);
+                    if (   matchingEnemy != null                              // exists in the list
+                       && !ObjList.Contains(matchingEnemy.Object)             // already extracted from this scene
+                       && !matchingEnemy.SceneExclude.Contains(scene.Number)) // not excluded from being extracted from this scene
                     {
-                        if (!ObjList.Contains(EnemyList[k].Object))
-                        {
-                            if (!EnemyList[k].SceneExclude.Contains(scene.Number))
-                            {
-                                ObjList.Add(EnemyList[k].Object);
-                            }
-                        }
+                        ObjList.Add(matchingEnemy.Object);
                     }
                 }
             }
@@ -104,65 +105,106 @@ namespace MMR.Randomizer
 
         public static void SetSceneEnemyActors(Scene scene, List<ValueSwap[]> A)
         {
-            for (int i = 0; i < scene.Maps.Count; i++)
+            foreach (var sceneMap in scene.Maps)
             {
-                for (int j = 0; j < scene.Maps[i].Actors.Count; j++)
+                foreach (var mapActor in sceneMap.Actors)
                 {
-                    int k = A.FindIndex(u => u[0].OldV == scene.Maps[i].Actors[j].n);
-                    if (k != -1)
+                    var valueSwapActor = A.Find(u => u[0].OldV == mapActor.n);
+                    if (valueSwapActor != null)
                     {
-                        scene.Maps[i].Actors[j].n = A[k][0].NewV;
-                        scene.Maps[i].Actors[j].v = A[k][1].NewV;
-                        A.RemoveAt(k);
+                        // todo: rewrite n and v, since I have no idea what those are or why they are exactly teh same
+                        mapActor.n = valueSwapActor[0].NewV;
+                        mapActor.v = valueSwapActor[1].NewV;
+                        A.Remove(valueSwapActor);
                     }
                 }
             }
         }
 
-        public static void SetSceneEnemyObjects(Scene scene, List<ValueSwap> O)
+        public static void SetSceneEnemyObjects(Scene scene, List<ValueSwap> newObjects)
         {
-            for (int i = 0; i < scene.Maps.Count; i++)
+            foreach (var sceneMap in scene.Maps)
             {
-                for (int j = 0; j < scene.Maps[i].Objects.Count; j++)
+                for (int sceneObjIndex = 0; sceneObjIndex < sceneMap.Objects.Count; sceneObjIndex++)
                 {
-                    int k = O.FindIndex(u => u.OldV == scene.Maps[i].Objects[j]);
-                    if (k != -1)
+                    var valueSwapObject = newObjects.Find(u => u.OldV == sceneMap.Objects[sceneObjIndex]);
+                    if (valueSwapObject != null)
                     {
-                        scene.Maps[i].Objects[j] = O[k].NewV;
+                        sceneMap.Objects[sceneObjIndex] = valueSwapObject.NewV;
                     }
                 }
             }
         }
 
-        public static List<Enemy> GetMatchPool(List<Enemy> Actors, Random R)
+        public static List<Enemy> GetMatchPool(List<Enemy> oldActors, Random random, Scene scene)
         {
-            List<Enemy> Pool = new List<Enemy>();
-            for (int i = 0; i < Actors.Count; i++)
+            List<Enemy> enemyMatchesPool = new List<Enemy>();
+            foreach (var oldEnemy in oldActors)
             {
-                Enemy E = EnemyList.Find(u => u.Actor == Actors[i].Actor);
-                for (int j = 0; j < EnemyList.Count; j++)
+                // unknown why we do this, I have to assume that we want an enemy type 
+                //  without the objects and variables for some reason
+                var enemyMatch = EnemyList.Find(u => u.Actor == oldEnemy.Actor);
+                foreach (var enemy in EnemyList)
                 {
-                    if ((EnemyList[j].Type == E.Type) && (EnemyList[j].Stationary == E.Stationary))
+
+                    // desbrekos, the giant skelefish swarm will lag southern swamp horribly
+                    if (scene.File == 1358 && enemy == EnemyList[27]) // southern swamp and desbrekos
                     {
-                        if (!Pool.Contains(EnemyList[j]))
-                        {
-                            Pool.Add(EnemyList[j]);
-                        }
+                        continue;
                     }
-                    else if ((EnemyList[j].Type == E.Type) && (R.Next(5) == 0))
+                    // if dinofos replaces iron knuckle, it crashes (or at least crashed for me)
+                    if (scene.File == 1145 && enemy == EnemyList[06]) // graveyard but not dinofos
                     {
-                        if (!Pool.Contains(EnemyList[j]))
-                        {
-                            Pool.Add(EnemyList[j]);
-                        }
+                        continue;
+                    }
+                    // if dinofos replaces iron knuckle, it crashes (or at least crashed for me)
+                    if (scene.File == 1137 && enemy == EnemyList[26]) // no chuchu in cleared swamp
+                    {
+                        continue;
+                    }
+                    // if peathat in snowhead, it lags the whole dungeon
+                    if (oldEnemy.Actor == (int)GameObjects.Actor.RedBubble && scene.File == 1241 && enemy == EnemyList[05]) // snowhead temple but not peahat in red bubble lava
+                    {
+                        continue;
+                    }
+                    // issue: type respawning and type flying: enemies can be both but enemies.txt can only have one per enemy
+                    // so some enemies like boes and blue bubbles can be bombchus because they are listed as respawn
+                    // but they can also be fly, and chu explodes instantly above ground
+                    // no chus replacing: guay, blue bubble
+                    if ((oldEnemy.Actor == (int)GameObjects.Actor.BlueBubble || oldEnemy.Actor == (int)GameObjects.Actor.Guay) && enemy == EnemyList[31])
+                    {
+                        continue;
+                    }
+                    // no boe replacement in path to mountain village or snowhead exterior
+                    if ((scene.File == 1451 || scene.File == 1222) && (oldEnemy.Actor == (int)GameObjects.Actor.Bo) && enemy == EnemyList[31])
+                    {
+                        continue;
+                    }
+
+                    // TODO here would be a great place to test if the requirements to kill an enemy are met with given items
+
+                    if ((enemy.Type == enemyMatch.Type) 
+                        && (enemy.Stationary == enemyMatch.Stationary)
+                        && ! enemyMatchesPool.Contains(enemy))
+                    {
+                        enemyMatchesPool.Add(enemy);
+                    }
+
+                    // huh? 1/6 chance of enemies that are the same type but not stationary, if they aren't already used?
+                    else if ((enemy.Type == enemyMatch.Type) 
+                          && (random.Next(5) == 0) 
+                          && ! enemyMatchesPool.Contains(enemy))
+                    {
+                        enemyMatchesPool.Add(enemy);
                     }
                 }
             }
-            return Pool;
+            return enemyMatchesPool;
         }
 
         public static void SwapSceneEnemies(OutputSettings settings, Scene scene, Random rng)
         {
+            // spoiler log already written by this point, if you want a log make a new one
             StringBuilder log = new StringBuilder();
             void WriteOutput(string str)
             {
@@ -172,59 +214,54 @@ namespace MMR.Randomizer
 
             WriteOutput("For Scene: [" + ((GameObjects.Scene) scene.Number).ToString()  + "] with fid: " + scene.File);
 
-            List<int> Actors = GetSceneEnemyActors(scene);
-            if (Actors.Count == 0)
+            List<int> sceneActors = GetSceneEnemyActors(scene);
+            List<int> sceneObjects = GetSceneEnemyObjects(scene);
+            if (sceneActors.Count == 0 || sceneObjects.Count == 0)
             {
                 return;
             }
-            List<int> Objects = GetSceneEnemyObjects(scene);
-            if (Objects.Count == 0)
+
+            // if actor doesn't exist but object does, probably spawned by something else, remove from actors to randomize
+            foreach (int obj in sceneObjects.ToList())
             {
-                return;
-            }
-            // if actor doesn't exist but object does, probably spawned by something else
-            List<int> ObjRemove = new List<int>();
-            foreach (int o in Objects)
-            {
-                List<Enemy> ObjectMatch = EnemyList.FindAll(u => u.Object == o);
-                bool exists = false;
-                for (int i = 0; i < ObjectMatch.Count; i++)
+                //List<Enemy> ObjectMatch = EnemyList.FindAll(u => u.Object == obj);bool exists = false;foreach (var enemy in ObjectMatch){exists |= sceneActors.Contains(enemy.Actor);};if (!exists)
+                if ( ! (EnemyList.FindAll(u => u.Object == obj)).Any( u => sceneActors.Contains(u.Actor)))
                 {
-                    exists |= Actors.Contains(ObjectMatch[i].Actor);
-                }
-                if (!exists)
-                {
-                    ObjRemove.Add(o); ;
+                    sceneObjects.Remove(obj);
                 }
             }
-            foreach (int o in ObjRemove)
-            {
-                Objects.Remove(o);
-            }
-            List<ValueSwap[]> ActorsUpdate = new List<ValueSwap[]>();
-            List<ValueSwap> ObjsUpdate;
-            List<List<Enemy>> Updates;
-            List<List<Enemy>> Matches;
+
+            List<ValueSwap[]> chosenReplacementActors = new List<ValueSwap[]>();
+            List<ValueSwap>   chosenReplacementObjects;
+            List<List<Enemy>> originalEnemies;
+            List<List<Enemy>> matchingCandidates;
+
+            // attempt random enemy combos until a combo that fits in the old slot is chosen
             int loopsCount = 0;
             while (true)
             {
-                ObjsUpdate = new List<ValueSwap>();
-                Updates = new List<List<Enemy>>();
-                Matches = new List<List<Enemy>>();
+                /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
+                chosenReplacementObjects = new List<ValueSwap>();
+                originalEnemies = new List<List<Enemy>>();
+                matchingCandidates  = new List<List<Enemy>>();
                 int oldsize = 0;
                 int newsize = 0;
-                for (int i = 0; i < Objects.Count; i++)
+                for (int i = 0; i < sceneObjects.Count; i++)
                 {
-                    Updates.Add(EnemyList.FindAll(u => ((u.Object == Objects[i]) && (Actors.Contains(u.Actor)))));
-                    Matches.Add(GetMatchPool(Updates[i], rng));
-                    int k = rng.Next(Matches[i].Count);
-                    int newobj = Matches[i][k].Object;
-                    newsize += Matches[i][k].ObjectSize;
-                    oldsize += Updates[i][0].ObjectSize;
+                    // get a list of all enemies from enemylist that have the same OBJECT as our object that have an actor we also have
+                    originalEnemies.Add(EnemyList.FindAll(u => ((u.Object == sceneObjects[i]) && (sceneActors.Contains(u.Actor)))));
+                    // get a list of matching actors that can fit in the place of the previous actor
+                    matchingCandidates.Add(GetMatchPool(originalEnemies[i], rng, scene));
+                    // get random enemy from the possible random enemy matches
+                    Enemy randomEnemmy = matchingCandidates[i][rng.Next(matchingCandidates[i].Count)];
+                    // keep track of sizes between this new enemy combo and what used to be in this scene
+                    newsize += randomEnemmy.ObjectSize;
+                    oldsize += originalEnemies[i][0].ObjectSize; // is this right? always i/0?
+                    // add random enemy to list
                     ValueSwap NewObject = new ValueSwap();
-                    NewObject.OldV = Objects[i];
-                    NewObject.NewV = newobj;
-                    ObjsUpdate.Add(NewObject);
+                    NewObject.OldV = sceneObjects[i];
+                    NewObject.NewV = randomEnemmy.Object;
+                    chosenReplacementObjects.Add(NewObject);
                 }
                 if (newsize <= oldsize)
                 {
@@ -232,89 +269,60 @@ namespace MMR.Randomizer
                     //not really accurate but *should* work for now to prevent crashing
                     break;
                 }
-            }
-            for (int i = 0; i < ObjsUpdate.Count; i++)
-            {
-                int j = 0;
-                while (j != Actors.Count)
+                loopsCount += 1;
+                if (loopsCount >= 10000)
                 {
-                    Enemy Old = Updates[i].Find(u => u.Actor == Actors[j]);
-                    if (Old != null)
+                    throw new Exception(" No enemy combo could be found to fill this scene: " + scene.File);
+                }
+            }
+
+            loopsCount = 0;
+            for (int i = 0; i < chosenReplacementObjects.Count; i++)
+            {
+                // why does J only increase when the actor is NOT modified...?
+                int j = 0;
+                while (j != sceneActors.Count)
+                {
+                    Enemy oldEnemy = originalEnemies[i].Find(u => u.Actor == sceneActors[j]);
+                    if (oldEnemy != null)
                     {
-                        List<Enemy> SubMatches = Matches[i].FindAll(u => u.Object == ObjsUpdate[i].NewV);
-                        int l;
+                        loopsCount += 1;
+                        if (loopsCount >= 10000) // inf loop check
+                        {
+                            throw new Exception(" No enemy combo could be found to fill this scene: " + scene.File);
+                        }
+
+                        List<Enemy> subMatches = matchingCandidates[i].FindAll(u => u.Object == chosenReplacementObjects[i].NewV);
+
+                        // why must everything be bogo sort?
+                        // why not randomize the list and then pick a random start and sequentially traverse
+                        int randomSubmatch;
                         while (true)
                         {
-                            l = rng.Next(SubMatches.Count);
-                            if ((Old.Type == SubMatches[l].Type) && (Old.Stationary == SubMatches[l].Stationary))
-                            {
-                                break;
-                            }
-                            else
-                            {
-                                if ((Old.Type == SubMatches[l].Type) && (rng.Next(5) == 0))
-                                {
-                                    break;
-                                }
-                            }
-                            if (SubMatches.FindIndex(u => u.Type == Old.Type) == -1)
+                            /// looking for a list of objects for the actors we chose that fit the actor types
+                            // why do we settle on a match if we can't find a type match with their old type?
+                            randomSubmatch = rng.Next(subMatches.Count);
+                            if ( (oldEnemy.Type == subMatches[randomSubmatch].Type && oldEnemy.Stationary == subMatches[randomSubmatch].Stationary)
+                              || (oldEnemy.Type == subMatches[randomSubmatch].Type && rng.Next(5) == 0)
+                              || (subMatches.FindIndex(u => u.Type == oldEnemy.Type) == -1))
                             {
                                 break;
                             }
                         }
 
-                        loopsCount += 1;
-                        if (loopsCount >= 10000)
-                        {
-                            throw new Exception(" Enemizer could not resolve enemies for this seed, please try another. \n Trouble scene: " + scene.File);
-                        }
-
-                        // temporary fix to some specific scene/enemy issues
-                        // desbrekos, the giant skelefish swarm will lag southern swamp horribly
-                        if (scene.File == 1358 && ObjsUpdate.Any(u => u.NewV == EnemyList[27].Object)) // southern swamp and desbrekos
-                        {
-                            continue;
-                        }
-                        // if dinofos replaces iron knuckle, it crashes (or at least crashed for me)
-                        if (scene.File == 1145 && ObjsUpdate.Any(u => u.NewV == EnemyList[0x6].Object)) // graveyard but not dinofos
-                        {
-                            continue;
-                        }
-                        // if dinofos replaces iron knuckle, it crashes (or at least crashed for me)
-                        if (scene.File == 1137 && ObjsUpdate.Any(u => u.NewV == EnemyList[26].Object)) // no chuchu in cleared swamp
-                        {
-                            continue;
-                        }
-                        // if peathat in snowhead, it lags the whole dungeon
-                        if (Old.Actor == (int)GameObjects.Actor.RedBubble && scene.File == 1241 && ObjsUpdate.Any(u => u.NewV == EnemyList[0x5].Object)) // snowhead temple but not peahat in red bubble lava
-                        {
-                            continue;
-                        }
-                        // issue: type respawning and type flying: enemies can be both but enemies.txt can only have one per enemy
-                        // so some enemies like boes and blue bubbles can be bombchus because they are listed as respawn
-                        // but they can also be fly, and chu explodes instantly above ground
-                        // no chus replacing: guay, blue bubble
-                        if ((Old.Actor == (int)GameObjects.Actor.BlueBubble || Old.Actor == (int)GameObjects.Actor.Guay) && ObjsUpdate.Any(u => u.NewV == EnemyList[31].Object))
-                        {
-                            continue;
-                        }
-                        // no boe replacement in path to mountain village or snowhead exterior
-                        if ((scene.File == 1451 || scene.File == 1222) && (Old.Actor == (int)GameObjects.Actor.Bo) && ObjsUpdate.Any(u => u.NewV == EnemyList[31].Object))
-                        {
-                            continue;
-                        }
-
-                        ValueSwap NewActor = new ValueSwap();
-                        NewActor.OldV = Actors[j];
-                        NewActor.NewV = SubMatches[l].Actor;
-                        ValueSwap NewVar = new ValueSwap();
-                        NewVar.NewV = SubMatches[l].Variables[rng.Next(SubMatches[l].Variables.Count)];
-                        ActorsUpdate.Add(new ValueSwap[] { NewActor, NewVar });
-                        Actors.RemoveAt(j);
+                        ValueSwap newActor = new ValueSwap();
+                        newActor.OldV = sceneActors[j];
+                        newActor.NewV = subMatches[randomSubmatch].Actor;
+                        ValueSwap newValueSwap = new ValueSwap();
+                        newValueSwap.NewV = subMatches[randomSubmatch].Variables[rng.Next(subMatches[randomSubmatch].Variables.Count)];
+                        chosenReplacementActors.Add(new ValueSwap[] { newActor, newValueSwap });
+                        sceneActors.RemoveAt(j);
 
                         // print what enemy was and now is as debug for a scene
-                        WriteOutput("Old Enemy actor:[" + Old.Actor + "] was replaced by new enemy: [" + NewActor.NewV.ToString() + "]");
+                        //string oldEnemyName = ((GameObjects.Actor) oldEnemy.Actor).ToString();
+                        //string newEnemyName = ((GameObjects.Actor) newActor.NewV).ToString();
 
+                        WriteOutput("Old Enemy actor:[" + newActor.OldV + "] was replaced by new enemy: [" + newActor.NewV + "]");
                     }
                     else
                     {
@@ -322,8 +330,8 @@ namespace MMR.Randomizer
                     }
                 }
             }
-            SetSceneEnemyActors(scene, ActorsUpdate);
-            SetSceneEnemyObjects(scene, ObjsUpdate);
+            SetSceneEnemyActors(scene, chosenReplacementActors);
+            SetSceneEnemyObjects(scene, chosenReplacementObjects);
             SceneUtils.UpdateScene(scene);
             using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename +  "_EnemizerLog.txt", append: true))
             {
@@ -335,18 +343,23 @@ namespace MMR.Randomizer
 
         public static void ShuffleEnemies(OutputSettings settings,Random random)
         {
-            int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69 };
-            ReadEnemyList();
-            SceneUtils.ReadSceneTable();
-            SceneUtils.GetMaps();
-            SceneUtils.GetMapHeaders();
-            SceneUtils.GetActors();
-            for (int i = 0; i < RomData.SceneList.Count; i++)
-            {
-                if (!SceneSkip.Contains(RomData.SceneList[i].Number))
+            try
+            { 
+                // these are: cutscene map, town and swamp shooting gallery, 
+                // sakons hideout, and giants chamber (what)
+                int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69 };
+                ReadEnemyList();
+                SceneUtils.ReadSceneTable();
+                SceneUtils.GetMaps();
+                SceneUtils.GetMapHeaders();
+                SceneUtils.GetActors();
+                foreach (var scene in RomData.SceneList) if (!SceneSkip.Contains(scene.Number))
                 {
-                    SwapSceneEnemies(settings, RomData.SceneList[i], random);
+                    SwapSceneEnemies(settings, scene, random);
                 }
+            } catch (Exception e)
+            {
+                throw new Exception("Enemizer failed for this seed, please try another seed.\n\n" + e.Message);
             }
         }
 
