@@ -256,5 +256,8 @@ namespace MMR.Randomizer.GameObjects
 
         //bombflower
         // 2F 2A
+
+        // player
+        // 0 0
     }
 }

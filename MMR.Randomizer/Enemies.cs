@@ -1,6 +1,6 @@
 ﻿using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes.Actor;
-using MMR.Randomizer.Models;
+using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
@@ -212,7 +212,9 @@ namespace MMR.Randomizer
                 log.AppendLine(str);
             }
 
-            WriteOutput("For Scene: [" + ((GameObjects.Scene) scene.Number).ToString()  + "] with fid: " + scene.File);
+            var allScenes = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList();
+            string sceneName = allScenes.Find(u => u.GetAttribute<SceneInternalIdAttribute>().InternalId == scene.Number).ToString();
+            WriteOutput("For Scene: [" + sceneName + "] with fid: " + scene.File);//
 
             List<int> sceneActors = GetSceneEnemyActors(scene);
             List<int> sceneObjects = GetSceneEnemyObjects(scene);
@@ -258,10 +260,11 @@ namespace MMR.Randomizer
                     newsize += randomEnemmy.ObjectSize;
                     oldsize += originalEnemies[i][0].ObjectSize; // is this right? always i/0?
                     // add random enemy to list
-                    ValueSwap NewObject = new ValueSwap();
-                    NewObject.OldV = sceneObjects[i];
-                    NewObject.NewV = randomEnemmy.Object;
-                    chosenReplacementObjects.Add(NewObject);
+                    //ValueSwap newObject = new ValueSwap();newObject.OldV = sceneObjects[i];newObject.NewV = randomEnemmy.Object;chosenReplacementObjects.Add(newObject);
+                    chosenReplacementObjects.Add( new ValueSwap() { 
+                        OldV = sceneObjects[i],
+                        NewV = randomEnemmy.Object
+                    });
                 }
                 if (newsize <= oldsize)
                 {
@@ -319,10 +322,12 @@ namespace MMR.Randomizer
                         sceneActors.RemoveAt(j);
 
                         // print what enemy was and now is as debug for a scene
-                        //string oldEnemyName = ((GameObjects.Actor) oldEnemy.Actor).ToString();
+                        var allEnemys = ((GameObjects.Actor[])Enum.GetValues(typeof(GameObjects.Actor))).ToList();
+                        string oldEnemyName = allEnemys.Find(u => u.GetAttribute<ActorListIndexAttribute>().Index == newActor.OldV).ToString();
+                        string newEnemyName = allEnemys.Find(u => u.GetAttribute<ActorListIndexAttribute>().Index == newActor.NewV).ToString();
                         //string newEnemyName = ((GameObjects.Actor) newActor.NewV).ToString();
 
-                        WriteOutput("Old Enemy actor:[" + newActor.OldV + "] was replaced by new enemy: [" + newActor.NewV + "]");
+                        WriteOutput("Old Enemy actor:[" + oldEnemyName + "] was replaced by new enemy: [" + newEnemyName + "]");
                     }
                     else
                     {
