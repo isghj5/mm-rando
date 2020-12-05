@@ -327,7 +327,7 @@ namespace MMR.Randomizer
                         string newEnemyName = allEnemys.Find(u => u.GetAttribute<ActorListIndexAttribute>().Index == newActor.NewV).ToString();
                         //string newEnemyName = ((GameObjects.Actor) newActor.NewV).ToString();
 
-                        WriteOutput("Old Enemy actor:[" + oldEnemyName + "] was replaced by new enemy: [" + newEnemyName + "]");
+                        WriteOutput("Old Enemy actor:[" + oldEnemyName + "] was replaced by new enemy: [" + newEnemyName + "] with variant: [" + newValueSwap.NewV.ToString("X2") + "]");
                     }
                     else
                     {
