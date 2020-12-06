@@ -54,7 +54,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x14)]
         [ActorVariants(0x0)]
         [EnemyType(ActorType.Ground)] // spawns in ground, not air
-        [EnemizerScenesExcluded(0x7)]
+        //[EnemizerScenesExcluded(0x7)] // I think this only existed because respawn detection was poor
         Peahat = 56,
 
         [EnemizerEnabled]
@@ -232,7 +232,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0xF1)]
         [ObjectListIndex(0x6)]
         [ActorVariants(0)]
-        [EnemyType(ActorType.Flying)] // used to be respawn type, but spawns in the air
+        [EnemyType(ActorType.Flying)]
         [RespawningVarients(0)]
         Guay = 226,
 
@@ -244,7 +244,6 @@ namespace MMR.Randomizer.GameObjects
         [EnemyType(ActorType.Flying)]
         DragonFly = 241,
 
-        [EnemizerEnabled]
         [ActorInitVarOffset(0x3688)]
         [ActorListIndex(0x113)]
         [ObjectListIndex(0x155)]
@@ -284,6 +283,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemyType(ActorType.Water)]
         Desbreko = 297, // dead fish swarm from pirates fortress
 
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x1250)]
         [ActorListIndex(0x155)]
         [ObjectListIndex(0x171)]
@@ -313,7 +313,7 @@ namespace MMR.Randomizer.GameObjects
         // 9605,3205,6405 all respawn in path to mountain village, 8C05 is snowhead, 6404 and 7804 are stone tower
         [RespawningVarients(0x6404, 0x7804,   0x9605, 0x3205, 0x6405,    0x8C05)]
         [EnemyType(ActorType.Ground)]// used to be respawning type, but can spawn in the air and on the ground
-        [EnemizerScenesExcluded(0x1B)]
+        //[EnemizerScenesExcluded(0x1B)] // now that respawning is handled, lets try re-randomizing them in woodfall
         Bo = 322,
 
         [EnemizerEnabled]
@@ -321,6 +321,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x16F)]
         [ObjectListIndex(0x181)]
         [ActorVariants(0x008C, 0x0028, 0x003C, 0x0046, 0x0032, 0x0001, 0x8023, 0x0005, 0x0014, 0x8028, 0x8014)]
+        [RespawningVarients(0x8014,   0x008C, 0x0028, 0x003C, 0x0046, 0x0032, 0x0001, 0x8023, 0x0005, 0x0014, 0x8028)] // 8014 is known, rest is safe bet
         [EnemyType(ActorType.Ground)]
         RealBombchu = 331,
 
@@ -382,7 +383,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1C3)]
         [ActorVariants(0x00FF)]
         [EnemyType(ActorType.Flying)]
-        [EnemizerScenesExcluded(0x16,0x18)]
+        [EnemizerScenesExcluded(0x16,0x18)] // clock tower roof? what?
         Poe = 459,
 
         [EnemizerEnabled]
@@ -391,7 +392,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1EB)]
         [ActorVariants(0x0)]
         [EnemyType(ActorType.Flying)]
-        [EnemizerScenesExcluded(0x23)]
+        [EnemizerScenesExcluded(0x23)] // pirate beehive cutscene
         GiantBeee = 475,
 
         //[EnemizerEnabled]

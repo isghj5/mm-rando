@@ -4,6 +4,9 @@ namespace MMR.Randomizer.GameObjects
 {
     public enum Scene
     {
+        // base enumerator value matches the ST column, SceneInternal ID matches ID column (F)
+        // https://docs.google.com/spreadsheets/d/1J-4OwmZzOKEv2hZ7wrygOpMm0YcRnephEo3Q2FooF6E/edit#gid=1593589171
+
         [SceneInternalId(0x12)]
         MayorsResidence = 0x00,
 
@@ -19,6 +22,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x11)]
         HoneyDarling = 0x04,
 
+        [ClearEnemyPuzzleRooms(1,2,4)]
         [SceneInternalId(0x0C)]
         BeneathGraveyard = 0x05,
 
@@ -33,6 +37,7 @@ namespace MMR.Randomizer.GameObjects
         // Unused = 0x09,
 
         [SceneInternalId(0x07)]
+        [ClearEnemyPuzzleRooms(7,13)] //7:dodongo, 13:peahat
         Grottos = 0x0A,
 
         // Unused = 0x0B,
@@ -55,12 +60,14 @@ namespace MMR.Randomizer.GameObjects
         MilkBar = 0x12,
 
         [SceneInternalId(0x16)]
+        [ClearEnemyPuzzleRooms(4)]// basement lava
         StoneTowerTemple = 0x13,
 
         [SceneInternalId(0x17)]
         TreasureChestShop = 0x14,
 
         [SceneInternalId(0x18)]
+        [ClearEnemyPuzzleRooms(4)]// wizrobe room
         InvertedStoneTowerTemple = 0x15,
 
         [SceneInternalId(0x19)]
@@ -70,6 +77,7 @@ namespace MMR.Randomizer.GameObjects
         BeforeThePortalToTermina = 0x17,
 
         [SceneInternalId(0x1B)]
+        [ClearEnemyPuzzleRooms(4, 6, 7, 8, 9)]
         WoodfallTemple = 0x18,
 
         [SceneInternalId(0x1C)]
@@ -88,12 +96,14 @@ namespace MMR.Randomizer.GameObjects
         TownShootingGallery = 0x1D,
 
         [SceneInternalId(0x21)]
+        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9, 12 )]
         SnowheadTemple = 0x1E,
 
         [SceneInternalId(0x22)]
         MilkRoad = 0x1F,
 
         [SceneInternalId(0x23)]
+        [ClearEnemyPuzzleRooms(0,1,2)] // three pirate minibosses
         PiratesFortressRooms = 0x20,
 
         [SceneInternalId(0x24)]
@@ -133,6 +143,7 @@ namespace MMR.Randomizer.GameObjects
         MarineLab = 0x2C,
 
         [SceneInternalId(0x30)]
+        // [ClearEnemyPuzzleRooms(   )] // is big poe reward a clear room reward?
         DampesHouse = 0x2D,
 
         // Unused = 0x2E,
@@ -206,12 +217,14 @@ namespace MMR.Randomizer.GameObjects
         GoronVillageSpring = 0x45,
 
         [SceneInternalId(0x49)]
+        [ClearEnemyPuzzleRooms(3,4,5,7)]
         GreatBayTemple = 0x46,
 
         [SceneInternalId(0x4A)]
         WaterfallRapids = 0x47,
 
         [SceneInternalId(0x4B)]
+        //[ClearEnemyPuzzleRooms( unk )] // need to revisit to know, big poe and 2 chests?
         BeneathTheWell = 0x48,
 
         [SceneInternalId(0x4C)]
@@ -224,12 +237,14 @@ namespace MMR.Randomizer.GameObjects
         GoronGrave = 0x4B,
 
         [SceneInternalId(0x4F)]
+        //[ClearEnemyPuzzleRooms( unk )] // ignored by enemizer right now anyway
         SakonsHideout = 0x4C,
 
         [SceneInternalId(0x50)]
         MountainVillage = 0x4D,
 
         [SceneInternalId(0x51)]
+        //[ClearEnemyPuzzleRooms(1)]  // ignored by enemizer right now anyway
         PoeHut = 0x4E,
 
         [SceneInternalId(0x52)]
@@ -245,6 +260,7 @@ namespace MMR.Randomizer.GameObjects
         MusicBoxHouse = 0x52,
 
         [SceneInternalId(0x56)]
+        //[ClearEnemyPuzzleRooms( unk )] // ignored by enemizer right now anyway
         IgosDuIkanasLair = 0x53,
 
         [SceneInternalId(0x57)]
@@ -275,6 +291,7 @@ namespace MMR.Randomizer.GameObjects
         GyorgsLair = 0x5C,
 
         [SceneInternalId(0x60)]
+        //[ClearEnemyPuzzleRooms( unk )] // ignored by enemizer right now anyway
         SecretShrine = 0x5D,
 
         [SceneInternalId(0x61)]
@@ -292,6 +309,7 @@ namespace MMR.Randomizer.GameObjects
         // LostWoods = 0x62,
 
         [SceneInternalId(0x66)]
+        [ClearEnemyPuzzleRooms(1, 2)] // 1 dinofos, 2 is iron knuckle
         LinkTrial = 0x63,
 
         [SceneInternalId(0x67)]
