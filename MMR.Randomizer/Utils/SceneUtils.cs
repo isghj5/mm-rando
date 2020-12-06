@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using MMR.Randomizer.Extensions;
+using System.Diagnostics;
+using MMR.Randomizer.Attributes.Actor;
+using MMR.Common.Extensions;
+using System;
 
 namespace MMR.Randomizer.Utils
 {
@@ -158,6 +162,8 @@ namespace MMR.Randomizer.Utils
             List<Actor> Actors = new List<Actor>();
             for (int i = 0; i < Count; i++)
             {
+                // actor list format https://wiki.cloudmodding.com/mm/Scenes_and_Rooms#Actors_List
+
                 Actor a = new Actor();
                 ushort an = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16));
                 a.m = an & 0xF000;
@@ -171,6 +177,8 @@ namespace MMR.Randomizer.Utils
                 a.v = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 14);
                 Actors.Add(a);
             }
+            Debug.WriteLine("\n");
+
             return Actors;
         }
 

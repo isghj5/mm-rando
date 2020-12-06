@@ -10,16 +10,16 @@ namespace MMR.Randomizer.Attributes.Actor
 
     class ActorVariantsAttribute : Attribute
     {
-        public List<int> Varients { get; private set; }
+        public List<int> Variants { get; private set; }
 
-        public ActorVariantsAttribute(int varient, params int[] additionalVarients)
+        public ActorVariantsAttribute(int variant, params int[] additionalVarients)
         {
-            var v = new List<int> { varient };
+            var v = new List<int> { variant };
             if(additionalVarients.Length > 0)
             {
                 v.AddRange(additionalVarients);
             }
-            Varients = v;
+            Variants = v;
         }
     }
 }

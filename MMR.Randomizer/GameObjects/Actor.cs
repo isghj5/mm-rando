@@ -84,7 +84,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(0x1B, 0x27, 0x28, 0x40)]
         Skulltula = 67,
 
-        //[EnemizerEnabled]
+        //[EnemizerEnabled]  //crash, link to paths?
         [ActorInitVarOffset(0x1CC0)]
         [ActorListIndex(0x2D)]
         [ObjectListIndex(0x1D)]
@@ -134,7 +134,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorVariants(0xFFFF)]
         [EnemyType(ActorType.Flying)] //used to be respawn type, but its in the air
         [RespawningVarients(0xFFFF)]
-        BlueBubble = 84,
+        BlueBubble = 84, // cursed
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1240)]
@@ -221,9 +221,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2D60)]
         [ActorListIndex(0xED)]
         [ObjectListIndex(0x142)]
-        [ActorVariants(0x0042,0x0022,0x0032)]
+        [ActorVariants(0x0022,0x0032)] // 0x0042 is swinging from tree, looks stupid if spawns in the ground
         [EnemyType(ActorType.Ground)]
         [EnemizerScenesExcluded(0x43,0x28)]
+        //[RespawningVarients(0x32)] the ones that circle the tombs, but dont respawn if placed anywhere else it seems, ignore
         Stalchild = 223,
 
         [EnemizerEnabled]
@@ -262,7 +263,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x13A)]
         [ObjectListIndex(0x161)]
         [EnemyType(ActorType.Water)]
-        Raft = 278, // carniverous raft
+        Raft = 278, // carniverous raft, woodfall
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2D30)]
@@ -271,7 +272,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorVariants(0x0C01,0x1402,0xFF03,0xFF01,0xFF00,0x0A01,0x0202,0x801,0xFF02)]
         [EnemyType(ActorType.Ground)] // used to be respawning type, but spawns on the ground
         [EnemizerScenesExcluded(0x49)]
-        [RespawningVarients(0x0C01,0x1402,0xFF03,0xFF01,0xFF00,0x0A01,0x0202,0x801,0xFF02)]
+        // termina field, ff00 gbt waterchu, 
+        [RespawningVarients(0xFF03, 0xFF01, 0xFF00,  0x0C01,0x1402,0x0A01,0x0202,0x801,0xFF02)]
         ChuChu = 296,
 
         [EnemizerEnabled]
@@ -308,6 +310,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x164)]
         [ObjectListIndex(0x17A)]
         [ActorVariants(0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0x9605, 0x3205, 0x6405, 0xFF01, 0xFF05, 0xC200, 0xFA00, 0xFA01, 0x8C05)]
+        // 9605,3205,6405 all respawn in path to mountain village, 8C05 is snowhead, 6404 and 7804 are stone tower
+        [RespawningVarients(0x6404, 0x7804,   0x9605, 0x3205, 0x6405,    0x8C05)]
         [EnemyType(ActorType.Ground)]// used to be respawning type, but can spawn in the air and on the ground
         [EnemizerScenesExcluded(0x1B)]
         Bo = 322,
@@ -333,7 +337,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x184)]
         [ObjectListIndex(0x18D)]
         [EnemyType(ActorType.Ground)]
-        Eyegore = 250,
+        Eyegore = 250, // walking laser cyclops in inverted stone tower
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x21C0)]
@@ -348,7 +352,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x1D1)]
         [ObjectListIndex(0x1B5)]
         [EnemyType(ActorType.Water)]
-        Dexihand = 426,
+        Dexihand = 426,  // ???'s water logged brother
 
         [ActorInitVarOffset(0x2940)] // combat music disable does not work
         [ActorListIndex(0x1DA)]
@@ -407,7 +411,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x291)]
         [ObjectListIndex(0x22)]
         [EnemyType(ActorType.Flying)]
-        Takkuri = 616,
+        Takkuri = 616, // the birds at the bird house like to steal shiney things
 
         //flying pot is missing
         // 8D 3
