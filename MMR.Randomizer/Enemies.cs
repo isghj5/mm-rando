@@ -1,6 +1,7 @@
 ﻿using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes.Actor;
 using MMR.Randomizer.Attributes.Entrance;
+using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
@@ -23,14 +24,16 @@ namespace MMR.Randomizer
             public int NewV;
         }
          
-        private static List<Enemy> EnemyList { get; set; }
+        //private static List<Enemy> EnemyList { get; set; }
+        private static List<GameObjects.Actor> EnemyList { get; set; }
 
         public static void ReadEnemyList()
         {
             /// read enemies.txt enemies description file
             /// todo: delete this after we move all of enemies.txt to enemies.cs enum
-            EnemyList = new List<Enemy>();
-            string[] lines = Properties.Resources.ENEMIES.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+            EnemyList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().Where(u => u.IsEnemyRandomized()).ToList();
+
+            /*string[] lines = Properties.Resources.ENEMIES.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
             int i = 0;
             while (i < lines.Length)
             {
@@ -60,47 +63,47 @@ namespace MMR.Randomizer
                 }
                 EnemyList.Add(e);
                 i += 6;
-            }
+            }*/
         }
 
-        public static List<int> GetSceneEnemyActors(Scene scene)
+        public static List<Enemy> GetSceneEnemyActors(Scene scene)
         {
-            List<int> ActorList = new List<int>();
+            var enemyList = new List<Enemy>();
             foreach (var sceneMap in scene.Maps)
             {
-                //for (int j = 0; j < scene.Maps[i].Actors.Count; j++)
                 foreach (var mapActor in sceneMap.Actors)
                 {
                     // check if this actor should be scene excluded from this scene (not replaced)
                     //   if not, add
-                    //int k = EnemyList.FindIndex(u => u.Actor == mapActor.n);
-                    var matchingEnemy = EnemyList.Find(u => u.Actor == mapActor.n);
-                    if (matchingEnemy != null && ! matchingEnemy.SceneExclude.Contains(scene.Number))
+                    var matchingEnemy = EnemyList.Find(u => u.ActorIndex() == mapActor.n);
+                    if (matchingEnemy > 0 && ! matchingEnemy.ScenesRandomizationExcluded().Contains(scene.Number))
                     {
-                        ActorList.Add(matchingEnemy.Actor);
+                        var newEnemy = matchingEnemy.ToEnemy();
+                        newEnemy.Variables = new List<int> { mapActor.v };
+                        enemyList.Add(newEnemy);
                     }
                 }
             }
-            return ActorList;
+            return enemyList;
         }
 
         public static List<int> GetSceneEnemyObjects(Scene scene)
         {
-            List<int> ObjList = new List<int>();
+            List<int> objList = new List<int>();
             foreach (var sceneMap in scene.Maps)
             {
                 foreach (var mapObject in sceneMap.Objects)
                 {
-                    var matchingEnemy = EnemyList.Find(u => u.Object == mapObject);
-                    if (   matchingEnemy != null                              // exists in the list
-                       && !ObjList.Contains(matchingEnemy.Object)             // already extracted from this scene
-                       && !matchingEnemy.SceneExclude.Contains(scene.Number)) // not excluded from being extracted from this scene
+                    var matchingEnemy = EnemyList.Find(u => u.ObjectIndex() == mapObject);
+                    if (   matchingEnemy > 0                                               // exists in the list
+                       && !objList.Contains(matchingEnemy.ObjectIndex())                     // not already extracted from this scene
+                       && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.Number)) // not excluded from being extracted from this scene
                     {
-                        ObjList.Add(matchingEnemy.Object);
+                        objList.Add(matchingEnemy.ObjectIndex());
                     }
                 }
             }
-            return ObjList;
+            return objList;
         }
 
         public static void SetSceneEnemyActors(Scene scene, List<ValueSwap[]> A)
@@ -143,10 +146,10 @@ namespace MMR.Randomizer
             {
                 // unknown why we do this, I have to assume that we want an enemy type 
                 //  without the objects and variables for some reason
-                var enemyMatch = EnemyList.Find(u => u.Actor == oldEnemy.Actor);
+                var enemyMatch = EnemyList.Find(u => u.ActorIndex() == oldEnemy.Actor);
                 foreach (var enemy in EnemyList)
                 {
-
+                    /*
                     // desbrekos, the giant skelefish swarm will lag southern swamp horribly
                     if (scene.File == 1358 && enemy == EnemyList[27]) // southern swamp and desbrekos
                     {
@@ -175,27 +178,26 @@ namespace MMR.Randomizer
                     {
                         continue;
                     }
-                    // no boe replacement in path to mountain village or snowhead exterior
+                    // no bo replacement with bombchu in path to mountain village or snowhead exterior
                     if ((scene.File == 1451 || scene.File == 1222) && (oldEnemy.Actor == (int)GameObjects.Actor.Bo) && enemy == EnemyList[31])
                     {
                         continue;
                     }
-
+                    */
                     // TODO here would be a great place to test if the requirements to kill an enemy are met with given items
 
-                    if ((enemy.Type == enemyMatch.Type) 
-                        && (enemy.Stationary == enemyMatch.Stationary)
-                        && ! enemyMatchesPool.Contains(enemy))
+                    // TODO re-enable and test stationary, which is currently missing
+                    if ((enemy.EnemyType() == enemyMatch.EnemyType())) //&& (enemy.Stationary == enemyMatch.Stationary)&& ! enemyMatchesPool.Contains(enemy))
                     {
-                        enemyMatchesPool.Add(enemy);
+                        enemyMatchesPool.Add(enemyMatch.ToEnemy());
                     }
 
-                    // huh? 1/6 chance of enemies that are the same type but not stationary, if they aren't already used?
-                    else if ((enemy.Type == enemyMatch.Type) 
+                    // random chance of not caring about stationary state
+                    else if ((enemy.EnemyType() == enemyMatch.EnemyType()) 
                           && (random.Next(5) == 0) 
-                          && ! enemyMatchesPool.Contains(enemy))
+                          && ! enemyMatchesPool.Contains(enemyMatch.ToEnemy()))
                     {
-                        enemyMatchesPool.Add(enemy);
+                        enemyMatchesPool.Add(enemyMatch.ToEnemy());
                     }
                 }
             }
@@ -212,13 +214,13 @@ namespace MMR.Randomizer
                 log.AppendLine(str);
             }
 
-            var allScenes = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList();
+            var    allScenes = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList();
             string sceneName = allScenes.Find(u => u.GetAttribute<SceneInternalIdAttribute>().InternalId == scene.Number).ToString();
             WriteOutput("For Scene: [" + sceneName + "] with fid: " + scene.File);//
 
-            List<int> sceneActors = GetSceneEnemyActors(scene);
-            List<int> sceneObjects = GetSceneEnemyObjects(scene);
-            if (sceneActors.Count == 0 || sceneObjects.Count == 0)
+            List<Enemy> sceneEnemies  = GetSceneEnemyActors(scene);
+            List<int>   sceneObjects = GetSceneEnemyObjects(scene);
+            if (sceneEnemies.Count == 0 || sceneObjects.Count == 0)
             {
                 return;
             }
@@ -226,16 +228,16 @@ namespace MMR.Randomizer
             // if actor doesn't exist but object does, probably spawned by something else, remove from actors to randomize
             foreach (int obj in sceneObjects.ToList())
             {
-                //List<Enemy> ObjectMatch = EnemyList.FindAll(u => u.Object == obj);bool exists = false;foreach (var enemy in ObjectMatch){exists |= sceneActors.Contains(enemy.Actor);};if (!exists)
-                if ( ! (EnemyList.FindAll(u => u.Object == obj)).Any( u => sceneActors.Contains(u.Actor)))
-                {
+                //List<Enemy> ObjectMatch = EnemyList.FindAll(u => u.Object == obj);bool exists = false;foreach (var enemy in ObjectMatch){exists |= sceneEnemies.Contains(enemy.Actor);};if (!exists)
+                if ( ! (EnemyList.FindAll(u => u.ObjectIndex() == obj)).Any( u => sceneEnemies.Any( w => w.Actor == u.ActorIndex()))) //sceneEnemies.Contains(u.ActorIndex())))
+                { 
                     sceneObjects.Remove(obj);
                 }
             }
 
             List<ValueSwap[]> chosenReplacementActors = new List<ValueSwap[]>();
             List<ValueSwap>   chosenReplacementObjects;
-            List<List<Enemy>> originalEnemies;
+            List<Enemy>       originalEnemies;
             List<List<Enemy>> matchingCandidates;
 
             // attempt random enemy combos until a combo that fits in the old slot is chosen
@@ -244,21 +246,22 @@ namespace MMR.Randomizer
             {
                 /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
                 chosenReplacementObjects = new List<ValueSwap>();
-                originalEnemies = new List<List<Enemy>>();
+                originalEnemies = new List<Enemy>();
                 matchingCandidates  = new List<List<Enemy>>();
                 int oldsize = 0;
                 int newsize = 0;
                 for (int i = 0; i < sceneObjects.Count; i++)
                 {
                     // get a list of all enemies from enemylist that have the same OBJECT as our object that have an actor we also have
-                    originalEnemies.Add(EnemyList.FindAll(u => ((u.Object == sceneObjects[i]) && (sceneActors.Contains(u.Actor)))));
+                    //originalEnemies.Add(EnemyList.FindAll(u => ((u.ObjectIndex() == sceneObjects[i]) && (sceneEnemies.Contains(u.ActorIndex())))));
+                    originalEnemies = sceneEnemies.FindAll(u => u.Object == sceneObjects[i]);  // && sceneEnemies.Any(w => w.) ); // not sure checking if the actor exists is necessary by this point
                     // get a list of matching actors that can fit in the place of the previous actor
-                    matchingCandidates.Add(GetMatchPool(originalEnemies[i], rng, scene));
+                    matchingCandidates.Add(GetMatchPool(originalEnemies, rng, scene));
                     // get random enemy from the possible random enemy matches
                     Enemy randomEnemmy = matchingCandidates[i][rng.Next(matchingCandidates[i].Count)];
                     // keep track of sizes between this new enemy combo and what used to be in this scene
                     newsize += randomEnemmy.ObjectSize;
-                    oldsize += originalEnemies[i][0].ObjectSize; // is this right? always i/0?
+                    oldsize += originalEnemies[0].ObjectSize;
                     // add random enemy to list
                     //ValueSwap newObject = new ValueSwap();newObject.OldV = sceneObjects[i];newObject.NewV = randomEnemmy.Object;chosenReplacementObjects.Add(newObject);
                     chosenReplacementObjects.Add( new ValueSwap() { 
@@ -266,6 +269,7 @@ namespace MMR.Randomizer
                         NewV = randomEnemmy.Object
                     });
                 }
+
                 if (newsize <= oldsize)
                 {
                     //this should take into account map/scene size and size of all loaded actors...
@@ -282,11 +286,14 @@ namespace MMR.Randomizer
             loopsCount = 0;
             for (int i = 0; i < chosenReplacementObjects.Count; i++)
             {
-                // why does J only increase when the actor is NOT modified...?
+                // why does j only increase when the actor is NOT modified...?
                 int j = 0;
-                while (j != sceneActors.Count)
+
+                //foreach (var oldEnemy in sceneEnemies.ToList())
+                while (j != sceneEnemies.Count)
                 {
-                    Enemy oldEnemy = originalEnemies[i].Find(u => u.Actor == sceneActors[j]);
+                    //Enemy oldEnemy = originalEnemies[i].Find(u => u.Actor == sceneEnemies[j].Actor);
+                    Enemy oldEnemy = originalEnemies.Find(u => u.Actor == sceneEnemies[j].Actor);
                     if (oldEnemy != null)
                     {
                         loopsCount += 1;
@@ -303,7 +310,7 @@ namespace MMR.Randomizer
                         while (true)
                         {
                             /// looking for a list of objects for the actors we chose that fit the actor types
-                            // why do we settle on a match if we can't find a type match with their old type?
+                            // why do we settle on a match if we can't find a type match with their old type? (last option)
                             randomSubmatch = rng.Next(subMatches.Count);
                             if ( (oldEnemy.Type == subMatches[randomSubmatch].Type && oldEnemy.Stationary == subMatches[randomSubmatch].Stationary)
                               || (oldEnemy.Type == subMatches[randomSubmatch].Type && rng.Next(5) == 0)
@@ -314,20 +321,18 @@ namespace MMR.Randomizer
                         }
 
                         ValueSwap newActor = new ValueSwap();
-                        newActor.OldV = sceneActors[j];
+                        newActor.OldV = oldEnemy.Actor;// sceneEnemies[j].Variables[0];
                         newActor.NewV = subMatches[randomSubmatch].Actor;
                         ValueSwap newValueSwap = new ValueSwap();
                         newValueSwap.NewV = subMatches[randomSubmatch].Variables[rng.Next(subMatches[randomSubmatch].Variables.Count)];
                         chosenReplacementActors.Add(new ValueSwap[] { newActor, newValueSwap });
-                        sceneActors.RemoveAt(j);
+                        sceneEnemies.RemoveAt(j);
 
                         // print what enemy was and now is as debug for a scene
-                        var allEnemys = ((GameObjects.Actor[])Enum.GetValues(typeof(GameObjects.Actor))).ToList();
-                        string oldEnemyName = allEnemys.Find(u => u.GetAttribute<ActorListIndexAttribute>().Index == newActor.OldV).ToString();
-                        string newEnemyName = allEnemys.Find(u => u.GetAttribute<ActorListIndexAttribute>().Index == newActor.NewV).ToString();
-                        //string newEnemyName = ((GameObjects.Actor) newActor.NewV).ToString();
-
-                        WriteOutput("Old Enemy actor:[" + oldEnemyName + "] was replaced by new enemy: [" + newEnemyName + "] with variant: [" + newValueSwap.NewV.ToString("X2") + "]");
+                        //var allEnemys = ((GameObjects.Actor[])Enum.GetValues(typeof(GameObjects.Actor))).ToList();
+                        string oldEnemyName = EnemyList.Find(u => u.ActorIndex() == newActor.OldV).ToString();
+                        string newEnemyName = EnemyList.Find(u => u.ActorIndex() == newActor.NewV).ToString();
+                        WriteOutput("Old Enemy actor:[" + oldEnemyName + "] with id [" + newActor.OldV +  "] was replaced by new enemy: [" + newEnemyName + "] with variant: [" + newValueSwap.NewV.ToString("X2") + "]");
                     }
                     else
                     {

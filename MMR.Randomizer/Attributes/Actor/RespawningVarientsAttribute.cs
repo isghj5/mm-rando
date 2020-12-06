@@ -10,7 +10,7 @@ namespace MMR.Randomizer.Attributes.Actor
 
     class RespawningVarientsAttribute : Attribute
     {
-        public List<int> Varients { get; private set; }
+        public List<int> Variants { get; private set; }
 
         public RespawningVarientsAttribute(int varient, params int[] additionalVarients)
         {
@@ -19,7 +19,7 @@ namespace MMR.Randomizer.Attributes.Actor
             {
                 v.AddRange(additionalVarients);
             }
-            Varients = v;
+            Variants = v;
         }
     }
 }
