@@ -20,8 +20,6 @@ namespace MMR.Randomizer.Extensions
 
         public static bool IsEnemyRandomized(this Actor actor)
         {
-            //EnemizerEnabledAttribute test = actor.GetAttribute<EnemizerEnabledAttribute>();
-            //return test != null ? test.Enabled : false;
             return actor.GetAttribute<EnemizerEnabledAttribute>()?.Enabled ?? false;
         }
 
@@ -40,16 +38,28 @@ namespace MMR.Randomizer.Extensions
             return actor.GetAttribute<ActorVariantsAttribute>()?.Variants;
         }
 
+        public static List<int> NonRespawningVariants(this Actor actor)
+        {
+            var nonRespawningVariants = Variants(actor);
+            var respawningVariants    = RespawningVariants(actor);
+            if (respawningVariants != null && respawningVariants.Count > 0)
+            {
+                nonRespawningVariants.RemoveAll(u => respawningVariants.Contains(u));
+            }
+            return nonRespawningVariants;
+        }
+
         public static List<int> ScenesRandomizationExcluded(this Actor actor)
         {
             return actor.GetAttribute<EnemizerScenesExcludedAttribute>()?.ScenesExcluded ?? new List<int>();
         }
 
-
         public static Models.Rom.Enemy ToEnemy(this Actor actor)
         {
+            // turning static actor enum into modifiable enemy type
             return new Models.Rom.Enemy()
             {
+                Name         = (actor).ToString(),
                 Actor        = actor.ActorIndex(),
                 Object       = actor.ObjectIndex(),
                 ObjectSize   = ObjUtils.GetObjSize(actor.ObjectIndex()),

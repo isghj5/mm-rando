@@ -10,5 +10,12 @@ namespace MMR.Randomizer.Extensions
         {
             return scene.GetAttribute<SceneInternalIdAttribute>().InternalId;
         }
+
+        //public static List<int> ClearEnemyPuzzleRooms()
+        public static bool IsClearEnemyPuzzleRoom(this Scene scene, int room)
+        {
+            var attr = scene.GetAttribute<ClearEnemyPuzzleRoomsAttribute>();
+            return attr == null ? false : attr.PuzzleRooms.Contains(room);
+        }
     }
 }
