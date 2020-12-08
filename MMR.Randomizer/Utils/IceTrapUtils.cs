@@ -24,6 +24,7 @@ namespace MMR.Randomizer.Utils
                 return (x.IsRandomized || onslaught)
                 && x.NewLocation != null
                 && ItemUtils.IsJunk(x.Item)
+                && !x.Item.IsFake()
                 && !ItemUtils.IsStartingLocation(x.NewLocation.Value)
                 && (x.Item == GameObjects.Item.RecoveryHeart || !x.Item.Name().Contains("Heart"));
             }).ToArray();

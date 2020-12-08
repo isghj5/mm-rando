@@ -45,7 +45,7 @@ namespace MMR.Randomizer.Utils
                     }
                 }
 
-                if (!item.IsRandomized)
+                if (!item.IsRandomized || item.Item.IsFake())
                 {
                     continue;
                 }
