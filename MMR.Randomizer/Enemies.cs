@@ -112,9 +112,9 @@ namespace MMR.Randomizer
         {
             List<Enemy> enemyMatchesPool = new List<Enemy>();
 
-            // in the future I hope we can change enemies, but for now
+            // in the future I hope we can change single enemies, but for now
             // this exists up here and not in the loop because woodfall:
-            //  in woodfall one dragonfly is needed for a clear-all-enemies room, but this loop creates redundant copies
+            //  in woodfall one dragonfly is needed for a clear-all-enemies room, but this loop handles all unique
             bool MustNotRespawn = oldActors.Any(u => u.MustNotRespawn);
             
             // todo does this NEED to be a double loop? does anything change per enemy copy that we should worry about?
@@ -124,33 +124,15 @@ namespace MMR.Randomizer
                 var enemyMatch = EnemyList.Find(u => u.ActorIndex() == oldEnemy.Actor);
                 foreach (var enemy in EnemyList)
                 {
-                    if (enemy.EnemyType() != enemyMatch.EnemyType())
+                    var compatibleVariants = enemy.CompatibleVariants(enemyMatch, random);
+                    if (compatibleVariants == null)
                     {
                         continue;
                     }
 
-                    // IS NUMBER NOT ID? NUMBER what the fuck is this lame variable name
-                    // TODO rewrite so we dont need this hardcoded
-                    // desbrekos, the giant skelefish swarm will lag southern swamp horribly
-                    if (scene.File == 1358 && enemy == GameObjects.Actor.Desbreko)
-                    //if (scene.Number == GameObjects.Scene.SouthernSwamp.Id() && enemy == GameObjects.Actor.Desbreko)
-                    {
-                        continue;
-                    }
-                    // if dinofos replaces iron knuckle, it crashes (or at least crashed for me)
-                    if (scene.File == 1145 && enemy == GameObjects.Actor.Dinofos)
-                    //if (scene.Number == GameObjects.Scene.IkanaGraveyard.Id() && enemy == GameObjects.Actor.Dinofos)
-                    {
-                        continue; // TODO broken
-                    }
-                    // chuchu in cleared swamp is crash if you approach the witch shop
-                    if (scene.File == 1137 && enemy == GameObjects.Actor.ChuChu)
-                    //if (scene.Number == GameObjects.Scene.SouthernSwampClear.Id() && enemy == GameObjects.Actor.ChuChu)
-                    {
-                        continue;
-                    }
-                    // if peathat replaces snowhead red bubble, it lags the whole dungeon
-                    if (oldEnemy.Actor == (int)GameObjects.Actor.RedBubble && scene.File == 1241 && enemy == GameObjects.Actor.Peahat)
+                    // if peathat replaces snowhead red bubble, it lags the whole dungeon, also its hot get out of there deku
+                    if (oldEnemy.Actor == GameObjects.Actor.RedBubble.ActorIndex() && scene.File == 1241 
+                        && (enemy == GameObjects.Actor.Peahat || enemy == GameObjects.Actor.MadShrub))
                     //if (oldEnemy.Actor == (int)GameObjects.Actor.RedBubble && scene.Number == GameObjects.Scene.SnowheadTemple.Id() && enemy == GameObjects.Actor.Peahat)
                     {
                         continue;
@@ -165,16 +147,42 @@ namespace MMR.Randomizer
                         var newEnemy = enemy.ToEnemy();
                         if (MustNotRespawn)
                         {
-                            newEnemy.Variables = enemy.NonRespawningVariants(); // reduce to available
+                            newEnemy.Variables = enemy.NonRespawningVariants(compatibleVariants); // reduce to available
                             if (newEnemy.Variables.Count == 0)
                             {
                                 continue; // can't put this enemy here: it has no non-respawning variants
                             }
                         }
+                        else
+                        {
+                            newEnemy.Variables = compatibleVariants;
+                        }
                         enemyMatchesPool.Add(newEnemy);
                     }
                 }
             }
+            // TODO rewrite so we dont need this hardcoded
+            // desbrekos, the giant skelefish swarm will lag southern swamp horribly
+            if (scene.File == 1358)
+            {
+                enemyMatchesPool.Remove(GameObjects.Actor.Desbreko.ToEnemy());
+            }
+            // if dinofos replaces iron knuckle, it crashes (or at least crashed for me)
+            if (scene.File == 1145)
+            {
+                enemyMatchesPool.Remove(GameObjects.Actor.Dinofos.ToEnemy());
+            }
+            // chuchu in cleared swamp is crash if you approach the witch shop
+            if (scene.File == 1137)
+            {
+                enemyMatchesPool.Remove(GameObjects.Actor.ChuChu.ToEnemy());
+            }
+            // if Hiploop gets replaced with with RedBubble in woodfall you can see their models below the bridges
+            if (scene.File == 1362)
+            {
+                enemyMatchesPool.Remove(GameObjects.Actor.RedBubble.ToEnemy());
+            }
+
             return enemyMatchesPool;
         }
 
@@ -188,16 +196,18 @@ namespace MMR.Randomizer
                 log.AppendLine(str);
             }
 
-            var    allScenes = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList();
-            string sceneName = allScenes.Find(u => u.Id() == scene.Number).ToString();
-            WriteOutput("For Scene: [" + sceneName + "] with fid: " + scene.File);//
-
             List<Enemy> sceneEnemies  = GetSceneEnemyActors(scene);
             List<int>   sceneObjects = GetSceneEnemyObjects(scene);
             if (sceneEnemies.Count == 0 || sceneObjects.Count == 0)
             {
+                WriteOutput("No Enemies or no enemy objects in scene: " + scene.File);
                 return;
             }
+
+            // if only scenes were enums of the id, could just case the scene.Number to a gameobject.scene
+            var allScenes = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList();
+            string sceneName = allScenes.Find(u => u.Id() == scene.Number).ToString();
+            WriteOutput("For Scene: [" + sceneName + "] with fid: " + scene.File);
 
             // if actor doesn't exist but object does, probably spawned by something else, remove from actors to randomize
             // TODO check for side objects that no longer need to exist and replace with possible alt objects
@@ -291,7 +301,6 @@ namespace MMR.Randomizer
                     chosenReplacementActors.Add(new ValueSwap[] { newActor, newValueSwap });
 
                     // print what enemy was and now is as debug for a scene
-                    //var allEnemys = ((GameObjects.Actor[])Enum.GetValues(typeof(GameObjects.Actor))).ToList();
                     string oldEnemyName = oldEnemy.Name;
                     string newEnemyName = subMatches[randomSubmatch].Name;
                     WriteOutput("Old Enemy actor:[" + oldEnemyName + "] with id [" + newActor.OldV +  "] was replaced by new enemy: [" + newEnemyName + "] with variant: [" + newValueSwap.NewV.ToString("X2") + "]");

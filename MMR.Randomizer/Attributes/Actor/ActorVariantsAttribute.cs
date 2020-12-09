@@ -10,7 +10,7 @@ namespace MMR.Randomizer.Attributes.Actor
 
     class ActorVariantsAttribute : Attribute
     {
-        public List<int> Variants { get; private set; }
+        public List<int> Variants { get; set; }
 
         public ActorVariantsAttribute(int variant, params int[] additionalVarients)
         {
@@ -22,4 +22,38 @@ namespace MMR.Randomizer.Attributes.Actor
             Variants = v;
         }
     }
+
+    /// <summary>
+    /// some enemies have variants that automaticallly respawn forever, 
+    ///  these get in the way of puzzle rooms that require you clear all enemies
+    /// </summary>
+
+    class RespawningVarientsAttribute : ActorVariantsAttribute
+    {
+        public RespawningVarientsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+    }
+
+    /// <summary>
+    /// some enemies can spawn in multiple situations, likelike can spawn on the beach or ocean bottom, so two types
+    /// I don't really want to add one of these times the different types, even though we need them, so inheritance
+    /// </summary>
+
+    // todo: consider splitting these up further, several enemies hang/perch from trees, 
+    //  some enemies spawn on the surface or bottom of water, and skulltullas dont really _fly_
+
+    class FlyingVariantsAttribute : ActorVariantsAttribute
+    {
+        public FlyingVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+    }
+
+    class GroundVariantsAttribute : ActorVariantsAttribute
+    {
+        public GroundVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+    }
+
+    class WaterVariantsAttribute : ActorVariantsAttribute
+    {
+        public WaterVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+    }
+
 }
