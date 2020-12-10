@@ -37,6 +37,15 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x8003,0x04,0)]
         Keese = 50,
 
+        [EnemizerEnabled] // silly
+        [ActorListIndex(0x11)]
+        [ObjectListIndex(0xF)]
+        [GroundVariants(0xFFFF)]
+        [RespawningVarients(0xFFFF)] // killing one not possible
+        // I would like a flying variant, but they seem to drop like a rock instead of float down
+        [EnemizerScenesExcluded(0x15, 0x29, 0x35, 0x42, 0x10)]
+        FriendlyCucco = 54,
+
         [EnemizerEnabled]
         [ActorInitVarOffset(0x32C0)]
         [ActorListIndex(0x12)]
@@ -73,7 +82,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2540)]
         [ActorListIndex(0x24)]
         [ObjectListIndex(0x20)]
-        [FlyingVariants(0xEF,0x7F,4)]
+        [FlyingVariants(0xEF,0x7F,4,0x3F)]
         [GroundVariants(0xEF,0x7F,4)] // because they almost always show up indoors
         [EnemizerScenesExcluded(0x1B, 0x27, 0x28, 0x40)]
         Skulltula = 67,
@@ -105,7 +114,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1D30)]
         [ActorListIndex(0x3B)]
         [ObjectListIndex(0x40)]
-        [GroundVariants(0xFF02,0xFF00)]
+        [GroundVariants(0xFF02,0xFF00,  0xFF01)]
         [EnemizerScenesExcluded(0x46)]
         MadShrub = 81,
 
@@ -143,7 +152,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x4C)]
         [ObjectListIndex(0x75)]
         [GroundVariants(0x7F07,0x7F05,0x7F06)]
-        [EnemizerScenesExcluded(0x4b,0x13)]
+        [EnemizerScenesExcluded(0x4b,0x13)] // gibdo locations, but share the same object so gets detected
         ReDead = 93,
 
         [ActorInitVarOffset(0x3080)]
@@ -152,6 +161,12 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0)]// uh, wall type, but that doesnt exist
         [EnemizerScenesExcluded(0)]
         SkullWallTula = 96,
+
+        //[EnemizerEnabled] // broken: crash
+        [ActorListIndex(0x5F)]
+        [ObjectListIndex(0x280)]
+        [FlyingVariants(1)]
+        MajoraBalloonSewer = 102,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0xF00)]
@@ -183,9 +198,10 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFF03,0xFF02,0xFF01)]
         IronKnuckle = 127,
 
-        //[EnemizerEnabled] //broken: object 3
+        [EnemizerEnabled] //broken: object 3
         [ActorListIndex(0x8D)]
         [ObjectListIndex(3)] // special case value, not real object
+        // and object 3 is so massive it never gets chosen even if we try to shove it into the object list
         [GroundVariants(0x3F7F)] // what if water type too? bottom of the ocean pot
         FlyingPot = 132,
 
@@ -195,6 +211,31 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xE4)]
         [GroundVariants(02,0x2001,0x300F,0x100F)]
         Freezard = 134,
+
+        [EnemizerEnabled] // want a chance to meet him randomly visiting the world
+        [ActorListIndex(0xCA)]
+        [ObjectListIndex(0x11D)]
+        //0x1200, 0x1B00, 0x2800 spawns from the ground after you play a song
+        // versions: 1200, 1B00, 2800 shows up a lot, 2D00 stonetower, 3200 zora cape
+        // trading post version is 1
+        // wish I could spawn the ones that dance so they are always dancing when the player gets there
+        [GroundVariants(1)]
+        [RespawningVarients(0x1200, 0x1B00, 0x2800, 1)] // killing one not possible
+        // twinislands 0x5D snowhead 0x21, observatory 0x29, zora hall 0x33, trade 0x34, 0x48 goron village
+        [EnemizerScenesExcluded(0x5D, 0x21, 0x29, 0x33, 0x34, 0x37, 0x48, 0x4D, 0x50, 0x38, 0x5B, 0x53, 0x58, 0x5A, 0x5E)] 
+        Scarecrow = 172,
+
+        [EnemizerEnabled]
+        [ActorListIndex(0xE2)]
+        [ObjectListIndex(0x132)]
+        // 0xFFFF does not spawn
+        // 0xA9F and the 0x29F crashes, but... was there ever a dog in that house?
+        // 3FF is SCT dog, 0x22BF is spiderhouse dog, makes no sense if use mask
+        // 0xD9F is old ranch dog WORKS, racetrack dogs unknown, spawned by the game
+        [GroundVariants(0x3FF, 0x22BF)]
+        [RespawningVarients(0x3FF, 0x22BF)] // killing one not possible
+        [EnemizerScenesExcluded(0x6F, 0x10, 0x27, 0x35)]
+        Dog = 215,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3E40)]
@@ -222,6 +263,14 @@ namespace MMR.Randomizer.GameObjects
         Guay = 226,
 
         [EnemizerEnabled]
+        [ActorListIndex(0xF3)]
+        [ObjectListIndex(0x146)]
+        [GroundVariants(2)]  // 2 is from romani ranch, 0 is cow grotto
+        [RespawningVarients(2)] // cannot kill
+        [EnemizerScenesExcluded(0x35, 0x4B, 0x07, 0x10)]
+        Cow = 227,
+
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x2A7C)]
         [ActorListIndex(0x109)]
         [ObjectListIndex(0x14E)]
@@ -232,6 +281,13 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x113)]
         [ObjectListIndex(0x155)]
         Garo = 248,
+
+        [EnemizerEnabled]
+        [ActorListIndex(0x267)]
+        [ObjectListIndex(0x23F)]
+        [FlyingVariants(7, 5)]
+        [EnemizerScenesExcluded(0x37, 0x38)]
+        Seagulls = 267,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3760)]
@@ -304,17 +360,26 @@ namespace MMR.Randomizer.GameObjects
         [RespawningVarients(0x8014,0x8028,0x8023,   0x0032,0x0005,0x0014)] 
         RealBombchu = 331,
 
-        [ActorListIndex(0x1A8)]
-        [ObjectListIndex(0x19E)]
-        //[WaterVariants( unk )]
-        BigOcto = 383,
-
         //[EnemizerEnabled]
         [ActorInitVarOffset(0x1C6C)]
         [ActorListIndex(0x180)]
         [ObjectListIndex(0x16B)]
         //[WaterVariants( unk )]
         SkullFish = 346,
+
+        //[EnemizerEnabled] // broken: 0 doesnt spawn, and the rest explode almost instantly
+        [ActorListIndex(0x1A6)]
+        [ObjectListIndex(0x19B)]
+        //[FlyingVariants(0)] // doesn't spawn unless in the ranch for some reason, shame too this is the one in the ranch
+        [FlyingVariants(0x8050,0x805A,0x8064)] // explodes randomly when entering scene
+        [RespawningVarients(0x8050, 0x8064, 0x805A)]
+        [EnemizerScenesExcluded(0x35)] // dont replace actual romani balloons
+        PoeBalloon = 381,
+
+        [ActorListIndex(0x1A8)]
+        [ObjectListIndex(0x19E)]
+        //[WaterVariants( unk )]
+        BigOcto = 383,
 
         [ActorInitVarOffset(0x445C)]
         [ActorListIndex(0x184)]
@@ -340,6 +405,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x1DA)]
         [ObjectListIndex(0x75)]
         [GroundVariants( 0x1E9, 0x1F4, 0x208, 0x214, 0x224, 0x236, 0x247, 0x253, 0x262, 0x275, 0x283, 0x291, 0x2A0 )]
+        [EnemizerScenesExcluded(0x13, 0x4B)] // needed for well exploration
         GibdoWell = 435,
 
         [EnemizerEnabled]
@@ -349,6 +415,14 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFF00,0xFF01,00,01)]
         // dont know why it was marked as respawn type in earlier versions none of them seem to respawn
         Eeno = 446,  // Snowmen in showhead
+
+        [EnemizerEnabled]
+        [ActorListIndex(0x1E8)]
+        [ObjectListIndex(0x1C5)]
+        //0x100 is red, 0x200 is blue, 0x300 is green, 00 is purple, however, its difficult to fight more than 2
+        [FlyingVariants(0x300, 0x200, 0x100)]
+        [GroundVariants(0x300, 0x200, 0x100)]
+        PoeSisters = 448,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3794)]
@@ -374,12 +448,12 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(0x23)] // pirate beehive cutscene
         GiantBeee = 475,
 
-        //[EnemizerEnabled] // only randomizes amongst itself... bleh
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x1C50)]
         [ActorListIndex(0x216)]
         [ObjectListIndex(0x201)]
         [GroundVariants(0xFF,0x80FF)]
-        [RespawningVarients(0xFF,0x80FF)] // dont know if they are respawning or not, siding on caution
+        //[RespawningVarients(0xFF,0x80FF)] // dont think they respawn, there are just a lot of them
         Leever = 493,
 
         //[EnemizerEnabled] // failure to randomize
@@ -387,7 +461,14 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x235)]
         [ObjectListIndex(0x75)]
         [GroundVariants( 0, 0x81, 0x82, 0x83, 0x84, 0x85 )]
+        [EnemizerScenesExcluded(0x13,0x4B)] // dont replace the train
         GibdoIkana = 524,
+
+        //[EnemizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
+        [ActorListIndex(0x282)]
+        [ObjectListIndex(0x280)]
+        [FlyingVariants(0)]
+        MajoraBalloonNCT = 601,
 
         [ActorInitVarOffset(0x2E30)]
         [ActorListIndex(0x291)]
@@ -395,8 +476,6 @@ namespace MMR.Randomizer.GameObjects
         //[FlyingVariants(0, 1)] // two? one that steals and one that doesn't?
         Takkuri = 616,
 
-        //flying pot is missing
-        // 8D 3
 
         //bombflower
         // 2F 2A

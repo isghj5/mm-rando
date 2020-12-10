@@ -85,7 +85,7 @@ namespace MMR.Randomizer.Extensions
             };
         }
 
-        public static List<int> CompatibleVariants(this Actor actor, Actor otherActor, Random rng)
+        public static List<int> CompatibleVariants(this Actor actor, Actor otherActor, Random rng, int oldActorVariant)
         {
             // with mixed types, typing could be messy, keep it hidden here
             // EG. like like can spawn on the sand on the surface, but also on the bottom of GBC
@@ -95,38 +95,31 @@ namespace MMR.Randomizer.Extensions
             listOfVariants.ForEach(u => rng.Next()); // random sort in case it has multiple types
             foreach( var variant in listOfVariants)
             {
-                List<int> compatibleVariants = null;
+                ActorVariantsAttribute ourAttr = null;
+                ActorVariantsAttribute theirAttr = null;
                 if (variant == 1) // water
                 {
-                    var ourAttr = actor.GetAttribute < WaterVariantsAttribute >();
-                    var theirAttr = otherActor.GetAttribute< WaterVariantsAttribute >();
-                    if (ourAttr != null && theirAttr != null)
-                    {
-                        compatibleVariants = (ourAttr.Variants).FindAll(u => theirAttr.Variants.Contains(u));
-                    }
+                    ourAttr = actor.GetAttribute < WaterVariantsAttribute >();
+                    theirAttr = otherActor.GetAttribute< WaterVariantsAttribute >();
                 }
                 if (variant == 2) // ground
                 {
-                    var ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
-                    var theirAttr = otherActor.GetAttribute<GroundVariantsAttribute>();
-                    if (ourAttr != null && theirAttr != null)
-                    {
-                        compatibleVariants = (ourAttr.Variants).FindAll(u => theirAttr.Variants.Contains(u));
-                    }
+                    ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
+                    theirAttr = otherActor.GetAttribute<GroundVariantsAttribute>();
                 }
                 if (variant == 3) // flying
                 {
-                    var ourAttr = actor.GetAttribute<FlyingVariantsAttribute>();
-                    var theirAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
-                    if (ourAttr != null && theirAttr != null)
-                    {
-                        compatibleVariants = (ourAttr.Variants).FindAll(u => theirAttr.Variants.Contains(u));
-                    }
+                    ourAttr = actor.GetAttribute<FlyingVariantsAttribute>();
+                    theirAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
                 }
-
-                if (compatibleVariants != null && compatibleVariants.Count > 0)
+                if (ourAttr != null && theirAttr != null) // both have same type
                 {
-                    return compatibleVariants;
+                    var compatibleVariants = theirAttr.Variants;
+                    // our old actor variant was this type
+                    if (compatibleVariants.Count > 0 && ourAttr.Variants.Contains(oldActorVariant))
+                    {
+                        return compatibleVariants;
+                    }
                 }
             }
 

@@ -11,6 +11,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MMR.Randomizer
 {
@@ -124,7 +126,7 @@ namespace MMR.Randomizer
                 var enemyMatch = EnemyList.Find(u => u.ActorIndex() == oldEnemy.Actor);
                 foreach (var enemy in EnemyList)
                 {
-                    var compatibleVariants = enemy.CompatibleVariants(enemyMatch, random);
+                    var compatibleVariants = enemyMatch.CompatibleVariants(enemy, random, oldEnemy.Variables[0]);
                     if (compatibleVariants == null)
                     {
                         continue;
@@ -196,7 +198,7 @@ namespace MMR.Randomizer
                 log.AppendLine(str);
             }
 
-            List<Enemy> sceneEnemies  = GetSceneEnemyActors(scene);
+            List<Enemy> sceneEnemies = GetSceneEnemyActors(scene);
             List<int>   sceneObjects = GetSceneEnemyObjects(scene);
             if (sceneEnemies.Count == 0 || sceneObjects.Count == 0)
             {
@@ -207,7 +209,7 @@ namespace MMR.Randomizer
             // if only scenes were enums of the id, could just case the scene.Number to a gameobject.scene
             var allScenes = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList();
             string sceneName = allScenes.Find(u => u.Id() == scene.Number).ToString();
-            WriteOutput("For Scene: [" + sceneName + "] with fid: " + scene.File);
+            WriteOutput("For Scene: [" + sceneName + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
 
             // if actor doesn't exist but object does, probably spawned by something else, remove from actors to randomize
             // TODO check for side objects that no longer need to exist and replace with possible alt objects
@@ -328,11 +330,19 @@ namespace MMR.Randomizer
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
                 SceneUtils.GetActors();
-                foreach (var scene in RomData.SceneList) if (!SceneSkip.Contains(scene.Number))
+                //foreach (var scene in RomData.SceneList) if (!SceneSkip.Contains(scene.Number))
+                Parallel.ForEach(RomData.SceneList, scene =>
                 {
-                    SwapSceneEnemies(settings, scene, random);
-                }
-            } catch (Exception e)
+                    if (!SceneSkip.Contains(scene.Number))
+                    {
+                        var previousThreadPriority = Thread.CurrentThread.Priority; // do not SLAM
+                        Thread.CurrentThread.Priority = ThreadPriority.Lowest;
+                        SwapSceneEnemies(settings, scene, random);
+                        Thread.CurrentThread.Priority = previousThreadPriority;
+                    }
+                });
+            }
+            catch (Exception e)
             {
                 throw new Exception("Enemizer failed for this seed, please try another seed.\n\n" + e.Message);
             }
