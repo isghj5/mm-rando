@@ -272,11 +272,11 @@ namespace MMR.Randomizer
             {
                 foreach (var oldEnemy in originalEnemiesPerObject[i].ToList())
                 {
+                    int randomSubmatch;
                     List<Enemy> subMatches = matchingCandidatesLists[i].FindAll(u => u.Object == chosenReplacementObjects[i].NewV);
 
                     // why must everything be bogo sort?
                     // why not randomize the list and then pick a random start and sequentially traverse
-                    int randomSubmatch;
                     while (true)
                     {
                         loopsCount += 1;
@@ -330,13 +330,21 @@ namespace MMR.Randomizer
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
                 SceneUtils.GetActors();
+                var newSceneList = RomData.SceneList;
+                // if using parallel, move biggest scenes to the front so that we dont get stuck waiting at the end for one big scene with multiple dead cores doing nothing
+                foreach (var sceneIndex in new int[]{ 1522, 1388, 1446, 1208, 1165, 1421, 1451, 1241, 1224, 1332, 1330, 1431, 1310 }){
+                    var item = newSceneList.Find(u => u.File == sceneIndex);
+                    newSceneList.Remove(item);
+                    newSceneList.Insert(0, item);
+                }
+
                 //foreach (var scene in RomData.SceneList) if (!SceneSkip.Contains(scene.Number))
-                Parallel.ForEach(RomData.SceneList, scene =>
+                Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
                 {
                     if (!SceneSkip.Contains(scene.Number))
                     {
-                        var previousThreadPriority = Thread.CurrentThread.Priority; // do not SLAM
-                        Thread.CurrentThread.Priority = ThreadPriority.Lowest;
+                        var previousThreadPriority = Thread.CurrentThread.Priority;
+                        Thread.CurrentThread.Priority = ThreadPriority.BelowNormal;// do not SLAM
                         SwapSceneEnemies(settings, scene, random);
                         Thread.CurrentThread.Priority = previousThreadPriority;
                     }

@@ -50,7 +50,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x32C0)]
         [ActorListIndex(0x12)]
         [ObjectListIndex(0x12)]
-        [GroundVariants(0xFFFD,0xFFFE,0xFFFF)]
+        [GroundVariants(0xFFFD,0xFFFE,0xFFFF)] // FF does not exist in MM vanilla, red variety
         [WaterVariants(0xFFFE)] 
         Tektite = 55,
 
@@ -74,26 +74,34 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x5C8)]
         [ActorListIndex(0x1D)]
         [ObjectListIndex(0xE)]
-        [FlyingVariants(0)]
+        [FlyingVariants(0)] // 0 works, but OOT used FFFF
         [EnemizerScenesExcluded(0x69)]
-        Shabom = 62, // the flying bubbles from Jabu Jabu
+        Shabom = 62, // the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2540)]
         [ActorListIndex(0x24)]
         [ObjectListIndex(0x20)]
         [FlyingVariants(0xEF,0x7F,4,0x3F)]
-        [GroundVariants(0xEF,0x7F,4)] // because they almost always show up indoors
+        //[GroundVariants(0xEF,0x7F,4)] // remember, this works for _spawns_
         [EnemizerScenesExcluded(0x1B, 0x27, 0x28, 0x40)]
         Skulltula = 67,
 
-        //[EnemizerEnabled]  //crash, link to paths?
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x1CC0)]
         [ActorListIndex(0x2D)]
         [ObjectListIndex(0x1D)]
-        [FlyingVariants(3,1,2,4,7)]
-        [EnemizerScenesExcluded(0x01)]
+        [FlyingVariants(2,3)] // 3 works, 1+4 crashes, assuming 7 also crashes because probably a flag
+        //[EnemizerScenesExcluded(0x01)] // huh? scene 1 is majoras lair
         DeathArmos = 71,
+
+        [EnemizerEnabled]
+        [ActorListIndex(0x2F)]
+        [ObjectListIndex(0x2A)]
+        [GroundVariants(0xFFFF)]
+        [RespawningVarients(0xFFFF)] // cannot kill
+        [EnemizerScenesExcluded(0x1F, 0x6B)]
+        BombFlower = 73,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1380)]
@@ -198,7 +206,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFF03,0xFF02,0xFF01)]
         IronKnuckle = 127,
 
-        [EnemizerEnabled] //broken: object 3
+        //[EnemizerEnabled] //broken: object 3
         [ActorListIndex(0x8D)]
         [ObjectListIndex(3)] // special case value, not real object
         // and object 3 is so massive it never gets chosen even if we try to shove it into the object list
@@ -211,6 +219,14 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xE4)]
         [GroundVariants(02,0x2001,0x300F,0x100F)]
         Freezard = 134,
+
+        //[EnemizerEnabled] // not being detected
+        [ActorListIndex(0x9D)]
+        [ObjectListIndex(0xF2)]
+        [GroundVariants(0x0FFF)]
+        [RespawningVarients(0x0FFF)] // cannot kill
+        [EnemizerScenesExcluded(0x1F)]
+        CuccoChick = 134,
 
         [EnemizerEnabled] // want a chance to meet him randomly visiting the world
         [ActorListIndex(0xCA)]
@@ -281,6 +297,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x113)]
         [ObjectListIndex(0x155)]
         Garo = 248,
+
+        [ActorInitVarOffset(0x445C)]
+        [ActorListIndex(0x184)]
+        [ObjectListIndex(0x18D)]
+        //[GroundVariants( unk ))]
+        Eyegore = 250, // walking laser cyclops in inverted stone tower
 
         [EnemizerEnabled]
         [ActorListIndex(0x267)]
@@ -367,6 +389,15 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants( unk )]
         SkullFish = 346,
 
+        //[EnemizerEnabled] // cannot use, object type 1
+        [ActorListIndex(0x183)]
+        [ObjectListIndex(1)]
+        [GroundVariants(0x7F, 0x17F)]
+        [RespawningVarients(0x7F, 0x17F)] // cannot kill
+        // ikana castle, 
+        //[EnemizerScenesExcluded(0x1B, incomplete)] 
+        DekuFlower = 349,
+
         //[EnemizerEnabled] // broken: 0 doesnt spawn, and the rest explode almost instantly
         [ActorListIndex(0x1A6)]
         [ObjectListIndex(0x19B)]
@@ -380,12 +411,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x19E)]
         //[WaterVariants( unk )]
         BigOcto = 383,
-
-        [ActorInitVarOffset(0x445C)]
-        [ActorListIndex(0x184)]
-        [ObjectListIndex(0x18D)]
-        //[GroundVariants( unk ))]
-        Eyegore = 250, // walking laser cyclops in inverted stone tower
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x21C0)]
@@ -476,9 +501,9 @@ namespace MMR.Randomizer.GameObjects
         //[FlyingVariants(0, 1)] // two? one that steals and one that doesn't?
         Takkuri = 616,
 
-
-        //bombflower
-        // 2F 2A
+        [ActorListIndex(0x13)]
+        [ObjectListIndex(0)]
+        Empty = 1114,
 
         // player
         // 0 0
