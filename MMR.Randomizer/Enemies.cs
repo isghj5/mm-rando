@@ -45,13 +45,17 @@ namespace MMR.Randomizer
                     //   if not, add
                     // this is getting ugly, need to simplify the scene(class) and scene(enum) conversion
                     var matchingEnemy = EnemyList.Find(u => u.ActorIndex() == mapActor.n);
-                    var matchingScene = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList().Find(u => u.Id() == scene.Number);
-                    if (matchingEnemy > 0 && ! matchingEnemy.ScenesRandomizationExcluded().Contains(scene.Number))
-                    {
-                        var newEnemy = matchingEnemy.ToEnemy();
-                        newEnemy.Variables = new List<int> { mapActor.v };
-                        newEnemy.MustNotRespawn = matchingScene.IsClearEnemyPuzzleRoom(scene.Maps.IndexOf(sceneMap));
-                        enemyList.Add(newEnemy);
+                    if (matchingEnemy > 0) {
+                        var listOfAcceptableVariants = matchingEnemy.Variants();
+                        var matchingScene = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList().Find(u => u.Id() == scene.Number);
+                        if ( !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.Number)
+                            && listOfAcceptableVariants.Contains(mapActor.v))
+                        {
+                            var newEnemy = matchingEnemy.ToEnemy();
+                            newEnemy.Variables = new List<int> { mapActor.v };
+                            newEnemy.MustNotRespawn = matchingScene.IsClearEnemyPuzzleRoom(scene.Maps.IndexOf(sceneMap));
+                            enemyList.Add(newEnemy);
+                        }
                     }
                 }
             }
@@ -133,7 +137,7 @@ namespace MMR.Randomizer
                     }
 
                     // if peathat replaces snowhead red bubble, it lags the whole dungeon, also its hot get out of there deku
-                    if (oldEnemy.Actor == GameObjects.Actor.RedBubble.ActorIndex() && scene.File == 1241 
+                    if (scene.File == 1241 && oldEnemy.Actor == GameObjects.Actor.RedBubble.ActorIndex()
                         && (enemy == GameObjects.Actor.Peahat || enemy == GameObjects.Actor.MadShrub))
                     //if (oldEnemy.Actor == (int)GameObjects.Actor.RedBubble && scene.Number == GameObjects.Scene.SnowheadTemple.Id() && enemy == GameObjects.Actor.Peahat)
                     {
@@ -161,6 +165,7 @@ namespace MMR.Randomizer
                         }
                         enemyMatchesPool.Add(newEnemy);
                     }
+
                 }
             }
             // TODO rewrite so we dont need this hardcoded
@@ -190,7 +195,8 @@ namespace MMR.Randomizer
 
         public static void SwapSceneEnemies(OutputSettings settings, Scene scene, Random rng)
         {
-            // spoiler log already written by this point, if you want a log make a new one
+            DateTime startTime = DateTime.Now;
+            // spoiler log already written by this point, for now making a brand new one instead of appending
             StringBuilder log = new StringBuilder();
             void WriteOutput(string str)
             {
@@ -267,6 +273,9 @@ namespace MMR.Randomizer
                 }
             }
 
+            Enemy emptyEnemy = GameObjects.Actor.Empty.ToEnemy();
+            emptyEnemy.Variables = new List<int> { 0 };
+
             loopsCount = 0;
             for (int i = 0; i < chosenReplacementObjects.Count; i++)
             {
@@ -295,6 +304,25 @@ namespace MMR.Randomizer
                         }
                     }
 
+                    // temp method to cut leevers down a bit
+                    if (oldEnemy.Actor == GameObjects.Actor.Leever.ActorIndex() 
+                        && (rng.Next(5) <= 3) )
+                    {
+                        subMatches[randomSubmatch] = emptyEnemy;
+                    }
+
+                    //this is temporary, I need to think of a better way to reduce enemies intelegently per-enemy, per-room, per-event
+                    if ((originalEnemiesPerObject[i].Count >= 5
+                          && (subMatches[randomSubmatch].Actor == GameObjects.Actor.GossipStone.ActorIndex() || subMatches[randomSubmatch].Actor == GameObjects.Actor.Scarecrow.ActorIndex()
+                          || subMatches[randomSubmatch].Actor == GameObjects.Actor.Dodongo.ActorIndex() || subMatches[randomSubmatch].Actor == GameObjects.Actor.PoeSisters.ActorIndex()
+                          || subMatches[randomSubmatch].Actor == GameObjects.Actor.BigPoe.ActorIndex() || subMatches[randomSubmatch].Actor == GameObjects.Actor.Dinofos.ActorIndex())
+                        )
+                        && (rng.Next(5) <= 2))
+                    {
+                        subMatches[randomSubmatch] = emptyEnemy;
+                    }
+
+
                     ValueSwap newActor = new ValueSwap();
                     newActor.OldV = oldEnemy.Actor;
                     newActor.NewV = subMatches[randomSubmatch].Actor;
@@ -311,6 +339,7 @@ namespace MMR.Randomizer
             SetSceneEnemyActors(scene, chosenReplacementActors);
             SetSceneEnemyObjects(scene, chosenReplacementObjects);
             SceneUtils.UpdateScene(scene);
+            WriteOutput( "time to complete randomizing scene: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
             using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename +  "_EnemizerLog.txt", append: true))
             {
                 sw.WriteLine(""); // spacer
@@ -332,7 +361,9 @@ namespace MMR.Randomizer
                 SceneUtils.GetActors();
                 var newSceneList = RomData.SceneList;
                 // if using parallel, move biggest scenes to the front so that we dont get stuck waiting at the end for one big scene with multiple dead cores doing nothing
-                foreach (var sceneIndex in new int[]{ 1522, 1388, 1446, 1208, 1165, 1421, 1451, 1241, 1224, 1332, 1330, 1431, 1310 }){
+                // biggest is on the right, because its put at the front last
+                // this should be all scenes that took > 500ms on Isghj's computer during alpha
+                foreach (var sceneIndex in new int[]{ 1442, 1353, 1258, 1358, 1449, 1291, 1224,  1522, 1388, 1165, 1421, 1431, 1241, 1222, 1330, 1208, 1451, 1446, 1332, 1310 }){
                     var item = newSceneList.Find(u => u.File == sceneIndex);
                     newSceneList.Remove(item);
                     newSceneList.Insert(0, item);
