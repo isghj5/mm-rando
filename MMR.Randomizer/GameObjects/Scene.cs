@@ -67,7 +67,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1175)]
         [SceneInternalId(0x16)]
-        [ClearEnemyPuzzleRooms(4)]// basement lava
+        [ClearEnemyPuzzleRooms(4,7)]// basement lava
         StoneTowerTemple = 0x13,
 
         [SceneInternalId(0x17)]
@@ -86,7 +86,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1208)]
         [SceneInternalId(0x1B)]
-        [ClearEnemyPuzzleRooms(4, 6, 7, 8, 9)]
+        [ClearEnemyPuzzleRooms(0, 1, 3, 4, 6, 7, 8, 9)]
         WoodfallTemple = 0x18,
 
         [FileID(1222)]
@@ -140,6 +140,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x29)]
         AstralObservatory = 0x26, // and sewer leading to it
 
+        [FileID(1301)]
         [SceneInternalId(0x2A)]
         DekuTrial = 0x27,
 
@@ -206,6 +207,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x3E)]
         DekuKingChamber = 0x3B,
 
+        [FileID(1344)]
         [SceneInternalId(0x3F)]
         GoronTrial = 0x3C,
 
@@ -234,6 +236,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x46)]
         Woodfall = 0x43,
 
+        [FileID(1364)]
         [SceneInternalId(0x47)]
         ZoraTrial = 0x44,
 
@@ -242,7 +245,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1369)]
         [SceneInternalId(0x49)]
-        [ClearEnemyPuzzleRooms(3,4,5,7)]
+        [ClearEnemyPuzzleRooms(3,4,5,7,8)]
         GreatBayTemple = 0x46,
 
         [SceneInternalId(0x4A)]

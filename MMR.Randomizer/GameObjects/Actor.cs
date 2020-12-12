@@ -101,7 +101,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFFFF)]
         [RespawningVarients(0xFFFF)] // cannot kill
         [EnemizerScenesExcluded(0x1F, 0x6B)]
-        BombFlower = 73,
+        BombFlower = 72,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1380)]
@@ -115,7 +115,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x33)]
         [ObjectListIndex(0x31)]
         [GroundVariants(0)]
-        [EnemizerScenesExcluded(0x1B)]
+        //[EnemizerScenesExcluded(0x1B)] // pretty sure this was just because respawning type
         DekuBaba = 74,
 
         [EnemizerEnabled]
@@ -123,7 +123,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorListIndex(0x3B)]
         [ObjectListIndex(0x40)]
         [GroundVariants(0xFF02,0xFF00,  0xFF01)]
-        [EnemizerScenesExcluded(0x46)]
+        [EnemizerScenesExcluded(0x46, 0x2B)]
         MadShrub = 81,
 
         [EnemizerEnabled]
@@ -195,8 +195,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2330)]
         [ActorListIndex(0x6C)]
         [ObjectListIndex(0xAB)]
-        [WaterVariants(0,2,3)]
-        [GroundVariants(0,2,3)]
+        // 2 is ocean bottom, 0 is one in shallow shore water, 3 is land and one in shallow water
+        [WaterVariants(0,2)]
+        [GroundVariants(3)]
         LikeLike = 112,
 
         [EnemizerEnabled]
@@ -220,13 +221,21 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(02,0x2001,0x300F,0x100F)]
         Freezard = 134,
 
-        //[EnemizerEnabled] // not being detected
+        [EnemizerEnabled]
+        [ActorListIndex(0x92)]
+        [ObjectListIndex(0x12A)]
+        [GroundVariants(0x807F, 0x8004, 0x8002)]
+        [RespawningVarients(0x807F, 0x8004, 0x8002)] // dont spawn where you can cause trouble
+        [EnemizerScenesExcluded(0x38, 0x2D)]
+        Bombiwa = 137,
+
+        //[EnemizerEnabled] // does not spawn
         [ActorListIndex(0x9D)]
         [ObjectListIndex(0xF2)]
         [GroundVariants(0x0FFF)]
         [RespawningVarients(0x0FFF)] // cannot kill
         [EnemizerScenesExcluded(0x1F)]
-        CuccoChick = 134,
+        CuccoChick = 144,
 
         [EnemizerEnabled] // want a chance to meet him randomly visiting the world
         [ActorListIndex(0xCA)]
@@ -271,6 +280,14 @@ namespace MMR.Randomizer.GameObjects
         Stalchild = 223,
 
         [EnemizerEnabled]
+        [ActorListIndex(0xEF)]
+        [ObjectListIndex(0x143)]
+        [GroundVariants(0x46,0x67,0x88,0xA9,0xCA, 0x4B,0x6C,0x8D,0xAE,0xCF, 0x50,0x71,0x92,0xB3,0xD4, 0x83,0xA4,0xC5,0x41,0x62)]
+        [RespawningVarients(0x46,0x67,0x88,0xA9,0xCA, 0x4B,0x6C,0x8D,0xAE,0xCF, 0x50,0x71,0x92,0xB3,0xD4, 0x83,0xA4,0xC5,0x41,0x62)] // cannot kill
+        [EnemizerScenesExcluded(0x66, 0x47, 0x3F, 0x2A)]
+        GossipStone = 224,
+
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x1520)]
         [ActorListIndex(0xF1)]
         [ObjectListIndex(0x6)]
@@ -298,16 +315,18 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x155)]
         Garo = 248,
 
+        //[EnemizerEnabled] // AI gets confused, backwalks forever
         [ActorInitVarOffset(0x445C)]
         [ActorListIndex(0x184)]
         [ObjectListIndex(0x18D)]
-        //[GroundVariants( unk ))]
+        [GroundVariants(0x700)]
         Eyegore = 250, // walking laser cyclops in inverted stone tower
 
-        [EnemizerEnabled]
+        //[EnemizerEnabled] // spawned for me, but not streamers? weird time dependencies?
         [ActorListIndex(0x267)]
         [ObjectListIndex(0x23F)]
         [FlyingVariants(7, 5)]
+        [RespawningVarients(7, 5)]
         [EnemizerScenesExcluded(0x37, 0x38)]
         Seagulls = 267,
 
@@ -368,7 +387,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x9605, 0x3205, 0x6405, 0x8C05)]
         [GroundVariants(0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0x9605, 0x3205, 0x6405, 0xFF01, 0xFF05, 0xC200, 0xFA00, 0xFA01, 0x8C05)]
         // 9605,3205,6405 all respawn in path to mountain village, 8C05 is snowhead, 6404 and 7804 are stone tower
-        [RespawningVarients(0x6404, 0x7804,   0x9605, 0x3205, 0x6405,    0x8C05)]
+        [RespawningVarients(0x6404,0x7804, 0x9605,0x3205,0x6405,  0x8C05, 0xFF05)]
         //[EnemizerScenesExcluded(0x1B)] // think they were only excluded because respawn detection was weak
         Bo = 322,
 
@@ -394,7 +413,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(1)]
         [GroundVariants(0x7F, 0x17F)]
         [RespawningVarients(0x7F, 0x17F)] // cannot kill
-        // ikana castle, 
+        // ikana castle, deku palace, nct, woodfall, woodfall temple
         //[EnemizerScenesExcluded(0x1B, incomplete)] 
         DekuFlower = 349,
 
@@ -447,6 +466,7 @@ namespace MMR.Randomizer.GameObjects
         //0x100 is red, 0x200 is blue, 0x300 is green, 00 is purple, however, its difficult to fight more than 2
         [FlyingVariants(0x300, 0x200, 0x100)]
         [GroundVariants(0x300, 0x200, 0x100)]
+        // scene exclusion goes here
         PoeSisters = 448,
 
         [EnemizerEnabled]
@@ -472,6 +492,14 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0)] // spawns really low to ground in vanilla
         [EnemizerScenesExcluded(0x23)] // pirate beehive cutscene
         GiantBeee = 475,
+
+        [EnemizerEnabled]
+        //[ActorInitVarOffset(0xAD4)]
+        [ActorListIndex(0x208)]
+        [ObjectListIndex(0x1F1)]
+        [FlyingVariants(0xFF00,1,0x102)] // 1 is a possible type? well: ff00
+        [EnemizerScenesExcluded(0x4B, 0x30)] // well and dampe house
+        BigPoe = 479,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1C50)]
@@ -501,9 +529,12 @@ namespace MMR.Randomizer.GameObjects
         //[FlyingVariants(0, 1)] // two? one that steals and one that doesn't?
         Takkuri = 616,
 
-        [ActorListIndex(0x13)]
+        [ActorListIndex(0x13)] // this is empty in vanilla, might change later
         [ObjectListIndex(0)]
-        Empty = 1114,
+        /*[GroundVariants(0)]
+        [FlyingVariants(0)]
+        [WaterVariants(0)]*/
+        Empty = 1114, // when I want to delete an actor, since 0 is player
 
         // player
         // 0 0

@@ -14,5 +14,7 @@ namespace MMR.Randomizer.Models.Rom
         public vec16    p = new vec16(); // not sure these even get used for anything
         public vec16    r = new vec16(); // not sure these even get used for anything
         public int      v; // varient, 2 bytes that changes the nature of enemies with two or more varients
+
+        public GameObjects.Actor actor;
     }
 }

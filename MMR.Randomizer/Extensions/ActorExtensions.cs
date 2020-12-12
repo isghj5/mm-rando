@@ -39,17 +39,17 @@ namespace MMR.Randomizer.Extensions
             var attrF = actor.GetAttribute<FlyingVariantsAttribute>();
             if (attrF != null)
             {
-                variants.Union(attrF.Variants);
+                variants.AddRange(attrF.Variants);
             }
             var attrW = actor.GetAttribute<WaterVariantsAttribute>();
             if (attrW != null)
             {
-                variants.Union(attrW.Variants);
+                variants.AddRange(attrW.Variants);
             }
             var attrG = actor.GetAttribute<GroundVariantsAttribute>();
             if (attrG != null)
             {
-                variants.Union(attrG.Variants);
+                variants.AddRange(attrG.Variants);
             }
 
             return variants;
@@ -124,6 +124,11 @@ namespace MMR.Randomizer.Extensions
             }
 
             return null;
+        }
+
+        public static int ActorInitOffset(this Actor actor)
+        {
+            return actor.GetAttribute<ActorInitVarOffsetAttribute>()?.Offset ?? -1;
         }
     }
 }
