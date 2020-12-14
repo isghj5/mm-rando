@@ -760,6 +760,11 @@ namespace MMR.Randomizer.Utils
             ///   since we cannot know where those samples are on the rom until A) the soundbank is written, and B) the sample file is written
             ///   because the pointer is an offset of the soundbank rom location, and both can shift in BuildRom()
 
+            if (RomData.InstrumentSetList == null)
+            {
+                return;
+            }
+
             int soundbankAddr = RomData.MMFileList[5].Cmp_Addr; // in vanilla it's 0x97f70 but MMR can shift it up because AudioSeq gets re-located
             int audiobankInstSetAddr = RomData.MMFileList[3].Cmp_Addr; // pointer to specific instrument set, starting with 0, updating per loop
             foreach (var instrumentset in RomData.InstrumentSetList)
