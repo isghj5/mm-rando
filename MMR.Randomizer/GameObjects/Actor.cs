@@ -78,6 +78,12 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(0x69)]
         Shabom = 62, // the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
+        //[EnemizerEnabled] // crashes, goddamnit
+        [ActorListIndex(0x21)]
+        [ObjectListIndex(0x1)]
+        [GroundVariants(0)] // if any work, unknown
+        Ben = 65,
+
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2540)]
         [ActorListIndex(0x24)]
@@ -234,8 +240,14 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xF2)]
         [GroundVariants(0x0FFF)]
         [RespawningVarients(0x0FFF)] // cannot kill
-        [EnemizerScenesExcluded(0x1F)]
+        [EnemizerScenesExcluded(0x42)]
         CuccoChick = 144,
+
+        [EnemizerEnabled]
+        [ActorListIndex(0xA5)]
+        [ObjectListIndex(0xF4)]
+        [GroundVariants(0)]
+        BeanSeller = 151,
 
         [EnemizerEnabled] // want a chance to meet him randomly visiting the world
         [ActorListIndex(0xCA)]
@@ -359,6 +371,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16B)]
         [WaterVariants(0x0F00,0x0300)]
         Desbreko = 297, // dead fish swarm from pirates fortress
+
+        //[EnemizerEnabled] // works but her objet is huge, and you cant talk or interact with her
+        [ActorListIndex(0x69)]
+        [ObjectListIndex(0xA2)]
+        [GroundVariants(0)]
+        [WaterVariants(0)]
+        Ruto = 304,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1250)]
