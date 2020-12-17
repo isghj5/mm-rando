@@ -5,7 +5,6 @@ namespace MMR.Randomizer.GameObjects
     public enum Actor
     {
         // the main enumator value is the MMFileList index
-        // todo finish adding ENEMIES.txt content here so we can rid of it
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2A60)]
@@ -496,11 +495,19 @@ namespace MMR.Randomizer.GameObjects
         Hiploop = 449, // Charging beetle in Woodfall
 
         [EnemizerEnabled]
+        [ActorListIndex(0x1F2)]
+        [ObjectListIndex(0x1CB)]
+        [GroundVariants(0,1,2,3)]
+        [EnemizerScenesExcluded(0x6C, 0x6D, 0x6E, 0x6F)] // all of clocktown
+        [RespawningVarients(0x6C, 0x6D, 0x6E, 0x6F)] // cannot kill
+        Postbox = 458,
+
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x2F70)]
         [ActorListIndex(0x1F3)]
         [ObjectListIndex(0x1C3)]
         [FlyingVariants(0x00FF)]
-        [EnemizerScenesExcluded(0x16,0x18)] // clock tower roof? what?
+        [EnemizerScenesExcluded(0x16,0x18)] // inverted stonetower and... clock tower roof? what?
         Poe = 459,
 
         [EnemizerEnabled]
@@ -536,11 +543,25 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(0x13,0x4B)] // dont replace the train
         GibdoIkana = 524,
 
+        [EnemizerEnabled]
+        [ActorListIndex(0x25F)]
+        [ObjectListIndex(0x12B)]
+        [GroundVariants(0x584)]
+        [RespawningVarients(0x584)]
+        SleepingScrub = 566,
+
         //[EnemizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
         [ActorListIndex(0x282)]
         [ObjectListIndex(0x280)]
         [FlyingVariants(0)]
         MajoraBalloonNCT = 601,
+
+        [EnemizerEnabled]
+        [ActorListIndex(0x289)]
+        [ObjectListIndex(0x25B)]
+        [GroundVariants(0)]
+        [RespawningVarients(0)]
+        ButlersSon = 608,
 
         [ActorInitVarOffset(0x2E30)]
         [ActorListIndex(0x291)]
@@ -555,7 +576,5 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0)]*/
         Empty = 1114, // when I want to delete an actor, since 0 is player
 
-        // player
-        // 0 0
     }
 }
