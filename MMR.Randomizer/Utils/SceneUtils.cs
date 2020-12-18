@@ -175,7 +175,7 @@ namespace MMR.Randomizer.Utils
                 a.r.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 10);
                 a.r.z = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 12);
                 a.v = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 14);
-                a.actor = Array.Find((GameObjects.Actor[])Enum.GetValues(typeof(GameObjects.Actor)), u => u.ActorIndex() == a.n);
+                a.actor = (GameObjects.Actor)a.n;
                 Actors.Add(a);
             }
             Debug.WriteLine("\n");
