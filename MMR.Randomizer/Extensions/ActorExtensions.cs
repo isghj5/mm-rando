@@ -8,14 +8,15 @@ using System;
 using System.Runtime.CompilerServices;
 using System.CodeDom;
 using System.Linq;
+using MMR.Randomizer.Attributes;
 
 namespace MMR.Randomizer.Extensions
 {
     public static class ActorExtensions
     {
-        public static int ActorIndex(this Actor actor)
+        public static int FileListIndex(this Actor actor)
         {
-            return actor.GetAttribute<ActorListIndexAttribute>().Index;
+            return actor.GetAttribute<FileIDAttribute>().ID;
         }
 
         public static int ObjectIndex(this Actor actor)
@@ -77,7 +78,7 @@ namespace MMR.Randomizer.Extensions
             return new Models.Rom.Enemy()
             {
                 Name         = (actor).ToString(),
-                Actor        = actor.ActorIndex(),
+                Actor        = (int) actor,
                 Object       = actor.ObjectIndex(),
                 ObjectSize   = ObjUtils.GetObjSize(actor.ObjectIndex()),
                 Variables    = actor.Variants(),

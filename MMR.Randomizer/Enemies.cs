@@ -44,7 +44,8 @@ namespace MMR.Randomizer
                     // check if this actor should be scene excluded from this scene (not replaced)
                     //   if not, add
                     // this is getting ugly, need to simplify the scene(class) and scene(enum) conversion
-                    var matchingEnemy = EnemyList.Find(u => u.ActorIndex() == mapActor.n);
+                    // would it be faster or slower to conver mapactor.n to gameobject then lookup enemizer tag?
+                    var matchingEnemy = EnemyList.Find(u => (int) u == mapActor.n);
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.Variants();
                         var matchingScene = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList().Find(u => u.Id() == scene.Number);
@@ -127,7 +128,8 @@ namespace MMR.Randomizer
             foreach (var oldEnemy in oldActors) // this is all copies of an enemy in a scene, so all bo or all guay
             {
                 // the enemy we got from the scene has the specific variant number, the general game object has all
-                var enemyMatch = EnemyList.Find(u => u.ActorIndex() == oldEnemy.Actor);
+                //var enemyMatch = EnemyList.Find(u => (int) u == oldEnemy.Actor);
+                var enemyMatch = (GameObjects.Actor) oldEnemy.Actor;
                 foreach (var enemy in EnemyList)
                 {
                     var compatibleVariants = enemyMatch.CompatibleVariants(enemy, random, oldEnemy.Variables[0]);
@@ -137,7 +139,7 @@ namespace MMR.Randomizer
                     }
 
                     // if peathat replaces snowhead red bubble, it lags the whole dungeon, also its hot get out of there deku
-                    if (scene.File == 1241 && oldEnemy.Actor == GameObjects.Actor.RedBubble.ActorIndex()
+                    if (scene.File == 1241 && oldEnemy.Actor == (int) GameObjects.Actor.RedBubble
                         && (enemy == GameObjects.Actor.Peahat || enemy == GameObjects.Actor.MadShrub))
                     //if (oldEnemy.Actor == (int)GameObjects.Actor.RedBubble && scene.Number == GameObjects.Scene.SnowheadTemple.Id() && enemy == GameObjects.Actor.Peahat)
                     {
@@ -148,7 +150,7 @@ namespace MMR.Randomizer
 
                     // TODO re-enable and test stationary, which is currently missing
                     //&& (enemy.Stationary == enemyMatch.Stationary)&& )
-                    if ( ! enemyMatchesPool.Any(u => u.Actor == enemy.ActorIndex()))
+                    if ( ! enemyMatchesPool.Any(u => u.Actor == (int) enemy))
                     {
                         var newEnemy = enemy.ToEnemy();
                         if (MustNotRespawn)
@@ -221,7 +223,7 @@ namespace MMR.Randomizer
             // TODO check for side objects that no longer need to exist and replace with possible alt objects
             foreach (int obj in sceneObjects.ToList())
             {
-                if ( ! (EnemyList.FindAll(u => u.ObjectIndex() == obj)).Any( u => sceneEnemies.Any( w => w.Actor == u.ActorIndex())))
+                if ( ! (EnemyList.FindAll(u => u.ObjectIndex() == obj)).Any( u => sceneEnemies.Any( w => w.Actor == (int) u)))
                 { 
                     sceneObjects.Remove(obj);
                 }
@@ -298,30 +300,31 @@ namespace MMR.Randomizer
                         //|| (oldEnemy.Type == subMatches[randomSubmatch].Type && rng.Next(5) == 0)
                         //  //&& oldEnemy.Stationary == subMatches[randomSubmatch].Stationary)
                         randomSubmatch = rng.Next(subMatches.Count);
-                        if ( oldEnemy.Type == subMatches[randomSubmatch].Type || (subMatches.FindIndex(u => u.Type == oldEnemy.Type) == -1))
+                        if (oldEnemy.Type == subMatches[randomSubmatch].Type || (subMatches.FindIndex(u => u.Type == oldEnemy.Type) == -1))
                         {
                             break;
                         }
                     }
 
                     // temp method to cut leevers down a bit
-                    if (oldEnemy.Actor == GameObjects.Actor.Leever.ActorIndex() 
-                        && (rng.Next(5) <= 3) )
+                    if (oldEnemy.Actor == (int)GameObjects.Actor.Leever
+                        && (rng.Next(5) <= 3))
                     {
                         subMatches[randomSubmatch] = emptyEnemy;
                     }
 
                     //this is temporary, I need to think of a better way to reduce enemies intelegently per-enemy, per-room, per-event
                     if ((originalEnemiesPerObject[i].Count >= 5
-                          && (subMatches[randomSubmatch].Actor == GameObjects.Actor.GossipStone.ActorIndex() || subMatches[randomSubmatch].Actor == GameObjects.Actor.Scarecrow.ActorIndex()
-                          || subMatches[randomSubmatch].Actor == GameObjects.Actor.Dodongo.ActorIndex() || subMatches[randomSubmatch].Actor == GameObjects.Actor.PoeSisters.ActorIndex()
-                          || subMatches[randomSubmatch].Actor == GameObjects.Actor.BigPoe.ActorIndex() || subMatches[randomSubmatch].Actor == GameObjects.Actor.Dinofos.ActorIndex())
+                          && (subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.GossipStone || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Scarecrow
+                          || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.Dodongo || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.PoeSisters
+                          || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.Peahat || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.BeanSeller
+                          || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.Postbox || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.ButlersSon
+                          || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.BigPoe || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Dinofos)
                         )
                         && (rng.Next(5) <= 2))
                     {
                         subMatches[randomSubmatch] = emptyEnemy;
                     }
-
 
                     ValueSwap newActor = new ValueSwap();
                     newActor.OldV = oldEnemy.Actor;
@@ -353,7 +356,8 @@ namespace MMR.Randomizer
             {
                 // these are: cutscene map, town and swamp shooting gallery, 
                 // sakons hideout, and giants chamber (shabom)
-                int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69 };
+                // adding ocean spiderhouse because its always bo, nothing else fits, but it can lag enemizer
+                int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x28 };
                 ReadEnemyList();
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
@@ -387,6 +391,103 @@ namespace MMR.Randomizer
             }
         }
 
+        public static void DisableCombatMusicOnEnemy(GameObjects.Actor actor)
+        {
+            int actorInitVarRomAddr = actor.GetAttribute<ActorInitVarOffsetAttribute>().Offset;
+            /// each enemy actor has actor init variables, 
+            /// if they have combat music is determined if a flag is set in the seventh byte
+            /// disabling combat music means disabling this bit for most enemies
+            int actorFileID = actor.FileListIndex();
+            RomUtils.CheckCompressed(actorFileID);
+            int actorFlagLocation = (actorInitVarRomAddr + 7);
+            byte flagByte = RomData.MMFileList[actorFileID].Data[actorFlagLocation];
+            RomData.MMFileList[actorFileID].Data[actorFlagLocation] = (byte)(flagByte & 0xFB);
+
+            if (actor == GameObjects.Actor.DekuBabaWithered) // special case: when they regrow music returns
+            {
+                // when they finish regrowing their combat music bit is reset, we need to no-op this to stop it
+                // 	[ori t3,t1,0x0005] which is [35 2B 00 05] becomes [00 00 00 00]
+                ReadWriteUtils.Arr_WriteU32(RomData.MMFileList[actorFileID].Data, 0x12BC, 0x00000000);
+            }
+        }
+
+
+        public static void DisableEnemyCombatMusic(bool weakEnemiesOnly = false)
+        {
+            /// each enemy has one int flag that contains a single bit that enables combat music
+            /// to get these values I used the starting rom addr of the enemy actor
+            ///  searched the ram for the actor overlay table that has rom and ram per actor,
+            ///  there it lists the actor init var ram and actor ram locations, diff, apply to rom start
+            ///  the combat music flag is part of the seventh byte of the actor init variables, but our fuction knows this
+
+            // we always disable wizrobe because he's a miniboss, 
+            // but when you enter his room you hear regular combat music for a few frames before his fight really starts
+            // this isn't noticed in vanilla because vanilla combat starts slow
+            DisableCombatMusicOnEnemy(GameObjects.Actor.Wizrobe);
+
+            var weakEnemyList = new GameObjects.Actor[]
+            {
+                GameObjects.Actor.ChuChu,
+                GameObjects.Actor.SkullFish,
+                GameObjects.Actor.DekuBaba,
+                GameObjects.Actor.DekuBabaWithered,
+                GameObjects.Actor.BioDekuBaba,
+                GameObjects.Actor.RealBombchu,
+                GameObjects.Actor.Guay,
+                GameObjects.Actor.Wolfos,
+                GameObjects.Actor.Keese,
+                GameObjects.Actor.Leever,
+                GameObjects.Actor.Bo,
+                GameObjects.Actor.DekuBaba,
+                GameObjects.Actor.Shellblade,
+                GameObjects.Actor.Tektite,
+                GameObjects.Actor.BadBat,
+                GameObjects.Actor.Eeno,
+                GameObjects.Actor.MadShrub,
+                GameObjects.Actor.Nejiron,
+                GameObjects.Actor.Hiploop,
+                GameObjects.Actor.Octarok,
+                GameObjects.Actor.Shabom,
+                GameObjects.Actor.Dexihand,
+                GameObjects.Actor.Freezard,
+                GameObjects.Actor.Armos,
+                GameObjects.Actor.Snapper,
+                GameObjects.Actor.Desbreko,
+                GameObjects.Actor.Poe,
+                GameObjects.Actor.GibdoIkana,
+                GameObjects.Actor.GibdoWell,
+                GameObjects.Actor.RedBubble,
+                GameObjects.Actor.Stalchild
+            }.ToList();
+
+            var annoyingEnemyList = new GameObjects.Actor[]
+            {
+                GameObjects.Actor.BlueBubble,
+                GameObjects.Actor.LikeLike,
+                GameObjects.Actor.Beamos,
+                GameObjects.Actor.DeathArmos,
+                GameObjects.Actor.Dinofos,
+                GameObjects.Actor.DragonFly,
+                GameObjects.Actor.GiantBeee,
+                GameObjects.Actor.WallMaster,
+                GameObjects.Actor.FloorMaster,
+                GameObjects.Actor.Skulltula,
+                GameObjects.Actor.SkullWallTula,
+                GameObjects.Actor.ReDead,
+                GameObjects.Actor.Peahat,
+                GameObjects.Actor.Dodongo,
+                GameObjects.Actor.Takkuri,
+                GameObjects.Actor.Eyegore,
+                GameObjects.Actor.Garo
+            }.ToList();
+
+            var disableList = weakEnemiesOnly ? weakEnemyList : weakEnemyList.Concat(annoyingEnemyList);
+
+            foreach (var enemy in disableList)
+            {
+                DisableCombatMusicOnEnemy(enemy);
+            }
+        }
     }
 
 }
