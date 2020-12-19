@@ -380,13 +380,12 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1830)]
         [FileID(322)]
-        [ObjectListIndex(0x17A)]
-        [FlyingVariants(0x9605, 0x3205, 0x6405, 0x8C05)]
-        [GroundVariants(0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0x9605, 0x3205, 0x6405, 0xFF01, 0xFF05, 0xC200, 0xFA00, 0xFA01, 0x8C05)]
+        [ObjectListIndex(0x17A)]        //[FlyingVariants(0x9605, 0x3205, 0x6405, 0x8C05)]
+        // this variety is slow spawn, meaning you have to walk up to it: 0x2800, 0x3200, 0xC200, 0xFA00
+        [GroundVariants(0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0x9605, 0x3205, 0x6405, 0xFF01, 0xFF05, 0xC200, 0xFA00, 0xFA01, 0x8C05)] 
         // 9605,3205,6405 all respawn in path to mountain village, 8C05 is snowhead, 6404 and 7804 are stone tower
         [RespawningVarients(0x6404,0x7804, 0x9605,0x3205,0x6405,  0x8C05, 0xFF05)]
-        //[EnemizerScenesExcluded(0x1B)] // think they were only excluded because respawn detection was weak
-        Bo = 0x164,
+        Bo = 0x164, //boe
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2290)]
@@ -420,7 +419,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x18D)]
         [GroundVariants(0x700)]
         Eyegore = 0x184,// walking laser cyclops in inverted stone tower
-
 
         //[EnemizerEnabled] // broken: 0 doesnt spawn, and the rest explode almost instantly
         [FileID(381)]

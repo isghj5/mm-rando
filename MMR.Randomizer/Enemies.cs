@@ -31,7 +31,9 @@ namespace MMR.Randomizer
 
         public static void ReadEnemyList()
         {
-            EnemyList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().Where(u => u.IsEnemyRandomized()).ToList();
+            EnemyList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+                            .Where(u => u.IsEnemyRandomized())
+                            .ToList();
         }
 
         public static List<Enemy> GetSceneEnemyActors(Scene scene)
@@ -41,20 +43,16 @@ namespace MMR.Randomizer
             {
                 foreach (var mapActor in sceneMap.Actors)
                 {
-                    // check if this actor should be scene excluded from this scene (not replaced)
-                    //   if not, add
-                    // this is getting ugly, need to simplify the scene(class) and scene(enum) conversion
-                    // would it be faster or slower to conver mapactor.n to gameobject then lookup enemizer tag?
                     var matchingEnemy = EnemyList.Find(u => (int) u == mapActor.n);
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.Variants();
-                        var matchingScene = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList().Find(u => u.Id() == scene.Number);
                         if ( !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.Number)
                             && listOfAcceptableVariants.Contains(mapActor.v))
                         {
                             var newEnemy = matchingEnemy.ToEnemy();
                             newEnemy.Variables = new List<int> { mapActor.v };
-                            newEnemy.MustNotRespawn = matchingScene.IsClearEnemyPuzzleRoom(scene.Maps.IndexOf(sceneMap));
+                            //var matchingScene = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList().Find(u => u.Id() == scene.Number);
+                            newEnemy.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(scene.Maps.IndexOf(sceneMap));
                             enemyList.Add(newEnemy);
                         }
                     }
@@ -207,17 +205,17 @@ namespace MMR.Randomizer
             }
 
             List<Enemy> sceneEnemies = GetSceneEnemyActors(scene);
-            List<int>   sceneObjects = GetSceneEnemyObjects(scene);
-            if (sceneEnemies.Count == 0 || sceneObjects.Count == 0)
+            if (sceneEnemies.Count == 0)
             {
-                WriteOutput("No Enemies or no enemy objects in scene: " + scene.File);
+                //Debug.WriteLine("No Enemies or no enemy objects in scene: " + scene.SceneEnum.ToString() + " with sid:" + scene.Number.ToString("X2"));
                 return;
             }
+            WriteOutput("time to get scene enemies: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
+            List<int>   sceneObjects = GetSceneEnemyObjects(scene);
+            WriteOutput(" time to get scene objects: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
-            // if only scenes were enums of the id, could just case the scene.Number to a gameobject.scene
-            var allScenes = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList();
-            string sceneName = allScenes.Find(u => u.Id() == scene.Number).ToString();
-            WriteOutput("For Scene: [" + sceneName + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
+            WriteOutput("For Scene: [" + scene.SceneEnum.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
+            WriteOutput(" time to find scene name: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             // if actor doesn't exist but object does, probably spawned by something else, remove from actors to randomize
             // TODO check for side objects that no longer need to exist and replace with possible alt objects
@@ -228,27 +226,34 @@ namespace MMR.Randomizer
                     sceneObjects.Remove(obj);
                 }
             }
+            WriteOutput(" time to finish removing unnecessary objects: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
+
+            List<List<Enemy>> originalEnemiesPerObject = new List<List<Enemy>>(); ; // outer layer is per object
+            List<List<Enemy>> matchingCandidatesLists = new List<List<Enemy>>();
             List<ValueSwap[]> chosenReplacementActors = new List<ValueSwap[]>();
-            List<ValueSwap>   chosenReplacementObjects;
-            List<List<Enemy>> originalEnemiesPerObject; // outer layer is per object
-            List<List<Enemy>> matchingCandidatesLists;
+            List<ValueSwap> chosenReplacementObjects;
+
+            // get a matching set of possible replacement objects and enemies that we can use
+            // moving out of loop, this should be static except for RNG changes, which we can leave static per seed
+            for (int i = 0; i < sceneObjects.Count; i++)
+            {
+                // get a list of all enemies (in this room) from enemylist that have the same OBJECT as our object that have an actor we also have
+                originalEnemiesPerObject.Add(sceneEnemies.FindAll(u => u.Object == sceneObjects[i]));
+                // get a list of matching actors that can fit in the place of the previous actor
+                matchingCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene));
+            }
+            WriteOutput(" time to generate candidate list: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             int loopsCount = 0;
             while (true)
             {
                 /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
                 chosenReplacementObjects = new List<ValueSwap>();
-                originalEnemiesPerObject = new List<List<Enemy>>();
-                matchingCandidatesLists  = new List<List<Enemy>>();
                 int oldsize = 0;
                 int newsize = 0;
                 for (int i = 0; i < sceneObjects.Count; i++)
                 {
-                    // get a list of all enemies (in this room) from enemylist that have the same OBJECT as our object that have an actor we also have
-                    originalEnemiesPerObject.Add(sceneEnemies.FindAll(u => u.Object == sceneObjects[i]));
-                    // get a list of matching actors that can fit in the place of the previous actor
-                    matchingCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene));
                     // get random enemy from the possible random enemy matches
                     Enemy randomEnemy = matchingCandidatesLists[i][rng.Next(matchingCandidatesLists[i].Count)];
                     // keep track of sizes between this new enemy combo and what used to be in this scene
@@ -262,23 +267,24 @@ namespace MMR.Randomizer
                     });
                 }
 
+                loopsCount += 1;
                 if (newsize <= oldsize)
                 {
                     //this should take into account map/scene size and size of all loaded actors...
                     //not really accurate but *should* work for now to prevent crashing
                     break;
                 }
-                loopsCount += 1;
-                if (loopsCount >= 10000)
+                if (loopsCount >= 500) // 10000 when we do hit 10k it just delays retry, something really wrong happens if you make it past 400
                 {
                     throw new Exception(" No enemy combo could be found to fill this scene: " + scene.File);
                 }
             }
+            WriteOutput(" Loops used for match candidate: " + loopsCount);
+            WriteOutput(" time to finish finding matching population: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             Enemy emptyEnemy = GameObjects.Actor.Empty.ToEnemy();
             emptyEnemy.Variables = new List<int> { 0 };
 
-            loopsCount = 0;
             for (int i = 0; i < chosenReplacementObjects.Count; i++)
             {
                 foreach (var oldEnemy in originalEnemiesPerObject[i].ToList())
@@ -286,12 +292,12 @@ namespace MMR.Randomizer
                     int randomSubmatch;
                     List<Enemy> subMatches = matchingCandidatesLists[i].FindAll(u => u.Object == chosenReplacementObjects[i].NewV);
 
-                    // why must everything be bogo sort?
-                    // why not randomize the list and then pick a random start and sequentially traverse
+                    // this isn't really a loop, 99% of the time it matches on the first loop
+                    // leaving this for now because its faster than shuffling the list even if it looks stupid
                     while (true)
                     {
                         loopsCount += 1;
-                        if (loopsCount >= 10000) // inf loop check
+                        if (loopsCount >= 1000) // inf loop check
                         {
                             throw new Exception(" No enemy combo could be found to fill this scene: " + scene.File);
                         }
@@ -316,10 +322,10 @@ namespace MMR.Randomizer
                     //this is temporary, I need to think of a better way to reduce enemies intelegently per-enemy, per-room, per-event
                     if ((originalEnemiesPerObject[i].Count >= 5
                           && (subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.GossipStone || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Scarecrow
-                          || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.Dodongo || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.PoeSisters
-                          || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.Peahat || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.BeanSeller
-                          || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.Postbox || subMatches[randomSubmatch].Actor == (int)GameObjects.Actor.ButlersSon
-                          || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.BigPoe || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Dinofos)
+                           || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Dodongo || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.PoeSisters
+                           || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Peahat || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.BeanSeller
+                           || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Postbox || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.ButlersSon
+                           || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.BigPoe || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Dinofos)
                         )
                         && (rng.Next(5) <= 2))
                     {
@@ -339,10 +345,11 @@ namespace MMR.Randomizer
                     WriteOutput("Old Enemy actor:[" + oldEnemyName + "] with id [" + newActor.OldV +  "] was replaced by new enemy: [" + newEnemyName + "] with variant: [" + newValueSwap.NewV.ToString("X2") + "]");
                 }
             }
+
             SetSceneEnemyActors(scene, chosenReplacementActors);
             SetSceneEnemyObjects(scene, chosenReplacementObjects);
             SceneUtils.UpdateScene(scene);
-            WriteOutput( "time to complete randomizing scene: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
+            WriteOutput( " time to complete randomizing scene: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
             using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename +  "_EnemizerLog.txt", append: true))
             {
                 sw.WriteLine(""); // spacer
@@ -367,7 +374,7 @@ namespace MMR.Randomizer
                 // if using parallel, move biggest scenes to the front so that we dont get stuck waiting at the end for one big scene with multiple dead cores doing nothing
                 // biggest is on the right, because its put at the front last
                 // this should be all scenes that took > 500ms on Isghj's computer during alpha
-                foreach (var sceneIndex in new int[]{ 1442, 1353, 1258, 1358, 1449, 1291, 1224,  1522, 1388, 1165, 1421, 1431, 1241, 1222, 1330, 1208, 1451, 1446, 1332, 1310 }){
+                foreach (var sceneIndex in new int[]{ 1442, 1353, 1258, 1358, 1449, 1291, 1224,  1522, 1388, 1165, 1421, 1431, 1241, 1222, 1330, 1208, 1451, 1332, 1446, 1310 }){
                     var item = newSceneList.Find(u => u.File == sceneIndex);
                     newSceneList.Remove(item);
                     newSceneList.Insert(0, item);
@@ -384,10 +391,21 @@ namespace MMR.Randomizer
                         Thread.CurrentThread.Priority = previousThreadPriority;
                     }
                 });
+
+                // real shit, 4 5 6 7
+                // bits (from 0) 4 should be always update, 5 should be always draw, 6 should be no cull
+                var actor = GameObjects.Actor.Peahat;
+                RomUtils.CheckCompressed(actor.FileListIndex());
+                RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 7] &= 0x1F;
+                actor = GameObjects.Actor.PoeSisters;
+                RomUtils.CheckCompressed(actor.FileListIndex());
+                RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 7] &= 0x1F;
+
             }
             catch (Exception e)
             {
-                throw new Exception("Enemizer failed for this seed, please try another seed.\n\n" + e.Message);
+                string innerExceptions = e.InnerException != null ? e.InnerException.ToString() : "";
+                throw new Exception("Enemizer failed for this seed, please try another seed.\n\n" + e.Message + "\n" + innerExceptions);
             }
         }
 
