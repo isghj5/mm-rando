@@ -57,6 +57,7 @@ namespace MMR.Randomizer.Utils
                 {
                     s.File = RomUtils.AddrToFile((int)saddr);
                     s.Number = i >> 4;
+                    s.SceneEnum = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList().Find(u => u.Id() == s.Number);
                     RomData.SceneList.Add(s);
                 }
                 i += 16;
@@ -157,7 +158,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        private static List<Actor> ReadMapActors(byte[] Map, int Addr, int Count)
+        private static List<Actor> ReadMapActors(byte[] Map, int Addr, int Count, int sceneID)
         {
             List<Actor> Actors = new List<Actor>();
             for (int i = 0; i < Count; i++)
@@ -175,7 +176,8 @@ namespace MMR.Randomizer.Utils
                 a.r.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 10);
                 a.r.z = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 12);
                 a.v = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 14);
-                a.actor = (GameObjects.Actor)a.n;
+                a.actor = (GameObjects.Actor) a.n; // issue, if actor doesn't exist, what does this resolve to?
+                a.sceneID = RomData.SceneList[sceneID].Number;
                 Actors.Add(a);
             }
             Debug.WriteLine("\n");
@@ -247,7 +249,7 @@ namespace MMR.Randomizer.Utils
                             byte ActorCount = RomData.MMFileList[f].Data[k + 1];
                             int ActorAddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, k + 4) & 0xFFFFFF;
                             RomData.SceneList[i].Maps[j].ActorAddr = ActorAddr;
-                            RomData.SceneList[i].Maps[j].Actors = ReadMapActors(RomData.MMFileList[f].Data, ActorAddr, ActorCount);
+                            RomData.SceneList[i].Maps[j].Actors = ReadMapActors(RomData.MMFileList[f].Data, ActorAddr, ActorCount, i);
                         }
                         if (cmd == 0x0B)
                         {

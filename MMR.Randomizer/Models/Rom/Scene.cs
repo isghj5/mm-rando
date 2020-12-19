@@ -4,8 +4,9 @@ namespace MMR.Randomizer.Models.Rom
 {
     public class Scene
     {
-        public int File;
-        public int Number;
+        public int File;    // DMA Filetable index
+        public int Number;  // Scene table index
+        public GameObjects.Scene SceneEnum;  // Gameobject scene enum value
         public List<Map> Maps = new List<Map>();
         public List<SceneSetup> Setups { get; set; } = new List<SceneSetup>();
     }
