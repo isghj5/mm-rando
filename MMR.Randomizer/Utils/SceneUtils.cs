@@ -176,7 +176,7 @@ namespace MMR.Randomizer.Utils
                 a.r.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 10);
                 a.r.z = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 12);
                 a.v = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 14);
-                a.actor = (GameObjects.Actor) a.n; // issue, if actor doesn't exist, what does this resolve to?
+                a.actor = (GameObjects.Actor) a.n; // ? if actor doesn't exist, what does this resolve to?
                 a.sceneID = RomData.SceneList[sceneID].Number;
                 Actors.Add(a);
             }

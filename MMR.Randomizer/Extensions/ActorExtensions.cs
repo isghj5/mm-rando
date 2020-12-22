@@ -3,11 +3,7 @@ using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Attributes.Actor;
 using MMR.Common.Extensions;
 using MMR.Randomizer.Utils;
-using System.Runtime.InteropServices;
 using System;
-using System.Runtime.CompilerServices;
-using System.CodeDom;
-using System.Linq;
 using MMR.Randomizer.Attributes;
 
 namespace MMR.Randomizer.Extensions
@@ -27,6 +23,11 @@ namespace MMR.Randomizer.Extensions
         public static bool IsEnemyRandomized(this Actor actor)
         {
             return actor.GetAttribute<EnemizerEnabledAttribute>()?.Enabled ?? false;
+        }
+
+        public static bool IsActorRandomized(this Actor actor)
+        {
+            return actor.GetAttribute<ActorizerEnabledAttribute>()?.Enabled ?? false;
         }
 
         public static List<int> RespawningVariants(this Actor actor)
