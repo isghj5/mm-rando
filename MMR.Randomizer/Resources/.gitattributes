@@ -1,0 +1,5 @@
+# Treat bin & mod files as binary.
+asm/*.bin   binary
+addresses/* binary
+models/*    binary
+mods/*      binary

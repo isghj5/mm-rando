@@ -48,6 +48,8 @@ namespace MMR.UI.Forms
             InitializeTooltips();
             InitializeHUDGroupBox();
             InitializeTransformationFormSettings();
+            InitializeShortenCutsceneSettings();
+            InitalizeLowHealthSFXOptions();
 
             ItemEditor = new ItemEditForm();
             UpdateCustomItemAmountLabel();
@@ -104,6 +106,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cDMult, "Select a damage mode, affecting how much damage Link takes:\n\n - Default: Link takes normal damage.\n - 2x: Link takes double damage.\n - 4x: Link takes quadruple damage.\n - 1-hit KO: Any damage kills Link.\n - Doom: Hardcore mode. Link's hearts are slowly being drained continuously.");
             TooltipBuilder.SetTooltip(cDType, "Select an effect to occur whenever Link is being damaged:\n\n - Default: Vanilla effects occur.\n - Fire: All damage burns Link.\n - Ice: All damage freezes Link.\n - Shock: All damage shocks link.\n - Knockdown: All damage knocks Link down.\n - Random: Any random effect of the above.");
             TooltipBuilder.SetTooltip(cGravity, "Select a movement modifier:\n\n - Default: No movement modifier.\n - High speed: Link moves at a much higher velocity.\n - Super low gravity: Link can jump very high.\n - Low gravity: Link can jump high.\n - High gravity: Link can barely jump.");
+            TooltipBuilder.SetTooltip(cLowHealthSFXComboBox, "Select a Low Health SFX setting:\n\n - Default: Vanilla sound.\n - Disabled: No sound will play.\n - Random: a random SFX will be chosen.\n - Specific SFX: a specific SFX will play as the low health sfx.");
             TooltipBuilder.SetTooltip(cNutAndStickDrops, "Adds Deku nuts and Deku sticks to drop tables in the field:\n\n - Default: No change, vanilla behavior.\n - Light: one stick and nut 1/16 chance termina bush.\n - Medium: More nuts, twice the chance\n - Extra: More sticks, more nuts, more drop locations.\n - Mayhem: You're crazy in the coconut!");
             TooltipBuilder.SetTooltip(cFloors, "Select a floortype for every floor ingame:\n\n - Default: Vanilla floortypes.\n - Sand: Link sinks slowly into every floor, affecting movement speed.\n - Ice: Every floor is slippery.\n - Snow: Similar to sand. \n - Random: Any random floortypes of the above.");
             TooltipBuilder.SetTooltip(cClockSpeed, "Modify the speed of time.");
@@ -122,7 +125,6 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cIceTrapQuirks, "Ice traps will behave slightly differently from other items in certain situations.");
 
             // Comforts/cosmetics
-            TooltipBuilder.SetTooltip(cCutsc, "Enable shortened cutscenes.\n\nCertain cutscenes are skipped or otherwise shortened.\nDISCLAIMER: This may cause crashing in certain emulators.");
             TooltipBuilder.SetTooltip(cQText, "Enable quick text. Dialogs are fast-forwarded to choices/end of dialog.");
             TooltipBuilder.SetTooltip(cSFX, "Randomize sound effects that are played throughout the game.");
             TooltipBuilder.SetTooltip(cMusic, "Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music. Causes softlock on Frog Choir HP.");
@@ -168,7 +170,83 @@ namespace MMR.UI.Forms
         }
 
         Regex addSpacesRegex = new Regex("(?<!^)([A-Z])");
-        void InitializeTransformationFormSettings()
+
+        private void InitializeShortenCutsceneSettings()
+        {
+            foreach (var shortenCutsceneGroup in typeof(ShortenCutsceneSettings)
+                .GetProperties()
+                )
+            {
+                var tabPage = new TabPage
+                {
+                    Tag = shortenCutsceneGroup,
+                    Text = addSpacesRegex.Replace(shortenCutsceneGroup.Name, " $1"),
+                    UseVisualStyleBackColor = true,
+                };
+                tShortenCutscenes.TabPages.Add(tabPage);
+
+                var initialX = 6;
+                var initialY = 7;
+                var deltaX = 150;
+                var deltaY = 23;
+                var width = 150;
+                var height = 17;
+                var currentX = initialX;
+                var currentY = initialY;
+                foreach (var value in Enum.GetValues(shortenCutsceneGroup.PropertyType).Cast<Enum>())
+                {
+                    if (Convert.ToInt32(value) == 0)
+                    {
+                        continue;
+                    }
+                    var checkBox = new CheckBox
+                    {
+                        Tag = value,
+                        Name = "cShortenCutscene_" + value.ToString(),
+                        Text = addSpacesRegex.Replace(value.ToString(), " $1"),
+                        Location = new Point(currentX, currentY),
+                        Size = new Size(width, height),
+                    };
+                    var description = value.GetAttribute<DescriptionAttribute>()?.Description;
+                    if (description != null)
+                    {
+                        TooltipBuilder.SetTooltip(checkBox, description);
+                    }
+                    checkBox.CheckedChanged += cShortenCutscene_CheckedChanged;
+                    tabPage.Controls.Add(checkBox);
+                    currentX += deltaX;
+                    if (currentX > tShortenCutscenes.Width - width)
+                    {
+                        currentX = initialX;
+                        currentY += deltaY;
+                    }
+                }
+            }
+        }
+
+        private void InitalizeLowHealthSFXOptions()
+        {
+            string[] listOfOptions = Enum.GetNames(typeof(LowHealthSFX));
+            this.cLowHealthSFXComboBox.Items.Clear();
+            this.cLowHealthSFXComboBox.Items.AddRange(listOfOptions);
+            this.cLowHealthSFXComboBox.SelectedItem = "Default";
+        }
+
+        private void cShortenCutscene_CheckedChanged(object sender, EventArgs e)
+        {
+            var checkBox = (CheckBox)sender;
+            var propertyInfo = (PropertyInfo)checkBox.Parent.Tag;
+            var cutsceneFlag = (int)checkBox.Tag;
+            if (_configuration.GameplaySettings.ShortenCutsceneSettings == null)
+            {
+                _configuration.GameplaySettings.ShortenCutsceneSettings = new ShortenCutsceneSettings();
+            }
+            var value = (int)propertyInfo.GetValue(_configuration.GameplaySettings.ShortenCutsceneSettings);
+            var newValue = checkBox.Checked ? value | cutsceneFlag : value & ~cutsceneFlag;
+            UpdateSingleSetting(() => propertyInfo.SetValue(_configuration.GameplaySettings.ShortenCutsceneSettings, newValue));
+        }
+
+        private void InitializeTransformationFormSettings()
         {
             foreach (var form in Enum.GetValues(typeof(TransformationForm)).Cast<TransformationForm>())
             {
@@ -191,8 +269,82 @@ namespace MMR.UI.Forms
                     });
                     tabPage.Controls.Add(CreateInstrumentComboBox(form));
                 }
+                if (_configuration.CosmeticSettings.UseEnergyColors.TryGetValue(form, out var use))
+                {
+                    tabPage.Controls.Add(new Label
+                    {
+                        Name = "lEnergyColorDefault",
+                        Text = "Default",
+                        Location = new Point(91, 63),
+                        Size = new Size(135, 23),
+                        TextAlign = ContentAlignment.MiddleCenter,
+                        Visible = !use,
+                        BorderStyle = BorderStyle.FixedSingle,
+                    });
+                    var bEnergy = CreateEnergyColorButtons(form);
+                    foreach (var button in bEnergy)
+                    {
+                        tabPage.Controls.Add(button);
+                    }
+                    tabPage.Controls.Add(CreateEnergyColorCheckBox(form));
+                    tabPage.Controls.Add(CreateEnergyColorRandomizeButton(form));
+                }
                 tFormCosmetics.TabPages.Add(tabPage);
             }
+        }
+
+        private Button CreateEnergyColorRandomizeButton(TransformationForm transformationForm)
+        {
+            var button = new Button
+            {
+                Tag = transformationForm,
+                Name = "cEnergyRandomize",
+                Text = "🎲",
+                Location = new Point(91 + (3 * 34), 62),
+                Size = new Size(33, 25),
+                TextAlign = ContentAlignment.TopRight,
+            };
+            button.Font = new Font(button.Font.FontFamily, 12);
+            TooltipBuilder.SetTooltip(button, "Randomize the energy colors for this form.");
+            button.Click += bEnergyRandomize_Click;
+            return button;
+        }
+
+        private CheckBox CreateEnergyColorCheckBox(TransformationForm transformationForm)
+        {
+            var checkBox = new CheckBox
+            {
+                Tag = transformationForm,
+                Name = "cEnergy",
+                Text = "Energy color:",
+                Location = new Point(6, 67),
+                Size = new Size(88, 17),
+            };
+            checkBox.CheckedChanged += cEnergy_CheckedChanged;
+            return checkBox;
+        }
+
+        private Button[] CreateEnergyColorButtons(TransformationForm transformationForm)
+        {
+            var current = _configuration.CosmeticSettings.EnergyColors[transformationForm];
+            var buttons = new List<Button>();
+            for (int i = 0; i < current.Length; i++)
+            {
+                var button = new Button
+                {
+                    Tag = transformationForm,
+                    Name = $"bEnergy{i}",
+                    Location = new Point(91 + (i * 34), 63),
+                    Size = new Size(32, 23),
+                    BackColor = current[i],
+                    FlatStyle = FlatStyle.Flat,
+                    Text = "",
+                };
+                TooltipBuilder.SetTooltip(button, "Select the energy color for this form.");
+                button.Click += bEnergy_Click;
+                buttons.Add(button);
+            }
+            return buttons.ToArray();
         }
 
         private CheckBox CreateTunicColorCheckBox(TransformationForm transformationForm, Button bTunic)
@@ -302,6 +454,68 @@ namespace MMR.UI.Forms
         private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             TryRandomize(sender as BackgroundWorker, e);
+        }
+
+        private void cEnergy_CheckedChanged(object sender, EventArgs e)
+        {
+            _isUpdating = true;
+
+            var checkBox = (CheckBox)sender;
+            var form = (TransformationForm)checkBox.Tag;
+            _configuration.CosmeticSettings.UseEnergyColors[form] = checkBox.Checked;
+
+            var current = _configuration.CosmeticSettings.EnergyColors[form];
+            for (int i = 0; i < current.Length; i++)
+            {
+                var button = (Button)checkBox.Parent.Controls.Find($"bEnergy{i}", false)[0];
+                button.Visible = checkBox.Checked;
+
+                var label = (Label)checkBox.Parent.Controls.Find("lEnergyColorDefault", false)[0];
+                label.Visible = !checkBox.Checked;
+
+                var randomizeButton = (Button)checkBox.Parent.Controls.Find("cEnergyRandomize", false)[0];
+                randomizeButton.Visible = checkBox.Checked;
+            }
+
+            _isUpdating = false;
+        }
+
+        private void bEnergy_Click(object sender, EventArgs e)
+        {
+            var result = cEnergy.ShowDialog();
+            if (result == DialogResult.OK)
+            {
+                _isUpdating = true;
+
+                var button = (Button)sender;
+                var form = (TransformationForm)button.Tag;
+                var index = int.Parse(button.Name.Substring(7));
+                _configuration.CosmeticSettings.EnergyColors[form][index] = cEnergy.Color;
+                button.BackColor = cEnergy.Color;
+
+                _isUpdating = false;
+            }
+        }
+
+        private void bEnergyRandomize_Click(object sender, EventArgs e)
+        {
+            _isUpdating = true;
+
+            var button = (Button)sender;
+            var form = (TransformationForm)button.Tag;
+            var random = new Random();
+            var selected = tFormCosmetics.SelectedTab;
+            for (int i = 0; i < _configuration.CosmeticSettings.EnergyColors[form].Length; i++)
+            {
+                var color = RandomUtils.GetRandomColor(random);
+                // Update the color in cosmetic settings.
+                _configuration.CosmeticSettings.EnergyColors[form][i] = color;
+                // Find the respective energy color button and update its color.
+                var bEnergy = (Button)selected.Controls.Find($"bEnergy{i}", false)[0];
+                bEnergy.BackColor = color;
+            }
+
+            _isUpdating = false;
         }
 
         private EventHandler create_cTunic_CheckedChanged(Button bTunic)
@@ -467,7 +681,24 @@ namespace MMR.UI.Forms
             cDEnt.Checked = _configuration.GameplaySettings.RandomizeDungeonEntrances;
             cSFX.Checked = _configuration.CosmeticSettings.RandomizeSounds;
             cEnemy.Checked = _configuration.GameplaySettings.RandomizeEnemies;
-            cCutsc.Checked = _configuration.GameplaySettings.ShortenCutscenes;
+            if (_configuration.GameplaySettings.ShortenCutsceneSettings == null)
+            {
+                _configuration.GameplaySettings.ShortenCutsceneSettings = new ShortenCutsceneSettings();
+            }
+            foreach (TabPage shortenCutsceneTab in tShortenCutscenes.TabPages)
+            {
+                var shortenCutsceneGroup = (PropertyInfo)shortenCutsceneTab.Tag;
+                var value = (Enum)shortenCutsceneGroup.GetValue(_configuration.GameplaySettings.ShortenCutsceneSettings);
+                foreach (var flagValue in Enum.GetValues(shortenCutsceneGroup.PropertyType).Cast<Enum>())
+                {
+                    if (Convert.ToInt32(flagValue) == 0)
+                    {
+                        continue;
+                    }
+                    var cShortenCutscene = (CheckBox)shortenCutsceneTab.Controls.Find("cShortenCutscene_" + flagValue.ToString(), false)[0];
+                    cShortenCutscene.Checked = value.HasFlag(flagValue);
+                }
+            }
             cQText.Checked = _configuration.GameplaySettings.QuickTextEnabled;
             cFreeHints.Checked = _configuration.GameplaySettings.FreeHints;
             cMoonItems.Checked = _configuration.GameplaySettings.AddMoonItems;
@@ -503,6 +734,7 @@ namespace MMR.UI.Forms
             cLink.SelectedIndex = (int)_configuration.GameplaySettings.Character;
             cTatl.SelectedIndex = (int)_configuration.CosmeticSettings.TatlColorSchema;
             cGravity.SelectedIndex = (int)_configuration.GameplaySettings.MovementMode;
+            cLowHealthSFXComboBox.SelectedIndex = cLowHealthSFXComboBox.Items.IndexOf(_configuration.CosmeticSettings.LowHealthSFX.ToString());
             cNutAndStickDrops.SelectedIndex = (int)_configuration.GameplaySettings.NutandStickDrops;
             cFloors.SelectedIndex = (int)_configuration.GameplaySettings.FloorType;
             cGossipHints.SelectedIndex = (int)_configuration.GameplaySettings.GossipHintStyle;
@@ -526,10 +758,29 @@ namespace MMR.UI.Forms
                     var cInstrument = (ComboBox)cosmeticFormTab.Controls.Find("cInstrument", false)[0];
                     cInstrument.SelectedValue = _configuration.CosmeticSettings.Instruments[form];
                 }
+
+                if (_configuration.CosmeticSettings.UseEnergyColors.TryGetValue(form, out var use))
+                {
+                    var cEnergy = (CheckBox)cosmeticFormTab.Controls.Find("cEnergy", false)[0];
+                    cEnergy.Checked = use;
+
+                    var colors = _configuration.CosmeticSettings.EnergyColors[form];
+                    for (int i = 0; i < colors.Length; i++)
+                    {
+                        var bEnergy = (Button)cosmeticFormTab.Controls.Find($"bEnergy{i}", false)[0];
+                        bEnergy.BackColor = colors[i];
+                        bEnergy.Visible = use;
+
+                        var cEnergyRandomize = (Button)cosmeticFormTab.Controls.Find("cEnergyRandomize", false)[0];
+                        cEnergyRandomize.Visible = use;
+
+                        var lEnergyColorDefault = (Label)cosmeticFormTab.Controls.Find("lEnergyColorDefault", false)[0];
+                        lEnergyColorDefault.Visible = !use;
+                    }
+                }
             }
             cTargettingStyle.Checked = _configuration.CosmeticSettings.EnableHoldZTargeting;
             cEnableNightMusic.Checked = _configuration.CosmeticSettings.EnableNightBGM;
-
 
             // Misc config options
             cDisableCritWiggle.Checked = _configuration.GameplaySettings.CritWiggleDisable;
@@ -688,6 +939,7 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.CosmeticSettings.EnableNightBGM = cEnableNightMusic.Checked);
         }
 
+
         private void cMusic_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.CosmeticSettings.Music = (Music)cMusic.SelectedIndex);
@@ -696,11 +948,6 @@ namespace MMR.UI.Forms
         private void cBottled_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.RandomizeBottleCatchContents = cBottled.Checked);
-        }
-
-        private void cCutsc_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ShortenCutscenes = cCutsc.Checked);
         }
 
         private void cDChests_CheckedChanged(object sender, EventArgs e)
@@ -1220,7 +1467,6 @@ namespace MMR.UI.Forms
             cTargettingStyle.Enabled = v;
             cSFX.Enabled = v;
             cDisableCritWiggle.Enabled = v;
-            cCutsc.Enabled = v;
             cQText.Enabled = v;
             cFastPush.Enabled = v;
             cShopAppearance.Enabled = v;
@@ -1311,7 +1557,10 @@ namespace MMR.UI.Forms
             _configuration = new Configuration
             {
                 OutputSettings = new OutputSettings(),
-                GameplaySettings = new GameplaySettings(),
+                GameplaySettings = new GameplaySettings
+                {
+                    ShortenCutsceneSettings = new ShortenCutsceneSettings(),
+                },
                 CosmeticSettings = new CosmeticSettings(),
             };
 
@@ -1392,6 +1641,7 @@ namespace MMR.UI.Forms
                     tSettings.TabPages.Insert(0, tabMain);
                     tSettings.TabPages.Insert(1, tabGimmicks);
                     tSettings.TabPages.Insert(2, tabComfort);
+                    tSettings.TabPages.Insert(3, tabShortenCutscenes);
                 }
             }
             else
@@ -1399,6 +1649,7 @@ namespace MMR.UI.Forms
                 tSettings.TabPages.Remove(tabMain);
                 tSettings.TabPages.Remove(tabGimmicks);
                 tSettings.TabPages.Remove(tabComfort);
+                tSettings.TabPages.Remove(tabShortenCutscenes);
             }
 
             // Other..?
@@ -1451,32 +1702,39 @@ namespace MMR.UI.Forms
             var path = Path.ChangeExtension(filename ?? DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION);
             if (File.Exists(path))
             {
-                Configuration newConfiguration;
-                using (StreamReader Req = new StreamReader(File.OpenRead(path)))
+                try
                 {
-                    newConfiguration = Configuration.FromJson(Req.ReadToEnd());
-                }
+                    Configuration newConfiguration;
+                    using (StreamReader Req = new StreamReader(File.OpenRead(path)))
+                    {
+                        newConfiguration = Configuration.FromJson(Req.ReadToEnd());
+                    }
 
-                if (newConfiguration.GameplaySettings.Logic != null)
-                {
-                    newConfiguration.GameplaySettings.UserLogicFileName = path;
-                    newConfiguration.GameplaySettings.Logic = null;
+                    if (newConfiguration.GameplaySettings.Logic != null)
+                    {
+                        newConfiguration.GameplaySettings.UserLogicFileName = path;
+                        newConfiguration.GameplaySettings.Logic = null;
+                    }
+                    if (File.Exists(newConfiguration.GameplaySettings.UserLogicFileName))
+                    {
+                        tbUserLogic.Text = Path.GetFileNameWithoutExtension(newConfiguration.GameplaySettings.UserLogicFileName);
+                    }
+                    else
+                    {
+                        newConfiguration.GameplaySettings.UserLogicFileName = string.Empty;
+                    }
+                    if (filename != null)
+                    {
+                        _configuration.GameplaySettings = newConfiguration.GameplaySettings;
+                    }
+                    else
+                    {
+                        _configuration = newConfiguration;
+                    }
                 }
-                if (File.Exists(newConfiguration.GameplaySettings.UserLogicFileName))
+                catch (Exception e)
                 {
-                    tbUserLogic.Text = Path.GetFileNameWithoutExtension(newConfiguration.GameplaySettings.UserLogicFileName);
-                }
-                else
-                {
-                    newConfiguration.GameplaySettings.UserLogicFileName = string.Empty;
-                }
-                if (filename != null)
-                {
-                    _configuration.GameplaySettings = newConfiguration.GameplaySettings;
-                }
-                else
-                {
-                    _configuration = newConfiguration;
+                    MessageBox.Show(e.Message, "Error loading settings file.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
 
@@ -1570,6 +1828,15 @@ namespace MMR.UI.Forms
             var combobox = (ComboBox)sender;
             var selected = (ColorSelectionItem)combobox.SelectedItem;
             _configuration.CosmeticSettings.MagicSelection = selected.Name;
+        }
+
+        private void cLowHealthSFXComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            // should probably make the object[] obj support both string and index to avoid this search, but it's low use
+            var comboboxArrayObj = cLowHealthSFXComboBox.Items[ cLowHealthSFXComboBox.SelectedIndex ];
+            var SFXOptionList = Enum.GetValues(typeof(LowHealthSFX)).Cast<LowHealthSFX>().ToList();
+            var SFXOption = SFXOptionList.Find(u => u.ToString() == comboboxArrayObj.ToString());
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.LowHealthSFX = SFXOption);
         }
 
         private void bToggleTricks_Click(object sender, EventArgs e)

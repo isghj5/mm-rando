@@ -11,6 +11,7 @@ using MMR.Common.Utils;
 using System.IO;
 using System.Linq.Expressions;
 using MMR.Randomizer.Models.Colors;
+using MMR.Randomizer.Constants;
 
 namespace MMR.CLI
 {
@@ -40,6 +41,7 @@ namespace MMR.CLI
                     Console.WriteLine("{0, -17} {1}", kvp.Key, kvp.Value);
                 }
                 Console.WriteLine("settings.json details:");
+                Console.WriteLine(GetSettingPath(cfg => cfg.GameplaySettings) + ":");
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.LogicMode));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.DamageMode));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.DamageEffect));
@@ -48,14 +50,19 @@ namespace MMR.CLI
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.ClockSpeed));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.BlastMaskCooldown));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.GossipHintStyle));
+                Console.WriteLine(GetSettingDescription(nameof(GameplaySettings.EnabledTricks), "Array of trick IDs."));
+                Console.WriteLine(GetSettingPath(cfg => cfg.GameplaySettings.ShortenCutsceneSettings) + ":");
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.ShortenCutsceneSettings.General));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.ShortenCutsceneSettings.BossIntros));
+                Console.WriteLine(GetSettingPath(cfg => cfg.CosmeticSettings) + ":");
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.TatlColorSchema));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.Music));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.DisableCombatMusic));
-                Console.WriteLine(GetEnumArraySettingDescription(cfg => cfg.CosmeticSettings.DPad.Pad.Values) + " Array length of 4.");
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.Instruments), Enum.GetNames(typeof(Instrument))));
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.HeartsSelection), ColorSelectionManager.Hearts.GetItems().Select(csi => csi.Name)));
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.MagicSelection), ColorSelectionManager.MagicMeter.GetItems().Select(csi => csi.Name)));
-                Console.WriteLine(GetSettingDescription(nameof(GameplaySettings.EnabledTricks), "Array of trick IDs."));
+                Console.WriteLine(GetSettingPath(cfg => cfg.CosmeticSettings.DPad.Pad) + ":");
+                Console.WriteLine(GetEnumArraySettingDescription(cfg => cfg.CosmeticSettings.DPad.Pad.Values) + " Array length of 4.");
                 return 0;
             }
             var configuration = LoadSettings();
@@ -65,7 +72,10 @@ namespace MMR.CLI
                 configuration = new Configuration
                 {
                     CosmeticSettings = new CosmeticSettings(),
-                    GameplaySettings = new GameplaySettings(),
+                    GameplaySettings = new GameplaySettings
+                    {
+                        ShortenCutsceneSettings = new ShortenCutsceneSettings(),
+                    },
                     OutputSettings = new OutputSettings()
                     {
                         InputROMFilename = "input.z64",
@@ -121,14 +131,26 @@ namespace MMR.CLI
                 configuration.OutputSettings.OutputROMFilename = outputArg.SingleOrDefault();
             }
             configuration.OutputSettings.OutputROMFilename ??= "output/";
-            if (Directory.Exists(configuration.OutputSettings.OutputROMFilename))
+            if (!Path.IsPathRooted(configuration.OutputSettings.OutputROMFilename))
             {
-                configuration.OutputSettings.OutputROMFilename = Path.Combine(configuration.OutputSettings.OutputROMFilename, FileUtils.MakeFilenameValid(DateTime.UtcNow.ToString("o")));
+                configuration.OutputSettings.OutputROMFilename = Path.Combine(Directory.GetCurrentDirectory(), configuration.OutputSettings.OutputROMFilename);
             }
-            if (Path.GetExtension(configuration.OutputSettings.OutputROMFilename) != ".z64")
+            var directory = Path.GetDirectoryName(configuration.OutputSettings.OutputROMFilename);
+            var filename = Path.GetFileName(configuration.OutputSettings.OutputROMFilename);
+            if (!Directory.Exists(directory))
             {
-                configuration.OutputSettings.OutputROMFilename += ".z64";
+                Console.WriteLine($"Directory not found '{directory}'");
+                return -1;
             }
+            if (string.IsNullOrWhiteSpace(filename))
+            {
+                filename = FileUtils.MakeFilenameValid(DateTime.UtcNow.ToString("o")) + ".z64";
+            }
+            else if (Path.GetExtension(filename) != ".z64")
+            {
+                filename = Path.ChangeExtension(filename, "z64");
+            }
+            configuration.OutputSettings.OutputROMFilename = Path.Combine(directory, filename);
 
             var inputArg = argsDictionary.GetValueOrDefault("-input");
             if (inputArg != null)
@@ -344,6 +366,11 @@ namespace MMR.CLI
         private static string GetArrayValueDescription(string name, IEnumerable<string> values)
         {
             return GetSettingDescription(name, string.Join('|', values));
+        }
+
+        private static string GetSettingPath<T>(Expression<Func<Configuration, T>> expression)
+        {
+            return string.Join('.', expression.Body.ToString().Split('.').Skip(1));
         }
 
         private static string GetSettingDescription(string name, string description)

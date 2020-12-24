@@ -1,5 +1,5 @@
-﻿using MMR.Randomizer.Utils;
-using Newtonsoft.Json;
+﻿using Be.IO;
+using MMR.Common.Extensions;
 using System.IO;
 using System.Linq;
 
@@ -65,14 +65,14 @@ namespace MMR.Randomizer.Asm
         public byte[] ToBytes()
         {
             using (var memStream = new MemoryStream())
-            using (var writer = new BinaryWriter(memStream))
+            using (var writer = new BeBinaryWriter(memStream))
             {
-                ReadWriteUtils.WriteU32(writer, this.Version);
+                writer.WriteUInt32(this.Version);
 
                 // Version 0
-                writer.Write(this.Items);
-                writer.Write(this.State);
-                writer.Write(this.Display);
+                writer.WriteBytes(this.Items);
+                writer.WriteByte(this.State);
+                writer.WriteByte(this.Display);
 
                 return memStream.ToArray();
             }

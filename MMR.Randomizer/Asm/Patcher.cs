@@ -6,52 +6,11 @@ using System.Collections.Generic;
 namespace MMR.Randomizer.Asm
 {
     /// <summary>
-    /// Address with bytes to patch.
-    /// </summary>
-    public class PatchData
-    {
-        public uint Address;
-        public byte[] Bytes;
-
-        private PatchData(uint address, byte[] bytes)
-        {
-            this.Address = address;
-            this.Bytes = bytes;
-        }
-
-        /// <summary>
-        /// Parse a <see cref="PatchData"/> from a line in the patch file.
-        /// </summary>
-        /// <param name="line">Line</param>
-        /// <returns>PatchData</returns>
-        public static PatchData FromLine(string line)
-        {
-            line = line.Trim();
-
-            // Check if comment or blank line
-            if (line.StartsWith(";") || line == "")
-                return null;
-
-            var fields = line.Split(',');
-            if (fields.Length != 2)
-                throw new Exception(String.Format("PatchData line must be two fields separated by a comma: {0}", line));
-
-            var address = Convert.ToUInt32(fields[0], 16);
-            var dataValue = Convert.ToUInt32(fields[1], 16);
-            var bytes = BitConverter.GetBytes(dataValue);
-            if (BitConverter.IsLittleEndian)
-                Array.Reverse(bytes);
-
-            return new PatchData(address, bytes);
-        }
-    }
-
-    /// <summary>
     /// Patcher for assembly patch file.
     /// </summary>
     public class Patcher
     {
-        private PatchData[] _data;
+        private AlvReader.Entry[] _data;
 
         /// <summary>
         /// Address of the end of the MMFile table.
@@ -97,18 +56,16 @@ namespace MMR.Randomizer.Asm
         public byte[] GetFileData(uint start, uint length)
         {
             var bytes = new byte[length];
-
-            // Zero out file bytes
-            Array.Clear(bytes, 0, bytes.Length);
-
+            var memory = new Memory<byte>(bytes);
             foreach (var data in _data)
+            {
                 if (start <= data.Address)
                 {
-                    // Get address relative to our MMFile
-                    var addr = data.Address - start;
-                    ReadWriteUtils.Arr_Insert(data.Bytes, 0, data.Bytes.Length, bytes, (int)addr);
+                    // Get offset relative to MMFile start.
+                    var offset = data.Address - start;
+                    data.Data.CopyTo(memory.Slice((int)offset));
                 }
-
+            }
             return bytes;
         }
 
@@ -137,39 +94,44 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
-        /// Load a <see cref="Patcher"/> from lines.
+        /// Get whether or not an address is relevant to be included in the patch data.
         /// </summary>
-        /// <param name="lines">Lines</param>
-        /// <returns>Patcher</returns>
-        public static Patcher FromLines(string[] lines)
+        /// <param name="address">Address to check</param>
+        /// <returns>true if relevant, false if not.</returns>
+        public static bool IsAddressRelevant(uint address)
         {
-            // Parse each line of patch data into a list
-            var list = new List<PatchData>();
-            foreach (var line in lines)
+            // If patch address is before or within MMFile table, ignore.
+            return TABLE_END <= address;
+        }
+
+        /// <summary>
+        /// Create <see cref="Patcher"/> from ALV data.
+        /// </summary>
+        /// <param name="rawBytes">ALV raw bytes</param>
+        /// <returns><see cref="Patcher"/>.</returns>
+        public static Patcher FromAlv(byte[] rawBytes)
+        {
+            var list = new List<AlvReader.Entry>();
+            var alvReader = new AlvReader(rawBytes);
+            foreach (var entry in alvReader)
             {
-                var data = PatchData.FromLine(line);
-                if (data == null)
-                    continue;
-
-                // If patch address is before or within MMFile table, ignore
-                if (TABLE_END <= data.Address)
-                    list.Add(data);
+                if (IsAddressRelevant(entry.Address))
+                    list.Add(entry);
             }
-
             var patcher = new Patcher();
             patcher._data = list.ToArray();
             return patcher;
         }
 
         /// <summary>
-        /// Load a <see cref="Patcher"/> from a <see cref="string"/>.
+        /// Create <see cref="Patcher"/> from GZip-compressed ALV data.
         /// </summary>
-        /// <param name="full">String</param>
-        /// <returns>Patcher</returns>
-        public static Patcher FromString(string full)
+        /// <param name="compressedBytes">GZip-compressed ALV data</param>
+        /// <returns><see cref="Patcher"/>.</returns>
+        public static Patcher FromCompressedAlv(byte[] compressedBytes)
         {
-            var lines = full.Split('\n');
-            return FromLines(lines);
+            var decompressedBytes = CompressionUtils.GZipDecompress(compressedBytes);
+            return FromAlv(decompressedBytes);
         }
 
         /// <summary>
@@ -178,7 +140,7 @@ namespace MMR.Randomizer.Asm
         /// <returns>Patcher</returns>
         public static Patcher Load()
         {
-            return FromString(Resources.asm.rom_patch);
+            return FromCompressedAlv(Resources.asm.rom_patch);
         }
 
         /// <summary>
@@ -188,7 +150,7 @@ namespace MMR.Randomizer.Asm
         {
             foreach (var data in _data)
                 if (TABLE_END <= data.Address && data.Address < symbols.PayloadStart)
-                    ReadWriteUtils.WriteToROM((int)data.Address, data.Bytes);
+                    ReadWriteUtils.WriteToROM((int)data.Address, data.Data);
         }
     }
 }

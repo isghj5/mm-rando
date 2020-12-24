@@ -13,6 +13,7 @@
 #include "models.h"
 #include "text.h"
 #include "util.h"
+#include "world_colors.h"
 #include "z2.h"
 
 void c_init() {
@@ -25,6 +26,7 @@ void c_init() {
     mmr_init();
     misc_init();
     text_init();
+    WorldColors_Init();
 }
 
 void before_player_actor_update(z2_link_t *link, z2_game_t *game) {

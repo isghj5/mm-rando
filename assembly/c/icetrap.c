@@ -27,7 +27,7 @@ bool icetrap_give(z2_link_t *link, z2_game_t *game) {
         return false;
     }
 
-    if (g_pending_freezes && link->frozen_timer == 0) {
+    if (g_pending_freezes) {
         g_pending_freezes -= 1;
         z2_LinkInvincibility(link, 0x14);
         z2_LinkDamage(game, link, Z2_DAMAGE_EFFECT_FREEZE, 0x40800000);

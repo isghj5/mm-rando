@@ -243,6 +243,16 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
+        /// Write a <see cref="WorldColorsConfig"/> to the ROM.
+        /// </summary>
+        /// <param name="config">World Colors config.</param>
+        public void WriteWorldColorsConfig(WorldColorsConfig config)
+        {
+            config.PatchObjects();
+            WriteAsmConfig("WORLD_COLOR_CONFIG", config);
+        }
+
+        /// <summary>
         /// Try and write a <see cref="DPadConfig"/> to the ROM.
         /// </summary>
         /// <param name="config">D-Pad config</param>
@@ -288,6 +298,24 @@ namespace MMR.Randomizer.Asm
             try
             {
                 WriteMiscHash(hash);
+                return true;
+            }
+            catch (KeyNotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Try and write a <see cref="WorldColorsConfig"/> to the ROM.
+        /// </summary>
+        /// <param name="config">World Colors config.</param>
+        /// <returns>True if successful, false if the <see cref="WorldColorsConfig"/> symbol was not found.</returns>
+        public bool TryWriteWorldColorsConfig(WorldColorsConfig config)
+        {
+            try
+            {
+                WriteWorldColorsConfig(config);
                 return true;
             }
             catch (KeyNotFoundException)
@@ -420,6 +448,7 @@ namespace MMR.Randomizer.Asm
         {
             this.WriteDPadConfig(options.DPadConfig);
             this.WriteHudColorsConfig(options.HudColorsConfig);
+            this.WriteWorldColorsConfig(options.WorldColorsConfig);
 
             // Only write the MiscConfig hash (the rest should not be changeable post-patch)
             this.WriteMiscHash(options.Hash);
@@ -433,6 +462,7 @@ namespace MMR.Randomizer.Asm
         {
             this.TryWriteDPadConfig(options.DPadConfig);
             this.TryWriteHudColorsConfig(options.HudColorsConfig);
+            this.TryWriteWorldColorsConfig(options.WorldColorsConfig);
 
             // Try and write the MiscConfig hash
             this.TryWriteMiscHash(options.Hash);

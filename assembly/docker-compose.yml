@@ -5,6 +5,4 @@ services:
     volumes:
       - ../:/docker
     working_dir: /docker/assembly
-    #stdin_open: true
-    #tty: true
-    command: bash -c 'export PATH="$$PATH:/opt/n64/bin" && make'
+    command: bash -c 'export PATH="$$PATH:/opt/n64/bin" && make copy'

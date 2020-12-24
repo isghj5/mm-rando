@@ -89,11 +89,6 @@ namespace MMR.Randomizer.Utils
 
             // Patch En_Zog (Mikau) actor.
             {
-                // Update Mikau mass value to 0 during actor init, so Mikau can be "pushed" via collision.
-                // Old: addiu t6, r0, 0x00FF
-                // New: addiu t6, r0, 0x0000
-                ReadWriteUtils.WriteU32ToROM(0xFF87D0, 0x240E0000); // Physical: 0xF482F0
-
                 // Update instruction to use new distance to allow pushing Mikau from: 40.0 => 96.0
                 // Old: lui at, 0x4220
                 // New: lui at, 0x42C0

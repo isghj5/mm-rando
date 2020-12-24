@@ -69,6 +69,23 @@ struct mmr_config {
     u16 location_quiver_small;
     u16 location_quiver_large;
     u16 location_quiver_largest;
+
+    union {
+        struct {
+            u8             : 2;
+            u8    canyon   : 1;
+            u8    ocean    : 1;
+            u8    ranch    : 1;
+            u8    mountain : 1;
+            u8    swamp    : 1;
+            u8    town     : 1;
+        };
+        u8 byte;
+    } extra_starting_maps;
+    u8 unused; // padding
+
+    u8 extra_starting_item_ids[0x10]; // probably don't need much more than this, but can increase later if we need to.
+    u16 extra_starting_item_ids_length;
 };
 
 extern struct mmr_config MMR_CONFIG;

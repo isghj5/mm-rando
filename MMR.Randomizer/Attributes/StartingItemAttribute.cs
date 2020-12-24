@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace MMR.Randomizer.Attributes
 {
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class StartingItemAttribute : Attribute
     {
-        public int Address { get; private set; }
-        public byte Value { get; private set; }
-        public bool IsAdditional { get; private set; }
+        public int Address { get; }
+        public byte Value { get; }
+        public bool IsAdditional { get; }
 
         public StartingItemAttribute(int address, byte value, bool isAdditional = false)
         {

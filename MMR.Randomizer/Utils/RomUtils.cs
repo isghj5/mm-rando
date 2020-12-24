@@ -1,4 +1,5 @@
-﻿using MMR.Randomizer.Models.Rom;
+﻿using Be.IO;
+using MMR.Randomizer.Models.Rom;
 using System;
 using System.Collections.Generic;
 using System.Globalization;
@@ -261,21 +262,21 @@ namespace MMR.Randomizer.Utils
                 {
                     decompressStream.CopyTo(memoryStream);
                     memoryStream.Seek(0, SeekOrigin.Begin);
-                    using (var reader = new BinaryReader(memoryStream))
+                    using (var reader = new BeBinaryReader(memoryStream))
                     {
-                        var magic = ReadWriteUtils.ReadU32(reader);
-                        var version = ReadWriteUtils.ReadU32(reader);
+                        var magic = reader.ReadUInt32();
+                        var version = reader.ReadUInt32();
 
                         // Validate patch magic and version values
                         PatchUtils.Validate(magic, version);
 
                         while (reader.BaseStream.Position != reader.BaseStream.Length)
                         {
-                            var fileIndex = ReadWriteUtils.ReadS32(reader);
-                            var fileAddr = ReadWriteUtils.ReadS32(reader);
-                            var index = ReadWriteUtils.ReadS32(reader);
-                            var isStatic = ReadWriteUtils.ReadS32(reader) != 0 ? true : false;
-                            var length = ReadWriteUtils.ReadS32(reader);
+                            var fileIndex = reader.ReadInt32();
+                            var fileAddr = reader.ReadInt32();
+                            var index = reader.ReadInt32();
+                            var isStatic = reader.ReadInt32() != 0 ? true : false;
+                            var length = reader.ReadInt32();
                             var data = reader.ReadBytes(length);
                             if (fileIndex >= RomData.MMFileList.Count)
                             {

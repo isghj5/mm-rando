@@ -1,10 +1,5 @@
-﻿using MMR.Randomizer.Models;
-using MMR.Randomizer.Models.Rom;
-using MMR.Randomizer.Utils;
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.IO;
-using System.Linq;
 
 namespace MMR.Randomizer.Utils
 {
@@ -76,6 +71,14 @@ namespace MMR.Randomizer.Utils
             int f = RomUtils.GetFileIndexForWriting(Addr);
             int dest = Addr - RomData.MMFileList[f].Addr;
             Arr_Insert(val, 0, val.Length, RomData.MMFileList[f].Data, dest);
+        }
+
+        public static void WriteToROM(int Addr, ReadOnlyMemory<byte> val)
+        {
+            int f = RomUtils.GetFileIndexForWriting(Addr);
+            int dest = Addr - RomData.MMFileList[f].Addr;
+            var memory = new Memory<byte>(RomData.MMFileList[f].Data);
+            val.CopyTo(memory.Slice(dest));
         }
 
         public static void Arr_Insert(byte[] src, int start, int len, byte[] dest, int addr)

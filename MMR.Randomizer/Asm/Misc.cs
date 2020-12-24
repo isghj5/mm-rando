@@ -1,4 +1,6 @@
-﻿using MMR.Randomizer.Models;
+﻿using Be.IO;
+using MMR.Common.Extensions;
+using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
 using System.IO;
@@ -48,6 +50,11 @@ namespace MMR.Randomizer.Asm
         public bool SoundCheck { get; set; }
 
         /// <summary>
+        /// Whether or not to change the hungry Goron to set a different value when rolling away and add more coordinates to his path.
+        /// </summary>
+        public bool DonGero { get; set; }
+
+        /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
@@ -58,6 +65,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.BlastMaskThief ? (uint)1 : 0) << 30;
             flags |= (this.FishermanGame ? (uint)1 : 0) << 29;
             flags |= (this.BoatArchery ? (uint)1 : 0) << 28;
+            flags |= (this.DonGero ? (uint)1 : 0) << 27;
             return flags;
         }
     }
@@ -99,6 +107,11 @@ namespace MMR.Randomizer.Asm
         /// Whether or not to draw hash icons on the file select screen.
         /// </summary>
         public bool DrawHash { get; set; } = true;
+
+        /// <summary>
+        /// Whether or not to activate beach cutscene earlier when pushing Mikau to shore.
+        /// </summary>
+        public bool EarlyMikau { get; set; }
 
         /// <summary>
         /// Whether or not to apply Elegy of Emptiness speedups.
@@ -201,6 +214,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.ShopModels ? (uint)1 : 0) << 17;
             flags |= (this.ProgressiveUpgrades ? (uint)1 : 0) << 16;
             flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 15;
+            flags |= (this.EarlyMikau ? (uint)1 : 0) << 14;
             return flags;
         }
     }
@@ -245,24 +259,24 @@ namespace MMR.Randomizer.Asm
         public byte[] ToBytes()
         {
             using (var memStream = new MemoryStream())
-            using (var writer = new BinaryWriter(memStream))
+            using (var writer = new BeBinaryWriter(memStream))
             {
-                ReadWriteUtils.WriteU32(writer, this.Version);
+                writer.WriteUInt32(this.Version);
 
                 // Version 0
-                writer.Write(this.Hash);
-                writer.Write(ReadWriteUtils.Byteswap32(this.Flags));
+                writer.WriteBytes(this.Hash);
+                writer.WriteUInt32(this.Flags);
 
                 // Version 1
                 if (this.Version >= 1)
                 {
-                    writer.Write(ReadWriteUtils.Byteswap32(this.InternalFlags));
+                    writer.WriteUInt32(this.InternalFlags);
                 }
 
                 // Version 3
                 if (this.Version >= 3)
                 {
-                    writer.Write(ReadWriteUtils.Byteswap32(this.Speedups));
+                    writer.WriteUInt32(this.Speedups);
                 }
 
                 return memStream.ToArray();
@@ -315,10 +329,14 @@ namespace MMR.Randomizer.Asm
         public void FinalizeSettings(GameplaySettings settings)
         {
             // Update speedup flags which correspond with ShortenCutscenes.
-            this.Speedups.BlastMaskThief = settings.ShortenCutscenes;
-            this.Speedups.BoatArchery = settings.ShortenCutscenes;
-            this.Speedups.FishermanGame = settings.ShortenCutscenes;
-            this.Speedups.SoundCheck = settings.ShortenCutscenes;
+            this.Speedups.BlastMaskThief = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.BlastMaskThief);
+            this.Speedups.BoatArchery = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.BoatArchery);
+            this.Speedups.FishermanGame = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FishermanGame);
+            this.Speedups.SoundCheck = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.MilkBarPerformance);
+            this.Speedups.DonGero = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.HungryGoron);
+
+            // If using Adult Link model, allow Mikau cutscene to activate early.
+            this.Flags.EarlyMikau = settings.Character == Character.AdultLink;
 
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;

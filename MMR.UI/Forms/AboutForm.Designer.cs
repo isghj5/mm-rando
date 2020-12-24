@@ -38,7 +38,7 @@
             // 
             this.lAboutText.Location = new System.Drawing.Point(27, 33);
             this.lAboutText.Name = "lAboutText";
-            this.lAboutText.Size = new System.Drawing.Size(308, 168);
+            this.lAboutText.Size = new System.Drawing.Size(308, 175);
             this.lAboutText.TabIndex = 0;
             this.lAboutText.Text = resources.GetString("lAboutText.Text");
             this.lAboutText.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -56,7 +56,7 @@
             // discordLinkLabel
             // 
             this.discordLinkLabel.AutoSize = true;
-            this.discordLinkLabel.Location = new System.Drawing.Point(108, 119);
+            this.discordLinkLabel.Location = new System.Drawing.Point(108, 116);
             this.discordLinkLabel.Name = "discordLinkLabel";
             this.discordLinkLabel.Size = new System.Drawing.Size(141, 13);
             this.discordLinkLabel.TabIndex = 2;
@@ -69,7 +69,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(359, 210);
+            this.ClientSize = new System.Drawing.Size(359, 216);
             this.Controls.Add(this.discordLinkLabel);
             this.Controls.Add(this.lAboutTitle);
             this.Controls.Add(this.lAboutText);

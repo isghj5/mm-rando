@@ -1742,6 +1742,7 @@ typedef struct {
     u8               unk_0xF6[0x2];                  /* 0x00F6 */
     z2_save_scene_flags_t save_scene_flags[0x78];    /* 0x00F8 */
     u8               unk_0xE18[0xA8];                /* 0x0E18 */
+    // 0EA4 = 0x1C byte length bit field. bit per scene indicating whether minimap is enabled
     u16              skull_tokens_1;                 /* 0x0EC0 */
     u16              skull_tokens_2;                 /* 0x0EC2 */
     u8               unk_0xEC4[0x1A];                /* 0x0EC4 */
@@ -1761,19 +1762,32 @@ typedef struct {
                 u8   flag_0x0E;                      /* 0x0F06 */
             };
             u8       unk_0x0F[0x08];                 /* 0x0F07 */
+            // 0F0C & 0x01 = Woodfall Temple Raised
+            // 0F0C & 0x02 = Swamp Clear
             u8       great_spin;                     /* 0x0F0F */
             u8       unk_0x18[0x4C];                 /* 0x0F10 */
+            // 0F19 & 0x80 = Mountain Clear
+            // 0F2C & 0x20 = Canyon Clear
+            // 0F2F & 0x80 = Ocean Clear
         };
         u8           week_event_inf_bytes[0x64];     /* 0x0EF8 */
     }                week_event_inf;
     u32              locations_visited;              /* 0x0F5C */
-    u8               unk_0xF60[0x8C];                /* 0x0F60 */
+    u32              world_map_visible;              /* 0x0F60 */ // 0x00007FFF is full map
+    u8               unk_0xF60[0x88];                /* 0x0F64 */
     u8               lotteries[0x09];                /* 0x0FEC */
     u8               spider_masks[0x06];             /* 0x0FF5 */
     u8               bomber_code[0x05];              /* 0x0FFB */
     u8               unk_0x1000[0x0A];               /* 0x1000 */
     u16              checksum;                       /* 0x100A */
     u8               event_inf[0x08];                /* 0x100C */
+    // (cleared if you leave temple)
+    // 1011 & 0x40 = Gyorg Intro cutscene seen
+    // 1011 & 0x20 = Twinmold Intro cutscene seen
+    // 1011 & 0x10 = Odolwa Intro cutscene seen
+    // 1011 & 0x08 = Goht Unfrozen cutscene seen
+    // 1012 & 0x04 = Goht Intro cutscene seen
+    // 1012 & 0x02 = Majora Intro cutscene seen
     u8               unk_0x1014[0x02];               /* 0x1014 */
     u16              jinx_timer;                     /* 0x1016 */
     s16              rupee_timer;                    /* 0x1018 */
@@ -1785,6 +1799,7 @@ typedef struct {
     u32              entrance_mod;                   /* 0x3CAC */
     s32              void_flag;                      /* 0x3CB0 */
     u8               unk_0x3CB4[0x11C];              /* 0x3CB4 */
+    // u16 3D04 = after death entrance
     u8               timers[0x40];                   /* 0x3DD0 */
     u8               unk_0x3E10[0x108];              /* 0x3E10‬ */
     u8               buttons_usable[0x05];           /* 0x3F18, B, C-left, C-down, C-right, A buttons. */
@@ -1952,11 +1967,18 @@ typedef struct {
     u8               mask;                           /* 0x0153 */
     u8               mask_c;                         /* 0x0154, C button index (starting at 1) of current/recently worn mask */
     u8               previous_mask;                  /* 0x0155 */
-    u8               unk_0x156[0xF4];                /* 0x0156 */
-    u16              current_animation_id;           /* 0x024A */
+    u8               unk_0x156[0xF2];                /* 0x0156 */
+    union {
+        struct {
+            u16      unk_0x248;                      /* 0x0248 */
+            u16      current_animation_id;           /* 0x024A */
+        };
+        u32          animation_value;                /* 0x0248 */
+    };
     u8               unk_0x24C[0x138];               /* 0x024C */
     u16              get_item;                       /* 0x0384 */
-    u8               unk_0x386[0x6E6];               /* 0x0386 */
+    u8               unk_0x386[0x6E2];               /* 0x0386 */
+    f32             *table_A68;                      /* 0x0A68 */
     union {
         struct {
             u32      action_state1;                  /* 0x0A6C */
@@ -2442,6 +2464,8 @@ typedef struct {
 
 /* Function Addresses (Get Item) */
 #define z2_SetGetItem_addr               0x800B8A1C
+#define z2_GiveItem_addr                 0x80112E80
+#define z2_GiveMap_addr                  0x8012EF0C
 
 /* Function Addresses (HUD) */
 #define z2_UpdateButtonsState_addr       0x8010EF68
@@ -2467,6 +2491,12 @@ typedef struct {
 #define z2_LoadRoom_addr                 0x8012E96C
 #define z2_UnloadRoom_addr               0x8012EBF8
 
+/* Function Addresses (Sound) */
+#define z2_SetBGM2_addr                  0x801A3098
+
+/* Function Addresses (Text) */
+#define z2_ShowMessage_addr              0x801518B0
+
 /* Relocatable Functions (Pause Menu) */
 #define z2_PauseDrawItemIcon_vram        0x80821AD4
 
@@ -2475,8 +2505,14 @@ typedef struct {
 #define z2_LinkInvincibility_vram        0x80833998
 #define z2_UseItem_vram                  0x80831990
 
+#define z2_PerformEnterWaterEffects_vram 0x8083B8D0
+#define z2_PlayerHandleBuoyancy_vram     0x808475B4
+
 /* Relocatable Types (VRAM) */
 #define z2_file_select_ctxt_vram         0x80813DF0
+
+typedef void (*z2_PerformEnterWaterEffects_proc)(z2_game_t *game, z2_link_t *link);
+typedef void (*z2_PlayerHandleBuoyancy_proc)(z2_link_t *link);
 
 /* Function Prototypes */
 typedef int (*z2_CanInteract_proc)(z2_game_t *game);
@@ -2564,6 +2600,8 @@ typedef void (*z2_Yaz0_LoadAndDecompressFile_proc)(u32 prom_addr, void *dest, u3
 
 /* Function Prototypes (Get Item) */
 typedef void (*z2_SetGetItem_proc)(z2_actor_t *actor, z2_game_t *game, s32 unk2, u32 unk3);
+typedef void (*z2_GiveItem_proc)(z2_game_t *game, u8 item_id);
+typedef void (*z2_GiveMap_proc)(u32 map_index);
 
 /* Function Prototypes (HUD) */
 typedef void (*z2_HudSetAButtonText_proc)(z2_game_t *game, u16 text_id);
@@ -2591,6 +2629,12 @@ typedef void (*z2_RngSetSeed_proc)(u32 seed);
 /* Function Prototypes (Rooms) */
 typedef void (*z2_LoadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt, uint8_t room_id);
 typedef void (*z2_UnloadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt);
+
+/* Function Prototypes (Sound) */
+typedef void (*z2_SetBGM2_proc)(u16 bgm_id);
+
+/* Function Prototypes (Text) */
+typedef void (*z2_ShowMessage_proc)(z2_game_t *game, u16 message_id, u8 something); // TODO figure out something?
 
 /* Functions */
 #define z2_CanInteract                   ((z2_CanInteract_proc)           z2_CanInteract_addr)
@@ -2675,6 +2719,8 @@ typedef void (*z2_UnloadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt);
 
 /* Functions (Get Item) */
 #define z2_SetGetItem                    ((z2_SetGetItem_proc)            z2_SetGetItem_addr)
+#define z2_GiveItem                      ((z2_GiveItem_proc)              z2_GiveItem_addr)
+#define z2_GiveMap                       ((z2_GiveMap_proc)               z2_GiveMap_addr)
 
 /* Functions (HUD) */
 #define z2_HudSetAButtonText             ((z2_HudSetAButtonText_proc)     z2_HudSetAButtonText_addr)
@@ -2699,5 +2745,11 @@ typedef void (*z2_UnloadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt);
 /* Functions (Rooms) */
 #define z2_LoadRoom                      ((z2_LoadRoom_proc)              z2_LoadRoom_addr)
 #define z2_UnloadRoom                    ((z2_UnloadRoom_proc)            z2_UnloadRoom_addr)
+
+/* Functions (Sound) */
+#define z2_SetBGM2                       ((z2_SetBGM2_proc)               z2_SetBGM2_addr)
+
+/* Functions (Text) */
+#define z2_ShowMessage                   ((z2_ShowMessage_proc)           z2_ShowMessage_addr)
 
 #endif // Z2_H

@@ -537,3 +537,89 @@
     jal     hud_colors_get_menu_subtitle_text_color_hook
     addiu   t7, v0, 0x0008
     lw      ra, 0x00C0 (sp) ;; Restore RA.
+
+;==================================================================================================
+; Song Score Lines Color
+;==================================================================================================
+
+.headersize(G_CODE_RAM - G_CODE_FILE)
+
+; Replaces:
+;   lui     at, 0x0001
+;   addu    at, at, v0
+;   sh      a0, 0x2034 (at) ;; Red = 0xFF
+;   lui     at, 0x0001
+;   addu    at, at, v0
+;   sh      r0, 0x2036 (at) ;; Green = 0x00
+;   lui     at, 0x0001
+;   addu    at, at, v0
+;   sh      r0, 0x2038 (at) ;; Blue = 0x00
+.org 0x80150C2C
+.area 0x24
+    sw      v0, 0x0034 (sp) ;; Store V0 in reserved stack space.
+    sw      v1, 0x0038 (sp) ;; Store V1 in reserved stack space.
+    jal     hud_colors_update_score_lines_color
+    lw      a0, 0x0030 (sp) ;; A0 = GlobalContext.
+    addiu   a0, r0, 0x00FF  ;; Restore: A0 = 0xFF.
+    lw      v0, 0x0034 (sp) ;; Restore V0.
+    lw      v1, 0x0038 (sp) ;; Restore V1.
+    nop
+    nop
+.endarea
+
+;==================================================================================================
+; Song Score Note Color
+;==================================================================================================
+
+.headersize(G_CODE_RAM - G_CODE_FILE)
+
+@ScoreNoteColor equ (HUD_COLOR_CONFIG + 0xBC)
+
+; Replaces:
+;   or      v1, v0, r0       ;; V1 = V0.
+;   lui     t7, 0xFF64       ;;
+;   ori     t7, t7, 0x00FF   ;; T7 = 0xFF6400FF (color value).
+;   sw      t7, 0x0004 (v1)  ;; Write lower 32-bits of SetPrimColor instruction (color value).
+;   sw      t2, 0x0000 (v1)  ;; Write higher 32-bits of SetPrimColor instruction.
+.org 0x80152B4C
+    lui     t7, hi(@ScoreNoteColor)
+    lw      t7, lo(@ScoreNoteColor) (t7)
+    ori     t7, t7, 0x00FF   ;; Alpha = 0xFF.
+    sw      t7, 0x0004 (v0)
+    sw      t2, 0x0000 (v0)
+
+;==================================================================================================
+; Shop Cursor Color
+;==================================================================================================
+
+; Write cursor color for Trading Post.
+.headersize(G_EN_OSSAN_VRAM - G_EN_OSSAN_FILE)
+.org 0x808AAAF8 ; Offset: 0x2A58
+    addiu   a1, a0, 0x220 ;; A1 = Output array.
+    mfc1    a2, f0        ;; A2 = Amount.
+    j       HudColors_WriteShopCursorColor
+    or      a3, r0, r0    ;; A3 = Shop type (0).
+
+; Write cursor color for Curiosity Shop.
+.headersize(G_EN_FSN_VRAM - G_EN_FSN_FILE)
+.org 0x80AE2D90 ; Offset: 0x1220
+    addiu   a1, a0, 0x3B4  ;; A1 = Output array.
+    mfc1    a2, f0         ;; A2 = Amount.
+    j       HudColors_WriteShopCursorColor
+    ori     a3, r0, 0x0001 ;; A3 = Shop type (1).
+
+; Write cursor color for Bomb Shop, Goron Shop, Zora Shop.
+.headersize(G_EN_SOB1_VRAM - G_EN_SOB1_FILE)
+.org 0x80A0EFDC ; Offset: 0x27CC
+    addiu   a1, a0, 0x30C  ;; A1 = Output array.
+    mfc1    a2, f0         ;; A2 = Amount.
+    j       HudColors_WriteShopCursorColor
+    ori     a3, r0, 0x0002 ;; A3 = Shop type (2).
+
+; Write cursor color for Potion Hut.
+.headersize(G_EN_TRT_VRAM - G_EN_TRT_FILE)
+.org 0x80A8E56C ; Offset: 0x2DFC
+    addiu   a1, a0, 0x3F0  ;; A1 = Output array.
+    mfc1    a2, f0         ;; A2 = Amount.
+    j       HudColors_WriteShopCursorColor
+    ori     a3, r0, 0x0003 ;; A3 = Shop type (3).

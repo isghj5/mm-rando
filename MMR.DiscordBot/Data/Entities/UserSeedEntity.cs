@@ -8,6 +8,7 @@ namespace MMR.DiscordBot.Data.Entities
     {
         [PrimaryKey]
         public ulong UserId { get; set; }
+
         public DateTime LastSeedRequest { get; set; }
     }
 }

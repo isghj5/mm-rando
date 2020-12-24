@@ -19,16 +19,15 @@ namespace MMR.Randomizer.Models.Settings
             return JsonConvert.DeserializeObject<Configuration>(json, _jsonSerializerSettings);
         }
 
-        private static JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        private readonly static JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
         {
             ContractResolver = new WritablePropertiesOnlyResolver(),
             NullValueHandling = NullValueHandling.Ignore,
             Formatting = Formatting.Indented,
+            Converters =
+            {
+                new StringEnumConverter(),
+            }
         };
-
-        static Configuration()
-        {
-            _jsonSerializerSettings.Converters.Add(new StringEnumConverter());
-        }
     }
 }

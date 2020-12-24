@@ -87,7 +87,7 @@ namespace MMR.Randomizer.Utils
                         continue;
                     }
 
-                    if (competitiveHintInfo.Condition != null && competitiveHintInfo.Condition(randomizedResult.Settings))
+                    if (competitiveHintInfo.Condition != null && !competitiveHintInfo.Condition(randomizedResult.Settings))
                     {
                         randomizedItems.Remove(item);
                         continue;
@@ -423,7 +423,7 @@ namespace MMR.Randomizer.Utils
                     {
                         soundEffectId = 0x690A; // grandma laugh
                         itemNames.Add(item.Item.ItemHints().Random(random));
-                        locationNames.Add(hintableItems.Random(random).Item.LocationHints().Random(random));
+                        locationNames.Add(hintableItems.Random(random).NewLocation.Value.LocationHints().Random(random));
                     }
                 }
             }

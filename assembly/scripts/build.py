@@ -162,7 +162,7 @@ def main():
     create_diff(
         os.path.join(relpath, 'roms/base.z64'),
         os.path.join(relpath, 'roms/patched.z64'),
-        os.path.join(relpath, 'data/generated/rom_patch.txt'),
+        os.path.join(relpath, 'data/generated/rom_patch.bin'),
         virtual=args.virtual,
         offset=offsets.table,
     )

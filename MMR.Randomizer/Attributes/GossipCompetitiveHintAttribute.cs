@@ -9,15 +9,19 @@ namespace MMR.Randomizer.Attributes
         public int Priority { get; private set; }
         public Func<GameplaySettings, bool> Condition { get; private set; }
 
-        public GossipCompetitiveHintAttribute(int priority = 0, string condition = null)
+        public GossipCompetitiveHintAttribute(int priority = 0)
+        {
+            Priority = priority;
+        }
+
+        public GossipCompetitiveHintAttribute(int priority, string condition, object conditionValue)
         {
             Priority = priority;
 
             if (condition != null)
             {
-                typeof(GameplaySettings).GetProperty(condition);
                 var parameter = Expression.Parameter(typeof(GameplaySettings));
-                Condition = Expression.Lambda<Func<GameplaySettings, bool>>(Expression.Property(parameter, condition), parameter).Compile();
+                Condition = Expression.Lambda<Func<GameplaySettings, bool>>(Expression.Equal(Expression.Property(parameter, condition), Expression.Constant(conditionValue)), parameter).Compile();
             }
         }
     }

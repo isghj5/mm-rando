@@ -283,6 +283,30 @@
   <data name="replace_gi_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\replace-gi-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="shorten_cutscene_don_gero" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-don-gero.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_goht_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-goht-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_gyorg_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-gyorg-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_igos_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-igos-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_majora_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-majora-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_odolwa_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-odolwa-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_twinmold_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-twinmold-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="shorten_cutscene_wart_intro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\shorten-cutscene-wart-intro.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="short_cutscenes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\short-cutscenes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

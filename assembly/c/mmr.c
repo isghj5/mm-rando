@@ -120,7 +120,6 @@ u16 mmr_GetNewGiIndex(z2_game_t *game, z2_actor_t *actor, u16 gi_index, bool gra
     if (!flagged) {
         if (grant) {
             mmr_SetGiFlag(new_gi_index);
-            mmr_SetGiFlag(gi_index);
         }
         new_gi_index = gi_index;
         if (MISC_CONFIG.progressive_upgrades)
@@ -138,6 +137,9 @@ u16 mmr_GetNewGiIndex(z2_game_t *game, z2_actor_t *actor, u16 gi_index, bool gra
         if (!is_cycle_repeatable) {
             new_gi_index = 0x0A; // Recovery Heart
         }
+    }
+    if (grant) {
+        mmr_SetGiFlag(gi_index);
     }
     if (actor == Z2_LINK(game)) {
         Z2_LINK(game)->get_item = new_gi_index;

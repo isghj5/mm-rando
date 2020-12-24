@@ -1,4 +1,6 @@
-﻿using MMR.Randomizer.Utils;
+﻿using Be.IO;
+using MMR.Common.Extensions;
+using MMR.Randomizer.GameObjects;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,6 +41,10 @@ namespace MMR.Randomizer.Asm
         public ushort LocationQuiverLarge;
         public ushort LocationQuiverLargest;
 
+        public byte ExtraStartingMaps;
+        public byte[] ExtraStartingItemIds;
+        public ushort ExtraStartingItemIdsLength;
+
         /// <summary>
         /// Convert to bytes.
         /// </summary>
@@ -46,39 +52,44 @@ namespace MMR.Randomizer.Asm
         public byte[] ToBytes()
         {
             using (var memStream = new MemoryStream())
-            using (var writer = new BinaryWriter(memStream))
+            using (var writer = new BeBinaryWriter(memStream))
             {
-                ReadWriteUtils.WriteU32(writer, this.Version);
+                writer.WriteUInt32(this.Version);
 
                 foreach (var val in this.CycleRepeatableLocations)
                 {
-                    ReadWriteUtils.WriteU16(writer, val);
+                    writer.WriteUInt16(val);
                 }
 
-                ReadWriteUtils.WriteU16(writer, CycleRepeatableLocationsLength);
+                writer.WriteUInt16(CycleRepeatableLocationsLength);
 
-                ReadWriteUtils.WriteU16(writer, this.LocationBottleRedPotion);
-                ReadWriteUtils.WriteU16(writer, this.LocationBottleGoldDust);
-                ReadWriteUtils.WriteU16(writer, this.LocationBottleMilk);
-                ReadWriteUtils.WriteU16(writer, this.LocationBottleChateau);
+                writer.WriteUInt16(this.LocationBottleRedPotion);
+                writer.WriteUInt16(this.LocationBottleGoldDust);
+                writer.WriteUInt16(this.LocationBottleMilk);
+                writer.WriteUInt16(this.LocationBottleChateau);
 
-                ReadWriteUtils.WriteU16(writer, this.LocationSwordKokiri);
-                ReadWriteUtils.WriteU16(writer, this.LocationSwordRazor);
-                ReadWriteUtils.WriteU16(writer, this.LocationSwordGilded);
+                writer.WriteUInt16(this.LocationSwordKokiri);
+                writer.WriteUInt16(this.LocationSwordRazor);
+                writer.WriteUInt16(this.LocationSwordGilded);
 
-                ReadWriteUtils.WriteU16(writer, this.LocationMagicSmall);
-                ReadWriteUtils.WriteU16(writer, this.LocationMagicLarge);
+                writer.WriteUInt16(this.LocationMagicSmall);
+                writer.WriteUInt16(this.LocationMagicLarge);
 
-                ReadWriteUtils.WriteU16(writer, this.LocationWalletAdult);
-                ReadWriteUtils.WriteU16(writer, this.LocationWalletGiant);
+                writer.WriteUInt16(this.LocationWalletAdult);
+                writer.WriteUInt16(this.LocationWalletGiant);
 
-                ReadWriteUtils.WriteU16(writer, this.LocationBombBagSmall);
-                ReadWriteUtils.WriteU16(writer, this.LocationBombBagBig);
-                ReadWriteUtils.WriteU16(writer, this.LocationBombBagBiggest);
+                writer.WriteUInt16(this.LocationBombBagSmall);
+                writer.WriteUInt16(this.LocationBombBagBig);
+                writer.WriteUInt16(this.LocationBombBagBiggest);
 
-                ReadWriteUtils.WriteU16(writer, this.LocationQuiverSmall);
-                ReadWriteUtils.WriteU16(writer, this.LocationQuiverLarge);
-                ReadWriteUtils.WriteU16(writer, this.LocationQuiverLargest);
+                writer.WriteUInt16(this.LocationQuiverSmall);
+                writer.WriteUInt16(this.LocationQuiverLarge);
+                writer.WriteUInt16(this.LocationQuiverLargest);
+
+                writer.WriteByte(this.ExtraStartingMaps);
+                writer.WriteByte(0); // padding
+                writer.WriteBytes(this.ExtraStartingItemIds);
+                writer.WriteUInt16(this.ExtraStartingItemIdsLength);
 
                 return memStream.ToArray();
             }
@@ -116,8 +127,13 @@ namespace MMR.Randomizer.Asm
         public ushort LocationQuiverLarge { get; set; }
         public ushort LocationQuiverLargest { get; set; }
 
+        public TingleMap ExtraStartingMaps { get; set; }
+
+        public List<byte> ExtraStartingItemIds { get; set; }
+
         public MMRConfig()
         {
+            ExtraStartingItemIds = new List<byte>();
             CycleRepeatableLocations = new List<ushort>();
             BaseCycleRepeatableLocations = new ReadOnlyCollection<ushort>(new List<ushort>
             {
@@ -189,12 +205,20 @@ namespace MMR.Randomizer.Asm
         /// <returns>Configuration structure</returns>
         public override IAsmConfigStruct ToStruct(uint version)
         {
+            if (this.ExtraStartingItemIds.Count > 0x10)
+            {
+                throw new ArgumentException($"{nameof(ExtraStartingItemIds)} is too large.");
+            }
+
             var endBuffer = 0x80 - this.CycleRepeatableLocations.Count - this.BaseCycleRepeatableLocations.Count;
             if (endBuffer < 0)
             {
-                throw new ArgumentException("cycleRepeatableLocations is too large.");
+                throw new ArgumentException($"{nameof(CycleRepeatableLocations)} is too large.");
             }
+
             var cycleRepeatableLocations = this.BaseCycleRepeatableLocations.Concat(this.CycleRepeatableLocations).Concat(Enumerable.Repeat((ushort)0, endBuffer)).ToArray();
+            var extraStartingItemIds = this.ExtraStartingItemIds.ToArray();
+            Array.Resize(ref extraStartingItemIds, 0x10);
             return new MMRConfigStruct
             {
                 Version = version,
@@ -223,7 +247,11 @@ namespace MMR.Randomizer.Asm
                 LocationQuiverSmall = this.LocationQuiverSmall,
                 LocationQuiverLarge = this.LocationQuiverLarge,
                 LocationQuiverLargest = this.LocationQuiverLargest,
-    };
+
+                ExtraStartingMaps = (byte)this.ExtraStartingMaps,
+                ExtraStartingItemIds = extraStartingItemIds,
+                ExtraStartingItemIdsLength = (ushort)this.ExtraStartingItemIds.Count,
+            };
         }
     }
 }
