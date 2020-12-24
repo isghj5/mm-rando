@@ -56,4 +56,18 @@ namespace MMR.Randomizer.Attributes.Actor
         public WaterVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 
+    // we often want to place restrictions on how many of an enemy can possibly spawn
+
+    class SinglePerRoomMax : ActorVariantsAttribute
+    {
+
+        public SinglePerRoomMax(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+    }
+
+    class DoublePerRoomMax : ActorVariantsAttribute
+    {
+
+        public DoublePerRoomMax(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+    }
+
 }

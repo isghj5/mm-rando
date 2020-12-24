@@ -22,5 +22,11 @@ namespace MMR.Randomizer.Extensions
             return attr == null ? false : attr.PuzzleRooms.Contains(room);
         }
 
+        public static int GetSceneObjLimit(this Scene scene)
+        {
+            // TODO make this a real attribute
+            // cat says the lowest max heap size for any scene is 0x15900, aiming lower than that for spawned objects
+            return 0x12000; 
+        }
     }
 }
