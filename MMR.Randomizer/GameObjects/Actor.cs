@@ -59,7 +59,6 @@ namespace MMR.Randomizer.GameObjects
         [FileID(56)]
         [ObjectListIndex(0x14)]
         [GroundVariants(0)]
-        //[EnemizerScenesExcluded(0x7)] // I think this only existed because respawn detection was poor
         Peahat = 0x14,
 
         [EnemizerEnabled]
@@ -104,8 +103,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1CC0)]
         [FileID(71)]
         [ObjectListIndex(0x1D)]
+        // 2 worked in snowhead, seems to fly in a straight line though, pathing?
         [FlyingVariants(2,3)] // 3 works, 1+4 crashes, assuming 7 also crashes because probably a flag
-        //[EnemizerScenesExcluded(0x01)] // huh? scene 1 is majoras lair
+        [RespawningVarients(2,3)] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
+        [EnemizerScenesExcluded(0x18)] // 0x18 is ISTT
         DeathArmos = 0x2D,
 
         [ActorizerEnabled]
@@ -155,7 +156,15 @@ namespace MMR.Randomizer.GameObjects
         [RespawningVarients(0xFFFF)]
         BlueBubble = 0x3E,// cursed
 
+        //[EnemizerEnabled] hardcoded values for his entrance spawn
+        [ObjectListIndex(0x52)]
+        [GroundVariants(0)]
+        [SinglePerRoomMax(0)] // only fight her if you fight only one
+        [EnemizerScenesExcluded(0x18)] // lets not randomize his normal spawn
+        Gomess = 0x43,
+
         [EnemizerEnabled]
+        //[ItemsReqRemove(Item.ItemBombBag)]
         [ActorInitVarOffset(0x1240)]
         [FileID(89)]
         [ObjectListIndex(0x6A)]
@@ -203,6 +212,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xA2)]
         [GroundVariants(0)]
         [WaterVariants(0)]
+        [SinglePerRoomMax(0)]
         Ruto = 0x69,
 
         [EnemizerEnabled]
@@ -255,6 +265,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(151)]
         [ObjectListIndex(0xF4)]
         [GroundVariants(0)]
+        [RespawningVarients(0)] // cannot kill
+        [EnemizerScenesExcluded(0x07)]
         BeanSeller = 0xA5,
 
         [ActorizerEnabled] // want a chance to meet him randomly visiting the world
@@ -298,8 +310,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2D60)]
         [FileID(223)]
         [ObjectListIndex(0x142)]
-        // 0x0042 is swinging from tree, looks stupid if spawns in the ground
-        [GroundVariants(0x0022,0x0032)]
+        // 0x0042 is swinging from tree, looks stupid if spawns in the ground, 22 is sitting on the edge of a bookcase, looks weird on the ground
+        [GroundVariants(0x0032)]
         [EnemizerScenesExcluded(0x43,0x28)]
         //[RespawningVarients(0x32)] the ones that circle the tombs, but dont respawn if placed anywhere else it seems, ignore
         Stalchild = 0xED,
@@ -336,10 +348,12 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0,02,03)]
         DragonFly = 0x109,
 
+        //[EnemizerEnabled] //crash
         [ActorInitVarOffset(0x3688)]
         [FileID(248)]
         [ObjectListIndex(0x155)]
-        Garo = 0x113,
+        [GroundVariants(0x2243)]
+        Garo = 0x112, //113 is the garo, but 112 is the encounter to get garo
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3760)]
@@ -375,6 +389,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(297)]
         [ObjectListIndex(0x16B)]
         [WaterVariants(0x0F00,0x0300)]
+        [SinglePerRoomMax(0)]
         Desbreko = 0x14B,// dead fish swarm from pirates fortress
 
         [EnemizerEnabled]
@@ -418,11 +433,14 @@ namespace MMR.Randomizer.GameObjects
         [RespawningVarients(0x8014,0x8028,0x8023,   0x0032,0x0005,0x0014)] 
         RealBombchu = 0x16F,
 
-        //[EnemizerEnabled]
+        [EnemizerEnabled] // biggest issue: they dont really attack, this isn't the version that spawns over and over
         [ActorInitVarOffset(0x1C6C)]
         [FileID(346)]
         [ObjectListIndex(0x16B)]
-        //[WaterVariants( unk )]
+        // A2 might be the ones that respawn over and over, the "Encounter"
+        // 82 and 62 are found in the map room, both just kinda spin, never engages
+        // zora cape has 000, same as the other two
+        [WaterVariants( 0xA2, 0x82, 0x62, 0 )]
         SkullFish = 0x180,
 
         //[ActorizerEnabled] // crash
@@ -439,6 +457,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(250)]
         [ObjectListIndex(0x18D)]
         [GroundVariants(0x700)]
+        [SinglePerRoomMax(0)]
         Eyegore = 0x184,// walking laser cyclops in inverted stone tower
 
         //[ActorizerEnabled] // broken: 0 doesnt spawn, and the rest explode almost instantly
@@ -460,7 +479,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(406)]
         [ObjectListIndex(0x1A6)]
         [GroundVariants(0x0)]
-        [EnemizerScenesExcluded(0x1B)]
+        //[EnemizerScenesExcluded(0x1B)] // woodfall, only because respawn detection was broken
         Snapper = 0x1BA,
 
         [ActorInitVarOffset(0x1FD0)]
@@ -497,7 +516,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1C5)]
         //0x100 is red, 0x200 is blue, 0x300 is green, 00 is purple, however, its difficult to fight more than 2
         [FlyingVariants(0x300, 0x200, 0x100)]
-        [GroundVariants(0x300, 0x200, 0x100)]
+        [GroundVariants(0x300, 0x200, 0x100)] 
+        [SinglePerRoomMax(0)] // only fight her if you fight only one
         // scene exclusion goes here
         PoeSisters = 0x1E8,
 
@@ -550,6 +570,14 @@ namespace MMR.Randomizer.GameObjects
         //[RespawningVarients(0xFF,0x80FF)] // dont think they respawn, there are just a lot of them
         Leever = 0x216,
 
+        //[ActorizerEnabled] // does not spawn? boo
+        [ObjectListIndex(0x211)]
+        [GroundVariants(1)]
+        [WaterVariants(1)]
+        [RespawningVarients(1)] // cannot kill
+        [EnemizerScenesExcluded(0x33)]
+        Japas = 0x231,
+
         //[EnemizerEnabled] // failure to randomize
         [ActorInitVarOffset(0x2CA0)]  // combat music disable does not work
         [FileID(524)]
@@ -557,6 +585,15 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants( 0, 0x81, 0x82, 0x83, 0x84, 0x85 )]
         [EnemizerScenesExcluded(0x13,0x4B)] // dont replace the train
         GibdoIkana = 0x235,
+
+        //[ActorizerEnabled] // unless I write dayonly/nightonly, this is too flukey
+        [ObjectListIndex(0xFF)]
+        // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
+        // 2 doesn't ever seen to spawn, day or night, think its a fluke
+        [GroundVariants(0x2)] // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
+        [RespawningVarients(0,1,2)] // cannot kill
+        [EnemizerScenesExcluded(0x15, 0x70, 0x61)]
+        GuruGuru = 0x248,
 
         //[ActorizerEnabled] // doesn't spawn with a flower, looks silly
         [FileID(566)]
@@ -584,6 +621,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x25B)]
         [GroundVariants(0)]
         [RespawningVarients(0)]
+        [SinglePerRoomMax(0)]
         ButlersSon = 0x289,
 
         [ActorInitVarOffset(0x2E30)]

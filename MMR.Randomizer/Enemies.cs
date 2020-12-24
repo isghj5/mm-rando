@@ -43,9 +43,9 @@ namespace MMR.Randomizer
             /// this is separate from object because actors and objects are a different list in the scene data
 
             var enemyList = new List<Enemy>();
-            foreach (var sceneMap in scene.Maps)
+            for (int mapNumber = 0; mapNumber < scene.Maps.Count; mapNumber++ ) // var sceneMap in scene.Maps)
             {
-                foreach (var mapActor in sceneMap.Actors)
+                foreach (var mapActor in scene.Maps[mapNumber].Actors)
                 {
                     var matchingEnemy = EnemyList.Find(u => (int) u == mapActor.n);
                     if (matchingEnemy > 0) {
@@ -57,7 +57,8 @@ namespace MMR.Randomizer
                             //mapActor.objectIndex = 
                             newEnemy.Variables = new List<int> { mapActor.v };
                             //var matchingScene = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList().Find(u => u.Id() == scene.Number);
-                            newEnemy.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(scene.Maps.IndexOf(sceneMap));
+                            newEnemy.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(mapNumber);
+                            newEnemy.Room = mapNumber;
                             enemyList.Add(newEnemy);
                         }
                     }
@@ -123,25 +124,34 @@ namespace MMR.Randomizer
             /// in Enemizer some spawn locations suck, we notice them being wrong only when we change them
 
             // maybe break this up a bit
-            void ZeroRotation(int fid, int actorAddr, int actorIndex)
+            void FlattenPitchRoll(int fid, int actorAddr, int actorIndex)
             {
+                // the bottom 3 bits are time flags
+                // I like how CM lists only three bits, but pretends like theres nothing in the gap
+                // obviously theres something related to time spawns there
                 RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 8] = 0; // x rot
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 9] &= 3; // x rot
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 10] = 0; // y rot
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 11] &= 3; // y rot
+                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 9] &= 0x7F; // x rot
                 RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 12] = 0; // z rot
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 13] &= 3; // z rot
+                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 13] &= 0x7F; // z rot
             }
-            void SetHeight(int fid, int actorAddr, int actorIndex, short height) // broken needs fix
+            void SetHeight(int fid, int actorAddr, int actorIndex, int height)
             {
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 4] = (byte) ((height >> 8) & 0xF); // y pos
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 5] = (byte)( height & 0xF); // y pos
+                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 4] = (byte) ((height >> 8) & 0xFF); // y pos
+                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 5] = (byte)( height & 0xFF);        // y pos
             }
-
 
             // TODO have to fix the stonetower bombchu to not spawn right in front of the chest
 
-            // TODO fix the one eeno spawn in TF that spawns too high above the gorund
+            var terminaFieldRool0FID = GameObjects.Scene.TerminaField.FileID() + 1;
+            RomUtils.CheckCompressed(terminaFieldRool0FID); // safety first
+            var terminaFieldSceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.TerminaField.FileID());
+            var terminaFieldActorAddr = RomData.SceneList[terminaFieldSceneIndex].Maps[0].ActorAddr;
+            // room 0 actor 145: Y to -245
+            // currently broken: too high
+            SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 144, -245);  // fixes the eeno that is way too high above ground
+            // room 0 actor 61: Y to -60
+            SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 60, -60);  // fixes the blue bubble that is too high
+
 
             // have to fix the two wolfos spawn in twin islands that spawn off scew
             // room 0, actors 27 and 28
@@ -151,10 +161,8 @@ namespace MMR.Randomizer
             RomUtils.CheckCompressed(twinIslandsRoom0FID); // safety first
             var sceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.TwinIslands.FileID());
             var twinIslandsActorAddr = RomData.SceneList[sceneIndex].Maps[0].ActorAddr;
-            ZeroRotation(twinIslandsRoom0FID, twinIslandsActorAddr, 26);  // fixes redead
-            //SetHeight(twinIslandsRoom0FID, twinIslandsActorAddr, 26, 141); // busted
-            ZeroRotation(twinIslandsRoom0FID, twinIslandsActorAddr, 27); // fixes redead
-            //SetHeight(twinIslandsRoom0FID, twinIslandsActorAddr, 27, 196); // busted
+            FlattenPitchRoll(twinIslandsRoom0FID, twinIslandsActorAddr, 26);  // fixes redead falling through the floor
+            FlattenPitchRoll(twinIslandsRoom0FID, twinIslandsActorAddr, 27);  // fixes redead falling through the floor
 
         }
 
@@ -213,6 +221,7 @@ namespace MMR.Randomizer
 
                 }
             }
+
             // TODO rewrite so we dont need this hardcoded
             // desbrekos, the giant skelefish swarm will lag southern swamp horribly
             if (scene.File == 1358)
@@ -324,7 +333,7 @@ namespace MMR.Randomizer
                     // get random enemy from the possible random enemy matches
                     Enemy randomEnemy = matchingCandidatesLists[i][rng.Next(matchingCandidatesLists[i].Count)];
                     // keep track of sizes between this new enemy combo and what used to be in this scene
-                    if (randomEnemy.Object != 1) // 1is always loaded, dont count it if an actor needs it
+                    if (randomEnemy.Object != 1) // if always loaded, dont count it if an actor needs it
                     {
                         newsize += randomEnemy.ObjectSize;
 
@@ -340,17 +349,19 @@ namespace MMR.Randomizer
 
                 // testing: force enemy redead, bombchus dont fall if you want to test position
                 //if (scene.File == GameObjects.Scene.TwinIslands.FileID() && !chosenReplacementObjects.Any(u => u.NewV == 0x75)) //75 = redead
-                //if (scene.File == GameObjects.Scene.TwinIslands.FileID() && !chosenReplacementObjects.Any(u => u.NewV == 0x2A)) // 2A = bombflower
-                /*{
+                /*if (scene.File == GameObjects.Scene.GreatBayCoast.FileID() 
+                    && !chosenReplacementObjects.Any(u => u.NewV == 0x211)) // bombflower exists, 2A = bombflower
+                    //&& chosenReplacementObjects[3].NewV != 0x2A) // eeno replaced with bombflower
+                {
                     continue;
                 }*/
 
                 loopsCount += 1;
-                if (newsize <= oldsize * 1.5) // DEBUG turn off for size based generation
+                if (newsize <= oldsize || newsize < scene.SceneEnum.GetSceneObjLimit() ) // DEBUG turn off for size based generation
                 {
                     //this should take into account map/scene size and size of all loaded actors...
                     //not really accurate but *should* work for now to prevent crashing
-                    WriteOutput("Ratio of new to old scene object volume: " + ((float)newsize / (float)oldsize) + " size:" + newsize);
+                    WriteOutput("Ratio of new to old scene object volume: " + ((float)newsize / (float)oldsize) + " size:" + newsize.ToString("X2"));
                     break;
                 }
 
@@ -397,13 +408,12 @@ namespace MMR.Randomizer
                     }
 
                     //this is temporary, I need to think of a better way to reduce enemies intelegently per-enemy, per-room, per-event
-                    if ((originalEnemiesPerObject[i].Count >= 5
+                    if (( ! oldEnemy.MustNotRespawn && originalEnemiesPerObject[i].Count >= 5
                           && (subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.GossipStone || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Scarecrow
                            || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Dodongo || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.PoeSisters
                            || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Peahat || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.BeanSeller
                            || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Postbox || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.ButlersSon
-                           || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.BigPoe || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Dinofos)
-                        )
+                           || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.BigPoe || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Dinofos))
                         && (rng.Next(5) <= 2))
                     {
                         subMatches[randomSubmatch] = emptyEnemy;
@@ -488,15 +498,9 @@ namespace MMR.Randomizer
                     Debug.WriteLine(dataBlob[actorInitLoc + 9].ToString("X2") + " < object id");
                 }
 
-                // real shit, 4 5 6 7
                 // bits (from 0) 4 should be always update, 5 should be always draw, 6 should be no cull
                 //RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 7] |= 0x80; // "invisible" is weirder than you think
 
-                /*foreach(var a in new GameObjects.Actor[] { GameObjects.Actor.Peahat, GameObjects.Actor.PoeSisters, GameObjects.Actor.Dinofos, GameObjects.Actor.BombFlower })
-                {
-                    RomUtils.CheckCompressed(a.FileListIndex());
-                    PrintActorInitFlags(a.ToString(), RomData.MMFileList[a.FileListIndex()].Data, a.ActorInitOffset());
-                }*/
 
                 foreach (var a2 in Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                             .Where(u => u.IsEnemyRandomized() &&  u.ActorInitOffset() > 100)
@@ -522,8 +526,8 @@ namespace MMR.Randomizer
                 //RomUtils.CheckCompressed(actor.FileListIndex());
                 //PrintActorInitFlags(actor.ToString(), RomData.MMFileList[actor.FileListIndex()].Data, actor.ActorInitOffset());
                 //RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 7] |= 0x80; // test invisible
-                FixSpawnLocations();
 
+                FixSpawnLocations(); // some spawns need to be fixed, enemizer brings out their bugginess
             }
             catch (Exception e)
             {
