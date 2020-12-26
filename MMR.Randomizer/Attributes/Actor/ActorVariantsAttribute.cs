@@ -8,7 +8,7 @@ namespace MMR.Randomizer.Attributes.Actor
     ///  example: all the chuchus are one actor, white and black bo are varients of one actor
     /// </summary>
 
-    class ActorVariantsAttribute : Attribute
+    public class ActorVariantsAttribute : Attribute
     {
         public List<int> Variants { get; set; }
 
@@ -28,43 +28,43 @@ namespace MMR.Randomizer.Attributes.Actor
     ///  these get in the way of puzzle rooms that require you clear all enemies
     /// </summary>
 
-    class RespawningVarientsAttribute : ActorVariantsAttribute
+    public class RespawningVarientsAttribute : ActorVariantsAttribute
     {
         public RespawningVarientsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 
-    /// <summary>
-    /// some enemies can spawn in multiple situations, likelike can spawn on the beach or ocean bottom, so two types
-    /// I don't really want to add one of these times the different types, even though we need them, so inheritance
-    /// </summary>
+/// <summary>
+/// some enemies can spawn in multiple situations, likelike can spawn on the beach or ocean bottom, so two types
+/// I don't really want to add one of these times the different types, even though we need them, so inheritance
+/// </summary>
 
-    // todo: consider splitting these up further, several enemies hang/perch from trees, 
-    //  some enemies spawn on the surface or bottom of water, and skulltullas dont really _fly_
+// todo: consider splitting these up further, several enemies hang/perch from trees, 
+//  some enemies spawn on the surface or bottom of water, and skulltullas dont really _fly_
 
-    class FlyingVariantsAttribute : ActorVariantsAttribute
+    public class FlyingVariantsAttribute : ActorVariantsAttribute
     {
         public FlyingVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 
-    class GroundVariantsAttribute : ActorVariantsAttribute
+    public class GroundVariantsAttribute : ActorVariantsAttribute
     {
         public GroundVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 
-    class WaterVariantsAttribute : ActorVariantsAttribute
+    public class WaterVariantsAttribute : ActorVariantsAttribute
     {
         public WaterVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 
     // we often want to place restrictions on how many of an enemy can possibly spawn
 
-    class SinglePerRoomMax : ActorVariantsAttribute
+    public class SinglePerRoomMax : ActorVariantsAttribute
     {
 
         public SinglePerRoomMax(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 
-    class DoublePerRoomMax : ActorVariantsAttribute
+    public class DoublePerRoomMax : ActorVariantsAttribute
     {
 
         public DoublePerRoomMax(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }

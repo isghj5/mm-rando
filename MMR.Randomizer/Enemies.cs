@@ -1,6 +1,5 @@
 ﻿using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes.Actor;
-using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
@@ -33,8 +32,8 @@ namespace MMR.Randomizer
         public static void ReadEnemyList()
         {
             EnemyList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                            .Where(u => u.IsEnemyRandomized() || u.IsActorRandomized()) // both
-                            //.Where(u => u.IsEnemyRandomized()) // enemizer only
+                            //.Where(u => u.IsEnemyRandomized() || u.IsActorRandomized()) // both
+                            .Where(u => u.IsEnemyRandomized()) // enemizer only
                             .ToList();
         }
 
@@ -134,13 +133,29 @@ namespace MMR.Randomizer
                 RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 12] = 0; // z rot
                 RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 13] &= 0x7F; // z rot
             }
+            void SetX(int fid, int actorAddr, int actorIndex, int x)
+            {
+                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 2] = (byte)((x >> 8) & 0xFF); // x pos
+                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 3] = (byte)(x & 0xFF);        // x pos
+            }
             void SetHeight(int fid, int actorAddr, int actorIndex, int height)
             {
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 4] = (byte) ((height >> 8) & 0xFF); // y pos
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 5] = (byte)( height & 0xFF);        // y pos
+                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 4] = (byte)((height >> 8) & 0xFF); // y pos
+                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 5] = (byte)(height & 0xFF);        // y pos
+            }
+            void SetZ(int fid, int actorAddr, int actorIndex, int z)
+            { 
+                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 6] = (byte)((z >> 8) & 0xFF); // x pos
+                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 7] = (byte)(z & 0xFF);        // x pos
             }
 
-            // TODO have to fix the stonetower bombchu to not spawn right in front of the chest
+            // move the bombchu in the first room back several feet from the chest, so replacement cannot block the chest
+            var stoneTowerTempleRoom0FID = GameObjects.Scene.StoneTowerTemple.FileID() + 1;
+            RomUtils.CheckCompressed(stoneTowerTempleRoom0FID); // safety first
+            var stoneTowerTempleSceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.StoneTowerTemple.FileID());
+            var stoneTowerTempleActorAddr = RomData.SceneList[stoneTowerTempleSceneIndex].Maps[0].ActorAddr;
+            // room 0 actor 3: set Z to -630 (away from the chest)
+            SetZ(stoneTowerTempleRoom0FID, stoneTowerTempleActorAddr, 3, -630);
 
             var terminaFieldRool0FID = GameObjects.Scene.TerminaField.FileID() + 1;
             RomUtils.CheckCompressed(terminaFieldRool0FID); // safety first
@@ -152,7 +167,6 @@ namespace MMR.Randomizer
             // room 0 actor 61: Y to -60
             SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 60, -60);  // fixes the blue bubble that is too high
 
-
             // have to fix the two wolfos spawn in twin islands that spawn off scew
             // room 0, actors 27 and 28
             // 27: y:141, r(xyz): 0 0 0a
@@ -163,6 +177,14 @@ namespace MMR.Randomizer
             var twinIslandsActorAddr = RomData.SceneList[sceneIndex].Maps[0].ActorAddr;
             FlattenPitchRoll(twinIslandsRoom0FID, twinIslandsActorAddr, 26);  // fixes redead falling through the floor
             FlattenPitchRoll(twinIslandsRoom0FID, twinIslandsActorAddr, 27);  // fixes redead falling through the floor
+
+            // the dinofos spawn is near the roof in woodfall and secret shrine
+            var woodfallRoom7FID = GameObjects.Scene.WoodfallTemple.FileID() + 8;
+            RomUtils.CheckCompressed(woodfallRoom7FID); // safety first
+            sceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
+            var woodfallActorAddr = RomData.SceneList[sceneIndex].Maps[7].ActorAddr;
+            // this shit is cursed, it never moves unless you put it outside of the room, like the room resets my changes
+            SetHeight(woodfallRoom7FID, woodfallActorAddr, 0, -1208);  // this should be ideal height
 
         }
 
@@ -224,24 +246,24 @@ namespace MMR.Randomizer
 
             // TODO rewrite so we dont need this hardcoded
             // desbrekos, the giant skelefish swarm will lag southern swamp horribly
-            if (scene.File == 1358)
+            if (scene.File == GameObjects.Scene.SouthernSwamp.FileID())
             {
-                enemyMatchesPool.Remove(GameObjects.Actor.Desbreko.ToEnemy());
+                enemyMatchesPool.RemoveAll(u => u.Actor == (int) GameObjects.Actor.Desbreko);
             }
-            // if dinofos replaces iron knuckle, it crashes (or at least crashed for me)
-            if (scene.File == 1145)
+            // if dinofos replaces iron knuckle, it crashes
+            if (scene.File == GameObjects.Scene.BeneathGraveyard.FileID())
             {
-                enemyMatchesPool.Remove(GameObjects.Actor.Dinofos.ToEnemy());
+                enemyMatchesPool.RemoveAll(u => u.Actor == (int)GameObjects.Actor.Dinofos);
             }
             // chuchu in cleared swamp is crash if you approach the witch shop
-            if (scene.File == 1137)
+            if (scene.File == GameObjects.Scene.SouthernSwampClear.FileID())
             {
-                enemyMatchesPool.Remove(GameObjects.Actor.ChuChu.ToEnemy());
+                enemyMatchesPool.RemoveAll(u => u.Actor == (int)GameObjects.Actor.ChuChu);
             }
             // if Hiploop gets replaced with with RedBubble in woodfall you can see their models below the bridges
-            if (scene.File == 1362)
+            if (scene.File == GameObjects.Scene.Woodfall.FileID())
             {
-                enemyMatchesPool.Remove(GameObjects.Actor.RedBubble.ToEnemy());
+                enemyMatchesPool.RemoveAll(u => u.Actor == (int)GameObjects.Actor.RedBubble);
             }
 
             return enemyMatchesPool;
@@ -282,6 +304,25 @@ namespace MMR.Randomizer
                 }
             }
             WriteOutput(" time to finish removing unnecessary objects: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
+
+            // special case: likelikes need to be split into two objects because ground and water share one object 
+            // but no other enemeies work as dual replacement
+            if ((scene.File == GameObjects.Scene.ZoraCape.FileID() || scene.File == GameObjects.Scene.GreatBayCoast.FileID())
+                && sceneObjects.Contains(GameObjects.Actor.LikeLike.ObjectIndex()))
+            {
+                // add shield object to list of objects we can swap out
+                sceneObjects.Add(GameObjects.Actor.LikeLikeShield.ObjectIndex());
+                // generate a a candidate list for the second likelike
+                for( int i = 0; i < sceneEnemies.Count; ++i)
+                {
+                    if ( sceneEnemies[i].Actor == (int)GameObjects.Actor.LikeLike
+                        && GameObjects.Actor.LikeLike.IsGroundVariant(sceneEnemies[i].Variables[0]))
+                    {
+                        sceneEnemies[i].Object = GameObjects.Actor.LikeLikeShield.ObjectIndex();
+                    }
+                }
+            }
+
 
             List<List<Enemy>> originalEnemiesPerObject = new List<List<Enemy>>(); ; // outer layer is per object
             List<List<Enemy>> matchingCandidatesLists = new List<List<Enemy>>();
@@ -347,14 +388,21 @@ namespace MMR.Randomizer
                     });
                 }
 
-                // testing: force enemy redead, bombchus dont fall if you want to test position
+                // TESTING: force enemy in object index of scene
                 //if (scene.File == GameObjects.Scene.TwinIslands.FileID() && !chosenReplacementObjects.Any(u => u.NewV == 0x75)) //75 = redead
-                /*if (scene.File == GameObjects.Scene.GreatBayCoast.FileID() 
-                    && !chosenReplacementObjects.Any(u => u.NewV == 0x211)) // bombflower exists, 2A = bombflower
-                    //&& chosenReplacementObjects[3].NewV != 0x2A) // eeno replaced with bombflower
+                /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID() 
+                    //&& !chosenReplacementObjects.Any(u => u.NewV == 0x211)) // bombflower exists, 2A = bombflower
+                    && chosenReplacementObjects[4].NewV != GameObjects.Actor.Dinofos.ObjectIndex()) // eeno replaced with bombflower
+                {
+                    continue;
+                }
+                if (scene.File == GameObjects.Scene.StoneTowerTemple.FileID()
+                    //&& !chosenReplacementObjects.Any(u => u.NewV == 0x211)) // bombflower exists, 2A = bombflower
+                    && chosenReplacementObjects[4].NewV != GameObjects.Actor.BombFlower.ObjectIndex()) // eeno replaced with bombflower
                 {
                     continue;
                 }*/
+
 
                 loopsCount += 1;
                 if (newsize <= oldsize || newsize < scene.SceneEnum.GetSceneObjLimit() ) // DEBUG turn off for size based generation
@@ -407,6 +455,7 @@ namespace MMR.Randomizer
                         subMatches[randomSubmatch] = emptyEnemy;
                     }
 
+                    // we should know what room each enemy is in, we can have that info here
                     //this is temporary, I need to think of a better way to reduce enemies intelegently per-enemy, per-room, per-event
                     if (( ! oldEnemy.MustNotRespawn && originalEnemiesPerObject[i].Count >= 5
                           && (subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.GossipStone || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Scarecrow
@@ -501,7 +550,6 @@ namespace MMR.Randomizer
                 // bits (from 0) 4 should be always update, 5 should be always draw, 6 should be no cull
                 //RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 7] |= 0x80; // "invisible" is weirder than you think
 
-
                 foreach (var a2 in Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                             .Where(u => u.IsEnemyRandomized() &&  u.ActorInitOffset() > 100)
                             .ToList())
@@ -514,7 +562,6 @@ namespace MMR.Randomizer
                     // to test invisibility in all enemies
                     //RomData.MMFileList[a2.FileListIndex()].Data[a2.ActorInitOffset() + 7] |= 0x80; // test invisible
                 }
-
 
                 // testing add hookshot flag to items
                 var actor = GameObjects.Actor.Postbox;
