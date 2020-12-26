@@ -4,6 +4,7 @@ using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
+using Newtonsoft.Json.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -53,11 +54,10 @@ namespace MMR.Randomizer
                             && listOfAcceptableVariants.Contains(mapActor.v))
                         {
                             var newEnemy = matchingEnemy.ToEnemy();
-                            //mapActor.objectIndex = 
                             newEnemy.Variables = new List<int> { mapActor.v };
-                            //var matchingScene = ((GameObjects.Scene[])Enum.GetValues(typeof(GameObjects.Scene))).ToList().Find(u => u.Id() == scene.Number);
                             newEnemy.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(mapNumber);
                             newEnemy.Room = mapNumber;
+                            newEnemy.RoomActorIndex = scene.Maps[mapNumber].Actors.IndexOf(mapActor);
                             enemyList.Add(newEnemy);
                         }
                     }
@@ -87,18 +87,17 @@ namespace MMR.Randomizer
             return objList;
         }
 
-        public static void SetSceneEnemyActors(Scene scene, List<ValueSwap[]> A)
+        public static void SetSceneEnemyActors(Scene scene, List<Enemy> enemies)
         {
-            foreach (var sceneRoom in scene.Maps)
-            foreach (var roomActor in sceneRoom.Actors)
-            { 
-                var valueSwapActor = A.Find(u => u[0].OldV == roomActor.n);
-                if (valueSwapActor != null)
+            for (int roomCount = 0; roomCount < scene.Maps.Count; ++roomCount)
+            {
+                var roomEnemyList = enemies.FindAll(u => u.Room == roomCount);
+                var sceneRoom = scene.Maps[roomCount];
+                foreach( var roomEnemy in roomEnemyList)
                 {
-                    // todo: rewrite n and v, since I have no idea what those are or why they are exactly teh same
-                    roomActor.n = valueSwapActor[0].NewV;
-                    roomActor.v = valueSwapActor[1].NewV;
-                    A.Remove(valueSwapActor);
+                    int actorIndex = roomEnemy.RoomActorIndex;
+                    sceneRoom.Actors[actorIndex].n = roomEnemy.Actor;
+                    sceneRoom.Actors[actorIndex].v = roomEnemy.Variables[0];
                 }
             }
         }
@@ -116,13 +115,10 @@ namespace MMR.Randomizer
             }
         }
 
-        // adjust spawn cords
-
         public static void FixSpawnLocations()
         {
             /// in Enemizer some spawn locations suck, we notice them being wrong only when we change them
 
-            // maybe break this up a bit
             void FlattenPitchRoll(int fid, int actorAddr, int actorIndex)
             {
                 // the bottom 3 bits are time flags
@@ -326,7 +322,8 @@ namespace MMR.Randomizer
 
             List<List<Enemy>> originalEnemiesPerObject = new List<List<Enemy>>(); ; // outer layer is per object
             List<List<Enemy>> matchingCandidatesLists = new List<List<Enemy>>();
-            List<ValueSwap[]> chosenReplacementActors = new List<ValueSwap[]>();
+            //List<ValueSwap[]> chosenReplacementActors = new List<ValueSwap[]>();
+            List<Enemy>     chosenReplacementEnemies = new List<Enemy>();
             List<ValueSwap>   chosenReplacementObjects;
 
             // get a matching set of possible replacement objects and enemies that we can use
@@ -469,21 +466,27 @@ namespace MMR.Randomizer
                     }
 
                     // actors and objects are handled with value swaps
-                    // todo: turn this into something other than an array of valueswaps
-                    ValueSwap newActor = new ValueSwap();
+                    /*ValueSwap newActor = new ValueSwap();
                     newActor.OldV = oldEnemy.Actor;
                     newActor.NewV = subMatches[randomSubmatch].Actor;
                     ValueSwap newVariant = new ValueSwap();
                     var randomVariantValue = rng.Next(subMatches[randomSubmatch].Variables.Count);
                     newVariant.NewV = subMatches[randomSubmatch].Variables[randomVariantValue];
-                    chosenReplacementActors.Add(new ValueSwap[] { newActor, newVariant });
+                    chosenReplacementActors.Add(new ValueSwap[] { newActor, newVariant });*/
+
+                    
+                    var newEnemy = oldEnemy;
+                    newEnemy.Actor = subMatches[randomSubmatch].Actor;
+                    newEnemy.Variables[0] = rng.Next(subMatches[randomSubmatch].Variables.Count);
+
+                    chosenReplacementEnemies.Add(newEnemy);
 
                     // print what enemy was and now is as debug for a scene
-                    WriteOutput("Old Enemy actor:[" + oldEnemy.Name + "] with id [" + newActor.OldV +  "] was replaced by new enemy: [" + subMatches[randomSubmatch].Name + "] with variant: [" + newVariant.NewV.ToString("X2") + "]");
+                    WriteOutput("Old Enemy actor:[" + oldEnemy.Name + "] was replaced by new enemy: [" + subMatches[randomSubmatch].Name + "] with variant: [" + newEnemy.Variables[0].ToString("X2") + "]");
                 }
             }
 
-            SetSceneEnemyActors(scene, chosenReplacementActors);
+            SetSceneEnemyActors(scene, chosenReplacementEnemies);
             SetSceneEnemyObjects(scene, chosenReplacementObjects);
             SceneUtils.UpdateScene(scene);
             WriteOutput( " time to complete randomizing scene: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
@@ -513,7 +516,8 @@ namespace MMR.Randomizer
                 var newSceneList = RomData.SceneList;
                 // if using parallel, move biggest scenes to the front so that we dont get stuck waiting at the end for one big scene with multiple dead cores doing nothing
                 // biggest is on the right, because its put at the front last
-                // this should be all scenes that took > 500ms on Isghj's computer during alpha
+                // this should be all scenes that took > 500ms on Isghj's computer during alpha ~dec15
+                //  this is old, should be re-evaluated with different code
                 foreach (var sceneIndex in new int[]{ 1442, 1353, 1258, 1358, 1449, 1291, 1224,  1522, 1388, 1165, 1421, 1431, 1241, 1222, 1330, 1208, 1451, 1332, 1446, 1310 }){
                     var item = newSceneList.Find(u => u.File == sceneIndex);
                     newSceneList.Remove(item);

@@ -11,7 +11,8 @@ namespace MMR.Randomizer.Models.Rom
         public List<int> Variables = new List<int>();
         public bool MustNotRespawn = false;
         public int Room;
-        public int Type;
+        public int RoomActorIndex; // the position in the room actor list
+        public int Type; // ?
         public int Stationary;
         public List<int> SceneExclude = new List<int>();
     }
