@@ -66,7 +66,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(58)]
         [ObjectListIndex(0x17)]
         [GroundVariants(0)]
-        [EnemizerScenesExcluded(0x1B,0x21,0x60,0x66)]
+        [EnemizerScenesExcluded(0x60)] // issue: spawn is too high, needs to be lowered
         Dinofos = 0x19,
 
         [EnemizerEnabled]
@@ -223,6 +223,13 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0,2)]
         [GroundVariants(3)]
         LikeLike = 0x6C,
+
+        //[EnemizerEnabled] // we dont actually want this detected automatically, this will be added per-likelike manually
+        //[ObjectListIndex(0xBE)] // this is really the shield, we're using it as the second likelike object
+        [ObjectListIndex(0xB3)] // this is really the shield, we're using it as the second likelike object
+        // 2 is ocean bottom, 0 is one in shallow shore water, 3 is land and one in shallow water
+        //[GroundVariants(3)]
+        LikeLikeShield = 0x28E, // 28E is a dummy actor ID, we only use it because it will never conflict with enemizer
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x26EC)]

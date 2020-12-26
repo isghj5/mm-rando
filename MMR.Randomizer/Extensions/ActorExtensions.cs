@@ -128,6 +128,37 @@ namespace MMR.Randomizer.Extensions
             return null;
         }
 
+        public static bool IsGroundVariant(this Actor actor, int varient)
+        {
+            var groundAttribute = actor.GetAttribute<GroundVariantsAttribute>();
+            if (groundAttribute != null)
+            {
+                return groundAttribute.Variants.Contains(varient);
+            }
+            return false;
+        }
+
+        public static bool IsWaterVariant(this Actor actor, int varient)
+        {
+            var groundAttribute = actor.GetAttribute<WaterVariantsAttribute>();
+            if (groundAttribute != null)
+            {
+                return groundAttribute.Variants.Contains(varient);
+            }
+            return false;
+        }
+
+        public static bool isFlyingVarient(this Actor actor, int varient)
+        {
+            var groundAttribute = actor.GetAttribute<FlyingVariantsAttribute>();
+            if (groundAttribute != null)
+            {
+                return groundAttribute.Variants.Contains(varient);
+            }
+            return false;
+        }
+
+
         public static int ActorInitOffset(this Actor actor)
         {
             return actor.GetAttribute<ActorInitVarOffsetAttribute>()?.Offset ?? -1;
