@@ -1119,6 +1119,10 @@ namespace MMR.Randomizer
                     var itemCombo = PlandoUtils.CleanItemCombo(pic, Random, itemPool, ItemList);
                     if (itemCombo == null) // not possible to fullfill
                     {
+                        if (pic.SkipIfError)
+                        {
+                            continue;
+                        }
                         // let's backtrack and find the items that are already assigned
                         //   and the checks that are already taken and print them
                         var allItems = ItemList.FindAll(u => pic.ItemList.Contains(u.Item));

@@ -16,6 +16,7 @@ namespace MMR.Randomizer.Utils
         public string Name;
         public string Notes;
         public int    ItemDrawCount = -1; // plural item list: how many items are randomly selected instead of all
+        public bool   SkipIfError = false;
     }
 
     public class PlandoItemCombo : PlandoCombo
