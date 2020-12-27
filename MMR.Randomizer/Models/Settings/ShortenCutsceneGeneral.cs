@@ -21,7 +21,7 @@ namespace MMR.Randomizer.Models.Settings
         [Description("Replaying of the music is shortened.")]
         MilkBarPerformance = 1 << 3,
 
-        [Description("You don't have to watch the Hungry Goron roll away.")]
+        [Description("The Hungry Goron doesn't interrupt you when you approach, and you don't have to watch him roll away.")]
         [HackContent(nameof(Resources.mods.shorten_cutscene_don_gero))]
         HungryGoron = 1 << 4,
 

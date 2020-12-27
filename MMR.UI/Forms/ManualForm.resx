@@ -267,33 +267,40 @@ Choose from a list of items to start the game with. Logic will take into conside
   <data name="lGimmick.Text" xml:space="preserve">
     <value>This section allows some gameplay alterations. It does not affect the item placement logic.
 
-Damage mode
-This changes the way damage is handled. In doom mode, damage is as normal but Link will gradually lose health and die over a ~2 minute period. This only takes effect while in direct control of Link.
+Ice Traps
+Amount
+Amount of ice traps to be added to pool by replacing junk items.
+ - Normal: 1/15th of randomized junk items become ice traps.
+ - Extra: 1/7th of randomized junk items become ice traps.
+ - Mayhem: All randomized junk items become ice traps.
+ - Onslaught: All junk items become ice traps.
 
-Damage effects
-Sets the type of damage dealt to Link. In random mode, the damage type will change every time damage is taken.
+Appearance
+Changes the appearance of ice traps in the pool for world models.
 
-Movement
-Changes some basic movement mechanics. Item placement does not currently take this into account so note that low/high gravity could make some items significantly easier/harder to access.
+Enable Quirks
+Ice traps will behave slightly differently from other items in certain situations.
 
-Floor types
-Sets the physics for the ground Link is standing on. In random mode, this will pick random types every ~25 seconds and will also include lava (voids deku/zora) and deep sand (voids goron).
 
-Clock speed
+Clock
+Speed
 Increases or decreases how fast in-game time progresses. When set to faster than normal, clock speed when the Inverted Song of Time is enabled will be increased as well. At the slowest setting, the Inverted Song of Time will do nothing.
 
+Hide UI
+Removes the clock from the in-game UI. Players will have to rely on other means of telling the time, such as in-game clocks on walls, the Bombers' Notebook, or looking at the sun.
+
+
+Other
 Blast Mask Cooldown
 Changes the delay between Blast Mask explosions.
 
-Ice Traps
-Amount of ice traps to be added to pool by replacing junk items.
-Appearance of ice traps in pool for world models.
-
-Ice Traps -&gt; Enable Quirks
-Ice traps will behave slightly differently from other items in certain situations.
-
-Hide Clock UI
-Removes the clock from the in-game UI. Players will have to rely on other means of telling the time, such as in-game clocks on walls, the Bombers' Notebook, or looking at the sun.
+Nut and Stick Drops
+Adds Deku nuts and Deku sticks to drop tables in the field:
+ - Default: No change, vanilla behavior.
+ - Light: one stick and nut 1/16 chance termina bush.
+ - Medium: More nuts, twice the chance
+ - Extra: More sticks, more nuts, more drop locations.
+ - Mayhem: You're crazy in the coconut!
 
 Underwater Ocarina
 Allows using the Ocarina underwater.
@@ -304,14 +311,30 @@ Enables the Sun's Song (&gt;v^&gt;v^) which speeds up time to 400 units per fram
 Allow Fierce Deity's Mask anywhere
 Allows the Fierce Deity's Mask to be used anywhere and fixes some softlocks that can be caused by Fierce Deity.
 
-BYO Ammo
-When you get Bow / Bombs / Bombchu on your B button, you'll never get unlimited ammo. Instead you'll use your own. Logic Modes other than No Logic will account for this.
+
+Movement
+Gravity / Speed
+Changes some basic movement mechanics. Item placement does not currently take this into account so note that low/high gravity could make some items significantly easier/harder to access.
+
+Floor types
+Sets the physics for the ground Link is standing on. In random mode, this will pick random types every ~25 seconds and will also include lava (voids deku/zora) and deep sand (voids goron).
+
+Continuous Deku Hopping.
+Press A while hopping across water to keep hopping.
+
+
+Challenges
+Damage mode
+This changes the way damage is handled. In doom mode, damage is as normal but Link will gradually lose health and die over a ~2 minute period. This only takes effect while in direct control of Link.
+
+Damage effects
+Sets the type of damage dealt to Link. In random mode, the damage type will change every time damage is taken.
 
 Death is Moon Crash.
 When you die, the moon crashes.
 
-Continuous Deku Hopping.
-Press A while hopping across water to keep hopping.</value>
+BYO Ammo
+When you get Bow / Bombs / Bombchu on your B button, you'll never get unlimited ammo. Instead you'll use your own. Logic Modes other than No Logic will account for this.</value>
   </data>
   <data name="label1.Text" xml:space="preserve">
     <value>Speed Ups
@@ -334,9 +357,6 @@ Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000. Also
 Comfort Options
 Disable crit wiggle
 You will no longer get weird movement when your health is low.
-
-Shorten cutscenes
-Reduces length of or skips cutscenes during gameplay.
 
 Quick text
 Instantly print every text box.
@@ -395,32 +415,14 @@ Tunic colour
 Sets the colour of form's tunic.
 
 Instrument
-Sets the instrument used when playing songs using A and the C-buttons.
+Sets the instrument used when playing songs.
 
-Song Playback
-Sets the instrument used when the player plays a song and the game plays it back.
-
-Sync Button
-When enabled, the form's Song Playback instrument will be synced with the form's Instrument.
-
-
-HUD
-Hearts and Magic
-Customized will use the colors selected using the Customize button. Random Choice will pick random colors from a predefined list. Completely Random will pick a completely random color.
-
-Customize
-Completely customize the HUD colors. Click an element to choose a color, or right-click for more options.
-
-Hue Shift Music UI
-Shifts the hue of various UI elements.
-
-
-Other
-Default Hold Z-Target
-The game will set the initial Z-Target style to Hold instead of Switch.
-
-Tatl theme
-Select a colour scheme for Tatl.
+Energy color
+ - Human: Sets the color of the Spin Attack and Great Spin Attack
+ - Deku: Sets the color of the sparkle effects when spinning, the puff of dust when entering and leaving a deku flower, and the sparkles when flying using a deku flower.
+ - Goron: Sets the color of the spike roll power up.
+ - Zora: Sets the color of the energy shield.
+ - Fierce Deity: Sets the color of the sword beam and sparkles.
 
 
 Music / Sound
@@ -434,7 +436,33 @@ Disable Combat Music
 Disables combat music around all regular (non boss or miniboss) enemies in the game.
 
 Music
-Default will leave music as it is normally. Random will shuffle music around, insert music from other games, while attempting to keep music categorized. None will remove music from the game.</value>
+Default will leave music as it is normally. Random will shuffle music around, insert music from other games, while attempting to keep music categorized. None will remove music from the game.
+
+Low Health SFX
+Set the low health sound effect.
+ - Default: plays the default sound.
+ - Disabled: plays no sound.
+ - Random: a random sound is chosen during randomization and that sound will be played.
+ - &lt;Choices&gt;: Play that sound.
+
+
+Other
+Tatl theme
+Select a colour scheme for Tatl.
+
+Default Hold Z-Target
+The game will set the initial Z-Target style to Hold instead of Switch.
+
+
+HUD
+Hearts and Magic
+Customized will use the colors selected using the Customize button. Random Choice will pick random colors from a predefined list. Completely Random will pick a completely random color.
+
+Customize
+Completely customize the HUD colors. Click an element to choose a color, or right-click for more options.
+
+Randomize Hue of Miscellaneous UI
+Shifts the hue of various UI elements.</value>
   </data>
   <data name="lHow.Text" xml:space="preserve">
     <value>The get item table is expanded to allow all randomised items to have a unique entry and during randomisation this table will be shuffled according to logic for the selected ruleset. The table format is slightly modified to allow for updates to certain items to work easily (mainly for dungeons and Tingle maps).

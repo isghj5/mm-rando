@@ -50,6 +50,8 @@
             this.lCosmetic = new System.Windows.Forms.Label();
             this.tHow = new System.Windows.Forms.TabPage();
             this.lHow = new System.Windows.Forms.Label();
+            this.tShortenCutscenes = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
             this.tManual.SuspendLayout();
             this.tMain.SuspendLayout();
             this.tRules.SuspendLayout();
@@ -61,6 +63,7 @@
             this.tComfort.SuspendLayout();
             this.tCosmetics.SuspendLayout();
             this.tHow.SuspendLayout();
+            this.tShortenCutscenes.SuspendLayout();
             this.SuspendLayout();
             // 
             // tManual
@@ -74,6 +77,7 @@
             this.tManual.Controls.Add(this.tShuffles);
             this.tManual.Controls.Add(this.tGimmicks);
             this.tManual.Controls.Add(this.tComfort);
+            this.tManual.Controls.Add(this.tShortenCutscenes);
             this.tManual.Controls.Add(this.tCosmetics);
             this.tManual.Controls.Add(this.tHow);
             this.tManual.Location = new System.Drawing.Point(12, 12);
@@ -214,7 +218,7 @@
             // 
             this.lGimmick.Location = new System.Drawing.Point(6, 3);
             this.lGimmick.Name = "lGimmick";
-            this.lGimmick.Size = new System.Drawing.Size(372, 749);
+            this.lGimmick.Size = new System.Drawing.Size(372, 892);
             this.lGimmick.TabIndex = 2;
             this.lGimmick.Text = resources.GetString("lGimmick.Text");
             // 
@@ -233,7 +237,7 @@
             // 
             this.label1.Location = new System.Drawing.Point(3, 1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(377, 1383);
+            this.label1.Size = new System.Drawing.Size(377, 1324);
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             // 
@@ -252,7 +256,7 @@
             // 
             this.lCosmetic.Location = new System.Drawing.Point(6, 3);
             this.lCosmetic.Name = "lCosmetic";
-            this.lCosmetic.Size = new System.Drawing.Size(372, 724);
+            this.lCosmetic.Size = new System.Drawing.Size(372, 844);
             this.lCosmetic.TabIndex = 2;
             this.lCosmetic.Text = resources.GetString("lCosmetic.Text");
             // 
@@ -274,6 +278,27 @@
             this.lHow.Size = new System.Drawing.Size(372, 268);
             this.lHow.TabIndex = 3;
             this.lHow.Text = resources.GetString("lHow.Text");
+            // 
+            // tShortenCutscenes
+            // 
+            this.tShortenCutscenes.AutoScroll = true;
+            this.tShortenCutscenes.Controls.Add(this.label2);
+            this.tShortenCutscenes.Location = new System.Drawing.Point(4, 25);
+            this.tShortenCutscenes.Name = "tShortenCutscenes";
+            this.tShortenCutscenes.Padding = new System.Windows.Forms.Padding(3);
+            this.tShortenCutscenes.Size = new System.Drawing.Size(400, 271);
+            this.tShortenCutscenes.TabIndex = 10;
+            this.tShortenCutscenes.Text = "Shorten Cutscenes";
+            this.tShortenCutscenes.UseVisualStyleBackColor = true;
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(6, 3);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(372, 61);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Shorten or skip various cutscenes. Each checkbox has a tooltip describing what th" +
+    "e option does. The \"Everything Else\" option combines a lot of various changes.";
             // 
             // ManualForm
             // 
@@ -298,6 +323,7 @@
             this.tComfort.ResumeLayout(false);
             this.tCosmetics.ResumeLayout(false);
             this.tHow.ResumeLayout(false);
+            this.tShortenCutscenes.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -325,5 +351,7 @@
         private System.Windows.Forms.Label lItem;
         private System.Windows.Forms.TabPage tComfort;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TabPage tShortenCutscenes;
+        private System.Windows.Forms.Label label2;
     }
 }

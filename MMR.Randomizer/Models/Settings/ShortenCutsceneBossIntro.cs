@@ -36,5 +36,9 @@ namespace MMR.Randomizer.Models.Settings
         [Description("Igos du Ikana and his henchmen are ready to fight you right away.")]
         [HackContent(nameof(Resources.mods.shorten_cutscene_igos_intro))]
         IgosDuIkana = 1 << 6,
+
+        [Description("Gomess and his bats are ready to fight you right away.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_gomess_intro))]
+        Gomess = 1 << 7,
     }
 }
