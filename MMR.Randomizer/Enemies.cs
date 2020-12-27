@@ -115,35 +115,37 @@ namespace MMR.Randomizer
             }
         }
 
+        public static void FlattenPitchRoll(int roomFID, int actorAddr, int actorIndex)
+        {
+            // the bottom 3 bits are time flags
+            // I like how CM lists only three bits, but pretends like theres nothing in the gap
+            // obviously theres something related to time spawns there
+            RomData.MMFileList[roomFID].Data[actorAddr + (actorIndex * 16) + 8] = 0; // x rot
+            RomData.MMFileList[roomFID].Data[actorAddr + (actorIndex * 16) + 9] &= 0x7F; // x rot
+            RomData.MMFileList[roomFID].Data[actorAddr + (actorIndex * 16) + 12] = 0; // z rot
+            RomData.MMFileList[roomFID].Data[actorAddr + (actorIndex * 16) + 13] &= 0x7F; // z rot
+        }
+        public static void SetX(int roomFID, int actorAddr, int actorIndex, int x)
+        {
+            RomData.MMFileList[roomFID].Data[actorAddr + (actorIndex * 16) + 2] = (byte)((x >> 8) & 0xFF); // x pos
+            RomData.MMFileList[roomFID].Data[actorAddr + (actorIndex * 16) + 3] = (byte)(x & 0xFF);        // x pos
+        }
+        public static void SetHeight(int roomFID, int actorAddr, int actorIndex, int height)
+        {
+            RomData.MMFileList[roomFID].Data[actorAddr + (actorIndex * 16) + 4] = (byte)((height >> 8) & 0xFF); // y pos
+            RomData.MMFileList[roomFID].Data[actorAddr + (actorIndex * 16) + 5] = (byte)(height & 0xFF);        // y pos
+        }
+        public static void SetZ(int roomFID, int actorAddr, int actorIndex, int z)
+        {
+            RomData.MMFileList[roomFID].Data[actorAddr + (actorIndex * 16) + 6] = (byte)((z >> 8) & 0xFF); // x pos
+            RomData.MMFileList[roomFID].Data[actorAddr + (actorIndex * 16) + 7] = (byte)(z & 0xFF);        // x pos
+        }
+
+
         public static void FixSpawnLocations()
         {
             /// in Enemizer some spawn locations suck, we notice them being wrong only when we change them
 
-            void FlattenPitchRoll(int fid, int actorAddr, int actorIndex)
-            {
-                // the bottom 3 bits are time flags
-                // I like how CM lists only three bits, but pretends like theres nothing in the gap
-                // obviously theres something related to time spawns there
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 8] = 0; // x rot
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 9] &= 0x7F; // x rot
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 12] = 0; // z rot
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 13] &= 0x7F; // z rot
-            }
-            void SetX(int fid, int actorAddr, int actorIndex, int x)
-            {
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 2] = (byte)((x >> 8) & 0xFF); // x pos
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 3] = (byte)(x & 0xFF);        // x pos
-            }
-            void SetHeight(int fid, int actorAddr, int actorIndex, int height)
-            {
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 4] = (byte)((height >> 8) & 0xFF); // y pos
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 5] = (byte)(height & 0xFF);        // y pos
-            }
-            void SetZ(int fid, int actorAddr, int actorIndex, int z)
-            { 
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 6] = (byte)((z >> 8) & 0xFF); // x pos
-                RomData.MMFileList[fid].Data[actorAddr + (actorIndex * 16) + 7] = (byte)(z & 0xFF);        // x pos
-            }
 
             // move the bombchu in the first room back several feet from the chest, so replacement cannot block the chest
             var stoneTowerTempleRoom0FID = GameObjects.Scene.StoneTowerTemple.FileID() + 1;
@@ -182,6 +184,21 @@ namespace MMR.Randomizer
             // this shit is cursed, it never moves unless you put it outside of the room, like the room resets my changes
             SetHeight(woodfallRoom7FID, woodfallActorAddr, 0, -1208);  // this should be ideal height
 
+        }
+
+        public static void FixSpecificLikeLikeTypes()
+        {
+            /// some likelikes dont follow the normal water/ground type variety, so they should be switched to match for replacement
+
+            var coastScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
+            // coast: shallow water likelike along the pillars is ground, should be water
+            coastScene.Maps[0].Actors[21].v = 2;
+            // coast: bottom of the ocean east is ground, should be water
+            coastScene.Maps[0].Actors[24].v = 2;
+            // coast: tidepool likelike is water, and also too shallow for water enemy
+            coastScene.Maps[0].Actors[20].v = 2;
+            //coastScene.Maps[0].Actors[20].x = 2;
+            //SetX(coastScene.File + 1, coastScene.Maps[0].ActorAddr, 20, -1245);
         }
 
         public static List<Enemy> GetMatchPool(List<Enemy> oldActors, Random random, Scene scene)
@@ -513,6 +530,7 @@ namespace MMR.Randomizer
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
                 SceneUtils.GetActors();
+                FixSpecificLikeLikeTypes();
                 var newSceneList = RomData.SceneList;
                 // if using parallel, move biggest scenes to the front so that we dont get stuck waiting at the end for one big scene with multiple dead cores doing nothing
                 // biggest is on the right, because its put at the front last
