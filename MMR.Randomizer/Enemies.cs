@@ -33,8 +33,8 @@ namespace MMR.Randomizer
         public static void ReadEnemyList()
         {
             EnemyList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                            //.Where(u => u.IsEnemyRandomized() || u.IsActorRandomized()) // both
-                            .Where(u => u.IsEnemyRandomized()) // enemizer only
+                            .Where(u => u.IsEnemyRandomized() || u.IsActorRandomized()) // both
+                            //.Where(u => u.IsEnemyRandomized()) // enemizer only
                             .ToList();
         }
 
@@ -89,10 +89,10 @@ namespace MMR.Randomizer
 
         public static void SetSceneEnemyActors(Scene scene, List<Enemy> enemies)
         {
-            for (int roomCount = 0; roomCount < scene.Maps.Count; ++roomCount)
+            for (int roomIndex = 0; roomIndex < scene.Maps.Count; ++roomIndex)
             {
-                var roomEnemyList = enemies.FindAll(u => u.Room == roomCount);
-                var sceneRoom = scene.Maps[roomCount];
+                var roomEnemyList = enemies.FindAll(u => u.Room == roomIndex);
+                var sceneRoom = scene.Maps[roomIndex];
                 foreach( var roomEnemy in roomEnemyList)
                 {
                     int actorIndex = roomEnemy.RoomActorIndex;
@@ -144,46 +144,51 @@ namespace MMR.Randomizer
 
         public static void FixSpawnLocations()
         {
-            /// in Enemizer some spawn locations suck, we notice them being wrong only when we change them
+            /// in Enemizer some spawn locations are noticably buggy
+            ///   example: one of the eeno in north termina field is too high, 
+            ///    we never notice because it falls to the ground before we can get there normally
+            ///    but if its a stationary enemy, like a dekubaba it hovers in the air
 
-
-            // move the bombchu in the first room back several feet from the chest, so replacement cannot block the chest
-            var stoneTowerTempleRoom0FID = GameObjects.Scene.StoneTowerTemple.FileID() + 1;
-            RomUtils.CheckCompressed(stoneTowerTempleRoom0FID); // safety first
-            var stoneTowerTempleSceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.StoneTowerTemple.FileID());
-            var stoneTowerTempleActorAddr = RomData.SceneList[stoneTowerTempleSceneIndex].Maps[0].ActorAddr;
-            // room 0 actor 3: set Z to -630 (away from the chest)
-            SetZ(stoneTowerTempleRoom0FID, stoneTowerTempleActorAddr, 3, -630);
+            // todo: rewrite this so functions take care of actoraddr and index
 
             var terminaFieldRool0FID = GameObjects.Scene.TerminaField.FileID() + 1;
             RomUtils.CheckCompressed(terminaFieldRool0FID); // safety first
             var terminaFieldSceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.TerminaField.FileID());
             var terminaFieldActorAddr = RomData.SceneList[terminaFieldSceneIndex].Maps[0].ActorAddr;
-            // room 0 actor 145: Y to -245
-            // currently broken: too high
             SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 144, -245);  // fixes the eeno that is way too high above ground
-            // room 0 actor 61: Y to -60
+            SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 16, -209);  // fixes the eeno that is too high above ground (bombchu explode)
+            SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 17, -185);  // fixes the eeno that is too high above ground (bombchu explode)
             SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 60, -60);  // fixes the blue bubble that is too high
+            SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 107, -280);  // fixes the leever spawn is too low (bombchu explode)
+            SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 110, -280);  // fixes the leever spawn is too low (bombchu explode)
+            SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 121, -280);  // fixes the leever spawn is too low (bombchu explode)
+            SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 153, -280);  // fixes the leever spawn is too low (bombchu explode)
 
-            // have to fix the two wolfos spawn in twin islands that spawn off scew
+
+            // have to fix the two wolfos spawn in twin islands that spawn off scew, 
+            //   redead falls through the floor otherwise
             // room 0, actors 27 and 28
-            // 27: y:141, r(xyz): 0 0 0a
-            // 28: y:196, r: 0 0 0
             var twinIslandsRoom0FID = GameObjects.Scene.TwinIslands.FileID() + 1;
-            RomUtils.CheckCompressed(twinIslandsRoom0FID); // safety first
+            RomUtils.CheckCompressed(twinIslandsRoom0FID);
             var sceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.TwinIslands.FileID());
             var twinIslandsActorAddr = RomData.SceneList[sceneIndex].Maps[0].ActorAddr;
-            FlattenPitchRoll(twinIslandsRoom0FID, twinIslandsActorAddr, 26);  // fixes redead falling through the floor
-            FlattenPitchRoll(twinIslandsRoom0FID, twinIslandsActorAddr, 27);  // fixes redead falling through the floor
+            FlattenPitchRoll(twinIslandsRoom0FID, twinIslandsActorAddr, 26);
+            FlattenPitchRoll(twinIslandsRoom0FID, twinIslandsActorAddr, 27);
 
             // the dinofos spawn is near the roof in woodfall and secret shrine
             var woodfallRoom7FID = GameObjects.Scene.WoodfallTemple.FileID() + 8;
-            RomUtils.CheckCompressed(woodfallRoom7FID); // safety first
+            RomUtils.CheckCompressed(woodfallRoom7FID);
             sceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
             var woodfallActorAddr = RomData.SceneList[sceneIndex].Maps[7].ActorAddr;
-            // this shit is cursed, it never moves unless you put it outside of the room, like the room resets my changes
-            SetHeight(woodfallRoom7FID, woodfallActorAddr, 0, -1208);  // this should be ideal height
+            SetHeight(woodfallRoom7FID, woodfallActorAddr, 0, -1208);
 
+            // move the bombchu in the first stonetowertemple room 
+            //   backward several feet from the chest, so replacement cannot block the chest
+            var stoneTowerTempleRoom0FID = GameObjects.Scene.StoneTowerTemple.FileID() + 1;
+            RomUtils.CheckCompressed(stoneTowerTempleRoom0FID);
+            var stoneTowerTempleSceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.StoneTowerTemple.FileID());
+            var stoneTowerTempleActorAddr = RomData.SceneList[stoneTowerTempleSceneIndex].Maps[0].ActorAddr;
+            SetZ(stoneTowerTempleRoom0FID, stoneTowerTempleActorAddr, 3, -630);
         }
 
         public static void FixSpecificLikeLikeTypes()
@@ -201,7 +206,7 @@ namespace MMR.Randomizer
             //SetX(coastScene.File + 1, coastScene.Maps[0].ActorAddr, 20, -1245);
         }
 
-        public static List<Enemy> GetMatchPool(List<Enemy> oldActors, Random random, Scene scene)
+        public static List<Enemy> GetMatchPool(List<Enemy> oldActors, Random random, Scene scene, List<GameObjects.Actor> ReducedEnemyList)
         {
             List<Enemy> enemyMatchesPool = new List<Enemy>();
 
@@ -216,7 +221,7 @@ namespace MMR.Randomizer
                 // the enemy we got from the scene has the specific variant number, the general game object has all
                 //var enemyMatch = EnemyList.Find(u => (int) u == oldEnemy.Actor);
                 var enemyMatch = (GameObjects.Actor) oldEnemy.Actor;
-                foreach (var enemy in EnemyList)
+                foreach (var enemy in ReducedEnemyList)
                 {
                     var compatibleVariants = enemyMatch.CompatibleVariants(enemy, random, oldEnemy.Variables[0]);
                     if (compatibleVariants == null)
@@ -257,28 +262,6 @@ namespace MMR.Randomizer
                 }
             }
 
-            // TODO rewrite so we dont need this hardcoded
-            // desbrekos, the giant skelefish swarm will lag southern swamp horribly
-            if (scene.File == GameObjects.Scene.SouthernSwamp.FileID())
-            {
-                enemyMatchesPool.RemoveAll(u => u.Actor == (int) GameObjects.Actor.Desbreko);
-            }
-            // if dinofos replaces iron knuckle, it crashes
-            if (scene.File == GameObjects.Scene.BeneathGraveyard.FileID())
-            {
-                enemyMatchesPool.RemoveAll(u => u.Actor == (int)GameObjects.Actor.Dinofos);
-            }
-            // chuchu in cleared swamp is crash if you approach the witch shop
-            if (scene.File == GameObjects.Scene.SouthernSwampClear.FileID())
-            {
-                enemyMatchesPool.RemoveAll(u => u.Actor == (int)GameObjects.Actor.ChuChu);
-            }
-            // if Hiploop gets replaced with with RedBubble in woodfall you can see their models below the bridges
-            if (scene.File == GameObjects.Scene.Woodfall.FileID())
-            {
-                enemyMatchesPool.RemoveAll(u => u.Actor == (int)GameObjects.Actor.RedBubble);
-            }
-
             return enemyMatchesPool;
         }
 
@@ -294,7 +277,7 @@ namespace MMR.Randomizer
                 log.AppendLine(str);
             }
 
-            List<Enemy> sceneEnemies = GetSceneEnemyActors(scene);
+            var sceneEnemies = GetSceneEnemyActors(scene);
             if (sceneEnemies.Count == 0)
             {
                 return; // if no enemies, no point in continuing
@@ -336,11 +319,14 @@ namespace MMR.Randomizer
                 }
             }
 
+            // some scenes are blocked from having enemies, do this ONCE before GetMatchPool, which would do it per-enemy
+            var SceneAcceptableEnemies = EnemyList.FindAll( u => ! u.BlockedScenes().Contains(scene.SceneEnum)); // copy the original list
 
+            // we group enemies with objects because some objects can be reused for multiple enemies, potential minor boost to variety
             List<List<Enemy>> originalEnemiesPerObject = new List<List<Enemy>>(); ; // outer layer is per object
             List<List<Enemy>> matchingCandidatesLists = new List<List<Enemy>>();
-            //List<ValueSwap[]> chosenReplacementActors = new List<ValueSwap[]>();
-            List<Enemy>     chosenReplacementEnemies = new List<Enemy>();
+            List<Enemy>       chosenReplacementEnemies = new List<Enemy>();
+            var               previousyAssignedActor = new List<GameObjects.Actor>();
             List<ValueSwap>   chosenReplacementObjects;
 
             // get a matching set of possible replacement objects and enemies that we can use
@@ -350,15 +336,56 @@ namespace MMR.Randomizer
                 // get a list of all enemies (in this room) from enemylist that have the same OBJECT as our object that have an actor we also have
                 originalEnemiesPerObject.Add(sceneEnemies.FindAll(u => u.Object == sceneObjects[i]));
                 // get a list of matching actors that can fit in the place of the previous actor
-                matchingCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene));
+                matchingCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene, SceneAcceptableEnemies));
             }
             WriteOutput(" time to generate candidate list: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             int loopsCount = 0;
             while (true)
             {
-
                 /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
+                
+                chosenReplacementObjects = new List<ValueSwap>();
+                int oldsize = 0;
+                int newsize = 0;
+                for (int i = 0; i < sceneObjects.Count; i++)
+                {
+                    //////////////////////////////////////////////////////
+                    ////////// debuging: force an object (enemy) /////////
+                    //////////////////////////////////////////////////////
+                    /*if (scene.File == GameObjects.Scene.GreatBayCoast.FileID()
+                        && i == 1) // actor object number X
+                    {
+                        //chosenReplacementObjects[i].NewV = GameObjects.Actor.DeathArmos.ObjectIndex();
+                        chosenReplacementObjects.Add(new ValueSwap()
+                        {
+                            OldV = sceneObjects[i],
+                            //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
+                            NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
+                        });
+                        oldsize += originalEnemiesPerObject[i][0].ObjectSize;
+                        continue;
+                    }*/
+
+                    // get random enemy from the possible random enemy matches
+                    Enemy randomEnemy = matchingCandidatesLists[i][rng.Next(matchingCandidatesLists[i].Count)];
+                    // keep track of sizes between this new enemy combo and what used to be in this scene
+                    if (randomEnemy.Object != 1) // if always loaded, dont count it if an actor needs it
+                    {
+                        newsize += randomEnemy.ObjectSize;
+
+                    }
+                    oldsize += originalEnemiesPerObject[i][0].ObjectSize;
+                    // add random enemy to list
+                    chosenReplacementObjects.Add( new ValueSwap() 
+                    { 
+                        OldV = sceneObjects[i],
+                        NewV = randomEnemy.Object
+                    });
+                }
+
+                loopsCount += 1;
+                // inf loop catch, now kinda rare
                 if (loopsCount >= 700) // 10000 when we do hit 10k it just delays retry, something really wrong happens if you make it past 400
                 {
                     var error = " No enemy combo could be found to fill this scene: " + scene.SceneEnum.ToString() + " w sid:" + scene.Number.ToString("X2");
@@ -380,45 +407,6 @@ namespace MMR.Randomizer
                     throw new Exception(error);
                 }
 
-                chosenReplacementObjects = new List<ValueSwap>();
-                int oldsize = 0;
-                int newsize = 0;
-                for (int i = 0; i < sceneObjects.Count; i++)
-                {
-                    // get random enemy from the possible random enemy matches
-                    Enemy randomEnemy = matchingCandidatesLists[i][rng.Next(matchingCandidatesLists[i].Count)];
-                    // keep track of sizes between this new enemy combo and what used to be in this scene
-                    if (randomEnemy.Object != 1) // if always loaded, dont count it if an actor needs it
-                    {
-                        newsize += randomEnemy.ObjectSize;
-
-                    }
-                    oldsize += originalEnemiesPerObject[i][0].ObjectSize;
-                    // add random enemy to list
-                    chosenReplacementObjects.Add( new ValueSwap() 
-                    { 
-                        OldV = sceneObjects[i],
-                        NewV = randomEnemy.Object
-                    });
-                }
-
-                // TESTING: force enemy in object index of scene
-                //if (scene.File == GameObjects.Scene.TwinIslands.FileID() && !chosenReplacementObjects.Any(u => u.NewV == 0x75)) //75 = redead
-                /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID() 
-                    //&& !chosenReplacementObjects.Any(u => u.NewV == 0x211)) // bombflower exists, 2A = bombflower
-                    && chosenReplacementObjects[4].NewV != GameObjects.Actor.Dinofos.ObjectIndex()) // eeno replaced with bombflower
-                {
-                    continue;
-                }
-                if (scene.File == GameObjects.Scene.StoneTowerTemple.FileID()
-                    //&& !chosenReplacementObjects.Any(u => u.NewV == 0x211)) // bombflower exists, 2A = bombflower
-                    && chosenReplacementObjects[4].NewV != GameObjects.Actor.BombFlower.ObjectIndex()) // eeno replaced with bombflower
-                {
-                    continue;
-                }*/
-
-
-                loopsCount += 1;
                 if (newsize <= oldsize || newsize < scene.SceneEnum.GetSceneObjLimit() ) // DEBUG turn off for size based generation
                 {
                     //this should take into account map/scene size and size of all loaded actors...
@@ -433,13 +421,15 @@ namespace MMR.Randomizer
 
             Enemy emptyEnemy = GameObjects.Actor.Empty.ToEnemy();
             emptyEnemy.Variables = new List<int> { 0 };
+            //bool alreadyDeathTest = false;
 
-            for (int i = 0; i < chosenReplacementObjects.Count; i++)
+            for (int objCount = 0; objCount < chosenReplacementObjects.Count; objCount++)
             {
-                foreach (var oldEnemy in originalEnemiesPerObject[i].ToList())
+                var temporaryMatchEnemyList = new List<Enemy>();
+                foreach (var oldEnemy in originalEnemiesPerObject[objCount].ToList())
                 {
                     int randomSubmatch;
-                    List<Enemy> subMatches = matchingCandidatesLists[i].FindAll(u => u.Object == chosenReplacementObjects[i].NewV);
+                    List<Enemy> subMatches = matchingCandidatesLists[objCount].FindAll(u => u.Object == chosenReplacementObjects[objCount].NewV);
 
                     // this isn't really a loop, 99% of the time it matches on the first loop
                     // leaving this for now because its faster than shuffling the list even if it looks stupid
@@ -462,45 +452,75 @@ namespace MMR.Randomizer
                         }
                     }
 
-                    // temp method to cut leevers down a bit, since there are FOURTYFIVE on TF
-                    if (oldEnemy.Actor == (int)GameObjects.Actor.Leever
-                        && (rng.Next(5) <= 3))
-                    {
-                        subMatches[randomSubmatch] = emptyEnemy;
-                    }
-
-                    // we should know what room each enemy is in, we can have that info here
-                    //this is temporary, I need to think of a better way to reduce enemies intelegently per-enemy, per-room, per-event
-                    if (( ! oldEnemy.MustNotRespawn && originalEnemiesPerObject[i].Count >= 5
-                          && (subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.GossipStone || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Scarecrow
-                           || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Dodongo || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.PoeSisters
-                           || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Peahat || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.BeanSeller
-                           || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Postbox || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.ButlersSon
-                           || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.BigPoe || subMatches[randomSubmatch].Actor == (int) GameObjects.Actor.Dinofos))
-                        && (rng.Next(5) <= 2))
-                    {
-                        subMatches[randomSubmatch] = emptyEnemy;
-                    }
-
-                    // actors and objects are handled with value swaps
-                    /*ValueSwap newActor = new ValueSwap();
-                    newActor.OldV = oldEnemy.Actor;
-                    newActor.NewV = subMatches[randomSubmatch].Actor;
-                    ValueSwap newVariant = new ValueSwap();
-                    var randomVariantValue = rng.Next(subMatches[randomSubmatch].Variables.Count);
-                    newVariant.NewV = subMatches[randomSubmatch].Variables[randomVariantValue];
-                    chosenReplacementActors.Add(new ValueSwap[] { newActor, newVariant });*/
-
-                    
                     var newEnemy = oldEnemy;
                     newEnemy.Actor = subMatches[randomSubmatch].Actor;
-                    newEnemy.Variables[0] = rng.Next(subMatches[randomSubmatch].Variables.Count);
+                    newEnemy.Variables[0] = subMatches[randomSubmatch].Variables[rng.Next(subMatches[randomSubmatch].Variables.Count)];
 
-                    chosenReplacementEnemies.Add(newEnemy);
+                    temporaryMatchEnemyList.Add(newEnemy);
+                    if ( ! previousyAssignedActor.Contains((GameObjects.Actor)newEnemy.Actor))
+                    {
+                        previousyAssignedActor.Add((GameObjects.Actor)newEnemy.Actor);
+                    }
 
                     // print what enemy was and now is as debug for a scene
-                    WriteOutput("Old Enemy actor:[" + oldEnemy.Name + "] was replaced by new enemy: [" + subMatches[randomSubmatch].Name + "] with variant: [" + newEnemy.Variables[0].ToString("X2") + "]");
+                    //WriteOutput("Old Enemy actor:[" + oldEnemy.Name + "] was replaced by new enemy: [" + subMatches[randomSubmatch].Name + "] with variant: [" + newEnemy.Variables[0].ToString("X2") + "]");
                 }
+
+                // enemies can have max per room varients, if these show up we should cull the varieties that dont have those limits
+                var restrictedEnemies = previousyAssignedActor.FindAll(u => u.HasVariantsWithRoomLimits());
+                foreach( var problemEnemy in restrictedEnemies)
+                {
+                    // we need to split enemies per room
+                    for (int roomIndex = 0; roomIndex < scene.Maps.Count; ++roomIndex)
+                    {
+                        var roomEnemies = temporaryMatchEnemyList.FindAll(u => u.Room == roomIndex);
+                        var enemyCullList = new List<Enemy>();
+
+                        // foreach variets, remove enemies found that match
+                        var limitedVariants = problemEnemy.Variants().FindAll(u => problemEnemy.VariantMaxCountPerRoom(u) >= 0);
+                        foreach (var variant in limitedVariants)
+                        {
+                            var roomEnemiesWithVariant = roomEnemies.FindAll(u => u.Variables[0] == variant);
+                            if (roomEnemiesWithVariant != null && roomEnemiesWithVariant.Count > 0)
+                            {
+
+                                int max = problemEnemy.VariantMaxCountPerRoom(variant);
+                                // save max variants
+                                for (int i = 0; i < max && i < roomEnemiesWithVariant.Count; ++i)
+                                {
+                                    roomEnemiesWithVariant.Remove(roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)]);
+                                }
+                                // kill the rest of variant X
+                                foreach (var enemy in roomEnemiesWithVariant)
+                                {
+                                    var enemyIndex = temporaryMatchEnemyList.IndexOf(enemy);
+                                    temporaryMatchEnemyList[enemyIndex].Actor = (int)GameObjects.Actor.Empty;
+                                    //temporaryMatchEnemyList[enemyIndex].Name = "Removed";
+                                }
+                                WriteOutput( " in room " + roomIndex +  ", removing extra variants: " + variant.ToString("X2") + " for enemy: " + problemEnemy.ToString());
+
+                            }
+                        }
+                    }
+                }
+                // this was here because I believed it was double dipping
+                // TODO: check if its doing anything
+                previousyAssignedActor.Clear();
+
+                // print debug enemy locations
+                // moved here later because room limits can change the values
+                for (int i = 0; i < temporaryMatchEnemyList.Count; i++)
+                {
+                    WriteOutput("Old Enemy actor:[" 
+                        + originalEnemiesPerObject[objCount][i].Name 
+                        + "] was replaced by new enemy: [" 
+                        + ((GameObjects.Actor)temporaryMatchEnemyList[i].Actor).ToString() 
+                        + "] with variant: [" 
+                        + temporaryMatchEnemyList[i].Variables[0].ToString("X2") + "]");
+                }
+
+                // add temp list back to chosenRepalcementEnemies
+                chosenReplacementEnemies.AddRange(temporaryMatchEnemyList);
             }
 
             SetSceneEnemyActors(scene, chosenReplacementEnemies);
@@ -531,11 +551,12 @@ namespace MMR.Randomizer
                 SceneUtils.GetMapHeaders();
                 SceneUtils.GetActors();
                 FixSpecificLikeLikeTypes();
-                var newSceneList = RomData.SceneList;
-                // if using parallel, move biggest scenes to the front so that we dont get stuck waiting at the end for one big scene with multiple dead cores doing nothing
+
+                // if using parallel, move biggest scenes to the front so that we dont get stuck waiting at the end for one big scene with multiple dead cores idle
                 // biggest is on the right, because its put at the front last
                 // this should be all scenes that took > 500ms on Isghj's computer during alpha ~dec15
                 //  this is old, should be re-evaluated with different code
+                var newSceneList = RomData.SceneList;
                 foreach (var sceneIndex in new int[]{ 1442, 1353, 1258, 1358, 1449, 1291, 1224,  1522, 1388, 1165, 1421, 1431, 1241, 1222, 1330, 1208, 1451, 1332, 1446, 1310 }){
                     var item = newSceneList.Find(u => u.File == sceneIndex);
                     newSceneList.Remove(item);
@@ -543,8 +564,8 @@ namespace MMR.Randomizer
                 }
                 int seed = random.Next(); // order is up to the processor, to keep these matching the seed, set them all to start at the same value
 
-                //foreach (var scene in RomData.SceneList) if (!SceneSkip.Contains(scene.Number))
                 Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
+                //foreach (var scene in RomData.SceneList) if (!SceneSkip.Contains(scene.Number))
                 {
                     if (!SceneSkip.Contains(scene.Number))
                     {
@@ -586,10 +607,10 @@ namespace MMR.Randomizer
                 }
 
                 // testing add hookshot flag to items
-                var actor = GameObjects.Actor.Postbox;
+                /*var actor = GameObjects.Actor.Postbox;
                 RomUtils.CheckCompressed(actor.FileListIndex());
                 PrintActorInitFlags(actor.ToString(), RomData.MMFileList[actor.FileListIndex()].Data, actor.ActorInitOffset());
-                RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 6] |= 0x02; // test hookshotable
+                RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 6] |= 0x02; // test hookshotable */
 
                 //actor = GameObjects.Actor.Dinofos;
                 //RomUtils.CheckCompressed(actor.FileListIndex());

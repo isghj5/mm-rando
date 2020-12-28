@@ -158,6 +158,35 @@ namespace MMR.Randomizer.Extensions
             return false;
         }
 
+        public static List<Scene> BlockedScenes(this Actor actor)
+        {
+            var blockedScenesAttribute = actor.GetAttribute<EnemizerScenesPlacementBlock>();
+            if (blockedScenesAttribute != null)
+            {
+                return blockedScenesAttribute.ScenesBlocked;
+            }
+            return new List<Scene>();
+        }
+
+        public static int VariantMaxCountPerRoom(this Actor actor, int variant) 
+        {
+            var singleAttr = actor.GetAttribute<SinglePerRoomMax>();
+            if (singleAttr != null && singleAttr.Variants.Contains(variant)) // think 1 will be a more common restriction
+            {
+                return 1;
+            }
+            var doubleAttr = actor.GetAttribute<DoublePerRoomMax>();
+            if (doubleAttr != null && doubleAttr.Variants.Contains(variant))
+            {
+                return 2;
+            }
+            return -1; // no restriction
+        }
+
+        public static bool HasVariantsWithRoomLimits(this Actor actor)
+        {
+            return actor.GetAttribute<SinglePerRoomMax>() != null | actor.GetAttribute<DoublePerRoomMax>() != null;
+        }
 
         public static int ActorInitOffset(this Actor actor)
         {
