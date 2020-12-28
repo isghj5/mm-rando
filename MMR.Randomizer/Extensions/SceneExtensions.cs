@@ -2,6 +2,7 @@
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.GameObjects;
+using System.Runtime.CompilerServices;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -28,5 +29,7 @@ namespace MMR.Randomizer.Extensions
             // cat says the lowest max heap size for any scene is 0x15900, aiming lower than that for spawned objects
             return 0x12000; 
         }
+
     }
+
 }

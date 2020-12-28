@@ -398,4 +398,5 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x70)]
         LaundryPool = 0x6D,
     }
+
 }
