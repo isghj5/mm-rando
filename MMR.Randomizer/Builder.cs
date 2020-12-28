@@ -444,6 +444,22 @@ namespace MMR.Randomizer
             }
         }
 
+        private void MakeItRain()
+        {
+            // in termina field on day 2
+            int terminaFieldRoom0FID = GameObjects.Scene.TerminaField.FileID() + 1;
+
+            for (int Byte = 0; Byte < 0x10 * 70; Byte += 8)
+            {
+                if (RomData.MMFileList[terminaFieldRoom0FID].Data[Byte] == 0x08) // header command starts with 0x08
+                {
+                    RomData.MMFileList[terminaFieldRoom0FID].Data[Byte + 0x6] |= 0x10; // weirdly this seems to be the only noticable effect of this byte
+                    return;
+                }
+            }
+
+        }
+
         private void WriteInstruments(Random random)
         {
             var codeFileAddress = 0xB3C000;
@@ -2808,6 +2824,7 @@ namespace MMR.Randomizer
             progressReporter.ReportProgress(72, "Writing cosmetics...");
             WriteTatlColour(new Random(BitConverter.ToInt32(hash, 0)));
             WriteTunicColor();
+            MakeItRain();
             WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
             progressReporter.ReportProgress(73, "Writing music...");
