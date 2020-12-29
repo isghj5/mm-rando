@@ -19,6 +19,7 @@
             | ShortenCutsceneBossIntro.Twinmold
             | ShortenCutsceneBossIntro.Majora
             | ShortenCutsceneBossIntro.Wart
-            | ShortenCutsceneBossIntro.IgosDuIkana;
+            | ShortenCutsceneBossIntro.IgosDuIkana
+            | ShortenCutsceneBossIntro.Gomess;
     }
 }

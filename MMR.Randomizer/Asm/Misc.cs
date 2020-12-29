@@ -78,7 +78,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Whether or not to enable cycling arrow types while using the bow.
         /// </summary>
-        public bool ArrowCycling { get; set; }
+        public bool ArrowCycling { get; set; } = true;
 
         /// <summary>
         /// Whether or not to show magic being consumed ahead of time when using elemental arrows.
@@ -101,7 +101,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Whether or not to use the closest cow to the player when giving an item.
         /// </summary>
-        public bool CloseCows { get; set; }
+        public bool CloseCows { get; set; } = true;
 
         /// <summary>
         /// Whether or not to draw hash icons on the file select screen.
@@ -116,12 +116,12 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Whether or not to apply Elegy of Emptiness speedups.
         /// </summary>
-        public bool ElegySpeedup { get; set; }
+        public bool ElegySpeedup { get; set; } = true;
 
         /// <summary>
         /// Whether or not to enable faster pushing and pulling speeds.
         /// </summary>
-        public bool FastPush { get; set; }
+        public bool FastPush { get; set; } = true;
 
         /// <summary>
         /// Whether or not to enable freestanding models.

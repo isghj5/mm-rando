@@ -12,6 +12,7 @@ using MMR.Randomizer.Utils.Mzxrules;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Threading;
+using System.Numerics;
 
 namespace MMR.Randomizer.Utils
 {
@@ -155,7 +156,8 @@ namespace MMR.Randomizer.Utils
 
         static RomUtils()
         {
-            var random = new Random(typeof(RomUtils).Assembly.ManifestModule.ModuleVersionId.GetHashCode());
+            var bigInt = new BigInteger(typeof(RomUtils).Assembly.ManifestModule.ModuleVersionId.ToByteArray());
+            var random = new Random((int)(bigInt & int.MaxValue));
             var buffer = new byte[16];
             random.NextBytes(buffer);
             key = buffer.ToArray();

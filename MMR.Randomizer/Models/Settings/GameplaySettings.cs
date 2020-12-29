@@ -357,7 +357,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Text is fast-forwarded
         /// </summary>
-        public bool QuickTextEnabled { get; set; }
+        public bool QuickTextEnabled { get; set; } = true;
 
         /// <summary>
         /// Replaces Link's default model
@@ -401,27 +401,27 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Change beavers so the player doesn't have to race the younger beaver.
         /// </summary>
-        public bool SpeedupBeavers { get; set; }
+        public bool SpeedupBeavers { get; set; } = true;
 
         /// <summary>
         /// Change the dampe flames to always have 2 on ground floor and one up the ladder.
         /// </summary>
-        public bool SpeedupDampe { get; set; }
+        public bool SpeedupDampe { get; set; } = true;
 
         /// <summary>
         /// Change dog race to make gold dog always win if the player has the Mask of Truth
         /// </summary>
-        public bool SpeedupDogRace { get; set; }
+        public bool SpeedupDogRace { get; set; } = true;
 
         /// <summary>
         /// Change the Lab Fish to only need to be fed one fish.
         /// </summary>
-        public bool SpeedupLabFish { get; set; }
+        public bool SpeedupLabFish { get; set; } = true;
 
         /// <summary>
         /// Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000.
         /// </summary>
-        public bool SpeedupBank { get; set; }
+        public bool SpeedupBank { get; set; } = true;
 
         #endregion
 
