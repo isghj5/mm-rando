@@ -1,5 +1,6 @@
 ﻿using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Attributes.Actor;
+using MMR.Randomizer.Models.Rom;
 
 namespace MMR.Randomizer.GameObjects
 {
@@ -29,6 +30,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xA)]
         [GroundVariants(1,0)]
         [DoublePerRoomMax(1,0)] // which one is the big one?
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Dodongo = 0xB,
 
         [EnemizerEnabled]
@@ -60,6 +62,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(56)]
         [ObjectListIndex(0x14)]
         [GroundVariants(0)]
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Peahat = 0x14,
 
         [EnemizerEnabled]
@@ -69,7 +72,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [DoublePerRoomMax(0)]
         [EnemizerScenesExcluded(0x60)] // issue: spawn is too high, needs to be lowered
-        [EnemizerScenesPlacementBlock(Scene.BeneathGraveyard)] // crash if placed on dinofos
+        [EnemizerScenesPlacementBlock(Scene.BeneathGraveyard, Scene.DekuShrine)] // crash in graveyard
         Dinofos = 0x19,
 
         [EnemizerEnabled]
@@ -91,6 +94,7 @@ namespace MMR.Randomizer.GameObjects
         // the frogs that show up when you kill hte other frog, those are unknown vars because they are spawned by the dead miniboss
         [GroundVariants(3,4)] // 3 is southern swamp, 4 is laundry pool
         [RespawningVarients(3,4)]
+        [EnemizerScenesExcluded(0x45, 0x00, 0x70)] // clear and poison swamp, laundrypool
         Frog1 = 0x22,
 
         [EnemizerEnabled]
@@ -100,6 +104,8 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0xEF,0x7F,4,0x3F)]
         //[GroundVariants(0xEF,0x7F,4)] // remember, this works for _spawns_
         [EnemizerScenesExcluded(0x1B, 0x27, 0x28, 0x40)]
+        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, 
+            Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
         Skulltula = 0x24,
 
         //[EnemizerEnabled] // sometimes crash, cause unknown
@@ -115,7 +121,7 @@ namespace MMR.Randomizer.GameObjects
         // graveyard doesnt crash, but he doesn't spawn here either? its just an empty sky
         [EnemizerScenesPlacementBlock(Scene.AstralObservatory, Scene.RoadToIkana, 
             Scene.Woodfall, Scene.PathToMountainVillage, Scene.IkanaCastle,
-            Scene.MountainVillageSpring, Scene.BeneathGraveyard,
+            Scene.MountainVillageSpring, Scene.BeneathGraveyard, Scene.DekuShrine,
             Scene.IkanaGraveyard )] // known crash locations
         DeathArmos = 0x2D,
 
@@ -140,7 +146,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(74)]
         [ObjectListIndex(0x31)]
         [GroundVariants(0)]
-        //[EnemizerScenesExcluded(0x1B)] // pretty sure this was just because respawning type
+        [EnemizerScenesExcluded(0x1B)] // armos did not drop fairy, whats going on
         DekuBaba = 0x33,
 
         [EnemizerEnabled]
@@ -156,7 +162,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(82)]
         [ObjectListIndex(0x51)]
         [GroundVariants(0)]
-        [EnemizerScenesPlacementBlock(Scene.Woodfall)] // visible waiting below the bridges
+        [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // visible waiting below the bridges
         RedBubble = 0x3C,
 
         [EnemizerEnabled]
@@ -169,9 +175,14 @@ namespace MMR.Randomizer.GameObjects
 
         [EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky
         [ObjectListIndex(0x52)]
-        [GroundVariants(0)]
+        [GroundVariants(0)] // can fly, but weirdly is very bad at changing height if you fight in a multi-level area
         [SinglePerRoomMax(0)] // only fight her if you fight only one
+        [RespawningVarients(0)] // does NOT respawn, but assume never have light arrows until the last second of a run, do not place where can block an item
         [EnemizerScenesExcluded(0x18)] // lets not randomize his normal spawn
+        // good candidate for night and dungeon spawn only
+        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.RoadToIkana,
+            Scene.SouthernSwamp, Scene.Woodfall, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.PathToSnowhead, 
+            Scene.Snowhead, Scene.DekuShrine)]
         Gomess = 0x43,
 
         [EnemizerEnabled]
@@ -195,6 +206,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x75)]
         [GroundVariants(0x7F07,0x7F05,0x7F06)]
         [EnemizerScenesExcluded(0x4b,0x13)] // gibdo locations, but share the same object so gets detected
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows us down too much
         ReDead = 0x4C,
 
         //[ActorizerEnabled] // broken: crash
@@ -218,7 +230,7 @@ namespace MMR.Randomizer.GameObjects
         [RespawningVarients(01,02)]
         DekuBabaWithered = 0x66,
 
-        //[ActorizerEnabled] // works but her object is huge, and you cant talk or interact with her
+        [ActorizerEnabled] // works but her object is huge, and you cant talk or interact with her
         [FileID(204)]
         [ObjectListIndex(0xA2)]
         [GroundVariants(0)]
@@ -233,6 +245,7 @@ namespace MMR.Randomizer.GameObjects
         // 2 is ocean bottom, 0 is one in shallow shore water, 3 is land and one in shallow water
         [WaterVariants(0,2)]
         [GroundVariants(3)]
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // just no
         LikeLike = 0x6C,
 
         //[EnemizerEnabled] // we dont actually want this detected automatically, this will be added per-likelike manually
@@ -261,6 +274,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(134)]
         [ObjectListIndex(0xE4)]
         [GroundVariants(02,0x2001,0x300F,0x100F)]
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // Slowing enemies
         Freezard = 0x8F,
 
         [ActorizerEnabled]
@@ -269,6 +283,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x807F, 0x8004, 0x8002)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [RespawningVarients(0x807F, 0x8004, 0x8002)] // dont spawn where you can cause trouble
         [EnemizerScenesExcluded(0x38, 0x2D)]
+        [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
         Bombiwa = 0x92,
 
         //[ActorizerEnabled] // does not spawn
@@ -307,8 +322,9 @@ namespace MMR.Randomizer.GameObjects
         // 0xA9F and the 0x29F crashes, but... was there ever a dog in that house?
         // 3FF is SCT dog, 0x22BF is spiderhouse dog, makes no sense if use mask
         // 0xD9F is old ranch dog WORKS, racetrack dogs unknown, spawned by the game
-        [GroundVariants(0x3FF, 0x22BF)]
-        [RespawningVarients(0x3FF, 0x22BF)] // killing one not possible
+        [GroundVariants(0x3FF, 0x22BF, 0xD9F)]
+        [RespawningVarients(0x3FF, 0x22BF, 0xD9F)] // killing one not possible
+        [DoublePerRoomMax(0x3FF, 0x22BF, 0xD9F)] // killing one not possible
         [EnemizerScenesExcluded(0x6F, 0x10, 0x27, 0x35)]
         Dog = 0xE2,
 
@@ -417,13 +433,16 @@ namespace MMR.Randomizer.GameObjects
         [FileID(307)]
         [ObjectListIndex(0x171)]
         [GroundVariants(0)]
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slowing enemies
         Nejiron = 0x155,// Rolling exploding rock in Ikana
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1500)]
         [FileID(313)]
         [ObjectListIndex(0x172)]
-        [FlyingVariants(0xFF34,0xFF02,0xFF03,0xFF9F,0x019F,0x0102,0x0103)]
+        [FlyingVariants(0xFF34, 0xFF02, 0xFF03, 0xFF9F, 0x019F, 0x0102, 0x0103)]
+        // one of these is sit on the wall bat from rtss: FF03/01/9F
+        [SinglePerRoomMax(0xFF34)] // swarm
         [EnemizerScenesExcluded(0x18)]
         BadBat = 0x15B,
 
@@ -436,12 +455,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1830)]
         [FileID(322)]
         [ObjectListIndex(0x17A)]
-        [FlyingVariants(0x9605, 0x3205, 0x6405, 0x8C05)]
+        [FlyingVariants(0x9605, 0x3205, 0x6405, 0x8C05, 0xFA01, 0xFA00)]
         // this variety is slow spawn, meaning you have to walk up to it: 0x2800, 0x3200, 0xC200, 0xFA00
-        [GroundVariants(0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200, 0xFA00, 0xFA01)] 
+        [GroundVariants(0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200)] 
         // 9605,3205,6405 all respawn in path to mountain village, 8C05 is snowhead, 6404 and 7804 are stone tower
         [RespawningVarients(0x6404,0x7804, 0x9605,0x3205,0x6405,  0x8C05, 0xFF05)]
-        Bo = 0x164, //boe
+        Bo = 0x164, //boe, small ball of snow or soot
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2290)]
@@ -499,6 +518,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(406)]
         [ObjectListIndex(0x1A6)]
         [GroundVariants(0x0)]
+        [EnemizerScenesExcluded(0x1B)] // req for frog miniboss, do not touch unless you are willing to remove and replace him
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         Snapper = 0x1BA,
 
         [ActorInitVarOffset(0x1FD0)]
@@ -513,6 +534,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x75)]
         [GroundVariants( 0x1E9, 0x1F4, 0x208, 0x214, 0x224, 0x236, 0x247, 0x253, 0x262, 0x275, 0x283, 0x291, 0x2A0 )]
         [EnemizerScenesExcluded(0x13, 0x4B)] // needed for well exploration
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         GibdoWell = 0x1DA,
 
         [EnemizerEnabled]
@@ -539,6 +561,7 @@ namespace MMR.Randomizer.GameObjects
         [SinglePerRoomMax(0)] // only fight her if you fight only one
         [DoublePerRoomMax(0x300, 0x200, 0x100)] // can be more common
         // no scene exclusion necessary, get spawned by the poe sisters minigame but they aren't actors in the scene to be randomized
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         PoeSisters = 0x1E8,
 
         [EnemizerEnabled]
@@ -585,9 +608,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(479)]
         [ObjectListIndex(0x1F1)]
-        [FlyingVariants(0xFF00,1,0x102)] // 1 is a possible type? well: ff00
+        //[FlyingVariants(0xFF00, 1, 0x102)] // 1 is a possible type? well: ff00
+        [FlyingVariants(1)] // 1 is a possible type? well: ff00
         [EnemizerScenesExcluded(0x4B, 0x30)] // well and dampe house must be vanilla for scoopsanity
         [DoublePerRoomMax(0xFF00, 1, 0x102)]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208,
 
         [EnemizerEnabled]
@@ -612,6 +637,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x75)]
         [GroundVariants( 0, 0x81, 0x82, 0x83, 0x84, 0x85 )]
         [EnemizerScenesExcluded(0x13,0x4B)] // dont replace the train
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         GibdoIkana = 0x235,
 
         //[ActorizerEnabled] // unless I write dayonly/nightonly, this is too flukey

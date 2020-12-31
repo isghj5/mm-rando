@@ -141,7 +141,6 @@ namespace MMR.Randomizer
             RomData.MMFileList[roomFID].Data[actorAddr + (actorIndex * 16) + 7] = (byte)(z & 0xFF);        // x pos
         }
 
-
         public static void FixSpawnLocations()
         {
             /// in Enemizer some spawn locations are noticably buggy
@@ -164,7 +163,6 @@ namespace MMR.Randomizer
             SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 121, -280);  // fixes the leever spawn is too low (bombchu explode)
             SetHeight(terminaFieldRool0FID, terminaFieldActorAddr, 153, -280);  // fixes the leever spawn is too low (bombchu explode)
 
-
             // have to fix the two wolfos spawn in twin islands that spawn off scew, 
             //   redead falls through the floor otherwise
             // room 0, actors 27 and 28
@@ -182,13 +180,15 @@ namespace MMR.Randomizer
             var woodfallActorAddr = RomData.SceneList[sceneIndex].Maps[7].ActorAddr;
             SetHeight(woodfallRoom7FID, woodfallActorAddr, 0, -1208);
 
-            // move the bombchu in the first stonetowertemple room 
-            //   backward several feet from the chest, so replacement cannot block the chest
             var stoneTowerTempleRoom0FID = GameObjects.Scene.StoneTowerTemple.FileID() + 1;
             RomUtils.CheckCompressed(stoneTowerTempleRoom0FID);
             var stoneTowerTempleSceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.StoneTowerTemple.FileID());
             var stoneTowerTempleActorAddr = RomData.SceneList[stoneTowerTempleSceneIndex].Maps[0].ActorAddr;
+            // move the bombchu in the first stonetowertemple room 
+            //   backward several feet from the chest, so replacement cannot block the chest
             SetZ(stoneTowerTempleRoom0FID, stoneTowerTempleActorAddr, 3, -630);
+            // biobaba in the right room spawns under the bridge, if octarock it pops up through the tile, move to the side of the bridge
+            SetX(stoneTowerTempleRoom0FID + 3, stoneTowerTempleActorAddr, 19, 1530);
         }
 
         public static void FixSpecificLikeLikeTypes()
@@ -353,15 +353,16 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ////////// debuging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////
-                    /*if (scene.File == GameObjects.Scene.GreatBayCoast.FileID()
-                        && i == 1) // actor object number X
+                    /*if (scene.File == GameObjects.Scene.SouthernSwamp.FileID()
+                        && i == 0) // actor object number X
                     {
                         //chosenReplacementObjects[i].NewV = GameObjects.Actor.DeathArmos.ObjectIndex();
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[i],
                             //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
-                            NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
+                            //NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
+                            NewV = GameObjects.Actor.BigPoe.ObjectIndex() // good for detection explosion
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
@@ -545,6 +546,7 @@ namespace MMR.Randomizer
                 // sakons hideout, and giants chamber (shabom)
                 // adding ocean spiderhouse because its always bo, nothing else fits, but it can lag enemizer
                 int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x28 };
+
                 ReadEnemyList();
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
