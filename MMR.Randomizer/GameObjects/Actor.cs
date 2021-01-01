@@ -1,5 +1,6 @@
 ﻿using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Attributes.Actor;
+using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models.Rom;
 
 namespace MMR.Randomizer.GameObjects
@@ -64,6 +65,13 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Peahat = 0x14,
+
+        //[ActorizerEnabled] // crash, just like all other obj 1 actors
+        [ObjectListIndex(0x1)]
+        [WaterVariants(2)] // 2 is the lab fish
+        [RespawningVarients(2)] // cannot kill
+        [EnemizerScenesExcluded(0x2F)]
+        Fish = 0x17,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3A70)]
@@ -322,9 +330,11 @@ namespace MMR.Randomizer.GameObjects
         // 0xA9F and the 0x29F crashes, but... was there ever a dog in that house?
         // 3FF is SCT dog, 0x22BF is spiderhouse dog, makes no sense if use mask
         // 0xD9F is old ranch dog WORKS, racetrack dogs unknown, spawned by the game
-        [GroundVariants(0x3FF, 0x22BF, 0xD9F)]
-        [RespawningVarients(0x3FF, 0x22BF, 0xD9F)] // killing one not possible
-        [DoublePerRoomMax(0x3FF, 0x22BF, 0xD9F)] // killing one not possible
+        //[GroundVariants(0x3FF, 0x22BF, 0xD9F)]
+        // these two work in some scenes, crash in others: 0xD9F, 22BF,
+        [GroundVariants(0x3FF)]
+        [RespawningVarients(0x3FF)] // killing one not possible
+        [DoublePerRoomMax(0x3FF)]
         [EnemizerScenesExcluded(0x6F, 0x10, 0x27, 0x35)]
         Dog = 0xE2,
 
@@ -518,7 +528,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(406)]
         [ObjectListIndex(0x1A6)]
         [GroundVariants(0x0)]
-        [EnemizerScenesExcluded(0x1B)] // req for frog miniboss, do not touch unless you are willing to remove and replace him
+        [EnemizerScenesExcluded(0x1B)] // req for gekko miniboss, do not touch until fix
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         Snapper = 0x1BA,
 
@@ -604,6 +614,12 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0)] // spawns really low to ground in vanilla
         [EnemizerScenesExcluded(0x23)] // pirate beehive cutscene
         GiantBeee = 0x204,
+
+        //[ActorizerEnabled] // spawns but invisible, can hit it but cannot see it
+        [ObjectListIndex(0x1EE)]
+        [GroundVariants(0)]
+        [RespawningVarients(0)] // cannot kill
+        Gong = 0x207,
 
         [EnemizerEnabled]
         [FileID(479)]
