@@ -267,7 +267,6 @@ namespace MMR.Randomizer
 
         public static void SwapSceneEnemies(OutputSettings settings, Scene scene, int seed)
         {
-            Random rng = new Random(seed);
             DateTime startTime = DateTime.Now;
             // spoiler log already written by this point, for now making a brand new one instead of appending
             StringBuilder log = new StringBuilder();
@@ -328,6 +327,7 @@ namespace MMR.Randomizer
             List<Enemy>       chosenReplacementEnemies = new List<Enemy>();
             var               previousyAssignedActor = new List<GameObjects.Actor>();
             List<ValueSwap>   chosenReplacementObjects;
+            Random rng = new Random(seed + scene.File);
 
             // get a matching set of possible replacement objects and enemies that we can use
             // moving out of loop, this should be static except for RNG changes, which we can leave static per seed
@@ -353,7 +353,7 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ////////// debuging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////
-                    /*if (scene.File == GameObjects.Scene.SouthernSwamp.FileID()
+                    /*if (scene.File == GameObjects.Scene.MountainVillageSpring.FileID()
                         && i == 0) // actor object number X
                     {
                         //chosenReplacementObjects[i].NewV = GameObjects.Actor.DeathArmos.ObjectIndex();
@@ -362,7 +362,7 @@ namespace MMR.Randomizer
                             OldV = sceneObjects[i],
                             //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
                             //NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
-                            NewV = GameObjects.Actor.BigPoe.ObjectIndex() // good for detection explosion
+                            NewV = GameObjects.Actor.Dog.ObjectIndex() // good for detection explosion
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
@@ -619,7 +619,24 @@ namespace MMR.Randomizer
                 //PrintActorInitFlags(actor.ToString(), RomData.MMFileList[actor.FileListIndex()].Data, actor.ActorInitOffset());
                 //RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 7] |= 0x80; // test invisible
 
+                // problem: if we remove snapper as an obj gekko does not spawn
+                // attempted fix: replace one of the other unused obj in that room with snapper to he still spawns
+                // in room 9
+                /*var woodfallScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
+                foreach (var room in woodfallScene.Maps)
+                {
+                    for (int objIndex = 0; objIndex < room.Objects.Count; objIndex++)
+                    {
+                        if (room.Objects[objIndex] == 0x1EB)
+                        {
+                            room.Objects[objIndex] = 0x1A6; // swap to snapper
+                        }
+                    }
+                }*/
+                //RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID()).Maps[8].Objects[13] = 0x1A6;
+
                 FixSpawnLocations(); // some spawns need to be fixed, enemizer brings out their bugginess
+
             }
             catch (Exception e)
             {
