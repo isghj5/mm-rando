@@ -48,9 +48,11 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x13)]
         IkanaCanyon = 0x10,
 
+        [FileID(1171)]
         [SceneInternalId(0x14)]
         PiratesFortress = 0x11,
 
+        [FileID(1173)]
         [SceneInternalId(0x15)]
         MilkBar = 0x12,
 
@@ -90,6 +92,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x21)]
         SnowheadTemple = 0x1E,
 
+        [FileID(1256)]
         [SceneInternalId(0x22)]
         MilkRoad = 0x1F,
 
@@ -99,6 +102,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x24)]
         SwampShootingGallery = 0x21,
 
+        [FileID(1276)]
         [SceneInternalId(0x25)]
         PinnacleRock = 0x22,
 
@@ -146,6 +150,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x34)]
         TradingPost = 0x31,
 
+        [FileID(1326)]
         [SceneInternalId(0x35)]
         RomaniRanch = 0x32,
 
@@ -163,6 +168,7 @@ namespace MMR.Randomizer.GameObjects
 
         // Unused = 0x37,
 
+        [FileID(1336)]
         [SceneInternalId(0x3B)]
         PiratesFortressExterior = 0x38,
 
@@ -181,9 +187,11 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x40)]
         RoadToSouthernSwamp = 0x3D,
 
+        [FileID(1349)]
         [SceneInternalId(0x41)]
         DoggyRacetrack = 0x3E,
 
+        [FileID(1351)]
         [SceneInternalId(0x42)]
         CuccoShack = 0x3F,
 
@@ -208,6 +216,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x49)]
         GreatBayTemple = 0x46,
 
+        [FileID(1386)]
         [SceneInternalId(0x4A)]
         WaterfallRapids = 0x47,
 

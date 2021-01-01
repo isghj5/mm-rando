@@ -439,18 +439,34 @@ namespace MMR.Randomizer
 
         private void MakeItRain()
         {
-            // in termina field on day 2
-            int terminaFieldRoom0FID = GameObjects.Scene.TerminaField.FileID() + 1;
+            int terminaFieldRoom0FID = GameObjects.Scene.TerminaField.FileID() + 1; // tested working
+            int roadtosouthernswampRoom0FID = GameObjects.Scene.RoadToSouthernSwamp.FileID() + 1;
+            int milkroadRoom0FID = GameObjects.Scene.MilkRoad.FileID() + 1;
+            int gormantrackRoom0FD = GameObjects.Scene.GormanTrack.FileID() + 1;
+            int greatbaycoastRoom0FID = GameObjects.Scene.GreatBayCoast.FileID() + 1;
+            int pinnacleRockRoom0FID = GameObjects.Scene.PinnacleRock.FileID() + 1; 
+            int piratesExteriorRoom0FID = GameObjects.Scene.PiratesFortressExterior.FileID() + 1;
+            int piratesInteriorRoom0FID = GameObjects.Scene.PiratesFortress.FileID() + 1;
+            int zoracapeRoom0FID = GameObjects.Scene.ZoraCape.FileID() + 1;
+            int waterfallRapidsRoom0FID = GameObjects.Scene.WaterfallRapids.FileID() + 1;
+            // not sure if woodfall should be added, its in the swamp, but maybe the mountain is supposed to be really tall and above the clouds
 
-            for (int Byte = 0; Byte < 0x10 * 70; Byte += 8)
+            int[] roomFDs = new int[] { terminaFieldRoom0FID, roadtosouthernswampRoom0FID, milkroadRoom0FID, gormantrackRoom0FD,
+                greatbaycoastRoom0FID, pinnacleRockRoom0FID, piratesExteriorRoom0FID, piratesInteriorRoom0FID,
+                zoracapeRoom0FID,  waterfallRapidsRoom0FID};
+
+            foreach (var fid in roomFDs)
             {
-                if (RomData.MMFileList[terminaFieldRoom0FID].Data[Byte] == 0x08) // header command starts with 0x08
+                RomUtils.CheckCompressed(fid);
+                for (int Byte = 0; Byte < 0x10 * 70; Byte += 8)
                 {
-                    RomData.MMFileList[terminaFieldRoom0FID].Data[Byte + 0x6] |= 0x10; // weirdly this seems to be the only noticable effect of this byte
-                    return;
+                    if (RomData.MMFileList[fid].Data[Byte] == 0x08) // header command starts with 0x08
+                    {
+                        RomData.MMFileList[fid].Data[Byte + 0x6] |= 0x10; // weirdly this seems to be the only noticable effect of this byte
+                        break;
+                    }
                 }
             }
-
         }
 
         private void WriteInstruments(Random random)
