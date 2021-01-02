@@ -252,10 +252,9 @@ namespace MMR.Randomizer.Utils
                             }
                             currentSong.Type = categoriesList;
                         }
-                        else  // there should always be one, if not, print error and skip
+                        else  // there should always be one, if not, print error and stop
                         {
-                            Debug.WriteLine("ERROR: cannot find a categories file for " + currentSong.Name);
-                            continue;
+                            throw new Exception("ERROR: cannot find a categories file for " + currentSong.Name);
                         }
 
                         // read list of sound samples
@@ -334,7 +333,8 @@ namespace MMR.Randomizer.Utils
                 }// for each zip
                 catch (Exception e) // log it, continue with other songs
                 {
-                    Debug.WriteLine("Error attempting to read archive: " + filePath + " -- " + e);
+
+                    throw new Exception("Error attempting to read archive: " + filePath + " -- \n" + e);
                 }
             }
         }
