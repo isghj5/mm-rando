@@ -45,7 +45,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(54)]
         [ObjectListIndex(0xF)]
         [GroundVariants(0xFFFF)]
-        [RespawningVarients(0xFFFF)] // killing one not possible
+        [UnkillableVariants(0xFFFF)] // killing one not possible
         // I would like a flying variant, but they seem to drop like a rock instead of float down
         [EnemizerScenesExcluded(0x15, 0x29, 0x35, 0x42, 0x10)]
         FriendlyCucco = 0x11,
@@ -69,7 +69,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // crash, just like all other obj 1 actors
         [ObjectListIndex(0x1)]
         [WaterVariants(2)] // 2 is the lab fish
-        [RespawningVarients(2)] // cannot kill
+        [UnkillableVariants(2)]
         [EnemizerScenesExcluded(0x2F)]
         Fish = 0x17,
 
@@ -100,8 +100,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0xBC)]
         // the frogs that show up when you kill hte other frog, those are unknown vars because they are spawned by the dead miniboss
-        [GroundVariants(3,4)] // 3 is southern swamp, 4 is laundry pool
-        [RespawningVarients(3,4)]
+        [GroundVariants(1,2,3,4)] // 3 is southern swamp, 4 is laundry pool, the versions in teh mountaion have the F flag, think the rest are numbered
+        [UnkillableVariants(1,2,3,4)]
         [EnemizerScenesExcluded(0x45, 0x00, 0x70)] // clear and poison swamp, laundrypool
         Frog1 = 0x22,
 
@@ -111,7 +111,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x20)]
         [FlyingVariants(0xEF,0x7F,4,0x3F)]
         //[GroundVariants(0xEF,0x7F,4)] // remember, this works for _spawns_
-        [EnemizerScenesExcluded(0x1B, 0x27, 0x28, 0x40)]
+        [EnemizerScenesExcluded(0x27, 0x28)] // huh? what are these? why were they not randomized in road to ss?
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, 
             Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
         Skulltula = 0x24,
@@ -123,7 +123,7 @@ namespace MMR.Randomizer.GameObjects
         // 2 worked in snowhead, seems to fly in a straight line though, pathing?
         [FlyingVariants(2)] // 3 works, 1+4 crashes, assuming 7 also crashes because probably a flag
         [SinglePerRoomMax(2)]
-        [RespawningVarients(2)] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
+        [UnkillableVariants(2)] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
         [EnemizerScenesExcluded(0x18)] // 0x18 is ISTT
         // scenes that seem fine: path to snowhead, grottos, well, road to southern swampm ikana canyon, spring twin islands
         // graveyard doesnt crash, but he doesn't spawn here either? its just an empty sky
@@ -138,7 +138,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(72)]
         [ObjectListIndex(0x2A)]
         [GroundVariants(0xFFFF)]
-        [RespawningVarients(0xFFFF)] // cannot kill
+        [UnkillableVariants(0xFFFF)]
         [EnemizerScenesExcluded(0x1F, 0x6B)]
         BombFlower = 0x2F,
 
@@ -147,6 +147,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(73)]
         [ObjectListIndex(0x30)]
         [GroundVariants(0xFFFF)]
+        //[UnkillableVariants(0xFFFF)] // does not respawn, but they do not drop fairies when killed, so marked here
         Armos = 0x32,
 
         [EnemizerEnabled]
@@ -154,7 +155,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(74)]
         [ObjectListIndex(0x31)]
         [GroundVariants(0)]
-        [EnemizerScenesExcluded(0x1B)] // armos did not drop fairy, whats going on
+        //[EnemizerScenesExcluded(0x1B)] // asside from armos not dropping a fairy, this seems safe now
         DekuBaba = 0x33,
 
         [EnemizerEnabled]
@@ -178,18 +179,18 @@ namespace MMR.Randomizer.GameObjects
         [FileID(84)]
         [ObjectListIndex(0x51)]
         [FlyingVariants(0xFFFF)]
-        [RespawningVarients(0xFFFF)]
+        [UnkillableVariants(0xFFFF)] // respawning
         BlueBubble = 0x3E,// cursed
 
         [EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky
         [ObjectListIndex(0x52)]
         [GroundVariants(0)] // can fly, but weirdly is very bad at changing height if you fight in a multi-level area
         [SinglePerRoomMax(0)] // only fight her if you fight only one
-        [RespawningVarients(0)] // does NOT respawn, but assume never have light arrows until the last second of a run, do not place where can block an item
+        [UnkillableVariants(0)] // is NOT unkillable, but assume never have light arrows until the last second of a run, do not place where can block an item
         [EnemizerScenesExcluded(0x18)] // lets not randomize his normal spawn
         // good candidate for night and dungeon spawn only
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.RoadToIkana,
-            Scene.SouthernSwamp, Scene.Woodfall, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.PathToSnowhead, 
+            Scene.SouthernSwamp, Scene.WoodsOfMystery, Scene.Woodfall, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.PathToSnowhead, 
             Scene.Snowhead, Scene.DekuShrine)]
         Gomess = 0x43,
 
@@ -235,7 +236,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(108)]
         [ObjectListIndex(0x31)]
         [GroundVariants(1,2)]
-        [RespawningVarients(01,02)]
+        [UnkillableVariants(1,2)] // they grow back, dont count as killable
         DekuBabaWithered = 0x66,
 
         [ActorizerEnabled] // works but her object is huge, and you cant talk or interact with her
@@ -289,7 +290,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(137)]
         [ObjectListIndex(0x12A)]
         [GroundVariants(0x807F, 0x8004, 0x8002)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
-        [RespawningVarients(0x807F, 0x8004, 0x8002)] // dont spawn where you can cause trouble
+        [FlyingVariants(0x807F, 0x8004, 0x8002)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
+        [UnkillableVariants(0x807F, 0x8004, 0x8002)] // dont actually know if you can kill these to get a fairy drop
+        //[UnkillableVariants(0x807F,0x8002)] // tested true
         [EnemizerScenesExcluded(0x38, 0x2D)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
         Bombiwa = 0x92,
@@ -298,7 +301,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(144)]
         [ObjectListIndex(0xF2)]
         [GroundVariants(0x0FFF)]
-        [RespawningVarients(0x0FFF)] // cannot kill
+        [UnkillableVariants(0x0FFF)]
         [EnemizerScenesExcluded(0x42)]
         CuccoChick = 0x9D,
 
@@ -306,7 +309,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(151)]
         [ObjectListIndex(0xF4)]
         [GroundVariants(0)]
-        [RespawningVarients(0)] // cannot kill
+        [UnkillableVariants(0)]
         [EnemizerScenesExcluded(0x07)]
         BeanSeller = 0xA5,
 
@@ -318,7 +321,7 @@ namespace MMR.Randomizer.GameObjects
         // trading post version is 1
         // wish I could spawn the ones that dance so they are always dancing when the player gets there
         [GroundVariants(1)]
-        [RespawningVarients(0x1200, 0x1B00, 0x2800, 1)] // killing one not possible
+        [UnkillableVariants(0x1200, 0x1B00, 0x2800, 1)] // killing one not possible
         // twinislands 0x5D snowhead 0x21, observatory 0x29, zora hall 0x33, trade 0x34, 0x48 goron village
         [EnemizerScenesExcluded(0x5D, 0x21, 0x29, 0x33, 0x34, 0x37, 0x48, 0x4D, 0x50, 0x38, 0x5B, 0x53, 0x58, 0x5A, 0x5E)] 
         Scarecrow = 0xCA,
@@ -333,14 +336,14 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x3FF, 0x22BF, 0xD9F)]
         // these two work in some scenes, crash in others: 0xD9F, 22BF,
         [GroundVariants(0x3FF)]
-        [RespawningVarients(0x3FF)] // killing one not possible
+        [UnkillableVariants(0x3FF)] // killing one not possible
         [DoublePerRoomMax(0x3FF)]
         [EnemizerScenesExcluded(0x6F, 0x10, 0x27, 0x35)]
         Dog = 0xE2,
 
         [ObjectListIndex(0x133)]
         //[GroundVariants(0x1E,0x2A02,0x2C0A,0x320F)]
-        //[RespawningVarients(0x3FF, 0x22BF)] // killing one not possible
+        //[UnkillableVariants(0x3FF, 0x22BF)] // killing one not possible
         CrateLarge = 0xE5,
 
         [EnemizerEnabled]
@@ -357,7 +360,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x0042 is swinging from tree, looks stupid if spawns in the ground, 22 is sitting on the edge of a bookcase, looks weird on the ground
         [GroundVariants(0x0032)]
         [EnemizerScenesExcluded(0x43,0x28)]
-        //[RespawningVarients(0x32)] the ones that circle the tombs, but dont respawn if placed anywhere else it seems, ignore
+        //[UnkillableVariants(0x32)] the ones that circle the tombs, but dont respawn if placed anywhere else it seems, ignore
         Stalchild = 0xED,
 
         [ActorizerEnabled]
@@ -365,7 +368,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(224)]
         [ObjectListIndex(0x143)]
         [GroundVariants(0x46,0x67,0x88,0xA9,0xCA, 0x4B,0x6C,0x8D,0xAE,0xCF, 0x50,0x71,0x92,0xB3,0xD4, 0x83,0xA4,0xC5,0x41,0x62)]
-        [RespawningVarients(0x46,0x67,0x88,0xA9,0xCA, 0x4B,0x6C,0x8D,0xAE,0xCF, 0x50,0x71,0x92,0xB3,0xD4, 0x83,0xA4,0xC5,0x41,0x62)] // cannot kill
+        [UnkillableVariants(0x46,0x67,0x88,0xA9,0xCA, 0x4B,0x6C,0x8D,0xAE,0xCF, 0x50,0x71,0x92,0xB3,0xD4, 0x83,0xA4,0xC5,0x41,0x62)]
         [EnemizerScenesExcluded(0x66, 0x47, 0x3F, 0x2A)]
         GossipStone = 0xEF,
 
@@ -374,14 +377,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(226)]
         [ObjectListIndex(0x6)]
         [FlyingVariants(0)]
-        [RespawningVarients(0)]
+        [UnkillableVariants(0)]
         Guay = 0xF1,
 
         [ActorizerEnabled]
         [FileID(227)]
         [ObjectListIndex(0x146)]
         [GroundVariants(0,2)]  // 2 is from romani ranch, 0 is cow grotto, well is also 0
-        [RespawningVarients(0,2)] // cannot kill
+        [UnkillableVariants(0,2)]
         [EnemizerScenesExcluded(0x35, 0x4B, 0x07, 0x10)]
         Cow = 0xF3,
 
@@ -389,7 +392,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2A7C)]
         [FileID(241)]
         [ObjectListIndex(0x14E)]
-        [FlyingVariants(0,02,03)]
+        [FlyingVariants(0,2,3)]
+        [DoublePerRoomMax(0,2,3)]
         DragonFly = 0x109,
 
         //[EnemizerEnabled] //crash
@@ -415,7 +419,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerEnabled] // does not spawn, tcrf can get it to spawn but it does nothing
         //[ObjectListIndex(0x161)]
         //[GroundVariants(0)]
-        //[RespawningVarients(0)] // cannot kill
+        //[UnkillableVariants(0)]
         //Frog2 = 0x147, // this doesn't exist in the actors by area list, not vanilla
 
         [EnemizerEnabled]
@@ -426,7 +430,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(0x49)]
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)] // crash transitioning witch shop room
         // termina field, ff00 gbt waterchu, the rest are assumed respawn until proven otherwise
-        [RespawningVarients(0xFF03,0xFF01,0xFF00,    0x0C01,0x1402,0x0A01,0x0202,0x801,0xFF02)]
+        [UnkillableVariants(0xFF03,0xFF01,0xFF00,    0x0C01,0x1402,0x0A01,0x0202,0x801,0xFF02)]
         ChuChu = 0x14A,
 
         [EnemizerEnabled]
@@ -437,6 +441,15 @@ namespace MMR.Randomizer.GameObjects
         [SinglePerRoomMax(0x0F00, 0x0300)]
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp)] // massive lag
         Desbreko = 0x14B, // dead fish swarm from pirates fortress
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x16C)]
+        [GroundVariants(0)]
+        [SinglePerRoomMax(0)]
+        [EnemizerScenesExcluded(0x6C)]
+        [UnkillableVariants(0)]
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall, Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower)] // big blocking
+        Bell = 0x14E,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1250)]
@@ -469,7 +482,7 @@ namespace MMR.Randomizer.GameObjects
         // this variety is slow spawn, meaning you have to walk up to it: 0x2800, 0x3200, 0xC200, 0xFA00
         [GroundVariants(0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200)] 
         // 9605,3205,6405 all respawn in path to mountain village, 8C05 is snowhead, 6404 and 7804 are stone tower
-        [RespawningVarients(0x6404,0x7804, 0x9605,0x3205,0x6405,  0x8C05, 0xFF05)]
+        [UnkillableVariants(0x6404,0x7804, 0x9605,0x3205,0x6405,  0x8C05, 0xFF05)] // respawning
         Bo = 0x164, //boe, small ball of snow or soot
 
         [EnemizerEnabled]
@@ -479,8 +492,17 @@ namespace MMR.Randomizer.GameObjects
         // the snowhead version that doesnt aggro is 01
         [GroundVariants(0x8C,0x28,0x3C,0x46,0x32,0x1,0x8023,0x5,0x14,0x8028,0x8014)]
         // the values on the left are tested respawning, the values on the right are untested, conservative assume respawning
-        [RespawningVarients(0x8014,0x8028,0x8023,   0x0032,0x0005,0x0014)] 
+        [UnkillableVariants(0x8014,0x8028,0x8023,   0x0032,0x0005,0x0014)] // respawning
         RealBombchu = 0x16F,
+
+        [EnemizerEnabled]
+        [ObjectListIndex(0x185)]
+        [FlyingVariants(0, 1, 2, 3, 4, 5)]
+        [UnkillableVariants(0, 1, 2, 3, 4, 5)]
+        [SinglePerRoomMax(0, 1, 2, 3, 4, 5)]
+        [EnemizerScenesExcluded(0x40, 0x5D, 0x6E, 0x22, 0x37, 0x13)] // southernswamp, twinislands, nct, milkroad, gbcoast, ikana
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.TwinIslands, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
+        Tingle = 0x176,
 
         [EnemizerEnabled] // biggest issue: they dont really attack, this isn't the version that spawns over and over
         [ActorInitVarOffset(0x1C6C)]
@@ -496,7 +518,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(349)]
         [ObjectListIndex(1)]
         //[GroundVariants(0x7F, 0x17F)] // both crash for some reason
-        [RespawningVarients(0x7F, 0x17F)] // cannot kill
+        [UnkillableVariants(0x7F, 0x17F)]
         // ikana castle, deku palace, nct, woodfall, woodfall temple
         [EnemizerScenesExcluded(0x1B)] 
         DekuFlower = 0x183,
@@ -514,7 +536,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x19B)]
         //[FlyingVariants(0)] // doesn't spawn unless in the ranch for some reason, shame too this is the one in the ranch
         [FlyingVariants(0x8050,0x805A,0x8064)] // explodes randomly when entering scene
-        [RespawningVarients(0x8050, 0x8064, 0x805A)]
+        [UnkillableVariants(0x8050, 0x8064, 0x805A)]
         [EnemizerScenesExcluded(0x35)] // dont replace actual romani balloons
         PoeBalloon = 0x1A6,
 
@@ -586,7 +608,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(458)]
         [ObjectListIndex(0x1CB)]
         [GroundVariants(0,1,2,3)]
-        [RespawningVarients(0,1,2,3)] // cannot kill
+        [UnkillableVariants(0,1,2,3)]
         [EnemizerScenesExcluded(0x6C, 0x6D, 0x6E, 0x6F)] // all of clocktown
         Postbox = 0x1F2,
 
@@ -618,7 +640,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // spawns but invisible, can hit it but cannot see it
         [ObjectListIndex(0x1EE)]
         [GroundVariants(0)]
-        [RespawningVarients(0)] // cannot kill
+        [UnkillableVariants(0)]
         Gong = 0x207,
 
         [EnemizerEnabled]
@@ -638,11 +660,18 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFF,0x80FF)]
         Leever = 0x216,
 
+        //[EnemizerEnabled] // cutscene is broken without camera placement, player stuck in place
+        [ObjectListIndex(0x204)]
+        //[GroundVariants(0x24B)] // 3 different versions
+        [GroundVariants(0x24B)]
+        //[EnemizerScenesExcluded(0x23)] // do not remove original, for now
+        PirateColonel = 0x21D,
+
         //[ActorizerEnabled] // does not spawn? boo
         [ObjectListIndex(0x211)]
         [GroundVariants(1)]
         [WaterVariants(1)]
-        [RespawningVarients(1)] // cannot kill
+        [UnkillableVariants(1)]
         [EnemizerScenesExcluded(0x33)]
         [SinglePerRoomMax(1)]
         Japas = 0x231,
@@ -661,7 +690,7 @@ namespace MMR.Randomizer.GameObjects
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
         // 2 doesn't ever seen to spawn, day or night, think its a fluke
         [GroundVariants(0x2)] // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
-        [RespawningVarients(0,1,2)] // cannot kill
+        [UnkillableVariants(0,1,2)]
         [EnemizerScenesExcluded(0x15, 0x70, 0x61)]
         [DoublePerRoomMax(0, 1, 2)]
         GuruGuru = 0x248,
@@ -670,14 +699,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(566)]
         [ObjectListIndex(0x12B)]
         [GroundVariants(0x584)]
-        [RespawningVarients(0x584)]
+        [UnkillableVariants(0x584)]
         SleepingScrub = 0x25F,
 
         //[ActorizerEnabled] // spawned for me, but not streamers? weird time dependencies?
         [FileID(267)]
         [ObjectListIndex(0x23F)]
         [FlyingVariants(7, 5)]
-        [RespawningVarients(7, 5)]
+        [UnkillableVariants(7, 5)]
         [EnemizerScenesExcluded(0x37, 0x38)]
         Seagulls = 0x267,
 
@@ -691,15 +720,18 @@ namespace MMR.Randomizer.GameObjects
         [FileID(608)]
         [ObjectListIndex(0x25B)]
         [GroundVariants(0)]
-        [RespawningVarients(0)]
+        [UnkillableVariants(0)]
         [SinglePerRoomMax(0)]
         ButlersSon = 0x289,
 
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x2E30)]
         [FileID(616)]
         [ObjectListIndex(0x22)]
         //[FlyingVariants(0, 1)] // two? one that steals and one that doesn't?
-        //[SinglePerRoomMax(0)]
+        [FlyingVariants(0)] // zero seems safe, does not steal sword or anything, 1 does not spawn
+        [SinglePerRoomMax(0)]
+        [EnemizerScenesExcluded(0x2D)] // do not remove original
         Takkuri = 0x291,
 
         [FileID(1114)]

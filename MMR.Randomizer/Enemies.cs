@@ -1,4 +1,5 @@
-﻿using MMR.Common.Extensions;
+﻿using Microsoft.Toolkit.HighPerformance.Extensions;
+using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes.Actor;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models.Rom;
@@ -115,6 +116,18 @@ namespace MMR.Randomizer
             }
         }
 
+        public static void LowerEnemiesResourceLoad()
+        {
+            /// some enemies are really hard on the CPU/RSP, we can fix some of them to behave nicer with flags
+            foreach (var enemy in EnemyList.Where(u => u.ActorInitOffset() > 0).ToList())
+            {
+                /// bit flags 4-6 according to crookedpoe: Always Run update, Always Draw, Never Cull
+                RomUtils.CheckCompressed(enemy.FileListIndex());
+                RomData.MMFileList[enemy.FileListIndex()].Data[enemy.ActorInitOffset() + 7] &= 0x8F; 
+            }
+        }
+
+
         public static void FlattenPitchRoll(int roomFID, int actorAddr, int actorIndex)
         {
             // the bottom 3 bits are time flags
@@ -189,6 +202,13 @@ namespace MMR.Randomizer
             SetZ(stoneTowerTempleRoom0FID, stoneTowerTempleActorAddr, 3, -630);
             // biobaba in the right room spawns under the bridge, if octarock it pops up through the tile, move to the side of the bridge
             SetX(stoneTowerTempleRoom0FID + 3, stoneTowerTempleActorAddr, 19, 1530);
+
+            // testing using the given objects instead of the functions, add height to postboxes in SCT
+            //var sctRoom0FID = GameObjects.Scene.SouthClockTown.FileID();
+            var sctscene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SouthClockTown.FileID());
+            //sctscene.Maps[0].Actors[47].p.y += 100; // broken, does not work
+            //SetHeight(GameObjects.Scene.SouthClockTown.FileID() + 1, sctscene.Maps[0].ActorAddr, 47, 100); // works, so the actor values aren't being saved either this late or at all
+
         }
 
         public static void FixSpecificLikeLikeTypes()
@@ -206,22 +226,27 @@ namespace MMR.Randomizer
             //SetX(coastScene.File + 1, coastScene.Maps[0].ActorAddr, 20, -1245);
         }
 
-        public static List<Enemy> GetMatchPool(List<Enemy> oldActors, Random random, Scene scene, List<GameObjects.Actor> ReducedEnemyList)
+        public static List<Enemy> GetMatchPool(List<Enemy> oldActors, Random random, Scene scene, List<GameObjects.Actor> reducedEnemyList)
         {
             List<Enemy> enemyMatchesPool = new List<Enemy>();
 
-            // in the future I hope we can change single enemies, but for now
-            // this exists up here and not in the loop because woodfall:
-            //  in woodfall one dragonfly is needed for a clear-all-enemies room, but this loop handles all unique
-            bool MustNotRespawn = oldActors.Any(u => u.MustNotRespawn);
-            
+            // we cannot currently swap out specific enemies, so if ONE must be killable, all shared enemies must
+            //  eg: one of the dragonflies in woodfall must be killable in the map room, so all in the dungeon must since we cannot isolate
+            bool MustBeKillable = oldActors.Any(u => u.MustNotRespawn);
+
+            if (scene.SceneEnum.GetSceneFairyDroppingEnemies().Contains((GameObjects.Actor) oldActors[0].Actor))
+            {
+                /// special case: armos does not drop stray fairies, and I dont know why
+                reducedEnemyList.Remove(GameObjects.Actor.Armos);
+                MustBeKillable = true; // we dont want respawning or unkillable enemies here either
+            }
+
             // todo does this NEED to be a double loop? does anything change per enemy copy that we should worry about?
             foreach (var oldEnemy in oldActors) // this is all copies of an enemy in a scene, so all bo or all guay
             {
                 // the enemy we got from the scene has the specific variant number, the general game object has all
-                //var enemyMatch = EnemyList.Find(u => (int) u == oldEnemy.Actor);
                 var enemyMatch = (GameObjects.Actor) oldEnemy.Actor;
-                foreach (var enemy in ReducedEnemyList)
+                foreach (var enemy in reducedEnemyList)
                 {
                     var compatibleVariants = enemyMatch.CompatibleVariants(enemy, random, oldEnemy.Variables[0]);
                     if (compatibleVariants == null)
@@ -232,7 +257,6 @@ namespace MMR.Randomizer
                     // if peathat replaces snowhead red bubble, it lags the whole dungeon, also its hot get out of there deku
                     if (scene.File == 1241 && oldEnemy.Actor == (int) GameObjects.Actor.RedBubble
                         && (enemy == GameObjects.Actor.Peahat || enemy == GameObjects.Actor.MadShrub))
-                    //if (oldEnemy.Actor == (int)GameObjects.Actor.RedBubble && scene.Number == GameObjects.Scene.SnowheadTemple.Id() && enemy == GameObjects.Actor.Peahat)
                     {
                         continue;
                     }
@@ -244,9 +268,9 @@ namespace MMR.Randomizer
                     if ( ! enemyMatchesPool.Any(u => u.Actor == (int) enemy))
                     {
                         var newEnemy = enemy.ToEnemy();
-                        if (MustNotRespawn)
+                        if (MustBeKillable)
                         {
-                            newEnemy.Variables = enemy.NonRespawningVariants(compatibleVariants); // reduce to available
+                            newEnemy.Variables = enemy.KillableVariants(compatibleVariants); // reduce to available
                             if (newEnemy.Variables.Count == 0)
                             {
                                 continue; // can't put this enemy here: it has no non-respawning variants
@@ -258,7 +282,6 @@ namespace MMR.Randomizer
                         }
                         enemyMatchesPool.Add(newEnemy);
                     }
-
                 }
             }
 
@@ -319,15 +342,13 @@ namespace MMR.Randomizer
             }
 
             // some scenes are blocked from having enemies, do this ONCE before GetMatchPool, which would do it per-enemy
-            var SceneAcceptableEnemies = EnemyList.FindAll( u => ! u.BlockedScenes().Contains(scene.SceneEnum)); // copy the original list
+            var sceneAcceptableEnemies = EnemyList.FindAll( u => ! u.BlockedScenes().Contains(scene.SceneEnum));
+            var rng = new Random(seed + scene.File);
 
             // we group enemies with objects because some objects can be reused for multiple enemies, potential minor boost to variety
-            List<List<Enemy>> originalEnemiesPerObject = new List<List<Enemy>>(); ; // outer layer is per object
-            List<List<Enemy>> matchingCandidatesLists = new List<List<Enemy>>();
-            List<Enemy>       chosenReplacementEnemies = new List<Enemy>();
-            var               previousyAssignedActor = new List<GameObjects.Actor>();
-            List<ValueSwap>   chosenReplacementObjects;
-            Random rng = new Random(seed + scene.File);
+            var originalEnemiesPerObject = new List<List<Enemy>>(); ; // outer layer is per object
+            var actorCandidatesLists = new List<List<Enemy>>();
+            List<ValueSwap> chosenReplacementObjects;
 
             // get a matching set of possible replacement objects and enemies that we can use
             // moving out of loop, this should be static except for RNG changes, which we can leave static per seed
@@ -336,7 +357,7 @@ namespace MMR.Randomizer
                 // get a list of all enemies (in this room) from enemylist that have the same OBJECT as our object that have an actor we also have
                 originalEnemiesPerObject.Add(sceneEnemies.FindAll(u => u.Object == sceneObjects[i]));
                 // get a list of matching actors that can fit in the place of the previous actor
-                matchingCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene, SceneAcceptableEnemies));
+                actorCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene, sceneAcceptableEnemies.ToList()));
             }
             WriteOutput(" time to generate candidate list: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
@@ -353,28 +374,38 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ////////// debuging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////
-                    /*if (scene.File == GameObjects.Scene.MountainVillageSpring.FileID()
-                        && i == 0) // actor object number X
+                    /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID()
+                        && i == 4) // actor object number X
                     {
-                        //chosenReplacementObjects[i].NewV = GameObjects.Actor.DeathArmos.ObjectIndex();
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[i],
                             //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
                             //NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
-                            NewV = GameObjects.Actor.Dog.ObjectIndex() // good for detection explosion
+                            NewV = GameObjects.Actor.Armos.ObjectIndex() // good for detection explosion
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
                     }*/
 
+                    // to prevent the same object(and thus actor) being used multiple times. Should increase variety
+                    var reducedCandidateList = actorCandidatesLists[i].ToList();
+                    foreach (var objectSwap in chosenReplacementObjects)
+                    {
+                        reducedCandidateList.RemoveAll(u => u.Object == objectSwap.NewV);
+                    }
+                    if (reducedCandidateList.Count == 0)
+                    {
+                        newsize += 0x1000000; // should always error in the object size section
+                        continue; // this enemy was starved by previous options, force error and try again
+                    }
+
                     // get random enemy from the possible random enemy matches
-                    Enemy randomEnemy = matchingCandidatesLists[i][rng.Next(matchingCandidatesLists[i].Count)];
+                    Enemy randomEnemy = reducedCandidateList[rng.Next(reducedCandidateList.Count)];
                     // keep track of sizes between this new enemy combo and what used to be in this scene
                     if (randomEnemy.Object != 1) // if always loaded, dont count it if an actor needs it
                     {
                         newsize += randomEnemy.ObjectSize;
-
                     }
                     oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                     // add random enemy to list
@@ -386,18 +417,17 @@ namespace MMR.Randomizer
                 }
 
                 loopsCount += 1;
-                // inf loop catch, now kinda rare
-                if (loopsCount >= 700) // 10000 when we do hit 10k it just delays retry, something really wrong happens if you make it past 400
+                if (loopsCount >= 750) // inf loop catch
                 {
                     var error = " No enemy combo could be found to fill this scene: " + scene.SceneEnum.ToString() + " w sid:" + scene.Number.ToString("X2");
                     WriteOutput(error);
                     WriteOutput("Failed Candidate List:");
-                    foreach (var list in matchingCandidatesLists)
+                    foreach (var list in actorCandidatesLists)
                     {
                         WriteOutput("enemy:");
                         foreach (var match in list)
                         {
-                            WriteOutput(" Enemytype candidate: " + match.Name + " with vars: " + match.Variables[0]);
+                            WriteOutput(" Enemytype candidate: " + match.Name + " with vars: " + match.Variables[0].ToString("X2"));
                         }
                     }
                     using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
@@ -408,7 +438,7 @@ namespace MMR.Randomizer
                     throw new Exception(error);
                 }
 
-                if (newsize <= oldsize || newsize < scene.SceneEnum.GetSceneObjLimit() ) // DEBUG turn off for size based generation
+                if (newsize <= oldsize || newsize < scene.SceneEnum.GetSceneObjLimit()) 
                 {
                     //this should take into account map/scene size and size of all loaded actors...
                     //not really accurate but *should* work for now to prevent crashing
@@ -420,9 +450,10 @@ namespace MMR.Randomizer
             WriteOutput(" Loops used for match candidate: " + loopsCount);
             WriteOutput(" time to finish finding matching population: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
-            Enemy emptyEnemy = GameObjects.Actor.Empty.ToEnemy();
+            var chosenReplacementEnemies = new List<Enemy>();
+            var previousyAssignedActor = new List<GameObjects.Actor>();
+            var emptyEnemy = GameObjects.Actor.Empty.ToEnemy();
             emptyEnemy.Variables = new List<int> { 0 };
-            //bool alreadyDeathTest = false;
 
             for (int objCount = 0; objCount < chosenReplacementObjects.Count; objCount++)
             {
@@ -430,7 +461,7 @@ namespace MMR.Randomizer
                 foreach (var oldEnemy in originalEnemiesPerObject[objCount].ToList())
                 {
                     int randomSubmatch;
-                    List<Enemy> subMatches = matchingCandidatesLists[objCount].FindAll(u => u.Object == chosenReplacementObjects[objCount].NewV);
+                    List<Enemy> subMatches = actorCandidatesLists[objCount].FindAll(u => u.Object == chosenReplacementObjects[objCount].NewV);
 
                     // this isn't really a loop, 99% of the time it matches on the first loop
                     // leaving this for now because its faster than shuffling the list even if it looks stupid
@@ -462,9 +493,6 @@ namespace MMR.Randomizer
                     {
                         previousyAssignedActor.Add((GameObjects.Actor)newEnemy.Actor);
                     }
-
-                    // print what enemy was and now is as debug for a scene
-                    //WriteOutput("Old Enemy actor:[" + oldEnemy.Name + "] was replaced by new enemy: [" + subMatches[randomSubmatch].Name + "] with variant: [" + newEnemy.Variables[0].ToString("X2") + "]");
                 }
 
                 // enemies can have max per room varients, if these show up we should cull the varieties that dont have those limits
@@ -524,6 +552,41 @@ namespace MMR.Randomizer
                 chosenReplacementEnemies.AddRange(temporaryMatchEnemyList);
             }
 
+            // special case test: woodfall snapper rando kills gecko, lets see if we can fix
+            //var woodfallScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
+            // does not work, probably needs a snapper actor too not just object
+            // if we need A snapper actor/object, we could force that condition, snapper could be on dinofos, snapper, or bo, dekubaba if I can figure out what that even means
+            /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID())
+            {
+                
+                // I dont know if this is working, as actor + obj spawns nothing
+                // todo try unrandomizing the snapper object to snapper, whatever enemy we need does NOT need that object in here
+                scene.Maps[8].Objects[2]  = 0x1A6; // blue warp obj to snapper
+                scene.Maps[8].Objects[17] = 0x1A6; // old snapper spot, whatever new enemy exists wont be in this room anyway
+                scene.Maps[8].Objects[16] = 0x1A6; // dekubaba
+
+                scene.Maps[8].Objects[16] = 0x1A6; // why is there a fucking skullwalla in this room????
+                scene.Maps[8].Objects[13] = 0x1A6; // giant bee? redundant just in case for testing, this might kill the hive if it does not exist
+
+                // I know the actor changes are working because I could add a snapper to this room if snapper was still in the rest of the temple
+                scene.Maps[8].Actors[3].n = 0x1BA; // one of the extra flowers to snapper
+                scene.Maps[8].Actors[3].v = 0; // regular snapper variety
+            }*/
+
+            /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID())
+            {
+                foreach (var room in scene.Maps)
+                {
+                    for (int objIndex = 0; objIndex < room.Objects.Count; objIndex++)
+                    {
+                        if (room.Objects[objIndex] == 0x1EB)
+                        {
+                            room.Objects[objIndex] = 0x1A6; // swap to snapper
+                        }
+                    }
+                }
+            }*/
+
             SetSceneEnemyActors(scene, chosenReplacementEnemies);
             SetSceneEnemyObjects(scene, chosenReplacementObjects);
             SceneUtils.UpdateScene(scene);
@@ -578,6 +641,8 @@ namespace MMR.Randomizer
                     }
                 });
 
+                LowerEnemiesResourceLoad();
+
                 void PrintActorInitFlags(string name, byte[] dataBlob, int actorInitLoc){
                     Debug.WriteLine("Printing actor: " + name);
                     Debug.WriteLine(dataBlob[actorInitLoc].ToString("X2") + " < actor id");
@@ -600,23 +665,14 @@ namespace MMR.Randomizer
                             .ToList())
                 {
                     RomUtils.CheckCompressed(a2.FileListIndex());
-                    PrintActorInitFlags(a2.ToString(), RomData.MMFileList[a2.FileListIndex()].Data, a2.ActorInitOffset());
-                    // I'm just assuming that I can do this for all enemies, because I did it to all enemies I knew were issues
-                    // and... I'm not even sure anything changed at all
-                    RomData.MMFileList[a2.FileListIndex()].Data[a2.ActorInitOffset() + 7] &= 0x8F; // redeuce CPU test, kill bits 4-6
                     // to test invisibility in all enemies
                     //RomData.MMFileList[a2.FileListIndex()].Data[a2.ActorInitOffset() + 7] |= 0x80; // test invisible
                 }
 
-                // testing add hookshot flag to items
-                /*var actor = GameObjects.Actor.Postbox;
+                // todo: bombiwa
+                var actor = GameObjects.Actor.DekuBaba;
                 RomUtils.CheckCompressed(actor.FileListIndex());
                 PrintActorInitFlags(actor.ToString(), RomData.MMFileList[actor.FileListIndex()].Data, actor.ActorInitOffset());
-                RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 6] |= 0x02; // test hookshotable */
-
-                //actor = GameObjects.Actor.Dinofos;
-                //RomUtils.CheckCompressed(actor.FileListIndex());
-                //PrintActorInitFlags(actor.ToString(), RomData.MMFileList[actor.FileListIndex()].Data, actor.ActorInitOffset());
                 //RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 7] |= 0x80; // test invisible
 
                 // problem: if we remove snapper as an obj gekko does not spawn

@@ -87,6 +87,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1208)]
         [SceneInternalId(0x1B)]
         [ClearEnemyPuzzleRooms(0, 1, 3, 4, 6, 7, 8, 9)]
+        [FairyDroppingEnemies(Actor.DekuBaba, Actor.Skulltula)]
         WoodfallTemple = 0x18,
 
         [FileID(1222)]
@@ -109,7 +110,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1241)]
         [SceneInternalId(0x21)]
-        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9, 12 )]
+        // 11 dinofos room, 6/12 wizrobe
+        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9, 11 )]
+        [FairyDroppingEnemies(Actor.Dinofos)]
         SnowheadTemple = 0x1E,
 
         [SceneInternalId(0x22)]
@@ -245,7 +248,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1369)]
         [SceneInternalId(0x49)]
-        [ClearEnemyPuzzleRooms(3,4,5,7,8)]
+        //3: clear the biobabs, 5 is gekko, 8 is wart
+        [ClearEnemyPuzzleRooms(3,5,7)]
+        [FairyDroppingEnemies(Actor.Skulltula)]
         GreatBayTemple = 0x46,
 
         [SceneInternalId(0x4A)]
@@ -253,7 +258,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1388)]
         [SceneInternalId(0x4B)]
-        //[ClearEnemyPuzzleRooms( unk )] // need to revisit to know, big poe and 2 chests?
+        [ClearEnemyPuzzleRooms( 12 )] // 12 is big poe
         BeneathTheWell = 0x48,
 
         [SceneInternalId(0x4C)]
@@ -274,7 +279,6 @@ namespace MMR.Randomizer.GameObjects
         MountainVillage = 0x4D,
 
         [SceneInternalId(0x51)]
-        //[ClearEnemyPuzzleRooms(1)]  // ignored by enemizer right now anyway
         PoeHut = 0x4E,
 
         [FileID(1421)]
@@ -292,7 +296,6 @@ namespace MMR.Randomizer.GameObjects
         MusicBoxHouse = 0x52,
 
         [SceneInternalId(0x56)]
-        //[ClearEnemyPuzzleRooms( unk )] // ignored by enemizer right now anyway
         IgosDuIkanasLair = 0x53,
 
         [SceneInternalId(0x57)]
@@ -300,10 +303,12 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1442)]
         [SceneInternalId(0x58)]
+        [FairyDroppingEnemies(Actor.Eyegore)]
         StoneTower = 0x55,
 
         [FileID(1444)]
         [SceneInternalId(0x59)]
+        [FairyDroppingEnemies(Actor.Wizrobe)]
         InvertedStoneTower = 0x56,
 
         [FileID(1446)]
@@ -332,7 +337,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1459)]
         [SceneInternalId(0x60)]
-        //[ClearEnemyPuzzleRooms( unk )] // ignored by enemizer right now anyway
+        [ClearEnemyPuzzleRooms(2,3,4,5)]
         SecretShrine = 0x5D,
 
         [FileID(1466)]
