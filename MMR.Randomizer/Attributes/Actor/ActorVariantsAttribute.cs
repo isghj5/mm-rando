@@ -28,9 +28,9 @@ namespace MMR.Randomizer.Attributes.Actor
     ///  these get in the way of puzzle rooms that require you clear all enemies
     /// </summary>
 
-    public class RespawningVarientsAttribute : ActorVariantsAttribute
+    public class UnkillableVariantsAttribute : ActorVariantsAttribute
     {
-        public RespawningVarientsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+        public UnkillableVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 
 /// <summary>

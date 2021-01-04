@@ -2,7 +2,7 @@
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.GameObjects;
-using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -28,6 +28,12 @@ namespace MMR.Randomizer.Extensions
             // TODO make this a real attribute
             // cat says the lowest max heap size for any scene is 0x15900, aiming lower than that for spawned objects
             return 0x12000; 
+        }
+
+        public static List<Actor> GetSceneFairyDroppingEnemies(this Scene scene)
+        {
+            var attr = scene.GetAttribute<FairyDroppingEnemiesAttribute>();
+            return attr == null ? new List<Actor>() : attr.Enemies;
         }
 
     }

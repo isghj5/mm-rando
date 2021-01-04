@@ -30,9 +30,9 @@ namespace MMR.Randomizer.Extensions
             return actor.GetAttribute<ActorizerEnabledAttribute>()?.Enabled ?? false;
         }
 
-        public static List<int> RespawningVariants(this Actor actor)
+        public static List<int> UnkillableVariants(this Actor actor)
         {
-            return actor.GetAttribute<RespawningVarientsAttribute>()?.Variants;
+            return actor.GetAttribute<UnkillableVariantsAttribute>()?.Variants;
         }
 
         public static List<int> Variants(this Actor actor)
@@ -57,13 +57,13 @@ namespace MMR.Randomizer.Extensions
             return variants;
         }
 
-        public static List<int> NonRespawningVariants(this Actor actor, List<int> acceptableVariants = null)
+        public static List<int> KillableVariants(this Actor actor, List<int> acceptableVariants = null)
         {
             var nonRespawningVariants = acceptableVariants != null ? acceptableVariants : Variants(actor);
-            var respawningVariants    = RespawningVariants(actor);
-            if (respawningVariants != null && respawningVariants.Count > 0)
+            var unkillableVariants    = UnkillableVariants(actor);
+            if (unkillableVariants != null && unkillableVariants.Count > 0)
             {
-                nonRespawningVariants.RemoveAll(u => respawningVariants.Contains(u));
+                nonRespawningVariants.RemoveAll(u => unkillableVariants.Contains(u));
             }
             return nonRespawningVariants;
         }
