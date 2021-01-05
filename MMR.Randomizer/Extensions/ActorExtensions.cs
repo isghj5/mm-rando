@@ -53,6 +53,16 @@ namespace MMR.Randomizer.Extensions
             {
                 variants.AddRange(attrG.Variants);
             }
+            var attrWall = actor.GetAttribute<WallVariantsAttribute>();
+            if (attrWall != null)
+            {
+                variants.AddRange(attrWall.Variants);
+            }
+            var attrPatrol = actor.GetAttribute<PatrolVariantsAttribute>();
+            if (attrPatrol != null)
+            {
+                variants.AddRange(attrPatrol.Variants);
+            }
 
             return variants;
         }
@@ -75,7 +85,7 @@ namespace MMR.Randomizer.Extensions
 
         public static Models.Rom.Enemy ToEnemy(this Actor actor)
         {
-            // turning static actor enum into modifiable enemy type
+            // turning static actor enum into enemy instance
             return new Models.Rom.Enemy()
             {
                 Name         = (actor).ToString(),
@@ -93,7 +103,7 @@ namespace MMR.Randomizer.Extensions
             // EG. like like can spawn on the sand on the surface, but also on the bottom of GBC
 
             // I'm sure theres a cleaner way, but everything I tried C# said no
-            var listOfVariants = new List<byte>() {1 , 2 , 3 };
+            var listOfVariants = new List<byte>() {1, 2, 3, 4, 5};
             listOfVariants.ForEach(u => rng.Next()); // random sort in case it has multiple types
             foreach( var variant in listOfVariants)
             {
@@ -113,6 +123,16 @@ namespace MMR.Randomizer.Extensions
                 {
                     ourAttr = actor.GetAttribute<FlyingVariantsAttribute>();
                     theirAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
+                }
+                if (variant == 4) // wall
+                {
+                    ourAttr = actor.GetAttribute<WallVariantsAttribute>();
+                    theirAttr = otherActor.GetAttribute<WallVariantsAttribute>();
+                }
+                if (variant == 5) // patrol
+                {
+                    ourAttr = actor.GetAttribute<PatrolVariantsAttribute>();
+                    theirAttr = otherActor.GetAttribute<PatrolVariantsAttribute>();
                 }
                 if (ourAttr != null && theirAttr != null) // both have same type
                 {
@@ -148,7 +168,7 @@ namespace MMR.Randomizer.Extensions
             return false;
         }
 
-        public static bool isFlyingVarient(this Actor actor, int varient)
+        public static bool isFlyingVariant(this Actor actor, int varient)
         {
             var groundAttribute = actor.GetAttribute<FlyingVariantsAttribute>();
             if (groundAttribute != null)
