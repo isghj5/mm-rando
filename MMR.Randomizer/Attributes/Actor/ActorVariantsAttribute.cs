@@ -33,13 +33,10 @@ namespace MMR.Randomizer.Attributes.Actor
         public UnkillableVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 
-/// <summary>
-/// some enemies can spawn in multiple situations, likelike can spawn on the beach or ocean bottom, so two types
-/// I don't really want to add one of these times the different types, even though we need them, so inheritance
-/// </summary>
-
-// todo: consider splitting these up further, several enemies hang/perch from trees, 
-//  some enemies spawn on the surface or bottom of water, and skulltullas dont really _fly_
+    /// <summary>
+    /// some enemies can spawn in multiple situations, likelike can spawn on the beach or ocean bottom, so two types
+    /// I don't really want to add one of these times the different types, even though we need them, so inheritance
+    /// </summary>
 
     public class FlyingVariantsAttribute : ActorVariantsAttribute
     {
@@ -56,17 +53,25 @@ namespace MMR.Randomizer.Attributes.Actor
         public WaterVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 
+    public class WallVariantsAttribute : ActorVariantsAttribute
+    {
+        public WallVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+    }
+
+    public class PatrolVariantsAttribute : ActorVariantsAttribute
+    {
+        public PatrolVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+    }
+
     // we often want to place restrictions on how many of an enemy can possibly spawn
 
     public class SinglePerRoomMax : ActorVariantsAttribute
     {
-
         public SinglePerRoomMax(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 
     public class DoublePerRoomMax : ActorVariantsAttribute
     {
-
         public DoublePerRoomMax(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 

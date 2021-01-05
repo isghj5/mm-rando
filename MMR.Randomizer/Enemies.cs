@@ -374,27 +374,27 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ////////// debuging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////
-                    /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID()
-                        && i == 4) // actor object number X
+                    /*if (scene.File == GameObjects.Scene.WoodsOfMystery.FileID()
+                        && i == 0) // actor object number X
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[i],
                             //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
                             //NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
-                            NewV = GameObjects.Actor.Armos.ObjectIndex() // good for detection explosion
+                            NewV = GameObjects.Actor.HappyMaskSalesman.ObjectIndex() // good for detection explosion
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
                     }*/
 
-                    // to prevent the same object(and thus actor) being used multiple times. Should increase variety
                     var reducedCandidateList = actorCandidatesLists[i].ToList();
                     foreach (var objectSwap in chosenReplacementObjects)
                     {
+                        // remove previously used objects, remove copies to increase variety
                         reducedCandidateList.RemoveAll(u => u.Object == objectSwap.NewV);
                     }
-                    if (reducedCandidateList.Count == 0)
+                    if (reducedCandidateList.Count == 0) // rarely, there are no available objects left
                     {
                         newsize += 0x1000000; // should always error in the object size section
                         continue; // this enemy was starved by previous options, force error and try again
@@ -402,6 +402,7 @@ namespace MMR.Randomizer
 
                     // get random enemy from the possible random enemy matches
                     Enemy randomEnemy = reducedCandidateList[rng.Next(reducedCandidateList.Count)];
+
                     // keep track of sizes between this new enemy combo and what used to be in this scene
                     if (randomEnemy.Object != 1) // if always loaded, dont count it if an actor needs it
                     {
@@ -782,7 +783,6 @@ namespace MMR.Randomizer
                 GameObjects.Actor.WallMaster,
                 GameObjects.Actor.FloorMaster,
                 GameObjects.Actor.Skulltula,
-                GameObjects.Actor.SkullWallTula,
                 GameObjects.Actor.ReDead,
                 GameObjects.Actor.Peahat,
                 GameObjects.Actor.Dodongo,
