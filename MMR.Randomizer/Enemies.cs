@@ -792,7 +792,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Garo
             }.ToList();
 
-            var disableList = weakEnemiesOnly ? weakEnemyList : weakEnemyList.Concat(annoyingEnemyList);
+            var disableList = weakEnemyList;// Only ? weakEnemyList : weakEnemyList.Concat(annoyingEnemyList);
 
             foreach (var enemy in disableList)
             {
