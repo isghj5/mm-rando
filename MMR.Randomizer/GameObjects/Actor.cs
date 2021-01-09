@@ -10,6 +10,15 @@ namespace MMR.Randomizer.GameObjects
         // the main enumator value is the actor list ID
 
         [EnemizerEnabled]
+        [ObjectListIndex(0x51)] // gameplay_keep obj 1
+        // 0x83F0 is tiny candle light
+        //[GroundVariants(0x83F0, 0x27F5)] // TODO finish checking the rest of possible variations
+        [GroundVariants(0x7F4)] // 0x7F4 is the bright yellow light of the graveyard smash
+        [UnkillableVariants(0x7F4)]
+        [EnemizerScenesExcluded(0x46)] //woodfall
+        Flame = 0x4, //En_Light
+
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x2A60)]
         [FileID(46)]
         [ObjectListIndex(0x5)]
@@ -38,7 +47,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1D60)]
         [FileID(50)]
         [ObjectListIndex(0xB)]
-        [FlyingVariants(0x8003,0x04,0)]
+        [FlyingVariants(0x8003,0x04,0)] // which ones are fire and ice?
         Keese = 0xC,
 
         [ActorizerEnabled]
@@ -66,9 +75,9 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Peahat = 0x14,
 
-        //[ActorizerEnabled] // crash, just like all other obj 1 actors
-        [ObjectListIndex(0x1)]
-        [WaterVariants(2)] // 2 is the lab fish
+        [ActorizerEnabled]
+        [ObjectListIndex(0x16B)] // gameplay keep obj 1
+        [WaterVariants(2,0)] // 2 is the lab fish
         [UnkillableVariants(2)]
         [EnemizerScenesExcluded(0x2F)]
         Fish = 0x17,
@@ -93,10 +102,18 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(0x69)]
         Shabom = 0x1D,// the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
-        //[ActorizerEnabled] // crashes, goddamnit
+        [ActorizerEnabled]
         [FileID(65)]
-        [ObjectListIndex(0x1)]
-        [GroundVariants(0)] // if any work, unknown
+        [ObjectListIndex(0x25B)] // gameplay_keep obj 1
+        [GroundVariants(0)] // 0 is ben
+        [UnkillableVariants(0)]
+        // Ben seems to be cursed, if you enter a scene with him from a grotto it can crash (~90% chance?) 
+        // but entering those same scenes from horizontal loading zones is fine
+        [EnemizerScenesPlacementBlock(Scene.TerminaField,
+            Scene.WoodsOfMystery, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.SouthernSwampClear,
+            Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.MountainVillageSpring, Scene.PathToSnowhead,
+            Scene.GreatBayCoast, Scene.ZoraCape,
+            Scene.RoadToIkana, Scene.IkanaGraveyard, Scene.IkanaCanyon)]
         Ben = 0x21,
 
         [ActorizerEnabled]
@@ -201,8 +218,17 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1240)]
         [FileID(89)]
         [ObjectListIndex(0x6A)]
-        [GroundVariants(0x600,0x800,0x500,0xFF00,0x300)]
+        //[GroundVariants(0x600, 0x800, 0x500, 0xFF00, 0x300)] // all working varieties
+        [GroundVariants(0x600)] // reduce for lag
+        [DoublePerRoomMax(0x600, 0x800, 0x500, 0xFF00, 0x300)]
         Beamos = 0x47,
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x25B)]// gameplay_keep obj 1
+        [FlyingVariants(0)] // there are two other vars untested
+        [UnkillableVariants(0)]
+        [SinglePerRoomMax(0)]
+        Demo_Kankyo = 0x49,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3200)]
@@ -221,18 +247,28 @@ namespace MMR.Randomizer.GameObjects
         ReDead = 0x4C,
 
         [EnemizerEnabled]
+        [ObjectListIndex(0x25B)] // gameplay_keep obj 1, swap into butler son
+        [GroundVariants(0x3323)]
+        [UnkillableVariants(0x3323)]
+        [DoublePerRoomMax(0x3323)]
+        Bugs = 0x4F,
+
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x3080)]
         [FileID(96)]
         [ObjectListIndex(0x20)] // uh, this might not be a valid object either
         // swamphouse: 0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F
         // ocean spiderhouse: 0xFF3F, 0x1B, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x223, 0x11F,
+        // some spiders crash, probably because it follows a path, 223, 113, 1B, 909
         // regular wall skulltula that attacks you: FFFC
         // issue: cannot know what the vars for the ones in the pots/hives/trees/bonk are, dirt is weirdly visible in scenetatl
-        [WallVariants(0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F,
-            0xFF3F, 0x1B, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x223, 0x11F,
+        // known fine: FF53, FF3B, FF76
+        [WallVariants(0xFF53, 0xFF07, 0xFF56, 0xFF62, 0xFF76, 0xFF03,
+            0xFF3F, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0xFF0B, 0xFF0F,
             0xFFFC)]
+        //[WallVariants()]
         [SinglePerRoomMax(0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F,
-            0xFF3F, 0x1B, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x223, 0x11F)]
+            0xFF3F, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x11F)]
         [EnemizerScenesExcluded(0x27)] // dont remove old spiders, the new ones might not be gettable
         GoldSkullTula = 0x50, // for now, only randomize the gold skulltulas
 
@@ -272,7 +308,7 @@ namespace MMR.Randomizer.GameObjects
         // 2 is ocean bottom, 0 is one in shallow shore water, 3 is land and one in shallow water
         [WaterVariants(0,2)]
         [GroundVariants(3)]
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // just no
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows down the race
         LikeLike = 0x6C,
 
         //[EnemizerEnabled] // we dont actually want this detected automatically, this will be added per-likelike manually
@@ -282,27 +318,47 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(3)]
         LikeLikeShield = 0x28E, // 28E is a dummy actor ID, we only use it because it will never conflict with enemizer
 
+        [ActorizerEnabled] // does not show up, even though its obj 1, the fuck
+        // WORSE, somehow it crashes when you leave the scene, instead of enter, wack
+        // ^ that might have been ben
+        [ObjectListIndex(0x6A)] // gameplay_keep, obj 1
+        // 0x4E8F, 0x7A8F, 0x608F, 0x5C8F are magic pots from the goron race
+        // 0x11F, 0x10F are pots from majora fight
+        // 0x750F, 0x7310, 0x711F, 0x6F15 are from stone tower near the statue
+        // pulled from snowhead 0x4A0A
+        // 0 actually loads in a random spot, but its always empty
+        //[GroundVariants(0x4E8F, 0x7A8F, 0x608F, 0x5C8F, 0x11F, 0x10F, 0x750F, 0x7310, 0x711F, 0x6F15)]
+        [GroundVariants(0, 1)]
+        [UnkillableVariants(0,1)]
+        ClayPot = 0x82,
+
         [EnemizerEnabled]
         [ActorInitVarOffset(0x26EC)]
         [FileID(127)]
         [ObjectListIndex(0xD8)]
-        [GroundVariants(0xFF03,0xFF02,0xFF01)]
+        [GroundVariants(0xFF03, 0xFF02, 0xFF01)]
         IronKnuckle = 0x84,
 
-        //[EnemizerEnabled] //broken: object 3
+        [EnemizerEnabled]
         [FileID(132)]
-        //[ObjectListIndex(0xF8)] // special case value, not real object
+        [ObjectListIndex(0x6A)] // dungeon_keep, obj 3
         // and object 3 is so massive it never gets chosen even if we try to shove it into the object list
-        [GroundVariants(0x3F7F)] // what if water type too? bottom of the ocean pot
+        //[GroundVariants(0x4015)]
+        [GroundVariants(0)] // actually spawns thank god, only in dungeons though, but outside its just an empty space so thats fine
+        [UnkillableVariants(0x3F7F, 0x4015)] // what if water type too? bottom of the ocean pot
         FlyingPot = 0x8D,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2240)]
         [FileID(134)]
         [ObjectListIndex(0xE4)]
-        [GroundVariants(02,0x2001,0x300F,0x100F)]
+        [GroundVariants(02, 0x2001, 0x300F, 0x100F)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // Slowing enemies
         Freezard = 0x8F,
+        
+        [ActorizerEnabled]
+        [ObjectListIndex(1)]
+        Grass = 0x90,
 
         [ActorizerEnabled]
         [FileID(137)]
@@ -331,7 +387,22 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(0x07)]
         BeanSeller = 0xA5,
 
-        [ActorizerEnabled] // want a chance to meet him randomly visiting the world
+        [EnemizerEnabled]
+        [ObjectListIndex(0xA)] // gamplaykeep obj 1 // the rocks are free, you can take them home
+        //6a does not load
+        [GroundVariants(0x1F2)]
+        [UnkillableVariants(0x1F2, 0x6A)] // not enemy actor group, cannot kill
+        [EnemizerScenesExcluded(0x2D)] // dont replace them in TF
+        Rock = 0xB0, // rock
+
+        //[EnemizerEnabled] // does not load
+        [ObjectListIndex(0xA)] // gamplaykeep obj 1
+        [GroundVariants(0)]
+        [UnkillableVariants(0)]
+        [EnemizerScenesExcluded(0x2D)]
+        RockSirloin = 0xB9,
+
+        [ActorizerEnabled]
         [FileID(172)]
         [ObjectListIndex(0x11D)]
         //0x1200, 0x1B00, 0x2800 spawns from the ground after you play a song
@@ -363,7 +434,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x133)]
         //[GroundVariants(0x1E,0x2A02,0x2C0A,0x320F)]
         //[UnkillableVariants(0x3FF, 0x22BF)] // killing one not possible
-        CrateLarge = 0xE5,
+        LargeCrate = 0xE5,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3E40)]
@@ -392,6 +463,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(0x66, 0x47, 0x3F, 0x2A)]
         GossipStone = 0xEF,
 
+        SoundEffects2 = 0xF0,
+
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1520)]
         [FileID(226)]
@@ -408,6 +481,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableVariants(0,2)]
         [EnemizerScenesExcluded(0x35, 0x4B, 0x07, 0x10)]
         Cow = 0xF3,
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x1CB)] // gameplay_keep obj 1
+        [GroundVariants(0)]
+        [UnkillableVariants(0)]
+        LetterToPostman = 0xFE,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2A7C)]
@@ -514,7 +593,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x181)]
         // the snowhead version that doesnt aggro is 01
         [GroundVariants(0x8C, 0x28, 0x3C, 0x46, 0x32, 0x1, 0x8023, 0x5, 0x14, 0x8028, 0x8014)]
-        [WallVariants(0x1)]
+        [WallVariants(0x1)] // peaceful, just wants cheese
         // the values on the left are tested respawning, the values on the right are untested, conservative assume respawning
         [UnkillableVariants(0x8014,0x8028,0x8023,   0x0032,0x0005,0x0014)] // respawning
         RealBombchu = 0x16F,
@@ -544,13 +623,13 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants( 0xA2, 0x82, 0x62, 0 )]
         SkullFish = 0x180,
 
-        //[ActorizerEnabled] // crash
+        [ActorizerEnabled]
         [FileID(349)]
-        [ObjectListIndex(1)]
-        //[GroundVariants(0x7F, 0x17F)] // both crash for some reason
+        [ObjectListIndex(0x1A6)] // obj 1: gameplay keep, but can't set that
+        [GroundVariants(0x7F, 0x17F)] // both crash for some reason
         [UnkillableVariants(0x7F, 0x17F)]
-        // ikana castle, deku palace, nct, woodfall, woodfall temple
-        [EnemizerScenesExcluded(0x1B)] 
+        // woodfall(1B), SHT(0x21), ikana castle, deku palace, nct, woodfall, woodfall temple
+        [EnemizerScenesExcluded(0x1B, 0x21)] 
         DekuFlower = 0x183,
 
         //[EnemizerEnabled] // AI gets confused, backwalks forever, pathing?
@@ -581,7 +660,17 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants( unk )]
         BigOcto = 0x1A8,
 
-        [ActorizerEnabled]
+        [EnemizerEnabled]
+        [ObjectListIndex(0xE)]
+        // snowhead : 0x5E00,0x6000, 0x5800,0x5600, GreatBay: 0x6000
+        // huh? these repeat per dungeon? 
+        [FlyingVariants(0x5E00, 0x6000, 0x5800, 0x5600 )]
+        [UnkillableVariants(0x5E00, 0x6000, 0x5800, 0x5600)] // neither pop nore item collect counts as kill
+        [SinglePerRoomMax(0x5E00, 0x6000, 0x5800, 0x5600)] // neither pop nore item collect counts as kill
+        [EnemizerScenesExcluded(0x1B, 0x21, 0x49, 0x16, 0x18)] // neither pop nore item collect counts as kill
+        ElfBubble = 0x1B1,
+
+        [ActorizerEnabled] // weird that he is so rare though
         [ObjectListIndex(0x1A3)]
         [GroundVariants(0)] // 0 is clocktower
         [UnkillableVariants(0)]
@@ -589,13 +678,22 @@ namespace MMR.Randomizer.GameObjects
         HappyMaskSalesman = 0x1B5,
 
         [EnemizerEnabled]
-        [ActorInitVarOffset(0x21C0)]
+        [ActorInitVarOffset(0x1FF0)]
         [FileID(406)]
         [ObjectListIndex(0x1A6)]
         [GroundVariants(0x0)]
-        [EnemizerScenesExcluded(0x1B)] // req for gekko miniboss, do not touch until fix
+        //[EnemizerScenesExcluded(0x1B)] // req for gekko miniboss, do not touch until fix
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         Snapper = 0x1BA,
+
+        //[ActorizerEnabled] //busted
+        [ObjectListIndex(0x1AF)]
+        // 1, 0xFFF3 do not load, 10 just crashes
+        [GroundVariants(0x10)] // unknown which ones do what we want (FFF3, 01, 10) 814 walking about outside
+        // unkillable
+        // only one
+        [EnemizerScenesExcluded(0x30)]
+        Dampe = 0x1CA,
 
         [ActorInitVarOffset(0x1FD0)]
         [FileID(426)]
@@ -604,12 +702,13 @@ namespace MMR.Randomizer.GameObjects
         Dexihand = 0x1D1,// ???'s water logged brother
 
         [EnemizerEnabled]
-        [ActorInitVarOffset(0x2940)] // combat music disable does not work
+        [ActorInitVarOffset(0x2940)]
         [FileID(435)]
         [ObjectListIndex(0x75)]
-        [GroundVariants( 0x1E9, 0x1F4, 0x208, 0x214, 0x224, 0x236, 0x247, 0x253, 0x262, 0x275, 0x283, 0x291, 0x2A0 )]
+        [GroundVariants(0x1E9, 0x1F4, 0x208, 0x214, 0x224, 0x236, 0x247, 0x253, 0x262, 0x275, 0x283, 0x291, 0x2A0)]
+        [UnkillableVariants(0x1E9, 0x1F4, 0x208, 0x214, 0x224, 0x236, 0x247, 0x253, 0x262, 0x275, 0x283, 0x291, 0x2A0)]
         [EnemizerScenesExcluded(0x13, 0x4B)] // needed for well exploration
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows down player too much in a race setting
         GibdoWell = 0x1DA,
 
         [EnemizerEnabled]
@@ -619,7 +718,6 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFF00,0xFF01,00,01)]
         Eeno = 0x1E6,// Snowmen in showhead
         
-
         [EnemizerEnabled]
         [ActorInitVarOffset(0x36A0)]
         [FileID(448)]
@@ -690,7 +788,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208,
 
-        //[ActorizerEnabled]
+        //[ActorizerEnabled] // just the head visible? meh? need to increase size too I think
         [ObjectListIndex(0x1F2)]
         [WallVariants(0x907F, 0xA07F)]
         [UnkillableVariants(0x907F, 0xA07F)]
@@ -718,6 +816,7 @@ namespace MMR.Randomizer.GameObjects
         PatrollingPirate = 0x21E,
 
         //[ActorizerEnabled] // does not spawn? boo
+        // did I maybe use the wrong vars?
         [ObjectListIndex(0x211)]
         [GroundVariants(1)]
         [WaterVariants(1)]
@@ -726,11 +825,12 @@ namespace MMR.Randomizer.GameObjects
         [SinglePerRoomMax(1)]
         Japas = 0x231,
 
-        //[EnemizerEnabled] // failure to randomize
+        //[EnemizerEnabled] // we already have well versions
         [ActorInitVarOffset(0x2CA0)]  // combat music disable does not work
         [FileID(524)]
         [ObjectListIndex(0x75)]
-        [GroundVariants( 0, 0x81, 0x82, 0x83, 0x84, 0x85 )]
+        [GroundVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)]
+        [UnkillableVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)]
         [EnemizerScenesExcluded(0x13,0x4B)] // dont replace the train
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         GibdoIkana = 0x235,
@@ -746,6 +846,7 @@ namespace MMR.Randomizer.GameObjects
         GuruGuru = 0x248,
 
         //[ActorizerEnabled] // doesn't spawn with a flower, looks silly
+        // HEY the other actors, that make flowers, we can use them for dual deku
         [FileID(566)]
         [ObjectListIndex(0x12B)]
         [GroundVariants(0x584)]
