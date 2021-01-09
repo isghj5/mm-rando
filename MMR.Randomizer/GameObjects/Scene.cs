@@ -180,6 +180,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x33)]
         ZoraHall = 0x30,
 
+        [FileID(1324)]
         [SceneInternalId(0x34)]
         TradingPost = 0x31,
 

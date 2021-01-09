@@ -211,6 +211,21 @@ namespace MMR.Randomizer
 
         }
 
+        private static void FixScarecrowTalk()
+        {
+            /// scarecrow breaks if you try to teach him a song anywhere where he normally does not exist
+            if (!EnemyList.Contains(GameObjects.Actor.Scarecrow))
+            {
+                return;
+            }
+
+            // turn this one jal into zeros
+            //RomData.MMFileList[GameObjects.Actor.Scarecrow.FileListIndex()].Data[0x1980] = 0;
+            //RomData.MMFileList[GameObjects.Actor.Scarecrow.FileListIndex()].Data[0x1981] = 0;
+            //RomData.MMFileList[GameObjects.Actor.Scarecrow.FileListIndex()].Data[0x1982] = 0;
+            //RomData.MMFileList[GameObjects.Actor.Scarecrow.FileListIndex()].Data[0x1983] = 0;
+        }
+
         public static void FixSpecificLikeLikeTypes()
         {
             /// some likelikes dont follow the normal water/ground type variety, so they should be switched to match for replacement
@@ -290,7 +305,6 @@ namespace MMR.Randomizer
 
         public static void SwapSceneEnemies(OutputSettings settings, Scene scene, int seed)
         {
-            DateTime startTime = DateTime.Now;
             // spoiler log already written by this point, for now making a brand new one instead of appending
             StringBuilder log = new StringBuilder();
             void WriteOutput(string str)
@@ -298,6 +312,18 @@ namespace MMR.Randomizer
                 Debug.WriteLine(str);
                 log.AppendLine(str);
             }
+            void FlushLog()
+            {
+                EnemizerLogSemaphore.WaitOne(); // with paralel, thread safety
+                using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
+                {
+                    sw.WriteLine(""); // spacer from last flush
+                    sw.Write(log);
+                }
+                EnemizerLogSemaphore.ReleaseMutex();
+            }
+
+            DateTime startTime = DateTime.Now;
 
             var sceneEnemies = GetSceneEnemyActors(scene);
             if (sceneEnemies.Count == 0)
@@ -372,9 +398,9 @@ namespace MMR.Randomizer
                 for (int i = 0; i < sceneObjects.Count; i++)
                 {
                     //////////////////////////////////////////////////////
-                    ////////// debuging: force an object (enemy) /////////
+                    ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////
-                    /*if (scene.File == GameObjects.Scene.WoodsOfMystery.FileID()
+                    /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID()
                         && i == 0) // actor object number X
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
@@ -382,7 +408,7 @@ namespace MMR.Randomizer
                             OldV = sceneObjects[i],
                             //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
                             //NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
-                            NewV = GameObjects.Actor.HappyMaskSalesman.ObjectIndex() // good for detection explosion
+                            NewV = GameObjects.Actor.Beamos.ObjectIndex() // good for detection explosion
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
@@ -404,7 +430,7 @@ namespace MMR.Randomizer
                     Enemy randomEnemy = reducedCandidateList[rng.Next(reducedCandidateList.Count)];
 
                     // keep track of sizes between this new enemy combo and what used to be in this scene
-                    if (randomEnemy.Object != 1) // if always loaded, dont count it if an actor needs it
+                    if (randomEnemy.Object >= 4) // object 1 is gameplay keep, 3 is dungeon keep
                     {
                         newsize += randomEnemy.ObjectSize;
                     }
@@ -431,11 +457,7 @@ namespace MMR.Randomizer
                             WriteOutput(" Enemytype candidate: " + match.Name + " with vars: " + match.Variables[0].ToString("X2"));
                         }
                     }
-                    using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
-                    {
-                        sw.WriteLine(""); // spacer
-                        sw.Write(log);
-                    }
+                    FlushLog();
                     throw new Exception(error);
                 }
 
@@ -557,7 +579,7 @@ namespace MMR.Randomizer
             //var woodfallScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
             // does not work, probably needs a snapper actor too not just object
             // if we need A snapper actor/object, we could force that condition, snapper could be on dinofos, snapper, or bo, dekubaba if I can figure out what that even means
-            /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID())
+            /*if (scene.SceneEnum == GameObjects.Scene.WoodfallTemple)
             {
                 
                 // I dont know if this is working, as actor + obj spawns nothing
@@ -570,8 +592,11 @@ namespace MMR.Randomizer
                 scene.Maps[8].Objects[13] = 0x1A6; // giant bee? redundant just in case for testing, this might kill the hive if it does not exist
 
                 // I know the actor changes are working because I could add a snapper to this room if snapper was still in the rest of the temple
-                scene.Maps[8].Actors[3].n = 0x1BA; // one of the extra flowers to snapper
-                scene.Maps[8].Actors[3].v = 0; // regular snapper variety
+                //scene.Maps[8].Actors[3].n = 0x1BA; // one of the extra flowers to snapper
+                //scene.Maps[8].Actors[3].v = 0; // regular snapper variety
+
+                scene.Maps[8].Actors[3].n = 0x144; // one of the extra flowers to snapper mini0-boss
+                scene.Maps[8].Actors[3].v = 0; // vars of miniboss unknown
             }*/
 
             /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID())
@@ -588,18 +613,31 @@ namespace MMR.Randomizer
                 }
             }*/
 
+            // problem: if we remove snapper as an obj gekko does not spawn
+            // attempted fix: replace one of the other unused obj in that room with snapper to he still spawns
+            // in room 9
+            //var woodfallScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
+            /*foreach (var room in woodfallScene.Maps)
+            {
+                for (int objIndex = 0; objIndex < room.Objects.Count; objIndex++)
+                {
+                    if (room.Objects[objIndex] == 0x1EB)
+                    {
+                        room.Objects[objIndex] = 0x1A6; // swap to snapper
+                    }
+                }
+            }*/
+            // set 
+            //woodfallScene.Maps[8].Objects[13] = 0x1A6;
+            //woodfallScene.Maps[8].ActorAddr[13] = 0x1A6;
+
+
+
             SetSceneEnemyActors(scene, chosenReplacementEnemies);
             SetSceneEnemyObjects(scene, chosenReplacementObjects);
             SceneUtils.UpdateScene(scene);
             WriteOutput( " time to complete randomizing scene: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
-
-            EnemizerLogSemaphore.WaitOne(); // with paralel, thread safety
-            using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename +  "_EnemizerLog.txt", append: true))
-            {
-                sw.WriteLine(""); // spacer
-                sw.Write(log);
-            }
-            EnemizerLogSemaphore.ReleaseMutex();
+            FlushLog();
         }
 
         public static void ShuffleEnemies(OutputSettings settings,Random random)
@@ -646,53 +684,38 @@ namespace MMR.Randomizer
 
                 void PrintActorInitFlags(string name, byte[] dataBlob, int actorInitLoc){
                     Debug.WriteLine("Printing actor: " + name);
-                    Debug.WriteLine(dataBlob[actorInitLoc].ToString("X2") + " < actor id");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 1].ToString("X2") + " < actor id");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 2].ToString("X2") + " < type?");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 3].ToString("X2") + " < type?");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 4].ToString("X2") + " < first byte");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 5].ToString("X2"));
-                    Debug.WriteLine(dataBlob[actorInitLoc + 6].ToString("X2"));
-                    Debug.WriteLine(dataBlob[actorInitLoc + 7].ToString("X2") + " < last byte");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 8].ToString("X2") + " < object id");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 9].ToString("X2") + " < object id");
+                    Debug.WriteLine(dataBlob[actorInitLoc].ToString("X2") + 
+                                    dataBlob[actorInitLoc + 1].ToString("X2") + " < actor id");
+                    Debug.WriteLine(dataBlob[actorInitLoc + 2].ToString("X2") + " < type");
+                    Debug.WriteLine(dataBlob[actorInitLoc + 3].ToString("X2") + " < unk ?");
+                    Debug.WriteLine(dataBlob[actorInitLoc + 4].ToString("X2") + " < init var first byte");
+                    Debug.WriteLine(dataBlob[actorInitLoc + 5].ToString("X2") + " < init var second byte");
+                    Debug.WriteLine(dataBlob[actorInitLoc + 6].ToString("X2") + " < init var third byte");
+                    Debug.WriteLine(dataBlob[actorInitLoc + 7].ToString("X2") + " < init var last byte");
+                    Debug.WriteLine(dataBlob[actorInitLoc + 8].ToString("X2") +
+                                    dataBlob[actorInitLoc + 9].ToString("X2") + " < object id");
                 }
 
                 // bits (from 0) 4 should be always update, 5 should be always draw, 6 should be no cull
                 //RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 7] |= 0x80; // "invisible" is weirder than you think
 
-                foreach (var a2 in Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+                /*foreach (var a2 in Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                             .Where(u => u.IsEnemyRandomized() &&  u.ActorInitOffset() > 100)
                             .ToList())
                 {
                     RomUtils.CheckCompressed(a2.FileListIndex());
                     // to test invisibility in all enemies
                     //RomData.MMFileList[a2.FileListIndex()].Data[a2.ActorInitOffset() + 7] |= 0x80; // test invisible
-                }
+                }*/
 
                 // todo: bombiwa
-                var actor = GameObjects.Actor.DekuBaba;
+                var actor = GameObjects.Actor.PoeSisters;
                 RomUtils.CheckCompressed(actor.FileListIndex());
                 PrintActorInitFlags(actor.ToString(), RomData.MMFileList[actor.FileListIndex()].Data, actor.ActorInitOffset());
                 //RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 7] |= 0x80; // test invisible
 
-                // problem: if we remove snapper as an obj gekko does not spawn
-                // attempted fix: replace one of the other unused obj in that room with snapper to he still spawns
-                // in room 9
-                /*var woodfallScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
-                foreach (var room in woodfallScene.Maps)
-                {
-                    for (int objIndex = 0; objIndex < room.Objects.Count; objIndex++)
-                    {
-                        if (room.Objects[objIndex] == 0x1EB)
-                        {
-                            room.Objects[objIndex] = 0x1A6; // swap to snapper
-                        }
-                    }
-                }*/
-                //RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID()).Maps[8].Objects[13] = 0x1A6;
-
                 FixSpawnLocations(); // some spawns need to be fixed, enemizer brings out their bugginess
+                FixScarecrowTalk();
 
             }
             catch (Exception e)
@@ -789,7 +812,8 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Takkuri,
                 GameObjects.Actor.Eyegore,
                 GameObjects.Actor.IronKnuckle,
-                GameObjects.Actor.Garo
+                GameObjects.Actor.Garo,
+                GameObjects.Actor.PoeSisters
             }.ToList();
 
             var disableList = weakEnemyList;// Only ? weakEnemyList : weakEnemyList.Concat(annoyingEnemyList);
