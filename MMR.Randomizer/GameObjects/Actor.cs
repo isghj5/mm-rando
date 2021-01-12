@@ -51,6 +51,17 @@ namespace MMR.Randomizer.GameObjects
         Keese = 0xC,
 
         [ActorizerEnabled]
+        [ObjectListIndex(0x25B)] // gameplay_keep obj 1, place beside butler son
+        // 4 is group of fairies out of a fountain, 7 is large healing fairy, 9 is yellow fairy
+        [GroundVariants(4, 7, 9)]
+        [FlyingVariants(4, 7, 9)]
+        [SinglePerRoomMax(4)]
+        [DoublePerRoomMax(7)]
+        [UnkillableVariants(4, 7, 9)] // friend
+        [EnemizerScenesExcluded(0x4B)] // dont remove from well
+        Fairy = 0x10,
+
+        [ActorizerEnabled]
         [FileID(54)]
         [ObjectListIndex(0xF)]
         [GroundVariants(0xFFFF)]
@@ -102,6 +113,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(0x69)]
         Shabom = 0x1D,// the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
+        
         [ActorizerEnabled]
         [FileID(65)]
         [ObjectListIndex(0x25B)] // gameplay_keep obj 1
@@ -226,8 +238,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x25B)]// gameplay_keep obj 1
         [FlyingVariants(0)] // there are two other vars untested
+        [GroundVariants(0)] // there are two other vars untested
         [UnkillableVariants(0)]
         [SinglePerRoomMax(0)]
+        // variety 0 crashes scenes with snow weather, but not rain, weird
+        [EnemizerScenesPlacementBlock(Scene.Snowhead, Scene.TwinIslands, Scene.MountainVillage, Scene.GoronVillage)]
         Demo_Kankyo = 0x49,
 
         [EnemizerEnabled]
@@ -248,9 +263,11 @@ namespace MMR.Randomizer.GameObjects
 
         [EnemizerEnabled]
         [ObjectListIndex(0x25B)] // gameplay_keep obj 1, swap into butler son
-        [GroundVariants(0x3323)]
-        [UnkillableVariants(0x3323)]
-        [DoublePerRoomMax(0x3323)]
+        [GroundVariants(0x3323)] // bettles on the floor
+        [FlyingVariants(0x2324, 0x4324)] // butterlies in the air
+        [WaterVariants(0x6322)] // fish swimming in the water
+        [UnkillableVariants(0x3323, 0x2324, 0x4324, 0x6322)]
+        [DoublePerRoomMax(0x3323, 0x2324, 0x4324)]
         Bugs = 0x4F,
 
         [EnemizerEnabled]
@@ -266,11 +283,37 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0xFF53, 0xFF07, 0xFF56, 0xFF62, 0xFF76, 0xFF03,
             0xFF3F, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0xFF0B, 0xFF0F,
             0xFFFC)]
-        //[WallVariants()]
         [SinglePerRoomMax(0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F,
             0xFF3F, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x11F)]
         [EnemizerScenesExcluded(0x27)] // dont remove old spiders, the new ones might not be gettable
         GoldSkullTula = 0x50, // for now, only randomize the gold skulltulas
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x171)] // overworld_keep, obj 2
+        // 3D is swamp grotto, 304 is deku playground, 5C is mystery woods
+        // FF/299 is HSG, 233 is path to snowhead, 3B is mountain village spring grot
+        // 96 is goron rock grotto, 218/2B8? is graveyard grotto, 3E is road to swamp
+        // 301 is ranch grotto? 
+        // 214 is log cow grotto
+        // okay these dont work as static behavior, but lets see what happens if we just add some randomly, what happens?
+        // 2B8 is hidden bombable, leads to spring gossip, 201 was hidden and spring
+        // 5C 96, 01 are visible, lead to spring
+        // 301 takes me to a different nearby scene, 304 takes me to a differnt one
+        // okay, anything below 100 seems to take us to spring, 0x200 flag is hidden, 0x300 is related travel
+        // 310 crashed though in one instance, probably too high of a 300 number
+        // x000 is the grotto index, except 1000 breaks for some reason, while 0,2,3,4 work for the gossip grottos
+        // 7000 is hot spring water grotto, 6k is A regular chest grotto
+        // dont think the 8k bit is used, it wasn't in OOT
+        // but seriously thats still a small number of grottos
+        // zoey says the lower byte used to be for chest contents and things but we dont use in rando
+        // TODO rewrite grotto to take a bigger list of entrances
+        [GroundVariants(0, 0x6000, 0x7000)]
+        [UnkillableVariants(0, 0x6000, 0x7000)]
+        [SinglePerRoomMax(0, 0x6000, 0x7000)]
+        [EnemizerScenesExcluded(0x53)]
+        // as its obj is 2, shouldn't be available in dungeons, maybe not indoors either
+        [EnemizerScenesPlacementBlock(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
+        GrottoHole = 0x55,
 
         //[ActorizerEnabled] // broken: crash
         [FileID(102)]
@@ -355,10 +398,14 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(02, 0x2001, 0x300F, 0x100F)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // Slowing enemies
         Freezard = 0x8F,
-        
-        [ActorizerEnabled]
-        [ObjectListIndex(1)]
-        Grass = 0x90,
+
+        [EnemizerEnabled]
+        [ObjectListIndex(0x14)] // gameplay_keep obj 1
+        // 1 creates a grass circle in termina field, 0 is grotto grass single
+        [GroundVariants(0)]
+        [UnkillableVariants(0)] // not enemy actor group
+        [EnemizerScenesExcluded(0x07)] // dont remove from peahat grotto
+        GrassBush = 0x90,
 
         [ActorizerEnabled]
         [FileID(137)]
@@ -865,6 +912,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(601)]
         [ObjectListIndex(0x280)]
         [FlyingVariants(0)]
+        // Unkillable
         MajoraBalloonNCT = 0x282,
 
         [ActorizerEnabled] // shows up too much tho, because small object
