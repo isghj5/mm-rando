@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MMR.Randomizer.Models.Vectors;
+using System.Collections.Generic;
 
 namespace MMR.Randomizer.Models.Rom
 {
@@ -12,8 +13,9 @@ namespace MMR.Randomizer.Models.Rom
         public bool MustNotRespawn = false;
         public int Room;
         public int RoomActorIndex; // the position in the room actor list
-        public int Type; // ?
+        public int Type;
         public int Stationary;
+        public vec16 Rotation;
         public List<int> SceneExclude = new List<int>();
     }
 }

@@ -29,7 +29,7 @@ namespace MMR.Randomizer
          
         //private static List<Enemy> EnemyList { get; set; }
         private static List<GameObjects.Actor> EnemyList { get; set; }
-        private static Mutex EnemizerLogSemaphore = new Mutex();
+        private static Mutex EnemizerLogMutex = new Mutex();
 
         public static void ReadEnemyList()
         {
@@ -59,6 +59,7 @@ namespace MMR.Randomizer
                             newEnemy.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(mapNumber);
                             newEnemy.Room = mapNumber;
                             newEnemy.RoomActorIndex = scene.Maps[mapNumber].Actors.IndexOf(mapActor);
+                            newEnemy.Rotation = mapActor.r;
                             enemyList.Add(newEnemy);
                         }
                     }
@@ -99,6 +100,7 @@ namespace MMR.Randomizer
                     int actorIndex = roomEnemy.RoomActorIndex;
                     sceneRoom.Actors[actorIndex].n = roomEnemy.Actor;
                     sceneRoom.Actors[actorIndex].v = roomEnemy.Variables[0];
+                    sceneRoom.Actors[actorIndex].r = roomEnemy.Rotation;
                 }
             }
         }
@@ -314,13 +316,13 @@ namespace MMR.Randomizer
             }
             void FlushLog()
             {
-                EnemizerLogSemaphore.WaitOne(); // with paralel, thread safety
+                EnemizerLogMutex.WaitOne(); // with paralel, thread safety
                 using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write(log);
                 }
-                EnemizerLogSemaphore.ReleaseMutex();
+                EnemizerLogMutex.ReleaseMutex();
             }
 
             DateTime startTime = DateTime.Now;
@@ -400,19 +402,20 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////
-                    /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID()
-                        && i == 0) // actor object number X
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                        && sceneObjects[i] == GameObjects.Actor.Leever.ObjectIndex())
+                        //&& i == 2) // actor object number X
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[i],
                             //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
                             //NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
-                            NewV = GameObjects.Actor.Beamos.ObjectIndex() // good for detection explosion
+                            NewV = GameObjects.Actor.Fairy.ObjectIndex() // good for detection explosion
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
-                    }*/
+                    }
 
                     var reducedCandidateList = actorCandidatesLists[i].ToList();
                     foreach (var objectSwap in chosenReplacementObjects)
@@ -511,6 +514,14 @@ namespace MMR.Randomizer
                     newEnemy.Actor = subMatches[randomSubmatch].Actor;
                     newEnemy.Variables[0] = subMatches[randomSubmatch].Variables[rng.Next(subMatches[randomSubmatch].Variables.Count)];
 
+                    // setting grottos testing
+                    /*if (newEnemy.Actor == (int)GameObjects.Actor.GrottoHole)
+                    {
+                        //newEnemy.Rotation.x = 0;
+                        //newEnemy.Rotation.y = 0;
+                        newEnemy.Rotation.z = 0x301;
+                    }*/
+
                     temporaryMatchEnemyList.Add(newEnemy);
                     if ( ! previousyAssignedActor.Contains((GameObjects.Actor)newEnemy.Actor))
                     {
@@ -545,11 +556,11 @@ namespace MMR.Randomizer
                                 // kill the rest of variant X
                                 foreach (var enemy in roomEnemiesWithVariant)
                                 {
+                                    //WriteOutput(" in room " + roomIndex + ", removing extra variants: " + variant.ToString("X2") + " for enemy: " + problemEnemy.ToString());
                                     var enemyIndex = temporaryMatchEnemyList.IndexOf(enemy);
                                     temporaryMatchEnemyList[enemyIndex].Actor = (int)GameObjects.Actor.Empty;
                                     //temporaryMatchEnemyList[enemyIndex].Name = "Removed";
                                 }
-                                WriteOutput( " in room " + roomIndex +  ", removing extra variants: " + variant.ToString("X2") + " for enemy: " + problemEnemy.ToString());
 
                             }
                         }
@@ -631,8 +642,6 @@ namespace MMR.Randomizer
             //woodfallScene.Maps[8].Objects[13] = 0x1A6;
             //woodfallScene.Maps[8].ActorAddr[13] = 0x1A6;
 
-
-
             SetSceneEnemyActors(scene, chosenReplacementEnemies);
             SetSceneEnemyObjects(scene, chosenReplacementObjects);
             SceneUtils.UpdateScene(scene);
@@ -666,7 +675,7 @@ namespace MMR.Randomizer
                     newSceneList.Remove(item);
                     newSceneList.Insert(0, item);
                 }
-                int seed = random.Next(); // order is up to the processor, to keep these matching the seed, set them all to start at the same value
+                int seed = random.Next(); // order is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
 
                 Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
                 //foreach (var scene in RomData.SceneList) if (!SceneSkip.Contains(scene.Number))
