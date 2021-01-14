@@ -10,11 +10,11 @@ namespace MMR.Randomizer.Attributes.Actor
 
     class EnemizerScenesExcludedAttribute : Attribute
     {
-       public List<int> ScenesExcluded { get; private set; }
+       public List<GameObjects.Scene> ScenesExcluded { get; private set; }
 
-        public EnemizerScenesExcludedAttribute(int scene, params int[] additionalScenes)
+        public EnemizerScenesExcludedAttribute(GameObjects.Scene scene, params GameObjects.Scene[] additionalScenes)
         {
-            var scenes = new List<int> { scene };
+            var scenes = new List<GameObjects.Scene> { scene };
             if (additionalScenes.Length > 0)
             {
                 scenes.AddRange(additionalScenes);
