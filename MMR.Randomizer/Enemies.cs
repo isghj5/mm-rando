@@ -252,10 +252,9 @@ namespace MMR.Randomizer
             scene.Maps[0].Actors[6].p.z = 790;
             scene.Maps[0].Actors[6].v = 0;
 
-            scene.Maps[0].Actors[4].p.x = 2020; // placement: to the right as you approach witches
+            scene.Maps[0].Actors[4].p.x = 2020; // placement: to the right as you approach witches, next to tree
             scene.Maps[0].Actors[4].p.y = 22;
             scene.Maps[0].Actors[4].p.z = 300;
-
 
             scene.Maps[2].Actors[2].p.x = 2910; // placement: between the bushes along the wall
             scene.Maps[2].Actors[2].p.y = 14;
@@ -511,8 +510,8 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////
-                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID()
-                        && sceneObjects[i] == GameObjects.Actor.Leever.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID()
+                        && sceneObjects[i] == GameObjects.Actor.Bo.ObjectIndex())
                         //&& i == 2) // actor object number X
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
@@ -520,7 +519,7 @@ namespace MMR.Randomizer
                             OldV = sceneObjects[i],
                             //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
                             //NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
-                            NewV = GameObjects.Actor.ElfBubble.ObjectIndex() // good for detection explosion
+                            NewV = GameObjects.Actor.Beamos.ObjectIndex() // good for detection explosion
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;

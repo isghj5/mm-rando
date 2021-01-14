@@ -69,7 +69,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableVariants(0xFFFF)] // killing one not possible
         // I would like a flying variant, but they seem to drop like a rock instead of float down
         //[EnemizerScenesExcluded(0x15, Scene.AstralObservatory, 0x35, 0x42, 0x10)]
-        [EnemizerScenesExcluded(Scene.AstralObservatory)]
+        [EnemizerScenesExcluded(Scene.AstralObservatory, Scene.RomaniRanch, Scene.CuccoShack, Scene.MilkBar)]
         FriendlyCucco = 0x11,
 
         [EnemizerEnabled]
@@ -238,7 +238,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x6A)]
         //[GroundVariants(0x600, 0x800, 0x500, 0xFF00, 0x300)] // all working varieties
         [GroundVariants(0x600)] // reduce for lag
-        [UnkillableVariants(0x600)] // not unkillable, but for now, stops them from showing up blocking clear to get checks, and fairies
+        //[UnkillableVariants(0x600)] // not unkillable, but for now, stops them from showing up blocking clear to get checks, and fairies
         [DoublePerRoomMax(0x600, 0x800, 0x500, 0xFF00, 0x300)]
         Beamos = 0x47,
 
@@ -332,7 +332,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0xF00)]
         [FileID(106)]
         [ObjectListIndex(0x8E)]
-        [WaterVariants(0)]
+        [WaterVariants(0)] // works on ground too but cannot add ground without ground enemies showing up in fish tank
         Shellblade = 0x64,
 
         [EnemizerEnabled]
@@ -370,9 +370,9 @@ namespace MMR.Randomizer.GameObjects
         LikeLikeShield = 0x28E, // 28E is a dummy actor ID, we only use it because it will never conflict with enemizer
 
         [ActorizerEnabled]
-        [ObjectListIndex(0x1)] // gameplay_keep, obj 1
+        // this is marked 2 and not 1 because 0x100 pots dont spawn in dungeons
+        [ObjectListIndex(0x2)] // gameplay_keep, obj 1
         [FileID(126)]
-        // 0x750F, 0x7310, 0x711F, 0x6F15 are from stone tower near the statue
         // according to CM, 0x100 is available everywhere as a pot, where 0x3F defines the drop item
         // so 1F is arrows, F is magic, B is three small rups? 7 is huge 200 rup, 17 is empty
         // 0xA is one rup, 1A and 14 are empty 04 is 20 rupes, 
@@ -380,7 +380,7 @@ namespace MMR.Randomizer.GameObjects
         // 115 is 5 bombs, 105 is tall dodongo 50 rup, 106 is empty, 116 is empty
         // 101 is one rup, 111 SKULL TOKEN POT??!? 102 was 5 rups 112 empty
         // 103 empty, 113 is 10 deku nuts, 104 is red rup, 114 is empty
-        //[GroundVariants(0x110)] // testing
+        //[GroundVariants(0x110)] // testing // 115 101 106 10E 10F
         [GroundVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
         //[DoublePerRoomMax(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)] // prob not necessary
         [UnkillableVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)] // not enemy actor class
@@ -398,7 +398,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(3)] // dungeon_keep, obj 3
         // and object 3 is so massive it never gets chosen even if we try to shove it into the object list
         //[GroundVariants(0x4015)]
-        [GroundVariants(0)] // actually spawns thank god, only in dungeons though, but outside its just an empty space so thats fine
+        // 0 works, always empty
+        [GroundVariants(0x115, 0x101, 0x106, 0x10E, 0x10F)] // actually spawns thank god, only in dungeons though, but outside its just an empty space so thats fine
         [UnkillableVariants(0, 0x3F7F, 0x4015)] // what if water type too? bottom of the ocean pot
         FlyingPot = 0x8D,
 
@@ -744,12 +745,12 @@ namespace MMR.Randomizer.GameObjects
 
         Lillypad = 0x1B9,
 
-        [EnemizerEnabled]
+        //[EnemizerEnabled]
         [ActorInitVarOffset(0x1FF0)]
         [FileID(406)]
         [ObjectListIndex(0x1A6)]
         [GroundVariants(0x0)]
-        //[EnemizerScenesExcluded(0x1B)] // req for gekko miniboss, do not touch until fix
+        [EnemizerScenesExcluded(Scene.WoodfallTemple)] // req for gekko miniboss, do not touch until fix
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         Snapper = 0x1BA,
 
