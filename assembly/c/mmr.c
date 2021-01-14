@@ -140,9 +140,9 @@ u16 mmr_GetNewGiIndex(z2_game_t *game, z2_actor_t *actor, u16 gi_index, bool gra
     }
     if (grant) {
         mmr_SetGiFlag(gi_index);
-    }
-    if (actor == Z2_LINK(game)) {
-        Z2_LINK(game)->get_item = new_gi_index;
+        if (actor == Z2_LINK(game)) {
+            Z2_LINK(game)->get_item = new_gi_index;
+        }
     }
     return new_gi_index;
 }

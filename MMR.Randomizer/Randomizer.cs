@@ -989,10 +989,21 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            if (currentItem.IsTemporary() && ItemUtils.IsMoonLocation(target))
+            if (currentItem.IsTemporary())
             {
-                Debug.WriteLine($"{currentItem} cannot be placed on the moon.");
-                return false;
+                if (ItemUtils.IsMoonLocation(target))
+                {
+                    Debug.WriteLine($"{currentItem} is temporary and cannot be placed on the moon.");
+                    return false;
+                }
+
+                // This is to prevent business scrub relocation logic from potentially causing unbeatable seeds.
+                // TODO fix this in a nicer way.
+                if (target == Item.HeartPieceNotebookHand && !ItemUtils.IsJunk(currentItem))
+                {
+                    Debug.WriteLine($"{currentItem} is temporary and cannot be placed on {target}.");
+                    return false;
+                }
             }
 
             //check direct dependence

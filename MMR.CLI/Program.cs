@@ -27,7 +27,8 @@ namespace MMR.CLI
                 {
                     { "-help", "See this help text." },
                     { "-settings <path>", "Path to a settings JSON file. Only the GameplaySettings will be loaded. Other settings will be loaded from your default settings.json file." },
-                    { "-patch", "Output a .mmr patch file." },
+                    { "-outputpatch", "Output a .mmr patch file." },
+                    { "-inputpatch <path>", "Path to a .mmr patch file to apply." },
                     { "-spoiler", "Output a .txt spoiler log." },
                     { "-html", "Output a .html item tracker." },
                     { "-rom", "Output a .z64 ROM file." },
@@ -106,7 +107,8 @@ namespace MMR.CLI
             configuration.GameplaySettings.CustomStartingItemList = ConvertItemString(ItemUtils.StartingItems().Where(item => !item.Name().Contains("Heart")).ToList(), configuration.GameplaySettings.CustomStartingItemListString);
             configuration.GameplaySettings.CustomJunkLocations = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomJunkLocationsString);
 
-            configuration.OutputSettings.GeneratePatch |= argsDictionary.ContainsKey("-patch");
+            configuration.OutputSettings.InputPatchFilename = argsDictionary.GetValueOrDefault("-inputpatch")?.SingleOrDefault();
+            configuration.OutputSettings.GeneratePatch |= argsDictionary.ContainsKey("-outputpatch");
             configuration.OutputSettings.GenerateSpoilerLog |= argsDictionary.ContainsKey("-spoiler");
             configuration.OutputSettings.GenerateHTMLLog |= argsDictionary.ContainsKey("-html");
             configuration.OutputSettings.GenerateROM |= argsDictionary.ContainsKey("-rom");
@@ -121,6 +123,7 @@ namespace MMR.CLI
                 seed = new Random().Next();
             }
 
+
             var outputArg = argsDictionary.GetValueOrDefault("-output");
             if (outputArg != null)
             {
@@ -129,6 +132,10 @@ namespace MMR.CLI
                     throw new ArgumentException("Invalid argument.", "-output");
                 }
                 configuration.OutputSettings.OutputROMFilename = outputArg.SingleOrDefault();
+            }
+            else if (!string.IsNullOrWhiteSpace(configuration.OutputSettings.InputPatchFilename))
+            {
+                configuration.OutputSettings.OutputROMFilename = Path.ChangeExtension(configuration.OutputSettings.InputPatchFilename, "z64");
             }
             configuration.OutputSettings.OutputROMFilename ??= "output/";
             if (!Path.IsPathRooted(configuration.OutputSettings.OutputROMFilename))
