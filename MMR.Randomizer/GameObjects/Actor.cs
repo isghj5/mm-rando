@@ -2,6 +2,7 @@
 using MMR.Randomizer.Attributes.Actor;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models.Rom;
+using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.GameObjects
 {
@@ -15,7 +16,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x83F0, 0x27F5)] // TODO finish checking the rest of possible variations
         [GroundVariants(0x7F4)] // 0x7F4 is the bright yellow light of the graveyard smash
         [UnkillableVariants(0x7F4)]
-        [EnemizerScenesExcluded(0x46)] //woodfall
+        [EnemizerScenesExcluded(Scene.Woodfall)] //woodfall
         Flame = 0x4, //En_Light
 
         [EnemizerEnabled]
@@ -23,7 +24,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(46)]
         [ObjectListIndex(0x5)]
         [WaterVariants(0xFF00)]
-        [EnemizerScenesExcluded(0x13,0x49)]
+        [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.GreatBayTemple)]
         Octarok = 0x8,
 
         [EnemizerEnabled]
@@ -51,14 +52,14 @@ namespace MMR.Randomizer.GameObjects
         Keese = 0xC,
 
         [ActorizerEnabled]
-        [ObjectListIndex(0x25B)] // gameplay_keep obj 1, place beside butler son
+        [ObjectListIndex(0x1)] // gameplay_keep obj 1, place beside butler son
         // 4 is group of fairies out of a fountain, 7 is large healing fairy, 9 is yellow fairy
         [GroundVariants(4, 7, 9)]
         [FlyingVariants(4, 7, 9)]
         [SinglePerRoomMax(4)]
         [DoublePerRoomMax(7)]
         [UnkillableVariants(4, 7, 9)] // friend
-        [EnemizerScenesExcluded(0x4B)] // dont remove from well
+        [EnemizerScenesExcluded(Scene.BeneathTheWell)] // dont remove from well
         Fairy = 0x10,
 
         [ActorizerEnabled]
@@ -67,7 +68,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFFFF)]
         [UnkillableVariants(0xFFFF)] // killing one not possible
         // I would like a flying variant, but they seem to drop like a rock instead of float down
-        [EnemizerScenesExcluded(0x15, 0x29, 0x35, 0x42, 0x10)]
+        //[EnemizerScenesExcluded(0x15, Scene.AstralObservatory, 0x35, 0x42, 0x10)]
+        [EnemizerScenesExcluded(Scene.AstralObservatory)]
         FriendlyCucco = 0x11,
 
         [EnemizerEnabled]
@@ -82,7 +84,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x24E0)]
         [FileID(56)]
         [ObjectListIndex(0x14)]
+        // yo wait how did we get the flying variety once? was that spawned in air or was that a variety that was missing?
         [GroundVariants(0)]
+        [DoublePerRoomMax(0)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Peahat = 0x14,
 
@@ -90,7 +94,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16B)] // gameplay keep obj 1
         [WaterVariants(2,0)] // 2 is the lab fish
         [UnkillableVariants(2)]
-        [EnemizerScenesExcluded(0x2F)]
+        [EnemizerScenesExcluded(Scene.MarineLab)]
         Fish = 0x17,
 
         [EnemizerEnabled]
@@ -99,7 +103,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x17)]
         [GroundVariants(0)]
         [DoublePerRoomMax(0)]
-        [EnemizerScenesExcluded(0x60)] // issue: spawn is too high, needs to be lowered
+        [EnemizerScenesExcluded(Scene.SecretShrine)] // issue: spawn is too high, needs to be lowered
         [EnemizerScenesPlacementBlock(Scene.BeneathGraveyard, Scene.DekuShrine)] // crash in graveyard
         Dinofos = 0x19,
 
@@ -110,13 +114,13 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0)] // 0 works, but OOT used FFFF
         [GroundVariants(0)] // 0 works, but OOT used FFFF
         [WaterVariants(0)] // 0 works, but OOT used FFFF
-        [EnemizerScenesExcluded(0x69)]
+        //[EnemizerScenesExcluded(0x69)]
         Shabom = 0x1D,// the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
         
         [ActorizerEnabled]
         [FileID(65)]
-        [ObjectListIndex(0x25B)] // gameplay_keep obj 1
+        [ObjectListIndex(1)] // gameplay_keep obj 1
         [GroundVariants(0)] // 0 is ben
         [UnkillableVariants(0)]
         // Ben seems to be cursed, if you enter a scene with him from a grotto it can crash (~90% chance?) 
@@ -133,7 +137,8 @@ namespace MMR.Randomizer.GameObjects
         // the frogs that show up when you kill hte other frog, those are unknown vars because they are spawned by the dead miniboss
         [GroundVariants(1,2,3,4)] // 3 is southern swamp, 4 is laundry pool, the versions in teh mountaion have the F flag, think the rest are numbered
         [UnkillableVariants(1,2,3,4)]
-        [EnemizerScenesExcluded(0x45, 0x00, 0x70)] // clear and poison swamp, laundrypool
+        [SinglePerRoomMax(1,2,3,4)]
+        [EnemizerScenesExcluded(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.LaundryPool)] // clear and poison swamp, laundrypool
         Frog1 = 0x22,
 
         [EnemizerEnabled]
@@ -142,7 +147,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x20)]
         [FlyingVariants(0xEF,0x7F,4,0x3F)]
         //[GroundVariants(0xEF,0x7F,4)] // remember, this works for _spawns_
-        [EnemizerScenesExcluded(0x27, 0x28)] // huh? what are these? why were they not randomized in road to ss?
+        //[EnemizerScenesExcluded(0x27, 0x28)] // huh? what are these? why were they not randomized in road to ss?
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, 
             Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
         Skulltula = 0x24,
@@ -155,7 +160,8 @@ namespace MMR.Randomizer.GameObjects
         [PatrolVariants(2)] // 3 works, 1+4 crashes, assuming 7 also crashes because probably a flag
         [SinglePerRoomMax(2)]
         [UnkillableVariants(2)] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
-        [EnemizerScenesExcluded(0x18, 0x16)] // 0x18 is ISTT
+        //[EnemizerScenesExcluded(0x18, 0x16)] // 0x18 is ISTT
+        [EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         // scenes that seem fine: path to snowhead, grottos, well, road to southern swampm ikana canyon, spring twin islands
         // graveyard doesnt crash, but he doesn't spawn here either? its just an empty sky
         [EnemizerScenesPlacementBlock(Scene.AstralObservatory, Scene.RoadToIkana, 
@@ -170,7 +176,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x2A)]
         [GroundVariants(0xFFFF)]
         [UnkillableVariants(0xFFFF)]
-        [EnemizerScenesExcluded(0x1F, 0x6B)]
+        [EnemizerScenesExcluded(Scene.GoronRacetrack, Scene.OdolwasLair)]
         BombFlower = 0x2F,
 
         [EnemizerEnabled]
@@ -194,7 +200,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(81)]
         [ObjectListIndex(0x40)]
         [GroundVariants(0xFF02,0xFF00,  0xFF01)]
-        [EnemizerScenesExcluded(0x46, 0x2B)]
+        [EnemizerScenesExcluded(Scene.Woodfall, Scene.DekuPalace)]
         MadShrub = 0x3B,
 
         [EnemizerEnabled]
@@ -218,11 +224,11 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // can fly, but weirdly is very bad at changing height if you fight in a multi-level area
         [SinglePerRoomMax(0)] // only fight her if you fight only one
         [UnkillableVariants(0)] // is NOT unkillable, but assume never have light arrows until the last second of a run, do not place where can block an item
-        [EnemizerScenesExcluded(0x18)] // lets not randomize his normal spawn
+        [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple)] // lets not randomize his normal spawn
         // good candidate for night and dungeon spawn only
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.RoadToIkana,
             Scene.SouthernSwamp, Scene.WoodsOfMystery, Scene.Woodfall, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.PathToSnowhead, 
-            Scene.Snowhead, Scene.DekuShrine)]
+            Scene.Snowhead, Scene.GoronVillage, Scene.DekuShrine)]
         Gomess = 0x43,
 
         [EnemizerEnabled]
@@ -232,18 +238,19 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x6A)]
         //[GroundVariants(0x600, 0x800, 0x500, 0xFF00, 0x300)] // all working varieties
         [GroundVariants(0x600)] // reduce for lag
+        [UnkillableVariants(0x600)] // not unkillable, but for now, stops them from showing up blocking clear to get checks, and fairies
         [DoublePerRoomMax(0x600, 0x800, 0x500, 0xFF00, 0x300)]
         Beamos = 0x47,
 
         [ActorizerEnabled]
-        [ObjectListIndex(0x25B)]// gameplay_keep obj 1
+        [ObjectListIndex(0x1)]// gameplay_keep obj 1
         [FlyingVariants(0)] // there are two other vars untested
         [GroundVariants(0)] // there are two other vars untested
         [UnkillableVariants(0)]
         [SinglePerRoomMax(0)]
         // variety 0 crashes scenes with snow weather, but not rain, weird
         [EnemizerScenesPlacementBlock(Scene.Snowhead, Scene.TwinIslands, Scene.MountainVillage, Scene.GoronVillage)]
-        Demo_Kankyo = 0x49,
+        Demo_Kankyo = 0x49, // lost woods living fairy dust
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3200)]
@@ -257,13 +264,13 @@ namespace MMR.Randomizer.GameObjects
         [FileID(93)]
         [ObjectListIndex(0x75)]
         [GroundVariants(0x7F07,0x7F05,0x7F06)]
-        [EnemizerScenesExcluded(0x4b,0x13)] // gibdo locations, but share the same object so gets detected
+        [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.BeneathTheWell)] // gibdo locations, but share the same object so gets detected
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows us down too much
         ReDead = 0x4C,
 
         [EnemizerEnabled]
-        [ObjectListIndex(0x25B)] // gameplay_keep obj 1, swap into butler son
-        [GroundVariants(0x3323)] // bettles on the floor
+        [ObjectListIndex(0x1)] // gameplay_keep obj 1
+        [GroundVariants(0x3323, 0x2324, 0x4324)] // bettles on the floor
         [FlyingVariants(0x2324, 0x4324)] // butterlies in the air
         [WaterVariants(0x6322)] // fish swimming in the water
         [UnkillableVariants(0x3323, 0x2324, 0x4324, 0x6322)]
@@ -285,11 +292,11 @@ namespace MMR.Randomizer.GameObjects
             0xFFFC)]
         [SinglePerRoomMax(0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F,
             0xFF3F, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x11F)]
-        [EnemizerScenesExcluded(0x27)] // dont remove old spiders, the new ones might not be gettable
+        [EnemizerScenesExcluded(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse)] // dont remove old spiders, the new ones might not be gettable
         GoldSkullTula = 0x50, // for now, only randomize the gold skulltulas
 
         [ActorizerEnabled]
-        [ObjectListIndex(0x171)] // overworld_keep, obj 2
+        [ObjectListIndex(2)] // overworld_keep, obj 2
         // 3D is swamp grotto, 304 is deku playground, 5C is mystery woods
         // FF/299 is HSG, 233 is path to snowhead, 3B is mountain village spring grot
         // 96 is goron rock grotto, 218/2B8? is graveyard grotto, 3E is road to swamp
@@ -307,10 +314,10 @@ namespace MMR.Randomizer.GameObjects
         // but seriously thats still a small number of grottos
         // zoey says the lower byte used to be for chest contents and things but we dont use in rando
         // TODO rewrite grotto to take a bigger list of entrances
-        [GroundVariants(0, 0x6000, 0x7000)]
+        [GroundVariants(0, 0x7000)]
         [UnkillableVariants(0, 0x6000, 0x7000)]
         [SinglePerRoomMax(0, 0x6000, 0x7000)]
-        [EnemizerScenesExcluded(0x53)]
+        [EnemizerScenesExcluded(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead)]
         // as its obj is 2, shouldn't be available in dungeons, maybe not indoors either
         [EnemizerScenesPlacementBlock(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         GrottoHole = 0x55,
@@ -339,7 +346,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // works but her object is huge, and you cant talk or interact with her
         [FileID(204)]
         [ObjectListIndex(0xA2)]
-        [GroundVariants(0)]
+        //[GroundVariants(0)]
         [WaterVariants(0)]
         [SinglePerRoomMax(0)]
         Ruto = 0x69,
@@ -351,6 +358,7 @@ namespace MMR.Randomizer.GameObjects
         // 2 is ocean bottom, 0 is one in shallow shore water, 3 is land and one in shallow water
         [WaterVariants(0,2)]
         [GroundVariants(3)]
+        //[GroundVariants(3)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows down the race
         LikeLike = 0x6C,
 
@@ -361,18 +369,21 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(3)]
         LikeLikeShield = 0x28E, // 28E is a dummy actor ID, we only use it because it will never conflict with enemizer
 
-        [ActorizerEnabled] // does not show up, even though its obj 1, the fuck
-        // WORSE, somehow it crashes when you leave the scene, instead of enter, wack
-        // ^ that might have been ben
-        [ObjectListIndex(0x6A)] // gameplay_keep, obj 1
-        // 0x4E8F, 0x7A8F, 0x608F, 0x5C8F are magic pots from the goron race
-        // 0x11F, 0x10F are pots from majora fight
+        [ActorizerEnabled]
+        [ObjectListIndex(0x1)] // gameplay_keep, obj 1
+        [FileID(126)]
         // 0x750F, 0x7310, 0x711F, 0x6F15 are from stone tower near the statue
-        // pulled from snowhead 0x4A0A
-        // 0 actually loads in a random spot, but its always empty
-        //[GroundVariants(0x4E8F, 0x7A8F, 0x608F, 0x5C8F, 0x11F, 0x10F, 0x750F, 0x7310, 0x711F, 0x6F15)]
-        [GroundVariants(0, 1)]
-        [UnkillableVariants(0,1)]
+        // according to CM, 0x100 is available everywhere as a pot, where 0x3F defines the drop item
+        // so 1F is arrows, F is magic, B is three small rups? 7 is huge 200 rup, 17 is empty
+        // 0xA is one rup, 1A and 14 are empty 04 is 20 rupes, 
+        // 100 is empty, 110 is fairy, 10E is stick//////
+        // 115 is 5 bombs, 105 is tall dodongo 50 rup, 106 is empty, 116 is empty
+        // 101 is one rup, 111 SKULL TOKEN POT??!? 102 was 5 rups 112 empty
+        // 103 empty, 113 is 10 deku nuts, 104 is red rup, 114 is empty
+        //[GroundVariants(0x110)] // testing
+        [GroundVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
+        //[DoublePerRoomMax(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)] // prob not necessary
+        [UnkillableVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)] // not enemy actor class
         ClayPot = 0x82,
 
         [EnemizerEnabled]
@@ -384,11 +395,11 @@ namespace MMR.Randomizer.GameObjects
 
         [EnemizerEnabled]
         [FileID(132)]
-        [ObjectListIndex(0x6A)] // dungeon_keep, obj 3
+        [ObjectListIndex(3)] // dungeon_keep, obj 3
         // and object 3 is so massive it never gets chosen even if we try to shove it into the object list
         //[GroundVariants(0x4015)]
         [GroundVariants(0)] // actually spawns thank god, only in dungeons though, but outside its just an empty space so thats fine
-        [UnkillableVariants(0x3F7F, 0x4015)] // what if water type too? bottom of the ocean pot
+        [UnkillableVariants(0, 0x3F7F, 0x4015)] // what if water type too? bottom of the ocean pot
         FlyingPot = 0x8D,
 
         [EnemizerEnabled]
@@ -400,11 +411,11 @@ namespace MMR.Randomizer.GameObjects
         Freezard = 0x8F,
 
         [EnemizerEnabled]
-        [ObjectListIndex(0x14)] // gameplay_keep obj 1
+        [ObjectListIndex(0x1)] // gameplay_keep obj 1
         // 1 creates a grass circle in termina field, 0 is grotto grass single
-        [GroundVariants(0)]
-        [UnkillableVariants(0)] // not enemy actor group
-        [EnemizerScenesExcluded(0x07)] // dont remove from peahat grotto
+        [GroundVariants(0, 1)]
+        [UnkillableVariants(0, 1)] // not enemy actor group
+        [EnemizerScenesExcluded(Scene.Grottos)] // dont remove from peahat grotto
         GrassBush = 0x90,
 
         [ActorizerEnabled]
@@ -414,7 +425,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x807F, 0x8004, 0x8002)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [UnkillableVariants(0x807F, 0x8004, 0x8002)] // dont actually know if you can kill these to get a fairy drop
         //[UnkillableVariants(0x807F,0x8002)] // tested true
-        [EnemizerScenesExcluded(0x38, 0x2D)]
+        [EnemizerScenesExcluded(Scene.TerminaField)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
         Bombiwa = 0x92,
 
@@ -423,7 +434,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xF2)]
         [GroundVariants(0x0FFF)]
         [UnkillableVariants(0x0FFF)]
-        [EnemizerScenesExcluded(0x42)]
+        [EnemizerScenesExcluded(Scene.CuccoShack)]
         CuccoChick = 0x9D,
 
         [ActorizerEnabled]
@@ -431,22 +442,22 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xF4)]
         [GroundVariants(0)]
         [UnkillableVariants(0)]
-        [EnemizerScenesExcluded(0x07)]
+        [EnemizerScenesExcluded(Scene.Grottos)]
         BeanSeller = 0xA5,
 
         [EnemizerEnabled]
-        [ObjectListIndex(0xA)] // gamplaykeep obj 1 // the rocks are free, you can take them home
+        [ObjectListIndex(0x1)] // gamplaykeep obj 1 // the rocks are free, you can take them home
         //6a does not load
         [GroundVariants(0x1F2)]
         [UnkillableVariants(0x1F2, 0x6A)] // not enemy actor group, cannot kill
-        [EnemizerScenesExcluded(0x2D)] // dont replace them in TF
+        [EnemizerScenesExcluded(Scene.TerminaField)] // dont replace them in TF
         Rock = 0xB0, // rock
 
-        //[EnemizerEnabled] // does not load
-        [ObjectListIndex(0xA)] // gamplaykeep obj 1
+        //[EnemizerEnabled] // does not load, wrong vars?
+        [ObjectListIndex(0x1)] // gamplaykeep obj 1
         [GroundVariants(0)]
         [UnkillableVariants(0)]
-        [EnemizerScenesExcluded(0x2D)]
+        [EnemizerScenesExcluded(Scene.GoronShrine)]
         RockSirloin = 0xB9,
 
         [ActorizerEnabled]
@@ -459,7 +470,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(1)]
         [UnkillableVariants(0x1200, 0x1B00, 0x2800, 1)] // killing one not possible
         // twinislands 0x5D snowhead 0x21, observatory 0x29, zora hall 0x33, trade 0x34, 0x48 goron village
-        [EnemizerScenesExcluded(0x5D, 0x21, 0x29, 0x33, 0x34, 0x37, 0x48, 0x4D, 0x50, 0x38, 0x5B, 0x53, 0x58, 0x5A, 0x5E)] 
+        //[EnemizerScenesExcluded(0x5D, 0x21, 0x29, 0x33, 0x34, 0x37, 0x48, 0x4D, 0x50, 0x38, 0x5B, 0x53, 0x58, 0x5A, 0x5E)] 
+        [EnemizerScenesExcluded(Scene.AstralObservatory, Scene.TradingPost)]
         Scarecrow = 0xCA,
 
         [ActorizerEnabled]
@@ -475,7 +487,8 @@ namespace MMR.Randomizer.GameObjects
         //[PatrolVariants(0xD9F)] // didn't crash when put in deku palace
         [UnkillableVariants(0x3FF)] // killing one not possible
         [DoublePerRoomMax(0x3FF)]
-        [EnemizerScenesExcluded(0x6F, 0x10, 0x27, 0x35)]
+        //[EnemizerScenesExcluded(0x6F, 0x10, 0x27, 0x35)]
+        [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown, Scene.SwampSpiderHouse)]
         Dog = 0xE2,
 
         [ObjectListIndex(0x133)]
@@ -496,7 +509,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x142)]
         // 0x0042 is swinging from tree, looks stupid if spawns in the ground, 22 is sitting on the edge of a bookcase, looks weird on the ground
         [GroundVariants(0x0032)]
-        [EnemizerScenesExcluded(0x43,0x28)]
+        [EnemizerScenesExcluded(Scene.IkanaGraveyard, Scene.OceanSpiderHouse)]
         //[UnkillableVariants(0x32)] the ones that circle the tombs, but dont respawn if placed anywhere else it seems, ignore
         Stalchild = 0xED,
 
@@ -507,7 +520,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62)]
         [WallVariants(0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62)]
         [UnkillableVariants(0x46,0x67,0x88,0xA9,0xCA, 0x4B,0x6C,0x8D,0xAE,0xCF, 0x50,0x71,0x92,0xB3,0xD4, 0x83,0xA4,0xC5,0x41,0x62)]
-        [EnemizerScenesExcluded(0x66, 0x47, 0x3F, 0x2A)]
+        [EnemizerScenesExcluded(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.MilkRoad,
+            Scene.RomaniRanch, Scene.IkanaCanyon)]
         GossipStone = 0xEF,
 
         SoundEffects2 = 0xF0,
@@ -526,7 +540,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0, 2)]  // 2 is from romani ranch, 0 is cow grotto, well is also 0
         [WallVariants(0, 2)]  // 2 is from romani ranch, 0 is cow grotto, well is also 0
         [UnkillableVariants(0,2)]
-        [EnemizerScenesExcluded(0x35, 0x4B, 0x07, 0x10)]
+        [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.Grottos, Scene.BeneathTheWell)]
         Cow = 0xF3,
 
         [ActorizerEnabled]
@@ -555,14 +569,16 @@ namespace MMR.Randomizer.GameObjects
         [FileID(271)]
         [ObjectListIndex(0x15E)]
         [WaterVariants(04,02,01,0)]
-        [EnemizerScenesExcluded(0x49)]
+        //[EnemizerScenesExcluded(Scene.GreatBayTemple)] // think this was just here because you respawn detection
         BioDekuBaba = 0x12D,
-
 
         //[EnemizerEnabled] // todo: try randomizing
         [FileID(278)]
         [ObjectListIndex(0x161)]
         Raft = 0x13A,// carniverous raft, woodfall
+
+        [ObjectListIndex(0x165)]
+        PottedPlant = 0x13E,
 
         //[EnemizerEnabled] // does not spawn, tcrf can get it to spawn but it does nothing
         //[ObjectListIndex(0x161)]
@@ -575,7 +591,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(296)]
         [ObjectListIndex(0x16A)]
         [GroundVariants(0x0C01,0x1402,0xFF03,0xFF01,0xFF00,0x0A01,0x0202,0x801,0xFF02)]
-        [EnemizerScenesExcluded(0x49)]
+        [EnemizerScenesExcluded(Scene.GreatBayTemple)] // necessary to climb
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)] // crash transitioning witch shop room
         // termina field, ff00 gbt waterchu, the rest are assumed respawn until proven otherwise
         [UnkillableVariants(0xFF03,0xFF01,0xFF00,    0x0C01,0x1402,0x0A01,0x0202,0x801,0xFF02)]
@@ -594,7 +610,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16C)]
         [GroundVariants(0)]
         [SinglePerRoomMax(0)]
-        [EnemizerScenesExcluded(0x6C)]
+        [EnemizerScenesExcluded(Scene.EastClockTown)]
         [UnkillableVariants(0)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall, Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower)] // big blocking
         Bell = 0x14E,
@@ -611,11 +627,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1500)]
         [FileID(313)]
         [ObjectListIndex(0x172)]
-        [FlyingVariants(0xFF34, 0xFF02, 0xFF03, 0xFF9F, 0x019F, 0x0102, 0x0103)]
+        [FlyingVariants(0xFF34, 0xFF02, 0xFF03, 0x019F, 0x0102, 0x0103)]
         [WallVariants(0xFF9F)]
         // one of these is sit on the wall bat from rtss: FF03/01/9F
         [SinglePerRoomMax(0xFF34)] // swarm
-        [EnemizerScenesExcluded(0x18)]
+        //[EnemizerScenesExcluded(Scene.InvertedStoneTower)] // think this is here for death, but death has mini-death for his bats...?
         BadBat = 0x15B,
 
         [ActorInitVarOffset(0x37D0)]
@@ -650,7 +666,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0, 1, 2, 3, 4, 5)]
         [UnkillableVariants(0, 1, 2, 3, 4, 5)]
         [SinglePerRoomMax(0, 1, 2, 3, 4, 5)]
-        [EnemizerScenesExcluded(0x40, 0x5D, 0x6E, 0x22, 0x37, 0x13)] // southernswamp, twinislands, nct, milkroad, gbcoast, ikana
+        [EnemizerScenesExcluded(Scene.SouthernSwamp, Scene.TwinIslands, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.TwinIslands, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
         Tingle = 0x176,
 
@@ -672,11 +688,11 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [FileID(349)]
-        [ObjectListIndex(0x1A6)] // obj 1: gameplay keep, but can't set that
+        [ObjectListIndex(0x1)] // obj 1: gameplay keep, but can't set that
         [GroundVariants(0x7F, 0x17F)] // both crash for some reason
         [UnkillableVariants(0x7F, 0x17F)]
-        // woodfall(1B), SHT(0x21), ikana castle, deku palace, nct, woodfall, woodfall temple
-        [EnemizerScenesExcluded(0x1B, 0x21)] 
+        [EnemizerScenesExcluded(Scene.Woodfall, Scene.DekuPalace, Scene.WoodfallTemple, Scene.OdolwasLair, 
+            Scene.EastClockTown, Scene.NorthClockTown, Scene.IkanaCastle, Scene.SnowheadTemple)] 
         DekuFlower = 0x183,
 
         //[EnemizerEnabled] // AI gets confused, backwalks forever, pathing?
@@ -685,6 +701,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x18D)]
         [PatrolVariants(0x700)]
         [SinglePerRoomMax(0x700)]
+        [EnemizerScenesExcluded(Scene.InvertedStoneTower, Scene.StoneTowerTemple)]
         Eyegore = 0x184,// walking laser cyclops in inverted stone tower
 
         [ActorizerEnabled]
@@ -699,7 +716,7 @@ namespace MMR.Randomizer.GameObjects
         //[FlyingVariants(0)] // doesn't spawn unless in the ranch for some reason, shame too this is the one in the ranch
         [FlyingVariants(0x8050,0x805A,0x8064)] // explodes randomly when entering scene
         [UnkillableVariants(0x8050, 0x8064, 0x805A)]
-        [EnemizerScenesExcluded(0x35)] // dont replace actual romani balloons
+        [EnemizerScenesExcluded(Scene.RomaniRanch)] // dont replace actual romani balloons
         PoeBalloon = 0x1A6,
 
         [FileID(0x1A8)]
@@ -707,14 +724,15 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants( unk )]
         BigOcto = 0x1A8,
 
-        [EnemizerEnabled]
+        //[EnemizerEnabled]
         [ObjectListIndex(0xE)]
         // snowhead : 0x5E00,0x6000, 0x5800,0x5600, GreatBay: 0x6000
         // huh? these repeat per dungeon? 
-        [FlyingVariants(0x5E00, 0x6000, 0x5800, 0x5600 )]
+        [FlyingVariants(0x5E00, 0x6000, 0x5800, 0x5600)]
+        [GroundVariants(0x5E00, 0x6000, 0x5800, 0x5600)]
         [UnkillableVariants(0x5E00, 0x6000, 0x5800, 0x5600)] // neither pop nore item collect counts as kill
-        [SinglePerRoomMax(0x5E00, 0x6000, 0x5800, 0x5600)] // neither pop nore item collect counts as kill
-        [EnemizerScenesExcluded(0x1B, 0x21, 0x49, 0x16, 0x18)] // neither pop nore item collect counts as kill
+        [SinglePerRoomMax(0x5E00, 0x6000, 0x5800, 0x5600)]
+        [EnemizerScenesExcluded(Scene.Woodfall, Scene.Snowhead, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         ElfBubble = 0x1B1,
 
         [ActorizerEnabled] // weird that he is so rare though
@@ -723,6 +741,8 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableVariants(0)]
         [SinglePerRoomMax(0)]
         HappyMaskSalesman = 0x1B5,
+
+        Lillypad = 0x1B9,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1FF0)]
@@ -739,7 +759,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x10)] // unknown which ones do what we want (FFF3, 01, 10) 814 walking about outside
         // unkillable
         // only one
-        [EnemizerScenesExcluded(0x30)]
+        //[EnemizerScenesExcluded(0x30)]
         Dampe = 0x1CA,
 
         [ActorInitVarOffset(0x1FD0)]
@@ -754,7 +774,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x75)]
         [GroundVariants(0x1E9, 0x1F4, 0x208, 0x214, 0x224, 0x236, 0x247, 0x253, 0x262, 0x275, 0x283, 0x291, 0x2A0)]
         [UnkillableVariants(0x1E9, 0x1F4, 0x208, 0x214, 0x224, 0x236, 0x247, 0x253, 0x262, 0x275, 0x283, 0x291, 0x2A0)]
-        [EnemizerScenesExcluded(0x13, 0x4B)] // needed for well exploration
+        [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.IkanaCanyon)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows down player too much in a race setting
         GibdoWell = 0x1DA,
 
@@ -791,7 +811,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1CB)]
         [GroundVariants(0,1,2,3)]
         [UnkillableVariants(0,1,2,3)]
-        [EnemizerScenesExcluded(0x6C, 0x6D, 0x6E, 0x6F)] // all of clocktown
+        [EnemizerScenesExcluded(Scene.WestClockTown, Scene.SouthClockTown, Scene.NorthClockTown, Scene.EastClockTown)]
         Postbox = 0x1F2,
 
         [EnemizerEnabled]
@@ -800,14 +820,17 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1C3)]
         [FlyingVariants(0x00FF)]
         [GroundVariants(0x00FF)] // this is fine because the only vanilla instance is excluded, so this doesn't describe spawns too
-        [EnemizerScenesExcluded(0x16,0x18)] // inverted stonetower and... clock tower roof? what?
+        [EnemizerScenesExcluded(Scene.InvertedStoneTower)]
         Poe = 0x1F3,
 
-        [ActorizerEnabled] //4x can spawn without issue
+        SmallSnowball = 0x1F9,
+
+        //[ActorizerEnabled] //4x can spawn without issue
         [ObjectListIndex(0x1DF)]
         [GroundVariants(0x1400)] // all other versions are 0x13** or 0x1402
-        [EnemizerScenesExcluded(0x32)]
         [SinglePerRoomMax(0x1400)]
+        [UnkillableVariants(0x1400)]
+        [EnemizerScenesExcluded(Scene.GoronShrine)]
         GoronKid = 0x201,
 
         [EnemizerEnabled]
@@ -816,7 +839,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1EB)]
         [FlyingVariants(0x0)]
         [GroundVariants(0x0)] // spawns really low to ground in vanilla
-        [EnemizerScenesExcluded(0x23)] // pirate beehive cutscene
+        [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // pirate beehive cutscene
         GiantBeee = 0x204,
 
         //[ActorizerEnabled] // spawns but invisible, can hit it but cannot see it
@@ -830,7 +853,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1F1)]
         //[FlyingVariants(0xFF00, 1, 0x102)] // 1 is a possible type? well: ff00
         [FlyingVariants(1)] // 1 is a possible type? well: ff00
-        [EnemizerScenesExcluded(0x4B, 0x30)] // well and dampe house must be vanilla for scoopsanity
+        [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.BeneathGraveyard)] // well and dampe house must be vanilla for scoopsanity
         [DoublePerRoomMax(0xFF00, 1, 0x102)]
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208,
@@ -841,6 +864,13 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableVariants(0x907F, 0xA07F)]
         // maybe dont remove originals
         CowFigurine = 0x20A,
+
+        //[ActorizerEnabled] // likes to crash
+        [ObjectListIndex(0x1)] // gameplay_keep obj 1
+        [GroundVariants(0xFF03)]
+        [UnkillableVariants(0xFF03)]
+        [SinglePerRoomMax(0xFF03)]
+        Seth1 = 0x20B, // the green shirt guy, "Seth"? spiderhouses
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1C50)]
@@ -868,7 +898,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(1)]
         [WaterVariants(1)]
         [UnkillableVariants(1)]
-        [EnemizerScenesExcluded(0x33)]
+        [EnemizerScenesExcluded(Scene.ZoraHallRooms)]
         [SinglePerRoomMax(1)]
         Japas = 0x231,
 
@@ -878,9 +908,24 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x75)]
         [GroundVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)]
         [UnkillableVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)]
-        [EnemizerScenesExcluded(0x13,0x4B)] // dont replace the train
+        [EnemizerScenesExcluded(Scene.IkanaCanyon)] // dont replace the train
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         GibdoIkana = 0x235,
+
+        //[ActorizerEnabled] // boring since its hidden unless you wear one often junk mask
+        [ObjectListIndex(1)]
+        [GroundVariants(0x7F)]
+        [UnkillableVariants(0x7F)]
+        MushroomCloud = 0x23B,
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0xA1)]
+        // 9 is the one that sells you kegs
+        [GroundVariants(9)]
+        [UnkillableVariants(9)]
+        [SinglePerRoomMax(9)]
+        [EnemizerScenesExcluded(Scene.BombShop)]
+        Goron = 0x242,
 
         //[ActorizerEnabled] // unless I write dayonly/nightonly, this is too flukey
         [ObjectListIndex(0xFF)]
@@ -888,7 +933,8 @@ namespace MMR.Randomizer.GameObjects
         // 2 doesn't ever seen to spawn, day or night, think its a fluke
         [GroundVariants(0x2)] // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
         [UnkillableVariants(0,1,2)]
-        [EnemizerScenesExcluded(0x15, 0x70, 0x61)]
+        //[EnemizerScenesExcluded(0x15, 0x70, 0x61)]
+        [EnemizerScenesExcluded(Scene.StockPotInn, Scene.LaundryPool, Scene.MilkBar)] // think him being in milkbar is a credits thing
         [DoublePerRoomMax(0, 1, 2)]
         GuruGuru = 0x248,
 
@@ -905,7 +951,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x23F)]
         [FlyingVariants(7, 5)]
         [UnkillableVariants(7, 5)]
-        [EnemizerScenesExcluded(0x37, 0x38)]
+        [EnemizerScenesExcluded(Scene.GreatBayCoast, Scene.ZoraCape)]
         Seagulls = 0x267,
 
         //[ActorizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
@@ -930,11 +976,14 @@ namespace MMR.Randomizer.GameObjects
         //[FlyingVariants(0, 1)] // two? one that steals and one that doesn't?
         [FlyingVariants(0)] // zero seems safe, does not steal sword or anything, 1 does not spawn
         [SinglePerRoomMax(0)]
-        [EnemizerScenesExcluded(0x2D)] // do not remove original
+        [EnemizerScenesExcluded(Scene.TerminaField)] // do not remove original
         Takkuri = 0x291,
 
         [FileID(1114)]
         [ObjectListIndex(0)]
+        [GroundVariants(0)]
+        [FlyingVariants(0)]
+        [WaterVariants(0)]
         Empty = -1
 
     }

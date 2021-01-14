@@ -5,6 +5,7 @@ using MMR.Common.Extensions;
 using MMR.Randomizer.Utils;
 using System;
 using MMR.Randomizer.Attributes;
+using System.Linq;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -17,7 +18,7 @@ namespace MMR.Randomizer.Extensions
 
         public static int ObjectIndex(this Actor actor)
         {
-            return actor.GetAttribute<ObjectListIndexAttribute>().Index;
+            return actor.GetAttribute<ObjectListIndexAttribute>()?.Index ?? -1;
         }
 
         public static bool IsEnemyRandomized(this Actor actor)
@@ -78,9 +79,9 @@ namespace MMR.Randomizer.Extensions
             return nonRespawningVariants;
         }
 
-        public static List<int> ScenesRandomizationExcluded(this Actor actor)
+        public static List<Scene> ScenesRandomizationExcluded(this Actor actor)
         {
-            return actor.GetAttribute<EnemizerScenesExcludedAttribute>()?.ScenesExcluded ?? new List<int>();
+            return actor.GetAttribute<EnemizerScenesExcludedAttribute>()?.ScenesExcluded ?? new List<Scene>();
         }
 
         public static Models.Rom.Enemy ToEnemy(this Actor actor)
@@ -103,8 +104,8 @@ namespace MMR.Randomizer.Extensions
             // EG. like like can spawn on the sand on the surface, but also on the bottom of GBC
 
             // I'm sure theres a cleaner way, but everything I tried C# said no
-            var listOfVariants = new List<byte>() {1, 2, 3, 4, 5};
-            listOfVariants.ForEach(u => rng.Next()); // random sort in case it has multiple types
+            var listOfVariants = new List<byte>() {1, 2, 3, 4}; // 5
+            listOfVariants = listOfVariants.OrderBy(u => rng.Next()).ToList(); // random sort in case it has multiple types
             foreach( var variant in listOfVariants)
             {
                 ActorVariantsAttribute ourAttr = null;
@@ -129,16 +130,17 @@ namespace MMR.Randomizer.Extensions
                     ourAttr = actor.GetAttribute<WallVariantsAttribute>();
                     theirAttr = otherActor.GetAttribute<WallVariantsAttribute>();
                 }
-                if (variant == 5) // patrol
+                /*if (variant == 5) // patrol
                 {
                     ourAttr = actor.GetAttribute<PatrolVariantsAttribute>();
                     theirAttr = otherActor.GetAttribute<PatrolVariantsAttribute>();
-                }
+                }*/
                 if (ourAttr != null && theirAttr != null) // both have same type
                 {
                     var compatibleVariants = theirAttr.Variants;
                     // our old actor variant was this type
-                    if (compatibleVariants.Count > 0 && ourAttr.Variants.Contains(oldActorVariant))
+                    if (compatibleVariants.Count > 0 && ourAttr.Variants.Count > 0 
+                        && ourAttr.Variants.Contains(oldActorVariant)) // old actor had to actually be this attribute
                     {
                         return compatibleVariants;
                     }

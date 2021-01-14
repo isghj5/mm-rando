@@ -30,12 +30,14 @@ namespace MMR.Randomizer
         //private static List<Enemy> EnemyList { get; set; }
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
+        private static bool ACTORSENABLED = true;
 
         public static void ReadEnemyList()
         {
+            //.Where(u => u.IsEnemyRandomized()) // enemizer only
             EnemyList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                            .Where(u => u.IsEnemyRandomized() || u.IsActorRandomized()) // both
-                            //.Where(u => u.IsEnemyRandomized()) // enemizer only
+                            .Where(u => u.ObjectIndex() > 3
+                                && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized()))) // both
                             .ToList();
         }
 
@@ -51,7 +53,7 @@ namespace MMR.Randomizer
                     var matchingEnemy = EnemyList.Find(u => (int) u == mapActor.n);
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.Variants();
-                        if ( !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.Number)
+                        if ( !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)
                             && listOfAcceptableVariants.Contains(mapActor.v))
                         {
                             var newEnemy = matchingEnemy.ToEnemy();
@@ -80,7 +82,7 @@ namespace MMR.Randomizer
                     var matchingEnemy = EnemyList.Find(u => u.ObjectIndex() == mapObject);
                     if (   matchingEnemy > 0                                               // exists in the list
                        && !objList.Contains(matchingEnemy.ObjectIndex())                     // not already extracted from this scene
-                       && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.Number)) // not excluded from being extracted from this scene
+                       && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
                         objList.Add(matchingEnemy.ObjectIndex());
                     }
@@ -228,6 +230,111 @@ namespace MMR.Randomizer
             //RomData.MMFileList[GameObjects.Actor.Scarecrow.FileListIndex()].Data[0x1983] = 0;
         }
 
+        /// <summary>
+        /// Moves the deku baba in souther swamp
+        ///   why? beacuse they are posisioned in the elbow and its really obvious when they swamp on room swamp
+        ///   its already weird how they aren't aligned in vanilla, imo
+        /// </summary>
+        /// <param name="scene"></param>
+        public static void FixSouthernSwampDekuBaba(Scene scene)
+        {
+            if (scene.SceneEnum != GameObjects.Scene.SouthernSwamp)
+            {
+                return;
+            }
+
+            // because this room is already borderline lag fest, turn one into a lillypad
+            // actor 7 is the furthest back in the cave, unreachable
+            scene.Maps[0].Actors[6].n = 0x1B9; // lilypad actor
+            scene.Maps[0].Actors[6].actor = GameObjects.Actor.Lillypad; // lilypad actor
+            scene.Maps[0].Actors[6].p.x = 581; // placement: toward back wall behind tourist center
+            scene.Maps[0].Actors[6].p.y = 0;
+            scene.Maps[0].Actors[6].p.z = 790;
+            scene.Maps[0].Actors[6].v = 0;
+
+            scene.Maps[0].Actors[4].p.x = 2020; // placement: to the right as you approach witches
+            scene.Maps[0].Actors[4].p.y = 22;
+            scene.Maps[0].Actors[4].p.z = 300;
+
+
+            scene.Maps[2].Actors[2].p.x = 2910; // placement: between the bushes along the wall
+            scene.Maps[2].Actors[2].p.y = 14;
+            scene.Maps[2].Actors[2].p.z = -1075;
+
+            scene.Maps[2].Actors[3].p.x = 4240; // placement: near waterfall
+            scene.Maps[2].Actors[3].p.y = -2;
+            scene.Maps[2].Actors[3].p.z = -1270;
+
+        }
+
+        public static void EmptyOrFreeActor(Enemy enemy, Random rng, List<Enemy> currentRoomActorList, List<GameObjects.Actor> sceneAcceptableReplacements)
+        {
+            // check the old enemy for available co-actors,
+            // remove if those already exist in the list at max size
+            var acceptableReplacements = sceneAcceptableReplacements;
+
+            // if we roll a dice, we get a free actor, an actor that can already exists in memory
+            //   else, its empty, replace with empty actor
+            if (rng.Next(10) < 5) // 50% chance for now of considering adding, later user set or per-enemy type even
+            {
+                // randomly sort list of available enemies
+                // check the enemy does not already exist in limit
+                // place enemy
+                int randomStart = rng.Next(acceptableReplacements.Count);
+                for (int attempt = 0; attempt < acceptableReplacements.Count; ++attempt)
+                {
+                    int listIndex = (randomStart + attempt) % acceptableReplacements.Count;
+                    var testEnemy = acceptableReplacements[listIndex];
+                    var testEnemeyCompatibleVariants = ((GameObjects.Actor) enemy.Actor).CompatibleVariants(testEnemy, rng, enemy.Variables[0]);
+                    if (testEnemeyCompatibleVariants == null)
+                    {
+                        continue;  // no way to use this enemy, skip
+                    }
+
+                    var enemyHasMaximums = testEnemy.HasVariantsWithRoomLimits();
+                    var acceptableVariants = new List<int>();
+
+                    if (enemyHasMaximums)
+                    {
+                        var enemiesInRoom = currentRoomActorList.FindAll(u => u.Actor == (int)testEnemy);
+                        if (enemiesInRoom.Count > 0)  // only test for specific variants if there are already some in the room
+                        {
+                            // find variant that is not maxed out
+                            foreach (var variant in testEnemeyCompatibleVariants)
+                            {
+                                // if the varient limit has not been reached
+                                var variantMax = testEnemy.VariantMaxCountPerRoom(variant);
+                                var variantCount = enemiesInRoom.Count(u => u.Variables[0] == variant); ;
+                                if (variantCount < variantMax)
+                                {
+                                    acceptableVariants.Add(variant);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            acceptableVariants = testEnemeyCompatibleVariants;
+                        }
+                    }
+                    else
+                    {
+                        acceptableVariants = testEnemeyCompatibleVariants;
+                    }
+
+                    if (acceptableVariants.Count > 0)
+                    {
+                        int randomVariant = acceptableVariants[rng.Next(acceptableVariants.Count)];
+                        enemy.Actor = (int)testEnemy;
+                        enemy.Variables[0] = randomVariant;
+                        return;
+                    }
+                }
+            }
+
+            enemy.Actor = (int) GameObjects.Actor.Empty;
+            enemy.Variables[0] = 0;
+        }
+
         public static void FixSpecificLikeLikeTypes()
         {
             /// some likelikes dont follow the normal water/ground type variety, so they should be switched to match for replacement
@@ -325,6 +432,8 @@ namespace MMR.Randomizer
                 EnemizerLogMutex.ReleaseMutex();
             }
 
+            FixSouthernSwampDekuBaba(scene);
+
             DateTime startTime = DateTime.Now;
 
             var sceneEnemies = GetSceneEnemyActors(scene);
@@ -402,7 +511,7 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID()
                         && sceneObjects[i] == GameObjects.Actor.Leever.ObjectIndex())
                         //&& i == 2) // actor object number X
                     {
@@ -411,11 +520,11 @@ namespace MMR.Randomizer
                             OldV = sceneObjects[i],
                             //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
                             //NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
-                            NewV = GameObjects.Actor.Fairy.ObjectIndex() // good for detection explosion
+                            NewV = GameObjects.Actor.ElfBubble.ObjectIndex() // good for detection explosion
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
-                    }
+                    }*/
 
                     var reducedCandidateList = actorCandidatesLists[i].ToList();
                     foreach (var objectSwap in chosenReplacementObjects)
@@ -476,10 +585,16 @@ namespace MMR.Randomizer
             WriteOutput(" Loops used for match candidate: " + loopsCount);
             WriteOutput(" time to finish finding matching population: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
+            // TODO add dungeon and field object enemies to the list
+            var sceneIsDungeon = scene.SceneEnum.IsDungeon();
+            var sceneFreeActors = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+                                      .Where(u => (u.ObjectIndex() == 1 || (!sceneIsDungeon && u.ObjectIndex() == 2) || (sceneIsDungeon && u.ObjectIndex() == 3))
+                                               && ! u.BlockedScenes().Contains(scene.SceneEnum)
+                                               && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized())))
+                                               .ToList();
+
             var chosenReplacementEnemies = new List<Enemy>();
             var previousyAssignedActor = new List<GameObjects.Actor>();
-            var emptyEnemy = GameObjects.Actor.Empty.ToEnemy();
-            emptyEnemy.Variables = new List<int> { 0 };
 
             for (int objCount = 0; objCount < chosenReplacementObjects.Count; objCount++)
             {
@@ -548,19 +663,26 @@ namespace MMR.Randomizer
                             {
 
                                 int max = problemEnemy.VariantMaxCountPerRoom(variant);
-                                // save max variants
-                                for (int i = 0; i < max && i < roomEnemiesWithVariant.Count; ++i)
+                                // make sure any enemy that has to drop a fairy is removed first
+                                int removed = 0;
+                                foreach (var protectedEnemy in roomEnemiesWithVariant.Where(u => u.MustNotRespawn == true).ToList())
+                                {
+                                    roomEnemiesWithVariant.Remove(protectedEnemy);
+                                    removed++;
+                                }
+                                for (int i = removed; i < max && i < roomEnemiesWithVariant.Count; ++i)
                                 {
                                     roomEnemiesWithVariant.Remove(roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)]);
                                 }
                                 // kill the rest of variant X
                                 foreach (var enemy in roomEnemiesWithVariant)
                                 {
-                                    //WriteOutput(" in room " + roomIndex + ", removing extra variants: " + variant.ToString("X2") + " for enemy: " + problemEnemy.ToString());
                                     var enemyIndex = temporaryMatchEnemyList.IndexOf(enemy);
-                                    temporaryMatchEnemyList[enemyIndex].Actor = (int)GameObjects.Actor.Empty;
-                                    //temporaryMatchEnemyList[enemyIndex].Name = "Removed";
+                                    //temporaryMatchEnemyList[enemyIndex].Actor = (int) GameObjects.Actor.Empty; // works but I want more
+                                    //temporaryMatchEnemyList[enemyIndex] = EmptyOrFreeActor(enemy, rng, temporaryMatchEnemyList, sceneFreeActors);
+                                    EmptyOrFreeActor(enemy, rng, temporaryMatchEnemyList, sceneFreeActors);
                                 }
+                                WriteOutput(" in room " + roomIndex + ", removing extra variants: " + variant.ToString("X2") + " for enemy: " + problemEnemy.ToString());
 
                             }
                         }

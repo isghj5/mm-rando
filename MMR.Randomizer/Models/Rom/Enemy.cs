@@ -16,6 +16,6 @@ namespace MMR.Randomizer.Models.Rom
         public int Type;
         public int Stationary;
         public vec16 Rotation;
-        public List<int> SceneExclude = new List<int>();
+        public List<GameObjects.Scene> SceneExclude = new List<GameObjects.Scene>();
     }
 }
