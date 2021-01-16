@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MMR.Randomizer.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -23,5 +24,23 @@ namespace MMR.Randomizer.Attributes
             ScenesBlocked = scenes;
         }
 
+    }
+
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    class EnemizerSceneEnemyReplacementBlockAttribute : Attribute
+    {
+        public GameObjects.Actor OriginalEnemy { get; private set; }
+        public List<GameObjects.Actor> BlockedReplacements { get; private set; }
+
+        public EnemizerSceneEnemyReplacementBlockAttribute(GameObjects.Actor originalEnemy, GameObjects.Actor blockedReplacement, params GameObjects.Actor[] blockedReplacements)
+        {
+            OriginalEnemy = originalEnemy;
+            var blockedEnemies = new List<GameObjects.Actor>() { blockedReplacement };
+            if (blockedReplacements.Length > 0)
+            {
+                blockedEnemies.AddRange(blockedReplacements);
+            }
+            BlockedReplacements = blockedEnemies;
+        }
     }
 }

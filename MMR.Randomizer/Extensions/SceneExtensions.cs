@@ -2,6 +2,7 @@
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.GameObjects;
+using System.CodeDom;
 using System.Collections.Generic;
 
 namespace MMR.Randomizer.Extensions
@@ -42,12 +43,34 @@ namespace MMR.Randomizer.Extensions
 
         public static bool IsDungeon(this Scene scene)
         {
+            /// we need to know if object 3 gameplay_dangeon_keep is loaded, to use actors that require this actor
+
+            // this is just a guess for now, the penalty of loading an actor that needs obj3 and doesn not have it is... an empty enemy not a big bug
+            // TODO flesh out this list
             var listOfDungeons = new List<Scene>{ Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple };
-
-
             return listOfDungeons.Contains(scene);
         }
 
+        public static List<Actor> GetBlockedReplacementActors(this Scene scene, Actor replacedActor)
+        {
+            /// sometimes we want to stop actors in scene from being randomized to specific actors,
+            ///  but we dont want to block from the whole scene, just one actor replacement
+            ///  where OriginalEnemy is the vanilla enemy we need to replace
+            ///  and BlockedReplacements is the list of enemies we cannot replace OriginalEnemy with 
+            var enemyReplacementBlockedCombosAttr = scene.GetAttributes<EnemizerSceneEnemyReplacementBlockAttribute>();
+            if (enemyReplacementBlockedCombosAttr != null)
+            {
+                foreach( var replacementEnemyBlockedAttr in enemyReplacementBlockedCombosAttr)
+                {
+                    if (replacementEnemyBlockedAttr != null && replacementEnemyBlockedAttr.OriginalEnemy == replacedActor)
+                    {
+                        return replacementEnemyBlockedAttr.BlockedReplacements;
+                    }
+                }
+            }
+
+            return new List<Actor>(); // no blocked enemy combos found, return empty list
+        }
     }
 
 }
