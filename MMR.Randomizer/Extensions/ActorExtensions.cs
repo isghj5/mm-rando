@@ -33,7 +33,14 @@ namespace MMR.Randomizer.Extensions
 
         public static List<int> UnkillableVariants(this Actor actor)
         {
-            return actor.GetAttribute<UnkillableVariantsAttribute>()?.Variants;
+            if (actor.GetAttribute<UnkillableAllVariantsAttribute>() != null) // all are unkillable
+            {
+                return Variants(actor);
+            }
+            else
+            {
+                return actor.GetAttribute<UnkillableVariantsAttribute>()?.Variants;
+            }
         }
 
         public static List<int> Variants(this Actor actor)

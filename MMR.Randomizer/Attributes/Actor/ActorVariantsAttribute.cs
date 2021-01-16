@@ -33,6 +33,13 @@ namespace MMR.Randomizer.Attributes.Actor
         public UnkillableVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
     }
 
+    public class UnkillableAllVariantsAttribute : Attribute
+    {
+        public bool Unkillable = true;
+
+        public UnkillableAllVariantsAttribute(){}
+    }
+
     /// <summary>
     /// some enemies can spawn in multiple situations, likelike can spawn on the beach or ocean bottom, so two types
     /// I don't really want to add one of these times the different types, even though we need them, so inheritance

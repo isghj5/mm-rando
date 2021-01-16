@@ -22,7 +22,6 @@ namespace MMR.Randomizer
         public class ValueSwap
         {
             // these are indexes of objects
-            // but also used for actor variable values, ergo any int values that need to be swapped
             public int OldV;
             public int NewV;
         }
@@ -30,7 +29,7 @@ namespace MMR.Randomizer
         //private static List<Enemy> EnemyList { get; set; }
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = true;
+        private static bool ACTORSENABLED = false;
 
         public static void ReadEnemyList()
         {
@@ -163,7 +162,7 @@ namespace MMR.Randomizer
             /// in Enemizer some spawn locations are noticably buggy
             ///   example: one of the eeno in north termina field is too high, 
             ///    we never notice because it falls to the ground before we can get there normally
-            ///    but if its a stationary enemy, like a dekubaba it hovers in the air
+            ///    but if its a stationary enemy, like a dekubaba, it hovers in the air
 
             // todo: rewrite this so functions take care of actoraddr and index
 
@@ -232,7 +231,7 @@ namespace MMR.Randomizer
 
         /// <summary>
         /// Moves the deku baba in souther swamp
-        ///   why? beacuse they are posisioned in the elbow and its really obvious when they swamp on room swamp
+        ///   why? beacuse they are positioned in the elbow and its really obvious when they spawn/despawn on room swap
         ///   its already weird how they aren't aligned in vanilla, imo
         /// </summary>
         /// <param name="scene"></param>
@@ -268,6 +267,8 @@ namespace MMR.Randomizer
 
         public static void EmptyOrFreeActor(Enemy enemy, Random rng, List<Enemy> currentRoomActorList, List<GameObjects.Actor> sceneAcceptableReplacements)
         {
+            /// returns an actor that is either an empty actor or a free actor that can be placed here beacuse it doesn't require a new unique object
+
             // check the old enemy for available co-actors,
             // remove if those already exist in the list at max size
             var acceptableReplacements = sceneAcceptableReplacements;
@@ -345,8 +346,6 @@ namespace MMR.Randomizer
             coastScene.Maps[0].Actors[24].v = 2;
             // coast: tidepool likelike is water, and also too shallow for water enemy
             coastScene.Maps[0].Actors[20].v = 2;
-            //coastScene.Maps[0].Actors[20].x = 2;
-            //SetX(coastScene.File + 1, coastScene.Maps[0].ActorAddr, 20, -1245);
         }
 
         public static List<Enemy> GetMatchPool(List<Enemy> oldActors, Random random, Scene scene, List<GameObjects.Actor> reducedEnemyList)
@@ -364,6 +363,12 @@ namespace MMR.Randomizer
                 MustBeKillable = true; // we dont want respawning or unkillable enemies here either
             }
 
+            // this could be per-enemy, but right now its only used where enemies and objects match, so to save cpu cycles do it once per object not per enemy
+            foreach(var enemy in scene.SceneEnum.GetBlockedReplacementActors((GameObjects.Actor)oldActors[0].Actor))
+            {
+                reducedEnemyList.Remove(enemy);
+            }
+
             // todo does this NEED to be a double loop? does anything change per enemy copy that we should worry about?
             foreach (var oldEnemy in oldActors) // this is all copies of an enemy in a scene, so all bo or all guay
             {
@@ -373,13 +378,6 @@ namespace MMR.Randomizer
                 {
                     var compatibleVariants = enemyMatch.CompatibleVariants(enemy, random, oldEnemy.Variables[0]);
                     if (compatibleVariants == null)
-                    {
-                        continue;
-                    }
-
-                    // if peathat replaces snowhead red bubble, it lags the whole dungeon, also its hot get out of there deku
-                    if (scene.File == 1241 && oldEnemy.Actor == (int) GameObjects.Actor.RedBubble
-                        && (enemy == GameObjects.Actor.Peahat || enemy == GameObjects.Actor.MadShrub))
                     {
                         continue;
                     }
@@ -510,8 +508,8 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////
-                    /*if (scene.File == GameObjects.Scene.WoodfallTemple.FileID()
-                        && sceneObjects[i] == GameObjects.Actor.Bo.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                        && sceneObjects[i] == GameObjects.Actor.Leever.ObjectIndex())
                         //&& i == 2) // actor object number X
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
@@ -519,7 +517,7 @@ namespace MMR.Randomizer
                             OldV = sceneObjects[i],
                             //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
                             //NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
-                            NewV = GameObjects.Actor.Beamos.ObjectIndex() // good for detection explosion
+                            NewV = GameObjects.Actor.Eeno.ObjectIndex() // good for detection explosion
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;

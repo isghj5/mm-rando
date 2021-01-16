@@ -43,6 +43,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1522)]
         [SceneInternalId(0x07)]
         [ClearEnemyPuzzleRooms(7,13)] //7:dodongo, 13:peahat
+        [EnemizerSceneEnemyReplacementBlock(Actor.Peahat, // hidden or very weak enemies suck here, but they are very common in this slot
+            Actor.Bo, Actor.Nejiron, Actor.RedBubble, Actor.Leever, Actor.Wolfos, Actor.Beamos)] // beamos is just because bomb locking this check early is prime seed killer
+        [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
+            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard)]
         Grottos = 0x0A,
 
         // Unused = 0x0B,
@@ -114,6 +118,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x21)]
         // 11 dinofos room, 6/12 wizrobe
         [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9, 11 )]
+        [EnemizerSceneEnemyReplacementBlock(Actor.RedBubble, // spawns in hot lava, keep wood enemies out
+            Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos)]
         [FairyDroppingEnemies(Actor.Dinofos)]
         SnowheadTemple = 0x1E,
 
@@ -223,6 +229,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1347)]
         [SceneInternalId(0x40)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.BadBat, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
+            Actor.Bo)]
         RoadToSouthernSwamp = 0x3D,
 
         [FileID(1349)]
@@ -242,6 +250,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1358)]
         [SceneInternalId(0x45)]
+        //[EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // bit annoying 
+        //    Actor.Peahat, Actor.LikeLike, Actor.Freezard)]
         SouthernSwamp = 0x42,
 
         [FileID(1362)]
