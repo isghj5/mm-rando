@@ -615,7 +615,7 @@ namespace MMR.Randomizer
             WriteOutput(" Loops used for match candidate: " + loopsCount);
             WriteOutput(" time to finish finding matching population: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
-            // TODO add dungeon and field object enemies to the list
+            // some actors don't require unique objects, they can use objects that are generally loaded, we can use these almost anywhere
             var sceneIsDungeon = scene.SceneEnum.IsDungeon();
             var sceneFreeActors = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                                       .Where(u => (u.ObjectIndex() == 1 || (!sceneIsDungeon && u.ObjectIndex() == 2) || (sceneIsDungeon && u.ObjectIndex() == 3))
@@ -674,7 +674,7 @@ namespace MMR.Randomizer
                     }
                 }
 
-                // enemies can have max per room varients, if these show up we should cull the varieties that dont have those limits
+                // enemies can have max per room variants, if these show up we should cull the extra over the max
                 var restrictedEnemies = previousyAssignedActor.FindAll(u => u.HasVariantsWithRoomLimits());
                 foreach( var problemEnemy in restrictedEnemies)
                 {
@@ -682,38 +682,48 @@ namespace MMR.Randomizer
                     for (int roomIndex = 0; roomIndex < scene.Maps.Count; ++roomIndex)
                     {
                         var roomEnemies = temporaryMatchEnemyList.FindAll(u => u.Room == roomIndex);
+                        var roomIsClearPuzzleRoom = scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
                         var enemyCullList = new List<Enemy>();
 
-                        // foreach variets, remove enemies found that match
+                        // for limited variants, reduce size
                         var limitedVariants = problemEnemy.Variants().FindAll(u => problemEnemy.VariantMaxCountPerRoom(u) >= 0);
                         foreach (var variant in limitedVariants)
                         {
                             var roomEnemiesWithVariant = roomEnemies.FindAll(u => u.Variables[0] == variant);
                             if (roomEnemiesWithVariant != null && roomEnemiesWithVariant.Count > 0)
                             {
-
                                 int max = problemEnemy.VariantMaxCountPerRoom(variant);
-                                // make sure any enemy that has to drop a fairy is removed first
                                 int removed = 0;
-                                foreach (var protectedEnemy in roomEnemiesWithVariant.Where(u => u.MustNotRespawn == true).ToList())
+                                if (roomIsClearPuzzleRoom) // make sure any enemy that has to drop a fairy is removed first
                                 {
-                                    roomEnemiesWithVariant.Remove(protectedEnemy);
+                                    // weirdly there isn't a single room in the game that has both a clear enemy to get item puzzle and a fairy dropping enemy, so we can reuse
+                                    var randomEnemy = roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)];
+                                    roomEnemiesWithVariant.Remove(randomEnemy); // leave at least one enemy alone
                                     removed++;
+                                    WriteOutput("Clear room: removing random enemy to prevent room being empty: " + randomEnemy.Name + ", index" + randomEnemy.RoomActorIndex);
                                 }
+                                else
+                                {
+                                    // if not a clear room, all protected enemies are fairy enemies or specific enemies, cannot remove any
+                                    foreach (var protectedEnemy in roomEnemiesWithVariant.Where(u => u.MustNotRespawn == true).ToList())
+                                    {
+                                        roomEnemiesWithVariant.Remove(protectedEnemy);
+                                        removed++;
+                                        WriteOutput("Protected Enemy: " + protectedEnemy.Name + ", index:" + protectedEnemy.RoomActorIndex);
+                                    }
+                                }
+                                // remove random enemies until max for variant is reached
                                 for (int i = removed; i < max && i < roomEnemiesWithVariant.Count; ++i)
                                 {
                                     roomEnemiesWithVariant.Remove(roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)]);
                                 }
-                                // kill the rest of variant X
+                                // kill the rest of variant X since max is reached
                                 foreach (var enemy in roomEnemiesWithVariant)
                                 {
                                     var enemyIndex = temporaryMatchEnemyList.IndexOf(enemy);
-                                    //temporaryMatchEnemyList[enemyIndex].Actor = (int) GameObjects.Actor.Empty; // works but I want more
-                                    //temporaryMatchEnemyList[enemyIndex] = EmptyOrFreeActor(enemy, rng, temporaryMatchEnemyList, sceneFreeActors);
                                     EmptyOrFreeActor(enemy, rng, temporaryMatchEnemyList, sceneFreeActors);
                                 }
                                 WriteOutput(" in room " + roomIndex + ", removing extra variants: " + variant.ToString("X2") + " for enemy: " + problemEnemy.ToString());
-
                             }
                         }
                     }

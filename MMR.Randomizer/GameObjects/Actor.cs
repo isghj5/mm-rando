@@ -40,7 +40,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(49)]
         [ObjectListIndex(0xA)]
         [GroundVariants(1, 0)]
-        [DoublePerRoomMax(1)] // pretty sure 1 is the larger one
+        [SinglePerRoomMax(1)]
+        [DoublePerRoomMax(0)] // 3 is enough, it can lag rooms as is
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Dodongo = 0xB,
 
@@ -535,7 +536,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(226)]
         [ObjectListIndex(0x6)]
         [FlyingVariants(0)]
-        [UnkillableVariants(0)] // wait this one respawns?
+        [UnkillableVariants(0)] // weirdly, it respawns
         Guay = 0xF1,
 
         [ActorizerEnabled]
