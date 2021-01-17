@@ -92,8 +92,13 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1208)]
         [SceneInternalId(0x1B)]
-        [ClearEnemyPuzzleRooms(0, 1, 3, 4, 6, 7, 8, 9)]
-        [FairyDroppingEnemies(Actor.DekuBaba, Actor.Skulltula)]
+        [ClearEnemyPuzzleRooms(4, 6, 7, 8, 9)] // 4: mapchest, 6: snapper room, 7: bow room, 8: BK, 9:dark
+        //[FairyDroppingEnemies(0,  )] 
+        [FairyDroppingEnemies(1, 4, 34)] // wooden flower room, deku baba and stray fairy in bubble
+        [FairyDroppingEnemies(3, 3)] // west wing, skulltula:3
+        [FairyDroppingEnemies(5, 22)] // east wing, beehive:22
+        [EnemizerSceneEnemyReplacementBlock(Actor.Dinofos, // weak enemies are kinda lame here
+            Actor.Leever, Actor.ChuChu, Actor.DekuBabaWithered)]
         WoodfallTemple = 0x18,
 
         [FileID(1222)]
@@ -117,10 +122,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1241)]
         [SceneInternalId(0x21)]
         // 11 dinofos room, 6/12 wizrobe
-        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9, 11 )]
+        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9 )] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
         [EnemizerSceneEnemyReplacementBlock(Actor.RedBubble, // spawns in hot lava, keep wood enemies out
             Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos)]
-        [FairyDroppingEnemies(Actor.Dinofos)]
+        [FairyDroppingEnemies(11, 2, 3)] // dinofos 
         SnowheadTemple = 0x1E,
 
         [FileID(1256)]
@@ -269,7 +274,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x49)]
         //3: clear the biobabs, 5 is gekko, 8 is wart
         [ClearEnemyPuzzleRooms(3,5,7)]
-        [FairyDroppingEnemies(Actor.Skulltula)]
+        [FairyDroppingEnemies(8, 7)] // skulltula in first room 
         GreatBayTemple = 0x46,
 
         [FileID(1386)]
@@ -323,12 +328,13 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1442)]
         [SceneInternalId(0x58)]
-        [FairyDroppingEnemies(Actor.Eyegore)]
+        [FairyDroppingEnemies(1, 2)] // eygore 
         StoneTower = 0x55,
 
         [FileID(1444)]
         [SceneInternalId(0x59)]
-        [FairyDroppingEnemies(Actor.Wizrobe)]
+        [FairyDroppingEnemies(1, 3)] // eygore 
+        [FairyDroppingEnemies(1, 1)] // wizrobe
         InvertedStoneTower = 0x56,
 
         [FileID(1446)]

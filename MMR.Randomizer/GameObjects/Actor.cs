@@ -428,7 +428,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x807F, 0x8004, 0x8002)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         //[UnkillableVariants(0x807F,0x8002)] // tested true
-        [EnemizerScenesExcluded(Scene.TerminaField)]
+        [EnemizerScenesExcluded(Scene.TerminaField, Scene.GreatBayCoast, Scene.Grottos)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
         Bombiwa = 0x92,
 
@@ -670,8 +670,8 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0, 1, 2, 3, 4, 5)]
         [UnkillableAllVariants]
         [SinglePerRoomMax(0, 1, 2, 3, 4, 5)]
-        [EnemizerScenesExcluded(Scene.SouthernSwamp, Scene.TwinIslands, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.TwinIslands, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
+        [EnemizerScenesExcluded(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
+        [EnemizerScenesPlacementBlock(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
         Tingle = 0x176,
 
         //[ActorizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
@@ -875,6 +875,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [SinglePerRoomMax(0xFF03)]
         Seth1 = 0x20B, // the green shirt guy, "Seth"? spiderhouses
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x1F5)]
+        [WallVariants(0x3F)] // 3F has no cutscene, I think
+        [UnkillableAllVariants]
+        SkullKidPainting = 0x210,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1C50)]
