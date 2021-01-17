@@ -4,22 +4,26 @@ using System.Text;
 
 namespace MMR.Randomizer.Attributes.Entrance
 {
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     class FairyDroppingEnemiesAttribute : Attribute
     {
         /// <summary>
-        /// scene attribute: enemies in the scene that drop stray fairies when they die
+        /// scene attribute: the room in the scene, and the vanilla actor numbers for actors that drop fairies
+        ///   eg, [room 1] of woodfall has one dekubaba that drops a fairy, which is [number 4]
         /// </summary>
 
-        public List<GameObjects.Actor> Enemies { get; set; }
+        public int RoomNumber { get; private set;}
+        public List<int> ActorNumbers { get; set; }
 
-        public FairyDroppingEnemiesAttribute(GameObjects.Actor enemy, params GameObjects.Actor[] additionalEnemies)
+        public FairyDroppingEnemiesAttribute(int roomNumber, int actorNumber, params int[] additionalActorNumbers )
         {
-            var e = new List<GameObjects.Actor> { enemy };
-            if (additionalEnemies.Length > 0)
+            RoomNumber = roomNumber;
+            var newList = new List<int> { actorNumber };
+            if (additionalActorNumbers.Length > 0)
             {
-                e.AddRange(additionalEnemies);
+                newList.AddRange(additionalActorNumbers);
             }
-            Enemies = e;
+            ActorNumbers = newList;
         }
 
     }

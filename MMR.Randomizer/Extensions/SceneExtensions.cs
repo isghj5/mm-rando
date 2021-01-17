@@ -24,6 +24,41 @@ namespace MMR.Randomizer.Extensions
             return attr == null ? false : attr.PuzzleRooms.Contains(room);
         }
 
+        public static bool IsFairyDroppingEnemy(this Scene scene, int roomNumber, int actorNumber)
+        {
+            var FairyDroppingEnemiesAttr = scene.GetAttributes<FairyDroppingEnemiesAttribute>();
+            if (FairyDroppingEnemiesAttr != null)
+            {
+                foreach(var roomWithFairyEnemies in FairyDroppingEnemiesAttr)
+                {
+                    if (roomWithFairyEnemies.RoomNumber == roomNumber)
+                    {
+                        return roomWithFairyEnemies.ActorNumbers.Contains(actorNumber);
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public static List<(int roomNumber, List<int> actorNumbers)> GetSceneFairyDroppingEnemies(this Scene scene)
+        {
+            // returns a list of room:actorlist, where actors are their vanilla locations
+
+            var fairyDroppingEnemiesAttr = scene.GetAttributes<FairyDroppingEnemiesAttribute>();
+            if (fairyDroppingEnemiesAttr != null)
+            {
+                var listOfAllRoomsWithFairyActors = new List<(int roomNumber, List<int> actorNumber)>();
+                foreach (var roomWithFairyEnemies in fairyDroppingEnemiesAttr)
+                {
+                    (int, List<int>) newRoom = (roomWithFairyEnemies.RoomNumber, roomWithFairyEnemies.ActorNumbers);
+                    listOfAllRoomsWithFairyActors.Add(newRoom);
+                }
+                return listOfAllRoomsWithFairyActors;
+            }
+            return null;
+        }
+
         public static int GetSceneObjLimit(this Scene scene)
         {
             // TODO make this a real attribute
@@ -33,12 +68,6 @@ namespace MMR.Randomizer.Extensions
                 return 0x7F40; // crashs common at > 4.0x modifier, this is closer to 2.15 for safety
 
             return 0x12000; 
-        }
-
-        public static List<Actor> GetSceneFairyDroppingEnemies(this Scene scene)
-        {
-            var attr = scene.GetAttribute<FairyDroppingEnemiesAttribute>();
-            return attr == null ? new List<Actor>() : attr.Enemies;
         }
 
         public static bool IsDungeon(this Scene scene)

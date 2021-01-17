@@ -29,7 +29,7 @@ namespace MMR.Randomizer
         //private static List<Enemy> EnemyList { get; set; }
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = false;
+        private static bool ACTORSENABLED = true;
 
         public static void ReadEnemyList()
         {
@@ -43,12 +43,15 @@ namespace MMR.Randomizer
         public static List<Enemy> GetSceneEnemyActors(Scene scene)
         {
             /// this is separate from object because actors and objects are a different list in the scene data
+            
+            // I prefer foreach, but in benchmarks its considerably slower, and enemizer has performance issues
 
             var enemyList = new List<Enemy>();
-            for (int mapNumber = 0; mapNumber < scene.Maps.Count; mapNumber++ ) // var sceneMap in scene.Maps)
+            for (int mapNumber = 0; mapNumber < scene.Maps.Count; ++mapNumber)
             {
-                foreach (var mapActor in scene.Maps[mapNumber].Actors)
+                for (int actorNumber = 0; actorNumber < scene.Maps[mapNumber].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapNumber].Actors)
                 {
+                    var mapActor = scene.Maps[mapNumber].Actors[actorNumber];
                     var matchingEnemy = EnemyList.Find(u => (int) u == mapActor.n);
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.Variants();
@@ -57,7 +60,8 @@ namespace MMR.Randomizer
                         {
                             var newEnemy = matchingEnemy.ToEnemy();
                             newEnemy.Variables = new List<int> { mapActor.v };
-                            newEnemy.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(mapNumber);
+                            newEnemy.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(mapNumber)
+                                                   || scene.SceneEnum.IsFairyDroppingEnemy(mapNumber, actorNumber);
                             newEnemy.Room = mapNumber;
                             newEnemy.RoomActorIndex = scene.Maps[mapNumber].Actors.IndexOf(mapActor);
                             newEnemy.Rotation = mapActor.r;
@@ -118,6 +122,31 @@ namespace MMR.Randomizer
                 }
             }
         }
+
+        public static List<GameObjects.Actor> GetSceneFairyDroppingEnemyTypes(Scene scene, List<Enemy> listOfReadEnemies)
+        {
+            // reads the list of specific actors of fairies, checks the list of actors we read from the scene, gets the actor types for GetMatches
+            // why? because our object focused code needs to whittle the list of actors for a enemy replacement, 
+            //   but has to know if even one enemy is used for fairies that it cannot be unkillable
+            // doing that last second per-enemy would be expensive, so we need to check per-scene
+            // we COULD hard code these types into the scene data, but if someone in the distant future doesn't realize they have to add both, might be a hard bug to find
+
+            var actorsThatDropFairies = scene.SceneEnum.GetSceneFairyDroppingEnemies();
+            var returnActorTypes = new List<GameObjects.Actor>();
+            for(int actorNum = 0; actorNum < listOfReadEnemies.Count; ++actorNum) // var enemy in listOfReadEnemies)
+            {
+                for(int fairyRoom = 0; fairyRoom < actorsThatDropFairies.Count; ++fairyRoom)
+                {
+                    if ( listOfReadEnemies[actorNum].Room == actorsThatDropFairies[fairyRoom].roomNumber
+                      && actorsThatDropFairies[fairyRoom].actorNumbers.Contains(listOfReadEnemies[actorNum].RoomActorIndex) )
+                    {
+                        returnActorTypes.Add((GameObjects.Actor)listOfReadEnemies[actorNum].Actor);
+                    }
+                }
+            }
+            return returnActorTypes;
+        }
+
 
         public static void LowerEnemiesResourceLoad()
         {
@@ -348,7 +377,7 @@ namespace MMR.Randomizer
             coastScene.Maps[0].Actors[20].v = 2;
         }
 
-        public static List<Enemy> GetMatchPool(List<Enemy> oldActors, Random random, Scene scene, List<GameObjects.Actor> reducedEnemyList)
+        public static List<Enemy> GetMatchPool(List<Enemy> oldActors, Random random, Scene scene, List<GameObjects.Actor> reducedCandidateList, bool containsFairyDroppingEnemy)
         {
             List<Enemy> enemyMatchesPool = new List<Enemy>();
 
@@ -356,17 +385,18 @@ namespace MMR.Randomizer
             //  eg: one of the dragonflies in woodfall must be killable in the map room, so all in the dungeon must since we cannot isolate
             bool MustBeKillable = oldActors.Any(u => u.MustNotRespawn);
 
-            if (scene.SceneEnum.GetSceneFairyDroppingEnemies().Contains((GameObjects.Actor) oldActors[0].Actor))
+            // moved up higher, because we can scan once per scene
+            if (containsFairyDroppingEnemy) // scene.SceneEnum.GetSceneFairyDroppingEnemies().Contains((GameObjects.Actor) oldActors[0].Actor))
             {
                 /// special case: armos does not drop stray fairies, and I dont know why
-                reducedEnemyList.Remove(GameObjects.Actor.Armos);
+                reducedCandidateList.Remove(GameObjects.Actor.Armos);
                 MustBeKillable = true; // we dont want respawning or unkillable enemies here either
             }
 
             // this could be per-enemy, but right now its only used where enemies and objects match, so to save cpu cycles do it once per object not per enemy
             foreach(var enemy in scene.SceneEnum.GetBlockedReplacementActors((GameObjects.Actor)oldActors[0].Actor))
             {
-                reducedEnemyList.Remove(enemy);
+                reducedCandidateList.Remove(enemy);
             }
 
             // todo does this NEED to be a double loop? does anything change per enemy copy that we should worry about?
@@ -374,7 +404,7 @@ namespace MMR.Randomizer
             {
                 // the enemy we got from the scene has the specific variant number, the general game object has all
                 var enemyMatch = (GameObjects.Actor) oldEnemy.Actor;
-                foreach (var enemy in reducedEnemyList)
+                foreach (var enemy in reducedCandidateList)
                 {
                     var compatibleVariants = enemyMatch.CompatibleVariants(enemy, random, oldEnemy.Variables[0]);
                     if (compatibleVariants == null)
@@ -479,6 +509,8 @@ namespace MMR.Randomizer
             var sceneAcceptableEnemies = EnemyList.FindAll( u => ! u.BlockedScenes().Contains(scene.SceneEnum));
             var rng = new Random(seed + scene.File);
 
+            // we want to check for actor types that contain fairies per-scene for speed
+            var fairyDroppingActors = GetSceneFairyDroppingEnemyTypes(scene, sceneEnemies);
             // we group enemies with objects because some objects can be reused for multiple enemies, potential minor boost to variety
             var originalEnemiesPerObject = new List<List<Enemy>>(); ; // outer layer is per object
             var actorCandidatesLists = new List<List<Enemy>>();
@@ -491,7 +523,8 @@ namespace MMR.Randomizer
                 // get a list of all enemies (in this room) from enemylist that have the same OBJECT as our object that have an actor we also have
                 originalEnemiesPerObject.Add(sceneEnemies.FindAll(u => u.Object == sceneObjects[i]));
                 // get a list of matching actors that can fit in the place of the previous actor
-                actorCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene, sceneAcceptableEnemies.ToList()));
+                var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == sceneObjects[i]);
+                actorCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene, sceneAcceptableEnemies.ToList(), objectHasFairyDroppingEnemy));
             }
             WriteOutput(" time to generate candidate list: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
