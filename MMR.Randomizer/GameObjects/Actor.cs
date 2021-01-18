@@ -858,7 +858,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1F1)]
         //[FlyingVariants(0xFF00, 1, 0x102)] // 1 is a possible type? well: ff00
         [FlyingVariants(1)] // 1 is a possible type? well: ff00
-        [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.BeneathGraveyard)] // well and dampe house must be vanilla for scoopsanity
+        [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
         [DoublePerRoomMax(0xFF00, 1, 0x102)]
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208,
