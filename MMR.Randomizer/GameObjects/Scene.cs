@@ -185,6 +185,7 @@ namespace MMR.Randomizer.GameObjects
 
         // Unused = 0x2E,
 
+        [FileID(1319)]
         [SceneInternalId(0x32)]
         GoronShrine = 0x2F,
 
