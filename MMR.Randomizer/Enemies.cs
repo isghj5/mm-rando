@@ -241,6 +241,17 @@ namespace MMR.Randomizer
             //sctscene.Maps[0].Actors[47].p.y += 100; // broken, does not work
             //SetHeight(GameObjects.Scene.SouthClockTown.FileID() + 1, sctscene.Maps[0].ActorAddr, 47, 100); // works, so the actor values aren't being saved either this late or at all
 
+            var goronshrineRoom0FID = GameObjects.Scene.GoronShrine.FileID() + 1;
+            RomUtils.CheckCompressed(goronshrineRoom0FID);
+            var goronshrineSceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.GoronShrine.FileID());
+            var goronshrineSceneActorAddr = RomData.SceneList[goronshrineSceneIndex].Maps[0].ActorAddr;
+
+            // lets see how long until people notice
+            var rots = new List<byte>() { 0, 0x24, 0x48, 0x6C, 0x90 };
+            var randomRotation = rots[new Random().Next(rots.Count)];
+            Debug.WriteLine("rot: " + randomRotation.ToString("X2"));
+            RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (22 * 16) + 10] = randomRotation; // y rot /2
+            RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (41 * 16) + 0xF] = 0x1F; // set pot to drop arrows
         }
 
         private static void FixScarecrowTalk()

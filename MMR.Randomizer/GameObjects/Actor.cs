@@ -89,7 +89,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [FlyingVariants(0)] // there's space in that hall for flying enemiess, what happens if we spawn in the air? does it sink?
         //[DoublePerRoomMax(0)]
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)] // too big, can block the butler race
         Peahat = 0x14,
 
         [ActorizerEnabled]
@@ -546,6 +546,7 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0, 2)]  // 2 is from romani ranch, 0 is cow grotto, well is also 0
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.Grottos, Scene.BeneathTheWell)]
+        [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemy
         Cow = 0xF3,
 
         [ActorizerEnabled]
@@ -856,7 +857,6 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(479)]
         [ObjectListIndex(0x1F1)]
-        //[FlyingVariants(0xFF00, 1, 0x102)] // 1 is a possible type? well: ff00
         [FlyingVariants(1)] // 1 is a possible type? well: ff00
         [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
         [DoublePerRoomMax(0xFF00, 1, 0x102)]
