@@ -252,7 +252,10 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [SinglePerRoomMax(0)]
         // variety 0 crashes scenes with snow weather, but not rain, weird
-        [EnemizerScenesPlacementBlock(Scene.Snowhead, Scene.TwinIslands, Scene.MountainVillage, Scene.GoronVillage)]
+        // also crashes in snowhead, if its in central room crash, if its in first room wont crash on warp, but does crash on walking in front door
+        // grottos are fine though, so is fade out warp, so only certain scene transitions are an issue wtf
+        [EnemizerScenesPlacementBlock(Scene.Snowhead, Scene.TwinIslands, Scene.MountainVillage, Scene.GoronVillage, Scene.PathToMountainVillage,
+            Scene.SnowheadTemple, Scene.GoronShrine, Scene.MountainSmithy)] // no snow, but entering from snowy area is also crash
         Demo_Kankyo = 0x49, // lost woods living fairy dust
 
         [EnemizerEnabled]
@@ -492,7 +495,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [DoublePerRoomMax(0x3FF)]
         //[EnemizerScenesExcluded(0x6F, 0x10, 0x27, 0x35)]
-        [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown, Scene.SwampSpiderHouse)]
+        [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
         Dog = 0xE2,
 
         [ObjectListIndex(0x133)]

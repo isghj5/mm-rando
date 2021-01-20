@@ -252,6 +252,13 @@ namespace MMR.Randomizer
             Debug.WriteLine("rot: " + randomRotation.ToString("X2"));
             RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (22 * 16) + 10] = randomRotation; // y rot /2
             RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (41 * 16) + 0xF] = 0x1F; // set pot to drop arrows
+
+            // debug: set one rock to demo_kankyo, and yes entering from snowing area is crash
+            /*RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (4 * 16) + 1] = 0x49; // actor
+            RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (4 * 16) + 0] = 0x0; // actor
+            RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (4 * 16) + 14] = 0x0; // var
+            RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (4 * 16) + 15] = 0x0; // var
+            */
         }
 
         private static void FixScarecrowTalk()
@@ -552,8 +559,8 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////
-                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID()
-                        && sceneObjects[i] == GameObjects.Actor.Leever.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.Grottos.FileID()
+                        && sceneObjects[i] == GameObjects.Actor.DekuBaba.ObjectIndex())
                         //&& i == 2) // actor object number X
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
@@ -561,11 +568,12 @@ namespace MMR.Randomizer
                             OldV = sceneObjects[i],
                             //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
                             //NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
-                            NewV = GameObjects.Actor.Eeno.ObjectIndex() // good for detection explosion
+                            NewV = GameObjects.Actor.ButlersSon.ObjectIndex() // good for detection explosion
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
                     }*/
+
 
                     var reducedCandidateList = actorCandidatesLists[i].ToList();
                     foreach (var objectSwap in chosenReplacementObjects)
@@ -618,7 +626,7 @@ namespace MMR.Randomizer
                 {
                     //this should take into account map/scene size and size of all loaded actors...
                     //not really accurate but *should* work for now to prevent crashing
-                    WriteOutput("Ratio of new to old scene object volume: " + ((float)newsize / (float)oldsize) + " size:" + newsize.ToString("X2"));
+                    WriteOutput("Ratio of new to old scene object volume: [" + ((float)newsize / (float)oldsize) + "] new size:" + newsize.ToString("X2")+ ", vanilla: " + oldsize.ToString("X2"));
                     break;
                 }
 
@@ -829,7 +837,7 @@ namespace MMR.Randomizer
                 // these are: cutscene map, town and swamp shooting gallery, 
                 // sakons hideout, and giants chamber (shabom)
                 // adding ocean spiderhouse because its always bo, nothing else fits, but it can lag enemizer
-                int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x28 };
+                int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69};
 
                 ReadEnemyList();
                 SceneUtils.ReadSceneTable();
