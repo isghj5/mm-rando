@@ -429,7 +429,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x807F, 0x8004, 0x8002)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         //[UnkillableVariants(0x807F,0x8002)] // tested true
-        [EnemizerScenesExcluded(Scene.TerminaField, Scene.GreatBayCoast, Scene.Grottos)]
+        [EnemizerScenesExcluded(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Grottos)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
         Bombiwa = 0x92,
 
@@ -707,7 +707,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x18D)]
         [PatrolVariants(0x700)]
         [SinglePerRoomMax(0x700)]
-        [EnemizerScenesExcluded(Scene.InvertedStoneTower, Scene.StoneTowerTemple)]
+        [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         Eyegore = 0x184,// walking laser cyclops in inverted stone tower
 
         [ActorizerEnabled]
@@ -750,7 +750,7 @@ namespace MMR.Randomizer.GameObjects
 
         Lillypad = 0x1B9,
 
-        //[EnemizerEnabled]
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x1FF0)]
         [FileID(406)]
         [ObjectListIndex(0x1A6)]
@@ -826,7 +826,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1C3)]
         [FlyingVariants(0x00FF)]
         [GroundVariants(0x00FF)] // this is fine because the only vanilla instance is excluded, so this doesn't describe spawns too
-        [EnemizerScenesExcluded(Scene.InvertedStoneTower)]
+        [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple)]
         Poe = 0x1F3,
 
         SmallSnowball = 0x1F9,
