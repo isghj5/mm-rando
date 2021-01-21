@@ -149,7 +149,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x20)]
         [FlyingVariants(0xEF,0x7F,4,0x3F)]
         //[GroundVariants(0xEF,0x7F,4)] // remember, this works for _spawns_
-        //[EnemizerScenesExcluded(0x27, 0x28)] // huh? what are these? why were they not randomized in road to ss?
+        [EnemizerScenesExcluded(Scene.OceanSpiderHouse)]
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, 
             Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
         Skulltula = 0x24,
@@ -574,7 +574,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x14E)]
         [FlyingVariants(0,2,3)]
         [DoublePerRoomMax(0,2,3)]
-        DragonFly = 0x109,
+        DragonFly = 0x109, //En_Grasshopper
 
         //[EnemizerEnabled] //crash
         [ActorInitVarOffset(0x3688)]
@@ -589,7 +589,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x15E)]
         [WaterVariants(04,02,01,0)]
         [EnemizerScenesExcluded(Scene.GreatBayTemple)] // need their lilipads to reach compass chest and fairy chest
-        BioDekuBaba = 0x12D,
+        BioDekuBaba = 0x12D, // Boss_05
 
         //[EnemizerEnabled] // todo: try randomizing
         [FileID(278)]
@@ -614,7 +614,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)] // crash transitioning witch shop room
         // termina field, ff00 gbt waterchu, the rest are assumed respawn until proven otherwise
         [UnkillableVariants(0xFF03,0xFF01,0xFF00,    0x0C01,0x1402,0x0A01,0x0202,0x801,0xFF02)]
-        ChuChu = 0x14A,
+        ChuChu = 0x14A, // En_Slime
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x16C4)]
@@ -623,7 +623,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0x0F00,0x0300)]
         [SinglePerRoomMax(0x0F00, 0x0300)]
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp)] // massive lag
-        Desbreko = 0x14B, // dead fish swarm from pirates fortress
+        Desbreko = 0x14B, // En_Pr (Pirana?)
 
         [ActorizerEnabled]
         [ObjectListIndex(0x16C)]
@@ -656,7 +656,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x37D0)]
         [FileID(315)]
         [ObjectListIndex(0x178)]
-        Wizrobe = 0x15D,
+        Wizrobe = 0x15D, // En_Wiz
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1830)]
@@ -759,7 +759,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // 0 is clocktower
         [UnkillableAllVariants]
         [SinglePerRoomMax(0)]
-        HappyMaskSalesman = 0x1B5,
+        HappyMaskSalesman = 0x1B5, // En_Osn
 
         Lillypad = 0x1B9,
 
@@ -770,7 +770,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0)]
         [EnemizerScenesExcluded(Scene.WoodfallTemple)] // req for gekko miniboss, do not touch until fix
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
-        Snapper = 0x1BA,
+        Snapper = 0x1BA, // En_Kame
 
         //[ActorizerEnabled] //busted
         [ObjectListIndex(0x1AF)]
@@ -803,7 +803,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1C4)]
         [GroundVariants(0xFF00, 0xFF01, 0, 1)]
         [SinglePerRoomMax(1, 0xF001)]// limit the bigger one
-        Eeno = 0x1E6,// Snowmen in showhead
+        Eeno = 0x1E6,// En_Snowman
         
         [EnemizerEnabled]
         [ActorInitVarOffset(0x36A0)]
@@ -825,6 +825,13 @@ namespace MMR.Randomizer.GameObjects
         Hiploop = 0x1E9,// Charging beetle in Woodfall
 
         [ActorizerEnabled]
+        [ObjectListIndex(0x1D7)]
+        [WaterVariants(0)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.MarineLab)]
+        LabFish = 0x1F1,
+
+        [ActorizerEnabled]
         [ActorInitVarOffset(0xC68)]
         [FileID(458)]
         [ObjectListIndex(0x1CB)]
@@ -841,6 +848,12 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x00FF)] // this is fine because the only vanilla instance is excluded, so this doesn't describe spawns too
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple)]
         Poe = 0x1F3,
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x1CE)]
+        [WaterVariants(0)]
+        [UnkillableAllVariants]
+        ZoraEgg = 0x1F5,
 
         SmallSnowball = 0x1F9,
 
@@ -894,6 +907,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1F5)]
         [WallVariants(0x3F)] // 3F has no cutscene, I think
         [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.OceanSpiderHouse)]
         SkullKidPainting = 0x210,
 
         [EnemizerEnabled]
