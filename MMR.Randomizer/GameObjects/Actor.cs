@@ -186,7 +186,6 @@ namespace MMR.Randomizer.GameObjects
         [FileID(73)]
         [ObjectListIndex(0x30)]
         [GroundVariants(0xFFFF)]
-        //[UnkillableVariants(0xFFFF)] // does not respawn, but they do not drop fairies when killed, so marked here
         Armos = 0x32,
 
         [EnemizerEnabled]
@@ -194,7 +193,6 @@ namespace MMR.Randomizer.GameObjects
         [FileID(74)]
         [ObjectListIndex(0x31)]
         [GroundVariants(0)]
-        //[EnemizerScenesExcluded(0x1B)] // asside from armos not dropping a fairy, this seems safe now
         DekuBaba = 0x33,
 
         [EnemizerEnabled]
@@ -247,13 +245,18 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [ObjectListIndex(0x1)]// gameplay_keep obj 1
-        [FlyingVariants(0)] // there are two other vars untested
-        [GroundVariants(0)] // there are two other vars untested
+        // variety 01 in giants crashes if placed in goron shrine
+        // variety 02 in moon, spawns a lighter version of 00, less particles, no whole chains
+        // concerned that having 0 AND 2 would crash, like 0 and snow
+        [FlyingVariants(0)]
+        [GroundVariants(0)]
         [UnkillableAllVariants]
         [SinglePerRoomMax(0)]
         // variety 0 crashes scenes with snow weather, but not rain, weird
         // also crashes in snowhead, if its in central room crash, if its in first room wont crash on warp, but does crash on walking in front door
         // grottos are fine though, so is fade out warp, so only certain scene transitions are an issue wtf
+        // WARNING: the lens grotto might be an issue if you ever randomize something in there that can have free enemies, 
+        //   spiders are currently not limited so never get trimmed
         [EnemizerScenesPlacementBlock(Scene.Snowhead, Scene.TwinIslands, Scene.MountainVillage, Scene.GoronVillage, Scene.PathToMountainVillage,
             Scene.SnowheadTemple, Scene.GoronShrine, Scene.MountainSmithy)] // no snow, but entering from snowy area is also crash
         Demo_Kankyo = 0x49, // lost woods living fairy dust
@@ -306,23 +309,29 @@ namespace MMR.Randomizer.GameObjects
         // 3D is swamp grotto, 304 is deku playground, 5C is mystery woods
         // FF/299 is HSG, 233 is path to snowhead, 3B is mountain village spring grot
         // 96 is goron rock grotto, 218/2B8? is graveyard grotto, 3E is road to swamp
-        // 301 is ranch grotto? 
-        // 214 is log cow grotto
-        // okay these dont work as static behavior, but lets see what happens if we just add some randomly, what happens?
-        // 2B8 is hidden bombable, leads to spring gossip, 201 was hidden and spring
-        // 5C 96, 01 are visible, lead to spring
-        // 301 takes me to a different nearby scene, 304 takes me to a differnt one
-        // okay, anything below 100 seems to take us to spring, 0x200 flag is hidden, 0x300 is related travel
+        // 301 is ranch grotto? 214 is log cow grotto
+        // 0x2XX flag is hidden, 0x3XX is related travel (one of the exits in this area)
         // 310 crashed though in one instance, probably too high of a 300 number
         // x000 is the grotto index, except 1000 breaks for some reason, while 0,2,3,4 work for the gossip grottos
         // 7000 is hot spring water grotto, 6k is A regular chest grotto
-        // dont think the 8k bit is used, it wasn't in OOT
-        // but seriously thats still a small number of grottos
-        // zoey says the lower byte used to be for chest contents and things but we dont use in rando
-        // TODO rewrite grotto to take a bigger list of entrances
-        [GroundVariants(0, 0x7000)]
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        // Grottos can use Z Rotation to set addresses to places, instead of variables
+        // because of this, I am going to rewrite a new variant system that we will re-parse when needed
+        // so we can store rotation and more data
+        // If 0x8000 flag, then this is a regular grotto type with a chest, and 0x10XX is the chest flag for the chest it uses
+        //   else, 0x02 can mean its hidden or not
+        //     and 0x0_XX is the cave type otherwise, listed below:
+        // so if 0x0 variant, rotation is used, where rotation is :
+        // 0 is grassy gossip grotto, 1 is spider grotto, 2 is sandy grotto, 3 is water grotto, 
+        // 4 is generic grotto, 5 is HSG 6 is straight jgrot, 7 is dong grot, 8 is vine jgrot,
+        // 9 field scrub, A is a cow groto, B is biobaba, C bean, D peahat, E+ is mayor's house (fake)
+        [GroundVariants(0x0, 0x1, 0x2, 0x3, 0x5, 0x9, 0xA, 0xC, 0xD, 0xB, // regular grottos
+            0x206, 0x208, 0x20F, // secret grottos, hidden
+            0x8233, 0x823B, 0x8218, 0x825C)] // grottos that might hold checks, also hidden, untested
+        [SinglePerRoomMax(0x0, 0x1, 0x2, 0x3, 0x5, 0x9, 0xA, 0xC, 0xD, 0xB, // regular grottos
+            0x206, 0x208, 0x20F, // secret grottos, hidden
+            0x8233, 0x823B, 0x8218, 0x825C)] // grottos that might hold checks, also hidden, untested
         [UnkillableAllVariants]
-        [SinglePerRoomMax(0, 0x6000, 0x7000)]
         [EnemizerScenesExcluded(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead)]
         // as its obj is 2, shouldn't be available in dungeons, maybe not indoors either
         [EnemizerScenesPlacementBlock(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
@@ -420,6 +429,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
         // 1 creates a grass circle in termina field, 0 is grotto grass single
+        // 642B is a smaller cuttable grass from the ground in secret shrine
         [GroundVariants(0, 1)]
         [UnkillableVariants(0, 1)] // not enemy actor group
         [EnemizerScenesExcluded(Scene.Grottos)] // dont remove from peahat grotto
@@ -578,7 +588,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(271)]
         [ObjectListIndex(0x15E)]
         [WaterVariants(04,02,01,0)]
-        //[EnemizerScenesExcluded(Scene.GreatBayTemple)] // think this was just here because you respawn detection
+        [EnemizerScenesExcluded(Scene.GreatBayTemple)] // need their lilipads to reach compass chest and fairy chest
         BioDekuBaba = 0x12D,
 
         //[EnemizerEnabled] // todo: try randomizing
@@ -834,7 +844,7 @@ namespace MMR.Randomizer.GameObjects
 
         SmallSnowball = 0x1F9,
 
-        //[ActorizerEnabled] //4x can spawn without issue
+        //[ActorizerEnabled] // softlock if you enter the song teach cutscene, which in rando is proximity
         [ObjectListIndex(0x1DF)]
         [GroundVariants(0x1400)] // all other versions are 0x13** or 0x1402
         [SinglePerRoomMax(0x1400)]

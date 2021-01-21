@@ -254,10 +254,11 @@ namespace MMR.Randomizer
             RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (41 * 16) + 0xF] = 0x1F; // set pot to drop arrows
 
             // debug: set one rock to demo_kankyo, and yes entering from snowing area is crash
-            /*RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (4 * 16) + 1] = 0x49; // actor
+            /*
+            RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (4 * 16) + 1] = 0x49; // actor
             RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (4 * 16) + 0] = 0x0; // actor
             RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (4 * 16) + 14] = 0x0; // var
-            RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (4 * 16) + 15] = 0x0; // var
+            RomData.MMFileList[goronshrineRoom0FID].Data[goronshrineSceneActorAddr + (4 * 16) + 15] = 0x02; // var
             */
         }
 
@@ -310,6 +311,24 @@ namespace MMR.Randomizer
             scene.Maps[2].Actors[3].p.y = -2;
             scene.Maps[2].Actors[3].p.z = -1270;
 
+        }
+
+        public static void SetupGrottoActor(Enemy enemy, int newVariant)
+        {
+            /// grottos can get their address index from a table, where the index is their Z rotation
+            ///   so we re-encoded variants to hold the data we want, check out the actor enum entry for more info
+            /// the "rotation" short is shared with some flags, we only use the left most 9 of 16 bits
+            ///  bits: XXXX XXXX XYYY YYYY where X is rotation, 1 = 1 degree
+            enemy.Actor = (int)GameObjects.Actor.GrottoHole;
+            short oldRotationFlags = (short)(enemy.Rotation.z & 0x7F); // remember, the rotation clips into the right byte 1bit
+            enemy.Variables[0] = newVariant & 0x2FF;
+            int newIndex = (newVariant & 0xF) << 7; // in vanilla the array is only 15 long
+            if ((newVariant & 0x8000) > 0) // item grotto
+            {
+                newIndex = (0x4) << 7; // generic grotto is entrance index 4
+            }
+            short rotation = (short)((int)oldRotationFlags | (int)newIndex);
+            enemy.Rotation.z = rotation;
         }
 
         public static void EmptyOrFreeActor(Enemy enemy, Random rng, List<Enemy> currentRoomActorList, List<GameObjects.Actor> sceneAcceptableReplacements)
@@ -371,8 +390,15 @@ namespace MMR.Randomizer
                     if (acceptableVariants.Count > 0)
                     {
                         int randomVariant = acceptableVariants[rng.Next(acceptableVariants.Count)];
-                        enemy.Actor = (int)testEnemy;
-                        enemy.Variables[0] = randomVariant;
+                        if (testEnemy == GameObjects.Actor.GrottoHole)
+                        {
+                            SetupGrottoActor(enemy, randomVariant);
+                        }
+                        else
+                        {
+                            enemy.Actor = (int)testEnemy;
+                            enemy.Variables[0] = randomVariant;
+                        }
                         return;
                     }
                 }
@@ -558,22 +584,19 @@ namespace MMR.Randomizer
                 {
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
-                    //////////////////////////////////////////////////////
-                    /*if (scene.File == GameObjects.Scene.Grottos.FileID()
+                    //////////////////////////////////////////////////////  
+                    if (scene.File == GameObjects.Scene.Grottos.FileID()
                         && sceneObjects[i] == GameObjects.Actor.DekuBaba.ObjectIndex())
-                        //&& i == 2) // actor object number X
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[i],
-                            //NewV = GameObjects.Actor.BombFlower.ObjectIndex() // good for visual
                             //NewV = GameObjects.Actor.RealBombchu.ObjectIndex() // good for detection explosion
                             NewV = GameObjects.Actor.ButlersSon.ObjectIndex() // good for detection explosion
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
-                    }*/
-
+                    }
 
                     var reducedCandidateList = actorCandidatesLists[i].ToList();
                     foreach (var objectSwap in chosenReplacementObjects)
@@ -679,13 +702,16 @@ namespace MMR.Randomizer
                     newEnemy.Variables[0] = subMatches[randomSubmatch].Variables[rng.Next(subMatches[randomSubmatch].Variables.Count)];
 
                     // setting grottos testing
-                    /*if (newEnemy.Actor == (int)GameObjects.Actor.GrottoHole)
+                    /* if (newEnemy.Actor == (int)GameObjects.Actor.GrottoHole)
                     {
                         //newEnemy.Rotation.x = 0;
                         //newEnemy.Rotation.y = 0;
-                        newEnemy.Rotation.z = 0x301;
-                    }*/
-
+                        short rotation = (short)(newEnemy.Rotation.z & 0x7F); // remember, the rotation clips into the right byte
+                        short newIndex = 0x55 << 7;
+                        rotation = (short)((int)rotation | (int)newIndex);
+                        newEnemy.Rotation.z = rotation;
+                    }
+                    */
                     temporaryMatchEnemyList.Add(newEnemy);
                     if ( ! previousyAssignedActor.Contains((GameObjects.Actor)newEnemy.Actor))
                     {
