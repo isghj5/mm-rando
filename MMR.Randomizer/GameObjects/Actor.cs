@@ -120,7 +120,7 @@ namespace MMR.Randomizer.GameObjects
         Shabom = 0x1D,// the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
         
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // disabled for now because crash if leaving grotto into scene with ben
         [FileID(65)]
         [ObjectListIndex(1)] // gameplay_keep obj 1
         [GroundVariants(0)] // 0 is ben
@@ -130,8 +130,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.TerminaField,
             Scene.WoodsOfMystery, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.SouthernSwampClear,
             Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.MountainVillageSpring, Scene.PathToSnowhead,
-            Scene.GreatBayCoast, Scene.ZoraCape,
-            Scene.RoadToIkana, Scene.IkanaGraveyard, Scene.IkanaCanyon)]
+            Scene.GreatBayCoast, Scene.ZoraCape, Scene.RoadToIkana, Scene.IkanaGraveyard, Scene.IkanaCanyon,
+            Scene.Grottos)]
         Ben = 0x21,
 
         [ActorizerEnabled]
@@ -149,7 +149,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x20)]
         [FlyingVariants(0xEF,0x7F,4,0x3F)]
         //[GroundVariants(0xEF,0x7F,4)] // remember, this works for _spawns_
-        [EnemizerScenesExcluded(Scene.OceanSpiderHouse)]
+        [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, 
             Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
         Skulltula = 0x24,
@@ -220,7 +220,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // rspawning
         BlueBubble = 0x3E,// cursed
 
-        [EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky
+        //[EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky, and his color darkening is wack
         [ObjectListIndex(0x52)]
         [GroundVariants(0)] // can fly, but weirdly is very bad at changing height if you fight in a multi-level area
         [SinglePerRoomMax(0)] // only fight her if you fight only one
@@ -354,7 +354,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1B80)]
         [FileID(108)]
         [ObjectListIndex(0x31)]
-        [GroundVariants(1,2)]
+        [GroundVariants(1,2)] // both stiff and mini
         [UnkillableAllVariants] // they grow back, dont count as killable
         DekuBabaWithered = 0x66,
 
@@ -896,18 +896,27 @@ namespace MMR.Randomizer.GameObjects
         // maybe dont remove originals
         CowFigurine = 0x20A,
 
-        //[ActorizerEnabled] // likes to crash
-        [ObjectListIndex(0x1)] // gameplay_keep obj 1
-        [GroundVariants(0xFF03)]
+        [ActorizerEnabled] // crash  on appraoch
+        //[ObjectListIndex(0x1)] // gameplay_keep obj 1
+        [ObjectListIndex(0x26A)] // I dont think this is really a gameplay keep actor, spiderhous has a carpenter object
+        // 0xFF03 crashes on approach
+        // FE04/5 doesn't spawn, probably until you finish the spiderhouse
+        // FE03 is in SCT, he stares up at the moon, except doesn't know where the moon is, can face the wrong way
+        // FE01 doesn't want to spawn, hmm, 02 is swamp spiderhouse, likely doesn't want to spawn either until house is cleared
+        [GroundVariants(0xFE03)]
+        [SinglePerRoomMax(0xFE03)]
         [UnkillableAllVariants]
-        [SinglePerRoomMax(0xFF03)]
+        // looking at moon, don't place him underground
+        [EnemizerScenesPlacementBlock(Scene.Grottos, Scene.InvertedStoneTower, Scene.BeneathGraveyard, Scene.BeneathTheWell,
+            Scene.GoronShrine, Scene.IkanaCastle, Scene.OceanSpiderHouse, Scene.SwampSpiderHouse,
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
         Seth1 = 0x20B, // the green shirt guy, "Seth"? spiderhouses
 
         [ActorizerEnabled]
         [ObjectListIndex(0x1F5)]
-        [WallVariants(0x3F)] // 3F has no cutscene, I think
+        [WallVariants(0x3F)] // 3F has no cutscene, no camera concerns
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.OceanSpiderHouse)]
+        [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // object is shared with multiple actors in this scene, breaks whole area
         SkullKidPainting = 0x210,
 
         [EnemizerEnabled]
@@ -955,6 +964,13 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x7F)]
         [UnkillableAllVariants]
         MushroomCloud = 0x23B,
+
+        [EnemizerEnabled] // untested
+        [ObjectListIndex(1)] // even thought this enemy is only in one temple, its a gameplay_keep actor?
+        // woodfall swarms include: 1,2,3,4,7,A, sure is a lot of variety for a one-off variant
+        [FlyingVariants(1,2,3,4,7)] // A would be 8+4?
+        [UnkillableAllVariants]
+        MothSwarm = 0x23D,
 
         [ActorizerEnabled]
         [ObjectListIndex(0xA1)]
