@@ -29,7 +29,7 @@ namespace MMR.Randomizer
         //private static List<Enemy> EnemyList { get; set; }
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = false;
+        private static bool ACTORSENABLED = true;
 
         public static void ReadEnemyList()
         {
@@ -150,7 +150,7 @@ namespace MMR.Randomizer
 
         public static void LowerEnemiesResourceLoad()
         {
-            /// some enemies are really hard on the CPU/RSP, we can fix some of them to behave nicer with flags
+            /// some enemies are really hard on the CPU/RSP, we can change some of them to behave nicer with flags
             foreach (var enemy in EnemyList.Where(u => u.ActorInitOffset() > 0).ToList())
             {
                 /// bit flags 4-6 according to crookedpoe: Always Run update, Always Draw, Never Cull
@@ -278,9 +278,9 @@ namespace MMR.Randomizer
         }
 
         /// <summary>
-        /// Moves the deku baba in souther swamp
+        /// Moves the deku baba in southern swamp
         ///   why? beacuse they are positioned in the elbow and its really obvious when they spawn/despawn on room swap
-        ///   its already weird how they aren't aligned in vanilla, imo
+        ///   its already noticable in vanilla, but with mixed enemy rando it can cause whole new enemies to pop in and out
         /// </summary>
         /// <param name="scene"></param>
         public static void FixSouthernSwampDekuBaba(Scene scene)
@@ -302,14 +302,17 @@ namespace MMR.Randomizer
             scene.Maps[0].Actors[4].p.x = 2020; // placement: to the right as you approach witches, next to tree
             scene.Maps[0].Actors[4].p.y = 22;
             scene.Maps[0].Actors[4].p.z = 300;
+            //scene.Maps[0].Actors[4].r.y = (short)0x877F; // rotation normal to wall behind it, vanilla 0x7F
 
             scene.Maps[2].Actors[2].p.x = 2910; // placement: between the bushes along the wall
             scene.Maps[2].Actors[2].p.y = 14;
             scene.Maps[2].Actors[2].p.z = -1075;
+            scene.Maps[2].Actors[2].r.y = 0x2D8F;
 
             scene.Maps[2].Actors[3].p.x = 4240; // placement: near waterfall
             scene.Maps[2].Actors[3].p.y = -2;
             scene.Maps[2].Actors[3].p.z = -1270;
+            //scene.Maps[2].Actors[3].r.y = 0x878F;
 
         }
 
