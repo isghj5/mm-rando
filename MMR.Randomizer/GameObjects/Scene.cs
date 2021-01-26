@@ -74,6 +74,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1175)]
         [SceneInternalId(0x16)]
         [ClearEnemyPuzzleRooms(4,7)]// basement lava
+        [FairyDroppingEnemies(1, 2)] // eygore 
         StoneTowerTemple = 0x13,
 
         [SceneInternalId(0x17)]
@@ -81,7 +82,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1190)]
         [SceneInternalId(0x18)]
-        [ClearEnemyPuzzleRooms(4)]// wizrobe room
+        [FairyDroppingEnemies(1, 3)] // eygore 
+        [FairyDroppingEnemies(1, 1)] // wizrobe
         InvertedStoneTowerTemple = 0x15,
 
         [SceneInternalId(0x19)]
@@ -124,7 +126,7 @@ namespace MMR.Randomizer.GameObjects
         // 11 dinofos room, 6/12 wizrobe
         [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9 )] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
         [EnemizerSceneEnemyReplacementBlock(Actor.RedBubble, // spawns in hot lava, keep wood enemies out
-            Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos)]
+            Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos, Actor.Dinofos)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.Bo, // spawns in hot lava, keep wood enemies out
         //    Actor.Demo_Kankyo)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.Wolfos, // spawns in hot lava, keep wood enemies out
@@ -183,6 +185,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x2F)]
         MarineLab = 0x2C,
 
+        [FileID(1316)]
         [SceneInternalId(0x30)]
         // [ClearEnemyPuzzleRooms(   )] // is big poe reward a clear room reward?
         DampesHouse = 0x2D,
@@ -266,6 +269,10 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1362)]
         [SceneInternalId(0x46)]
+        //  we want the hiploop to be non-blocking actors, making them killable with this flag does the job
+        [FairyDroppingEnemies(24,25,26)] // hiploops
+        [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
+            Actor.Wolfos, Actor.Peahat)] // blocking enemies (wolfos:iceblock)
         Woodfall = 0x43,
 
         [FileID(1364)]
@@ -333,13 +340,10 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1442)]
         [SceneInternalId(0x58)]
-        [FairyDroppingEnemies(1, 2)] // eygore 
         StoneTower = 0x55,
 
         [FileID(1444)]
         [SceneInternalId(0x59)]
-        [FairyDroppingEnemies(1, 3)] // eygore 
-        [FairyDroppingEnemies(1, 1)] // wizrobe
         InvertedStoneTower = 0x56,
 
         [FileID(1446)]

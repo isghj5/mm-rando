@@ -6,6 +6,7 @@ using MMR.Randomizer.Utils;
 using System;
 using MMR.Randomizer.Attributes;
 using System.Linq;
+using System.Numerics;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -96,11 +97,12 @@ namespace MMR.Randomizer.Extensions
             // turning static actor enum into enemy instance
             return new Models.Rom.Enemy()
             {
-                Name         = (actor).ToString(),
-                Actor        = (int) actor,
-                Object       = actor.ObjectIndex(),
-                ObjectSize   = ObjUtils.GetObjSize(actor.ObjectIndex()),
-                Variables    = actor.Variants(),
+                Name = (actor).ToString(),
+                Actor = (int)actor,
+                Object = actor.ObjectIndex(),
+                ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex()),
+                Variables = actor.Variants(),
+                Rotation = new Models.Vectors.vec16(),
                 SceneExclude = actor.ScenesRandomizationExcluded()
             };
         }
@@ -214,7 +216,8 @@ namespace MMR.Randomizer.Extensions
 
         public static bool HasVariantsWithRoomLimits(this Actor actor)
         {
-            return actor.GetAttribute<SinglePerRoomMax>() != null | actor.GetAttribute<DoublePerRoomMax>() != null;
+            return actor.GetAttribute<SinglePerRoomMax>() != null 
+                | actor.GetAttribute<DoublePerRoomMax>() != null;
         }
 
         public static int ActorInitOffset(this Actor actor)

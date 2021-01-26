@@ -19,6 +19,15 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.Woodfall)] //woodfall
         Flame = 0x4, //En_Light
 
+        //[ActorizerEnabled]
+        [ObjectListIndex(0xC)]
+        // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
+        // addresses make no sense
+        // 0x1184 is peahat chest
+        //[GroundVariants(0x50DD, 0x535E, 0x56BF)]
+        [UnkillableAllVariants]
+        TreasureChest = 0x6, // En_Box
+
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2A60)]
         [FileID(46)]
@@ -119,7 +128,6 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(0x69)]
         Shabom = 0x1D,// the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
-        
         //[ActorizerEnabled] // disabled for now because crash if leaving grotto into scene with ben
         [FileID(65)]
         [ObjectListIndex(1)] // gameplay_keep obj 1
@@ -237,10 +245,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1240)]
         [FileID(89)]
         [ObjectListIndex(0x6A)]
-        //[GroundVariants(0x600, 0x800, 0x500, 0xFF00, 0x300)] // all working varieties
-        [GroundVariants(0x600)] // reduce for lag
+        [GroundVariants(0x600, 0x800, 0x500, 0xFF00, 0x300)] // all working varieties
         [UnkillableAllVariants] // not unkillable, but for now, stops them from showing up blocking clear to get checks, and fairies
-        [DoublePerRoomMax(0x600, 0x800, 0x500, 0xFF00, 0x300)]
+        [SinglePerRoomMax(0x600, 0x800, 0x500, 0xFF00, 0x300)] // 5 is plenty
         Beamos = 0x47,
 
         [ActorizerEnabled]
@@ -266,6 +273,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(92)]
         [ObjectListIndex(0x9)]
         [GroundVariants(0)]
+        [DoublePerRoomMax(0)]
         FloorMaster = 0x4A,
 
         [EnemizerEnabled]
@@ -304,33 +312,44 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse)] // dont remove old spiders, the new ones might not be gettable
         GoldSkullTula = 0x50, // for now, only randomize the gold skulltulas
 
+        //[]
+        // hmm, this fights with demo_kankyo, need to think of a way to keep these two apart
+        [ObjectListIndex(1)] // gameplay_keep 1
+        [FlyingVariants(3)] // 3 is snow
+        Environement = 0x51, // Object_Kankyo
+
         [ActorizerEnabled]
         [ObjectListIndex(2)] // overworld_keep, obj 2
-        // 3D is swamp grotto, 304 is deku playground, 5C is mystery woods
-        // FF/299 is HSG, 233 is path to snowhead, 3B is mountain village spring grot
+        [FileID(99)]
+        // FF/299 is HSG, 233 is path to snowhead, 3B is mountain village spring grot 3D is swamp grotto, , 5C is mystery woods
         // 96 is goron rock grotto, 218/2B8? is graveyard grotto, 3E is road to swamp
         // 301 is ranch grotto? 214 is log cow grotto
-        // 0x2XX flag is hidden, 0x3XX is related travel (one of the exits in this area)
+        // 0x2XX flag is hidden, 0x3XX is related travel (one of the exits in this area, thats how deku playground works)
         // 310 crashed though in one instance, probably too high of a 300 number
         // x000 is the grotto index, except 1000 breaks for some reason, while 0,2,3,4 work for the gossip grottos
-        // 7000 is hot spring water grotto, 6k is A regular chest grotto
+        // 7 is hot spring water grotto, 6 is A regular chest grotto,
+        // in vanilla its & 7 so only three bits are read, the fourth bit does not seem to be, but we can turn it on
+        // 8 becomes straight jgrot, 9 is dong grot, A is vines jgrot
         ////////////////////////////////////////////////////////////////////////////////////////////////
         // Grottos can use Z Rotation to set addresses to places, instead of variables
-        // because of this, I am going to rewrite a new variant system that we will re-parse when needed
-        // so we can store rotation and more data
-        // If 0x8000 flag, then this is a regular grotto type with a chest, and 0x10XX is the chest flag for the chest it uses
-        //   else, 0x02 can mean its hidden or not
-        //     and 0x0_XX is the cave type otherwise, listed below:
+        //   because of this, I am going to rewrite a new variant system that we will re-parse when needed
+        //   so we can store rotation and more data
+        //   If 0x0800 flag, then this is a regular grotto type with a chest, and 0x10XX is the chest flag for the chest it uses
+        //     else, 0x02 can mean its hidden or not
+        //       and 0x0_XX is the cave type otherwise, listed below:
         // so if 0x0 variant, rotation is used, where rotation is :
         // 0 is grassy gossip grotto, 1 is spider grotto, 2 is sandy grotto, 3 is water grotto, 
-        // 4 is generic grotto, 5 is HSG 6 is straight jgrot, 7 is dong grot, 8 is vine jgrot,
+        // 4 is generic grotto, 5 is HSG, 6 is straight jgrot, 7 is dong grot, 8 is vine jgrot,
         // 9 field scrub, A is a cow groto, B is biobaba, C bean, D peahat, E+ is mayor's house (fake)
-        [GroundVariants(0x0, 0x1, 0x2, 0x3, 0x5, 0x9, 0xA, 0xC, 0xD, 0xB, // regular grottos
-            0x206, 0x208, 0x20F, // secret grottos, hidden
-            0x8233, 0x823B, 0x8218, 0x825C)] // grottos that might hold checks, also hidden, untested
-        [SinglePerRoomMax(0x0, 0x1, 0x2, 0x3, 0x5, 0x9, 0xA, 0xC, 0xD, 0xB, // regular grottos
-            0x206, 0x208, 0x20F, // secret grottos, hidden
-            0x8233, 0x823B, 0x8218, 0x825C)] // grottos that might hold checks, also hidden, untested
+        /*[GroundVariants(0x0, 0x2000, 0x3000, 0x4000, // stone grottos
+            0x7000, 0xC000, 0xE000, 0xF000, 0xD000, // regular grottos
+            0x8200, 0xA200, // secret japanese grottos, hidden
+            0x6233, 0x623B, 0x6218, 0x625C)] // grottos that might hold checks, also hidden */
+        [GroundVariants(0x1000)]
+        [SinglePerRoomMax(0x0, 0x3000, 0x4000, // stone grottos
+            0x7000, 0xC000, 0xE000, 0xF000, 0xD000, // regular grottos
+            0x8200, 0xA200, // secret japanese grottos, hidden
+            0x6233, 0x623B, 0x6218, 0x625C)] // grottos that might hold checks, also hidden
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead)]
         // as its obj is 2, shouldn't be available in dungeons, maybe not indoors either
@@ -470,12 +489,27 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.TerminaField)] // dont replace them in TF
         Rock = 0xB0, // rock
 
-        //[EnemizerEnabled] // does not load, wrong vars?
+        [EnemizerEnabled]
         [ObjectListIndex(0x1)] // gamplaykeep obj 1
-        [GroundVariants(0)]
+        // 801, opening scene grass, 0x1FXX are ranch and TF
+        // 0402 is ikana graveyard rock circle
+        [GroundVariants(0x801, 0x1F02, 0x1F00, 0x0402)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.GoronShrine)]
-        RockSirloin = 0xB9,
+        GrassRockCluster = 0xB3,
+
+        //[ActorizerEnabled] // does not load, wrong vars?
+        [ObjectListIndex(0x1)] // gamplaykeep obj 1
+        [GroundVariants(1)] // neither 0 nor 1 work
+        [UnkillableAllVariants]
+        //[EnemizerScenesExcluded(Scene.GoronShrine)]
+        RockSirloin = 0xB9, // En_Mm
+
+        [ObjectListIndex(0x1)] // gamplay_keep obj 1
+        // variants: 607 is the rain in road to southern swamp, which gets rainier as you approach swamp and dry toward termina field
+        //  same for milk road, both are right next to the entrance that becomes more rainy
+        // var 1 southern swamp (clear), 
+        // a04: romani ranch, a36: zora cape/coast
+        WeatherTag = 0xBC, // En_Weather_Tag
 
         [ActorizerEnabled]
         [FileID(172)]
@@ -490,6 +524,12 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(0x5D, 0x21, 0x29, 0x33, 0x34, 0x37, 0x48, 0x4D, 0x50, 0x38, 0x5B, 0x53, 0x58, 0x5A, 0x5E)] 
         [EnemizerScenesExcluded(Scene.AstralObservatory, Scene.TradingPost)]
         Scarecrow = 0xCA,
+
+        //[ActorizerEnabled] // does not spawn, grotto does weird stuff to it, use TreasureChest instead
+        //[ObjectListIndex(0xC)] //same as chest, but wiwth weird requirements
+        //[GroundVariants(0)] // only option, hmm
+        //[UnkillableAllVariants]
+        //GrottoChest = 0xCE, // En_Torch
 
         [ActorizerEnabled]
         [FileID(215)]
@@ -642,11 +682,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slowing enemies
         Nejiron = 0x155,// Rolling exploding rock in Ikana
 
+        [ObjectListIndex(1)] // gameplay_keep obj 1
+        ThreeDayTimer = 0x15A,
+
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1500)]
         [FileID(313)]
         [ObjectListIndex(0x172)]
-        [FlyingVariants(0xFF34, 0xFF02, 0xFF03, 0x019F, 0x0102, 0x0103)]
+        [FlyingVariants(0xFF34, 0xFF02, 0xFF03, 0x019F, 0x0102, 0x0103, 0xFF01)]
         [WallVariants(0xFF9F)]
         // one of these is sit on the wall bat from rtss: FF03/01/9F
         [SinglePerRoomMax(0xFF34)] // swarm
@@ -680,6 +723,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableVariants(0x8014,0x8028,0x8023,   0x0032,0x0005,0x0014)] // respawning
         RealBombchu = 0x16F,
 
+        [ActorizerEnabled]
+        [ObjectListIndex(2)] // field_keep
+        [GroundVariants(0x7F00)] //400 is milkroad, 7F00 is opening area
+        [UnkillableAllVariants] // untested
+        KeatonGrass = 0x171, // En_Kusa2
+
         [EnemizerEnabled]
         [ObjectListIndex(0x185)]
         [FlyingVariants(0, 1, 2, 3, 4, 5)]
@@ -687,7 +736,14 @@ namespace MMR.Randomizer.GameObjects
         [SinglePerRoomMax(0, 1, 2, 3, 4, 5)]
         [EnemizerScenesExcluded(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
         [EnemizerScenesPlacementBlock(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
-        Tingle = 0x176,
+        Tingle = 0x176, // En_Bal
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0xE3)]
+        [GroundVariants(0xFF)]
+        [SinglePerRoomMax(0xFF)]
+        [EnemizerScenesExcluded(Scene.WestClockTown)]
+        Banker = 0x177, // En_Ginko_Man
 
         //[ActorizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
         [ObjectListIndex(0x135)]
@@ -703,7 +759,7 @@ namespace MMR.Randomizer.GameObjects
         // 82 and 62 are found in the map room, both just kinda spin, never engages
         // zora cape has 000, same as the other two
         [WaterVariants( 0xA2, 0x82, 0x62, 0 )]
-        SkullFish = 0x180,
+        SkullFish = 0x180, // En_Pr2
 
         [ActorizerEnabled]
         [FileID(349)]
@@ -713,6 +769,13 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.Woodfall, Scene.DekuPalace, Scene.WoodfallTemple, Scene.OdolwasLair, 
             Scene.EastClockTown, Scene.NorthClockTown, Scene.IkanaCastle, Scene.SnowheadTemple)] 
         DekuFlower = 0x183,
+        
+        //[EnemizerEnabled]
+        [ObjectListIndex(0x155)]
+        [GroundVariants(0)]  // does not spawn, but if you approach where he SHOULD BE you lose camera control
+        [SinglePerRoomMax(0)]
+        [EnemizerScenesExcluded(Scene.StoneTowerTemple)]
+        GaroMaster = 0x182, // En_Jso2
 
         //[EnemizerEnabled] // AI gets confused, backwalks forever, pathing?
         [ActorInitVarOffset(0x445C)]
@@ -781,10 +844,13 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(0x30)]
         Dampe = 0x1CA,
 
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x1FD0)]
         [FileID(426)]
         [ObjectListIndex(0x1B5)]
-        // good candidate for wall enemy
+        // dont know what the differences are
+        [WallVariants(0x1932, 0x3FFF)] // dont know what the differences are
+        [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
         Dexihand = 0x1D1,// ???'s water logged brother
 
         [EnemizerEnabled]
@@ -792,7 +858,6 @@ namespace MMR.Randomizer.GameObjects
         [FileID(435)]
         [ObjectListIndex(0x75)]
         [GroundVariants(0x1E9, 0x1F4, 0x208, 0x214, 0x224, 0x236, 0x247, 0x253, 0x262, 0x275, 0x283, 0x291, 0x2A0)]
-        [UnkillableVariants(0x1E9, 0x1F4, 0x208, 0x214, 0x224, 0x236, 0x247, 0x253, 0x262, 0x275, 0x283, 0x291, 0x2A0)] // do they trigger flags to kill?
         [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.IkanaCanyon)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows down player too much in a race setting
         GibdoWell = 0x1DA,
@@ -919,6 +984,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // object is shared with multiple actors in this scene, breaks whole area
         SkullKidPainting = 0x210,
 
+        [ActorizerEnabled]
+        [ObjectListIndex(0x1F8)]
+        // 1 is standing in the hall during spring
+        [GroundVariants(1)]
+        [SinglePerRoomMax(1)]
+        [EnemizerScenesExcluded(Scene.GoronShrine)] // remove and it crashes, dont know why
+        GoronElder = 0x213,
+
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1C50)]
         [FileID(493)]
@@ -949,36 +1022,41 @@ namespace MMR.Randomizer.GameObjects
         [SinglePerRoomMax(1)]
         Japas = 0x231,
 
-        //[EnemizerEnabled] // we already have well versions
+        //[EnemizerEnabled] // does not spawn outside of ikana
         [ActorInitVarOffset(0x2CA0)]  // combat music disable does not work
         [FileID(524)]
         [ObjectListIndex(0x75)]
         [GroundVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)]
-        [UnkillableVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)]
+        [UnkillableVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)] // assumed, they might be killable if not in train
         [EnemizerScenesExcluded(Scene.IkanaCanyon)] // dont replace the train
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         GibdoIkana = 0x235,
 
-        //[ActorizerEnabled] // boring since its hidden unless you wear one often junk mask
+        //[ActorizerEnabled] // boring since its hidden unless you wear one often junk mask, just decreases chances of noticable enemies
         [ObjectListIndex(1)]
         [GroundVariants(0x7F)]
         [UnkillableAllVariants]
         MushroomCloud = 0x23B,
 
-        [EnemizerEnabled] // untested
+        [EnemizerEnabled]
         [ObjectListIndex(1)] // even thought this enemy is only in one temple, its a gameplay_keep actor?
         // woodfall swarms include: 1,2,3,4,7,A, sure is a lot of variety for a one-off variant
         [FlyingVariants(1,2,3,4,7)] // A would be 8+4?
         [UnkillableAllVariants]
         MothSwarm = 0x23D,
 
+        //[EnemizerEnabled]
+        [ObjectListIndex(0x15C)] // this is gyorgs object, probably too big, but our code would handle that
+        //[WaterVariants(0)] // vars unknown, 0 crashes
+        GyorgSpawn = 0x23F,
+
         [ActorizerEnabled]
         [ObjectListIndex(0xA1)]
         // 9 is the one that sells you kegs
-        [GroundVariants(9)]
+        [GroundVariants(9, 0x1E0, 1)]
+        [SinglePerRoomMax(9, 0x1E0, 1)]
         [UnkillableAllVariants]
-        [SinglePerRoomMax(9)]
-        [EnemizerScenesExcluded(Scene.BombShop)]
+        [EnemizerScenesExcluded(Scene.BombShop, Scene.GoronShrine)]
         Goron = 0x242,
 
         //[ActorizerEnabled] // unless I write dayonly/nightonly, this is too flukey
@@ -1008,6 +1086,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.GreatBayCoast, Scene.ZoraCape)]
         Seagulls = 0x267,
 
+        //[ActorizerEnabled] // didn't spawn with 0, don't know what varieties work
+        [ObjectListIndex(0x240)]
+        [FlyingVariants(0)]
+        AgressiveBees = 0x269,
+
         //[ActorizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
         [FileID(601)]
         [ObjectListIndex(0x280)]
@@ -1032,6 +1115,12 @@ namespace MMR.Randomizer.GameObjects
         [SinglePerRoomMax(0)]
         [EnemizerScenesExcluded(Scene.TerminaField)] // do not remove original
         Takkuri = 0x291,
+
+        //[ActorizerEnabled] // did not spawn
+        [ObjectListIndex(0x2A7)]
+        [FlyingVariants(0xF)] // these might be pathing actors
+        [UnkillableAllVariants]
+        MoonBirdsBrown = 0x2A7,
 
         [FileID(1114)]
         [ObjectListIndex(0)]
