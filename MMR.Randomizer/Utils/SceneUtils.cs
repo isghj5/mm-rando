@@ -85,7 +85,10 @@ namespace MMR.Randomizer.Utils
                             RomData.SceneList[i].Maps.Add(m);
                             mapsaddr += 8;
                         }
-                        break;
+                    }
+                    if (cmd == 0x07)
+                    {
+                        scene.SpecialObject = (Scene.SceneSpecialObject) RomData.MMFileList[f].Data[j + 7];
                     }
                     if (cmd == 0x14)
                     {
