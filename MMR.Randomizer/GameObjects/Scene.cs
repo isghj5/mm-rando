@@ -327,6 +327,8 @@ namespace MMR.Randomizer.GameObjects
         RoadToIkana = 0x50,
 
         [SceneInternalId(0x54)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Clock,
+            Actor.BadBat, Actor.GoldSkullTula)] // z-targetable can be annoying in the sword test
         SwordsmansSchool = 0x51,
 
         [SceneInternalId(0x55)]
