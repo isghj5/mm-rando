@@ -338,12 +338,11 @@ namespace MMR.Randomizer.GameObjects
         // 0 is grassy gossip grotto, 1 is spider grotto, 2 is sandy grotto, 3 is water grotto, 
         // 4 is generic grotto, 5 is HSG, 6 is straight jgrot, 7 is dong grot, 8 is vine jgrot,
         // 9 field scrub, A is a cow groto, B is biobaba, C bean, D peahat, E+ is mayor's house (fake)
-        /*[GroundVariants(0x0, 0x2000, 0x3000, 0x4000, // stone grottos
+        [GroundVariants(0x0, 0x2000, 0x3000, 0x4000, // stone grottos
             0x7000, 0xC000, 0xE000, 0xF000, 0xD000, // regular grottos
             0x8200, 0xA200, // secret japanese grottos, hidden
-            0x6233, 0x623B, 0x6218, 0x625C)] // grottos that might hold checks, also hidden */
-        [GroundVariants(0x1000)]
-        [SinglePerRoomMax(0x0, 0x3000, 0x4000, // stone grottos
+            0x6233, 0x623B, 0x6218, 0x625C)] // grottos that might hold checks, also hidden
+        [SinglePerRoomMax(0x0, 0x2000, 0x3000, 0x4000, // stone grottos
             0x7000, 0xC000, 0xE000, 0xF000, 0xD000, // regular grottos
             0x8200, 0xA200, // secret japanese grottos, hidden
             0x6233, 0x623B, 0x6218, 0x625C)] // grottos that might hold checks, also hidden
