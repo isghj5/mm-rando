@@ -1,8 +1,5 @@
 ﻿using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Attributes.Actor;
-using MMR.Randomizer.Extensions;
-using MMR.Randomizer.Models.Rom;
-using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.GameObjects
 {
@@ -546,7 +543,7 @@ namespace MMR.Randomizer.GameObjects
         [DoublePerRoomMax(0x3FF)]
         //[EnemizerScenesExcluded(0x6F, 0x10, 0x27, 0x35)]
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
-        Dog = 0xE2,
+        Dog = 0xE2, // En_Dg
 
         [ObjectListIndex(0x133)]
         //[GroundVariants(0x1E,0x2A02,0x2C0A,0x320F)]
@@ -574,6 +571,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x28F0)]
         [FileID(224)]
         [ObjectListIndex(0x143)]
+        // all moon mask hints, which are free but since they are mask hints they are often worthless
         [GroundVariants(0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62)]
         [WallVariants(0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62)]
         [UnkillableAllVariants]
@@ -888,6 +886,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1C6)]
         [GroundVariants(0,0x0101)]
         Hiploop = 0x1E9,// Charging beetle in Woodfall
+
+        // don't know vars without mamuyan decomp
+        [ObjectListIndex(0x132)]
+        RacingDog = 0x1EE, // En_Racedog
 
         [ActorizerEnabled]
         [ObjectListIndex(0x1D7)]
