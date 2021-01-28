@@ -13,6 +13,7 @@ using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Threading;
 using System.Numerics;
+using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.Utils
 {
@@ -326,27 +327,31 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static byte[] BuildROM()
+        public static byte[] BuildROM(bool encryptRom = true)
         {
-            // yaz0 encode all of the files for the rom
-            Parallel.ForEach(RomData.MMFileList, file =>
+            if (encryptRom)
             {
-                if (file.IsCompressed && file.WasEdited){
-                    // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
-                    var previousThreadPriority = Thread.CurrentThread.Priority;
-                    Thread.CurrentThread.Priority = ThreadPriority.Lowest;
-                    byte[] result;
-                    var newSize = Yaz.Encode(file.Data, file.Data.Length, out result);
-                    if (newSize >= 0)
+                // yaz0 encode all of the files for the rom
+                Parallel.ForEach(RomData.MMFileList, file =>
+                {
+                    if (file.IsCompressed && file.WasEdited)
                     {
-                        file.Data = new byte[newSize];
-                        ReadWriteUtils.Arr_Insert(result, 0, newSize, file.Data, 0);
+                        // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
+                        var previousThreadPriority = Thread.CurrentThread.Priority;
+                        Thread.CurrentThread.Priority = ThreadPriority.Lowest;
+                        byte[] result;
+                        var newSize = Yaz.Encode(file.Data, file.Data.Length, out result);
+                        if (newSize >= 0)
+                        {
+                            file.Data = new byte[newSize];
+                            ReadWriteUtils.Arr_Insert(result, 0, newSize, file.Data, 0);
+                        }
+                        // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
+                        Thread.CurrentThread.Priority = previousThreadPriority;
                     }
-                    // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
-                    Thread.CurrentThread.Priority = previousThreadPriority;
-                }
-            });
-            byte[] ROM = new byte[0x2000000];
+                });
+            }
+            byte[] ROM = new byte[0x2000000]; // 32mb = 0x2000000
             int ROMAddr = 0;
             // write all files to rom
             for (int i = 0; i < RomData.MMFileList.Count; i++)

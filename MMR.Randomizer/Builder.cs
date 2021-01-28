@@ -2814,9 +2814,22 @@ namespace MMR.Randomizer
 
             if (outputSettings.GenerateROM || outputSettings.OutputVC)
             {
-                progressReporter.ReportProgress(75, "Building ROM...");
+                progressReporter.ReportProgress(75, "Decompressing the rest of the ROM...");
 
-                byte[] ROM = RomUtils.BuildROM();
+                /*if (!outputSettings.OutputVC)
+                {
+                    for (int i = 0; i < RomData.MMFileList.Count; ++i) //decompress all remaining compressed files
+                    {
+                        if (RomData.MMFileList[i].Data != null)
+                        {
+                            RomUtils.CheckCompressed(i);
+                        }
+                    }
+                }*/
+
+                progressReporter.ReportProgress(80, "Building ROM...");
+
+                byte[] ROM = RomUtils.BuildROM(outputSettings.OutputVC == true);
 
                 if (outputSettings.GenerateROM)
                 {
