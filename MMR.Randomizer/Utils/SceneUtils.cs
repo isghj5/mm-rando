@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using MMR.Randomizer.Extensions;
 using System.Diagnostics;
-using MMR.Randomizer.Attributes.Actor;
-using MMR.Common.Extensions;
 using System;
 
 namespace MMR.Randomizer.Utils

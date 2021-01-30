@@ -4,8 +4,9 @@ using System.Collections.Generic;
 namespace MMR.Randomizer.Attributes.Actor
 {
     /// <summary>
-    ///  each enemy actor has varients that share so much of their code and data that they are bundled together has a varient
+    ///  each enemy actor has varients that share so much of their code and data that they are bundled together as a variant
     ///  example: all the chuchus are one actor, white and black bo are varients of one actor
+    ///  we need ways to specify behavior not just to an actor but to their variants, which are sometimes unique
     /// </summary>
 
     public class ActorVariantsAttribute : Attribute
@@ -24,8 +25,8 @@ namespace MMR.Randomizer.Attributes.Actor
     }
 
     /// <summary>
-    /// some enemies have variants that automaticallly respawn forever, 
-    ///  these get in the way of puzzle rooms that require you clear all enemies
+    /// Some Enemies are not killable
+    ///  they present an issue if they block paths or have stray fairies in their bodies
     /// </summary>
 
     public class UnkillableVariantsAttribute : ActorVariantsAttribute
@@ -36,9 +37,24 @@ namespace MMR.Randomizer.Attributes.Actor
     public class UnkillableAllVariantsAttribute : Attribute
     {
         public bool Unkillable = true;
-
-        public UnkillableAllVariantsAttribute(){}
     }
+
+    /// <summary>
+    /// Some enemies have variants that automaticallly respawn forever
+    ///  these get in the way of puzzle rooms that require you clear all enemies
+    ///  also, any enemy that appears to die, but prevents a clear room gets this flag
+    /// </summary>
+
+    public class RespawningVariantsAttribute : ActorVariantsAttribute
+    {
+        public RespawningVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+    }
+
+    public class RespawningAllVariantsAttribute : Attribute
+    {
+        public bool Respawning = true;
+    }
+
 
     /// <summary>
     /// some enemies can spawn in multiple situations, likelike can spawn on the beach or ocean bottom, so two types

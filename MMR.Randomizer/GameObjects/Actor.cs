@@ -166,7 +166,7 @@ namespace MMR.Randomizer.GameObjects
         // 2 worked in snowhead, seems to fly in a straight line though, pathing?
         [PatrolVariants(2)] // 3 works, 1+4 crashes, assuming 7 also crashes because probably a flag
         [SinglePerRoomMax(2)]
-        [UnkillableVariants(2)] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
+        [RespawningAllVariants] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
         //[EnemizerScenesExcluded(0x18, 0x16)] // 0x18 is ISTT
         [EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         // scenes that seem fine: path to snowhead, grottos, well, road to southern swampm ikana canyon, spring twin islands
@@ -183,7 +183,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x2A)]
         [GroundVariants(0xFFFF)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.GoronRacetrack, Scene.OdolwasLair)]
+        [EnemizerScenesExcluded(Scene.OdolwasLair)]//Scene.GoronRacetrack)] // some poor unfortunate souls asked for a more chaotic race
         BombFlower = 0x2F,
 
         [EnemizerEnabled]
@@ -446,7 +446,7 @@ namespace MMR.Randomizer.GameObjects
         // 1 creates a grass circle in termina field, 0 is grotto grass single
         // 642B is a smaller cuttable grass from the ground in secret shrine
         [GroundVariants(0, 1)]
-        [UnkillableVariants(0, 1)] // not enemy actor group
+        [UnkillableAllVariants] // not enemy actor group
         [EnemizerScenesExcluded(Scene.Grottos)] // dont remove from peahat grotto
         GrassBush = 0x90,
 
@@ -456,7 +456,6 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x807F, 0x8004, 0x8002)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [FlyingVariants(0x807F, 0x8004, 0x8002)] // one of these when you break it gives a jingle, you found a puzzle, kind of jingle
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
-        //[UnkillableVariants(0x807F,0x8002)] // tested true
         [EnemizerScenesExcluded(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Grottos)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
         Bombiwa = 0x92,
@@ -546,7 +545,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ObjectListIndex(0x133)]
         //[GroundVariants(0x1E,0x2A02,0x2C0A,0x320F)]
-        //[UnkillableVariants(0x3FF, 0x22BF)] // killing one not possible
+        [UnkillableAllVariants] // killing one not possible
         LargeCrate = 0xE5,
 
         [EnemizerEnabled]
@@ -586,7 +585,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(226)]
         [ObjectListIndex(0x6)]
         [FlyingVariants(0)]
-        [UnkillableVariants(0)] // weirdly, it respawns
+        [RespawningVariants(0)] // weirdly, it respawns
         Guay = 0xF1,
 
         [ActorizerEnabled]
@@ -628,6 +627,13 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.GreatBayTemple)] // need their lilipads to reach compass chest and fairy chest
         BioDekuBaba = 0x12D, // Boss_05
 
+        //[ActorizerEnabled] // field of effect is so HUG
+        [ObjectListIndex(0xA1)]
+        // 8 is smithy goron, 0x7F84, 0x7F
+        [GroundVariants(0x8, 0x7FE2)]
+        [EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)]
+        GenericGoron = 0x138, // En_Go
+
         //[EnemizerEnabled] // todo: try randomizing
         [FileID(278)]
         [ObjectListIndex(0x161)]
@@ -650,7 +656,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.GreatBayTemple)] // necessary to climb
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)] // crash transitioning witch shop room
         // termina field, ff00 gbt waterchu, the rest are assumed respawn until proven otherwise
-        [UnkillableVariants(0xFF03,0xFF01,0xFF00,    0x0C01,0x1402,0x0A01,0x0202,0x801,0xFF02)]
+        [RespawningVariants(0xFF03,0xFF01,0xFF00,    0x0C01,0x1402,0x0A01,0x0202,0x801,0xFF02)]
         ChuChu = 0x14A, // En_Slime
 
         [EnemizerEnabled]
@@ -706,7 +712,7 @@ namespace MMR.Randomizer.GameObjects
         // this variety is slow spawn, meaning you have to walk up to it: 0x2800, 0x3200, 0xC200, 0xFA00
         [GroundVariants(0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200)] 
         // 9605,3205,6405 all respawn in path to mountain village, 8C05 is snowhead, 6404 and 7804 are stone tower
-        [UnkillableVariants(0x6404,0x7804, 0x9605,0x3205,0x6405,  0x8C05, 0xFF05)] // respawning
+        [RespawningVariants(0x6404,0x7804, 0x9605,0x3205,0x6405,  0x8C05, 0xFF05)] // respawning
         Bo = 0x164, //boe, small ball of snow or soot
 
         [EnemizerEnabled]
@@ -717,7 +723,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x8C, 0x28, 0x3C, 0x46, 0x32, 0x1, 0x8023, 0x5, 0x14, 0x8028, 0x8014)]
         [WallVariants(0x1)] // peaceful, just wants cheese
         // the values on the left are tested respawning, the values on the right are untested, conservative assume respawning
-        [UnkillableVariants(0x8014,0x8028,0x8023,   0x0032,0x0005,0x0014)] // respawning
+        [RespawningVariants(0x8014,0x8028,0x8023,   0x0032,0x0005,0x0014)] // respawning
         RealBombchu = 0x16F,
 
         [ActorizerEnabled]
@@ -835,10 +841,6 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] //busted
         [ObjectListIndex(0x1AF)]
         // 1, 0xFFF3 do not load, 10 just crashes
-        [GroundVariants(0x10)] // unknown which ones do what we want (FFF3, 01, 10) 814 walking about outside
-        // unkillable
-        // only one
-        //[EnemizerScenesExcluded(0x30)]
         Dampe = 0x1CA,
 
         [EnemizerEnabled]
@@ -858,6 +860,19 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.IkanaCanyon)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows down player too much in a race setting
         GibdoWell = 0x1DA,
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x1C2)]
+        // FFFF is extra?
+        // 600 is night one, 702 is night 2, 801, is night 3
+        // ffff crashes in TF
+        // only one 0x600 can exist without crashing
+        //[GroundVariants(0xFFFF, 0x600, 0x702, 0x801)]
+        [GroundVariants(0xFFFF, 0x600, 0x702, 0x801)]
+        [SinglePerRoomMax(0xFFFF, 0x600, 0x702, 0x801)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.IkanaGraveyard)]
+        IkanaGravestone = 0x1E3,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2EE0)]
@@ -925,10 +940,12 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabled] // softlock if you enter the song teach cutscene, which in rando is proximity
         [ObjectListIndex(0x1DF)]
-        [GroundVariants(0x1400)] // all other versions are 0x13** or 0x1402
-        [SinglePerRoomMax(0x1400)]
+        //[GroundVariants(0x1400)] // all other versions are 0x13** or 0x1402
+        // 0x3FF1 does not spawn in winter, even in other scenes
+        [GroundVariants(0x3FF1)]
+        [SinglePerRoomMax(0x1400, 0x3FF1)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.GoronShrine)]
+        [EnemizerScenesExcluded(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
         GoronKid = 0x201,
 
         [EnemizerEnabled]
@@ -955,9 +972,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208,
 
-        //[ActorizerEnabled] // just the head visible? meh? need to increase size too I think
+        [ActorizerEnabled] // just the head visible? meh? need to increase size too I think
         [ObjectListIndex(0x1F2)]
         [WallVariants(0x907F, 0xA07F)]
+        [GroundVariants(0x907F, 0xA07F)]
+        [SinglePerRoomMax(0x907F, 0xA07F)]
         [UnkillableAllVariants]
         // maybe dont remove originals
         CowFigurine = 0x20A,
@@ -1013,6 +1032,21 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         PatrollingPirate = 0x21E,
 
+        // lame: saves take you to the real spawn, owl soar takes you to the real spawn, this only lets us activate and save warp
+        [ActorizerEnabled] 
+        [ObjectListIndex(0x170)]
+        // 0 is great bay coast, 1 is cape, 2 is snowhead, 3 is mountain village, 4 is SCT,
+        //5 is milk road, 6 is woodfall, 7 is southern swamp, 8 is ikana canyon, 9 is stonetower
+        // F is WCT, is also found in woodfall, cleared swamp?
+        // A does not exist, lets see what the testers do
+        [GroundVariants(0, 1, 3, 2, 6, 5, 7, 8, 9, 0xA, 0xF)]
+        [SinglePerRoomMax(0, 1, 3, 2, 6, 5, 7, 8, 9, 0xA, 0xF)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.SouthClockTown, Scene.MilkRoad, 
+             Scene.Woodfall, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.MountainVillage, Scene.MountainVillageSpring, Scene.Snowhead,
+             Scene.GreatBayCoast, Scene.ZoraCape, Scene.IkanaCanyon, Scene.StoneTower, Scene.InvertedStoneTower)] 
+        OwlStatue = 0x223, // Obj_Warpstone
+
         //[ActorizerEnabled] // does not spawn? boo
         // did I maybe use the wrong vars?
         [ObjectListIndex(0x211)]
@@ -1028,7 +1062,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(524)]
         [ObjectListIndex(0x75)]
         [GroundVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)]
-        [UnkillableVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)] // assumed, they might be killable if not in train
+        [RespawningAllVariants]
         [EnemizerScenesExcluded(Scene.IkanaCanyon)] // dont replace the train
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         GibdoIkana = 0x235,
@@ -1043,7 +1077,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(1)] // even thought this enemy is only in one temple, its a gameplay_keep actor?
         // woodfall swarms include: 1,2,3,4,7,A, sure is a lot of variety for a one-off variant
         [FlyingVariants(1,2,3,4,7)] // A would be 8+4?
-        [UnkillableAllVariants]
+        [RespawningAllVariants] // they do NOT respawn, but they do block clear all rooms
         MothSwarm = 0x23D,
 
         //[EnemizerEnabled]

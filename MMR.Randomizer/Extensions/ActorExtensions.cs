@@ -6,7 +6,6 @@ using MMR.Randomizer.Utils;
 using System;
 using MMR.Randomizer.Attributes;
 using System.Linq;
-using System.Numerics;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -36,7 +35,7 @@ namespace MMR.Randomizer.Extensions
         {
             if (actor.GetAttribute<UnkillableAllVariantsAttribute>() != null) // all are unkillable
             {
-                return Variants(actor);
+                return AllVariants(actor);
             }
             else
             {
@@ -44,7 +43,20 @@ namespace MMR.Randomizer.Extensions
             }
         }
 
-        public static List<int> Variants(this Actor actor)
+        public static List<int> RespawningVariants(this Actor actor)
+        {
+            if (actor.GetAttribute<RespawningAllVariantsAttribute>() != null) // all are respawning
+            {
+                return AllVariants(actor);
+            }
+            else
+            {
+                return actor.GetAttribute<RespawningVariantsAttribute>()?.Variants;
+            }
+        }
+
+
+        public static List<int> AllVariants(this Actor actor)
         {
             var variants = new List<int>();
             var attrF = actor.GetAttribute<FlyingVariantsAttribute>();
@@ -78,13 +90,18 @@ namespace MMR.Randomizer.Extensions
 
         public static List<int> KillableVariants(this Actor actor, List<int> acceptableVariants = null)
         {
-            var nonRespawningVariants = acceptableVariants != null ? acceptableVariants : Variants(actor);
+            var killableVariants = acceptableVariants != null ? acceptableVariants : AllVariants(actor);
             var unkillableVariants    = UnkillableVariants(actor);
+            var respawningVariants    = RespawningVariants(actor);
             if (unkillableVariants != null && unkillableVariants.Count > 0)
             {
-                nonRespawningVariants.RemoveAll(u => unkillableVariants.Contains(u));
+                killableVariants.RemoveAll(u => unkillableVariants.Contains(u));
             }
-            return nonRespawningVariants;
+            if (respawningVariants != null && respawningVariants.Count > 0)
+            {
+                killableVariants.RemoveAll(u => respawningVariants.Contains(u));
+            }
+            return killableVariants;
         }
 
         public static List<Scene> ScenesRandomizationExcluded(this Actor actor)
@@ -101,7 +118,7 @@ namespace MMR.Randomizer.Extensions
                 Actor = (int)actor,
                 Object = actor.ObjectIndex(),
                 ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex()),
-                Variables = actor.Variants(),
+                Variables = actor.AllVariants(),
                 Rotation = new Models.Vectors.vec16(),
                 SceneExclude = actor.ScenesRandomizationExcluded()
             };

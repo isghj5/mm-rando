@@ -27,6 +27,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1145)]
         [ClearEnemyPuzzleRooms(1,2,4)]
         [SceneInternalId(0x0C)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.IronKnuckle, 
+            Actor.Hiploop)] // hiploop dies if he touches water? happens in day 2 iron knuckle
         BeneathGraveyard = 0x05,
 
         [FileID(1137)]
@@ -143,6 +145,7 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms(0,1,2)] // three pirate minibosses
         PiratesFortressRooms = 0x20,
 
+        [FileID(1276)]
         [SceneInternalId(0x24)]
         SwampShootingGallery = 0x21,
 
@@ -150,9 +153,11 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x25)]
         PinnacleRock = 0x22,
 
+        [FileID(1278)]
         [SceneInternalId(0x26)]
-        FairyFountain = 0x23,
+        FairyFountain = 0x23, // great fairy
 
+        [FileID(1284)]
         [SceneInternalId(0x27)]
         SwampSpiderHouse = 0x24,
 
@@ -172,6 +177,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x2B)]
         DekuPalace = 0x28,
 
+        [FileID(1308)]
         [SceneInternalId(0x2C)]
         MountainSmithy = 0x29,
 
@@ -179,9 +185,11 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x2D)]
         TerminaField = 0x2A,
 
+        [FileID(1312)]
         [SceneInternalId(0x2E)]
         PostOffice = 0x2B,
 
+        [FileID(1314)]
         [SceneInternalId(0x2F)]
         MarineLab = 0x2C,
 
@@ -196,6 +204,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x32)]
         GoronShrine = 0x2F,
 
+        [FileID(1322)]
         [SceneInternalId(0x33)]
         ZoraHall = 0x30,
 
@@ -207,6 +216,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x35)]
         RomaniRanch = 0x32,
 
+        [FileID(1328)]
         [SceneInternalId(0x36)]
         TwinmoldsLair = 0x33,
 
@@ -218,6 +228,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x38)]
         ZoraCape = 0x35,
 
+        [FileID(1334)]
         [SceneInternalId(0x39)]
         LotteryShop = 0x36,
 
@@ -227,12 +238,15 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x3B)]
         PiratesFortressExterior = 0x38,
 
+        [FileID(1338)]
         [SceneInternalId(0x3C)]
         FishermansHut = 0x39,
 
+        [FileID(1340)]
         [SceneInternalId(0x3D)]
         GoronShop = 0x3A,
 
+        [FileID(1342)]
         [SceneInternalId(0x3E)]
         DekuKingChamber = 0x3B,
 
@@ -279,6 +293,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x47)]
         ZoraTrial = 0x44,
 
+        [FileID(1366)]
         [SceneInternalId(0x48)]
         GoronVillageSpring = 0x45,
 
@@ -298,6 +313,7 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms( 12 )] // 12 is big poe
         BeneathTheWell = 0x48,
 
+        [FileID(1403)]
         [SceneInternalId(0x4C)]
         ZoraHallRooms = 0x49,
 
@@ -305,18 +321,22 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x4D)]
         GoronVillage = 0x4A,
 
+        [FileID(1412)]
         [SceneInternalId(0x4E)]
         GoronGrave = 0x4B,
 
+        [FileID(1414)]
         [SceneInternalId(0x4F)]
         //[ClearEnemyPuzzleRooms( unk )] // ignored by enemizer right now anyway
         SakonsHideout = 0x4C,
 
+        [FileID(1417)]
         [SceneInternalId(0x50)]
         MountainVillage = 0x4D,
 
+        [FileID(1419)]
         [SceneInternalId(0x51)]
-        PoeHut = 0x4E,
+        PoeHut = 0x4E, // Ghost Hut
 
         [FileID(1421)]
         [SceneInternalId(0x52)]
