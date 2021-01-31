@@ -216,25 +216,37 @@ namespace MMR.Randomizer.Extensions
             return new List<Scene>();
         }
 
-        public static int VariantMaxCountPerRoom(this Actor actor, int variant) 
+        public static int VariantMaxCountPerRoom(this Actor actor, int queryVariant) 
         {
-            var singleAttr = actor.GetAttribute<SinglePerRoomMax>();
-            if (singleAttr != null && singleAttr.Variants.Contains(variant)) // think 1 will be a more common restriction
+            if (actor.GetAttribute<OnlyOneActorPerRoom>() != null)
             {
                 return 1;
             }
-            var doubleAttr = actor.GetAttribute<DoublePerRoomMax>();
-            if (doubleAttr != null && doubleAttr.Variants.Contains(variant))
+
+            var limitedVariants = actor.GetAttributes<VariantsWithRoomMax>();
+            if (limitedVariants != null)
             {
-                return 2;
+                foreach (var variant in limitedVariants)
+                {
+                    if (variant.Variants.Contains(queryVariant))
+                    {
+                        return variant.RoomMax;
+                    }
+                }
             }
+
             return -1; // no restriction
         }
 
         public static bool HasVariantsWithRoomLimits(this Actor actor)
         {
-            return actor.GetAttribute<SinglePerRoomMax>() != null 
-                | actor.GetAttribute<DoublePerRoomMax>() != null;
+            return actor.GetAttributes<VariantsWithRoomMax>() != null
+                || OnlyOnePerRoom(actor);
+        }
+
+        public static bool OnlyOnePerRoom(this Actor actor)
+        {
+            return actor.GetAttribute<OnlyOneActorPerRoom>() != null;
         }
 
         public static int ActorInitOffset(this Actor actor)

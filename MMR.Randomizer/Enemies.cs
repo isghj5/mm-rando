@@ -254,12 +254,26 @@ namespace MMR.Randomizer
             storageroomBo.p.y = -118;
             storageroomBo.p.z = -1651;
 
-            // in order to randomize dog, without adding that dog back in because it can crash, we need to change the vars on the dog we want changed
-            //  should add a "randomize but do not-reuse vars" attribute to get around this, but there just aren't enough uses right this second
             if (ACTORSENABLED)
             {
+                // in order to randomize dog, without adding that dog back in because it can crash, we need to change the vars on the dog we want changed
+                //  should add a "randomize but do not-reuse vars" attribute to get around this, but there just aren't enough uses right this second
                 var swampspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
                 swampspiderhouseScene.Maps[0].Actors[2].v = 0x3FF;
+
+                // because this is one of the areas that can have tingle, and he falls into not-reachable, put him someplace reachable
+                var woodfallexteriorScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Woodfall.FileID());
+                var firstDragonfly = woodfallexteriorScene.Maps[0].Actors[4];
+                firstDragonfly.p.x = 990; // over a deku scrub
+                firstDragonfly.p.z = 690;
+
+                var secondDragonfly = woodfallexteriorScene.Maps[0].Actors[5];
+                secondDragonfly.p.x = 615; // over a lillypad
+                secondDragonfly.p.z = -495;
+
+                var lilypad = woodfallexteriorScene.Maps[0].Actors[37];
+                lilypad.p.x = 615; // move lilypad over
+                lilypad.p.z = -495;
             }
 
             /*
@@ -273,8 +287,8 @@ namespace MMR.Randomizer
             SetX(grottoRoom0FID, grottoSceneActorAddr, actorIndex: actorNumber, -583);
             SetZ(grottoRoom0FID, grottoSceneActorAddr, actorIndex: actorNumber, -20);
             SetVariant(testScene, roomIndex: 0, actorNumber, 0x7200); */
+
             
-            /*
             // set the collectable rup in woodfall to a random grotto, just to see if anyone even notices
             var woodfallRoom0FID = GameObjects.Scene.Woodfall.FileID() + 1;
             RomUtils.CheckCompressed(woodfallRoom0FID);
@@ -317,7 +331,7 @@ namespace MMR.Randomizer
             // 180 is 222, no change?
             // 200 is 2D8, so multiples of B6, but where did that come from?
             RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].r.z = 0x0200; // ignored if top nibble is set to > 0
-            */
+            
         }
 
         private static void FixScarecrowTalk()
@@ -415,52 +429,97 @@ namespace MMR.Randomizer
 
         public static void SetupGrottoActor(Enemy enemy, int newVariant)
         {
-            /// grottos can get their address index from a table, where the index can be their Z rotation
+            /// grottos can get their address index from an array, where the index can be their Z rotation
             ///   so we re-encoded variants to hold the data we want, check out the actor enum entry for more info
             ///   the lower two byes are used to set the chest, but we have a chest grotto with upper byte index, so reuse for rotation here
             ///   the game does not use the top two bits of the second byte, so we use one as a flag for rotation type grottos
             enemy.Actor = (int) GameObjects.Actor.GrottoHole;
             enemy.Variables[0] = newVariant;
-            if ((newVariant & 0x0800) != 0) // grotto that uses rotation to set value
+            if ((newVariant & 0x0400) != 0) // grotto that uses rotation to set value
             {
                 int newIndex = newVariant & 0xF; // in vanilla the array is only 15 long
                 enemy.Rotation.z = (short)MergeRotationAndFlags(rotation: newIndex, flags: enemy.Rotation.z);
             }
         }
 
-        public static void EmptyOrFreeActor(Enemy enemy, Random rng, List<Enemy> currentRoomActorList, List<GameObjects.Actor> sceneAcceptableReplacements, bool roomIsClearPuzzleRoom = false)
+        public static void TrimExtraActors(GameObjects.Actor actorType, List<Enemy> roomEnemies, List<GameObjects.Actor> roomFreeActors, bool roomIsClearPuzzleRoom, Random rng, int variant = -1)
+        {
+            /// in the event an actor should be restricted to a limited number, the extras need to be trimmed
+
+            var roomEnemiesWithVariant = roomEnemies;
+            if (! actorType.OnlyOnePerRoom())
+            {
+                roomEnemiesWithVariant = roomEnemies.FindAll(u => u.Variables[0] == variant);
+            }
+                    
+            if (roomEnemiesWithVariant != null && roomEnemiesWithVariant.Count > 1)
+            {
+                int max = actorType.VariantMaxCountPerRoom(variant);
+                int removed = 0;
+                if (roomIsClearPuzzleRoom) // clear enemy room, only one enemy has to be killable
+                {
+                    // weirdly there isn't a single room in the game that has both a clear enemy to get item puzzle and a fairy dropping enemy, so we can reuse
+                    var randomEnemy = roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)];
+                    roomEnemiesWithVariant.Remove(randomEnemy); // leave at least one enemy alone
+                    removed++;
+                }
+                else
+                {
+                    // if not a clear room, all protected enemies are fairy enemies or specific enemies, cannot remove any
+                    foreach (var protectedEnemy in roomEnemiesWithVariant.Where(u => u.MustNotRespawn == true).ToList())
+                    {
+                        roomEnemiesWithVariant.Remove(protectedEnemy);
+                        removed++;
+                    }
+                }
+                // remove random enemies until max for variant is reached
+                for (int i = removed; i < max && i < roomEnemiesWithVariant.Count; ++i)
+                {
+                    roomEnemiesWithVariant.Remove(roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)]);
+                }
+                // kill the rest of variant X since max is reached
+                foreach (var enemy in roomEnemiesWithVariant)
+                {
+                    var enemyIndex = roomEnemies.IndexOf(enemy);
+                    EmptyOrFreeActor(enemy, rng, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom);
+                    if (((GameObjects.Actor)enemy.Actor).OnlyOnePerRoom())
+                    {
+                        roomFreeActors.Remove((GameObjects.Actor)enemy.Actor);
+                    }
+                }
+            }
+        }
+
+        public static void EmptyOrFreeActor(Enemy enemy, Random rng, List<Enemy> currentRoomActorList, List<GameObjects.Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false)
         {
             /// returns an actor that is either an empty actor or a free actor that can be placed here beacuse it doesn't require a new unique object
 
             // check the old enemy for available co-actors,
             // remove if those already exist in the list at max size
-            var acceptableReplacements = sceneAcceptableReplacements;
             var enemyEnumerator = (GameObjects.Actor) enemy.Actor;
 
             // roll dice: either get a free actor, or empty
             if (rng.Next(100) < 70) // for now a static chance
             {
-                // randomly sort list of available enemies
-                // check the enemy does not already exist in limit
-                // place enemy
-                int randomStart = rng.Next(acceptableReplacements.Count);
-                for (int attempt = 0; attempt < acceptableReplacements.Count; ++attempt)
+                // pick random replacement by selecting random start of array and traversing sequentially until we find a match
+                int randomStart = rng.Next(acceptableFreeActors.Count);
+                for (int matchAttempt = 0; matchAttempt < acceptableFreeActors.Count; ++matchAttempt)
                 {
-                    int listIndex = (randomStart + attempt) % acceptableReplacements.Count;
-                    var testEnemy = acceptableReplacements[listIndex];
-                    var testEnemeyCompatibleVariants = enemyEnumerator.CompatibleVariants(testEnemy, rng, enemy.Variables[0]);
-                    if (testEnemeyCompatibleVariants == null)
+                    int listIndex = (randomStart + matchAttempt) % acceptableFreeActors.Count;
+                    var testEnemy = acceptableFreeActors[listIndex];
+                    var testEnemyCompatibleVariants = enemyEnumerator.CompatibleVariants(testEnemy, rng, enemy.Variables[0]);
+                    if (testEnemyCompatibleVariants == null)
                     {
-                        continue;  // no way to use this enemy, skip
+                        continue;  // no type compatibility, skip
                     }
                     var respawningVariants = enemyEnumerator.RespawningVariants();
-                    if (respawningVariants != null)
+                    if ((enemy.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
                     {
-                        testEnemeyCompatibleVariants.RemoveAll(u => respawningVariants.Contains(u));
+                        testEnemyCompatibleVariants.RemoveAll(u => respawningVariants.Contains(u));
                     }
-                    if (testEnemeyCompatibleVariants.Count == 0)
+                    if (testEnemyCompatibleVariants.Count == 0)
                     {
-                        continue;  // no way to use this enemy, skip
+                        continue;  // cannot use respawning enemies here, skip
                     }
 
                     var enemyHasMaximums = testEnemy.HasVariantsWithRoomLimits();
@@ -472,7 +531,7 @@ namespace MMR.Randomizer
                         if (enemiesInRoom.Count > 0)  // only test for specific variants if there are already some in the room
                         {
                             // find variant that is not maxed out
-                            foreach (var variant in testEnemeyCompatibleVariants)
+                            foreach (var variant in testEnemyCompatibleVariants)
                             {
                                 // if the varient limit has not been reached
                                 var variantMax = testEnemy.VariantMaxCountPerRoom(variant);
@@ -485,12 +544,12 @@ namespace MMR.Randomizer
                         }
                         else
                         {
-                            acceptableVariants = testEnemeyCompatibleVariants;
+                            acceptableVariants = testEnemyCompatibleVariants;
                         }
                     }
                     else
                     {
-                        acceptableVariants = testEnemeyCompatibleVariants;
+                        acceptableVariants = testEnemyCompatibleVariants;
                     }
 
                     if (acceptableVariants.Count > 0)
@@ -747,17 +806,17 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
-                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID()
-                        && sceneObjects[i] == GameObjects.Actor.Leever.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID()
+                        && sceneObjects[i] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[i],
-                            NewV = GameObjects.Actor.CowFigurine.ObjectIndex()
+                            NewV = GameObjects.Actor.Scarecrow.ObjectIndex()
                         });
                         oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
-                    }*/
+                    } // */
 
                     var reducedCandidateList = actorCandidatesLists[i].ToList();
                     foreach (var objectSwap in chosenReplacementObjects)
@@ -885,59 +944,36 @@ namespace MMR.Randomizer
                 }
 
                 // enemies can have max per room variants, if these show up we should cull the extra over the max
-                var restrictedEnemies = previousyAssignedActor.FindAll(u => u.HasVariantsWithRoomLimits());
+                var restrictedEnemies = previousyAssignedActor.FindAll(u => u.HasVariantsWithRoomLimits() || u.OnlyOnePerRoom());
                 foreach( var problemEnemy in restrictedEnemies)
                 {
+                    if (problemEnemy.OnlyOnePerRoom())
+                    {
+                        WriteOutput(" only one allowed, removing extras of enemy: " + problemEnemy.ToString());
+                    }
+
                     // we need to split enemies per room
                     for (int roomIndex = 0; roomIndex < scene.Maps.Count; ++roomIndex)
                     {
                         var roomEnemies = temporaryMatchEnemyList.FindAll(u => u.Room == roomIndex);
                         var roomIsClearPuzzleRoom = scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
-                        var enemyCullList = new List<Enemy>();
+                        var roomFreeActors = sceneFreeActors.ToList();
 
-                        // for limited variants, reduce size
-                        var limitedVariants = problemEnemy.AllVariants().FindAll(u => problemEnemy.VariantMaxCountPerRoom(u) >= 0);
-                        foreach (var variant in limitedVariants)
+                        if (problemEnemy.OnlyOnePerRoom())
                         {
-                            var roomEnemiesWithVariant = roomEnemies.FindAll(u => u.Variables[0] == variant);
-                            if (roomEnemiesWithVariant != null && roomEnemiesWithVariant.Count > 0)
+                            TrimExtraActors(problemEnemy, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, rng);
+                        }
+                        else
+                        {
+                            var limitedVariants = problemEnemy.AllVariants().FindAll(u => problemEnemy.VariantMaxCountPerRoom(u) >= 0);
+                            foreach (var variant in limitedVariants)
                             {
-                                int max = problemEnemy.VariantMaxCountPerRoom(variant);
-                                int removed = 0;
-                                if (roomIsClearPuzzleRoom) // make sure any enemy that has to drop a fairy is removed first
-                                {
-                                    // weirdly there isn't a single room in the game that has both a clear enemy to get item puzzle and a fairy dropping enemy, so we can reuse
-                                    var randomEnemy = roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)];
-                                    roomEnemiesWithVariant.Remove(randomEnemy); // leave at least one enemy alone
-                                    removed++;
-                                    WriteOutput("Clear room: removing random enemy to prevent room being empty: " + randomEnemy.Name + ", index" + randomEnemy.RoomActorIndex);
-                                }
-                                else
-                                {
-                                    // if not a clear room, all protected enemies are fairy enemies or specific enemies, cannot remove any
-                                    foreach (var protectedEnemy in roomEnemiesWithVariant.Where(u => u.MustNotRespawn == true).ToList())
-                                    {
-                                        roomEnemiesWithVariant.Remove(protectedEnemy);
-                                        removed++;
-                                        WriteOutput("Protected Enemy: " + protectedEnemy.Name + ", index:" + protectedEnemy.RoomActorIndex);
-                                    }
-                                }
-                                // remove random enemies until max for variant is reached
-                                for (int i = removed; i < max && i < roomEnemiesWithVariant.Count; ++i)
-                                {
-                                    roomEnemiesWithVariant.Remove(roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)]);
-                                }
-                                // kill the rest of variant X since max is reached
-                                foreach (var enemy in roomEnemiesWithVariant)
-                                {
-                                    var enemyIndex = temporaryMatchEnemyList.IndexOf(enemy);
-                                    EmptyOrFreeActor(enemy, rng, temporaryMatchEnemyList, sceneFreeActors, roomIsClearPuzzleRoom);
-                                }
-                                WriteOutput(" in room " + roomIndex + ", removing extra variants: " + variant.ToString("X2") + " for enemy: " + problemEnemy.ToString());
+                                TrimExtraActors(problemEnemy, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, rng, variant);
                             }
                         }
                     }
                 }
+
                 // this was here because I believed it was double dipping
                 // TODO: check if its doing anything
                 previousyAssignedActor.Clear();
@@ -1193,7 +1229,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.PoeSisters
             }.ToList();
 
-            var disableList = weakEnemyList;// Only ? weakEnemyList : weakEnemyList.Concat(annoyingEnemyList);
+            var disableList = weakEnemiesOnly ? weakEnemyList : weakEnemyList.Concat(annoyingEnemyList);
 
             foreach (var enemy in disableList)
             {

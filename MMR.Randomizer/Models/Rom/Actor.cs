@@ -15,8 +15,8 @@ namespace MMR.Randomizer.Models.Rom
         public int      m; // some flags at the very start?
         public int      n; // actor list index
         public int objectIndex; // object list index
-        public vec16    p = new vec16(); // not sure these even get used for anything
-        public vec16    r = new vec16(); // not sure these even get used for anything
+        public vec16    p = new vec16();
+        public vec16    r = new vec16();
         public int      v; // variant (parameters), 2 bytes that changes the nature of enemies with two or more variants
 
         public GameObjects.Actor actor;
