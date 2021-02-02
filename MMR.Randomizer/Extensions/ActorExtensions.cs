@@ -109,16 +109,17 @@ namespace MMR.Randomizer.Extensions
             return actor.GetAttribute<EnemizerScenesExcludedAttribute>()?.ScenesExcluded ?? new List<Scene>();
         }
 
-        public static Models.Rom.Enemy ToEnemy(this Actor actor)
+        public static Models.Rom.Actor ToActorModel(this Actor actor)
         {
             // turning static actor enum into enemy instance
-            return new Models.Rom.Enemy()
+            return new Models.Rom.Actor()
             {
                 Name = (actor).ToString(),
-                Actor = (int)actor,
-                Object = actor.ObjectIndex(),
+                ActorID = (int)actor,
+                ActorEnum = actor,
+                ObjectID = actor.ObjectIndex(),
                 ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex()),
-                Variables = actor.AllVariants(),
+                Variants = actor.AllVariants(),
                 Rotation = new Models.Vectors.vec16(),
                 SceneExclude = actor.ScenesRandomizationExcluded()
             };
@@ -247,6 +248,11 @@ namespace MMR.Randomizer.Extensions
         public static bool OnlyOnePerRoom(this Actor actor)
         {
             return actor.GetAttribute<OnlyOneActorPerRoom>() != null;
+        }
+
+        public static bool HasOptionalCompanions(this Actor actor)
+        {
+            return actor.GetAttributes<AlignedCompanionActorAttribute>() != null;
         }
 
         public static int ActorInitOffset(this Actor actor)

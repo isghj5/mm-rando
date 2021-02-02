@@ -11,7 +11,6 @@ namespace MMR.Randomizer.Models.Rom
             None = 0,  FieldKeep = 2,  DungeonKeep = 3
         }
 
-
         public int File;    // DMA Filetable index
         public int Number;  // Scene table index
         public GameObjects.Scene SceneEnum;  // Gameobject scene enum value
@@ -28,7 +27,6 @@ namespace MMR.Randomizer.Models.Rom
         {
             return SpecialObject == SceneSpecialObject.FieldKeep;
         }
-
     }
 
     public class SceneSetup
