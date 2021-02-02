@@ -13,8 +13,8 @@ namespace MMR.Randomizer.Attributes.Actor
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class CompanionActorAttribute : Attribute
     {
-        public static GameObjects.Actor Companion { get; private set; }
-        public static List<int> Variants { get; private set; }
+        public GameObjects.Actor Companion { get; private set; }
+        public List<int> Variants { get; private set; }
 
         public CompanionActorAttribute(GameObjects.Actor companion, int variant, params int[] additionalVariants)
         {
@@ -45,16 +45,36 @@ namespace MMR.Randomizer.Attributes.Actor
     ///  example2: grotto hidden under bombiwa
     /// </summary>
 
+    public enum CompanionAlignment
+    {
+        OnTop,
+        Above,
+        InFront
+    }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     public class AlignedCompanionActorAttribute: CompanionActorAttribute
     {
-        public static vec16 RelativePosition { get; private set; }
 
-        public AlignedCompanionActorAttribute(GameObjects.Actor companion, vec16 relativePosition, int variant, params int[] additionalVariants):
+        public vec16 RelativePosition { get; private set; }
+        public int ourVariant { get; private set; }
+
+        public AlignedCompanionActorAttribute(GameObjects.Actor companion, CompanionAlignment relativePosition, int ourVariant,
+            int variant = -1, params int[] additionalVariants):
               base(companion, variant, additionalVariants)
         {
-            RelativePosition = relativePosition;
+            if (relativePosition == CompanionAlignment.OnTop)
+            {
+                RelativePosition = new vec16(); //0,0,0
+            }
+            else if (relativePosition == CompanionAlignment.Above)
+            {
+                RelativePosition = new vec16(0,40,0); // increase height (Y)
+            }
+            else if (relativePosition == CompanionAlignment.InFront)
+            {
+                RelativePosition = new vec16(0, 0, 0); //  todo is forward x or z?
+            }
         }
 
     }

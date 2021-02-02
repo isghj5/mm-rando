@@ -12,7 +12,7 @@ namespace MMR.Randomizer.Models.Vectors
         public short y = new short();
         public short z = new short();
 
-        public vec16(){ }
+        public vec16() {}
     
         public vec16(int newX, int newY, int newZ)
         {

@@ -159,7 +159,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        private static List<Actor> ReadMapActors(byte[] Map, int Addr, int Count, int sceneID)
+        private static List<Actor> ReadMapActors(byte[] Map, int Addr, int Count, int sceneID, int mapID)
         {
             List<Actor> Actors = new List<Actor>();
             for (int i = 0; i < Count; i++)
@@ -168,17 +168,23 @@ namespace MMR.Randomizer.Utils
 
                 Actor a = new Actor();
                 ushort an = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16));
-                a.m = an & 0xF000;
-                a.n = an & 0x0FFF;
-                a.p.x = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 2);
-                a.p.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 4);
-                a.p.z = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 6);
-                a.r.x = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 8);
-                a.r.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 10);
-                a.r.z = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 12);
-                a.v = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 14);
-                a.actor = (GameObjects.Actor) a.n; // ? if actor doesn't exist, what does this resolve to?
+                a.ActorIDFlags = an & 0xF000; // unused
+                a.ActorID = an & 0x0FFF;
+                a.ActorEnum = (GameObjects.Actor) a.ActorID;
+                a.OldName = a.ActorEnum.ToString();
+                a.ObjectID = a.ActorEnum.ObjectIndex();
+                //a.ObjectSize = ObjUtils.GetObjSize(a.ObjectIndex());
+                a.Position.x = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 2);
+                a.Position.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 4);
+                a.Position.z = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 6);
+                a.Rotation.x = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 8);
+                a.Rotation.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 10);
+                a.Rotation.z = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 12);
+                a.Variants[0] = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 14);
                 a.sceneID = RomData.SceneList[sceneID].Number;
+                a.Room = mapID;
+                a.RoomActorIndex = i;
+
                 Actors.Add(a);
             }
             Debug.WriteLine("\n");
@@ -200,14 +206,14 @@ namespace MMR.Randomizer.Utils
         {
             for (int i = 0; i < Actors.Count; i++)
             {
-                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16), (ushort)(Actors[i].m | Actors[i].n));
-                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 2, (ushort)Actors[i].p.x);
-                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 4, (ushort)Actors[i].p.y);
-                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 6, (ushort)Actors[i].p.z);
-                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 8, (ushort)Actors[i].r.x);
-                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 10, (ushort)Actors[i].r.y);
-                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 12, (ushort)Actors[i].r.z);
-                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 14, (ushort)Actors[i].v);
+                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16), (ushort)(Actors[i].ActorIDFlags | Actors[i].ActorID));
+                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 2, (ushort)Actors[i].Position.x);
+                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 4, (ushort)Actors[i].Position.y);
+                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 6, (ushort)Actors[i].Position.z);
+                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 8, (ushort)Actors[i].Rotation.x);
+                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 10, (ushort)Actors[i].Rotation.y);
+                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 12, (ushort)Actors[i].Rotation.z);
+                ReadWriteUtils.Arr_WriteU16(Map, Addr + (i * 16) + 14, (ushort)Actors[i].Variants[0]);
             }
         }
 
@@ -250,7 +256,7 @@ namespace MMR.Randomizer.Utils
                             byte ActorCount = RomData.MMFileList[f].Data[k + 1];
                             int ActorAddr = (int)ReadWriteUtils.Arr_ReadU32(RomData.MMFileList[f].Data, k + 4) & 0xFFFFFF;
                             RomData.SceneList[i].Maps[j].ActorAddr = ActorAddr;
-                            RomData.SceneList[i].Maps[j].Actors = ReadMapActors(RomData.MMFileList[f].Data, ActorAddr, ActorCount, i);
+                            RomData.SceneList[i].Maps[j].Actors = ReadMapActors(RomData.MMFileList[f].Data, ActorAddr, ActorCount, i, j);
                         }
                         if (cmd == 0x0B)
                         {

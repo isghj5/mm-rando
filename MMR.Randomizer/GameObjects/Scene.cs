@@ -346,17 +346,21 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x53)]
         RoadToIkana = 0x50,
 
+        [FileID(1433)]
         [SceneInternalId(0x54)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Clock,
-            Actor.BadBat, Actor.GoldSkullTula)] // z-targetable can be annoying in the sword test
+            Actor.BadBat, Actor.GoldSkullTula, Actor.RealBombchu)] // z-targetable can be annoying in the sword test
         SwordsmansSchool = 0x51,
 
+        [FileID(1434)]
         [SceneInternalId(0x55)]
         MusicBoxHouse = 0x52,
 
+        [FileID(1437)]
         [SceneInternalId(0x56)]
         IgosDuIkanasLair = 0x53,
 
+        [FileID(1440)]
         [SceneInternalId(0x57)]
         TouristCenter = 0x54,
 
