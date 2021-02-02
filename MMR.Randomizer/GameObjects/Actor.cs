@@ -1203,6 +1203,18 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         ButlersSon = 0x289,
 
+        [ActorizerEnabled]
+        [ObjectListIndex(0x264)]
+        [AlignedCompanionActor(KeatonGrass, CompanionAlignment.OnTop, ourVariant: -1,
+           variant: 0x7F00, 0x400, 0x1F00)] // we want him to only show up if you kill grass right?
+        // summoning 0 crashes, so does 0xFFFF
+        [GroundVariants(0xFFFF)] // unkown, normally summoned by bushes?
+        [UnkillableAllVariants]
+        [OnlyOneActorPerRoom]
+        //Keaton = 0x289C, // En_Kitan
+        Keaton = 0x2B1, // THIS IS A LIE, its a trick until I can force second objects to load, but we do NOT want the actual actor to load for keaton
+        // 2b1 is really bomb shop proprietor
+
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2E30)]
         [FileID(616)]

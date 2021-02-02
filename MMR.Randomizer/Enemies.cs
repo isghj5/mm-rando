@@ -28,7 +28,7 @@ namespace MMR.Randomizer
          
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = true;
+        private static bool ACTORSENABLED = false;
 
         public static void ReadEnemyList()
         {
@@ -804,13 +804,13 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
-                    /* if (scene.File == GameObjects.Scene.RoadToSouthernSwamp.FileID()
-                        && sceneObjects[i] == GameObjects.Actor.BadBat.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                        && sceneObjects[i] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[i],
-                            NewV = GameObjects.Actor.Bombiwa.ObjectIndex()
+                            NewV = GameObjects.Actor.Keaton.ObjectIndex()
                         });
                         //oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
