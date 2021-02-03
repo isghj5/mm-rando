@@ -25,9 +25,9 @@ namespace MMR.Randomizer.GameObjects
         HoneyDarling = 0x04,
 
         [FileID(1145)]
-        [ClearEnemyPuzzleRooms(1,2,4)]
+        [ClearEnemyPuzzleRooms(1, 2, 4)]
         [SceneInternalId(0x0C)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.IronKnuckle, 
+        [EnemizerSceneEnemyReplacementBlock(Actor.IronKnuckle,
             Actor.Hiploop)] // hiploop dies if he touches water? happens in day 2 iron knuckle
         BeneathGraveyard = 0x05,
 
@@ -44,7 +44,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1522)]
         [SceneInternalId(0x07)]
-        [ClearEnemyPuzzleRooms(7,13)] //7:dodongo, 13:peahat
+        [ClearEnemyPuzzleRooms(7, 13)] //7:dodongo, 13:peahat
         [EnemizerSceneEnemyReplacementBlock(Actor.Peahat, // hidden or very weak enemies suck here, but they are very common in this slot
             Actor.Bo, Actor.Nejiron, Actor.RedBubble, Actor.Leever, Actor.Wolfos, Actor.Beamos)] // beamos is just because bomb locking this check early is prime seed killer
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
@@ -75,7 +75,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1175)]
         [SceneInternalId(0x16)]
-        [ClearEnemyPuzzleRooms(4,7)]// basement lava
+        [ClearEnemyPuzzleRooms(4, 7)]// basement lava
         [FairyDroppingEnemies(1, 2)] // eygore 
         StoneTowerTemple = 0x13,
 
@@ -126,7 +126,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1241)]
         [SceneInternalId(0x21)]
         // 11 dinofos room, 6/12 wizrobe
-        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9 )] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
+        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9)] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
         [EnemizerSceneEnemyReplacementBlock(Actor.RedBubble, // spawns in hot lava, keep wood enemies out
             Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos, Actor.Dinofos)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.Bo, // spawns in hot lava, keep wood enemies out
@@ -142,7 +142,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1258)]
         [SceneInternalId(0x23)]
-        [ClearEnemyPuzzleRooms(0,1,2)] // three pirate minibosses
+        [ClearEnemyPuzzleRooms(0, 1, 2)] // three pirate minibosses
         PiratesFortressRooms = 0x20,
 
         [FileID(1276)]
@@ -284,7 +284,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1362)]
         [SceneInternalId(0x46)]
         //  we want the hiploop to be non-blocking actors, making them killable with this flag does the job
-        [FairyDroppingEnemies(24,25,26)] // hiploops
+        [FairyDroppingEnemies(24, 25, 26)] // hiploops
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
             Actor.Wolfos, Actor.Peahat)] // blocking enemies (wolfos:iceblock)
         Woodfall = 0x43,
@@ -300,7 +300,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1369)]
         [SceneInternalId(0x49)]
         //3: clear the biobabs, 5 is gekko, 8 is wart
-        [ClearEnemyPuzzleRooms(3,5,7)]
+        [ClearEnemyPuzzleRooms(3, 5, 7)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula,
+            Actor.Peahat)] // pain
         [FairyDroppingEnemies(8, 7)] // skulltula in first room 
         GreatBayTemple = 0x46,
 

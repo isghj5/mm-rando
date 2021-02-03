@@ -37,7 +37,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(46)]
         [ObjectListIndex(0x5)]
         [WaterVariants(0xFF00)]
-        [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.GreatBayTemple)]
+        [EnemizerScenesExcluded( Scene.GreatBayTemple)] //Scene.IkanaCanyon,
         Octarok = 0x8,
 
         [EnemizerEnabled]
@@ -221,7 +221,8 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(MothSwarm, variant: 1, 2, 3, 4, 7)]
         [AlignedCompanionActor(MothSwarm, CompanionAlignment.Above, ourVariant: -1,
            variant: 1, 2, 3, 4, 7)] // they're free, and they are moths, makes sense
-        [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SouthernSwamp, Scene.SouthClockTown, Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayTemple)]
+        [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SouthernSwamp, Scene.SouthClockTown, Scene.DekuShrine, Scene.WestClockTown,
+            Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayTemple, Scene.OceanSpiderHouse, Scene.BeneathTheWell )]
         Torch = 0x39, // Obj_Syokudai
 
         [EnemizerEnabled]
