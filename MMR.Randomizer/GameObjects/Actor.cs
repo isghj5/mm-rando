@@ -943,7 +943,7 @@ namespace MMR.Randomizer.GameObjects
         //0x100 is red, 0x200 is blue, 0x300 is green, 00 is purple, however, its difficult to fight more than 2
         [FlyingVariants(0x300, 0x200, 0x100)]
         [GroundVariants(0x300, 0x200, 0x100, 0)]
-        [VariantsWithRoomMax(max: 1, 0, 0x100, 0x200, 0x300)] // only one per
+        [VariantsWithRoomMax(max: 1, variant: 0, 0x100, 0x200, 0x300)] // only one per
         // no scene exclusion necessary, get spawned by the poe sisters minigame but they aren't actors in the scene to be randomized
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         PoeSisters = 0x1E8,

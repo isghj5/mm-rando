@@ -533,11 +533,9 @@ namespace MMR.Randomizer
             }
         }
 
-        public static void EmptyOrFreeActor(Actor enemy, Random rng, List<Actor> currentRoomActorList, List<GameObjects.Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false)
+        public static void EmptyOrFreeActor(Actor targetActor, Random rng, List<Actor> currentRoomActorList, List<GameObjects.Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false)
         {
             /// returns an actor that is either an empty actor or a free actor that can be placed here beacuse it doesn't require a new unique object
-
-            var enemyEnumerator = (GameObjects.Actor) enemy.ActorID;
 
             // roll dice: either get a free actor, or empty
             if (rng.Next(100) < 70) // for now a static chance
@@ -551,13 +549,13 @@ namespace MMR.Randomizer
 
                     int listIndex = (randomStart + matchAttempt) % acceptableFreeActors.Count;
                     var testEnemy = acceptableFreeActors[listIndex];
-                    var testEnemyCompatibleVariants = enemyEnumerator.CompatibleVariants(testEnemy, rng, enemy.Variants[0]);
+                    var testEnemyCompatibleVariants = targetActor.ActorEnum.CompatibleVariants(testEnemy, rng, targetActor.Variants[0]);
                     if (testEnemyCompatibleVariants == null)
                     {
                         continue;  // no type compatibility, skip
                     }
-                    var respawningVariants = enemyEnumerator.RespawningVariants();
-                    if ((enemy.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
+                    var respawningVariants = testEnemy.RespawningVariants();
+                    if ((targetActor.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
                     {
                         testEnemyCompatibleVariants.RemoveAll(u => respawningVariants.Contains(u));
                     }
@@ -601,11 +599,11 @@ namespace MMR.Randomizer
                         int randomVariant = acceptableVariants[rng.Next(acceptableVariants.Count)];
                         if (testEnemy == GameObjects.Actor.GrottoHole)
                         {
-                            SetupGrottoActor(enemy, randomVariant);
+                            SetupGrottoActor(targetActor, randomVariant);
                         }
                         else
                         {
-                            enemy.ChangeActor(testEnemy, vars: randomVariant);
+                            targetActor.ChangeActor(testEnemy, vars: randomVariant);
                         }
                         return;
                     }
@@ -613,7 +611,7 @@ namespace MMR.Randomizer
             }
             else // empty actor
             {
-                enemy.ChangeActor(GameObjects.Actor.Empty, vars: 0);
+                targetActor.ChangeActor(GameObjects.Actor.Empty, vars: 0);
             }
         }
 
@@ -823,15 +821,14 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
-                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID()
-                        && sceneObjects[i] == GameObjects.Actor.Leever.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.SnowheadTemple.FileID()
+                        && sceneObjects[i] == GameObjects.Actor.RedBubble.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[i],
-                            NewV = GameObjects.Actor.Keaton.ObjectIndex()
+                            NewV = GameObjects.Actor.Snapper.ObjectIndex()
                         });
-                        //oldsize += originalEnemiesPerObject[i][0].ObjectSize;
                         continue;
                     } // */
 
@@ -882,7 +879,8 @@ namespace MMR.Randomizer
                     throw new Exception(error);
                 }
 
-                if (newsize <= oldsize || newsize < scene.SceneEnum.GetSceneObjLimit()) 
+                if (newsize <= oldsize || newsize < scene.SceneEnum.GetSceneObjLimit()
+                    && !(scene.SceneEnum == GameObjects.Scene.SnowheadTemple && newsize > 0x20000)) 
                 {
                     //this should take into account map/scene size and size of all loaded actors...
                     //not really accurate but *should* work for now to prevent crashing
@@ -1002,10 +1000,10 @@ namespace MMR.Randomizer
                 for (int i = 0; i < temporaryMatchEnemyList.Count; i++)
                 {
                     WriteOutput("Old Enemy actor:["
-                        + originalEnemiesPerObject[objCount][i].OldName
+                        + originalEnemiesPerObject[objCount][i].OldName + "][" 
+                        + originalEnemiesPerObject[objCount][i].Variants[0].ToString("X2")
                         + "] was replaced by new enemy: ["
-                        + temporaryMatchEnemyList[i].Name
-                        + "] with variant: ["
+                        + temporaryMatchEnemyList[i].Name + "]["
                         + temporaryMatchEnemyList[i].Variants[0].ToString("X2") + "]");
                 }
 
@@ -1110,7 +1108,7 @@ namespace MMR.Randomizer
                     if (!SceneSkip.Contains(scene.Number))
                     {
                         var previousThreadPriority = Thread.CurrentThread.Priority;
-                        Thread.CurrentThread.Priority = ThreadPriority.BelowNormal;// do not SLAM
+                        Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
                         SwapSceneEnemies(settings, scene, seed);
                         Thread.CurrentThread.Priority = previousThreadPriority;
                     }
