@@ -913,16 +913,17 @@ namespace MMR.Randomizer
                 // for actors that have companions, add them now
                 foreach (var actor in subMatches.ToList())
                 {
-                    var companionAttr = actor.ActorEnum.GetAttributes<CompanionActorAttribute>();
-                    if (companionAttr != null)
+                    var companionAttrs = actor.ActorEnum.GetAttributes<CompanionActorAttribute>();
+                    if (companionAttrs != null)
                     {
-                        foreach (var companion in companionAttr)
+                        foreach (var companion in companionAttrs)
                         {
                             var cObj = companion.Companion.ObjectIndex();
                             if (cObj == 1 || cObj == actor.ObjectID)    // todo: add object search across other actors chosen
                             {
                                 var newCompanion = companion.Companion.ToActorModel();
                                 newCompanion.Variants = companion.Variants;
+                                newCompanion.IsCompanion = true;
                                 subMatches.Add(newCompanion);
                             }
                         }
@@ -931,7 +932,7 @@ namespace MMR.Randomizer
 
                 foreach (var oldEnemy in originalEnemiesPerObject[objCount].ToList())
                 {
-                    int randomSubmatch;
+                    Actor testActor;
 
                     // this isn't really a loop, 99% of the time it matches on the first loop
                     // leaving this for now because its faster than shuffling the list even if it looks stupid
@@ -945,17 +946,23 @@ namespace MMR.Randomizer
                         }
 
                         /// looking for a list of objects for the actors we chose that fit the actor types
-                        //|| (oldEnemy.Type == subMatches[randomSubmatch].Type && rng.Next(5) == 0)
-                        //  //&& oldEnemy.Stationary == subMatches[randomSubmatch].Stationary)
-                        randomSubmatch = rng.Next(subMatches.Count);
-                        if (oldEnemy.Type == subMatches[randomSubmatch].Type || (subMatches.FindIndex(u => u.Type == oldEnemy.Type) == -1))
+                        //|| (oldEnemy.Type == subMatches[testActor].Type && rng.Next(5) == 0)
+                        //  //&& oldEnemy.Stationary == subMatches[testActor].Stationary)
+                        testActor = subMatches[rng.Next(subMatches.Count)];
+
+                        if (oldEnemy.MustNotRespawn && testActor.IsCompanion)
+                        {
+                            continue; // most companions currently are not killable, skip
+                        }
+
+                        if (oldEnemy.Type == testActor.Type || (subMatches.FindIndex(u => u.Type == oldEnemy.Type) == -1))
                         {
                             break;
                         }
                     }
 
-                    oldEnemy.ChangeActor( newActorType: (GameObjects.Actor) subMatches[randomSubmatch].ActorID,
-                                          vars: subMatches[randomSubmatch].Variants[rng.Next(subMatches[randomSubmatch].Variants.Count)]);
+                    oldEnemy.ChangeActor( newActorType: (GameObjects.Actor)testActor.ActorID,
+                                          vars: testActor.Variants[rng.Next(testActor.Variants.Count)]);
 
                     temporaryMatchEnemyList.Add(oldEnemy);
                     if ( ! previousyAssignedActor.Contains((GameObjects.Actor) oldEnemy.ActorID))

@@ -27,6 +27,7 @@ namespace MMR.Randomizer.Models.Rom
         public vec16 Position = new vec16();
         public vec16 Rotation = new vec16();
         public List<GameObjects.Scene> SceneExclude = new List<GameObjects.Scene>();
+        public bool IsCompanion = false;
         public bool previouslyMovedCompanion = false;
 
         public int sceneID; // do we still need this?
