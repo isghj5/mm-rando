@@ -28,7 +28,7 @@ namespace MMR.Randomizer
          
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = false;
+        private static bool ACTORSENABLED = true;
 
         public static void ReadEnemyList()
         {
@@ -228,6 +228,19 @@ namespace MMR.Randomizer
             var swampspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
             swampspiderhouseScene.Maps[0].Actors[2].Variants[0] = 0x3FF;
 
+            // test bonk spider
+            /*
+            var northclocktownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.NorthClockTown.FileID()).Maps[0];
+            // -654, 200, -1780
+            northclocktownScene.Actors[17].Position = new vec16(-654, 230, -1780);
+            northclocktownScene.Actors[17].ChangeActor(GameObjects.Actor.GoldSkullTula, 0xFF41);
+            northclocktownScene.Actors[32].Position = new vec16(-654, 230, -1780);
+            northclocktownScene.Actors[32].Rotation = new vec16(0x187, 0x197F, 0xA7F);
+            northclocktownScene.Actors[32].ChangeActor(GameObjects.Actor.TG_Sw, 0x40);
+            northclocktownScene.Objects[7] = GameObjects.Actor.GoldSkullTula.ObjectIndex(); // postbox
+            SceneUtils.UpdateScene(RomData.SceneList.Find(u => u.File == GameObjects.Scene.NorthClockTown.FileID()));
+            */
+
             /*
             var testScene = GameObjects.Scene.TwinIslands;
             var grottoRoom0FID = testScene.FileID() + 1;
@@ -365,6 +378,12 @@ namespace MMR.Randomizer
             coastScene.Maps[0].Actors[24].Variants[0] = 2;
             // coast: tidepool likelike is water
             coastScene.Maps[0].Actors[20].Variants[0] = 2;
+
+            // cleared coast likeliks
+            coastScene.Maps[0].Actors[43].Variants[0] = 2;
+            coastScene.Maps[0].Actors[44].Variants[0] = 2;
+            coastScene.Maps[0].Actors[46].Variants[0] = 2;
+
         }
 
         private static void EnableDampeHouseWallMaster()
