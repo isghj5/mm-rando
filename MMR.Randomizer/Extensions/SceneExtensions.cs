@@ -67,17 +67,10 @@ namespace MMR.Randomizer.Extensions
             if (scene == Scene.GreatBayCoast)
                 return 0x7F40; // crashs common at > 4.0x modifier, this is closer to 2.15 for safety
 
+            if (scene == Scene.SnowheadTemple)
+                return 0x20000; // crashing if reaching 25FFF, everything below 0x20000 was fine though
+
             return 0x12000; 
-        }
-
-        public static bool IsDungeon(this Scene scene)
-        {
-            /// we need to know if object 3 gameplay_dangeon_keep is loaded, to use actors that require this actor
-
-            // this is just a guess for now, the penalty of loading an actor that needs obj3 and doesn not have it is... an empty enemy not a big bug
-            // TODO flesh out this list
-            var listOfDungeons = new List<Scene>{ Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple };
-            return listOfDungeons.Contains(scene);
         }
 
         public static List<Actor> GetBlockedReplacementActors(this Scene scene, Actor replacedActor)

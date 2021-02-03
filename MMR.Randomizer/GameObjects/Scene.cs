@@ -128,7 +128,9 @@ namespace MMR.Randomizer.GameObjects
         // 11 dinofos room, 6/12 wizrobe
         [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9)] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
         [EnemizerSceneEnemyReplacementBlock(Actor.RedBubble, // spawns in hot lava, keep wood enemies out
-            Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos, Actor.Dinofos)]
+            Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos, Actor.Dinofos, Actor.Snapper)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Freezard, // weird behavior, if the killing blow of meg at long range can stop chests from spawning
+            Actor.PoeSisters)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.Bo, // spawns in hot lava, keep wood enemies out
         //    Actor.Demo_Kankyo)]
         //[EnemizerSceneEnemyReplacementBlock(Actor.Wolfos, // spawns in hot lava, keep wood enemies out
