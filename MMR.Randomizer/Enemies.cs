@@ -15,6 +15,8 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+// todo rename this actorutils.cs and move to MMR.Randomizer/Utils/
+
 namespace MMR.Randomizer
 {
     public class Enemies
@@ -126,6 +128,22 @@ namespace MMR.Randomizer
             }
             return returnActorTypes;
         }
+
+        const int ACTOR_OVERLAY_TBL = 0xC45510;
+        public static int GetOvlRamSize(int actorOvlTblIndex)
+        {
+            /// actor overlay size already exists in the actor overlay table, just look it up from the index
+            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(ACTOR_OVERLAY_TBL);
+            RomUtils.CheckCompressed(actorOvlTblFID);
+            // the object table exists inside of another file, we need the offset to the table
+            int actorOvlTblOffset = ACTOR_OVERLAY_TBL - RomData.MMFileList[actorOvlTblFID].Addr;
+            var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
+            // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb pppppppp iiiiiiii nnnnnnnn ???? cc ??
+            // A and B should be start and end of vram address, which is what we want as we want the ram size
+            return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 12)
+                       - ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8));
+        }
+
 
         public static int MergeRotationAndFlags(int rotation, int flags)
         {
@@ -809,13 +827,17 @@ namespace MMR.Randomizer
             WriteOutput(" time to generate candidate list: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             int loopsCount = 0;
-            int oldsize = sceneObjects.Select(x => ObjUtils.GetObjSize(x)).Sum();
+            int oldObjectSize = sceneObjects.Select(x => ObjUtils.GetObjSize(x)).Sum();
+            int oldActorSize = sceneEnemies.Select(u => u.ActorID).Distinct().Select(x => GetOvlRamSize(x)).Sum();
+            
             while (true)
             {
                 /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
                 
                 chosenReplacementObjects = new List<ValueSwap>();
-                int newsize = 0;
+                int newObjectSize = 0;
+                int newActorSize = 0;
+                var newActorList = new List<int>();
                 for (int i = 0; i < sceneObjects.Count; i++)
                 {
                     //////////////////////////////////////////////////////
@@ -840,7 +862,7 @@ namespace MMR.Randomizer
                     }
                     if (reducedCandidateList.Count == 0) // rarely, there are no available objects left
                     {
-                        newsize += 0x1000000; // should always error in the object size section
+                        newObjectSize += 0x1000000; // should always error in the object size section
                         continue; // this enemy was starved by previous options, force error and try again
                     }
 
@@ -850,9 +872,15 @@ namespace MMR.Randomizer
                     // keep track of sizes between this new enemy combo and what used to be in this scene
                     if (randomEnemy.ObjectID >= 4) // object 1 is gameplay keep, 3 is dungeon keep
                     {
-                        newsize += randomEnemy.ObjectSize;
+                        newObjectSize += randomEnemy.ObjectSize;
                     }
-                    //oldsize += originalEnemiesPerObject[i][0].ObjectSize;
+                    if (! newActorList.Contains(randomEnemy.ActorID))
+                    {
+                        newActorSize += GetOvlRamSize(randomEnemy.ActorID);
+                        newActorList.Append(randomEnemy.ActorID);
+                    }
+
+                    //oldObjectSize += originalEnemiesPerObject[i][0].ObjectSize;
                     // add random enemy to list
                     chosenReplacementObjects.Add( new ValueSwap() 
                     { 
@@ -879,12 +907,15 @@ namespace MMR.Randomizer
                     throw new Exception(error);
                 }
 
-                if (newsize <= oldsize || newsize < scene.SceneEnum.GetSceneObjLimit()
-                    && !(scene.SceneEnum == GameObjects.Scene.SnowheadTemple && newsize > 0x20000)) 
+                if (newObjectSize <= oldObjectSize || newObjectSize < scene.SceneEnum.GetSceneObjLimit()
+                    && (newActorSize <= (oldActorSize * 2))
+                    && (newObjectSize + newActorSize <= 0x31000) // TF is 318D0, SHT is 39DE0 in enemizer test 12.4
+                    && !(scene.SceneEnum == GameObjects.Scene.SnowheadTemple && newObjectSize > 0x20000)) //temporary, it bypasses logic above without actor size detection
                 {
                     //this should take into account map/scene size and size of all loaded actors...
                     //not really accurate but *should* work for now to prevent crashing
-                    WriteOutput("Ratio of new to old scene object volume: [" + ((float)newsize / (float)oldsize) + "] new size:" + newsize.ToString("X2")+ ", vanilla: " + oldsize.ToString("X2"));
+                    WriteOutput(" Ram scene objects Ratio: [" + ((float)newObjectSize / (float)oldObjectSize).ToString("F4") + "] new size:" + newObjectSize.ToString("X2") + ", vanilla: " + oldObjectSize.ToString("X2"));
+                    WriteOutput(" Ram scene actors  Ratio: [" + ((float)newActorSize / (float)oldActorSize).ToString("F4") + "] new size:" + newActorSize.ToString("X2") + ", vanilla: " + oldActorSize.ToString("X2"));
                     break;
                 }
             }
@@ -1008,10 +1039,10 @@ namespace MMR.Randomizer
                 {
                     WriteOutput("Old Enemy actor:["
                         + originalEnemiesPerObject[objCount][i].OldName + "][" 
-                        + originalEnemiesPerObject[objCount][i].Variants[0].ToString("X2")
+                        + originalEnemiesPerObject[objCount][i].Variants[0].ToString("X4")
                         + "] was replaced by new enemy: ["
                         + temporaryMatchEnemyList[i].Name + "]["
-                        + temporaryMatchEnemyList[i].Variants[0].ToString("X2") + "]");
+                        + temporaryMatchEnemyList[i].Variants[0].ToString("X4") + "]");
                 }
 
                 // add temp list back to chosenRepalcementEnemies

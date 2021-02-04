@@ -14,7 +14,7 @@ namespace MMR.Randomizer.Utils
             int objTableOffset = OBJECT_TABLE - RomData.MMFileList[objTableFID].Addr;
             var objTableData = RomData.MMFileList[objTableFID].Data;
             return (int)(ReadWriteUtils.Arr_ReadU32(objTableData, objTableOffset + (objTableIndex * 8) + 4)
-                - ReadWriteUtils.Arr_ReadU32(objTableData, objTableOffset + (objTableIndex * 8)));
+                       - ReadWriteUtils.Arr_ReadU32(objTableData, objTableOffset + (objTableIndex * 8)));
         }
 
         public static byte[] GetObjectData(int objectIndex)
