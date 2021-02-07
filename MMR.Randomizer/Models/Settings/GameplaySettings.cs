@@ -394,6 +394,8 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool FixEponaSword { get; set; } = true;
 
+        public ZoraEggsRequired ZoraEggsRequired { get; set; }
+
         #endregion
 
         #region Speedups

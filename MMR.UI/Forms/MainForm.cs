@@ -695,6 +695,8 @@ namespace MMR.UI.Forms
             cNutAndStickDrops.SelectedIndex = (int)_configuration.GameplaySettings.NutandStickDrops;
             cFloors.SelectedIndex = (int)_configuration.GameplaySettings.FloorType;
             cGossipHints.SelectedIndex = (int)_configuration.GameplaySettings.GossipHintStyle;
+            cZoraEggs.SelectedIndex = (int)_configuration.GameplaySettings.ZoraEggsRequired;
+
             cBlastCooldown.SelectedIndex = (int)_configuration.GameplaySettings.BlastMaskCooldown;
             cIceTraps.SelectedIndex = (int)_configuration.GameplaySettings.IceTraps;
             cIceTrapsAppearance.SelectedIndex = (int)_configuration.GameplaySettings.IceTrapAppearance;
@@ -1772,6 +1774,13 @@ namespace MMR.UI.Forms
             _configuration.CosmeticSettings.MagicSelection = selected.Name;
         }
 
+        private void cZoraEggs_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var combobox = (ComboBox)sender;
+            UpdateSingleSetting(() => _configuration.GameplaySettings.ZoraEggsRequired = (ZoraEggsRequired) combobox.SelectedIndex);
+
+        }
+
         private void cLowHealthSFXComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             // should probably make the object[] obj support both string and index to avoid this search, but it's low use
@@ -1797,5 +1806,6 @@ namespace MMR.UI.Forms
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
     }
 }

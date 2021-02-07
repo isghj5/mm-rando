@@ -54,6 +54,7 @@ void quest_items_after_song_of_time_clear(void) {
     if (MISC_CONFIG.quest_consume != QUEST_CONSUME_NEVER) {
         quest_item_storage_clear(&SAVE_FILE_CONFIG.quest_storage);
     }
+    set_starting_egg_count();
 }
 
 /**

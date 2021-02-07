@@ -116,6 +116,8 @@ namespace MMR.UI.Forms
             this.label4 = new System.Windows.Forms.Label();
             this.tabComfort = new System.Windows.Forms.TabPage();
             this.gSpeedUps = new System.Windows.Forms.GroupBox();
+            this.cZoraEggs = new System.Windows.Forms.ComboBox();
+            this.lZoraEggs = new System.Windows.Forms.Label();
             this.cFasterBank = new System.Windows.Forms.CheckBox();
             this.cSkipBeaver = new System.Windows.Forms.CheckBox();
             this.cFasterLabFish = new System.Windows.Forms.CheckBox();
@@ -1247,6 +1249,8 @@ namespace MMR.UI.Forms
             // 
             // gSpeedUps
             // 
+            this.gSpeedUps.Controls.Add(this.cZoraEggs);
+            this.gSpeedUps.Controls.Add(this.lZoraEggs);
             this.gSpeedUps.Controls.Add(this.cFasterBank);
             this.gSpeedUps.Controls.Add(this.cSkipBeaver);
             this.gSpeedUps.Controls.Add(this.cFasterLabFish);
@@ -1258,6 +1262,33 @@ namespace MMR.UI.Forms
             this.gSpeedUps.TabIndex = 37;
             this.gSpeedUps.TabStop = false;
             this.gSpeedUps.Text = "Speed Ups";
+            // 
+            // cZoraEggs
+            // 
+            this.cZoraEggs.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cZoraEggs.FormattingEnabled = true;
+            this.cZoraEggs.Location = new System.Drawing.Point(147, 160);
+            this.cZoraEggs.Name = "cZoraEggs";
+            this.cZoraEggs.Items.AddRange(new object[] {
+            "Seven",
+            "Six",
+            "Five",
+            "Four",
+            "Three",
+            "Two",
+            "One"});
+            this.cZoraEggs.Size = new System.Drawing.Size(121, 21);
+            this.cZoraEggs.TabIndex = 6;
+            this.cZoraEggs.SelectedIndexChanged += new System.EventHandler(this.cZoraEggs_SelectedIndexChanged);
+            // 
+            // lZoraEggs
+            // 
+            this.lZoraEggs.AutoSize = true;
+            this.lZoraEggs.Location = new System.Drawing.Point(144, 141);
+            this.lZoraEggs.Name = "lZoraEggs";
+            this.lZoraEggs.Size = new System.Drawing.Size(87, 13);
+            this.lZoraEggs.TabIndex = 5;
+            this.lZoraEggs.Text = "Zora Eggs Req\'d";
             // 
             // cFasterBank
             // 
@@ -2503,6 +2534,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.ComboBox cZoraEggs;
+        private System.Windows.Forms.Label lZoraEggs;
     }
 }
 

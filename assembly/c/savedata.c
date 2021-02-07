@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include "quest_items.h"
 #include "save_file.h"
+#include "zoraeggs.h"
 #include "z2.h"
 
 static bool is_owl_save_size(size_t size) {
