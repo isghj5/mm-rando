@@ -225,8 +225,8 @@ namespace MMR.Randomizer
             // biobaba in the right room spawns under the bridge, if octarock it pops up through the tile, move to the side of the bridge
             stonetowertempleScene.Maps[3].Actors[19].Position.x = 1530;
 
-            RomUtils.CheckCompressed(1320);
-            ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[1320].Data, (0x4 * 0x16) + (22 * 16) + 10, (ushort) MergeRotationAndFlags(new Random().Next(5) * 0x6 * 12, 0x8 | 0x4));
+            //RomUtils.CheckCompressed(1320);
+            //ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[1320].Data, (0x4 * 0x16) + (22 * 16) + 10, (ushort) MergeRotationAndFlags(new Random().Next(5) * 0x6 * 12, 0x8 | 0x4));
 
             // the dinofos spawn is near the roof in woodfall and secret shrine
             var woodfalltempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
@@ -237,9 +237,7 @@ namespace MMR.Randomizer
             var oceanspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.OceanSpiderHouse.FileID());
             var storageroomBo = oceanspiderhouseScene.Maps[5].Actors[2];
             // lower to the floor 
-            storageroomBo.Position.x = -726;
-            storageroomBo.Position.y = -118;
-            storageroomBo.Position.z = -1651;
+            storageroomBo.Position = new vec16(-726, -118, -1651);
 
             // in order to randomize dog, without adding that dog back in because it can crash, we need to change the vars on the dog we want changed
             //  should add a "randomize but do not-reuse vars" attribute to get around this, but there just aren't enough uses right this second
@@ -843,13 +841,13 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
-                    /* if (scene.File == GameObjects.Scene.SnowheadTemple.FileID()
-                        && sceneObjects[i] == GameObjects.Actor.RedBubble.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                        && sceneObjects[i] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[i],
-                            NewV = GameObjects.Actor.Snapper.ObjectIndex()
+                            NewV = GameObjects.Actor.Tektite.ObjectIndex()
                         });
                         continue;
                     } // */
