@@ -20,7 +20,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.Woodfall)]
         Flame = 0x4, //En_Light
 
-        //[ActorizerEnabled]
+        [ActorizerEnabled]
         [ObjectListIndex(0xC)]
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
         // addresses make no sense
@@ -29,6 +29,14 @@ namespace MMR.Randomizer.GameObjects
         //0x5 is woodentype, 0xC is switch activated
         // gomess is 0x27BE, which does not spawn util you kill him, so obviously the top byte is NOT that simple in MM, snowhead is 27BE
         //[GroundVariants(0x50DD, 0x535E, 0x56BF)]
+        [GroundVariants(0x47BE, 0x40DD, 0x435E, 0x46BF,
+            0x4F2E, 0x411E, 0x49A1, 0x4579,
+            0x4A2E, 0x461E, 0x48A1, 0x4379,
+            0x4FEE, 0x418E, 0x4991, 0x4559)]
+        [VariantsWithRoomMax( max:1, variant: 0x47BE, 0x40DD, 0x435E, 0x46BF,
+            0x4F2E, 0x411E, 0x49A1, 0x4579,
+            0x4A2E, 0x461E, 0x48A1, 0x4379,
+            0x4FEE, 0x418E, 0x4991, 0x4559)]
         [UnkillableAllVariants]
         TreasureChest = 0x6, // En_Box
 
@@ -222,7 +230,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(MothSwarm, CompanionAlignment.Above, ourVariant: -1,
            variant: 1, 2, 3, 4, 7)] // they're free, and they are moths, makes sense
         [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SouthernSwamp, Scene.SouthClockTown, Scene.DekuShrine, Scene.WestClockTown,
-            Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayTemple, Scene.OceanSpiderHouse, Scene.BeneathTheWell )]
+            Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast, Scene.GreatBayTemple, Scene.OceanSpiderHouse, Scene.BeneathTheWell )]
         Torch = 0x39, // Obj_Syokudai
 
         [EnemizerEnabled]
@@ -1243,6 +1251,17 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [EnemizerScenesExcluded(Scene.TerminaField)] // do not remove original, esp with rupeeland coming soon
         Takkuri = 0x291,
+
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x26E)]
+        [WallVariants(0x2)]
+        Windows = 0x294,
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x18)]
+        [GroundVariants(0)]
+        DressMannequin = 0x2A1,
 
         // seriously? this is a different actor?
         // they are all sitting down though, so boring for now until we add actor moving for ledge sitting
