@@ -1,6 +1,7 @@
 ﻿using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Attributes.Actor;
 using MMR.Randomizer.Models.Vectors;
+using System.Security.Cryptography.X509Certificates;
 
 namespace MMR.Randomizer.GameObjects
 {
@@ -18,7 +19,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x7F4, 0x7FE)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.Woodfall)]
-        Flame = 0x4, //En_Light
+        Flame = 0x4, // En_Light
 
         [ActorizerEnabled]
         [ObjectListIndex(0xC)]
@@ -75,6 +76,22 @@ namespace MMR.Randomizer.GameObjects
         Keese = 0xC,
 
         [ActorizerEnabled]
+        [ObjectListIndex(1)]
+        // 400E is child cutscene, should just sit there and neigh
+        // Gorman track has a lot??
+        //  0, 0100, 96FF, 4605, 3c05, 4605, 9605,5005
+        // 96FF/3c05 did not spawn in field, 5005/4605 are ridable epona, both can exist and are ridable
+        // experimental: 9605 did not spawn, neither did 0x3C00, 
+        // 46FF did spawn just fine
+        // 0/100 are crash I think
+        [GroundVariants(0x400E, 0x4600, 0x5005)]
+        //[OnlyOneActorPerRoom]
+        Horse = 0xD, // En_Horse
+
+        [ObjectListIndex(0x1)]
+        Item00 = 0xE, // En_Item00
+
+        [ActorizerEnabled]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
         // 4 is group of fairies out of a fountain, 7 is large healing fairy, 9 is yellow fairy
         [GroundVariants(4, 7, 9)]
@@ -83,7 +100,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 2, variant: 7)] // maybe limit the secret menu fairies
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.BeneathTheWell)] // dont remove from well
-        Fairy = 0x10,
+        Fairy = 0x10, // En_Elf
 
         [ActorizerEnabled]
         [FileID(54)]
@@ -116,9 +133,9 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)] // too big, can block the butler race
         Peahat = 0x14,
 
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // not sure what to believe anymore, labfish is a different actor, school of fish is different, lets turn this off
         [ObjectListIndex(0x16B)] // gameplay keep obj 1
-        [WaterVariants(2,0)] // 2 is the lab fish
+        [WaterVariants(0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.MarineLab)]
         Fish = 0x17,
@@ -176,6 +193,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, 
             Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
         Skulltula = 0x24,
+
+        //[ActorizerEnabled]
+        [ObjectListIndex(1)]
+        //[GroundVariants()]
+        Sign = 0x26, // En_A_Obj
 
         //[EnemizerEnabled] // sometimes crash, cause unknown
         [ActorInitVarOffset(0x1CC0)]
@@ -916,6 +938,12 @@ namespace MMR.Randomizer.GameObjects
         // 1, 0xFFF3 do not load, 10 just crashes
         Dampe = 0x1CA,
 
+        [ObjectListIndex(0x1AD)]
+        // FF01 is the ice blocking the path north
+        // 0x5AXX seems to be the blocking path ice walls from snowhead temple
+        //[GroundVariants(0x5A00)] 
+        IceBlock = 0x1C8, // Obj_BigIcicle
+
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1FD0)]
         [FileID(426)]
@@ -1228,7 +1256,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 4)] // fairy fountain
         [OnlyOneActorPerRoom]
-        ButlersSon = 0x289,
+        ButlersSon = 0x289, // En_Nnh
 
         [ActorizerEnabled]
         [ObjectListIndex(0x264)]
@@ -1238,6 +1266,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFFFF)] // unkown, normally summoned by bushes?
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
+        // for now, don't place in really small scenes where there is almost never enough space for keaton and keaton grass to spawn normally
+        [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.ClockTowerInterior, Scene.NorthClockTown, Scene.MountainVillageSpring, Scene.TwinIslands, Scene.OceanSpiderHouse)]
         //Keaton = 0x289C, // En_Kitan
         Keaton = 0x2B1, // THIS IS A LIE, its a trick until I can force second objects to load, but we do NOT want the actual actor to load for keaton
         // 2b1 is really bomb shop proprietor
@@ -1252,14 +1282,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.TerminaField)] // do not remove original, esp with rupeeland coming soon
         Takkuri = 0x291,
 
-
         [ActorizerEnabled]
         [ObjectListIndex(0x26E)]
         [WallVariants(0x2)]
         Windows = 0x294,
 
-        [ActorizerEnabled]
-        [ObjectListIndex(0x18)]
+        //[ActorizerEnabled]
+        [ObjectListIndex(0x18)] // might also need the sunmask object
+        // 0 does not spawn, might need another object
         [GroundVariants(0)]
         DressMannequin = 0x2A1,
 

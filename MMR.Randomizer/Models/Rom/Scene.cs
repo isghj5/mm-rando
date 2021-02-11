@@ -27,6 +27,17 @@ namespace MMR.Randomizer.Models.Rom
         {
             return SpecialObject == SceneSpecialObject.FieldKeep;
         }
+
+        public List<Actor> GetAllActors()
+        {
+            List<Actor> actorList = new List<Actor>();
+            for(int mapIndex = 0; mapIndex < Maps.Count; ++mapIndex)
+            {
+                actorList.AddRange(Maps[mapIndex].Actors);
+            }
+            return actorList;
+        }
+
     }
 
     public class SceneSetup
