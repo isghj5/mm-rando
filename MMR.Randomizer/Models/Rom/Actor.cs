@@ -23,7 +23,7 @@ namespace MMR.Randomizer.Models.Rom
         public int Room;           // this specific actor, which map/room was it in
         public int RoomActorIndex; // the index of this actor in its room's actor list
         public int Type;
-        public int Stationary;
+        //public int Stationary;
         public vec16 Position = new vec16();
         public vec16 Rotation = new vec16();
         public List<GameObjects.Scene> SceneExclude = new List<GameObjects.Scene>();
