@@ -249,6 +249,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x287F east clocktown
         [GroundVariants(0x1180, 0x289, 0x287F)]
         [CompanionActor(MothSwarm, variant: 1, 2, 3, 4, 7)]
+        [UnkillableAllVariants]
         [AlignedCompanionActor(MothSwarm, CompanionAlignment.Above, ourVariant: -1,
            variant: 1, 2, 3, 4, 7)] // they're free, and they are moths, makes sense
         [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SouthernSwamp, Scene.SouthClockTown, Scene.DekuShrine, Scene.WestClockTown,
