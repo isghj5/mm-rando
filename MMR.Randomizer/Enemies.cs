@@ -249,6 +249,13 @@ namespace MMR.Randomizer
             var swampspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
             swampspiderhouseScene.Maps[0].Actors[2].Variants[0] = 0x3FF;
 
+            var greatbaytempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayTemple.FileID());
+            // the bombchu along the green pipe in the double seesaw room needs to be moved in case its an unmovable enemy
+            greatbaytempleScene.Maps[10].Actors[3].Position = new vec16(3525, -180, 630);
+            // the bombchu along the red pipe in the pre-wart room needs the same kind of moving
+            greatbaytempleScene.Maps[6].Actors[7].Position = new vec16(-1840, -570, -870);
+
+
             // test bonk spider
             /*
             var northclocktownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.NorthClockTown.FileID()).Maps[0];
@@ -890,13 +897,13 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
-                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID()
-                        && sceneObjects[i] == GameObjects.Actor.Leever.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
-                            OldV = sceneObjects[i],
-                            NewV = GameObjects.Actor.ButlersSon.ObjectIndex()
+                            OldV = sceneObjects[objCount],
+                            NewV = GameObjects.Actor.LaundryPoolBell.ObjectIndex()
                         });
                         continue;
                     } // */

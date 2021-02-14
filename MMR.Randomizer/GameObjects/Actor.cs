@@ -323,7 +323,7 @@ namespace MMR.Randomizer.GameObjects
         // grottos are fine though, so is fade out warp, so only certain scene transitions are an issue wtf
         // WARNING: the lens grotto might be an issue if you ever randomize something in there that can have free enemies, 
         //   spiders are currently not limited so never get trimmed
-        [EnemizerScenesPlacementBlock(Scene.Snowhead, Scene.TwinIslands, Scene.MountainVillage, Scene.GoronVillage, Scene.PathToMountainVillage,
+        [EnemizerScenesPlacementBlock(Scene.Snowhead, Scene.TwinIslands, Scene.MountainVillage, Scene.GoronVillage, Scene.PathToMountainVillage, Scene.PathToSnowhead,
             Scene.SnowheadTemple, Scene.GoronShrine, Scene.MountainSmithy)] // no snow, but entering from snowy area is also crash
         Demo_Kankyo = 0x49, // lost woods living fairy dust
 
@@ -1235,12 +1235,19 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(7, 5)]
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.GreatBayCoast, Scene.ZoraCape)]
-        Seagulls = 0x267,
+        Seagulls = 0x267, // En_Tanron4
 
         //[ActorizerEnabled] // didn't spawn with 0, don't know what vars work
         [ObjectListIndex(0x240)]
         [FlyingVariants(0)]
-        AgressiveBees = 0x269,
+        AgressiveBees = 0x269, // En_Tanron6
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x243)]
+        [UnkillableAllVariants]
+        [GroundVariants(0xF)] // only one too
+        [VariantsWithRoomMax(max: 10, variant: 0xF)]
+        LaundryPoolBell = 0x270, // En_Cha
 
         //[ActorizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
         [FileID(601)]
