@@ -658,6 +658,7 @@ namespace MMR.Randomizer
             else // empty actor
             {
                 targetActor.ChangeActor(GameObjects.Actor.Empty, vars: 0);
+                //targetActor.ChangeActor(GameObjects.Actor.Horse, vars: 0x4600); // debug for free actors
             }
         }
 
@@ -773,7 +774,7 @@ namespace MMR.Randomizer
             StringBuilder log = new StringBuilder();
             void WriteOutput(string str)
             {
-                Debug.WriteLine(str);
+                //Debug.WriteLine(str);
                 log.AppendLine(str);
             }
             void FlushLog()
@@ -897,16 +898,18 @@ namespace MMR.Randomizer
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
+                    #if DEBUG
                     if (scene.File == GameObjects.Scene.TerminaField.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.LaundryPoolBell.ObjectIndex()
+                            NewV = GameObjects.Actor.AnjuWeddingDress.ObjectIndex()
                         });
                         continue;
-                    } // */
+                    }
+                    #endif
 
                     var reducedCandidateList = actorCandidatesLists[objCount].ToList();
                     foreach (var objectSwap in chosenReplacementObjects)
