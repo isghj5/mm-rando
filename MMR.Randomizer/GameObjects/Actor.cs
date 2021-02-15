@@ -85,6 +85,8 @@ namespace MMR.Randomizer.GameObjects
         // 46FF did spawn just fine
         // 0/100 are crash I think
         [GroundVariants(0x400E, 0x4600, 0x5005)]
+        // if you leave or enter a room after spawning epona you crash, not sure why, but so far the known areas are all dungeons
+        [EnemizerScenesPlacementBlock(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple)]
         //[OnlyOneActorPerRoom]
         Horse = 0xD, // En_Horse
 
@@ -1247,6 +1249,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [GroundVariants(0xF)] // only one too
         [VariantsWithRoomMax(max: 10, variant: 0xF)]
+        [EnemizerScenesExcluded(Scene.LaundryPool)]
         LaundryPoolBell = 0x270, // En_Cha
 
         //[ActorizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
@@ -1294,6 +1297,12 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x26E)]
         [WallVariants(0x2)]
         Windows = 0x294,
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x15)]
+        [GroundVariants(0)]
+        [UnkillableAllVariants]
+        AnjuWeddingDress = 0x299,
 
         //[ActorizerEnabled]
         [ObjectListIndex(0x18)] // might also need the sunmask object
