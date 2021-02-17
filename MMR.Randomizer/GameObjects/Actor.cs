@@ -326,7 +326,8 @@ namespace MMR.Randomizer.GameObjects
         // WARNING: the lens grotto might be an issue if you ever randomize something in there that can have free enemies, 
         //   spiders are currently not limited so never get trimmed
         [EnemizerScenesPlacementBlock(Scene.Snowhead, Scene.TwinIslands, Scene.MountainVillage, Scene.GoronVillage, Scene.PathToMountainVillage, Scene.PathToSnowhead,
-            Scene.SnowheadTemple, Scene.GoronShrine, Scene.MountainSmithy)] // no snow, but entering from snowy area is also crash
+            Scene.GoronShrine, Scene.MountainSmithy,   // no snow, but entering from snowy area is also crash
+            Scene.SnowheadTemple, Scene.WoodfallTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)] // with randomized dungeons, entering from snowy area
         Demo_Kankyo = 0x49, // lost woods living fairy dust
 
         [EnemizerEnabled]
