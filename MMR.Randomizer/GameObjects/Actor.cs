@@ -197,7 +197,7 @@ namespace MMR.Randomizer.GameObjects
         Skulltula = 0x24,
 
         //[ActorizerEnabled]
-        [ObjectListIndex(1)]
+        [ObjectListIndex(0xFC)] // the spreadsheet thinks this is free but I dont think so
         //[GroundVariants()]
         Sign = 0x26, // En_A_Obj
 
@@ -446,7 +446,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         Ruto = 0x69, // En_Ru
 
-        [EnemizerEnabled]
+        //[EnemizerEnabled]
         [ActorInitVarOffset(0x2330)]
         [FileID(112)]
         [ObjectListIndex(0xAB)]
@@ -536,6 +536,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.CuccoShack)]
         CuccoChick = 0x9D,
+
+        //[ActorizerEnabled] // puff of smoke, and it somehow ruins day1->2 transition wtf
+        [ObjectListIndex(0x1)] // gameplay keep obj 1
+        //[GroundVariants(0)] // unknown vars
+        //[UnkillableAllVariants]
+        En_Clear_Tag = 0xA2, // en_clear_tag in OOT was arwing, what is it in here?
 
         [ActorizerEnabled]
         [FileID(151)]
@@ -790,6 +796,13 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:1, 0xFF34)] // swarm
         //[EnemizerScenesExcluded(Scene.InvertedStoneTower)] // think this is here for death, but death has mini-death for his bats...?
         BadBat = 0x15B,
+
+
+        [ObjectListIndex(1)] // not sure this isn't an error
+        // grave dissapears when we remove the seagull object? I think? why the heck would they use the same object
+        // spreadsheet thinks 0x206 could be it
+        MikauGrave = 0x15C, // En_Sekihi
+
 
         [ActorInitVarOffset(0x37D0)]
         [FileID(315)]
@@ -1088,7 +1101,8 @@ namespace MMR.Randomizer.GameObjects
         // 1 has a spawn flag that stops respawning once you kill one
         [FlyingVariants(1, 0xFF00)] // 1 is a possible type? well: ff00
         [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
-        [VariantsWithRoomMax(max: 1, variant: 1, 0xFF00)]
+        //[VariantsWithRoomMax(max: 1, variant: 1, 0xFF00)]
+        [OnlyOneActorPerRoom] // if both 01 and ff00 try to spawn, only one will in some places, reported bug: controller lock
         [CompanionActor(Flame, 0x7FE)] // blue flames
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208,
