@@ -255,6 +255,9 @@ namespace MMR.Randomizer
             // the bombchu along the red pipe in the pre-wart room needs the same kind of moving
             greatbaytempleScene.Maps[6].Actors[7].Position = new vec16(-1840, -570, -870);
 
+            var grottosScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Grottos.FileID());
+            grottosScene.Maps[13].Actors[1].Variants[0] = 1; // change the grass in peahat grotto to drop items like TF grass
+
 
             // test bonk spider
             /*
@@ -408,10 +411,9 @@ namespace MMR.Randomizer
             coastScene.Maps[0].Actors[20].Variants[0] = 2;
 
             // cleared coast likeliks
-            coastScene.Maps[0].Actors[43].Variants[0] = 2;
-            coastScene.Maps[0].Actors[44].Variants[0] = 2;
-            coastScene.Maps[0].Actors[46].Variants[0] = 2;
-
+            coastScene.Maps[1].Actors[43].Variants[0] = 2;
+            coastScene.Maps[1].Actors[44].Variants[0] = 2;
+            coastScene.Maps[1].Actors[46].Variants[0] = 2;
         }
 
         private static void EnableDampeHouseWallMaster()
@@ -899,13 +901,13 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.Grottos.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.Bo.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.AnjuWeddingDress.ObjectIndex()
+                            NewV = GameObjects.Actor.OwlStatue.ObjectIndex()
                         });
                         continue;
                     }
@@ -1074,6 +1076,15 @@ namespace MMR.Randomizer
             } // end while searching for compatible object/actors
 
             WriteOutput(" Loops used for match candidate: " + loopsCount);
+
+            #if DEBUG
+            if (scene.SceneEnum == GameObjects.Scene.Grottos) // force specific variant for debugging
+            {
+                chosenReplacementEnemies[19].ActorID = (int)GameObjects.Actor.Horse;
+                chosenReplacementEnemies[19].ActorEnum = GameObjects.Actor.Horse;
+                chosenReplacementEnemies[19].Variants[0] = 0x400E;
+            }
+            #endif
 
             // print debug enemy locations
             for (int i = 0; i < chosenReplacementEnemies.Count; i++)
