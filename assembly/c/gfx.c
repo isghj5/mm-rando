@@ -1,8 +1,11 @@
 #include "gfx.h"
 #include "util.h"
+#include "z2.h"
 
 extern char DPAD_TEXTURE;
 #define dpad_texture_raw ((u8 *)&DPAD_TEXTURE)
+
+extern u8 FONT_TEXTURE[];
 
 Gfx setup_db[] =
 {
@@ -26,6 +29,26 @@ Gfx setup_db[] =
 
 sprite_t dpad_sprite = {
     NULL, 32, 32, 1,
+    G_IM_FMT_RGBA, G_IM_SIZ_32b, 4
+};
+
+sprite_t font_sprite = {
+    NULL, 8, 14, 95,
+    G_IM_FMT_IA, G_IM_SIZ_8b, 1
+};
+
+sprite_t icon_sprite = {
+    NULL, 32, 32, 97,
+    G_IM_FMT_RGBA, G_IM_SIZ_32b, 4
+};
+
+sprite_t icon_24_sprite = {
+    NULL, 24, 24, 12,
+    G_IM_FMT_RGBA, G_IM_SIZ_32b, 4
+};
+
+sprite_t fairy_sprite = {
+    NULL, 32, 24, 4,
     G_IM_FMT_RGBA, G_IM_SIZ_32b, 4
 };
 
@@ -83,4 +106,21 @@ void gfx_init() {
     // Allocate space for item textures
     int size = sprite_bytes(&g_item_textures_sprite);
     g_item_textures_sprite.buf = heap_alloc(size);
+
+    // Initialize fairy sprite.
+    int fairy_bytes = sprite_bytes(&fairy_sprite);
+    fairy_sprite.buf = heap_alloc(fairy_bytes);
+    u8 *temp = (u8*)0x80780000;
+    u32 prom = z2_GetFilePhysAddr(0xA0A000);
+    u32 data_offset = 0x1B80;
+    z2_Yaz0_LoadAndDecompressFile(prom, temp, data_offset + fairy_bytes);
+    z2_memcpy(fairy_sprite.buf, temp + data_offset, fairy_bytes);
+
+    // Initialize font texture buffer.
+    int font_bytes = sprite_bytes(&font_sprite);
+    font_sprite.buf = heap_alloc(font_bytes);
+    for (int i = 0; i < font_bytes / 2; i++) {
+        font_sprite.buf[2*i] = (FONT_TEXTURE[i] >> 4) | 0xF0;
+        font_sprite.buf[2*i + 1] = FONT_TEXTURE[i] | 0xF0;
+    }
 }

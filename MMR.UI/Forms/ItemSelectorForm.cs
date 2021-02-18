@@ -471,7 +471,7 @@ namespace MMR.UI.Forms
 
         private void lItems_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (lItems.CheckBoxes)
+            if (lItems.CheckBoxes || lItems.SelectedIndices.Count == 0)
             {
                 return;
             }

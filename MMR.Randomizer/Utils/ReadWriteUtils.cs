@@ -1,10 +1,5 @@
-﻿using MMR.Randomizer.Models;
-using MMR.Randomizer.Models.Rom;
-using MMR.Randomizer.Utils;
-using System;
-using System.Collections.ObjectModel;
+﻿using System;
 using System.IO;
-using System.Linq;
 
 namespace MMR.Randomizer.Utils
 {
@@ -76,6 +71,14 @@ namespace MMR.Randomizer.Utils
             int f = RomUtils.GetFileIndexForWriting(Addr);
             int dest = Addr - RomData.MMFileList[f].Addr;
             Arr_Insert(val, 0, val.Length, RomData.MMFileList[f].Data, dest);
+        }
+
+        public static void WriteToROM(int Addr, ReadOnlyMemory<byte> val)
+        {
+            int f = RomUtils.GetFileIndexForWriting(Addr);
+            int dest = Addr - RomData.MMFileList[f].Addr;
+            var memory = new Memory<byte>(RomData.MMFileList[f].Data);
+            val.CopyTo(memory.Slice(dest));
         }
 
         public static void Arr_Insert(byte[] src, int start, int len, byte[] dest, int addr)
@@ -197,6 +200,45 @@ namespace MMR.Randomizer.Utils
             for (var i = 0; i < amount; i++)
                 dest[i] = src[i];
             return dest;
+        }
+
+        /// <summary>
+        /// Write 16-bit <see cref="ushort"/> value to ROM as big-endian.
+        /// </summary>
+        /// <param name="addr">VROM address</param>
+        /// <param name="value">Value</param>
+        public static void WriteU16ToROM(int addr, ushort value)
+        {
+            var bytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            WriteToROM(addr, bytes);
+        }
+
+        /// <summary>
+        /// Write 32-bit <see cref="uint"/> value to ROM as big-endian.
+        /// </summary>
+        /// <param name="addr">VROM address</param>
+        /// <param name="value">Value</param>
+        public static void WriteU32ToROM(int addr, uint value)
+        {
+            var bytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            WriteToROM(addr, bytes);
+        }
+
+        /// <summary>
+        /// Write 64-bit <see cref="ulong"/> value to ROM as big-endian.
+        /// </summary>
+        /// <param name="addr">VROM address</param>
+        /// <param name="value">Value</param>
+        public static void WriteU64ToROM(int addr, ulong value)
+        {
+            var bytes = BitConverter.GetBytes(value);
+            if (BitConverter.IsLittleEndian)
+                Array.Reverse(bytes);
+            WriteToROM(addr, bytes);
         }
     }
 

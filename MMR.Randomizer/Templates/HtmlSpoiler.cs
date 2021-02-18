@@ -84,14 +84,14 @@ namespace MMR.Randomizer.Templates
             this.Write("</span><br/>\r\n<br/>\r\n<button type=\"button\" onclick=\"toggleDarkLight()\" title=\"Tog" +
                     "gle dark/light mode\">Toggle Dark Theme</button>\r\n<br/>\r\n<br/>\r\n<label><b>Spoiler" +
                     " Log State: </b></label><input id=\"spoilerLogState\" type=\"text\"/><br/>\r\n");
- if (spoiler.RandomizeDungeonEntrances) { 
+ if (spoiler.DungeonEntrances.Any()) { 
 
             this.Write("<h2>Dungeon Entrance Replacements</h2>\r\n<table border=\"1\" class=\"item-replacement" +
                     "s\">\r\n\t<tr>\r\n\t\t<th>Entrance</th>\r\n\t    <th></th>\r\n\t\t<th>New Destination</th>\r\n\t</" +
                     "tr>\r\n");
-		 for (int i = 0; i < 4; i++) {
-            var entrance = spoiler.Entrances[i];
-            var destination = spoiler.Entrances[spoiler.NewDestinationIndices[i]];
+		 foreach (var kvp in spoiler.DungeonEntrances) {
+            var entrance = kvp.Key;
+            var destination = kvp.Value;
             this.Write("\t<tr data-id=\"");
             this.Write(this.ToStringHelper.ToStringWithCulture((int)destination));
             this.Write("\" data-newlocationid=\"");

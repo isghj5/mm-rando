@@ -68,7 +68,7 @@ namespace MMR.UI.Forms
             this.KeyDown += MainForm_KeyDown_CtrlS;
 
 
-            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Enemizer Test 13.4";
+            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion}";
         }
 
         private void InitializeTooltips()
@@ -614,20 +614,9 @@ namespace MMR.UI.Forms
             bgWorker.RunWorkerAsync();
         }
 
-        private void bRandomise_MouseDown(object sender, MouseEventArgs e)
+        private void bRandomise_Click(object sender, EventArgs e)
         {
-            // if right click, generate quickly without file select
-            Randomize(e.Button == MouseButtons.Right);
-        }
-
-        private void bReroll_MouseDown(object sender, MouseEventArgs e)
-        {
-            tSeed.Text = (new Random()).Next(2147483647).ToString();
-
-            if (e.Button == MouseButtons.Right)  // reroll seed and instant re-generate
-            {
-                Randomize(true);
-            }
+            Randomize();
         }
 
         private void bApplyPatch_Click(object sender, EventArgs e)
@@ -1526,7 +1515,6 @@ namespace MMR.UI.Forms
             cDrawHash.Enabled = v;
 
             bRandomise.Enabled = v;
-            bReroll.Enabled = v;
             tSeed.Enabled = v;
             tSettings.Enabled = v;
             bLoadPatch.Enabled = v;
@@ -1590,10 +1578,7 @@ namespace MMR.UI.Forms
 
             _configuration.OutputSettings.InputPatchFilename = null;
 
-            if (File.Exists("SeedDone.wav"))
-                new SoundPlayer("SeedDone.wav").Play();  // specific sfx file
-            else
-                SystemSounds.Asterisk.Play();             // System sound
+            MessageBox.Show("Generation complete!", "Success", MessageBoxButtons.OK, MessageBoxIcon.None);
         }
 
         private bool CheckLogicFileExists()

@@ -1,8 +1,11 @@
-﻿using MMR.Randomizer.Models.Rom;
+﻿using MMR.Randomizer.GameObjects;
+using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Utils;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 
 namespace MMR.Randomizer.Asm
@@ -40,6 +43,16 @@ namespace MMR.Randomizer.Asm
             }
         }
 
+        private Symbols()
+            : this(new Dictionary<string, uint>())
+        {
+        }
+
+        private Symbols(Dictionary<string, uint> symbols)
+        {
+            this._symbols = symbols;
+        }
+
         /// <summary>
         /// Check if a certain symbol exists.
         /// </summary>
@@ -72,6 +85,53 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
+        /// Create initial mimic item table for ice traps.
+        /// </summary>
+        /// <returns>Mimic table.</returns>
+        public MimicItemTable CreateMimicItemTable()
+        {
+            var addr = this["ITEM_OVERRIDE_COUNT"];
+            var count = ReadWriteUtils.ReadU32((int)addr);
+            return new MimicItemTable((int)count);
+        }
+
+        /// <summary>
+        /// Write <see cref="MimicItemTable"/> table to ROM.
+        /// </summary>
+        /// <param name="table">Table</param>
+        public void WriteMimicItemTable(MimicItemTable table)
+        {
+            var addr = this["ITEM_OVERRIDE_ENTRIES"];
+            ReadWriteUtils.WriteToROM((int)addr, table.Build());
+        }
+
+        /// <summary>
+        /// Create initial extended <see cref="MessageTable"/> for extra messages.
+        /// </summary>
+        /// <returns>Extended MessageTable</returns>
+        public MessageTable CreateInitialExtMessageTable()
+        {
+            var addr = this["EXT_MSG_TABLE_COUNT"];
+            var count = ReadWriteUtils.ReadU32((int)addr);
+            return new MessageTable(count);
+        }
+
+        /// <summary>
+        /// Write extended <see cref="MessageTable"/>.
+        /// </summary>
+        /// <param name="table">Extended MessageTable</param>
+        public void WriteExtMessageTable(MessageTable table)
+        {
+            // Write extended message table entries, and append new file for extended message table data.
+            var addr = this["EXT_MSG_TABLE"];
+            var index = MessageTable.WriteExtended(table, addr);
+
+            // Write index of message table data.
+            var fileIndexAddr = this["EXT_MSG_DATA_FILE"];
+            ReadWriteUtils.WriteU32ToROM((int)fileIndexAddr, (uint)index);
+        }
+
+        /// <summary>
         /// Write an <see cref="AsmConfig"/> structure to ROM.
         /// </summary>
         /// <param name="symbol">Symbol</param>
@@ -82,6 +142,16 @@ namespace MMR.Randomizer.Asm
             var version = ReadWriteUtils.ReadU32((int)(addr + 4));
             var bytes = config.ToBytes(version);
             ReadWriteUtils.WriteToROM((int)(addr + 4), bytes);
+        }
+
+        /// <summary>
+        /// Write bytes for Clock Town stray fairy icon to ROM.
+        /// </summary>
+        public void WriteClockTownStrayFairyIcon()
+        {
+            var addr = this["TOWN_FAIRY_BYTES"];
+            var icon = ImageUtils.GetClockTownStrayFairyIcon();
+            ReadWriteUtils.WriteToROM((int)addr, icon);
         }
 
         /// <summary>
@@ -153,6 +223,15 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
+        /// Write a <see cref="MMRConfig"/> to the ROM.
+        /// </summary>
+        /// <param name="config">MMR config</param>
+        public void WriteMMRConfig(MMRConfig config)
+        {
+            WriteAsmConfig("MMR_CONFIG", config);
+        }
+
+        /// <summary>
         /// Write the <see cref="MiscConfig"/> hash bytes without overwriting other parts of the structure.
         /// </summary>
         /// <param name="hash">Hash bytes</param>
@@ -161,6 +240,16 @@ namespace MMR.Randomizer.Asm
             var bytes = ReadWriteUtils.CopyBytes(hash, 0x10);
             var addr = this["MISC_CONFIG"];
             ReadWriteUtils.WriteToROM((int)(addr + 8), bytes);
+        }
+
+        /// <summary>
+        /// Write a <see cref="WorldColorsConfig"/> to the ROM.
+        /// </summary>
+        /// <param name="config">World Colors config.</param>
+        public void WriteWorldColorsConfig(WorldColorsConfig config)
+        {
+            config.PatchObjects();
+            WriteAsmConfig("WORLD_COLOR_CONFIG", config);
         }
 
         /// <summary>
@@ -218,6 +307,24 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
+        /// Try and write a <see cref="WorldColorsConfig"/> to the ROM.
+        /// </summary>
+        /// <param name="config">World Colors config.</param>
+        /// <returns>True if successful, false if the <see cref="WorldColorsConfig"/> symbol was not found.</returns>
+        public bool TryWriteWorldColorsConfig(WorldColorsConfig config)
+        {
+            try
+            {
+                WriteWorldColorsConfig(config);
+                return true;
+            }
+            catch (KeyNotFoundException)
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
         /// Load <see cref="Symbols"/> from serialized data.
         /// </summary>
         /// <param name="bytes">Bytes</param>
@@ -251,36 +358,11 @@ namespace MMR.Randomizer.Asm
         /// <returns>Symbols</returns>
         public static Symbols FromJSON(string json)
         {
-            var symbols = new Symbols();
-
-            // This is a horrible hack for this specific JSON input
-            var lines = json.Split('\n');
-            foreach (var line in lines)
-            {
-                var trimmed = line.Trim();
-
-                // Ignore empty line, brackets
-                if (trimmed == "" || trimmed == "{" || trimmed == "}")
-                    continue;
-
-                // Get name & value fields
-                var fields = trimmed.Split(':');
-                var name = fields[0].Trim();
-                var value = fields[1].Trim();
-
-                // If ends with "," remove it
-                if (value.EndsWith(","))
-                    value = value.Substring(0, value.Length - 1).Trim();
-
-                // Remove surrounding quotes
-                name = name.Replace("\"", "");
-                value = value.Replace("\"", "");
-
-                // Add result to dictionary
-                symbols._symbols.Add(name, Convert.ToUInt32(value, 16));
-            }
-
-            return symbols;
+            var jobject = JObject.Parse(json);
+            var result = jobject.ToObject<Dictionary<string, string>>()
+                .Select(x => new KeyValuePair<string, uint>(x.Key, Convert.ToUInt32(x.Value, 16)))
+                .ToDictionary(x => x.Key, x => x.Value);
+            return new Symbols(result);
         }
 
         /// <summary>
@@ -315,7 +397,7 @@ namespace MMR.Randomizer.Asm
         /// <returns>Symbols</returns>
         public static Symbols Load()
         {
-            return FromJSON(Properties.Resources.ASM_SYMBOLS);
+            return FromJSON(Resources.asm.symbols);
         }
 
         /// <summary>
@@ -353,7 +435,9 @@ namespace MMR.Randomizer.Asm
         /// <param name="options">Options</param>
         public void ApplyConfiguration(AsmOptionsGameplay options)
         {
+            this.WriteClockTownStrayFairyIcon();
             this.WriteMiscConfig(options.MiscConfig);
+            this.WriteMMRConfig(options.MMRConfig);
         }
 
         /// <summary>
@@ -364,6 +448,7 @@ namespace MMR.Randomizer.Asm
         {
             this.WriteDPadConfig(options.DPadConfig);
             this.WriteHudColorsConfig(options.HudColorsConfig);
+            this.WriteWorldColorsConfig(options.WorldColorsConfig);
 
             // Only write the MiscConfig hash (the rest should not be changeable post-patch)
             this.WriteMiscHash(options.Hash);
@@ -377,6 +462,7 @@ namespace MMR.Randomizer.Asm
         {
             this.TryWriteDPadConfig(options.DPadConfig);
             this.TryWriteHudColorsConfig(options.HudColorsConfig);
+            this.TryWriteWorldColorsConfig(options.WorldColorsConfig);
 
             // Try and write the MiscConfig hash
             this.TryWriteMiscHash(options.Hash);

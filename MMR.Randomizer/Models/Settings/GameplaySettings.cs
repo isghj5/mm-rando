@@ -70,11 +70,27 @@ namespace MMR.Randomizer.Models.Settings
         }
 
         /// <summary>
+        /// Whether or not to apply Elegy of Emptiness speedups.
+        /// </summary>
+        public bool ElegySpeedup {
+            get { return this.AsmOptions.MiscConfig.Flags.ElegySpeedup; }
+            set { this.AsmOptions.MiscConfig.Flags.ElegySpeedup = value; }
+        }
+
+        /// <summary>
         /// Whether or not to enable faster pushing and pulling speeds.
         /// </summary>
         public bool FastPush {
             get { return this.AsmOptions.MiscConfig.Flags.FastPush; }
             set { this.AsmOptions.MiscConfig.Flags.FastPush = value; }
+        }
+
+        /// <summary>
+        /// Whether or not ice traps should behave slightly differently from other items in certain situations.
+        /// </summary>
+        public bool IceTrapQuirks {
+            get { return this.AsmOptions.MiscConfig.Flags.IceTrapQuirks; }
+            set { this.AsmOptions.MiscConfig.Flags.IceTrapQuirks = value; }
         }
 
         /// <summary>
@@ -99,6 +115,33 @@ namespace MMR.Randomizer.Models.Settings
         public bool QuestItemStorage {
             get { return this.AsmOptions.MiscConfig.Flags.QuestItemStorage; }
             set { this.AsmOptions.MiscConfig.Flags.QuestItemStorage = value; }
+        }
+
+        /// <summary>
+        /// Whether or not to enable Continuous Deku Hopping.
+        /// </summary>
+        public bool ContinuousDekuHopping
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.ContinuousDekuHopping; }
+            set { this.AsmOptions.MiscConfig.Flags.ContinuousDekuHopping = value; }
+        }
+
+        /// <summary>
+        /// Updates shop models and text
+        /// </summary>
+        public bool UpdateShopAppearance
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.ShopModels; }
+            set { this.AsmOptions.MiscConfig.Flags.ShopModels = value; }
+        }
+
+        /// <summary>
+        /// Updates shop models and text
+        /// </summary>
+        public bool ProgressiveUpgrades
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.ProgressiveUpgrades; }
+            set { this.AsmOptions.MiscConfig.Flags.ProgressiveUpgrades = value; }
         }
 
         #endregion
@@ -231,6 +274,16 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public string CustomJunkLocationsString { get; set; }
 
+        /// <summary>
+        /// Defines number of ice traps.
+        /// </summary>
+        public IceTraps IceTraps { get; set; }
+
+        /// <summary>
+        /// Defines appearance pool for visible ice traps.
+        /// </summary>
+        public IceTrapAppearance IceTrapAppearance { get; set; }
+
         #endregion
 
         #region Gimmicks
@@ -254,6 +307,8 @@ namespace MMR.Randomizer.Models.Settings
         /// Sets the type of floor globally
         /// </summary>
         public FloorType FloorType { get; set; }
+
+        public NutAndStickDrops NutandStickDrops { get; set; }
 
         /// <summary>
         /// Sets the clock speed.
@@ -279,7 +334,7 @@ namespace MMR.Randomizer.Models.Settings
         /// Allow's using Fierce Deity's Mask anywhere
         /// </summary>
         public bool AllowFierceDeityAnywhere { get; set; }
-
+      
         /// <summary>
         /// Arrows, Bombs, and Bombchu will not be provided. You must bring your own. Logic Modes other than No Logic will account for this.
         /// </summary>
@@ -297,12 +352,12 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Certain cutscenes will play shorter, or will be skipped
         /// </summary>
-        public bool ShortenCutscenes { get; set; }
+        public ShortenCutsceneSettings ShortenCutsceneSettings { get; set; }
 
         /// <summary>
         /// Text is fast-forwarded
         /// </summary>
-        public bool QuickTextEnabled { get; set; }
+        public bool QuickTextEnabled { get; set; } = true;
 
         /// <summary>
         /// Replaces Link's default model
@@ -330,11 +385,6 @@ namespace MMR.Randomizer.Models.Settings
         public bool PreventDowngrades { get; set; } = true;
 
         /// <summary>
-        /// Updates shop models and text
-        /// </summary>
-        public bool UpdateShopAppearance { get; set; } = true;
-
-        /// <summary>
         /// Updates chest appearance to match contents
         /// </summary>
         public bool UpdateChests { get; set; } = true;
@@ -351,27 +401,27 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Change beavers so the player doesn't have to race the younger beaver.
         /// </summary>
-        public bool SpeedupBeavers { get; set; }
+        public bool SpeedupBeavers { get; set; } = true;
 
         /// <summary>
         /// Change the dampe flames to always have 2 on ground floor and one up the ladder.
         /// </summary>
-        public bool SpeedupDampe { get; set; }
+        public bool SpeedupDampe { get; set; } = true;
 
         /// <summary>
         /// Change dog race to make gold dog always win if the player has the Mask of Truth
         /// </summary>
-        public bool SpeedupDogRace { get; set; }
+        public bool SpeedupDogRace { get; set; } = true;
 
         /// <summary>
         /// Change the Lab Fish to only need to be fed one fish.
         /// </summary>
-        public bool SpeedupLabFish { get; set; }
+        public bool SpeedupLabFish { get; set; } = true;
 
         /// <summary>
         /// Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000.
         /// </summary>
-        public bool SpeedupBank { get; set; }
+        public bool SpeedupBank { get; set; } = true;
 
         #endregion
 
@@ -382,16 +432,15 @@ namespace MMR.Randomizer.Models.Settings
             return JsonConvert.SerializeObject(this, _jsonSerializerSettings);
         }
 
-        private static JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        private readonly static JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
         {
             ContractResolver = new WritablePropertiesOnlyResolver(),
             NullValueHandling = NullValueHandling.Ignore,
+            Converters =
+            {
+                new StringEnumConverter(),
+            }
         };
-
-        static GameplaySettings()
-        {
-            _jsonSerializerSettings.Converters.Add(new StringEnumConverter());
-        }
 
         public string Validate()
         {

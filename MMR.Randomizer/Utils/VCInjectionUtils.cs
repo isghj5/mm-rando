@@ -1,4 +1,6 @@
-﻿using MMR.Randomizer.Asm;
+﻿using Be.IO;
+using MMR.Common.Extensions;
+using MMR.Randomizer.Asm;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -69,7 +71,7 @@ namespace MMR.Randomizer.Utils
         /// <param name="VCDir">VC directory</param>
         private static void PatchApp1(DPadConfig config, string VCDir)
         {
-            using (var app1 = new BinaryWriter(File.OpenWrite(Path.Combine(VCDir, "00000001.app"))))
+            using (var app1 = new BeBinaryWriter(File.OpenWrite(Path.Combine(VCDir, "00000001.app"))))
             {
                 var used = config.InUse;
                 var buttons = new VCControllerButton[]
@@ -91,12 +93,12 @@ namespace MMR.Randomizer.Utils
                     if (used[i])
                     {
                         // If using this D-Pad direction, write its button flag
-                        ReadWriteUtils.WriteU32(app1, (uint)buttons[i]);
+                        app1.WriteUInt32((uint)buttons[i]);
                     }
                     else
                     {
                         // Otherwise write the button flag for the L button
-                        ReadWriteUtils.WriteU32(app1, (uint)VCControllerButton.L);
+                        app1.WriteUInt32((uint)VCControllerButton.L);
                     }
                 }
             }

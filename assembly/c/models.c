@@ -1,61 +1,19 @@
 #include <stdbool.h>
-#include "extended_objects.h"
-#include "linheap.h"
+#include "items.h"
+#include "item_override.h"
 #include "loaded_models.h"
 #include "misc.h"
 #include "mmr.h"
 #include "models.h"
+#include "objheap.h"
 #include "util.h"
 #include "z2.h"
 
-#define slot_count 8
+#define OBJHEAP_SLOTS (12)
+#define OBJHEAP_SIZE  (0x20000)
 
-static struct linheap g_object_heap = {
-    .start = NULL,
-    .cur = NULL,
-    .size = 0x20000,
-};
-
-struct loaded_object {
-    u16 object_id;
-    u8 *buf;
-};
-
-static struct loaded_object object_slots[slot_count] = { 0 };
-
-static void load_object_file(u32 object_id, u8 *buf) {
-    z2_obj_file_t *entry = extended_objects_get((s16)object_id);
-    u32 vrom_start = entry->vrom_start;
-    u32 size = entry->vrom_end - vrom_start;
-    z2_ReadFile(buf, vrom_start, size);
-}
-
-static void load_object(struct loaded_object *object, u32 object_id) {
-    object->object_id = object_id;
-    load_object_file(object_id, object->buf);
-}
-
-static size_t get_object_size(u32 object_id) {
-    z2_obj_file_t info = *extended_objects_get((s16)object_id);
-    return (size_t)(info.vrom_end - info.vrom_start);
-}
-
-static struct loaded_object* get_object(u32 object_id) {
-    for (int i = 0; i < slot_count; i++) {
-        struct loaded_object *object = &(object_slots[i]);
-        if (object->object_id == object_id) {
-            return object;
-        }
-        if (object->object_id == 0) {
-            size_t objsize = get_object_size(object_id);
-            object->buf = linheap_alloc(&g_object_heap, objsize);
-            load_object(object, object_id);
-            return object;
-        }
-    }
-
-    return NULL;
-}
+struct objheap_item g_objheap_items[OBJHEAP_SLOTS] = { 0 };
+struct objheap g_objheap = { 0 };
 
 static void scale_top_matrix(f32 scale_factor) {
     f32 *matrix = z2_GetMatrixStackTop();
@@ -81,7 +39,12 @@ static void draw_model_low_level(z2_actor_t *actor, z2_game_t *game, s8 graphic_
 }
 
 static void draw_model(struct model model, z2_actor_t *actor, z2_game_t *game, f32 base_scale) {
-    struct loaded_object *object = get_object(model.object_id);
+    // If both graphic & object are 0, draw nothing.
+    if (model.graphic_id == 0 && model.object_id == 0) {
+        return;
+    }
+
+    struct objheap_item *object = objheap_allocate(&g_objheap, model.object_id, actor->room);
     if (object) {
         // Update RDRAM segment table with object pointer during the draw function.
         // This is required by Moon's Tear (and possibly others), which programatically resolves a
@@ -109,16 +72,22 @@ static u8 models_fix_graphic_id(u8 graphic) {
  * Get the Get-Item table entry for a specific index, and optionally load relevant entry values
  * into a model structure for drawing.
  **/
-static mmr_gi_t * models_prepare_gi_entry(struct model *model, z2_game_t *game, u32 gi_index, bool resolve) {
+static mmr_gi_t * models_prepare_gi_entry(struct model *model, z2_game_t *game, u16 gi_index, bool resolve) {
     if (resolve) {
-        gi_index = mmr_GetNewGiIndex_stub(game, gi_index, false);
+        gi_index = mmr_GetNewGiIndex(game, 0, gi_index, false);
     }
     mmr_gi_t *entry = mmr_get_gi_entry(gi_index);
 
     if (model != NULL) {
-        u8 graphic = models_fix_graphic_id(entry->graphic);
-        model->object_id = entry->object;
-        model->graphic_id = graphic;
+        u16 gfx, obj;
+        if (item_override_get_graphic(gi_index, &gfx, &obj)) {
+            model->graphic_id = models_fix_graphic_id((u8)gfx);
+            model->object_id = obj;
+        } else {
+            u8 graphic = models_fix_graphic_id(entry->graphic);
+            model->object_id = entry->object;
+            model->graphic_id = graphic;
+        }
     }
 
     return entry;
@@ -127,7 +96,7 @@ static mmr_gi_t * models_prepare_gi_entry(struct model *model, z2_game_t *game, 
 /**
  * Load information from the Get-Item table using an index and draw the corresponding model.
  **/
-static void models_draw_from_gi_table(z2_actor_t *actor, z2_game_t *game, f32 scale, u32 gi_index) {
+static void models_draw_from_gi_table(z2_actor_t *actor, z2_game_t *game, f32 scale, u16 gi_index) {
     struct model model;
     mmr_gi_t *entry = models_prepare_gi_entry(&model, game, gi_index, true);
 
@@ -139,7 +108,7 @@ static void models_draw_from_gi_table(z2_actor_t *actor, z2_game_t *game, f32 sc
  * Load the actor model information for later reference if not already stored, and return in model
  * parameter.
  **/
-static bool models_set_loaded_actor_model(struct model *model, z2_actor_t *actor, z2_game_t *game, u32 gi_index) {
+static bool models_set_loaded_actor_model(struct model *model, z2_actor_t *actor, z2_game_t *game, u16 gi_index) {
     if (!loaded_models_get_actor_model(model, NULL, actor)) {
         mmr_gi_t *entry = models_prepare_gi_entry(model, game, gi_index, true);
         loaded_models_add_actor_model(*model, entry, actor);
@@ -150,11 +119,44 @@ static bool models_set_loaded_actor_model(struct model *model, z2_actor_t *actor
 }
 
 /**
+ * Cause model to "float" using rotation value.
+ **/
+static void models_apply_hover_float(z2_actor_t *actor, f32 base, f32 multiplier) {
+    f32 rot = z2_Math_Sins(actor->rot_2.y);
+    actor->unk_0xC4 = (rot * multiplier) + base;
+}
+
+/**
+ * Check if a model should rotate backwards (trap item).
+ **/
+static bool models_should_rotate_backwards(z2_game_t *game, u16 gi_index) {
+    // Only rotate ice traps backwards if Ice Trap Quirks enabled.
+    if (MISC_CONFIG.ice_trap_quirks) {
+        struct model model;
+        mmr_gi_t *entry = models_prepare_gi_entry(&model, game, gi_index, true);
+        return entry->item == Z2_ICE_TRAP;
+    } else {
+        return false;
+    }
+}
+
+/**
+ * Rotate an actor model by a specific amount.
+ **/
+static void models_rotate(z2_actor_t *actor, z2_game_t *game, u16 gi_index, u16 amount) {
+    if (!models_should_rotate_backwards(game, gi_index)) {
+        actor->rot_2.y += amount;
+    } else {
+        actor->rot_2.y -= amount;
+    }
+}
+
+/**
  * Hook function for drawing Heart Piece actors as their new item.
  **/
 void models_draw_heart_piece(z2_actor_t *actor, z2_game_t *game) {
     if (MISC_CONFIG.freestanding) {
-        u32 index = actor->variable + 0x80;
+        u16 index = actor->variable + 0x80;
         models_draw_from_gi_table(actor, game, 22.0, index);
     } else {
         z2_DrawHeartPiece(actor, game);
@@ -162,14 +164,36 @@ void models_draw_heart_piece(z2_actor_t *actor, z2_game_t *game) {
 }
 
 /**
+ * Hook function for rotating En_Item00 actors (Heart Piece).
+ **/
+void models_rotate_en_item00(z2_actor_t *actor, z2_game_t *game) {
+    // MMR Heart Pieces use masked variable 0x1D or greater.
+    if (MISC_CONFIG.freestanding && (actor->variable & 0xFF) >= 0x1D) {
+        // Rotate Heart Piece.
+        u16 index = actor->variable + 0x80;
+        models_rotate(actor, game, index, 0x3C0);
+    } else {
+        actor->rot_2.y += 0x3C0;
+    }
+}
+
+/**
+ * Get the Get-Item index for a Skulltula Token actor.
+ **/
+u16 models_get_skulltula_token_gi_index(z2_actor_t *actor, z2_game_t *game) {
+    u16 chest_flag = (actor->variable & 0xFC) >> 2;
+    // Checks if Swamp Spider House scene
+    u16 base_index = game->scene_index == 0x27 ? 0x13A : 0x158;
+    u16 gi_index = base_index + chest_flag;
+    return gi_index;
+}
+
+/**
  * Hook function for drawing Skulltula Token actors as their new item.
  **/
 void models_draw_skulltula_token(z2_actor_t *actor, z2_game_t *game) {
     if (MISC_CONFIG.freestanding) {
-        u16 chest_flag = (actor->variable & 0xFC) >> 2;
-        // Checks if Swamp Spider House scene
-        u32 base_index = game->scene_index == 0x27 ? 0x13A : 0x158;
-        u32 gi_index = base_index + chest_flag;
+        u16 gi_index = models_get_skulltula_token_gi_index(actor, game);
         models_draw_from_gi_table(actor, game, 1.0, gi_index);
     } else {
         draw_model_low_level(actor, game, Z2_GRAPHIC_ST_TOKEN - 1);
@@ -177,10 +201,22 @@ void models_draw_skulltula_token(z2_actor_t *actor, z2_game_t *game) {
 }
 
 /**
- * Check whether or not a Get-Item entry draws a Stray Fairy.
+ * Hook function for rotating Skulltula Token actors.
  **/
-static bool models_is_stray_fairy_gi(mmr_gi_t *gi) {
-    return gi->item == 0x9D && gi->graphic == 0x4F;
+void models_rotate_skulltula_token(z2_actor_t *actor, z2_game_t *game) {
+    if (MISC_CONFIG.freestanding) {
+        u16 gi_index = models_get_skulltula_token_gi_index(actor, game);
+        models_rotate(actor, game, gi_index, 0x38E);
+    } else {
+        actor->rot_2.y += 0x38E;
+    }
+}
+
+/**
+ * Check whether or not a model draws a Stray Fairy.
+ **/
+static bool models_is_stray_fairy_model(struct model model) {
+    return model.graphic_id == 0x4F;
 }
 
 /**
@@ -220,13 +256,13 @@ void models_before_stray_fairy_main(z2_actor_t *actor, z2_game_t *game) {
     if (MISC_CONFIG.freestanding && draw) {
         mmr_gi_t *entry;
         struct model model;
-        u32 gi_index = models_get_stray_fairy_gi_index(actor, game);
+        u16 gi_index = models_get_stray_fairy_gi_index(actor, game);
         models_set_loaded_actor_model(&model, actor, game, gi_index);
         if (loaded_models_get_actor_model(&model, (void**)&entry, actor)) {
             // Check that we are not drawing a stray fairy.
-            if (!models_is_stray_fairy_gi(entry)) {
+            if (!models_is_stray_fairy_model(model)) {
                 // Rotate at the same speed of a Heart Piece actor.
-                actor->rot_2.y = (u16)(actor->rot_2.y + 0x3C0);
+                models_rotate(actor, game, gi_index, 0x3C0);
             }
         }
     }
@@ -242,14 +278,14 @@ bool models_draw_stray_fairy(z2_actor_t *actor, z2_game_t *game) {
     if (MISC_CONFIG.freestanding && draw) {
         mmr_gi_t *entry;
         struct model model;
-        u32 gi_index = models_get_stray_fairy_gi_index(actor, game);
+        u16 gi_index = models_get_stray_fairy_gi_index(actor, game);
         models_set_loaded_actor_model(&model, actor, game, gi_index);
         if (!loaded_models_get_actor_model(&model, (void**)&entry, actor)) {
             return false;
         }
 
         // Check if we are drawing a stray fairy.
-        if (models_is_stray_fairy_gi(entry)) {
+        if (models_is_stray_fairy_model(model)) {
             // Update stray fairy actor according to type, and perform original draw.
             z2_en_elforg_t *elforg = (z2_en_elforg_t *)actor;
             u8 fairy_type = entry->type >> 4;
@@ -268,7 +304,7 @@ bool models_draw_stray_fairy(z2_actor_t *actor, z2_game_t *game) {
 /**
  * Get the Get-Item index for a Heart Container actor.
  **/
-static u32 models_get_heart_container_gi_index(z2_game_t *game) {
+static u16 models_get_heart_container_gi_index(z2_game_t *game) {
     // This is a (somewhat) reimplementation of MMR function at: 0x801DC138
     // The original function returns in A2 and A3 to setup calling a different function.
     if (game->scene_index == 0x1F) {
@@ -289,11 +325,23 @@ static u32 models_get_heart_container_gi_index(z2_game_t *game) {
  **/
 bool models_draw_heart_container(z2_actor_t *actor, z2_game_t *game) {
     if (MISC_CONFIG.freestanding) {
-        u32 index = models_get_heart_container_gi_index(game);
+        u16 index = models_get_heart_container_gi_index(game);
         models_draw_from_gi_table(actor, game, 1.0, index);
         return true;
     } else {
         return false;
+    }
+}
+
+/**
+ * Hook function for rotating Heart Container actors.
+ **/
+void models_rotate_heart_container(z2_actor_t *actor, z2_game_t *game) {
+    if (MISC_CONFIG.freestanding) {
+        u16 gi_index = models_get_heart_container_gi_index(game);
+        models_rotate(actor, game, gi_index, 0x400);
+    } else {
+        actor->rot_2.y += 0x400;
     }
 }
 
@@ -359,7 +407,8 @@ void models_before_moons_tear_main(z2_actor_t *actor, z2_game_t *game) {
                 actor->pos_2.x = 157.0;
                 actor->pos_2.y = -32.0;
                 actor->pos_2.z = -103.0;
-                actor->rot_2.y = (u16)(actor->rot_2.y + 0x3C0);
+                models_rotate(actor, game, 0x96, 0x3C0);
+                models_apply_hover_float(actor, 30.0, 18.0);
             }
         }
     }
@@ -405,6 +454,17 @@ bool models_draw_lab_fish_heart_piece(z2_actor_t *actor, z2_game_t *game) {
 }
 
 /**
+ * Hook function for rotating Lab Fish Heart Piece actor.
+ **/
+void models_rotate_lab_fish_heart_piece(z2_actor_t *actor, z2_game_t *game) {
+    if (MISC_CONFIG.freestanding) {
+        models_rotate(actor, game, 0x112, 0x3E8);
+    } else {
+        actor->rot_2.y += 0x3E8;
+    }
+}
+
+/**
  * Check whether or not a model draws a Seahorse.
  **/
 static bool models_is_seahorse_model(struct model model) {
@@ -429,7 +489,8 @@ static bool models_should_override_seahorse_draw(z2_actor_t *actor, z2_game_t *g
 void models_before_seahorse_main(z2_actor_t *actor, z2_game_t *game) {
     if (MISC_CONFIG.freestanding) {
         if (models_should_override_seahorse_draw(actor, game)) {
-            actor->rot_2.y = (u16)(actor->rot_2.y + 0x3C0);
+            models_rotate(actor, game, 0x95, 0x3C0);
+            models_apply_hover_float(actor, -1000.0, 1000.0);
         }
     }
 }
@@ -448,6 +509,14 @@ bool models_draw_seahorse(z2_actor_t *actor, z2_game_t *game) {
     return false;
 }
 
+void models_draw_shop_inventory(z2_en_girla_t *actor, z2_game_t *game, u32 graphic_id_minus_1) {
+    if (MISC_CONFIG.shop_models) {
+        models_draw_from_gi_table(&(actor->common), game, 1.0, actor->gi_index);
+    } else {
+        draw_model_low_level(&(actor->common), game, graphic_id_minus_1);
+    }
+}
+
 void models_after_actor_dtor(z2_actor_t *actor) {
     if (MISC_CONFIG.freestanding) {
         if (actor->id == Z2_ACTOR_EN_ELFORG) {
@@ -460,17 +529,73 @@ void models_after_actor_dtor(z2_actor_t *actor) {
  * Reset object heap pointer and clear all loaded object slots.
  **/
 void models_clear_object_heap(void) {
-    linheap_clear(&g_object_heap);
-    for (size_t i = 0; i < slot_count; i++) {
-        object_slots[i].object_id = 0;
-        object_slots[i].buf = NULL;
-    }
+    objheap_clear(&g_objheap);
 }
 
 /**
  * Initialize object heap.
  **/
 void models_init(void) {
-    void *alloc = heap_alloc(g_object_heap.size);
-    linheap_init(&g_object_heap, alloc);
+    void *alloc = heap_alloc(OBJHEAP_SIZE);
+    objheap_init(&g_objheap, alloc, OBJHEAP_SIZE, g_objheap_items, OBJHEAP_SLOTS);
+}
+
+struct models_state {
+    // Pointer to graphics context, cannot be retrieved from normal pointer during room unload.
+    z2_gfx_t *gfx;
+    // Pointer to poly_opa, used to check if objheap should finish advance.
+    const Gfx *prev_opa;
+};
+
+static struct models_state g_state = { 0 };
+
+/**
+ * Helper function called after preparing game's display buffers for writing (write pointer set to buffer start).
+ * Used to finish advancing objheap when needed.
+ **/
+void models_after_prepare_display_buffers(z2_gfx_t *gfx) {
+    // Apparently gfx pointer cannot be retrieved during room unload, so store in global.
+    if (gfx != NULL) {
+        g_state.gfx = gfx;
+    }
+    // Note: This assumes that when the poly_opa buffer pointer has been reset to start, it has already been flushed
+    // to RDP. While this is very likely, it is not guaranteed.
+    // If alternative Opa buffer has been cleared, both DLists should be rid of pointers to object data in previous room.
+    if (g_state.prev_opa != NULL && gfx->poly_opa.buf != g_state.prev_opa) {
+        objheap_flush_operation(&g_objheap);
+        g_state.prev_opa = NULL;
+    }
+}
+
+/**
+ * Helper function called when unloading previous room, to prepare for finishing advance of objheap in a subsequent frame.
+ **/
+void models_prepare_after_room_unload(z2_game_t *game) {
+    // Note: During frame processing loop, unloads room before drawing actors.
+    // Not sure how to get alternative Opa buffer, so get current and check if non-NULL and non-equal (there are only 2).
+    g_state.prev_opa = g_state.gfx->poly_opa.buf;
+
+    // Determine operation before finish advancing or reverting.
+    // Normally, objects from previously loaded rooms would no longer draw so this isn't an issue, but is required for hack
+    // used to draw actors with 0xFF room, so that the pointer can be safely swapped to data of the relevant room.
+    s8 cur_room = (s8)game->room_ctxt.rooms[0].idx;
+    objheap_handle_room_unload(&g_objheap, cur_room);
+}
+
+/**
+ * Helper function called when loading next room, to prepare objheap for advancing.
+ **/
+void models_prepare_before_room_load(z2_room_ctxt_t *room_ctxt, s8 room_index) {
+    if ((s8)room_ctxt->rooms[0].idx == -1) {
+        // If loading first room in scene, remember room index.
+        objheap_init_room(&g_objheap, room_index);
+    } else {
+        // Safeguard: If previous Opa DList pointer is non-NULL, still waiting to flush advance or revert operation.
+        // If attempting to prepare advance before this has happened, prevent flushing advance or revert operations.
+        if (g_state.prev_opa) {
+            g_state.prev_opa = NULL;
+        }
+        // If not loading first room in scene, prepare objheap for advance.
+        objheap_prepare_advance(&g_objheap, room_index);
+    }
 }

@@ -11,11 +11,6 @@ namespace MMR.Randomizer
     {
         public static string Process(Configuration configuration, int seed, IProgressReporter progressReporter)
         {
-            if (!Directory.Exists(Path.Combine(Values.MainDirectory, "Resources")))
-            {
-                return $"Please extract the entire randomizer archive, including the Resources/ folder and subfolders";
-            }
-
             var randomizer = new Randomizer(configuration.GameplaySettings, seed);
             RandomizedResult randomized = null;
             if (string.IsNullOrWhiteSpace(configuration.OutputSettings.InputPatchFilename))
@@ -47,12 +42,21 @@ namespace MMR.Randomizer
                 {
                     return "Cannot verify input ROM is Majora's Mask (U).";
                 }
+                if (configuration.OutputSettings.OutputVC && !Directory.Exists(Values.VCDirectory))
+                {
+                    return "Error: vc folder is missing and WiiVC wad creation was selected.\n\n"
+                        + "If you did not extract the whole randomizer, you must extract the vc folder. If this is a beta release, copy the vc folder from the main release.";
+                }
 
                 var builder = new Builder(randomized, configuration.CosmeticSettings);
 
                 try
                 {
                     builder.MakeROM(configuration.OutputSettings, progressReporter);
+                }
+                catch (ROMOverflowException ex)
+                {
+                    return $"Error: {ex.Message}";
                 }
                 catch (PatchMagicException)
                 {

@@ -8,7 +8,22 @@
 struct world_color_config {
     u32 magic;
     u32 version;
-    rgbs_t blue_bubble;
+    rgbs_t goronEnergyPunch;
+    rgbs_t goronEnergyRolling;
+    rgbs_t swordChargeEnergyBluEnv;
+    rgbs_t swordChargeEnergyBluPri;
+    rgbs_t swordChargeEnergyRedEnv;
+    rgbs_t swordChargeEnergyRedPri;
+    rgbs_t swordChargeSparksBlu;
+    rgbs_t swordChargeSparksRed;
+    rgbs_t swordSlashEnergyBluPri;
+    rgbs_t swordSlashEnergyRedPri;
+    rgbs_t swordBeamEnergyEnv;
+    rgbs_t swordBeamEnergyPri;
+    rgbs_t swordBeamDamageEnv;
+    rgbs_t blueBubble;
 };
+
+void WorldColors_Init(void);
 
 #endif // WORLD_COLORS_H

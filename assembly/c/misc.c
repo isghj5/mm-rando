@@ -3,7 +3,7 @@
 
 struct misc_config MISC_CONFIG = {
     .magic = MISC_CONFIG_MAGIC,
-    .version = 1,
+    .version = 3,
 
     // Version 0 flags
     .crit_wiggle = CRIT_WIGGLE_DEFAULT,
@@ -18,6 +18,13 @@ struct misc_config MISC_CONFIG = {
     .quest_consume = QUEST_CONSUME_DEFAULT,
     .arrow_cycle = 1,
     .arrow_magic_show = 1,
+
+    // Version 2 flags
+    .elegy_speedup = 1,
+    .continuous_deku_hop = 0,
+    .shop_models = 1,
+    .progressive_upgrades = 1,
+    .ice_trap_quirks = 0,
 };
 
 union faucet_speed {
@@ -44,11 +51,11 @@ struct ikana_speed {
     f32 initial;
 };
 
-struct misc_config* misc_get_config() {
+struct misc_config* misc_get_config(void) {
     return &MISC_CONFIG;
 }
 
-bool misc_can_use_ocarina_underwater() {
+bool misc_can_use_ocarina_underwater(void) {
     return MISC_CONFIG.ocarina_underwater != 0;
 }
 
@@ -190,9 +197,14 @@ bool misc_crit_wiggle_check(z2_camera_t *camera, s16 health) {
     }
 }
 
+bool misc_get_vanilla_layout(void) {
+    return MISC_CONFIG.vanilla_layout;
+}
+
 void misc_init(void) {
     if (MISC_CONFIG.vanilla_layout) {
         // Mod files with code required for freestanding models are not included if using vanilla layout.
         MISC_CONFIG.freestanding = 0;
+        MISC_CONFIG.shop_models = 0;
     }
 }

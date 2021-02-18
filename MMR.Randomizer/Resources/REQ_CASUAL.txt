@@ -48,8 +48,8 @@
 0
 
 - Pictobox
+553
 
-472;475
 0
 0
 
@@ -174,8 +174,8 @@
 62
 
 - Mountain Bomb Bag (40)
-106,92,479
-
+106,479
+92;0,32,33,34
 0
 0
 
@@ -342,8 +342,8 @@
 0
 
 - Boat Archery HP
-105
-472;475
+105,553
+
 0
 0
 
@@ -450,8 +450,8 @@
 2
 
 - Stone Mask
-9,96,461
-472;475
+9,461,553
+500;96
 0
 0
 
@@ -618,8 +618,8 @@
 0
 
 - Poison swamp access
-
-482,544;544,549;0,10;0,120;0,8;0,472
+554
+10;120;8;472;93
 0
 0
 
@@ -702,7 +702,7 @@
 0
 
 - Inverted Stone Tower Temple access
-116,120,4,468,461
+116,120,4,461
 
 0
 0
@@ -2496,8 +2496,8 @@
 0
 
 - Swamp Scrub Magic Bean
-0
 
+0;32,33
 0
 0
 
@@ -3317,3 +3317,14 @@
 0
 0
 ;In the Ocean Spider House storage room, jump onto the boat and clip through the ceiling.
+- Any Healing Potion
+
+472;475
+0
+0
+
+- Cross Poisoned Water
+
+0;482,544;549,544
+0
+0

@@ -12,6 +12,8 @@ all: mm
 mm:
 	$(PYTHON) $(BUILD_PY) -t mm --compile-c --virtual
 
-copy: mm
-	cp $(GEN_DIR)/rom_patch.txt $(RES_DIR)
+copy: mm copy-only
+
+copy-only:
+	cp $(GEN_DIR)/rom_patch.bin $(RES_DIR)
 	cp $(GEN_DIR)/symbols.json  $(RES_DIR)

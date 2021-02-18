@@ -34,6 +34,33 @@ namespace MMR.Common.Extensions
             return list[random.Next(list.Count)];
         }
 
+        /// <summary>
+        /// Select unique random items from a given array.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="list">Source items list</param>
+        /// <param name="amount">Selection amount</param>
+        /// <param name="random">Random</param>
+        /// <returns>Selected items</returns>
+        public static T[] Random<T>(this IList<T> list, int amount, Random random)
+        {
+            if (amount > list.Count)
+            {
+                throw new IndexOutOfRangeException("Selection amount cannot exceed array length.");
+            }
+
+            var result = new List<T>(amount);
+            var source = list.ToList();
+            for (int i = 0; i < amount; i++)
+            {
+                var index = random.Next(source.Count);
+                var selected = source[index];
+                result.Add(selected);
+                source.RemoveAt(index);
+            }
+            return result.ToArray();
+        }
+
         public static IEnumerable<TSource> DistinctBy<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> keySelector)
         {
             return source.Distinct(new KeyEqualityComparer<TSource, TKey>(keySelector));

@@ -219,3 +219,31 @@ models_draw_seahorse_hook:
     ; Fix stack for caller and return
     jr      ra
     addiu   sp, sp, 0x50
+
+models_draw_shop_inventory_hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0010 (sp)
+
+    ; Shift arguments
+    or      a2, a1, r0
+    or      a1, a0, r0
+
+    jal     models_draw_shop_inventory
+    or      a0, s0, r0
+
+    lw      ra, 0x0010 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
+models_bio_baba_heart_piece_rotation_fix_hook:
+    bnez    at, @@return
+    nop
+    addiu   at, r0, 0x0017
+    beq     v0, at, @@return
+    addiu   at, r0, 0x0001
+    slti    at, v0, 0x001D
+    xori    at, at, 0x0001
+
+@@return:
+    jr      ra
+    nop

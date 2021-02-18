@@ -5,7 +5,7 @@
 
 struct hud_color_config HUD_COLOR_CONFIG = {
     .magic = HUD_COLOR_CONFIG_MAGIC,
-    .version = 2,
+    .version = 3,
 
     // Version 0
     .button_a                = { 0x64, 0xC8, 0xFF },
@@ -61,6 +61,13 @@ struct hud_color_config HUD_COLOR_CONFIG = {
 
     // Version 2
     .dpad                    = { 0x80, 0x80, 0x80 },
+
+    // Version 3
+    .menu_border_1           = { 0xB4, 0xB4, 0x78 },
+    .menu_border_2           = { 0x96, 0x8C, 0x5A },
+    .menu_subtitle_text      = { 0xFF, 0xC8, 0x00 },
+    .shop_cursor_1           = { 0x00, 0x00, 0xFF },
+    .shop_cursor_2           = { 0x00, 0x50, 0xFF },
 };
 
 struct pause_cursor_colors {
@@ -175,6 +182,27 @@ u32 hud_colors_get_note_button_color(u8 index, u8 alpha) {
     } else {
         return color_rgb8_to_int(HUD_COLOR_CONFIG.note_c_1, alpha);
     }
+}
+
+/**
+ * Hook function used to get the pause menu primary border color.
+ **/
+u32 hud_colors_get_menu_border_1_color(void) {
+    return color_rgb8_to_int(HUD_COLOR_CONFIG.menu_border_1, 0xFF);
+}
+
+/**
+ * Hook function used to get the pause menu secondary border color.
+ **/
+u32 hud_colors_get_menu_border_2_color(void) {
+    return color_rgb8_to_int(HUD_COLOR_CONFIG.menu_border_2, 0xFF);
+}
+
+/**
+ * Hook function used to get the pause menu subtitle text color.
+ **/
+u32 hud_colors_get_menu_subtitle_text_color(void) {
+    return color_rgb8_to_int(HUD_COLOR_CONFIG.menu_subtitle_text, 0xFF);
 }
 
 void hud_colors_update_heart_colors(z2_game_t *game) {
@@ -389,4 +417,41 @@ void hud_colors_main_menu_init(void) {
     z2_file_select_ctxt.heart_rgb[1].r = HUD_COLOR_CONFIG.heart_dd.r;
     z2_file_select_ctxt.heart_rgb[1].g = HUD_COLOR_CONFIG.heart_dd.g;
     z2_file_select_ctxt.heart_rgb[1].b = HUD_COLOR_CONFIG.heart_dd.b;
+}
+
+/**
+ * Hook function called to write song score lines color to RDRAM.
+ **/
+void hud_colors_update_score_lines_color(z2_game_t *game) {
+    // Update song score lines color.
+    game->msgbox_ctxt.score_line_color.r = HUD_COLOR_CONFIG.score_lines.r;
+    game->msgbox_ctxt.score_line_color.g = HUD_COLOR_CONFIG.score_lines.g;
+    game->msgbox_ctxt.score_line_color.b = HUD_COLOR_CONFIG.score_lines.b;
+}
+
+/**
+ * Hook function called to write shop cursor color values to an output array.
+ **/
+void HudColors_WriteShopCursorColor(z2_actor_t *actor, u32 *output, u32 amountBits, u32 shopType) {
+    // Hack to have f32 argument without being weird?
+    f32 amount = *(f32*)&amountBits;
+    // Build array of RGB values.
+    u32 colors1[3], colors2[3];
+    for (int i = 0; i < 3; i++) {
+        colors1[i] = HUD_COLOR_CONFIG.shop_cursor_1.bytes[i];
+        colors2[i] = HUD_COLOR_CONFIG.shop_cursor_2.bytes[i];
+    }
+    // Calculate individual color values for RGB.
+    for (int i = 0; i < 3; i++) {
+        u32 c1 = colors1[i], c2 = colors2[i];
+        if (c1 <= c2) {
+            f32 delta = (f32)(c2 - c1) * amount;
+            output[i] = (u32)delta + c1;
+        } else {
+            f32 delta = (f32)(c1 - c2) * amount;
+            output[i] = (u32)delta + c2;
+        }
+    }
+    // Use constant alpha.
+    output[3] = 0xFF;
 }

@@ -3,7 +3,9 @@ using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
+using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Rom;
+using MMR.Randomizer.Models.Settings;
 using System.Collections.Generic;
 
 namespace MMR.Randomizer.Utils
@@ -11,25 +13,19 @@ namespace MMR.Randomizer.Utils
     public static class ItemSwapUtils
     {
         const int BOTTLE_CATCH_TABLE = 0xCD7C08;
-        static int cycle_repeat = 0;
-        const int CYCLE_REPEAT_COUNT_ADDRESS = 0xC72D16;
-        const ushort INITIAL_CYCLE_REPEAT_COUNT = 0x74;
-        static ushort cycle_repeat_count = INITIAL_CYCLE_REPEAT_COUNT;
         static int GET_ITEM_TABLE = 0;
 
         public static void ReplaceGetItemTable()
         {
-            ResourceUtils.ApplyHack(Values.ModsDirectory, "replace-gi-table");
+            ResourceUtils.ApplyHack(Resources.mods.replace_gi_table);
             int last_file = RomData.MMFileList.Count - 1;
-            GET_ITEM_TABLE = RomUtils.AddNewFile(Values.ModsDirectory, "gi-table");
+            GET_ITEM_TABLE = RomUtils.AddNewFile(Resources.mods.gi_table);
             ReadWriteUtils.WriteToROM(0xBDAEAC, (uint)last_file + 1);
-            ResourceUtils.ApplyHack(Values.ModsDirectory, "update-chests");
-            RomUtils.AddNewFile(Values.ModsDirectory, "chest-table");
+            ResourceUtils.ApplyHack(Resources.mods.update_chests);
+            RomUtils.AddNewFile(Resources.mods.chest_table);
             ReadWriteUtils.WriteToROM(0xBDAEA8, (uint)last_file + 2);
-            ResourceUtils.ApplyHack(Values.ModsDirectory, "standing-hearts");
-            ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-item-checks");
-            cycle_repeat = 0xC72DF4;
-            cycle_repeat_count = INITIAL_CYCLE_REPEAT_COUNT;
+            ResourceUtils.ApplyHack(Resources.mods.standing_hearts);
+            ResourceUtils.ApplyHack(Resources.mods.fix_item_checks);
             SceneUtils.ResetSceneFlagMask();
             SceneUtils.UpdateSceneFlagMask(0x5B); // red potion
             SceneUtils.UpdateSceneFlagMask(0x91); // chateau romani
@@ -104,18 +100,27 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void WriteNewItem(Item location, Item item, List<MessageEntry> newMessages, bool updateShop, bool preventDowngrades, bool updateChest, ChestTypeAttribute.ChestType? overrideChestType, bool isExtraStartingItem)
+        public static void WriteNewItem(ItemObject itemObject, List<MessageEntry> newMessages, GameplaySettings settings, ChestTypeAttribute.ChestType? overrideChestType)
         {
+            var item = itemObject.Item;
+            var location = itemObject.NewLocation.Value;
             System.Diagnostics.Debug.WriteLine($"Writing {item.Name()} --> {location.Location()}");
 
             int f = RomUtils.GetFileIndexForWriting(GET_ITEM_TABLE);
             int baseaddr = GET_ITEM_TABLE - RomData.MMFileList[f].Addr;
             var getItemIndex = location.GetItemIndex().Value;
             int offset = (getItemIndex - 1) * 8 + baseaddr;
-            var newItem = isExtraStartingItem 
-                ? Items.RecoveryHeart // Warning: this will not work well for starting with Bottle contents (currently impossible), because you'll first have to acquire the Recovery Heart before getting the bottle-less version. Also may interfere with future implementation of progressive upgrades.
-                : RomData.GetItemList[item.GetItemIndex().Value];
             var fileData = RomData.MMFileList[f].Data;
+
+            GetItemEntry newItem;
+            if (item.IsExclusiveItem())
+            {
+                newItem = item.ExclusiveItemEntry();
+            }
+            else
+            {
+                newItem = RomData.GetItemList[item.GetItemIndex().Value];
+            }
 
             var data = new byte[]
             {
@@ -129,75 +134,77 @@ namespace MMR.Randomizer.Utils
                 (byte)(newItem.Object & 0xFF),
             };
             ReadWriteUtils.Arr_Insert(data, 0, data.Length, fileData, offset);
-            
-            // todo use Logic Editor to handle which locations should be repeatable and which shouldn't.
-            if ((item.IsCycleRepeatable() && location != Item.HeartPieceNotebookMayor) || (item.Name().Contains("Rupee") && location.IsRupeeRepeatable()))
-            {
-                ReadWriteUtils.WriteToROM(cycle_repeat, (ushort)getItemIndex);
-                cycle_repeat += 2;
-                cycle_repeat_count += 2;
 
-                ReadWriteUtils.WriteToROM(CYCLE_REPEAT_COUNT_ADDRESS, cycle_repeat_count);
+            // todo use Logic Editor to handle which locations should be repeatable and which shouldn't.
+            var isCycleRepeatable = item.IsCycleRepeatable();
+            if (item.Name().Contains("Rupee") && location.IsRupeeRepeatable())
+            {
+                isCycleRepeatable = true;
+            }
+            if (item.ToString().StartsWith("Trade") && settings.QuestItemStorage)
+            {
+                isCycleRepeatable = false;
+            }
+            if (isCycleRepeatable)
+            {
+                settings.AsmOptions.MMRConfig.CycleRepeatableLocations.Add(getItemIndex);
             }
 
-            var isRepeatable = item.IsRepeatable() || (!preventDowngrades && item.IsDowngradable());
+            var isRepeatable = item.IsRepeatable() || (!settings.PreventDowngrades && item.IsDowngradable());
+            if (settings.ProgressiveUpgrades && item.HasAttribute<ProgressiveAttribute>())
+            {
+                isRepeatable = false;
+            }
             if (!isRepeatable)
             {
                 SceneUtils.UpdateSceneFlagMask(getItemIndex);
             }
 
-            if (item == Item.ItemBottleWitch)
-            {
-                ReadWriteUtils.WriteToROM(0xB4997E, (ushort)getItemIndex);
-            }
-
-            if (item == Item.ItemBottleMadameAroma)
-            {
-                ReadWriteUtils.WriteToROM(0xB4998A, (ushort)getItemIndex);
-            }
-
-            if (item == Item.ItemBottleAliens)
-            {
-                ReadWriteUtils.WriteToROM(0xB49996, (ushort)getItemIndex);
-            }
-            
-            if (item == Item.ItemBottleGoronRace)
-            {
-                ReadWriteUtils.WriteToROM(0xB499A2, (ushort)getItemIndex);
-            }
-
-            if (updateChest)
+            if (settings.UpdateChests)
             {
                 UpdateChest(location, item, overrideChestType);
             }
 
+            if (settings.UpdateShopAppearance)
+            {
+                UpdateShop(itemObject, newMessages);
+            }
+
             if (location != item)
             {
-                if (updateShop)
-                {
-                    UpdateShop(location, item, newMessages);
-                }
-
                 if (location == Item.StartingSword)
                 {
-                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-sword-song-of-time");
+                    ResourceUtils.ApplyHack(Resources.mods.fix_sword_song_of_time);
                 }
 
                 if (location == Item.MundaneItemSeahorse)
                 {
-                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-fisherman");
+                    ResourceUtils.ApplyHack(Resources.mods.fix_fisherman);
                 }
 
                 if (location == Item.MaskFierceDeity)
                 {
-                    ResourceUtils.ApplyHack(Values.ModsDirectory, "fix-fd-mask-reset");
+                    ResourceUtils.ApplyHack(Resources.mods.fix_fd_mask_reset);
                 }
             }
         }
 
-        private static void UpdateShop(Item location, Item item, List<MessageEntry> newMessages)
+        private static void UpdateShop(ItemObject itemObject, List<MessageEntry> newMessages)
         {
-            var newItem = RomData.GetItemList[item.GetItemIndex().Value];
+            var location = itemObject.NewLocation.Value;
+            GetItemEntry newItem;
+            if (itemObject.Mimic != null)
+            {
+                newItem = RomData.GetItemList[itemObject.Mimic.Item.GetItemIndex().Value];
+            }
+            else if (itemObject.Item.IsExclusiveItem())
+            {
+                newItem = itemObject.Item.ExclusiveItemEntry();
+            }
+            else
+            {
+                newItem = RomData.GetItemList[itemObject.Item.GetItemIndex().Value];
+            }
 
             var shopRooms = location.GetAttributes<ShopRoomAttribute>();
             foreach (var shopRoom in shopRooms)
@@ -212,57 +219,39 @@ namespace MMR.Randomizer.Utils
                 var index = newItem.Index > 0x7F ? (byte)(0xFF - newItem.Index) : (byte)(newItem.Index - 1);
                 ReadWriteUtils.WriteToROM(shopInventory.ShopItemAddress + 0x03, index);
 
-                var shopTexts = item.ShopTexts();
-                string description;
-                switch (shopInventory.Keeper)
-                {
-                    case ShopInventoryAttribute.ShopKeeper.WitchShop:
-                        description = shopTexts.WitchShop;
-                        break;
-                    case ShopInventoryAttribute.ShopKeeper.TradingPostMain:
-                        description = shopTexts.TradingPostMain;
-                        break;
-                    case ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer:
-                        description = shopTexts.TradingPostPartTimer;
-                        break;
-                    case ShopInventoryAttribute.ShopKeeper.CuriosityShop:
-                        description = shopTexts.CuriosityShop;
-                        break;
-                    case ShopInventoryAttribute.ShopKeeper.BombShop:
-                        description = shopTexts.BombShop;
-                        break;
-                    case ShopInventoryAttribute.ShopKeeper.ZoraShop:
-                        description = shopTexts.ZoraShop;
-                        break;
-                    case ShopInventoryAttribute.ShopKeeper.GoronShop:
-                        description = shopTexts.GoronShop;
-                        break;
-                    case ShopInventoryAttribute.ShopKeeper.GoronShopSpring:
-                        description = shopTexts.GoronShopSpring;
-                        break;
-                    default:
-                        description = null;
-                        break;
-                }
-                if (description == null)
-                {
-                    description = shopTexts.Default;
-                }
-
                 var messageId = ReadWriteUtils.ReadU16(shopInventory.ShopItemAddress + 0x0A);
-                newMessages.Add(new MessageEntry
-                {
-                    Id = messageId,
-                    Header = null,
-                    Message = MessageUtils.BuildShopDescriptionMessage(item.Name(), 20, description)
-                });
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(messageId)
+                    .Message(it =>
+                    {
+                        it.Red(() =>
+                        {
+                            it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text("20 Rupees").NewLine();
+                        })
+                        .RuntimeWrap(() =>
+                        {
+                            it.RuntimeItemDescription(itemObject.DisplayItem, shopInventory.Keeper, location);
+                        })
+                        .DisableTextBoxClose()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
 
-                newMessages.Add(new MessageEntry
-                {
-                    Id = (ushort)(messageId + 1),
-                    Header = null,
-                    Message = MessageUtils.BuildShopPurchaseMessage(item.Name(), 20, item)
-                });
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id((ushort)(messageId + 1))
+                    .Message(it =>
+                    {
+                        it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text("20 Rupees").NewLine()
+                        .Text(" ").NewLine()
+                        .StartGreenText()
+                        .TwoChoices()
+                        .Text("I'll buy ").RuntimePronoun(itemObject.DisplayItem, location).NewLine()
+                        .Text("No thanks")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
             }
         }
 

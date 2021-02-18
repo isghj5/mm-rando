@@ -15,6 +15,9 @@
 #define z2_LinkInvincibility GET_RELOC_PLAYER_FUNC(z2_LinkInvincibility)
 #define z2_UseItem           GET_RELOC_PLAYER_FUNC(z2_UseItem)
 
+#define z2_PerformEnterWaterEffects GET_RELOC_PLAYER_FUNC(z2_PerformEnterWaterEffects)
+#define z2_PlayerHandleBuoyancy     GET_RELOC_PLAYER_FUNC(z2_PlayerHandleBuoyancy)
+
 /* Relocatable pause menu functions */
 #define z2_PauseDrawItemIcon GET_RELOC_PAUSE_FUNC(z2_PauseDrawItemIcon)
 

@@ -1,0 +1,8 @@
+version: '3'
+services:
+  mmr:
+    build: .
+    volumes:
+      - ../:/docker
+    working_dir: /docker/assembly
+    command: bash -c 'export PATH="$$PATH:/opt/n64/bin" && make copy'

@@ -14,4 +14,9 @@
     <ProjectReference Include="..\MMR.Common\MMR.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+    <Folder Include="Modules\" />
+    <Folder Include="Data\Repositories\" />
+  </ItemGroup>
 </Project>

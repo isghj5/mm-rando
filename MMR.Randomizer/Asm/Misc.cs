@@ -1,5 +1,8 @@
-﻿using MMR.Randomizer.Utils;
-using Newtonsoft.Json;
+﻿using Be.IO;
+using MMR.Common.Extensions;
+using MMR.Randomizer.Models;
+using MMR.Randomizer.Models.Settings;
+using MMR.Randomizer.Utils;
 using System.IO;
 
 namespace MMR.Randomizer.Asm
@@ -22,6 +25,52 @@ namespace MMR.Randomizer.Asm
     }
 
     /// <summary>
+    /// Speedups.
+    /// </summary>
+    public class MiscSpeedups
+    {
+        /// <summary>
+        /// Whether or not to end Blast Mask Thief escape sequence early once the luggage is dropped.
+        /// </summary>
+        public bool BlastMaskThief { get; set; }
+
+        /// <summary>
+        /// Whether or not to end Boat Archery early if the player has enough points.
+        /// </summary>
+        public bool BoatArchery { get; set; }
+
+        /// <summary>
+        /// Whether or not to end Fisherman's Game early if the player has enough points.
+        /// </summary>
+        public bool FishermanGame { get; set; }
+
+        /// <summary>
+        /// Whether or not to change Sound Check to speed up actor cutscenes until song is fully composed.
+        /// </summary>
+        public bool SoundCheck { get; set; }
+
+        /// <summary>
+        /// Whether or not to change the hungry Goron to set a different value when rolling away and add more coordinates to his path.
+        /// </summary>
+        public bool DonGero { get; set; }
+
+        /// <summary>
+        /// Convert to a <see cref="uint"/> integer.
+        /// </summary>
+        /// <returns>Integer</returns>
+        public uint ToInt()
+        {
+            uint flags = 0;
+            flags |= (this.SoundCheck ? (uint)1 : 0) << 31;
+            flags |= (this.BlastMaskThief ? (uint)1 : 0) << 30;
+            flags |= (this.FishermanGame ? (uint)1 : 0) << 29;
+            flags |= (this.BoatArchery ? (uint)1 : 0) << 28;
+            flags |= (this.DonGero ? (uint)1 : 0) << 27;
+            return flags;
+        }
+    }
+
+    /// <summary>
     /// Miscellaneous flags.
     /// </summary>
     public class MiscFlags
@@ -29,7 +78,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Whether or not to enable cycling arrow types while using the bow.
         /// </summary>
-        public bool ArrowCycling { get; set; }
+        public bool ArrowCycling { get; set; } = true;
 
         /// <summary>
         /// Whether or not to show magic being consumed ahead of time when using elemental arrows.
@@ -50,9 +99,9 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
-        /// Whether or not to use the closest cow to the player when giving an item (not yet implemented).
+        /// Whether or not to use the closest cow to the player when giving an item.
         /// </summary>
-        public bool CloseCows { get; set; }
+        public bool CloseCows { get; set; } = true;
 
         /// <summary>
         /// Whether or not to draw hash icons on the file select screen.
@@ -60,14 +109,44 @@ namespace MMR.Randomizer.Asm
         public bool DrawHash { get; set; } = true;
 
         /// <summary>
+        /// Whether or not to activate beach cutscene earlier when pushing Mikau to shore.
+        /// </summary>
+        public bool EarlyMikau { get; set; }
+
+        /// <summary>
+        /// Whether or not to apply Elegy of Emptiness speedups.
+        /// </summary>
+        public bool ElegySpeedup { get; set; } = true;
+
+        /// <summary>
         /// Whether or not to enable faster pushing and pulling speeds.
         /// </summary>
-        public bool FastPush { get; set; }
+        public bool FastPush { get; set; } = true;
 
         /// <summary>
         /// Whether or not to enable freestanding models.
         /// </summary>
         public bool FreestandingModels { get; set; } = true;
+
+        /// <summary>
+        /// Whether or not to enable continuous deku hopping.
+        /// </summary>
+        public bool ContinuousDekuHopping { get; set; } = false;
+
+        /// <summary>
+        /// Whether or not to enable shop models.
+        /// </summary>
+        public bool ShopModels { get; set; } = true;
+
+        /// <summary>
+        /// Whether or not to enable progressive upgrades.
+        /// </summary>
+        public bool ProgressiveUpgrades { get; set; } = true;
+
+        /// <summary>
+        /// Whether or not ice traps should behave slightly differently from other items in certain situations.
+        /// </summary>
+        public bool IceTrapQuirks { get; set; }
 
         /// <summary>
         /// Whether or not to allow using the ocarina underwater.
@@ -107,6 +186,10 @@ namespace MMR.Randomizer.Asm
             this.CloseCows = ((flags >> 25) & 1) == 1;
             this.FreestandingModels = ((flags >> 24) & 1) == 1;
             this.ArrowCycling = ((flags >> 21) & 1) == 1;
+            this.ContinuousDekuHopping = ((flags >> 18) & 1) == 1;
+            this.ShopModels = ((flags >> 17) & 1) == 1;
+            this.ProgressiveUpgrades = ((flags >> 16) & 1) == 1;
+            this.IceTrapQuirks = ((flags >> 15) & 1) == 1;
         }
 
         /// <summary>
@@ -126,6 +209,12 @@ namespace MMR.Randomizer.Asm
             flags |= (((uint)this.QuestConsume) & 3) << 22;
             flags |= (this.ArrowCycling ? (uint)1 : 0) << 21;
             flags |= (this.ArrowMagic ? (uint)1 : 0) << 20;
+            flags |= (this.ElegySpeedup ? (uint)1 : 0) << 19;
+            flags |= (this.ContinuousDekuHopping ? (uint)1 : 0) << 18;
+            flags |= (this.ShopModels ? (uint)1 : 0) << 17;
+            flags |= (this.ProgressiveUpgrades ? (uint)1 : 0) << 16;
+            flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 15;
+            flags |= (this.EarlyMikau ? (uint)1 : 0) << 14;
             return flags;
         }
     }
@@ -161,6 +250,7 @@ namespace MMR.Randomizer.Asm
         public byte[] Hash;
         public uint Flags;
         public uint InternalFlags;
+        public uint Speedups;
 
         /// <summary>
         /// Convert to bytes.
@@ -169,18 +259,24 @@ namespace MMR.Randomizer.Asm
         public byte[] ToBytes()
         {
             using (var memStream = new MemoryStream())
-            using (var writer = new BinaryWriter(memStream))
+            using (var writer = new BeBinaryWriter(memStream))
             {
-                ReadWriteUtils.WriteU32(writer, this.Version);
+                writer.WriteUInt32(this.Version);
 
                 // Version 0
-                writer.Write(this.Hash);
-                writer.Write(ReadWriteUtils.Byteswap32(this.Flags));
+                writer.WriteBytes(this.Hash);
+                writer.WriteUInt32(this.Flags);
 
                 // Version 1
                 if (this.Version >= 1)
                 {
-                    writer.Write(ReadWriteUtils.Byteswap32(this.InternalFlags));
+                    writer.WriteUInt32(this.InternalFlags);
+                }
+
+                // Version 3
+                if (this.Version >= 3)
+                {
+                    writer.WriteUInt32(this.Speedups);
                 }
 
                 return memStream.ToArray();
@@ -208,16 +304,42 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public InternalFlags InternalFlags { get; set; }
 
+        /// <summary>
+        /// Speedups.
+        /// </summary>
+        public MiscSpeedups Speedups { get; set; }
+
         public MiscConfig()
-            : this(new byte[0], new MiscFlags(), new InternalFlags())
+            : this(new byte[0], new MiscFlags(), new InternalFlags(), new MiscSpeedups())
         {
         }
 
-        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags)
+        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags, MiscSpeedups speedups)
         {
             this.Hash = hash;
             this.Flags = flags;
             this.InternalFlags = internalFlags;
+            this.Speedups = speedups;
+        }
+
+        /// <summary>
+        /// Finalize configuration using <see cref="GameplaySettings"/>.
+        /// </summary>
+        /// <param name="settings">Settings</param>
+        public void FinalizeSettings(GameplaySettings settings)
+        {
+            // Update speedup flags which correspond with ShortenCutscenes.
+            this.Speedups.BlastMaskThief = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.BlastMaskThief);
+            this.Speedups.BoatArchery = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.BoatArchery);
+            this.Speedups.FishermanGame = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FishermanGame);
+            this.Speedups.SoundCheck = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.MilkBarPerformance);
+            this.Speedups.DonGero = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.HungryGoron);
+
+            // If using Adult Link model, allow Mikau cutscene to activate early.
+            this.Flags.EarlyMikau = settings.Character == Character.AdultLink;
+
+            // Update internal flags.
+            this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;
         }
 
         /// <summary>
@@ -235,6 +357,7 @@ namespace MMR.Randomizer.Asm
                 Hash = hash,
                 Flags = this.Flags.ToInt(),
                 InternalFlags = this.InternalFlags.ToInt(),
+                Speedups = this.Speedups.ToInt(),
             };
         }
     }

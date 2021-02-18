@@ -6,7 +6,7 @@ user='vagrant'
 pacman -Sy --noconfirm --noprogressbar archlinux-keyring
 
 # Install packages
-pacman -Syu --noconfirm --noprogressbar \
+pacman -Syu --needed --noconfirm --noprogressbar \
 base-devel git lib32-gcc-libs python wget
 
 # Setup abs directory
@@ -20,10 +20,13 @@ cd /abs \
 && sudo -u "$user" tar xzf 'yay.tar.gz' \
 && cd yay \
 && sudo -u "$user" makepkg -s --noconfirm --noprogressbar \
-&& pacman -U --noconfirm --noprogressbar yay-*.pkg.tar.xz
+&& pacman -U --needed --noconfirm --noprogressbar yay-*.pkg.tar.zst
 
 # Use yay to install armips via the AUR
-sudo -u "$user" yay -S --noconfirm --noprogressbar armips-git
+sudo -u "$user" yay -S --needed --noconfirm --noprogressbar armips-git
+
+# Clean pacman package cache to clear disk space
+pacman -Scc --noconfirm
 
 # Make directory for git repositories
 mkdir ~/git && cd ~/git

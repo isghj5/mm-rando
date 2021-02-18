@@ -4,7 +4,6 @@ using MMR.Randomizer.Constants;
 
 namespace MMR.Randomizer.Models.Rom
 {
-
     public class SequenceInfo
     {
         public string Name { get; set; }
@@ -16,5 +15,6 @@ namespace MMR.Randomizer.Models.Rom
         public int Instrument { get; set; }
         public List<SequenceBinaryData> SequenceBinaryList { get; set; }
         public int PreviousSlot { get; set; } = -1;
+        public List<SequenceSoundSampleBinaryData> InstrumentSamples { get; set; } = null;
     }
 }

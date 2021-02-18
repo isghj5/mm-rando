@@ -78,6 +78,9 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         BigStoneDoorOpensThud = 0x2093,
 
+        [Tags(Long)]
+        ToiletHandFlush = 0x2097,
+
         //[Tags(Long, Debug)]
         //MoonEarthQuake= 0x2098, // loops, damnit
 
@@ -92,14 +95,22 @@ namespace MMR.Randomizer.Models.SoundEffects
         [ReplacableByTags(Long)]
         WolfHowlEvening = 0x20AE,
 
+        [Replacable(0xD1DCBA)]
         [Tags(Short)]
+        [ReplacableByTags(Short)]
         FrogJumpCroak = 0x20B1,
 
         [Tags(Long)]
         JabuJabuDeepBreath = 0x20B6, // wow this is still in here??
 
         [Tags(Long)]
-        FrogIncreaseSize = 0x20CC, // wow this is still in here??
+        FrogIncreaseSize = 0x20CC,
+
+        [Tags(LowHpBeep, Short)]
+        ToiletHandAppear = 0x20D0,
+
+        [Tags(LowHpBeep, Short)]
+        ToiletHandVanish = 0x20D1,
 
         [Replacable(0x00DFC776, 0xDFCC3A, 0xDFDCF6)]
         [Tags(Short, LowHpBeep)]
@@ -203,8 +214,29 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         #region Enemy SFX
 
+        [Tags(Long)]
+        DodongoExhale = 0x3001,
+
+        [Tags(Short)]
+        DodongoTakeDamage = 0x3003,
+
+        [Tags(Short, LowHpBeep)]
+        OdolwaTakeDamage = 0x3009,
+
+        [Tags(Long)]
+        OdolwaDefeated = 0x300B,
+
         [Tags(Short)]
         GaroAppear = 0x3012,
+
+        //[Tags(Looping, Debug)]
+        //OdolwaTaunt1 = 0x3015, // ooh-ah-la-dai, summoning bugs, looping
+
+        //[Tags(Looping, Debug)]
+        //OdolwaTaunt2 = 0x3016, // keh-laaaah-veh! taunting you to attack, looping
+
+        //[Tags(Looping, Debug)]
+        //OdolwaTaunt3 = 0x3017, // hey-dah-vah! summoning moths, looping
 
         [Tags(Long)]
         TwinMoldAppears = 0x3019,
@@ -217,6 +249,9 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Short)]
         DinolfosAttack = 0x302A,
+
+        [Tags(Short, LowHpBeep)]
+        DinolfosLaugh = 0x302C, // dodgeing your arrows
 
         [Replacable(0xE89EA6, 0xE8A336, 0xE03C66, 0xE03E36, 0xE060FE)]
         [ReplacableByTags(Short)]
@@ -328,7 +363,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         GuayDie = 0x30EB,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         SnapperShoutsGagrap = 0x30F3,
 
         [Tags(Short)]
@@ -336,6 +371,45 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Short)]
         GoronSitStand = 0x30FD,
+
+        [Tags(Short)]
+        KotakePainShout = 0x3100, // don't you have something to help me???
+
+        [Tags(Short)]
+        KotakeDrinkFinished = 0x3101, // Hoy! as the a cloud of red potion leaves her mouth
+
+        //[Tags(Short, Debug)]
+        //KotakePotionSwallow = 0x3102, // potion drink swollow sound
+
+        [Tags(Long)]
+        KotakeWitchCackle = 0x3103,
+
+        //[Tags(Short, Debug)]
+        //KotakeSwirl = 0x3104, // looping, broom circling sfx before merging from OOT
+
+        [Tags(Long)]
+        KotakeBlastingOff = 0x3105,
+
+        //[Tags(Long, Debug)]
+        //KotakeConjureBroom = 0x3106, // looping, summon broom and then hovering on broom while talking
+
+        [Tags(Long, Short)]
+        BigGoronFallsAsleepFinal = 0x3107,
+
+        [Tags(Long)]
+        PoeLaughingRegular2 = 0x310A, // Poe laughing at you, regular version 2, slightly different, not skull kid though
+
+        [Tags(Short)]
+        SkullKidSurprised = 0x310D,
+
+        //[Tags(Long, Debug)]
+        //Unknown4 = 0x3111,  // kinda wet scraping sound
+
+        [Tags(Short)]
+        StallchildTakeDamage = 0x3112, // stallchild takes small damage
+
+        //[Tags(Long, Debug)]
+        //RegularEnemyDamage = 0x3114, // marked as for twinrova, but sounds like regular damage taken 
 
         [Tags(Long)]
         PoeLaughingRegular = 0x311A, // Poe laughing at you, regular version
@@ -377,6 +451,12 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         GoronSleepy = 0x31AD,
 
+        //[Tags(Long, Debug)]
+        //IronKnuckleUnknown = 0x31B0, // very short and quiet grunt
+
+        [Tags(Short)]
+        IronKnuckleDeathGroan = 0x31B1, // Iron Knuckle death 
+
         //[Tags(Short)]
         //MajoraWrathWhipSFX3 = 0x31CA,
 
@@ -410,8 +490,30 @@ namespace MMR.Randomizer.Models.SoundEffects
         //[Tags(Long)]
         //UnknownBugSfx = 0x31F2,
 
+        [Tags(Long, Short)]
+        KoumeShocked = 0x31FB, // skull kid kills koutake
+
+        [Tags(Long)]
+        ChuChuEmergeFromGround = 0x31FE,
+
+        [Tags(Long)]
+        KoumeSnoring = 0x31FF,
+
+        [Tags(Short)]
+        KoumeStartledAwake = 0x3200,
+
         [Tags(Long)]
         DekuLinkPanicScream = 0x3200, // when he sees his reflection
+
+        [Replacable(0x1057882)]
+        [ReplacableByTags(Long)] 
+        [Tags(Long)]
+        GoronSnore1 = 0x321A,
+
+        [Replacable(0x10578A6)]
+        [ReplacableByTags(Long)]
+        //[Tags(Long)]           // this air sucking sound, we don't want it in the pool
+        GoronSnore2 = 0x321B,
 
         //[Tags(Long)]
         //MajoraWrathSpinningTopLoop = 0x322C,
@@ -462,6 +564,12 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, Long, LowHpBeep)]
         PirateLaugh = 0x3271, // smug laugh when they catch you pretending to be a stone
 
+        //[Tags(Short, Long, Debug)]
+        //PiratePain = 0x3273, // suffering damage after fight "Don't think this ends here -> escape"
+
+        [Tags(Short)]
+        PirateShout = 0x3274, // throws a deku nut to escape
+
         [Tags(Long)]
         SkullKidLaugh1 = 0x3275,
 
@@ -470,6 +578,31 @@ namespace MMR.Randomizer.Models.SoundEffects
 
         [Tags(Long)]
         SkullKidLaugh3 = 0x3277,
+
+        [Tags(Short, Long)]
+        DeathScythe = 0x32AC,
+
+        [Tags(Short, LowHpBeep)]
+        DeathScythe2 = 0x32AD,
+
+        [Tags(Long)]
+        DeathLaughs = 0x32B0,
+
+        [Tags(Short, Long)]
+        DeathDamageTaken = 0x32B1,
+
+        //[Tags(Short, Debug)]
+        //DeathHeartBreak = 0x32B5, // I guess part of his death cinematic? not sure it was used
+
+        [Tags(Short, Long)]
+        CptKeetaAcceptingOrder = 0x32C5,
+
+        [Tags(Long)]
+        GaroMasterLaugh = 0x32C6,
+
+        //[Tags(Short, Debug)]
+        //KoumeLaughing2 = 0x32CB, // off pitch koume laughing, not used? these are marked as copies too
+
 
         #endregion
 
@@ -570,10 +703,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(LowHpBeep)] // its kinda quiet to use for anything short
         ChildLinkPantLowHealth = 0x6029,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ChildLinkFallDamage = 0x603A,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ChildLinkKnockedOffHorse = 0x603E,
 
         [Replacable(0x00BABCF6)]
@@ -622,13 +755,13 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         DekuFallLong = 0x6088,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         DekuFallDamage = 0x609A,
 
         [Tags(Short, LowHpBeep)]
         DekuHorror = 0x6096,
 
-        [Tags(Long, LowHpBeep)]
+        [Tags(Short, Long, LowHpBeep)]
         ZoraFallDamage = 0x60BA,
 
         [Tags(Short, LowHpBeep)]
@@ -643,7 +776,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         GoronFallLong = 0x60C8,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         GoronFallDamage = 0x60DA, // might also get reused as goron recognizing darmani
 
         [Tags(Short, LowHpBeep)]
@@ -658,13 +791,34 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         BomberEhh = 0x6103,
 
+        [Tags(Short)]
+        BomberSurprise = 0x6105,
+
+        //[Tags(Short, Debug)]
+        //HagVoice1Unused = 0x6106,  // japanese iiya "No!" (suprised)
+
+        [Tags(Long)]
+        GrandmaRobbedShout = 0x6107, // Just as sakon contacts
+
+        //[Tags(Short, Debug)]
+        //GrandmaRobbedHelpMe = 0x6108, // as sakon is getting away "someone please stop him"
+
+        //[Tags(Short, Debug)]
+        //GrandmaRobbedAcceptance = 0x6109, // you failed to stop sakon, or blew him up, either way shes tired
+
+        [Tags(Long)]
+        GrandmaChuckle = 0x610A,
+
+        //[Tags(Short, Debug)]
+        //GrandmaOhIsee = 0x610B, // unused? sounds like you explained something to her and she understands now
+
         [Tags(Short, LowHpBeep)]
         MamamuYanCelebratory = 0x6112,
 
         [Tags(Short)]
         AveilFrustrated = 0x6115,
 
-        [Tags(Long, LowHpBeep)]
+        [Tags(Short, Long, LowHpBeep)]
         AveilLaugh = 0x6116,
 
         [Tags(Short)]
@@ -721,13 +875,13 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         CremiaSurprised = 0x6129,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ReceptionistMmHmm = 0x612A,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ReceptionistSwoon = 0x612B,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         ReceptionistMmm = 0x612C,
 
         // too annoying for lowhpbeep
@@ -761,10 +915,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         DekuPrincessAngerBuilding = 0x6136, // second half of outburst at king, before jumping
 
-        [Tags(Long)]
+        [Tags(Short)]
         DekuPrincessStressed = 0x6137, // bottle talking, and start of angry outburst at king
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         StrayFairyHelpMe = 0x6138,
 
         [Tags(Long)]
@@ -773,10 +927,10 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         RomaniYesSisterSigh = 0x6141,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         DampeAfraid = 0x6143,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         DampeUrgh = 0x6144,
 
         [Tags(Short)]
@@ -797,14 +951,20 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         MutohScoff = 0x614F,
 
-        [Tags(Short, LowHpBeep)]
+        [Tags(Long, LowHpBeep)]
         CuriosityShopGuyHii = 0x6151,
 
-        [Tags(Long)]
+        [Tags(Long, Short, LowHpBeep)]
         CuriosityShopGuyLaugh = 0x6152,
 
-        [Tags(Long)]
+        [Tags(Long, Short)]
         CuriosityShopGuyRefuse = 0x6153, // we don't serve bunny people here
+
+        [Tags(Short, Long)]
+        KamaroOoohhh = 0x6154,
+
+        [Tags(Short, Long)]
+        KamaroAaagh = 0x6155,
 
         [Tags(Long, Short)]
         JuglerChuckleOhHoHoHo = 0x6156,
@@ -832,6 +992,16 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         GaboraHurrgh = 0x6166,
 
+        [Tags(Long, LowHpBeep)] // quiet enough to work for lowhp
+        GrogSigh = 0x616C,
+
+        [Tags(Long)] // too quiet to use in my opinion
+        GrogHehHeh= 0x616D,
+
+
+        [Tags(Short, LowHpBeep)]
+        ViscenAhQuestion = 0x616E, // the guard in the meeting "have you not noticed the giant moon???"
+
         [ReplacableInMessage(0x696F, 10100, 10101, 10107, 10111, 10114, 10123, 10141, 10149, 10155, 10427, 10429, 10431, 10589)]
         [Tags(Short, LowHpBeep)]
         [ReplacableByTags(Short)]
@@ -843,16 +1013,19 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short)]
         DarlingMmm = 0x6171,
 
-        [Tags(Long, LowHpBeep)]
+        [Tags(Short)]
+        MikauOwww = 0x6174, // also used by toilet hand "p p paper!"
+
+        [Tags(Long, Short, LowHpBeep)]
         MikauBaybee = 0x6175,
 
-        [Tags(Long)]
-        MikauYay = 0x6176,
+        [Tags(Short, Long, LowHpBeep)]
+        MikauYay = 0x6176, // also used by toilet hand
 
         [Tags(Long)]
         TingleFall = 0x6177,
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         TingleChuckle = 0x617A,
 
         [Tags(Long)]
@@ -876,7 +1049,7 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         UnknownMaleSorrowOoohhhh = 0x6181,  // ??? Not sure this was ever used
 
-        [Tags(Long)]
+        [Tags(Short, Long)]
         UnknownMaleCuriousQuestionHmmm = 0x6182,  // ??? Not sure this was ever used
 
         [Tags(Long)]

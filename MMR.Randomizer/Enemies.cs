@@ -1295,7 +1295,6 @@ namespace MMR.Randomizer
             }
         }
         #endregion
-
     }
 
 }

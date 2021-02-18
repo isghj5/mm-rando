@@ -2,6 +2,7 @@
 #define Z2_H
 
 #include <n64.h>
+#include <stdbool.h>
 #include "types.h"
 
 #define Z2_SCREEN_WIDTH      320
@@ -981,7 +982,7 @@ typedef struct {
     z2_xyzf_t        focus_pos;                      /* 0x0094 */
     u32              unk_0xA0;                       /* 0x00A0 */
     u32              unk_0xA4;                       /* 0x00A4 */
-    u32              unk_0xA8;                       /* 0x00A8 */
+    z2_actor_t      *actor;                          /* 0x00A8 */
     u8               unk_0xAC[0x94];                 /* 0x00AC */
     s16              unk_0x140;                      /* 0x0140 */
     s16              state;                          /* 0x0142 */
@@ -1066,7 +1067,8 @@ typedef struct {
     f32              unk_0x1F8;                      /* 0x01F8 */
     u8               unk_0x1FC[0x54];                /* 0x01FC */
     s32              unk_0x250;                      /* 0x0250 */
-    u8               unk_0x254[0x14];                /* 0x0254 */
+    z2_actor_t      *elegy_statues[0x04];            /* 0x0254 */
+    u8               unk_0x264[0x04];                /* 0x0264 */
     u8               unk_0x268;                      /* 0x0268 */
     u8               unk_0x269[0x03];                /* 0x0269 */
     u8               unk_0x26C[0x18];                /* 0x026C */
@@ -1405,11 +1407,9 @@ typedef struct {
 } z2_song_notes_t;                                   /* 0x001C */
 
 /**
- * Structure with some song state.
- *
- * Usually located at: 0x801FD43A
+ * Song state substructure which alternates between 2 via frame counter.
  **/
-typedef struct {
+typedef struct z2_song_frame_s {
     s8               recent_note;                    /* 0x0000 */
     s8               stored_song;                    /* 0x0001 */
     s8               note_index;                     /* 0x0002 */
@@ -1418,9 +1418,16 @@ typedef struct {
     u8               playback_state;                 /* 0x0005 */
                                                      /* 1 while doing playback, is reset to 0 to show the "You Played X song" text. */
     u8               playback_note_index;            /* 0x0006 */
-    u8               unk_0x07[0x03];                 /* 0x0007 */
-    s8               note_index_2;                   /* 0x000A */
-    u8               unk_0x0B[0x05];                 /* 0x000B */
+    u8               unk_0x07;                       /* 0x0007 */
+} z2_song_frame_t;                                   /* 0x0008 */
+
+/**
+ * Structure with some song state.
+ *
+ * Usually located at: 0x801FD43A
+ **/
+typedef struct {
+    z2_song_frame_t  frames[2];                      /* 0x0000 */
     u16              frame_count;                    /* 0x0010 */
     z2_angle_t       analog_angle;                   /* 0x0012, angle of analog stick, modifies sound. */
     u16              unk_0x14;                       /* 0x0014 */
@@ -1458,24 +1465,52 @@ typedef struct {
 /// =============================================================
 
 typedef struct z2_msgbox_ctxt_s {
-    u8               unk_0x00[0x1F00];               /* 0x0000 */
+    u8               unk_0x00[0x19E8];               /* 0x0000 */
+    // Struct at 0x168?
+    u8               cur_msg_raw[0x500];             /* 0x19E8 */ // length might be wrong
+    u32              msg_data_offset;                /* 0x1EE8 */
+    u32              msg_data_length;                /* 0x1EEC */
+    u8               unk_0x1EF0[0x10];               /* 0x1EF0 */
     z2_song_ctxt_t  *song_ctxt;                      /* 0x1F00 */
-    u8               unk_0x1F04[0x0C];               /* 0x1F04 */
+    u16              cur_msg_id;                     /* 0x1F04 */
+    u16              unk_0x1F06;                     /* 0x1F06 */
+    u8               unk_0x1F08[0x02];               /* 0x1F08 */
+    u8               unk_0x1F0A;                     /* 0x1F0A */
+    u8               unk_0x1F0B[0x05];               /* 0x1F0B */
     u32              unk_0x1F10;                     /* 0x1F10 */
-    u8               unk_0x1F14[0x0E];               /* 0x1F14 */
+    u8               unk_0x1F14[0x04];               /* 0x1F14 */
+    u8               unk_0x1F18;                     /* 0x1F18 */ // related to horizontal alignment
+    u8               unk_0x1F19[0x09];               /* 0x1F19 */
     u8               message_state_1;                /* 0x1F22 */
-    u8               unk_0x1F23[0xF5];               /* 0x1F23 */
+    u8               unk_0x1F23;                     /* 0x1F23 */
+    u8               cur_msg_displayed[0xC0];        /* 0x1F24 */ // length might be wrong
+    u8               unk_0x1FE4[0x08];               /* 0x1FE4 */
+    u16              cur_msg_char_index;             /* 0x1FEC */
+    u16              unk_0x1FEE;                     /* 0x1FEE */
+    u8               unk_0x1FF0[0x0A];               /* 0x1FF0 */
+    u16              msg_text_screen_y;              /* 0x1FFA */
+    u8               unk_0x1FFC[0x1C];               /* 0x1FFC */
     z2_color_rgb16_t cur_char_color;                 /* 0x2018 */
     s16              cur_char_alpha;                 /* 0x201E */
     u8               message_state_2;                /* 0x2020 */
-    u8               unk_0x2021[0x02];               /* 0x2021 */
+    u8               selection;                      /* 0x2021 */
+    u8               unk_0x2022;                     /* 0x2022 */
     u8               message_state_3;                /* 0x2023 */
-    u8               unk_0x2024[0x10];               /* 0x2024 */
+    u8               unk_0x2024[0x04];               /* 0x2024 */
+    u16              playback_song;                  /* 0x2028 */
+    u16              unk_0x202A;                     /* 0x202A */
+    u16              unk_0x202C;                     /* 0x202C */
+    u8               unk_0x202E[0x06];               /* 0x202E */
     z2_color_rgb16_t score_line_color;               /* 0x2034 */
     u8               unk_0x203A[0x02];               /* 0x203A */
     s16              score_line_alpha;               /* 0x203C */
-    u8               unk_0x203E[0x82];               /* 0x203E */
-    u8               unk_0x20C0[0x08];               /* 0x20C0 */
+    u8               unk_0x203E[0x2C];               /* 0x203E */
+    u16              msg_box_screen_y;               /* 0x206A */
+    u8               unk_0x206C[0x18];               /* 0x206C */
+    void            *message_table;                  /* 0x2084 */
+    u8               unk_0x2088[0x08];               /* 0x2088 */
+    s16              message_data_file;              /* 0x2090, 0 = main file, 1 = credits file. */
+    u8               unk_0x2092[0x36];               /* 0x2092 */
     z2_color_rgb16_t normal_char_color;              /* 0x20C8 */
     u8               unk_0x20CE[0x12];               /* 0x20CE */
 } z2_msgbox_ctxt_t;                                  /* 0x20E0 */
@@ -1706,7 +1741,11 @@ typedef struct {
     char             form_name[0x8][0x3];            /* 0x00DE */
     u8               unk_0xF6[0x2];                  /* 0x00F6 */
     z2_save_scene_flags_t save_scene_flags[0x78];    /* 0x00F8 */
-    u8               unk_0xE18[0xC6];                /* 0x0E18 */
+    u8               unk_0xE18[0xA8];                /* 0x0E18 */
+    // 0EA4 = 0x1C byte length bit field. bit per scene indicating whether minimap is enabled
+    u16              skull_tokens_1;                 /* 0x0EC0 */
+    u16              skull_tokens_2;                 /* 0x0EC2 */
+    u8               unk_0xEC4[0x1A];                /* 0x0EC4 */
     u16              bank_rupees;                    /* 0x0EDE */
     u8               unk_0xEE0[0x10];                /* 0x0EE0 */
     u32              lottery_guess;                  /* 0x0EF0 */
@@ -1723,28 +1762,44 @@ typedef struct {
                 u8   flag_0x0E;                      /* 0x0F06 */
             };
             u8       unk_0x0F[0x08];                 /* 0x0F07 */
+            // 0F0C & 0x01 = Woodfall Temple Raised
+            // 0F0C & 0x02 = Swamp Clear
             u8       great_spin;                     /* 0x0F0F */
             u8       unk_0x18[0x4C];                 /* 0x0F10 */
+            // 0F19 & 0x80 = Mountain Clear
+            // 0F2C & 0x20 = Canyon Clear
+            // 0F2F & 0x80 = Ocean Clear
         };
         u8           week_event_inf_bytes[0x64];     /* 0x0EF8 */
     }                week_event_inf;
     u32              locations_visited;              /* 0x0F5C */
-    u8               unk_0xF60[0x8C];                /* 0x0F60 */
+    u32              world_map_visible;              /* 0x0F60 */ // 0x00007FFF is full map
+    u8               unk_0xF60[0x88];                /* 0x0F64 */
     u8               lotteries[0x09];                /* 0x0FEC */
     u8               spider_masks[0x06];             /* 0x0FF5 */
     u8               bomber_code[0x05];              /* 0x0FFB */
-    u8               unk_0xFF0[0x0A];                /* 0x1000 */
+    u8               unk_0x1000[0x0A];               /* 0x1000 */
     u16              checksum;                       /* 0x100A */
     u8               event_inf[0x08];                /* 0x100C */
+    // (cleared if you leave temple)
+    // 1011 & 0x40 = Gyorg Intro cutscene seen
+    // 1011 & 0x20 = Twinmold Intro cutscene seen
+    // 1011 & 0x10 = Odolwa Intro cutscene seen
+    // 1011 & 0x08 = Goht Unfrozen cutscene seen
+    // 1012 & 0x04 = Goht Intro cutscene seen
+    // 1012 & 0x02 = Majora Intro cutscene seen
     u8               unk_0x1014[0x02];               /* 0x1014 */
     u16              jinx_timer;                     /* 0x1016 */
     s16              rupee_timer;                    /* 0x1018 */
     u8               unk_0x101A[0xC6];               /* 0x101A */
     u8               pictobox_photo[0x2BC0];         /* 0x10E0 */
     s32              file_index;                     /* 0x3CA0 */
-    u8               unk_0x3CA4[0x0C];               /* 0x3CA4 */
+    u8               unk_0x3CA4[0x04];               /* 0x3CA4 */
+    u32              title_screen_mod;               /* 0x3CA8 */
+    u32              entrance_mod;                   /* 0x3CAC */
     s32              void_flag;                      /* 0x3CB0 */
     u8               unk_0x3CB4[0x11C];              /* 0x3CB4 */
+    // u16 3D04 = after death entrance
     u8               timers[0x40];                   /* 0x3DD0 */
     u8               unk_0x3E10[0x108];              /* 0x3E10‬ */
     u8               buttons_usable[0x05];           /* 0x3F18, B, C-left, C-down, C-right, A buttons. */
@@ -1755,7 +1810,10 @@ typedef struct {
     u16              magic_meter_size;               /* 0x3F2E */
     u8               unk_0x3F30[0x02];               /* 0x3F30 */
     s16              magic_consume_cost;             /* 0x3F32 */
-    u8               unk_0x3F34[0x34];               /* 0x3F34 */
+    u8               unk_0x3F34[0x06];               /* 0x3F34 */
+    u16              minigame_counter;               /* 0x3F3A */
+    u16              minigame_counter_2;             /* 0x3F3C */
+    u8               unk_0x3F3E[0x2A];               /* 0x3F3E */
     z2_scene_flags_t scene_flags[0x78];              /* 0x3F68 */
     u8               unk_0x48C8[0x1010];             /* 0x48C8 */
     z2_color_rgb16_t heart_dd_beating_rgb;           /* 0x58D8 */
@@ -1909,7 +1967,18 @@ typedef struct {
     u8               mask;                           /* 0x0153 */
     u8               mask_c;                         /* 0x0154, C button index (starting at 1) of current/recently worn mask */
     u8               previous_mask;                  /* 0x0155 */
-    u8               unk_0x156[0x916];               /* 0x0156 */
+    u8               unk_0x156[0xF2];                /* 0x0156 */
+    union {
+        struct {
+            u16      unk_0x248;                      /* 0x0248 */
+            u16      current_animation_id;           /* 0x024A */
+        };
+        u32          animation_value;                /* 0x0248 */
+    };
+    u8               unk_0x24C[0x138];               /* 0x024C */
+    u16              get_item;                       /* 0x0384 */
+    u8               unk_0x386[0x6E2];               /* 0x0386 */
+    f32             *table_A68;                      /* 0x0A68 */
     union {
         struct {
             u32      action_state1;                  /* 0x0A6C */
@@ -1928,13 +1997,32 @@ typedef struct {
     u16              frozen_timer;                   /* 0x0AE8 */
     u8               unk_0xAEA[0x76];                /* 0x0AEA */
     u16              blast_mask_timer;               /* 0x0B60 */
-    u8               unk_0xB62[0x10];                /* 0x0B62 */
+    u8               unk_0xB62[0x05];                /* 0x0B62 */
+    u8               deku_hop_counter;               /* 0x0B67 */
+    u8               unk_0xB68[0x0A];                /* 0x0B68 */
     u16              floor_type;                     /* 0x0B72, determines sound effect used while walking */
 } z2_link_t;
 
 /// =============================================================
 /// Other Actors
 /// =============================================================
+
+/**
+ * En_Box actor (Treasure Chest).
+ **/
+typedef struct {
+    z2_actor_t       common;                         /* 0x0000 */
+    u8               unk_0x144[0xA8];                /* 0x0144 */
+    s16              anim_counter;                   /* 0x01EC, used for fancy light animation? */
+    u8               unk_0x1EE;                      /* 0x01EE */
+    u8               unk_0x1EF;                      /* 0x01EF */
+    u8               unk_0x1F0;                      /* 0x01F0 */
+    u8               chest_type;                     /* 0x01F1 */
+    u8               unk_0x1F2[0x28];                /* 0x01F2 */
+    s16              unk_0x21A;                      /* 0x021A */
+    u32              gi_index;                       /* 0x021C */
+    u32              unk_0x220;                      /* 0x0220 */
+} z2_en_box_t;                                       /* 0x0224 */
 
 /**
  * En_Elf actor.
@@ -1982,6 +2070,105 @@ typedef struct {
     u8               unk_0x228[0x04];                /* 0x0228 */
     void            *unk_0x22C;                      /* 0x022C */
 } z2_en_elforg_t;                                    /* 0x0230 */
+
+/**
+ * En_Akindonuts actor (Business Scrub)
+ **/
+typedef struct {
+    z2_actor_t       common;                         /* 0x0000 */
+    u8               unk_0x144[0x1E8];               /* 0x0144 */
+    u16              state;                          /* 0x032C, Not sure what else to call this, or what else it does. */
+    u8               unk_0x32E[0x0E];                /* 0x032E */
+    u16              last_message_id;                /* 0x033C */
+} z2_en_akindonuts_t;
+
+/**
+ * En_GirlA actor (Shop Inventory Data)
+ **/
+typedef struct {
+    z2_actor_t       common;                         /* 0x0000 */
+    u8               unk_0x144[0x5A];                /* 0x0144 */
+    u16              gi_index;                       /* 0x019E */
+} z2_en_girla_t;
+
+/**
+ * En_Toto actor (Toto)
+ **/
+typedef struct z2_en_toto_s {
+    z2_actor_t       common;                         /* 0x0000 */
+    u8               unk_0x144[0x16C];               /* 0x0144 */
+    u8               func_index;                     /* 0x02B0 */
+    u8               frame_count;                    /* 0x02B1 */
+    u8               actor_cutscene;                 /* 0x02B2 */
+    u8               song_flags;                     /* 0x02B3 */
+    u8               unk_0x2B4[0x04];                /* 0x02B4 */
+    void            *cur_state;                      /* 0x02B8 */
+    u8               unk_0x2BC[0x04];                /* 0x02BC */
+    void            *unk_0x2C0;                      /* 0x02C0 */
+    z2_actor_t      *stagelights;                    /* 0x02C4 */
+    u8               unk_0x2C8[0x08];                /* 0x02C8 */
+} z2_en_toto_t;                                      /* 0x02D0 */
+
+/**
+ * En_Suttari (Sakon)
+ **/
+typedef struct z2_en_suttari_s {
+    z2_actor_t       common;                         /* 0x0000 */
+    u8               unk_0x144[0x04];                /* 0x0144 */
+    void            *function;                       /* 0x0148 */
+    u8               unk_0x14C[0x98];                /* 0x014C */
+    u16              unk_0x1E4;                      /* 0x01E4 */
+    u16              flags;                          /* 0x01E6 */
+    u8               unk_0x1E8[0x10];                /* 0x01E8 */
+    s32              escape_status;                  /* 0x01F8 */
+    u8               unk_0x1FC[0x254];               /* 0x01FC */
+    u32              running_state;                  /* 0x0450 */
+    u8               unk_0x454[0x02];                /* 0x0454 */
+    s16              actor_cutscene_1;               /* 0x0456 */
+    s16              actor_cutscene_2;               /* 0x0458 */
+    u8               unk_0x45A[0x02];                /* 0x045A */
+} z2_en_suttari_t;                                   /* 0x045C */
+
+typedef struct z2_obj_boat_s {
+    z2_actor_t       common;                         /* 0x0000 */
+    u8               unk_0x144[0x18];                /* 0x0144 */
+    u8               path_progress;                  /* 0x015C */
+    s8               speed_multiplier;               /* 0x015D */
+    u8               unk_0x15E;                      /* 0x015E */
+    u8               unk_0x15F;                      /* 0x015F */
+    u8               unk_0x160[0x08];                /* 0x0160 */
+} z2_obj_boat_t;                                     /* 0x0168 */
+
+/**
+ * Bg_Ingate (Boat Cruise Canoe)
+ **/
+typedef struct z2_bg_ingate_s {
+    z2_actor_t       common;                         /* 0x0000 */
+    u8               unk_0x144[0x18];                /* 0x0144 */
+    void            *function;                       /* 0x015C */
+    u16              flags;                          /* 0x0160 */
+    u8               unk_0x162[0x02];                /* 0x0162 */
+    void            *path_list;                      /* 0x0164 */
+    s16              speed;                          /* 0x0168 */
+    u8               unk_0x16A[0x26];                /* 0x016A */
+} z2_bg_ingate_t;                                    /* 0x0190 */
+
+/// =============================================================
+/// Actor Cutscene
+/// =============================================================
+
+typedef struct z2_actor_cutscene_s {
+    s16              priority;                       /* 0x0000 */
+    s16              length;                         /* 0x0002 */
+    s16              unk_0x04;                       /* 0x0004 */
+    s16              unk_0x06;                       /* 0x0006 */
+    s16              additionalCutscene;             /* 0x0008 */
+    u8               sound;                          /* 0x000A */
+    u8               unk_0x0B;                       /* 0x000B */
+    s16              unk_0x0C;                       /* 0x000C */
+    u8               unk_0x0E;                       /* 0x000E */
+    u8               letterboxSize;                  /* 0x000F */
+} z2_actor_cutscene_t;                               /* 0x0010 */
 
 /// =============================================================
 /// Arenas
@@ -2207,10 +2394,53 @@ typedef struct {
 #define z2_UpdateButtonUsability_addr    0x80110038
 #define z2_WriteHeartColors_addr         0x8010069C
 #define z2_RemoveItem_addr               0x801149A0
+#define z2_ToggleSfxDampen_addr          0x8019C300
+#define z2_HandleInputVelocity_addr      0x800FF2F8
+#define z2_SetGetItemLongrange_addr      0x800B8BD0
+
+/* Scene Flags */
+#define z2_get_generic_flag_addr         0x800B5BB0
+#define z2_set_generic_flag_addr         0x800B5BF4
+#define z2_remove_generic_flag_addr      0x800B5C34
+#define z2_get_chest_flag_addr           0x800B5C78
+#define z2_set_chest_flag_addr           0x800B5C90
+#define z2_set_all_chest_flags_addr      0x800B5CAC
+#define z2_get_all_chest_flags_addr      0x800B5CB8
+#define z2_get_clear_flag_addr           0x800B5CC4
+#define z2_set_clear_flag_addr           0x800B5CDC
+#define z2_remove_clear_flag_addr        0x800B5CF8
+#define z2_get_temp_clear_flag_addr      0x800B5D18
+#define z2_set_temp_clear_flag_addr      0x800B5D30
+#define z2_remove_temp_clear_flag_addr   0x800B5D4C
+#define z2_get_collectible_flag_addr     0x800B5D6C
+#define z2_set_collectibe_flag_addr      0x800B5DB0
+#define z2_load_scene_flags_addr         0x800B9170
+#define z2_check_scene_pairs_addr        0x80169CBC
+#define z2_store_scene_flags_addr        0x80169D40
 
 /* Function Addresses (Actors) */
 #define z2_ActorDtor_addr                0x800B6948
 #define z2_ActorRemove_addr              0x800BB498
+#define z2_ActorUnload_addr              0x800B670C
+
+/* Function Addresses (Actor Cutscene) */
+#define z2_ActorCutscene_ClearWaiting_addr             0x800F1648
+#define z2_ActorCutscene_ClearNextCutscenes_addr       0x800F1678
+#define z2_ActorCutscene_MarkNextCutscenes_addr        0x800F16A8
+#define z2_ActorCutscene_End_addr                      0x800F17FC
+#define z2_ActorCutscene_Update_addr                   0x800F1A7C
+#define z2_ActorCutscene_SetIntentToPlay_addr          0x800F1BA4
+#define z2_ActorCutscene_GetCanPlayNext_addr           0x800F1BE4
+#define z2_ActorCutscene_StartAndSetUnkLinkFields_addr 0x800F1C68
+#define z2_ActorCutscene_StartAndSetFlag_addr          0x800F1CE0
+#define z2_ActorCutscene_Start_addr                    0x800F1D84
+#define z2_ActorCutscene_Stop_addr                     0x800F1FBC
+#define z2_ActorCutscene_GetCurrentIndex_addr          0x800F207C
+#define z2_ActorCutscene_GetCutscene_addr              0x800F208C
+#define z2_ActorCutscene_GetAdditionalCutscene_addr    0x800F20B8
+#define z2_ActorCutscene_GetLength_addr                0x800F20F8
+#define z2_ActorCutscene_GetCurrentCamera_addr         0x800F21B8
+#define z2_ActorCutscene_SetReturnCamera_addr          0x800F23C4
 
 /* Function Addresses (Drawing) */
 #define z2_BaseDrawCollectable_addr      0x800A7128
@@ -2221,6 +2451,7 @@ typedef struct {
 #define z2_CallSetupDList_addr           0x8012C2DC
 
 /* Function Addresses (File Loading) */
+#define z2_RomToRam_addr                 0x80080790
 #define z2_GetFileTable_addr             0x800808F4
 #define z2_GetFilePhysAddr_addr          0x80080950
 #define z2_GetFileNumber_addr            0x800809BC
@@ -2229,14 +2460,22 @@ typedef struct {
 #define z2_LoadFileFromArchive_addr      0x80178DAC
 #define z2_LoadVFileFromArchive_addr     0x80178E3C
 
+#define z2_Yaz0_LoadAndDecompressFile_addr 0x80081178
+
 /* Function Addresses (Get Item) */
 #define z2_SetGetItem_addr               0x800B8A1C
+#define z2_GiveItem_addr                 0x80112E80
+#define z2_GiveMap_addr                  0x8012EF0C
 
 /* Function Addresses (HUD) */
 #define z2_UpdateButtonsState_addr       0x8010EF68
 #define z2_ReloadButtonTexture_addr      0x80112B40
 #define z2_HudSetAButtonText_addr        0x8011552C
 #define z2_InitButtonNoteColors_addr     0x80147564
+
+/* Function Addresses (Math) */
+#define z2_Math_Sins_addr                0x800FED84
+#define z2_Math_Vec3f_DistXZ_addr        0x800FF92C
 
 /* Function Addresses (Objects) */
 #define z2_GetObjectIndex_addr           0x8012F608
@@ -2252,6 +2491,12 @@ typedef struct {
 #define z2_LoadRoom_addr                 0x8012E96C
 #define z2_UnloadRoom_addr               0x8012EBF8
 
+/* Function Addresses (Sound) */
+#define z2_SetBGM2_addr                  0x801A3098
+
+/* Function Addresses (Text) */
+#define z2_ShowMessage_addr              0x801518B0
+
 /* Relocatable Functions (Pause Menu) */
 #define z2_PauseDrawItemIcon_vram        0x80821AD4
 
@@ -2260,8 +2505,14 @@ typedef struct {
 #define z2_LinkInvincibility_vram        0x80833998
 #define z2_UseItem_vram                  0x80831990
 
+#define z2_PerformEnterWaterEffects_vram 0x8083B8D0
+#define z2_PlayerHandleBuoyancy_vram     0x808475B4
+
 /* Relocatable Types (VRAM) */
 #define z2_file_select_ctxt_vram         0x80813DF0
+
+typedef void (*z2_PerformEnterWaterEffects_proc)(z2_game_t *game, z2_link_t *link);
+typedef void (*z2_PlayerHandleBuoyancy_proc)(z2_link_t *link);
 
 /* Function Prototypes */
 typedef int (*z2_CanInteract_proc)(z2_game_t *game);
@@ -2280,10 +2531,54 @@ typedef void (*z2_UpdateButtonUsability_proc)(z2_game_t *game);
 typedef void (*z2_UseItem_proc)(z2_game_t *game, z2_link_t *link, u8 item);
 typedef void (*z2_WriteHeartColors_proc)(z2_game_t *game);
 typedef void (*z2_RemoveItem_proc)(u32 item, u8 slot);
+typedef void (*z2_ToggleSfxDampen_proc)(int enable);
+typedef void (*z2_HandleInputVelocity_proc)(f32 *linear_velocity, f32 input_velocity, f32 increaseBy, f32 decreaseBy);
+typedef bool (*z2_SetGetItemLongrange_proc)(z2_actor_t *actor, z2_game_t *game, u16 gi_index);
+
+/* Function Prototypes (Scene Flags) */
+// TODO parameters
+typedef void (*z2_get_generic_flag_proc)();
+typedef void (*z2_set_generic_flag_proc)();
+typedef void (*z2_remove_generic_flag_proc)(z2_game_t *game, s8 flag);
+typedef void (*z2_get_chest_flag_proc)();
+typedef void (*z2_set_chest_flag_proc)();
+typedef void (*z2_set_all_chest_flags_proc)();
+typedef void (*z2_get_all_chest_flags_proc)();
+typedef void (*z2_get_clear_flag_proc)();
+typedef void (*z2_set_clear_flag_proc)();
+typedef void (*z2_remove_clear_flag_proc)();
+typedef void (*z2_get_temp_clear_flag_proc)();
+typedef void (*z2_set_temp_clear_flag_proc)();
+typedef void (*z2_remove_temp_clear_flag_proc)();
+typedef void (*z2_get_collectible_flag_proc)();
+typedef void (*z2_set_collectibe_flag_proc)();
+typedef void (*z2_load_scene_flags_proc)();
+typedef void (*z2_check_scene_pairs_proc)();
+typedef void (*z2_store_scene_flags_proc)();
 
 /* Function Prototypes (Actors) */
 typedef void (*z2_ActorProc_proc)(z2_actor_t *actor, z2_game_t *game);
 typedef void (*z2_ActorRemove_proc)(z2_actor_ctxt_t *ctxt, z2_actor_t *actor, z2_game_t *game);
+typedef void (*z2_ActorUnload_proc)(z2_actor_t *actor);
+
+/* Function Prototypes (Actor Cutscene) */
+typedef void (*z2_ActorCutscene_ClearWaiting_proc)(void);
+typedef void (*z2_ActorCutscene_ClearNextCutscenes_proc)(void);
+typedef void (*z2_ActorCutscene_MarkNextCutscenes_proc)(void);
+typedef void (*z2_ActorCutscene_End_proc)(void);
+typedef void (*z2_ActorCutscene_Update_proc)(void);
+typedef void (*z2_ActorCutscene_SetIntentToPlay_proc)(s16 index);
+typedef s16 (*z2_ActorCutscene_GetCanPlayNext_proc)(s16 index);
+typedef s16 (*z2_ActorCutscene_StartAndSetUnkLinkFields_proc)(s16 index, z2_actor_t *actor);
+typedef s16 (*z2_ActorCutscene_StartAndSetFlag_proc)(s16 index, z2_actor_t *actor);
+typedef s16 (*z2_ActorCutscene_Start_proc)(s16 index, z2_actor_t *actor);
+typedef s16 (*z2_ActorCutscene_Stop_proc)(s16 index);
+typedef s16 (*z2_ActorCutscene_GetCurrentIndex_proc)(void);
+typedef z2_actor_cutscene_t * (*z2_ActorCutscene_GetCutscene_proc)(s16 index);
+typedef s16 (*z2_ActorCutscene_GetAdditionalCutscene_proc)(s16 index);
+typedef s16 (*z2_ActorCutscene_GetLength_proc)(s16 index);
+typedef s16 (*z2_ActorCutscene_GetCurrentCamera_proc)(void);
+typedef void (*z2_ActorCutscene_SetReturnCamera_proc)(s16 index);
 
 /* Function Prototypes (Drawing) */
 typedef void (*z2_ActorDraw_proc)(z2_actor_t *actor, z2_game_t *game);
@@ -2292,6 +2587,7 @@ typedef void (*z2_CallDList_proc)(z2_gfx_t *gfx);
 typedef void (*z2_PreDraw_proc)(z2_actor_t *actor, z2_game_t *game, u32 unknown);
 
 /* Function Prototypes (File Loading) */
+typedef s32 (*z2_RomToRam_proc)(u32 src, void *dst, u32 length);
 typedef s16 (*z2_GetFileNumber_proc)(u32 vrom_addr);
 typedef u32 (*z2_GetFilePhysAddr_proc)(u32 vrom_addr);
 typedef z2_file_table_t* (*z2_GetFileTable_proc)(u32 vrom_addr);
@@ -2300,14 +2596,22 @@ typedef void (*z2_LoadFileFromArchive_proc)(u32 phys_file, u8 index, u8 *dest, u
 typedef void (*z2_LoadVFileFromArchive_proc)(u32 virt_file, u8 index, u8 *dest, u32 length);
 typedef void (*z2_ReadFile_proc)(void *mem_addr, u32 vrom_addr, u32 size);
 
+typedef void (*z2_Yaz0_LoadAndDecompressFile_proc)(u32 prom_addr, void *dest, u32 length);
+
 /* Function Prototypes (Get Item) */
 typedef void (*z2_SetGetItem_proc)(z2_actor_t *actor, z2_game_t *game, s32 unk2, u32 unk3);
+typedef void (*z2_GiveItem_proc)(z2_game_t *game, u8 item_id);
+typedef void (*z2_GiveMap_proc)(u32 map_index);
 
 /* Function Prototypes (HUD) */
 typedef void (*z2_HudSetAButtonText_proc)(z2_game_t *game, u16 text_id);
 typedef void (*z2_InitButtonNoteColors_proc)(z2_game_t *game);
 typedef void (*z2_ReloadButtonTexture_proc)(z2_game_t *game, u8 idx);
 typedef void (*z2_UpdateButtonsState_proc)(u32 state);
+
+/* Function Prototypes (Math) */
+typedef f32 (*z2_Math_Sins_proc)(s16 angle);
+typedef f32 (*z2_Math_Vec3f_DistXZ_proc)(z2_xyzf_t *p1, z2_xyzf_t *p2);
 
 /* Function Prototypes (Objects) */
 typedef s8 (*z2_GetObjectIndex_proc)(const z2_obj_ctxt_t *ctxt, u16 object_id);
@@ -2326,6 +2630,12 @@ typedef void (*z2_RngSetSeed_proc)(u32 seed);
 typedef void (*z2_LoadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt, uint8_t room_id);
 typedef void (*z2_UnloadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt);
 
+/* Function Prototypes (Sound) */
+typedef void (*z2_SetBGM2_proc)(u16 bgm_id);
+
+/* Function Prototypes (Text) */
+typedef void (*z2_ShowMessage_proc)(z2_game_t *game, u16 message_id, u8 something); // TODO figure out something?
+
 /* Functions */
 #define z2_CanInteract                   ((z2_CanInteract_proc)           z2_CanInteract_addr)
 #define z2_CanInteract2                  ((z2_CanInteract2_proc)          z2_CanInteract2_addr)
@@ -2339,10 +2649,53 @@ typedef void (*z2_UnloadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt);
 #define z2_UpdateButtonUsability         ((z2_UpdateButtonUsability_proc) z2_UpdateButtonUsability_addr)
 #define z2_WriteHeartColors              ((z2_WriteHeartColors_proc)      z2_WriteHeartColors_addr)
 #define z2_RemoveItem                    ((z2_RemoveItem_proc)            z2_RemoveItem_addr)
+#define z2_ToggleSfxDampen               ((z2_ToggleSfxDampen_proc)       z2_ToggleSfxDampen_addr)
+#define z2_HandleInputVelocity           ((z2_HandleInputVelocity_proc)   z2_HandleInputVelocity_addr)
+#define z2_SetGetItemLongrange           ((z2_SetGetItemLongrange_proc)   z2_SetGetItemLongrange_addr)
+
+/* Functions (Scene Flags) */
+#define z2_get_generic_flag ((z2_get_generic_flag_proc) z2_get_generic_flag_addr)
+#define z2_set_generic_flag ((z2_set_generic_flag_proc) z2_set_generic_flag_addr)
+#define z2_remove_generic_flag ((z2_remove_generic_flag_proc) z2_remove_generic_flag_addr)
+#define z2_get_chest_flag ((z2_get_chest_flag_proc) z2_get_chest_flag_addr)
+#define z2_set_chest_flag ((z2_set_chest_flag_proc) z2_set_chest_flag_addr)
+#define z2_set_all_chest_flags ((z2_set_all_chest_flags_proc) z2_set_all_chest_flags_addr)
+#define z2_get_all_chest_flags ((z2_get_all_chest_flags_proc) z2_get_all_chest_flags_addr)
+#define z2_get_clear_flag ((z2_get_clear_flag_proc) z2_get_clear_flag_addr)
+#define z2_set_clear_flag ((z2_set_clear_flag_proc) z2_set_clear_flag_addr)
+#define z2_remove_clear_flag ((z2_remove_clear_flag_proc) z2_remove_clear_flag_addr)
+#define z2_get_temp_clear_flag ((z2_get_temp_clear_flag_proc) z2_get_temp_clear_flag_addr)
+#define z2_set_temp_clear_flag ((z2_set_temp_clear_flag_proc) z2_set_temp_clear_flag_addr)
+#define z2_remove_temp_clear_flag ((z2_remove_temp_clear_flag_proc) z2_remove_temp_clear_flag_addr)
+#define z2_get_collectible_flag ((z2_get_collectible_flag_proc) z2_get_collectible_flag_addr)
+#define z2_set_collectibe_flag ((z2_set_collectibe_flag_proc) z2_set_collectibe_flag_addr)
+#define z2_load_scene_flags ((z2_load_scene_flags_proc) z2_load_scene_flags_addr)
+#define z2_check_scene_pairs ((z2_check_scene_pairs_proc) z2_check_scene_pairs_addr)
+#define z2_store_scene_flags ((z2_store_scene_flags_proc) z2_store_scene_flags_addr)
 
 /* Functions (Actors) */
 #define z2_ActorDtor                     ((z2_ActorProc_proc)             z2_ActorDtor_addr)
 #define z2_ActorRemove                   ((z2_ActorRemove_proc)           z2_ActorRemove_addr)
+#define z2_ActorUnload                   ((z2_ActorUnload_proc)           z2_ActorUnload_addr)
+
+/* Functions (Actor Cutscene) */
+#define z2_ActorCutscene_ClearWaiting             ((z2_ActorCutscene_ClearWaiting_proc)             z2_ActorCutscene_ClearWaiting_addr)
+#define z2_ActorCutscene_ClearNextCutscenes       ((z2_ActorCutscene_ClearNextCutscenes_proc)       z2_ActorCutscene_ClearNextCutscenes_addr)
+#define z2_ActorCutscene_MarkNextCutscenes        ((z2_ActorCutscene_MarkNextCutscenes_proc)        z2_ActorCutscene_MarkNextCutscenes_addr)
+#define z2_ActorCutscene_End                      ((z2_ActorCutscene_End_proc)                      z2_ActorCutscene_End_addr)
+#define z2_ActorCutscene_Update                   ((z2_ActorCutscene_Update_proc)                   z2_ActorCutscene_Update_addr)
+#define z2_ActorCutscene_SetIntentToPlay          ((z2_ActorCutscene_SetIntentToPlay_proc)          z2_ActorCutscene_SetIntentToPlay_addr)
+#define z2_ActorCutscene_GetCanPlayNext           ((z2_ActorCutscene_GetCanPlayNext_proc)           z2_ActorCutscene_GetCanPlayNext_addr)
+#define z2_ActorCutscene_StartAndSetUnkLinkFields ((z2_ActorCutscene_StartAndSetUnkLinkFields_proc) z2_ActorCutscene_StartAndSetUnkLinkFields_addr)
+#define z2_ActorCutscene_StartAndSetFlag          ((z2_ActorCutscene_StartAndSetFlag_proc)          z2_ActorCutscene_StartAndSetFlag_addr)
+#define z2_ActorCutscene_Start                    ((z2_ActorCutscene_Start_proc)                    z2_ActorCutscene_Start_addr)
+#define z2_ActorCutscene_Stop                     ((z2_ActorCutscene_Stop_proc)                     z2_ActorCutscene_Stop_addr)
+#define z2_ActorCutscene_GetCurrentIndex          ((z2_ActorCutscene_GetCurrentIndex_proc)          z2_ActorCutscene_GetCurrentIndex_addr)
+#define z2_ActorCutscene_GetCutscene              ((z2_ActorCutscene_GetCutscene_proc)              z2_ActorCutscene_GetCutscene_addr)
+#define z2_ActorCutscene_GetAdditionalCutscene    ((z2_ActorCutscene_GetAdditionalCutscene_proc)    z2_ActorCutscene_GetAdditionalCutscene_addr)
+#define z2_ActorCutscene_GetLength                ((z2_ActorCutscene_GetLength_proc)                z2_ActorCutscene_GetLength_addr)
+#define z2_ActorCutscene_GetCurrentCamera         ((z2_ActorCutscene_GetCurrentCamera_proc)         z2_ActorCutscene_GetCurrentCamera_addr)
+#define z2_ActorCutscene_SetReturnCamera          ((z2_ActorCutscene_SetReturnCamera_proc)          z2_ActorCutscene_SetReturnCamera_addr)
 
 /* Functions (Drawing) */
 #define z2_BaseDrawCollectable           ((z2_ActorDraw_proc)             z2_BaseDrawCollectable_addr)
@@ -2360,15 +2713,24 @@ typedef void (*z2_UnloadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt);
 #define z2_LoadFileFromArchive           ((z2_LoadFileFromArchive_proc)   z2_LoadFileFromArchive_addr)
 #define z2_LoadVFileFromArchive          ((z2_LoadVFileFromArchive_proc)  z2_LoadVFileFromArchive_addr)
 #define z2_ReadFile                      ((z2_ReadFile_proc)              z2_ReadFile_addr)
+#define z2_RomToRam                      ((z2_RomToRam_proc)              z2_RomToRam_addr)
+
+#define z2_Yaz0_LoadAndDecompressFile    ((z2_Yaz0_LoadAndDecompressFile_proc) z2_Yaz0_LoadAndDecompressFile_addr)
 
 /* Functions (Get Item) */
 #define z2_SetGetItem                    ((z2_SetGetItem_proc)            z2_SetGetItem_addr)
+#define z2_GiveItem                      ((z2_GiveItem_proc)              z2_GiveItem_addr)
+#define z2_GiveMap                       ((z2_GiveMap_proc)               z2_GiveMap_addr)
 
 /* Functions (HUD) */
 #define z2_HudSetAButtonText             ((z2_HudSetAButtonText_proc)     z2_HudSetAButtonText_addr)
 #define z2_InitButtonNoteColors          ((z2_InitButtonNoteColors_proc)  z2_InitButtonNoteColors_addr)
 #define z2_ReloadButtonTexture           ((z2_ReloadButtonTexture_proc)   z2_ReloadButtonTexture_addr)
 #define z2_UpdateButtonsState            ((z2_UpdateButtonsState_proc)    z2_UpdateButtonsState_addr)
+
+/* Functions (Math) */
+#define z2_Math_Sins                     ((z2_Math_Sins_proc)             z2_Math_Sins_addr)
+#define z2_Math_Vec3f_DistXZ             ((z2_Math_Vec3f_DistXZ_proc)     z2_Math_Vec3f_DistXZ_addr)
 
 /* Functions (Objects) */
 #define z2_GetObjectIndex                ((z2_GetObjectIndex_proc)        z2_GetObjectIndex_addr)
@@ -2383,5 +2745,11 @@ typedef void (*z2_UnloadRoom_proc)(z2_game_t *game, z2_room_ctxt_t *room_ctxt);
 /* Functions (Rooms) */
 #define z2_LoadRoom                      ((z2_LoadRoom_proc)              z2_LoadRoom_addr)
 #define z2_UnloadRoom                    ((z2_UnloadRoom_proc)            z2_UnloadRoom_addr)
+
+/* Functions (Sound) */
+#define z2_SetBGM2                       ((z2_SetBGM2_proc)               z2_SetBGM2_addr)
+
+/* Functions (Text) */
+#define z2_ShowMessage                   ((z2_ShowMessage_proc)           z2_ShowMessage_addr)
 
 #endif // Z2_H
