@@ -181,8 +181,8 @@ namespace MMR.Randomizer.GameObjects
         // the frogs that show up when you kill hte other frog, those are unknown vars because they are spawned by the dead miniboss
         [GroundVariants(1,2,3,4)] // 3 is southern swamp, 4 is laundry pool, the versions in teh mountaion have the F flag, think the rest are numbered
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max: 1, 1, 2, 3,4)]
-        [EnemizerScenesExcluded(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.LaundryPool)] // clear and poison swamp, laundrypool
+        [VariantsWithRoomMax(max: 1, variant: 1, 2, 3, 4)]
+        [EnemizerScenesExcluded(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.LaundryPool)]
         Frog1 = 0x22,
 
         [EnemizerEnabled]
@@ -1067,6 +1067,10 @@ namespace MMR.Randomizer.GameObjects
         ZoraEgg = 0x1F5,
 
         SmallSnowball = 0x1F9,
+
+        //[ActorizerEnabled] // TODO test if we can randomizer her
+        [ObjectListIndex(0x1D4)]
+        DekuPrincess = 0x1FC,
 
         //[ActorizerEnabled] // softlock if you enter the song teach cutscene, which in rando is proximity
         [ObjectListIndex(0x1DF)]

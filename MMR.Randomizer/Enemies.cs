@@ -901,13 +901,13 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.Grottos.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.Bo.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.OwlStatue.ObjectIndex()
+                            NewV = GameObjects.Actor.Frog1.ObjectIndex()
                         });
                         continue;
                     }
