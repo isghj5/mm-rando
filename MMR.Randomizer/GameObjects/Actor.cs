@@ -85,12 +85,14 @@ namespace MMR.Randomizer.GameObjects
         // 46FF did spawn just fine
         // 0/100 are crash I think
         [GroundVariants(0x400E, 0x4600, 0x5005)]
+        [UnkillableAllVariants]
         // if you leave or enter a room after spawning epona you crash, not sure why, but so far the known areas are all dungeons
         [EnemizerScenesPlacementBlock(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple)]
         //[OnlyOneActorPerRoom]
         Horse = 0xD, // En_Horse
 
         [ObjectListIndex(0x1)]
+        [UnkillableAllVariants]
         Item00 = 0xE, // En_Item00
 
         [ActorizerEnabled]
@@ -178,7 +180,6 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [ObjectListIndex(0xBC)]
-        // the frogs that show up when you kill hte other frog, those are unknown vars because they are spawned by the dead miniboss
         [GroundVariants(1,2,3,4)] // 3 is southern swamp, 4 is laundry pool, the versions in teh mountaion have the F flag, think the rest are numbered
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max: 1, variant: 1, 2, 3, 4)]
@@ -189,7 +190,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2540)]
         [FileID(67)]
         [ObjectListIndex(0x20)]
-        [FlyingVariants(0xEF,0x7F,4,0x3F)]
+        // 4 is in the astral observatory, and has a spawn kill flag, so don't use
+        [FlyingVariants(0xEF, 0x7F, 0x3F)]
         //[GroundVariants(0xEF,0x7F,4)] // remember, this works for _spawns_
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, 
@@ -199,6 +201,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled]
         [ObjectListIndex(0xFC)] // the spreadsheet thinks this is free but I dont think so
         //[GroundVariants()]
+        [UnkillableAllVariants]
         Sign = 0x26, // En_A_Obj
 
         //[EnemizerEnabled] // sometimes crash, cause unknown
@@ -378,6 +381,7 @@ namespace MMR.Randomizer.GameObjects
         // hmm, this fights with demo_kankyo, need to think of a way to keep these two apart
         [ObjectListIndex(1)] // gameplay_keep 1
         [FlyingVariants(3)] // 3 is snow
+        [UnkillableAllVariants]
         Environement = 0x51, // Object_Kankyo
 
         [ActorizerEnabled]
@@ -421,6 +425,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // broken: crash, probably uses a path
         [FileID(102)]
         [ObjectListIndex(0x280)]
+        [UnkillableAllVariants]
         MajoraBalloonSewer = 0x5F, // En_Encounter2
 
         [EnemizerEnabled]
@@ -443,6 +448,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xA2)]
         //[GroundVariants(0)]
         [WaterVariants(0)]
+        [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         Ruto = 0x69, // En_Ru
 
@@ -495,7 +501,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x4015)]
         // 0 works, always empty
         [GroundVariants(0x115, 0x101, 0x106, 0x10E, 0x10F)] // actually spawns thank god, only in dungeons though, but outside its just an empty space so thats fine
-        [UnkillableAllVariants]
+        [UnkillableAllVariants] // unknown, harder to test since its a free enemy
         FlyingPot = 0x8D,
 
         [EnemizerEnabled]
@@ -541,7 +547,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)] // gameplay keep obj 1
         //[GroundVariants(0)] // unknown vars
         //[UnkillableAllVariants]
-        En_Clear_Tag = 0xA2, // en_clear_tag in OOT was arwing, what is it in here?
+        En_Clear_Tag = 0xA2, // en_clear_tag in OOT was arwing, but not for us?
 
         [ActorizerEnabled]
         [FileID(151)]
@@ -728,6 +734,7 @@ namespace MMR.Randomizer.GameObjects
         Raft = 0x13A,// carniverous raft, woodfall
 
         [ObjectListIndex(0x165)]
+        [UnkillableAllVariants]
         PottedPlant = 0x13E,
 
         //[EnemizerEnabled] // does not spawn, tcrf can get it to spawn but it does nothing
@@ -784,6 +791,7 @@ namespace MMR.Randomizer.GameObjects
         Nejiron = 0x155, // Rolling exploding rock in Ikana
 
         [ObjectListIndex(1)] // gameplay_keep obj 1
+        [UnkillableAllVariants]
         ThreeDayTimer = 0x15A,
 
         [EnemizerEnabled]
@@ -801,6 +809,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(1)] // not sure this isn't an error
         // grave dissapears when we remove the seagull object? I think? why the heck would they use the same object
         // spreadsheet thinks 0x206 could be it
+        [UnkillableAllVariants]
         MikauGrave = 0x15C, // En_Sekihi
 
 
@@ -839,6 +848,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         // reminder: even though its obj2, the actual keaton doesn't not spawn without its own object
         [ObjectListIndex(2)] // field_keep
+        [AlignedCompanionActor(Bugs, CompanionAlignment.Above, ourVariant: -1,
+            variant: 0x2324, 0x4324)] // butterflies over the bushes
         [GroundVariants(0x7F00, 0x400, 0x1F00)] //400 is milkroad, 7F00 is opening area, spring is 1F00
         [UnkillableAllVariants] // untested
         KeatonGrass = 0x171, // En_Kusa2
@@ -856,6 +867,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xE3)]
         [GroundVariants(0xFF)]
         [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.WestClockTown)]
         Banker = 0x177, // En_Ginko_Man
 
@@ -938,6 +950,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         HappyMaskSalesman = 0x1B5, // En_Osn
 
+        [UnkillableAllVariants]
         Lillypad = 0x1B9,
 
         [EnemizerEnabled]
@@ -959,6 +972,7 @@ namespace MMR.Randomizer.GameObjects
         // FF01 is the ice blocking the path north
         // 0x5AXX seems to be the blocking path ice walls from snowhead temple
         //[GroundVariants(0x5A00)] 
+        [UnkillableAllVariants]
         IceBlock = 0x1C8, // Obj_BigIcicle
 
         [EnemizerEnabled]
@@ -990,6 +1004,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:1, 0xFFFF, 0x600, 0x702, 0x801)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)]
+        [EnemizerScenesPlacementBlock(Scene.Woodfall)] // blocking enemies
         IkanaGravestone = 0x1E3,
 
         [EnemizerEnabled]
@@ -1002,7 +1017,8 @@ namespace MMR.Randomizer.GameObjects
         
         // spreadsheet thinks ths is both a skullwalltula and gameplay_keep
         // in scene tatl, these look like bump detectors for spiders being released
-        TG_Sw = 0x1E7, // TG_Sw this is really what its called
+        // this is bonk detector! huh
+        TG_Sw = 0x1E7, // this is really what its called
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x36A0)]
@@ -1025,6 +1041,7 @@ namespace MMR.Randomizer.GameObjects
 
         // don't know vars without mamuyan decomp
         [ObjectListIndex(0x132)]
+        [UnkillableAllVariants]
         RacingDog = 0x1EE, // En_Racedog
 
         [ActorizerEnabled]
@@ -1068,9 +1085,15 @@ namespace MMR.Randomizer.GameObjects
 
         SmallSnowball = 0x1F9,
 
-        //[ActorizerEnabled] // TODO test if we can randomizer her
+        [ActorizerEnabled] // TODO test if we can randomizer her
         [ObjectListIndex(0x1D4)]
-        DekuPrincess = 0x1FC,
+        // 0 is inside of tree
+        // 2 is post-woodfall sitting in royal chamber, does not spawn until after a flag is set
+        [GroundVariants(0x0)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.DekuKingChamber)] // if her object is not in the king chamber no cutscene after bottle delivery
+        DekuPrincess = 0x1FC, // En_Dnp
 
         //[ActorizerEnabled] // softlock if you enter the song teach cutscene, which in rando is proximity
         [ObjectListIndex(0x1DF)]
@@ -1147,6 +1170,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(1)]
         [OnlyOneActorPerRoom]
         [EnemizerScenesExcluded(Scene.GoronShrine)] // remove and it crashes, dont know why
+        [UnkillableAllVariants]
         GoronElder = 0x213,
 
         [EnemizerEnabled]
@@ -1216,6 +1240,7 @@ namespace MMR.Randomizer.GameObjects
         //[AlignedCompanionActor(Torch, CompanionAlignment.Above,
         //    variant: )] // 
         [RespawningAllVariants] // they do NOT respawn, but they do block clear all rooms
+        [UnkillableAllVariants]
         MothSwarm = 0x23D,
 
         //[EnemizerEnabled]
@@ -1315,6 +1340,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x26E)]
         [WallVariants(0x2)]
+        [UnkillableAllVariants]
         Windows = 0x294,
 
         [ActorizerEnabled]
@@ -1327,6 +1353,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x18)] // might also need the sunmask object
         // 0 does not spawn, might need another object
         [GroundVariants(0)]
+        [UnkillableAllVariants]
         DressMannequin = 0x2A1,
 
         // seriously? this is a different actor?

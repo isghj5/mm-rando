@@ -219,9 +219,9 @@ namespace MMR.Randomizer
             FlattenPitchRoll(twinislandsScene.Maps[0].Actors[27]);
 
             // I like secrets
-            twinislandsScene.Maps[0].Actors[1].Position = new vec16(-583, 140, -20); // place: next to tree
-
-            twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x7200; // invisible
+            //twinislandsScene.Maps[0].Actors[1].Position = new vec16(-583, 140, -20); // place: next to tree
+            twinislandsScene.Maps[0].Actors[1].Position = new vec16(349, -196, 970); // place: under the ice, sneaky like teh crabb
+            //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x7200; // invisible
 
             // move the bombchu in the first stonetowertemple room 
             //   backward several feet from the chest, so replacement cannot block the chest
@@ -901,13 +901,13 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.BlueBubble.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Frog1.ObjectIndex()
+                            NewV = GameObjects.Actor.Skulltula.ObjectIndex()
                         });
                         continue;
                     }
