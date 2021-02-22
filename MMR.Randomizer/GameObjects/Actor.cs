@@ -620,13 +620,14 @@ namespace MMR.Randomizer.GameObjects
         // 0xA9F and the 0x29F crashes, but... was there ever a dog in that house?
         // 3FF is SCT dog, 0x22BF is spiderhouse dog, makes no sense if use mask
         // 0xD9F is old ranch dog WORKS, racetrack dogs unknown, spawned by the game
-        //[GroundVariants(0x3FF, 0x22BF, 0xD9F)]
-        // these two work in some scenes, crash in others: 0xD9F, 22BF,
-        [GroundVariants(0x3FF)]
+        // in mamuyan: (phi_s0 << 5) | (arg0->unk1C & 0x7E00) unk1C seems static
+        // from mamuyan code we know the colors are 1-E shifted right by 5
+        // colors: (white, brown, dark grey, bluedog, gold)
+        [GroundVariants(0x20, 0x40, 0x60, 0x80, 0x120,
+            0x3FF, 0xD9F, 0x22BF)]
         //[PatrolVariants(0xD9F)] // didn't crash when put in deku palace
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max:5, 0x3FF)]
-        //[EnemizerScenesExcluded(0x6F, 0x10, 0x27, 0x35)]
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // cursed scp dog
         Dog = 0xE2, // En_Dg
@@ -1039,10 +1040,12 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0,0x0101)]
         Hiploop = 0x1E9,// Charging beetle in Woodfall
 
-        // don't know vars without mamuyan decomp
+        //[ActorizerEnabled] // thank god for m2c
+        // turns out mamu yan spawns regular dogs, for the dogs meandering around
         [ObjectListIndex(0x132)]
+        [GroundVariants(0x2)]
         [UnkillableAllVariants]
-        RacingDog = 0x1EE, // En_Racedog
+        RaceDog = 0x1EE, // En_Racedog
 
         [ActorizerEnabled]
         [ObjectListIndex(0x1D7)]
@@ -1284,9 +1287,12 @@ namespace MMR.Randomizer.GameObjects
         Seagulls = 0x267, // En_Tanron4
 
         //[ActorizerEnabled] // didn't spawn with 0, don't know what vars work
-        [ObjectListIndex(0x240)]
-        [FlyingVariants(0)]
-        AgressiveBees = 0x269, // En_Tanron6
+        //[ObjectListIndex(0x240)] // huh? where did this come from
+        [ObjectListIndex(0x1EB)]
+        // m2c suggests either param 1 or 2 could work
+        // 1 spins in circles like giant bee, 2 did not spawn
+        [FlyingVariants(2)]
+        BeeSwarm = 0x269, // En_Tanron6
 
         [ActorizerEnabled]
         [ObjectListIndex(0x243)]
