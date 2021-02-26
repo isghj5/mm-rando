@@ -471,7 +471,9 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         // this is marked 2 and not 1 because 0x100 pots dont spawn in dungeons
-        [ObjectListIndex(0x2)] // gameplay_keep, obj 1
+        //[ObjectListIndex(0x1)] // this is a lie, the pot DETECTS multiple objects but does NOT exist in gameplay keep
+        [ObjectListIndex(0xF9)]
+        // 0xF9 is pot and pot shard
         [FileID(126)]
         // according to CM, 0x100 is available everywhere as a pot, where 0x3F defines the drop item
         // so 1F is arrows, F is magic, B is three small rups? 7 is huge 200 rup, 17 is empty
@@ -483,8 +485,9 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x110)] // testing // 115 101 106 10E 10F
         [GroundVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
         //[DoublePerRoomMax(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)] // prob not necessary
+        [EnemizerScenesExcluded(Scene.MajorasLair)]
         [UnkillableAllVariants]
-        ClayPot = 0x82,
+        ClayPot = 0x82, // Obj_Tsubo
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x26EC)]
@@ -492,17 +495,20 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xD8)]
         [GroundVariants(0xFF03, 0xFF02, 0xFF01)]
         [VariantsWithRoomMax(max:4, 0xFF03, 0xFF02, 0xFF01)]
-        IronKnuckle = 0x84,
+        IronKnuckle = 0x84, // En_Ik
 
         [EnemizerEnabled]
         [FileID(132)]
+        [ActorInitVarOffset(0xC5C)]
         [ObjectListIndex(3)] // dungeon_keep, obj 3
         // and object 3 is so massive it never gets chosen even if we try to shove it into the object list
         //[GroundVariants(0x4015)]
         // 0 works, always empty
         [GroundVariants(0x115, 0x101, 0x106, 0x10E, 0x10F)] // actually spawns thank god, only in dungeons though, but outside its just an empty space so thats fine
         [UnkillableAllVariants] // unknown, harder to test since its a free enemy
-        FlyingPot = 0x8D,
+        FlyingPot = 0x8D, // En_Tubo_Trap
+
+        IceSparkleEffect = 0x8E,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2240)]
@@ -605,7 +611,7 @@ namespace MMR.Randomizer.GameObjects
         // twinislands 0x5D snowhead 0x21, observatory 0x29, zora hall 0x33, trade 0x34, 0x48 goron village
         //[EnemizerScenesExcluded(0x5D, 0x21, 0x29, 0x33, 0x34, 0x37, 0x48, 0x4D, 0x50, 0x38, 0x5B, 0x53, 0x58, 0x5A, 0x5E)] 
         [EnemizerScenesExcluded(Scene.AstralObservatory, Scene.TradingPost)]
-        Scarecrow = 0xCA,
+        Scarecrow = 0xCA, // En_Kakasi
 
         //[ActorizerEnabled] // does not spawn, grotto does weird stuff to it, use TreasureChest instead
         //[ObjectListIndex(0xC)] //same as chest, but wiwth weird requirements
@@ -1283,6 +1289,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x23F)]
         [FlyingVariants(7, 5)]
         [UnkillableAllVariants]
+        [VariantsWithRoomMax(max: 2, variant: 7, 5)] // > severe lag over 10
         //[EnemizerScenesExcluded(Scene.GreatBayCoast, Scene.ZoraCape)]
         Seagulls = 0x267, // En_Tanron4
 
@@ -1297,7 +1304,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x243)]
         [UnkillableAllVariants]
-        [GroundVariants(0xF)] // only one too
+        [GroundVariants(0xF)] // only one toof
         [VariantsWithRoomMax(max: 10, variant: 0xF)]
         [EnemizerScenesExcluded(Scene.LaundryPool)]
         LaundryPoolBell = 0x270, // En_Cha
