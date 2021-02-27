@@ -75,7 +75,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x8003,0x04,0)] // which ones are fire and ice?
         Keese = 0xC,
 
-        [ActorizerEnabled]
+        //[ActorizerEnabled]
         [ObjectListIndex(1)]
         // 400E is child cutscene, should just sit there and neigh
         // Gorman track has a lot??
@@ -87,6 +87,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x400E, 0x4600, 0x5005)]
         [UnkillableAllVariants]
         // if you leave or enter a room after spawning epona you crash, not sure why, but so far the known areas are all dungeons
+        // also you crash if you enter a diffent room (southern swamp) without epona song
         [EnemizerScenesPlacementBlock(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple)]
         //[OnlyOneActorPerRoom]
         Horse = 0xD, // En_Horse

@@ -258,6 +258,9 @@ namespace MMR.Randomizer
             var grottosScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Grottos.FileID());
             grottosScene.Maps[13].Actors[1].Variants[0] = 1; // change the grass in peahat grotto to drop items like TF grass
 
+            var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
+            var torchRotation = dekuPalaceScene.Maps[2].Actors[26].Rotation.z;
+            torchRotation = (short) MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
 
             // test bonk spider
             /*
@@ -530,6 +533,11 @@ namespace MMR.Randomizer
                                                  && !u.BlockedScenes().Contains(scene.SceneEnum)
                                                  && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized())))
                                                  .ToList();
+
+            // todo: find some way to add ONLY dungeon var pots for dungeons
+
+            // todo: search all untouched objects and add those actors too
+
             return sceneFreeActors;
         }
 
@@ -1078,11 +1086,15 @@ namespace MMR.Randomizer
             WriteOutput(" Loops used for match candidate: " + loopsCount);
 
             #if DEBUG
-            if (scene.SceneEnum == GameObjects.Scene.Grottos) // force specific variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.SouthClockTown) // force specific actor/variant for debugging
             {
-                chosenReplacementEnemies[19].ActorID = (int)GameObjects.Actor.Horse;
-                chosenReplacementEnemies[19].ActorEnum = GameObjects.Actor.Horse;
-                chosenReplacementEnemies[19].Variants[0] = 0x400E;
+                //chosenReplacementEnemies[19].ActorID = (int)GameObjects.Actor.Horse;
+                //chosenReplacementEnemies[19].ActorEnum = GameObjects.Actor.Horse;
+                //chosenReplacementEnemies[19].Variants[0] = 0x400E;
+                var act = scene.Maps[0].Actors[11]; // sct dog
+                act.ActorID = (int) GameObjects.Actor.ClayPot;
+                act.ActorEnum = GameObjects.Actor.ClayPot;
+                act.Variants[0] = 0x101;//0x115;
             }
             #endif
 
