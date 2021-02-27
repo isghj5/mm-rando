@@ -192,7 +192,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(67)]
         [ObjectListIndex(0x20)]
         // 4 is in the astral observatory, and has a spawn kill flag, so don't use
-        [FlyingVariants(0xEF, 0x7F, 0x3F)]
+        [FlyingVariants(0xEF, 0x7F, 0x3F, 0x4)]
+        [RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
         //[GroundVariants(0xEF,0x7F,4)] // remember, this works for _spawns_
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, 
@@ -1136,7 +1137,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1F1)]
         // 1 and FF00 both exist
         // 1 has a spawn flag that stops respawning once you kill one
-        [FlyingVariants(1, 0xFF00)] // 1 is a possible type? well: ff00
+        //  because of this, it's possible to kill one in TF, then need to kill one in a clear enemy puzzle room and it doesnt spawn
+        [FlyingVariants(0xFF00)] // 1 is a possible type? well: ff00
         [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
         //[VariantsWithRoomMax(max: 1, variant: 1, 0xFF00)]
         [OnlyOneActorPerRoom] // if both 01 and ff00 try to spawn, only one will in some places, reported bug: controller lock
