@@ -915,7 +915,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Dog.ObjectIndex()
+                            NewV = GameObjects.Actor.GrottoHole.ObjectIndex()
                         });
                         continue;
                     }

@@ -388,6 +388,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [ObjectListIndex(2)] // overworld_keep, obj 2
+        //[ObjectListIndex(0x34)] // testing
         [FileID(99)]
         // FF/299 is HSG, 233 is path to snowhead, 3B is mountain village spring grot 3D is swamp grotto, , 5C is mystery woods
         // 96 is goron rock grotto, 218/2B8? is graveyard grotto, 3E is road to swamp
@@ -637,7 +638,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max:5, 0x3FF)]
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
-        [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // cursed scp dog
+        [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, Scene.RoadToIkana, Scene.MountainVillageSpring)]
         Dog = 0xE2, // En_Dg
 
         [ObjectListIndex(0x133)]
@@ -1388,6 +1389,5 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0), FlyingVariants(0), WaterVariants(0)]
         [UnkillableAllVariants]
         Empty = -1
-
     }
 }
