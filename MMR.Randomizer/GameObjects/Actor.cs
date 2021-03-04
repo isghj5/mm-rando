@@ -260,7 +260,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(MothSwarm, CompanionAlignment.Above, ourVariant: -1,
            variant: 1, 2, 3, 4, 7)] // they're free, and they are moths, makes sense
         [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SouthernSwamp, Scene.SouthClockTown, Scene.DekuShrine, Scene.WestClockTown,
-            Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast, Scene.GreatBayTemple, Scene.OceanSpiderHouse, Scene.BeneathTheWell )]
+            Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast, Scene.GreatBayTemple, Scene.OceanSpiderHouse, Scene.BeneathTheWell, Scene.PiratesFortressRooms)]
         Torch = 0x39, // Obj_Syokudai
 
         [EnemizerEnabled]
@@ -1264,7 +1264,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0xA1)]
         // 9 is the one that sells you kegs
-        [GroundVariants(9, 0x1E0, 1)]
+        [GroundVariants(9, 0x1E0, 1, 8)]
         [VariantsWithRoomMax( max: 1, 9, 0x1E0, 1)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.BombShop, Scene.GoronShrine)]
