@@ -180,6 +180,7 @@ namespace MMR.Randomizer
 
             FixSpawnLocations();
             ExtendGrottoDirectIndexByte();
+            EnablePoFusenAnywhere();
         }
 
         public static void LowerEnemiesResourceLoad()
@@ -500,6 +501,32 @@ namespace MMR.Randomizer
             var grotholeFID = GameObjects.Actor.GrottoHole.FileListIndex();
             RomUtils.CheckCompressed(grotholeFID);
             RomData.MMFileList[grotholeFID].Data[0x2FF] = 0xF; // ANDI 0x7 -> ANDI 0xF
+        }
+
+        private static void EnablePoFusenAnywhere()
+        {
+            //the flying poe baloon romani uses to play her game doesn't spawn unless it has an explosion fuse timer
+            //  or it detects romani actor in the scene, so it can count baloon pops
+            // but the code that suisides the baloon if neihter of these are true is nop-able
+
+            var enPoFusenFID = GameObjects.Actor.PoeBalloon.FileListIndex();
+            RomUtils.CheckCompressed(enPoFusenFID);
+            // nops the MarkForDeath function call, should stop them from de-spawning
+            ReadWriteUtils.Arr_WriteU32(RomData.MMFileList[enPoFusenFID].Data, Dest: 0xF4, val: 0x00000000);
+
+            // because they can now show up in weird places, they need to be poppable
+            // make them poppable with hookshot
+            RomData.MMFileList[enPoFusenFID].Data[0xB63] = 0xF1;
+            // make them poppable with zora fins
+            RomData.MMFileList[enPoFusenFID].Data[0xB60] = 0xF1;
+            // make them poppable with zora barier
+            RomData.MMFileList[enPoFusenFID].Data[0xB6F] = 0xF1;
+            // make them poppable with bush
+            RomData.MMFileList[enPoFusenFID].Data[0xB72] = 0xF1;
+            // make them poppable with zora karate
+            RomData.MMFileList[enPoFusenFID].Data[0xB73] = 0xF1;
+            // make them poppable with FD beam
+            RomData.MMFileList[enPoFusenFID].Data[0xB75] = 0xF1;
         }
 
         #endregion
@@ -915,7 +942,17 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.GrottoHole.ObjectIndex()
+                            NewV = GameObjects.Actor.Wolfos.ObjectIndex()
+                        });
+                        continue;
+                    }
+                    if (scene.File == GameObjects.Scene.Grottos.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.DekuBaba.ObjectIndex())
+                    {
+                        chosenReplacementObjects.Add(new ValueSwap()
+                        {
+                            OldV = sceneObjects[objCount],
+                            NewV = GameObjects.Actor.PoeBalloon.ObjectIndex()
                         });
                         continue;
                     }
@@ -1084,19 +1121,28 @@ namespace MMR.Randomizer
             } // end while searching for compatible object/actors
 
             WriteOutput(" Loops used for match candidate: " + loopsCount);
-
+            /////////////////////////////
+            ///////   DEBUGGING   ///////
+            /////////////////////////////
             #if DEBUG
-            if (scene.SceneEnum == GameObjects.Scene.SouthClockTown) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.WoodsOfMystery) // force specific actor/variant for debugging
             {
                 //chosenReplacementEnemies[19].ActorID = (int)GameObjects.Actor.Horse;
                 //chosenReplacementEnemies[19].ActorEnum = GameObjects.Actor.Horse;
                 //chosenReplacementEnemies[19].Variants[0] = 0x400E;
-                var act = scene.Maps[0].Actors[11]; // sct dog
-                act.ActorID = (int) GameObjects.Actor.ClayPot;
-                act.ActorEnum = GameObjects.Actor.ClayPot;
-                act.Variants[0] = 0x101;//0x115;
+                chosenReplacementEnemies[0].Variants[0] = 0x411E;
+                chosenReplacementEnemies[1].Variants[0] = 0x4579;
+                chosenReplacementEnemies[2].Variants[0] = 0x418E;
+                chosenReplacementEnemies[3].Variants[0] = 0x4F2E;
+
+                //var act = scene.Maps[0].Actors[11]; 
+                //act.ActorID = (int) GameObjects.Actor.MothSwarm;
+                //act.ActorEnum = GameObjects.Actor.MothSwarm;
+                //act.Variants[0] = 0xFFFF;//0x115;
             }
+            /////////////////////////////
             #endif
+            /////////////////////////////
 
             // print debug enemy locations
             for (int i = 0; i < chosenReplacementEnemies.Count; i++)

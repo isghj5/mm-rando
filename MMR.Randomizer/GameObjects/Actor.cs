@@ -650,7 +650,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x3E40)]
         [FileID(222)]
         [ObjectListIndex(0x141)]
-        [GroundVariants(0xFF01,0xFF81,0xFF00)]
+        //01 is winter coat, 0x800 is with ice block
+        [GroundVariants(0xFF01, 0xFF81, 0xFF00, 0xFF80)]
         Wolfos = 0xEC,
 
         [EnemizerEnabled]
@@ -928,11 +929,13 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         Clock = 0x19C,
 
-        //[ActorizerEnabled] // broken: 0 doesnt spawn, and the rest explode almost instantly
+        [ActorizerEnabled]
         [FileID(381)]
         [ObjectListIndex(0x19B)]
-        //[FlyingVariants(0)] // doesn't spawn unless in the ranch for some reason, shame too this is the one in the ranch
-        [FlyingVariants(0x8050,0x805A,0x8064)] // explodes randomly when entering scene
+        // vars: in vanilla 0 only spawns if it can find romani, 0x80XX are timed fuse baloons for credits scene
+        // we have fixed 0x0 so that it doesn't auto-despawn, however, since the code handles her not being available anyway
+        [GroundVariants(0x0)]
+        [FlyingVariants(0x0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.RomaniRanch)] // dont replace actual romani balloons
         PoeBalloon = 0x1A6,
