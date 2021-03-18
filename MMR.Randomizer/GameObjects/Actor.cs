@@ -25,20 +25,21 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xC)]
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
         // addresses make no sense
-        // 0x1184 is peahat chest
         // the top nibble is type, 0x7 seems to be enemy clear, also type 1
         //0x5 is woodentype, 0xC is switch activated
         // gomess is 0x27BE, which does not spawn util you kill him, so obviously the top byte is NOT that simple in MM, snowhead is 27BE
-        //[GroundVariants(0x50DD, 0x535E, 0x56BF)]
-        [GroundVariants(0x47BE, 0x40DD, 0x435E, 0x46BF,
-            0x4F2E, 0x411E, 0x49A1, 0x4579,
-            0x4A2E, 0x461E, 0x48A1, 0x4379,
-            0x4FEE, 0x418E, 0x4991, 0x4559)]
-        [VariantsWithRoomMax( max:1, variant: 0x47BE, 0x40DD, 0x435E, 0x46BF,
-            0x4F2E, 0x411E, 0x49A1, 0x4579,
-            0x4A2E, 0x461E, 0x48A1, 0x4379,
-            0x4FEE, 0x418E, 0x4991, 0x4559)]
+        // the MM item notes are just wrong it seems, unless it being open breaks invisible
+        [GroundVariants( 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
+            0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
+            0x0AFB, 0x099C)] // two free, the rest are gold invisible 
+        [VariantsWithRoomMax( max:1, variant: 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
+            0x561E, 0x5C79,0x5991, 0x5B58, 0x5A1E,
+            0x0AFB, 0x099C)] // brown, harder to see in perpheral vision, not invisible
         [UnkillableAllVariants]
+        [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
+            variant: 0x3F5F)] // can place around chests
+        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
+            variant: 2, 4, 9)] // fairies around chests make sense, just not a full fairy fountain
         TreasureChest = 0x6, // En_Box
 
         [EnemizerEnabled]
@@ -75,7 +76,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x8003,0x04,0)] // which ones are fire and ice?
         Keese = 0xC,
 
-        //[ActorizerEnabled]
+        //[ActorizerEnabled] // crashes and other weird issues
         [ObjectListIndex(1)]
         // 400E is child cutscene, should just sit there and neigh
         // Gorman track has a lot??
@@ -99,8 +100,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
         // 4 is group of fairies out of a fountain, 7 is large healing fairy, 9 is yellow fairy
-        [GroundVariants(4, 7, 9)]
-        [FlyingVariants(4, 7, 9)]
+        [GroundVariants(2, 4, 7, 9)]
+        [FlyingVariants(2, 4, 7, 9)]
         [VariantsWithRoomMax(max: 1, variant: 4)] // don't create too many fairy fountains
         [VariantsWithRoomMax(max: 2, variant: 7)] // maybe limit the secret menu fairies
         [UnkillableAllVariants]
@@ -135,6 +136,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [FlyingVariants(0)] // there's space in that hall for flying enemiess, what happens if we spawn in the air? does it sink?
         //[DoublePerRoomMax(0)]
+        [VariantsWithRoomMax(max:3, variant:0)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)] // too big, can block the butler race
         Peahat = 0x14,
 
@@ -453,6 +455,8 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
+        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
+            variant: 2, 4, 9)]
         Ruto = 0x69, // En_Ru
 
         //[EnemizerEnabled]
@@ -572,6 +576,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x1F2)]
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         [EnemizerScenesExcluded(Scene.TerminaField)] // dont replace them in TF
+        [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
+            variant: 0x3F5F)]
         Rock = 0xB0, // rock
 
         [EnemizerEnabled]
@@ -638,7 +644,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max:5, 0x3FF)]
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
-        [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, Scene.RoadToIkana, Scene.MountainVillageSpring)]
+        [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, Scene.RoadToIkana, Scene.MountainVillageSpring, Scene.GoronVillage)]
         Dog = 0xE2, // En_Dg
 
         [ObjectListIndex(0x133)]
@@ -652,6 +658,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x141)]
         //01 is winter coat, 0x800 is with ice block
         [GroundVariants(0xFF01, 0xFF81, 0xFF00, 0xFF80)]
+        [VariantsWithRoomMax(max:2, variant: 0xFF80, 0xFF81)]
         Wolfos = 0xEC,
 
         [EnemizerEnabled]
@@ -737,6 +744,8 @@ namespace MMR.Randomizer.GameObjects
         // 8 is smithy goron, 0x7F84, 0x7F
         [GroundVariants(0x8, 0x7FE2)]
         [EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)]
+        [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
+            variant: 0x3F5F)]
         GenericGoron = 0x138, // En_Go
 
         //[EnemizerEnabled] // todo: try randomizing
@@ -816,18 +825,24 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(Scene.InvertedStoneTower)] // think this is here for death, but death has mini-death for his bats...?
         BadBat = 0x15B,
 
-
         [ObjectListIndex(1)] // not sure this isn't an error
-        // grave dissapears when we remove the seagull object? I think? why the heck would they use the same object
         // spreadsheet thinks 0x206 could be it
         [UnkillableAllVariants]
         MikauGrave = 0x15C, // En_Sekihi
-
 
         [ActorInitVarOffset(0x37D0)]
         [FileID(315)]
         [ObjectListIndex(0x178)]
         Wizrobe = 0x15D, // En_Wiz
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x1)]
+        //[GroundVariants(0x4560)] // works but no sound? //0x800B
+        // 0x3F5F smaller than the other two, some smaller 
+        [GroundVariants(0x3F5F)]
+        [VariantsWithRoomMax(max:3, variant: 0x3F5F)]
+        [UnkillableAllVariants]
+        CircleOfFire = 0x162,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1830)]
@@ -930,6 +945,15 @@ namespace MMR.Randomizer.GameObjects
         Clock = 0x19C,
 
         [ActorizerEnabled]
+        [ObjectListIndex(0x135)]
+        [GroundVariants(0)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
+            variant: 2, 4, 9)]
+        PalaceGuardDeku = 0x1A0, // En_Guard_Nuts
+
+        [ActorizerEnabled]
         [FileID(381)]
         [ObjectListIndex(0x19B)]
         // vars: in vanilla 0 only spawns if it can find romani, 0x80XX are timed fuse baloons for credits scene
@@ -1017,7 +1041,8 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:1, 0xFFFF, 0x600, 0x702, 0x801)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)]
-        [EnemizerScenesPlacementBlock(Scene.Woodfall)] // blocking enemies
+        [EnemizerScenesPlacementBlock(Scene.Woodfall, // blocking enemies
+            Scene.SouthernSwamp)] // 75% chance of crash, reason unk
         IkanaGravestone = 0x1E3,
 
         [EnemizerEnabled]
@@ -1075,6 +1100,8 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(LetterToPostman, variant: 0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.WestClockTown, Scene.SouthClockTown, Scene.NorthClockTown, Scene.EastClockTown)]
+        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
+            variant: 2, 4, 9)]
         Postbox = 0x1F2,
 
         [EnemizerEnabled]
@@ -1167,6 +1194,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFE03)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
+        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
+            variant: 2, 4, 9)]
         // looking at moon, don't place him underground
         [EnemizerScenesPlacementBlock(Scene.Grottos, Scene.InvertedStoneTower, Scene.BeneathGraveyard, Scene.BeneathTheWell,
             Scene.GoronShrine, Scene.IkanaCastle, Scene.OceanSpiderHouse, Scene.SwampSpiderHouse,
@@ -1187,6 +1216,8 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [EnemizerScenesExcluded(Scene.GoronShrine)] // remove and it crashes, dont know why
         [UnkillableAllVariants]
+        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
+            variant: 2, 4, 9)]
         GoronElder = 0x213,
 
         [EnemizerEnabled]
@@ -1271,6 +1302,8 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax( max: 1, 9, 0x1E0, 1)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.BombShop, Scene.GoronShrine)]
+        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
+            variant: 2, 4, 9)]
         Goron = 0x242,
 
         //[ActorizerEnabled] // unless I write dayonly/nightonly, this is too flukey
@@ -1329,7 +1362,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
-            variant: 4)] // fairy fountain
+            variant: 4, 7)] // fairy fountain
         [OnlyOneActorPerRoom]
         ButlersSon = 0x289, // En_Nnh
 

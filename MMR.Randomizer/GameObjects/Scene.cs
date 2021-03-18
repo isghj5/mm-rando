@@ -103,6 +103,8 @@ namespace MMR.Randomizer.GameObjects
         [FairyDroppingEnemies(5, 22)] // east wing, beehive:22
         [EnemizerSceneEnemyReplacementBlock(Actor.Dinofos, // weak enemies are kinda lame here
             Actor.Leever, Actor.ChuChu, Actor.DekuBabaWithered)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula, // weak enemies are kinda lame here
+            Actor.BigPoe)]
         WoodfallTemple = 0x18,
 
         [FileID(1222)]
@@ -129,12 +131,9 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9)] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
         [EnemizerSceneEnemyReplacementBlock(Actor.RedBubble, // spawns in hot lava, keep wood enemies out
             Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos, Actor.Dinofos, Actor.Snapper)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.Freezard, // weird behavior, if the killing blow of meg at long range can stop chests from spawning
-            Actor.PoeSisters)]
-        //[EnemizerSceneEnemyReplacementBlock(Actor.Bo, // spawns in hot lava, keep wood enemies out
-        //    Actor.Demo_Kankyo)]
-        //[EnemizerSceneEnemyReplacementBlock(Actor.Wolfos, // spawns in hot lava, keep wood enemies out
-        //    Actor.Demo_Kankyo)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Freezard,
+            Actor.PoeSisters, // weird behavior, if the killing blow of meg at long range can stop chests from spawning
+            Actor.Wolfos)] // wolfos: ice wolfos can push the regular actual dog backwards through the wall
         [FairyDroppingEnemies(11, 2, 3)] // dinofos 
         SnowheadTemple = 0x1E,
 
@@ -430,7 +429,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1491)]
         [SceneInternalId(0x66)]
-        [ClearEnemyPuzzleRooms(1, 2)] // 1 dinofos, 2 is iron knuckle
+        [ClearEnemyPuzzleRooms(1, 2, 3)] // 1 dinofos, 3 is iron knuckle
         LinkTrial = 0x63,
 
         [FileID(1500)]

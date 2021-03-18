@@ -185,8 +185,16 @@ namespace MMR.Randomizer
 
         public static void LowerEnemiesResourceLoad()
         {
+            var actorList = EnemyList.Where(u => u.ActorInitOffset() > 0).ToList();
+            var dinofos = GameObjects.Actor.Dinofos;
+
+            // separated because for some reason this can cause cutscene dinofos to delay and even softlock
+            RomUtils.CheckCompressed(dinofos.FileListIndex());
+            RomData.MMFileList[dinofos.FileListIndex()].Data[dinofos.ActorInitOffset() + 7] &= 0xBF;// 4 flag is the issue
+            actorList.Remove(dinofos);
+
             /// some enemies are really hard on the CPU/RSP, we can change some of them to behave nicer with flags
-            foreach (var enemy in EnemyList.Where(u => u.ActorInitOffset() > 0).ToList())
+            foreach (var enemy in actorList)
             {
                 /// bit flags 4-6 according to crookedpoe: Always Run update, Always Draw, Never Cull
                 RomUtils.CheckCompressed(enemy.FileListIndex());
@@ -527,6 +535,9 @@ namespace MMR.Randomizer
             RomData.MMFileList[enPoFusenFID].Data[0xB73] = 0xF1;
             // make them poppable with FD beam
             RomData.MMFileList[enPoFusenFID].Data[0xB75] = 0xF1;
+            // make them poppable with swords
+            RomData.MMFileList[enPoFusenFID].Data[0xB65] = 0xF1;
+
         }
 
         #endregion
@@ -537,11 +548,13 @@ namespace MMR.Randomizer
             ///   so we re-encoded variants to hold the data we want, check out the actor enum entry for more info
             ///   the lower two byes are used to set the chest, but we have a chest grotto with upper byte index, so reuse for rotation here
             ///   the game does not use the top two bits of the second byte, so we use one as a flag for rotation type grottos
+            ///   we also set the time flags to always, because it makes no sense for a hole to only exist day or night, holes are forever
             enemy.ChangeActor(GameObjects.Actor.GrottoHole, vars: newVariant);
-            if ((newVariant & 0x0400) != 0) // grotto that uses rotation to set value
+            //if ((newVariant & 0x0400) != 0) // grotto that uses rotation to set value
             {
                 int newIndex = newVariant & 0xF; // in vanilla the array is only 15 long
-                enemy.Rotation.z = (short) MergeRotationAndFlags(rotation: newIndex, flags: enemy.Rotation.z);
+                enemy.Rotation.x = (short)MergeRotationAndFlags(rotation: 0, flags: 0x7F);
+                enemy.Rotation.z = (short)MergeRotationAndFlags(rotation: newIndex, flags: 0x7F);//: enemy.Rotation.z);
             }
         }
 
@@ -942,20 +955,20 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Wolfos.ObjectIndex()
+                            NewV = GameObjects.Actor.TreasureChest.ObjectIndex()
                         });
                         continue;
                     }
-                    if (scene.File == GameObjects.Scene.Grottos.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.DekuBaba.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.SouthernSwamp.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.DragonFly.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.PoeBalloon.ObjectIndex()
+                            NewV = GameObjects.Actor.Seagulls.ObjectIndex()
                         });
                         continue;
-                    }
+                    } // */
                     #endif
 
                     var reducedCandidateList = actorCandidatesLists[objCount].ToList();
@@ -1125,15 +1138,14 @@ namespace MMR.Randomizer
             ///////   DEBUGGING   ///////
             /////////////////////////////
             #if DEBUG
-            if (scene.SceneEnum == GameObjects.Scene.WoodsOfMystery) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.SouthernSwamp) // force specific actor/variant for debugging
             {
                 //chosenReplacementEnemies[19].ActorID = (int)GameObjects.Actor.Horse;
                 //chosenReplacementEnemies[19].ActorEnum = GameObjects.Actor.Horse;
                 //chosenReplacementEnemies[19].Variants[0] = 0x400E;
-                chosenReplacementEnemies[0].Variants[0] = 0x411E;
-                chosenReplacementEnemies[1].Variants[0] = 0x4579;
-                chosenReplacementEnemies[2].Variants[0] = 0x418E;
-                chosenReplacementEnemies[3].Variants[0] = 0x4F2E;
+                //chosenReplacementEnemies[1].ActorID = (int) GameObjects.Actor.MothSwarm;
+                //chosenReplacementEnemies[1].ActorEnum = GameObjects.Actor.MothSwarm;
+                //chosenReplacementEnemies[1].Variants[0] = 7;
 
                 //var act = scene.Maps[0].Actors[11]; 
                 //act.ActorID = (int) GameObjects.Actor.MothSwarm;
@@ -1141,7 +1153,7 @@ namespace MMR.Randomizer
                 //act.Variants[0] = 0xFFFF;//0x115;
             }
             /////////////////////////////
-            #endif
+#endif
             /////////////////////////////
 
             // print debug enemy locations
