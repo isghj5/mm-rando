@@ -949,6 +949,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.DekuPalace)] // do not remove original for now
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 4, 9)]
         PalaceGuardDeku = 0x1A0, // En_Guard_Nuts
