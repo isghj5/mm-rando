@@ -40,6 +40,7 @@ namespace MMR.Randomizer.GameObjects
             variant: 0x3F5F)] // can place around chests
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 4, 9)] // fairies around chests make sense, just not a full fairy fountain
+        [EnemizerScenesExcluded(Scene.InvertedStoneTower)]
         TreasureChest = 0x6, // En_Box
 
         [EnemizerEnabled]
