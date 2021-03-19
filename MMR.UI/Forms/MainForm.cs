@@ -67,8 +67,11 @@ namespace MMR.UI.Forms
             this.KeyPreview = true;
             this.KeyDown += MainForm_KeyDown_CtrlS;
 
-
+            #if DEBUG
+            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + DEBUG ON";
+            #else
             Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Enemizer Test 13.10";
+            #endif
         }
 
         private void InitializeTooltips()
@@ -404,7 +407,7 @@ namespace MMR.UI.Forms
             _configuration.CosmeticSettings.Instruments[form] = value;
         }
 
-        #region Forms Code
+#region Forms Code
 
         private void mmrMain_Load(object sender, EventArgs e)
         {
@@ -1548,9 +1551,9 @@ namespace MMR.UI.Forms
             }
         }
 
-        #endregion
+#endregion
 
-        #region Settings
+#region Settings
 
         public void InitializeSettings()
         {
@@ -1571,9 +1574,9 @@ namespace MMR.UI.Forms
         }
 
 
-        #endregion
+#endregion
 
-        #region Randomization
+#region Randomization
 
         /// <summary>
         /// Try to perform randomization and make rom
@@ -1608,7 +1611,7 @@ namespace MMR.UI.Forms
             return true;
         }
 
-        #endregion
+#endregion
 
         private void BLoadPatch_Click(object sender, EventArgs e)
         {

@@ -26,8 +26,12 @@ namespace MMR.Randomizer.Utils
             int veraddr = 0xC44E30;
             int settingaddr = 0xC44E70;
             string verstring = $"MM Rando {ver}\x00";
-            string settingstring = $"{setting} + Isghj's Enemizer Test 13.10\x00";
 
+            #if DEBUG
+            string settingstring = $"{setting} + DEBUG BUILD\x00";
+            #else
+            string settingstring = $"{setting} + Isghj's Enemizer Test 13.10\x00";
+            #endif
             int f = GetFileIndexForWriting(veraddr);
             var file = RomData.MMFileList[f];
 

@@ -515,29 +515,25 @@ namespace MMR.Randomizer
         {
             //the flying poe baloon romani uses to play her game doesn't spawn unless it has an explosion fuse timer
             //  or it detects romani actor in the scene, so it can count baloon pops
-            // but the code that suisides the baloon if neihter of these are true is nop-able
+            // but the code that blocks the baloon if neihter of these are true is nop-able
 
             var enPoFusenFID = GameObjects.Actor.PoeBalloon.FileListIndex();
             RomUtils.CheckCompressed(enPoFusenFID);
+
             // nops the MarkForDeath function call, should stop them from de-spawning
             ReadWriteUtils.Arr_WriteU32(RomData.MMFileList[enPoFusenFID].Data, Dest: 0xF4, val: 0x00000000);
 
-            // because they can now show up in weird places, they need to be poppable
-            // make them poppable with hookshot
-            RomData.MMFileList[enPoFusenFID].Data[0xB63] = 0xF1;
-            // make them poppable with zora fins
-            RomData.MMFileList[enPoFusenFID].Data[0xB60] = 0xF1;
-            // make them poppable with zora barier
-            RomData.MMFileList[enPoFusenFID].Data[0xB6F] = 0xF1;
-            // make them poppable with bush
-            RomData.MMFileList[enPoFusenFID].Data[0xB72] = 0xF1;
-            // make them poppable with zora karate
-            RomData.MMFileList[enPoFusenFID].Data[0xB73] = 0xF1;
-            // make them poppable with FD beam
-            RomData.MMFileList[enPoFusenFID].Data[0xB75] = 0xF1;
-            // make them poppable with swords
-            RomData.MMFileList[enPoFusenFID].Data[0xB65] = 0xF1;
-
+            // because they can now show up in weird places, they need to be poppable more ways
+            RomData.MMFileList[enPoFusenFID].Data[0xB5D] = 0xF1; // stick
+            RomData.MMFileList[enPoFusenFID].Data[0xB5F] = 0xF1; // bombs
+            RomData.MMFileList[enPoFusenFID].Data[0xB60] = 0xF1; // zora fins
+            RomData.MMFileList[enPoFusenFID].Data[0xB63] = 0xF1; // hookshot
+            RomData.MMFileList[enPoFusenFID].Data[0xB65] = 0xF1; // swords
+            RomData.MMFileList[enPoFusenFID].Data[0xB6C] = 0xF1; // deku bubble
+            RomData.MMFileList[enPoFusenFID].Data[0xB6F] = 0xF1; // zora barier
+            RomData.MMFileList[enPoFusenFID].Data[0xB72] = 0xF1; // bush throw
+            RomData.MMFileList[enPoFusenFID].Data[0xB73] = 0xF1; // zora karate
+            RomData.MMFileList[enPoFusenFID].Data[0xB75] = 0xF1; // fd beam
         }
 
         #endregion
@@ -955,7 +951,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.TreasureChest.ObjectIndex()
+                            NewV = GameObjects.Actor.Ruto.ObjectIndex()
                         });
                         continue;
                     }

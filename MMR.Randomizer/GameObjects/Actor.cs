@@ -135,13 +135,13 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x24E0)]
         [FileID(56)]
         [ObjectListIndex(0x14)]
-        // yo wait how did we get the flying variety once? was that spawned in air or was that a variety that was missing?
+        // 0 is the big one in peahat grotto, 1 is the little ones normally only spawned by the big one if you hit them at night
         [GroundVariants(0)]
-        [FlyingVariants(0)] // there's space in that hall for flying enemiess, what happens if we spawn in the air? does it sink?
-        //[DoublePerRoomMax(0)]
-        [VariantsWithRoomMax(max:3, variant:0)]
+        [FlyingVariants(1)]
+        [VariantsWithRoomMax(max: 3, variant: 0)]
+        [VariantsWithRoomMax(max: 7, variant: 1)] // lag, not difficulty
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)] // too big, can block the butler race
-        Peahat = 0x14,
+        Peahat = 0x14, // En_Peehat
 
         //[ActorizerEnabled] // not sure what to believe anymore, labfish is a different actor, school of fish is different, lets turn this off
         [ObjectListIndex(0x16B)] // gameplay keep obj 1
@@ -454,7 +454,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // works but her object is huge, and you cant talk or interact with her, which kinda sucks
         [FileID(304)]
         [ObjectListIndex(0xA2)]
-        //[GroundVariants(0)]
+        // her code takes her params and passes it to another func as (params * 0x7E00 >> 9)
+        // 200 does not spawn? 400 is slightly tilted to one side (might be the leever actually)
+        // 800 also does not spawn
+        //[GroundVariants(0x0A00)]//(0x7E00)]
         [WaterVariants(0)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
@@ -695,8 +698,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1520)]
         [FileID(226)]
         [ObjectListIndex(0x6)]
-        [FlyingVariants(0)]
-        [RespawningVariants(0)] // weirdly, it respawns
+        [FlyingVariants(0,1)]
+        [RespawningVariants(0, 1)] // weirdly, all versions of regular guay are respawning
         [VariantsWithRoomMax(max: 10, variant: 0)]
         Guay = 0xF1,
 
@@ -1131,7 +1134,7 @@ namespace MMR.Randomizer.GameObjects
 
         SmallSnowball = 0x1F9,
 
-        [ActorizerEnabled] // TODO test if we can randomizer her
+        [ActorizerEnabled]
         [ObjectListIndex(0x1D4)]
         // 0 is inside of tree
         // 2 is post-woodfall sitting in royal chamber, does not spawn until after a flag is set
@@ -1155,8 +1158,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0xAD4)]
         [FileID(475)]
         [ObjectListIndex(0x1EB)]
-        [FlyingVariants(0x0)]
-        [GroundVariants(0x0)] // spawns really low to ground in vanilla
+        // 0 is the lame bee that just spins in circles, 1/2 are aggressive and charge at you
+        [FlyingVariants(0,1,2,3,4,5)]
+        [GroundVariants(0,1,2,3,4,5)]
+        [VariantsWithRoomMax(max:4, variant: 0, 1, 2, 3, 4, 5)]
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // pirate beehive cutscene
         GiantBeee = 0x204,
 
@@ -1266,7 +1271,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.ZoraHallRooms)]
         [OnlyOneActorPerRoom]
-        Japas = 0x231,
+        Japas = 0x231, // En_Zob
 
         //[EnemizerEnabled] // does not spawn outside of ikana
         [ActorInitVarOffset(0x2CA0)]  // combat music disable does not work
