@@ -650,7 +650,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max:5, 0x3FF)]
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
-        [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, Scene.RoadToIkana, Scene.MountainVillageSpring, Scene.GoronVillage)]
+        // dog safe areas: TF, roadtoSS, SS, SSC, deku palace, sspiderhouse
+        // path to mountain village
+        // gbc
+        [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, // cursed if put on hms
+            Scene.DekuShrine, Scene.Woodfall,
+            Scene.RoadToIkana, Scene.MountainVillageSpring, Scene.GoronVillage)]
         Dog = 0xE2, // En_Dg
 
         [ObjectListIndex(0x133)]
@@ -996,6 +1001,12 @@ namespace MMR.Randomizer.GameObjects
 
         [UnkillableAllVariants]
         Lillypad = 0x1B9,
+
+        //[ActorizerEnabled] //wrong one, the one we want is burrowed, but he also does NOT come with a flower, its secondary
+        [ObjectListIndex(0x1E5)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.SouthClockTown, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.GoronVillage, Scene.GoronVillageSpring, Scene.ZoraHallRooms, Scene.IkanaCanyon)]
+        BuisinessScrub = 0x1BD,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1FF0)]
