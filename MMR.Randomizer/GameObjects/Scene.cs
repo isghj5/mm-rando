@@ -302,11 +302,10 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1369)]
         [SceneInternalId(0x49)]
-        //3: clear the biobabs, 5 is gekko, 8 is wart
+        //3: clear the biobabas, 5 is gekko, 8 is wart
         [ClearEnemyPuzzleRooms(3, 5, 7)]
-        // for some reason big poe in the first room can cause camera to lock, unknown reason
         [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula,
-            Actor.Peahat, Actor.BigPoe)]
+            Actor.BigPoe)]// for some reason big poe in the first room can cause camera to lock, unknown reason
         [FairyDroppingEnemies(8, 7)] // skulltula in first room 
         GreatBayTemple = 0x46,
 

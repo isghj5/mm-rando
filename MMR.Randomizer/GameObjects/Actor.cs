@@ -287,7 +287,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(Flame, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x7F4)] // I'll just put this over with the rest of the fire
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // visible waiting below the bridges
-        RedBubble = 0x3C,
+        RedBubble = 0x3C, // En_Bbfall
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1A40)]
@@ -297,7 +297,14 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 8, variant: 0xFFFF)]
         [CompanionActor(Flame, 0x7FE)] // blue flames
         [UnkillableAllVariants] // respawning
-        BlueBubble = 0x3E, // cursed
+        BlueBubble = 0x3E, // En_Bb
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x61)]
+        [GroundVariants(0xFF0B, 0xFF02, 0xFF00, 0xFF0D, 0xFF01, 0xFF1A, 0x0A1A)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.TerminaField)] // need to keep in termina field for rupee rando
+        Treee = 0x41, // En_Wood2
 
         //[EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky, and his color darkening is wack
         [ObjectListIndex(0x52)]
@@ -425,6 +432,7 @@ namespace MMR.Randomizer.GameObjects
             0x8200, 0xA200, // secret japanese grottos, hidden
             0x6233, 0x623B, 0x6218, 0x625C)] // grottos that might hold checks, also hidden
         [UnkillableAllVariants]
+        [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)] // FIRE AND DARKNESS
         [EnemizerScenesExcluded(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead)]
         // as its obj is 2, shouldn't be available in dungeons, maybe not indoors either
         [EnemizerScenesPlacementBlock(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
@@ -564,8 +572,6 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabled] // puff of smoke, and it somehow ruins day1->2 transition wtf
         [ObjectListIndex(0x1)] // gameplay keep obj 1
-        //[GroundVariants(0)] // unknown vars
-        //[UnkillableAllVariants]
         En_Clear_Tag = 0xA2, // en_clear_tag in OOT was arwing, but not for us?
 
         [ActorizerEnabled]
@@ -575,6 +581,14 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.Grottos)]
         BeanSeller = 0xA5,
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0xFE)]
+        [GroundVariants(0xFFFF)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.MarineLab)]
+        Scientist = 0xAE,
 
         [EnemizerEnabled]
         [ObjectListIndex(0x1)] // gamplaykeep obj 1 // the rocks are free, you can take them home
@@ -646,7 +660,7 @@ namespace MMR.Randomizer.GameObjects
         // colors: (white, brown, dark grey, bluedog, gold)
         [GroundVariants(0x20, 0x40, 0x60, 0x80, 0x120,
             0x3FF, 0xD9F, 0x22BF)]
-        //[PatrolVariants(0xD9F)] // didn't crash when put in deku palace
+        //[GroundVariants(0x120, 0xD9F)] // f0x22BF, 0x3FF fine in snowhead, 0x120, 
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max:5, 0x3FF)]
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
@@ -724,6 +738,12 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [UnkillableAllVariants]
         LetterToPostman = 0xFE,
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x14F)]
+        [GroundVariants(0x0)]
+        [UnkillableAllVariants]
+        Bumper = 0x106, // obj_Boyo
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2A7C)]
@@ -1117,7 +1137,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0,1,2,3)]
         [CompanionActor(LetterToPostman, variant: 0)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.WestClockTown, Scene.SouthClockTown, Scene.NorthClockTown, Scene.EastClockTown)]
+        [EnemizerScenesExcluded(Scene.WestClockTown, Scene.SouthClockTown)]//, Scene.NorthClockTown, Scene.EastClockTown)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 4, 9)]
         Postbox = 0x1F2,
@@ -1197,6 +1217,15 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208,
 
+        [ActorizerEnabled]
+        [ObjectListIndex(0x1EE)]
+        // thought I could fake a var 1  but it actually does something????
+        [WallVariants(0)]
+        //[GroundVariants(0)] // vanilla, low to the ground
+        [UnkillableAllVariants]
+        // should we randomize the orgiginal?
+        SwordsmanSign = 0x209, // Obj_Kendo_Kanban
+
         //[ActorizerEnabled] // only the head not the whole cow, lame
         [ObjectListIndex(0x1F2)]
         [WallVariants(0x907F, 0xA07F)]
@@ -1274,11 +1303,10 @@ namespace MMR.Randomizer.GameObjects
              Scene.GreatBayCoast, Scene.ZoraCape, Scene.IkanaCanyon, Scene.StoneTower, Scene.InvertedStoneTower)] 
         OwlStatue = 0x223, // Obj_Warpstone
 
-        //[ActorizerEnabled] // does not spawn? boo
-        // did I maybe use the wrong vars?
+        [ActorizerEnabled] // BUG: do not teach him song or cursed
         [ObjectListIndex(0x211)]
-        [GroundVariants(1)]
-        [WaterVariants(1)]
+        //[GroundVariants(0)]
+        [WaterVariants(0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.ZoraHallRooms)]
         [OnlyOneActorPerRoom]

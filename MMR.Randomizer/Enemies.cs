@@ -951,17 +951,17 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Ruto.ObjectIndex()
-                        });
+                            NewV = GameObjects.Actor.Scientist.ObjectIndex()
+                        }); 
                         continue;
                     }
-                    /*if (scene.File == GameObjects.Scene.SouthernSwamp.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.DragonFly.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.StockPotInn.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.Clock.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Seagulls.ObjectIndex()
+                            NewV = GameObjects.Actor.SwordsmanSign.ObjectIndex()
                         });
                         continue;
                     } // */
