@@ -658,9 +658,10 @@ namespace MMR.Randomizer.GameObjects
         // in mamuyan: (phi_s0 << 5) | (arg0->unk1C & 0x7E00) unk1C seems static
         // from mamuyan code we know the colors are 1-E shifted right by 5
         // colors: (white, brown, dark grey, bluedog, gold)
-        [GroundVariants(0x20, 0x40, 0x60, 0x80, 0x120,
-            0x3FF, 0xD9F, 0x22BF)]
-        //[GroundVariants(0x120, 0xD9F)] // f0x22BF, 0x3FF fine in snowhead, 0x120, 
+        //[GroundVariants(0x20, 0x40, 0x60, 0x80, 0x120,
+        //    0x3FF, 0xD9F, 0x22BF)]
+        //[GroundVariants(0x60, 0x40, 0xD9F)] // f0x22BF, 0x3FF fine in snowhead, 0x120, 
+        [GroundVariants(0x60)] // f0x22BF, 0x3FF fine in snowhead, 0x120, 
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max:5, 0x3FF)]
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
@@ -1223,6 +1224,7 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0)]
         //[GroundVariants(0)] // vanilla, low to the ground
         [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.SwordsmansSchool)] // object is also used for gong, messes with rupee rando
         // should we randomize the orgiginal?
         SwordsmanSign = 0x209, // Obj_Kendo_Kanban
 
@@ -1334,6 +1336,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(1,2,3,4,7)] // A would be 8+4?
         //[AlignedCompanionActor(Torch, CompanionAlignment.Above,
         //    variant: )] // 
+        [OnlyOneActorPerRoom]
         [RespawningAllVariants] // they do NOT respawn, but they do block clear all rooms
         [UnkillableAllVariants]
         MothSwarm = 0x23D,

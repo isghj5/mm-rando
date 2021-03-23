@@ -581,8 +581,12 @@ namespace MMR.Randomizer
         {
             /// actors with maximum counts have their extras trimmed off, replaced with free or empty actors
 
-            var roomEnemiesWithVariant = roomEnemies;
-            if (! actorType.OnlyOnePerRoom())
+            List<Actor> roomEnemiesWithVariant;
+            if (actorType.OnlyOnePerRoom())
+            {
+                roomEnemiesWithVariant = roomEnemies;
+            }
+            else
             {
                 roomEnemiesWithVariant = roomEnemies.FindAll(u => u.Variants[0] == variant);
             }
@@ -612,14 +616,20 @@ namespace MMR.Randomizer
                 {
                     roomEnemiesWithVariant.Remove(roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)]);
                 }
+                // if the actor being trimmed is a free actor, remove from possible replacements
+                if (roomFreeActors.Contains(actorType))
+                {
+                    roomFreeActors.Remove(actorType);
+                }
+
                 // kill the rest of variant X since max is reached
                 foreach (var enemy in roomEnemiesWithVariant)
                 {
                     var enemyIndex = roomEnemies.IndexOf(enemy);
                     EmptyOrFreeActor(enemy, rng, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom);
-                    if (( (GameObjects.Actor) enemy.ActorID).OnlyOnePerRoom())
+                    if (((GameObjects.Actor)enemy.ActorID).OnlyOnePerRoom())
                     {
-                        roomFreeActors.Remove( (GameObjects.Actor) enemy.ActorID);
+                        roomFreeActors.Remove((GameObjects.Actor)enemy.ActorID);
                     }
                 }
             }
@@ -701,11 +711,11 @@ namespace MMR.Randomizer
                     }
                 }
             }
-            else // empty actor
-            {
-                targetActor.ChangeActor(GameObjects.Actor.Empty, vars: 0);
-                //targetActor.ChangeActor(GameObjects.Actor.Horse, vars: 0x4600); // debug for free actors
-            }
+            //else // empty actor
+            
+            targetActor.ChangeActor(GameObjects.Actor.Empty, vars: 0);
+            //targetActor.ChangeActor(GameObjects.Actor.Horse, vars: 0x4600); // debug for free actors
+            
         }
 
         public static void MoveAlignedCompanionActors(List<Actor> changedEnemies, Random rng, StringBuilder log)
@@ -951,7 +961,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Scientist.ObjectIndex()
+                            NewV = GameObjects.Actor.Torch.ObjectIndex()
                         }); 
                         continue;
                     }
@@ -1005,7 +1015,6 @@ namespace MMR.Randomizer
                 {
                     continue; // reset start over
                 }
-
 
                 // this used to be outside of the loop, but now we need to keep track of actor size with "free" actors
                 for (int objCount = 0; objCount < chosenReplacementObjects.Count; objCount++)
@@ -1074,7 +1083,7 @@ namespace MMR.Randomizer
                         // we need to split enemies per room
                         for (int roomIndex = 0; roomIndex < scene.Maps.Count; ++roomIndex)
                         {
-                            var roomEnemies = temporaryMatchEnemyList.FindAll(u => u.Room == roomIndex);
+                            var roomEnemies = temporaryMatchEnemyList.FindAll(u => u.Room == roomIndex && u.ActorEnum == problemEnemy);
                             var roomIsClearPuzzleRoom = scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
                             var roomFreeActors = sceneFreeActors.ToList();
 
