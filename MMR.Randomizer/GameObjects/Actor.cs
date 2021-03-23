@@ -473,7 +473,7 @@ namespace MMR.Randomizer.GameObjects
             variant: 2, 4, 9)]
         Ruto = 0x69, // En_Ru
 
-        //[EnemizerEnabled]
+        [EnemizerEnabled]
         [ActorInitVarOffset(0x2330)]
         [FileID(112)]
         [ObjectListIndex(0xAB)]
@@ -945,6 +945,14 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants( 0xA2, 0x82, 0x62, 0 )]
         SkullFish = 0x180, // En_Pr2
 
+        //[EnemizerEnabled]
+        [ObjectListIndex(0x155)]
+        [GroundVariants(0)]  // does not spawn, but if you approach where he SHOULD BE you lose camera control
+        [OnlyOneActorPerRoom]
+        [EnemizerScenesExcluded(Scene.StoneTowerTemple)]
+        GaroMaster = 0x182, // En_Jso2
+
+
         [EnemizerEnabled] // free enemy, placed in places where enemies are normally
         [FileID(349)]
         [ObjectListIndex(0x1)] // obj 1: gameplay keep, but can't set that
@@ -953,14 +961,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.Woodfall, Scene.DekuPalace, Scene.WoodfallTemple, Scene.OdolwasLair, 
             Scene.EastClockTown, Scene.NorthClockTown, Scene.IkanaCastle, Scene.SnowheadTemple)] 
         DekuFlower = 0x183,
-        
-        //[EnemizerEnabled]
-        [ObjectListIndex(0x155)]
-        [GroundVariants(0)]  // does not spawn, but if you approach where he SHOULD BE you lose camera control
-        [OnlyOneActorPerRoom]
-        [EnemizerScenesExcluded(Scene.StoneTowerTemple)]
-        GaroMaster = 0x182, // En_Jso2
-
+       
         //[EnemizerEnabled] // AI gets confused, backwalks forever, pathing?
         [ActorInitVarOffset(0x445C)]
         [FileID(250)]
@@ -970,11 +971,19 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         Eyegore = 0x184,// walking laser cyclops in inverted stone tower
 
+        [EnemizerEnabled]
+        [ObjectListIndex(0xBB)]
+        [WaterVariants(0x2002, 0x2006, 0x200B, 0x2003, 0x2004, 0x2005, 0x200C)]
+        [FlyingVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
+        [UnkillableAllVariants] // untested, assume because its obj_ that its not enemy actor group
+        [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
+        Mine = 0x185, // Obj_Mine
+
         [ActorizerEnabled]
         [ObjectListIndex(0x18C)]
         [WallVariants(0x907F, 0xA07F)]
         [UnkillableAllVariants]
-        Clock = 0x19C,
+        Clock = 0x19C, // En_Tokeidai
 
         [ActorizerEnabled]
         [ObjectListIndex(0x135)]
@@ -995,6 +1004,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.RomaniRanch)] // dont replace actual romani balloons
+        [EnemizerScenesPlacementBlock(Scene.TerminaField)] // long draw distance means they can overflow actor spawn
         PoeBalloon = 0x1A6,
 
         [FileID(0x1A8)]

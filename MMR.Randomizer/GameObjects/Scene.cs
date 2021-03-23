@@ -225,10 +225,12 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1330)]
         [SceneInternalId(0x37)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Leever, Actor.PoeBalloon)]
         GreatBayCoast = 0x34,
 
         [FileID(1332)]
         [SceneInternalId(0x38)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Leever, Actor.PoeBalloon)]
         ZoraCape = 0x35,
 
         [FileID(1334)]

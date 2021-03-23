@@ -928,7 +928,7 @@ namespace MMR.Randomizer
             {
                 /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
                 loopsCount += 1;
-                if (loopsCount >= 750) // inf loop catch
+                if (loopsCount >= 900) // inf loop catch
                 {
                     var error = " No enemy combo could be found to fill this scene: " + scene.SceneEnum.ToString() + " w sid:" + scene.Number.ToString("X2");
                     WriteOutput(error);
@@ -965,13 +965,13 @@ namespace MMR.Randomizer
                         }); 
                         continue;
                     }
-                    if (scene.File == GameObjects.Scene.StockPotInn.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.Clock.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.GreatBayCoast.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.LikeLike.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.SwordsmanSign.ObjectIndex()
+                            NewV = GameObjects.Actor.Mine.ObjectIndex()
                         });
                         continue;
                     } // */
