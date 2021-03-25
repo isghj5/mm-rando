@@ -48,7 +48,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Peahat, // hidden or very weak enemies suck here, but they are very common in this slot
             Actor.Bo, Actor.Nejiron, Actor.RedBubble, Actor.Leever, Actor.Wolfos, Actor.Beamos)] // beamos is just because bomb locking this check early is prime seed killer
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
-            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard)]
+            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, Actor.Bumper)]
         Grottos = 0x0A,
 
         // Unused = 0x0B,
@@ -161,7 +161,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1284)]
         [SceneInternalId(0x27)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // blocking a few skulltulla
-            Actor.Bell, Actor.Cow, Actor.IkanaGravestone, Actor.Bombiwa)]
+            Actor.StockpotBell, Actor.Cow, Actor.IkanaGravestone, Actor.Bombiwa)]
         SwampSpiderHouse = 0x24,
 
         [FileID(1291)]
@@ -467,7 +467,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x6F)]
         SouthClockTown = 0x6C,
 
-        [FileID(1516)]
+        [FileID(1518)]
         [SceneInternalId(0x70)]
         LaundryPool = 0x6D,
     }

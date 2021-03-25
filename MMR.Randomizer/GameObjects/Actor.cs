@@ -639,7 +639,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         // twinislands 0x5D snowhead 0x21, observatory 0x29, zora hall 0x33, trade 0x34, 0x48 goron village
         //[EnemizerScenesExcluded(0x5D, 0x21, 0x29, 0x33, 0x34, 0x37, 0x48, 0x4D, 0x50, 0x38, 0x5B, 0x53, 0x58, 0x5A, 0x5E)] 
-        [EnemizerScenesExcluded(Scene.AstralObservatory, Scene.TradingPost)]
+        [EnemizerScenesExcluded(Scene.TradingPost)]//, Scene.AstralObservatory)]
         Scarecrow = 0xCA, // En_Kakasi
 
         //[ActorizerEnabled] // does not spawn, grotto does weird stuff to it, use TreasureChest instead
@@ -819,10 +819,11 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16C)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(max: 3, variant:0)]//[OnlyOneActorPerRoom]
-        [EnemizerScenesExcluded(Scene.EastClockTown)]
+        //[EnemizerScenesExcluded(Scene.EastClockTown)]
         [UnkillableAllVariants]
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall, Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower)] // big blocking
-        Bell = 0x14E,
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall, Scene.LaundryPool,
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower)] // big blocking
+        StockpotBell = 0x14E,
 
         // crashes in a lot of scenes, breaks them visually like gomess in others, cannot interact, doesn't have collisionbox
         //[ActorizerEnabled]
@@ -841,6 +842,9 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 6, 0)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slowing enemies
         Nejiron = 0x155, // Rolling exploding rock in Ikana
+
+        [ObjectListIndex(0x1C)]
+        Kafei = 0x159, // En_Test4
 
         [ObjectListIndex(1)] // gameplay_keep obj 1
         [UnkillableAllVariants]
@@ -1070,6 +1074,9 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
         Dexihand = 0x1D1,// ???'s water logged brother
 
+        [ObjectListIndex(0x107)]
+        PostMan = 0x1D5, // En_Pm
+
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2940)]
         [FileID(435)]
@@ -1195,6 +1202,9 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
         GoronKid = 0x201,
+
+        [ObjectListIndex(0xE2)]
+        Anju = 0x202, // En_An
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0xAD4)]
@@ -1349,6 +1359,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [RespawningAllVariants] // they do NOT respawn, but they do block clear all rooms
         [UnkillableAllVariants]
+        [EnemizerScenesPlacementBlock(Scene.Snowhead)]
         MothSwarm = 0x23D,
 
         //[EnemizerEnabled]
@@ -1409,6 +1420,14 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 10, variant: 0xF)]
         [EnemizerScenesExcluded(Scene.LaundryPool)]
         LaundryPoolBell = 0x270, // En_Cha
+
+        // without flower under him I bet he looks stupid
+        [ObjectListIndex(0x1E5)]
+        BuisnessScrub = 0x274, // En_AkinDonuts
+
+        // todo: test randomizing
+        [ObjectListIndex(0x1E5)]
+        LinkTheGoro = 0x276,
 
         //[ActorizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
         [FileID(601)]

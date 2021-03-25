@@ -228,9 +228,19 @@ namespace MMR.Randomizer
             FlattenPitchRoll(twinislandsScene.Maps[0].Actors[27]);
 
             // I like secrets
-            //twinislandsScene.Maps[0].Actors[1].Position = new vec16(-583, 140, -20); // place: next to tree
+            //twinislandsScene.Maps[0].Actors[1].Position = new vec16(-583, 140, -20); // place: next to tree, testing
             twinislandsScene.Maps[0].Actors[1].Position = new vec16(349, -196, 970); // place: under the ice, sneaky like teh crabb
+            //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x60CB; // set to unk check
+            // 300 is back to mountain village
+            // 303 is empty, it takes us to mayors office, which might mean we can put an address tehre 
+            twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x0303; // set to spring goron race?
             //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x7200; // invisible
+
+            // guess what, spring has a space, EMPTY, entrance in the entrance list
+            RomUtils.CheckCompressed(GameObjects.Scene.TwinIslands.FileID());
+            var twinislandsSceneData = RomData.MMFileList[GameObjects.Scene.TwinIslands.FileID()].Data;
+            twinislandsSceneData[0xD6] = 0xAE; 
+            twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall wtf
 
             // move the bombchu in the first stonetowertemple room 
             //   backward several feet from the chest, so replacement cannot block the chest
@@ -270,6 +280,28 @@ namespace MMR.Randomizer
             var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
             var torchRotation = dekuPalaceScene.Maps[2].Actors[26].Rotation.z;
             torchRotation = (short) MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
+
+            //turn around this torch, because if its bean man hes facing into the wall and it hurts me
+            var laundryPoolScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LaundryPool.FileID());
+            laundryPoolScene.Maps[0].Actors[2].Rotation.y = (short)MergeRotationAndFlags(rotation: 135, flags: 0x7F);
+            laundryPoolScene.Maps[0].Actors[2].Rotation.x = 0x7F;
+            laundryPoolScene.Maps[0].Actors[2].Rotation.z = 0x7F;
+            //laundryPoolScene.Maps[0].Actors[1].Rotation.z = (short)MergeRotationAndFlags(rotation: laundryPoolScene.Maps[0].Actors[1].Rotation.z, flags: 0x7F);
+
+            // it was two torches, turn the other into a secret grotto, at least for now
+            var randomVars = new List<ushort> { 0x6233, 0x623B, 0x6218, 0x625C, 0x8200, 0xA200, 0x7200, 0xC200, 0xE200, 0xF200, 0xD200 };
+            laundryPoolScene.Maps[0].Actors[1].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomVars[new Random().Next(randomVars.Count)]);
+            laundryPoolScene.Maps[0].Actors[1].Rotation = new vec16(0x7f, 0x7f ,0x7f);
+            laundryPoolScene.Maps[0].Actors[1].Position = new vec16(-1872, -120, 229);
+
+            /*
+            var greatBayCoast = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
+            greatBayCoast.Maps[1].Actors[8].ActorID = 0;
+            greatBayCoast.Maps[1].Actors[8].ChangeActor(GameObjects.Actor.GrottoHole, vars:0x5000);
+            //greatBayCoast.Maps[1].Actors[8].Position = new vec16(-3433, -242, 4646);
+            greatBayCoast.Maps[1].Actors[8].Position = new vec16(-3433, 10, 4646);
+            greatBayCoast.Maps[1].Actors[8].Rotation = new vec16(0x7f, 0x7f, 0x7f);
+            */
 
             // test bonk spider
             /*
