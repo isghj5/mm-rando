@@ -161,7 +161,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1284)]
         [SceneInternalId(0x27)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // blocking a few skulltulla
-            Actor.StockpotBell, Actor.Cow, Actor.IkanaGravestone, Actor.Bombiwa)]
+            Actor.StockpotBell, Actor.Cow, Actor.IkanaGravestone, Actor.Bombiwa, Actor.Bumper)]
         SwampSpiderHouse = 0x24,
 
         [FileID(1291)]

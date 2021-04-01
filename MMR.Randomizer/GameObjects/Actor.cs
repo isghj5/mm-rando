@@ -115,11 +115,12 @@ namespace MMR.Randomizer.GameObjects
         [FileID(54)]
         [ObjectListIndex(0xF)]
         [GroundVariants(0xFFFF)]
+        [VariantsWithRoomMax(max: 10, variant:0xFFFF)]
         [UnkillableAllVariants]
         // I would like a flying variant, but they seem to drop like a rock instead of float down
         //[EnemizerScenesExcluded(0x15, Scene.AstralObservatory, 0x35, 0x42, 0x10)]
         [EnemizerScenesExcluded(Scene.AstralObservatory, Scene.RomaniRanch, Scene.CuccoShack, Scene.MilkBar)]
-        FriendlyCucco = 0x11,
+        FriendlyCucco = 0x11, // En_Niw
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x32C0)]
@@ -743,6 +744,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x14F)]
         [GroundVariants(0x0)]
+        [VariantsWithRoomMax(max: 5, variant:0)] // culling distance is too long
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)]
         [UnkillableAllVariants]
         Bumper = 0x106, // obj_Boyo
 
@@ -1155,7 +1158,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0,1,2,3)]
         [CompanionActor(LetterToPostman, variant: 0)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.WestClockTown, Scene.SouthClockTown)]//, Scene.NorthClockTown, Scene.EastClockTown)]
+        [EnemizerScenesExcluded(Scene.WestClockTown, Scene.SouthClockTown, Scene.NorthClockTown, Scene.EastClockTown)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 4, 9)]
         Postbox = 0x1F2,
