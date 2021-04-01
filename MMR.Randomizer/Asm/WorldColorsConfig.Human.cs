@@ -44,8 +44,8 @@ namespace MMR.Randomizer.Asm
         void SetHumanEnergyColors(Color blueColor, Color redColor)
         {
             var converter = new ColorSpaceConverter();
-            var blueAdjusted = converter.TranslateHsv(blueColor, hsv => new Hsv(hsv.H, Increase(hsv.S), Increase(hsv.V)));
-            var redAdjusted = converter.TranslateHsv(redColor, hsv => new Hsv(hsv.H, Increase(hsv.S), Increase(hsv.V)));
+            var blueAdjusted = converter.TranslateHsv(blueColor, static hsv => new Hsv(hsv.H, Increase(hsv.S), Increase(hsv.V)));
+            var redAdjusted = converter.TranslateHsv(redColor, static hsv => new Hsv(hsv.H, Increase(hsv.S), Increase(hsv.V)));
 
             // Update color for normal spin.
             Colors.SwordEnergyBlueEnv1 = blueColor;
@@ -67,7 +67,7 @@ namespace MMR.Randomizer.Asm
             Colors.SwordChargeSparksBlue = blueAdjusted;
             Colors.SwordChargeSparksRed = redAdjusted;
 
-            float Increase(float input, float mult = 3f) => Math.Min(input * mult, 1f);
+            static float Increase(float input, float mult = 3f) => Math.Min(input * mult, 1f);
         }
     }
 }

@@ -14,6 +14,16 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<GetItemIndexAttribute>()?.Index;
         }
 
+        public static ushort? GetCollectableIndex(this Item item)
+        {
+            return item.GetAttribute<CollectableIndexAttribute>()?.Index;
+        }
+
+        public static bool IsNullableItem(this Item item)
+        {
+            return item.HasAttribute<NullableItemAttribute>();
+        }
+
         public static int[] GetBottleItemIndices(this Item item)
         {
             return item.GetAttribute<GetBottleItemIndicesAttribute>()?.Indices;
@@ -87,11 +97,6 @@ namespace MMR.Randomizer.Extensions
             return item.HasAttribute<RepeatableAttribute>();
         }
 
-        public static bool IsCycleRepeatable(this Item item)
-        {
-            return item.HasAttribute<CycleRepeatableAttribute>();
-        }
-
         public static bool IsRupeeRepeatable(this Item item)
         {
             return item.HasAttribute<RupeeRepeatableAttribute>();
@@ -105,6 +110,11 @@ namespace MMR.Randomizer.Extensions
         public static bool IsTemporary(this Item item)
         {
             return item.HasAttribute<TemporaryAttribute>();
+        }
+
+        public static ItemCategory? Category(this Item item)
+        {
+            return item.GetAttribute<ItemCategoryAttribute>()?.ItemCategory;
         }
 
         public static bool IsFake(this Item item)

@@ -43,6 +43,13 @@ namespace MMR.UI.Forms
             this.cUserItems = new System.Windows.Forms.CheckBox();
             this.tSettings = new System.Windows.Forms.TabControl();
             this.tabMain = new System.Windows.Forms.TabPage();
+            this.tOtherCustomizations = new System.Windows.Forms.TabControl();
+            this.tOtherCustomization = new System.Windows.Forms.TabPage();
+            this.cProgressiveUpgrades = new System.Windows.Forms.CheckBox();
+            this.cDEnt = new System.Windows.Forms.CheckBox();
+            this.cNoStartingItems = new System.Windows.Forms.CheckBox();
+            this.cMixSongs = new System.Windows.Forms.CheckBox();
+            this.cEnemy = new System.Windows.Forms.CheckBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
             this.bToggleTricks = new System.Windows.Forms.Button();
@@ -51,36 +58,17 @@ namespace MMR.UI.Forms
             this.lMode = new System.Windows.Forms.Label();
             this.tbUserLogic = new System.Windows.Forms.TextBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.lJunkLocationsAmount = new System.Windows.Forms.Label();
-            this.bJunkLocationsEditor = new System.Windows.Forms.Button();
             this.tJunkLocationsList = new System.Windows.Forms.TextBox();
+            this.bJunkLocationsEditor = new System.Windows.Forms.Button();
+            this.lJunkLocationsAmount = new System.Windows.Forms.Label();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.tStartingItemList = new System.Windows.Forms.TextBox();
             this.lCustomStartingItemAmount = new System.Windows.Forms.Label();
             this.bStartingItemEditor = new System.Windows.Forms.Button();
-            this.tStartingItemList = new System.Windows.Forms.TextBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.cProgressiveUpgrades = new System.Windows.Forms.CheckBox();
-            this.cNoStartingItems = new System.Windows.Forms.CheckBox();
-            this.cDEnt = new System.Windows.Forms.CheckBox();
-            this.cEnemy = new System.Windows.Forms.CheckBox();
-            this.cMixSongs = new System.Windows.Forms.CheckBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.cMundaneRewards = new System.Windows.Forms.CheckBox();
-            this.cStrayFairies = new System.Windows.Forms.CheckBox();
-            this.cSpiders = new System.Windows.Forms.CheckBox();
-            this.cCowMilk = new System.Windows.Forms.CheckBox();
-            this.cFairyRewards = new System.Windows.Forms.CheckBox();
-            this.lCustomItemAmount = new System.Windows.Forms.Label();
-            this.tCustomItemList = new System.Windows.Forms.TextBox();
+            this.gItemPoolOptions = new System.Windows.Forms.GroupBox();
             this.bItemListEditor = new System.Windows.Forms.Button();
-            this.cSoS = new System.Windows.Forms.CheckBox();
-            this.cCrazyStartingItems = new System.Windows.Forms.CheckBox();
-            this.cDChests = new System.Windows.Forms.CheckBox();
-            this.cBottled = new System.Windows.Forms.CheckBox();
-            this.cNutChest = new System.Windows.Forms.CheckBox();
-            this.cShop = new System.Windows.Forms.CheckBox();
-            this.cAdditional = new System.Windows.Forms.CheckBox();
-            this.cMoonItems = new System.Windows.Forms.CheckBox();
+            this.tCustomItemList = new System.Windows.Forms.TextBox();
+            this.lCustomItemAmount = new System.Windows.Forms.Label();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.cFDAnywhere = new System.Windows.Forms.CheckBox();
@@ -209,12 +197,13 @@ namespace MMR.UI.Forms
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
+            this.tOtherCustomizations.SuspendLayout();
+            this.tOtherCustomization.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBox9.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
-            this.groupBox2.SuspendLayout();
+            this.gItemPoolOptions.SuspendLayout();
             this.tabGimmicks.SuspendLayout();
             this.groupBox12.SuspendLayout();
             this.groupBox11.SuspendLayout();
@@ -241,9 +230,10 @@ namespace MMR.UI.Forms
             // 
             // bopen
             // 
-            this.bopen.Location = new System.Drawing.Point(12, 376);
+            this.bopen.Location = new System.Drawing.Point(14, 434);
+            this.bopen.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bopen.Name = "bopen";
-            this.bopen.Size = new System.Drawing.Size(96, 27);
+            this.bopen.Size = new System.Drawing.Size(112, 31);
             this.bopen.TabIndex = 0;
             this.bopen.Text = "Open ROM";
             this.bopen.UseVisualStyleBackColor = true;
@@ -259,17 +249,19 @@ namespace MMR.UI.Forms
             // 
             // tROMName
             // 
-            this.tROMName.Location = new System.Drawing.Point(118, 380);
+            this.tROMName.Location = new System.Drawing.Point(138, 438);
+            this.tROMName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tROMName.Name = "tROMName";
             this.tROMName.ReadOnly = true;
-            this.tROMName.Size = new System.Drawing.Size(548, 20);
+            this.tROMName.Size = new System.Drawing.Size(639, 23);
             this.tROMName.TabIndex = 1;
             // 
             // cUserItems
             // 
             this.cUserItems.AutoSize = true;
-            this.cUserItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cUserItems.Location = new System.Drawing.Point(7, 4);
+            this.cUserItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cUserItems.Location = new System.Drawing.Point(8, 5);
+            this.cUserItems.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cUserItems.Name = "cUserItems";
             this.cUserItems.Size = new System.Drawing.Size(119, 17);
             this.cUserItems.TabIndex = 11;
@@ -284,34 +276,136 @@ namespace MMR.UI.Forms
             this.tSettings.Controls.Add(this.tabComfort);
             this.tSettings.Controls.Add(this.tabShortenCutscenes);
             this.tSettings.Controls.Add(this.tabCosmetics);
-            this.tSettings.Location = new System.Drawing.Point(3, 24);
+            this.tSettings.Location = new System.Drawing.Point(4, 28);
+            this.tSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tSettings.Name = "tSettings";
             this.tSettings.SelectedIndex = 0;
-            this.tSettings.Size = new System.Drawing.Size(675, 337);
+            this.tSettings.Size = new System.Drawing.Size(788, 389);
             this.tSettings.TabIndex = 10;
             // 
             // tabMain
             // 
+            this.tabMain.Controls.Add(this.tOtherCustomizations);
             this.tabMain.Controls.Add(this.panel1);
             this.tabMain.Controls.Add(this.groupBox9);
             this.tabMain.Controls.Add(this.groupBox6);
             this.tabMain.Controls.Add(this.groupBox4);
-            this.tabMain.Controls.Add(this.groupBox3);
-            this.tabMain.Controls.Add(this.groupBox2);
-            this.tabMain.Location = new System.Drawing.Point(4, 22);
+            this.tabMain.Controls.Add(this.gItemPoolOptions);
+            this.tabMain.Location = new System.Drawing.Point(4, 24);
+            this.tabMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabMain.Name = "tabMain";
-            this.tabMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tabMain.Size = new System.Drawing.Size(667, 311);
+            this.tabMain.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabMain.Size = new System.Drawing.Size(780, 361);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Main Settings";
             this.tabMain.UseVisualStyleBackColor = true;
             // 
+            // tOtherCustomizations
+            // 
+            this.tOtherCustomizations.Controls.Add(this.tOtherCustomization);
+            this.tOtherCustomizations.Location = new System.Drawing.Point(7, 197);
+            this.tOtherCustomizations.Name = "tOtherCustomizations";
+            this.tOtherCustomizations.SelectedIndex = 0;
+            this.tOtherCustomizations.Size = new System.Drawing.Size(381, 160);
+            this.tOtherCustomizations.TabIndex = 22;
+            // 
+            // tOtherCustomization
+            // 
+            this.tOtherCustomization.Controls.Add(this.cProgressiveUpgrades);
+            this.tOtherCustomization.Controls.Add(this.cDEnt);
+            this.tOtherCustomization.Controls.Add(this.cNoStartingItems);
+            this.tOtherCustomization.Controls.Add(this.cMixSongs);
+            this.tOtherCustomization.Controls.Add(this.cEnemy);
+            this.tOtherCustomization.Location = new System.Drawing.Point(4, 24);
+            this.tOtherCustomization.Name = "tOtherCustomization";
+            this.tOtherCustomization.Padding = new System.Windows.Forms.Padding(3);
+            this.tOtherCustomization.Size = new System.Drawing.Size(373, 132);
+            this.tOtherCustomization.TabIndex = 0;
+            this.tOtherCustomization.Text = "Other";
+            this.tOtherCustomization.UseVisualStyleBackColor = true;
+            // 
+            // cProgressiveUpgrades
+            // 
+            this.cProgressiveUpgrades.AutoSize = true;
+            this.cProgressiveUpgrades.BackColor = System.Drawing.Color.Transparent;
+            this.cProgressiveUpgrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cProgressiveUpgrades.ForeColor = System.Drawing.Color.Black;
+            this.cProgressiveUpgrades.Location = new System.Drawing.Point(6, 63);
+            this.cProgressiveUpgrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cProgressiveUpgrades.Name = "cProgressiveUpgrades";
+            this.cProgressiveUpgrades.Size = new System.Drawing.Size(130, 17);
+            this.cProgressiveUpgrades.TabIndex = 21;
+            this.cProgressiveUpgrades.Text = "Progressive Upgrades";
+            this.cProgressiveUpgrades.UseVisualStyleBackColor = false;
+            this.cProgressiveUpgrades.CheckedChanged += new System.EventHandler(this.cProgressiveUpgrades_CheckedChanged);
+            // 
+            // cDEnt
+            // 
+            this.cDEnt.AutoSize = true;
+            this.cDEnt.BackColor = System.Drawing.Color.Transparent;
+            this.cDEnt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cDEnt.ForeColor = System.Drawing.Color.Black;
+            this.cDEnt.Location = new System.Drawing.Point(6, 10);
+            this.cDEnt.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDEnt.Name = "cDEnt";
+            this.cDEnt.Size = new System.Drawing.Size(120, 17);
+            this.cDEnt.TabIndex = 7;
+            this.cDEnt.Text = "Dungeon entrances";
+            this.cDEnt.UseVisualStyleBackColor = false;
+            this.cDEnt.CheckedChanged += new System.EventHandler(this.cDEnt_CheckedChanged);
+            // 
+            // cNoStartingItems
+            // 
+            this.cNoStartingItems.AutoSize = true;
+            this.cNoStartingItems.BackColor = System.Drawing.Color.Transparent;
+            this.cNoStartingItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cNoStartingItems.ForeColor = System.Drawing.Color.Black;
+            this.cNoStartingItems.Location = new System.Drawing.Point(193, 10);
+            this.cNoStartingItems.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cNoStartingItems.Name = "cNoStartingItems";
+            this.cNoStartingItems.Size = new System.Drawing.Size(107, 17);
+            this.cNoStartingItems.TabIndex = 20;
+            this.cNoStartingItems.Text = "No Starting Items";
+            this.cNoStartingItems.UseVisualStyleBackColor = false;
+            this.cNoStartingItems.CheckedChanged += new System.EventHandler(this.cNoStartingItems_CheckedChanged);
+            // 
+            // cMixSongs
+            // 
+            this.cMixSongs.AutoSize = true;
+            this.cMixSongs.BackColor = System.Drawing.Color.Transparent;
+            this.cMixSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cMixSongs.ForeColor = System.Drawing.Color.Black;
+            this.cMixSongs.Location = new System.Drawing.Point(6, 36);
+            this.cMixSongs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMixSongs.Name = "cMixSongs";
+            this.cMixSongs.Size = new System.Drawing.Size(122, 17);
+            this.cMixSongs.TabIndex = 3;
+            this.cMixSongs.Text = "Mix songs with items";
+            this.cMixSongs.UseVisualStyleBackColor = false;
+            this.cMixSongs.CheckedChanged += new System.EventHandler(this.cMixSongs_CheckedChanged);
+            // 
+            // cEnemy
+            // 
+            this.cEnemy.AutoSize = true;
+            this.cEnemy.BackColor = System.Drawing.Color.Transparent;
+            this.cEnemy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.cEnemy.ForeColor = System.Drawing.Color.Black;
+            this.cEnemy.Location = new System.Drawing.Point(193, 36);
+            this.cEnemy.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cEnemy.Name = "cEnemy";
+            this.cEnemy.Size = new System.Drawing.Size(106, 17);
+            this.cEnemy.TabIndex = 9;
+            this.cEnemy.Text = "Enemies (BETA!)";
+            this.cEnemy.UseVisualStyleBackColor = false;
+            this.cEnemy.CheckedChanged += new System.EventHandler(this.cEnemy_CheckedChanged);
+            // 
             // panel1
             // 
             this.panel1.Controls.Add(this.cUserItems);
-            this.panel1.Location = new System.Drawing.Point(524, 2);
+            this.panel1.Location = new System.Drawing.Point(611, 2);
+            this.panel1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(126, 23);
+            this.panel1.Size = new System.Drawing.Size(147, 27);
             this.panel1.TabIndex = 30;
             // 
             // groupBox9
@@ -321,18 +415,21 @@ namespace MMR.UI.Forms
             this.groupBox9.Controls.Add(this.bLoadLogic);
             this.groupBox9.Controls.Add(this.lMode);
             this.groupBox9.Controls.Add(this.tbUserLogic);
-            this.groupBox9.Location = new System.Drawing.Point(6, 6);
+            this.groupBox9.Location = new System.Drawing.Point(7, 7);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(325, 85);
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox9.Size = new System.Drawing.Size(379, 98);
             this.groupBox9.TabIndex = 29;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Generation Settings";
             // 
             // bToggleTricks
             // 
-            this.bToggleTricks.Location = new System.Drawing.Point(232, 20);
+            this.bToggleTricks.Location = new System.Drawing.Point(271, 23);
+            this.bToggleTricks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bToggleTricks.Name = "bToggleTricks";
-            this.bToggleTricks.Size = new System.Drawing.Size(82, 23);
+            this.bToggleTricks.Size = new System.Drawing.Size(96, 27);
             this.bToggleTricks.TabIndex = 19;
             this.bToggleTricks.Text = "Toggle Tricks";
             this.bToggleTricks.UseVisualStyleBackColor = true;
@@ -348,17 +445,19 @@ namespace MMR.UI.Forms
             "Vanilla Layout",
             "User Logic",
             "No Logic"});
-            this.cMode.Location = new System.Drawing.Point(82, 21);
+            this.cMode.Location = new System.Drawing.Point(96, 24);
+            this.cMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cMode.Name = "cMode";
-            this.cMode.Size = new System.Drawing.Size(144, 21);
+            this.cMode.Size = new System.Drawing.Size(167, 23);
             this.cMode.TabIndex = 1;
             this.cMode.SelectedIndexChanged += new System.EventHandler(this.cMode_SelectedIndexChanged);
             // 
             // bLoadLogic
             // 
-            this.bLoadLogic.Location = new System.Drawing.Point(11, 48);
+            this.bLoadLogic.Location = new System.Drawing.Point(13, 55);
+            this.bLoadLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bLoadLogic.Name = "bLoadLogic";
-            this.bLoadLogic.Size = new System.Drawing.Size(68, 24);
+            this.bLoadLogic.Size = new System.Drawing.Size(79, 28);
             this.bLoadLogic.TabIndex = 17;
             this.bLoadLogic.Text = "Open Logic";
             this.bLoadLogic.UseVisualStyleBackColor = true;
@@ -368,9 +467,10 @@ namespace MMR.UI.Forms
             // 
             this.lMode.AutoSize = true;
             this.lMode.BackColor = System.Drawing.Color.Transparent;
-            this.lMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lMode.ForeColor = System.Drawing.Color.Black;
-            this.lMode.Location = new System.Drawing.Point(9, 26);
+            this.lMode.Location = new System.Drawing.Point(10, 30);
+            this.lMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lMode.Name = "lMode";
             this.lMode.Size = new System.Drawing.Size(68, 13);
             this.lMode.TabIndex = 0;
@@ -378,422 +478,161 @@ namespace MMR.UI.Forms
             // 
             // tbUserLogic
             // 
-            this.tbUserLogic.Location = new System.Drawing.Point(82, 50);
+            this.tbUserLogic.Location = new System.Drawing.Point(96, 58);
+            this.tbUserLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbUserLogic.Name = "tbUserLogic";
             this.tbUserLogic.ReadOnly = true;
-            this.tbUserLogic.Size = new System.Drawing.Size(233, 20);
+            this.tbUserLogic.Size = new System.Drawing.Size(271, 23);
             this.tbUserLogic.TabIndex = 18;
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.lJunkLocationsAmount);
-            this.groupBox6.Controls.Add(this.bJunkLocationsEditor);
             this.groupBox6.Controls.Add(this.tJunkLocationsList);
-            this.groupBox6.Location = new System.Drawing.Point(6, 172);
+            this.groupBox6.Controls.Add(this.bJunkLocationsEditor);
+            this.groupBox6.Controls.Add(this.lJunkLocationsAmount);
+            this.groupBox6.Location = new System.Drawing.Point(200, 108);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(325, 72);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox6.Size = new System.Drawing.Size(186, 83);
             this.groupBox6.TabIndex = 28;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Enforce Junk Locations";
             // 
-            // lJunkLocationsAmount
+            // tJunkLocationsList
             // 
-            this.lJunkLocationsAmount.AutoSize = true;
-            this.lJunkLocationsAmount.Location = new System.Drawing.Point(9, 24);
-            this.lJunkLocationsAmount.Name = "lJunkLocationsAmount";
-            this.lJunkLocationsAmount.Size = new System.Drawing.Size(112, 13);
-            this.lJunkLocationsAmount.TabIndex = 27;
-            this.lJunkLocationsAmount.Text = "0/0 locations selected";
+            this.tJunkLocationsList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tJunkLocationsList.Location = new System.Drawing.Point(13, 51);
+            this.tJunkLocationsList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tJunkLocationsList.Name = "tJunkLocationsList";
+            this.tJunkLocationsList.Size = new System.Drawing.Size(118, 23);
+            this.tJunkLocationsList.TabIndex = 26;
+            this.tJunkLocationsList.Text = "--";
+            this.tJunkLocationsList.TextChanged += new System.EventHandler(this.tJunkLocationsList_TextChanged);
             // 
             // bJunkLocationsEditor
             // 
-            this.bJunkLocationsEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.bJunkLocationsEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bJunkLocationsEditor.Location = new System.Drawing.Point(232, 13);
+            this.bJunkLocationsEditor.Location = new System.Drawing.Point(128, 50);
+            this.bJunkLocationsEditor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bJunkLocationsEditor.Name = "bJunkLocationsEditor";
-            this.bJunkLocationsEditor.Size = new System.Drawing.Size(83, 27);
+            this.bJunkLocationsEditor.Size = new System.Drawing.Size(46, 25);
             this.bJunkLocationsEditor.TabIndex = 26;
             this.bJunkLocationsEditor.Text = "Edit";
             this.bJunkLocationsEditor.UseVisualStyleBackColor = true;
             this.bJunkLocationsEditor.Click += new System.EventHandler(this.bJunkLocationsEditor_Click);
             // 
-            // tJunkLocationsList
+            // lJunkLocationsAmount
             // 
-            this.tJunkLocationsList.Location = new System.Drawing.Point(11, 44);
-            this.tJunkLocationsList.Name = "tJunkLocationsList";
-            this.tJunkLocationsList.Size = new System.Drawing.Size(304, 20);
-            this.tJunkLocationsList.TabIndex = 26;
-            this.tJunkLocationsList.Text = "--";
-            this.tJunkLocationsList.TextChanged += new System.EventHandler(this.tJunkLocationsList_TextChanged);
+            this.lJunkLocationsAmount.AutoSize = true;
+            this.lJunkLocationsAmount.Location = new System.Drawing.Point(10, 28);
+            this.lJunkLocationsAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lJunkLocationsAmount.Name = "lJunkLocationsAmount";
+            this.lJunkLocationsAmount.Size = new System.Drawing.Size(121, 15);
+            this.lJunkLocationsAmount.TabIndex = 27;
+            this.lJunkLocationsAmount.Text = "0/0 locations selected";
             // 
             // groupBox4
             // 
+            this.groupBox4.Controls.Add(this.tStartingItemList);
             this.groupBox4.Controls.Add(this.lCustomStartingItemAmount);
             this.groupBox4.Controls.Add(this.bStartingItemEditor);
-            this.groupBox4.Controls.Add(this.tStartingItemList);
-            this.groupBox4.Location = new System.Drawing.Point(6, 94);
+            this.groupBox4.Location = new System.Drawing.Point(7, 108);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(325, 72);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox4.Size = new System.Drawing.Size(186, 83);
             this.groupBox4.TabIndex = 17;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Extra Starting Items";
             // 
+            // tStartingItemList
+            // 
+            this.tStartingItemList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tStartingItemList.Location = new System.Drawing.Point(13, 52);
+            this.tStartingItemList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tStartingItemList.Name = "tStartingItemList";
+            this.tStartingItemList.Size = new System.Drawing.Size(118, 23);
+            this.tStartingItemList.TabIndex = 26;
+            this.tStartingItemList.Text = "--";
+            this.tStartingItemList.TextChanged += new System.EventHandler(this.tStartingItemList_TextChanged);
+            // 
             // lCustomStartingItemAmount
             // 
             this.lCustomStartingItemAmount.AutoSize = true;
-            this.lCustomStartingItemAmount.Location = new System.Drawing.Point(9, 25);
+            this.lCustomStartingItemAmount.Location = new System.Drawing.Point(10, 29);
+            this.lCustomStartingItemAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lCustomStartingItemAmount.Name = "lCustomStartingItemAmount";
-            this.lCustomStartingItemAmount.Size = new System.Drawing.Size(94, 13);
+            this.lCustomStartingItemAmount.Size = new System.Drawing.Size(102, 15);
             this.lCustomStartingItemAmount.TabIndex = 27;
             this.lCustomStartingItemAmount.Text = "0/0 items selected";
             // 
             // bStartingItemEditor
             // 
-            this.bStartingItemEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.bStartingItemEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bStartingItemEditor.Location = new System.Drawing.Point(232, 13);
+            this.bStartingItemEditor.Location = new System.Drawing.Point(129, 51);
+            this.bStartingItemEditor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bStartingItemEditor.Name = "bStartingItemEditor";
-            this.bStartingItemEditor.Size = new System.Drawing.Size(83, 27);
+            this.bStartingItemEditor.Size = new System.Drawing.Size(46, 25);
             this.bStartingItemEditor.TabIndex = 26;
             this.bStartingItemEditor.Text = "Edit";
             this.bStartingItemEditor.UseVisualStyleBackColor = true;
             this.bStartingItemEditor.Click += new System.EventHandler(this.bStartingItemEditor_Click);
             // 
-            // tStartingItemList
+            // gItemPoolOptions
             // 
-            this.tStartingItemList.Location = new System.Drawing.Point(11, 45);
-            this.tStartingItemList.Name = "tStartingItemList";
-            this.tStartingItemList.Size = new System.Drawing.Size(304, 20);
-            this.tStartingItemList.TabIndex = 26;
-            this.tStartingItemList.Text = "--";
-            this.tStartingItemList.TextChanged += new System.EventHandler(this.tStartingItemList_TextChanged);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.cProgressiveUpgrades);
-            this.groupBox3.Controls.Add(this.cNoStartingItems);
-            this.groupBox3.Controls.Add(this.cDEnt);
-            this.groupBox3.Controls.Add(this.cEnemy);
-            this.groupBox3.Controls.Add(this.cMixSongs);
-            this.groupBox3.Location = new System.Drawing.Point(337, 212);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(322, 93);
-            this.groupBox3.TabIndex = 16;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Other Customizations";
-            // 
-            // cProgressiveUpgrades
-            // 
-            this.cProgressiveUpgrades.AutoSize = true;
-            this.cProgressiveUpgrades.BackColor = System.Drawing.Color.Transparent;
-            this.cProgressiveUpgrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cProgressiveUpgrades.ForeColor = System.Drawing.Color.Black;
-            this.cProgressiveUpgrades.Location = new System.Drawing.Point(9, 65);
-            this.cProgressiveUpgrades.Name = "cProgressiveUpgrades";
-            this.cProgressiveUpgrades.Size = new System.Drawing.Size(130, 17);
-            this.cProgressiveUpgrades.TabIndex = 21;
-            this.cProgressiveUpgrades.Text = "Progressive Upgrades";
-            this.cProgressiveUpgrades.UseVisualStyleBackColor = false;
-            this.cProgressiveUpgrades.CheckedChanged += new System.EventHandler(this.cProgressiveUpgrades_CheckedChanged);
-            // 
-            // cNoStartingItems
-            // 
-            this.cNoStartingItems.AutoSize = true;
-            this.cNoStartingItems.BackColor = System.Drawing.Color.Transparent;
-            this.cNoStartingItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cNoStartingItems.ForeColor = System.Drawing.Color.Black;
-            this.cNoStartingItems.Location = new System.Drawing.Point(169, 19);
-            this.cNoStartingItems.Name = "cNoStartingItems";
-            this.cNoStartingItems.Size = new System.Drawing.Size(107, 17);
-            this.cNoStartingItems.TabIndex = 20;
-            this.cNoStartingItems.Text = "No Starting Items";
-            this.cNoStartingItems.UseVisualStyleBackColor = false;
-            this.cNoStartingItems.CheckedChanged += new System.EventHandler(this.cNoStartingItems_CheckedChanged);
-            // 
-            // cDEnt
-            // 
-            this.cDEnt.AutoSize = true;
-            this.cDEnt.BackColor = System.Drawing.Color.Transparent;
-            this.cDEnt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cDEnt.ForeColor = System.Drawing.Color.Black;
-            this.cDEnt.Location = new System.Drawing.Point(9, 19);
-            this.cDEnt.Name = "cDEnt";
-            this.cDEnt.Size = new System.Drawing.Size(120, 17);
-            this.cDEnt.TabIndex = 7;
-            this.cDEnt.Text = "Dungeon entrances";
-            this.cDEnt.UseVisualStyleBackColor = false;
-            this.cDEnt.CheckedChanged += new System.EventHandler(this.cDEnt_CheckedChanged);
-            // 
-            // cEnemy
-            // 
-            this.cEnemy.AutoSize = true;
-            this.cEnemy.BackColor = System.Drawing.Color.Transparent;
-            this.cEnemy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cEnemy.ForeColor = System.Drawing.Color.Black;
-            this.cEnemy.Location = new System.Drawing.Point(169, 42);
-            this.cEnemy.Name = "cEnemy";
-            this.cEnemy.Size = new System.Drawing.Size(106, 17);
-            this.cEnemy.TabIndex = 9;
-            this.cEnemy.Text = "Enemies (BETA!)";
-            this.cEnemy.UseVisualStyleBackColor = false;
-            this.cEnemy.CheckedChanged += new System.EventHandler(this.cEnemy_CheckedChanged);
-            // 
-            // cMixSongs
-            // 
-            this.cMixSongs.AutoSize = true;
-            this.cMixSongs.BackColor = System.Drawing.Color.Transparent;
-            this.cMixSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cMixSongs.ForeColor = System.Drawing.Color.Black;
-            this.cMixSongs.Location = new System.Drawing.Point(9, 42);
-            this.cMixSongs.Name = "cMixSongs";
-            this.cMixSongs.Size = new System.Drawing.Size(122, 17);
-            this.cMixSongs.TabIndex = 3;
-            this.cMixSongs.Text = "Mix songs with items";
-            this.cMixSongs.UseVisualStyleBackColor = false;
-            this.cMixSongs.CheckedChanged += new System.EventHandler(this.cMixSongs_CheckedChanged);
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.cMundaneRewards);
-            this.groupBox2.Controls.Add(this.cStrayFairies);
-            this.groupBox2.Controls.Add(this.cSpiders);
-            this.groupBox2.Controls.Add(this.cCowMilk);
-            this.groupBox2.Controls.Add(this.cFairyRewards);
-            this.groupBox2.Controls.Add(this.lCustomItemAmount);
-            this.groupBox2.Controls.Add(this.tCustomItemList);
-            this.groupBox2.Controls.Add(this.bItemListEditor);
-            this.groupBox2.Controls.Add(this.cSoS);
-            this.groupBox2.Controls.Add(this.cCrazyStartingItems);
-            this.groupBox2.Controls.Add(this.cDChests);
-            this.groupBox2.Controls.Add(this.cBottled);
-            this.groupBox2.Controls.Add(this.cNutChest);
-            this.groupBox2.Controls.Add(this.cShop);
-            this.groupBox2.Controls.Add(this.cAdditional);
-            this.groupBox2.Controls.Add(this.cMoonItems);
-            this.groupBox2.Location = new System.Drawing.Point(337, 6);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(322, 200);
-            this.groupBox2.TabIndex = 15;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Item Pool Options";
-            // 
-            // cMundaneRewards
-            // 
-            this.cMundaneRewards.AutoSize = true;
-            this.cMundaneRewards.BackColor = System.Drawing.Color.Transparent;
-            this.cMundaneRewards.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cMundaneRewards.ForeColor = System.Drawing.Color.Black;
-            this.cMundaneRewards.Location = new System.Drawing.Point(9, 164);
-            this.cMundaneRewards.Name = "cMundaneRewards";
-            this.cMundaneRewards.Size = new System.Drawing.Size(116, 17);
-            this.cMundaneRewards.TabIndex = 25;
-            this.cMundaneRewards.Text = "Mundane Rewards";
-            this.cMundaneRewards.UseVisualStyleBackColor = false;
-            this.cMundaneRewards.CheckedChanged += new System.EventHandler(this.cMundaneRewards_CheckedChanged);
-            // 
-            // cStrayFairies
-            // 
-            this.cStrayFairies.AutoSize = true;
-            this.cStrayFairies.BackColor = System.Drawing.Color.Transparent;
-            this.cStrayFairies.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cStrayFairies.ForeColor = System.Drawing.Color.Black;
-            this.cStrayFairies.Location = new System.Drawing.Point(169, 143);
-            this.cStrayFairies.Name = "cStrayFairies";
-            this.cStrayFairies.Size = new System.Drawing.Size(83, 17);
-            this.cStrayFairies.TabIndex = 24;
-            this.cStrayFairies.Text = "Stray Fairies";
-            this.cStrayFairies.UseVisualStyleBackColor = false;
-            this.cStrayFairies.CheckedChanged += new System.EventHandler(this.cStrayFairies_CheckedChanged);
-            // 
-            // cSpiders
-            // 
-            this.cSpiders.AutoSize = true;
-            this.cSpiders.BackColor = System.Drawing.Color.Transparent;
-            this.cSpiders.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cSpiders.ForeColor = System.Drawing.Color.Black;
-            this.cSpiders.Location = new System.Drawing.Point(9, 141);
-            this.cSpiders.Name = "cSpiders";
-            this.cSpiders.Size = new System.Drawing.Size(105, 17);
-            this.cSpiders.TabIndex = 23;
-            this.cSpiders.Text = "Skulltula Tokens";
-            this.cSpiders.UseVisualStyleBackColor = false;
-            this.cSpiders.CheckedChanged += new System.EventHandler(this.cSpiders_CheckedChanged);
-            // 
-            // cCowMilk
-            // 
-            this.cCowMilk.AutoSize = true;
-            this.cCowMilk.BackColor = System.Drawing.Color.Transparent;
-            this.cCowMilk.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cCowMilk.ForeColor = System.Drawing.Color.Black;
-            this.cCowMilk.Location = new System.Drawing.Point(9, 117);
-            this.cCowMilk.Name = "cCowMilk";
-            this.cCowMilk.Size = new System.Drawing.Size(69, 17);
-            this.cCowMilk.TabIndex = 22;
-            this.cCowMilk.Text = "Cow Milk";
-            this.cCowMilk.UseVisualStyleBackColor = false;
-            this.cCowMilk.CheckedChanged += new System.EventHandler(this.cCowMilk_CheckedChanged);
-            // 
-            // cFairyRewards
-            // 
-            this.cFairyRewards.AutoSize = true;
-            this.cFairyRewards.BackColor = System.Drawing.Color.Transparent;
-            this.cFairyRewards.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cFairyRewards.ForeColor = System.Drawing.Color.Black;
-            this.cFairyRewards.Location = new System.Drawing.Point(169, 48);
-            this.cFairyRewards.Name = "cFairyRewards";
-            this.cFairyRewards.Size = new System.Drawing.Size(122, 17);
-            this.cFairyRewards.TabIndex = 21;
-            this.cFairyRewards.Text = "Great Fairy Rewards";
-            this.cFairyRewards.UseVisualStyleBackColor = false;
-            this.cFairyRewards.CheckedChanged += new System.EventHandler(this.cFairyRewards_CheckedChanged);
-            // 
-            // lCustomItemAmount
-            // 
-            this.lCustomItemAmount.AutoSize = true;
-            this.lCustomItemAmount.Location = new System.Drawing.Point(9, 124);
-            this.lCustomItemAmount.Name = "lCustomItemAmount";
-            this.lCustomItemAmount.Size = new System.Drawing.Size(108, 13);
-            this.lCustomItemAmount.TabIndex = 20;
-            this.lCustomItemAmount.Text = "0/0 items randomized";
-            this.lCustomItemAmount.Visible = false;
-            // 
-            // tCustomItemList
-            // 
-            this.tCustomItemList.Location = new System.Drawing.Point(10, 100);
-            this.tCustomItemList.Name = "tCustomItemList";
-            this.tCustomItemList.Size = new System.Drawing.Size(302, 20);
-            this.tCustomItemList.TabIndex = 19;
-            this.tCustomItemList.Text = "-----------";
-            this.tCustomItemList.Visible = false;
-            this.tCustomItemList.TextChanged += new System.EventHandler(this.tCustomItemList_TextChanged);
+            this.gItemPoolOptions.Controls.Add(this.bItemListEditor);
+            this.gItemPoolOptions.Controls.Add(this.tCustomItemList);
+            this.gItemPoolOptions.Controls.Add(this.lCustomItemAmount);
+            this.gItemPoolOptions.Location = new System.Drawing.Point(393, 7);
+            this.gItemPoolOptions.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gItemPoolOptions.Name = "gItemPoolOptions";
+            this.gItemPoolOptions.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gItemPoolOptions.Size = new System.Drawing.Size(376, 350);
+            this.gItemPoolOptions.TabIndex = 15;
+            this.gItemPoolOptions.TabStop = false;
+            this.gItemPoolOptions.Text = "Item Pool Options";
             // 
             // bItemListEditor
             // 
-            this.bItemListEditor.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bItemListEditor.Location = new System.Drawing.Point(120, 71);
+            this.bItemListEditor.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.bItemListEditor.Location = new System.Drawing.Point(140, 142);
+            this.bItemListEditor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bItemListEditor.Name = "bItemListEditor";
-            this.bItemListEditor.Size = new System.Drawing.Size(83, 24);
+            this.bItemListEditor.Size = new System.Drawing.Size(97, 28);
             this.bItemListEditor.TabIndex = 18;
             this.bItemListEditor.Text = "Item List Editor";
             this.bItemListEditor.UseVisualStyleBackColor = true;
             this.bItemListEditor.Visible = false;
             this.bItemListEditor.Click += new System.EventHandler(this.bItemListEditor_Click);
             // 
-            // cSoS
+            // tCustomItemList
             // 
-            this.cSoS.AutoSize = true;
-            this.cSoS.BackColor = System.Drawing.Color.Transparent;
-            this.cSoS.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cSoS.ForeColor = System.Drawing.Color.Black;
-            this.cSoS.Location = new System.Drawing.Point(9, 25);
-            this.cSoS.Name = "cSoS";
-            this.cSoS.Size = new System.Drawing.Size(143, 17);
-            this.cSoS.TabIndex = 10;
-            this.cSoS.Text = "Exclude Song of Soaring";
-            this.cSoS.UseVisualStyleBackColor = false;
-            this.cSoS.CheckedChanged += new System.EventHandler(this.cSoS_CheckedChanged);
+            this.tCustomItemList.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.tCustomItemList.Location = new System.Drawing.Point(12, 175);
+            this.tCustomItemList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tCustomItemList.Name = "tCustomItemList";
+            this.tCustomItemList.Size = new System.Drawing.Size(352, 23);
+            this.tCustomItemList.TabIndex = 19;
+            this.tCustomItemList.Text = "-----------";
+            this.tCustomItemList.Visible = false;
+            this.tCustomItemList.TextChanged += new System.EventHandler(this.tCustomItemList_TextChanged);
             // 
-            // cCrazyStartingItems
+            // lCustomItemAmount
             // 
-            this.cCrazyStartingItems.AutoSize = true;
-            this.cCrazyStartingItems.BackColor = System.Drawing.Color.Transparent;
-            this.cCrazyStartingItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cCrazyStartingItems.ForeColor = System.Drawing.Color.Black;
-            this.cCrazyStartingItems.Location = new System.Drawing.Point(169, 117);
-            this.cCrazyStartingItems.Name = "cCrazyStartingItems";
-            this.cCrazyStartingItems.Size = new System.Drawing.Size(119, 17);
-            this.cCrazyStartingItems.TabIndex = 17;
-            this.cCrazyStartingItems.Text = "Crazy Starting Items";
-            this.cCrazyStartingItems.UseVisualStyleBackColor = false;
-            this.cCrazyStartingItems.CheckedChanged += new System.EventHandler(this.cCrazyStartingItems_CheckedChanged);
-            // 
-            // cDChests
-            // 
-            this.cDChests.AutoSize = true;
-            this.cDChests.BackColor = System.Drawing.Color.Transparent;
-            this.cDChests.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cDChests.ForeColor = System.Drawing.Color.Black;
-            this.cDChests.Location = new System.Drawing.Point(9, 48);
-            this.cDChests.Name = "cDChests";
-            this.cDChests.Size = new System.Drawing.Size(97, 17);
-            this.cDChests.TabIndex = 4;
-            this.cDChests.Text = "Dungeon items";
-            this.cDChests.UseVisualStyleBackColor = false;
-            this.cDChests.CheckedChanged += new System.EventHandler(this.cDChests_CheckedChanged);
-            // 
-            // cBottled
-            // 
-            this.cBottled.AutoSize = true;
-            this.cBottled.BackColor = System.Drawing.Color.Transparent;
-            this.cBottled.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cBottled.ForeColor = System.Drawing.Color.Black;
-            this.cBottled.Location = new System.Drawing.Point(9, 94);
-            this.cBottled.Name = "cBottled";
-            this.cBottled.Size = new System.Drawing.Size(133, 17);
-            this.cBottled.TabIndex = 5;
-            this.cBottled.Text = "Caught bottle contents";
-            this.cBottled.UseVisualStyleBackColor = false;
-            this.cBottled.CheckedChanged += new System.EventHandler(this.cBottled_CheckedChanged);
-            // 
-            // cNutChest
-            // 
-            this.cNutChest.AutoSize = true;
-            this.cNutChest.BackColor = System.Drawing.Color.Transparent;
-            this.cNutChest.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cNutChest.ForeColor = System.Drawing.Color.Black;
-            this.cNutChest.Location = new System.Drawing.Point(169, 94);
-            this.cNutChest.Name = "cNutChest";
-            this.cNutChest.Size = new System.Drawing.Size(144, 17);
-            this.cNutChest.TabIndex = 16;
-            this.cNutChest.Text = "Pre-Clocktown Deku Nut";
-            this.cNutChest.UseVisualStyleBackColor = false;
-            this.cNutChest.CheckedChanged += new System.EventHandler(this.cNutChest_CheckedChanged);
-            // 
-            // cShop
-            // 
-            this.cShop.AutoSize = true;
-            this.cShop.BackColor = System.Drawing.Color.Transparent;
-            this.cShop.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cShop.ForeColor = System.Drawing.Color.Black;
-            this.cShop.Location = new System.Drawing.Point(9, 71);
-            this.cShop.Name = "cShop";
-            this.cShop.Size = new System.Drawing.Size(78, 17);
-            this.cShop.TabIndex = 6;
-            this.cShop.Text = "Shop items";
-            this.cShop.UseVisualStyleBackColor = false;
-            this.cShop.CheckedChanged += new System.EventHandler(this.cShop_CheckedChanged);
-            // 
-            // cAdditional
-            // 
-            this.cAdditional.AutoSize = true;
-            this.cAdditional.BackColor = System.Drawing.Color.Transparent;
-            this.cAdditional.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cAdditional.ForeColor = System.Drawing.Color.Black;
-            this.cAdditional.Location = new System.Drawing.Point(169, 71);
-            this.cAdditional.Name = "cAdditional";
-            this.cAdditional.Size = new System.Drawing.Size(98, 17);
-            this.cAdditional.TabIndex = 12;
-            this.cAdditional.Text = "Everything else";
-            this.cAdditional.UseVisualStyleBackColor = false;
-            this.cAdditional.CheckedChanged += new System.EventHandler(this.cAdditional_CheckedChanged);
-            // 
-            // cMoonItems
-            // 
-            this.cMoonItems.AutoSize = true;
-            this.cMoonItems.BackColor = System.Drawing.Color.Transparent;
-            this.cMoonItems.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.cMoonItems.ForeColor = System.Drawing.Color.Black;
-            this.cMoonItems.Location = new System.Drawing.Point(169, 25);
-            this.cMoonItems.Name = "cMoonItems";
-            this.cMoonItems.Size = new System.Drawing.Size(80, 17);
-            this.cMoonItems.TabIndex = 15;
-            this.cMoonItems.Text = "Moon items";
-            this.cMoonItems.UseVisualStyleBackColor = false;
-            this.cMoonItems.CheckedChanged += new System.EventHandler(this.cMoonItems_CheckedChanged);
+            this.lCustomItemAmount.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.lCustomItemAmount.AutoSize = true;
+            this.lCustomItemAmount.Location = new System.Drawing.Point(10, 203);
+            this.lCustomItemAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lCustomItemAmount.Name = "lCustomItemAmount";
+            this.lCustomItemAmount.Size = new System.Drawing.Size(122, 15);
+            this.lCustomItemAmount.TabIndex = 20;
+            this.lCustomItemAmount.Text = "0/0 items randomized";
+            this.lCustomItemAmount.Visible = false;
             // 
             // tabGimmicks
             // 
@@ -803,10 +642,11 @@ namespace MMR.UI.Forms
             this.tabGimmicks.Controls.Add(this.groupBox5);
             this.tabGimmicks.Controls.Add(this.groupBox1);
             this.tabGimmicks.Controls.Add(this.label4);
-            this.tabGimmicks.Location = new System.Drawing.Point(4, 22);
+            this.tabGimmicks.Location = new System.Drawing.Point(4, 24);
+            this.tabGimmicks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabGimmicks.Name = "tabGimmicks";
-            this.tabGimmicks.Padding = new System.Windows.Forms.Padding(3);
-            this.tabGimmicks.Size = new System.Drawing.Size(667, 311);
+            this.tabGimmicks.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabGimmicks.Size = new System.Drawing.Size(780, 361);
             this.tabGimmicks.TabIndex = 3;
             this.tabGimmicks.Text = "Gimmicks";
             this.tabGimmicks.UseVisualStyleBackColor = true;
@@ -820,9 +660,11 @@ namespace MMR.UI.Forms
             this.groupBox12.Controls.Add(this.lBlastMask);
             this.groupBox12.Controls.Add(this.lNutAndStickDrops);
             this.groupBox12.Controls.Add(this.cNutAndStickDrops);
-            this.groupBox12.Location = new System.Drawing.Point(162, 80);
+            this.groupBox12.Location = new System.Drawing.Point(189, 92);
+            this.groupBox12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Size = new System.Drawing.Size(323, 225);
+            this.groupBox12.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox12.Size = new System.Drawing.Size(377, 260);
             this.groupBox12.TabIndex = 34;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Other";
@@ -831,9 +673,10 @@ namespace MMR.UI.Forms
             // 
             this.cFDAnywhere.AutoSize = true;
             this.cFDAnywhere.BackColor = System.Drawing.Color.Transparent;
-            this.cFDAnywhere.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cFDAnywhere.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cFDAnywhere.ForeColor = System.Drawing.Color.Black;
-            this.cFDAnywhere.Location = new System.Drawing.Point(127, 65);
+            this.cFDAnywhere.Location = new System.Drawing.Point(148, 75);
+            this.cFDAnywhere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFDAnywhere.Name = "cFDAnywhere";
             this.cFDAnywhere.Size = new System.Drawing.Size(195, 17);
             this.cFDAnywhere.TabIndex = 23;
@@ -852,9 +695,10 @@ namespace MMR.UI.Forms
             "Short",
             "Long",
             "Very Long"});
-            this.cBlastCooldown.Location = new System.Drawing.Point(6, 30);
+            this.cBlastCooldown.Location = new System.Drawing.Point(7, 35);
+            this.cBlastCooldown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cBlastCooldown.Name = "cBlastCooldown";
-            this.cBlastCooldown.Size = new System.Drawing.Size(106, 21);
+            this.cBlastCooldown.Size = new System.Drawing.Size(123, 23);
             this.cBlastCooldown.TabIndex = 20;
             this.cBlastCooldown.SelectedIndexChanged += new System.EventHandler(this.cBlastCooldown_SelectedIndexChanged);
             // 
@@ -862,9 +706,10 @@ namespace MMR.UI.Forms
             // 
             this.cUnderwaterOcarina.AutoSize = true;
             this.cUnderwaterOcarina.BackColor = System.Drawing.Color.Transparent;
-            this.cUnderwaterOcarina.Location = new System.Drawing.Point(127, 19);
+            this.cUnderwaterOcarina.Location = new System.Drawing.Point(148, 22);
+            this.cUnderwaterOcarina.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cUnderwaterOcarina.Name = "cUnderwaterOcarina";
-            this.cUnderwaterOcarina.Size = new System.Drawing.Size(121, 17);
+            this.cUnderwaterOcarina.Size = new System.Drawing.Size(131, 19);
             this.cUnderwaterOcarina.TabIndex = 22;
             this.cUnderwaterOcarina.Text = "Underwater Ocarina";
             this.cUnderwaterOcarina.UseVisualStyleBackColor = false;
@@ -874,9 +719,10 @@ namespace MMR.UI.Forms
             // 
             this.cSunsSong.AutoSize = true;
             this.cSunsSong.BackColor = System.Drawing.Color.Transparent;
-            this.cSunsSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cSunsSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cSunsSong.ForeColor = System.Drawing.Color.Black;
-            this.cSunsSong.Location = new System.Drawing.Point(127, 42);
+            this.cSunsSong.Location = new System.Drawing.Point(148, 48);
+            this.cSunsSong.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cSunsSong.Name = "cSunsSong";
             this.cSunsSong.Size = new System.Drawing.Size(116, 17);
             this.cSunsSong.TabIndex = 21;
@@ -887,18 +733,20 @@ namespace MMR.UI.Forms
             // lBlastMask
             // 
             this.lBlastMask.AutoSize = true;
-            this.lBlastMask.Location = new System.Drawing.Point(7, 16);
+            this.lBlastMask.Location = new System.Drawing.Point(8, 18);
+            this.lBlastMask.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lBlastMask.Name = "lBlastMask";
-            this.lBlastMask.Size = new System.Drawing.Size(109, 13);
+            this.lBlastMask.Size = new System.Drawing.Size(121, 15);
             this.lBlastMask.TabIndex = 19;
             this.lBlastMask.Text = "Blast Mask Cooldown";
             // 
             // lNutAndStickDrops
             // 
             this.lNutAndStickDrops.AutoSize = true;
-            this.lNutAndStickDrops.Location = new System.Drawing.Point(7, 54);
+            this.lNutAndStickDrops.Location = new System.Drawing.Point(8, 62);
+            this.lNutAndStickDrops.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lNutAndStickDrops.Name = "lNutAndStickDrops";
-            this.lNutAndStickDrops.Size = new System.Drawing.Size(103, 13);
+            this.lNutAndStickDrops.Size = new System.Drawing.Size(112, 15);
             this.lNutAndStickDrops.TabIndex = 25;
             this.lNutAndStickDrops.Text = "Nut and Stick Drops";
             // 
@@ -912,9 +760,10 @@ namespace MMR.UI.Forms
             "Medium",
             "Extra",
             "Mayhem"});
-            this.cNutAndStickDrops.Location = new System.Drawing.Point(6, 68);
+            this.cNutAndStickDrops.Location = new System.Drawing.Point(7, 78);
+            this.cNutAndStickDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNutAndStickDrops.Name = "cNutAndStickDrops";
-            this.cNutAndStickDrops.Size = new System.Drawing.Size(106, 21);
+            this.cNutAndStickDrops.Size = new System.Drawing.Size(123, 23);
             this.cNutAndStickDrops.TabIndex = 26;
             this.cNutAndStickDrops.SelectedIndexChanged += new System.EventHandler(this.cNutAndStickDrops_SelectedIndexChanged);
             // 
@@ -926,9 +775,11 @@ namespace MMR.UI.Forms
             this.groupBox11.Controls.Add(this.cByoAmmo);
             this.groupBox11.Controls.Add(this.cDMult);
             this.groupBox11.Controls.Add(this.lDMult);
-            this.groupBox11.Location = new System.Drawing.Point(491, 163);
+            this.groupBox11.Location = new System.Drawing.Point(573, 188);
+            this.groupBox11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Size = new System.Drawing.Size(170, 142);
+            this.groupBox11.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox11.Size = new System.Drawing.Size(198, 164);
             this.groupBox11.TabIndex = 33;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Challenges";
@@ -944,18 +795,20 @@ namespace MMR.UI.Forms
             "Shock",
             "Knockdown",
             "Random"});
-            this.cDType.Location = new System.Drawing.Point(6, 71);
+            this.cDType.Location = new System.Drawing.Point(7, 82);
+            this.cDType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDType.Name = "cDType";
-            this.cDType.Size = new System.Drawing.Size(158, 21);
+            this.cDType.Size = new System.Drawing.Size(184, 23);
             this.cDType.TabIndex = 0;
             this.cDType.SelectedIndexChanged += new System.EventHandler(this.cDType_SelectedIndexChanged);
             // 
             // lDType
             // 
             this.lDType.AutoSize = true;
-            this.lDType.Location = new System.Drawing.Point(6, 57);
+            this.lDType.Location = new System.Drawing.Point(7, 66);
+            this.lDType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lDType.Name = "lDType";
-            this.lDType.Size = new System.Drawing.Size(82, 13);
+            this.lDType.Size = new System.Drawing.Size(89, 15);
             this.lDType.TabIndex = 1;
             this.lDType.Text = "Damage effects";
             // 
@@ -963,9 +816,10 @@ namespace MMR.UI.Forms
             // 
             this.cDeathMoonCrash.AutoSize = true;
             this.cDeathMoonCrash.BackColor = System.Drawing.Color.Transparent;
-            this.cDeathMoonCrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cDeathMoonCrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cDeathMoonCrash.ForeColor = System.Drawing.Color.Black;
-            this.cDeathMoonCrash.Location = new System.Drawing.Point(6, 98);
+            this.cDeathMoonCrash.Location = new System.Drawing.Point(7, 113);
+            this.cDeathMoonCrash.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDeathMoonCrash.Name = "cDeathMoonCrash";
             this.cDeathMoonCrash.Size = new System.Drawing.Size(125, 17);
             this.cDeathMoonCrash.TabIndex = 25;
@@ -977,9 +831,10 @@ namespace MMR.UI.Forms
             // 
             this.cByoAmmo.AutoSize = true;
             this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
-            this.cByoAmmo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cByoAmmo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
-            this.cByoAmmo.Location = new System.Drawing.Point(6, 121);
+            this.cByoAmmo.Location = new System.Drawing.Point(7, 140);
+            this.cByoAmmo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cByoAmmo.Name = "cByoAmmo";
             this.cByoAmmo.Size = new System.Drawing.Size(80, 17);
             this.cByoAmmo.TabIndex = 24;
@@ -997,18 +852,20 @@ namespace MMR.UI.Forms
             "4x",
             "1-hit KO",
             "Doom"});
-            this.cDMult.Location = new System.Drawing.Point(6, 33);
+            this.cDMult.Location = new System.Drawing.Point(7, 38);
+            this.cDMult.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDMult.Name = "cDMult";
-            this.cDMult.Size = new System.Drawing.Size(158, 21);
+            this.cDMult.Size = new System.Drawing.Size(184, 23);
             this.cDMult.TabIndex = 0;
             this.cDMult.SelectedIndexChanged += new System.EventHandler(this.cDMult_SelectedIndexChanged);
             // 
             // lDMult
             // 
             this.lDMult.AutoSize = true;
-            this.lDMult.Location = new System.Drawing.Point(6, 19);
+            this.lDMult.Location = new System.Drawing.Point(7, 22);
+            this.lDMult.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lDMult.Name = "lDMult";
-            this.lDMult.Size = new System.Drawing.Size(76, 13);
+            this.lDMult.Size = new System.Drawing.Size(85, 15);
             this.lDMult.TabIndex = 1;
             this.lDMult.Text = "Damage mode";
             // 
@@ -1019,9 +876,11 @@ namespace MMR.UI.Forms
             this.groupBox10.Controls.Add(this.lGravity);
             this.groupBox10.Controls.Add(this.cGravity);
             this.groupBox10.Controls.Add(this.cContinuousDekuHopping);
-            this.groupBox10.Location = new System.Drawing.Point(491, 6);
+            this.groupBox10.Location = new System.Drawing.Point(573, 7);
+            this.groupBox10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(170, 151);
+            this.groupBox10.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox10.Size = new System.Drawing.Size(198, 174);
             this.groupBox10.TabIndex = 32;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Movement";
@@ -1036,27 +895,30 @@ namespace MMR.UI.Forms
             "Ice",
             "Snow",
             "Random"});
-            this.cFloors.Location = new System.Drawing.Point(6, 68);
+            this.cFloors.Location = new System.Drawing.Point(7, 78);
+            this.cFloors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFloors.Name = "cFloors";
-            this.cFloors.Size = new System.Drawing.Size(158, 21);
+            this.cFloors.Size = new System.Drawing.Size(184, 23);
             this.cFloors.TabIndex = 0;
             this.cFloors.SelectedIndexChanged += new System.EventHandler(this.cFloors_SelectedIndexChanged);
             // 
             // lFloors
             // 
             this.lFloors.AutoSize = true;
-            this.lFloors.Location = new System.Drawing.Point(6, 54);
+            this.lFloors.Location = new System.Drawing.Point(7, 62);
+            this.lFloors.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lFloors.Name = "lFloors";
-            this.lFloors.Size = new System.Drawing.Size(58, 13);
+            this.lFloors.Size = new System.Drawing.Size(65, 15);
             this.lFloors.TabIndex = 1;
             this.lFloors.Text = "Floor types";
             // 
             // lGravity
             // 
             this.lGravity.AutoSize = true;
-            this.lGravity.Location = new System.Drawing.Point(6, 16);
+            this.lGravity.Location = new System.Drawing.Point(7, 18);
+            this.lGravity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lGravity.Name = "lGravity";
-            this.lGravity.Size = new System.Drawing.Size(82, 13);
+            this.lGravity.Size = new System.Drawing.Size(87, 15);
             this.lGravity.TabIndex = 1;
             this.lGravity.Text = "Gravity / Speed";
             // 
@@ -1070,9 +932,10 @@ namespace MMR.UI.Forms
             "Super low gravity",
             "Low gravity",
             "High gravity"});
-            this.cGravity.Location = new System.Drawing.Point(6, 30);
+            this.cGravity.Location = new System.Drawing.Point(7, 35);
+            this.cGravity.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cGravity.Name = "cGravity";
-            this.cGravity.Size = new System.Drawing.Size(158, 21);
+            this.cGravity.Size = new System.Drawing.Size(184, 23);
             this.cGravity.TabIndex = 0;
             this.cGravity.SelectedIndexChanged += new System.EventHandler(this.cGravity_SelectedIndexChanged);
             // 
@@ -1080,9 +943,10 @@ namespace MMR.UI.Forms
             // 
             this.cContinuousDekuHopping.AutoSize = true;
             this.cContinuousDekuHopping.BackColor = System.Drawing.Color.Transparent;
-            this.cContinuousDekuHopping.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cContinuousDekuHopping.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cContinuousDekuHopping.ForeColor = System.Drawing.Color.Black;
-            this.cContinuousDekuHopping.Location = new System.Drawing.Point(6, 95);
+            this.cContinuousDekuHopping.Location = new System.Drawing.Point(7, 110);
+            this.cContinuousDekuHopping.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cContinuousDekuHopping.Name = "cContinuousDekuHopping";
             this.cContinuousDekuHopping.Size = new System.Drawing.Size(151, 17);
             this.cContinuousDekuHopping.TabIndex = 26;
@@ -1097,9 +961,11 @@ namespace MMR.UI.Forms
             this.groupBox5.Controls.Add(this.cIceTraps);
             this.groupBox5.Controls.Add(this.cIceTrapsAppearance);
             this.groupBox5.Controls.Add(this.cIceTrapQuirks);
-            this.groupBox5.Location = new System.Drawing.Point(6, 6);
+            this.groupBox5.Location = new System.Drawing.Point(7, 7);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(150, 151);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox5.Size = new System.Drawing.Size(175, 174);
             this.groupBox5.TabIndex = 31;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Ice Traps";
@@ -1107,18 +973,20 @@ namespace MMR.UI.Forms
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 54);
+            this.label2.Location = new System.Drawing.Point(7, 62);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.Size = new System.Drawing.Size(70, 15);
             this.label2.TabIndex = 30;
             this.label2.Text = "Appearance";
             // 
             // lIceTraps
             // 
             this.lIceTraps.AutoSize = true;
-            this.lIceTraps.Location = new System.Drawing.Point(6, 16);
+            this.lIceTraps.Location = new System.Drawing.Point(7, 18);
+            this.lIceTraps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lIceTraps.Name = "lIceTraps";
-            this.lIceTraps.Size = new System.Drawing.Size(43, 13);
+            this.lIceTraps.Size = new System.Drawing.Size(51, 15);
             this.lIceTraps.TabIndex = 28;
             this.lIceTraps.Text = "Amount";
             // 
@@ -1132,9 +1000,10 @@ namespace MMR.UI.Forms
             "Extra",
             "Mayhem",
             "Onslaught"});
-            this.cIceTraps.Location = new System.Drawing.Point(6, 30);
+            this.cIceTraps.Location = new System.Drawing.Point(7, 35);
+            this.cIceTraps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cIceTraps.Name = "cIceTraps";
-            this.cIceTraps.Size = new System.Drawing.Size(138, 21);
+            this.cIceTraps.Size = new System.Drawing.Size(160, 23);
             this.cIceTraps.TabIndex = 26;
             this.cIceTraps.SelectedIndexChanged += new System.EventHandler(this.cIceTraps_SelectedIndexChanged);
             // 
@@ -1146,9 +1015,10 @@ namespace MMR.UI.Forms
             "Major Items",
             "Junk Items",
             "Anything"});
-            this.cIceTrapsAppearance.Location = new System.Drawing.Point(6, 68);
+            this.cIceTrapsAppearance.Location = new System.Drawing.Point(7, 78);
+            this.cIceTrapsAppearance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cIceTrapsAppearance.Name = "cIceTrapsAppearance";
-            this.cIceTrapsAppearance.Size = new System.Drawing.Size(138, 21);
+            this.cIceTrapsAppearance.Size = new System.Drawing.Size(160, 23);
             this.cIceTrapsAppearance.TabIndex = 27;
             this.cIceTrapsAppearance.SelectedIndexChanged += new System.EventHandler(this.cIceTrapsAppearance_SelectedIndexChanged);
             // 
@@ -1156,9 +1026,10 @@ namespace MMR.UI.Forms
             // 
             this.cIceTrapQuirks.AutoSize = true;
             this.cIceTrapQuirks.BackColor = System.Drawing.Color.Transparent;
-            this.cIceTrapQuirks.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cIceTrapQuirks.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cIceTrapQuirks.ForeColor = System.Drawing.Color.Black;
-            this.cIceTrapQuirks.Location = new System.Drawing.Point(6, 95);
+            this.cIceTrapQuirks.Location = new System.Drawing.Point(7, 110);
+            this.cIceTrapQuirks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cIceTrapQuirks.Name = "cIceTrapQuirks";
             this.cIceTrapQuirks.Size = new System.Drawing.Size(92, 17);
             this.cIceTrapQuirks.TabIndex = 29;
@@ -1171,9 +1042,11 @@ namespace MMR.UI.Forms
             this.groupBox1.Controls.Add(this.cClockSpeed);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.cHideClock);
-            this.groupBox1.Location = new System.Drawing.Point(3, 163);
+            this.groupBox1.Location = new System.Drawing.Point(4, 188);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(153, 142);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox1.Size = new System.Drawing.Size(178, 164);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Clock";
@@ -1189,18 +1062,20 @@ namespace MMR.UI.Forms
             "2x",
             "3x",
             "6x"});
-            this.cClockSpeed.Location = new System.Drawing.Point(6, 35);
+            this.cClockSpeed.Location = new System.Drawing.Point(7, 40);
+            this.cClockSpeed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cClockSpeed.Name = "cClockSpeed";
-            this.cClockSpeed.Size = new System.Drawing.Size(141, 21);
+            this.cClockSpeed.Size = new System.Drawing.Size(164, 23);
             this.cClockSpeed.TabIndex = 15;
             this.cClockSpeed.SelectedIndexChanged += new System.EventHandler(this.cClockSpeed_SelectedIndexChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(3, 21);
+            this.label6.Location = new System.Drawing.Point(4, 24);
+            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(38, 13);
+            this.label6.Size = new System.Drawing.Size(39, 15);
             this.label6.TabIndex = 16;
             this.label6.Text = "Speed";
             // 
@@ -1208,9 +1083,10 @@ namespace MMR.UI.Forms
             // 
             this.cHideClock.AutoSize = true;
             this.cHideClock.BackColor = System.Drawing.Color.Transparent;
-            this.cHideClock.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cHideClock.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cHideClock.ForeColor = System.Drawing.Color.Black;
-            this.cHideClock.Location = new System.Drawing.Point(6, 62);
+            this.cHideClock.Location = new System.Drawing.Point(7, 72);
+            this.cHideClock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHideClock.Name = "cHideClock";
             this.cHideClock.Size = new System.Drawing.Size(62, 17);
             this.cHideClock.TabIndex = 17;
@@ -1222,9 +1098,10 @@ namespace MMR.UI.Forms
             // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(198, 14);
+            this.label4.Location = new System.Drawing.Point(231, 16);
+            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(237, 52);
             this.label4.TabIndex = 14;
@@ -1238,10 +1115,11 @@ namespace MMR.UI.Forms
             this.tabComfort.Controls.Add(this.gHints);
             this.tabComfort.Controls.Add(this.groupBox8);
             this.tabComfort.Controls.Add(this.groupBox7);
-            this.tabComfort.Location = new System.Drawing.Point(4, 22);
+            this.tabComfort.Location = new System.Drawing.Point(4, 24);
+            this.tabComfort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabComfort.Name = "tabComfort";
-            this.tabComfort.Padding = new System.Windows.Forms.Padding(3);
-            this.tabComfort.Size = new System.Drawing.Size(667, 311);
+            this.tabComfort.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabComfort.Size = new System.Drawing.Size(780, 361);
             this.tabComfort.TabIndex = 1;
             this.tabComfort.Text = "Comfort";
             this.tabComfort.UseVisualStyleBackColor = true;
@@ -1253,9 +1131,11 @@ namespace MMR.UI.Forms
             this.gSpeedUps.Controls.Add(this.cFasterLabFish);
             this.gSpeedUps.Controls.Add(this.cGoodDogRaceRNG);
             this.gSpeedUps.Controls.Add(this.cGoodDampeRNG);
-            this.gSpeedUps.Location = new System.Drawing.Point(6, 6);
+            this.gSpeedUps.Location = new System.Drawing.Point(7, 7);
+            this.gSpeedUps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gSpeedUps.Name = "gSpeedUps";
-            this.gSpeedUps.Size = new System.Drawing.Size(361, 211);
+            this.gSpeedUps.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gSpeedUps.Size = new System.Drawing.Size(421, 243);
             this.gSpeedUps.TabIndex = 37;
             this.gSpeedUps.TabStop = false;
             this.gSpeedUps.Text = "Speed Ups";
@@ -1263,9 +1143,10 @@ namespace MMR.UI.Forms
             // cFasterBank
             // 
             this.cFasterBank.AutoSize = true;
-            this.cFasterBank.Location = new System.Drawing.Point(9, 67);
+            this.cFasterBank.Location = new System.Drawing.Point(10, 77);
+            this.cFasterBank.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFasterBank.Name = "cFasterBank";
-            this.cFasterBank.Size = new System.Drawing.Size(83, 17);
+            this.cFasterBank.Size = new System.Drawing.Size(86, 19);
             this.cFasterBank.TabIndex = 4;
             this.cFasterBank.Text = "Faster Bank";
             this.cFasterBank.UseVisualStyleBackColor = true;
@@ -1274,9 +1155,10 @@ namespace MMR.UI.Forms
             // cSkipBeaver
             // 
             this.cSkipBeaver.AutoSize = true;
-            this.cSkipBeaver.Location = new System.Drawing.Point(9, 21);
+            this.cSkipBeaver.Location = new System.Drawing.Point(10, 24);
+            this.cSkipBeaver.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cSkipBeaver.Name = "cSkipBeaver";
-            this.cSkipBeaver.Size = new System.Drawing.Size(127, 17);
+            this.cSkipBeaver.Size = new System.Drawing.Size(133, 19);
             this.cSkipBeaver.TabIndex = 0;
             this.cSkipBeaver.Text = "Skip Younger Beaver";
             this.cSkipBeaver.UseVisualStyleBackColor = true;
@@ -1285,9 +1167,10 @@ namespace MMR.UI.Forms
             // cFasterLabFish
             // 
             this.cFasterLabFish.AutoSize = true;
-            this.cFasterLabFish.Location = new System.Drawing.Point(9, 44);
+            this.cFasterLabFish.Location = new System.Drawing.Point(10, 51);
+            this.cFasterLabFish.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFasterLabFish.Name = "cFasterLabFish";
-            this.cFasterLabFish.Size = new System.Drawing.Size(98, 17);
+            this.cFasterLabFish.Size = new System.Drawing.Size(103, 19);
             this.cFasterLabFish.TabIndex = 2;
             this.cFasterLabFish.Text = "Faster Lab Fish";
             this.cFasterLabFish.UseVisualStyleBackColor = true;
@@ -1296,9 +1179,10 @@ namespace MMR.UI.Forms
             // cGoodDogRaceRNG
             // 
             this.cGoodDogRaceRNG.AutoSize = true;
-            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(147, 44);
+            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(172, 51);
+            this.cGoodDogRaceRNG.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cGoodDogRaceRNG.Name = "cGoodDogRaceRNG";
-            this.cGoodDogRaceRNG.Size = new System.Drawing.Size(131, 17);
+            this.cGoodDogRaceRNG.Size = new System.Drawing.Size(135, 19);
             this.cGoodDogRaceRNG.TabIndex = 3;
             this.cGoodDogRaceRNG.Text = "Good Dog Race RNG";
             this.cGoodDogRaceRNG.UseVisualStyleBackColor = true;
@@ -1307,9 +1191,10 @@ namespace MMR.UI.Forms
             // cGoodDampeRNG
             // 
             this.cGoodDampeRNG.AutoSize = true;
-            this.cGoodDampeRNG.Location = new System.Drawing.Point(147, 20);
+            this.cGoodDampeRNG.Location = new System.Drawing.Point(172, 23);
+            this.cGoodDampeRNG.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cGoodDampeRNG.Name = "cGoodDampeRNG";
-            this.cGoodDampeRNG.Size = new System.Drawing.Size(116, 17);
+            this.cGoodDampeRNG.Size = new System.Drawing.Size(123, 19);
             this.cGoodDampeRNG.TabIndex = 1;
             this.cGoodDampeRNG.Text = "Good Dampe RNG";
             this.cGoodDampeRNG.UseVisualStyleBackColor = true;
@@ -1321,9 +1206,11 @@ namespace MMR.UI.Forms
             this.gHints.Controls.Add(this.cGossipHints);
             this.gHints.Controls.Add(this.cFreeHints);
             this.gHints.Controls.Add(this.cClearHints);
-            this.gHints.Location = new System.Drawing.Point(6, 223);
+            this.gHints.Location = new System.Drawing.Point(7, 257);
+            this.gHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gHints.Name = "gHints";
-            this.gHints.Size = new System.Drawing.Size(223, 77);
+            this.gHints.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gHints.Size = new System.Drawing.Size(260, 89);
             this.gHints.TabIndex = 36;
             this.gHints.TabStop = false;
             this.gHints.Text = "Gossip Stone Hints";
@@ -1332,9 +1219,10 @@ namespace MMR.UI.Forms
             // 
             this.lGossip.AutoSize = true;
             this.lGossip.BackColor = System.Drawing.Color.Transparent;
-            this.lGossip.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lGossip.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lGossip.ForeColor = System.Drawing.Color.Black;
-            this.lGossip.Location = new System.Drawing.Point(10, 21);
+            this.lGossip.Location = new System.Drawing.Point(12, 24);
+            this.lGossip.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lGossip.Name = "lGossip";
             this.lGossip.Size = new System.Drawing.Size(79, 13);
             this.lGossip.TabIndex = 20;
@@ -1349,9 +1237,10 @@ namespace MMR.UI.Forms
             "Random",
             "Relevant",
             "Competitive"});
-            this.cGossipHints.Location = new System.Drawing.Point(13, 34);
+            this.cGossipHints.Location = new System.Drawing.Point(15, 39);
+            this.cGossipHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cGossipHints.Name = "cGossipHints";
-            this.cGossipHints.Size = new System.Drawing.Size(115, 21);
+            this.cGossipHints.Size = new System.Drawing.Size(134, 23);
             this.cGossipHints.TabIndex = 19;
             this.cGossipHints.SelectedIndexChanged += new System.EventHandler(this.cGossipHints_SelectedIndexChanged);
             // 
@@ -1359,9 +1248,10 @@ namespace MMR.UI.Forms
             // 
             this.cFreeHints.AutoSize = true;
             this.cFreeHints.BackColor = System.Drawing.Color.Transparent;
-            this.cFreeHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cFreeHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cFreeHints.ForeColor = System.Drawing.Color.Black;
-            this.cFreeHints.Location = new System.Drawing.Point(136, 17);
+            this.cFreeHints.Location = new System.Drawing.Point(159, 20);
+            this.cFreeHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFreeHints.Name = "cFreeHints";
             this.cFreeHints.Size = new System.Drawing.Size(72, 17);
             this.cFreeHints.TabIndex = 15;
@@ -1373,9 +1263,10 @@ namespace MMR.UI.Forms
             // 
             this.cClearHints.AutoSize = true;
             this.cClearHints.BackColor = System.Drawing.Color.Transparent;
-            this.cClearHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cClearHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cClearHints.ForeColor = System.Drawing.Color.Black;
-            this.cClearHints.Location = new System.Drawing.Point(136, 40);
+            this.cClearHints.Location = new System.Drawing.Point(159, 46);
+            this.cClearHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cClearHints.Name = "cClearHints";
             this.cClearHints.Size = new System.Drawing.Size(75, 17);
             this.cClearHints.TabIndex = 16;
@@ -1387,9 +1278,11 @@ namespace MMR.UI.Forms
             // 
             this.groupBox8.Controls.Add(this.lLink);
             this.groupBox8.Controls.Add(this.cLink);
-            this.groupBox8.Location = new System.Drawing.Point(235, 223);
+            this.groupBox8.Location = new System.Drawing.Point(274, 257);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(424, 77);
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox8.Size = new System.Drawing.Size(495, 89);
             this.groupBox8.TabIndex = 35;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Cosmetic Customization";
@@ -1398,9 +1291,10 @@ namespace MMR.UI.Forms
             // 
             this.lLink.AutoSize = true;
             this.lLink.BackColor = System.Drawing.Color.Transparent;
-            this.lLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lLink.ForeColor = System.Drawing.Color.Black;
-            this.lLink.Location = new System.Drawing.Point(3, 23);
+            this.lLink.Location = new System.Drawing.Point(4, 27);
+            this.lLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lLink.Name = "lLink";
             this.lLink.Size = new System.Drawing.Size(67, 13);
             this.lLink.TabIndex = 9;
@@ -1415,9 +1309,10 @@ namespace MMR.UI.Forms
             "Link (OoT)",
             "Adult Link (Risky!)",
             "Kafei"});
-            this.cLink.Location = new System.Drawing.Point(6, 36);
+            this.cLink.Location = new System.Drawing.Point(7, 42);
+            this.cLink.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cLink.Name = "cLink";
-            this.cLink.Size = new System.Drawing.Size(111, 21);
+            this.cLink.Size = new System.Drawing.Size(129, 23);
             this.cLink.TabIndex = 10;
             this.cLink.SelectedIndexChanged += new System.EventHandler(this.cLink_SelectedIndexChanged);
             // 
@@ -1435,9 +1330,11 @@ namespace MMR.UI.Forms
             this.groupBox7.Controls.Add(this.cDisableCritWiggle);
             this.groupBox7.Controls.Add(this.cQuestItemStorage);
             this.groupBox7.Controls.Add(this.cNoDowngrades);
-            this.groupBox7.Location = new System.Drawing.Point(373, 6);
+            this.groupBox7.Location = new System.Drawing.Point(435, 7);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(286, 211);
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox7.Size = new System.Drawing.Size(334, 243);
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
@@ -1445,9 +1342,10 @@ namespace MMR.UI.Forms
             // cElegySpeedups
             // 
             this.cElegySpeedups.AutoSize = true;
-            this.cElegySpeedups.Location = new System.Drawing.Point(147, 183);
+            this.cElegySpeedups.Location = new System.Drawing.Point(172, 211);
+            this.cElegySpeedups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cElegySpeedups.Name = "cElegySpeedups";
-            this.cElegySpeedups.Size = new System.Drawing.Size(101, 17);
+            this.cElegySpeedups.Size = new System.Drawing.Size(107, 19);
             this.cElegySpeedups.TabIndex = 37;
             this.cElegySpeedups.Text = "Elegy speedups";
             this.cElegySpeedups.UseVisualStyleBackColor = true;
@@ -1456,9 +1354,10 @@ namespace MMR.UI.Forms
             // cCloseCows
             // 
             this.cCloseCows.AutoSize = true;
-            this.cCloseCows.Location = new System.Drawing.Point(9, 91);
+            this.cCloseCows.Location = new System.Drawing.Point(10, 105);
+            this.cCloseCows.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cCloseCows.Name = "cCloseCows";
-            this.cCloseCows.Size = new System.Drawing.Size(81, 17);
+            this.cCloseCows.Size = new System.Drawing.Size(87, 19);
             this.cCloseCows.TabIndex = 36;
             this.cCloseCows.Text = "Close Cows";
             this.cCloseCows.UseVisualStyleBackColor = true;
@@ -1467,9 +1366,10 @@ namespace MMR.UI.Forms
             // cArrowCycling
             // 
             this.cArrowCycling.AutoSize = true;
-            this.cArrowCycling.Location = new System.Drawing.Point(147, 160);
+            this.cArrowCycling.Location = new System.Drawing.Point(172, 185);
+            this.cArrowCycling.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cArrowCycling.Name = "cArrowCycling";
-            this.cArrowCycling.Size = new System.Drawing.Size(89, 17);
+            this.cArrowCycling.Size = new System.Drawing.Size(99, 19);
             this.cArrowCycling.TabIndex = 35;
             this.cArrowCycling.Text = "Arrow cycling";
             this.cArrowCycling.UseVisualStyleBackColor = true;
@@ -1478,9 +1378,10 @@ namespace MMR.UI.Forms
             // cFreestanding
             // 
             this.cFreestanding.AutoSize = true;
-            this.cFreestanding.Location = new System.Drawing.Point(147, 68);
+            this.cFreestanding.Location = new System.Drawing.Point(172, 78);
+            this.cFreestanding.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFreestanding.Name = "cFreestanding";
-            this.cFreestanding.Size = new System.Drawing.Size(125, 17);
+            this.cFreestanding.Size = new System.Drawing.Size(139, 19);
             this.cFreestanding.TabIndex = 34;
             this.cFreestanding.Text = "Update world models";
             this.cFreestanding.UseVisualStyleBackColor = true;
@@ -1489,9 +1390,10 @@ namespace MMR.UI.Forms
             // cFastPush
             // 
             this.cFastPush.AutoSize = true;
-            this.cFastPush.Location = new System.Drawing.Point(9, 68);
+            this.cFastPush.Location = new System.Drawing.Point(10, 78);
+            this.cFastPush.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFastPush.Name = "cFastPush";
-            this.cFastPush.Size = new System.Drawing.Size(125, 17);
+            this.cFastPush.Size = new System.Drawing.Size(132, 19);
             this.cFastPush.TabIndex = 31;
             this.cFastPush.Text = "Increase push speed";
             this.cFastPush.UseVisualStyleBackColor = true;
@@ -1501,9 +1403,10 @@ namespace MMR.UI.Forms
             // 
             this.cQText.AutoSize = true;
             this.cQText.BackColor = System.Drawing.Color.Transparent;
-            this.cQText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cQText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cQText.ForeColor = System.Drawing.Color.Black;
-            this.cQText.Location = new System.Drawing.Point(9, 45);
+            this.cQText.Location = new System.Drawing.Point(10, 52);
+            this.cQText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cQText.Name = "cQText";
             this.cQText.Size = new System.Drawing.Size(74, 17);
             this.cQText.TabIndex = 6;
@@ -1515,9 +1418,10 @@ namespace MMR.UI.Forms
             // 
             this.cShopAppearance.AutoSize = true;
             this.cShopAppearance.BackColor = System.Drawing.Color.Transparent;
-            this.cShopAppearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cShopAppearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cShopAppearance.ForeColor = System.Drawing.Color.Black;
-            this.cShopAppearance.Location = new System.Drawing.Point(147, 22);
+            this.cShopAppearance.Location = new System.Drawing.Point(172, 25);
+            this.cShopAppearance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cShopAppearance.Name = "cShopAppearance";
             this.cShopAppearance.Size = new System.Drawing.Size(92, 17);
             this.cShopAppearance.TabIndex = 21;
@@ -1529,9 +1433,10 @@ namespace MMR.UI.Forms
             // 
             this.cEponaSword.AutoSize = true;
             this.cEponaSword.BackColor = System.Drawing.Color.Transparent;
-            this.cEponaSword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cEponaSword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cEponaSword.ForeColor = System.Drawing.Color.Black;
-            this.cEponaSword.Location = new System.Drawing.Point(147, 114);
+            this.cEponaSword.Location = new System.Drawing.Point(172, 132);
+            this.cEponaSword.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cEponaSword.Name = "cEponaSword";
             this.cEponaSword.Size = new System.Drawing.Size(104, 17);
             this.cEponaSword.TabIndex = 22;
@@ -1543,9 +1448,10 @@ namespace MMR.UI.Forms
             // 
             this.cUpdateChests.AutoSize = true;
             this.cUpdateChests.BackColor = System.Drawing.Color.Transparent;
-            this.cUpdateChests.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cUpdateChests.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cUpdateChests.ForeColor = System.Drawing.Color.Black;
-            this.cUpdateChests.Location = new System.Drawing.Point(147, 45);
+            this.cUpdateChests.Location = new System.Drawing.Point(172, 52);
+            this.cUpdateChests.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cUpdateChests.Name = "cUpdateChests";
             this.cUpdateChests.Size = new System.Drawing.Size(95, 17);
             this.cUpdateChests.TabIndex = 23;
@@ -1557,9 +1463,10 @@ namespace MMR.UI.Forms
             // 
             this.cDisableCritWiggle.AutoSize = true;
             this.cDisableCritWiggle.BackColor = System.Drawing.Color.Transparent;
-            this.cDisableCritWiggle.Location = new System.Drawing.Point(9, 22);
+            this.cDisableCritWiggle.Location = new System.Drawing.Point(10, 25);
+            this.cDisableCritWiggle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDisableCritWiggle.Name = "cDisableCritWiggle";
-            this.cDisableCritWiggle.Size = new System.Drawing.Size(111, 17);
+            this.cDisableCritWiggle.Size = new System.Drawing.Size(122, 19);
             this.cDisableCritWiggle.TabIndex = 29;
             this.cDisableCritWiggle.Text = "Disable crit wiggle";
             this.cDisableCritWiggle.UseVisualStyleBackColor = false;
@@ -1569,9 +1476,10 @@ namespace MMR.UI.Forms
             // 
             this.cQuestItemStorage.AutoSize = true;
             this.cQuestItemStorage.BackColor = System.Drawing.Color.Transparent;
-            this.cQuestItemStorage.Location = new System.Drawing.Point(147, 137);
+            this.cQuestItemStorage.Location = new System.Drawing.Point(172, 158);
+            this.cQuestItemStorage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cQuestItemStorage.Name = "cQuestItemStorage";
-            this.cQuestItemStorage.Size = new System.Drawing.Size(140, 17);
+            this.cQuestItemStorage.Size = new System.Drawing.Size(155, 19);
             this.cQuestItemStorage.TabIndex = 30;
             this.cQuestItemStorage.Text = "Quest item extra storage";
             this.cQuestItemStorage.UseVisualStyleBackColor = false;
@@ -1581,9 +1489,10 @@ namespace MMR.UI.Forms
             // 
             this.cNoDowngrades.AutoSize = true;
             this.cNoDowngrades.BackColor = System.Drawing.Color.Transparent;
-            this.cNoDowngrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cNoDowngrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cNoDowngrades.ForeColor = System.Drawing.Color.Black;
-            this.cNoDowngrades.Location = new System.Drawing.Point(147, 91);
+            this.cNoDowngrades.Location = new System.Drawing.Point(172, 105);
+            this.cNoDowngrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNoDowngrades.Name = "cNoDowngrades";
             this.cNoDowngrades.Size = new System.Drawing.Size(101, 17);
             this.cNoDowngrades.TabIndex = 18;
@@ -1594,19 +1503,21 @@ namespace MMR.UI.Forms
             // tabShortenCutscenes
             // 
             this.tabShortenCutscenes.Controls.Add(this.tShortenCutscenes);
-            this.tabShortenCutscenes.Location = new System.Drawing.Point(4, 22);
+            this.tabShortenCutscenes.Location = new System.Drawing.Point(4, 24);
+            this.tabShortenCutscenes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabShortenCutscenes.Name = "tabShortenCutscenes";
-            this.tabShortenCutscenes.Size = new System.Drawing.Size(667, 311);
+            this.tabShortenCutscenes.Size = new System.Drawing.Size(780, 361);
             this.tabShortenCutscenes.TabIndex = 5;
             this.tabShortenCutscenes.Text = "Shorten Cutscenes";
             this.tabShortenCutscenes.UseVisualStyleBackColor = true;
             // 
             // tShortenCutscenes
             // 
-            this.tShortenCutscenes.Location = new System.Drawing.Point(7, 4);
+            this.tShortenCutscenes.Location = new System.Drawing.Point(8, 5);
+            this.tShortenCutscenes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tShortenCutscenes.Name = "tShortenCutscenes";
             this.tShortenCutscenes.SelectedIndex = 0;
-            this.tShortenCutscenes.Size = new System.Drawing.Size(650, 279);
+            this.tShortenCutscenes.Size = new System.Drawing.Size(758, 322);
             this.tShortenCutscenes.TabIndex = 0;
             // 
             // tabCosmetics
@@ -1615,9 +1526,10 @@ namespace MMR.UI.Forms
             this.tabCosmetics.Controls.Add(this.gCosmeticMusicSound);
             this.tabCosmetics.Controls.Add(this.cHUDGroupBox);
             this.tabCosmetics.Controls.Add(this.tFormCosmetics);
-            this.tabCosmetics.Location = new System.Drawing.Point(4, 22);
+            this.tabCosmetics.Location = new System.Drawing.Point(4, 24);
+            this.tabCosmetics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tabCosmetics.Name = "tabCosmetics";
-            this.tabCosmetics.Size = new System.Drawing.Size(667, 311);
+            this.tabCosmetics.Size = new System.Drawing.Size(780, 361);
             this.tabCosmetics.TabIndex = 4;
             this.tabCosmetics.Text = "Cosmetics";
             this.tabCosmetics.UseVisualStyleBackColor = true;
@@ -1627,9 +1539,11 @@ namespace MMR.UI.Forms
             this.gCosmeticOther.Controls.Add(this.cTatl);
             this.gCosmeticOther.Controls.Add(this.lTatl);
             this.gCosmeticOther.Controls.Add(this.cTargettingStyle);
-            this.gCosmeticOther.Location = new System.Drawing.Point(256, 3);
+            this.gCosmeticOther.Location = new System.Drawing.Point(299, 3);
+            this.gCosmeticOther.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gCosmeticOther.Name = "gCosmeticOther";
-            this.gCosmeticOther.Size = new System.Drawing.Size(401, 129);
+            this.gCosmeticOther.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gCosmeticOther.Size = new System.Drawing.Size(468, 149);
             this.gCosmeticOther.TabIndex = 47;
             this.gCosmeticOther.TabStop = false;
             this.gCosmeticOther.Text = "Other";
@@ -1645,9 +1559,10 @@ namespace MMR.UI.Forms
             "Cool",
             "Random",
             "Rainbow (cycle)"});
-            this.cTatl.Location = new System.Drawing.Point(9, 29);
+            this.cTatl.Location = new System.Drawing.Point(10, 33);
+            this.cTatl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTatl.Name = "cTatl";
-            this.cTatl.Size = new System.Drawing.Size(129, 21);
+            this.cTatl.Size = new System.Drawing.Size(150, 23);
             this.cTatl.TabIndex = 41;
             this.cTatl.SelectedIndexChanged += new System.EventHandler(this.cTatl_SelectedIndexChanged);
             // 
@@ -1655,9 +1570,10 @@ namespace MMR.UI.Forms
             // 
             this.lTatl.AutoSize = true;
             this.lTatl.BackColor = System.Drawing.Color.Transparent;
-            this.lTatl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lTatl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lTatl.ForeColor = System.Drawing.Color.Black;
-            this.lTatl.Location = new System.Drawing.Point(6, 16);
+            this.lTatl.Location = new System.Drawing.Point(7, 18);
+            this.lTatl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lTatl.Name = "lTatl";
             this.lTatl.Size = new System.Drawing.Size(57, 13);
             this.lTatl.TabIndex = 40;
@@ -1667,9 +1583,10 @@ namespace MMR.UI.Forms
             // 
             this.cTargettingStyle.AutoSize = true;
             this.cTargettingStyle.BackColor = System.Drawing.Color.Transparent;
-            this.cTargettingStyle.Location = new System.Drawing.Point(9, 56);
+            this.cTargettingStyle.Location = new System.Drawing.Point(10, 65);
+            this.cTargettingStyle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTargettingStyle.Name = "cTargettingStyle";
-            this.cTargettingStyle.Size = new System.Drawing.Size(129, 17);
+            this.cTargettingStyle.Size = new System.Drawing.Size(140, 19);
             this.cTargettingStyle.TabIndex = 37;
             this.cTargettingStyle.Text = "Default Hold Z-Target";
             this.cTargettingStyle.UseVisualStyleBackColor = false;
@@ -1684,9 +1601,11 @@ namespace MMR.UI.Forms
             this.gCosmeticMusicSound.Controls.Add(this.cEnableNightMusic);
             this.gCosmeticMusicSound.Controls.Add(this.cLowHealthSFXComboBox);
             this.gCosmeticMusicSound.Controls.Add(this.lLowHealthSFXComboBox);
-            this.gCosmeticMusicSound.Location = new System.Drawing.Point(7, 138);
+            this.gCosmeticMusicSound.Location = new System.Drawing.Point(8, 159);
+            this.gCosmeticMusicSound.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gCosmeticMusicSound.Name = "gCosmeticMusicSound";
-            this.gCosmeticMusicSound.Size = new System.Drawing.Size(243, 169);
+            this.gCosmeticMusicSound.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gCosmeticMusicSound.Size = new System.Drawing.Size(284, 195);
             this.gCosmeticMusicSound.TabIndex = 46;
             this.gCosmeticMusicSound.TabStop = false;
             this.gCosmeticMusicSound.Text = "Music / Sound";
@@ -1695,9 +1614,10 @@ namespace MMR.UI.Forms
             // 
             this.lMusic.AutoSize = true;
             this.lMusic.BackColor = System.Drawing.Color.Transparent;
-            this.lMusic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lMusic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lMusic.ForeColor = System.Drawing.Color.Black;
-            this.lMusic.Location = new System.Drawing.Point(3, 86);
+            this.lMusic.Location = new System.Drawing.Point(4, 99);
+            this.lMusic.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lMusic.Name = "lMusic";
             this.lMusic.Size = new System.Drawing.Size(35, 13);
             this.lMusic.TabIndex = 43;
@@ -1711,9 +1631,10 @@ namespace MMR.UI.Forms
             "Default",
             "Random",
             "None"});
-            this.cMusic.Location = new System.Drawing.Point(6, 99);
+            this.cMusic.Location = new System.Drawing.Point(7, 114);
+            this.cMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cMusic.Name = "cMusic";
-            this.cMusic.Size = new System.Drawing.Size(134, 21);
+            this.cMusic.Size = new System.Drawing.Size(156, 23);
             this.cMusic.TabIndex = 42;
             this.cMusic.SelectedIndexChanged += new System.EventHandler(this.cMusic_SelectedIndexChanged);
             // 
@@ -1721,9 +1642,10 @@ namespace MMR.UI.Forms
             // 
             this.cSFX.AutoSize = true;
             this.cSFX.BackColor = System.Drawing.Color.Transparent;
-            this.cSFX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cSFX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cSFX.ForeColor = System.Drawing.Color.Black;
-            this.cSFX.Location = new System.Drawing.Point(6, 20);
+            this.cSFX.Location = new System.Drawing.Point(7, 23);
+            this.cSFX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cSFX.Name = "cSFX";
             this.cSFX.Size = new System.Drawing.Size(102, 17);
             this.cSFX.TabIndex = 36;
@@ -1734,9 +1656,10 @@ namespace MMR.UI.Forms
             // cCombatMusicDisable
             // 
             this.cCombatMusicDisable.AutoSize = true;
-            this.cCombatMusicDisable.Location = new System.Drawing.Point(6, 66);
+            this.cCombatMusicDisable.Location = new System.Drawing.Point(7, 76);
+            this.cCombatMusicDisable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cCombatMusicDisable.Name = "cCombatMusicDisable";
-            this.cCombatMusicDisable.Size = new System.Drawing.Size(131, 17);
+            this.cCombatMusicDisable.Size = new System.Drawing.Size(145, 19);
             this.cCombatMusicDisable.TabIndex = 45;
             this.cCombatMusicDisable.Text = "Disable Combat Music";
             this.cCombatMusicDisable.UseVisualStyleBackColor = true;
@@ -1745,9 +1668,10 @@ namespace MMR.UI.Forms
             // cEnableNightMusic
             // 
             this.cEnableNightMusic.AutoSize = true;
-            this.cEnableNightMusic.Location = new System.Drawing.Point(6, 43);
+            this.cEnableNightMusic.Location = new System.Drawing.Point(7, 50);
+            this.cEnableNightMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cEnableNightMusic.Name = "cEnableNightMusic";
-            this.cEnableNightMusic.Size = new System.Drawing.Size(114, 17);
+            this.cEnableNightMusic.Size = new System.Drawing.Size(123, 19);
             this.cEnableNightMusic.TabIndex = 38;
             this.cEnableNightMusic.Text = "Enable Night BGM";
             this.cEnableNightMusic.UseVisualStyleBackColor = true;
@@ -1757,18 +1681,20 @@ namespace MMR.UI.Forms
             // 
             this.cLowHealthSFXComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cLowHealthSFXComboBox.FormattingEnabled = true;
-            this.cLowHealthSFXComboBox.Location = new System.Drawing.Point(6, 141);
+            this.cLowHealthSFXComboBox.Location = new System.Drawing.Point(7, 163);
+            this.cLowHealthSFXComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cLowHealthSFXComboBox.Name = "cLowHealthSFXComboBox";
-            this.cLowHealthSFXComboBox.Size = new System.Drawing.Size(121, 21);
+            this.cLowHealthSFXComboBox.Size = new System.Drawing.Size(140, 23);
             this.cLowHealthSFXComboBox.TabIndex = 25;
             this.cLowHealthSFXComboBox.SelectedIndexChanged += new System.EventHandler(this.cLowHealthSFXComboBox_SelectedIndexChanged);
             // 
             // lLowHealthSFXComboBox
             // 
             this.lLowHealthSFXComboBox.AutoSize = true;
-            this.lLowHealthSFXComboBox.Location = new System.Drawing.Point(3, 123);
+            this.lLowHealthSFXComboBox.Location = new System.Drawing.Point(4, 142);
+            this.lLowHealthSFXComboBox.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lLowHealthSFXComboBox.Name = "lLowHealthSFXComboBox";
-            this.lLowHealthSFXComboBox.Size = new System.Drawing.Size(84, 13);
+            this.lLowHealthSFXComboBox.Size = new System.Drawing.Size(89, 15);
             this.lLowHealthSFXComboBox.TabIndex = 25;
             this.lLowHealthSFXComboBox.Text = "Low Health SFX";
             // 
@@ -1776,9 +1702,11 @@ namespace MMR.UI.Forms
             // 
             this.cHUDGroupBox.Controls.Add(this.cHueShiftMiscUI);
             this.cHUDGroupBox.Controls.Add(this.cHUDTableLayoutPanel);
-            this.cHUDGroupBox.Location = new System.Drawing.Point(256, 138);
+            this.cHUDGroupBox.Location = new System.Drawing.Point(299, 159);
+            this.cHUDGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHUDGroupBox.Name = "cHUDGroupBox";
-            this.cHUDGroupBox.Size = new System.Drawing.Size(401, 169);
+            this.cHUDGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHUDGroupBox.Size = new System.Drawing.Size(468, 195);
             this.cHUDGroupBox.TabIndex = 44;
             this.cHUDGroupBox.TabStop = false;
             this.cHUDGroupBox.Text = "HUD";
@@ -1786,9 +1714,10 @@ namespace MMR.UI.Forms
             // cHueShiftMiscUI
             // 
             this.cHueShiftMiscUI.AutoSize = true;
-            this.cHueShiftMiscUI.Location = new System.Drawing.Point(9, 79);
+            this.cHueShiftMiscUI.Location = new System.Drawing.Point(10, 91);
+            this.cHueShiftMiscUI.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHueShiftMiscUI.Name = "cHueShiftMiscUI";
-            this.cHueShiftMiscUI.Size = new System.Drawing.Size(198, 17);
+            this.cHueShiftMiscUI.Size = new System.Drawing.Size(216, 19);
             this.cHueShiftMiscUI.TabIndex = 1;
             this.cHueShiftMiscUI.Text = "Randomize Hue of Miscellaneous UI";
             this.cHueShiftMiscUI.UseVisualStyleBackColor = true;
@@ -1797,20 +1726,21 @@ namespace MMR.UI.Forms
             // cHUDTableLayoutPanel
             // 
             this.cHUDTableLayoutPanel.ColumnCount = 3;
-            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 50F));
+            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58F));
             this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 78F));
+            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
             this.cHUDTableLayoutPanel.Controls.Add(this.cHUDHeartsComboBox, 1, 0);
             this.cHUDTableLayoutPanel.Controls.Add(this.cHeartsLabel, 0, 0);
             this.cHUDTableLayoutPanel.Controls.Add(this.cMagicLabel, 0, 1);
             this.cHUDTableLayoutPanel.Controls.Add(this.cHUDMagicComboBox, 1, 1);
             this.cHUDTableLayoutPanel.Controls.Add(this.btn_hud, 2, 0);
-            this.cHUDTableLayoutPanel.Location = new System.Drawing.Point(2, 16);
+            this.cHUDTableLayoutPanel.Location = new System.Drawing.Point(2, 18);
+            this.cHUDTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHUDTableLayoutPanel.Name = "cHUDTableLayoutPanel";
             this.cHUDTableLayoutPanel.RowCount = 2;
             this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.cHUDTableLayoutPanel.Size = new System.Drawing.Size(393, 57);
+            this.cHUDTableLayoutPanel.Size = new System.Drawing.Size(458, 66);
             this.cHUDTableLayoutPanel.TabIndex = 0;
             // 
             // cHUDHeartsComboBox
@@ -1818,9 +1748,10 @@ namespace MMR.UI.Forms
             this.cHUDHeartsComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cHUDHeartsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cHUDHeartsComboBox.FormattingEnabled = true;
-            this.cHUDHeartsComboBox.Location = new System.Drawing.Point(53, 3);
+            this.cHUDHeartsComboBox.Location = new System.Drawing.Point(62, 3);
+            this.cHUDHeartsComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHUDHeartsComboBox.Name = "cHUDHeartsComboBox";
-            this.cHUDHeartsComboBox.Size = new System.Drawing.Size(259, 21);
+            this.cHUDHeartsComboBox.Size = new System.Drawing.Size(301, 23);
             this.cHUDHeartsComboBox.TabIndex = 32;
             this.cHUDHeartsComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDHeartsComboBox_SelectedIndexChanged);
             // 
@@ -1828,9 +1759,10 @@ namespace MMR.UI.Forms
             // 
             this.cHeartsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cHeartsLabel.AutoSize = true;
-            this.cHeartsLabel.Location = new System.Drawing.Point(3, 7);
+            this.cHeartsLabel.Location = new System.Drawing.Point(4, 9);
+            this.cHeartsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.cHeartsLabel.Name = "cHeartsLabel";
-            this.cHeartsLabel.Size = new System.Drawing.Size(41, 13);
+            this.cHeartsLabel.Size = new System.Drawing.Size(44, 15);
             this.cHeartsLabel.TabIndex = 33;
             this.cHeartsLabel.Text = "Hearts:";
             // 
@@ -1838,9 +1770,10 @@ namespace MMR.UI.Forms
             // 
             this.cMagicLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cMagicLabel.AutoSize = true;
-            this.cMagicLabel.Location = new System.Drawing.Point(3, 36);
+            this.cMagicLabel.Location = new System.Drawing.Point(4, 42);
+            this.cMagicLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.cMagicLabel.Name = "cMagicLabel";
-            this.cMagicLabel.Size = new System.Drawing.Size(39, 13);
+            this.cMagicLabel.Size = new System.Drawing.Size(43, 15);
             this.cMagicLabel.TabIndex = 34;
             this.cMagicLabel.Text = "Magic:";
             // 
@@ -1849,9 +1782,10 @@ namespace MMR.UI.Forms
             this.cHUDMagicComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cHUDMagicComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cHUDMagicComboBox.FormattingEnabled = true;
-            this.cHUDMagicComboBox.Location = new System.Drawing.Point(53, 31);
+            this.cHUDMagicComboBox.Location = new System.Drawing.Point(62, 36);
+            this.cHUDMagicComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHUDMagicComboBox.Name = "cHUDMagicComboBox";
-            this.cHUDMagicComboBox.Size = new System.Drawing.Size(259, 21);
+            this.cHUDMagicComboBox.Size = new System.Drawing.Size(301, 23);
             this.cHUDMagicComboBox.TabIndex = 35;
             this.cHUDMagicComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDMagicComboBox_SelectedIndexChanged);
             // 
@@ -1859,10 +1793,11 @@ namespace MMR.UI.Forms
             // 
             this.btn_hud.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btn_hud.AutoSize = true;
-            this.btn_hud.Location = new System.Drawing.Point(321, 10);
+            this.btn_hud.Location = new System.Drawing.Point(371, 11);
+            this.btn_hud.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn_hud.Name = "btn_hud";
             this.cHUDTableLayoutPanel.SetRowSpan(this.btn_hud, 2);
-            this.btn_hud.Size = new System.Drawing.Size(65, 37);
+            this.btn_hud.Size = new System.Drawing.Size(83, 43);
             this.btn_hud.TabIndex = 31;
             this.btn_hud.Text = "Customize";
             this.btn_hud.UseVisualStyleBackColor = true;
@@ -1870,10 +1805,11 @@ namespace MMR.UI.Forms
             // 
             // tFormCosmetics
             // 
-            this.tFormCosmetics.Location = new System.Drawing.Point(6, 3);
+            this.tFormCosmetics.Location = new System.Drawing.Point(7, 3);
+            this.tFormCosmetics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tFormCosmetics.Name = "tFormCosmetics";
             this.tFormCosmetics.SelectedIndex = 0;
-            this.tFormCosmetics.Size = new System.Drawing.Size(244, 129);
+            this.tFormCosmetics.Size = new System.Drawing.Size(285, 149);
             this.tFormCosmetics.TabIndex = 39;
             // 
             // cDrawHash
@@ -1881,9 +1817,10 @@ namespace MMR.UI.Forms
             this.cDrawHash.AutoSize = true;
             this.cDrawHash.BackColor = System.Drawing.Color.Transparent;
             this.cDrawHash.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cDrawHash.Location = new System.Drawing.Point(113, 64);
+            this.cDrawHash.Location = new System.Drawing.Point(132, 74);
+            this.cDrawHash.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDrawHash.Name = "cDrawHash";
-            this.cDrawHash.Size = new System.Drawing.Size(104, 17);
+            this.cDrawHash.Size = new System.Drawing.Size(111, 19);
             this.cDrawHash.TabIndex = 28;
             this.cDrawHash.Text = "Hash Icons .png";
             this.cDrawHash.UseVisualStyleBackColor = false;
@@ -1897,9 +1834,11 @@ namespace MMR.UI.Forms
             this.gGameOutput.Controls.Add(this.cSpoiler);
             this.gGameOutput.Controls.Add(this.cN64);
             this.gGameOutput.Controls.Add(this.cVC);
-            this.gGameOutput.Location = new System.Drawing.Point(13, 406);
+            this.gGameOutput.Location = new System.Drawing.Point(15, 468);
+            this.gGameOutput.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gGameOutput.Name = "gGameOutput";
-            this.gGameOutput.Size = new System.Drawing.Size(226, 89);
+            this.gGameOutput.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGameOutput.Size = new System.Drawing.Size(264, 103);
             this.gGameOutput.TabIndex = 16;
             this.gGameOutput.TabStop = false;
             this.gGameOutput.Text = "Outputs";
@@ -1908,9 +1847,10 @@ namespace MMR.UI.Forms
             // 
             this.cHTMLLog.AutoSize = true;
             this.cHTMLLog.BackColor = System.Drawing.Color.Transparent;
-            this.cHTMLLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cHTMLLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cHTMLLog.ForeColor = System.Drawing.Color.Black;
-            this.cHTMLLog.Location = new System.Drawing.Point(113, 42);
+            this.cHTMLLog.Location = new System.Drawing.Point(132, 48);
+            this.cHTMLLog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHTMLLog.Name = "cHTMLLog";
             this.cHTMLLog.Size = new System.Drawing.Size(111, 17);
             this.cHTMLLog.TabIndex = 14;
@@ -1922,9 +1862,10 @@ namespace MMR.UI.Forms
             // 
             this.cPatch.AutoSize = true;
             this.cPatch.BackColor = System.Drawing.Color.Transparent;
-            this.cPatch.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cPatch.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cPatch.ForeColor = System.Drawing.Color.Black;
-            this.cPatch.Location = new System.Drawing.Point(16, 64);
+            this.cPatch.Location = new System.Drawing.Point(19, 74);
+            this.cPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cPatch.Name = "cPatch";
             this.cPatch.Size = new System.Drawing.Size(79, 17);
             this.cPatch.TabIndex = 15;
@@ -1936,9 +1877,10 @@ namespace MMR.UI.Forms
             // 
             this.cSpoiler.AutoSize = true;
             this.cSpoiler.BackColor = System.Drawing.Color.Transparent;
-            this.cSpoiler.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cSpoiler.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cSpoiler.ForeColor = System.Drawing.Color.Black;
-            this.cSpoiler.Location = new System.Drawing.Point(113, 19);
+            this.cSpoiler.Location = new System.Drawing.Point(132, 22);
+            this.cSpoiler.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cSpoiler.Name = "cSpoiler";
             this.cSpoiler.Size = new System.Drawing.Size(92, 17);
             this.cSpoiler.TabIndex = 8;
@@ -1952,9 +1894,10 @@ namespace MMR.UI.Forms
             this.cN64.BackColor = System.Drawing.Color.Transparent;
             this.cN64.Checked = true;
             this.cN64.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cN64.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cN64.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cN64.ForeColor = System.Drawing.Color.Black;
-            this.cN64.Location = new System.Drawing.Point(16, 18);
+            this.cN64.Location = new System.Drawing.Point(19, 21);
+            this.cN64.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cN64.Name = "cN64";
             this.cN64.Size = new System.Drawing.Size(97, 17);
             this.cN64.TabIndex = 10;
@@ -1966,9 +1909,10 @@ namespace MMR.UI.Forms
             // 
             this.cVC.AutoSize = true;
             this.cVC.BackColor = System.Drawing.Color.Transparent;
-            this.cVC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cVC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cVC.ForeColor = System.Drawing.Color.Black;
-            this.cVC.Location = new System.Drawing.Point(16, 41);
+            this.cVC.Location = new System.Drawing.Point(19, 47);
+            this.cVC.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cVC.Name = "cVC";
             this.cVC.Size = new System.Drawing.Size(84, 17);
             this.cVC.TabIndex = 9;
@@ -1979,17 +1923,19 @@ namespace MMR.UI.Forms
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(214, 364);
+            this.label1.Location = new System.Drawing.Point(250, 420);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(250, 13);
+            this.label1.Size = new System.Drawing.Size(277, 15);
             this.label1.TabIndex = 12;
             this.label1.Text = "ROM must be Majora\'s Mask (U) ending with \".z64\"";
             // 
             // bApplyPatch
             // 
-            this.bApplyPatch.Location = new System.Drawing.Point(306, 9);
+            this.bApplyPatch.Location = new System.Drawing.Point(357, 10);
+            this.bApplyPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bApplyPatch.Name = "bApplyPatch";
-            this.bApplyPatch.Size = new System.Drawing.Size(99, 47);
+            this.bApplyPatch.Size = new System.Drawing.Size(115, 54);
             this.bApplyPatch.TabIndex = 16;
             this.bApplyPatch.Text = "Apply Patch";
             this.bApplyPatch.UseVisualStyleBackColor = true;
@@ -2006,9 +1952,10 @@ namespace MMR.UI.Forms
             // 
             // bRandomise
             // 
-            this.bRandomise.Location = new System.Drawing.Point(306, 9);
+            this.bRandomise.Location = new System.Drawing.Point(357, 10);
+            this.bRandomise.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bRandomise.Name = "bRandomise";
-            this.bRandomise.Size = new System.Drawing.Size(99, 47);
+            this.bRandomise.Size = new System.Drawing.Size(115, 54);
             this.bRandomise.TabIndex = 5;
             this.bRandomise.Text = "Randomize";
             this.bRandomise.UseVisualStyleBackColor = true;
@@ -2040,7 +1987,8 @@ namespace MMR.UI.Forms
             this.mHelp});
             this.mMenu.Location = new System.Drawing.Point(0, 0);
             this.mMenu.Name = "mMenu";
-            this.mMenu.Size = new System.Drawing.Size(679, 24);
+            this.mMenu.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.mMenu.Size = new System.Drawing.Size(792, 24);
             this.mMenu.TabIndex = 12;
             this.mMenu.Text = "mMenu";
             // 
@@ -2142,10 +2090,10 @@ namespace MMR.UI.Forms
             // 
             // pProgress
             // 
-            this.pProgress.Location = new System.Drawing.Point(13, 513);
+            this.pProgress.Location = new System.Drawing.Point(15, 592);
             this.pProgress.Margin = new System.Windows.Forms.Padding(2);
             this.pProgress.Name = "pProgress";
-            this.pProgress.Size = new System.Drawing.Size(653, 19);
+            this.pProgress.Size = new System.Drawing.Size(762, 22);
             this.pProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.pProgress.TabIndex = 13;
             // 
@@ -2157,16 +2105,17 @@ namespace MMR.UI.Forms
             // 
             this.lStatus.AutoSize = true;
             this.lStatus.BackColor = System.Drawing.Color.Transparent;
-            this.lStatus.Location = new System.Drawing.Point(11, 497);
+            this.lStatus.Location = new System.Drawing.Point(13, 573);
             this.lStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lStatus.Name = "lStatus";
-            this.lStatus.Size = new System.Drawing.Size(47, 13);
+            this.lStatus.Size = new System.Drawing.Size(48, 15);
             this.lStatus.TabIndex = 13;
             this.lStatus.Text = "Ready...";
             // 
             // tSeed
             // 
-            this.tSeed.Location = new System.Drawing.Point(77, 10);
+            this.tSeed.Location = new System.Drawing.Point(90, 12);
+            this.tSeed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tSeed.MaxLength = 10;
             this.tSeed.Name = "tSeed";
             this.tSeed.Size = new System.Drawing.Size(129, 20);
@@ -2179,9 +2128,10 @@ namespace MMR.UI.Forms
             // 
             this.lSeed.AutoSize = true;
             this.lSeed.BackColor = System.Drawing.Color.Transparent;
-            this.lSeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lSeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lSeed.ForeColor = System.Drawing.Color.Black;
-            this.lSeed.Location = new System.Drawing.Point(1, 13);
+            this.lSeed.Location = new System.Drawing.Point(1, 15);
+            this.lSeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lSeed.Name = "lSeed";
             this.lSeed.Size = new System.Drawing.Size(76, 13);
             this.lSeed.TabIndex = 3;
@@ -2191,9 +2141,10 @@ namespace MMR.UI.Forms
             // 
             this.cDummy.AutoSize = true;
             this.cDummy.Enabled = false;
-            this.cDummy.Location = new System.Drawing.Point(586, 504);
+            this.cDummy.Location = new System.Drawing.Point(684, 582);
+            this.cDummy.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDummy.Name = "cDummy";
-            this.cDummy.Size = new System.Drawing.Size(80, 17);
+            this.cDummy.Size = new System.Drawing.Size(83, 19);
             this.cDummy.TabIndex = 9;
             this.cDummy.Text = "checkBox1";
             this.cDummy.UseVisualStyleBackColor = true;
@@ -2207,10 +2158,11 @@ namespace MMR.UI.Forms
             // 
             this.ttOutput.Controls.Add(this.tpOutputSettings);
             this.ttOutput.Controls.Add(this.tpPatchSettings);
-            this.ttOutput.Location = new System.Drawing.Point(248, 407);
+            this.ttOutput.Location = new System.Drawing.Point(289, 470);
+            this.ttOutput.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.ttOutput.Name = "ttOutput";
             this.ttOutput.SelectedIndex = 0;
-            this.ttOutput.Size = new System.Drawing.Size(420, 89);
+            this.ttOutput.Size = new System.Drawing.Size(490, 103);
             this.ttOutput.TabIndex = 15;
             this.ttOutput.SelectedIndexChanged += new System.EventHandler(this.ttOutput_Changed);
             // 
@@ -2220,10 +2172,11 @@ namespace MMR.UI.Forms
             this.tpOutputSettings.Controls.Add(this.bRandomise);
             this.tpOutputSettings.Controls.Add(this.tSeed);
             this.tpOutputSettings.Controls.Add(this.lSeed);
-            this.tpOutputSettings.Location = new System.Drawing.Point(4, 22);
+            this.tpOutputSettings.Location = new System.Drawing.Point(4, 24);
+            this.tpOutputSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tpOutputSettings.Name = "tpOutputSettings";
-            this.tpOutputSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpOutputSettings.Size = new System.Drawing.Size(412, 63);
+            this.tpOutputSettings.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tpOutputSettings.Size = new System.Drawing.Size(482, 75);
             this.tpOutputSettings.TabIndex = 0;
             this.tpOutputSettings.Text = "Output settings";
             this.tpOutputSettings.UseVisualStyleBackColor = true;
@@ -2233,27 +2186,30 @@ namespace MMR.UI.Forms
             this.tpPatchSettings.Controls.Add(this.tPatch);
             this.tpPatchSettings.Controls.Add(this.bApplyPatch);
             this.tpPatchSettings.Controls.Add(this.bLoadPatch);
-            this.tpPatchSettings.Location = new System.Drawing.Point(4, 22);
+            this.tpPatchSettings.Location = new System.Drawing.Point(4, 24);
+            this.tpPatchSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tpPatchSettings.Name = "tpPatchSettings";
-            this.tpPatchSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.tpPatchSettings.Size = new System.Drawing.Size(412, 63);
+            this.tpPatchSettings.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tpPatchSettings.Size = new System.Drawing.Size(482, 75);
             this.tpPatchSettings.TabIndex = 1;
             this.tpPatchSettings.Text = "Patch settings";
             this.tpPatchSettings.UseVisualStyleBackColor = true;
             // 
             // tPatch
             // 
-            this.tPatch.Location = new System.Drawing.Point(6, 35);
+            this.tPatch.Location = new System.Drawing.Point(7, 40);
+            this.tPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tPatch.Name = "tPatch";
             this.tPatch.ReadOnly = true;
-            this.tPatch.Size = new System.Drawing.Size(294, 20);
+            this.tPatch.Size = new System.Drawing.Size(342, 23);
             this.tPatch.TabIndex = 17;
             // 
             // bLoadPatch
             // 
-            this.bLoadPatch.Location = new System.Drawing.Point(5, 6);
+            this.bLoadPatch.Location = new System.Drawing.Point(6, 7);
+            this.bLoadPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bLoadPatch.Name = "bLoadPatch";
-            this.bLoadPatch.Size = new System.Drawing.Size(103, 26);
+            this.bLoadPatch.Size = new System.Drawing.Size(120, 30);
             this.bLoadPatch.TabIndex = 16;
             this.bLoadPatch.Text = "Load Patch...";
             this.bLoadPatch.UseVisualStyleBackColor = true;
@@ -2261,10 +2217,10 @@ namespace MMR.UI.Forms
             // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(679, 543);
+            this.ClientSize = new System.Drawing.Size(792, 627);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.bopen);
             this.Controls.Add(this.tROMName);
@@ -2277,13 +2233,17 @@ namespace MMR.UI.Forms
             this.Controls.Add(this.mMenu);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon"))); // why is this broken now
             this.MainMenuStrip = this.mMenu;
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Load += new System.EventHandler(this.mmrMain_Load);
             this.tSettings.ResumeLayout(false);
             this.tabMain.ResumeLayout(false);
+            this.tOtherCustomizations.ResumeLayout(false);
+            this.tOtherCustomization.ResumeLayout(false);
+            this.tOtherCustomization.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.groupBox9.ResumeLayout(false);
@@ -2292,10 +2252,8 @@ namespace MMR.UI.Forms
             this.groupBox6.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
-            this.groupBox2.ResumeLayout(false);
-            this.groupBox2.PerformLayout();
+            this.gItemPoolOptions.ResumeLayout(false);
+            this.gItemPoolOptions.PerformLayout();
             this.tabGimmicks.ResumeLayout(false);
             this.tabGimmicks.PerformLayout();
             this.groupBox12.ResumeLayout(false);
@@ -2358,9 +2316,6 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cQText;
         private System.Windows.Forms.CheckBox cEnemy;
         private System.Windows.Forms.CheckBox cDEnt;
-        private System.Windows.Forms.CheckBox cShop;
-        private System.Windows.Forms.CheckBox cBottled;
-        private System.Windows.Forms.CheckBox cDChests;
         private System.Windows.Forms.CheckBox cMixSongs;
         private System.Windows.Forms.ColorDialog cEnergy;
         private System.Windows.Forms.ColorDialog cTunic;
@@ -2389,7 +2344,6 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.ToolStripMenuItem mAbout;
         private System.Windows.Forms.ToolStripSeparator mSep1;
         private System.Windows.Forms.OpenFileDialog openBROM;
-        private System.Windows.Forms.CheckBox cAdditional;
         private System.Windows.Forms.ToolStripMenuItem mCustomise;
         private System.Windows.Forms.CheckBox cUserItems;
         private System.Windows.Forms.ProgressBar pProgress;
@@ -2401,7 +2355,6 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.CheckBox cFreeHints;
-        private System.Windows.Forms.CheckBox cMoonItems;
         private System.Windows.Forms.CheckBox cPatch;
         private System.Windows.Forms.Button bApplyPatch;
         private System.Windows.Forms.TabControl ttOutput;
@@ -2419,24 +2372,16 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lGossip;
         private System.Windows.Forms.ComboBox cGossipHints;
         private System.Windows.Forms.CheckBox cShopAppearance;
-        private System.Windows.Forms.CheckBox cNutChest;
-        private System.Windows.Forms.CheckBox cCrazyStartingItems;
         private System.Windows.Forms.CheckBox cEponaSword;
         private System.Windows.Forms.CheckBox cUpdateChests;
         private System.Windows.Forms.GroupBox gGameOutput;
-        private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox gItemPoolOptions;
         private System.Windows.Forms.CheckBox cNoStartingItems;
         private System.Windows.Forms.Button bItemListEditor;
         private System.Windows.Forms.TextBox tCustomItemList;
         private System.Windows.Forms.Label lCustomItemAmount;
-        private System.Windows.Forms.CheckBox cFairyRewards;
         private System.Windows.Forms.TextBox tbUserLogic;
         private System.Windows.Forms.Button bLoadLogic;
-        private System.Windows.Forms.CheckBox cCowMilk;
-        private System.Windows.Forms.CheckBox cSpiders;
-        private System.Windows.Forms.CheckBox cStrayFairies;
-        private System.Windows.Forms.CheckBox cMundaneRewards;
         private System.Windows.Forms.ComboBox cBlastCooldown;
         private System.Windows.Forms.Label lBlastMask;
         private System.Windows.Forms.GroupBox groupBox4;
@@ -2516,6 +2461,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.TabControl tOtherCustomizations;
+        private System.Windows.Forms.TabPage tOtherCustomization;
     }
 }
 

@@ -46,12 +46,12 @@
             this.lGimmick = new System.Windows.Forms.Label();
             this.tComfort = new System.Windows.Forms.TabPage();
             this.label1 = new System.Windows.Forms.Label();
+            this.tShortenCutscenes = new System.Windows.Forms.TabPage();
+            this.label2 = new System.Windows.Forms.Label();
             this.tCosmetics = new System.Windows.Forms.TabPage();
             this.lCosmetic = new System.Windows.Forms.Label();
             this.tHow = new System.Windows.Forms.TabPage();
             this.lHow = new System.Windows.Forms.Label();
-            this.tShortenCutscenes = new System.Windows.Forms.TabPage();
-            this.label2 = new System.Windows.Forms.Label();
             this.tManual.SuspendLayout();
             this.tMain.SuspendLayout();
             this.tRules.SuspendLayout();
@@ -61,9 +61,9 @@
             this.tShuffles.SuspendLayout();
             this.tGimmicks.SuspendLayout();
             this.tComfort.SuspendLayout();
+            this.tShortenCutscenes.SuspendLayout();
             this.tCosmetics.SuspendLayout();
             this.tHow.SuspendLayout();
-            this.tShortenCutscenes.SuspendLayout();
             this.SuspendLayout();
             // 
             // tManual
@@ -80,29 +80,32 @@
             this.tManual.Controls.Add(this.tShortenCutscenes);
             this.tManual.Controls.Add(this.tCosmetics);
             this.tManual.Controls.Add(this.tHow);
-            this.tManual.Location = new System.Drawing.Point(12, 12);
+            this.tManual.Location = new System.Drawing.Point(14, 14);
+            this.tManual.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tManual.Name = "tManual";
             this.tManual.SelectedIndex = 0;
-            this.tManual.Size = new System.Drawing.Size(408, 300);
+            this.tManual.Size = new System.Drawing.Size(476, 346);
             this.tManual.TabIndex = 0;
             // 
             // tMain
             // 
             this.tMain.AutoScroll = true;
             this.tMain.Controls.Add(this.lUsage);
-            this.tMain.Location = new System.Drawing.Point(4, 25);
+            this.tMain.Location = new System.Drawing.Point(4, 27);
+            this.tMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tMain.Name = "tMain";
-            this.tMain.Padding = new System.Windows.Forms.Padding(3);
-            this.tMain.Size = new System.Drawing.Size(400, 271);
+            this.tMain.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tMain.Size = new System.Drawing.Size(468, 315);
             this.tMain.TabIndex = 0;
             this.tMain.Text = "Usage";
             this.tMain.UseVisualStyleBackColor = true;
             // 
             // lUsage
             // 
-            this.lUsage.Location = new System.Drawing.Point(6, 3);
+            this.lUsage.Location = new System.Drawing.Point(7, 3);
+            this.lUsage.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lUsage.Name = "lUsage";
-            this.lUsage.Size = new System.Drawing.Size(372, 294);
+            this.lUsage.Size = new System.Drawing.Size(434, 339);
             this.lUsage.TabIndex = 1;
             this.lUsage.Text = resources.GetString("lUsage.Text");
             // 
@@ -110,19 +113,21 @@
             // 
             this.tRules.AutoScroll = true;
             this.tRules.Controls.Add(this.lRules);
-            this.tRules.Location = new System.Drawing.Point(4, 25);
+            this.tRules.Location = new System.Drawing.Point(4, 27);
+            this.tRules.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tRules.Name = "tRules";
-            this.tRules.Padding = new System.Windows.Forms.Padding(3);
-            this.tRules.Size = new System.Drawing.Size(400, 271);
+            this.tRules.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tRules.Size = new System.Drawing.Size(468, 315);
             this.tRules.TabIndex = 1;
             this.tRules.Text = "Rulesets";
             this.tRules.UseVisualStyleBackColor = true;
             // 
             // lRules
             // 
-            this.lRules.Location = new System.Drawing.Point(6, 3);
+            this.lRules.Location = new System.Drawing.Point(7, 3);
+            this.lRules.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lRules.Name = "lRules";
-            this.lRules.Size = new System.Drawing.Size(372, 357);
+            this.lRules.Size = new System.Drawing.Size(434, 412);
             this.lRules.TabIndex = 2;
             this.lRules.Text = resources.GetString("lRules.Text");
             // 
@@ -130,18 +135,20 @@
             // 
             this.tBaseChanges.AutoScroll = true;
             this.tBaseChanges.Controls.Add(this.lBaseGame);
-            this.tBaseChanges.Location = new System.Drawing.Point(4, 25);
+            this.tBaseChanges.Location = new System.Drawing.Point(4, 27);
+            this.tBaseChanges.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tBaseChanges.Name = "tBaseChanges";
-            this.tBaseChanges.Size = new System.Drawing.Size(400, 271);
+            this.tBaseChanges.Size = new System.Drawing.Size(468, 315);
             this.tBaseChanges.TabIndex = 5;
             this.tBaseChanges.Text = "Base game changes";
             this.tBaseChanges.UseVisualStyleBackColor = true;
             // 
             // lBaseGame
             // 
-            this.lBaseGame.Location = new System.Drawing.Point(6, 3);
+            this.lBaseGame.Location = new System.Drawing.Point(7, 3);
+            this.lBaseGame.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lBaseGame.Name = "lBaseGame";
-            this.lBaseGame.Size = new System.Drawing.Size(372, 304);
+            this.lBaseGame.Size = new System.Drawing.Size(434, 351);
             this.lBaseGame.TabIndex = 2;
             this.lBaseGame.Text = resources.GetString("lBaseGame.Text");
             // 
@@ -149,38 +156,42 @@
             // 
             this.tLogic.AutoScroll = true;
             this.tLogic.Controls.Add(this.lLogic);
-            this.tLogic.Location = new System.Drawing.Point(4, 25);
+            this.tLogic.Location = new System.Drawing.Point(4, 27);
+            this.tLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tLogic.Name = "tLogic";
-            this.tLogic.Padding = new System.Windows.Forms.Padding(3);
-            this.tLogic.Size = new System.Drawing.Size(400, 271);
+            this.tLogic.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tLogic.Size = new System.Drawing.Size(468, 315);
             this.tLogic.TabIndex = 7;
             this.tLogic.Text = "Logic editor";
             this.tLogic.UseVisualStyleBackColor = true;
             // 
             // lLogic
             // 
-            this.lLogic.Location = new System.Drawing.Point(6, 3);
+            this.lLogic.Location = new System.Drawing.Point(7, 3);
+            this.lLogic.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lLogic.Name = "lLogic";
-            this.lLogic.Size = new System.Drawing.Size(372, 336);
+            this.lLogic.Size = new System.Drawing.Size(434, 388);
             this.lLogic.TabIndex = 3;
             this.lLogic.Text = resources.GetString("lLogic.Text");
             // 
             // tItem
             // 
             this.tItem.Controls.Add(this.lItem);
-            this.tItem.Location = new System.Drawing.Point(4, 25);
+            this.tItem.Location = new System.Drawing.Point(4, 27);
+            this.tItem.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tItem.Name = "tItem";
-            this.tItem.Padding = new System.Windows.Forms.Padding(3);
-            this.tItem.Size = new System.Drawing.Size(400, 271);
+            this.tItem.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tItem.Size = new System.Drawing.Size(468, 315);
             this.tItem.TabIndex = 8;
             this.tItem.Text = "Item list";
             this.tItem.UseVisualStyleBackColor = true;
             // 
             // lItem
             // 
-            this.lItem.Location = new System.Drawing.Point(6, 3);
+            this.lItem.Location = new System.Drawing.Point(7, 3);
+            this.lItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lItem.Name = "lItem";
-            this.lItem.Size = new System.Drawing.Size(372, 156);
+            this.lItem.Size = new System.Drawing.Size(434, 180);
             this.lItem.TabIndex = 4;
             this.lItem.Text = resources.GetString("lItem.Text");
             // 
@@ -188,18 +199,20 @@
             // 
             this.tShuffles.AutoScroll = true;
             this.tShuffles.Controls.Add(this.lShuffle);
-            this.tShuffles.Location = new System.Drawing.Point(4, 25);
+            this.tShuffles.Location = new System.Drawing.Point(4, 27);
+            this.tShuffles.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tShuffles.Name = "tShuffles";
-            this.tShuffles.Size = new System.Drawing.Size(400, 271);
+            this.tShuffles.Size = new System.Drawing.Size(468, 315);
             this.tShuffles.TabIndex = 2;
             this.tShuffles.Text = "Shuffles";
             this.tShuffles.UseVisualStyleBackColor = true;
             // 
             // lShuffle
             // 
-            this.lShuffle.Location = new System.Drawing.Point(6, 3);
+            this.lShuffle.Location = new System.Drawing.Point(7, 3);
+            this.lShuffle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lShuffle.Name = "lShuffle";
-            this.lShuffle.Size = new System.Drawing.Size(372, 1695);
+            this.lShuffle.Size = new System.Drawing.Size(434, 1956);
             this.lShuffle.TabIndex = 2;
             this.lShuffle.Text = resources.GetString("lShuffle.Text");
             // 
@@ -207,18 +220,20 @@
             // 
             this.tGimmicks.AutoScroll = true;
             this.tGimmicks.Controls.Add(this.lGimmick);
-            this.tGimmicks.Location = new System.Drawing.Point(4, 25);
+            this.tGimmicks.Location = new System.Drawing.Point(4, 27);
+            this.tGimmicks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tGimmicks.Name = "tGimmicks";
-            this.tGimmicks.Size = new System.Drawing.Size(400, 271);
+            this.tGimmicks.Size = new System.Drawing.Size(468, 315);
             this.tGimmicks.TabIndex = 3;
             this.tGimmicks.Text = "Gimmicks";
             this.tGimmicks.UseVisualStyleBackColor = true;
             // 
             // lGimmick
             // 
-            this.lGimmick.Location = new System.Drawing.Point(6, 3);
+            this.lGimmick.Location = new System.Drawing.Point(7, 3);
+            this.lGimmick.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lGimmick.Name = "lGimmick";
-            this.lGimmick.Size = new System.Drawing.Size(372, 892);
+            this.lGimmick.Size = new System.Drawing.Size(434, 1029);
             this.lGimmick.TabIndex = 2;
             this.lGimmick.Text = resources.GetString("lGimmick.Text");
             // 
@@ -226,88 +241,97 @@
             // 
             this.tComfort.AutoScroll = true;
             this.tComfort.Controls.Add(this.label1);
-            this.tComfort.Location = new System.Drawing.Point(4, 25);
+            this.tComfort.Location = new System.Drawing.Point(4, 27);
+            this.tComfort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tComfort.Name = "tComfort";
-            this.tComfort.Size = new System.Drawing.Size(400, 271);
+            this.tComfort.Size = new System.Drawing.Size(468, 315);
             this.tComfort.TabIndex = 9;
             this.tComfort.Text = "Comfort";
             this.tComfort.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(3, 1);
+            this.label1.Location = new System.Drawing.Point(4, 1);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(377, 1324);
+            this.label1.Size = new System.Drawing.Size(440, 1528);
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
-            // 
-            // tCosmetics
-            // 
-            this.tCosmetics.AutoScroll = true;
-            this.tCosmetics.Controls.Add(this.lCosmetic);
-            this.tCosmetics.Location = new System.Drawing.Point(4, 25);
-            this.tCosmetics.Name = "tCosmetics";
-            this.tCosmetics.Size = new System.Drawing.Size(400, 271);
-            this.tCosmetics.TabIndex = 4;
-            this.tCosmetics.Text = "Cosmetics";
-            this.tCosmetics.UseVisualStyleBackColor = true;
-            // 
-            // lCosmetic
-            // 
-            this.lCosmetic.Location = new System.Drawing.Point(6, 3);
-            this.lCosmetic.Name = "lCosmetic";
-            this.lCosmetic.Size = new System.Drawing.Size(372, 844);
-            this.lCosmetic.TabIndex = 2;
-            this.lCosmetic.Text = resources.GetString("lCosmetic.Text");
-            // 
-            // tHow
-            // 
-            this.tHow.Controls.Add(this.lHow);
-            this.tHow.Location = new System.Drawing.Point(4, 25);
-            this.tHow.Name = "tHow";
-            this.tHow.Padding = new System.Windows.Forms.Padding(3);
-            this.tHow.Size = new System.Drawing.Size(400, 271);
-            this.tHow.TabIndex = 6;
-            this.tHow.Text = "How it works";
-            this.tHow.UseVisualStyleBackColor = true;
-            // 
-            // lHow
-            // 
-            this.lHow.Location = new System.Drawing.Point(6, 3);
-            this.lHow.Name = "lHow";
-            this.lHow.Size = new System.Drawing.Size(372, 268);
-            this.lHow.TabIndex = 3;
-            this.lHow.Text = resources.GetString("lHow.Text");
             // 
             // tShortenCutscenes
             // 
             this.tShortenCutscenes.AutoScroll = true;
             this.tShortenCutscenes.Controls.Add(this.label2);
-            this.tShortenCutscenes.Location = new System.Drawing.Point(4, 25);
+            this.tShortenCutscenes.Location = new System.Drawing.Point(4, 27);
+            this.tShortenCutscenes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tShortenCutscenes.Name = "tShortenCutscenes";
-            this.tShortenCutscenes.Padding = new System.Windows.Forms.Padding(3);
-            this.tShortenCutscenes.Size = new System.Drawing.Size(400, 271);
+            this.tShortenCutscenes.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tShortenCutscenes.Size = new System.Drawing.Size(468, 315);
             this.tShortenCutscenes.TabIndex = 10;
             this.tShortenCutscenes.Text = "Shorten Cutscenes";
             this.tShortenCutscenes.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
-            this.label2.Location = new System.Drawing.Point(6, 3);
+            this.label2.Location = new System.Drawing.Point(7, 3);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(372, 61);
+            this.label2.Size = new System.Drawing.Size(434, 70);
             this.label2.TabIndex = 3;
             this.label2.Text = "Shorten or skip various cutscenes. Each checkbox has a tooltip describing what th" +
     "e option does. The \"Everything Else\" option combines a lot of various changes.";
             // 
+            // tCosmetics
+            // 
+            this.tCosmetics.AutoScroll = true;
+            this.tCosmetics.Controls.Add(this.lCosmetic);
+            this.tCosmetics.Location = new System.Drawing.Point(4, 27);
+            this.tCosmetics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tCosmetics.Name = "tCosmetics";
+            this.tCosmetics.Size = new System.Drawing.Size(468, 315);
+            this.tCosmetics.TabIndex = 4;
+            this.tCosmetics.Text = "Cosmetics";
+            this.tCosmetics.UseVisualStyleBackColor = true;
+            // 
+            // lCosmetic
+            // 
+            this.lCosmetic.Location = new System.Drawing.Point(7, 3);
+            this.lCosmetic.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lCosmetic.Name = "lCosmetic";
+            this.lCosmetic.Size = new System.Drawing.Size(434, 974);
+            this.lCosmetic.TabIndex = 2;
+            this.lCosmetic.Text = resources.GetString("lCosmetic.Text");
+            // 
+            // tHow
+            // 
+            this.tHow.Controls.Add(this.lHow);
+            this.tHow.Location = new System.Drawing.Point(4, 27);
+            this.tHow.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tHow.Name = "tHow";
+            this.tHow.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tHow.Size = new System.Drawing.Size(468, 315);
+            this.tHow.TabIndex = 6;
+            this.tHow.Text = "How it works";
+            this.tHow.UseVisualStyleBackColor = true;
+            // 
+            // lHow
+            // 
+            this.lHow.Location = new System.Drawing.Point(7, 3);
+            this.lHow.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lHow.Name = "lHow";
+            this.lHow.Size = new System.Drawing.Size(434, 309);
+            this.lHow.TabIndex = 3;
+            this.lHow.Text = resources.GetString("lHow.Text");
+            // 
             // ManualForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(432, 324);
+            this.ClientSize = new System.Drawing.Size(504, 374);
             this.Controls.Add(this.tManual);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "ManualForm";
             this.Text = "Manual";
@@ -321,9 +345,9 @@
             this.tShuffles.ResumeLayout(false);
             this.tGimmicks.ResumeLayout(false);
             this.tComfort.ResumeLayout(false);
+            this.tShortenCutscenes.ResumeLayout(false);
             this.tCosmetics.ResumeLayout(false);
             this.tHow.ResumeLayout(false);
-            this.tShortenCutscenes.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }

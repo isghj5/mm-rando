@@ -114,6 +114,11 @@ namespace MMR.Randomizer.Asm
         public bool EarlyMikau { get; set; }
 
         /// <summary>
+        /// Whether or not to make Stray Fairy chests behave like normal chests.
+        /// </summary>
+        public bool FairyChests { get; set; }
+
+        /// <summary>
         /// Whether or not to apply Elegy of Emptiness speedups.
         /// </summary>
         public bool ElegySpeedup { get; set; } = true;
@@ -215,6 +220,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.ProgressiveUpgrades ? (uint)1 : 0) << 16;
             flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 15;
             flags |= (this.EarlyMikau ? (uint)1 : 0) << 14;
+            flags |= (this.FairyChests ? (uint)1 : 0) << 13;
             return flags;
         }
     }
@@ -229,6 +235,8 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool VanillaLayout { get; set; }
 
+        public ushort CollectableTableFileIndex { get; set; }
+
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
@@ -237,6 +245,7 @@ namespace MMR.Randomizer.Asm
         {
             uint flags = 0;
             flags |= (this.VanillaLayout ? (uint)1 : 0) << 31;
+            flags |= CollectableTableFileIndex;
             return flags;
         }
     }
@@ -338,8 +347,11 @@ namespace MMR.Randomizer.Asm
             // If using Adult Link model, allow Mikau cutscene to activate early.
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;
 
+            this.Flags.FairyChests = settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly);
+
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;
+            this.InternalFlags.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
         }
 
         /// <summary>

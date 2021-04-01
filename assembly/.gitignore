@@ -8,18 +8,18 @@ armips*
 # Ignore build files
 build/*.o
 build/*.txt
-data/generated/*.bin
-data/generated/*.json
-data/generated/*.txt
+build/generated/*.bin
+build/generated/*.json
+build/generated/*.txt
 
 # Ignore private vagrant directory
 .vagrant*
 
-# Ignore contents of "input" and "output" except for .gitkeep
-input/*
-output/*
-!input/.gitkeep
-!output/.gitkeep
+# Ignore output directory, used by MMR.CLI for outputting ROMs.
+output/
+
+# Ignore n64 directory, optionally included so that VSCode can resolve headers such as: <n64.h>
+n64/
 
 # Ignore Randomizer settings file
 settings.json

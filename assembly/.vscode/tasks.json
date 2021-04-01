@@ -5,7 +5,7 @@
     "tasks": [
         {
             "label": "Build Assembly",
-            "command": "dotnet nake RunDockerCompose",
+            "command": "docker-compose up --abort-on-container-exit",
             "type": "shell",
             "group": "build",
             "presentation": {

@@ -75,11 +75,6 @@ namespace MMR.Randomizer.Utils
                    && item <= Item.BottleCatchMushroom;
         }
 
-        public static bool IsMoonLocation(Item location)
-        {
-            return location >= Item.HeartPieceDekuTrial && location <= Item.ChestLinkTrialBombchu10;
-        }
-
         public static bool IsStartingLocation(Item location)
         {
             return location == Item.MaskDeku || location == Item.SongHealing
@@ -90,6 +85,38 @@ namespace MMR.Randomizer.Utils
         {
             return item >= Item.SongHealing
                 && item <= Item.SongOath;
+        }
+
+        public static IEnumerable<Item> SmallKeys()
+        {
+            return new List<Item>
+            {
+                Item.ItemWoodfallKey1,
+                Item.ItemSnowheadKey1,
+                Item.ItemSnowheadKey2,
+                Item.ItemSnowheadKey3,
+                Item.ItemGreatBayKey1,
+                Item.ItemStoneTowerKey1,
+                Item.ItemStoneTowerKey2,
+                Item.ItemStoneTowerKey3,
+                Item.ItemStoneTowerKey4,
+            }.AsEnumerable();
+        }
+
+        public static IEnumerable<Item> BossKeys()
+        {
+            return new List<Item>
+            {
+                Item.ItemWoodfallBossKey,
+                Item.ItemSnowheadBossKey,
+                Item.ItemGreatBayBossKey,
+                Item.ItemStoneTowerBossKey,
+            }.AsEnumerable();
+        }
+
+        public static IEnumerable<Item> DungeonStrayFairies()
+        {
+            return Enumerable.Range((int)Item.CollectibleStrayFairyWoodfall1, 60).Cast<Item>();
         }
 
         // todo cache

@@ -4,7 +4,7 @@ namespace MMR.Randomizer.Attributes
 {
     public class GetItemIndexAttribute : Attribute
     {
-        public ushort Index { get; private set; }
+        public ushort Index { get; }
 
         public GetItemIndexAttribute(ushort index)
         {

@@ -1,4 +1,4 @@
--version 15
+-version 16
 - Deku Mask
 
 
@@ -7,13 +7,13 @@
 
 - Hero's Bow
 104
-480;0,120;0,129
+1103;0,120;0,129
 0
 0
 
 - Fire Arrow
-107,541
-2,120,461;10,481;92,119,461,462;119,462,522,544;92,119,461,463,93;93,119,463,522,544
+107,1164
+10,1104;92,119,1084,1085;119,1085,1145,1167;92,119,1084,1086,93;93,119,1086,1145,1167;1178
 0
 0
 
@@ -25,7 +25,7 @@
 
 - Light Arrow
 116
-4,120,464,461;0,25,92,93,119,465
+1087,1180;0,25,92,93,119,1088
 0
 0
 
@@ -37,31 +37,31 @@
 
 - Magic Bean
 103
-0;483
+0;1106
 0
 0
 
 - Powder Keg
 106,92
-2,120,461;108
+108;1178
 0
 0
 
 - Pictobox
-553
+1176
 
 0
 0
 
 - Lens of Truth
 106
-9,461;95;484
+9,1084;95;1107
 0
 0
 
 - Hookshot
 111
-92,120;0,92,461;10,120;0,10,461
+92,120;0,92,1084;10,120;0,10,1084
 0
 0
 
@@ -79,7 +79,7 @@
 
 - Great Fairy Extended Magic
 92,99,362,363,364,365,366,367,368,369,370,371,372,373,374,375,376
-499;461
+1122;1084
 0
 0
 
@@ -103,12 +103,12 @@
 
 - Aliens Bottle
 109
-524;120
+1147;120
 0
 2
 
 - Goron Race Bottle
-108,92,461
+108,92,1084
 
 12
 0
@@ -120,7 +120,7 @@
 0
 
 - Dampe Bottle
-90,502
+90,1125
 93;120
 0
 32
@@ -133,25 +133,25 @@
 
 - Bombers' Notebook
 
-0,461;93;120;10;525
+0,1084;93;120;10;1148
 0
 0
 
 - Razor Sword
-106,479
-461,2,120;95,173;108
+106,1102
+95,173;108;1178
 0
 12
 
 - Gilded Sword
 106,18
-2,461,120;95,173;108
+95,173;108;1178
 0
 48
 
 - Mirror Shield
 115
-2,4,120,461;4,38,39,88,120,171,461,473;38,39,88,168,171,473,485
+88,171,1096,1180;88,168,171,1096,1108;1178,1180
 0
 0
 
@@ -169,12 +169,12 @@
 
 - Town Bomb Bag (30)
 38,39
-92;93;468
+92;93;1091
 0
 62
 
 - Mountain Bomb Bag (40)
-106,479
+106,1102
 92;0,32,33,34
 0
 0
@@ -193,7 +193,7 @@
 
 - Moon's Tear
 
-0;10;93;120;486;525;500
+0;10;93;120;1109;1148;1123
 0
 0
 
@@ -228,7 +228,7 @@
 1
 
 - Letter to Kafei
-84,529
+84,1152
 
 3
 2
@@ -253,7 +253,7 @@
 
 - Postman HP
 
-79;487
+79;1110
 0
 15
 
@@ -264,8 +264,8 @@
 10
 
 - ??? HP
-529
-33;34;35;36;38;40,488;40,0;40,522,544
+1152
+33;34;35;36;38;40,1111;40,0;40,1145,1167
 0
 42
 
@@ -300,14 +300,14 @@
 21
 
 - Honey and Darling HP
-120,469
+120,1092
 
 0
 16
 
 - Swordsman's School HP
+1181
 
-23;24;274
 0
 31
 
@@ -324,8 +324,8 @@
 0
 
 - Termina Field Business Scrub HP
-479
-0;10;93;120;486;525;500
+1102
+0;10;93;120;1109;1148;1123
 0
 0
 
@@ -342,14 +342,14 @@
 0
 
 - Boat Archery HP
-105,553
+105,1176
 
 0
 0
 
 - Frog Choir HP
-80,108,104,112,10,0,93,3,120,461
-511;2
+80,108,104,112,10,0,93,1179
+1134;2
 0
 0
 
@@ -360,7 +360,7 @@
 0
 
 - Seahorse HP
-110,93,432,466
+110,93,432,1089
 
 0
 0
@@ -379,12 +379,12 @@
 
 - Dog Race HP
 
-489;86
+1112;86
 0
 16
 
 - Poe Hut HP
-115,547,120
+115,1170,120
 
 0
 0
@@ -397,13 +397,13 @@
 
 - Peahat Grotto HP
 
-547;120;0
+1170;120;0
 0
 21
 
 - Dodongo Grotto HP
 
-490;468;120;469;92
+1113;1091;120;1092;92
 0
 0
 
@@ -420,14 +420,14 @@
 0
 
 - Ocean Spider House HP
-120,471
-491;90
+120,1094
+1114;90
 0
 0
 
 - Graveyard Iron Knuckle HP
-90,119,468,502
-492,528;9,461
+90,119,1091,1125
+1115,1151;9,1084
 0
 8
 
@@ -439,19 +439,19 @@
 
 - All Night Mask
 31
-120;10;468;92;93;119
+120;10;1091;92;93;119
 0
 32
 
 - Blast Mask
 38,39
-92;93;468
+92;93;1091
 0
 2
 
 - Stone Mask
-9,461,553
-500;96
+9,1084,1176
+1123;96
 0
 0
 
@@ -480,20 +480,20 @@
 16
 
 - Don Gero's Mask
-106,92,461
+106,92,1084
 
 0
 0
 
 - Mask of Scents
 167,103,0
-493;105
+1116;105
 0
 0
 
 - Romani Mask
 109
-120;524
+120;1147
 0
 8
 
@@ -510,7 +510,7 @@
 15
 
 - Couple's Mask
-39,84,38,114,529
+39,84,38,114,1152
 
 0
 32
@@ -540,19 +540,19 @@
 21
 
 - Captain's Hat
-98,502,547
-494;120
+98,1125,1170
+1117;120
 0
 0
 
 - Giant's Mask
-117,10,4,120,461,507
+117,10,1130,1180
 
 0
 0
 
 - Goron Mask
-94,106,9,461
+94,106,9,1084
 
 0
 0
@@ -571,7 +571,7 @@
 
 - Song of Soaring
 103
-0;93,522,544
+0;93,1145,1167
 0
 0
 
@@ -582,14 +582,14 @@
 1
 
 - Song of Storms
-90,502
-468;92;93
+90,1125
+1091;92;93
 0
 2
 
 - Sonata of Awakening
 103,0
-497;477
+1120;1100
 0
 0
 
@@ -606,8 +606,8 @@
 0
 
 - Elegy of Emptiness
-115,120,2,25,461,547
-4;0,7,92,484;498,7,92,9;0,7,92,9;7,92,498,484
+115,25,1170,1178
+4;0,7,92,1107;1121,7,92,9;0,7,92,9;7,92,1121,1107
 0
 0
 
@@ -618,37 +618,37 @@
 0
 
 - Poison swamp access
-554
-10;120;8;472;93
+1177
+10;120;8;1095;93
 0
 0
 
 - Woodfall Temple access
-0,98,103,547
+0,98,103,1170
 
 0
 0
 
 - Woodfall clear
 104,120,128
-0;10,480
+0;10,1103
 0
 0
 
 - North access
 
-95,119,173;92,95,173;119,120;2,120,461;92,120
+95,119,173;92,95,173;119,120;92,120;1178
 0
 0
 
 - Snowhead Temple access
 106,92
-99,499;99,461;550
+99,1122;99,1084;1173
 0
 0
 
 - Snowhead clear
-107,120,2,132,92,461
+107,132,92,1178
 
 0
 0
@@ -661,7 +661,7 @@
 
 - West access
 
-96;500
+96;1123
 0
 0
 
@@ -678,44 +678,44 @@
 0
 
 - Great Bay clear
-112,120,3,138,93,10,461
-501;2
+112,138,93,10,1179
+1124;2
 0
 0
 
 - East access
-10,502
+10,1125
 88;89
 0
 0
 
 - Ikana Canyon access
 114
-503;3,120,461
+1126;1179
 0
 0
 
 - Stone Tower Temple access
 115,10,101
-504;93,92
+1127;93,92
 0
 0
 
 - Inverted Stone Tower Temple access
-116,120,4,461
+116,1180
 
 0
 0
 
 - Ikana clear
-117,10,120,4,142,461,507
-505;506
+117,10,142,1130,1180
+1128;1129
 0
 0
 
 - Explosives
 
-5;28;29;74,551;74,544
+5;28;29;74,1174;74,1167
 0
 0
 
@@ -732,13 +732,13 @@
 0
 
 - (Unused)
-107,92,119,120,2,461
+107,92,119,120,2,1084
 
 0
 0
 
 - (Unused)
-112,93,10,120,3,2,461
+112,93,10,120,3,2,1084
 
 0
 0
@@ -750,7 +750,7 @@
 0
 
 - (Unused)
-117,119,120,4,0,92,93,101,10,461
+117,119,120,4,0,92,93,101,10,1084
 
 0
 0
@@ -763,7 +763,7 @@
 
 - Woodfall Compass
 104
-0,120;0,129;480
+0,120;0,129;1103
 0
 0
 
@@ -780,38 +780,38 @@
 0
 
 - Snowhead Map
-107,541
-92,461;10;119,462;508;522,544
+107,1164
+92,1084;10;119,1085;1131;1145,1167
 0
 0
 
 - Snowhead Compass
-107,541
-10;508;463;93,522,544
+107,1164
+10;1131;1086;93,1145,1167
 0
 0
 
 - Snowhead Boss Key
-107,461,2,120
-92;93,463,509,508
+107,1178
+92;93,1086,1132,1131
 0
 0
 
 - Snowhead Key 1 - block room
-107,541
-92,461;508;2,120,461;522,544
+107,1164
+92,1084;1131;1145,1167;1178
 0
 0
 
 - Snowhead Key 2 - icicle room
-107,541
-10,119,461;93,119,508;93,119,522,544;461,10,92,463,481;119,463;2,120,461,463;119,120,2,93,461
+107,1164
+10,119,1084;93,119,1131;93,119,1145,1167;1084,10,92,1086,1104;119,1086;1086,1178;93,119,1178
 0
 0
 
 - Snowhead Key 3 - bridge room
-107,541
-2,120,461;10,92;508;522,544
+107,1164
+10,92;1131;1145,1167;1178
 0
 0
 
@@ -829,7 +829,7 @@
 
 - Great Bay Boss Key
 112,93,10
-510;2,3,120,461;511,3,120,461;522,544
+1133;1178,1179;1134,1179;1145,1167
 0
 0
 
@@ -841,43 +841,43 @@
 
 - Stone Tower Map
 116
-25,119,92;119,120,4,461,92;4,120,461,464,93
+25,119,92;92,119,1180;93,1087,1180
 0
 0
 
 - Stone Tower Compass
 116
-4,120,461;25,464,92,93
+25,1087,92,93;1180
 0
 0
 
 - Stone Tower Boss Key
-117,4,120,461
-0,512,544;0,464,10;496,512,544
+117,1180
+0,1135,1167;0,1087,10;1119,1135,1167;0,1145,1167
 0
 0
 
 - Stone Tower Key 1 - armos room
 116
-25,119,92;119,120,4,461,92;4,120,461,464,93
+25,119,92;92,119,1180;93,1087,1180
 0
 0
 
 - Stone Tower Key 2 - eyegore room
 116
-4,120,461,93;119,464,92
+93,1180;119,1087,92
 0
 0
 
 - Stone Tower Key 3 - updraft room
-117,120,4,461
-496;0
+117,1180
+1119;0
 0
 0
 
 - Stone Tower Key 4 - death armos maze
-117,0,120,4,461
-512,544;464,10
+117
+0,1167,1180,10;0,1167,1180,101;10,1087,1180,0;1145,1167,10;1145,1167,101
 0
 0
 
@@ -979,109 +979,109 @@
 
 - Zora Shop Shield
 110
-93;513
+93;1136
 0
 0
 
 - Zora Shop Arrow 10
 110
-93;513
+93;1136
 0
 0
 
 - Zora Shop Red Potion
 110
-93;513
+93;1136
 0
 0
 
 - Bottle: Fairy
-466
+1089
 
 0
 0
 
 - Bottle: Deku Princess
-105,466
+105,1089
 
 0
 0
 
 - Bottle: Fish
-466
+1089
 
 0
 0
 
 - Bottle: Bug
-466
+1089
 
 0
 0
 
 - Bottle: Poe
-117,120,4,466,461
-0,512,544;495,496,512,544;10,464,0
+117,1089,1180
+0,1135,1167;1118,1119,1135,1167;10,1087,0
 0
 0
 
 - Bottle: Big Poe
-174,169,168,115,88,466,469
-4,120,461;4,93,461;120,485;93,485
+115,88,1089,1092
+120,1108;93,1108;1180
 0
 0
 
 - Bottle: Spring Water
-466
+1089
 
 0
 0
 
 - Bottle: Hot Spring Water
-106,466
-9,92,461;2,120,461;108;95,173;92,514
+106,1089
+9,92,1084;108;95,173;92,1137;1178
 0
 0
 
 - Bottle: Zora Egg
-111,10,466,516
-0,461;120
+111,10,1089,1139
+0,1084;120
 0
 0
 
 - Bottle: Mushroom
-81,466
+81,1089
 
 0
 0
 
 - Lens Cave 20r
 106
-9,461;95,530;484,530
+9,1084;95,1153;1107,1153
 0
 0
 
 - Lens Cave 50r
 106,119
-9,461;95;484
+9,1084;95;1107
 0
 0
 
 - Bean Grotto 20r
 103
-10,0;477,0;10,483;477,483
+10,0;1100,0;10,1106;1100,1106
 0
 0
 
 - HSW Grotto 20r
 106,119
-95,173;2,120,461;108
+95,173;108;1178
 0
 0
 
 - Graveyard Bad Bats
-90,502
-547;0
+90,1125
+1170;0
 0
 2
 
@@ -1111,7 +1111,7 @@
 
 - PF Guard Room 100r
 111
-517;10
+1140;10
 0
 0
 
@@ -1134,20 +1134,20 @@
 0
 
 - PR 20r (1)
-516,110
+1139,110
 
 0
 0
 
 - PR 20r (2)
-110,516
+110,1139
 
 0
 0
 
 - Bombers' Hideout 100r
 119
-0,461;531,0;93;10;120;486;525
+0,1084;1154,0;93;10;120;1109;1148
 0
 0
 
@@ -1177,7 +1177,7 @@
 
 - Termina Stump 20r
 
-10;476,477;532
+10;1099,1100;1155
 0
 0
 
@@ -1237,19 +1237,19 @@
 
 - Doggy Racetrack 50r
 
-93;10;476,477;518
+93;10;1099,1100;1141
 0
 16
 
 - Graveyard Grotto
-119,502
+119,1125
 
 0
 0
 
 - Swamp Grotto
 103
-0;93;522,544
+0;93;1145,1167
 0
 0
 
@@ -1267,19 +1267,19 @@
 
 - Well Right Path 50r
 115,88,169
-4,120,461;168,485
+168,1108;1180
 0
 0
 
 - Well Left Path 50r
-115,88,172,169,475
-530;9,461
+115,88,172,169,1098
+1153;9,1084
 0
 0
 
 - Mountain Village Chest (Spring)
 108
-530;9,461
+1153;9,1084
 0
 0
 
@@ -1302,26 +1302,26 @@
 0
 
 - Stone Tower 100r
-116,120,4,461,476,477
+116,1099,1100,1180
 
 0
 0
 
 - Stone Tower Bombchu 10
-116,120,4,461,476,477
+116,1099,1100,1180
 
 0
 0
 
 - Stone Tower Magic Bean
-116,120,4,461,476,477
+116,1099,1100,1180
 
 0
 0
 
 - Path to Snowhead Grotto
 106,119,92
-499;461
+1122;1084
 0
 0
 
@@ -1332,31 +1332,31 @@
 0
 
 - Secret Shrine HP
-120,4,114,461,547
+114,1170,1180
 
 0
 0
 
 - Secret Shrine Dinolfos
-120,4,114,461,547
+114,1170,1180
 
 0
 0
 
 - Secret Shrine Wizzrobe
-120,4,114,461
+114,1180
 
 0
 0
 
 - Secret Shrine Wart
-120,4,114,461
+114,1180
 
 0
 0
 
 - Secret Shrine Garo Master
-120,4,114,461,547
+114,1170,1180
 
 0
 0
@@ -1387,7 +1387,7 @@
 
 - South Clock Town 20r
 
-10;0,32;518
+10;0,32;1141
 0
 0
 
@@ -1398,7 +1398,7 @@
 32
 
 - Bank HP
-479
+1102
 
 0
 0
@@ -1417,19 +1417,19 @@
 
 - Path to Swamp HP
 
-0,461;120;10;93;519
+0,1084;120;10;93;1142
 0
 0
 
 - Swamp Scrub HP
 
-520;0,33
+1143;0,33
 0
 0
 
 - Deku Palace HP
 103
-0;483
+0;1106
 0
 0
 
@@ -1441,7 +1441,7 @@
 
 - Bio Baba Grotto HP
 
-92,93;92,533;119,93;119,533
+92,93;92,1156;119,93;119,1156
 0
 0
 
@@ -1465,19 +1465,19 @@
 
 - Zora Hall Scrub HP
 111
-520;92,0,35;521
+1143;92,0,35;1144
 0
 0
 
 - Path to Snowhead HP
 106,92,10
-499,484;461,9;461,484
+1122,1107;1084,9;1084,1107
 0
 0
 
 - Great Bay Coast HP
 110,10
-476,477;522,544
+1099,1100;1145,1167
 0
 0
 
@@ -1488,62 +1488,62 @@
 0
 
 - Ikana Castle HP
-115,120,0,2,461
-4,484;25,484;4,9;25,9;93,484,534;93,534,9
+115,0,1178
+4,1107;25,1107;4,9;25,9;93,1107,1157;93,1157,9
 0
 0
 
 - Odolwa Heart Container
 104,120,128
-0;480
+0;1103
 0
 0
 
 - Goht Heart Container
-107,120,2,92,132,461
+107,92,132,1178
 
 0
 0
 
 - Gyorg Heart Container
-112,93,120,3,10,138,461
-501;2
+112,93,10,138,1179
+1124;2
 0
 0
 
 - Twinmold Heart Container
-117,10,120,4,142,461,507
-505;506
+117,10,142,1130,1180
+1128;1129
 0
 0
 
 - Map: Clock Town
 
-0,461;10;120;93;523
+0,1084;10;120;93;1146
 0
 0
 
 - Map: Woodfall
 
-0,461;10;120;93;523
+0,1084;10;120;93;1146
 0
 0
 
 - Map: Snowhead
 
-0,461;10;120;93
+0,1084;10;120;93
 0
 0
 
 - Map: Romani Ranch
 
-0,461;10;93;120
+0,1084;10;93;120
 0
 0
 
 - Map: Great Bay
 
-10;0,461;93;120
+10;0,1084;93;120
 0
 0
 
@@ -1555,7 +1555,7 @@
 
 - Goron Racetrack Grotto
 106,119
-92;10,481
+92;10,1104
 0
 0
 
@@ -1602,7 +1602,7 @@
 0
 
 - Goron Trial HP
-265,92,262,461
+265,92,262,1084
 
 0
 0
@@ -1614,13 +1614,13 @@
 0
 
 - Link Trial HP
-265,264,119,120,2,10,461
+265,264,119,120,2,10,1084
 
 0
 0
 
 - Fierce Deity's Mask
-265,0,92,93,119,120,2,10,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,461
+265,0,92,93,119,120,2,10,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,1084
 
 0
 0
@@ -1681,13 +1681,13 @@
 
 - Ranch Cow #3 Milk
 
-96,109,535;96,109,536;265
+96,109,1158;96,109,1159;265
 0
 0
 
 - Well Cow Milk
 96,115,88,95,173
-4,120,461;485
+1108;1180
 0
 0
 
@@ -1717,13 +1717,13 @@
 
 - Swamp Skulltula Main Room Near Ceiling
 103
-10;0,120;0,461;93;0,469
+10;0,120;0,1084;93;0,1092
 0
 0
 
 - Swamp Skulltula Gold Room Near Ceiling
 103
-10;93;0,477
+10;93;0,1100
 0
 0
 
@@ -1746,13 +1746,13 @@
 0
 
 - Swamp Skulltula Tree Room Grass 1
-470
+1093
 
 0
 0
 
 - Swamp Skulltula Tree Room Grass 2
-470
+1093
 
 0
 0
@@ -1789,7 +1789,7 @@
 
 - Swamp Skulltula Monument Room Lower Wall
 103
-10;93;92,476,477;119,476,477
+10;93;92,1099,1100;119,1099,1100
 0
 0
 
@@ -1819,7 +1819,7 @@
 
 - Swamp Skulltula Gold Room Hive
 103
-120;10;93;0,461
+120;10;93;0,1084
 0
 0
 
@@ -1830,13 +1830,13 @@
 0
 
 - Swamp Skulltula Pot Room Behind Vines
-103,468
+103,1091
 
 0
 0
 
 - Swamp Skulltula Tree Room Tree 1
-470
+1093
 
 0
 0
@@ -1849,12 +1849,12 @@
 
 - Swamp Skulltula Pot Room Hive 1
 103
-0,461;120;10;93
+0,1084;120;10;93
 0
 0
 
 - Swamp Skulltula Tree Room Tree 2
-470
+1093
 
 0
 0
@@ -1866,8 +1866,8 @@
 0
 
 - Swamp Skulltula Tree Room Hive
-470
-0,461;10;93;120
+1093
+0,1084;10;93;120
 0
 0
 
@@ -1879,12 +1879,12 @@
 
 - Swamp Skulltula Pot Room Hive 2
 103
-0,461;120;10;93
+0,1084;120;10;93
 0
 0
 
 - Swamp Skulltula Tree Room Tree 3
-470
+1093
 
 0
 0
@@ -1896,181 +1896,181 @@
 0
 
 - Ocean Skulltula Storage Room Behind Boat
-471
+1094
 
 0
 0
 
 - Ocean Skulltula Library Hole Behind Picture
-471,10
+1094,10
 
 0
 0
 
 - Ocean Skulltula Library Hole Behind Cabinet
-471
+1094
 10;93
 0
 0
 
 - Ocean Skulltula Library On Corner Bookshelf
-471
+1094
 
 0
 0
 
 - Ocean Skulltula 2nd Room Ceiling Edge
-471
+1094
 10;93
 0
 0
 
 - Ocean Skulltula 2nd Room Ceiling Plank
-471
+1094
 10;93
 0
 0
 
 - Ocean Skulltula Colored Skulls Ceiling Edge
-471
+1094
 10;93
 0
 0
 
 - Ocean Skulltula Library Ceiling Edge
-471
+1094
 10;93
 0
 0
 
 - Ocean Skulltula Storage Room Ceiling Web
-471
-537;2,120,461
+1094
+1160;1178
 0
 0
 
 - Ocean Skulltula Storage Room Behind Crate
-471
+1094
 10;93;92
 0
 0
 
 - Ocean Skulltula 2nd Room Jar
-471
+1094
 
 0
 0
 
 - Ocean Skulltula Entrance Right Wall
-110,119,527
+110,119,1150
 10;93
 0
 0
 
 - Ocean Skulltula Entrance Left Wall
-110,119,527
+110,119,1150
 10;93
 0
 0
 
 - Ocean Skulltula 2nd Room Webbed Hole
-471,10
+1094,10
 
 0
 0
 
 - Ocean Skulltula Entrance Web
-110,119,527
-10,537;10,2,120,461;93,537;93,2,120,461
+110,119,1150
+10,1160;10,1178;93,1160;93,1178
 0
 0
 
 - Ocean Skulltula Colored Skulls Chandelier 1
-471
+1094
 
 0
 0
 
 - Ocean Skulltula Colored Skulls Chandelier 2
-471
+1094
 
 0
 0
 
 - Ocean Skulltula Colored Skulls Chandelier 3
-471
+1094
 
 0
 0
 
 - Ocean Skulltula Colored Skulls Behind Picture
-471
+1094
 10;93
 0
 0
 
 - Ocean Skulltula Library Behind Picture
-471
+1094
 
 0
 0
 
 - Ocean Skulltula Library Behind Bookcase 1
-471
+1094
 
 0
 0
 
 - Ocean Skulltula Storage Room Crate
-471
+1094
 
 0
 0
 
 - Ocean Skulltula 2nd Room Webbed Pot
-471
+1094
 
 0
 0
 
 - Ocean Skulltula 2nd Room Upper Pot
-471
+1094
 
 0
 0
 
 - Ocean Skulltula Colored Skulls Pot
-471
+1094
 
 0
 0
 
 - Ocean Skulltula Storage Room Jar
-471
-10;552
+1094
+10;1175
 0
 0
 
 - Ocean Skulltula 2nd Room Lower Pot
-471
+1094
 
 0
 0
 
 - Ocean Skulltula Library Behind Bookcase 2
-471
+1094
 
 0
 0
 
 - Ocean Skulltula 2nd Room Behind Skull 1
-471
+1094
 10;93
 0
 0
 
 - Ocean Skulltula 2nd Room Behind Skull 2
-471
+1094
 10;93
 0
 0
@@ -2083,7 +2083,7 @@
 
 - Woodfall Pre-Boss Lower Right Bubble
 104,120
-0;480
+0;1103
 0
 0
 
@@ -2095,13 +2095,13 @@
 
 - Woodfall Pre-Boss Upper Left Bubble
 104,120
-0;76,480
+0;76,1103
 0
 0
 
 - Woodfall Pre-Boss Pillar Bubble
 104,120
-0;76,480
+0;76,1103
 0
 0
 
@@ -2113,25 +2113,25 @@
 
 - Woodfall Poison Water Bubble
 104
-0,120;76,480
+0,120;76,1103
 0
 0
 
 - Woodfall Main Room Bubble
 104
-0,120;480;0,129
+0,120;1103;0,129
 0
 0
 
 - Woodfall Skulltula
 104
-0,120;480;0,129
+0,120;1103;0,129
 0
 0
 
 - Woodfall Pre-Boss Upper Right Bubble
 104,120
-0;480
+0;1103
 0
 0
 
@@ -2149,7 +2149,7 @@
 
 - Woodfall Dark Room
 104
-0,120;0,129;480
+0,120;0,129;1103
 0
 0
 
@@ -2161,103 +2161,103 @@
 
 - Woodfall Bridge Room Hive
 104
-0,129,461;0,120;480
+0,129,1084;0,120;1103
 0
 0
 
 - Woodfall Platform Room Hive
 104
-0,461;10,76;0,120;0,76,93
+0,1084;10,76;0,120;0,76,93
 0
 0
 
 - Snowhead Snow Room Bubble
-107,76,538,541
-2,93,120,461,463,508;2,93,120,461,463,10;2,92,120,461;10,463,481
+107,76,1161,1164
+93,1086,1131,1178;10,93,1086,1178;92,1178;10,1086,1104
 0
 0
 
 - Snowhead Ceiling Bubble
-107,76,538,541
-119,120,462;10,119,463;93,119,120,463,508;93,120,463,119,522,544;2,120,461
+107,76,1161,1164
+119,120,1085;10,119,1086;93,119,120,1086,1131;93,120,1086,119,1145,1167;1178
 0
 0
 
 - Snowhead Dinolfos 1
-107,461,2,120
-93,463,508;92
+107,1178
+93,1086,1131;92
 0
 0
 
 - Snowhead Bridge Room Ledge Bubble
-107,541
-76,120;10,76;10,539;522,539,544;92,461,539;93,522,76,544;76,93,508;93,522,539,544;93,539,508
+107,1164
+76,120;10,76;10,1162;1145,1162,1167;92,1084,1162;93,1145,76,1167;76,93,1131;93,1145,1162,1167;93,1162,1131
 0
 0
 
 - Snowhead Bridge Room Pillar Bubble
-107,541
-76,120;10,76;10,539;522,539,544;92,461,539;93,522,76,544;76,93,508;93,522,539,544;93,539,508
+107,1164
+76,120;10,76;10,1162;1145,1162,1167;92,1084,1162;93,1145,76,1167;76,93,1131;93,1145,1162,1167;93,1162,1131
 0
 0
 
 - Snowhead Dinolfos 2
-107,461,2,120
-93,463,508;92
+107,1178
+93,1086,1131;92
 0
 0
 
 - Snowhead Map Room Fairy
-107,541
-92,461;10;119,462;508;522,544
+107,1164
+92,1084;10;119,1085;1131;1145,1167
 0
 0
 
 - Snowhead Map Room Ledge
-107,541
-10,481;2,10,120,461;2,120,461,540;10,119,462;10,93,119,463;119,462,522,540,544;93,119,463,522,540,544;92,119,461,462,540
+107,1164
+10,1104;10,1178;1163,1178;10,119,1085;10,93,119,1086;119,1085,1145,1163,1167;93,119,1086,1145,1163,1167;92,119,1084,1085,1163
 0
 0
 
 - Snowhead Basement
 107,92
-461;10;119,462;508;522,544
+1084;10;119,1085;1131;1145,1167
 0
 0
 
 - Snowhead Twin Block
-107,541
-10;2,120,461,463;508;93,522,544
+107,1164
+10;1086,1178;1131;93,1145,1167
 0
 0
 
 - Snowhead Icicle Room Wall
-107,538,541
-119,463;92,461,2,120,463;10,92,119;119,508;93,119,522,544
+107,1161,1164
+119,1086;92,1086,1178;10,92,119;119,1131;93,119,1145,1167
 0
 0
 
 - Snowhead Main Room Wall
-107,538,541
-10,481;2,120,461
+107,1161,1164
+10,1104;1178
 0
 0
 
 - Snowhead Pillar Freezards
-107,461,2,120,541
+107,1164,1178
 
 0
 0
 
 - Snowhead Ice Puzzle
-107,461,2,120,541
-463;10;93
+107,1164,1178
+1086;10;93
 0
 0
 
 - Snowhead Crate
-107,541
-92,2,120,461,463,469;92,76,463,469;10;93,119;92,93
+107,1164
+92,1086,1092,1178;92,76,1086,1092;10;93,119;92,93
 0
 0
 
@@ -2268,7 +2268,7 @@
 0
 
 - Great Bay Pre-Boss Room Underwater Bubble
-112,93,120,3,461,10
+112,93,10,1179
 
 0
 0
@@ -2280,31 +2280,31 @@
 0
 
 - Great Bay Pre-Boss Room Bubble
-112,93,120,3,461,10
+112,93,10,1179
 
 0
 0
 
 - Great Bay Waterwheel Room Upper
-112,93,10,3,120,461
+112,93,10,1179
 
 0
 0
 
 - Great Bay Green Valve
-112,93,120,3,461,10
+112,93,10,1179
 
 0
 0
 
 - Great Bay Seesaw Room
-112,93,10,543
-501;2,120,461
+112,93,10,1166
+1124;1178
 0
 0
 
 - Great Bay Waterwheel Room Lower
-112,93,10,543
+112,93,10,1166
 
 0
 0
@@ -2322,7 +2322,7 @@
 0
 
 - Great Bay Underwater Barrel
-112,93,10,543
+112,93,10,1166
 
 0
 0
@@ -2347,73 +2347,73 @@
 
 - Great Bay Ledge Jar
 112,93,10
-76;3,120,461;542
+76;1165;1179
 0
 0
 
 - Stone Tower Mirror Sun Block
 116
-25,92,93,119,465;4,120,461,464
+25,92,93,119,1088;1087,1180
 0
 0
 
 - Stone Tower Eyegore
 116
-0,25,92,93,119,465;4,120,461,464
+0,25,92,93,119,1088;1087,1180
 0
 0
 
 - Stone Tower Lava Room Fire Ring
 116,92
-0,25,119,465;4,120,461,464
+0,25,119,1088;1087,1180
 0
 0
 
 - Stone Tower Updraft Fire Ring
-117,116,4,120,461,93,0
+117,116,93,0,1180
 
 0
 0
 
 - Stone Tower Mirror Sun Switch
 116
-25,119,465,92,93;4,120,461,464
+25,119,1088,92,93;1087,1180
 0
 0
 
 - Stone Tower Boss Warp
-117,4,120,461
+117,1180
 
 0
 0
 
 - Stone Tower Wizzrobe
 117,0
-4,120,461,512,544;4,10,92,120,461,464;4,10,120,461,464,544;522,10,544
+1135,1167,1180;10,92,1087,1180;10,1087,1167,1180;1145,10,1167
 0
 0
 
 - Stone Tower Death Armos
 117,116
-522,544;4,120,461,512,0,544;0,4,10,92,120,461,464;0,120,4,10,461,464,544;4,120,461,512,0,544;10,120,4,461,495,507,496,544
+1145,1167;0,1135,1167,1180;0,10,92,1087,1180;0,10,1087,1167,1180;0,1135,1167,1180;10,1118,1119,1130,1167,1180
 0
 0
 
 - Stone Tower Updraft Frozen Eye
-117,2,4,120,461
+117,1178,1180
 0;10
 0
 0
 
 - Stone Tower Thin Bridge
 116
-4,119,120,461,464,545;0,4,92,117,120,461,467;0,4,117,120,461,467,544;0,25,92,93,119,465,545
+119,1087,1168,1180;0,92,117,1090,1180;0,117,1090,1167,1180;0,25,92,93,119,1088,1168
 0
 0
 
 - Stone Tower Basement Ledge
 116
-92,119;4,93,120,461,464
+92,119;93,1087,1180
 0
 0
 
@@ -2424,20 +2424,20 @@
 0
 
 - Stone Tower Underwater
-116,4,120,461,93
-546;117,0;117,496
+116,93,1180
+1169;117,0;117,1119
 0
 0
 
 - Stone Tower Bridge Crystal
-116,4,120,461,93
+116,93,1180
 
 0
 0
 
 - Stone Tower Lava Room Ledge
 116,0
-25,92,93,119,465;4,120,461,464
+25,92,93,119,1088;1087,1180
 0
 0
 
@@ -2454,7 +2454,7 @@
 0
 
 - Milk Bar Chateau
-82,479
+82,1102
 
 0
 42
@@ -2473,7 +2473,7 @@
 
 - Honey and Darling 50r
 
-120;469;0,461
+120;1092;0,1084
 0
 16
 
@@ -2508,14 +2508,14 @@
 0
 
 - Canyon Scrub Blue Potion
-114,479
+114,1102
 
 0
 0
 
 - Zora Hall Stage Lights 5r
-2,120,461,110
-93;513
+110,1178
+93;1136
 0
 0
 
@@ -2569,13 +2569,13 @@
 
 - Curiosity Shop 5r
 
-175;473
+175;1096
 0
 42
 
 - Curiosity Shop 20r
 
-168;169;166;172;173;174;472;473;474;475;150,466
+168;169;166;172;173;174;1095;1096;1097;1098;150,1089
 0
 42
 
@@ -2587,12 +2587,3750 @@
 
 - Curiosity Shop 200r
 
-18;171;21;409,466
+18;171;21;409,1089
 0
 42
 
 - Seahorse
 8,110,111
+
+0
+0
+
+- Ikana Castle Courtyard Grass
+115
+1180;25;1157,93
+0
+0
+
+- Ikana Castle Courtyard Grass 2
+115
+1180;25;1157,93
+0
+0
+
+- Night 1 Grave Pot
+90,1125
+
+0
+2
+
+- Night 2 Grave Pot
+90,1125
+
+0
+8
+
+- Night 1 Grave Pot 2
+90,1125
+
+0
+2
+
+- Cucco Shack Crate
+
+
+0
+16
+
+- Dampe's Basement Pot
+90,1125
+
+0
+32
+
+- Dampe's Basement Pot 2
+90,1125
+
+0
+32
+
+- Dampe's Basement Pot 3
+90,1125
+
+0
+32
+
+- Dampe's Basement Pot 4
+90,1125
+
+0
+32
+
+- Goron Village Small Snowball
+106
+
+0
+0
+
+- Goron Village Small Snowball 2
+106
+
+0
+0
+
+- Great Bay Coast Pot
+110
+
+0
+0
+
+- Great Bay Coast Pot 2
+110
+
+0
+0
+
+- Great Bay Coast Pot 3
+110
+
+0
+0
+
+- Great Bay Coast Pot 4
+110
+
+0
+0
+
+- Great Bay Temple Red Valve Barrel
+112,93,10,1179
+
+0
+0
+
+- Ikana King Pot
+115
+1180;0,7,92,1107,25;7,9,92,1121,25;0,7,9,92,25;7,92,1107,1121,25
+0
+0
+
+- Ikana King Pot 2
+115
+1180;0,7,92,1107,25;7,9,92,1121,25;0,7,9,92,25;7,92,1107,1121,25
+0
+0
+
+- Ikana King Entry Pot
+115
+1180;0,7,92,1107,25;7,9,92,1121,25;0,7,9,92,25;7,92,1107,1121,25
+0
+0
+
+- Ikana King Entry Pot 2
+115
+1180;0,7,92,1107,25;7,9,92,1121,25;0,7,9,92,25;7,92,1107,1121,25
+0
+0
+
+- Ikana Graveyard Grass
+1125
+
+0
+0
+
+- Oceanside Spider House Entrance Pot
+110,119,1150
+
+0
+0
+
+- Oceanside Spider House Entrance Pot 2
+110,119,1150
+
+0
+0
+
+- Pirates' Fortress Sewer Gate Pot
+111,92
+
+0
+0
+
+- Pirates' Fortress Guarded Egg Pot
+111
+1140;10
+0
+0
+
+- Pirates' Fortress Barrel Maze Egg Pot
+111,10
+
+0
+0
+
+- Pirates' Fortress Sewer Exit Pot
+111,92
+
+0
+0
+
+- Secret Shrine Underwater Pot
+114,1180
+
+0
+0
+
+- Secret Shrine Underwater Pot 2
+114,1180
+
+0
+0
+
+- Snowhead Temple Icicle Room Snowball
+107,1164
+10,119,1084;93,119,1131;93,119,1145,1167;1084,10,92,1086,1104;119,1086;1086,1178;93,119,1178
+0
+0
+
+- Snowhead Temple Icicle Room Snowball 2
+107,1164
+10,119,1084;93,119,1131;93,119,1145,1167;1084,10,92,1086,1104;119,1086;1086,1178;93,119,1178
+0
+0
+
+- Stone Tower Upper Scarecrow Pot
+115,10,101
+1127;93,92
+0
+0
+
+- Stone Tower Upper Scarecrow Pot 2
+115,10,101
+1127;93,92
+0
+0
+
+- Great Bay Coast Pot 5
+110
+
+0
+0
+
+- Great Bay Temple Seesaw Room Pot
+112,93,10,1166
+
+0
+0
+
+- Great Bay Temple Green Pump Barrel
+112,93,1179,10
+
+0
+0
+
+- Ikana Canyon Grass
+115
+
+0
+0
+
+- Milk Road Grass
+
+
+0
+0
+
+- Mountain Village Spring Snowball
+108
+
+0
+0
+
+- Mountain Village Winter Small Snowball
+106
+
+0
+0
+
+- Pirates' Fortress Lone Guard Egg Pot
+111,10
+
+0
+0
+
+- Pirates' Fortress Cage Pot
+111,92
+
+0
+0
+
+- Ranch Crate
+
+
+0
+48
+
+- Snowhead Small Snowball
+106,92
+1122;1084
+0
+0
+
+- Stone Tower Owl Pot
+115,10,101
+1127;93,92
+0
+0
+
+- Zora Cape Owl Pot
+110
+93;1136
+0
+0
+
+- Observatory Scarecrow Pot
+
+0;10;93;120;1109;1148;1123
+0
+0
+
+- Observatory Scarecrow Pot 2
+
+0;10;93;120;1109;1148;1123
+0
+0
+
+- Deku Palace Item
+103
+0;1106
+0
+0
+
+- Deku Palace Item 2
+103
+0;1106
+0
+0
+
+- Deku Palace Item 3
+103
+0;1106
+0
+0
+
+- Deku Palace Item 4
+103
+0;1106
+0
+0
+
+- Deku Palace Item 5
+103
+0;1106
+0
+0
+
+- Doggy Racetrack Pot
+
+
+0
+16
+
+- Doggy Racetrack Pot 2
+
+
+0
+16
+
+- Doggy Racetrack Pot 3
+
+
+0
+16
+
+- Doggy Racetrack Pot 4
+
+
+0
+16
+
+- Goron Village Large Snowball
+106
+
+0
+0
+
+- Goron Village Large Snowball 2
+106
+
+0
+0
+
+- Goron Village Large Snowball 3
+106
+
+0
+0
+
+- Great Bay Coast Ledge Pot
+110,10
+
+0
+0
+
+- Great Bay Coast Ledge Pot 2
+110,10
+
+0
+0
+
+- Great Bay Coast Ledge Pot 3
+110,10
+
+0
+0
+
+- Great Bay Temple Water Control Room Item
+112,10
+
+0
+0
+
+- Great Bay Temple Water Control Room Item 2
+112,10
+
+0
+0
+
+- Bio Baba Grotto Hive
+
+92,93;92,1156;119,93;119,1156
+0
+0
+
+- Laundry Pool Crate
+
+
+0
+0
+
+- Mountain Village Day 3 Snowball
+106
+
+0
+48
+
+- Mountain Village Day 2 Snowball
+106
+
+0
+12
+
+- Twin Islands Item
+108,93
+
+0
+0
+
+- Twin Islands Item 2
+108,93
+
+0
+0
+
+- Twin Islands Item 3
+108,93
+
+0
+0
+
+- Twin Islands Item 4
+108,93
+
+0
+0
+
+- Pirates' Fortress Barrel Maze Egg Pot 2
+111,10
+
+0
+0
+
+- Pirates' Fortress Sewer Exit Barrel
+111,92
+
+0
+0
+
+- Pirates' Fortress Sewer Exit Barrel 2
+111,92
+
+0
+0
+
+- Pirates' Fortress Sewer Exit Barrel 3
+111,92
+
+0
+0
+
+- Pirates' Fortress Cage Room Barrel
+111,92
+
+0
+0
+
+- Ranch Barn Hay Item
+
+
+0
+48
+
+- Ranch Barn Hay Item 2
+
+
+0
+48
+
+- Snowhead Temple Icicle Room Snowball 3
+107,1164
+10,119,1084;93,119,1131;93,119,1145,1167;1084,10,92,1086,1104;119,1086;1086,1178;93,119,1178
+0
+0
+
+- Snowhead Temple Icicle Room Snowball 4
+107,1164
+10,119,1084;93,119,1131;93,119,1145,1167;1084,10,92,1086,1104;119,1086;1086,1178;93,119,1178
+0
+0
+
+- Snowhead Temple Icicle Room Snowball 5
+107,1164
+10,119,1084;93,119,1131;93,119,1145,1167;1084,10,92,1086,1104;119,1086;1086,1178;93,119,1178
+0
+0
+
+- Snowhead Temple Elevator Room Crate
+107,1164
+92,1084;10;119,1085;1131;1145,1167
+0
+0
+
+- Snowhead Temple Elevator Room Crate 2
+107,1164
+92,1084;10;119,1085;1131;1145,1167
+0
+0
+
+- Snowhead Temple Elevator Room Crate 3
+107,1164
+92,1084;10;119,1085;1131;1145,1167
+0
+0
+
+- Snowhead Temple Elevator Room Crate 4
+107,1164
+92,1084;10;119,1085;1131;1145,1167
+0
+0
+
+- Snowhead Temple Elevator Room Crate 5
+107,1164
+92,1084;10;119,1085;1131;1145,1167
+0
+0
+
+- Snowhead Temple Safety Bridge Pot
+107,1164
+10,1104;119,1085;119,1086,93;1178
+0
+0
+
+- Snowhead Temple Safety Bridge Pot 2
+107,1164
+10,1104;119,1085;119,1086,93;1178
+0
+0
+
+- Cleared Swamp Potion Shop Pot
+105
+
+0
+0
+
+- Swamp Near Frog Item
+
+0;93;1145,1167
+0
+0
+
+- Swamp Near Frog Item 2
+
+0;93;1145,1167
+0
+0
+
+- Potion Shop Pot
+
+
+0
+0
+
+- Stone Tower Temple Lava Room Item
+116,0
+25,92,93,119,1088;1087,1180
+0
+0
+
+- Stone Tower Temple Lava Room Item 2
+116,0
+25,92,93,119,1088;1087,1180
+0
+0
+
+- Stone Tower Temple Thin Bridge Item
+116
+1087,1180;0,25,92,93,119,1088
+0
+0
+
+- Stone Tower Temple Thin Bridge Item 2
+116
+1087,1180;0,25,92,93,119,1088
+0
+0
+
+- Stone Tower Temple Thin Bridge Item 3
+116
+1087,1180;0,25,92,93,119,1088
+0
+0
+
+- Stone Tower Temple Thin Bridge Item 4
+116
+1087,1180;0,25,92,93,119,1088
+0
+0
+
+- Stone Tower Temple Thin Bridge Item 5
+116
+1087,1180;0,25,92,93,119,1088
+0
+0
+
+- Stone Tower Temple Thin Bridge Item 6
+116
+1087,1180;0,25,92,93,119,1088
+0
+0
+
+- Stone Tower Temple Thin Bridge Item 7
+116
+1087,1180;0,25,92,93,119,1088
+0
+0
+
+- Stone Tower Temple Thin Bridge Item 8
+116
+1087,1180;0,25,92,93,119,1088
+0
+0
+
+- Inverted Stone Tower Temple Dexihand Item
+117,1180
+1119;0
+0
+0
+
+- Inverted Stone Tower Temple Pre-Boss Closest Item
+117,10,1130,1180
+
+0
+0
+
+- Inverted Stone Tower Temple Pre-Boss 2nd Closest Item
+117,10,1130,1180
+
+0
+0
+
+- Inverted Stone Tower Temple Pre-Boss Item
+117,10,1130,1180
+
+0
+0
+
+- Inverted Stone Tower Temple Pre-Boss Item 2
+117,10,1130,1180
+
+0
+0
+
+- Inverted Stone Tower Temple Pre-Boss Item 3
+117,10,1130,1180
+
+0
+0
+
+- Inverted Stone Tower Temple Pre-Boss Furthest Item
+117,10,1130,1180,93
+
+0
+0
+
+- Inverted Stone Tower Temple Pre-Boss Furthest Item 2
+117,10,1130,1180,93
+
+0
+0
+
+- Inverted Stone Tower Temple Pre-Boss 2nd Furthest Item
+117,10,1130,1180,93
+
+0
+0
+
+- Inverted Stone Tower Temple Pre-Boss 2nd Furthest Item 2
+117,10,1130,1180,93
+
+0
+0
+
+- Inverted Stone Tower Temple Pre-Boss Closest Item 2
+117,10,1130,1180
+
+0
+0
+
+- Inverted Stone Tower Temple Pre-Boss 2nd Closest Item 2
+117,10,1130,1180
+
+0
+0
+
+- Swordsman's School Pot
+1091
+
+0
+32
+
+- Swordsman's School Pot 2
+1091
+
+0
+32
+
+- Swordsman's School Pot 3
+1091
+
+0
+32
+
+- Swordsman's School Pot 4
+1091
+
+0
+32
+
+- Swordsman's School Pot 5
+1091
+
+0
+32
+
+- Woodfall Item
+103,0
+
+0
+0
+
+- Woodfall Temple Entrance Hive
+104
+0,1084;0,1091;0,119;10;120;93
+0
+0
+
+- Woodfall Temple Gekko Room Pot
+104,120,0
+
+0
+0
+
+- Woodfall Temple Gekko Room Pot 2
+104,120,0
+
+0
+0
+
+- Woodfall Temple Gekko Room Pot 3
+104,120,0
+
+0
+0
+
+- Woodfall Temple Gekko Room Pot 4
+104,120,0
+
+0
+0
+
+- Woodfall Temple Pre-Boss Platform Item
+104,120
+0;1103
+0
+0
+
+- Woodfall Temple Pre-Boss Platform Item 2
+104,120
+0;1103
+0
+0
+
+- Woodfall Temple Pre-Boss Platform Item 3
+104,120
+0;1103
+0
+0
+
+- Woodfall Temple Pre-Boss Platform Item 4
+104,120
+0;1103
+0
+0
+
+- Well Left Path Pot
+115,88,172,1098
+
+0
+0
+
+- Well Left Path Pot 2
+115,88,172,1098
+
+0
+0
+
+- Well Left Path Pot 3
+115,88,172,1098
+
+0
+0
+
+- Well Left Path Pot 4
+115,88,172,1098
+
+0
+0
+
+- Well Left Path Pot 5
+115,88,172,1098
+
+0
+0
+
+- Goron Village Small Snowball 3
+106
+
+0
+0
+
+- Goron Village Small Snowball 4
+106
+
+0
+0
+
+- Great Bay Coast Pot 6
+110
+
+0
+0
+
+- Great Bay Temple Red Valve Barrel 2
+112,93,10,1179
+
+0
+0
+
+- Great Bay Temple Green Pump Barrel 2
+112,93,1179
+
+0
+0
+
+- Ikana Canyon Grass 2
+115
+
+0
+0
+
+- Mountain Village Spring Snowball 2
+108
+
+0
+0
+
+- Mountain Village Winter Small Snowball 2
+106
+
+0
+0
+
+- Snowhead Small Snowball 2
+106,92
+1122;1084
+0
+0
+
+- Stone Tower Owl Pot 2
+115,10,101
+1127;93,92
+0
+0
+
+- Inverted Stone Tower Pot
+116,1099,1100,1180
+
+0
+0
+
+- Zora Cape Owl Pot 2
+110
+93;1136
+0
+0
+
+- Ikana Castle Left Staircase Pot
+115,0,1178
+4,1107;25,1107;4,9;25,9;93,1107,1157;93,1157,9
+0
+0
+
+- Goron Village Small Snowball 5
+106
+
+0
+0
+
+- Goron Village Small Snowball 6
+106
+
+0
+0
+
+- Pirates' Fortress Sewer Exit Pot 2
+111,92
+
+0
+0
+
+- Woodfall Pot
+103,0
+
+0
+0
+
+- Goron Shrine Pot
+106
+
+0
+0
+
+- Goron Shrine Pot 2
+106
+
+0
+0
+
+- Goron Shrine Pot 3
+106
+
+0
+0
+
+- Goron Shrine Pot 4
+106
+
+0
+0
+
+- Goron Shrine Pot 5
+106
+
+0
+0
+
+- Goron Village Small Snowball 7
+106
+
+0
+0
+
+- Goron Village Small Snowball 8
+106
+
+0
+0
+
+- Cleared Swamp Owl Grass
+105
+
+0
+0
+
+- Southern Swamp Owl Grass
+
+
+0
+0
+
+- Woodfall Pot 2
+103,0
+
+0
+0
+
+- Dampe's Basement Pot 5
+90,1125
+
+0
+32
+
+- Dampe's Basement Pot 6
+90,1125
+
+0
+32
+
+- Dampe's Basement Pot 7
+90,1125
+
+0
+32
+
+- Deku Palace Item 6
+103
+0;1106
+0
+0
+
+- Deku Palace Item 7
+103
+0;1106
+0
+0
+
+- Deku Palace Item 8
+103
+0;1106
+0
+0
+
+- Deku Palace Item 9
+103
+0;1106
+0
+0
+
+- Deku Palace Item 10
+103
+0;1106
+0
+0
+
+- Deku Palace Item 11
+103
+0;1106
+0
+0
+
+- Deku Palace Item 12
+103
+0;1106
+0
+0
+
+- Deku Palace Item 13
+103
+0;1106
+0
+0
+
+- Deku Palace Item 14
+103
+0;1106
+0
+0
+
+- Deku Palace Out of Bounds Item
+265
+
+0
+0
+
+- Deku Palace Item 15
+103
+0;1106
+0
+0
+
+- Deku Palace Item 16
+103
+0;1106
+0
+0
+
+- Deku Palace Item 17
+103
+0;1106
+0
+0
+
+- Butler Race Pillar Item
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Pillar Item 2
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Pillar Item 3
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Pillar Item 4
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Pillar Item 5
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Pillar Item 6
+167,103,0
+1116;105
+0
+0
+
+- Butler Race River Item
+167,103,0
+1116;105
+0
+0
+
+- Butler Race River Item 2
+167,103,0
+1116;105
+0
+0
+
+- Butler Race River Item 3
+167,103,0
+1116;105
+0
+0
+
+- Butler Race River Item 4
+167,103,0
+1116;105
+0
+0
+
+- Butler Race River Item 5
+167,103,0
+1116;105
+0
+0
+
+- Butler Race River Item 6
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Right Path Item
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Right Path Item 2
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Right Path Item 3
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Right Path Item 4
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Right Path Item 5
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Right Path Item 6
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Final Room Item
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Final Room Item 2
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Final Room Item 3
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Final Room Item 4
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Final Room Item 5
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Final Room Item 6
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Final Room Item 7
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Final Room Item 8
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Final Room Item 9
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Final Room Item 10
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Dual Pot
+167,103,0
+1116;105
+0
+0
+
+- East Clock Town Crate
+
+
+0
+0
+
+- Great Bay Temple Water Control Room Item 3
+112,10
+
+0
+0
+
+- Great Bay Temple Water Control Room Item 4
+112,10
+
+0
+0
+
+- Ikana Graveyard Grass 2
+1125
+
+0
+0
+
+- Potion Shop Item
+
+
+0
+0
+
+- Pirates' Fortress Cage Room Barrel 2
+111,92
+
+0
+0
+
+- Pirates' Fortress Cage Room Barrel 3
+111,92
+
+0
+0
+
+- Pirates' Fortress Cage Room Barrel 4
+111,92
+
+0
+0
+
+- Pirates' Fortress Cage Room Barrel 5
+111,92
+
+0
+0
+
+- Secret Shrine Floating Item
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 2
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 3
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 4
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 5
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 6
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 7
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 8
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 9
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 10
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 11
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 12
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 13
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 14
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 15
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 16
+114
+93;1099,1100
+0
+0
+
+- Secret Shrine Floating Item 17
+114
+93;1099,1100
+0
+0
+
+- Cleared Swamp Potion Shop Pot 2
+105
+
+0
+0
+
+- Potion Shop Pot 2
+
+
+0
+0
+
+- Stone Tower Temple Lava Room Item 3
+116,0
+25,92,93,119,1088;1087,1180
+0
+0
+
+- Stone Tower Temple Lava Room Item 4
+116,0
+25,92,93,119,1088;1087,1180
+0
+0
+
+- Stone Tower Temple Lava Room Item 5
+116,0
+25,92,93,119,1088;1087,1180
+0
+0
+
+- Inverted Stone Tower Temple Dexihand Item 2
+117,1180
+1119;0
+0
+0
+
+- Clock Tower Rooftop Pot
+
+
+0
+32
+
+- Clock Tower Rooftop Pot 2
+
+
+0
+32
+
+- Clock Tower Rooftop Pot 3
+
+
+0
+32
+
+- Clock Tower Rooftop Pot 4
+
+
+0
+32
+
+- Goron Racetrack Pot
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 2
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 3
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 4
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 5
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 6
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 7
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 8
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 9
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 10
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 11
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 12
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 13
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 14
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 15
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 16
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 17
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 18
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 19
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 20
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 21
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 22
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 23
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 24
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 25
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 26
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 27
+92,106
+108;7
+12
+0
+
+- Goron Shrine Pot 6
+106
+
+0
+0
+
+- Goron Shrine Pot 7
+106
+
+0
+0
+
+- Goron Shrine Pot 8
+106
+
+0
+0
+
+- Goron Shrine Pot 9
+106
+
+0
+0
+
+- Great Bay Coast Pot 7
+110
+
+0
+0
+
+- Great Bay Temple Red Valve Crate
+112,93,10,1179
+
+0
+0
+
+- Ikana King Pot 3
+115
+1180;0,7,92,1107,25;7,9,92,1121,25;0,7,9,92,25;7,92,1107,1121,25
+0
+0
+
+- Ikana Canyon Grass 3
+115
+
+0
+0
+
+- Milk Road Grass 2
+
+
+0
+0
+
+- Mountain Village Spring Snowball 3
+108
+
+0
+0
+
+- Goron Graveyard Snowball
+106
+9,1084;1137
+0
+0
+
+- Goron Graveyard Snowball 2
+106
+9,1084;1137
+0
+0
+
+- Mountain Village Winter Small Snowball 3
+106
+
+0
+0
+
+- Snowhead Small Snowball 3
+106,92
+1122;1084
+0
+0
+
+- Stone Tower Owl Pot 3
+115,10,101
+1127;93,92
+0
+0
+
+- Inverted Stone Tower Pot 2
+116,1099,1100,1180
+
+0
+0
+
+- Link Trial Pot
+265,264
+
+0
+0
+
+- Link Trial Pot 2
+265,264
+
+0
+0
+
+- Link Trial Pot 3
+265,264
+
+0
+0
+
+- Link Trial Pot 4
+265,264
+
+0
+0
+
+- Zora Cape Owl Pot 3
+110
+93;1136
+0
+0
+
+- Dampe's Basement Pot 8
+90,1125
+
+0
+32
+
+- Pirates' Fortress Item
+111
+1140;10
+0
+0
+
+- Pirates' Fortress Item 2
+111
+1140;10
+0
+0
+
+- Pirates' Fortress Item 3
+111
+1140;10
+0
+0
+
+- Butler Race Pillar Item 7
+167,103,0
+1116;105
+0
+0
+
+- Butler Race Pillar Item 8
+167,103,0
+1116;105
+0
+0
+
+- Great Bay Temple Water Control Room Item 5
+112,10
+
+0
+0
+
+- Great Bay Temple Dexihand Item
+112,93,10
+
+0
+0
+
+- Great Bay Temple Dexihand Item 2
+112,93,10
+
+0
+0
+
+- Great Bay Temple Green Pump Item
+112,93,1179,10
+
+0
+0
+
+- Great Bay Temple Green Pump Item 2
+112,93,1179,10
+
+0
+0
+
+- Laundry Pool Item
+
+
+0
+8
+
+- Laundry Pool Item 2
+
+
+0
+8
+
+- Laundry Pool Item 3
+
+
+0
+8
+
+- Mountain Village Spring Stair Item
+108
+
+0
+0
+
+- Snowhead Temple Icicle Room Frozen Item
+107,1164,120
+10,119;93,119,1131;93,119,1145,1167;1084,10,92,1086,1104;119,1086;1086,1178;93,119,1178
+0
+0
+
+- Snowhead Temple Icicle Room Frozen Item 2
+107,1164,120
+10,119;93,119,1131;93,119,1145,1167;1084,10,92,1086,1104;119,1086;1086,1178;93,119,1178
+0
+0
+
+- Snowhead Temple Icicle Room Frozen Item 3
+107,1164,120
+10,119;93,119,1131;93,119,1145,1167;1084,10,92,1086,1104;119,1086;1086,1178;93,119,1178
+0
+0
+
+- Swamp Near Frog Hive
+
+0,1084;10;120;93
+0
+0
+
+- Stone Tower Temple Lava Room Item 6
+116,0
+25,92,93,119,1088;1087,1180
+0
+0
+
+- Stone Tower Temple Eyegore Room Item
+116,93,1180
+
+0
+0
+
+- Stone Tower Temple Mirror Room Crate
+116
+25,92,93,119,1088;1087,1180
+0
+0
+
+- Stone Tower Temple Mirror Room Crate 2
+116
+25,92,93,119,1088;1087,1180
+0
+0
+
+- Stone Tower Temple Eyegore Room Item 2
+116,93,1180
+
+0
+0
+
+- Inverted Stone Tower Temple Dexihand Item 3
+117,1180
+1119;0
+0
+0
+
+- Inverted Stone Tower Temple Updraft Room Item
+117,1180
+0;10
+0
+0
+
+- Inverted Stone Tower Temple Updraft Room Item 2
+117,1180
+0;10
+0
+0
+
+- Termina Field Pillar Item
+
+
+0
+0
+
+- Woodfall Temple Pre-Boss Pillar Item
+104,120
+0;1103,93;1145,1103,1167
+0
+0
+
+- Woodfall Temple Pre-Boss Pillar Item 2
+104,120
+0;1103,93;1145,1103,1167
+0
+0
+
+- Ikana Castle Courtyard Grass 3
+115
+1180;25;1157,93
+0
+0
+
+- Ikana Castle Courtyard Grass 4
+115
+1180;25;1157,93
+0
+0
+
+- Ikana Castle Fire Ceiling Room Pot
+115,0,1178
+4;25;93,1157
+0
+0
+
+- Ikana Castle Hole Room Pot
+115,0,1178
+4;25;93,1157
+0
+0
+
+- Ikana Castle Hole Room Pot 2
+115,0,1178
+4;25;93,1157
+0
+0
+
+- Observatory Balloon Pot
+
+0,1084;1154,0;93;10;120;1109;1148
+0
+0
+
+- Observatory Balloon Pot 2
+
+0,1084;1154,0;93;10;120;1109;1148
+0
+0
+
+- Observatory Scarecrow Pot 3
+
+0;10;93;120;1109;1148;1123
+0
+0
+
+- Night 2 Grave Pot 2
+90,1125
+
+0
+8
+
+- Deku Palace Pot
+103,0
+1120;1100
+0
+0
+
+- Deku Palace Pot 2
+103,0
+1120;1100
+0
+0
+
+- Goron Racetrack Pot 28
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 29
+92,106
+108;7
+12
+0
+
+- Goron Racetrack Pot 30
+92,106
+108;7
+12
+0
+
+- Goron Shrine Pot 10
+106
+
+0
+0
+
+- Goron Shrine Pot 11
+106
+
+0
+0
+
+- Goron Village Large Snowball 4
+106
+
+0
+0
+
+- Goron Village Large Snowball 5
+106
+
+0
+0
+
+- Goron Village Large Snowball 6
+106
+
+0
+0
+
+- Goron Village Small Snowball 9
+106
+
+0
+0
+
+- Goron Village Small Snowball 10
+106
+
+0
+0
+
+- Ikana King Entry Pot 3
+115
+1180;0,7,92,1107,25;7,9,92,1121,25;0,7,9,92,25;7,92,1107,1121,25
+0
+0
+
+- Ikana Graveyard Grass 3
+1125
+
+0
+0
+
+- Mountain Village Winter Small Snowball 4
+106
+
+0
+0
+
+- Mountain Village Winter Small Snowball 5
+106
+
+0
+0
+
+- Mountain Village Day 1 Snowball
+106
+
+0
+0
+
+- Mountain Village Day 2 Snowball 2
+106
+
+0
+12
+
+- Oceanside Spider House Main Room Pot
+1094
+
+0
+0
+
+- Oceanside Spider House Entrance Pot 3
+110,119,1150
+
+0
+0
+
+- Oceanside Spider House Main Room Pot 2
+1094
+
+0
+0
+
+- Oceanside Spider House Storage Room Pot
+1094
+
+0
+0
+
+- Twin Islands Day 3 Snowball
+106
+
+0
+48
+
+- Twin Islands Day 3 Snowball 2
+106
+
+0
+48
+
+- Twin Islands Day 3 Snowball 3
+106
+
+0
+48
+
+- Twin Islands Day 3 Snowball 4
+106
+
+0
+48
+
+- Twin Islands Day 3 Snowball 5
+106
+
+0
+48
+
+- Twin Islands Day 2 Snowball
+106
+
+0
+12
+
+- Twin Islands Day 2 Snowball 2
+106
+
+0
+12
+
+- Twin Islands Day 2 Snowball 3
+106
+
+0
+12
+
+- Twin Islands Day 2 Snowball 4
+106
+
+0
+12
+
+- Twin Islands Day 1 Snowball
+106
+
+0
+0
+
+- Twin Islands Day 1 Snowball 2
+106
+
+0
+0
+
+- Twin Islands Day 1 Snowball 3
+106
+
+0
+0
+
+- Twin Islands Day 1 Snowball 4
+106
+
+0
+0
+
+- Twin Islands Day 1 Snowball 5
+106
+
+0
+0
+
+- Twin Islands Small Snowball
+106
+
+0
+0
+
+- Twin Islands Small Snowball 2
+106
+
+0
+0
+
+- Twin Islands Ramp Snowball
+106
+92;10,1104
+0
+0
+
+- Path to Mountain Village Small Snowball
+106
+
+0
+0
+
+- Path to Snowhead Large Snowball
+106,92
+1122;1084
+0
+0
+
+- Path to Snowhead Large Snowball 2
+106,92
+1122;1084
+0
+0
+
+- Path to Snowhead Large Snowball 3
+106,92
+1122;1084
+0
+0
+
+- Path to Snowhead Large Snowball 4
+106,92
+1122;1084
+0
+0
+
+- Pinnacle Rock Pot
+1139,110
+
+0
+0
+
+- Pinnacle Rock Pot 2
+1139,110
+
+0
+0
+
+- Pinnacle Rock Pot 3
+1139,110
+
+0
+0
+
+- Pinnacle Rock Pot 4
+1139,110
+
+0
+0
+
+- Secret Shrine Underwater Pot 3
+114,1180
+
+0
+0
+
+- Secret Shrine Underwater Pot 4
+114,1180
+
+0
+0
+
+- Snowhead Large Snowball
+106,92,99
+1122;1084
+0
+0
+
+- Snowhead Large Snowball 2
+106,92,99
+1122;1084
+0
+0
+
+- Snowhead Large Snowball 3
+106,92,99
+1122;1084
+0
+0
+
+- Snowhead Large Snowball 4
+106,92,99
+1122;1084
+0
+0
+
+- Snowhead Large Snowball 5
+106,92,99
+1122;1084
+0
+0
+
+- Snowhead Large Snowball 6
+106,92,99
+1122;1084
+0
+0
+
+- Stone Tower Lower Scarecrow Pot
+115,10,101
+1127;93,92
+0
+0
+
+- Stone Tower Lower Scarecrow Pot 2
+115,10,101
+1127;93,92
+0
+0
+
+- Stone Tower Upper Scarecrow Pot 3
+115,10,101
+1127;93,92
+0
+0
+
+- Stone Tower Upper Scarecrow Pot 4
+115,10,101
+1127;93,92
+0
+0
+
+- Stone Tower Lower Scarecrow Pot 3
+115,10,101
+1127;93,92
+0
+0
+
+- Zora Cape Waterfall Pot
+110
+
+0
+0
+
+- Ranch Fence Item
+
+
+0
+48
+
+- Ranch Fence Item 2
+
+
+0
+48
+
+- Ranch Fence Item 3
+
+
+0
+48
+
+- Ranch Fence Item 4
+
+
+0
+48
+
+- Ranch Fence Item 5
+
+
+0
+48
+
+- Ranch Fence Item 6
+
+
+0
+48
+
+- Termina Field Above Cow Grotto Invisible Item
+92,1084
+
+0
+0
+
+- Termina Field Invisible Item 2
+
+
+0
+0
+
+- Termina Field Invisible Item 3
+
+
+0
+0
+
+- Termina Field Invisible Item 4
+
+
+0
+0
+
+- Termina Field Invisible Item 5
+
+
+0
+0
+
+- Termina Field Invisible Item 6
+
+
+0
+0
+
+- Termina Field Invisible Item 7
+
+
+0
+0
+
+- Termina Field Invisible Item 8
+
+
+0
+0
+
+- Termina Field Northern Ramp Invisible Item
+92,1084
+
+0
+0
+
+- Termina Field Invisible Item 10
+
+
+0
+0
+
+- Termina Field Invisible Item 11
+
+
+0
+0
+
+- Swamp Spider House Invisible Item
+103
+
+0
+0
+
+- Swamp Spider House Invisible Item 2
+103
+
+0
+0
+
+- Swamp Spider House Invisible Item 3
+103
+
+0
+0
+
+- Swamp Spider House Invisible Item 4
+103
+
+0
+0
+
+- Swamp Spider House Invisible Item 5
+103
+
+0
+0
+
+- Termina Field Tree Item
+
+
+0
+0
+
+- Termina Field Pillar Spawned Item
+
+
+0
+0
+
+- Termina Field Telescope Guay
+
+0;10;93;120;1109;1148;1123
+0
+0
+
+- Swordsman School Gong
+
+23;24;274;0;92;93
+0
+31
+
+- Bean Grotto Soft Soil
+103,169
+0;1106
+0
+0
+
+- Deku Palace Soft Soil
+103,169,0
+
+0
+0
+
+- Doggy Racetrack Soft Soil
+169
+
+0
+16
+
+- Great Bay Coast Soft Soil
+110,10,169
+
+0
+0
+
+- Ranch Day 1 Soil
+109,169
+
+0
+1
+
+- Ranch Day 2 or 3 Soil
+169
+
+0
+48
+
+- Secret Shrine Soft Soil
+114,169
+
+0
+0
+
+- Stone Tower Soft Soil Lower
+116,1180,169
+
+0
+0
+
+- Stone Tower Soft Soil Upper
+116,1099,1100,1180,169
+
+0
+0
+
+- Swamp Spider House Rock Soft Soil
+103,169
+92;119
+0
+0
+
+- Swamp Spider House Gold Room Soft Soil
+103,169
+
+0
+0
+
+- Termina Field Stump Soft Soil
+169
+
+0
+0
+
+- Termina Field Observatory Soft Soil
+169
+0;10;93;120;1109;1148;1123
+0
+0
+
+- Termina Field South Wall Soft Soil
+169
+
+0
+0
+
+- Termina Field Pillar Soft Soil
+169
+
+0
+0
+
+- Termina Field Guay #1
+
+98;99;100
+0
+0
+
+- Termina Field Guay #2
+
+98;99;100
+0
+0
+
+- Termina Field Guay #3
+
+98;99;100
+0
+0
+
+- Termina Field Guay #4
+
+98;99;100
+0
+0
+
+- Termina Field Guay #5
+
+98;99;100
+0
+0
+
+- Termina Field Guay #6
+
+98;99;100
+0
+0
+
+- Termina Field Guay #7
+
+98;99;100
+0
+0
+
+- Termina Field Guay #8
+
+98;99;100
+0
+0
+
+- Termina Field Guay #9
+
+98;99;100
+0
+0
+
+- Termina Field Guay #10
+
+98;99;100
+0
+0
+
+- Termina Field Guay #11
+
+98;99;100
+0
+0
+
+- Termina Field Guay #12
+
+98;99;100
+0
+0
+
+- Termina Field Guay #13
+
+98;99;100
+0
+0
+
+- Termina Field Guay #14
+
+98;99;100
+0
+0
+
+- Termina Field Guay #15
+
+98;99;100
+0
+0
+
+- Termina Field Guay #16
+
+98;99;100
+0
+0
+
+- Termina Field Guay #17
+
+98;99;100
+0
+0
+
+- Termina Field Guay #18
+
+98;99;100
+0
+0
+
+- Termina Field Guay #19
+
+98;99;100
+0
+0
+
+- Termina Field Guay #20
+
+98;99;100
+0
+0
+
+- Termina Field Guay #5a
+
+98,92;98,96;99,92;99,96;100,92;100,96
+0
+0
+
+- Termina Field Guay #10a
+
+98,92;98,96;99,92;99,96;100,92;100,96
+0
+0
+
+- Termina Field Guay #15a
+
+98,92;98,96;99,92;99,96;100,92;100,96
+0
+0
+
+- Deku Palace Rupee Cluster #1
+103
+0;1106
+0
+0
+
+- Deku Palace Rupee Cluster #2
+103
+0;1106
+0
+0
+
+- Deku Palace Rupee Cluster #3
+103
+0;1106
+0
+0
+
+- Deku Palace Rupee Cluster #4
+103
+0;1106
+0
+0
+
+- Deku Palace Rupee Cluster #5
+103
+0;1106
+0
+0
+
+- Deku Palace Rupee Cluster #6
+103
+0;1106
+0
+0
+
+- Deku Palace Rupee Cluster #7
+103
+0;1106
+0
+0
+
+- Ikana Graveyard Rupee Cluster
+90,1125
+
+0
+8
+
+- Ikana Graveyard Rupee Cluster 2
+90,1125
+
+0
+8
+
+- Ikana Graveyard Rupee Cluster 3
+90,1125
+
+0
+8
+
+- Ikana Graveyard Rupee Cluster 4
+90,1125
+
+0
+8
+
+- Ikana Graveyard Rupee Cluster 5
+90,1125
+
+0
+8
+
+- Ikana Graveyard Rupee Cluster 6
+90,1125
+
+0
+8
+
+- Ikana Graveyard Rupee Cluster 7
+90,1125
+
+0
+8
+
+- Termina Field Song Wall Dawn
+
+
+0
+0
+
+- Termina Field Song Wall Dawn 2
+
+
+0
+0
+
+- Termina Field Song Wall Dawn 3
+
+
+0
+0
+
+- Termina Field Song Wall 4 / 20
+
+
+0
+0
+
+- Termina Field Song Wall 4 / 20 2
+
+
+0
+0
+
+- Termina Field Song Wall 4 / 20 3
+
+
+0
+0
+
+- Termina Field Song Wall 0 / 8 / 12 / 16
+
+
+0
+0
+
+- Termina Field Song Wall 0 / 8 / 12 / 16 2
+
+
+0
+0
+
+- Termina Field Song Wall 0 / 8 / 12 / 16 3
+
+
+0
+0
+
+- Termina Field Song Wall 2 / 10 / 14 / 18 / 22
+
+
+0
+0
+
+- Termina Field Song Wall 2 / 10 / 14 / 18 / 22 2
+
+
+0
+0
+
+- Termina Field Song Wall 2 / 10 / 14 / 18 / 22 3
+
+
+0
+0
+
+- Termina Field Song Wall Odd Hours
+
+
+0
+0
+
+- Termina Field Song Wall Odd Hours 2
+
+
+0
+0
+
+- Termina Field Song Wall Odd Hours 3
+
+
+0
+0
+
+- Deku Playground Day 2 Item
+0
+
+0
+12
+
+- Deku Playground Day 2 Item 2
+0
+
+0
+12
+
+- Deku Playground Day 2 Item 3
+0
+
+0
+12
+
+- Deku Playground Day 2 Item 4
+0
+
+0
+12
+
+- Deku Playground Day 2 Item 5
+0
+
+0
+12
+
+- Deku Playground Day 2 Item 6
+0
+
+0
+12
+
+- Deku Playground Day 1 Item
+0
+
+0
+3
+
+- Deku Playground Day 1 Item 2
+0
+
+0
+3
+
+- Deku Playground Day 1 Item 3
+0
+
+0
+3
+
+- Deku Playground Day 1 Item 4
+0
+
+0
+3
+
+- Deku Playground Day 1 Item 5
+0
+
+0
+3
+
+- Deku Playground Day 1 Item 6
+0
+
+0
+3
+
+- Deku Playground Day 3 Item
+0
+
+0
+48
+
+- Deku Playground Day 3 Item 2
+0
+
+0
+48
+
+- Deku Playground Day 3 Item 3
+0
+
+0
+48
+
+- Deku Playground Day 3 Item 4
+0
+
+0
+48
+
+- Deku Playground Day 3 Item 5
+0
+
+0
+48
+
+- Deku Playground Day 3 Item 6
+0
+
+0
+48
+
+- Pirates' Fortress Skull Flag Left Eye
+111
+10;92
+0
+0
+
+- Pirates' Fortress Skull Flag Left Eye 2
+111
+10;92
+0
+0
+
+- Pirates' Fortress Skull Flag Left Eye 3
+111
+10;92
+0
+0
+
+- Pirates' Fortress Skull Flag Right Eye
+111
+10;92
+0
+0
+
+- Pirates' Fortress Skull Flag Right Eye 2
+111
+10;92
+0
+0
+
+- Pirates' Fortress Skull Flag Right Eye 3
+111
+10;92
+0
+0
+
+- Hookshot Room Skull Flag Forehead
+111
+92,120;0,92,1084;10,120;0,10,1084
+0
+0
+
+- Hookshot Room Skull Flag Forehead 2
+111
+92,120;0,92,1084;10,120;0,10,1084
+0
+0
+
+- Hookshot Room Skull Flag Forehead 3
+111
+92,120;0,92,1084;10,120;0,10,1084
+0
+0
+
+- Swamp Spider House Blue Gem
+103
+
+0
+0
+
+- Swamp Spider House Blue Gem 2
+103
+
+0
+0
+
+- Swamp Spider House Blue Gem 3
+103
+
+0
+0
+
+- Swamp Spider House Blue Gem 4
+103
+
+0
+0
+
+- Swamp Spider House Blue Gem 5
+103
+
+0
+0
+
+- Swamp Spider House Blue Gem 6
+103
+
+0
+0
+
+- Swamp Spider House Blue Gem 7
+103
+
+0
+0
+
+- Swamp Spider House Blue Gem 8
+103
+
+0
+0
+
+- Swamp Spider House Blue Gem 9
+103
+
+0
+0
+
+- Swamp Spider House Blue Gem 10
+103
+
+0
+0
+
+- Swamp Spider House Blue Gem 11
+103
+
+0
+0
+
+- Swamp Spider House Blue Gem 12
+103
+
+0
+0
+
+- Oceanside Spider House Mask
+1094
+
+0
+0
+
+- Oceanside Spider House Mask 2
+1094
+
+0
+0
+
+- Oceanside Spider House Mask 3
+1094
+
+0
+0
+
+- Oceanside Spider House Mask 4
+1094
+
+0
+0
+
+- Oceanside Spider House Mask 5
+1094
+
+0
+0
+
+- Oceanside Spider House Mask 6
+1094
+
+0
+0
+
+- Oceanside Spider House Mask 7
+1094
+
+0
+0
+
+- Oceanside Spider House Mask 8
+1094
+
+0
+0
+
+- Oceanside Spider House Mask 9
+1094
+
+0
+0
+
+- Termina Field Clam
+
+0,1084;10;120;93
+0
+0
+
+- Termina Field Clam 2
+
+
+0
+0
+
+- Termina Field Clam 3
+
+
+0
+0
+
+- Termina Field Wall
+
+
+0
+0
+
+- Termina Field Wall 2
+
+
+0
+0
+
+- Termina Field Wall 3
+
+
+0
+0
+
+- Termina Field Skull Kid Drawing
+
+
+0
+0
+
+- Termina Field Skull Kid Drawing 2
+
+
+0
+0
+
+- Termina Field Skull Kid Drawing 3
+
+
+0
+0
+
+- Cucco Shack Diamond Hole
+
+
+0
+16
+
+- Cucco Shack Diamond Hole 2
+
+
+0
+16
+
+- Cucco Shack Diamond Hole 3
+
+
+0
+16
+
+- Cucco Shack Diamond Hole 4
+
+
+0
+16
+
+- Cucco Shack Diamond Hole 5
+
+
+0
+16
+
+- Cucco Shack Diamond Hole 6
+
+
+0
+16
+
+- Ikana Graveyard Lantern
+1125
+
+0
+0
+
+- Ikana Graveyard Lantern 2
+1125
+
+0
+0
+
+- Ikana Graveyard Lantern 3
+1125
+
+0
+0
+
+- Ikana Graveyard Lantern 4
+1125
+
+0
+0
+
+- Ikana Graveyard Lantern 5
+1125
+
+0
+0
+
+- Ikana Graveyard Lantern 6
+1125
+
+0
+0
+
+- Ikana Graveyard Lantern 7
+1125
+
+0
+0
+
+- Ikana Graveyard Lantern 8
+1125
+
+0
+0
+
+- Ikana Graveyard Lantern 9
+1125
+
+0
+0
+
+- Ikana Graveyard Lantern 10
+1125
+
+0
+0
+
+- Ikana Graveyard Lantern 11
+1125
+
+0
+0
+
+- Ikana Graveyard Lantern 12
+1125
+
+0
+0
+
+- Stock Pot Inn Mask
+93,1084
+
+0
+0
+
+- Stock Pot Inn Mask 2
+93,1084
+
+0
+0
+
+- Stock Pot Inn Mask 3
+93,1084
+
+0
+0
+
+- East Clock Town Target
+
+
+0
+0
+
+- East Clock Town Target 2
+
+
+0
+0
+
+- East Clock Town Target 3
+
+
+0
+0
+
+- East Clock Town Target 4
+
+
+0
+0
+
+- East Clock Town Target 5
+
+
+0
+0
+
+- East Clock Town Target 6
+
+
+0
+0
+
+- East Clock Town Basket
+
+
+0
+0
+
+- East Clock Town Basket 2
+
+
+0
+0
+
+- East Clock Town Basket 3
+
+
+0
+0
+
+- Clock Tower Clock
+
+0,1084;10;120;93
+0
+0
+
+- Clock Tower Clock 2
+
+0,1084;10;120;93
+0
+0
+
+- Clock Tower Clock 3
+
+0,1084;10;120;93
+0
+0
+
+- Takkuri
+
+1170;120;0
+0
+21
+
+- Hookshot Room Pot
+111
+
+0
+0
+
+- Hookshot Room Pot 2
+111
+
+0
+0
+
+- Termina Field Rock
+119
+
+0
+0
+
+- Termina Field Rock 2
+119
+
+0
+0
+
+- Ikana Graveyard Highest Rock
+1125,1092
+
+0
+0
+
+- Ikana Graveyard Lowest Rock
+119,1125
+
+0
+0
+
+- Ikana Graveyard 2nd Lowest Rock
+119,1125
+
+0
+0
+
+- Termina Field Rock 3
+119
+
+0
+0
+
+- Termina Field Rock 4
+119
+
+0
+0
+
+- Termina Field Rock 5
+119
+
+0
+0
+
+- Termina Field Rock 6
+119
+
+0
+0
+
+- Termina Field Rock 7
+119
+
+0
+0
+
+- Ikana Graveyard 2nd Highest Rock
+1125,1092
+
+0
+0
+
+- Ikana Graveyard Middle Rock
+1125,1092
+
+0
+0
+
+- Termina Field Rock 8
+119
+
+0
+0
+
+- Termina Field Rock 9
+119
+
+0
+0
+
+- Milk Road Keaton Grass
+
+
+0
+0
+
+- Milk Road Keaton Grass 2
+1084,1091
+
+0
+0
+
+- Milk Road Keaton Grass 3
+1084,1091
+
+0
+0
+
+- Milk Road Keaton Grass 4
+1084,1091
+
+0
+0
+
+- Milk Road Keaton Grass 5
+1084,1091
+
+0
+0
+
+- Milk Road Keaton Grass 6
+1084,1091
+
+0
+0
+
+- Milk Road Keaton Grass 7
+1084,1091
+
+0
+0
+
+- Milk Road Keaton Grass 8
+1084,1091
+
+0
+0
+
+- Milk Road Keaton Grass 9
+1084,1091
+
+0
+0
+
+- North Clock Town Keaton Grass
+
+
+0
+0
+
+- North Clock Town Keaton Grass 2
+1084,1091
+
+0
+0
+
+- North Clock Town Keaton Grass 3
+1084,1091
+
+0
+0
+
+- North Clock Town Keaton Grass 4
+1084,1091
+
+0
+0
+
+- North Clock Town Keaton Grass 5
+1084,1091
+
+0
+0
+
+- North Clock Town Keaton Grass 6
+1084,1091
+
+0
+0
+
+- North Clock Town Keaton Grass 7
+1084,1091
+
+0
+0
+
+- North Clock Town Keaton Grass 8
+1084,1091
+
+0
+0
+
+- North Clock Town Keaton Grass 9
+1084,1091
+
+0
+0
+
+- Mountain Village Spring Keaton Grass
+108
+
+0
+0
+
+- Mountain Village Spring Keaton Grass 2
+1084,1091,108
+
+0
+0
+
+- Mountain Village Spring Keaton Grass 3
+1084,1091,108
+
+0
+0
+
+- Mountain Village Spring Keaton Grass 4
+1084,1091,108
+
+0
+0
+
+- Mountain Village Spring Keaton Grass 5
+1084,1091,108
+
+0
+0
+
+- Mountain Village Spring Keaton Grass 6
+1084,1091,108
+
+0
+0
+
+- Mountain Village Spring Keaton Grass 7
+1084,1091,108
+
+0
+0
+
+- Mountain Village Spring Keaton Grass 8
+1084,1091,108
+
+0
+0
+
+- Mountain Village Spring Keaton Grass 9
+1084,1091,108
+
+0
+0
+
+- Oceanside Spider House Mask Room Pot
+1094
+
+0
+0
+
+- Oceanside Spider House Mask Room Pot 2
+1094
 
 0
 0
@@ -2628,7 +6366,7 @@
 0
 
 - GossipCanyonRoad
-502
+1125
 
 0
 0
@@ -2701,7 +6439,7 @@
 
 - GossipTerminaObservatory
 
-0;10;93;120;486;525;500
+0;10;93;120;1109;1148;1123
 0
 0
 
@@ -2736,7 +6474,7 @@
 0
 
 - GossipSwampSpiderHouse
-470
+1093
 
 0
 0
@@ -2809,7 +6547,7 @@
 
 - Any Sword
 
-23;24;274;15
+15;1181
 0
 0
 
@@ -2826,31 +6564,31 @@
 0
 
 - Ocean Skulltulas
-119,110,527
-10;500
+119,110,1150
+10;1123
 0
 0
 
 - Any Red Potion
-466
+1089
 16;147;156;162;165
 0
 0
 
 - Any Milk
-466
+1089
 17;278;279;280;281;282;283;284;285;410;420
 0
 0
 
 - Any Green Potion
-466
+1089
 148;157;417
 0
 0
 
 - Any Blue Potion
-466
+1089
 155;418
 0
 0
@@ -2911,7 +6649,7 @@
 ;Jump along invisible platforms without Lens of Truth.
 - Limitless Magic Beans
 103
-0;483
+0;1106
 0
 0
 
@@ -2964,13 +6702,13 @@
 0
 ;Allows killing the Big Octo with arrows or Zora, instead of requiring clearing Woodfall Temple.
 - Stun Keeta with Bombs
-469
+1092
 
 0
 0
 ;Use a bomb to stun Captain Keeta before he moves away.
 - ISTT Hookshot to Eyegore
-10,4,120,461
+10,1180
 
 0
 0
@@ -3000,7 +6738,7 @@
 0
 ;Roll along the sides of the gaps.
 - Goron Fence Jump
-92,469
+92,1092
 
 0
 0
@@ -3013,7 +6751,7 @@
 ;Navigate through the seesaw room without Fire Arrows.
 - Ikana Graveyard Access
 
-96;500
+96;1123
 0
 0
 
@@ -3043,7 +6781,7 @@
 
 - ISTT Eyegore Access
 
-495,496;495,0;0,465
+1118,1119;1118,0;0,1088
 0
 0
 
@@ -3073,7 +6811,7 @@
 ;Jump to the Boss Key chest using an ice platform.
 - ISTT Early Boss Key
 
-0;468;490;93
+0;1091;1113;93
 0
 0
 ;Drop down from the Dexihand either as Deku or with a sidehop and jump slash.
@@ -3097,7 +6835,7 @@
 ;Learn the path and enter Pinnacle Rock without the Seahorse.
 - Pinnacle Rock Access
 93
-515;432,466
+1138;432,1089
 0
 0
 
@@ -3138,7 +6876,7 @@
 0
 ;Drop a bomb behind you then use the recoil to jump a long distance.
 - Jump Slash Town Tingle
-468
+1091
 
 0
 0
@@ -3163,7 +6901,7 @@
 ;Backwalk up the slope to exit.
 - Exit Ocean Spider House
 
-526;92
+1149;92
 0
 0
 
@@ -3175,7 +6913,7 @@
 ;Walk and shoot through false walls without Lens of Truth.
 - Night Inn Access
 
-0;37;522,544;548;93,534
+0;37;1145,1167;1171;93,1157
 0
 0
 
@@ -3199,7 +6937,7 @@
 ;Slowly walk up the seam of the stump.
 - Bio Baba Hive Luck
 
-10;469
+10;1092
 0
 0
 ;Hope the item lands on a lilypad.
@@ -3229,7 +6967,7 @@
 ;At the entrance, simply hit the skulltula from a precise position. In the storage room, get on the boat, slash the skulltula, then jump slash to get the token.
 - Pass through false walls
 
-9,461;528
+9,1084;1151
 0
 0
 
@@ -3241,7 +6979,7 @@
 ;Jump to the two fairies in the SHT bridge room.
 - Jump along invisible platforms
 
-9,461;484
+9,1084;1107
 0
 0
 
@@ -3259,7 +6997,7 @@
 ;Reverse the water flow without Ice Arrows by using a Long Jump and a Gainer. Pass through the waterwheel room with a precise jump out of the water.
 - GBT Reverse Water Direction
 
-3,120,461;522,534,542,544
+1145,1157,1165,1167;1179
 0
 0
 
@@ -3276,14 +7014,14 @@
 0
 ;Hit switches through walls using explosives.
 - STT Ice Platform
-3,120,461
+1179
 
 0
 0
 ;Shoot the underwater sun switch by creating an ice platform first.
 - Fighting
 
-92;93;468;490
+92;93;1091;1113
 0
 0
 
@@ -3300,7 +7038,7 @@
 0
 ;Enter poisoned swamp by rolling as Goron. You aren't guaranteed to have enough health to make it.
 - Lullaby Skip
-92,461
+92,1084
 
 0
 0
@@ -3319,12 +7057,36 @@
 ;In the Ocean Spider House storage room, jump onto the boat and clip through the ceiling.
 - Any Healing Potion
 
-472;475
+1095;1098
 0
 0
 
 - Cross Poisoned Water
 
-0;482,544;549,544
+0;1105,1167;1172,1167
+0
+0
+
+- Use Fire Arrow
+2,120,1084
+
+0
+0
+
+- Use Ice Arrow
+3,120,1084
+
+0
+0
+
+- Use Light Arrow
+4,120,1084
+
+0
+0
+
+- Any B Sword
+
+23;24;274
 0
 0

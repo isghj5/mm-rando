@@ -483,7 +483,7 @@ namespace MMR.Randomizer
             var freePlayInstrumentsOffset = 0x12A8E4; // data for free play instruments
             var freePlayInstrumentsArrayAddress = 0x51CBE;
             var previouslyUsedInstruments = new List<Instrument>();
-            foreach (var form in Enum.GetValues(typeof(TransformationForm)).Cast<TransformationForm>().Where(form => form != TransformationForm.FierceDeity).OrderBy(f => _cosmeticSettings.Instruments[f] == Instrument.Random))
+            foreach (var form in Enum.GetValues<TransformationForm>().Where(form => form != TransformationForm.FierceDeity).OrderBy(f => _cosmeticSettings.Instruments[f] == Instrument.Random))
             {
                 var index = form.Id();
 
@@ -1126,11 +1126,6 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Resources.mods.death_moon_crash);
             }
-
-            if (_randomized.Settings.ContinuousDekuHopping)
-            {
-                ResourceUtils.ApplyHack(Resources.mods.fast_deku_hops);
-            }
         }
 
         private void WriteSunsSong()
@@ -1426,6 +1421,36 @@ namespace MMR.Randomizer
             return itemObject.Item != Item.RecoveryHeart ? itemObject.NewLocation.Value.GetItemIndex().Value : (ushort)0;
         }
 
+        private void WriteMiscHacks()
+        {
+            var hacks = new List<byte[]>();
+
+            if (_randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.DoorsOpen))
+            {
+                hacks.AddRange(SmallKeyMode.DoorsOpen.GetAttributes<HackContentAttribute>().Select(hc => hc.HackContent));
+            }
+
+            if (_randomized.Settings.BossKeyMode.HasFlag(BossKeyMode.DoorsOpen))
+            {
+                hacks.AddRange(BossKeyMode.DoorsOpen.GetAttributes<HackContentAttribute>().Select(hc => hc.HackContent));
+            }
+
+            ushort requiredStrayFairies = 15;
+            if (_randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly))
+            {
+                requiredStrayFairies = 0;
+                hacks.AddRange(StrayFairyMode.ChestsOnly.GetAttributes<HackContentAttribute>().Select(hc => hc.HackContent));
+            }
+
+            requiredStrayFairies += 0xA; // Needed for the value to be correct.
+            ReadWriteUtils.WriteToROM(0x00EA3366, requiredStrayFairies);
+
+            foreach (var hack in hacks)
+            {
+                ResourceUtils.ApplyHack(hack);
+            }
+        }
+
         private void WriteItems()
         {
             var freeItems = new List<Item>();
@@ -1474,7 +1499,7 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Resources.mods.fix_downgrades);
             }
-            if (_randomized.Settings.AddCowMilk)
+            if (_randomized.Settings.CategoriesRandomized.Contains(ItemCategory.CowMilk))
             {
                 ResourceUtils.ApplyHack(Resources.mods.fix_cow_bottle_check);
             }
@@ -1482,7 +1507,7 @@ namespace MMR.Randomizer
             ResourceUtils.ApplyHack(Resources.mods.update_trade_scrubs);
 
             var newMessages = new List<MessageEntry>();
-            _randomized.Settings.AsmOptions.MMRConfig.CycleRepeatableLocations.Clear();
+            _randomized.Settings.AsmOptions.MMRConfig.RupeeRepeatableLocations.Clear();
             foreach (var item in _randomized.ItemList)
             {
                 // Unused item
@@ -1548,7 +1573,7 @@ namespace MMR.Randomizer
             if (_randomized.Settings.UpdateShopAppearance)
             {
                 // update tingle shops
-                foreach (var messageShopText in Enum.GetValues(typeof(MessageShopText)).Cast<MessageShopText>())
+                foreach (var messageShopText in Enum.GetValues<MessageShopText>())
                 {
                     var messageShop = messageShopText.GetAttribute<MessageShopAttribute>();
                     var item1 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[0]);
@@ -1650,7 +1675,7 @@ namespace MMR.Randomizer
                             {
                                 it.RuntimeItemName(biggestBombBagItem.AlternateName(), biggestBombBagItem.NewLocation.Value);
                             })
-                            .Text(", but I'm focusing my marketing effords on ").Red("Gorons").Text(".")
+                            .Text(", but I'm focusing my marketing efforts on ").Red("Gorons").Text(".")
                             ;
                         })
                         .EndTextBox()
@@ -2302,7 +2327,7 @@ namespace MMR.Randomizer
                 .Build()
             );
 
-            if (_randomized.Settings.AddSkulltulaTokens)
+            if (_randomized.Settings.CategoriesRandomized.Contains(ItemCategory.SkulltulaTokens))
             {
                 ResourceUtils.ApplyHack(Resources.mods.fix_skulltula_tokens);
 
@@ -2358,7 +2383,7 @@ namespace MMR.Randomizer
                 newMessages.Add(swampSkulltulaEntry);
             }
 
-            if (_randomized.Settings.AddStrayFairies)
+            if (_randomized.Settings.CategoriesRandomized.Contains(ItemCategory.StrayFairies))
             {
                 ResourceUtils.ApplyHack(Resources.mods.fix_fairies);
             }
@@ -2433,7 +2458,7 @@ namespace MMR.Randomizer
 
             _messageTable.UpdateMessages(newMessages);
 
-            if (_randomized.Settings.AddShopItems)
+            if (_randomized.Settings.CategoriesRandomized.Contains(ItemCategory.ShopItems)) // TODO only apply when actual shops are randomized
             {
                 ResourceUtils.ApplyHack(Resources.mods.fix_shop_checks);
             }
@@ -2675,8 +2700,8 @@ namespace MMR.Randomizer
         /// </summary>
         private void WriteExtendedObjects()
         {
-            var addFairies = _randomized.Settings.AddStrayFairies;
-            var addSkulltulas = _randomized.Settings.AddSkulltulaTokens;
+            var addFairies = _randomized.Settings.CategoriesRandomized.Contains(ItemCategory.StrayFairies);
+            var addSkulltulas = _randomized.Settings.CategoriesRandomized.Contains(ItemCategory.SkulltulaTokens);
             var extended = _extendedObjects = ExtendedObjects.Create(addFairies, addSkulltulas);
 
             foreach (var e in RomData.GetItemList.Values)
@@ -2705,6 +2730,12 @@ namespace MMR.Randomizer
                 if (((e.ItemGained >= 0x66 && e.ItemGained <= 0x6C) || e.ItemGained == 0x62) && e.Object == 0x8F && extended.Indexes.MusicNotes != null)
                 {
                     e.Object = extended.Indexes.MusicNotes.Value;
+                }
+
+                // Update gi-table for Magic Power
+                if (e.ItemGained == 0x9B && e.Object == 0xA4 && extended.Indexes.MagicPower != null)
+                {
+                    e.Object = extended.Indexes.MagicPower.Value;
                 }
             }
         }
@@ -2748,7 +2779,7 @@ namespace MMR.Randomizer
             if (!string.IsNullOrWhiteSpace(outputSettings.InputPatchFilename))
             {
                 progressReporter.ReportProgress(50, "Applying patch...");
-                hash = RomUtils.ApplyPatch(outputSettings.InputPatchFilename);
+                hash = Patch.Patcher.ApplyPatch(outputSettings.InputPatchFilename);
 
                 // Parse Symbols data from the ROM (specific MMFile)
                 asm = AsmContext.LoadFromROM();
@@ -2800,6 +2831,7 @@ namespace MMR.Randomizer
 
                 progressReporter.ReportProgress(67, "Writing items...");
                 WriteItems();
+                WriteMiscHacks();
 
                 progressReporter.ReportProgress(68, "Writing messages...");
                 WriteGossipQuotes();
@@ -2824,7 +2856,13 @@ namespace MMR.Randomizer
                 WriteNutsAndSticks();
                 
                 progressReporter.ReportProgress(72, outputSettings.GeneratePatch ? "Generating patch..." : "Computing hash...");
-                hash = RomUtils.CreatePatch(outputSettings.GeneratePatch ? outputSettings.OutputROMFilename : null, originalMMFileList);
+                hash = outputSettings.GeneratePatch switch
+                {
+                    // Write patch file to path and return hash.
+                    true => Patch.Patcher.CreatePatch(Path.ChangeExtension(outputSettings.OutputROMFilename, "mmr"), originalMMFileList),
+                    // Only return hash.
+                    false => Patch.Patcher.CreatePatch(originalMMFileList),
+                };
 
                 // Write subset of Asm config post-patch
                 WriteAsmConfig(asm, hash);

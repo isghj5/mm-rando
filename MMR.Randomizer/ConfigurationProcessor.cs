@@ -1,7 +1,8 @@
-﻿using MMR.Randomizer.Models;
+﻿using MMR.Randomizer.Constants;
+using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
+using MMR.Randomizer.Patch;
 using MMR.Randomizer.Utils;
-using MMR.Randomizer.Constants;
 using System;
 using System.IO;
 
@@ -61,10 +62,6 @@ namespace MMR.Randomizer
                 catch (PatchMagicException)
                 {
                     return $"Error applying patch: Not a valid patch file";
-                }
-                catch (PatchVersionException ex)
-                {
-                    return $"Error applying patch: {ex.Message}";
                 }
                 catch (IOException ex)
                 {

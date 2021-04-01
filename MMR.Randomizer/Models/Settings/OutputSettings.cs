@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using System.IO;
+﻿using System.IO;
+using System.Text.Json.Serialization;
 
 namespace MMR.Randomizer.Models.Settings
 {

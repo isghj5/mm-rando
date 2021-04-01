@@ -35,7 +35,7 @@ namespace MMR.Randomizer.Asm
         void SetFierceDeityEnergyColors(Color color)
         {
             var converter = new ColorSpaceConverter();
-            var adjusted = converter.TranslateHsv(color, hsv => new Hsv(hsv.H, Increase(hsv.S), Increase(hsv.V)));
+            var adjusted = converter.TranslateHsv(color, static hsv => new Hsv(hsv.H, Increase(hsv.S), Increase(hsv.V)));
 
             // Update sword beam damage colors.
             Colors.SwordBeamDamageEnv = adjusted;
@@ -46,7 +46,7 @@ namespace MMR.Randomizer.Asm
             Colors.FierceDeitySparklesInner = color.Brighten(0.5f);
             Colors.FierceDeitySparklesOuter = color;
 
-            float Increase(float input, float mult = 3f) => Math.Min(input * mult, 1f);
+            static float Increase(float input, float mult = 3f) => Math.Min(input * mult, 1f);
         }
     }
 }

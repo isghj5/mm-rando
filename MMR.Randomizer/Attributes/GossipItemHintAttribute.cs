@@ -1,14 +1,17 @@
 ﻿using System;
+using System.Linq;
 
 namespace MMR.Randomizer.Attributes
 {
     public class GossipItemHintAttribute : Attribute
     {
-        public string[] Values { get; private set; }
+        public string[] Values { get; }
 
-        public GossipItemHintAttribute(params string[] values)
+        public GossipItemHintAttribute(string value, params string[] values)
         {
-            Values = values;
+            var list = values.ToList();
+            list.Add(value);
+            Values = list.ToArray();
         }
     }
 }

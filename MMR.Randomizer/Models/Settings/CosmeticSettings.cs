@@ -2,9 +2,9 @@
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models.Colors;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace MMR.Randomizer.Models.Settings
 {

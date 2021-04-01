@@ -266,7 +266,7 @@ namespace MMR.Randomizer.Utils
                 }
             }
 
-            foreach (var gossipQuote in Enum.GetValues(typeof(GossipQuote)).Cast<GossipQuote>().OrderBy(gq => random.Next()))
+            foreach (var gossipQuote in Enum.GetValues<GossipQuote>().OrderBy(gq => random.Next()))
             {
                 if (finalHints.Any(me => me.Id == (ushort)gossipQuote))
                 {

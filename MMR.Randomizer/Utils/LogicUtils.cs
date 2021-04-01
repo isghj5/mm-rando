@@ -159,7 +159,7 @@ namespace MMR.Randomizer.Utils
         public static ItemList PopulateItemListWithoutLogic()
         {
             var itemList = new ItemList();
-            foreach (var item in Enum.GetValues(typeof(Item)).Cast<Item>())
+            foreach (var item in Enum.GetValues<Item>())
             {
                 var currentItem = new ItemObject
                 {

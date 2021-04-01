@@ -131,7 +131,7 @@ def main():
         call(['make'])
 
     os.chdir(os.path.join(run_dir, relpath, 'src'))
-    call(['armips', '-sym2', '../build/asm_symbols.txt', 'build.asm'])
+    call(['armips', '-sym2', '../build/asm_symbols.txt', 'Build.asm'])
     os.chdir(run_dir)
 
     fixup_asm_symbols(os.path.join(relpath, 'build/asm_symbols.txt'))
@@ -146,10 +146,14 @@ def main():
 
     os.chdir(run_dir)
 
+    # Create subdirectory for generated files if it doesn't exist.
+    generated_path = os.path.join(relpath, 'build/generated')
+    os.makedirs(generated_path, exist_ok=True)
+
     # Dump symbols as JSON
     offsets = get_offsets_by_target(args.target)
     data_symbols = build_data_symbols(symbols, offsets)
-    dump_json_to_file(data_symbols, os.path.join(relpath, 'data/generated/symbols.json'))
+    dump_json_to_file(data_symbols, os.path.join(generated_path, 'symbols.json'))
 
     if pj64_sym_path:
         pj64_sym_path = os.path.realpath(pj64_sym_path)
@@ -162,7 +166,7 @@ def main():
     create_diff(
         os.path.join(relpath, 'roms/base.z64'),
         os.path.join(relpath, 'roms/patched.z64'),
-        os.path.join(relpath, 'data/generated/rom_patch.bin'),
+        os.path.join(generated_path, 'rom_patch.bin'),
         virtual=args.virtual,
         offset=offsets.table,
     )

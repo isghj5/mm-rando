@@ -1,4 +1,6 @@
-﻿namespace MMR.Randomizer.Models
+﻿using MMR.Randomizer.Attributes;
+
+namespace MMR.Randomizer.Models
 {
     public enum DamageMode
     {

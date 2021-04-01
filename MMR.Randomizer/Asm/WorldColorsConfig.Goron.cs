@@ -98,10 +98,10 @@ namespace MMR.Randomizer.Asm
             Colors.GoronRollOuterEnergyEnv2 = outer2.Item1;
             Colors.GoronRollOuterEnergyPrim2 = outer2.Item2;
 
-            Color GetPunchPrim(Color color)
+            static Color GetPunchPrim(Color color)
             {
                 var converter = new ColorSpaceConverter();
-                return converter.TranslateHsv(color, hsv => new Hsv(hsv.H, (hsv.S / 5f) * 4f, hsv.V));
+                return converter.TranslateHsv(color, static hsv => new Hsv(hsv.H, (hsv.S / 5f) * 4f, hsv.V));
             }
 
             (Color env, Color prim) Mix(Color color, Color env)

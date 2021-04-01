@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO.Compression;
-using MMR.Randomizer.Utils.Mzxrules;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Threading;
@@ -16,6 +15,8 @@ using System.Numerics;
 
 namespace MMR.Randomizer.Utils
 {
+    using Yaz = Yaz.Yaz;
+
     public static class RomUtils
     {
         const int FILE_TABLE = 0x1A500;
@@ -61,10 +62,7 @@ namespace MMR.Randomizer.Utils
             var file = mmFileList[fileIndex];
             if (file.IsCompressed && !file.WasEdited)
             {
-                using (var stream = new MemoryStream(file.Data))
-                {
-                    file.Data = Yaz.Decode(stream, file.Data.Length);
-                }
+                file.Data = Yaz.Decode(file.Data);
                 file.WasEdited = true;
             }
         }
@@ -83,11 +81,8 @@ namespace MMR.Randomizer.Utils
                 var dest = new byte[fileLength];
                 ReadWriteUtils.Arr_Insert(data, pointer, fileLength, dest, 0);
                 pointer += fileLength;
-                using (var stream = new MemoryStream(dest))
-                {
-                    var decompressed = Yaz.Decode(stream, dest.Length);
-                    files.Add(decompressed);
-                }
+                var decompressed = Yaz.Decode(dest);
+                files.Add(decompressed);
             }
             return files;
         }
@@ -154,170 +149,6 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        static RomUtils()
-        {
-            var bigInt = new BigInteger(typeof(RomUtils).Assembly.ManifestModule.ModuleVersionId.ToByteArray());
-            var random = new Random((int)(bigInt & int.MaxValue));
-            var buffer = new byte[16];
-            random.NextBytes(buffer);
-            key = buffer.ToArray();
-            random.NextBytes(buffer);
-            iv = buffer.ToArray();
-        }
-
-        private static readonly byte[] key;
-        private static readonly byte[] iv;
-
-        public static byte[] CreatePatch(string filename, List<MMFile> originalMMFiles)
-        {
-            var aes = Aes.Create();
-            var hashAlg = new SHA256Managed();
-            using (var outStream = filename != null ? (Stream) File.Open(Path.ChangeExtension(filename, "mmr"), FileMode.Create) : new MemoryStream())
-            using (var cryptoStream = new CryptoStream(outStream, aes.CreateEncryptor(key, iv), CryptoStreamMode.Write))
-            using (var hashStream = new CryptoStream(cryptoStream, hashAlg, CryptoStreamMode.Write))
-            {
-                using (var compressStream = new GZipStream(hashStream, CompressionMode.Compress))
-                using (var writer = new BinaryWriter(compressStream))
-                {
-                    writer.Write(ReadWriteUtils.Byteswap32(PatchUtils.PATCH_MAGIC));
-                    writer.Write(ReadWriteUtils.Byteswap32((uint)PatchUtils.PATCH_VERSION));
-                    for (var fileIndex = 0; fileIndex < RomData.MMFileList.Count; fileIndex++)
-                    {
-                        var file = RomData.MMFileList[fileIndex];
-                        var fileIsStatic = file.IsStatic ? 1 : 0;
-                        if (file.Data == null || (file.IsCompressed && !file.WasEdited))
-                        {
-                            continue;
-                        }
-                        if (fileIndex >= originalMMFiles.Count)
-                        {
-                            writer.Write(ReadWriteUtils.Byteswap32((uint)fileIndex));
-                            writer.Write(ReadWriteUtils.Byteswap32((uint)file.Addr));
-                            writer.Write(ReadWriteUtils.Byteswap32((uint)0));
-                            writer.Write(ReadWriteUtils.Byteswap32((uint)fileIsStatic));
-                            writer.Write(ReadWriteUtils.Byteswap32((uint)file.Data.Length));
-                            writer.Write(file.Data);
-                            continue;
-                        }
-                        CheckCompressed(fileIndex, originalMMFiles);
-                        var originalFile = originalMMFiles[fileIndex];
-                        if (file.Data.Length != originalFile.Data.Length)
-                        {
-                            writer.Write(ReadWriteUtils.Byteswap32((uint)fileIndex));
-                            writer.Write(ReadWriteUtils.Byteswap32((uint)file.Addr));
-                            writer.Write(-1);
-                            writer.Write(ReadWriteUtils.Byteswap32((uint)fileIsStatic));
-                            writer.Write(ReadWriteUtils.Byteswap32((uint)file.Data.Length));
-                            writer.Write(file.Data);
-                            continue;
-                        }
-                        int? modifiedIndex = null;
-                        var modifiedBuffer = new List<byte>();
-                        for (var i = 0; i <= file.Data.Length; i++)
-                        {
-                            if (i == file.Data.Length || file.Data[i] == originalFile.Data[i])
-                            {
-                                if (modifiedBuffer.Any())
-                                {
-                                    writer.Write(ReadWriteUtils.Byteswap32((uint)fileIndex));
-                                    writer.Write(ReadWriteUtils.Byteswap32((uint)file.Addr));
-                                    writer.Write(ReadWriteUtils.Byteswap32((uint)modifiedIndex.Value));
-                                    writer.Write(ReadWriteUtils.Byteswap32((uint)fileIsStatic));
-                                    writer.Write(ReadWriteUtils.Byteswap32((uint)modifiedBuffer.Count));
-                                    writer.Write(modifiedBuffer.ToArray());
-                                    modifiedBuffer.Clear();
-                                    modifiedIndex = null;
-                                    continue;
-                                }
-                            }
-                            else
-                            {
-                                if (!modifiedIndex.HasValue)
-                                {
-                                    modifiedIndex = i;
-                                }
-                                modifiedBuffer.Add(file.Data[i]);
-                            }
-                        }
-                    }
-                }
-                return hashAlg.Hash;
-            }
-        }
-
-        /// <summary>
-        /// Applies the given filename patch to the in-memory RomData
-        /// </summary>
-        /// <param name="filename"></param>
-        /// <returns>SHA256 hash of the patch.</returns>
-        public static byte[] ApplyPatch(string filename)
-        {
-            try
-            {
-                var aes = Aes.Create();
-                var hashAlg = new SHA256Managed();
-                using (var filestream = File.OpenRead(filename))
-                using (var cryptoStream = new CryptoStream(filestream, aes.CreateDecryptor(key, iv), CryptoStreamMode.Read))
-                using (var hashStream = new CryptoStream(cryptoStream, hashAlg, CryptoStreamMode.Read))
-                using (var decompressStream = new GZipStream(hashStream, CompressionMode.Decompress))
-                using (var memoryStream = new MemoryStream())
-                {
-                    decompressStream.CopyTo(memoryStream);
-                    memoryStream.Seek(0, SeekOrigin.Begin);
-                    using (var reader = new BeBinaryReader(memoryStream))
-                    {
-                        var magic = reader.ReadUInt32();
-                        var version = reader.ReadUInt32();
-
-                        // Validate patch magic and version values
-                        PatchUtils.Validate(magic, version);
-
-                        while (reader.BaseStream.Position != reader.BaseStream.Length)
-                        {
-                            var fileIndex = reader.ReadInt32();
-                            var fileAddr = reader.ReadInt32();
-                            var index = reader.ReadInt32();
-                            var isStatic = reader.ReadInt32() != 0 ? true : false;
-                            var length = reader.ReadInt32();
-                            var data = reader.ReadBytes(length);
-                            if (fileIndex >= RomData.MMFileList.Count)
-                            {
-                                var newFile = new MMFile
-                                {
-                                    Addr = fileAddr,
-                                    IsCompressed = false,
-                                    Data = data,
-                                    End = fileAddr + data.Length,
-                                    IsStatic = isStatic,
-                                };
-                                RomUtils.AppendFile(newFile);
-                            }
-                            if (index == -1)
-                            {
-                                RomData.MMFileList[fileIndex].Data = data;
-                                if (data.Length == 0)
-                                {
-                                    RomData.MMFileList[fileIndex].Cmp_Addr = -1;
-                                    RomData.MMFileList[fileIndex].Cmp_End = -1;
-                                }
-                            }
-                            else
-                            {
-                                CheckCompressed(fileIndex);
-                                ReadWriteUtils.Arr_Insert(data, 0, data.Length, RomData.MMFileList[fileIndex].Data, index);
-                            }
-                        }
-                    }
-
-                    return hashAlg.Hash;
-                }
-            }
-            catch
-            {
-                throw new IOException("Failed to apply patch. Patch may be invalid.");
-            }
-        }
-
         public static void WriteROM(string fileName, byte[] ROM)
         {
             using (BinaryWriter writer = new BinaryWriter(File.Open(fileName, FileMode.Create)))
@@ -335,13 +166,7 @@ namespace MMR.Randomizer.Utils
                     // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
                     var previousThreadPriority = Thread.CurrentThread.Priority;
                     Thread.CurrentThread.Priority = ThreadPriority.Lowest;
-                    byte[] result;
-                    var newSize = Yaz.Encode(file.Data, file.Data.Length, out result);
-                    if (newSize >= 0)
-                    {
-                        file.Data = new byte[newSize];
-                        ReadWriteUtils.Arr_Insert(result, 0, newSize, file.Data, 0);
-                    }
+                    file.Data = Yaz.EncodeAndCopy(file.Data);
                     // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
                     Thread.CurrentThread.Priority = previousThreadPriority;
                 }

@@ -12,6 +12,7 @@ namespace MMR.Randomizer.Asm
     public class ObjectIndexes
     {
         public short? DoubleDefense;
+        public short? MagicPower;
         public short? Fairies;
         public short? Skulltula;
         public short? MusicNotes;
@@ -90,6 +91,10 @@ namespace MMR.Randomizer.Asm
             this.Offsets.Add(AddDoubleDefense());
             Indexes.DoubleDefense = AdvanceIndex();
 
+            // Add Magic Power
+            this.Offsets.Add(AddMagicPower());
+            Indexes.MagicPower = AdvanceIndex();
+
             // Add Songs
             this.Offsets.Add(AddMusicNotes());
             this.Indexes.MusicNotes = AdvanceIndex();
@@ -127,6 +132,27 @@ namespace MMR.Randomizer.Asm
             // Interior primary & env colors.
             WriteByte(data, 0x1474, 0xFF, 0xFF, 0xFF);
             WriteByte(data, 0x1494, 0xFF, 0xFF, 0xFF);
+
+            return this.Bundle.Append(data);
+        }
+
+        /// <summary>
+        /// Add Double Defense object.
+        /// </summary>
+        /// <returns>Offsets</returns>
+        (uint, uint) AddMagicPower()
+        {
+            var data = CloneExistingData(736);
+
+            // small magic jar
+            WriteByte(data, 0x59C, 0xFF, 0xBD, 0x00); // ribbon 0xFF, 0xFF, 0xFF
+            WriteByte(data, 0x654, 0x64, 0xFA, 0x64); // body 0x28, 0x64, 0x28
+            WriteByte(data, 0x7BC, 0x19, 0x7D, 0x32); // cap 0x0A, 0x32, 0x14
+
+            // large magic jar
+            WriteByte(data, 0xEFC, 0xFF, 0xBD, 0x00); // ribbon 0xFF, 0xFF, 0x96
+            WriteByte(data, 0xFB4, 0x64, 0xFA, 0x64); // body 0x28, 0x64, 0x28
+            WriteByte(data, 0x119C, 0x19, 0x7D, 0x32); // cap 0x0A, 0x32, 0x14
 
             return this.Bundle.Append(data);
         }

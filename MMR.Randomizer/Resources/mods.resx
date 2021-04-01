@@ -127,6 +127,9 @@
   <data name="cm_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\cm-cs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="collectable_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\collectable-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="death_moon_crash" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\death-moon-crash;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -160,8 +163,8 @@
   <data name="enable_sunssong" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\enable-sunssong;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="fast_deku_hops" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>mods\fast-deku-hops;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="fairies_chests_only" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fairies-chests-only;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="fierce_deity_anywhere" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fierce-deity-anywhere;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -246,6 +249,12 @@
   </data>
   <data name="inst24_swap_guitar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\inst24-swap-guitar;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="key_boss_open" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\key-boss-open;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="key_small_open" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\key-small-open;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="logo_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\logo-text;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
