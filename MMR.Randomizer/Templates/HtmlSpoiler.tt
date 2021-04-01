@@ -1,4 +1,4 @@
-﻿<#@ template language="C#" linePragmas="false" #>
+<#@ template language="C#" linePragmas="false" #>
 <#@ assembly name="System.Core" #>
 <#@ import namespace="System.Linq" #>
 <#@ import namespace="System.Text" #>
@@ -49,11 +49,50 @@
 
 
     #spoilerLogState { width: 560px; }
+
+    .invisible {
+        display: none;
+    }
+    .settingsFlex {
+        display: flex;
+        flex-direction: row;
+    }
+    .settingsFlex span {
+        width: 100%;
+        text-align: center;
+        padding: 3px 0px;
+    }
+    #hideItemLabel {
+        text-align: left;
+        display: inline;
+        width: auto;
+    }
+    .centeredLabel {
+        text-align: center;
+        display: inline-block;
+        width: 100%;
+    }
+    button {
+        padding: 4px 15px;
+        border-radius: 8px;
+    }
+    @media (max-width: 860px) {
+        .settingsFlex {
+            flex-direction: column;
+        }
+        #hideItemLabel {
+            text-align: center;
+            display: inline-block;
+            width: 100%;
+        }
+    }
+
 </style>
 </head>
 <body class="light-mode">
 <label><b>Version: </b></label><span><#= spoiler.Version #></span><br/>
-<label><b>Settings: </b></label><code style="word-break: break-all;"><#= spoiler.SettingsString #></code><br/>
+<label><b>Settings: </b></label><code style="word-break: break-all;" class="invisible" id="settingsCode"><#= spoiler.SettingsString #></code>
+<button type="button" onclick="showHideSettings()">Toggle Setting Display</button><br/><br/>
 <label><b>Seed: </b></label><span><#= spoiler.Seed #></span><br/>
 <br/>
 <button type="button" onclick="toggleDarkLight()" title="Toggle dark/light mode">Toggle Dark Theme</button>
@@ -81,6 +120,27 @@
 </table>
 <# } #>
 <h2>Item Replacements</h2>
+<label id="hideItemLabel"><b>Hide Item Types:</b></label>
+<span class="settingsFlex">
+    <span>
+        <input type="checkbox" id="permanents" onclick="updateItemDisplaySettings()" /> Permanents/Traps
+    </span >
+    <span>
+        <input type="checkbox" id="lowRupees" onclick="updateItemDisplaySettings()"/> Low Value Rupees</span>
+    <span>
+        <input type="checkbox" id="highRupees" onclick="updateItemDisplaySettings()" /> High Value Rupees
+    </span><span><input type="checkbox" id="hearts" onclick="updateItemDisplaySettings()" /> Hearts</span>
+    <span>
+        <input type="checkbox" id="bottleContents" onclick="updateItemDisplaySettings()" /> Bottle Contents
+    </span>
+    <span>
+        <input type="checkbox" id="ammo" onclick="updateItemDisplaySettings()" /> Ammo
+    </span>
+</span>
+<br />
+<span class="centeredLabel"><button type="button" onclick="updateItemDisplaySettings()" />Refresh</button></span>
+<br />
+<br />
 <input type="checkbox" id="highlight-checks"/> Highlight available checks
 <table border="1" class="item-replacements">
  <tr>
@@ -368,6 +428,40 @@
         var body = document.getElementsByTagName('body')[0];
         var currentClassBody = body.className;
         body.className = currentClassBody === "dark-mode" ? "light-mode" : "dark-mode";
+    }
+
+    function showHideSettings() {
+        var settingsCode = document.getElementById("settingsCode");
+        var currentClassSettingsCode = settingsCode.className;
+        settingsCode.className = currentClassSettingsCode === "visible" ? "invisible" : "visible";
+    }
+    removableSettings = {};
+    removableSettings["hearts"] = ["Piece of Heart", "Heart Container"];
+    removableSettings["lowRupees"] = ["Blue Rupee", "Red Rupee"];
+    removableSettings["highRupees"] = ["Purple Rupee", "Silver Rupee", "Gold Rupee"];
+    removableSettings["bottleContents"] = ["Bottle:", "Milk", "Chateau", "Potion"];
+    removableSettings["permanents"] = ["Mask", "Stray Fairy", "Skulltula Spirit", "Song", "Sonata", "Lullaby", "Bossa", "Elegy", "Oath to Order", "Shield", "Upgrade", "Pictobox", "Lens of Truth", "Hookshot", "Spin Attack", "Double Defense", "Sword", "Notebook", "Hat", "Hood", "Map", "Ice Trap", "Empty Bottle", "Compass"];
+    removableSettings["ammo"] = ["Arrow", "Bombs", "Bombchu", "Deku Nuts", "Deku Stick"];
+    function updateItemDisplaySettings() {
+        var listOfItems = document.querySelectorAll('.itemname span');
+        for (const [key, value] of Object.entries(removableSettings)) {
+            listOfStuffToRemove = removableSettings[key];
+            for (i = 0; i < listOfItems.length; i = i + 1) {
+                theItem = listOfItems[i];
+                if (!theItem.parentNode.getAttribute("class").match("spoiler")) {
+                    for (j = 0; j < listOfStuffToRemove.length; j = j + 1) {
+                        if (theItem.getAttribute("data-content").match(listOfStuffToRemove[j])) {
+                            if (document.getElementById(key).checked) {
+                                theItem.parentNode.parentNode.style.display = "none";
+                                break;
+                            } else {
+                                theItem.parentNode.parentNode.style.display = "table-row";
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 </script>
 </body>
