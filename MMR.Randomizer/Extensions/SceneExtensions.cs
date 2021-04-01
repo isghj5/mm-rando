@@ -2,6 +2,7 @@
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Attributes.Entrance;
 using MMR.Randomizer.GameObjects;
+using System.CodeDom;
 using System.Collections.Generic;
 
 namespace MMR.Randomizer.Extensions
@@ -23,6 +24,41 @@ namespace MMR.Randomizer.Extensions
             return attr == null ? false : attr.PuzzleRooms.Contains(room);
         }
 
+        public static bool IsFairyDroppingEnemy(this Scene scene, int roomNumber, int actorNumber)
+        {
+            var FairyDroppingEnemiesAttr = scene.GetAttributes<FairyDroppingEnemiesAttribute>();
+            if (FairyDroppingEnemiesAttr != null)
+            {
+                foreach(var roomWithFairyEnemies in FairyDroppingEnemiesAttr)
+                {
+                    if (roomWithFairyEnemies.RoomNumber == roomNumber)
+                    {
+                        return roomWithFairyEnemies.ActorNumbers.Contains(actorNumber);
+                    }
+                }
+            }
+
+            return false;
+        }
+
+        public static List<(int roomNumber, List<int> actorNumbers)> GetSceneFairyDroppingEnemies(this Scene scene)
+        {
+            // returns a list of room:actorlist, where actors are their vanilla locations
+
+            var fairyDroppingEnemiesAttr = scene.GetAttributes<FairyDroppingEnemiesAttribute>();
+            if (fairyDroppingEnemiesAttr != null)
+            {
+                var listOfAllRoomsWithFairyActors = new List<(int roomNumber, List<int> actorNumber)>();
+                foreach (var roomWithFairyEnemies in fairyDroppingEnemiesAttr)
+                {
+                    (int, List<int>) newRoom = (roomWithFairyEnemies.RoomNumber, roomWithFairyEnemies.ActorNumbers);
+                    listOfAllRoomsWithFairyActors.Add(newRoom);
+                }
+                return listOfAllRoomsWithFairyActors;
+            }
+            return null;
+        }
+
         public static int GetSceneObjLimit(this Scene scene)
         {
             // TODO make this a real attribute
@@ -31,23 +67,32 @@ namespace MMR.Randomizer.Extensions
             if (scene == Scene.GreatBayCoast)
                 return 0x7F40; // crashs common at > 4.0x modifier, this is closer to 2.15 for safety
 
+            if (scene == Scene.SnowheadTemple)
+                return 0x20000; // crashing if reaching 25FFF, everything below 0x20000 was fine though
+
             return 0x12000; 
         }
 
-        public static List<Actor> GetSceneFairyDroppingEnemies(this Scene scene)
+        public static List<Actor> GetBlockedReplacementActors(this Scene scene, Actor replacedActor)
         {
-            var attr = scene.GetAttribute<FairyDroppingEnemiesAttribute>();
-            return attr == null ? new List<Actor>() : attr.Enemies;
+            /// sometimes we want to stop actors in scene from being randomized to specific actors,
+            ///  but we dont want to block from the whole scene, just one actor replacement
+            ///  where OriginalEnemy is the vanilla enemy we need to replace
+            ///  and BlockedReplacements is the list of enemies we cannot replace OriginalEnemy with 
+            var enemyReplacementBlockedCombosAttr = scene.GetAttributes<EnemizerSceneEnemyReplacementBlockAttribute>();
+            if (enemyReplacementBlockedCombosAttr != null)
+            {
+                foreach( var replacementEnemyBlockedAttr in enemyReplacementBlockedCombosAttr)
+                {
+                    if (replacementEnemyBlockedAttr != null && replacementEnemyBlockedAttr.OriginalEnemy == replacedActor)
+                    {
+                        return replacementEnemyBlockedAttr.BlockedReplacements;
+                    }
+                }
+            }
+
+            return new List<Actor>(); // no blocked enemy combos found, return empty list
         }
-
-        public static bool IsDungeon(this Scene scene)
-        {
-            var listOfDungeons = new List<Scene>{ Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple };
-
-
-            return listOfDungeons.Contains(scene);
-        }
-
     }
 
 }

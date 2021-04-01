@@ -72,21 +72,21 @@ namespace MMR.Randomizer.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to {
-        ///    &quot;DPAD_CONFIG&quot;: &quot;03809D58&quot;,
-        ///    &quot;DPAD_TEXTURE&quot;: &quot;0380BE90&quot;,
-        ///    &quot;EXT_MSG_DATA_FILE&quot;: &quot;0380A568&quot;,
-        ///    &quot;EXT_MSG_TABLE&quot;: &quot;0380AE88&quot;,
-        ///    &quot;EXT_MSG_TABLE_COUNT&quot;: &quot;0380A530&quot;,
-        ///    &quot;EXT_OBJECTS&quot;: &quot;0380A588&quot;,
-        ///    &quot;FONT_TEXTURE&quot;: &quot;0380CE90&quot;,
+        ///    &quot;DPAD_CONFIG&quot;: &quot;0380A3C0&quot;,
+        ///    &quot;DPAD_TEXTURE&quot;: &quot;0380C558&quot;,
+        ///    &quot;EXT_MSG_DATA_FILE&quot;: &quot;0380AC2C&quot;,
+        ///    &quot;EXT_MSG_TABLE&quot;: &quot;0380B550&quot;,
+        ///    &quot;EXT_MSG_TABLE_COUNT&quot;: &quot;0380ABF4&quot;,
+        ///    &quot;EXT_OBJECTS&quot;: &quot;0380AC50&quot;,
+        ///    &quot;FONT_TEXTURE&quot;: &quot;0380D558&quot;,
         ///    &quot;G_C_HEAP&quot;: &quot;03820000&quot;,
         ///    &quot;G_PAYLOAD_ADDR&quot;: &quot;03800000&quot;,
-        ///    &quot;HASH_ICONS&quot;: &quot;03809DE4&quot;,
-        ///    &quot;HUD_COLOR_CONFIG&quot;: &quot;03809EB8&quot;,
-        ///    &quot;ITEM_OVERRIDE_COUNT&quot;: &quot;0380A4EC&quot;,
-        ///    &quot;ITEM_OVERRIDE_ENTRIES&quot;: &quot;0380A608&quot;,
-        ///    &quot;MISC_CONFIG&quot;: &quot;0380A2FC&quot;,
-        ///    &quot;MMR_CONFIG&quot;: &quot;0380A320&quot;,
+        ///    &quot;HASH_ICONS&quot;: &quot;0380A44C&quot;,
+        ///    &quot;HUD_COLOR_CONFIG&quot;: &quot;0380A520&quot;,
+        ///    &quot;ITEM_OVERRIDE_COUNT&quot;: &quot;0380ABB0&quot;,
+        ///    &quot;ITEM_OVERRIDE_ENTRIES&quot;: &quot;0380ACD0&quot;,
+        ///    &quot;MISC_CONFIG&quot;: &quot;0380A96C&quot;,
+        ///    &quot;MMR_CONFIG&quot;: &quot;0380A990&quot;,
         ///    &quot;P [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string symbols {

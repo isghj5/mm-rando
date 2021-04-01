@@ -6,13 +6,15 @@ namespace MMR.Randomizer.Utils
     public static class ObjUtils
     {
         const int OBJECT_TABLE = 0xC58C80;
-        public static int GetObjSize(int obj)
+        public static int GetObjSize(int objTableIndex)
         {
-            int f = RomUtils.GetFileIndexForWriting(OBJECT_TABLE);
-            int basea = OBJECT_TABLE - RomData.MMFileList[f].Addr;
-            var fileData = RomData.MMFileList[f].Data;
-            return (int)(ReadWriteUtils.Arr_ReadU32(fileData, basea + (obj * 8) + 4)
-                - ReadWriteUtils.Arr_ReadU32(fileData, basea + (obj * 8)));
+            /// object size already exists in the object table, just look it up from the object index
+            int objTableFID = RomUtils.GetFileIndexForWriting(OBJECT_TABLE);
+            // the object table exists inside of another file, we need the offset to the table
+            int objTableOffset = OBJECT_TABLE - RomData.MMFileList[objTableFID].Addr;
+            var objTableData = RomData.MMFileList[objTableFID].Data;
+            return (int)(ReadWriteUtils.Arr_ReadU32(objTableData, objTableOffset + (objTableIndex * 8) + 4)
+                       - ReadWriteUtils.Arr_ReadU32(objTableData, objTableOffset + (objTableIndex * 8)));
         }
 
         public static byte[] GetObjectData(int objectIndex)

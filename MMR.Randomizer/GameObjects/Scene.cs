@@ -25,8 +25,10 @@ namespace MMR.Randomizer.GameObjects
         HoneyDarling = 0x04,
 
         [FileID(1145)]
-        [ClearEnemyPuzzleRooms(1,2,4)]
+        [ClearEnemyPuzzleRooms(1, 2, 4)]
         [SceneInternalId(0x0C)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.IronKnuckle,
+            Actor.Hiploop)] // hiploop dies if he touches water? happens in day 2 iron knuckle
         BeneathGraveyard = 0x05,
 
         [FileID(1137)]
@@ -42,7 +44,11 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1522)]
         [SceneInternalId(0x07)]
-        [ClearEnemyPuzzleRooms(7,13)] //7:dodongo, 13:peahat
+        [ClearEnemyPuzzleRooms(7, 13)] //7:dodongo, 13:peahat
+        [EnemizerSceneEnemyReplacementBlock(Actor.Peahat, // hidden or very weak enemies suck here, but they are very common in this slot
+            Actor.Bo, Actor.Nejiron, Actor.RedBubble, Actor.Leever, Actor.Wolfos, Actor.Beamos)] // beamos is just because bomb locking this check early is prime seed killer
+        [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
+            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, Actor.Bumper)]
         Grottos = 0x0A,
 
         // Unused = 0x0B,
@@ -69,7 +75,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1175)]
         [SceneInternalId(0x16)]
-        [ClearEnemyPuzzleRooms(4,7)]// basement lava
+        [ClearEnemyPuzzleRooms(4, 7)]// basement lava
+        [FairyDroppingEnemies(1, 2)] // eygore 
         StoneTowerTemple = 0x13,
 
         [SceneInternalId(0x17)]
@@ -77,7 +84,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1190)]
         [SceneInternalId(0x18)]
-        [ClearEnemyPuzzleRooms(4)]// wizrobe room
+        [FairyDroppingEnemies(1, 3)] // eygore 
+        [FairyDroppingEnemies(1, 1)] // wizrobe
         InvertedStoneTowerTemple = 0x15,
 
         [SceneInternalId(0x19)]
@@ -88,8 +96,15 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1208)]
         [SceneInternalId(0x1B)]
-        [ClearEnemyPuzzleRooms(0, 1, 3, 4, 6, 7, 8, 9)]
-        [FairyDroppingEnemies(Actor.DekuBaba, Actor.Skulltula)]
+        [ClearEnemyPuzzleRooms(4, 6, 7, 8, 9)] // 4: mapchest, 6: snapper room, 7: bow room, 8: BK, 9:dark
+        //[FairyDroppingEnemies(0,  )] 
+        [FairyDroppingEnemies(1, 4, 34)] // wooden flower room, deku baba and stray fairy in bubble
+        [FairyDroppingEnemies(3, 3)] // west wing, skulltula:3
+        [FairyDroppingEnemies(5, 22)] // east wing, beehive:22
+        [EnemizerSceneEnemyReplacementBlock(Actor.Dinofos, // weak enemies are kinda lame here
+            Actor.Leever, Actor.ChuChu, Actor.DekuBabaWithered)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula, // weak enemies are kinda lame here
+            Actor.BigPoe)]
         WoodfallTemple = 0x18,
 
         [FileID(1222)]
@@ -113,8 +128,13 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1241)]
         [SceneInternalId(0x21)]
         // 11 dinofos room, 6/12 wizrobe
-        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9, 11 )]
-        [FairyDroppingEnemies(Actor.Dinofos)]
+        [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9)] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
+        [EnemizerSceneEnemyReplacementBlock(Actor.RedBubble, // spawns in hot lava, keep wood enemies out
+            Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos, Actor.Dinofos, Actor.Snapper)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Freezard,
+            Actor.PoeSisters, // weird behavior, if the killing blow of meg at long range can stop chests from spawning
+            Actor.Wolfos)] // wolfos: ice wolfos can push the regular actual dog backwards through the wall
+        [FairyDroppingEnemies(11, 2, 3)] // dinofos 
         SnowheadTemple = 0x1E,
 
         [FileID(1256)]
@@ -123,9 +143,10 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1258)]
         [SceneInternalId(0x23)]
-        [ClearEnemyPuzzleRooms(0,1,2)] // three pirate minibosses
+        [ClearEnemyPuzzleRooms(0, 1, 2)] // three pirate minibosses
         PiratesFortressRooms = 0x20,
 
+        [FileID(1276)]
         [SceneInternalId(0x24)]
         SwampShootingGallery = 0x21,
 
@@ -133,10 +154,14 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x25)]
         PinnacleRock = 0x22,
 
+        [FileID(1278)]
         [SceneInternalId(0x26)]
-        FairyFountain = 0x23,
+        FairyFountain = 0x23, // great fairy
 
+        [FileID(1284)]
         [SceneInternalId(0x27)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // blocking a few skulltulla
+            Actor.StockpotBell, Actor.Cow, Actor.IkanaGravestone, Actor.Bombiwa, Actor.Bumper)]
         SwampSpiderHouse = 0x24,
 
         [FileID(1291)]
@@ -155,6 +180,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x2B)]
         DekuPalace = 0x28,
 
+        [FileID(1308)]
         [SceneInternalId(0x2C)]
         MountainSmithy = 0x29,
 
@@ -162,21 +188,26 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x2D)]
         TerminaField = 0x2A,
 
+        [FileID(1312)]
         [SceneInternalId(0x2E)]
         PostOffice = 0x2B,
 
+        [FileID(1314)]
         [SceneInternalId(0x2F)]
         MarineLab = 0x2C,
 
+        [FileID(1316)]
         [SceneInternalId(0x30)]
         // [ClearEnemyPuzzleRooms(   )] // is big poe reward a clear room reward?
         DampesHouse = 0x2D,
 
         // Unused = 0x2E,
 
+        [FileID(1319)]
         [SceneInternalId(0x32)]
         GoronShrine = 0x2F,
 
+        [FileID(1322)]
         [SceneInternalId(0x33)]
         ZoraHall = 0x30,
 
@@ -188,17 +219,21 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x35)]
         RomaniRanch = 0x32,
 
+        [FileID(1328)]
         [SceneInternalId(0x36)]
         TwinmoldsLair = 0x33,
 
         [FileID(1330)]
         [SceneInternalId(0x37)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Leever, Actor.PoeBalloon)]
         GreatBayCoast = 0x34,
 
         [FileID(1332)]
         [SceneInternalId(0x38)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Leever, Actor.PoeBalloon)]
         ZoraCape = 0x35,
 
+        [FileID(1334)]
         [SceneInternalId(0x39)]
         LotteryShop = 0x36,
 
@@ -208,12 +243,15 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x3B)]
         PiratesFortressExterior = 0x38,
 
+        [FileID(1338)]
         [SceneInternalId(0x3C)]
         FishermansHut = 0x39,
 
+        [FileID(1340)]
         [SceneInternalId(0x3D)]
         GoronShop = 0x3A,
 
+        [FileID(1342)]
         [SceneInternalId(0x3E)]
         DekuKingChamber = 0x3B,
 
@@ -223,6 +261,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1347)]
         [SceneInternalId(0x40)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.BadBat, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
+            Actor.Bo)]
         RoadToSouthernSwamp = 0x3D,
 
         [FileID(1349)]
@@ -242,24 +282,33 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1358)]
         [SceneInternalId(0x45)]
+        //[EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // bit annoying 
+        //    Actor.Peahat, Actor.LikeLike, Actor.Freezard)]
         SouthernSwamp = 0x42,
 
         [FileID(1362)]
         [SceneInternalId(0x46)]
+        //  we want the hiploop to be non-blocking actors, making them killable with this flag does the job
+        [FairyDroppingEnemies(24, 25, 26)] // hiploops
+        [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
+            Actor.Wolfos, Actor.Peahat)] // blocking enemies (wolfos:iceblock)
         Woodfall = 0x43,
 
         [FileID(1364)]
         [SceneInternalId(0x47)]
         ZoraTrial = 0x44,
 
+        [FileID(1366)]
         [SceneInternalId(0x48)]
         GoronVillageSpring = 0x45,
 
         [FileID(1369)]
         [SceneInternalId(0x49)]
-        //3: clear the biobabs, 5 is gekko, 8 is wart
-        [ClearEnemyPuzzleRooms(3,5,7)]
-        [FairyDroppingEnemies(Actor.Skulltula)]
+        //3: clear the biobabas, 5 is gekko, 8 is wart
+        [ClearEnemyPuzzleRooms(3, 5, 7)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula,
+            Actor.BigPoe)]// for some reason big poe in the first room can cause camera to lock, unknown reason
+        [FairyDroppingEnemies(8, 7)] // skulltula in first room 
         GreatBayTemple = 0x46,
 
         [FileID(1386)]
@@ -271,6 +320,7 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms( 12 )] // 12 is big poe
         BeneathTheWell = 0x48,
 
+        [FileID(1403)]
         [SceneInternalId(0x4C)]
         ZoraHallRooms = 0x49,
 
@@ -278,18 +328,22 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x4D)]
         GoronVillage = 0x4A,
 
+        [FileID(1412)]
         [SceneInternalId(0x4E)]
         GoronGrave = 0x4B,
 
+        [FileID(1414)]
         [SceneInternalId(0x4F)]
         //[ClearEnemyPuzzleRooms( unk )] // ignored by enemizer right now anyway
         SakonsHideout = 0x4C,
 
+        [FileID(1417)]
         [SceneInternalId(0x50)]
         MountainVillage = 0x4D,
 
+        [FileID(1419)]
         [SceneInternalId(0x51)]
-        PoeHut = 0x4E,
+        PoeHut = 0x4E, // Ghost Hut
 
         [FileID(1421)]
         [SceneInternalId(0x52)]
@@ -299,26 +353,30 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x53)]
         RoadToIkana = 0x50,
 
+        [FileID(1433)]
         [SceneInternalId(0x54)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Clock,
+            Actor.BadBat, Actor.GoldSkullTula, Actor.RealBombchu)] // z-targetable can be annoying in the sword test
         SwordsmansSchool = 0x51,
 
+        [FileID(1434)]
         [SceneInternalId(0x55)]
         MusicBoxHouse = 0x52,
 
+        [FileID(1437)]
         [SceneInternalId(0x56)]
         IgosDuIkanasLair = 0x53,
 
+        [FileID(1440)]
         [SceneInternalId(0x57)]
         TouristCenter = 0x54,
 
         [FileID(1442)]
         [SceneInternalId(0x58)]
-        [FairyDroppingEnemies(Actor.Eyegore)]
         StoneTower = 0x55,
 
         [FileID(1444)]
         [SceneInternalId(0x59)]
-        [FairyDroppingEnemies(Actor.Wizrobe)]
         InvertedStoneTower = 0x56,
 
         [FileID(1446)]
@@ -372,7 +430,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1491)]
         [SceneInternalId(0x66)]
-        [ClearEnemyPuzzleRooms(1, 2)] // 1 dinofos, 2 is iron knuckle
+        [ClearEnemyPuzzleRooms(1, 2, 3)] // 1 dinofos, 3 is iron knuckle
         LinkTrial = 0x63,
 
         [FileID(1500)]
@@ -409,7 +467,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x6F)]
         SouthClockTown = 0x6C,
 
-        [FileID(1516)]
+        [FileID(1518)]
         [SceneInternalId(0x70)]
         LaundryPool = 0x6D,
     }

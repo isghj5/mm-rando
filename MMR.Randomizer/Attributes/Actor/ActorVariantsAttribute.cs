@@ -4,34 +4,50 @@ using System.Collections.Generic;
 namespace MMR.Randomizer.Attributes.Actor
 {
     /// <summary>
-    ///  each enemy actor has varients that share so much of their code and data that they are bundled together has a varient
-    ///  example: all the chuchus are one actor, white and black bo are varients of one actor
+    ///  each enemy actor has variants that share so much of their code and data that they are bundled together as an actor
+    ///  example: all the chuchu variants are one actor, white and black bo are variants of one actor
+    ///  we need ways to specify behavior not just to an actor but to their variants, which are sometimes unique
     /// </summary>
 
     public class ActorVariantsAttribute : Attribute
     {
-        public List<int> Variants { get; set; }
+        public List<int> Variants { get; private set; }
 
-        public ActorVariantsAttribute(int variant, params int[] additionalVarients)
+        public ActorVariantsAttribute(int variant, params int[] additionalVariants)
         {
             var v = new List<int> { variant };
-            if(additionalVarients.Length > 0)
+            if(additionalVariants.Length > 0)
             {
-                v.AddRange(additionalVarients);
+                v.AddRange(additionalVariants);
             }
             Variants = v;
         }
     }
 
     /// <summary>
-    /// some enemies have variants that automaticallly respawn forever, 
-    ///  these get in the way of puzzle rooms that require you clear all enemies
+    /// Some Enemies are not killable
+    ///  they present an issue if they block paths or have stray fairies in their bodies
     /// </summary>
 
     public class UnkillableVariantsAttribute : ActorVariantsAttribute
     {
-        public UnkillableVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+        public UnkillableVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
     }
+
+    public class UnkillableAllVariantsAttribute : Attribute { }
+
+    /// <summary>
+    /// Some enemies have variants that automaticallly respawn forever
+    ///  these get in the way of puzzle rooms that require you clear all enemies
+    ///  also, any enemy that appears to die, but prevents a clear room gets this flag
+    /// </summary>
+
+    public class RespawningVariantsAttribute : ActorVariantsAttribute
+    {
+        public RespawningVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
+    }
+
+    public class RespawningAllVariantsAttribute : Attribute { }
 
     /// <summary>
     /// some enemies can spawn in multiple situations, likelike can spawn on the beach or ocean bottom, so two types
@@ -40,39 +56,52 @@ namespace MMR.Randomizer.Attributes.Actor
 
     public class FlyingVariantsAttribute : ActorVariantsAttribute
     {
-        public FlyingVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+        public FlyingVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
     }
 
     public class GroundVariantsAttribute : ActorVariantsAttribute
     {
-        public GroundVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+        public GroundVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
     }
 
     public class WaterVariantsAttribute : ActorVariantsAttribute
     {
-        public WaterVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+        public WaterVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
     }
 
     public class WallVariantsAttribute : ActorVariantsAttribute
     {
-        public WallVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+        public WallVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
     }
 
     public class PatrolVariantsAttribute : ActorVariantsAttribute
     {
-        public PatrolVariantsAttribute(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+        public PatrolVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
     }
 
-    // we often want to place restrictions on how many of an enemy can possibly spawn
+    // we often want to place restrictions on how many of an actor can possibly spawn
 
-    public class SinglePerRoomMax : ActorVariantsAttribute
+    public class OnlyOneActorPerRoom : Attribute
     {
-        public SinglePerRoomMax(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+        public bool OneMAX = true;
     }
 
-    public class DoublePerRoomMax : ActorVariantsAttribute
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    public class VariantsWithRoomMax : Attribute
     {
-        public DoublePerRoomMax(int variant, params int[] additionalVarients) : base(variant, additionalVarients) { }
+        public int RoomMax { get; private set; }
+        public List<int> Variants { get; private set; }
+
+        public VariantsWithRoomMax(int max, int variant, params int[] additionalVariants) 
+        {
+            var v = new List<int> { variant };
+            if (additionalVariants.Length > 0)
+            {
+                v.AddRange(additionalVariants);
+            }
+            Variants = v;
+            RoomMax = max;
+        }
     }
 
 }

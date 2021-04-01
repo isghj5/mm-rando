@@ -33,10 +33,30 @@ namespace MMR.Randomizer.Extensions
 
         public static List<int> UnkillableVariants(this Actor actor)
         {
-            return actor.GetAttribute<UnkillableVariantsAttribute>()?.Variants;
+            if (actor.GetAttribute<UnkillableAllVariantsAttribute>() != null) // all are unkillable
+            {
+                return AllVariants(actor);
+            }
+            else
+            {
+                return actor.GetAttribute<UnkillableVariantsAttribute>()?.Variants;
+            }
         }
 
-        public static List<int> Variants(this Actor actor)
+        public static List<int> RespawningVariants(this Actor actor)
+        {
+            if (actor.GetAttribute<RespawningAllVariantsAttribute>() != null) // all are respawning
+            {
+                return AllVariants(actor);
+            }
+            else
+            {
+                return actor.GetAttribute<RespawningVariantsAttribute>()?.Variants;
+            }
+        }
+
+
+        public static List<int> AllVariants(this Actor actor)
         {
             var variants = new List<int>();
             var attrF = actor.GetAttribute<FlyingVariantsAttribute>();
@@ -70,13 +90,18 @@ namespace MMR.Randomizer.Extensions
 
         public static List<int> KillableVariants(this Actor actor, List<int> acceptableVariants = null)
         {
-            var nonRespawningVariants = acceptableVariants != null ? acceptableVariants : Variants(actor);
+            var killableVariants = acceptableVariants != null ? acceptableVariants : AllVariants(actor);
             var unkillableVariants    = UnkillableVariants(actor);
+            var respawningVariants    = RespawningVariants(actor);
             if (unkillableVariants != null && unkillableVariants.Count > 0)
             {
-                nonRespawningVariants.RemoveAll(u => unkillableVariants.Contains(u));
+                killableVariants.RemoveAll(u => unkillableVariants.Contains(u));
             }
-            return nonRespawningVariants;
+            if (respawningVariants != null && respawningVariants.Count > 0)
+            {
+                killableVariants.RemoveAll(u => respawningVariants.Contains(u));
+            }
+            return killableVariants;
         }
 
         public static List<Scene> ScenesRandomizationExcluded(this Actor actor)
@@ -84,16 +109,18 @@ namespace MMR.Randomizer.Extensions
             return actor.GetAttribute<EnemizerScenesExcludedAttribute>()?.ScenesExcluded ?? new List<Scene>();
         }
 
-        public static Models.Rom.Enemy ToEnemy(this Actor actor)
+        public static Models.Rom.Actor ToActorModel(this Actor actor)
         {
             // turning static actor enum into enemy instance
-            return new Models.Rom.Enemy()
+            return new Models.Rom.Actor()
             {
-                Name         = (actor).ToString(),
-                Actor        = (int) actor,
-                Object       = actor.ObjectIndex(),
-                ObjectSize   = ObjUtils.GetObjSize(actor.ObjectIndex()),
-                Variables    = actor.Variants(),
+                Name = (actor).ToString(),
+                ActorID = (int)actor,
+                ActorEnum = actor,
+                ObjectID = actor.ObjectIndex(),
+                ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex()),
+                Variants = actor.AllVariants(),
+                Rotation = new Models.Vectors.vec16(),
                 SceneExclude = actor.ScenesRandomizationExcluded()
             };
         }
@@ -190,24 +217,42 @@ namespace MMR.Randomizer.Extensions
             return new List<Scene>();
         }
 
-        public static int VariantMaxCountPerRoom(this Actor actor, int variant) 
+        public static int VariantMaxCountPerRoom(this Actor actor, int queryVariant) 
         {
-            var singleAttr = actor.GetAttribute<SinglePerRoomMax>();
-            if (singleAttr != null && singleAttr.Variants.Contains(variant)) // think 1 will be a more common restriction
+            if (actor.GetAttribute<OnlyOneActorPerRoom>() != null)
             {
                 return 1;
             }
-            var doubleAttr = actor.GetAttribute<DoublePerRoomMax>();
-            if (doubleAttr != null && doubleAttr.Variants.Contains(variant))
+
+            var limitedVariants = actor.GetAttributes<VariantsWithRoomMax>();
+            if (limitedVariants != null)
             {
-                return 2;
+                foreach (var variant in limitedVariants)
+                {
+                    if (variant.Variants.Contains(queryVariant))
+                    {
+                        return variant.RoomMax;
+                    }
+                }
             }
+
             return -1; // no restriction
         }
 
         public static bool HasVariantsWithRoomLimits(this Actor actor)
         {
-            return actor.GetAttribute<SinglePerRoomMax>() != null | actor.GetAttribute<DoublePerRoomMax>() != null;
+            return actor.GetAttributes<VariantsWithRoomMax>() != null
+                || OnlyOnePerRoom(actor);
+        }
+
+        public static bool OnlyOnePerRoom(this Actor actor)
+        {
+            return actor.GetAttribute<OnlyOneActorPerRoom>() != null;
+        }
+
+        public static bool HasOptionalCompanions(this Actor actor)
+        {
+            return actor.GetAttributes<AlignedCompanionActorAttribute>() != null;
         }
 
         public static int ActorInitOffset(this Actor actor)
