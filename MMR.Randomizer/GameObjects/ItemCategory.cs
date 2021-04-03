@@ -28,7 +28,7 @@ namespace MMR.Randomizer.GameObjects
         [Description("Randomize bottle scoops.")]
         CaughtBottleContents,
 
-        [Description("Randomize locations that require glitches. Includes:\n\n* The Deku Nut chest beneath Clock Town.")]
+        [Description("Randomize locations that require glitches. Includes:\n\n* The Deku Nut chest beneath Clock Town.\n* The out of bounds item in Deku Palace.")]
         GlitchesRequired,
 
         [Description("Randomize milk from cows.\n\nOne inaccessible ranch cow is not included for Casual logic.")]

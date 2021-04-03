@@ -4069,163 +4069,163 @@
 
 - Goron Racetrack Pot
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 2
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 3
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 4
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 5
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 6
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 7
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 8
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 9
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 10
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 11
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 12
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 13
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 14
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 15
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 16
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 17
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 18
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 19
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 20
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 21
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 22
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 23
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 24
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 25
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 26
 92,106
-108;7
+108;7;1178
 12
 0
 
 - Goron Racetrack Pot 27
 92,106
-108;7
+108;7;1178
 12
 0
 
@@ -5447,24 +5447,6 @@
 0
 0
 
-- Termina Field Song Wall 4 / 20
-
-
-0
-0
-
-- Termina Field Song Wall 4 / 20 2
-
-
-0
-0
-
-- Termina Field Song Wall 4 / 20 3
-
-
-0
-0
-
 - Termina Field Song Wall 0 / 8 / 12 / 16
 
 
@@ -5496,6 +5478,24 @@
 0
 
 - Termina Field Song Wall 2 / 10 / 14 / 18 / 22 3
+
+
+0
+0
+
+- Termina Field Song Wall 4 / 20
+
+
+0
+0
+
+- Termina Field Song Wall 4 / 20 2
+
+
+0
+0
+
+- Termina Field Song Wall 4 / 20 3
 
 
 0
@@ -6090,19 +6090,19 @@
 0
 
 - Ikana Graveyard Highest Rock
-1125,1092
+1125,1092,98
 
 0
 0
 
 - Ikana Graveyard Lowest Rock
-119,1125
+119,1125,98
 
 0
 0
 
 - Ikana Graveyard 2nd Lowest Rock
-119,1125
+119,1125,98
 
 0
 0
@@ -6138,13 +6138,13 @@
 0
 
 - Ikana Graveyard 2nd Highest Rock
-1125,1092
+1125,1092,98
 
 0
 0
 
 - Ikana Graveyard Middle Rock
-1125,1092
+1125,1092,98
 
 0
 0

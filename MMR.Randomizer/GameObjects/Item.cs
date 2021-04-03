@@ -5257,7 +5257,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a hidden royal treasure"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x27C), ItemCategory(ItemCategory.GreenRupees), CollectableIndex(0x158A)]
+        [GetItemIndex(0x27C), ItemCategory(ItemCategory.GlitchesRequired), CollectableIndex(0x158A)]
         CollectableDekuPalaceWestInnerGardenItem7,
 
 
@@ -8243,71 +8243,41 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Red Rupee"), LocationName("Termina Field Song Wall 4 / 20"), Region(Region.TerminaField)]
+        [ItemName("Red Rupee"), LocationName("Termina Field Song Wall 0 / 8 / 12 / 16"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x3A7), ItemCategory(ItemCategory.RedRupees), NullableItem]
-        CollectableTerminaFieldSongWall4201,
-
-
-        [Visible]
-        [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Termina Field Song Wall 4 / 20 2"), Region(Region.TerminaField)]
-        [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
-        [ShopText("This is worth 1 rupee.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x3A8), ItemCategory(ItemCategory.GreenRupees), NullableItem]
-        CollectableTerminaFieldSongWall4202,
-
-
-        [Visible]
-        [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Termina Field Song Wall 4 / 20 3"), Region(Region.TerminaField)]
-        [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
-        [ShopText("This is worth 1 rupee.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x3A9), ItemCategory(ItemCategory.GreenRupees), NullableItem]
-        CollectableTerminaFieldSongWall4203,
-
-
-        [Visible]
-        [Repeatable]
-        [ItemName("Blue Rupee"), LocationName("Termina Field Song Wall 0 / 8 / 12 / 16"), Region(Region.TerminaField)]
-        [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
-        [ShopText("This is worth 5 rupees.")]
-        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x3AA), ItemCategory(ItemCategory.BlueRupees), NullableItem]
         CollectableTerminaFieldSongWall0812161,
 
 
         [Visible]
         [Repeatable]
-        [ItemName("Blue Rupee"), LocationName("Termina Field Song Wall 0 / 8 / 12 / 16 2"), Region(Region.TerminaField)]
+        [ItemName("Green Rupee"), LocationName("Termina Field Song Wall 0 / 8 / 12 / 16 2"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
-        [ShopText("This is worth 5 rupees.")]
+        [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x3AB), ItemCategory(ItemCategory.BlueRupees), NullableItem]
+        [GetItemIndex(0x3A8), ItemCategory(ItemCategory.GreenRupees), NullableItem]
         CollectableTerminaFieldSongWall0812162,
 
 
         [Visible]
         [Repeatable]
-        [ItemName("Blue Rupee"), LocationName("Termina Field Song Wall 0 / 8 / 12 / 16 3"), Region(Region.TerminaField)]
+        [ItemName("Green Rupee"), LocationName("Termina Field Song Wall 0 / 8 / 12 / 16 3"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
-        [ShopText("This is worth 5 rupees.")]
+        [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x3AC), ItemCategory(ItemCategory.BlueRupees), NullableItem]
+        [GetItemIndex(0x3A9), ItemCategory(ItemCategory.GreenRupees), NullableItem]
         CollectableTerminaFieldSongWall0812163,
 
 
         [Visible]
         [Repeatable]
-        [ItemName("Red Rupee"), LocationName("Termina Field Song Wall 2 / 10 / 14 / 18 / 22"), Region(Region.TerminaField)]
+        [ItemName("Blue Rupee"), LocationName("Termina Field Song Wall 2 / 10 / 14 / 18 / 22"), Region(Region.TerminaField)]
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
-        [ShopText("This is worth 20 rupees.")]
+        [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x3AD), ItemCategory(ItemCategory.RedRupees), NullableItem]
+        [GetItemIndex(0x3AA), ItemCategory(ItemCategory.BlueRupees), NullableItem]
         CollectableTerminaFieldSongWall2101418221,
 
 
@@ -8317,7 +8287,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x3AE), ItemCategory(ItemCategory.BlueRupees), NullableItem]
+        [GetItemIndex(0x3AB), ItemCategory(ItemCategory.BlueRupees), NullableItem]
         CollectableTerminaFieldSongWall2101418222,
 
 
@@ -8327,8 +8297,38 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x3AF), ItemCategory(ItemCategory.BlueRupees), NullableItem]
+        [GetItemIndex(0x3AC), ItemCategory(ItemCategory.BlueRupees), NullableItem]
         CollectableTerminaFieldSongWall2101418223,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Red Rupee"), LocationName("Termina Field Song Wall 4 / 20"), Region(Region.TerminaField)]
+        [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
+        [ShopText("This is worth 20 rupees.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x3AD), ItemCategory(ItemCategory.RedRupees), NullableItem]
+        CollectableTerminaFieldSongWall4201,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Blue Rupee"), LocationName("Termina Field Song Wall 4 / 20 2"), Region(Region.TerminaField)]
+        [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
+        [ShopText("This is worth 5 rupees.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x3AE), ItemCategory(ItemCategory.BlueRupees), NullableItem]
+        CollectableTerminaFieldSongWall4202,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Blue Rupee"), LocationName("Termina Field Song Wall 4 / 20 3"), Region(Region.TerminaField)]
+        [GossipLocationHint("musical notes"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
+        [ShopText("This is worth 5 rupees.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x3AF), ItemCategory(ItemCategory.BlueRupees), NullableItem]
+        CollectableTerminaFieldSongWall4203,
 
 
         [Visible]

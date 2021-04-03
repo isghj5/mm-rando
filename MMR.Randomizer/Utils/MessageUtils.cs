@@ -50,6 +50,21 @@ namespace MMR.Randomizer.Utils
                     continue;
                 }
 
+                if (randomizedResult.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon) && ItemUtils.SmallKeys().Contains(item.Item))
+                {
+                    continue;
+                }
+
+                if (randomizedResult.Settings.BossKeyMode.HasFlag(BossKeyMode.KeepWithinDungeon) && ItemUtils.BossKeys().Contains(item.Item))
+                {
+                    continue;
+                }
+
+                if (randomizedResult.Settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinDungeon) && ItemUtils.DungeonStrayFairies().Contains(item.Item))
+                {
+                    continue;
+                }
+
                 randomizedItems.Add(item);
 
                 var itemName = item.Item.Name();

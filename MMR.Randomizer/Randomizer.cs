@@ -1072,11 +1072,7 @@ namespace MMR.Randomizer
                 if (CheckMatch(currentItem, targetLocation))
                 {
                     currentItemObject.NewLocation = targetLocation;
-
-                    if (!lockRegion)
-                    {
-                        currentItemObject.IsRandomized = true;
-                    }
+                    currentItemObject.IsRandomized = true;
 
                     Debug.WriteLine($"----Placed {currentItem.Name()} at {targetLocation.Location()}----");
 

@@ -16,12 +16,12 @@ u16 Item00_CollectableFlagToGiIndex(GlobalContext* ctxt, u16 collectableFlag) {
     u32 index = MISC_CONFIG.internal.collectableTableFileIndex;
     DmaEntry entry = dmadata[index];
 
-    u32 start = entry.vromStart + collectableTableIndex * 2;
+    u32 start = entry.romStart + (collectableTableIndex * 2);
 
     // TODO optimization. check if this works on compressed files.
     // TODO optimization. maybe read the whole scene block when a scene loads.
     u16 giIndex;
-    z2_ReadFile(&giIndex, start, 2);
+    z2_RomToRam(start, &giIndex, sizeof(giIndex));
     return giIndex;
 }
 
