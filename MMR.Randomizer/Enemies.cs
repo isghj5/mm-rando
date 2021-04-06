@@ -252,7 +252,8 @@ namespace MMR.Randomizer
             //RomUtils.CheckCompressed(1320);
             //ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[1320].Data, (0x4 * 0x16) + (22 * 16) + 10, (ushort) MergeRotationAndFlags(new Random().Next(5) * 0x6 * 12, 0x8 | 0x4));
 
-            // the dinofos spawn is near the roof in woodfall and secret shrine
+            // the dinofos spawn is near the roof in woodfall, lower
+            // TODO: do secret shrine too maybe
             var woodfalltempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
             woodfalltempleScene.Maps[7].Actors[0].Position.y = -1208;
 
@@ -331,15 +332,18 @@ namespace MMR.Randomizer
 
             // set the collectable rup in woodfall to a random grotto, just to see if anyone even notices
             var woodfallRoom0FID = GameObjects.Scene.Woodfall.FileID() + 1;
-            RomUtils.CheckCompressed(woodfallRoom0FID);
             var woodfallSceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.Woodfall.FileID());
+            /* // disabled now that we have rupee rando
+            RomUtils.CheckCompressed(woodfallRoom0FID);
             var woodfallSceneActorAddr = RomData.SceneList[woodfallSceneIndex].Maps[0].ActorAddr;
             var grottoVariants = GameObjects.Actor.GrottoHole.AllVariants();
             var randomGrottoVariant = grottoVariants[new Random().Next(grottoVariants.Count)];
             var randomGrottoEnemy = GameObjects.Actor.GrottoHole.ToActorModel();
             SetupGrottoActor(randomGrottoEnemy, randomGrottoVariant);
+            
             //SetVariant(GameObjects.Scene.Woodfall, roomIndex: 0, actorIndex: 0, vars: 0x0000);
             RomData.SceneList[woodfallSceneIndex].Maps[0].Actors[0].Variants[0] = 0xE000; // vissible bean grotto
+            */
 
             //SetZRotation(GameObjects.Scene.Woodfall, roomIndex: 0, actorIndex: 0, zRot: 10); // got a crash, set to cow for now
             //RomData.SceneList[woodfallSceneIndex].Maps[0].Actors[0].Rotation.z = 0x10; // with matching flags
