@@ -1,11 +1,9 @@
 Item00_Constructor_Hook:
-    addiu   sp, sp, -0x1C
+    addiu   sp, sp, -0x14
     sw      ra, 0x0010 (sp)
     sw      a0, 0x0014 (sp)
-    sw      a1, 0x0018 (sp)
-    or      a0, s0, r0
     jal     Item00_Constructor
-    lw      a1, 0x0068 (sp)
+    sw      a1, 0x0018 (sp)
 
     ; Displaced code
     lh      t4, 0x001C (s0)
@@ -16,7 +14,7 @@ Item00_Constructor_Hook:
     lw      ra, 0x0010 (sp)
 
     jr      ra
-    addiu   sp, sp, 0x1C
+    addiu   sp, sp, 0x14
 
 Item00_GiveItem_Hook:
     addiu   sp, sp, -0x20

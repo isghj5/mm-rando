@@ -209,7 +209,7 @@ namespace MMR.Randomizer.Utils
             }
             if (exclude.Contains(item))
             {
-                if (settings.AddSongs || !ItemUtils.IsSong(item) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsSong(i)))
+                if (settings.AddSongs || !ItemUtils.IsSong(item) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i) && !ItemUtils.IsSong(i)))
                 {
                     return null;
                 }

@@ -9,7 +9,7 @@
 ;   addiu   at, r0, 0x0015
 .org 0x800A5E1C
     jal     Item00_Constructor_Hook
-    nop
+    lw      a1, 0x004C (sp)
 
 ;==================================================================================================
 ; Give Item
@@ -33,8 +33,8 @@
 ;   sll     a0, a0, 16
 ;   sra     a0, a0, 16
 .org 0x800A7984
-    or      a0, s2, r0
-    or      a1, s0, r0
+    or      a0, s0, r0
+    nop
     nop
 
 ; Replaces:

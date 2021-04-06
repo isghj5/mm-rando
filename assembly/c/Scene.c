@@ -2,6 +2,7 @@
 #include "ActorExt.h"
 #include "LoadedModels.h"
 #include "Models.h"
+#include "Item00.h"
 
 /**
  * Hook function used after the scene initialize function has been called.
@@ -13,4 +14,6 @@ void Scene_AfterInit(GlobalContext* ctxt) {
     Models_ClearObjectHeap();
     // Clear loaded actor model info
     LoadedModels_ClearActorModels();
+    // Load Collectable Table info for the scene
+    Item00_LoadCollectableTable(ctxt);
 }

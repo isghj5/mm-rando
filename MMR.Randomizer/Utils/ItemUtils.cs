@@ -8,6 +8,7 @@ using MMR.Randomizer.Attributes;
 using System.Collections.ObjectModel;
 using MMR.Randomizer.Models;
 using MMR.Common.Extensions;
+using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.Utils
 {
@@ -73,6 +74,26 @@ namespace MMR.Randomizer.Utils
         {
             return item >= Item.BottleCatchFairy
                    && item <= Item.BottleCatchMushroom;
+        }
+
+        public static bool IsRegionRestricted(GameplaySettings settings, Item item)
+        {
+            if (settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon) && SmallKeys().Contains(item))
+            {
+                return true;
+            }
+
+            if (settings.BossKeyMode.HasFlag(BossKeyMode.KeepWithinDungeon) && BossKeys().Contains(item))
+            {
+                return true;
+            }
+
+            if (settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinDungeon) && DungeonStrayFairies().Contains(item))
+            {
+                return true;
+            }
+
+            return false;
         }
 
         public static bool IsStartingLocation(Item location)

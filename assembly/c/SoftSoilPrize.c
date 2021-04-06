@@ -15,9 +15,9 @@ ActorEnItem00* SoftSoilPrize_ItemSpawn(GlobalContext* ctxt, Actor* actor, u16 ty
             break;
         case 0x27: // Swamp Spider House
             if (flag == 0) {
-                giIndex = 0x379; // Rock
+                giIndex = 0x37A; // Rock
             } else {
-                giIndex = 0x37A; // Gold Room
+                giIndex = 0x379; // Gold Room
             }
             break;
         case 0x2B: // Deku Palace
