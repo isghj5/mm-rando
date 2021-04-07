@@ -164,68 +164,71 @@ namespace MMR.Randomizer.Templates
                     " }\r\n        return false;\r\n    }\r\n\r\n    function includes(list, item) {\r\n       " +
                     " for (var i = 0; i < list.length; i++) {\r\n            if (list[i] === item) {\r\n " +
                     "               return true;\r\n            }\r\n        }\r\n        return false;\r\n  " +
-                    "  }\r\n    \r\n    var segmentSize = 16;\r\n    function saveItems() {\r\n        var se" +
-                    "gments = [];\r\n        for (var i = 0; i < logic.length; i++) {\r\n            var " +
-                    "segmentIndex = parseInt(i / segmentSize);\r\n            segments[segmentIndex] = " +
-                    "segments[segmentIndex] || 0;\r\n            if (logic[i].Checked) {\r\n             " +
-                    "   segments[parseInt(i / segmentSize)] += (1 << (i%segmentSize));\r\n            }" +
-                    "\r\n        }\r\n        var saveString = segments.map(function(s) {\r\n            re" +
-                    "turn s.toString(16);\r\n        }).join(\"-\");\r\n        var saveInput = document.qu" +
-                    "erySelector(\"#spoilerLogState\");\r\n        saveInput.value = saveString;\r\n    }\r\n" +
-                    "\r\n    function loadItems() {\r\n        var saveInput = document.querySelector(\"#s" +
-                    "poilerLogState\");\r\n        var segments = saveInput.value.split(\"-\");\r\n        i" +
-                    "f (Math.ceil((logic.length - 1) / segmentSize) !== segments.length) {\r\n         " +
-                    "   alert(\"Invalid Spoiler Log state\");\r\n            return;\r\n        }\r\n        " +
-                    "segments = segments.map(function(segment) {\r\n            return parseInt(segment" +
-                    ", 16);\r\n        });\r\n        var itemsToCheck = [];\r\n        for (var i = 0; i <" +
-                    " segments.length; i++) {\r\n            var segment = segments[i];\r\n            fo" +
-                    "r (var j = 0; j < segmentSize; j++) {\r\n                var itemIndex = segmentSi" +
-                    "ze * i + j;\r\n                if (itemIndex < logic.length) {\r\n                  " +
-                    "  var mark = ((segment >> j) % 2 == 1);\r\n                    logic[itemIndex].Ch" +
-                    "ecked = mark;\r\n                    var itemRow = document.querySelector(\"tr[data" +
-                    "-newlocationid=\'\" + itemIndex + \"\']\");\r\n                    if (itemRow) {\r\n    " +
-                    "                    logic[itemRow.dataset.id].Acquired = mark;\r\n                " +
-                    "        if (!includes(itemsToCheck, itemRow.dataset.id)) {\r\n                    " +
-                    "        itemsToCheck.push(itemRow.dataset.id);\r\n                        }\r\n     " +
-                    "               } else {\r\n                        logic[itemIndex].Acquired = mar" +
-                    "k;\r\n                        if (!includes(itemsToCheck, itemIndex)) {\r\n         " +
-                    "                   itemsToCheck.push(itemIndex);\r\n                        }\r\n   " +
-                    "                 }\r\n                }\r\n            }\r\n        }\r\n        checkIt" +
-                    "ems(itemsToCheck);\r\n    }\r\n\r\n    document.querySelector(\"#spoilerLogState\").addE" +
-                    "ventListener(\"keypress\", function(event) {\r\n        if (event.keyCode === 13) {\r" +
-                    "\n            loadItems();\r\n        }\r\n    });\r\n\r\n    function checkLocations(loc" +
-                    "ations) {\r\n        var itemsToCheck = [];\r\n        for (var i = 0; i < locations" +
-                    ".length; i++) {\r\n            var location = logic[locations[i]];\r\n            lo" +
-                    "cation.IsAvailable = \r\n                (location.RequiredItemIds === null || loc" +
-                    "ation.RequiredItemIds.length === 0 || all(location.RequiredItemIds, function(id)" +
-                    " { return logic[id].Acquired; }))\r\n                && \r\n                (locatio" +
-                    "n.ConditionalItemIds === null || location.ConditionalItemIds.length === 0 || any" +
-                    "(location.ConditionalItemIds, function(conditionals) { return all(conditionals, " +
-                    "function(id) { return logic[id].Acquired; }); }));\r\n            \r\n            if" +
-                    " (!location.Acquired && location.IsFakeItem && location.IsAvailable) {\r\n        " +
-                    "        location.Acquired = true;\r\n                itemsToCheck.push(locations[i" +
-                    "]);\r\n            }\r\n            if (location.Acquired && location.IsFakeItem && " +
-                    "!location.IsAvailable) {\r\n                location.Acquired = false;\r\n          " +
-                    "      itemsToCheck.push(locations[i]);\r\n            }\r\n        \r\n            var" +
-                    " locationRow = document.querySelector(\".item-replacements tr[data-newlocationid=" +
-                    "\'\" + locations[i] + \"\']\");\r\n            if (locationRow) {\r\n                loca" +
-                    "tionRow.className = \"\";\r\n                locationRow.classList.add(location.IsAv" +
-                    "ailable ? \"available\" : \"unavailable\");\r\n                var itemName = location" +
-                    "Row.querySelector(\".itemname\");\r\n                var checkbox = locationRow.quer" +
-                    "ySelector(\"input\");\r\n                checkbox.checked = location.Checked;\r\n     " +
-                    "           if (location.Checked) {\r\n                    itemName.classList.remov" +
-                    "e(\"spoiler\");\r\n                } else {\r\n                    itemName.classList." +
-                    "add(\"spoiler\");\r\n                }\r\n            }\r\n        \r\n            var ite" +
-                    "mRow = document.querySelector(\"#item-locations tr[data-newlocationid=\'\" + locati" +
-                    "ons[i] + \"\']\");\r\n            if (itemRow) {\r\n                var itemName = item" +
-                    "Row.querySelector(\".newlocation\");\r\n                var checkbox = itemRow.query" +
-                    "Selector(\"input\");\r\n                var item = logic[itemRow.dataset.id];\r\n     " +
-                    "           checkbox.checked = item.Acquired;\r\n                if (item.Acquired)" +
-                    " {\r\n                    itemName.classList.remove(\"spoiler\");\r\n                }" +
-                    " else {\r\n                    itemName.classList.add(\"spoiler\");\r\n               " +
-                    " }\r\n            }\r\n        }\r\n        if (itemsToCheck.length > 0) {\r\n          " +
-                    "  checkItems(itemsToCheck);\r\n        } else {\r\n            saveItems();\r\n       " +
-                    " }\r\n    }\r\n\r\n    var logic = ");
+                    "  }\r\n\r\n    function find(list, predicate) {\r\n        for (var i = 0; i < list.le" +
+                    "ngth; i++) {\r\n            if (predicate(list[i])) {\r\n                return list" +
+                    "[i];\r\n            }\r\n        }\r\n        return null;\r\n    }\r\n    \r\n    var segme" +
+                    "ntSize = 16;\r\n    function saveItems() {\r\n        var segments = [];\r\n        fo" +
+                    "r (var i = 0; i < logic.length; i++) {\r\n            var segmentIndex = parseInt(" +
+                    "i / segmentSize);\r\n            segments[segmentIndex] = segments[segmentIndex] |" +
+                    "| 0;\r\n            if (logic[i].Checked) {\r\n                segments[parseInt(i /" +
+                    " segmentSize)] += (1 << (i%segmentSize));\r\n            }\r\n        }\r\n        var" +
+                    " saveString = segments.map(function(s) {\r\n            return s.toString(16);\r\n  " +
+                    "      }).join(\"-\");\r\n        var saveInput = document.querySelector(\"#spoilerLog" +
+                    "State\");\r\n        saveInput.value = saveString;\r\n    }\r\n\r\n    function loadItems" +
+                    "() {\r\n        var saveInput = document.querySelector(\"#spoilerLogState\");\r\n     " +
+                    "   var segments = saveInput.value.split(\"-\");\r\n        if (Math.ceil((logic.leng" +
+                    "th - 1) / segmentSize) !== segments.length) {\r\n            alert(\"Invalid Spoile" +
+                    "r Log state\");\r\n            return;\r\n        }\r\n        segments = segments.map(" +
+                    "function(segment) {\r\n            return parseInt(segment, 16);\r\n        });\r\n   " +
+                    "     var locationsToCheck = [];\r\n        for (var i = 0; i < segments.length; i+" +
+                    "+) {\r\n            var segment = segments[i];\r\n            for (var j = 0; j < se" +
+                    "gmentSize; j++) {\r\n                var itemIndex = segmentSize * i + j;\r\n       " +
+                    "         if (itemIndex < logic.length) {\r\n                    var mark = ((segme" +
+                    "nt >> j) % 2 == 1);\r\n                    logic[itemIndex].Checked = mark;\r\n     " +
+                    "               var itemRow = document.querySelector(\"tr[data-newlocationid=\'\" + " +
+                    "itemIndex + \"\']\");\r\n                    if (itemRow) {\r\n                        " +
+                    "logic[itemRow.dataset.id].Acquired = mark;\r\n                    } else {\r\n      " +
+                    "                  logic[itemIndex].Acquired = mark;\r\n                    }\r\n    " +
+                    "                if (!includes(locationsToCheck, itemIndex)) {\r\n                 " +
+                    "       locationsToCheck.push(itemIndex);\r\n                    }\r\n               " +
+                    " }\r\n            }\r\n        }\r\n        checkLocations(locationsToCheck);\r\n    }\r\n" +
+                    "\r\n    document.querySelector(\"#spoilerLogState\").addEventListener(\"keypress\", fu" +
+                    "nction(event) {\r\n        if (event.keyCode === 13) {\r\n            loadItems();\r\n" +
+                    "        }\r\n    });\r\n\r\n    function checkLocations(locations) {\r\n        var item" +
+                    "sToCheck = [];\r\n        for (var i = 0; i < locations.length; i++) {\r\n          " +
+                    "  var location = logic[locations[i]];\r\n            location.IsAvailable = \r\n    " +
+                    "            (location.RequiredItemIds === null || location.RequiredItemIds.lengt" +
+                    "h === 0 || all(location.RequiredItemIds, function(id) { return logic[id].Acquire" +
+                    "d; }))\r\n                && \r\n                (location.ConditionalItemIds === nu" +
+                    "ll || location.ConditionalItemIds.length === 0 || any(location.ConditionalItemId" +
+                    "s, function(conditionals) { return all(conditionals, function(id) { return logic" +
+                    "[id].Acquired; }); }));\r\n            \r\n            var newLocation = find(logic," +
+                    " function(io) { return io.NewLocationId === locations[i]; });\r\n            if (!" +
+                    "newLocation) {\r\n                newLocation = location;\r\n            }\r\n        " +
+                    "    if (!newLocation.Acquired && location.IsFakeItem && location.IsAvailable) {\r" +
+                    "\n                newLocation.Acquired = true;\r\n                itemsToCheck.push" +
+                    "(newLocation.ItemId);\r\n            }\r\n            if (newLocation.Acquired && lo" +
+                    "cation.IsFakeItem && !location.IsAvailable) {\r\n                newLocation.Acqui" +
+                    "red = false;\r\n                itemsToCheck.push(newLocation.ItemId);\r\n          " +
+                    "  }\r\n        \r\n            var locationRow = document.querySelector(\".item-repla" +
+                    "cements tr[data-newlocationid=\'\" + locations[i] + \"\']\");\r\n            if (locati" +
+                    "onRow) {\r\n                locationRow.className = \"\";\r\n                locationR" +
+                    "ow.classList.add(location.IsAvailable ? \"available\" : \"unavailable\");\r\n         " +
+                    "       var itemName = locationRow.querySelector(\".itemname\");\r\n                v" +
+                    "ar checkbox = locationRow.querySelector(\"input\");\r\n                checkbox.chec" +
+                    "ked = location.Checked;\r\n                if (location.Checked) {\r\n              " +
+                    "      itemName.classList.remove(\"spoiler\");\r\n                } else {\r\n         " +
+                    "           itemName.classList.add(\"spoiler\");\r\n                }\r\n            }\r" +
+                    "\n        \r\n            var itemRow = document.querySelector(\"#item-locations tr[" +
+                    "data-newlocationid=\'\" + locations[i] + \"\']\");\r\n            if (itemRow) {\r\n     " +
+                    "           var itemName = itemRow.querySelector(\".newlocation\");\r\n              " +
+                    "  var checkbox = itemRow.querySelector(\"input\");\r\n                var item = log" +
+                    "ic[itemRow.dataset.id];\r\n                checkbox.checked = item.Acquired;\r\n    " +
+                    "            if (item.Acquired) {\r\n                    itemName.classList.remove(" +
+                    "\"spoiler\");\r\n                } else {\r\n                    itemName.classList.ad" +
+                    "d(\"spoiler\");\r\n                }\r\n            }\r\n        }\r\n        if (itemsToC" +
+                    "heck.length > 0) {\r\n            checkItems(itemsToCheck);\r\n        } else {\r\n   " +
+                    "         saveItems();\r\n        }\r\n    }\r\n\r\n    var logic = ");
             this.Write(this.ToStringHelper.ToStringWithCulture(spoiler.LogicJson));
             this.Write(";\r\n\r\n    for (var i = 0; i < logic.length; i++) {\r\n        var item = logic[i];\r\n" +
                     "        if (item.Acquired) {\r\n            item.Checked = true;\r\n            docu" +

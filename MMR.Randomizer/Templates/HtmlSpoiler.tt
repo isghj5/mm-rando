@@ -160,6 +160,15 @@
         }
         return false;
     }
+
+    function find(list, predicate) {
+        for (var i = 0; i < list.length; i++) {
+            if (predicate(list[i])) {
+                return list[i];
+            }
+        }
+        return null;
+    }
     
     var segmentSize = 16;
     function saveItems() {
@@ -188,7 +197,7 @@
         segments = segments.map(function(segment) {
             return parseInt(segment, 16);
         });
-        var itemsToCheck = [];
+        var locationsToCheck = [];
         for (var i = 0; i < segments.length; i++) {
             var segment = segments[i];
             for (var j = 0; j < segmentSize; j++) {
@@ -199,19 +208,16 @@
                     var itemRow = document.querySelector("tr[data-newlocationid='" + itemIndex + "']");
                     if (itemRow) {
                         logic[itemRow.dataset.id].Acquired = mark;
-                        if (!includes(itemsToCheck, itemRow.dataset.id)) {
-                            itemsToCheck.push(itemRow.dataset.id);
-                        }
                     } else {
                         logic[itemIndex].Acquired = mark;
-                        if (!includes(itemsToCheck, itemIndex)) {
-                            itemsToCheck.push(itemIndex);
-                        }
+                    }
+                    if (!includes(locationsToCheck, itemIndex)) {
+                        locationsToCheck.push(itemIndex);
                     }
                 }
             }
         }
-        checkItems(itemsToCheck);
+        checkLocations(locationsToCheck);
     }
 
     document.querySelector("#spoilerLogState").addEventListener("keypress", function(event) {
@@ -229,13 +235,17 @@
                 && 
                 (location.ConditionalItemIds === null || location.ConditionalItemIds.length === 0 || any(location.ConditionalItemIds, function(conditionals) { return all(conditionals, function(id) { return logic[id].Acquired; }); }));
             
-            if (!location.Acquired && location.IsFakeItem && location.IsAvailable) {
-                location.Acquired = true;
-                itemsToCheck.push(locations[i]);
+            var newLocation = find(logic, function(io) { return io.NewLocationId === locations[i]; });
+            if (!newLocation) {
+                newLocation = location;
             }
-            if (location.Acquired && location.IsFakeItem && !location.IsAvailable) {
-                location.Acquired = false;
-                itemsToCheck.push(locations[i]);
+            if (!newLocation.Acquired && location.IsFakeItem && location.IsAvailable) {
+                newLocation.Acquired = true;
+                itemsToCheck.push(newLocation.ItemId);
+            }
+            if (newLocation.Acquired && location.IsFakeItem && !location.IsAvailable) {
+                newLocation.Acquired = false;
+                itemsToCheck.push(newLocation.ItemId);
             }
         
             var locationRow = document.querySelector(".item-replacements tr[data-newlocationid='" + locations[i] + "']");

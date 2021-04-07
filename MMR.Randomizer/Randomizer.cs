@@ -1135,9 +1135,9 @@ namespace MMR.Randomizer
         private void ReplaceRecoveryHeartsWithJunk()
         {
             var usableJunk = ItemUtils.JunkItems.Where(item => item.IsRepeatable()).ToList();
-            foreach (var io in ItemList)
+            foreach (var io in ItemList.Where(io => !io.Item.IsFake()))
             {
-                if (io.Item == Item.RecoveryHeart)
+                if (!ItemUtils.IsStartingLocation(io.NewLocation.Value) && io.Item == Item.RecoveryHeart)
                 {
                     io.ItemOverride = usableJunk.Random(Random);
                 }

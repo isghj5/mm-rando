@@ -161,6 +161,11 @@ namespace MMR.Randomizer.Utils
             var itemList = new ItemList();
             foreach (var item in Enum.GetValues<Item>())
             {
+                if (item < 0)
+                {
+                    continue;
+                }
+
                 var currentItem = new ItemObject
                 {
                     ID = (int)item,
