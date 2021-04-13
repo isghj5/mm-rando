@@ -347,8 +347,8 @@ namespace MMR.Randomizer
 
             //SetZRotation(GameObjects.Scene.Woodfall, roomIndex: 0, actorIndex: 0, zRot: 10); // got a crash, set to cow for now
             //RomData.SceneList[woodfallSceneIndex].Maps[0].Actors[0].Rotation.z = 0x10; // with matching flags
-            RomData.SceneList[woodfallSceneIndex].Maps[0].Actors[0].ActorID = (int) GameObjects.Actor.GrottoHole; // set actor to grotto
-            RomData.SceneList[woodfallSceneIndex].Maps[0].Actors[0].ActorEnum = GameObjects.Actor.GrottoHole; // set actor to grotto
+            // RomData.SceneList[woodfallSceneIndex].Maps[0].Actors[0].ActorID = (int) GameObjects.Actor.GrottoHole; // set actor to grotto
+            // RomData.SceneList[woodfallSceneIndex].Maps[0].Actors[0].ActorEnum = GameObjects.Actor.GrottoHole; // set actor to grotto
 
             // set the collectable rup in woodfall to a random grotto, just to see if anyone even notices
             var testScene = GameObjects.Scene.TerminaField;
