@@ -214,7 +214,9 @@ typedef struct {
     /* 0x368 */ Vec3f unk368;
     /* 0x374 */ UNK_TYPE1 pad374[0x10];
     /* 0x384 */ u16 getItem;
-    /* 0x386 */ UNK_TYPE1 pad386[0xC];
+    /* 0x386 */ u16 unk386; // Some kind of rotation?
+    /* 0x388 */ Actor* givingActor;
+    /* 0x38C */ UNK_TYPE1 pad38C[0x8];
     /* 0x394 */ u8 unk394;
     /* 0x395 */ UNK_TYPE1 pad395[0x37];
     /* 0x3CC */ s16 unk3CC;

@@ -3,6 +3,7 @@
 #include "MMR.h"
 #include "Util.h"
 #include "enums.h"
+#include "Items.h"
 
 struct MMRConfig MMR_CONFIG = {
     .magic = MMR_CONFIG_MAGIC,
@@ -282,6 +283,12 @@ u16 MMR_GetProcessingItemGiIndex(GlobalContext* ctxt) {
     return 0;
 }
 
+void MMR_ClearItemQueue() {
+    for (u8 i = 0; i < ITEM_QUEUE_LENGTH; i++) {
+        itemQueue[i] = 0;
+    }
+}
+
 void MMR_ProcessItemQueue(GlobalContext* ctxt) {
     u16 giIndex = MMR_GetProcessingItemGiIndex(ctxt);
     if (giIndex) {
@@ -314,19 +321,34 @@ u32 MMR_GetMinorItemSfxId(u8 item) {
     if (item >= 0x6 && item <= 0x9) {
         return 0x4824;
     }
-    if (item == 0x79 || item == 0x7A) {
+    if (item == 0x79 || item == 0x7A || item == CUSTOM_ITEM_CRIMSON_RUPEE) {
         return 0x4824;
     }
-    if (item == 0xB0) {
-        return 0x31A4; // Ice Trap
+    if (item == CUSTOM_ITEM_ICE_TRAP) {
+        return 0x31A4;
     }
     return 0;
 }
 
-bool MMR_GiveItem(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
+void MMR_GiveItemToHold(Actor* actor, GlobalContext* ctxt, u16 giIndex) {
+    ActorPlayer* player = GET_PLAYER(ctxt);
+    player->stateFlags.state1 |= PLAYER_STATE1_HOLD;
+    player->getItem = giIndex;
+    player->givingActor = actor;
+}
+
+bool MMR_IsActorFreestanding(s16 id) {
+    if (id == 0xE || id == 0x25A || id == 0x1D2) {
+        return true;
+    }
+    return false;
+}
+
+bool MMR_GiveItemIfMinor(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
+    bool isFreestanding = MMR_IsActorFreestanding(actor->id);
     u32 minorItemSfxId = 0;
     GetItemEntry* entry = NULL;
-    if (MISC_CONFIG.flags.freestanding) {
+    if (!isFreestanding || MISC_CONFIG.flags.freestanding) {
         u16 newGiIndex = MMR_GetNewGiIndex(ctxt, NULL, giIndex, false);
         entry = MMR_GetGiEntry(newGiIndex);
         minorItemSfxId = MMR_GetMinorItemSfxId(entry->item);
@@ -334,7 +356,9 @@ bool MMR_GiveItem(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
     if (minorItemSfxId && entry) {
         if (minorItemSfxId == 0x31A4) {
             // TODO maybe check actor type is Item00/ScRuppe/DekuScrubPlaygroundRupee ?
-            actor->draw = NULL;
+            if (isFreestanding) {
+                actor->draw = NULL;
+            }
             z2_PlayLoopingSfxAtActor(actor, minorItemSfxId);
         } else {
             z2_PlaySfx(minorItemSfxId);
@@ -342,14 +366,21 @@ bool MMR_GiveItem(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
         z2_GiveItem(ctxt, entry->item);
         return true;
     } else {
+        return false;
+    }
+}
+
+bool MMR_GiveItem(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
+    bool result = MMR_GiveItemIfMinor(ctxt, actor, giIndex);
+    if (!result) {
         for (u8 i = 0; i < ITEM_QUEUE_LENGTH; i++) {
             if (itemQueue[i] == 0) {
                 itemQueue[i] = giIndex;
                 break;
             }
         }
-        return false;
     }
+    return result;
 }
 
 void MMR_Init(void) {

@@ -3558,7 +3558,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x1D2), ItemCategory(ItemCategory.Ammo), CollectableIndex(0x1807)]
-        CollectableDampéSHouseBasementPot1,
+        CollectableDampesHouseBasementPot1,
 
 
         [Visible]
@@ -3568,7 +3568,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x1D3), ItemCategory(ItemCategory.Ammo), CollectableIndex(0x180A)]
-        CollectableDampéSHouseBasementPot2,
+        CollectableDampesHouseBasementPot2,
 
 
         [Visible]
@@ -3578,7 +3578,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x1D4), ItemCategory(ItemCategory.Ammo), CollectableIndex(0x180C)]
-        CollectableDampéSHouseBasementPot3,
+        CollectableDampesHouseBasementPot3,
 
 
         [Visible]
@@ -3588,7 +3588,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x1D5), ItemCategory(ItemCategory.Ammo), CollectableIndex(0x180D)]
-        CollectableDampéSHouseBasementPot4,
+        CollectableDampesHouseBasementPot4,
 
 
         [Visible]
@@ -5138,7 +5138,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x270), ItemCategory(ItemCategory.GreenRupees), CollectableIndex(0x1805)]
-        CollectableDampéSHouseBasementPot5,
+        CollectableDampesHouseBasementPot5,
 
 
         [Visible]
@@ -5148,7 +5148,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x271), ItemCategory(ItemCategory.GreenRupees), CollectableIndex(0x1806)]
-        CollectableDampéSHouseBasementPot6,
+        CollectableDampesHouseBasementPot6,
 
 
         [Visible]
@@ -5158,7 +5158,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x272), ItemCategory(ItemCategory.GreenRupees), CollectableIndex(0x1809)]
-        CollectableDampéSHouseBasementPot7,
+        CollectableDampesHouseBasementPot7,
 
 
         [Visible]
@@ -6428,7 +6428,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x2F1), ItemCategory(ItemCategory.PurpleRupees), CollectableIndex(0x180B)]
-        CollectableDampéSHouseBasementPot8,
+        CollectableDampesHouseBasementPot8,
 
 
         [Visible]
@@ -9721,6 +9721,131 @@ namespace MMR.Randomizer.GameObjects
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x43A), ItemCategory(ItemCategory.Ammo), CollectableIndex(0x143B)]
         CollectableOceansideSpiderHouseMaskRoomPot2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("30 Arrows"), LocationName("Ikana Canyon Cleared Grass"), Region(Region.IkanaCanyon)]
+        [GossipLocationHint("uncursed grass"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
+        [ShopText("Ammo for your bow.", isMultiple: true)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x43B), ItemCategory(ItemCategory.Ammo), CollectableIndex(0x9A2)]
+        CollectableIkanaCanyonMainAreaGrass4,
+
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("5 Bombs"), LocationName("Ikana Canyon Cleared Grass 2"), Region(Region.IkanaCanyon)]
+        [GossipLocationHint("uncursed grass"), GossipItemHint("explosives")]
+        [ShopText("Explosives. You need a Bomb Bag to carry them.", isMultiple: true)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x43C), ItemCategory(ItemCategory.Ammo), CollectableIndex(0x9A1)]
+        CollectableIkanaCanyonMainAreaGrass5,
+
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Large Magic Jar"), LocationName("Ikana Canyon Cleared Grass 3"), Region(Region.IkanaCanyon)]
+        [GossipLocationHint("uncursed grass"), GossipItemHint("a magic refill")]
+        [ShopText("Replenishes a large amount of your magic power.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x43D), ItemCategory(ItemCategory.MagicJars), CollectableIndex(0x9A0)]
+        CollectableIkanaCanyonMainAreaGrass6,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Large Magic Jar"), LocationName("Path to Snowhead Spring Snowball"), Region(Region.PathToSnowhead)]
+        [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
+        [ShopText("Replenishes a large amount of your magic power.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x43E), ItemCategory(ItemCategory.MagicJars), CollectableIndex(0x2DA0)]
+        CollectablePathToSnowheadSmallSnowball1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Large Magic Jar"), LocationName("Path to Snowhead Spring Snowball 2"), Region(Region.PathToSnowhead)]
+        [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
+        [ShopText("Replenishes a large amount of your magic power.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x43F), ItemCategory(ItemCategory.MagicJars), CollectableIndex(0x2DA1)]
+        CollectablePathToSnowheadSmallSnowball2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Large Magic Jar"), LocationName("Path to Snowhead Spring Snowball 3"), Region(Region.PathToSnowhead)]
+        [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
+        [ShopText("Replenishes a large amount of your magic power.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x440), ItemCategory(ItemCategory.MagicJars), CollectableIndex(0x2DA2)]
+        CollectablePathToSnowheadSmallSnowball3,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Large Magic Jar"), LocationName("Path to Snowhead Spring Snowball 4"), Region(Region.PathToSnowhead)]
+        [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
+        [ShopText("Replenishes a large amount of your magic power.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x441), ItemCategory(ItemCategory.MagicJars), CollectableIndex(0x2DA3)]
+        CollectablePathToSnowheadSmallSnowball4,
+
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
+        [ShopText("Replenishes a small amount of your magic power.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x442), ItemCategory(ItemCategory.MagicJars), CollectableIndex(0x38A1)]
+        CollectablePathToMountainVillageSmallSnowball2,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball 2"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
+        [ShopText("Replenishes a small amount of your magic power.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x443), ItemCategory(ItemCategory.MagicJars), CollectableIndex(0x38A2)]
+        CollectablePathToMountainVillageSmallSnowball3,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball 3"), Region(Region.MountainVillage)]
+        [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
+        [ShopText("Replenishes a small amount of your magic power.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x444), ItemCategory(ItemCategory.MagicJars), CollectableIndex(0x38A5)]
+        CollectablePathToMountainVillageSmallSnowball4,
+
+
+        [Purchaseable]
+        [Repeatable]
+        [ItemName("Silver Rupee"), LocationName("Zora Cape Jar Game"), Region(Region.ZoraCape)]
+        [GossipLocationHint("an ocean game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
+        [ShopText("This is worth 100 rupees.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x445), ItemCategory(ItemCategory.SilverRupees)]
+        CollectableZoraCapeJarGame1,
+
+
+        [Visible]
+        [Repeatable]
+        [ItemName("Crimson Rupee"), LocationName("Ikana Graveyard Day 2 Bats"), Region(Region.IkanaGraveyard)]
+        [GossipLocationHint("a swarm of bats"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
+        [ShopText("This is worth 30 rupees.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x446), ItemCategory(ItemCategory.RedRupees)]
+        [ExclusiveItemMessage(0x9001, "\u0017You got a \u0001Crimson Rupee\u0000!\u0018\u0011It's worth \u000130 Rupees\u0000!\u0011What a pleasant surprise!\u00BF")]
+        CollectableIkanaGraveyardDay2Bats1,
+
 
 
 

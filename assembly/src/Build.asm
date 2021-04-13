@@ -35,6 +35,7 @@
 .include "BusinessScrub.Patch.asm"
 .include "Chest.Patch.asm"
 .include "Cows.Patch.asm"
+.include "Dampe.Patch.asm"
 .include "DekuScrubPlaygroundElevator.Patch.asm"
 .include "DekuScrubPlaygroundRupee.Patch.asm"
 .include "DonGero.Patch.asm"
@@ -77,6 +78,7 @@
 .include "SwordSchoolGong.Patch.asm"
 .include "Thiefbird.Patch.asm"
 .include "WorldColors.Patch.asm"
+.include "ZoraLand.Patch.asm"
 
 ;==================================================================================================
 ; New code region
@@ -94,6 +96,7 @@ PAYLOAD_START:
 .include "BusinessScrub.asm"
 .include "Chest.asm"
 .include "Cows.asm"
+.include "Dampe.asm"
 .include "DekuScrubPlaygroundElevator.asm"
 .include "DekuScrubPlaygroundRupee.asm"
 .include "Dpad.asm"
@@ -123,6 +126,7 @@ PAYLOAD_START:
 .include "SpinAttackEffect.asm"
 .include "StrayFairyGroup.asm"
 .include "WorldColors.asm"
+.include "ZoraLand.asm"
 .importobj "../build/bundle.o"
 
 .align 8

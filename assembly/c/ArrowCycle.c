@@ -147,7 +147,7 @@ static void HandleFrameDelay(ActorPlayer* player, GlobalContext* ctxt, Actor* ar
                 gSaveContext.extra.magicConsumeState = 2;
             }
             // Refund magic cost of previous arrow type.
-            if (prevEffectState >= 2 && !HasInfiniteMagic(gSaveContext)) {
+            if (prevEffectState >= 2 && !gSaveContext.perm.weekEventReg.hasInfiniteMagic) {
                 gSaveContext.perm.unk24.currentMagic += gArrowCycleState.magicCost;
             }
         }

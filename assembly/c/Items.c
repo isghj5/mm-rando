@@ -10,6 +10,9 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
     if (item == CUSTOM_ITEM_ICE_TRAP) {
         Icetrap_PushPending();
     }
+    if (item == CUSTOM_ITEM_CRIMSON_RUPEE) {
+        z2_AddRupees(30);
+    }
 }
 
 /**

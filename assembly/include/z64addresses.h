@@ -146,7 +146,7 @@ extern void z2_SetGetItem(Actor* actor, GlobalContext* ctxt, s32 unk2, u32 unk3)
 extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 extern void z2_GiveItem(GlobalContext* ctxt, u8 itemId);
 extern void z2_GiveMap(u32 mapIndex);
-extern void z2_AddRupees(u32 amount);
+extern void z2_AddRupees(s32 amount);
 
 // Function Prototypes (HUD).
 extern void z2_HudSetAButtonText(GlobalContext* ctxt, u16 textId);

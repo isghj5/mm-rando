@@ -2,13 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using MMR.Common.Extensions;
-using MMR.Randomizer.Extensions;
 
 namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 16;
+        public const int CurrentVersion = 18;
 
         public static string ApplyMigrations(string logic)
         {
@@ -97,6 +96,16 @@ namespace MMR.Randomizer.LogicMigrator
             if (GetVersion(lines) < 16)
             {
                 AddRupeesAndFixedDrops(lines);
+            }
+
+            if (GetVersion(lines) < 17)
+            {
+                AddRupeesAndFixedDrops2(lines);
+            }
+
+            if (GetVersion(lines) < 18)
+            {
+                AddRupeesAndFixedDrops3(lines);
             }
 
             return string.Join("\r\n", lines);
@@ -2241,6 +2250,102 @@ namespace MMR.Randomizer.LogicMigrator
             foreach (var item in newItems)
             {
                 lines.Insert(item.ID * 6 + 1, $"- {itemNames[item.ID - 433]}");
+                lines.Insert(item.ID * 6 + 2, string.Join(",", item.DependsOnItems));
+                lines.Insert(item.ID * 6 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
+                lines.Insert(item.ID * 6 + 4, $"{item.TimeNeeded}");
+                lines.Insert(item.ID * 6 + 5, "0");
+                lines.Insert(item.ID * 6 + 6, "");
+            }
+        }
+
+        private static void AddRupeesAndFixedDrops2(List<string> lines)
+        {
+            const int startIndex = 1056;
+            lines[0] = "-version 17";
+            var itemNames = new string[]
+            {
+                "Ikana Canyon Cleared Grass",
+                "Ikana Canyon Cleared Grass 2",
+                "Ikana Canyon Cleared Grass 3",
+                "Path to Snowhead Spring Snowball",
+                "Path to Snowhead Spring Snowball 2",
+                "Path to Snowhead Spring Snowball 3",
+                "Path to Snowhead Spring Snowball 4",
+                "Path to Mountain Village Spring Snowball",
+                "Path to Mountain Village Spring Snowball 2",
+                "Path to Mountain Village Spring Snowball 3",
+            };
+            var newItems = itemNames.Select((itemName, index) => new MigrationItem
+            {
+                ID = startIndex + index
+            }).ToArray();
+            for (var i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.StartsWith("-") || string.IsNullOrWhiteSpace(line) || line.StartsWith(";"))
+                {
+                    continue;
+                }
+                var updatedItemSections = line
+                    .Split(';')
+                    .Select(section => section.Split(',').Select(id =>
+                    {
+                        var itemId = int.Parse(id);
+                        if (itemId >= startIndex)
+                        {
+                            itemId += newItems.Length;
+                        }
+                        return itemId;
+                    }).ToList()).ToList();
+                lines[i] = string.Join(";", updatedItemSections.Select(section => string.Join(",", section)));
+            }
+            foreach (var item in newItems)
+            {
+                lines.Insert(item.ID * 6 + 1, $"- {itemNames[item.ID - startIndex]}");
+                lines.Insert(item.ID * 6 + 2, string.Join(",", item.DependsOnItems));
+                lines.Insert(item.ID * 6 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
+                lines.Insert(item.ID * 6 + 4, $"{item.TimeNeeded}");
+                lines.Insert(item.ID * 6 + 5, "0");
+                lines.Insert(item.ID * 6 + 6, "");
+            }
+        }
+
+        private static void AddRupeesAndFixedDrops3(List<string> lines)
+        {
+            const int startIndex = 1066;
+            lines[0] = "-version 18";
+            var itemNames = new string[]
+            {
+                "Zora Cape Jar Game",
+                "Ikana Graveyard Day 2 Bats",
+            };
+            var newItems = itemNames.Select((itemName, index) => new MigrationItem
+            {
+                ID = startIndex + index
+            }).ToArray();
+            for (var i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.StartsWith("-") || string.IsNullOrWhiteSpace(line) || line.StartsWith(";"))
+                {
+                    continue;
+                }
+                var updatedItemSections = line
+                    .Split(';')
+                    .Select(section => section.Split(',').Select(id =>
+                    {
+                        var itemId = int.Parse(id);
+                        if (itemId >= startIndex)
+                        {
+                            itemId += newItems.Length;
+                        }
+                        return itemId;
+                    }).ToList()).ToList();
+                lines[i] = string.Join(";", updatedItemSections.Select(section => string.Join(",", section)));
+            }
+            foreach (var item in newItems)
+            {
+                lines.Insert(item.ID * 6 + 1, $"- {itemNames[item.ID - startIndex]}");
                 lines.Insert(item.ID * 6 + 2, string.Join(",", item.DependsOnItems));
                 lines.Insert(item.ID * 6 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
                 lines.Insert(item.ID * 6 + 4, $"{item.TimeNeeded}");

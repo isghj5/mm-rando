@@ -155,7 +155,7 @@ static void HandleCameraOverlookEffect(GlobalContext* ctxt, ActorPlayer* player)
 static void HandleChateauEffect(GlobalContext* ctxt, ActorPlayer* player) {
     // Handle "Chateau" effect
     if (gExternalEffects.chateau) {
-        SetInfiniteMagic(gSaveContext);
+        gSaveContext.perm.weekEventReg.hasInfiniteMagic = true;
         gRefillMagic = true;
         gExternalEffects.chateau = 0;
     }

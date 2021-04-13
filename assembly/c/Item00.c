@@ -5,21 +5,45 @@
 #include "Player.h"
 #include "BaseRupee.h"
 
-static u16 itemQueue[0x80];
+static u16 collectableTable[0x80];
+
+u16 GetTweakedCollectableSceneIndex(u16 sceneIndex) {
+    switch (sceneIndex) {
+        case 0x1C: // Path to Mountain Village
+            if (gSaveContext.perm.weekEventReg.mountainCleared) {
+                return 0x71;
+            }
+            break;
+        case 0x5C: // Snowhead
+            if (gSaveContext.perm.weekEventReg.mountainCleared) {
+                return 0x72;
+            }
+            break;
+    }
+    return sceneIndex;
+}
 
 void Item00_LoadCollectableTable(GlobalContext* ctxt) {
-    u16 sceneIndex = ctxt->sceneNum;
+    if (MISC_CONFIG.internal.vanillaLayout) {
+        return;
+    }
+
+    u16 sceneIndex = GetTweakedCollectableSceneIndex(ctxt->sceneNum);
     
     u32 index = MISC_CONFIG.internal.collectableTableFileIndex;
     DmaEntry entry = dmadata[index];
 
     u32 start = entry.romStart + (sceneIndex * 0x100);
 
-    z2_RomToRam(start, &itemQueue, sizeof(itemQueue));
+    z2_RomToRam(start, &collectableTable, sizeof(collectableTable));
 }
 
 u16 Item00_CollectableFlagToGiIndex(u16 collectableFlag) {
-    return itemQueue[collectableFlag];
+    if (MISC_CONFIG.internal.vanillaLayout) {
+        return 0;
+    }
+    
+    return collectableTable[collectableFlag];
 }
 
 void Item00_Constructor(ActorEnItem00* actor, GlobalContext* ctxt) {

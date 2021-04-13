@@ -1134,7 +1134,12 @@ namespace MMR.Randomizer
 
         private void ReplaceRecoveryHeartsWithJunk()
         {
-            var usableJunk = ItemUtils.JunkItems.Where(item => item.IsRepeatable()).ToList();
+            var allUsableJunk = ItemUtils.JunkItems.Where(item => item.IsRepeatable()).ToList();
+            var usableJunk = allUsableJunk.Where(item => ItemList[item].IsRandomized).ToList();
+            if (!usableJunk.Any())
+            {
+                usableJunk = allUsableJunk;
+            }
             foreach (var io in ItemList.Where(io => !io.Item.IsFake()))
             {
                 if (!ItemUtils.IsStartingLocation(io.NewLocation.Value) && io.Item == Item.RecoveryHeart)

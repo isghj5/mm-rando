@@ -175,6 +175,9 @@
   <data name="fix_clock_speed" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-clock-speed;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="fix_collectable_flags" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-collectable-flags;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="fix_cow_bottle_check" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-cow-bottle-check;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -216,6 +219,9 @@
   </data>
   <data name="fix_music" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-music;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_piece_of_heart_message" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-piece-of-heart-message;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="fix_shop_checks" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-shop-checks;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

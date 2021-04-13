@@ -18,6 +18,8 @@ enum CustomItem {
     CUSTOM_ITEM_PROGRESSIVE_WALLET = 0xAF,
     // Traps
     CUSTOM_ITEM_ICE_TRAP           = 0xB0,
+    // Other
+    CUSTOM_ITEM_CRIMSON_RUPEE      = 0xB1,
 };
 
 #endif // ITEMS_H

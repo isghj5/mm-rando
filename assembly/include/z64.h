@@ -1048,9 +1048,9 @@ struct GlobalContext {
     /* 0x1886C */ AnimatedTexture* sceneTextureAnimations;
     /* 0x18870 */ UNK_TYPE1 pad18870[0x4];
     /* 0x18874 */ u8 unk18874;
-    /* 0x18875 */ s8 unk18875;
+    /* 0x18875 */ s8 warpType;
     /* 0x18876 */ UNK_TYPE1 pad18876[0x4];
-    /* 0x1887A */ u16 unk1887A;
+    /* 0x1887A */ u16 warpDestination;
     /* 0x1887C */ s8 unk1887C;
     /* 0x1887D */ UNK_TYPE1 pad1887D[0x2];
     /* 0x1887F */ u8 unk1887F;
@@ -1215,10 +1215,6 @@ typedef union {
     u8 bytes[0x1C];
 } PermanentSceneFlags; // size = 0x1C
 
-#define HasInfiniteMagic(Save) (((Save).perm.weekEventReg[0xE] & 8) != 0)
-#define SetInfiniteMagic(Save) ((Save).perm.weekEventReg[0xE] |= 8)
-#define HasGreatSpin(Save) ((Save).perm.weekEventReg[0x17])
-
 typedef struct {
     /* 0x00 */ u8 zelda[6]; // Will always be "ZELDA3" for a valid save
     /* 0x06 */ UNK_TYPE1 pad6[0xA];
@@ -1241,6 +1237,66 @@ typedef struct {
     /* 0x10 */ SaveContextButtonSet formButtonSlots[4];
     /* 0x20 */ SaveContextEquipment equipment;
 } SaveContext_struct2; // size = 0x22
+
+typedef union {
+    struct {
+        /* 0x00 */ UNK_TYPE1 pad00[0x8];
+        /* 0x08 */ union {
+            struct {
+                u8 hasTownFairy            : 1;
+            };
+            u8 pad08;
+        };
+        /* 0x09 */ UNK_TYPE1 pad0B[0x5];
+        /* 0x0E */ union {
+            struct {
+                u8                         : 4;
+                u8 hasInfiniteMagic        : 1;
+            };
+            u8 pad0E;
+        };
+        /* 0x0F */ UNK_TYPE1 pad0F[0x5];
+        /* 0x14 */ union {
+            struct {
+                u8                         : 6;
+                u8 swampCleared            : 1;
+                u8 woodfallTempleRaised    : 1;
+            };
+            u8 pad14;
+        };
+        /* 0x15 */ UNK_TYPE1 pad15[0x2];
+        /* 0x17 */ union {
+            struct {
+                u8                         : 6;
+                u8 hasGreatSpin            : 1;
+            };
+            u8 pad17;
+        };
+        /* 0x18 */ UNK_TYPE1 pad18[0x9];
+        /* 0x21 */ union {
+            struct {
+                u8 mountainCleared         : 1;
+            };
+            u8 pad21;
+        };
+        /* 0x22 */ UNK_TYPE1 pad22[0x12];
+        /* 0x34 */ union {
+            struct {
+                u8                         : 2;
+                u8 canyonCleared           : 1;
+            };
+            u8 pad34;
+        };
+        /* 0x35 */ UNK_TYPE1 pad35[0x2];
+        /* 0x37 */ union {
+            struct {
+                u8 oceanCleared            : 1;
+            };
+            u8 pad37;
+        };
+    };
+    u8 bytes[0x64];
+} WeekEventReg; // size = 0x64
 
 typedef struct {
     /* 0x0000 */ SaveContextEntrance entrance;
@@ -1277,12 +1333,12 @@ typedef struct {
     /* 0x0EE0 */ UNK_TYPE1 padEE0[0x10];
     /* 0x0EF0 */ u32 lotteryGuess;
     /* 0x0EF4 */ UNK_TYPE1 padEF4[0x4];
+    /* 0x0EF8 */ WeekEventReg weekEventReg;
     // [0xF0C] & 0x01 = Woodfall Temple Raised
     // [0xF0C] & 0x02 = Swamp Clear
     // [0xF19] & 0x80 = Mountain Clear
     // [0xF2C] & 0x20 = Canyon Clear
     // [0xF2F] & 0x80 = Ocean Clear
-    /* 0x0EF8 */ u8 weekEventReg[100];
     /* 0x0F5C */ u32 mapsVisited;
     /* 0x0F60 */ u32 worldMapVisible; // 0x00007FFF is full map.
     /* 0x0F64 */ UNK_TYPE1 padF64[0x88];
@@ -1444,7 +1500,7 @@ typedef struct {
     /* 0x14C */ u16 unkState;
     /* 0x14E */ u16 disappearCountdownCopy; // Copied from disappear_countdown
     /* 0x150 */ u16 renderFrameMask; // (disappear_countdown_copy & render_frame_mask) != 0 means dont render
-    /* 0x152 */ u16 disappearCountdown;
+    /* 0x152 */ s16 disappearCountdown;
     /* 0x154 */ f32 targetSize;
     /* 0x158 */ UNK_TYPE1 pad158[0x4C];
     /* 0x1A4 */ bool pickedUp;

@@ -336,6 +336,19 @@ Models_DrawScRuppe_Hook:
     jr      ra
     addiu   sp, sp, 0x20
 
+Models_RotateScRuppe_Hook:
+    or      a0, s0, r0
+    lw      a1, 0x001C (sp)
+    addiu   sp, sp, -0x14
+    sw      ra, 0x0010 (sp)
+
+    jal     Models_RotateScRuppe
+    nop
+
+    lw      ra, 0x0010 (sp)
+    jr      ra
+    addiu   sp, sp, 0x14
+
 Models_DrawDekuScrubPlaygroundRupee_Hook:
     addiu   sp, sp, -0x20
     sw      ra, 0x0010 (sp)

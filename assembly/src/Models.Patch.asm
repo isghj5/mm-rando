@@ -271,6 +271,38 @@
     b       0x800A6550
     nop
 
+; Allow items that normally don't rotate to rotate.
+; Replaces:
+;   LH      V1, 0x001C (S0)
+;   SLTI    AT, V1, 0x0003
+;   BNEZ    AT, 0x800A6454
+;   ADDIU   AT, R0, 0x0003
+;   BNEL    V1, AT, 0x800A6444
+;   ADDIU   AT, R0, 0x0006
+;   LH      T6, 0x0152 (S0)
+;   BLTZ    T6, 0x800A6454
+;   ADDIU   AT, R0, 0x0006
+;   BEQ     V1, AT, 0x800A6454
+;   ADDIU   AT, R0, 0x0007
+;   BNEL    V1, AT, 0x800A646C
+;   SLTI    AT, V1, 0x0016
+.org 0x800A6420
+.area 0x34
+    jal     Models_ShouldEnItem00Rotate
+    nop
+    beqz    v0, 0x800A6468
+    lh      v1, 0x001C (s0)
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+.endarea
+
 ;==================================================================================================
 ; Model Rotation (Skulltula Token)
 ;==================================================================================================
@@ -352,6 +384,19 @@
     nop
 
 ;==================================================================================================
+; Model Rotation (Scopecoin)
+;==================================================================================================
+
+.headersize G_EN_SCOPECOIN_DELTA
+
+; Replaces:
+;   SW      A1, 0x0004 (SP)
+;   LH      T6, 0x00BE (A0)
+.org 0x80BFCFA0
+    j       Models_RotateScopecoin
+    nop
+
+;==================================================================================================
 ; Freestanding Models (ScRuppe)
 ;==================================================================================================
 
@@ -370,6 +415,23 @@
     nop
 
 ;==================================================================================================
+; Model Rotation (ScRuppe)
+;==================================================================================================
+
+.headersize G_EN_SC_RUPPE_DELTA
+
+; Replaces:
+;   OR      A0, A2, R0
+;   ADDIU   T2, T1, 0x01F4
+;   JAL     0x800B6A88
+;   SH      T2, 0x00BE (A2)
+.org 0x80BD6AF8
+    jal     0x800B6A88
+    or      a0, a2, r0
+    jal     Models_RotateScRuppe_Hook
+    nop
+
+;==================================================================================================
 ; Freestanding Models (Deku Playground Rupee)
 ;==================================================================================================
 
@@ -385,3 +447,16 @@
     nop
     bnez    v0, 0x80AF6CBC
     nop
+
+;==================================================================================================
+; Model Rotation (Deku Playground Rupee)
+;==================================================================================================
+
+.headersize G_EN_GAMELUPY_DELTA
+
+; Replaces:
+;   ADDIU   T2, T1, 0x01F4
+;   SH      T2, 0x00BE (A1)
+.org 0x80AF6A24
+    jal     Models_RotateDekuScrubPlaygroundRupee
+    lw      a1, 0x001C (sp)

@@ -268,9 +268,7 @@ void OverlayMenu_Draw(GlobalContext* ctxt) {
                 total = gSaveContext.perm.inv.strayFairies[d->index];
                 maximum = 15;
             } else {
-                // Check for Clock Town fairy, flag: 0x801F0570 & 0x80
-                bool hasTownFairy = (gSaveContext.perm.weekEventReg[8] & 0x80) != 0;
-                total = hasTownFairy ? 1 : 0;
+                total = gSaveContext.perm.weekEventReg.hasTownFairy ? 1 : 0;
                 maximum = 1;
             }
         } else if (d->hasTokens) {

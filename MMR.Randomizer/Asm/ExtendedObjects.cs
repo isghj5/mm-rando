@@ -16,6 +16,7 @@ namespace MMR.Randomizer.Asm
         public short? Fairies;
         public short? Skulltula;
         public short? MusicNotes;
+        public short? Rupees;
     }
 
     /// <summary>
@@ -98,6 +99,10 @@ namespace MMR.Randomizer.Asm
             // Add Songs
             this.Offsets.Add(AddMusicNotes());
             this.Indexes.MusicNotes = AdvanceIndex();
+
+            // Add Rupees
+            this.Offsets.Add(AddRupees());
+            this.Indexes.Rupees = AdvanceIndex();
 
             // Add Skulltula Tokens
             if (skulltulas)
@@ -345,6 +350,47 @@ namespace MMR.Randomizer.Asm
             //WriteByte(data, 0xAC4, ); // purple
             //WriteByte(data, 0xAD4, ); // unused yellow?
             
+            return this.Bundle.Append(data);
+        }
+
+        #endregion
+
+        #region Rupees
+
+        (uint, uint) AddRupees()
+        {
+            var data = CloneExistingData(825);
+
+            //WriteByte(data, 0x4AC + 0x20 * 0, 0xFF, 0xFF, 0xFF); // Green Primary
+            //WriteByte(data, 0x4B4 + 0x20 * 0, 0xFF, 0xFF, 0xFF); // Green Env
+            //WriteByte(data, 0x4AC + 0xC0 + 0x20 * 0, 0xFF, 0xFF, 0xFF); // Green Primary
+            //WriteByte(data, 0x4B4 + 0xC0 + 0x20 * 0, 0xFF, 0xFF, 0xFF); // Green Env
+
+            //WriteByte(data, 0x4AC + 0x20 * 1, 0xFF, 0xFF, 0xFF); // Blue Primary
+            //WriteByte(data, 0x4B4 + 0x20 * 1, 0xFF, 0xFF, 0xFF); // Blue Env
+            //WriteByte(data, 0x4AC + 0xC0 + 0x20 * 1, 0xFF, 0xFF, 0xFF); // Blue Primary
+            //WriteByte(data, 0x4B4 + 0xC0 + 0x20 * 1, 0xFF, 0xFF, 0xFF); // Blue Env
+
+            WriteByte(data, 0x4AC + 0x20 * 2, 0xFF, 0x84, 0x55); // Red Primary
+            WriteByte(data, 0x4B4 + 0x20 * 2, 0x78, 0x00, 0x21); // Red Env
+            WriteByte(data, 0x4AC + 0xC0 + 0x20 * 2, 0xFF, 0xE4, 0xC6); // Red Primary
+            WriteByte(data, 0x4B4 + 0xC0 + 0x20 * 2, 0xCC, 0x00, 0x32); // Red Env
+
+            //WriteByte(data, 0x4AC + 0x20 * 3, 0xFF, 0xFF, 0xFF); // Purple Primary
+            //WriteByte(data, 0x4B4 + 0x20 * 3, 0xFF, 0xFF, 0xFF); // Purple Env
+            //WriteByte(data, 0x4AC + 0xC0 + 0x20 * 3, 0xFF, 0xFF, 0xFF); // Purple Primary
+            //WriteByte(data, 0x4B4 + 0xC0 + 0x20 * 3, 0xFF, 0xFF, 0xFF); // Purple Env
+
+            //WriteByte(data, 0x4AC + 0x20 * 4, 0xFF, 0xFF, 0xFF); // Silver Primary
+            //WriteByte(data, 0x4B4 + 0x20 * 4, 0xFF, 0xFF, 0xFF); // Silver Env
+            //WriteByte(data, 0x4AC + 0xC0 + 0x20 * 4, 0xFF, 0xFF, 0xFF); // Silver Primary
+            //WriteByte(data, 0x4B4 + 0xC0 + 0x20 * 4, 0xFF, 0xFF, 0xFF); // Silver Env
+
+            //WriteByte(data, 0x4AC + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Primary
+            //WriteByte(data, 0x4B4 + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Env
+            //WriteByte(data, 0x4AC + 0xC0 + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Primary
+            //WriteByte(data, 0x4B4 + 0xC0 + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Env
+
             return this.Bundle.Append(data);
         }
 

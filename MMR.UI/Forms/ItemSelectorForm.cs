@@ -8,7 +8,7 @@ namespace MMR.UI.Forms
 {
     public partial class ItemSelectorForm : Form
     {
-        private readonly static string[] DEFAULT_ITEM_NAMES = new string[] 
+        private readonly static string[] DEFAULT_ITEM_NAMES = new string[]
         {
             "Deku Mask",
             "Hero's Bow",
@@ -998,6 +998,18 @@ namespace MMR.UI.Forms
             "Mountain Village Spring Keaton Grass 9",
             "Oceanside Spider House Mask Room Pot",
             "Oceanside Spider House Mask Room Pot 2",
+            "Ikana Canyon Cleared Grass",
+            "Ikana Canyon Cleared Grass 2",
+            "Ikana Canyon Cleared Grass 3",
+            "Path to Snowhead Spring Snowball",
+            "Path to Snowhead Spring Snowball 2",
+            "Path to Snowhead Spring Snowball 3",
+            "Path to Snowhead Spring Snowball 4",
+            "Path to Mountain Village Spring Snowball",
+            "Path to Mountain Village Spring Snowball 2",
+            "Path to Mountain Village Spring Snowball 3",
+            "Zora Cape Jar Game",
+            "Ikana Graveyard Day 2 Bats",
 
 
             "GossipTerminaSouth",

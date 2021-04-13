@@ -1,5 +1,6 @@
 #include <z64.h>
 #include "MMR.h"
+#include "Misc.h"
 
 // TODO pick a definitely unused part of the actor memory
 void Rupee_SetGiIndex(Actor* actor, u16 giIndex) {
@@ -25,6 +26,10 @@ u16 Rupee_GetDrawGiIndex(Actor* actor) {
 }
 
 void Rupee_CheckAndSetGiIndex(Actor* actor, GlobalContext* ctxt, u16 giIndex) {
+    if (MISC_CONFIG.internal.vanillaLayout) {
+        return;
+    }
+    
     GetItemEntry* entry = MMR_GetGiEntry(giIndex);
     if (entry->message != 0) {
         Rupee_SetGiIndex(actor, giIndex);
