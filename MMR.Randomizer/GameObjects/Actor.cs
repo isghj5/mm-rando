@@ -505,7 +505,9 @@ namespace MMR.Randomizer.GameObjects
         // 101 is one rup, 111 SKULL TOKEN POT??!? 102 was 5 rups 112 empty
         // 103 empty, 113 is 10 deku nuts, 104 is red rup, 114 is empty
         //[GroundVariants(0x110)] // testing // 115 101 106 10E 10F
-        [GroundVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
+        [GroundVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E, // good variety
+            0x4110)] // TF pot
+
         //[DoublePerRoomMax(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)] // prob not necessary
         [EnemizerScenesExcluded(Scene.MajorasLair)]
         [UnkillableAllVariants]
