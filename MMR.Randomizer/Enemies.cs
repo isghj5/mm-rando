@@ -290,10 +290,25 @@ namespace MMR.Randomizer
             //laundryPoolScene.Maps[0].Actors[1].Rotation.z = (short)MergeRotationAndFlags(rotation: laundryPoolScene.Maps[0].Actors[1].Rotation.z, flags: 0x7F);
 
             // it was two torches, turn the other into a secret grotto, at least for now
-            var randomVars = new List<ushort> { 0x6233, 0x623B, 0x6218, 0x625C, 0x8200, 0xA200, 0x7200, 0xC200, 0xE200, 0xF200, 0xD200 };
-            laundryPoolScene.Maps[0].Actors[1].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomVars[new Random().Next(randomVars.Count)]);
+            var randomGrotto = new List<ushort> { 0x6233, 0x623B, 0x6218, 0x625C, 0x8200, 0xA200, 0x7200, 0xC200, 0xE200, 0xF200, 0xD200 };
+            laundryPoolScene.Maps[0].Actors[1].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[new Random().Next(randomGrotto.Count)]);
             laundryPoolScene.Maps[0].Actors[1].Rotation = new vec16(0x7f, 0x7f ,0x7f);
             laundryPoolScene.Maps[0].Actors[1].Position = new vec16(-1872, -120, 229);
+
+            // winter village has a gossip stone actor, but no object, lets use the non-used flying darmani ghost object and add it to enemizer
+            if (ACTORSENABLED)
+            {
+                var winterVillage = RomData.SceneList.Find(u => u.File == GameObjects.Scene.MountainVillage.FileID());
+                winterVillage.Maps[0].Objects[5] = GameObjects.Actor.GossipStone.ObjectIndex();
+                winterVillage.Maps[0].Actors[57].Variants[0] = 0x67; // the vars is for milkroad, change to a moon vars so it gets randomized
+                winterVillage.Maps[0].Actors[57].Position.y = -5; // floating a bit in the air, lower to ground
+
+                // now that darmani ghost is gone, lets re=use the actor for secret grotto
+                winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[new Random().Next(randomGrotto.Count)] & 0xFCFF);
+                //winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: 0x4000);
+                winterVillage.Maps[0].Actors[2].Position = new vec16( 504, 365, 800 );
+
+            }
 
             /*
             var greatBayCoast = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
