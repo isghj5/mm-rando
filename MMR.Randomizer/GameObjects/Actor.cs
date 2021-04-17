@@ -244,7 +244,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1380)]
         [FileID(73)]
         [ObjectListIndex(0x30)]
-        [GroundVariants(0xFFFF)]
+        [GroundVariants(0xFFFF, 0x7F)]
+        [VariantsWithRoomMax(max: 7, variant: 0xFFFF, 0x7F)] // weirdly high cpu usage, not a low as other still enemies
         Armos = 0x32,
 
         [EnemizerEnabled]
@@ -863,7 +864,7 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0xFF9F)]
         // one of these is sit on the wall bat from rtss: FF03/01/9F
         [VariantsWithRoomMax(max:1, 0xFF34)] // swarm
-        //[EnemizerScenesExcluded(Scene.InvertedStoneTower)] // think this is here for death, but death has mini-death for his bats...?
+        [EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
         BadBat = 0x15B,
 
         [ObjectListIndex(1)] // not sure this isn't an error

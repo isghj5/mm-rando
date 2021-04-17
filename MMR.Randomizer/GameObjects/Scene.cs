@@ -273,10 +273,11 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x42)]
         CuccoShack = 0x3F,
 
-        [FileID(1347)]
+        [FileID(1353)]
         [SceneInternalId(0x43)]
         IkanaGraveyard = 0x40,
 
+        [FileID(1356)]
         [SceneInternalId(0x44)]
         GohtsLair = 0x41,
 
