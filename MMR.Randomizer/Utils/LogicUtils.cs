@@ -239,14 +239,20 @@ namespace MMR.Randomizer.Utils
             var important = new List<Item>();
             if (locationLogic.RequiredItemIds != null && locationLogic.RequiredItemIds.Any())
             {
-                foreach (var requiredItemId in locationLogic.RequiredItemIds)
+                foreach (var requiredItemId in locationLogic.RequiredItemIds.Cast<Item>())
                 {
-                    var childPaths = GetImportantItems(itemList, settings, (Item)requiredItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                    if (itemList[requiredItemId].Item != requiredItemId)
+                    {
+                        continue;
+                    }
+
+                    var childPaths = GetImportantItems(itemList, settings, requiredItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
                     if (childPaths == null)
                     {
                         return null;
                     }
-                    required.Add((Item)requiredItemId);
+
+                    required.Add(requiredItemId);
                     if (childPaths.Required != null)
                     {
                         required.AddRange(childPaths.Required);
@@ -264,9 +270,14 @@ namespace MMR.Randomizer.Utils
                 {
                     var conditionalRequired = new List<Item>();
                     var conditionalImportant = new List<Item>();
-                    foreach (var conditionalItemId in conditions)
+                    foreach (var conditionalItemId in conditions.Cast<Item>())
                     {
-                        var childPaths = GetImportantItems(itemList, settings, (Item)conditionalItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                        if (itemList[conditionalItemId].Item != conditionalItemId)
+                        {
+                            continue;
+                        }
+
+                        var childPaths = GetImportantItems(itemList, settings, conditionalItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
                         if (childPaths == null)
                         {
                             conditionalRequired = null;
@@ -274,7 +285,7 @@ namespace MMR.Randomizer.Utils
                             break;
                         }
 
-                        conditionalRequired.Add((Item)conditionalItemId);
+                        conditionalRequired.Add(conditionalItemId);
                         if (childPaths.Required != null)
                         {
                             conditionalRequired.AddRange(childPaths.Required);

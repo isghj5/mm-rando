@@ -24,11 +24,6 @@ namespace MMR.Randomizer.Models.Settings
         public string Logic { get; set; }
 
         /// <summary>
-        /// Use Custom Item list for the logic.
-        /// </summary>
-        public bool UseCustomItemList { get; set; }
-
-        /// <summary>
         /// Options for the Asm <see cref="Patcher"/>.
         /// </summary>
         [JsonIgnore]
@@ -162,8 +157,6 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool AddSongs { get; set; }
 
-        public List<ItemCategory> CategoriesRandomized { get; set; } = new List<ItemCategory>();
-
         /// <summary>
         /// Randomize which dungeon you appear in when entering one
         /// </summary>
@@ -175,9 +168,9 @@ namespace MMR.Randomizer.Models.Settings
         public bool RandomizeEnemies { get; set; }
 
         /// <summary>
-        /// Prevents player starting with any items that are randomized.
+        /// Set how starting items are randomized
         /// </summary>
-        public bool NoStartingItems { get; set; } = true;
+        public StartingItemMode StartingItemMode { get; set; }
 
         public SmallKeyMode SmallKeyMode { get; set; }
 
@@ -190,7 +183,11 @@ namespace MMR.Randomizer.Models.Settings
         ///  Custom item list selections
         /// </summary>
         [JsonIgnore]
-        public List<int> CustomItemList { get; set; } = new List<int>();
+        public HashSet<Item> CustomItemList { get; set; } = new HashSet<Item>();
+
+        public List<ItemCategory> ItemCategoriesRandomized { get; set; }
+
+        public List<LocationCategory> LocationCategoriesRandomized { get; set; }
 
         /// <summary>
         ///  Custom item list string
@@ -201,7 +198,7 @@ namespace MMR.Randomizer.Models.Settings
         ///  Custom starting item list selections
         /// </summary>
         [JsonIgnore]
-        public List<GameObjects.Item> CustomStartingItemList { get; set; } = new List<GameObjects.Item>();
+        public List<Item> CustomStartingItemList { get; set; } = new List<Item>();
 
         /// <summary>
         ///  Custom starting item list string
@@ -396,7 +393,7 @@ namespace MMR.Randomizer.Models.Settings
             {
                 return "User Logic not found or invalid, please load User Logic or change logic mode.";
             }
-            if (UseCustomItemList && CustomItemList == null)
+            if (CustomItemList == null)
             {
                 return "Invalid custom item list.";
             }

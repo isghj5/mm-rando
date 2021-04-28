@@ -3300,31 +3300,31 @@
 0
 
 - Swordsman's School Pot
-1103
+1193
 
 0
 32
 
 - Swordsman's School Pot 2
-1103
+1193
 
 0
 32
 
 - Swordsman's School Pot 3
-1103
+1193
 
 0
 32
 
 - Swordsman's School Pot 4
-1103
+1193
 
 0
 32
 
 - Swordsman's School Pot 5
-1103
+1193
 
 0
 32
@@ -5815,13 +5815,13 @@
 
 - Termina Field Clam 2
 
-
+0,1096;10;120;93
 0
 0
 
 - Termina Field Clam 3
 
-
+0,1096;10;120;93
 0
 0
 

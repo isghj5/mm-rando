@@ -33,7 +33,7 @@ namespace MMR.UI.Forms
         public AboutForm About { get; private set; }
         public ManualForm Manual { get; private set; }
         public LogicEditorForm LogicEditor { get; private set; }
-        public ItemEditForm ItemEditor { get; private set; }
+        public CustomItemListEditForm ItemEditor { get; }
         public StartingItemEditForm StartingItemEditor { get; private set; }
         public JunkLocationEditForm JunkLocationEditor { get; private set; }
         public HudConfigForm HudConfig { get; private set; }
@@ -53,14 +53,13 @@ namespace MMR.UI.Forms
             InitializeDungeonModeSettings();
             InitalizeLowHealthSFXOptions();
 
-            ItemEditor = new ItemEditForm();
-            UpdateCustomItemAmountLabel();
-
             StartingItemEditor = new StartingItemEditForm();
             UpdateCustomStartingItemAmountLabel();
 
             JunkLocationEditor = new JunkLocationEditForm();
             UpdateJunkLocationAmountLabel();
+
+            ItemEditor = new CustomItemListEditForm(ItemUtils.AllLocations(), item => $"{item.Location()} ({item.Name()})", "Invalid custom item string");
 
             LogicEditor = new LogicEditorForm();
             Manual = new ManualForm();
@@ -88,7 +87,6 @@ namespace MMR.UI.Forms
             // Main Settings
             TooltipBuilder.SetTooltip(cMode, "Select mode of logic:\n - Casual: The randomization logic ensures that the game can be beaten casually.\n - Using glitches: The randomization logic allows for placement of items that are only obtainable using known glitches.\n - Vanilla Layout: All items are left vanilla.\n - User logic: Upload your own custom logic to be used in the randomization.\n - No logic: Completely random, no guarantee the game is beatable.");
 
-            TooltipBuilder.SetTooltip(cUserItems, "Only randomize a custom list of items.\n\nThe item list can be edited from the menu: Customize -> Item List Editor. When checked, some settings will become disabled.");
             TooltipBuilder.SetTooltip(cMixSongs, "Enable songs being placed among items in the randomization pool.");
             TooltipBuilder.SetTooltip(cProgressiveUpgrades, "Enable swords, wallets, magic, bomb bags and quivers to be found in the intended order.");
             TooltipBuilder.SetTooltip(cDEnt, "Enable randomization of dungeon entrances. \n\nStone Tower Temple is always vanilla, but Inverted Stone Tower Temple is randomized.");
@@ -103,7 +101,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFloors, "Select a floortype for every floor ingame:\n\n - Default: Vanilla floortypes.\n - Sand: Link sinks slowly into every floor, affecting movement speed.\n - Ice: Every floor is slippery.\n - Snow: Similar to sand. \n - Random: Any random floortypes of the above.");
             TooltipBuilder.SetTooltip(cClockSpeed, "Modify the speed of time.");
             TooltipBuilder.SetTooltip(cHideClock, "Clock UI will be hidden.");
-            TooltipBuilder.SetTooltip(cNoStartingItems, "You will not start with any randomized starting items.");
+            TooltipBuilder.SetTooltip(cStartingItems, "Select a starting item mode:\n\nNone - You will not start with any randomized starting items.\nRandom - You will start with randomized starting items.\nAllow Temporary Items - You will start with randomized starting items including Keg, Magic Bean and Bottles with X.");
             TooltipBuilder.SetTooltip(cBlastCooldown, "Adjust the cooldown timer after using the Blast Mask.");
             TooltipBuilder.SetTooltip(cIceTraps, "Amount of ice traps to be added to pool by replacing junk items.");
             TooltipBuilder.SetTooltip(cIceTrapsAppearance, "Appearance of ice traps in pool for world models.");
@@ -229,66 +227,214 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => propertyInfo.SetValue(_configuration.GameplaySettings, newValue));
         }
 
+        private class InvertIndeterminateCheckBox : CheckBox
+        {
+            protected override void OnClick(EventArgs e)
+            {
+                CheckState = CheckState switch
+                {
+                    CheckState.Checked => CheckState.Unchecked,
+                    CheckState.Unchecked => CheckState.Checked,
+                    CheckState.Indeterminate => CheckState.Checked,
+                    _ => CheckState,
+                };
+            }
+        }
+
+        private class LocationCategoryLabel : Label
+        {
+            public List<string> Lines { get; set; }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                base.OnPaint(e);
+                var b = new SolidBrush(ForeColor);
+                e.Graphics.TranslateTransform(0, Height);
+                e.Graphics.RotateTransform(-90);
+                foreach (var line in Lines)
+                {
+                    e.Graphics.RotateTransform(15);
+                    e.Graphics.DrawString(line, Font, b, 0f, 0f);
+                    e.Graphics.RotateTransform(-15);
+                    e.Graphics.TranslateTransform(0, 26);
+                }
+            }
+        }
+
         private void InitializeItemPoolSettings()
         {
-            var initialX = 10;
-            var initialY = 29;
-            var deltaX = 190;
-            var deltaY = 23;
-            var width = 190;
-            var height = 23;
-            var currentX = initialX;
-            var currentY = initialY;
-            var itemsInCategories = Enum.GetValues<Item>()
-                .GroupBy(item => item.Category())
-                .Where(g => g.Key != null)
-                .ToDictionary(kvp => kvp.Key, kvp => kvp.ToList());
+            var itemsByItemCategory = ItemUtils.ItemsByItemCategory();
+
+            var itemsByLocationCategory = ItemUtils.ItemsByLocationCategory();
+
+            tableItemPool.RowCount = Enum.GetValues<ItemCategory>().Count() - 2;
+            tableItemPool.ColumnCount = Enum.GetValues<LocationCategory>().Count() - 1;
+
+            var locationCategoriesX = 141;
+
+            var locationCategoryLabel = new LocationCategoryLabel();
+            locationCategoryLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            locationCategoryLabel.Location = new Point(locationCategoriesX + 24, 30);
+            locationCategoryLabel.Width = 610;
+            locationCategoryLabel.Height = 105;
+            locationCategoryLabel.Lines = Enum.GetValues<LocationCategory>().Where(c => c > 0).Select(c => $"{addSpacesRegex.Replace(c.ToString(), " $1")}: +{itemsByLocationCategory[c].Count}").ToList();
+
+            tabItemPool.Controls.Add(locationCategoryLabel);
+
+            foreach (var locationCategory in Enum.GetValues<LocationCategory>())
+            {
+                if (locationCategory < 0)
+                {
+                    continue;
+                }
+
+                var checkbox = new CheckBox();
+                var items = locationCategory == 0 ? ItemUtils.AllLocations().ToList() : itemsByLocationCategory[locationCategory];
+                checkbox.Tag = items;
+                var description = locationCategory.GetAttribute<DescriptionAttribute>()?.Description;
+                if (description != null)
+                {
+                    TooltipBuilder.SetTooltip(checkbox, description);
+                }
+                checkbox.Location = new Point(locationCategoriesX, 140);
+                checkbox.Width = 17;
+                checkbox.Height = 17;
+                checkbox.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+                checkbox.CheckStateChanged += cItemCategory2_CheckStateChanged;
+                tableItemPool.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 25));
+                tabItemPool.Controls.Add(checkbox);
+
+                locationCategoriesX += 26;
+            }
+
             foreach (var itemCategory in Enum.GetValues<ItemCategory>())
             {
                 if (itemCategory <= 0)
                 {
                     continue;
                 }
-                var checkBox = new CheckBox
+
+                foreach (var locationCategory in Enum.GetValues<LocationCategory>())
                 {
-                    Tag = itemCategory,
-                    Name = "cItemCategory_" + itemCategory.ToString(),
-                    Text = $"{addSpacesRegex.Replace(itemCategory.ToString(), " $1")} (+{itemsInCategories.GetValueOrDefault(itemCategory)?.Count ?? 0})",
-                    Location = new Point(currentX, currentY),
-                    Size = new Size(width, height),
-                };
-                var description = itemCategory.GetAttribute<DescriptionAttribute>()?.Description;
-                if (description != null)
-                {
-                    TooltipBuilder.SetTooltip(checkBox, description);
-                }
-                checkBox.CheckedChanged += cItemCategory_CheckedChanged;
-                gItemPoolOptions.Controls.Add(checkBox);
-                currentX += deltaX;
-                if (currentX > gItemPoolOptions.Width - width + 20)
-                {
-                    currentX = initialX;
-                    currentY += deltaY;
+                    if (locationCategory < 0)
+                    {
+                        continue;
+                    }
+
+                    if (itemCategory == 0 && locationCategory == 0)
+                    {
+                        continue;
+                    }
+
+                    InvertIndeterminateCheckBox checkbox = null;
+
+                    if (locationCategory == 0)
+                    {
+                        checkbox = new InvertIndeterminateCheckBox();
+                        var items = itemsByItemCategory[itemCategory];
+                        checkbox.Tag = items;
+                        checkbox.Text = $"{addSpacesRegex.Replace(itemCategory.ToString(), " $1")}: +{items.Count}";
+                        checkbox.CheckAlign = ContentAlignment.MiddleRight;
+                        checkbox.TextAlign = ContentAlignment.MiddleRight;
+                        checkbox.Width = 148;
+                        checkbox.Margin = new Padding(3, 3, 6, 3);
+                        var description = itemCategory.GetAttribute<DescriptionAttribute>()?.Description;
+                        if (description != null)
+                        {
+                            TooltipBuilder.SetTooltip(checkbox, description);
+                        }
+                        checkbox.CheckStateChanged += cItemCategory2_CheckStateChanged;
+                    }
+
+                    if (locationCategory > 0 && itemCategory > 0)
+                    {
+                        var items = itemsByItemCategory[itemCategory].Intersect(itemsByLocationCategory[locationCategory]).ToList();
+                        if (items.Count > 0)
+                        {
+                            checkbox = new InvertIndeterminateCheckBox();
+                            checkbox.Tag = items;
+                            checkbox.Dock = DockStyle.Fill;
+                            checkbox.CheckAlign = ContentAlignment.MiddleCenter;
+                            checkbox.CheckStateChanged += cItemCategory2_CheckStateChanged;
+                        }
+                    }
+
+                    if (checkbox != null)
+                    {
+                        tableItemPool.Controls.Add(checkbox, (int)locationCategory, (int)itemCategory - 1);
+                    }
                 }
             }
         }
 
-        private void cItemCategory_CheckedChanged(object sender, EventArgs e)
+        private bool _itemPoolRecalculating = false;
+        private void cItemCategory2_CheckStateChanged(object sender, EventArgs e)
         {
-            var checkBox = (CheckBox)sender;
-            var itemCategory = (ItemCategory)checkBox.Tag;
-            if (_configuration.GameplaySettings.CategoriesRandomized == null)
+            if (_itemPoolRecalculating)
             {
-                _configuration.GameplaySettings.CategoriesRandomized = new List<ItemCategory>();
+                return;
             }
-            if (checkBox.Checked)
+
+            var checkbox = (CheckBox)sender;
+            var items = (List<Item>)checkbox.Tag;
+            if (checkbox.CheckState == CheckState.Unchecked)
             {
-                UpdateSingleSetting(() => _configuration.GameplaySettings.CategoriesRandomized.Add(itemCategory));
+                foreach (var item in items)
+                {
+                    _configuration.GameplaySettings.CustomItemList.Remove(item);
+                }
             }
             else
             {
-                UpdateSingleSetting(() => _configuration.GameplaySettings.CategoriesRandomized.Remove(itemCategory));
+                foreach (var item in items)
+                {
+                    _configuration.GameplaySettings.CustomItemList.Add(item);
+                }
             }
+
+            UpdateItemPoolCheckboxes();
+        }
+
+        private void UpdateItemPoolCheckboxes()
+        {
+            if (_itemPoolRecalculating)
+            {
+                return;
+            }
+            _itemPoolRecalculating = true;
+
+            if (_configuration.GameplaySettings.CustomItemList != null)
+            {
+                // todo keep checkboxes cached
+                var checkboxes = new List<CheckBox>();
+                checkboxes.AddRange(tabItemPool.Controls.OfType<CheckBox>().ToList());
+                checkboxes.AddRange(tableItemPool.Controls.OfType<CheckBox>().ToList());
+
+                foreach (var otherCheckbox in checkboxes)
+                {
+                    var otherItems = (List<Item>)otherCheckbox.Tag;
+                    var matchingItems = _configuration.GameplaySettings.CustomItemList.Intersect(otherItems).Count();
+                    if (matchingItems == 0)
+                    {
+                        otherCheckbox.CheckState = CheckState.Unchecked;
+                    }
+                    else if (matchingItems == otherItems.Count)
+                    {
+                        otherCheckbox.CheckState = CheckState.Checked;
+                    }
+                    else
+                    {
+                        otherCheckbox.CheckState = CheckState.Indeterminate;
+                    }
+                }
+
+                tItemPool.Text = ItemUtils.ConvertItemListToString(ItemEditor.BaseItemList, _configuration.GameplaySettings.CustomItemList.ToList());
+                _configuration.GameplaySettings.CustomItemListString = tItemPool.Text;
+            }
+            ItemEditor.UpdateChecks(tItemPool.Text);
+            lItemPoolText.Text = ItemEditor.ExternalLabel;
+
+            _itemPoolRecalculating = false;
         }
 
         private void InitializeShortenCutsceneSettings()
@@ -790,16 +936,6 @@ namespace MMR.UI.Forms
             cVC.Checked = _configuration.OutputSettings.OutputVC;
             cPatch.Checked = _configuration.OutputSettings.GeneratePatch;
 
-            cUserItems.Checked = _configuration.GameplaySettings.UseCustomItemList;
-            foreach (var itemCategory in Enum.GetValues<ItemCategory>())
-            {
-                if (itemCategory <= 0)
-                {
-                    continue;
-                }
-                var cItemCategory = (CheckBox)gItemPoolOptions.Controls.Find("cItemCategory_" + itemCategory.ToString(), false)[0];
-                cItemCategory.Checked = _configuration.GameplaySettings.CategoriesRandomized.Contains(itemCategory);
-            }
             cMixSongs.Checked = _configuration.GameplaySettings.AddSongs;
             cProgressiveUpgrades.Checked = _configuration.GameplaySettings.ProgressiveUpgrades;
             cDEnt.Checked = _configuration.GameplaySettings.RandomizeDungeonEntrances;
@@ -853,7 +989,7 @@ namespace MMR.UI.Forms
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
             cNoDowngrades.Checked = _configuration.GameplaySettings.PreventDowngrades;
             cShopAppearance.Checked = _configuration.GameplaySettings.UpdateShopAppearance;
-            cNoStartingItems.Checked = _configuration.GameplaySettings.NoStartingItems;
+            cStartingItems.SelectedIndex = (int)_configuration.GameplaySettings.StartingItemMode;
             cEponaSword.Checked = _configuration.GameplaySettings.FixEponaSword;
             cUpdateChests.Checked = _configuration.GameplaySettings.UpdateChests;
             cSkipBeaver.Checked = _configuration.GameplaySettings.SpeedupBeavers;
@@ -953,26 +1089,6 @@ namespace MMR.UI.Forms
             {
                 cDummy.Select();
             }
-        }
-
-        private void cUserItems_CheckedChanged(object sender, EventArgs e)
-        {
-            foreach (var itemCategory in Enum.GetValues<ItemCategory>())
-            {
-                if (itemCategory <= 0)
-                {
-                    continue;
-                }
-                var cItemCategory = (CheckBox)gItemPoolOptions.Controls.Find("cItemCategory_" + itemCategory.ToString(), false)[0];
-                cItemCategory.Visible = !cUserItems.Checked;
-            }
-
-            bItemListEditor.Visible = cUserItems.Checked;
-            tCustomItemList.Visible = cUserItems.Checked;
-            lCustomItemAmount.Visible = cUserItems.Checked;
-
-            UpdateSingleSetting(() => _configuration.GameplaySettings.UseCustomItemList = cUserItems.Checked);
-
         }
 
         private void cN64_CheckedChanged(object sender, EventArgs e)
@@ -1126,9 +1242,9 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.IceTrapQuirks = cIceTrapQuirks.Checked);
         }
 
-        private void cNoStartingItems_CheckedChanged(object sender, EventArgs e)
+        private void cStartingItems_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.NoStartingItems = cNoStartingItems.Checked);
+            UpdateSingleSetting(() => _configuration.GameplaySettings.StartingItemMode = (StartingItemMode)cStartingItems.SelectedIndex);
         }
 
         private void cQText_CheckedChanged(object sender, EventArgs e)
@@ -1326,34 +1442,6 @@ namespace MMR.UI.Forms
             LogicEditor.Show();
         }
 
-        private void bItemListEditor_Click(object sender, EventArgs e)
-        {
-            if (ItemEditor.ShowDialog() == DialogResult.Cancel)
-            {
-                tCustomItemList.Text = ItemEditor.CustomItemListString;
-            }
-        }
-
-        private void tCustomItemList_TextChanged(object sender, EventArgs e)
-        {
-            ItemEditor.UpdateChecks(tCustomItemList.Text);
-            UpdateCustomItemAmountLabel();
-        }
-
-        private void UpdateCustomItemAmountLabel()
-        {
-            _configuration.GameplaySettings.CustomItemList = ItemEditor.CustomItemList.ToList();
-            _configuration.GameplaySettings.CustomItemListString = ItemEditor.CustomItemListString;
-            if (_configuration.GameplaySettings.CustomItemList.Contains(-1))
-            {
-                lCustomItemAmount.Text = "Invalid custom item string";
-            }
-            else
-            {
-                lCustomItemAmount.Text = $"{_configuration.GameplaySettings.CustomItemList.Count}/{ItemUtils.AllLocations().Count()} items randomized";
-            }
-        }
-
         private void bStartingItemEditor_Click(object sender, EventArgs e)
         {
             if (StartingItemEditor.ShowDialog() == DialogResult.Cancel)
@@ -1406,7 +1494,11 @@ namespace MMR.UI.Forms
             var vanillaMode = _configuration.GameplaySettings.LogicMode == LogicMode.Vanilla;
             cMixSongs.Enabled = !vanillaMode;
             cProgressiveUpgrades.Enabled = !vanillaMode;
-            foreach (Control control in gItemPoolOptions.Controls)
+            foreach (Control control in tabItemPool.Controls)
+            {
+                control.Enabled = !vanillaMode;
+            }
+            foreach (Control control in tableItemPool.Controls)
             {
                 control.Enabled = !vanillaMode;
             }
@@ -1414,21 +1506,13 @@ namespace MMR.UI.Forms
             cSpoiler.Enabled = !vanillaMode;
             cHTMLLog.Enabled = !vanillaMode;
             cGossipHints.Enabled = !vanillaMode;
-            cUserItems.Enabled = !vanillaMode;
-            //cNutChest.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.Casual;
-            cNoStartingItems.Enabled = !vanillaMode && (_configuration.GameplaySettings.CategoriesRandomized.Any(c => c.ToString().Contains("Rupee")) || _configuration.GameplaySettings.UseCustomItemList);
+            cStartingItems.Enabled = !vanillaMode;
             tJunkLocationsList.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
             bJunkLocationsEditor.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
             bToggleTricks.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
             cIceTraps.Enabled = !vanillaMode;
             cIceTrapsAppearance.Enabled = !vanillaMode;
             cIceTrapQuirks.Enabled = !vanillaMode;
-
-            if (!vanillaMode && !cNoStartingItems.Enabled)
-            {
-                cNoStartingItems.Checked = false;
-                _configuration.GameplaySettings.NoStartingItems = false;
-            }
 
             bLoadLogic.Enabled = _configuration.GameplaySettings.LogicMode == LogicMode.UserLogic;
 
@@ -1481,12 +1565,8 @@ namespace MMR.UI.Forms
             bJunkLocationsEditor.Enabled = v;
             tJunkLocationsList.Enabled = v;
 
-            cUserItems.Enabled = v;
-            bItemListEditor.Enabled = v;
-            tCustomItemList.Enabled = v;
-
             cDEnt.Enabled = v;
-            cNoStartingItems.Enabled = v;
+            cStartingItems.Enabled = v;
             cMixSongs.Enabled = v;
             cProgressiveUpgrades.Enabled = v;
             cEnemy.Enabled = v;
@@ -1543,7 +1623,12 @@ namespace MMR.UI.Forms
             cDeathMoonCrash.Enabled = v;
             cIceTrapQuirks.Enabled = v;
 
-            foreach (Control control in gItemPoolOptions.Controls)
+            foreach (Control control in tabItemPool.Controls)
+            {
+                control.Enabled = v;
+            }
+
+            foreach (Control control in tableItemPool.Controls)
             {
                 control.Enabled = v;
             }
@@ -1672,14 +1757,16 @@ namespace MMR.UI.Forms
                 if (!tSettings.TabPages.Contains(tabMain))
                 {
                     tSettings.TabPages.Insert(0, tabMain);
-                    tSettings.TabPages.Insert(1, tabGimmicks);
-                    tSettings.TabPages.Insert(2, tabComfort);
-                    tSettings.TabPages.Insert(3, tabShortenCutscenes);
+                    tSettings.TabPages.Insert(1, tabItemPool);
+                    tSettings.TabPages.Insert(2, tabGimmicks);
+                    tSettings.TabPages.Insert(3, tabComfort);
+                    tSettings.TabPages.Insert(4, tabShortenCutscenes);
                 }
             }
             else
             {
                 tSettings.TabPages.Remove(tabMain);
+                tSettings.TabPages.Remove(tabItemPool);
                 tSettings.TabPages.Remove(tabGimmicks);
                 tSettings.TabPages.Remove(tabComfort);
                 tSettings.TabPages.Remove(tabShortenCutscenes);
@@ -1756,6 +1843,7 @@ namespace MMR.UI.Forms
                     {
                         newConfiguration.GameplaySettings.UserLogicFileName = string.Empty;
                     }
+
                     if (filename != null)
                     {
                         _configuration.GameplaySettings = newConfiguration.GameplaySettings;
@@ -1771,7 +1859,31 @@ namespace MMR.UI.Forms
                 }
             }
 
-            tCustomItemList.Text = _configuration.GameplaySettings.CustomItemListString;
+            if (_configuration.GameplaySettings.ItemCategoriesRandomized != null || _configuration.GameplaySettings.LocationCategoriesRandomized != null)
+            {
+                var items = new List<Item>();
+                if (_configuration.GameplaySettings.ItemCategoriesRandomized != null)
+                {
+                    items.AddRange(ItemUtils.ItemsByItemCategory().Where(kvp => _configuration.GameplaySettings.ItemCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
+                    _configuration.GameplaySettings.ItemCategoriesRandomized = null;
+                }
+                if (_configuration.GameplaySettings.LocationCategoriesRandomized != null)
+                {
+                    items.AddRange(ItemUtils.ItemsByLocationCategory().Where(kvp => _configuration.GameplaySettings.LocationCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
+                    _configuration.GameplaySettings.LocationCategoriesRandomized = null;
+                }
+                _configuration.GameplaySettings.CustomItemList.Clear();
+                foreach (var item in items)
+                {
+                    _configuration.GameplaySettings.CustomItemList.Add(item);
+                }
+                UpdateItemPoolCheckboxes();
+            }
+            else
+            {
+                tItemPool.Text = _configuration.GameplaySettings.CustomItemListString;
+            }
+
 
             tStartingItemList.Text = _configuration.GameplaySettings.CustomStartingItemListString;
 
@@ -1800,11 +1912,8 @@ namespace MMR.UI.Forms
                 }
             }
 
-            _configuration.GameplaySettings.CategoriesRandomized = _configuration.GameplaySettings.CategoriesRandomized.Distinct().ToList();
-
             UpdateJunkLocationAmountLabel();
             UpdateCustomStartingItemAmountLabel();
-            UpdateCustomItemAmountLabel();
             UpdateCheckboxes();
             ToggleCheckBoxes();
             tROMName.Text = _configuration.OutputSettings.InputROMFilename;
@@ -1889,6 +1998,26 @@ namespace MMR.UI.Forms
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void bItemPoolEdit_Click(object sender, EventArgs e)
+        {
+            if (ItemEditor.ShowDialog() == DialogResult.Cancel)
+            {
+                tItemPool.Text = ItemEditor.ItemListString;
+            }
+        }
+
+        private void tItemPool_TextChanged(object sender, EventArgs e)
+        {
+            if (_itemPoolRecalculating)
+            {
+                return;
+            }
+
+            _configuration.GameplaySettings.CustomItemList = ItemUtils.ConvertStringToItemList(ItemEditor.BaseItemList, tItemPool.Text)?.ToHashSet();
+
+            UpdateItemPoolCheckboxes();
         }
     }
 }

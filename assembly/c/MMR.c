@@ -345,29 +345,29 @@ bool MMR_IsActorFreestanding(s16 id) {
 }
 
 bool MMR_GiveItemIfMinor(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
-    bool isFreestanding = MMR_IsActorFreestanding(actor->id);
-    u32 minorItemSfxId = 0;
-    GetItemEntry* entry = NULL;
-    if (!isFreestanding || MISC_CONFIG.flags.freestanding) {
-        u16 newGiIndex = MMR_GetNewGiIndex(ctxt, NULL, giIndex, false);
-        entry = MMR_GetGiEntry(newGiIndex);
-        minorItemSfxId = MMR_GetMinorItemSfxId(entry->item);
-    }
-    if (minorItemSfxId && entry) {
+    bool isActorFreestanding = MMR_IsActorFreestanding(actor->id);
+    giIndex = MMR_GetNewGiIndex(ctxt, NULL, giIndex, false);
+    GetItemEntry* entry = MMR_GetGiEntry(giIndex);
+    u32 minorItemSfxId = MMR_GetMinorItemSfxId(entry->item);
+
+    if (minorItemSfxId) {
         if (minorItemSfxId == 0x31A4) {
-            // TODO maybe check actor type is Item00/ScRuppe/DekuScrubPlaygroundRupee ?
-            if (isFreestanding) {
+            if (isActorFreestanding) {
                 actor->draw = NULL;
             }
             z2_PlayLoopingSfxAtActor(actor, minorItemSfxId);
-        } else {
-            z2_PlaySfx(minorItemSfxId);
+            z2_GiveItem(ctxt, entry->item);
+            return true;
         }
-        z2_GiveItem(ctxt, entry->item);
-        return true;
-    } else {
-        return false;
+
+        if (!isActorFreestanding || MISC_CONFIG.flags.freestanding) {
+            z2_PlaySfx(minorItemSfxId);
+            z2_GiveItem(ctxt, entry->item);
+            return true;
+        }
     }
+
+    return false;
 }
 
 bool MMR_GiveItem(GlobalContext* ctxt, Actor* actor, u16 giIndex) {

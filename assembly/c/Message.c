@@ -50,42 +50,42 @@ struct MessageExtensionState {
     u16 currentReplacementLength;
 };
 
-const String articleIndefinite = {
+const static String articleIndefinite = {
     .value = "a ", // intentional trailing space.
     .length = 2,
 };
 
-const String articleIndefiniteVowel = {
+const static String articleIndefiniteVowel = {
     .value = "an ", // intentional trailing space.
     .length = 3,
 };
 
-const String articleDefinite = {
+const static String articleDefinite = {
     .value = "the ", // intentional trailing space.
     .length = 4,
 };
 
-const String articleEmpty = {
+const static String articleEmpty = {
     .value = "",
     .length = 0,
 };
 
-const String pronounSingular = {
+const static String pronounSingular = {
     .value = "it",
     .length = 2,
 };
 
-const String amountSingular = {
+const static String amountSingular = {
     .value = " one", // intentional leading space.
     .length = 4,
 };
 
-const String amountDefinite = {
+const static String amountDefinite = {
     .value = " it", // intentional leading space.
     .length = 3,
 };
 
-const String verbSingular = {
+const static String verbSingular = {
     .value = "is",
     .length = 2,
 };

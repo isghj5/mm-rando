@@ -1,8 +1,9 @@
 ﻿using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models.Settings;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Linq;
+using MMR.Randomizer.Extensions;
 
 namespace MMR.Randomizer.Attributes
 {
@@ -30,11 +31,7 @@ namespace MMR.Randomizer.Attributes
         public GossipCompetitiveHintAttribute(int priority, ItemCategory itemCategory, bool doesContain)
         {
             Priority = priority;
-
-            var parameter = Expression.Parameter(typeof(GameplaySettings));
-            var containsMethod = typeof(List<ItemCategory>).GetMethod(nameof(List<ItemCategory>.Contains));
-            var containsExpression = Expression.Call(Expression.Property(parameter, nameof(GameplaySettings.CategoriesRandomized)), containsMethod, Expression.Constant(itemCategory));
-            Condition = Expression.Lambda<Func<GameplaySettings, bool>>(Expression.Equal(containsExpression, Expression.Constant(doesContain)), parameter).Compile();
+            Condition = settings => settings.CustomItemList.Any(item => item.ItemCategory() == itemCategory) == doesContain;
         }
     }
 }

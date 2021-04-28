@@ -44,32 +44,6 @@ namespace MMR.Randomizer.Utils
             return item >= Item.CollectibleStrayFairyClockTown && item <= Item.CollectibleStrayFairyStoneTower15;
         }
 
-        public static int AddItemOffset(int itemId)
-        {
-            if (itemId >= (int)Item.AreaSouthAccess)
-            {
-                itemId += Items.NumberOfAreasAndOther;
-            }
-            if (itemId >= (int)Item.OtherOneMask)
-            {
-                itemId += 5;
-            }
-            return itemId;
-        }
-
-        public static int SubtractItemOffset(int itemId)
-        {
-            if (itemId >= (int)Item.OtherOneMask)
-            {
-                itemId -= 5;
-            }
-            if (itemId >= (int)Item.AreaSouthAccess)
-            {
-                itemId -= Items.NumberOfAreasAndOther;
-            }
-            return itemId;
-        }
-
         public static bool IsBottleCatchContent(Item item)
         {
             return item >= Item.BottleCatchFairy
@@ -177,7 +151,25 @@ namespace MMR.Randomizer.Utils
         private static List<Item> _allLocations;
         public static IEnumerable<Item> AllLocations()
         {
-            return _allLocations ?? (_allLocations = Enum.GetValues(typeof(Item)).Cast<Item>().Where(item => item.Location() != null).ToList());
+            return _allLocations ?? (_allLocations = Enum.GetValues<Item>().Where(item => item.Location() != null).ToList());
+        }
+
+        private static Dictionary<ItemCategory, List<Item>> _itemsByItemCategory;
+        public static Dictionary<ItemCategory, List<Item>> ItemsByItemCategory()
+        {
+            return _itemsByItemCategory ?? (_itemsByItemCategory = AllLocations()
+                .GroupBy(item => item.ItemCategory())
+                .Where(g => g.Key.HasValue)
+                .ToDictionary(kvp => kvp.Key.Value, kvp => kvp.ToList()));
+        }
+
+        private static Dictionary<LocationCategory, List<Item>> _itemsByLocationCategory;
+        public static Dictionary<LocationCategory, List<Item>> ItemsByLocationCategory()
+        {
+            return _itemsByLocationCategory ?? (_itemsByLocationCategory = AllLocations()
+                .GroupBy(item => item.LocationCategory())
+                .Where(g => g.Key.HasValue)
+                .ToDictionary(kvp => kvp.Key.Value, kvp => kvp.ToList()));
         }
 
         // todo cache
@@ -262,5 +254,70 @@ namespace MMR.Randomizer.Utils
                 Item.FairyDoubleMagic,
             },
         }.Select(list => list.AsReadOnly()).ToList().AsReadOnly();
+
+        public static List<Item> ConvertStringToItemList(List<Item> baseItemList, string c)
+        {
+            if (string.IsNullOrWhiteSpace(c))
+            {
+                return new List<Item>();
+            }
+            var sectionCount = (int)Math.Ceiling(baseItemList.Count / 32.0);
+            var result = new List<Item>();
+            if (string.IsNullOrWhiteSpace(c))
+            {
+                return result;
+            }
+            try
+            {
+                string[] v = c.Split('-');
+                int[] vi = new int[sectionCount];
+                if (v.Length != vi.Length)
+                {
+                    return null;
+                }
+                for (int i = 0; i < sectionCount; i++)
+                {
+                    if (v[sectionCount - 1 - i] != "")
+                    {
+                        vi[i] = Convert.ToInt32(v[sectionCount - 1 - i], 16);
+                    }
+                }
+                for (int i = 0; i < 32 * sectionCount; i++)
+                {
+                    int j = i / 32;
+                    int k = i % 32;
+                    if (((vi[j] >> k) & 1) > 0)
+                    {
+                        if (i >= baseItemList.Count)
+                        {
+                            throw new IndexOutOfRangeException();
+                        }
+                        result.Add(baseItemList[i]);
+                    }
+                }
+            }
+            catch
+            {
+                return null;
+            }
+            return result;
+        }
+
+        public static string ConvertItemListToString(List<Item> baseItemList, List<Item> itemList)
+        {
+            var groupCount = (int)Math.Ceiling(baseItemList.Count / 32.0);
+            int[] n = new int[groupCount];
+            string[] ns = new string[groupCount];
+            foreach (var item in itemList)
+            {
+                var i = baseItemList.IndexOf(item);
+                int j = i / 32;
+                int k = i % 32;
+                n[j] |= (int)(1 << k);
+                ns[j] = Convert.ToString(n[j], 16);
+            }
+
+            return string.Join("-", ns.Reverse());
+        }
     }
 }

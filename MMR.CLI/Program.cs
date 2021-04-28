@@ -106,7 +106,7 @@ namespace MMR.CLI
                 Console.WriteLine($"Loaded GameplaySettings from \"{settingsPath}\".");
             }
 
-            configuration.GameplaySettings.CustomItemList = ConvertIntString(configuration.GameplaySettings.CustomItemListString);
+            configuration.GameplaySettings.CustomItemList = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomItemListString).ToHashSet();
             configuration.GameplaySettings.CustomStartingItemList = ConvertItemString(ItemUtils.StartingItems().Where(item => !item.Name().Contains("Heart")).ToList(), configuration.GameplaySettings.CustomStartingItemListString);
             configuration.GameplaySettings.CustomJunkLocations = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomJunkLocationsString);
 

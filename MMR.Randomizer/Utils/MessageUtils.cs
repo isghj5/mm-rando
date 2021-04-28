@@ -57,12 +57,12 @@ namespace MMR.Randomizer.Utils
 
                 randomizedItems.Add(item);
 
-                var itemName = item.Item.Name();
-                if (randomizedResult.Settings.GossipHintStyle != GossipHintStyle.Competitive 
-                    && (itemName.Contains("Heart") || itemName.Contains("Rupee"))
-                    && (randomizedResult.Settings.ClearHints || random.Next(8) != 0))
+                if (randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Random)
                 {
-                    continue;
+                    if (ItemUtils.IsJunk(item.Item) && (randomizedResult.Settings.ClearHints || random.Next(8) != 0))
+                    {
+                        continue;
+                    }
                 }
 
                 if (randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Competitive)

@@ -112,9 +112,14 @@ namespace MMR.Randomizer.Extensions
             return item.HasAttribute<TemporaryAttribute>();
         }
 
-        public static ItemCategory? Category(this Item item)
+        public static ItemCategory? ItemCategory(this Item item)
         {
-            return item.GetAttribute<ItemCategoryAttribute>()?.ItemCategory;
+            return item.GetAttribute<ItemPoolAttribute>()?.ItemCategory;
+        }
+
+        public static LocationCategory? LocationCategory(this Item item)
+        {
+            return item.GetAttribute<ItemPoolAttribute>()?.LocationCategory;
         }
 
         public static bool IsFake(this Item item)
