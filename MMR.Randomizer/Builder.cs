@@ -1063,6 +1063,37 @@ namespace MMR.Randomizer
                     })
                     .Build()
                 );
+
+                var ginkoFid = 337;
+                RomUtils.CheckCompressed(ginkoFid);
+                var ginkoData = RomData.MMFileList[ginkoFid].Data;
+
+                // skip greeting
+                ginkoData[0x187] = 0x68; // text 0x44C "Would you like to open a new account?"
+                ginkoData[0x193] = 0x68; // turned into text 0x468 "Deposit/Withdrawl/Cancel"
+
+                ginkoData[0x1D7] = 0x68; // text 0x467 "You need somethin?"
+                ginkoData[0x1EB] = 0x68; // turned into text 0x468 "Deposit/Withdrawl/Cancel"
+
+                ginkoData[0x1F7] = 0x68; // text 0x467 "You need something this late the moon is falling bro"
+                ginkoData[0x203] = 0x68; // turned into text 0x468 "Deposit/Withdrawl/Cancel"
+
+                // skip stamping
+                ginkoData[0xCAB] = 0x7E; // text 0x469 "Can I look at your stamp?"
+                ginkoData[0xCB7] = 0x7E; // turned into text 0x47E "Your deposits total X"
+
+                ginkoData[0x787] = 0x6E; // text 0x469 "So..."
+                ginkoData[0x7BF] = 0x6E; // turned into text 0x46E "How much do you want?"
+                ginkoData[0x7EF] = 0x6E; //
+                ginkoData[0x7FB] = 0x6E; //
+
+                // shorten first rup deposit before
+                ginkoData[0x73B] = 0x50; // text 0x479 "Well, are you gonna make a deposit? (input)" -> "Alright!" -> "So..."
+                ginkoData[0x75F] = 0x50; // turned into text "How much? How much?" [rupee prompt]"
+
+                // shorten first rup deposit after
+                ginkoData[0x397] = 0x5A; // text 0x461 "So, little guy, what's your name?"
+                ginkoData[0x3A3] = 0x5A; // turned into text 0x45A "All right, little guy, now I've got a total of [rupees] from you!"
             }
         }
 
