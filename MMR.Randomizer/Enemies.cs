@@ -990,16 +990,32 @@ namespace MMR.Randomizer
             int loopsCount = 0;
             int oldObjectSize = sceneObjects.Select(x => ObjUtils.GetObjSize(x)).Sum();
             //int oldActorSize = sceneEnemies.Select(u => u.ActorID).Distinct().Select(x => GetOvlRamSize(x)).Sum(); // one per enemy is wrong
-            int oldActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
+            //int oldActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
             var previousyAssignedActor = new List<GameObjects.Actor>();
             var chosenReplacementEnemies = new List<Actor>();
             var sceneFreeActors = GetSceneFreeActors(scene, log);
+
+            // because different actors spawn on day/night and on certain days, we have to check the sizes for all 6 combos
+            var oldActorlistByTimeflag = new List<Actor>[6]; // actors separated by when they spawn night/day for all three days
+            var oldActorlistByTimeflagSizes = new int[6];
+            var newActorlistByTimeflag = new List<Actor>[6]; // actors separated by when they spawn night/day for all three days
+            var newActorlistByTimeflagSizes = new int[6];
+
+            for(int i = 0; i < 6; ++i)  // foreach time flag
+            {
+                int flag = (1 << 7) >> i;
+                oldActorlistByTimeflag[i] = sceneEnemies.FindAll(u => (u.GetTimeFlags() & flag) > 0);
+                oldActorlistByTimeflagSizes[i] = oldActorlistByTimeflag[i].Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
+            }
+
+            WriteOutput(" time to separate time flag actors: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
+
 
             while (true)
             {
                 /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
                 loopsCount += 1;
-                if (loopsCount >= 900) // inf loop catch
+                if (loopsCount >= 1200) // inf loop catch
                 {
                     var error = " No enemy combo could be found to fill this scene: " + scene.SceneEnum.ToString() + " w sid:" + scene.Number.ToString("X2");
                     WriteOutput(error);
@@ -1183,16 +1199,33 @@ namespace MMR.Randomizer
 
                 // recalculate actor load
                 // make sure this is using the same calc as oldSize
-                int newActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
+                //int newActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
+                bool sizeIsFine = true;
+                for (int i = 0; i < 6; ++i)  // foreach time flag
+                {
+                    int flag = (1 << 7) >> i;
+                    newActorlistByTimeflag[i] = sceneEnemies.FindAll(u => (u.GetTimeFlags() & flag) > 0);
+                    newActorlistByTimeflagSizes[i] = newActorlistByTimeflag[i].Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
+
+                    //check if actor overlay sizes aren't too big
+                    if (newActorlistByTimeflagSizes[i] + oldObjectSize > oldActorlistByTimeflagSizes[i] + oldObjectSize
+                        && !( newActorlistByTimeflagSizes[i] < 0x19000)) // acceptable baseline size? // woodfalltemple is 5Dxxx, stonetower is 19xxx though
+                    {
+                        sizeIsFine = false;
+                        break;
+                    }
+                }
+
 
                 if ( (newObjectSize <= oldObjectSize || newObjectSize < scene.SceneEnum.GetSceneObjLimit())
-                    && (newActorSize <= (oldActorSize * 2))
-                    && (newActorSize + newObjectSize <= (oldActorSize + oldObjectSize)) // be conservative for now
-                    //&& (newObjectSize + newActorSize <= 0x34000) // TF is 318D0, SHT is 39DE0 in enemizer test 12.4
+                    && sizeIsFine
                     && !(scene.SceneEnum == GameObjects.Scene.SnowheadTemple && newObjectSize > 0x20000)) //temporary, it bypasses logic above without actor size detection
                 {
                     WriteOutput(" Ram scene objects Ratio: [" + ((float) newObjectSize / (float) oldObjectSize).ToString("F4") + "] new size:[" + newObjectSize.ToString("X5") + "], vanilla:[" + oldObjectSize.ToString("X5") + "]");
-                    WriteOutput(" Ram scene actors  Ratio: [" + ((float) newActorSize / (float) oldActorSize).ToString("F4") + "] new size:[" + newActorSize.ToString("X5") + "], vanilla:[" + oldActorSize.ToString("X5") + "]");
+                    for (int i = 0; i < 6; ++i)  // foreach time flag
+                    {
+                        WriteOutput(" Time "+ i +" Actor Ratio: [" + ((float) newActorlistByTimeflagSizes[i] / (float) oldActorlistByTimeflagSizes[i]).ToString("F4") + "] new size:[" + newActorlistByTimeflagSizes[i].ToString("X5") + "], vanilla:[" + oldActorlistByTimeflagSizes[i].ToString("X5") + "]");
+                    }
                     break;
                 }
                 //else: reset loop and try again
