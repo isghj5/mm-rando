@@ -604,6 +604,16 @@ namespace MMR.Randomizer.GameObjects
             variant: 0x3F5F)]
         Rock = 0xB0, // rock
 
+        [ActorizerEnabled]
+        [ObjectListIndex(0xF7)]
+        // xx30 is fake type, burn away if you hit them
+        // we're NOT going to be includeing the flipping switches, in part because they are invisble and you wouldn't know they are there anyway
+        // (they use the scene wall as their shape/texture)
+        [WallVariants(0xB00, 0x1200, 0x1130)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.StoneTower, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, Scene.SecretShrine)]
+        SunSwitch = 0xB2, // Obj_Lightswitch
+
         [EnemizerEnabled]
         [ObjectListIndex(0x1)] // gamplaykeep obj 1
         // 801, opening scene grass, 0x1FXX are ranch and TF
@@ -1340,6 +1350,15 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         Japas = 0x231, // En_Zob
 
+        // this appears to be more than just peek hole, the actor gets used for other things
+        //[ActorizerEnabled]
+        // this actor does NOT have the face as a visibleobject, its invisible actor, the mask is part of the scene wall
+        [ObjectListIndex(1)]
+        [WallVariants(0)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.CuriosityShop)]
+        PeekHole = 0x233,
+
         //[EnemizerEnabled] // does not spawn outside of ikana
         [ActorInitVarOffset(0x2CA0)]  // combat music disable does not work
         [FileID(524)]
@@ -1371,7 +1390,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerEnabled]
         [ObjectListIndex(0x15C)] // this is gyorgs object, probably too big, but our code would handle that
         //[WaterVariants(0)] // vars unknown, 0 crashes
-        GyorgSpawn = 0x23F,
+        GyorgSpawn = 0x23F, // En_Tanron3
 
         [ActorizerEnabled]
         [ObjectListIndex(0xA1)]
@@ -1382,7 +1401,15 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.BombShop, Scene.GoronShrine)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 4, 9)]
-        Goron = 0x242,
+        Goron = 0x242, // En_S_Goro
+
+        //[ActorizerEnabled] // does not spawn, time varibles? second required object?
+        [ObjectListIndex(0x4)]
+        [GroundVariants(0)]
+        [VariantsWithRoomMax(max: 1, variant: 0)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.StockPotInn)]
+        AnjusGrandma = 0x243, // En_Nb
 
         //[ActorizerEnabled] // unless I write dayonly/nightonly, this is too flukey
         [ObjectListIndex(0xFF)]
@@ -1392,7 +1419,15 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(0x15, 0x70, 0x61)]
         [EnemizerScenesExcluded(Scene.StockPotInn, Scene.LaundryPool, Scene.MilkBar)] // think him being in milkbar is a credits thing
-        GuruGuru = 0x248,
+        GuruGuru = 0x248, // En_GuruGuru
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x1B6)]
+        [GroundVariants(0)] //unk
+        [VariantsWithRoomMax(max: 1, variant:0)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.RoadToIkana)]
+        Shiro = 0x24A, // En_Stone_heishi
 
         //[ActorizerEnabled] // doesn't spawn with a flower, looks silly
         // HEY the other actors, that make flowers, we can use them for dual deku, would require custom code to put them on top of each other

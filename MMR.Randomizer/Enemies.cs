@@ -989,7 +989,8 @@ namespace MMR.Randomizer
 
             int loopsCount = 0;
             int oldObjectSize = sceneObjects.Select(x => ObjUtils.GetObjSize(x)).Sum();
-            int oldActorSize = sceneEnemies.Select(u => u.ActorID).Distinct().Select(x => GetOvlRamSize(x)).Sum();
+            //int oldActorSize = sceneEnemies.Select(u => u.ActorID).Distinct().Select(x => GetOvlRamSize(x)).Sum(); // one per enemy is wrong
+            int oldActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
             var previousyAssignedActor = new List<GameObjects.Actor>();
             var chosenReplacementEnemies = new List<Actor>();
             var sceneFreeActors = GetSceneFreeActors(scene, log);
@@ -1025,7 +1026,7 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
@@ -1035,7 +1036,8 @@ namespace MMR.Randomizer
                         }); 
                         continue;
                     }
-                    if (scene.File == GameObjects.Scene.GreatBayCoast.FileID()
+                    // todo torch on leevers is throwing wierd errors when it comes to companions
+                     if (scene.File == GameObjects.Scene.GreatBayCoast.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.LikeLike.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
@@ -1180,28 +1182,17 @@ namespace MMR.Randomizer
                 // we need a list of actors that are NOT randomized, left alone, they still exist, and we can ignore new duplicates
 
                 // recalculate actor load
-                int newActorSize = 0;
-                var previouslyCountedActors = new Dictionary<GameObjects.Actor, int>();
-                foreach (var newActor in chosenReplacementEnemies)
-                { 
-                    // we want to measure NEW actor requirements
-                    //  isolate actors, and ignore any that already exist in the untouched actor pool
-                    if (!previouslyCountedActors.Keys.Contains(newActor.ActorEnum)
-                        && (!untouchedRemainingActors.Any(u => u.ActorID == newActor.ActorID)))
-                    {
-                        int newSize = GetOvlRamSize(newActor.ActorID);
-                        previouslyCountedActors.Add(newActor.ActorEnum, newSize);
-                        newActorSize += newSize;
-                    }
-                }
+                // make sure this is using the same calc as oldSize
+                int newActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
 
                 if ( (newObjectSize <= oldObjectSize || newObjectSize < scene.SceneEnum.GetSceneObjLimit())
                     && (newActorSize <= (oldActorSize * 2))
-                    && (newObjectSize + newActorSize <= 0x34000) // TF is 318D0, SHT is 39DE0 in enemizer test 12.4
+                    && (newActorSize + newObjectSize <= (oldActorSize + oldObjectSize)) // be conservative for now
+                    //&& (newObjectSize + newActorSize <= 0x34000) // TF is 318D0, SHT is 39DE0 in enemizer test 12.4
                     && !(scene.SceneEnum == GameObjects.Scene.SnowheadTemple && newObjectSize > 0x20000)) //temporary, it bypasses logic above without actor size detection
                 {
-                    WriteOutput(" Ram scene objects Ratio: [" + ((float)newObjectSize / (float)oldObjectSize).ToString("F4") + "] new size:[" + newObjectSize.ToString("X5") + "], vanilla:[" + oldObjectSize.ToString("X5") + "]");
-                    WriteOutput(" Ram scene actors  Ratio: [" + ((float)newActorSize / (float)oldActorSize).ToString("F4") + "] new size:[" + newActorSize.ToString("X5") + "], vanilla:[" + oldActorSize.ToString("X5") + "]");
+                    WriteOutput(" Ram scene objects Ratio: [" + ((float) newObjectSize / (float) oldObjectSize).ToString("F4") + "] new size:[" + newObjectSize.ToString("X5") + "], vanilla:[" + oldObjectSize.ToString("X5") + "]");
+                    WriteOutput(" Ram scene actors  Ratio: [" + ((float) newActorSize / (float) oldActorSize).ToString("F4") + "] new size:[" + newActorSize.ToString("X5") + "], vanilla:[" + oldActorSize.ToString("X5") + "]");
                     break;
                 }
                 //else: reset loop and try again
@@ -1213,7 +1204,7 @@ namespace MMR.Randomizer
             ///////   DEBUGGING   ///////
             /////////////////////////////
             #if DEBUG
-            if (scene.SceneEnum == GameObjects.Scene.SouthernSwamp) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.StockPotInn) // force specific actor/variant for debugging
             {
                 //chosenReplacementEnemies[19].ActorID = (int)GameObjects.Actor.Horse;
                 //chosenReplacementEnemies[19].ActorEnum = GameObjects.Actor.Horse;
@@ -1222,13 +1213,13 @@ namespace MMR.Randomizer
                 //chosenReplacementEnemies[1].ActorEnum = GameObjects.Actor.MothSwarm;
                 //chosenReplacementEnemies[1].Variants[0] = 7;
 
-                //var act = scene.Maps[0].Actors[11]; 
-                //act.ActorID = (int) GameObjects.Actor.MothSwarm;
-                //act.ActorEnum = GameObjects.Actor.MothSwarm;
-                //act.Variants[0] = 0xFFFF;//0x115;
+                var act = scene.Maps[0].Actors[17]; 
+                act.ActorID = (int) GameObjects.Actor.PeekHole;
+                act.ActorEnum = GameObjects.Actor.PeekHole;
+                act.Variants[0] = 0x0;//0x115;
             }
             /////////////////////////////
-#endif
+            #endif
             /////////////////////////////
 
             // print debug enemy locations
