@@ -181,6 +181,7 @@ namespace MMR.Randomizer
             FixSpawnLocations();
             ExtendGrottoDirectIndexByte();
             EnablePoFusenAnywhere();
+            ShortenChickenPatience();
         }
 
         public static void LowerEnemiesResourceLoad()
@@ -310,6 +311,8 @@ namespace MMR.Randomizer
 
             }
 
+            // backup actor 39 x711 525 1021
+
             /*
             var greatBayCoast = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
             greatBayCoast.Maps[1].Actors[8].ActorID = 0;
@@ -320,17 +323,6 @@ namespace MMR.Randomizer
             */
 
             // test bonk spider
-            /*
-            var northclocktownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.NorthClockTown.FileID()).Maps[0];
-            // -654, 200, -1780
-            northclocktownScene.Actors[17].Position = new vec16(-654, 230, -1780);
-            northclocktownScene.Actors[17].ChangeActor(GameObjects.Actor.GoldSkullTula, 0xFF41);
-            northclocktownScene.Actors[32].Position = new vec16(-654, 230, -1780);
-            northclocktownScene.Actors[32].Rotation = new vec16(0x187, 0x197F, 0xA7F);
-            northclocktownScene.Actors[32].ChangeActor(GameObjects.Actor.TG_Sw, 0x40);
-            northclocktownScene.Objects[7] = GameObjects.Actor.GoldSkullTula.ObjectIndex(); // postbox
-            SceneUtils.UpdateScene(RomData.SceneList.Find(u => u.File == GameObjects.Scene.NorthClockTown.FileID()));
-            */
 
             /*
             var testScene = GameObjects.Scene.TwinIslands;
@@ -348,24 +340,9 @@ namespace MMR.Randomizer
             // set the collectable rup in woodfall to a random grotto, just to see if anyone even notices
             var woodfallRoom0FID = GameObjects.Scene.Woodfall.FileID() + 1;
             var woodfallSceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.Woodfall.FileID());
-            /* // disabled now that we have rupee rando
-            RomUtils.CheckCompressed(woodfallRoom0FID);
-            var woodfallSceneActorAddr = RomData.SceneList[woodfallSceneIndex].Maps[0].ActorAddr;
-            var grottoVariants = GameObjects.Actor.GrottoHole.AllVariants();
-            var randomGrottoVariant = grottoVariants[new Random().Next(grottoVariants.Count)];
-            var randomGrottoEnemy = GameObjects.Actor.GrottoHole.ToActorModel();
-            SetupGrottoActor(randomGrottoEnemy, randomGrottoVariant);
-            
-            //SetVariant(GameObjects.Scene.Woodfall, roomIndex: 0, actorIndex: 0, vars: 0x0000);
-            RomData.SceneList[woodfallSceneIndex].Maps[0].Actors[0].Variants[0] = 0xE000; // vissible bean grotto
-            */
 
-            //SetZRotation(GameObjects.Scene.Woodfall, roomIndex: 0, actorIndex: 0, zRot: 10); // got a crash, set to cow for now
-            //RomData.SceneList[woodfallSceneIndex].Maps[0].Actors[0].Rotation.z = 0x10; // with matching flags
-            // RomData.SceneList[woodfallSceneIndex].Maps[0].Actors[0].ActorID = (int) GameObjects.Actor.GrottoHole; // set actor to grotto
-            // RomData.SceneList[woodfallSceneIndex].Maps[0].Actors[0].ActorEnum = GameObjects.Actor.GrottoHole; // set actor to grotto
 
-            // set the collectable rup in woodfall to a random grotto, just to see if anyone even notices
+            // testing why zrotation can be so broken for grottos
             var testScene = GameObjects.Scene.TerminaField;
             var grottoSceneIndex = RomData.SceneList.FindIndex(u => u.File == testScene.FileID());
             var grottoSceneActorAddr = RomData.SceneList[grottoSceneIndex].Maps[0].ActorAddr;
@@ -374,22 +351,11 @@ namespace MMR.Randomizer
             //RomData.MMFileList[grottoRoom0FID].Data[grottoSceneActorAddr + (actorNumber * 16) + 1] = 0x55; // set actor to grotto
             RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].ActorEnum = GameObjects.Actor.GrottoHole;
             RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].ActorID = (int)GameObjects.Actor.GrottoHole;
-
             //RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Variants[0] = 0x625C; // working, hidden generic grotto with mystery woods grotto chest
             RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Variants[0] = 0x8200; // hidden jgrotto
 
-            // 10 in TF takes us to mayor house, 4 also takes us there?
-            // 0 takes us to the right spot
-            //SetZRotation(testScene, roomIndex: 0, actorIndex: actorNumber, zRot: 0xA); // remember this rotation is degrees, not pre-compiled bytes
-            var grotActor = RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber];
-            //grotActor.Rotation.z = (short) MergeRotationAndFlags(rotation: 1, grotActor.Rotation.z);
-            // 7F and 0-1 load (0  then + 1) into the index, 
-            //however FF (1+flags) OR 0x80 returns B6 <-wtf
-            // 1FF (2+ flags) takes us to 222 index
-            // 180 is 222, no change?
-            // 200 is 2D8, so multiples of B6, but where did that come from?
             RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Rotation.z = 0x0200; // ignored if top nibble is set to > 0
-            
+
         }
 
         private static void FixScarecrowTalk()
@@ -604,6 +570,16 @@ namespace MMR.Randomizer
             RomData.MMFileList[enPoFusenFID].Data[0xB72] = 0xF1; // bush throw
             RomData.MMFileList[enPoFusenFID].Data[0xB73] = 0xF1; // zora karate
             RomData.MMFileList[enPoFusenFID].Data[0xB75] = 0xF1; // fd beam
+        }
+
+        public static void ShortenChickenPatience()
+        {
+            // chickens take too many hits before they get mad, let's shrink this
+            // niw health is rand(0-9.9) + 10.0, lets replace with 0-2 + 1
+            RomUtils.CheckCompressed(GameObjects.Actor.FriendlyCucco.FileListIndex());
+            var niwData = RomData.MMFileList[GameObjects.Actor.FriendlyCucco.FileListIndex()].Data;
+            ReadWriteUtils.Arr_WriteU32(niwData, 0x24A8, 0x40000000); // 9.9 -> 2 in f32 (in rodata, loaded into init)
+            ReadWriteUtils.Arr_WriteU16(niwData, 0x156, 0x3f80); // 10 -> 1 in f32(first short only as literal) (in init)
         }
 
         #endregion
@@ -854,6 +830,7 @@ namespace MMR.Randomizer
                 reducedCandidateList.Remove(enemy);
             }
 
+
             // todo does this NEED to be a double loop? does anything change per enemy copy that we should worry about?
             foreach (var oldEnemy in oldActors) // this is all copies of an enemy in a scene, so all bo or all guay
             {
@@ -1042,24 +1019,34 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Torch.ObjectIndex()
+                            NewV = GameObjects.Actor.FriendlyCucco.ObjectIndex()
                         }); 
                         continue;
                     }
-                    // todo torch on leevers is throwing wierd errors when it comes to companions
-                     if (scene.File == GameObjects.Scene.GreatBayCoast.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.LikeLike.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.StoneTower.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.Beamos.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Mine.ObjectIndex()
+                            NewV = GameObjects.Actor.DekuBaba.ObjectIndex()
+                        });
+                        continue;
+                    }
+                    // todo torch on leevers is throwing wierd errors when it comes to companions
+                    if (scene.File == GameObjects.Scene.StoneTower.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.ReDead.ObjectIndex())
+                    {
+                        chosenReplacementObjects.Add(new ValueSwap()
+                        {
+                            OldV = sceneObjects[objCount],
+                            NewV = GameObjects.Actor.Cow.ObjectIndex()
                         });
                         continue;
                     } // */

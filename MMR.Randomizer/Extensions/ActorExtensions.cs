@@ -128,7 +128,7 @@ namespace MMR.Randomizer.Extensions
         public static List<int> CompatibleVariants(this Actor actor, Actor otherActor, Random rng, int oldActorVariant)
         {
             // with mixed types, typing could be messy, keep it hidden here
-            // EG. like like can spawn on the sand on the surface, but also on the bottom of GBC
+            // EG. like like can spawn on the sand (land), but also on the bottom of GBC (water floor)
 
             // I'm sure theres a cleaner way, but everything I tried C# said no
             var listOfVariants = new List<byte>() {1, 2, 3, 4}; // 5
@@ -162,6 +162,17 @@ namespace MMR.Randomizer.Extensions
                     ourAttr = actor.GetAttribute<PatrolVariantsAttribute>();
                     theirAttr = otherActor.GetAttribute<PatrolVariantsAttribute>();
                 }*/
+
+                // small chance of getting flying enemies on ground enemies
+                if (variant == 2 && ourAttr == null) // we are land and they are not
+                {
+                    theirAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
+                    if (theirAttr != null && rng.Next(100) < 10)
+                    {
+                        return theirAttr.Variants;
+                    }
+                }
+
                 if (ourAttr != null && theirAttr != null) // both have same type
                 {
                     var compatibleVariants = theirAttr.Variants;

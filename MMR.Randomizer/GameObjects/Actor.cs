@@ -440,11 +440,13 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         GrottoHole = 0x55, // Door_Ana
 
-        //[ActorizerEnabled] // broken: crash, probably uses a path
+        //[ActorizerEnabled] // broken: crash, does NOT use paths
+        // thought it might be that the actor's memory is just huge because it has 20 effects, but we measure that now
         [FileID(102)]
         [ObjectListIndex(0x280)]
+        [FlyingVariants(1)]
         [UnkillableAllVariants]
-        MajoraBalloonSewer = 0x5F, // En_Encounter2
+        MajoraBalloonSewer = 0x5F, // En_Encount2
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0xF00)]
@@ -672,10 +674,10 @@ namespace MMR.Randomizer.GameObjects
         // in mamuyan: (phi_s0 << 5) | (arg0->unk1C & 0x7E00) unk1C seems static
         // from mamuyan code we know the colors are 1-E shifted right by 5
         // colors: (white, brown, dark grey, bluedog, gold)
-        //[GroundVariants(0x20, 0x40, 0x60, 0x80, 0x120,
-        //    0x3FF, 0xD9F, 0x22BF)]
+        [GroundVariants(0x20, 0x40, 0x60, 0x80, 0x120,
+            0x3FF, 0xD9F, 0x22BF)]
         //[GroundVariants(0x60, 0x40, 0xD9F)] // f0x22BF, 0x3FF fine in snowhead, 0x120, 
-        [GroundVariants(0x60)] // f0x22BF, 0x3FF fine in snowhead, 0x120, 
+        //[GroundVariants(0x60)] //testing // f0x22BF, 0x3FF fine in snowhead, 0x120, 
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max:5, 0x3FF)]
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
@@ -1251,7 +1253,7 @@ namespace MMR.Randomizer.GameObjects
         //[VariantsWithRoomMax(max: 1, variant: 1, 0xFF00)]
         [OnlyOneActorPerRoom] // if both 01 and ff00 try to spawn, only one will in some places, reported bug: controller lock
         [CompanionActor(Flame, 0x7FE)] // blue flames
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp)] // they either dont spawn, or when they appear they lock your controls, bad
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208,
 
         [ActorizerEnabled]
