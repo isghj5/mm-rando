@@ -13,7 +13,7 @@ namespace MMR.Randomizer.Extensions
     {
         public static int FileListIndex(this Actor actor)
         {
-            return actor.GetAttribute<FileIDAttribute>().ID;
+            return actor.GetAttribute<FileIDAttribute>()?.ID ?? -1;
         }
 
         public static int ObjectIndex(this Actor actor)

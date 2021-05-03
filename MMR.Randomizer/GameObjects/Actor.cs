@@ -271,6 +271,7 @@ namespace MMR.Randomizer.GameObjects
         Torch = 0x39, // Obj_Syokudai
 
         [EnemizerEnabled]
+        [ActorInstanceSize(0x2C8)]
         [ActorInitVarOffset(0x1D30)]
         [FileID(81)]
         [ObjectListIndex(0x40)]
@@ -281,6 +282,7 @@ namespace MMR.Randomizer.GameObjects
         MadShrub = 0x3B,
 
         [EnemizerEnabled]
+        [ActorInstanceSize(0x464)]
         [ActorInitVarOffset(0x1AF0)]
         [FileID(82)]
         [ObjectListIndex(0x51)]
@@ -302,14 +304,16 @@ namespace MMR.Randomizer.GameObjects
         BlueBubble = 0x3E, // En_Bb
 
         [ActorizerEnabled]
+        [ActorInitVarOffset(0x1A0)]
         [ObjectListIndex(0x61)]
         [GroundVariants(0xFF0B, 0xFF02, 0xFF00, 0xFF0D, 0xFF01, 0xFF1A, 0x0A1A)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.TerminaField)] // need to keep in termina field for rupee rando
         Treee = 0x41, // En_Wood2
 
-        //[EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky, and his color darkening is wack
+        [EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky, and his color darkening is wack
         [ObjectListIndex(0x52)]
+        [ActorInstanceSize(0x938)]
         [GroundVariants(0)] // can fly, but weirdly is very bad at changing height if you fight in a multi-level area
         [OnlyOneActorPerRoom] // only fight her if you fight only one
         [UnkillableAllVariants] // is NOT unkillable, but assume never have light arrows until the last second of a run, do not place where can block an item
@@ -401,6 +405,7 @@ namespace MMR.Randomizer.GameObjects
         Environement = 0x51, // Object_Kankyo
 
         [ActorizerEnabled]
+        [ActorInstanceSize(0x194)]
         [ObjectListIndex(2)] // overworld_keep, obj 2
         //[ObjectListIndex(0x34)] // testing
         [FileID(99)]
@@ -464,6 +469,7 @@ namespace MMR.Randomizer.GameObjects
         DekuBabaWithered = 0x66, // En_Karebaba
 
         [ActorizerEnabled] // works but her object is huge, and you cant talk or interact with her, which kinda sucks
+        [ActorInstanceSize(0x314)]
         [FileID(304)]
         [ObjectListIndex(0xA2)]
         // her code takes her params and passes it to another func as (params * 0x7E00 >> 9)
@@ -815,6 +821,7 @@ namespace MMR.Randomizer.GameObjects
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2D30)]
+        [ActorInstanceSize(0x208)]
         [FileID(296)]
         [ObjectListIndex(0x16A)]
         [GroundVariants(0x0C01,0x1402,0xFF03,0xFF01,0xFF00,0x0A01,0x0202,0x801,0xFF02)]
@@ -915,6 +922,7 @@ namespace MMR.Randomizer.GameObjects
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2290)]
+        [ActorInstanceSize(0x2C0)]
         [FileID(331)]
         [ObjectListIndex(0x181)]
         // the snowhead version that doesnt aggro is 01
@@ -922,6 +930,8 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0x1)] // peaceful, just wants cheese
         [RespawningVariants(0x8014,0x8028,0x8023, // tested respawning
             0x0032,0x0005,0x0014)] // untesed, assumed respawning because I'm lazy for now
+        [VariantsWithRoomMax(max: 5, variant: 0x8C, 0x28, 0x3C, 0x46, 0x32, 0x1, 0x5, 0x14)]
+        [VariantsWithRoomMax(max: 1, variant: 0x8014, 0x8028, 0x8023, 0x0032, 0x0005, 0x0014)]
         [CompanionActor(ClayPot, variant: 0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
         RealBombchu = 0x16F,
 
@@ -1029,7 +1039,6 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.TerminaField)] // long draw distance means they can overflow actor spawn
         PoeBalloon = 0x1A6,
 
-        [FileID(0x1A8)]
         [ObjectListIndex(0x19E)]
         //[WaterVariants( unk )]
         BigOcto = 0x1A8,
@@ -1121,6 +1130,7 @@ namespace MMR.Randomizer.GameObjects
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2EE0)]
+        [ActorInstanceSize(0x378)]
         [FileID(446)]
         [ObjectListIndex(0x1C4)]
         [GroundVariants(0xFF00, 0xFF01, 0, 1)]
@@ -1245,13 +1255,17 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(479)]
         [ObjectListIndex(0x1F1)]
+        // think 0102 is the dig spots for dampe
         // 1 and FF00 both exist
         // 1 has a spawn flag that stops respawning once you kill one
         //  because of this, it's possible to kill one in TF, then need to kill one in a clear enemy puzzle room and it doesnt spawn
-        [FlyingVariants(0xFF00)] // 1 is a possible type? well: ff00
+        //[FlyingVariants(0xFF00)] // 1 is a possible type? well: ff00
+        [FlyingVariants(0xFF03, 0xFF04)] // looking at the code, FF should always spawn, and 2 is a special case, but what about the rest? crashes tho
+        [GroundVariants(0x1)] // looking at the code, FF should always spawn, and 2 is a special case, but what about the rest?
         [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
         //[VariantsWithRoomMax(max: 1, variant: 1, 0xFF00)]
         [OnlyOneActorPerRoom] // if both 01 and ff00 try to spawn, only one will in some places, reported bug: controller lock
+        [RespawningAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
         [CompanionActor(Flame, 0x7FE)] // blue flames
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208,
@@ -1313,7 +1327,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1C50)]
         [FileID(493)]
         [ObjectListIndex(0x201)]
-        [GroundVariants(0xFF,0x80FF)]
+        [GroundVariants(0xFF,0x80FF)] // does this include the really big one?
         Leever = 0x216,
 
         //[EnemizerEnabled] // cutscene is broken without camera placement, player stuck in place

@@ -129,24 +129,147 @@ namespace MMR.Randomizer
             return returnActorTypes;
         }
 
-        public static int GetOvlRamSize(int actorOvlTblIndex)
+        public static int GetOvlCodeRamSize(int actorOvlTblIndex)
         {
-            if (actorOvlTblIndex == (int)GameObjects.Actor.Empty)
+            /// this is the size of overlay (actor) code in ram
+ 
+            if (actorOvlTblIndex == (int)GameObjects.Actor.Empty || actorOvlTblIndex == 0)
             {
                 return 0;
             }
-            const int ACTOR_OVERLAY_TBL = 0xC45510;
 
             /// actor overlay size already exists in the actor overlay table, just look it up from the index
-            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(ACTOR_OVERLAY_TBL);
+            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
             RomUtils.CheckCompressed(actorOvlTblFID);
-            // the object table exists inside of another file, we need the offset to the table
-            int actorOvlTblOffset = ACTOR_OVERLAY_TBL - RomData.MMFileList[actorOvlTblFID].Addr;
+            // the overlay table exists inside of another file, we need the offset to the table
+            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
             var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
             // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb pppppppp iiiiiiii nnnnnnnn ???? cc ??
             // A and B should be start and end of vram address, which is what we want as we want the ram size
             return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 12)
                        - ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8));
+        }
+
+        public static int GetOvlInstanceRamSize(int actorOvlTblIndex)
+        {
+            /// this is the size of the actor's instance state in ram
+
+            // to get this, we either need to save it or read it from the overlay's init vars
+            var attr = ((GameObjects.Actor)actorOvlTblIndex).GetAttribute<ActorInstanceSizeAttribute>();
+            if (attr != null)
+            {
+                return attr.Size;
+            }
+
+            // if we didn't pre-save it, we need to extract it
+            var ovlFID = ((GameObjects.Actor) actorOvlTblIndex).FileListIndex();
+            if (ovlFID == -1) // we dont know its fid, I forgot to write prewrite it
+            {
+                ovlFID = GetFID(actorOvlTblIndex); // attempt to get it from the DMA table
+                if (ovlFID == -1) return 0xABCD; // conservative estimate
+            }
+
+            var offset = GetOvlActorInit(actorOvlTblIndex);
+            if (offset == -1)
+            {
+                return 0x1001;
+            }
+            RomUtils.CheckCompressed(ovlFID);
+            var ovlData = RomData.MMFileList[ovlFID].Data;
+            return ReadWriteUtils.Arr_ReadU16(ovlData, offset + 0xE); // E/F are the actor's instance size
+
+        }
+
+        public static int GetOvlActorInit(int actorOvlTblIndex)
+        {
+            /// this is the offset location of the actor's init variables
+
+            /// even though the overlay table says it has the init vars location, it doesn't get populated until after 
+
+            // we have some of them hardcoded, if that exists return that instead because scanning files sucks
+            var actor = (GameObjects.Actor) actorOvlTblIndex;
+            var actorAttr = actor.GetAttribute<ActorInitVarOffsetAttribute>();
+            if (actorAttr != null)
+            {
+                return actorAttr.Offset;
+            }
+
+            int actorFID = GetFID(actorOvlTblIndex);
+            if (actorFID == -1)
+            {
+                return -1;
+            }
+            RomUtils.CheckCompressed(actorFID);
+            var actorData = RomData.MMFileList[actorFID].Data;
+
+            // going to gamble here: assuming init ALWAYS aligns with double word
+            for (int i = 0; i < actorData.Length - 16 ; i += 16 )
+            {
+                var actorIdTest = ReadWriteUtils.Arr_ReadU16(actorData, i);
+                var objectIdTest = ReadWriteUtils.Arr_ReadU16(actorData, i + 8);
+                var padtest = ReadWriteUtils.Arr_ReadU32(actorData, i + 0xA);
+                var instTest = ReadWriteUtils.Arr_ReadU16(actorData, i + 0xE); // instance size
+                padtest &= 0xFFFFFFF0; // not sure if there are actors that need 5 diggits but might as well
+
+                // && objectIdTest == actor.ObjectIndex()
+
+                if (actorIdTest == actorOvlTblIndex
+                    && padtest == 0
+                    && instTest % 4 == 0) { 
+                        return i;
+                }
+            }
+
+            return -1;
+        }
+
+        public static int GetOvlActorVROMStart(int actorOvlTblIndex)
+        {
+            /// we might want to look up the file vrom address for an actor so we can find its FID
+            /// dont look at me like that, it's nintendo's fault the retail cart doesn't have this in the overlay table, they removed it
+
+            /// actor's vrom addr exists in the overlay table so the code can load the file
+            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
+            RomUtils.CheckCompressed(actorOvlTblFID);
+
+            // the overlay table exists inside of another file, we need the offset to the table
+            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
+            var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
+            // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb pppppppp iiiiiiii nnnnnnnn ???? cc ??
+            // x should be our vrom address start
+            return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 0));
+        }
+
+
+        public static int GetFIDFromVROM(int actorStart)
+        {
+            // assuming the actor overlay table vrom addresses can match DMA table, search through the DMA table
+            var dmaFID = 2;
+            var dmaData = RomData.MMFileList[dmaFID].Data;
+
+            for(int i = 0; i < 1550; ++i)
+            {
+                // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb x and y should be start and end VROM addresses of each file
+                var dmaStartingAddr = ReadWriteUtils.Arr_ReadU32(dmaData, 16 * i); // x
+                if (dmaStartingAddr == actorStart) {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
+        public static int GetFID(int actorID)
+        {
+            var fidLookup = ((GameObjects.Actor) actorID).FileListIndex();
+            if (fidLookup != -1)
+            {
+                return fidLookup;
+            }
+            
+            // if we want to know the file ID of an actor, we need to look up the VROM addr from the overlay table
+            // and match against a file in DMA, because nintendo removed the FID from the overlay table
+            return GetFIDFromVROM(GetOvlActorVROMStart(actorID));
         }
 
 
@@ -198,8 +321,9 @@ namespace MMR.Randomizer
             foreach (var enemy in actorList)
             {
                 /// bit flags 4-6 according to crookedpoe: Always Run update, Always Draw, Never Cull
-                RomUtils.CheckCompressed(enemy.FileListIndex());
-                RomData.MMFileList[enemy.FileListIndex()].Data[enemy.ActorInitOffset() + 7] &= 0x8F;
+                var fid = GetFID((int)enemy);
+                RomUtils.CheckCompressed(fid);
+                RomData.MMFileList[fid].Data[enemy.ActorInitOffset() + 7] &= 0x8F;
             }
         }
 
@@ -302,7 +426,7 @@ namespace MMR.Randomizer
                 var winterVillage = RomData.SceneList.Find(u => u.File == GameObjects.Scene.MountainVillage.FileID());
                 winterVillage.Maps[0].Objects[5] = GameObjects.Actor.GossipStone.ObjectIndex();
                 winterVillage.Maps[0].Actors[57].Variants[0] = 0x67; // the vars is for milkroad, change to a moon vars so it gets randomized
-                winterVillage.Maps[0].Actors[57].Position.y = -5; // floating a bit in the air, lower to ground
+                winterVillage.Maps[0].Actors[57].Position.y = -15; // floating a bit in the air, lower to ground
 
                 // now that darmani ghost is gone, lets re=use the actor for secret grotto
                 winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[new Random().Next(randomGrotto.Count)] & 0xFCFF);
@@ -356,6 +480,28 @@ namespace MMR.Randomizer
 
             RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Rotation.z = 0x0200; // ignored if top nibble is set to > 0
 
+            /*
+            // debugging, checking if ram sizes are relevant
+            for (var i = 0; i < 0x2B3; ++i)
+            {
+                var actor = (GameObjects.Actor) i;
+                var actorName = actor.ToActorModel().Name;
+                actorName = actorName == "" ? "UNKOWN" : actorName;
+                // we nee to make sure ram and overlay are the same
+                // read Init offset from overlay table
+                // decompress actor
+                var initVarString = "";
+                //var actorAttr = actor.GetAttribute<ActorInitVarOffsetAttribute>();
+                //if (actorAttr != null)
+                var actorStructSize = GetOvlInstanceRamSize(i);
+                if (actorStructSize != -1)
+                {
+                    initVarString = " and instance: 0x" + GetOvlInstanceRamSize(i).ToString("X5");
+                }
+
+                Debug.WriteLine("[" + actorName + "] FID:["+ GetFIDFromAID(i) + "] AID:[" + i.ToString("X3") + "] codesize: 0x" + GetOvlCodeRamSize(i).ToString("X5") + initVarString);
+            }
+            int z = 0; // */
         }
 
         private static void FixScarecrowTalk()
@@ -365,6 +511,48 @@ namespace MMR.Randomizer
             {
                 return;
             }
+        }
+
+        private static void CreateTuboChest()
+        {
+            // issue: we either cannot use or dont know the proper chest display lists
+
+            // attempt to turn tubo trap into tubo chest owo amazing chest ahead
+            /*
+            var tuboFID = 132;
+            RomUtils.CheckCompressed(tuboFID);
+            var tuboData = RomData.MMFileList[tuboFID].Data;
+            // set test trap box in SCT
+            var sctScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SouthClockTown.FileID());
+            sctScene.Maps[0].Actors[11].ChangeActor(GameObjects.Actor.FlyingPot); // dog -> trap
+            // change object to en_box @C65
+            tuboData[0xC65] = 0xC;
+            // change hit sfx to box breaking bigbox:0x2839 alt; wood thud is 21C9 2887 is pot broken
+            ReadWriteUtils.Arr_WriteU16(tuboData, 0x6CE, 0x2839); // four of them this actor cares a lot where and how it hits the player
+            ReadWriteUtils.Arr_WriteU16(tuboData, 0x73A, 0x2839); // sound here is correct
+            ReadWriteUtils.Arr_WriteU16(tuboData, 0x78E, 0x2839);
+            ReadWriteUtils.Arr_WriteU16(tuboData, 0x7FA, 0x2839);
+
+            // change take off sfx to box take off @92A boxputdown: 21AB
+            ReadWriteUtils.Arr_WriteU16(tuboData, 0x92A, 0x21AB); // sounds bad
+
+            // change display list to that of chest
+            // C0A /b //C0E/f
+            ReadWriteUtils.Arr_WriteU16(tuboData, 0xC0A, 0x0600);
+            ReadWriteUtils.Arr_WriteU16(tuboData, 0xC0E, 0x0128);
+
+            // different chest display lists 7E54 i crash
+            //0x0600024C .word 0x06007E54 .word 0x0600024C .word 0x06007F30 .word 0x06000128
+
+            // also need to find the box breaking effect too
+            // big wood planks from big box is 0x6001040 from D_05018090
+            // unfortunately this might not be available... hmm
+            //ReadWriteUtils.Arr_WriteU16(tuboData, 0x17A, 0x0600); // crate effect does not exist in SCT
+            //ReadWriteUtils.Arr_WriteU16(tuboData, 0x182, 0x1040);
+
+            ReadWriteUtils.Arr_WriteU16(tuboData, 0x17A, 0x0600);
+            ReadWriteUtils.Arr_WriteU16(tuboData, 0x182, 0x024C);
+            */
         }
 
         /// <summary>
@@ -973,20 +1161,33 @@ namespace MMR.Randomizer
             var sceneFreeActors = GetSceneFreeActors(scene, log);
 
             // because different actors spawn on day/night and on certain days, we have to check the sizes for all 6 combos
-            var oldActorlistByTimeflag = new List<Actor>[6]; // actors separated by when they spawn night/day for all three days
-            var oldActorlistByTimeflagSizes = new int[6];
-            var newActorlistByTimeflag = new List<Actor>[6]; // actors separated by when they spawn night/day for all three days
-            var newActorlistByTimeflagSizes = new int[6];
 
-            for(int i = 0; i < 6; ++i)  // foreach time flag
+            int actorlistCount = scene.Maps.Count() * 2;
+            var oldActorlistMapActors = new List<Actor>[actorlistCount]; // actors separated by when they spawn night/day for all three days
+            var oldActorlistMapSizes = new int[actorlistCount];
+            var newActorlistMapActors = new List<Actor>[actorlistCount]; // actors separated by when they spawn night/day for all three days
+            var newActorlistMapActorInstSizes = new int[actorlistCount];
+            var oldActorlistMapActorCodeSizes = new int[actorlistCount];
+            var newActorlistMapActorCodeSizes = new int[actorlistCount];
+
+            // because timeflags are often not that important (SCT, ingo brothers racetrack outliers) we can just bunch days/nights together and focus on rooms
+            for (int i = 0; i < actorlistCount; i += 2)  // foreach time flag and room
             {
-                int flag = (1 << 7) >> i;
-                oldActorlistByTimeflag[i] = sceneEnemies.FindAll(u => (u.GetTimeFlags() & flag) > 0);
-                oldActorlistByTimeflagSizes[i] = oldActorlistByTimeflag[i].Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
+                var roomEnemies = scene.Maps[i >> 1].Actors;
+
+                int dayFlagMask = 0x2AA;
+
+                oldActorlistMapActors[i]     = roomEnemies.FindAll(u => (u.GetTimeFlags() & dayFlagMask) > 0);         // day
+                oldActorlistMapActors[i + 1] = roomEnemies.FindAll(u => (u.GetTimeFlags() & (dayFlagMask >> 1)) > 0);  // night
+                oldActorlistMapSizes[i]      = oldActorlistMapActors[i    ].Select(u => u.ActorID).Select(x => GetOvlInstanceRamSize(x)).Sum();
+                oldActorlistMapSizes[i + 1]  = oldActorlistMapActors[i + 1].Select(u => u.ActorID).Select(x => GetOvlInstanceRamSize(x)).Sum();
+                oldActorlistMapActorCodeSizes[i]     = oldActorlistMapActors[i    ].DistinctBy(u => u).Select(x => GetOvlCodeRamSize(x.ActorID)).Sum();
+                oldActorlistMapActorCodeSizes[i + 1] = oldActorlistMapActors[i + 1].DistinctBy(u => u).Select(x => GetOvlCodeRamSize(x.ActorID)).Sum();
+                //                    newActorlistMapActorCodeSizes[i + 1]  = newActorlistMapActors[i + 1].DistinctBy(u => u).Select(x => GetOvlCodeRamSize(x.ActorID)).Sum();
+
             }
 
-            WriteOutput(" time to separate time flag actors: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
-
+            WriteOutput(" time to separate map/time actors: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             while (true)
             {
@@ -1019,23 +1220,23 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
+                    if (scene.File == GameObjects.Scene.RanchBuildings.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.FriendlyCucco.ObjectIndex())
+                    {
+                        chosenReplacementObjects.Add(new ValueSwap()
+                        {
+                            OldV = sceneObjects[objCount],
+                            NewV = GameObjects.Actor.DekuBaba.ObjectIndex()
+                        }); 
+                        continue;
+                    }
                     if (scene.File == GameObjects.Scene.TerminaField.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.FriendlyCucco.ObjectIndex()
-                        }); 
-                        continue;
-                    }
-                    if (scene.File == GameObjects.Scene.StoneTower.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.Beamos.ObjectIndex())
-                    {
-                        chosenReplacementObjects.Add(new ValueSwap()
-                        {
-                            OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.DekuBaba.ObjectIndex()
+                            NewV = GameObjects.Actor.BigPoe.ObjectIndex()
                         });
                         continue;
                     }
@@ -1188,30 +1389,57 @@ namespace MMR.Randomizer
                 // make sure this is using the same calc as oldSize
                 //int newActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
                 bool sizeIsFine = true;
-                for (int i = 0; i < 6; ++i)  // foreach time flag
+                for (int i = 0; i < actorlistCount; i += 2)  // foreach time flag
                 {
-                    int flag = (1 << 7) >> i;
-                    newActorlistByTimeflag[i] = sceneEnemies.FindAll(u => (u.GetTimeFlags() & flag) > 0);
-                    newActorlistByTimeflagSizes[i] = newActorlistByTimeflag[i].Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
+                    //var roomEnemies = sceneEnemies.FindAll(u => u.Room == (i >> 1));
+                    var roomEnemies = scene.Maps[i >> 1].Actors;
+
+                    int dayFlagMask = 0x2AA;
+
+                    newActorlistMapActors[i]       = roomEnemies.FindAll(u => (u.GetTimeFlags() & dayFlagMask) > 0);         // day
+                    newActorlistMapActors[i + 1]   = roomEnemies.FindAll(u => (u.GetTimeFlags() & (dayFlagMask >> 1)) > 0);  // night
+                    newActorlistMapActorInstSizes[i]      = newActorlistMapActors[i    ].Select(u => u.ActorID).Select(x => GetOvlInstanceRamSize(x)).Sum();
+                    newActorlistMapActorInstSizes[i + 1]  = newActorlistMapActors[i + 1].Select(u => u.ActorID).Select(x => GetOvlInstanceRamSize(x)).Sum();
+                    newActorlistMapActorCodeSizes[i]      = newActorlistMapActors[i    ].DistinctBy(u => u).Select(x => GetOvlCodeRamSize(x.ActorID)).Sum();
+                    newActorlistMapActorCodeSizes[i + 1]  = newActorlistMapActors[i + 1].DistinctBy(u => u).Select(x => GetOvlCodeRamSize(x.ActorID)).Sum();
 
                     //check if actor overlay sizes aren't too big
-                    if (newActorlistByTimeflagSizes[i] + oldObjectSize > oldActorlistByTimeflagSizes[i] + oldObjectSize
-                        && !( newActorlistByTimeflagSizes[i] < 0x19000)) // acceptable baseline size? // woodfalltemple is 5Dxxx, stonetower is 19xxx though
+
+                    if (newActorlistMapActorInstSizes[i] + newActorlistMapActorCodeSizes[i] + newObjectSize > oldActorlistMapSizes[i] + oldActorlistMapActorCodeSizes[i] + oldObjectSize + 0x1000
+                        || newActorlistMapActorInstSizes[i + 1] + newActorlistMapActorCodeSizes[i + 1] + newObjectSize > oldActorlistMapSizes[i + 1] + oldActorlistMapActorCodeSizes[i + 1] + oldObjectSize + 0x1000) // too big
                     {
-                        sizeIsFine = false;
-                        break;
+                        if ((newActorlistMapActorInstSizes[i] < 0x25000 && newActorlistMapActorInstSizes[i + 1] < 0x25000)
+                            || (newActorlistMapActorInstSizes[i] + newObjectSize < 0x40000 && newActorlistMapActorInstSizes[i + 1] + newObjectSize < 0x40000))
+                        {
+                            // grace period for now
+                            log.Append("[GRACE]");
+                        }
+                        else
+                        {
+                            sizeIsFine = false;
+                            break;
+                        }
+
                     }
                 }
 
 
-                if ( (newObjectSize <= oldObjectSize || newObjectSize < scene.SceneEnum.GetSceneObjLimit())
-                    && sizeIsFine
+                if (// (newObjectSize <= (oldObjectSize * 1.5) || newObjectSize < scene.SceneEnum.GetSceneObjLimit()) &&
+                    sizeIsFine
                     && !(scene.SceneEnum == GameObjects.Scene.SnowheadTemple && newObjectSize > 0x20000)) //temporary, it bypasses logic above without actor size detection
                 {
-                    WriteOutput(" Ram scene objects Ratio: [" + ((float) newObjectSize / (float) oldObjectSize).ToString("F4") + "] new size:[" + newObjectSize.ToString("X5") + "], vanilla:[" + oldObjectSize.ToString("X5") + "]");
-                    for (int i = 0; i < 6; ++i)  // foreach time flag
+                    WriteOutput(" Ram scene objects Ratio: [" + ((float) newObjectSize / (float) oldObjectSize).ToString("F4")
+                        + "] new size:[" + newObjectSize.ToString("X5") + "], vanilla:[" + oldObjectSize.ToString("X5") + "]");
+                    for (int i = 0; i < actorlistCount; ++i)
                     {
-                        WriteOutput(" Time "+ i +" Actor Ratio: [" + ((float) newActorlistByTimeflagSizes[i] / (float) oldActorlistByTimeflagSizes[i]).ToString("F4") + "] new size:[" + newActorlistByTimeflagSizes[i].ToString("X5") + "], vanilla:[" + oldActorlistByTimeflagSizes[i].ToString("X5") + "]");
+                        string time = (i % 2 == 0) ? "Day  " : "Night";
+                        WriteOutput(" Map [" + (i >> 1) + "] Time [" + time + "] actor inst Ratio: ["
+                            + ((float) newActorlistMapActorInstSizes[i] / (float) oldActorlistMapSizes[i]).ToString("F4")
+                            + "] new size:[" + newActorlistMapActorInstSizes[i].ToString("X5") + "], vanilla:[" + oldActorlistMapSizes[i].ToString("X5") + "]");
+                        WriteOutput(" Map [" + (i >> 1) + "] Time [" + time + "] actor code Ratio: ["
+                            + ((float) newActorlistMapActorCodeSizes[i] / (float) oldActorlistMapActorCodeSizes[i]).ToString("F4")
+                            + "] new size:[" + newActorlistMapActorCodeSizes[i].ToString("X5") + "], vanilla:[" + oldActorlistMapActorCodeSizes[i].ToString("X5") + "]");
+
                     }
                     break;
                 }
@@ -1452,6 +1680,24 @@ namespace MMR.Randomizer
         }
         #endregion
 
+    }
+
+
+    class SceneEnemiesCollection
+    {
+        // per scene: per room : per night and day: per old and new: an object size, an actor inst size, and a actor code size
+        // for each scene we need to check all of them, this is getting complicated
+
+        /*
+        struct 
+
+        int actorlistCount = scene.Maps.Count() * 2;
+        var oldActorlistMapActors = new List<Actor>[actorlistCount]; // actors separated by when they spawn night/day for all three days
+        var oldActorlistMapSizes = new int[actorlistCount];
+        var newActorlistMapActors = new List<Actor>[actorlistCount]; // actors separated by when they spawn night/day for all three days
+        var newActorlistMapActorInstSizes = new int[actorlistCount];
+        var newActorlistMapActorCodeSizes = new int[actorlistCount];
+        */
     }
 
 }

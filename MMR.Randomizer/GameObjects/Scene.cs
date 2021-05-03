@@ -12,15 +12,19 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x12)]
         MayorsResidence = 0x00,
 
+        [FileID(1143)]
         [SceneInternalId(0x0B)]
         MajorasLair = 0x01,
 
+        [FileID(1141)]
         [SceneInternalId(0x0A)]
         PotionShop = 0x02,
 
+        [FileID(1154)]
         [SceneInternalId(0x10)]
         RanchBuildings = 0x03,
 
+        [FileID(1158)]
         [SceneInternalId(0x11)]
         HoneyDarling = 0x04,
 
@@ -79,6 +83,7 @@ namespace MMR.Randomizer.GameObjects
         [FairyDroppingEnemies(1, 2)] // eygore 
         StoneTowerTemple = 0x13,
 
+        [FileID(1188)]
         [SceneInternalId(0x17)]
         TreasureChestShop = 0x14,
 
@@ -88,9 +93,11 @@ namespace MMR.Randomizer.GameObjects
         [FairyDroppingEnemies(1, 1)] // wizrobe
         InvertedStoneTowerTemple = 0x15,
 
+        [FileID(1203)]
         [SceneInternalId(0x19)]
         ClockTowerRoof = 0x16,
 
+        [FileID(1205)]
         [SceneInternalId(0x1A)]
         BeforeThePortalToTermina = 0x17,
 
@@ -105,6 +112,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.Leever, Actor.ChuChu, Actor.DekuBabaWithered)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula, // weak enemies are kinda lame here
             Actor.BigPoe)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Bo,
+            Actor.GibdoWell, Actor.Peahat)] // We consider them killable, but killing this many...
         WoodfallTemple = 0x18,
 
         [FileID(1222)]
@@ -115,6 +124,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x1D)]
         IkanaCastle = 0x1A,
 
+        [FileID(1235)]
         [SceneInternalId(0x1E)]
         DekuPlayground = 0x1B,
 
@@ -122,6 +132,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x1F)]
         OdolwasLair = 0x1C,
 
+        [FileID(1239)]
         [SceneInternalId(0x20)]
         TownShootingGallery = 0x1D,
 
