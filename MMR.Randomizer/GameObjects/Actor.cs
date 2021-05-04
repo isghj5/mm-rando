@@ -1006,8 +1006,9 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [ObjectListIndex(0xBB)]
         [WaterVariants(0x2002, 0x2006, 0x200B, 0x2003, 0x2004, 0x2005, 0x200C)]
-        [FlyingVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
-        [UnkillableAllVariants] // untested, assume because its obj_ that its not enemy actor group
+        // if I had a hanging from cieling thing like spiders this would work fine
+        [WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
+        [UnkillableAllVariants] // actorcat PROP, not detected as enemy
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         Mine = 0x185, // Obj_Mine
 
@@ -1079,6 +1080,13 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.WoodfallTemple)] // req for gekko miniboss, do not touch until fix
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         Snapper = 0x1BA, // En_Kame
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x129)]
+        [GroundVariants(0xFFFF)] // zero is regular, -1 is credits?
+        [UnkillableAllVariants]
+        [OnlyOneActorPerRoom]
+        BombchuGirl = 0x1C1, // En_Takaraya
 
         //[ActorizerEnabled] //busted
         [ObjectListIndex(0x1AF)]
@@ -1260,12 +1268,12 @@ namespace MMR.Randomizer.GameObjects
         // 1 has a spawn flag that stops respawning once you kill one
         //  because of this, it's possible to kill one in TF, then need to kill one in a clear enemy puzzle room and it doesnt spawn
         //[FlyingVariants(0xFF00)] // 1 is a possible type? well: ff00
-        [FlyingVariants(0xFF03, 0xFF04)] // looking at the code, FF should always spawn, and 2 is a special case, but what about the rest? crashes tho
-        [GroundVariants(0x1)] // looking at the code, FF should always spawn, and 2 is a special case, but what about the rest?
+        [GroundVariants(1)] // looking at the code, FF should always spawn, and 2 is a special case, but what about the rest? crashes tho
+        //[GroundVariants(0x1)] // looking at the code, FF should always spawn, and 2 is a special case, but what about the rest?
         [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
-        //[VariantsWithRoomMax(max: 1, variant: 1, 0xFF00)]
-        [OnlyOneActorPerRoom] // if both 01 and ff00 try to spawn, only one will in some places, reported bug: controller lock
-        [RespawningAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
+        //[OnlyOneActorPerRoom]
+        [VariantsWithRoomMax(max:2, variant:1)]
+        [UnkillableAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
         [CompanionActor(Flame, 0x7FE)] // blue flames
         [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208,

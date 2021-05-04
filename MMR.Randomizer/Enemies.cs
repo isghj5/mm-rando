@@ -19,18 +19,20 @@ using System.Threading.Tasks;
 
 namespace MMR.Randomizer
 {
+    public class ValueSwap
+    {
+        // these are indexes of objects
+        public int OldV;
+        public int NewV;
+    }
+
     public class Enemies
     {
-        public class ValueSwap
-        {
-            // these are indexes of objects
-            public int OldV;
-            public int NewV;
-        }
          
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
+        private static Random seedrng;
 
         public static void ReadEnemyList()
         {
@@ -305,6 +307,7 @@ namespace MMR.Randomizer
             ExtendGrottoDirectIndexByte();
             EnablePoFusenAnywhere();
             ShortenChickenPatience();
+            Shinanigans();
         }
 
         public static void LowerEnemiesResourceLoad()
@@ -352,21 +355,6 @@ namespace MMR.Randomizer
             FlattenPitchRoll(twinislandsScene.Maps[0].Actors[26]);
             FlattenPitchRoll(twinislandsScene.Maps[0].Actors[27]);
 
-            // I like secrets
-            //twinislandsScene.Maps[0].Actors[1].Position = new vec16(-583, 140, -20); // place: next to tree, testing
-            twinislandsScene.Maps[0].Actors[1].Position = new vec16(349, -196, 970); // place: under the ice, sneaky like teh crabb
-            //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x60CB; // set to unk check
-            // 300 is back to mountain village
-            // 303 is empty, it takes us to mayors office, which might mean we can put an address tehre 
-            twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x0303; // set to spring goron race?
-            //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x7200; // invisible
-
-            // guess what, spring has a space, EMPTY, entrance in the entrance list
-            RomUtils.CheckCompressed(GameObjects.Scene.TwinIslands.FileID());
-            var twinislandsSceneData = RomData.MMFileList[GameObjects.Scene.TwinIslands.FileID()].Data;
-            twinislandsSceneData[0xD6] = 0xAE; 
-            twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall wtf
-
             // move the bombchu in the first stonetowertemple room 
             //   backward several feet from the chest, so replacement cannot block the chest
             var stonetowertempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.StoneTowerTemple.FileID());
@@ -374,8 +362,6 @@ namespace MMR.Randomizer
             // biobaba in the right room spawns under the bridge, if octarock it pops up through the tile, move to the side of the bridge
             stonetowertempleScene.Maps[3].Actors[19].Position.x = 1530;
 
-            //RomUtils.CheckCompressed(1320);
-            //ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[1320].Data, (0x4 * 0x16) + (22 * 16) + 10, (ushort) MergeRotationAndFlags(new Random().Next(5) * 0x6 * 12, 0x8 | 0x4));
 
             // the dinofos spawn is near the roof in woodfall, lower
             // TODO: do secret shrine too maybe
@@ -394,6 +380,8 @@ namespace MMR.Randomizer
             var swampspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
             swampspiderhouseScene.Maps[0].Actors[2].Variants[0] = 0x3FF;
 
+            // the bombchus in GBT are in bad spots to be replaced by something unpassable,
+            // but most people dont notice where their original spawn even is so move them
             var greatbaytempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayTemple.FileID());
             // the bombchu along the green pipe in the double seesaw room needs to be moved in case its an unmovable enemy
             greatbaytempleScene.Maps[10].Actors[3].Position = new vec16(3525, -180, 630);
@@ -406,34 +394,67 @@ namespace MMR.Randomizer
             var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
             var torchRotation = dekuPalaceScene.Maps[2].Actors[26].Rotation.z;
             torchRotation = (short) MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
+        }
 
-            //turn around this torch, because if its bean man hes facing into the wall and it hurts me
-            var laundryPoolScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LaundryPool.FileID());
-            laundryPoolScene.Maps[0].Actors[2].Rotation.y = (short)MergeRotationAndFlags(rotation: 135, flags: 0x7F);
-            laundryPoolScene.Maps[0].Actors[2].Rotation.x = 0x7F;
-            laundryPoolScene.Maps[0].Actors[2].Rotation.z = 0x7F;
-            //laundryPoolScene.Maps[0].Actors[1].Rotation.z = (short)MergeRotationAndFlags(rotation: laundryPoolScene.Maps[0].Actors[1].Rotation.z, flags: 0x7F);
-
-            // it was two torches, turn the other into a secret grotto, at least for now
-            var randomGrotto = new List<ushort> { 0x6233, 0x623B, 0x6218, 0x625C, 0x8200, 0xA200, 0x7200, 0xC200, 0xE200, 0xF200, 0xD200 };
-            laundryPoolScene.Maps[0].Actors[1].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[new Random().Next(randomGrotto.Count)]);
-            laundryPoolScene.Maps[0].Actors[1].Rotation = new vec16(0x7f, 0x7f ,0x7f);
-            laundryPoolScene.Maps[0].Actors[1].Position = new vec16(-1872, -120, 229);
-
-            // winter village has a gossip stone actor, but no object, lets use the non-used flying darmani ghost object and add it to enemizer
+        private static void Shinanigans()
+        {
             if (ACTORSENABLED)
             {
+
+                //turn around this torch, because if its bean man hes facing into the wall and it hurts me
+                var laundryPoolScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LaundryPool.FileID());
+                laundryPoolScene.Maps[0].Actors[2].Rotation.y = (short)MergeRotationAndFlags(rotation: 135, flags: 0x7F);
+                laundryPoolScene.Maps[0].Actors[2].Rotation.x = 0x7F;
+                laundryPoolScene.Maps[0].Actors[2].Rotation.z = 0x7F;
+                //laundryPoolScene.Maps[0].Actors[1].Rotation.z = (short)MergeRotationAndFlags(rotation: laundryPoolScene.Maps[0].Actors[1].Rotation.z, flags: 0x7F);
+
+                // it was two torches, turn the other into a secret grotto, at least for now
+                var randomGrotto = new List<ushort> { 0x6233, 0x623B, 0x6218, 0x625C, 0x8200, 0xA200, 0x7200, 0xC200, 0xE200, 0xF200, 0xD200 };
+                laundryPoolScene.Maps[0].Actors[1].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)]);
+                laundryPoolScene.Maps[0].Actors[1].Rotation = new vec16(0x7f, 0x7f, 0x7f);
+                laundryPoolScene.Maps[0].Actors[1].Position = new vec16(-1872, -120, 229);
+
+                // winter village has a gossip stone actor, but no object, lets use the non-used flying darmani ghost object and add it to enemizer
                 var winterVillage = RomData.SceneList.Find(u => u.File == GameObjects.Scene.MountainVillage.FileID());
                 winterVillage.Maps[0].Objects[5] = GameObjects.Actor.GossipStone.ObjectIndex();
                 winterVillage.Maps[0].Actors[57].Variants[0] = 0x67; // the vars is for milkroad, change to a moon vars so it gets randomized
                 winterVillage.Maps[0].Actors[57].Position.y = -15; // floating a bit in the air, lower to ground
 
                 // now that darmani ghost is gone, lets re=use the actor for secret grotto
-                winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[new Random().Next(randomGrotto.Count)] & 0xFCFF);
+                winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)] & 0xFCFF);
                 //winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: 0x4000);
-                winterVillage.Maps[0].Actors[2].Position = new vec16( 504, 365, 800 );
-
+                winterVillage.Maps[0].Actors[2].Position = new vec16(504, 365, 800);
             }
+
+            // testing why zrotation can be so broken for grottos
+            var testScene = GameObjects.Scene.TerminaField;
+            var grottoSceneIndex = RomData.SceneList.FindIndex(u => u.File == testScene.FileID());
+            var grottoSceneActorAddr = RomData.SceneList[grottoSceneIndex].Maps[0].ActorAddr;
+            int actorNumber = 211;
+            // set actor value
+            //RomData.MMFileList[grottoRoom0FID].Data[grottoSceneActorAddr + (actorNumber * 16) + 1] = 0x55; // set actor to grotto
+            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].ActorEnum = GameObjects.Actor.GrottoHole;
+            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].ActorID = (int) GameObjects.Actor.GrottoHole;
+            //RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Variants[0] = 0x625C; // working, hidden generic grotto with mystery woods grotto chest
+            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Variants[0] = 0x8200; // hidden jgrotto
+
+            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Rotation.z = 0x0200; // ignored if top nibble is set to > 0
+
+            // I like secrets
+            var twinislandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslands.FileID());
+            //twinislandsScene.Maps[0].Actors[1].Position = new vec16(-583, 140, -20); // place: next to tree, testing
+            twinislandsScene.Maps[0].Actors[1].Position = new vec16(349, -196, 970); // place: under the ice, sneaky like teh crabb
+            //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x60CB; // set to unk check
+            // 300 is back to mountain village
+            // 303 is empty, it takes us to mayors office, which might mean we can put an address tehre 
+            twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x0303; // set to spring goron race?
+            //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x7200; // invisible
+
+            // spring has ONE exit, which means pad space is free realestate
+            RomUtils.CheckCompressed(GameObjects.Scene.TwinIslands.FileID());
+            var twinislandsSceneData = RomData.MMFileList[GameObjects.Scene.TwinIslands.FileID()].Data;
+            twinislandsSceneData[0xD6] = 0xAE;
+            twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall wtf
 
             // backup actor 39 x711 525 1021
 
@@ -445,6 +466,10 @@ namespace MMR.Randomizer
             greatBayCoast.Maps[1].Actors[8].Position = new vec16(-3433, 10, 4646);
             greatBayCoast.Maps[1].Actors[8].Rotation = new vec16(0x7f, 0x7f, 0x7f);
             */
+
+            //RomUtils.CheckCompressed(1320);
+            //ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[1320].Data, (0x4 * 0x16) + (22 * 16) + 10, (ushort) MergeRotationAndFlags(new Random().Next(5) * 0x6 * 12, 0x8 | 0x4));
+
 
             // test bonk spider
 
@@ -459,26 +484,6 @@ namespace MMR.Randomizer
             SetX(grottoRoom0FID, grottoSceneActorAddr, actorIndex: actorNumber, -583);
             SetZ(grottoRoom0FID, grottoSceneActorAddr, actorIndex: actorNumber, -20);
             SetVariant(testScene, roomIndex: 0, actorNumber, 0x7200); */
-
-
-            // set the collectable rup in woodfall to a random grotto, just to see if anyone even notices
-            var woodfallRoom0FID = GameObjects.Scene.Woodfall.FileID() + 1;
-            var woodfallSceneIndex = RomData.SceneList.FindIndex(u => u.File == GameObjects.Scene.Woodfall.FileID());
-
-
-            // testing why zrotation can be so broken for grottos
-            var testScene = GameObjects.Scene.TerminaField;
-            var grottoSceneIndex = RomData.SceneList.FindIndex(u => u.File == testScene.FileID());
-            var grottoSceneActorAddr = RomData.SceneList[grottoSceneIndex].Maps[0].ActorAddr;
-            int actorNumber = 211;
-            // set actor value
-            //RomData.MMFileList[grottoRoom0FID].Data[grottoSceneActorAddr + (actorNumber * 16) + 1] = 0x55; // set actor to grotto
-            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].ActorEnum = GameObjects.Actor.GrottoHole;
-            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].ActorID = (int)GameObjects.Actor.GrottoHole;
-            //RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Variants[0] = 0x625C; // working, hidden generic grotto with mystery woods grotto chest
-            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Variants[0] = 0x8200; // hidden jgrotto
-
-            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Rotation.z = 0x0200; // ignored if top nibble is set to > 0
 
             /*
             // debugging, checking if ram sizes are relevant
@@ -1160,32 +1165,8 @@ namespace MMR.Randomizer
             var chosenReplacementEnemies = new List<Actor>();
             var sceneFreeActors = GetSceneFreeActors(scene, log);
 
-            // because different actors spawn on day/night and on certain days, we have to check the sizes for all 6 combos
-
-            int actorlistCount = scene.Maps.Count() * 2;
-            var oldActorlistMapActors = new List<Actor>[actorlistCount]; // actors separated by when they spawn night/day for all three days
-            var oldActorlistMapSizes = new int[actorlistCount];
-            var newActorlistMapActors = new List<Actor>[actorlistCount]; // actors separated by when they spawn night/day for all three days
-            var newActorlistMapActorInstSizes = new int[actorlistCount];
-            var oldActorlistMapActorCodeSizes = new int[actorlistCount];
-            var newActorlistMapActorCodeSizes = new int[actorlistCount];
-
-            // because timeflags are often not that important (SCT, ingo brothers racetrack outliers) we can just bunch days/nights together and focus on rooms
-            for (int i = 0; i < actorlistCount; i += 2)  // foreach time flag and room
-            {
-                var roomEnemies = scene.Maps[i >> 1].Actors;
-
-                int dayFlagMask = 0x2AA;
-
-                oldActorlistMapActors[i]     = roomEnemies.FindAll(u => (u.GetTimeFlags() & dayFlagMask) > 0);         // day
-                oldActorlistMapActors[i + 1] = roomEnemies.FindAll(u => (u.GetTimeFlags() & (dayFlagMask >> 1)) > 0);  // night
-                oldActorlistMapSizes[i]      = oldActorlistMapActors[i    ].Select(u => u.ActorID).Select(x => GetOvlInstanceRamSize(x)).Sum();
-                oldActorlistMapSizes[i + 1]  = oldActorlistMapActors[i + 1].Select(u => u.ActorID).Select(x => GetOvlInstanceRamSize(x)).Sum();
-                oldActorlistMapActorCodeSizes[i]     = oldActorlistMapActors[i    ].DistinctBy(u => u).Select(x => GetOvlCodeRamSize(x.ActorID)).Sum();
-                oldActorlistMapActorCodeSizes[i + 1] = oldActorlistMapActors[i + 1].DistinctBy(u => u).Select(x => GetOvlCodeRamSize(x.ActorID)).Sum();
-                //                    newActorlistMapActorCodeSizes[i + 1]  = newActorlistMapActors[i + 1].DistinctBy(u => u).Select(x => GetOvlCodeRamSize(x.ActorID)).Sum();
-
-            }
+            // keeping track of ram space usage is getting ugly, try some OO to clean it up
+            SceneActorsCollection thisSceneActors = new SceneActorsCollection(scene);
 
             WriteOutput(" time to separate map/time actors: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
@@ -1206,6 +1187,7 @@ namespace MMR.Randomizer
                             WriteOutput("  Enemytype candidate: " + match.Name + " with vars: " + match.Variants[0].ToString("X2"));
                         }
                     }
+                    thisSceneActors.PrintCombineRatioNewOldz(log);
                     FlushLog();
                     throw new Exception(error);
                 }
@@ -1236,7 +1218,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.BigPoe.ObjectIndex()
+                            NewV = GameObjects.Actor.BombchuGirl.ObjectIndex()
                         });
                         continue;
                     }
@@ -1388,60 +1370,15 @@ namespace MMR.Randomizer
                 // recalculate actor load
                 // make sure this is using the same calc as oldSize
                 //int newActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
-                bool sizeIsFine = true;
-                for (int i = 0; i < actorlistCount; i += 2)  // foreach time flag
-                {
-                    //var roomEnemies = sceneEnemies.FindAll(u => u.Room == (i >> 1));
-                    var roomEnemies = scene.Maps[i >> 1].Actors;
-
-                    int dayFlagMask = 0x2AA;
-
-                    newActorlistMapActors[i]       = roomEnemies.FindAll(u => (u.GetTimeFlags() & dayFlagMask) > 0);         // day
-                    newActorlistMapActors[i + 1]   = roomEnemies.FindAll(u => (u.GetTimeFlags() & (dayFlagMask >> 1)) > 0);  // night
-                    newActorlistMapActorInstSizes[i]      = newActorlistMapActors[i    ].Select(u => u.ActorID).Select(x => GetOvlInstanceRamSize(x)).Sum();
-                    newActorlistMapActorInstSizes[i + 1]  = newActorlistMapActors[i + 1].Select(u => u.ActorID).Select(x => GetOvlInstanceRamSize(x)).Sum();
-                    newActorlistMapActorCodeSizes[i]      = newActorlistMapActors[i    ].DistinctBy(u => u).Select(x => GetOvlCodeRamSize(x.ActorID)).Sum();
-                    newActorlistMapActorCodeSizes[i + 1]  = newActorlistMapActors[i + 1].DistinctBy(u => u).Select(x => GetOvlCodeRamSize(x.ActorID)).Sum();
-
-                    //check if actor overlay sizes aren't too big
-
-                    if (newActorlistMapActorInstSizes[i] + newActorlistMapActorCodeSizes[i] + newObjectSize > oldActorlistMapSizes[i] + oldActorlistMapActorCodeSizes[i] + oldObjectSize + 0x1000
-                        || newActorlistMapActorInstSizes[i + 1] + newActorlistMapActorCodeSizes[i + 1] + newObjectSize > oldActorlistMapSizes[i + 1] + oldActorlistMapActorCodeSizes[i + 1] + oldObjectSize + 0x1000) // too big
-                    {
-                        if ((newActorlistMapActorInstSizes[i] < 0x25000 && newActorlistMapActorInstSizes[i + 1] < 0x25000)
-                            || (newActorlistMapActorInstSizes[i] + newObjectSize < 0x40000 && newActorlistMapActorInstSizes[i + 1] + newObjectSize < 0x40000))
-                        {
-                            // grace period for now
-                            log.Append("[GRACE]");
-                        }
-                        else
-                        {
-                            sizeIsFine = false;
-                            break;
-                        }
-
-                    }
-                }
-
-
+                thisSceneActors.SetNewActors(scene, chosenReplacementObjects);
+                bool sizeIsFine = thisSceneActors.isSizeAcceptable();
+              
                 if (// (newObjectSize <= (oldObjectSize * 1.5) || newObjectSize < scene.SceneEnum.GetSceneObjLimit()) &&
                     sizeIsFine
-                    && !(scene.SceneEnum == GameObjects.Scene.SnowheadTemple && newObjectSize > 0x20000)) //temporary, it bypasses logic above without actor size detection
+                    )//&& !(scene.SceneEnum == GameObjects.Scene.SnowheadTemple && newObjectSize > 0x20000)) //temporary, it bypasses logic above without actor size detection
                 {
-                    WriteOutput(" Ram scene objects Ratio: [" + ((float) newObjectSize / (float) oldObjectSize).ToString("F4")
-                        + "] new size:[" + newObjectSize.ToString("X5") + "], vanilla:[" + oldObjectSize.ToString("X5") + "]");
-                    for (int i = 0; i < actorlistCount; ++i)
-                    {
-                        string time = (i % 2 == 0) ? "Day  " : "Night";
-                        WriteOutput(" Map [" + (i >> 1) + "] Time [" + time + "] actor inst Ratio: ["
-                            + ((float) newActorlistMapActorInstSizes[i] / (float) oldActorlistMapSizes[i]).ToString("F4")
-                            + "] new size:[" + newActorlistMapActorInstSizes[i].ToString("X5") + "], vanilla:[" + oldActorlistMapSizes[i].ToString("X5") + "]");
-                        WriteOutput(" Map [" + (i >> 1) + "] Time [" + time + "] actor code Ratio: ["
-                            + ((float) newActorlistMapActorCodeSizes[i] / (float) oldActorlistMapActorCodeSizes[i]).ToString("F4")
-                            + "] new size:[" + newActorlistMapActorCodeSizes[i].ToString("X5") + "], vanilla:[" + oldActorlistMapActorCodeSizes[i].ToString("X5") + "]");
-
-                    }
-                    break;
+                    thisSceneActors.PrintCombineRatioNewOldz(log);
+                    break; // done, break look
                 }
                 //else: reset loop and try again
 
@@ -1490,10 +1427,11 @@ namespace MMR.Randomizer
             FlushLog();
         }
 
-        public static void ShuffleEnemies(OutputSettings settings,Random random)
+        public static void ShuffleEnemies(OutputSettings settings, Random random)
         {
             try
             {
+                seedrng = random;
                 DateTime enemizerStartTime = DateTime.Now;
 
                 // these are: cutscene map, town and swamp shooting gallery, 
@@ -1682,22 +1620,160 @@ namespace MMR.Randomizer
 
     }
 
-
-    class SceneEnemiesCollection
+    class BaseEnemiesCollection
     {
-        // per scene: per room : per night and day: per old and new: an object size, an actor inst size, and a actor code size
+        // sum of overlay code per actortype in this collection
+        public int OverlayRamSize;
+        // sum of all enemy instances struct ram requirements
+        public int ActorInstanceSum;
+        // sum of object size
+        public int ObjectRamSize;
+        int[] objectSizes; //debug
+        // list of enemies that were used to make this
+        public List<Actor> oldActorList = null;
+
+        public BaseEnemiesCollection(List<Actor> actorList, List<int> objList)
+        {
+            oldActorList = actorList;
+            var distinctActors = actorList.Select(u => u).DistinctBy(u => u);
+            OverlayRamSize = distinctActors.Select(x => Enemies.GetOvlCodeRamSize(x.ActorID)).Sum();
+            ActorInstanceSum = actorList.Select(u => u.ActorID).Select(x => Enemies.GetOvlInstanceRamSize(x)).Sum();
+            // untested for accuracy, actors without correct objects might be inccorectly sized
+            objectSizes = objList.Select(x => ObjUtils.GetObjSize(x)).ToArray();
+            ObjectRamSize = objList.Select(x => ObjUtils.GetObjSize(x)).Sum();
+            // = distinctActors.Select(x => ObjUtils.GetObjSize(x.ActorEnum.ObjectIndex())).ToArray(); // old object gathering from actors, think this included gamplay keep
+        }
+    }
+
+    class MapEnemiesCollection
+    {
+        public BaseEnemiesCollection day = null;
+        public BaseEnemiesCollection night = null;
+
+        public MapEnemiesCollection(List<Actor> actorList, List<int> objList)
+        {
+            // split enemies into day and night, init two types
+            int dayFlagMask = 0x2AA; // nigth is just shifted to the right by one
+
+            day = new BaseEnemiesCollection(actorList.FindAll(u => (u.GetTimeFlags() & dayFlagMask) > 0), objList);
+            night = new BaseEnemiesCollection(actorList.FindAll(u => (u.GetTimeFlags() & (dayFlagMask >> 1)) > 0), objList);
+        }
+    }
+
+    class SceneActorsCollection
+    {
+        // per scene: per old and new: per room : per night and day: an object size, an actor inst size, and a actor code size
         // for each scene we need to check all of them, this is getting complicated
 
-        /*
-        struct 
+        public List<MapEnemiesCollection> oldMapList;
+        public List<MapEnemiesCollection> newMapList;
+        string sName; // debugging
 
-        int actorlistCount = scene.Maps.Count() * 2;
-        var oldActorlistMapActors = new List<Actor>[actorlistCount]; // actors separated by when they spawn night/day for all three days
-        var oldActorlistMapSizes = new int[actorlistCount];
-        var newActorlistMapActors = new List<Actor>[actorlistCount]; // actors separated by when they spawn night/day for all three days
-        var newActorlistMapActorInstSizes = new int[actorlistCount];
-        var newActorlistMapActorCodeSizes = new int[actorlistCount];
-        */
+        public SceneActorsCollection(Scene s)
+        {
+            oldMapList = new List<MapEnemiesCollection>();
+            for (int i = 0; i < s.Maps.Count; ++i)
+            {
+                var map = s.Maps[i];
+                oldMapList.Add(new MapEnemiesCollection(map.Actors, map.Objects));
+            }
+            this.sName = s.SceneEnum.ToString();
+        }
+
+        public void SetNewActors(Scene s, List<ValueSwap> newObjChanges)
+        {
+            newMapList = new List<MapEnemiesCollection>();
+            for (int i = 0; i < s.Maps.Count; ++i)
+            {
+                var map = s.Maps[i];
+
+                var newObjList = map.Objects.ToList(); // copy
+                // probably a way to search for this with a lambda, can't think of it righ tnow
+                for (int v = 0; v < newObjChanges.Count; ++v)
+                {
+                    for (int o = 0; o < newObjList.Count; ++o)
+                    {
+                        if (newObjChanges[v].OldV == newObjList[o])
+                        {
+                            newObjList[o] = newObjChanges[v].NewV;
+                        }
+                    }
+                }
+
+                newMapList.Add(new MapEnemiesCollection(map.Actors, newObjList));
+            }
+        }
+
+        public bool isSizeAcceptable()
+        {
+            // is the overall size for all maps of night and day equal
+
+            for (int map = 0; map < oldMapList.Count; ++map) // per map
+            {
+                // pos diff is smaller
+                var sizeTest = CompareRamRequirements(oldMapList[map].day, newMapList[map].day);
+                if (sizeTest == false) {
+                    return false;
+                }
+
+                sizeTest = CompareRamRequirements(oldMapList[map].night, newMapList[map].night);
+                if (sizeTest == false) {
+                    return false;
+                }
+
+            }
+            return true; // all of them passed size test
+        }
+
+        private bool CompareRamRequirements(BaseEnemiesCollection oldCollection, BaseEnemiesCollection newCollection)
+        {
+            var dayOvlDiff  = oldCollection.OverlayRamSize   - newCollection.OverlayRamSize;
+            var dayInstDiff = oldCollection.ActorInstanceSum - newCollection.ActorInstanceSum;
+            var dayObjDiff  = oldCollection.ObjectRamSize    - newCollection.ObjectRamSize;
+
+            // if the new size is smaller than the old size we should be dandy, if not...
+            if (dayOvlDiff + dayInstDiff + dayObjDiff <= -0x5000) // conservative estimate for now
+            {
+                // lets assume a general headroom that not all scenes used, smaller scenes should get some excess
+                if (newCollection.OverlayRamSize + newCollection.ActorInstanceSum + newCollection.ObjectRamSize > 0x70000)
+                {
+                    return false;
+                }
+
+                //return false;
+            }
+
+            return true;
+        }
+
+        // print to log function
+        public void PrintCombineRatioNewOldz(StringBuilder log)
+        {
+            void PrintCombineRatioNewOld(string text, int newv, int oldv){
+                log.AppendLine(text + " ratio: [" + ((float) newv / (float) oldv).ToString("F4")
+                    + "] newsize: [" + newv.ToString("X6") + "] oldsize: [" + oldv.ToString("X6") + "]");
+            }
+
+            for (int map = 0; map < oldMapList.Count; ++map) // per map
+            {
+                log.AppendLine("Map " + map.ToString("X2") + ":      ");
+
+                PrintCombineRatioNewOld("  day:    overlay ", newMapList[map].day.OverlayRamSize,   oldMapList[map].day.OverlayRamSize);
+                PrintCombineRatioNewOld("  day:    struct  ", newMapList[map].day.ActorInstanceSum, oldMapList[map].day.ActorInstanceSum);
+                PrintCombineRatioNewOld("  day:    object  ", newMapList[map].day.ObjectRamSize, oldMapList[map].day.ObjectRamSize);
+                var newTotal = newMapList[map].day.OverlayRamSize + newMapList[map].day.ActorInstanceSum + newMapList[map].day.ObjectRamSize;
+                var oldTotal = oldMapList[map].day.OverlayRamSize + oldMapList[map].day.ActorInstanceSum + oldMapList[map].day.ObjectRamSize;
+                PrintCombineRatioNewOld("  day:    total  =", newTotal, oldTotal);
+
+                PrintCombineRatioNewOld("  night:  overlay ", newMapList[map].night.OverlayRamSize,   oldMapList[map].night.OverlayRamSize);
+                PrintCombineRatioNewOld("  night:  struct  ", newMapList[map].night.ActorInstanceSum, oldMapList[map].night.ActorInstanceSum);
+                PrintCombineRatioNewOld("  night:  object  ", newMapList[map].night.ObjectRamSize,    oldMapList[map].night.ObjectRamSize);
+                newTotal = newMapList[map].night.OverlayRamSize + newMapList[map].night.ActorInstanceSum + newMapList[map].night.ObjectRamSize;
+                oldTotal = oldMapList[map].night.OverlayRamSize + oldMapList[map].night.ActorInstanceSum + oldMapList[map].night.ObjectRamSize;
+                PrintCombineRatioNewOld("  night:  total  =", newTotal, oldTotal);
+
+            }
+        }
     }
 
 }
