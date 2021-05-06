@@ -304,6 +304,7 @@ namespace MMR.Randomizer.GameObjects
         BlueBubble = 0x3E, // En_Bb
 
         [ActorizerEnabled]
+        [ActorInstanceSize(0x1A0)]
         [ActorInitVarOffset(0x1A0)]
         [ObjectListIndex(0x61)]
         [GroundVariants(0xFF0B, 0xFF02, 0xFF00, 0xFF0D, 0xFF01, 0xFF1A, 0x0A1A)]
@@ -335,6 +336,7 @@ namespace MMR.Randomizer.GameObjects
         Beamos = 0x47, // En_Vm 
 
         [ActorizerEnabled]
+        [ActorInstanceSize(0x1650)]
         [ObjectListIndex(0x1)]// gameplay_keep obj 1
         // variety 01 in giants crashes if placed in goron shrine
         // variety 02 in moon, spawns a lighter version of 00, less particles, no whole chains
@@ -553,13 +555,14 @@ namespace MMR.Randomizer.GameObjects
         Freezard = 0x8F,
 
         [EnemizerEnabled]
+        [ActorInstanceSize(0x19C)]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
         // 1 creates a grass circle in termina field, 0 is grotto grass single
         // 642B is a smaller cuttable grass from the ground in secret shrine
         [GroundVariants(0, 1)]
         [UnkillableAllVariants] // not enemy actor group
         [EnemizerScenesExcluded(Scene.Grottos)] // dont remove from peahat grotto
-        GrassBush = 0x90,
+        GrassBush = 0x90, // En_Kusa
 
         [ActorizerEnabled]
         [FileID(137)]
@@ -603,6 +606,7 @@ namespace MMR.Randomizer.GameObjects
         Scientist = 0xAE,
 
         [EnemizerEnabled]
+        [ActorInstanceSize(0x198)]
         [ObjectListIndex(0x1)] // gamplaykeep obj 1 // the rocks are free, you can take them home
         //6a does not load
         [GroundVariants(0x1F2)]
@@ -610,7 +614,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.TerminaField)] // dont replace them in TF
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x3F5F)]
-        Rock = 0xB0, // rock
+        Rock = 0xB0, // En_Ishi
 
         [ActorizerEnabled]
         [ObjectListIndex(0xF7)]
@@ -651,6 +655,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [FileID(172)]
+        [ActorInstanceSize(0x2A0)]
         [ObjectListIndex(0x11D)]
         //0x1200, 0x1B00, 0x2800 spawns from the ground after you play a song
         // versions: 1200, 1B00, 2800 shows up a lot, 2D00 stonetower, 3200 zora cape
@@ -797,6 +802,7 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabled] // field of effect is so HUG
         [ObjectListIndex(0xA1)]
+        [ActorInstanceSize(0xB78)]
         // 8 is smithy goron, 0x7F84, 0x7F
         [GroundVariants(0x8, 0x7FE2)]
         [EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)]
@@ -897,13 +903,16 @@ namespace MMR.Randomizer.GameObjects
         Wizrobe = 0x15D, // En_Wiz
 
         [ActorizerEnabled]
+        [ActorInstanceSize(0x2AC)] // 1AC, raised to reduce chance of getting
         [ObjectListIndex(0x1)]
-        //[GroundVariants(0x4560)] // works but no sound? //0x800B
-        // 0x3F5F smaller than the other two, some smaller 
+        //[GroundVariants(0x4560)] // works but no sound?
+        // 0x800B is keeta
+        // 0x3F5F smaller than the other two,
+        // 3F60 woodfall small
         [GroundVariants(0x3F5F)]
-        [VariantsWithRoomMax(max:3, variant: 0x3F5F)]
+        [VariantsWithRoomMax(max:1, variant: 0x3F5F)]
         [UnkillableAllVariants]
-        CircleOfFire = 0x162,
+        CircleOfFire = 0x162, // Obj_Fireshield
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1830)]
@@ -1169,6 +1178,9 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0,0x0101)]
         Hiploop = 0x1E9,// Charging beetle in Woodfall
 
+        [ObjectListIndex(1)] // doubt
+        Fireworks = 0x1EB, // En_Hanabi
+
         //[ActorizerEnabled] // thank god for m2c
         // turns out mamu yan spawns regular dogs, for the dogs meandering around
         [ObjectListIndex(0x132)]
@@ -1176,13 +1188,17 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         RaceDog = 0x1EE, // En_Racedog
 
+        [ObjectListIndex(0x10F)]
+        KendoSensei = 0x1Ef, // En_Kendo_Js
+
         [ActorizerEnabled]
+        [ActorInstanceSize(0x2018)]
         [ObjectListIndex(0x1D7)]
         [WaterVariants(0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.MarineLab)]
         [EnemizerScenesPlacementBlock(Scene.GreatBayCoast, Scene.ZoraCape)] // issue: if both fish and labfish spawn, they eat, and cutscene locks
-        LabFish = 0x1F1,
+        LabFish = 0x1F1, // En_Fish2
 
         [ActorizerEnabled]
         [ActorInitVarOffset(0xC68)]
@@ -1219,6 +1235,15 @@ namespace MMR.Randomizer.GameObjects
 
         SmallSnowball = 0x1F9,
 
+        [ObjectListIndex(0x1D0)]
+        DarmanisGhost1 = 0x1FB, // En_Gg
+
+        [ObjectListIndex(0x1D0)]
+        DarmanisGhost2 = 0x1FB, // En_Gg2
+
+        [ObjectListIndex(0x1FB)]
+        DarmaniGrave = 0x1FB, // Obj_Ghaka
+
         [ActorizerEnabled]
         [ObjectListIndex(0x1D4)]
         // 0 is inside of tree
@@ -1239,6 +1264,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
         GoronKid = 0x201,
 
+        [ActorInstanceSize(0x3C8)]
         [ObjectListIndex(0xE2)]
         Anju = 0x202, // En_An
 
@@ -1252,6 +1278,9 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:4, variant: 0, 1, 2, 3, 4, 5)]
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // pirate beehive cutscene
         GiantBeee = 0x204,
+
+        [ObjectListIndex(0x1ED)]
+        DeepPython = 0x206, //En_Dragon
 
         //[ActorizerEnabled] // spawns but invisible, can hit it but cannot see it in TF
         // hmm, sword school special object is dungeon_keep

@@ -879,7 +879,7 @@ namespace MMR.Randomizer
             /// returns an actor that is either an empty actor or a free actor that can be placed here beacuse it doesn't require a new unique object
 
             // roll dice: either get a free actor, or empty
-            if (rng.Next(100) < 70) // for now a static chance
+            if (rng.Next(100) < 50) // for now a static chance
             {
                 // pick random replacement by selecting random start of array and traversing sequentially until we find a match
                 int randomStart = rng.Next(acceptableFreeActors.Count);
@@ -1174,7 +1174,7 @@ namespace MMR.Randomizer
             {
                 /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
                 loopsCount += 1;
-                if (loopsCount >= 1200) // inf loop catch
+                if (loopsCount >= 0x5000) //1200) // inf loop catch
                 {
                     var error = " No enemy combo could be found to fill this scene: " + scene.SceneEnum.ToString() + " w sid:" + scene.Number.ToString("X2");
                     WriteOutput(error);
@@ -1218,7 +1218,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.BombchuGirl.ObjectIndex()
+                            NewV = GameObjects.Actor.Treee.ObjectIndex()
                         });
                         continue;
                     }
@@ -1389,22 +1389,22 @@ namespace MMR.Randomizer
             ///////   DEBUGGING   ///////
             /////////////////////////////
             #if DEBUG
-            if (scene.SceneEnum == GameObjects.Scene.StockPotInn) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.RomaniRanch) // force specific actor/variant for debugging
             {
-                //chosenReplacementEnemies[19].ActorID = (int)GameObjects.Actor.Horse;
-                //chosenReplacementEnemies[19].ActorEnum = GameObjects.Actor.Horse;
-                //chosenReplacementEnemies[19].Variants[0] = 0x400E;
-                //chosenReplacementEnemies[1].ActorID = (int) GameObjects.Actor.MothSwarm;
-                //chosenReplacementEnemies[1].ActorEnum = GameObjects.Actor.MothSwarm;
-                //chosenReplacementEnemies[1].Variants[0] = 7;
+                chosenReplacementEnemies[3].ActorID = (int)GameObjects.Actor.CircleOfFire;
+                chosenReplacementEnemies[3].ActorEnum = GameObjects.Actor.CircleOfFire;
+                chosenReplacementEnemies[3].Variants[0] = 0x3F5F;
+                chosenReplacementEnemies[7].ActorID = (int) GameObjects.Actor.CircleOfFire;
+                chosenReplacementEnemies[7].ActorEnum = GameObjects.Actor.CircleOfFire;
+                chosenReplacementEnemies[7].Variants[0] = 0x3F5F;
+                chosenReplacementEnemies[1].ActorID = (int)GameObjects.Actor.Demo_Kankyo;
+                chosenReplacementEnemies[1].ActorEnum = GameObjects.Actor.Demo_Kankyo;
+                chosenReplacementEnemies[1].Variants[0] = 0;
 
-                var act = scene.Maps[0].Actors[17]; 
-                act.ActorID = (int) GameObjects.Actor.PeekHole;
-                act.ActorEnum = GameObjects.Actor.PeekHole;
-                act.Variants[0] = 0x0;//0x115;
+
             }
             /////////////////////////////
-            #endif
+#endif
             /////////////////////////////
 
             // print debug enemy locations
@@ -1700,7 +1700,8 @@ namespace MMR.Randomizer
                     }
                 }
 
-                newMapList.Add(new MapEnemiesCollection(map.Actors, newObjList));
+                newMapList.Add(new MapEnemiesCollection(map.Actors, newObjList)); // for some reason some actors are added???
+                //newMapList.Add(new MapEnemiesCollection(oldMapList.old newObjList));
             }
         }
 
@@ -1731,11 +1732,15 @@ namespace MMR.Randomizer
             var dayInstDiff = oldCollection.ActorInstanceSum - newCollection.ActorInstanceSum;
             var dayObjDiff  = oldCollection.ObjectRamSize    - newCollection.ObjectRamSize;
 
+            //wtf is wrong with my seed gen that this is so big a hurdle it wont make ONE seed
+             // || dayOvlDiff < -0x10000 || dayInstDiff < -0x10000 || dayObjDiff < -0x10000)  // theory: these can have their own limits
+
+
             // if the new size is smaller than the old size we should be dandy, if not...
-            if (dayOvlDiff + dayInstDiff + dayObjDiff <= -0x5000) // conservative estimate for now
+            if (dayOvlDiff + dayInstDiff + dayObjDiff <= -0x5000)  // conservative estimate for now
             {
                 // lets assume a general headroom that not all scenes used, smaller scenes should get some excess
-                if (newCollection.OverlayRamSize + newCollection.ActorInstanceSum + newCollection.ObjectRamSize > 0x70000)
+                if (newCollection.OverlayRamSize + newCollection.ActorInstanceSum + newCollection.ObjectRamSize > 0x90000)
                 {
                     return false;
                 }
