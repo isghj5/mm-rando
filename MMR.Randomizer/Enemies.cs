@@ -28,7 +28,7 @@ namespace MMR.Randomizer
 
     public class Enemies
     {
-         
+
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
@@ -45,7 +45,7 @@ namespace MMR.Randomizer
         public static List<Actor> GetSceneEnemyActors(Scene scene)
         {
             /// this is separate from object because actors and objects are a different list in the scene data
-            
+
             // I prefer foreach, but in benchmarks its considerably slower, and enemizer has performance issues
 
             var enemyList = new List<Actor>();
@@ -54,10 +54,10 @@ namespace MMR.Randomizer
                 for (int actorNumber = 0; actorNumber < scene.Maps[mapNumber].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapNumber].Actors)
                 {
                     var mapActor = scene.Maps[mapNumber].Actors[actorNumber];
-                    var matchingEnemy = EnemyList.Find(u => (int) u == mapActor.ActorID);
+                    var matchingEnemy = EnemyList.Find(u => (int)u == mapActor.ActorID);
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.AllVariants();
-                        if ( !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)
+                        if (!matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)
                             && listOfAcceptableVariants.Contains(mapActor.Variants[0]))
                         {
                             mapActor.Name = mapActor.ActorEnum.ToString();
@@ -83,7 +83,7 @@ namespace MMR.Randomizer
                 foreach (var mapObject in sceneMap.Objects)
                 {
                     var matchingEnemy = EnemyList.Find(u => u.ObjectIndex() == mapObject);
-                    if (   matchingEnemy > 0                                               // exists in the list
+                    if (matchingEnemy > 0                                               // exists in the list
                        && !objList.Contains(matchingEnemy.ObjectIndex())                     // not already extracted from this scene
                        && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
@@ -97,14 +97,14 @@ namespace MMR.Randomizer
         public static void SetSceneEnemyObjects(Scene scene, List<ValueSwap> newObjects)
         {
             foreach (var sceneMap in scene.Maps)
-            for (int sceneObjIndex = 0; sceneObjIndex < sceneMap.Objects.Count; sceneObjIndex++)
-            {
-                var valueSwapObject = newObjects.Find(u => u.OldV == sceneMap.Objects[sceneObjIndex]);
-                if (valueSwapObject != null)
+                for (int sceneObjIndex = 0; sceneObjIndex < sceneMap.Objects.Count; sceneObjIndex++)
                 {
-                    sceneMap.Objects[sceneObjIndex] = valueSwapObject.NewV;
+                    var valueSwapObject = newObjects.Find(u => u.OldV == sceneMap.Objects[sceneObjIndex]);
+                    if (valueSwapObject != null)
+                    {
+                        sceneMap.Objects[sceneObjIndex] = valueSwapObject.NewV;
+                    }
                 }
-            }
         }
 
         public static List<GameObjects.Actor> GetSceneFairyDroppingEnemyTypes(Scene scene, List<Actor> listOfReadEnemies)
@@ -117,14 +117,14 @@ namespace MMR.Randomizer
 
             var actorsThatDropFairies = scene.SceneEnum.GetSceneFairyDroppingEnemies();
             var returnActorTypes = new List<GameObjects.Actor>();
-            for(int actorNum = 0; actorNum < listOfReadEnemies.Count; ++actorNum)
+            for (int actorNum = 0; actorNum < listOfReadEnemies.Count; ++actorNum)
             {
-                for(int fairyRoom = 0; fairyRoom < actorsThatDropFairies.Count; ++fairyRoom)
+                for (int fairyRoom = 0; fairyRoom < actorsThatDropFairies.Count; ++fairyRoom)
                 {
-                    if ( listOfReadEnemies[actorNum].Room == actorsThatDropFairies[fairyRoom].roomNumber
-                      && actorsThatDropFairies[fairyRoom].actorNumbers.Contains(listOfReadEnemies[actorNum].RoomActorIndex) )
+                    if (listOfReadEnemies[actorNum].Room == actorsThatDropFairies[fairyRoom].roomNumber
+                      && actorsThatDropFairies[fairyRoom].actorNumbers.Contains(listOfReadEnemies[actorNum].RoomActorIndex))
                     {
-                        returnActorTypes.Add( (GameObjects.Actor) listOfReadEnemies[actorNum].ActorID);
+                        returnActorTypes.Add((GameObjects.Actor)listOfReadEnemies[actorNum].ActorID);
                     }
                 }
             }
@@ -134,7 +134,7 @@ namespace MMR.Randomizer
         public static int GetOvlCodeRamSize(int actorOvlTblIndex)
         {
             /// this is the size of overlay (actor) code in ram
- 
+
             if (actorOvlTblIndex == (int)GameObjects.Actor.Empty || actorOvlTblIndex == 0)
             {
                 return 0;
@@ -164,7 +164,7 @@ namespace MMR.Randomizer
             }
 
             // if we didn't pre-save it, we need to extract it
-            var ovlFID = ((GameObjects.Actor) actorOvlTblIndex).FileListIndex();
+            var ovlFID = ((GameObjects.Actor)actorOvlTblIndex).FileListIndex();
             if (ovlFID == -1) // we dont know its fid, I forgot to write prewrite it
             {
                 ovlFID = GetFID(actorOvlTblIndex); // attempt to get it from the DMA table
@@ -189,7 +189,7 @@ namespace MMR.Randomizer
             /// even though the overlay table says it has the init vars location, it doesn't get populated until after 
 
             // we have some of them hardcoded, if that exists return that instead because scanning files sucks
-            var actor = (GameObjects.Actor) actorOvlTblIndex;
+            var actor = (GameObjects.Actor)actorOvlTblIndex;
             var actorAttr = actor.GetAttribute<ActorInitVarOffsetAttribute>();
             if (actorAttr != null)
             {
@@ -205,7 +205,7 @@ namespace MMR.Randomizer
             var actorData = RomData.MMFileList[actorFID].Data;
 
             // going to gamble here: assuming init ALWAYS aligns with double word
-            for (int i = 0; i < actorData.Length - 16 ; i += 16 )
+            for (int i = 0; i < actorData.Length - 16; i += 16)
             {
                 var actorIdTest = ReadWriteUtils.Arr_ReadU16(actorData, i);
                 var objectIdTest = ReadWriteUtils.Arr_ReadU16(actorData, i + 8);
@@ -217,8 +217,8 @@ namespace MMR.Randomizer
 
                 if (actorIdTest == actorOvlTblIndex
                     && padtest == 0
-                    && instTest % 4 == 0) { 
-                        return i;
+                    && instTest % 4 == 0) {
+                    return i;
                 }
             }
 
@@ -249,7 +249,7 @@ namespace MMR.Randomizer
             var dmaFID = 2;
             var dmaData = RomData.MMFileList[dmaFID].Data;
 
-            for(int i = 0; i < 1550; ++i)
+            for (int i = 0; i < 1550; ++i)
             {
                 // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb x and y should be start and end VROM addresses of each file
                 var dmaStartingAddr = ReadWriteUtils.Arr_ReadU32(dmaData, 16 * i); // x
@@ -263,12 +263,12 @@ namespace MMR.Randomizer
 
         public static int GetFID(int actorID)
         {
-            var fidLookup = ((GameObjects.Actor) actorID).FileListIndex();
+            var fidLookup = ((GameObjects.Actor)actorID).FileListIndex();
             if (fidLookup != -1)
             {
                 return fidLookup;
             }
-            
+
             // if we want to know the file ID of an actor, we need to look up the VROM addr from the overlay table
             // and match against a file in DMA, because nintendo removed the FID from the overlay table
             return GetFIDFromVROM(GetOvlActorVROMStart(actorID));
@@ -281,13 +281,13 @@ namespace MMR.Randomizer
             /// bits: XXXX XXXX XFFF FFFF where X is rotation, F is flags
             /// where rotation is 1 = 1 degree, 360 is 0x168, so it does use all 9 bits
             ///  looks to me like rotation increases in a counter-clockwise direction
-            return  ((rotation & 0x1FF) << 7) | (flags & 0x7F);
+            return ((rotation & 0x1FF) << 7) | (flags & 0x7F);
         }
 
         public static void FlattenPitchRoll(Actor actor)
         {
-            actor.Rotation.x = (short) MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.x);
-            actor.Rotation.z = (short) MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.z);
+            actor.Rotation.x = (short)MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.x);
+            actor.Rotation.z = (short)MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.z);
         }
 
         #region Static Enemizer Changes and Fixes
@@ -339,9 +339,9 @@ namespace MMR.Randomizer
 
             var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
             terminafieldScene.Maps[0].Actors[144].Position.y = -245; // fixes the eeno that is way too high above ground
-            terminafieldScene.Maps[0].Actors[ 16].Position.y = -209; // fixes the eeno that is way too high above ground
-            terminafieldScene.Maps[0].Actors[ 17].Position.y = -185; // fixes the eeno that is too high above ground (bombchu explode)
-            terminafieldScene.Maps[0].Actors[ 60].Position.y = -60;  // fixes the blue bubble that is too high
+            terminafieldScene.Maps[0].Actors[16].Position.y = -209; // fixes the eeno that is way too high above ground
+            terminafieldScene.Maps[0].Actors[17].Position.y = -185; // fixes the eeno that is too high above ground (bombchu explode)
+            terminafieldScene.Maps[0].Actors[60].Position.y = -60;  // fixes the blue bubble that is too high
             terminafieldScene.Maps[0].Actors[107].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[110].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[121].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
@@ -393,7 +393,7 @@ namespace MMR.Randomizer
 
             var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
             var torchRotation = dekuPalaceScene.Maps[2].Actors[26].Rotation.z;
-            torchRotation = (short) MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
+            torchRotation = (short)MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
         }
 
         private static void Shinanigans()
@@ -434,7 +434,7 @@ namespace MMR.Randomizer
             // set actor value
             //RomData.MMFileList[grottoRoom0FID].Data[grottoSceneActorAddr + (actorNumber * 16) + 1] = 0x55; // set actor to grotto
             RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].ActorEnum = GameObjects.Actor.GrottoHole;
-            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].ActorID = (int) GameObjects.Actor.GrottoHole;
+            RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].ActorID = (int)GameObjects.Actor.GrottoHole;
             //RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Variants[0] = 0x625C; // working, hidden generic grotto with mystery woods grotto chest
             RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Variants[0] = 0x8200; // hidden jgrotto
 
@@ -485,7 +485,12 @@ namespace MMR.Randomizer
             SetZ(grottoRoom0FID, grottoSceneActorAddr, actorIndex: actorNumber, -20);
             SetVariant(testScene, roomIndex: 0, actorNumber, 0x7200); */
 
-            /*
+            //PrintActorValues();
+        }
+
+        private static void PrintActorValues()
+        {
+            
             // debugging, checking if ram sizes are relevant
             for (var i = 0; i < 0x2B3; ++i)
             {
@@ -494,19 +499,21 @@ namespace MMR.Randomizer
                 actorName = actorName == "" ? "UNKOWN" : actorName;
                 // we nee to make sure ram and overlay are the same
                 // read Init offset from overlay table
-                // decompress actor
                 var initVarString = "";
-                //var actorAttr = actor.GetAttribute<ActorInitVarOffsetAttribute>();
-                //if (actorAttr != null)
+                var objVarString = "";
                 var actorStructSize = GetOvlInstanceRamSize(i);
                 if (actorStructSize != -1)
                 {
                     initVarString = " and instance: 0x" + GetOvlInstanceRamSize(i).ToString("X5");
                 }
+                if (actor.ObjectIndex() > 3)
+                {
+                    objVarString = " and obj: 0x" + ObjUtils.GetObjSize(actor.ObjectIndex()).ToString("X5");
+                }
 
-                Debug.WriteLine("[" + actorName + "] FID:["+ GetFIDFromAID(i) + "] AID:[" + i.ToString("X3") + "] codesize: 0x" + GetOvlCodeRamSize(i).ToString("X5") + initVarString);
+                Debug.WriteLine("[" + actorName + "] FID:["+ GetFID(i) + "] AID:[" + i.ToString("X3") + "] codesize: 0x" + GetOvlCodeRamSize(i).ToString("X5") + initVarString + objVarString);
             }
-            int z = 0; // */
+            int breakpointherestupid = 0; // */
         }
 
         private static void FixScarecrowTalk()
@@ -574,19 +581,19 @@ namespace MMR.Randomizer
             var newLilyPad = southernswampScene.Maps[0].Actors[6];
             newLilyPad.ActorID = 0x1B9; // lilypad actor
             newLilyPad.ActorEnum = GameObjects.Actor.Lillypad; // lilypad actor
-            newLilyPad.Position = new vec16(561,0,790); // placement: toward back wall behind tourist center
+            newLilyPad.Position = new vec16(561, 0, 790); // placement: toward back wall behind tourist center
             newLilyPad.Variants[0] = 0;
 
             var movedToTree = southernswampScene.Maps[0].Actors[4];
             movedToTree.Position = new vec16(2020, 22, 300); // placement: to the right as you approach witches, next to tree
             // rotation normal to wall behind it, turn to the right 90deg
-            movedToTree.Rotation.y = (short) MergeRotationAndFlags(rotation: 270, flags: southernswampScene.Maps[0].Actors[4].Rotation.y);
+            movedToTree.Rotation.y = (short)MergeRotationAndFlags(rotation: 270, flags: southernswampScene.Maps[0].Actors[4].Rotation.y);
 
             // witch area babas
             var movedToGrass = southernswampScene.Maps[2].Actors[2];
             movedToGrass.Position = new vec16(2910, 14, -1075); // placement: between the bushes along the wall
             // rotation normal to wall behind it, turn to the left 90deg
-            movedToGrass.Rotation.y = (short) MergeRotationAndFlags(rotation: 90, flags: southernswampScene.Maps[2].Actors[2].Rotation.y);
+            movedToGrass.Rotation.y = (short)MergeRotationAndFlags(rotation: 90, flags: southernswampScene.Maps[2].Actors[2].Rotation.y);
 
             var movedToWaterFall = southernswampScene.Maps[2].Actors[3];
             movedToWaterFall.Position = new vec16(4240, -2, -1270); // placement: near waterfall
@@ -610,13 +617,13 @@ namespace MMR.Randomizer
             var movedToCliffBat = roadtoswampScene.Maps[0].Actors[6];
             movedToCliffBat.Position = new vec16(2432, -40, 2871);
             // match rotation with the other tree sitting bat
-            movedToCliffBat.Rotation.y = (short) MergeRotationAndFlags(rotation: 90, flags: roadtoswampScene.Maps[0].Actors[6].Rotation.y);
+            movedToCliffBat.Rotation.y = (short)MergeRotationAndFlags(rotation: 90, flags: roadtoswampScene.Maps[0].Actors[6].Rotation.y);
 
             // because the third bat was moved out of center corridor back, move one of the baba forward, we're basically swapping them
             var movedForwardDekuBaba = roadtoswampScene.Maps[0].Actors[14];
             movedForwardDekuBaba.Position.x = 1990;
             movedForwardDekuBaba.Position.z = 2594;
-            movedForwardDekuBaba.Rotation.y = (short) MergeRotationAndFlags(rotation: 195, flags: roadtoswampScene.Maps[0].Actors[14].Rotation.y);
+            movedForwardDekuBaba.Rotation.y = (short)MergeRotationAndFlags(rotation: 195, flags: roadtoswampScene.Maps[0].Actors[14].Rotation.y);
         }
 
         private static void FixSpecificLikeLikeTypes()
@@ -689,7 +696,7 @@ namespace MMR.Randomizer
             var actorListLoc = 0xD94; // easier to look up than to use the scene->setup->actorlist chain, bleh
             // the three different spots, per day, are differenet actors with time spawn flags to only spawn one
             List<int> threeMikauActors = new List<int> { 8, 9, 10 };
-            foreach(var actorIndex in threeMikauActors)
+            foreach (var actorIndex in threeMikauActors)
             {
                 var offset = actorListLoc + (actorIndex * 16);
                 // first two bytes are actor index, first nibble is flags that dont matter if empty, so ignoring
@@ -951,23 +958,23 @@ namespace MMR.Randomizer
                 }
             }
             //else // empty actor
-            
+
             targetActor.ChangeActor(GameObjects.Actor.Empty, vars: 0);
             //targetActor.ChangeActor(GameObjects.Actor.Horse, vars: 0x4600); // debug for free actors
-            
+
         }
 
         public static void MoveAlignedCompanionActors(List<Actor> changedEnemies, Random rng, StringBuilder log)
         {
             /// companion actors can sometimes be alligned, to increase immersion
 
-            var actorsWithCompanions = changedEnemies.FindAll(u => ((GameObjects.Actor) u.ActorID).HasOptionalCompanions()) 
+            var actorsWithCompanions = changedEnemies.FindAll(u => ((GameObjects.Actor)u.ActorID).HasOptionalCompanions())
                                                      .OrderBy(x => rng.Next()).ToList();
 
             for (int i = 0; i < actorsWithCompanions.Count; ++i)
             {
                 var mainActor = actorsWithCompanions[i];
-                var mainActorEnum = (GameObjects.Actor) mainActor.ActorID;
+                var mainActorEnum = (GameObjects.Actor)mainActor.ActorID;
                 var companions = mainActorEnum.GetAttributes<AlignedCompanionActorAttribute>().ToList();
                 foreach (var companion in companions)
                 {
@@ -975,7 +982,7 @@ namespace MMR.Randomizer
                     // todo detection of ourVars too
                     // scan for companions that can be moved
                     // for now, assume all previously used companions must be left untouched, no shuffling
-                    var eligibleCompanions = changedEnemies.FindAll(u => u.ActorID == (int) actorEnum       // correct actor
+                    var eligibleCompanions = changedEnemies.FindAll(u => u.ActorID == (int)actorEnum       // correct actor
                                                             && u.previouslyMovedCompanion == false          // not already used
                                                             && companion.Variants.Contains(u.Variants[0])); // correct variant
 
@@ -984,11 +991,11 @@ namespace MMR.Randomizer
                         var randomCompanion = eligibleCompanions[rng.Next(eligibleCompanions.Count)];
                         // first move on top, then adjust
                         randomCompanion.Position.x = mainActor.Position.x;
-                        randomCompanion.Position.y = (short) (actorsWithCompanions[i].Position.y + companion.RelativePosition.y);
+                        randomCompanion.Position.y = (short)(actorsWithCompanions[i].Position.y + companion.RelativePosition.y);
                         randomCompanion.Position.z = mainActor.Position.z;
 
                         // todo: use x and z, with actor rotation, to figure out where to move the actors to
-                        log.AppendLine(" Moved companion: [" + randomCompanion.ActorEnum.ToString() 
+                        log.AppendLine(" Moved companion: [" + randomCompanion.ActorEnum.ToString()
                                     + "][" + randomCompanion.Variants[0].ToString("X2")
                                     + "] to actor: [" + mainActor.ActorEnum.ToString()
                                     + "][" + randomCompanion.Variants[0].ToString("X2")
@@ -1000,6 +1007,61 @@ namespace MMR.Randomizer
                 }
             }
         }
+
+        private static void CullActors(Scene scene, List<ValueSwap> objList)
+        {
+            // error: sometimes some of the big scenes get stuck in a weird spot where they can't find any combos that fit
+            // one day I will figure out this bug, for now, attempt to remove some actors/objects to make it fit
+
+            if (scene.SceneEnum == GameObjects.Scene.RoadToIkana)
+            {
+                // backup: shrink, there is a fairy pot that almost nobody uses, and a scarecrow almost nobody uses, remove them
+
+                scene.Maps[0].Actors[76].ChangeActor(GameObjects.Actor.Empty);
+                objList.Add(
+                    new ValueSwap()
+                    {
+                        OldV = 0x11D,
+                        NewV = GameObjects.Actor.CowFigurine.ObjectIndex()
+                    }
+                );
+                scene.Maps[0].Actors[30].ChangeActor(GameObjects.Actor.Empty);
+                objList.Add(
+                    new ValueSwap()
+                    {
+                        OldV = 0xF9,
+                        NewV = GameObjects.Actor.CowFigurine.ObjectIndex()
+                    }
+                );
+            }
+            if (scene.SceneEnum == GameObjects.Scene.IkanaCanyon)
+            {
+                // backup: remove garo ghosts, they are not required and are easily missed
+
+                objList.Add(
+                    new ValueSwap()
+                    {
+                        OldV = 0x155, // Garo master
+                        NewV = GameObjects.Actor.CowFigurine.ObjectIndex()
+                    }
+                );
+            }
+            if (scene.SceneEnum == GameObjects.Scene.TerminaField)
+            {
+                // backup: term field has one stupid pot with a fairy, nobody uses it
+
+                objList.Add(
+                    new ValueSwap()
+                    {
+                        OldV = 0xF9, // Jar
+                        NewV = GameObjects.Actor.CowFigurine.ObjectIndex()
+                    }
+                );
+            }
+
+
+        }
+
 
         public static List<Actor> GetMatchPool(List<Actor> oldActors, Random random, Scene scene, List<GameObjects.Actor> reducedCandidateList, bool containsFairyDroppingEnemy)
         {
@@ -1174,8 +1236,10 @@ namespace MMR.Randomizer
             {
                 /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
                 loopsCount += 1;
-                if (loopsCount >= 0x5000) //1200) // inf loop catch
+                if (loopsCount >= 0x900) //1200) // inf loop catch
                 {
+
+
                     var error = " No enemy combo could be found to fill this scene: " + scene.SceneEnum.ToString() + " w sid:" + scene.Number.ToString("X2");
                     WriteOutput(error);
                     WriteOutput("Failed Candidate List:");
@@ -1202,13 +1266,13 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.RanchBuildings.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.FriendlyCucco.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.BlueBubble.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.DekuBaba.ObjectIndex()
+                            NewV = GameObjects.Actor.PoeBalloon.ObjectIndex()
                         }); 
                         continue;
                     }
@@ -1223,13 +1287,13 @@ namespace MMR.Randomizer
                         continue;
                     }
                     // todo torch on leevers is throwing wierd errors when it comes to companions
-                    if (scene.File == GameObjects.Scene.StoneTower.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.ReDead.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.RealBombchu.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Cow.ObjectIndex()
+                            NewV = GameObjects.Actor.Bumper.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1267,6 +1331,7 @@ namespace MMR.Randomizer
                         NewV = randomEnemy.ObjectID
                     });
                 }
+
                 // reset early if obviously too large
                 if ( (newObjectSize > oldObjectSize && newObjectSize >= scene.SceneEnum.GetSceneObjLimit()) 
                   || (scene.SceneEnum == GameObjects.Scene.SnowheadTemple && newObjectSize > 0x20000) )
@@ -1370,6 +1435,10 @@ namespace MMR.Randomizer
                 // recalculate actor load
                 // make sure this is using the same calc as oldSize
                 //int newActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
+                if (loopsCount >= 100)
+                {
+                    CullActors(scene, chosenReplacementObjects);
+                }
                 thisSceneActors.SetNewActors(scene, chosenReplacementObjects);
                 bool sizeIsFine = thisSceneActors.isSizeAcceptable();
               
@@ -1391,6 +1460,7 @@ namespace MMR.Randomizer
             #if DEBUG
             if (scene.SceneEnum == GameObjects.Scene.RomaniRanch) // force specific actor/variant for debugging
             {
+                /*
                 chosenReplacementEnemies[3].ActorID = (int)GameObjects.Actor.CircleOfFire;
                 chosenReplacementEnemies[3].ActorEnum = GameObjects.Actor.CircleOfFire;
                 chosenReplacementEnemies[3].Variants[0] = 0x3F5F;
@@ -1400,11 +1470,11 @@ namespace MMR.Randomizer
                 chosenReplacementEnemies[1].ActorID = (int)GameObjects.Actor.Demo_Kankyo;
                 chosenReplacementEnemies[1].ActorEnum = GameObjects.Actor.Demo_Kankyo;
                 chosenReplacementEnemies[1].Variants[0] = 0;
-
+                */
 
             }
             /////////////////////////////
-#endif
+            #endif
             /////////////////////////////
 
             // print debug enemy locations
@@ -1435,8 +1505,8 @@ namespace MMR.Randomizer
                 DateTime enemizerStartTime = DateTime.Now;
 
                 // these are: cutscene map, town and swamp shooting gallery, 
-                // sakons hideout, and giants chamber (shabom)
-                int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69};
+                // sakons hideout, and giants chamber (shabom), milkbar
+                int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x15};
 
                 ReadEnemyList();
                 SceneUtils.ReadSceneTable();
@@ -1737,7 +1807,7 @@ namespace MMR.Randomizer
 
 
             // if the new size is smaller than the old size we should be dandy, if not...
-            if (dayOvlDiff + dayInstDiff + dayObjDiff <= -0x5000)  // conservative estimate for now
+            if (dayOvlDiff + dayInstDiff + dayObjDiff <= -0x800)  // conservative estimate for now
             {
                 // lets assume a general headroom that not all scenes used, smaller scenes should get some excess
                 if (newCollection.OverlayRamSize + newCollection.ActorInstanceSum + newCollection.ObjectRamSize > 0x90000)
@@ -1761,21 +1831,24 @@ namespace MMR.Randomizer
 
             for (int map = 0; map < oldMapList.Count; ++map) // per map
             {
+                var newDTotal = newMapList[map].day.OverlayRamSize + newMapList[map].day.ActorInstanceSum + newMapList[map].day.ObjectRamSize;
+                var oldDTotal = oldMapList[map].day.OverlayRamSize + oldMapList[map].day.ActorInstanceSum + oldMapList[map].day.ObjectRamSize;
+                var newNTotal = newMapList[map].night.OverlayRamSize + newMapList[map].night.ActorInstanceSum + newMapList[map].night.ObjectRamSize;
+                var oldNTotal = oldMapList[map].night.OverlayRamSize + oldMapList[map].night.ActorInstanceSum + oldMapList[map].night.ObjectRamSize;
+
+                if (newDTotal - oldDTotal + newNTotal - oldNTotal == 0) continue; // map was untouched, dont print
+
                 log.AppendLine("Map " + map.ToString("X2") + ":      ");
 
                 PrintCombineRatioNewOld("  day:    overlay ", newMapList[map].day.OverlayRamSize,   oldMapList[map].day.OverlayRamSize);
                 PrintCombineRatioNewOld("  day:    struct  ", newMapList[map].day.ActorInstanceSum, oldMapList[map].day.ActorInstanceSum);
                 PrintCombineRatioNewOld("  day:    object  ", newMapList[map].day.ObjectRamSize, oldMapList[map].day.ObjectRamSize);
-                var newTotal = newMapList[map].day.OverlayRamSize + newMapList[map].day.ActorInstanceSum + newMapList[map].day.ObjectRamSize;
-                var oldTotal = oldMapList[map].day.OverlayRamSize + oldMapList[map].day.ActorInstanceSum + oldMapList[map].day.ObjectRamSize;
-                PrintCombineRatioNewOld("  day:    total  =", newTotal, oldTotal);
+                PrintCombineRatioNewOld("  day:    total  =", newDTotal, oldDTotal);
 
                 PrintCombineRatioNewOld("  night:  overlay ", newMapList[map].night.OverlayRamSize,   oldMapList[map].night.OverlayRamSize);
                 PrintCombineRatioNewOld("  night:  struct  ", newMapList[map].night.ActorInstanceSum, oldMapList[map].night.ActorInstanceSum);
                 PrintCombineRatioNewOld("  night:  object  ", newMapList[map].night.ObjectRamSize,    oldMapList[map].night.ObjectRamSize);
-                newTotal = newMapList[map].night.OverlayRamSize + newMapList[map].night.ActorInstanceSum + newMapList[map].night.ObjectRamSize;
-                oldTotal = oldMapList[map].night.OverlayRamSize + oldMapList[map].night.ActorInstanceSum + oldMapList[map].night.ObjectRamSize;
-                PrintCombineRatioNewOld("  night:  total  =", newTotal, oldTotal);
+                PrintCombineRatioNewOld("  night:  total  =", newNTotal, oldNTotal);
 
             }
         }

@@ -307,7 +307,14 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x1A0)]
         [ActorInitVarOffset(0x1A0)]
         [ObjectListIndex(0x61)]
-        [GroundVariants(0xFF0B, 0xFF02, 0xFF00, 0xFF0D, 0xFF01, 0xFF1A, 0x0A1A)]
+        // bush: 0xFF0B
+        // small tree: 0xFF02
+        // big tree: 0xFF00
+        // tree with shop man in it: 
+        [GroundVariants(0xFF0B, 0xFF02, 0xFF00, 0xFF01, 0xFF1A, 0x0A1A)]
+        [VariantsWithRoomMax(max: 0, variant: 0xFF0D)]// 0xFF0D crashes TF do not use 0D is from the cucco shack
+        [VariantsWithRoomMax(max: 1, variant: 0xA1A)]// has the shop keeper
+        //[GroundVariants(0xFF01, 0xFF1A)] //testing
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.TerminaField)] // need to keep in termina field for rupee rando
         Treee = 0x41, // En_Wood2
@@ -518,9 +525,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x110)] // testing // 115 101 106 10E 10F
         [GroundVariants(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E, // good variety
             0x4110)] // TF pot
-
-        //[DoublePerRoomMax(0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)] // prob not necessary
-        [EnemizerScenesExcluded(Scene.MajorasLair)]
+        [EnemizerScenesExcluded(Scene.MajorasLair, Scene.RoadToIkana)]
         [UnkillableAllVariants]
         ClayPot = 0x82, // Obj_Tsubo
 
@@ -885,8 +890,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1500)]
         [FileID(313)]
         [ObjectListIndex(0x172)]
-        [FlyingVariants(0xFF34, 0xFF02, 0xFF03, 0x019F, 0x0102, 0x0103, 0xFF01)]
-        [WallVariants(0xFF9F)]
+        [FlyingVariants(0xFF34, 0xFF02, 0xFF03, 0x0102, 0x0103, 0xFF01)]
+        [WallVariants(0xFF9F, 0x019F)]
         // one of these is sit on the wall bat from rtss: FF03/01/9F
         [VariantsWithRoomMax(max:1, 0xFF34)] // swarm
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
