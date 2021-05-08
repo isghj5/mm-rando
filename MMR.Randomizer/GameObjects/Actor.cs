@@ -212,7 +212,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         Sign = 0x26, // En_A_Obj
 
-        //[EnemizerEnabled] // sometimes crash, cause unknown
+        //[EnemizerEnabled] // sometimes crash, caused by paths I bet TODO rewrite him so he just wanders around a home instead
         [ActorInitVarOffset(0x1CC0)]
         [FileID(71)]
         [ObjectListIndex(0x1D)]
@@ -455,7 +455,7 @@ namespace MMR.Randomizer.GameObjects
         GrottoHole = 0x55, // Door_Ana
 
         //[ActorizerEnabled] // broken: crash, does NOT use paths
-        // thought it might be that the actor's memory is just huge because it has 20 effects, but we measure that now
+        // thought it might be that the actor's memory is just huge because it has 20 effects, but we measure that now // nope still crash
         [FileID(102)]
         [ObjectListIndex(0x280)]
         [FlyingVariants(1)]
@@ -557,7 +557,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(02, 0x2001, 0x300F, 0x100F)]
         [VariantsWithRoomMax(max: 2, variant: 02, 0x2001, 0x300F, 0x100F)] // 8 is more than enough
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // Slowing enemies
-        Freezard = 0x8F,
+        Freezard = 0x8F, // En_Fz
 
         [EnemizerEnabled]
         [ActorInstanceSize(0x19C)]
@@ -580,9 +580,9 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         [EnemizerScenesExcluded(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Grottos)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
-        Bombiwa = 0x92,
+        Bombiwa = 0x92, // Obj_Bombiwa
 
-        //[ActorizerEnabled] // does not spawn
+        //[ActorizerEnabled] // does not spawn because code checks for chicken object
         [FileID(144)]
         [ObjectListIndex(0xF2)]
         [GroundVariants(0x0FFF)]
@@ -794,6 +794,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x155)]
         [GroundVariants(0x2243)]
         Garo = 0x112, //113 is the garo, but 112 is the encounter to get garo
+
+        [ObjectListIndex(0x155)]
+        [GroundVariants(0x2243)]
+        GaroActual = 0x113,
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3760)]
@@ -1043,6 +1047,7 @@ namespace MMR.Randomizer.GameObjects
         PalaceGuardDeku = 0x1A0, // En_Guard_Nuts
 
         [ActorizerEnabled]
+        [ActorInstanceSize(0x330)] // 274 but fake increase size to reduce frequency
         [FileID(381)]
         [ObjectListIndex(0x19B)]
         // vars: in vanilla 0 only spawns if it can find romani, 0x80XX are timed fuse baloons for credits scene
@@ -1052,7 +1057,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.RomaniRanch)] // dont replace actual romani balloons
         [EnemizerScenesPlacementBlock(Scene.TerminaField)] // long draw distance means they can overflow actor spawn
-        PoeBalloon = 0x1A6,
+        PoeBalloon = 0x1A6, // En_Po_Fusen
 
         [ObjectListIndex(0x19E)]
         //[WaterVariants( unk )]
@@ -1069,7 +1074,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.Woodfall, Scene.Snowhead, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         ElfBubble = 0x1B1,
 
-        [ActorizerEnabled] // weird that he is so rare though
+        [ActorizerEnabled] // hes really rare because his ram requirements are huge
         [ObjectListIndex(0x1A3)]
         [GroundVariants(0)] // 0 is clocktower
         [UnkillableAllVariants]
@@ -1123,6 +1128,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
         Dexihand = 0x1D1,// ???'s water logged brother
 
+        // I suspect since he has so few vars that he will be hard coded, and req decomp to fix
+        //[ActorizerEnabled]
+        [GroundVariants(0x0)] // 0: sitting in his room?
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.WestClockTown, Scene.EastClockTown, Scene.NorthClockTown, Scene.SouthClockTown, Scene.PostOffice)]
         [ObjectListIndex(0x107)]
         PostMan = 0x1D5, // En_Pm
 
@@ -1156,7 +1166,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(446)]
         [ObjectListIndex(0x1C4)]
         [GroundVariants(0xFF00, 0xFF01, 0, 1)]
-        [VariantsWithRoomMax(max:1, variant: 1, 0xF001)]// limit the bigger one
+        [VariantsWithRoomMax(max:1, variant: 1, 0xF001)] // limit the bigger one
         Eeno = 0x1E6, // En_Snowman
         
         // spreadsheet thinks ths is both a skullwalltula and gameplay_keep
@@ -1181,7 +1191,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(449)]
         [ObjectListIndex(0x1C6)]
         [GroundVariants(0,0x0101)]
-        Hiploop = 0x1E9,// Charging beetle in Woodfall
+        Hiploop = 0x1E9, // Charging beetle in Woodfall
 
         [ObjectListIndex(1)] // doubt
         Fireworks = 0x1EB, // En_Hanabi
@@ -1193,7 +1203,11 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         RaceDog = 0x1EE, // En_Racedog
 
+        //[ActorizerEnabled] // does not spawn, again with the hardcoded nonsense
         [ObjectListIndex(0x10F)]
+        [GroundVariants(0xFF01)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.SwordsmansSchool)] // dont remove
         KendoSensei = 0x1Ef, // En_Kendo_Js
 
         [ActorizerEnabled]
@@ -1401,7 +1415,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled] // BUG: do not teach him song or cursed
         [ObjectListIndex(0x211)]
-        //[GroundVariants(0)]
+        [GroundVariants(0)]
         [WaterVariants(0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.ZoraHallRooms)]
@@ -1594,7 +1608,7 @@ namespace MMR.Randomizer.GameObjects
         StalchildHintGiver = 0x2A5,
 
         //[ActorizerEnabled] // did not spawn
-        [ObjectListIndex(0x2A7)]
+        [ObjectListIndex(0x2A7)] // for some reason my obj size lookup code thinks this is HUGE
         [FlyingVariants(0xF)] // these might be pathing actors
         [UnkillableAllVariants]
         MoonBirdsBrown = 0x2A7,

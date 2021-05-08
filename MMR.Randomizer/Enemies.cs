@@ -1266,13 +1266,13 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /*if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.BlueBubble.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.Dodongo.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.PoeBalloon.ObjectIndex()
+                            NewV = GameObjects.Actor.GiantBeee.ObjectIndex()
                         }); 
                         continue;
                     }
