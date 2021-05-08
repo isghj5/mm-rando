@@ -320,8 +320,8 @@ namespace MMR.Randomizer.GameObjects
         Treee = 0x41, // En_Wood2
 
         [EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky, and his color darkening is wack
+        [ActorInstanceSize(0x938 + (0x2a0 * 20))] // 0x938 // oversized because he spawns little bats and can easily overblow ram
         [ObjectListIndex(0x52)]
-        [ActorInstanceSize(0x938)]
         [GroundVariants(0)] // can fly, but weirdly is very bad at changing height if you fight in a multi-level area
         [OnlyOneActorPerRoom] // only fight her if you fight only one
         [UnkillableAllVariants] // is NOT unkillable, but assume never have light arrows until the last second of a run, do not place where can block an item

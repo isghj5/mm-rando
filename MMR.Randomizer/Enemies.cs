@@ -512,8 +512,16 @@ namespace MMR.Randomizer
                 }
 
                 Debug.WriteLine("[" + actorName + "] FID:["+ GetFID(i) + "] AID:[" + i.ToString("X3") + "] codesize: 0x" + GetOvlCodeRamSize(i).ToString("X5") + initVarString + objVarString);
-            }
-            int breakpointherestupid = 0; // */
+            } // */
+
+            for (int i = 0; i < 0x283; ++i)
+            {
+                //print object id and size
+                Debug.WriteLine(" obj [" + i.ToString("X3") + "] has size: " + ObjUtils.GetObjSize(i).ToString("X5"));
+
+            } // */
+
+            int breakpointherestupid = 0;
         }
 
         private static void FixScarecrowTalk()
@@ -1008,43 +1016,48 @@ namespace MMR.Randomizer
             }
         }
 
-        private static void CullActors(Scene scene, List<ValueSwap> objList)
+        private static void CullActors(Scene scene, List<ValueSwap> objList, int loopCount)
         {
-            // error: sometimes some of the big scenes get stuck in a weird spot where they can't find any combos that fit
+            // issue: sometimes some of the big scenes get stuck in a weird spot where they can't find any combos that fit
             // one day I will figure out this bug, for now, attempt to remove some actors/objects to make it fit
+            // TODO find the real smallest object
 
+            // medium goron, unused object, size: 0x10
+            // alternative: tanron1 is also size 0x10
+            const int SMALLEST_OBJ = 0xF3; 
+
+            // there are three scenes that struggle the most: TF, RTIkana, and IkanaCanyon
             if (scene.SceneEnum == GameObjects.Scene.RoadToIkana)
             {
-                // backup: shrink, there is a fairy pot that almost nobody uses, and a scarecrow almost nobody uses, remove them
-
+                // backup: shrink, there is a fairy pot that nobody uses, and a scarecrow almost nobody uses, remove them
                 scene.Maps[0].Actors[76].ChangeActor(GameObjects.Actor.Empty);
                 objList.Add(
                     new ValueSwap()
                     {
-                        OldV = 0x11D,
-                        NewV = GameObjects.Actor.CowFigurine.ObjectIndex()
+                        OldV = 0x11D, // Scarecrow
+                        NewV = SMALLEST_OBJ
                     }
                 );
                 scene.Maps[0].Actors[30].ChangeActor(GameObjects.Actor.Empty);
                 objList.Add(
                     new ValueSwap()
                     {
-                        OldV = 0xF9,
-                        NewV = GameObjects.Actor.CowFigurine.ObjectIndex()
+                        OldV = 0xF9, // Clay pot
+                        NewV = SMALLEST_OBJ
                     }
                 );
             }
             if (scene.SceneEnum == GameObjects.Scene.IkanaCanyon)
             {
-                // backup: remove garo ghosts, they are not required and are easily missed
-
+                // backup: remove garo ghosts, they are not required and are easily ignored
                 objList.Add(
                     new ValueSwap()
                     {
                         OldV = 0x155, // Garo master
-                        NewV = GameObjects.Actor.CowFigurine.ObjectIndex()
+                        NewV = SMALLEST_OBJ
                     }
                 );
+                // for now dont remove the encounters as players expect the tatl notification
             }
             if (scene.SceneEnum == GameObjects.Scene.TerminaField)
             {
@@ -1054,11 +1067,17 @@ namespace MMR.Randomizer
                     new ValueSwap()
                     {
                         OldV = 0xF9, // Jar
-                        NewV = GameObjects.Actor.CowFigurine.ObjectIndex()
+                        NewV = SMALLEST_OBJ
                     }
                 );
             }
 
+            // for every 50 loops
+            int removeCount = loopCount / 50; // yes int division
+            for(int i = 0; i < removeCount; ++i)
+            {
+                //attempt to find an enemy to remove, ideally not one that is super small
+            }
 
         }
 
@@ -1437,7 +1456,7 @@ namespace MMR.Randomizer
                 //int newActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
                 if (loopsCount >= 100)
                 {
-                    CullActors(scene, chosenReplacementObjects);
+                    CullActors(scene, chosenReplacementObjects, loopsCount);
                 }
                 thisSceneActors.SetNewActors(scene, chosenReplacementObjects);
                 bool sizeIsFine = thisSceneActors.isSizeAcceptable();
