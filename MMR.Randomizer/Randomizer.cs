@@ -1070,7 +1070,7 @@ namespace MMR.Randomizer
             }
             foreach (var io in ItemList.Where(io => !io.Item.IsFake()))
             {
-                if (!ItemUtils.IsStartingLocation(io.NewLocation.Value) && io.Item == Item.RecoveryHeart)
+                if (!ItemUtils.IsStartingLocation(io.NewLocation.Value) && (!io.NewLocation.Value.IsSong() || _settings.AddSongs) && io.Item == Item.RecoveryHeart)
                 {
                     io.ItemOverride = usableJunk.Random(Random);
                 }
@@ -1079,6 +1079,11 @@ namespace MMR.Randomizer
 
         private void RandomizeItems()
         {
+            if (!_settings.AddSongs)
+            {
+                ShuffleSongs();
+            }
+
             var itemPool = new List<Item>();
 
             AddAllItems(itemPool);
@@ -1536,10 +1541,11 @@ namespace MMR.Randomizer
                 }
             }
 
-            // add songs to list
-            for (var i = Item.SongHealing; i <= Item.SongOath; i++)
+            var songs = Enumerable.Range((int)Item.SongHealing, Item.SongOath - Item.SongHealing + 1).Cast<Item>();
+
+            foreach (var song in songs.OrderBy(s => _randomized.Settings.CustomStartingItemList.Contains(s)))
             {
-                PlaceItem(i, itemPool);
+                PlaceItem(song, itemPool);
             }
         }
 
@@ -1559,11 +1565,6 @@ namespace MMR.Randomizer
 
             // Should these be randomized by default? Why not check settings.
             AddBottleCatchContents();
-
-            if (!_settings.AddSongs)
-            {
-                ShuffleSongs();
-            }
         }
 
         /// <summary>

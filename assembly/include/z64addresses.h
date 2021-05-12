@@ -47,7 +47,11 @@ extern void z2_DrawButtonAmounts(GlobalContext* ctxt, u32 arg1, u16 alpha);
 extern void z2_DrawBButtonIcon(GlobalContext* ctxt);
 extern void z2_DrawCButtonIcons(GlobalContext* ctxt);
 extern u32 z2_GetFloorPhysicsType(void* arg0, void* arg1, u8 arg2);
+extern void z2_PushMatrixStackCopy();
+extern void z2_PopMatrixStack();
 extern f32* z2_GetMatrixStackTop();
+extern void z2_TransformMatrixStackTop(Vec3f* pos, Vec3s* rot);
+extern Gfx* z2_ShiftMatrix(GraphicsContext* gfxCtx);
 extern void z2_PlaySfx(u32 id);
 extern void z2_PlaySfxAtActor(Actor* actor, u32 id);
 extern void z2_PlayLoopingSfxAtActor(Actor* actor, u32 id);
@@ -160,6 +164,9 @@ extern f32 z2_Math_Vec3f_DistXZ(Vec3f* p1, Vec3f* p2);
 
 // Function Prototypes (Objects).
 extern s8 z2_GetObjectIndex(const SceneContext* ctxt, u16 objectId);
+
+extern void z2_SkelAnime_DrawLimb(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, bool* overrideLimbDraw, void* postLimbDraw, Actor* actor);
+extern void z2_SkelAnime_DrawLimb2(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, Actor* actor);
 
 // Function Prototypes (OS).
 extern void z2_memcpy(void* dest, const void* src, u32 size);

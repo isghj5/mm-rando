@@ -91,6 +91,8 @@
 .definelabel z2_object_spawn, 0x8012F2E0
 .definelabel z2_load_objects, 0x8012F4FC
 .definelabel z2_GetObjectIndex, 0x8012F608
+.definelabel z2_SkelAnime_DrawLimb, 0x80133B3C
+.definelabel z2_SkelAnime_DrawLimb2, 0x80133F28
 .definelabel z2_InitButtonNoteColors, 0x80147564
 .definelabel z2_ShowMessage, 0x801518B0
 .definelabel z2_GetMessageState, 0x80152498
@@ -99,7 +101,11 @@
 .definelabel z2_store_scene_flags, 0x80169D40
 .definelabel z2_LoadFileFromArchive, 0x80178DAC
 .definelabel z2_LoadVFileFromArchive, 0x80178E3C
+.definelabel z2_PushMatrixStackCopy, 0x8018019C
+.definelabel z2_PopMatrixStack, 0x801801CC
 .definelabel z2_GetMatrixStackTop, 0x80180234
+.definelabel z2_TransformMatrixStackTop, 0x801812FC
+.definelabel z2_ShiftMatrix, 0x80181A40
 .definelabel z2_ToggleSfxDampen, 0x8019C300
 .definelabel z2_PlaySfx, 0x8019F0C8
 .definelabel z2_SetBGM2, 0x801A3098

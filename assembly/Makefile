@@ -10,7 +10,7 @@ all: mm
 
 # Build for "mm" target (Majora's Mask)
 mm: symbols
-	$(PYTHON) $(BUILD_PY) -t mm --compile-c --virtual
+	$(PYTHON) $(BUILD_PY) -j -t mm --compile-c --virtual
 
 copy: mm copy-only
 

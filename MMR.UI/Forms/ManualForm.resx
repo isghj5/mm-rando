@@ -123,68 +123,7 @@ As an example, let's use the Hero's Bow. To access this item, it is required to 
 It's good to note that logic works recursively, so any requirements listed for accessing item X will automatically be requirements of any item that itself requires X.</value>
   </data>
   <data name="lItem.Text" xml:space="preserve">
-    <value>The item list editor allows you to select exactly which items will be shuffled. Simply check the boxes of all items desired. The selected items will then be used for randomisation as long as the "custom item list" box is checked on the main form.
-
-The text box at the bottom of the form will show the code for your selection, which you can copy/paste in case you want to keep the settings for another time or send to another player.</value>
-  </data>
-  <data name="lShuffle.Text" xml:space="preserve">
-    <value>The program provides a selection of options for which elements should be shuffled.
-The items included by default are: 
-- All main items
-- All masks (excl. Fierce Deity)
-- All trade items
-- All upgrades
-- All sidequest heart pieces
-- All minigame heart pieces
-- All chest heart pieces (excl. secret shrine)
-- All songs
-
-There is also a setting provided for the user to specify their own list of items to be included in the shuffle.
-
-Additional settings are explained below.
-
-Item Pool Options:
-
-1. Exclude Song of Soaring
-Song of Soaring will be excluded from being shuffled to improve playing experience; it is often the most convenient method of getting around Termina.
-
-2. Dungeon items
-Includes small keys, dungeon maps, compasses, and boss keys. These items will then be found at any location and will indicate to which dungeon they belong.
-
-3. Shop items
-This allows any item to be found and bought at a shop while shuffling the regular shop items into the item mix. This includes almost anywhere where you spend money to immediately get an item. Notable exclusions: Bomb Shop Powder Keg, Bean Grotto Magic Beans. Note that this may make items such as potions and Chateau difficult to find. Shop items are always buyable as long as you have enough rupees.
-
-4. Caught bottle contents
-This option only affects caught bottle contents, and these will only shuffle amongst themselves.
-
-5. Cow Milk
-Each cow in the game that ordinarily gives milk when you play Epona's Song for them will give a random item. Two cows in the Termina Field cow grotto. Two cows in the Great Bay Coast cow grotto. One cow beneath the well. Three cows in the Romani Ranch barn (the cow in the corner is not accessible casually). When this option is enabled, cows don't check if you have an empty bottle.
-
-6. Skulltula Tokens
-30 tokens in the Swamp Spider House. 30 tokens in the Oceanside Spider House. When this option is enabled, the player doesn't lose the skulltula tokens they've collected after playing Song of Time. Players must enter the spider houses to view how many tokens they have.
-
-7. Mundane Rewards
-Lottery purple rupee; Bank blue rupee (reward for 500 rupees); Deku Playground Any Day; Honey and Darling Any Day; Kotake payment for a mushroom; Pictograph contest blue rupee and red rupee; Zora Hall Stage Lights; Oceanside Spider House day 2 (purple rupee) and day 3 (red rupee); Pictographs of Lulu (blue rupee for a bad photo, red rupee for a good photo); Treasure Chest Game as Human/Deku/Zora; Curiosity Shop various payments (blue rupee, red rupee, purple rupee and gold rupee); the Seahorse.
-
-8. Moon items
-The Fierce Deity's Mask, the four Moon Trial pieces of heart, the 2 chests in the Link trial. Logic will ensure that items on the moon are not required to get to the moon.
-
-9. Great Fairy Rewards
-This option includes each of the Great Fairy rewards: Magic Power (town fairy as non-human), Great Fairy Mask (town fairy as human), Spin Attack, Extended Magic Power, Double Defense, Great Fairy's Sword.
-
-10. Everything else
-Includes all other chests and heart pieces that are not randomised by default, as well as heart containers and maps sold by Tingle.
-
-11. Pre-Clocktown Deku Nut
-This option is only enabled when using Glitched or User logic, as the chest is only accessible using glitches. If the chest is enabled via the Custom Item List, Casual logic will ensure the item there is not needed to beat the game, but it may be needed to clear the game 100%.
-
-12. Crazy starting items
-Adds the starting Sword and Shield to the item pool. Also reduces your starting health to 1 heart and adds two Heart Containers to the item pool. Instead of these items, you'll receive random starting items (assuming you didn't enable the No Starting Items option).
-
-13. Stray Fairies
-All the Stray Fairies will instead reward a random item, including the Clock Town stray fairy, and each of the dungeon stray fairies. Chests with fairies in them will still spawn a stray fairy, which will reward a random item when collected. When this option is enabled, the player doesn't lose the stray fairies they've collected after playing Song of Time. Players must enter a temple to see how many fairies they've collected for it.
-
-Other Customizations:
+    <value>Other
 
 1. Dungeon entrances
 This option will change which dungeon can be found in each of the four areas. It includes Woodfall Temple, Snowhead Temple, Great Bay Temple, and Inverted Stone Tower Temple. Stone Tower Temple is not included as it has no boss or blue warp.
@@ -192,17 +131,55 @@ This option will change which dungeon can be found in each of the four areas. It
 2. Mix songs with items
 Songs will be shuffled with the items, allowing songs to be found in item locations and vice versa.
 
-3. No Starting Items
-Instead of receiving random items to replace randomized starting items (Deku Mask and Song of Healing; and the four Crazy Starting Items if that option is enabled), those items will take the place of random rupee rewards in the game.
+3. Progressive Upgrades
+When you find a sword, wallet, bomb bag, bow/quiver or magic power that game will give you the next upgrade based on your inventory.
 
 4. Enemies
 Switches out enemies with others of a similar type. Working but not perfect - some scenes are currently excluded due to extra logic needed for proper functionality (Woodfall Temple, Ikana Graveyard, Sakon's Hideout, Inverted Stone Tower Temple).
 
-5. Progressive Upgrades
-When you find a sword, wallet, bomb bag, bow/quiver or magic power that game will give you the next upgrade based on your inventory.
+5. Starting Items
+Select a starting item mode:
+* None - You will not start with any randomized starting items.
+* Random - You will start with randomized starting items.
+* Allow Temporary Items - You will start with randomized starting items including Keg, Magic Bean and Bottles with X.
+
+
+Small Key Mode
+1. Doors Open
+Small Key doors will always be open. Small Keys in the item pool will be replaced with other items.
+
+2. Keep Within Dungeon
+Randomization algorithm will place any randomized Small Keys into a location within the same region, even if the Small Key has been replaced via another Small Key Mode.
+
+
+Boss Key Mode
+1. Doors Open
+Boss doors will always be open. Boss Keys in the item pool will be replaced with other items.
+
+2. Keep Within Dungeon
+Randomization algorithm will place any randomized Boss Keys into a location within the same region, even if the Boss Key has been replaced via another Boss Key Mode.
+
+
+Dungeon Fairy Mode
+1. Doors Open
+Stray Fairies in the item pool will be replaced with other items. Non-chest fairies (roaming, bubbles, beehives, etc.) are removed. Chests that ordinarily have a Stray Fairy will behave like normal chests.
+
+2. Keep Within Dungeon
+Randomization algorithm will place any randomized Stray Fairies into a location within the same region, even if the Stray Fairy has been replaced via another Dungeon Fairy Mode.
+
 
 Extra Starting Items
-Choose from a list of items to start the game with. Logic will take into consideration that you have these items.</value>
+Choose from a list of items to start the game with. Logic will take into consideration that you have these items.
+Starting with a Bottle with X will refill your bottle at the start of each cycle.
+
+
+Enforce Junk Locations
+Choose from a list of locations that will only be randomized to junk items. Junk items are items that are not used as part of any Logic requirement or condition and whose equivalent Chest Size would be 'small wooden'. For example Pieces of Heart are junk items (because they're not used by Logic and they belong in a small wooden chest), but Heart Containers are not junk (because even though they're not used by Logic, they belong in a large golden chest). Other junk items include ammo, magic jars, rupees, maps and compasses.
+The Junk Location Editor lists every location in the game, even though not all of them are necessarily valid choices. If you don't Mix Songs With Items, then enforcing junk on any song location will fail to generate a seed, as none of the songs are considered junk. However, if you add a song as an Extra Starting Item then the Recovery Heart that would replace it can be placed on an Enforced Junk location. The bottle scoop locations ("Bottle: x") would generally not be valid as options, as none of the scoops are considered junk.</value>
+  </data>
+  <data name="lShuffle.Text" xml:space="preserve">
+    <value>The program provides a grid of options for which elements should be shuffled. Each labelled heading has a tooltip that explains what kind of items fit into the category.
+The Edit button in the top right opens a screen that allows you to select in detail exactly which elements should be shuffled.</value>
   </data>
   <data name="lGimmick.Text" xml:space="preserve">
     <value>This section allows some gameplay alterations. It does not affect the item placement logic.
@@ -413,7 +390,7 @@ Item repeatability is handled in the same way as scene switches (flags) are, all
 
 Quite a lot of the work was done using external programs written to read and write the in-game file formats - these returned and updated lists of actors/variables, converted music data, and did the model swapping required for the play as options, for example.</value>
   </data>
-  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=5.0.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=5.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAUAEBAAAAEAIABoBAAAVgAAABgYAAABACAAiAkAAL4EAAAgIAAAAQAgAKgQAABGDgAAMDAAAAEA

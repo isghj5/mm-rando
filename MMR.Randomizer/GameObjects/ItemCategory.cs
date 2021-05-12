@@ -169,7 +169,7 @@ namespace MMR.Randomizer.GameObjects
         [Description("Randomize items spawned by events including the Moon's Tear, the Sword School Gong, the Song Wall in Termina Field, the Telescope Guay and the Termina Field circling Guay.")]
         Events,
 
-        [Description("Randomize non-skulltula items from soft soil.")]
+        [Description("Randomize items from soft soil.")]
         SoftSoil,
 
         [Description("Randomize items dropped by hitting specific spots in the game.")]

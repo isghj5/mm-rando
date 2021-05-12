@@ -1,5 +1,6 @@
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Attributes.Entrance;
+using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.GameObjects
@@ -116,7 +117,7 @@ namespace MMR.Randomizer.GameObjects
         
         [StartingItemId(0x9C)]
         [ItemName("Spin Attack"), LocationName("Woodfall Great Fairy"), Region(Region.Woodfall)]
-        [GossipLocationHint("a magical being"), GossipItemHint("a magic attack"), GossipCompetitiveHint(4, ItemCategory.StrayFairies, false)]
+        [GossipLocationHint("a magical being"), GossipItemHint("a magic attack"), GossipCompetitiveHint(4, ItemCategory.StrayFairies, false, nameof(GameplaySettings.StrayFairyMode), (int)StrayFairyMode.ChestsOnly, false)]
         [ShopText("Increases the power of your spin attack.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x12D), ItemPool(ItemCategory.MagicPowers, LocationCategory.NpcRewards)]
@@ -127,7 +128,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CDF4, 0x01)]
         [StartingItem(0xC5CDF5, 0x01)]
         [ItemName("Extended Magic Power"), LocationName("Snowhead Great Fairy"), Region(Region.Snowhead)]
-        [GossipLocationHint("a magical being"), GossipItemHint("magic power"), GossipCompetitiveHint(4, ItemCategory.StrayFairies, false)]
+        [GossipLocationHint("a magical being"), GossipItemHint("magic power"), GossipCompetitiveHint(4, ItemCategory.StrayFairies, false, nameof(GameplaySettings.StrayFairyMode), (int)StrayFairyMode.ChestsOnly, false)]
         [ShopText("Grants the ability to use lots of magic.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x12E), ItemPool(ItemCategory.MagicPowers, LocationCategory.NpcRewards)]
@@ -136,7 +137,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CDF6, 0x01)]
         [StartingItem(0xC5CE87, 0x14)]
         [ItemName("Double Defense"), LocationName("Ocean Great Fairy"), Region(Region.ZoraCape)]
-        [GossipLocationHint("a magical being"), GossipItemHint("magical defense"), GossipCompetitiveHint(4, ItemCategory.StrayFairies, false)]
+        [GossipLocationHint("a magical being"), GossipItemHint("magical defense"), GossipCompetitiveHint(4, ItemCategory.StrayFairies, false, nameof(GameplaySettings.StrayFairyMode), (int)StrayFairyMode.ChestsOnly, false)]
         [ShopText("Take half as much damage from enemies.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x12F), ItemPool(ItemCategory.MagicPowers, LocationCategory.NpcRewards)]
@@ -144,7 +145,7 @@ namespace MMR.Randomizer.GameObjects
 
         [StartingItem(0xC5CE34, 0x10)]
         [ItemName("Great Fairy's Sword"), LocationName("Ikana Great Fairy"), Region(Region.IkanaCanyon)]
-        [GossipLocationHint("a magical being"), GossipItemHint("a black rose", "a powerful blade"), GossipCompetitiveHint(4, ItemCategory.StrayFairies, false)]
+        [GossipLocationHint("a magical being"), GossipItemHint("a black rose", "a powerful blade"), GossipCompetitiveHint(4, ItemCategory.StrayFairies, false, nameof(GameplaySettings.StrayFairyMode), (int)StrayFairyMode.ChestsOnly, false)]
         [ShopText("The most powerful sword has black roses etched in its blade.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x130), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards)]

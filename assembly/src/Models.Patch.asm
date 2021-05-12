@@ -460,3 +460,24 @@
 .org 0x80AF6A24
     jal     Models_RotateDekuScrubPlaygroundRupee
     lw      a1, 0x001C (sp)
+
+;==================================================================================================
+; Freestanding Models (Masks)
+;==================================================================================================
+
+.headersize G_DM_CHAR05_DELTA
+
+; Replaces:
+;   jal     0x80133B3C
+.org 0x80AADA5C
+    jal     Models_DrawGoronMask
+
+; Replaces:
+;   jal     0x80133B3C
+.org 0x80AADB18
+    jal     Models_DrawZoraMask
+
+; Replaces:
+;   jal     0x80133F28
+.org 0x80AADBCC
+    jal     Models_DrawGibdoMask

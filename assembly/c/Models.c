@@ -695,6 +695,79 @@ void Models_RotateDekuScrubPlaygroundRupee(Actor* actor, GlobalContext* ctxt) {
     }
 }
 
+void Models_DrawCutsceneItem(GlobalContext* ctxt, Actor* actor, Vec3s* posRot, Vec3s* posRot2, f32 scale, u16 giIndex) {
+    // z2_PushMatrixStackCopy();
+
+    Vec3f pos;
+    Vec3s rot;
+    
+    pos.x = (f32)posRot[0].x;
+    pos.y = (f32)posRot[0].y;
+    pos.z = (f32)posRot[0].z;    
+    rot.x = posRot[1].x;
+    rot.y = posRot[1].y;
+    rot.z = posRot[1].z;
+    z2_TransformMatrixStackTop(&pos, &rot);
+    
+    if (posRot2) {
+        pos.x = (f32)posRot2[0].x;
+        pos.y = (f32)posRot2[0].y;
+        pos.z = (f32)posRot2[0].z;    
+        rot.x = posRot2[1].x;
+        rot.y = posRot2[1].y;
+        rot.z = posRot2[1].z;
+        z2_TransformMatrixStackTop(&pos, &rot);
+    }
+
+    DrawFromGiTable(actor, ctxt, scale, giIndex);
+    
+    // z2_PopMatrixStack();
+}
+
+void Models_DrawCutsceneMask(GlobalContext* ctxt, Actor* actor, Vec3s* posRot, u16 giIndex) {
+    Vec3s posRot2[2] = {
+        {
+            .x = 1024,
+            .y = -512,
+            .z = 0
+        },
+        {
+            .x = 0,
+            .y = 0xC000,
+            .z = 0x8000
+        }
+    };
+
+    Models_DrawCutsceneItem(ctxt, actor, posRot, posRot2, 22.0, giIndex);
+}
+
+void Models_DrawZoraMask(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, bool* overrideLimbDraw, void* postLimbDraw, Actor* actor) {
+    if (!MISC_CONFIG.flags.freestanding) {
+        z2_SkelAnime_DrawLimb(ctxt, skeleton, limbDrawTable, overrideLimbDraw, postLimbDraw, actor);
+        return;
+    }
+
+    Models_DrawCutsceneMask(ctxt, actor, limbDrawTable, 0x7A);
+}
+
+void Models_DrawGoronMask(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, bool* overrideLimbDraw, void* postLimbDraw, Actor* actor) {
+    if (!MISC_CONFIG.flags.freestanding) {
+        z2_SkelAnime_DrawLimb(ctxt, skeleton, limbDrawTable, overrideLimbDraw, postLimbDraw, actor);
+        return;
+    }
+
+    Models_DrawCutsceneMask(ctxt, actor, limbDrawTable, 0x79);
+}
+
+void Models_DrawGibdoMask(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, Actor* actor) {
+    if (!MISC_CONFIG.flags.freestanding) {
+        z2_SkelAnime_DrawLimb2(ctxt, skeleton, limbDrawTable, dListCount, overrideLimbDraw, postLimbDraw, actor);
+        return;
+    }
+
+    Models_DrawCutsceneMask(ctxt, actor, limbDrawTable, 0x87);
+}
+
 void Models_AfterActorDtor(Actor* actor) {
     if (MISC_CONFIG.flags.freestanding) {
         if (actor->id == ACTOR_EN_ELFORG) {

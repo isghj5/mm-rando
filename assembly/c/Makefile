@@ -8,7 +8,8 @@ CFLAGS = -march=vr4300 -mtune=vr4300 -mabi=32 -mno-gpopt -mdivide-breaks \
 # Compile with F3DEX2 support.
 CFLAGS += -DF3DEX_GBI_2 -I../include
 
-OBJECTS = $(patsubst %.c,%.o,$(sort $(wildcard *.c)))
+SOURCES := $(sort $(wildcard *.c))
+OBJECTS := $(patsubst %.c,%.o,$(SOURCES))
 
 OUTDIR = ../build
 
@@ -16,11 +17,13 @@ OUTDIR = ../build
 
 all: clean bundle symbols
 
-%.o: %.c
-	$(CC) -c $< $(CFLAGS)
+$(OBJECTS): %.o: %.c
+	$(CC) -c $< -o $@ $(CFLAGS)
 
-bundle: mkdir-outdir $(OBJECTS)
-	$(LD) -o $(OUTDIR)/bundle.o -i -L. $(patsubst %.o,-l:%.o,$(OBJECTS))
+$(OUTDIR)/bundle.o: $(OBJECTS)
+	$(LD) -o $@ -i -L. $^
+
+bundle: mkdir-outdir $(OUTDIR)/bundle.o
 
 symbols: mkdir-outdir bundle
 	$(OBJDUMP) -t $(OUTDIR)/bundle.o | tr -d '\015' > $(OUTDIR)/c_symbols.txt

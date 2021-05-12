@@ -288,7 +288,7 @@ namespace MMR.UI.Forms
                     continue;
                 }
 
-                var checkbox = new CheckBox();
+                var checkbox = new InvertIndeterminateCheckBox();
                 var items = locationCategory == 0 ? ItemUtils.AllLocations().ToList() : itemsByLocationCategory[locationCategory];
                 checkbox.Tag = items;
                 var description = locationCategory.GetAttribute<DescriptionAttribute>()?.Description;
@@ -299,7 +299,6 @@ namespace MMR.UI.Forms
                 checkbox.Location = new Point(locationCategoriesX, 140);
                 checkbox.Width = 17;
                 checkbox.Height = 17;
-                checkbox.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
                 checkbox.CheckStateChanged += cItemCategory2_CheckStateChanged;
                 tableItemPool.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 25));
                 tabItemPool.Controls.Add(checkbox);
@@ -530,8 +529,8 @@ namespace MMR.UI.Forms
                     tabPage.Controls.Add(new Label
                     {
                         Text = "Instrument:",
-                        Location = new Point(26, 33),
-                        Size = new Size(59, 13),
+                        Location = new Point(24, 33),
+                        Size = new Size(79, 13),
                     });
                     tabPage.Controls.Add(CreateInstrumentComboBox(form));
                 }
@@ -541,7 +540,7 @@ namespace MMR.UI.Forms
                     {
                         Name = "lEnergyColorDefault",
                         Text = "Default",
-                        Location = new Point(91, 63),
+                        Location = new Point(111, 63),
                         Size = new Size(135, 23),
                         TextAlign = ContentAlignment.MiddleCenter,
                         Visible = !use,
@@ -566,7 +565,7 @@ namespace MMR.UI.Forms
                 Tag = transformationForm,
                 Name = "cEnergyRandomize",
                 Text = "🎲",
-                Location = new Point(91 + (3 * 34), 62),
+                Location = new Point(111 + (3 * 34), 62),
                 Size = new Size(33, 25),
                 TextAlign = ContentAlignment.TopRight,
             };
@@ -584,7 +583,7 @@ namespace MMR.UI.Forms
                 Name = "cEnergy",
                 Text = "Energy color:",
                 Location = new Point(6, 67),
-                Size = new Size(88, 17),
+                Size = new Size(120, 25),
             };
             checkBox.CheckedChanged += cEnergy_CheckedChanged;
             return checkBox;
@@ -600,7 +599,7 @@ namespace MMR.UI.Forms
                 {
                     Tag = transformationForm,
                     Name = $"bEnergy{i}",
-                    Location = new Point(91 + (i * 34), 63),
+                    Location = new Point(111 + (i * 34), 63),
                     Size = new Size(32, 23),
                     BackColor = current[i],
                     FlatStyle = FlatStyle.Flat,
@@ -621,7 +620,7 @@ namespace MMR.UI.Forms
                 Name = "cTunic",
                 Text = "Tunic color:",
                 Location = new Point(6, 7),
-                Size = new Size(82, 17),
+                Size = new Size(102, 25),
             };
             checkBox.CheckedChanged += create_cTunic_CheckedChanged(bTunic);
             return checkBox;
@@ -633,7 +632,7 @@ namespace MMR.UI.Forms
             {
                 Tag = transformationForm,
                 Name = "bTunic",
-                Location = new Point(91, 3),
+                Location = new Point(111, 3),
                 Size = new Size(135, 23),
                 BackColor = Color.FromArgb(0x1E, 0x69, 0x1B),
                 FlatStyle = FlatStyle.Flat,
@@ -651,7 +650,7 @@ namespace MMR.UI.Forms
             {
                 Tag = transformationForm,
                 Name = "cInstrument",
-                Location = new Point(91, 30),
+                Location = new Point(111, 30),
                 Size = new Size(135, 21),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 DataSource = new BindingSource(data, null),
@@ -1881,7 +1880,8 @@ namespace MMR.UI.Forms
             }
             else
             {
-                tItemPool.Text = _configuration.GameplaySettings.CustomItemListString;
+                _configuration.GameplaySettings.CustomItemList = ItemUtils.ConvertStringToItemList(ItemEditor.BaseItemList, _configuration.GameplaySettings.CustomItemListString)?.ToHashSet();
+                UpdateItemPoolCheckboxes();
             }
 
 

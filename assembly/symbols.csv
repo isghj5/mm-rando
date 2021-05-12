@@ -89,6 +89,8 @@
 0x8012F2E0,z2_object_spawn
 0x8012F4FC,z2_load_objects
 0x8012F608,z2_GetObjectIndex
+0x80133B3C,z2_SkelAnime_DrawLimb
+0x80133F28,z2_SkelAnime_DrawLimb2
 0x80147564,z2_InitButtonNoteColors
 0x801518B0,z2_ShowMessage
 0x80152498,z2_GetMessageState
@@ -97,7 +99,11 @@
 0x80169D40,z2_store_scene_flags
 0x80178DAC,z2_LoadFileFromArchive
 0x80178E3C,z2_LoadVFileFromArchive
+0x8018019C,z2_PushMatrixStackCopy
+0x801801CC,z2_PopMatrixStack
 0x80180234,z2_GetMatrixStackTop
+0x801812FC,z2_TransformMatrixStackTop
+0x80181A40,z2_ShiftMatrix
 0x8019C300,z2_ToggleSfxDampen
 0x8019F0C8,z2_PlaySfx
 0x801A3098,z2_SetBGM2

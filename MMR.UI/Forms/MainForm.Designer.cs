@@ -338,12 +338,11 @@ namespace MMR.UI.Forms
             // 
             this.cProgressiveUpgrades.AutoSize = true;
             this.cProgressiveUpgrades.BackColor = System.Drawing.Color.Transparent;
-            this.cProgressiveUpgrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cProgressiveUpgrades.ForeColor = System.Drawing.Color.Black;
             this.cProgressiveUpgrades.Location = new System.Drawing.Point(193, 10);
             this.cProgressiveUpgrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cProgressiveUpgrades.Name = "cProgressiveUpgrades";
-            this.cProgressiveUpgrades.Size = new System.Drawing.Size(130, 17);
+            this.cProgressiveUpgrades.Size = new System.Drawing.Size(139, 19);
             this.cProgressiveUpgrades.TabIndex = 21;
             this.cProgressiveUpgrades.Text = "Progressive Upgrades";
             this.cProgressiveUpgrades.UseVisualStyleBackColor = false;
@@ -353,12 +352,11 @@ namespace MMR.UI.Forms
             // 
             this.cDEnt.AutoSize = true;
             this.cDEnt.BackColor = System.Drawing.Color.Transparent;
-            this.cDEnt.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cDEnt.ForeColor = System.Drawing.Color.Black;
             this.cDEnt.Location = new System.Drawing.Point(6, 10);
             this.cDEnt.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDEnt.Name = "cDEnt";
-            this.cDEnt.Size = new System.Drawing.Size(120, 17);
+            this.cDEnt.Size = new System.Drawing.Size(129, 19);
             this.cDEnt.TabIndex = 7;
             this.cDEnt.Text = "Dungeon entrances";
             this.cDEnt.UseVisualStyleBackColor = false;
@@ -368,12 +366,11 @@ namespace MMR.UI.Forms
             // 
             this.cMixSongs.AutoSize = true;
             this.cMixSongs.BackColor = System.Drawing.Color.Transparent;
-            this.cMixSongs.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cMixSongs.ForeColor = System.Drawing.Color.Black;
             this.cMixSongs.Location = new System.Drawing.Point(6, 36);
             this.cMixSongs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cMixSongs.Name = "cMixSongs";
-            this.cMixSongs.Size = new System.Drawing.Size(122, 17);
+            this.cMixSongs.Size = new System.Drawing.Size(138, 19);
             this.cMixSongs.TabIndex = 3;
             this.cMixSongs.Text = "Mix songs with items";
             this.cMixSongs.UseVisualStyleBackColor = false;
@@ -383,12 +380,11 @@ namespace MMR.UI.Forms
             // 
             this.cEnemy.AutoSize = true;
             this.cEnemy.BackColor = System.Drawing.Color.Transparent;
-            this.cEnemy.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cEnemy.ForeColor = System.Drawing.Color.Black;
             this.cEnemy.Location = new System.Drawing.Point(193, 36);
             this.cEnemy.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cEnemy.Name = "cEnemy";
-            this.cEnemy.Size = new System.Drawing.Size(106, 17);
+            this.cEnemy.Size = new System.Drawing.Size(110, 19);
             this.cEnemy.TabIndex = 9;
             this.cEnemy.Text = "Enemies (BETA!)";
             this.cEnemy.UseVisualStyleBackColor = false;
@@ -453,12 +449,11 @@ namespace MMR.UI.Forms
             // 
             this.lMode.AutoSize = true;
             this.lMode.BackColor = System.Drawing.Color.Transparent;
-            this.lMode.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lMode.ForeColor = System.Drawing.Color.Black;
             this.lMode.Location = new System.Drawing.Point(10, 30);
             this.lMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lMode.Name = "lMode";
-            this.lMode.Size = new System.Drawing.Size(68, 13);
+            this.lMode.Size = new System.Drawing.Size(75, 15);
             this.lMode.TabIndex = 0;
             this.lMode.Text = "Mode/Logic:";
             // 
@@ -661,12 +656,11 @@ namespace MMR.UI.Forms
             // 
             this.cFDAnywhere.AutoSize = true;
             this.cFDAnywhere.BackColor = System.Drawing.Color.Transparent;
-            this.cFDAnywhere.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cFDAnywhere.ForeColor = System.Drawing.Color.Black;
             this.cFDAnywhere.Location = new System.Drawing.Point(148, 75);
             this.cFDAnywhere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFDAnywhere.Name = "cFDAnywhere";
-            this.cFDAnywhere.Size = new System.Drawing.Size(195, 17);
+            this.cFDAnywhere.Size = new System.Drawing.Size(213, 19);
             this.cFDAnywhere.TabIndex = 23;
             this.cFDAnywhere.Text = "Allow Fierce Deity\'s Mask anywhere";
             this.cFDAnywhere.UseVisualStyleBackColor = false;
@@ -707,12 +701,11 @@ namespace MMR.UI.Forms
             // 
             this.cSunsSong.AutoSize = true;
             this.cSunsSong.BackColor = System.Drawing.Color.Transparent;
-            this.cSunsSong.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cSunsSong.ForeColor = System.Drawing.Color.Black;
             this.cSunsSong.Location = new System.Drawing.Point(148, 48);
             this.cSunsSong.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cSunsSong.Name = "cSunsSong";
-            this.cSunsSong.Size = new System.Drawing.Size(116, 17);
+            this.cSunsSong.Size = new System.Drawing.Size(122, 19);
             this.cSunsSong.TabIndex = 21;
             this.cSunsSong.Text = "Enable Sun\'s Song";
             this.cSunsSong.UseVisualStyleBackColor = false;
@@ -804,12 +797,11 @@ namespace MMR.UI.Forms
             // 
             this.cDeathMoonCrash.AutoSize = true;
             this.cDeathMoonCrash.BackColor = System.Drawing.Color.Transparent;
-            this.cDeathMoonCrash.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cDeathMoonCrash.ForeColor = System.Drawing.Color.Black;
             this.cDeathMoonCrash.Location = new System.Drawing.Point(7, 113);
             this.cDeathMoonCrash.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDeathMoonCrash.Name = "cDeathMoonCrash";
-            this.cDeathMoonCrash.Size = new System.Drawing.Size(125, 17);
+            this.cDeathMoonCrash.Size = new System.Drawing.Size(136, 19);
             this.cDeathMoonCrash.TabIndex = 25;
             this.cDeathMoonCrash.Text = "Death is Moon Crash";
             this.cDeathMoonCrash.UseVisualStyleBackColor = false;
@@ -819,12 +811,11 @@ namespace MMR.UI.Forms
             // 
             this.cByoAmmo.AutoSize = true;
             this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
-            this.cByoAmmo.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
             this.cByoAmmo.Location = new System.Drawing.Point(7, 140);
             this.cByoAmmo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cByoAmmo.Name = "cByoAmmo";
-            this.cByoAmmo.Size = new System.Drawing.Size(80, 17);
+            this.cByoAmmo.Size = new System.Drawing.Size(89, 19);
             this.cByoAmmo.TabIndex = 24;
             this.cByoAmmo.Text = "BYO Ammo";
             this.cByoAmmo.UseVisualStyleBackColor = false;
@@ -931,12 +922,11 @@ namespace MMR.UI.Forms
             // 
             this.cContinuousDekuHopping.AutoSize = true;
             this.cContinuousDekuHopping.BackColor = System.Drawing.Color.Transparent;
-            this.cContinuousDekuHopping.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cContinuousDekuHopping.ForeColor = System.Drawing.Color.Black;
             this.cContinuousDekuHopping.Location = new System.Drawing.Point(7, 110);
             this.cContinuousDekuHopping.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cContinuousDekuHopping.Name = "cContinuousDekuHopping";
-            this.cContinuousDekuHopping.Size = new System.Drawing.Size(151, 17);
+            this.cContinuousDekuHopping.Size = new System.Drawing.Size(168, 19);
             this.cContinuousDekuHopping.TabIndex = 26;
             this.cContinuousDekuHopping.Text = "Continuous Deku Hopping";
             this.cContinuousDekuHopping.UseVisualStyleBackColor = false;
@@ -1014,12 +1004,11 @@ namespace MMR.UI.Forms
             // 
             this.cIceTrapQuirks.AutoSize = true;
             this.cIceTrapQuirks.BackColor = System.Drawing.Color.Transparent;
-            this.cIceTrapQuirks.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cIceTrapQuirks.ForeColor = System.Drawing.Color.Black;
             this.cIceTrapQuirks.Location = new System.Drawing.Point(7, 110);
             this.cIceTrapQuirks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cIceTrapQuirks.Name = "cIceTrapQuirks";
-            this.cIceTrapQuirks.Size = new System.Drawing.Size(92, 17);
+            this.cIceTrapQuirks.Size = new System.Drawing.Size(98, 19);
             this.cIceTrapQuirks.TabIndex = 29;
             this.cIceTrapQuirks.Text = "Enable Quirks";
             this.cIceTrapQuirks.UseVisualStyleBackColor = false;
@@ -1071,12 +1060,11 @@ namespace MMR.UI.Forms
             // 
             this.cHideClock.AutoSize = true;
             this.cHideClock.BackColor = System.Drawing.Color.Transparent;
-            this.cHideClock.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cHideClock.ForeColor = System.Drawing.Color.Black;
             this.cHideClock.Location = new System.Drawing.Point(7, 72);
             this.cHideClock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHideClock.Name = "cHideClock";
-            this.cHideClock.Size = new System.Drawing.Size(62, 17);
+            this.cHideClock.Size = new System.Drawing.Size(65, 19);
             this.cHideClock.TabIndex = 17;
             this.cHideClock.Text = "Hide UI";
             this.cHideClock.UseVisualStyleBackColor = false;
@@ -1086,12 +1074,11 @@ namespace MMR.UI.Forms
             // 
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label4.ForeColor = System.Drawing.Color.Black;
             this.label4.Location = new System.Drawing.Point(231, 16);
             this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(237, 52);
+            this.label4.Size = new System.Drawing.Size(266, 60);
             this.label4.TabIndex = 14;
             this.label4.Text = "WARNING!\r\nMost of these settings are not considered in logic\r\nand some can cause " +
     "the seed to be unbeatable.\r\nUse at your own risk!";
@@ -1207,12 +1194,11 @@ namespace MMR.UI.Forms
             // 
             this.lGossip.AutoSize = true;
             this.lGossip.BackColor = System.Drawing.Color.Transparent;
-            this.lGossip.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lGossip.ForeColor = System.Drawing.Color.Black;
             this.lGossip.Location = new System.Drawing.Point(12, 24);
             this.lGossip.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lGossip.Name = "lGossip";
-            this.lGossip.Size = new System.Drawing.Size(79, 13);
+            this.lGossip.Size = new System.Drawing.Size(94, 15);
             this.lGossip.TabIndex = 20;
             this.lGossip.Text = "Hint distribution";
             // 
@@ -1236,12 +1222,11 @@ namespace MMR.UI.Forms
             // 
             this.cFreeHints.AutoSize = true;
             this.cFreeHints.BackColor = System.Drawing.Color.Transparent;
-            this.cFreeHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cFreeHints.ForeColor = System.Drawing.Color.Black;
             this.cFreeHints.Location = new System.Drawing.Point(159, 20);
             this.cFreeHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFreeHints.Name = "cFreeHints";
-            this.cFreeHints.Size = new System.Drawing.Size(72, 17);
+            this.cFreeHints.Size = new System.Drawing.Size(77, 19);
             this.cFreeHints.TabIndex = 15;
             this.cFreeHints.Text = "Free hints";
             this.cFreeHints.UseVisualStyleBackColor = false;
@@ -1251,12 +1236,11 @@ namespace MMR.UI.Forms
             // 
             this.cClearHints.AutoSize = true;
             this.cClearHints.BackColor = System.Drawing.Color.Transparent;
-            this.cClearHints.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cClearHints.ForeColor = System.Drawing.Color.Black;
             this.cClearHints.Location = new System.Drawing.Point(159, 46);
             this.cClearHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cClearHints.Name = "cClearHints";
-            this.cClearHints.Size = new System.Drawing.Size(75, 17);
+            this.cClearHints.Size = new System.Drawing.Size(82, 19);
             this.cClearHints.TabIndex = 16;
             this.cClearHints.Text = "Clear hints";
             this.cClearHints.UseVisualStyleBackColor = false;
@@ -1279,12 +1263,11 @@ namespace MMR.UI.Forms
             // 
             this.lLink.AutoSize = true;
             this.lLink.BackColor = System.Drawing.Color.Transparent;
-            this.lLink.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lLink.ForeColor = System.Drawing.Color.Black;
             this.lLink.Location = new System.Drawing.Point(4, 27);
             this.lLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lLink.Name = "lLink";
-            this.lLink.Size = new System.Drawing.Size(67, 13);
+            this.lLink.Size = new System.Drawing.Size(76, 15);
             this.lLink.TabIndex = 9;
             this.lLink.Text = "Player model";
             // 
@@ -1391,12 +1374,11 @@ namespace MMR.UI.Forms
             // 
             this.cQText.AutoSize = true;
             this.cQText.BackColor = System.Drawing.Color.Transparent;
-            this.cQText.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cQText.ForeColor = System.Drawing.Color.Black;
             this.cQText.Location = new System.Drawing.Point(10, 52);
             this.cQText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cQText.Name = "cQText";
-            this.cQText.Size = new System.Drawing.Size(74, 17);
+            this.cQText.Size = new System.Drawing.Size(80, 19);
             this.cQText.TabIndex = 6;
             this.cQText.Text = "Quick text";
             this.cQText.UseVisualStyleBackColor = false;
@@ -1406,12 +1388,11 @@ namespace MMR.UI.Forms
             // 
             this.cShopAppearance.AutoSize = true;
             this.cShopAppearance.BackColor = System.Drawing.Color.Transparent;
-            this.cShopAppearance.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cShopAppearance.ForeColor = System.Drawing.Color.Black;
             this.cShopAppearance.Location = new System.Drawing.Point(172, 25);
             this.cShopAppearance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cShopAppearance.Name = "cShopAppearance";
-            this.cShopAppearance.Size = new System.Drawing.Size(92, 17);
+            this.cShopAppearance.Size = new System.Drawing.Size(98, 19);
             this.cShopAppearance.TabIndex = 21;
             this.cShopAppearance.Text = "Update shops";
             this.cShopAppearance.UseVisualStyleBackColor = false;
@@ -1421,12 +1402,11 @@ namespace MMR.UI.Forms
             // 
             this.cEponaSword.AutoSize = true;
             this.cEponaSword.BackColor = System.Drawing.Color.Transparent;
-            this.cEponaSword.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cEponaSword.ForeColor = System.Drawing.Color.Black;
             this.cEponaSword.Location = new System.Drawing.Point(172, 132);
             this.cEponaSword.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cEponaSword.Name = "cEponaSword";
-            this.cEponaSword.Size = new System.Drawing.Size(104, 17);
+            this.cEponaSword.Size = new System.Drawing.Size(112, 19);
             this.cEponaSword.TabIndex = 22;
             this.cEponaSword.Text = "Fix Epona sword";
             this.cEponaSword.UseVisualStyleBackColor = false;
@@ -1436,12 +1416,11 @@ namespace MMR.UI.Forms
             // 
             this.cUpdateChests.AutoSize = true;
             this.cUpdateChests.BackColor = System.Drawing.Color.Transparent;
-            this.cUpdateChests.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cUpdateChests.ForeColor = System.Drawing.Color.Black;
             this.cUpdateChests.Location = new System.Drawing.Point(172, 52);
             this.cUpdateChests.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cUpdateChests.Name = "cUpdateChests";
-            this.cUpdateChests.Size = new System.Drawing.Size(95, 17);
+            this.cUpdateChests.Size = new System.Drawing.Size(100, 19);
             this.cUpdateChests.TabIndex = 23;
             this.cUpdateChests.Text = "Update chests";
             this.cUpdateChests.UseVisualStyleBackColor = false;
@@ -1477,12 +1456,11 @@ namespace MMR.UI.Forms
             // 
             this.cNoDowngrades.AutoSize = true;
             this.cNoDowngrades.BackColor = System.Drawing.Color.Transparent;
-            this.cNoDowngrades.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cNoDowngrades.ForeColor = System.Drawing.Color.Black;
             this.cNoDowngrades.Location = new System.Drawing.Point(172, 105);
             this.cNoDowngrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNoDowngrades.Name = "cNoDowngrades";
-            this.cNoDowngrades.Size = new System.Drawing.Size(101, 17);
+            this.cNoDowngrades.Size = new System.Drawing.Size(110, 19);
             this.cNoDowngrades.TabIndex = 18;
             this.cNoDowngrades.Text = "No downgrades";
             this.cNoDowngrades.UseVisualStyleBackColor = false;
@@ -1558,12 +1536,11 @@ namespace MMR.UI.Forms
             // 
             this.lTatl.AutoSize = true;
             this.lTatl.BackColor = System.Drawing.Color.Transparent;
-            this.lTatl.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lTatl.ForeColor = System.Drawing.Color.Black;
             this.lTatl.Location = new System.Drawing.Point(7, 18);
             this.lTatl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lTatl.Name = "lTatl";
-            this.lTatl.Size = new System.Drawing.Size(57, 13);
+            this.lTatl.Size = new System.Drawing.Size(62, 15);
             this.lTatl.TabIndex = 40;
             this.lTatl.Text = "Tatl theme";
             // 
@@ -1602,12 +1579,11 @@ namespace MMR.UI.Forms
             // 
             this.lMusic.AutoSize = true;
             this.lMusic.BackColor = System.Drawing.Color.Transparent;
-            this.lMusic.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lMusic.ForeColor = System.Drawing.Color.Black;
             this.lMusic.Location = new System.Drawing.Point(4, 99);
             this.lMusic.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lMusic.Name = "lMusic";
-            this.lMusic.Size = new System.Drawing.Size(35, 13);
+            this.lMusic.Size = new System.Drawing.Size(39, 15);
             this.lMusic.TabIndex = 43;
             this.lMusic.Text = "Music";
             // 
@@ -1630,12 +1606,11 @@ namespace MMR.UI.Forms
             // 
             this.cSFX.AutoSize = true;
             this.cSFX.BackColor = System.Drawing.Color.Transparent;
-            this.cSFX.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cSFX.ForeColor = System.Drawing.Color.Black;
             this.cSFX.Location = new System.Drawing.Point(7, 23);
             this.cSFX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cSFX.Name = "cSFX";
-            this.cSFX.Size = new System.Drawing.Size(102, 17);
+            this.cSFX.Size = new System.Drawing.Size(107, 19);
             this.cSFX.TabIndex = 36;
             this.cSFX.Text = "Randomize SFX";
             this.cSFX.UseVisualStyleBackColor = false;
@@ -1835,12 +1810,11 @@ namespace MMR.UI.Forms
             // 
             this.cHTMLLog.AutoSize = true;
             this.cHTMLLog.BackColor = System.Drawing.Color.Transparent;
-            this.cHTMLLog.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cHTMLLog.ForeColor = System.Drawing.Color.Black;
             this.cHTMLLog.Location = new System.Drawing.Point(132, 48);
             this.cHTMLLog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHTMLLog.Name = "cHTMLLog";
-            this.cHTMLLog.Size = new System.Drawing.Size(111, 17);
+            this.cHTMLLog.Size = new System.Drawing.Size(121, 19);
             this.cHTMLLog.TabIndex = 14;
             this.cHTMLLog.Text = "Item Tracker .html";
             this.cHTMLLog.UseVisualStyleBackColor = false;
@@ -1850,12 +1824,11 @@ namespace MMR.UI.Forms
             // 
             this.cPatch.AutoSize = true;
             this.cPatch.BackColor = System.Drawing.Color.Transparent;
-            this.cPatch.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cPatch.ForeColor = System.Drawing.Color.Black;
             this.cPatch.Location = new System.Drawing.Point(19, 74);
             this.cPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cPatch.Name = "cPatch";
-            this.cPatch.Size = new System.Drawing.Size(79, 17);
+            this.cPatch.Size = new System.Drawing.Size(88, 19);
             this.cPatch.TabIndex = 15;
             this.cPatch.Text = "Patch .mmr";
             this.cPatch.UseVisualStyleBackColor = false;
@@ -1865,12 +1838,11 @@ namespace MMR.UI.Forms
             // 
             this.cSpoiler.AutoSize = true;
             this.cSpoiler.BackColor = System.Drawing.Color.Transparent;
-            this.cSpoiler.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cSpoiler.ForeColor = System.Drawing.Color.Black;
             this.cSpoiler.Location = new System.Drawing.Point(132, 22);
             this.cSpoiler.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cSpoiler.Name = "cSpoiler";
-            this.cSpoiler.Size = new System.Drawing.Size(92, 17);
+            this.cSpoiler.Size = new System.Drawing.Size(102, 19);
             this.cSpoiler.TabIndex = 8;
             this.cSpoiler.Text = "Spoiler log .txt";
             this.cSpoiler.UseVisualStyleBackColor = false;
@@ -1882,12 +1854,11 @@ namespace MMR.UI.Forms
             this.cN64.BackColor = System.Drawing.Color.Transparent;
             this.cN64.Checked = true;
             this.cN64.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cN64.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cN64.ForeColor = System.Drawing.Color.Black;
             this.cN64.Location = new System.Drawing.Point(19, 21);
             this.cN64.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cN64.Name = "cN64";
-            this.cN64.Size = new System.Drawing.Size(97, 17);
+            this.cN64.Size = new System.Drawing.Size(100, 19);
             this.cN64.TabIndex = 10;
             this.cN64.Text = "N64 ROM .z64";
             this.cN64.UseVisualStyleBackColor = false;
@@ -1897,12 +1868,11 @@ namespace MMR.UI.Forms
             // 
             this.cVC.AutoSize = true;
             this.cVC.BackColor = System.Drawing.Color.Transparent;
-            this.cVC.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.cVC.ForeColor = System.Drawing.Color.Black;
             this.cVC.Location = new System.Drawing.Point(19, 47);
             this.cVC.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cVC.Name = "cVC";
-            this.cVC.Size = new System.Drawing.Size(84, 17);
+            this.cVC.Size = new System.Drawing.Size(89, 19);
             this.cVC.TabIndex = 9;
             this.cVC.Text = "Wii VC .wad";
             this.cVC.UseVisualStyleBackColor = false;
@@ -2116,12 +2086,11 @@ namespace MMR.UI.Forms
             // 
             this.lSeed.AutoSize = true;
             this.lSeed.BackColor = System.Drawing.Color.Transparent;
-            this.lSeed.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.lSeed.ForeColor = System.Drawing.Color.Black;
             this.lSeed.Location = new System.Drawing.Point(1, 15);
             this.lSeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lSeed.Name = "lSeed";
-            this.lSeed.Size = new System.Drawing.Size(76, 13);
+            this.lSeed.Size = new System.Drawing.Size(82, 15);
             this.lSeed.TabIndex = 3;
             this.lSeed.Text = "Random seed:";
             // 

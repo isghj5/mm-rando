@@ -176,6 +176,7 @@
             // 
             // tItem
             // 
+            this.tItem.AutoScroll = true;
             this.tItem.Controls.Add(this.lItem);
             this.tItem.Location = new System.Drawing.Point(4, 27);
             this.tItem.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -183,7 +184,7 @@
             this.tItem.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tItem.Size = new System.Drawing.Size(468, 315);
             this.tItem.TabIndex = 8;
-            this.tItem.Text = "Item list";
+            this.tItem.Text = "Other Main Settings";
             this.tItem.UseVisualStyleBackColor = true;
             // 
             // lItem
@@ -191,7 +192,7 @@
             this.lItem.Location = new System.Drawing.Point(7, 3);
             this.lItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lItem.Name = "lItem";
-            this.lItem.Size = new System.Drawing.Size(434, 180);
+            this.lItem.Size = new System.Drawing.Size(434, 1294);
             this.lItem.TabIndex = 4;
             this.lItem.Text = resources.GetString("lItem.Text");
             // 
@@ -204,7 +205,7 @@
             this.tShuffles.Name = "tShuffles";
             this.tShuffles.Size = new System.Drawing.Size(468, 315);
             this.tShuffles.TabIndex = 2;
-            this.tShuffles.Text = "Shuffles";
+            this.tShuffles.Text = "Item Pool";
             this.tShuffles.UseVisualStyleBackColor = true;
             // 
             // lShuffle
@@ -212,7 +213,7 @@
             this.lShuffle.Location = new System.Drawing.Point(7, 3);
             this.lShuffle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lShuffle.Name = "lShuffle";
-            this.lShuffle.Size = new System.Drawing.Size(434, 1956);
+            this.lShuffle.Size = new System.Drawing.Size(434, 99);
             this.lShuffle.TabIndex = 2;
             this.lShuffle.Text = resources.GetString("lShuffle.Text");
             // 
@@ -233,7 +234,7 @@
             this.lGimmick.Location = new System.Drawing.Point(7, 3);
             this.lGimmick.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lGimmick.Name = "lGimmick";
-            this.lGimmick.Size = new System.Drawing.Size(434, 1029);
+            this.lGimmick.Size = new System.Drawing.Size(434, 1329);
             this.lGimmick.TabIndex = 2;
             this.lGimmick.Text = resources.GetString("lGimmick.Text");
             // 

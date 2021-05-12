@@ -104,11 +104,20 @@ def write_pj64_symbols(f, symbols):
 
 def get_parser():
     parser = argparse.ArgumentParser()
+    parser.add_argument('-j', '--jobs', action='store', const=True, default=None, nargs='?', type=int, help='Number of jobs to run simultaneously when compiling C code')
     parser.add_argument('-t', '--target', default='mm', help='Target directory name')
     parser.add_argument('--pj64sym', help="Output path for PJ64 debugging symbols")
     parser.add_argument('--compile-c', action='store_true', help="Recompile C modules")
     parser.add_argument('--virtual', action='store_true', help='Use virtual addresses in diff')
     return parser
+
+def get_jobs_arguments(value):
+    if value is True:
+        return ['-j']
+    elif value is not None:
+        return ['-j', str(value)]
+    else:
+        return []
 
 def main():
     args = get_parser().parse_args()
@@ -128,7 +137,11 @@ def main():
 
     if compile_c:
         os.chdir(os.path.join(run_dir, relpath, 'c'))
-        call(['make'])
+        if args.jobs is not None:
+            # Call `make` with `-j` or `-j <number>` to run multiple jobs simultaneously.
+            call(['make', '--always-make'] + get_jobs_arguments(args.jobs))
+        else:
+            call(['make'])
 
     os.chdir(os.path.join(run_dir, relpath, 'src'))
     call(['armips', '-sym2', '../build/asm_symbols.txt', 'Build.asm'])
