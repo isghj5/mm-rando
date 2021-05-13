@@ -143,6 +143,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cCombatMusicDisable, "Disables combat music around all regular (non boss or miniboss) enemies in the game.");
             TooltipBuilder.SetTooltip(cHueShiftMiscUI, "Shifts the color of miscellaneous UI elements.");
             TooltipBuilder.SetTooltip(cElegySpeedups, "Applies various Elegy of Emptiness speedups.");
+            TooltipBuilder.SetTooltip(cInstantPictobox, "Remove anti-aliasing from the Pictobox pictures, which is what makes Pictobox on emulator so slow.");
         }
 
         /// <summary>
@@ -1049,6 +1050,7 @@ namespace MMR.UI.Forms
                 }
             }
             cTargettingStyle.Checked = _configuration.CosmeticSettings.EnableHoldZTargeting;
+            cInstantPictobox.Checked = !_configuration.CosmeticSettings.KeepPictoboxAntialiasing;
             cEnableNightMusic.Checked = _configuration.CosmeticSettings.EnableNightBGM;
 
             // Misc config options
@@ -1586,6 +1588,7 @@ namespace MMR.UI.Forms
             cClearHints.Enabled = v;
 
             cTargettingStyle.Enabled = v;
+            cInstantPictobox.Enabled = v;
             cSFX.Enabled = v;
             cDisableCritWiggle.Enabled = v;
             cQText.Enabled = v;
@@ -2018,6 +2021,11 @@ namespace MMR.UI.Forms
             _configuration.GameplaySettings.CustomItemList = ItemUtils.ConvertStringToItemList(ItemEditor.BaseItemList, tItemPool.Text)?.ToHashSet();
 
             UpdateItemPoolCheckboxes();
+        }
+
+        private void cInstantPictobox_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.KeepPictoboxAntialiasing = !cInstantPictobox.Checked);
         }
     }
 }

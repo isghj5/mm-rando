@@ -256,6 +256,9 @@
   <data name="inst24_swap_guitar" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\inst24-swap-guitar;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="instant_pictobox" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\instant-pictobox;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="key_boss_open" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\key-boss-open;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

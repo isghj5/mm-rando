@@ -529,6 +529,10 @@ namespace MMR.Randomizer
                 SceneUtils.ReenableNightBGM();
             }
 
+            if (!_cosmeticSettings.KeepPictoboxAntialiasing)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.instant_pictobox);
+            }
         }
 
         private void WriteMiscText()

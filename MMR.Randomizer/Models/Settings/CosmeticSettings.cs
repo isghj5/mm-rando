@@ -58,6 +58,12 @@ namespace MMR.Randomizer.Models.Settings
         public bool EnableNightBGM { get; set; }
 
         /// <summary>
+        /// Enabling this makes the randomizer not remove the pictobox antialiasing function.
+        /// Pictobox antialiasing is what makes the Pictobox incredibly slow on emulators.
+        /// </summary>
+        public bool KeepPictoboxAntialiasing { get; set; }
+
+        /// <summary>
         /// Sets the Low health beeping sfx
         /// </summary>
         public LowHealthSFX LowHealthSFX { get; set; }

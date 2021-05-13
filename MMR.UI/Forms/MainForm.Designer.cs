@@ -134,6 +134,7 @@ namespace MMR.UI.Forms
             this.tShortenCutscenes = new System.Windows.Forms.TabControl();
             this.tabCosmetics = new System.Windows.Forms.TabPage();
             this.gCosmeticOther = new System.Windows.Forms.GroupBox();
+            this.cInstantPictobox = new System.Windows.Forms.CheckBox();
             this.cTatl = new System.Windows.Forms.ComboBox();
             this.lTatl = new System.Windows.Forms.Label();
             this.cTargettingStyle = new System.Windows.Forms.CheckBox();
@@ -1502,6 +1503,7 @@ namespace MMR.UI.Forms
             // 
             // gCosmeticOther
             // 
+            this.gCosmeticOther.Controls.Add(this.cInstantPictobox);
             this.gCosmeticOther.Controls.Add(this.cTatl);
             this.gCosmeticOther.Controls.Add(this.lTatl);
             this.gCosmeticOther.Controls.Add(this.cTargettingStyle);
@@ -1513,6 +1515,19 @@ namespace MMR.UI.Forms
             this.gCosmeticOther.TabIndex = 47;
             this.gCosmeticOther.TabStop = false;
             this.gCosmeticOther.Text = "Other";
+            // 
+            // cInstantPictobox
+            // 
+            this.cInstantPictobox.AutoSize = true;
+            this.cInstantPictobox.BackColor = System.Drawing.Color.Transparent;
+            this.cInstantPictobox.Location = new System.Drawing.Point(10, 90);
+            this.cInstantPictobox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cInstantPictobox.Name = "cInstantPictobox";
+            this.cInstantPictobox.Size = new System.Drawing.Size(180, 19);
+            this.cInstantPictobox.TabIndex = 42;
+            this.cInstantPictobox.Text = "Instant Pictobox on Emulator";
+            this.cInstantPictobox.UseVisualStyleBackColor = false;
+            this.cInstantPictobox.CheckedChanged += new System.EventHandler(this.cInstantPictobox_CheckedChanged);
             // 
             // cTatl
             // 
@@ -2418,6 +2433,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lItemPoolText;
         private System.Windows.Forms.ComboBox cStartingItems;
         private System.Windows.Forms.Label lStartingItems;
+        private System.Windows.Forms.CheckBox cInstantPictobox;
     }
 }
 
