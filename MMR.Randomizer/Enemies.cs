@@ -1285,13 +1285,13 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.Dodongo.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.TradingPost.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.Clock.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.GiantBeee.ObjectIndex()
+                            NewV = GameObjects.Actor.BombBasket.ObjectIndex()
                         }); 
                         continue;
                     }

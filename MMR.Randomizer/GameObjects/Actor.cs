@@ -111,7 +111,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.BeneathTheWell)] // dont remove from well
         Fairy = 0x10, // En_Elf
 
-        [ActorizerEnabled]
+        [EnemizerEnabled] // now that they are testy, lets count them as enemies
         [FileID(54)]
         [ObjectListIndex(0xF)]
         [GroundVariants(0xFFFF)]
@@ -261,7 +261,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x1180 below graveyard
         // 0x289 gold pirate torches
         // 0x287F east clocktown
-        [GroundVariants(0x1180, 0x289, 0x287F)]
+        [GroundVariants(0x1180, 0x289, 0x287F, 0x207F)]
         [CompanionActor(MothSwarm, variant: 1, 2, 3, 4, 7)]
         [UnkillableAllVariants]
         [AlignedCompanionActor(MothSwarm, CompanionAlignment.Above, ourVariant: -1,
@@ -328,8 +328,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple)] // lets not randomize his normal spawn
         // good candidate for night and dungeon spawn only
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.RoadToIkana,
-            Scene.SouthernSwamp, Scene.WoodsOfMystery, Scene.Woodfall, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.PathToSnowhead, 
-            Scene.Snowhead, Scene.GoronVillage, Scene.DekuShrine)]
+            Scene.SouthernSwamp, Scene.WoodsOfMystery, Scene.Woodfall, Scene.TwinIslandsSpring, Scene.PathToSnowhead, 
+            Scene.Snowhead, Scene.GoronVillage, Scene.DekuShrine, Scene.StoneTower)]
         Gomess = 0x43, // En_Death 🤘
 
         [EnemizerEnabled]
@@ -715,8 +715,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(222)]
         [ObjectListIndex(0x141)]
         //01 is winter coat, 0x800 is with ice block
+        // ice block versions are limited because they are complicated collision and really long draw distance
         [GroundVariants(0xFF01, 0xFF81, 0xFF00, 0xFF80)]
-        [VariantsWithRoomMax(max:2, variant: 0xFF80, 0xFF81)]
+        [VariantsWithRoomMax(max: 2, variant: 0xFF81)]
+        [VariantsWithRoomMax(max: 1, variant: 0xFF80)]
         Wolfos = 0xEC,
 
         [EnemizerEnabled]
@@ -1081,6 +1083,19 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         HappyMaskSalesman = 0x1B5, // En_Osn
 
+        // probably an object check missing somewhere
+        //[ActorizerEnabled] // does not spawn
+        [ObjectListIndex(0x1A1)]
+        [WallVariants(0x0)] // unk because spawned by H+D
+        [UnkillableAllVariants] // not enemy type, right?
+        Target = 0x1B3, // En_Fu_Mato
+
+        //[ActorizerEnabled] // does not spawn
+        [ObjectListIndex(0x1A1)]
+        [WallVariants(0x1)] // unk because spawned by H+D
+        [UnkillableAllVariants] // not enemy type, right?
+        BombBasket = 0x1B4, // En_Fu_Kago
+
         [UnkillableAllVariants]
         Lillypad = 0x1B9,
 
@@ -1359,14 +1374,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.Grottos, Scene.InvertedStoneTower, Scene.BeneathGraveyard, Scene.BeneathTheWell,
             Scene.GoronShrine, Scene.IkanaCastle, Scene.OceanSpiderHouse, Scene.SwampSpiderHouse,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
-        Seth1 = 0x20B, // the green shirt guy, "Seth"? spiderhouses
+        Seth1 = 0x20B, // En_Set, the green shirt guy, "Seth"? spiderhouses
 
         [ActorizerEnabled]
         [ObjectListIndex(0x1F5)]
         [WallVariants(0x3F)] // 3F has no cutscene, no camera concerns
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // object is shared with multiple actors in this scene, breaks whole area
-        SkullKidPainting = 0x210,
+        SkullKidPainting = 0x210, // En_Kin2_Picture
 
         [ActorizerEnabled]
         [ObjectListIndex(0x1F8)]
@@ -1384,7 +1399,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(493)]
         [ObjectListIndex(0x201)]
         [GroundVariants(0xFF,0x80FF)] // does this include the really big one?
-        Leever = 0x216,
+        Leever = 0x216, // En_Neo_Reeba
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x203)]
+        [WallVariants(0)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
+        StoneTowerMirror = 0x219, // Bg_Ikana_Mirror
 
         //[EnemizerEnabled] // cutscene is broken without camera placement, player stuck in place
         [ObjectListIndex(0x204)]
