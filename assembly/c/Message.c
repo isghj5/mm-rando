@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <z64.h>
 #include "MMR.h"
+#include "Pictobox.h"
 
 typedef struct String {
     char* value;
@@ -530,6 +531,26 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
             gMessageExtensionState.isWrapping = false;
             gMessageExtensionState.lastSpaceIndex = -1;
             gMessageExtensionState.lastSpaceCursorPosition = 0;
+        } else if (currentCharacter == 0x13) {
+            // Write the text for the current Pictobox picture subject.
+            // TODO: This implementation is mostly a copy-paste of the code used to write grammar text, maybe clean this up later.
+            if (gMessageExtensionState.currentChar == -1) {
+                const char* text = Pictobox_CurrentText();
+                gMessageExtensionState.currentReplacement = (char*)text;
+                gMessageExtensionState.currentReplacementLength = z2_strlen(text);
+                gMessageExtensionState.currentChar = 0;
+            }
+            if (gMessageExtensionState.currentChar < gMessageExtensionState.currentReplacementLength) {
+                ctxt->msgCtx.currentMessageCharIndex--;
+                currentCharacter = gMessageExtensionState.currentReplacement[gMessageExtensionState.currentChar++];
+
+                CheckTextWrapping(ctxt, args, currentCharacter);
+
+                ctxt->msgCtx.currentMessageDisplayed[args->outputIndex] = currentCharacter;
+                return currentCharacter;
+            }
+            gMessageExtensionState.currentChar = -1;
+            currentCharacter = 0x01;
         } else {
             index--;
         }
@@ -537,7 +558,7 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
         ctxt->msgCtx.currentMessageCharIndex = index;
         return -1;
     }
-    
+
     CheckTextWrapping(ctxt, args, currentCharacter);
 
     ctxt->msgCtx.currentMessageDisplayed[args->outputIndex] = currentCharacter;

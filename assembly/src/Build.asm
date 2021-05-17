@@ -60,6 +60,7 @@
 .include "Models.Patch.asm"
 .include "MusicStaff.Patch.asm"
 .include "Pause.Patch.asm"
+.include "Pictobox.Patch.asm"
 .include "PlayerActor.Patch.asm"
 .include "Pushblock.Patch.asm"
 .include "QuestItems.Patch.asm"

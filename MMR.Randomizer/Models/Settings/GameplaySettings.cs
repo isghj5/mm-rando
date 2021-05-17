@@ -336,6 +336,11 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool FixEponaSword { get; set; } = true;
 
+        /// <summary>
+        /// Enables Pictobox prompt text to display the picture subject depending on flags.
+        /// </summary>
+        public bool EnablePictoboxSubject { get; set; } = true;
+
         #endregion
 
         #region Speedups

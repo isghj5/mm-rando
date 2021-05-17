@@ -1138,7 +1138,8 @@ typedef union {
 typedef union {
     struct {
         u32 heartPiece        : 4;
-        u32                   : 3;
+        u32                   : 2;
+        u32 pictoboxPhoto     : 1;
         u32 lullabyIntro      : 1;
         u32                   : 5;
         u32 bombersNotebook   : 1;

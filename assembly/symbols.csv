@@ -8,6 +8,7 @@
 0x80081178,z2_Yaz0_LoadAndDecompressFile
 0x80086FA0,z2_RngInt
 0x80086FD0,z2_RngSetSeed
+0x8008F1E0,z2_strlen
 0x800A7128,z2_BaseDrawCollectable
 0x800A72AC,z2_DrawRupee
 0x800A75B8,z2_DrawHeartPiece
@@ -91,6 +92,7 @@
 0x8012F608,z2_GetObjectIndex
 0x80133B3C,z2_SkelAnime_DrawLimb
 0x80133F28,z2_SkelAnime_DrawLimb2
+0x8013A240,z2_UpdatePictoFlags
 0x80147564,z2_InitButtonNoteColors
 0x801518B0,z2_ShowMessage
 0x80152498,z2_GetMessageState

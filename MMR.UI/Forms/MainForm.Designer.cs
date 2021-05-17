@@ -118,6 +118,7 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cImprovedPictobox = new System.Windows.Forms.CheckBox();
             this.cElegySpeedups = new System.Windows.Forms.CheckBox();
             this.cCloseCows = new System.Windows.Forms.CheckBox();
             this.cArrowCycling = new System.Windows.Forms.CheckBox();
@@ -1290,6 +1291,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cImprovedPictobox);
             this.groupBox7.Controls.Add(this.cElegySpeedups);
             this.groupBox7.Controls.Add(this.cCloseCows);
             this.groupBox7.Controls.Add(this.cArrowCycling);
@@ -1310,6 +1312,18 @@ namespace MMR.UI.Forms
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
+            // 
+            // cImprovedPictobox
+            // 
+            this.cImprovedPictobox.AutoSize = true;
+            this.cImprovedPictobox.Location = new System.Drawing.Point(10, 130);
+            this.cImprovedPictobox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cImprovedPictobox.Name = "cImprovedPictobox";
+            this.cImprovedPictobox.Size = new System.Drawing.Size(127, 19);
+            this.cImprovedPictobox.TabIndex = 38;
+            this.cImprovedPictobox.Text = "Improved Pictobox";
+            this.cImprovedPictobox.UseVisualStyleBackColor = true;
+            this.cImprovedPictobox.CheckedChanged += new System.EventHandler(this.cImprovedPictobox_CheckedChanged);
             // 
             // cElegySpeedups
             // 
@@ -2434,6 +2448,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.ComboBox cStartingItems;
         private System.Windows.Forms.Label lStartingItems;
         private System.Windows.Forms.CheckBox cInstantPictobox;
+        private System.Windows.Forms.CheckBox cImprovedPictobox;
     }
 }
 

@@ -62,6 +62,7 @@ extern void z2_RemoveItem(u32 item, u8 slot);
 extern void z2_ToggleSfxDampen(int enable);
 extern void z2_HandleInputVelocity(f32* linearVelocity, f32 inputVelocity, f32 increaseBy, f32 decreaseBy);
 extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giIndex);
+extern void z2_UpdatePictoFlags(GlobalContext* ctxt);
 
 // Function Prototypes (Scene Flags).
 // TODO parameters
@@ -170,6 +171,7 @@ extern void z2_SkelAnime_DrawLimb2(GlobalContext* ctxt, u32* skeleton, Vec3s* li
 
 // Function Prototypes (OS).
 extern void z2_memcpy(void* dest, const void* src, u32 size);
+extern size_t z2_strlen(const unsigned char* s);
 
 // Function Prototypes (RNG).
 extern u32 z2_RngInt(void);

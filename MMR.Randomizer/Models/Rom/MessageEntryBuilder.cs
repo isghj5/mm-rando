@@ -196,6 +196,13 @@ namespace MMR.Randomizer.Models.Rom
                 Append(0x09).Append(0x12);
 
             /// <summary>
+            /// Appends the picture subject control characters (0x09 0x13) to the message.
+            /// </summary>
+            /// <returns></returns>
+            public MessageBuilder PictureSubject() =>
+                Append(0x09).Append(0x13);
+
+            /// <summary>
             /// Appends the runtime item name start control characters (0x09 0x03) to the message and then appends the location's GetItemIndex
             /// </summary>
             /// <returns></returns>

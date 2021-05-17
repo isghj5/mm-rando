@@ -9,6 +9,7 @@
 .definelabel z2_Yaz0_LoadAndDecompressFile, 0x80081178
 .definelabel z2_RngInt, 0x80086FA0
 .definelabel z2_RngSetSeed, 0x80086FD0
+.definelabel z2_strlen, 0x8008F1E0
 .definelabel z2_BaseDrawCollectable, 0x800A7128
 .definelabel z2_DrawRupee, 0x800A72AC
 .definelabel z2_DrawHeartPiece, 0x800A75B8
@@ -93,6 +94,7 @@
 .definelabel z2_GetObjectIndex, 0x8012F608
 .definelabel z2_SkelAnime_DrawLimb, 0x80133B3C
 .definelabel z2_SkelAnime_DrawLimb2, 0x80133F28
+.definelabel z2_UpdatePictoFlags, 0x8013A240
 .definelabel z2_InitButtonNoteColors, 0x80147564
 .definelabel z2_ShowMessage, 0x801518B0
 .definelabel z2_GetMessageState, 0x80152498

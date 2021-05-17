@@ -545,6 +545,26 @@ namespace MMR.Randomizer
             }
         }
 
+        /// <summary>
+        /// Write text for pictograph prompt.
+        /// </summary>
+        /// <param name="table"><see cref="MessageTable"/> to update.</param>
+        private void WritePictographPromptText(MessageTable table)
+        {
+            table.UpdateMessages(new MessageEntryBuilder()
+                .Id(0xF8)
+                .Message(it =>
+                {
+                    it.Text("Keep this ").StartRedText().PictureSubject().StartWhiteText().Text("?").NewLine()
+                    .StartGreenText().Text(" ").NewLine()
+                    .TwoChoices().Text("Yes").NewLine().Text("No")
+                    .EndFinalTextBox()
+                    .StartWhiteText();
+                })
+                .Build()
+            );
+        }
+
         private void WriteMiscText()
         {
             _messageTable.UpdateMessages(new MessageEntryBuilder()
@@ -2985,6 +3005,11 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyHack(Resources.mods.fix_deku_drowning);
                 ResourceUtils.ApplyHack(Resources.mods.fix_collectable_flags);
                 Enemies.RemovePostGBTMikau();
+
+                if (_randomized.Settings.EnablePictoboxSubject)
+                {
+                    WritePictographPromptText(_messageTable);
+                }
 
                 progressReporter.ReportProgress(61, "Writing quick text...");
                 WriteQuickText();
