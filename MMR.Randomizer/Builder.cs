@@ -97,7 +97,7 @@ namespace MMR.Randomizer
             // 72:wagonride, 0E:boatcruise, 29:zelda, 2D:giants, 
             // 2E:guruguru, 7B:maskreveal(gaints summon cutscene), 73:keaton, 70:calling giants
             // 7D is reunion, 0x50 is sword school
-            List<int> lowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04, 0x42, 0x27, 0x31, 0x45, 0x72, 0x0E, 0x29, 0x2D, 0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50}; 
+            var lowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04, 0x42, 0x27, 0x31, 0x45, 0x72, 0x0E, 0x29, 0x2D, 0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50};
 
             // we randomize both slots and songs because if we're low on variety, and we don't sort slots
             //   then all the variety can be dried up for the later slots
@@ -185,11 +185,21 @@ namespace MMR.Randomizer
                             continue;
                         }
 
-                        // if the slot we are checking is a rarely used slot, and this song requires a custom instrument set
+                        // if the slot we are checking is a rarely used slot, and this song requires a custom instrument
                         //  skip so we don't waste precious instrument set slots on rarely heard music
-                        if (lowUseMusicSlots.Contains(targetSequence.Replaces) && ! testSeq.SequenceBinaryList.Any(u => u.InstrumentSet == null))
+                        // exception: if the song uses the unique song category, not general purpose author wanted it to be in this slot, bypass
+                        if (lowUseMusicSlots.Contains(targetSequence.Replaces) && !testSeq.Type.Contains(targetSequence.Replaces + 0x100)
+                            && !testSeq.SequenceBinaryList.Any(u => u.InstrumentSet == null))
                         {
-                            if(targetSequence.Type[0] < 8) // to reduce spam, limit this only to the regular categories
+                            var previouslyUsedBanks = testSeq.SequenceBinaryList.FindAll(u => (u.InstrumentSet.Hash != 0 && u.InstrumentSet.Hash == RomData.InstrumentSetList[u.InstrumentSet.BankSlot].Hash));
+                            if (previouslyUsedBanks.Count >= 1)
+                            {
+                                // exception: if another song already chosen has claimed a bank this song can use
+                                WriteOutput(GetSpacedString(testSeq.Name) + " accepted despite low use because an already used bank is available");
+                                break;
+                            }
+
+                            if (targetSequence.Type[0] < 8) // to reduce spam, limit this only to the regular categories
                             {
                                 WriteOutput(GetSpacedString(testSeq.Name) + " skipped for slot " + targetSequence.Replaces.ToString("X2") + " because it's a low use slot and requires a custom bank");
                             }
