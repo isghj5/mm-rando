@@ -792,6 +792,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x89), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards)]
         MaskKamaro,
 
+        [Visible]
         [StartingItem(0xC5CE4F, 0x41)]
         [ItemName("Gibdo Mask"), LocationName("Pamela's Father"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a healed spirit", "a lost father"), GossipItemHint("a mask of monsters")]
@@ -825,6 +826,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x7D), ItemPool(ItemCategory.Masks, LocationCategory.Chests)]
         MaskGiant,
 
+        [Visible]
         [StartingItem(0xC5CE47, 0x33)]
         [ItemName("Goron Mask"), LocationName("Darmani"), Region(Region.MountainVillage)]
         [GossipLocationHint("a healed spirit", "the lost champion"), GossipItemHint("a mountain spirit")]
@@ -833,6 +835,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x79), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards)]
         MaskGoron,
 
+        [Visible]
         [StartingItem(0xC5CE4D, 0x34)]
         [ItemName("Zora Mask"), LocationName("Mikau"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a healed spirit", "a fallen guitarist"), GossipItemHint("an ocean spirit")]
