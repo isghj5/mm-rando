@@ -1291,7 +1291,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.BombBasket.ObjectIndex()
+                            NewV = GameObjects.Actor.StoneTowerMirror.ObjectIndex()
                         }); 
                         continue;
                     }
