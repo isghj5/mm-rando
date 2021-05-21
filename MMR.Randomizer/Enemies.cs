@@ -1172,9 +1172,9 @@ namespace MMR.Randomizer
             {
                 return; // if no enemies, no point in continuing
             }
-
             WriteOutput("time to get scene enemies: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
-            List<int>   sceneObjects = GetSceneEnemyObjects(scene);
+
+            var sceneObjects = GetSceneEnemyObjects(scene);
             WriteOutput(" time to get scene objects: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             WriteOutput("For Scene: [" + scene.SceneEnum.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
@@ -1182,6 +1182,7 @@ namespace MMR.Randomizer
 
             // if actor doesn't exist but object does, probably spawned by something else, remove from actors to randomize
             // TODO check for side objects that no longer need to exist and replace with possible alt objects
+            // example: dinofos has a second object: dodongo, just for the fire breath dlist
             foreach (int obj in sceneObjects.ToList())
             {
                 if ( ! (EnemyList.FindAll(u => u.ObjectIndex() == obj)).Any( u => sceneEnemies.Any( w => w.ActorID == (int) u)))
@@ -1209,13 +1210,10 @@ namespace MMR.Randomizer
             }
             WriteOutput(" time to finish removing unnecessary objects: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
-            // way later, we will want a list of all actors we skipped, for actor overlay RAM budget considerations
-            var untouchedRemainingActors = scene.GetAllActors().FindAll(u => ! sceneObjects.Contains(u.ObjectID));
-
             // some scenes are blocked from having enemies, do this ONCE before GetMatchPool, which would do it per-enemy
             var sceneAcceptableEnemies = EnemyList.FindAll( u => ! u.BlockedScenes().Contains(scene.SceneEnum));
 
-            // issue: this function is called in paralel, if the order is different the random object will be different and not seed-reproducable
+            // issue: this function is called in paralel, if the order is different the Random object will be different and not seed-reproducable
             // instead of passing the random obj, we pass seed and add it to the unique scene number to get a replicatable, but random, seed
             var rng = new Random(seed + scene.File);
 
@@ -1254,7 +1252,21 @@ namespace MMR.Randomizer
             while (true)
             {
                 /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
-                loopsCount += 1;
+
+                // if we've tried 25 seeds and no results, re-shuffle the candidate lists, maybe the rng was bad
+                if (loopsCount % 25 == 0)
+                {
+                    // reinit actorCandidatesLists because this RNG is bad
+                    // TODO: turn this into a function as it copies code from above
+                    for (int i = 0; i < sceneObjects.Count; i++)
+                    {
+                        // get a list of all enemies (in this room) from enemylist that have the same OBJECT as our object that have an actor we also have
+                        originalEnemiesPerObject.Add(sceneEnemies.FindAll(u => u.ObjectID == sceneObjects[i]));
+                        // get a list of matching actors that can fit in the place of the previous actor
+                        var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == sceneObjects[i]);
+                        actorCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene, sceneAcceptableEnemies.ToList(), objectHasFairyDroppingEnemy));
+                    }
+                }
                 if (loopsCount >= 0x900) //1200) // inf loop catch
                 {
 
@@ -1274,6 +1286,7 @@ namespace MMR.Randomizer
                     FlushLog();
                     throw new Exception(error);
                 }
+                loopsCount++;
 
                 chosenReplacementEnemies = new List<Actor>();
                 chosenReplacementObjects = new List<ValueSwap>();
@@ -1295,7 +1308,7 @@ namespace MMR.Randomizer
                         }); 
                         continue;
                     }
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
@@ -1306,7 +1319,7 @@ namespace MMR.Randomizer
                         continue;
                     }
                     // todo torch on leevers is throwing wierd errors when it comes to companions
-                    /*if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
+                    if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.RealBombchu.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
