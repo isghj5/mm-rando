@@ -188,10 +188,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0xBC)]
         [GroundVariants(1,2,3,4)] // 3 is southern swamp, 4 is laundry pool, the versions in teh mountaion have the F flag, think the rest are numbered
-        [UnkillableAllVariants]
         [VariantsWithRoomMax(max: 1, variant: 1, 2, 3, 4)]
+        [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.LaundryPool)]
-        Frog1 = 0x22,
+        Frog1 = 0x22, // En_Minifrog
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2540)]
@@ -207,28 +207,27 @@ namespace MMR.Randomizer.GameObjects
         Skulltula = 0x24,
 
         //[ActorizerEnabled]
+        // issues: listing all the vars for all signs is going to be hell
         [ObjectListIndex(0xFC)] // the spreadsheet thinks this is free but I dont think so
         //[GroundVariants()]
         [UnkillableAllVariants]
         Sign = 0x26, // En_A_Obj
 
-        //[EnemizerEnabled] // sometimes crash, caused by paths I bet TODO rewrite him so he just wanders around a home instead
+        [EnemizerEnabled] // sometimes crash, caused by paths I bet TODO rewrite him so he just wanders around a home instead
         [ActorInitVarOffset(0x1CC0)]
         [FileID(71)]
         [ObjectListIndex(0x1D)]
-        // 2 worked in snowhead, seems to fly in a straight line though, pathing?
-        [PatrolVariants(2)] // 3 works, 1+4 crashes, assuming 7 also crashes because probably a flag
-        [VariantsWithRoomMax(max: 1, variant: 2)]
+        // the first byte is path, if its FF it should sit in one spot instead of pathing, which means no crash
+        //   would be better if it patroled or something but better that crash at least
+        [FlyingVariants(0xFF)]
+        [GroundVariants(0xFF)]
+        [VariantsWithRoomMax(max: 10, variant: 0xFF)]
         [RespawningAllVariants] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
-        //[EnemizerScenesExcluded(0x18, 0x16)] // 0x18 is ISTT
-        [EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
-        // scenes that seem fine: path to snowhead, grottos, well, road to southern swampm ikana canyon, spring twin islands
-        // graveyard doesnt crash, but he doesn't spawn here either? its just an empty sky
-        [EnemizerScenesPlacementBlock(Scene.AstralObservatory, Scene.RoadToIkana, 
-            Scene.Woodfall, Scene.PathToMountainVillage, Scene.IkanaCastle,
-            Scene.MountainVillageSpring, Scene.BeneathGraveyard, Scene.DekuShrine,
-            Scene.IkanaGraveyard )] // known crash locations
-        DeathArmos = 0x2D,
+        //[EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
+        // this old list of crash locations is for pathing versions, which we no longer use
+        //[EnemizerScenesPlacementBlock(Scene.AstralObservatory, Scene.RoadToIkana, Scene.Woodfall, Scene.PathToMountainVillage, Scene.IkanaCastle,
+        //    Scene.MountainVillageSpring, Scene.BeneathGraveyard, Scene.DekuShrine, Scene.IkanaGraveyard )] // known crash locations
+        DeathArmos = 0x2D, // En_Famos
 
         [ActorizerEnabled]
         [ActorInitVarOffset(0x1240)]
@@ -238,7 +237,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 8, variant: 0xFFFF)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.OdolwasLair)]//Scene.GoronRacetrack)] // some poor unfortunate souls asked for a more chaotic race
-        BombFlower = 0x2F,
+        BombFlower = 0x2F, // En_Bombf
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1380)]
@@ -826,15 +825,22 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x161)]
         Raft = 0x13A,// carniverous raft, woodfall
 
+        //[ActorizerEnabled] // weirdly huge actor, and boring
         [ObjectListIndex(0x165)]
         [UnkillableAllVariants]
         PottedPlant = 0x13E,
 
-        //[EnemizerEnabled] // does not spawn, tcrf can get it to spawn but it does nothing
-        //[ObjectListIndex(0x161)]
-        //[GroundVariants(0)]
-        //[UnkillableAllVariants]
-        //Frog2 = 0x147, // this doesn't exist in the actors by area list, not vanilla
+        [ActorizerEnabled] // cannot talk to them BUT YOU CAN KILL THEM
+        [ObjectListIndex(0xBC)]
+        [GroundVariants(0,1,2,3,4,5)] // 6 colors
+        [UnkillableAllVariants]
+        Frog2 = 0x147, // this doesn't exist in the actors by area list, not vanilla
+
+        //[EnemizerEnabled] // crash, also object is huge so never gets put places
+        [ObjectListIndex(0x192)] // cutscene object shared with zelda and skullkid, so BIG
+        [GroundVariants(0)]
+        [UnkillableAllVariants]
+        Dm_Sa = 0x149, // Dm_Sa // might be saria but because crash unk
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2D30)]
@@ -903,10 +909,15 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
         BadBat = 0x15B,
 
-        [ObjectListIndex(1)] // not sure this isn't an error
+        [ActorizerEnabled]
+        // there are actaually 3 others, but they are three separate objects, so hard to program
+        [ObjectListIndex(0x173)]
         // spreadsheet thinks 0x206 could be it
+        [GroundVariants(0)]
+        [VariantsWithRoomMax(max: 1, variant:0)]
         [UnkillableAllVariants]
-        MikauGrave = 0x15C, // En_Sekihi
+        // might be used for mikau grave, but also beta actors that teach songs...??
+        MagicSlab = 0x15C, // En_Sekihi
 
         [ActorInitVarOffset(0x37D0)]
         [FileID(315)]
@@ -1032,6 +1043,15 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         Mine = 0x185, // Obj_Mine
 
+        //[ActorizerEnabled]
+        [ObjectListIndex(0x77)] // 1
+        // 0 is tatl regular
+        [FlyingVariants(0)] // unk
+        [GroundVariants(0)] // unk
+        [VariantsWithRoomMax(max: 1, variant:0)]
+        [UnkillableAllVariants]
+        Dm_Char4 = 0x196,
+
         [ActorizerEnabled]
         [ObjectListIndex(0x18C)]
         [WallVariants(0x907F, 0xA07F)]
@@ -1047,6 +1067,14 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 4, 9)]
         PalaceGuardDeku = 0x1A0, // En_Guard_Nuts
+
+        //[ActorizerEnabled] // crash in clocktower, too big for anywhere else
+        // 100 does not spawn
+        [ObjectListIndex(0xB7)] // 100 and FF00
+        [GroundVariants(0xFF00)] // all vanilla are 0xB7
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.RomaniRanch, Scene.RanchBuildings)]
+        Romani1 = 0x1A4, // En_Ma4
 
         [ActorizerEnabled]
         [ActorInstanceSize(0x330)] // 274 but fake increase size to reduce frequency

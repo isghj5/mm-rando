@@ -1047,6 +1047,27 @@ namespace MMR.Randomizer
                     }
                 );
             }
+            if (scene.SceneEnum == GameObjects.Scene.MountainVillageSpring)
+            {
+                // backup: shrink, there is a fairy pot that nobody uses, and a scarecrow almost nobody uses, remove them
+                scene.Maps[0].Actors[3].ChangeActor(GameObjects.Actor.Empty);
+                objList.Add(
+                    new ValueSwap()
+                    {
+                        OldV = 0x11D, // Scarecrow
+                        NewV = SMALLEST_OBJ
+                    }
+                );
+                scene.Maps[0].Actors[46].ChangeActor(GameObjects.Actor.Empty);
+                objList.Add(
+                    new ValueSwap()
+                    {
+                        OldV = 0xF9, // Clay pot
+                        NewV = SMALLEST_OBJ
+                    }
+                );
+            }
+
             if (scene.SceneEnum == GameObjects.Scene.IkanaCanyon)
             {
                 // backup: remove garo ghosts, they are not required and are easily ignored
@@ -1267,7 +1288,7 @@ namespace MMR.Randomizer
                         actorCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene, sceneAcceptableEnemies.ToList(), objectHasFairyDroppingEnemy));
                     }
                 }
-                if (loopsCount >= 0x900) //1200) // inf loop catch
+                if (loopsCount >= 900) //1200) // inf loop catch
                 {
 
 
@@ -1298,28 +1319,28 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.TradingPost.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.Clock.ObjectIndex())
-                    {
-                        chosenReplacementObjects.Add(new ValueSwap()
-                        {
-                            OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.StoneTowerMirror.ObjectIndex()
-                        }); 
-                        continue;
-                    }
-                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
                             NewV = GameObjects.Actor.Treee.ObjectIndex()
+                        }); 
+                        continue;
+                    }
+                    /*if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
+                    {
+                        chosenReplacementObjects.Add(new ValueSwap()
+                        {
+                            OldV = sceneObjects[objCount],
+                            NewV = GameObjects.Actor.Romani1.ObjectIndex()
                         });
                         continue;
                     }
                     // todo torch on leevers is throwing wierd errors when it comes to companions
-                    if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
+                    /* if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.RealBombchu.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()

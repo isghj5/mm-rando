@@ -905,53 +905,6 @@ namespace MMR.Randomizer
                     .Build()
                 );
 
-                var ginkoFid = 337;
-                RomUtils.CheckCompressed(ginkoFid);
-                var ginkoData = RomData.MMFileList[ginkoFid].Data;
-
-                // skip regular greeting, straight to choice menu
-                ginkoData[0x187] = 0x68; // text 0x44C "Would you like to open a new account?"
-                ginkoData[0x193] = 0x68; // turned into text 0x468 "Deposit/Withdrawl/Cancel"
-                ginkoData[0x1D7] = 0x68; // text 0x466 "You need somethin?"
-                ginkoData[0x1EB] = 0x68; // turned into text 0x468 "Deposit/Withdrawl/Cancel"
-                ginkoData[0x1F7] = 0x68; // text 0x467 "You need something this late the moon is falling bro"
-                ginkoData[0x203] = 0x68; // turned into text 0x468 "Deposit/Withdrawl/Cancel"
-
-                ginkoData[0x787] = 0x6E; // text 0x469 "So..."
-                ginkoData[0x7BF] = 0x6E; // turned into text 0x46E "How much do you want?"
-                ginkoData[0x7EF] = 0x6E; //
-                ginkoData[0x7FB] = 0x6E; //
-
-                // shorten first rup deposit before
-                ginkoData[0x73B] = 0x50; // text 0x479 "Well, are you gonna make a deposit? (input)" -> "Alright!" -> "So..."
-                ginkoData[0x75F] = 0x50; // turned into text "How much? How much?" [rupee prompt]"
-
-                // shorten first rup deposit after
-                ginkoData[0x397] = 0x5A; // text 0x461 "So, little guy, what's your name?"  -> name huh? -> yada yada
-                ginkoData[0x3A3] = 0x5A; // turned into text 0x45A "All right, little guy, now I've got a total of [rupees] from you!"
-
-                // rupee count in text is copied from savecontext bank only in certain spots,
-                // if we skip the stamp text then it never gets copied on our first deposit.
-                // solution: After deposit it gets set but ONLY if you aren't making a new account, so we change the branch to ignore that possibility
-                ginkoData[0x363] = 0x02; // change branch if "player needs to be stamped" is 1 (TRUE) to 2 (never) so we use else block
-
-                // issue: bank rupee count in text is copied from the actual value at only very specific spots
-                // we need to overwrite some unused code, to set the bank text first
-                ReadWriteUtils.Arr_WriteU32(ginkoData, 0xC94, 0xA60F025C); // sh    t7,0x025C(s0)   // used to be C98 in branch delay slot
-                ReadWriteUtils.Arr_WriteU32(ginkoData, 0xC98, 0x3C09801F); // lui   t1,0x801F
-                ReadWriteUtils.Arr_WriteU32(ginkoData, 0xC9C, 0x2529F670); // addiu t1,t1,0xF670    // above and this load savecontext ptr
-                ReadWriteUtils.Arr_WriteU32(ginkoData, 0xCA0, 0x8FA4002C); // lw    a0,0x002C($sp)  // load globalCtx ptr from stack
-                ReadWriteUtils.Arr_WriteU32(ginkoData, 0xCA4, 0x8D2F0EDC); // lw    t7,0x0EDC(t1)   // load bank rupees from savecontext
-                ReadWriteUtils.Arr_WriteU32(ginkoData, 0xCA8, 0x3C010001); // lui   $at,0x0001      // for some reason there is a one offset on messagecontext
-                ReadWriteUtils.Arr_WriteU32(ginkoData, 0xCAC, 0x00240821); // addu  $at,$at,a0      // AT = message context
-                ReadWriteUtils.Arr_WriteU32(ginkoData, 0xCB0, 0x31F8FFFF); // andi  t8,t7,0xFFFF    // only the short though
-                ReadWriteUtils.Arr_WriteU32(ginkoData, 0xCB4, 0xAC386984); // sw    t8,0x6984($at)  // store value in globalCtx->msgCtx
-
-                ReadWriteUtils.Arr_WriteU32(ginkoData, 0xCB8, 0x0); // nop // extra spaces where the old code might do something bad, remove
-                ReadWriteUtils.Arr_WriteU32(ginkoData, 0xCBC, 0x0); // nop
-
-                // possible issue: can bank rewards still be re-gettable? first attempt did not show that
-
             }
         }
 
