@@ -12,6 +12,7 @@
 #define ActorOverlayTableAddr            0x801AEFD0
 #define GetItemGraphicTableAddr          0x801BB170
 #define GameStateTableAddr               0x801BD910
+#define ItemUpgradeCapacityAddr          0x801C1E00
 #define ItemTextureSegAddrTableAddr      0x801C1E6C // Segment address table used for item textures.
 #define ObjectTableAddr                  0x801C2740
 #define SongNotesAddr                    0x801CFC98
@@ -24,6 +25,7 @@
 // Data.
 #define gActorOverlayTable               ((ActorOverlay*)            ActorOverlayTableAddr)
 #define gSaveContext                     (*(SaveContext*)            SaveContextAddr)
+#define gItemUpgradeCapacity             (*(ItemUpgradeCapacity*)    ItemUpgradeCapacityAddr)
 #define dmadata                          ((DmaEntry*)                DmaEntryTableAddr)
 #define gGlobalContext                   (*(GlobalContext*)          GlobalContextAddr)
 #define gGameStateInfo                   (*(GameStateTable*)         GameStateTableAddr)
@@ -123,6 +125,9 @@ extern s16 z2_ActorCutscene_GetAdditionalCutscene(s16 index);
 extern s16 z2_ActorCutscene_GetLength(s16 index);
 extern s16 z2_ActorCutscene_GetCurrentCamera(void);
 extern void z2_ActorCutscene_SetReturnCamera(s16 index);
+
+// Function Prototypes (Font)
+extern void z2_Kanfont_LoadAsciiChar(GlobalContext* ctxt, u8 character, s32 iParm3);
 
 // Function Prototypes (Drawing).
 extern void z2_BaseDrawCollectable(Actor* actor, GlobalContext* ctxt);

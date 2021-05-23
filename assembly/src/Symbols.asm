@@ -68,6 +68,7 @@
 .definelabel z2_ActorCutscene_GetLength, 0x800F20F8
 .definelabel z2_ActorCutscene_GetCurrentCamera, 0x800F21B8
 .definelabel z2_ActorCutscene_SetReturnCamera, 0x800F23C4
+.definelabel z2_Kanfont_LoadAsciiChar, 0x800F4F54
 .definelabel z2_memcpy, 0x800FEC90
 .definelabel z2_Math_Sins, 0x800FED84
 .definelabel z2_HandleInputVelocity, 0x800FF2F8

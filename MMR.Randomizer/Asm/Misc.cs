@@ -55,6 +55,11 @@ namespace MMR.Randomizer.Asm
         public bool DonGero { get; set; }
 
         /// <summary>
+        /// Whether or not inputting Z/R should be handled during bank withdraw/deposit.
+        /// </summary>
+        public bool FastBankRupees { get; set; }
+
+        /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
@@ -66,6 +71,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FishermanGame ? (uint)1 : 0) << 29;
             flags |= (this.BoatArchery ? (uint)1 : 0) << 28;
             flags |= (this.DonGero ? (uint)1 : 0) << 27;
+            flags |= (this.FastBankRupees ? (uint)1 : 0) << 26;
             return flags;
         }
     }
@@ -343,6 +349,7 @@ namespace MMR.Randomizer.Asm
             this.Speedups.FishermanGame = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FishermanGame);
             this.Speedups.SoundCheck = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.MilkBarPerformance);
             this.Speedups.DonGero = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.HungryGoron);
+            this.Speedups.FastBankRupees = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText);
 
             // If using Adult Link model, allow Mikau cutscene to activate early.
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;

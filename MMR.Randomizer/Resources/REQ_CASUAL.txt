@@ -1398,8 +1398,8 @@
 32
 
 - Bank HP
-1114
 
+1114,1195;31
 0
 0
 
@@ -2449,7 +2449,7 @@
 
 - Bank 5r
 
-
+1114;1195
 0
 0
 
@@ -6211,7 +6211,7 @@
 
 - Milk Road Keaton Grass 9
 1096,1103
-
+1196;15;24;12
 0
 0
 
@@ -6265,7 +6265,7 @@
 
 - North Clock Town Keaton Grass 9
 1096,1103
-
+1196;15;24;12
 0
 0
 
@@ -6319,7 +6319,7 @@
 
 - Mountain Village Spring Keaton Grass 9
 1096,1103,108
-
+1196;15;24;12
 0
 0
 
@@ -7169,3 +7169,15 @@
 0
 0
 ;Drop a bomb near 3 of the jars, then use Blast Mask to break the remaining 2 jars at the same time.
+- Faster Bank
+
+
+0
+0
+;Makes Bank 2 require nothing, and Bank 3 require any wallet.
+- Keaton Grass Small Spin
+
+
+0
+0
+;Hit all 9 keaton bushes with a small sword and small spin attack.

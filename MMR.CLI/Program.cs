@@ -154,7 +154,7 @@ namespace MMR.CLI
             }
             if (string.IsNullOrWhiteSpace(filename))
             {
-                filename = FileUtils.MakeFilenameValid(DateTime.UtcNow.ToString("o")) + ".z64";
+                filename = FileUtils.MakeFilenameValid($"MMR-{typeof(Randomizer.Randomizer).Assembly.GetName().Version}-{DateTime.UtcNow:o}") + ".z64";
             }
             else if (Path.GetExtension(filename) != ".z64")
             {

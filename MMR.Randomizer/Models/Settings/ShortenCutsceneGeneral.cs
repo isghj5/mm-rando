@@ -29,6 +29,10 @@ namespace MMR.Randomizer.Models.Settings
         [HackContent(nameof(Resources.mods.remove_tatl_interrupts))]
         TatlInterrupts = 1 << 5,
 
+        [Description("Skips the irrelevant bank text. Allows using Z/R to set deposit/withdraw amount to min/max.")]
+        [HackContent(nameof(Resources.mods.faster_bank_text))]
+        FasterBankText = 1 << 6,
+
         [Description("Various cutscenes are skipped or otherwise shortened.")]
         [HackContent(nameof(Resources.mods.short_cutscenes))]
         EverythingElse = 1 << 31,

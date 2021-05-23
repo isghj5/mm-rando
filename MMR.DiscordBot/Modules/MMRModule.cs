@@ -95,7 +95,7 @@ namespace MMR.DiscordBot.Modules
                 {
                     try
                     {
-                        (var patchPath, var hashIconPath, var spoilerLogPath) = await MMRService.GenerateSeed(DateTime.UtcNow, null);
+                        var (patchPath, hashIconPath, spoilerLogPath, _) = await MMRService.GenerateSeed(DateTime.UtcNow, null);
                         if (File.Exists(patchPath) && File.Exists(hashIconPath) && File.Exists(spoilerLogPath))
                         {
                             foreach (var user in mentionedUsers)
@@ -139,22 +139,25 @@ namespace MMR.DiscordBot.Modules
                 }
             }
             var now = DateTime.UtcNow;
-            await UserSeedRepository.Save(new UserSeedEntity
+            var userSeedEntity = new UserSeedEntity
             {
                 UserId = Context.User.Id,
                 LastSeedRequest = now
-            });
+            };
+            await UserSeedRepository.Save(userSeedEntity);
             var messageResult = await ReplyAsync("Generating seed...");
             new Thread(async () =>
             {
                 try
                 {
-                    (var patchPath, var hashIconPath, var spoilerLogPath) = await MMRService.GenerateSeed(now, settingName);
+                    var (patchPath, hashIconPath, spoilerLogPath, version) = await MMRService.GenerateSeed(now, settingName);
                     await Context.Channel.SendFileAsync(patchPath);
                     await Context.Channel.SendFileAsync(hashIconPath);
                     File.Delete(patchPath);
                     File.Delete(hashIconPath);
                     await messageResult.DeleteAsync();
+                    userSeedEntity.Version = version;
+                    await UserSeedRepository.Save(userSeedEntity);
                 }
                 catch
                 {
@@ -172,18 +175,18 @@ namespace MMR.DiscordBot.Modules
                 // Silently ignore.
                 return;
             }
-            
-            var lastSeedRequest = (await UserSeedRepository.GetById(Context.User.Id))?.LastSeedRequest;
-            if (!lastSeedRequest.HasValue)
+
+            var userSeedEntity = await UserSeedRepository.GetById(Context.User.Id);
+            if (userSeedEntity == null)
             {
                 await ReplyAsync("You haven't generated any seeds recently.");
                 return;
             }
-            var spoilerLogFilename = MMRService.GetSpoilerLogPath(lastSeedRequest.Value);
-            if (File.Exists(spoilerLogFilename))
+            var (_, _, _, spoilerLogPath, _) = MMRService.GetSeedPaths(userSeedEntity.LastSeedRequest, userSeedEntity.Version);
+            if (File.Exists(spoilerLogPath))
             {
-                var result = await Context.Channel.SendFileAsync(spoilerLogFilename);
-                File.Delete(spoilerLogFilename);
+                var result = await Context.Channel.SendFileAsync(spoilerLogPath);
+                File.Delete(spoilerLogPath);
             }
             else
             {
