@@ -492,3 +492,21 @@
 ;   jal     0x801343C0
 .org 0x80AAB370
     jal     Models_DrawOcarina
+
+.headersize G_DM_STK_DELTA
+; Replaces:
+;   lw      v0, 0x02B0 (a1)
+;   lui     t9, 0x0601
+;   addiu   t9, t9, 0xCAD0
+;   addiu   t4, v0, 0x0008
+;   sw      t4, 0x02B0 (a1)
+;   sw      t9, 0x0004 (v0)
+;   sw      t2, 0x0000 (v0)
+.org 0x80AA32B4
+    lw      a0, 0x00A0 (sp)
+    jal     Models_DrawOcarinaLimb
+    or      a1, s0, r0
+    lw      a1, 0x0030 (sp)
+    nop
+    nop
+    nop
