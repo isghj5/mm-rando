@@ -182,7 +182,7 @@ namespace MMR.DiscordBot.Modules
                 await ReplyAsync("You haven't generated any seeds recently.");
                 return;
             }
-            var (_, _, _, spoilerLogPath, _) = MMRService.GetSeedPaths(userSeedEntity.LastSeedRequest, userSeedEntity.Version);
+            var (_, _, _, spoilerLogPath, _) = MMRService.GetSeedPaths(userSeedEntity.LastSeedRequest, userSeedEntity.Version ?? "1.13.0.13");
             if (File.Exists(spoilerLogPath))
             {
                 var result = await Context.Channel.SendFileAsync(spoilerLogPath);

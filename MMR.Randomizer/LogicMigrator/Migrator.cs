@@ -108,6 +108,11 @@ namespace MMR.Randomizer.LogicMigrator
                 AddRupeesAndFixedDrops3(lines);
             }
 
+            if (GetVersion(lines) < 19)
+            {
+                AddRupeesAndFixedDrops4(lines);
+            }
+
             return string.Join("\r\n", lines);
         }
 
@@ -2318,6 +2323,49 @@ namespace MMR.Randomizer.LogicMigrator
             {
                 "Zora Cape Jar Game",
                 "Ikana Graveyard Day 2 Bats",
+            };
+            var newItems = itemNames.Select((itemName, index) => new MigrationItem
+            {
+                ID = startIndex + index
+            }).ToArray();
+            for (var i = 0; i < lines.Count; i++)
+            {
+                var line = lines[i];
+                if (line.StartsWith("-") || string.IsNullOrWhiteSpace(line) || line.StartsWith(";"))
+                {
+                    continue;
+                }
+                var updatedItemSections = line
+                    .Split(';')
+                    .Select(section => section.Split(',').Select(id =>
+                    {
+                        var itemId = int.Parse(id);
+                        if (itemId >= startIndex)
+                        {
+                            itemId += newItems.Length;
+                        }
+                        return itemId;
+                    }).ToList()).ToList();
+                lines[i] = string.Join(";", updatedItemSections.Select(section => string.Join(",", section)));
+            }
+            foreach (var item in newItems)
+            {
+                lines.Insert(item.ID * 6 + 1, $"- {itemNames[item.ID - startIndex]}");
+                lines.Insert(item.ID * 6 + 2, string.Join(",", item.DependsOnItems));
+                lines.Insert(item.ID * 6 + 3, string.Join(";", item.Conditionals.Select(c => string.Join(",", c))));
+                lines.Insert(item.ID * 6 + 4, $"{item.TimeNeeded}");
+                lines.Insert(item.ID * 6 + 5, "0");
+                lines.Insert(item.ID * 6 + 6, "");
+            }
+        }
+
+        private static void AddRupeesAndFixedDrops4(List<string> lines)
+        {
+            const int startIndex = 1068;
+            lines[0] = "-version 19";
+            var itemNames = new string[]
+            {
+                "Cucco Shack Potted Plant",
             };
             var newItems = itemNames.Select((itemName, index) => new MigrationItem
             {
