@@ -199,7 +199,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x20)]
         // 4 is in the astral observatory, and has a spawn kill flag, so don't use
         [FlyingVariants(0xEF, 0x7F, 0x3F, 0x4)]
-        [RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
+        //[RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
+        [VariantsWithRoomMax(max: 0, variant: 4)] // just dont use, it might be more broken and a cause of a crash? doubt
         //[GroundVariants(0xEF,0x7F,4)] // remember, this works for _spawns_
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, 
@@ -1174,8 +1175,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x129)]
         [GroundVariants(0xFFFF)] // zero is regular, -1 is credits?
+        //[GroundVariants(0)] // zero is regular, -1 is credits?
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
+        [EnemizerScenesPlacementBlock(Scene.SouthClockTown)]
+        [EnemizerScenesExcluded(Scene.TreasureChestShop)]
         BombchuGirl = 0x1C1, // En_Takaraya
 
         [ActorizerEnabled]

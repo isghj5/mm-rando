@@ -1338,7 +1338,7 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
@@ -1347,17 +1347,17 @@ namespace MMR.Randomizer
                             NewV = GameObjects.Actor.Moon1.ObjectIndex()
                         }); 
                         continue;
-                    }
-                    /* if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
+                    } // */
+                    /* if (scene.File == GameObjects.Scene.SouthClockTown.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.Muto.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Lulu.ObjectIndex()
+                            NewV = GameObjects.Actor.BombchuGirl.ObjectIndex()
                         });
                         continue;
-                    }
+                    }// */
                     // todo torch on leevers is throwing wierd errors when it comes to companions
                     /* if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.RealBombchu.ObjectIndex())
