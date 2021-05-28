@@ -318,8 +318,9 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.TerminaField)] // need to keep in termina field for rupee rando
         Treee = 0x41, // En_Wood2
 
-        [EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky, and his color darkening is wack
-        [ActorInstanceSize(0x938 + (0x2a0 * 20))] // 0x938 // oversized because he spawns little bats and can easily overblow ram
+        //[EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky, and his color darkening is wack
+        [ActorInstanceSize(0x938 + (0x2a0 * 22))] // 0x938 // oversized because he spawns little bats and can easily overblow ram
+        // WARNING: this size aprox does NOT include the actor overlay size of the bats (En_Minideath)
         [ObjectListIndex(0x52)]
         [GroundVariants(0)] // can fly, but weirdly is very bad at changing height if you fight in a multi-level area
         [OnlyOneActorPerRoom] // only fight her if you fight only one
@@ -331,6 +332,8 @@ namespace MMR.Randomizer.GameObjects
             Scene.Snowhead, Scene.GoronVillage, Scene.DekuShrine, Scene.StoneTower)]
         Gomess = 0x43, // En_Death 🤘
 
+        MiniDeath = 0x44, // En_MiniDeath
+
         [EnemizerEnabled]
         //[ItemsReqRemove(Item.ItemBombBag)]
         [ActorInitVarOffset(0x1240)]
@@ -341,7 +344,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, 0x600, 0x800, 0x500, 0xFF00, 0x300)] // 5 is plenty
         Beamos = 0x47, // En_Vm 
 
-        [ActorizerEnabled]
+        [ActorizerEnabled] // temp, testing snowing
         [ActorInstanceSize(0x1650)]
         [ObjectListIndex(0x1)]// gameplay_keep obj 1
         // variety 01 in giants crashes if placed in goron shrine
@@ -407,10 +410,13 @@ namespace MMR.Randomizer.GameObjects
         GoldSkullTula = 0x50, // En_Sw "Skullwalltulla"
 
         // hmm, this fights with demo_kankyo, need to think of a way to keep these two apart
-        [ObjectListIndex(1)] // gameplay_keep 1
+        //[ActorizerEnabled] // wont snow with obj 1 or 0x1D8 might need weathertag
+        //[ObjectListIndex(1)] // gameplay_keep 1
+        [ObjectListIndex(0x1D8)] // the fuck is this object??
         [FlyingVariants(3)] // 3 is snow
+        [GroundVariants(3)] // 3 is snow
         [UnkillableAllVariants]
-        Environement = 0x51, // Object_Kankyo
+        Weather = 0x51, // Object_Kankyo
 
         [ActorizerEnabled]
         [ActorInstanceSize(0x194)]
@@ -581,6 +587,12 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
         Bombiwa = 0x92, // Obj_Bombiwa
 
+        [ActorizerEnabled]
+        [ObjectListIndex(0xF1)]
+        [GroundVariants(1, 2, 0x503, 0x603)]
+        [UnkillableAllVariants]
+        Carpenter = 0x9C, // En_Daiku
+
         //[ActorizerEnabled] // does not spawn because code checks for chicken object
         [FileID(144)]
         [ObjectListIndex(0xF2)]
@@ -592,6 +604,14 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // puff of smoke, and it somehow ruins day1->2 transition wtf
         [ObjectListIndex(0x1)] // gameplay keep obj 1
         En_Clear_Tag = 0xA2, // en_clear_tag in OOT was arwing, but not for us?
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x248)]
+        [GroundVariants(3, 0xFF, 0)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.MilkBar)]
+        Gorman = 0xA4, // En_Gm
 
         [ActorizerEnabled]
         [FileID(151)]
@@ -866,7 +886,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x16C)]
         [GroundVariants(0)]
-        [VariantsWithRoomMax(max: 3, variant:0)]//[OnlyOneActorPerRoom]
+        [VariantsWithRoomMax(max: 3, variant:0)]
         //[EnemizerScenesExcluded(Scene.EastClockTown)]
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall, Scene.LaundryPool,
@@ -887,7 +907,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(307)]
         [ObjectListIndex(0x171)]
         [GroundVariants(0)]
-        [VariantsWithRoomMax(max: 6, 0)]
+        [VariantsWithRoomMax(max: 3, variant: 0)]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slowing enemies
         Nejiron = 0x155, // Rolling exploding rock in Ikana
 
@@ -909,7 +929,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
         BadBat = 0x15B,
 
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // this works fine but shows up waay too often and kinda annoying
         // there are actaually 3 others, but they are three separate objects, so hard to program
         [ObjectListIndex(0x173)]
         // spreadsheet thinks 0x206 could be it
@@ -934,7 +954,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x3F5F)]
         [VariantsWithRoomMax(max:1, variant: 0x3F5F)]
         [UnkillableAllVariants]
-        CircleOfFire = 0x162, // Obj_Fireshield
+        CircleOfFire = 0x162, // Obj_Fireshield // tag: FireRing
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1830)]
@@ -997,6 +1017,14 @@ namespace MMR.Randomizer.GameObjects
         [PatrolVariants(0x12FF)]
         [UnkillableAllVariants]
         DekuPatrolGuard = 0x17A,
+
+        //[ActorizerEnabled] // no point, if it spawns on the ground its too big and you can't tell you are inside of it
+        // and enemies are so far away they are culled so you cant see them
+        [ObjectListIndex(0x188)] // or 223? two different objects can work, makes it hard to cath
+        [FlyingVariants(0x37F)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        Moon1 = 0x17C, // En_Fall
 
         [EnemizerEnabled] // biggest issue: they dont really attack, this isn't the version that spawns over and over
         [ActorInitVarOffset(0x1C6C)]
@@ -1149,6 +1177,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         BombchuGirl = 0x1C1, // En_Takaraya
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x1B6)]
+        [GroundVariants(0x7F, 0x307F, 0x207F, 0x107F)]
+        [UnkillableAllVariants]
+        GateSoldier = 0x1C7,
 
         //[ActorizerEnabled] //busted
         [ObjectListIndex(0x1AF)]
@@ -1387,7 +1421,7 @@ namespace MMR.Randomizer.GameObjects
         // maybe dont remove originals
         CowFigurine = 0x20A,
 
-        [ActorizerEnabled] // crash  on appraoch
+        [ActorizerEnabled]
         [ObjectListIndex(0x26A)] // the spreadsheet says he is obj 1 but that is a mistake
         // 0xFF03 crashes on approach
         // FE04/5 doesn't spawn, probably until you finish the spiderhouse
@@ -1401,8 +1435,8 @@ namespace MMR.Randomizer.GameObjects
         // looking at moon, don't place him underground
         [EnemizerScenesPlacementBlock(Scene.Grottos, Scene.InvertedStoneTower, Scene.BeneathGraveyard, Scene.BeneathTheWell,
             Scene.GoronShrine, Scene.IkanaCastle, Scene.OceanSpiderHouse, Scene.SwampSpiderHouse,
-            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
-        Seth1 = 0x20B, // En_Set, the green shirt guy, "Seth"? spiderhouses
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple, Scene.Woodfall)]
+        Seth1 = 0x20B, // En_Set, the green shirt guy, "Seth"? spiderhouses, hands waving at you from telescope guy
 
         [ActorizerEnabled]
         [ObjectListIndex(0x1F5)]
@@ -1481,6 +1515,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.CuriosityShop)]
         PeekHole = 0x233,
 
+        [ActorizerEnabled]
+        [ObjectListIndex(0x23A)]
+        [GroundVariants(0x050B)]
+        [VariantsWithRoomMax(max:0, variant:0x050B)] // we dont want a sitting npc to be placed places, just replace
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.MilkBar)]
+        Toto = 0x234, // En_Toto
+
         //[EnemizerEnabled] // does not spawn outside of ikana
         [ActorInitVarOffset(0x2CA0)]  // combat music disable does not work
         [FileID(524)]
@@ -1490,6 +1532,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.IkanaCanyon)] // dont replace the train
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         GibdoIkana = 0x235,
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x216)]
+        [GroundVariants(0xFE0F)]
+        [WaterVariants(0xFE0F, 0xFE02, 0xFE01)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        Tijo = 0x238,
 
         //[ActorizerEnabled] // boring since its hidden unless you wear one often junk mask, just decreases chances of noticable enemies
         [ObjectListIndex(1)]
@@ -1533,6 +1583,12 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.StockPotInn)]
         AnjusGrandma = 0x243, // En_Nb
 
+        [ActorizerEnabled]
+        [ObjectListIndex(0xE3)]
+        [GroundVariants(1,0)]
+        [UnkillableAllVariants]
+        Jugglers = 0x244, // En_Ja
+
         //[ActorizerEnabled] // unless I write dayonly/nightonly, this is too flukey
         [ObjectListIndex(0xFF)]
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
@@ -1550,6 +1606,17 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.RoadToIkana)]
         Shiro = 0x24A, // En_Stone_heishi
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x22B)]
+        // E01 is rehersal
+        [GroundVariants(0xFE0F)]
+        [WaterVariants(0xFE0F)]
+        [VariantsWithRoomMax(max:0, variant:0xE01)] // failure to spawn
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.ZoraCape)]
+        Lulu = 0x252, // Ee_Zov
 
         //[ActorizerEnabled] // doesn't spawn with a flower, looks silly
         // HEY the other actors, that make flowers, we can use them for dual deku, would require custom code to put them on top of each other
@@ -1577,6 +1644,13 @@ namespace MMR.Randomizer.GameObjects
         BeeSwarm = 0x269, // En_Tanron6
 
         [ActorizerEnabled]
+        [ObjectListIndex(0xF0)]
+        [GroundVariants(0)]
+        [VariantsWithRoomMax(max:0, variant:0)] // hard coded only spawn final night
+        [EnemizerScenesExcluded(Scene.MayorsResidence)]
+        Muto = 0x26B,
+
+        [ActorizerEnabled]
         [ObjectListIndex(0x243)]
         [UnkillableAllVariants]
         [GroundVariants(0xF)] // only one toof
@@ -1591,6 +1665,17 @@ namespace MMR.Randomizer.GameObjects
         // todo: test randomizing
         [ObjectListIndex(0x1E5)]
         LinkTheGoro = 0x276,
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x24B)]
+        // 0xA00 is lobby pacing
+        [GroundVariants(0x0A00, 0x7E01, 0x8000, 0xFE01,  0x7E02, 0xFE02, 0x7E02)]
+        [VariantsWithRoomMax(max: 0, variant: 0xA00)] // pathing I bet, will likely crash in too many palces
+        [VariantsWithRoomMax(max: 0, variant: 0x7E01, 0x8000, 0xFE01)] // also likely to path
+        //[OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.WestClockTown)]
+        RosaSisters = 0x27B, // En_Rz
 
         //[ActorizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
         [FileID(601)]
@@ -1643,6 +1728,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x15)]
         [GroundVariants(0)]
         [UnkillableAllVariants]
+        [CompanionActor(Flame, 0x7FE)] // blue flames
         AnjuWeddingDress = 0x299,
 
         //[ActorizerEnabled]

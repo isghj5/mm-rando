@@ -144,6 +144,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos, Actor.Dinofos, Actor.Snapper)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Freezard,
             Actor.PoeSisters, // weird behavior, if the killing blow of meg at long range can stop chests from spawning
+            Actor.CircleOfFire, // if it gets placed on the one on top of a chest the player is screwed
             Actor.Wolfos)] // wolfos: ice wolfos can push the regular actual dog backwards through the wall
         [FairyDroppingEnemies(11, 2, 3)] // dinofos 
         SnowheadTemple = 0x1E,
@@ -303,7 +304,7 @@ namespace MMR.Randomizer.GameObjects
         //  we want the hiploop to be non-blocking actors, making them killable with this flag does the job
         [FairyDroppingEnemies(24, 25, 26)] // hiploops
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
-            Actor.Wolfos, Actor.Peahat)] // blocking enemies (wolfos:iceblock)
+            Actor.Wolfos, Actor.Peahat, Actor.Seth1)] // blocking enemies (wolfos:iceblock)
         Woodfall = 0x43,
 
         [FileID(1364)]

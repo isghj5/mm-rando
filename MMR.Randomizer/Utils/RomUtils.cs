@@ -31,7 +31,7 @@ namespace MMR.Randomizer.Utils
             #if DEBUG
             string settingstring = $"{setting} + DEBUG BUILD\x00";
             #else
-            string settingstring = $"{setting} + Isghj's Enemizer Test 16.0\x00";
+            string settingstring = $"{setting} + Isghj's Enemizer Test 17.0\x00";
             #endif
             int f = GetFileIndexForWriting(veraddr);
             var file = RomData.MMFileList[f];
@@ -163,18 +163,19 @@ namespace MMR.Randomizer.Utils
 
         public static byte[] BuildROM()
         {
+            // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
+            var previousThreadPriority = Thread.CurrentThread.Priority;
+            Thread.CurrentThread.Priority = ThreadPriority.Lowest;
             // yaz0 encode all of the files for the rom
             Parallel.ForEach(RomData.MMFileList, file =>
             {
                 if (file.IsCompressed && file.WasEdited){
-                    // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
-                    var previousThreadPriority = Thread.CurrentThread.Priority;
-                    Thread.CurrentThread.Priority = ThreadPriority.Lowest;
                     file.Data = Yaz.EncodeAndCopy(file.Data);
-                    // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
-                    Thread.CurrentThread.Priority = previousThreadPriority;
                 }
             });
+            // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
+            Thread.CurrentThread.Priority = previousThreadPriority;
+
             byte[] ROM = new byte[0x2000000];
             int ROMAddr = 0;
             // write all files to rom

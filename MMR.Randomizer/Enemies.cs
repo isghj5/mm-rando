@@ -409,10 +409,10 @@ namespace MMR.Randomizer
                 //laundryPoolScene.Maps[0].Actors[1].Rotation.z = (short)MergeRotationAndFlags(rotation: laundryPoolScene.Maps[0].Actors[1].Rotation.z, flags: 0x7F);
 
                 // it was two torches, turn the other into a secret grotto, at least for now
-                var randomGrotto = new List<ushort> { 0x6233, 0x623B, 0x6218, 0x625C, 0x8200, 0xA200, 0x7200, 0xC200, 0xE200, 0xF200, 0xD200 };
+                var randomGrotto = new List<ushort> { 0x6033, 0x603B, 0x6018, 0x605C, 0x8000, 0xA000, 0x7000, 0xC000, 0xE000, 0xF000, 0xD000 };
                 laundryPoolScene.Maps[0].Actors[1].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)]);
                 laundryPoolScene.Maps[0].Actors[1].Rotation = new vec16(0x7f, 0x7f, 0x7f);
-                laundryPoolScene.Maps[0].Actors[1].Position = new vec16(-1872, -120, 229);
+                laundryPoolScene.Maps[0].Actors[1].Position = new vec16(-1502, 35, 555); // old: new vec16(-1872, -120, 229);
 
                 // winter village has a gossip stone actor, but no object, lets use the non-used flying darmani ghost object and add it to enemizer
                 var winterVillage = RomData.SceneList.Find(u => u.File == GameObjects.Scene.MountainVillage.FileID());
@@ -456,7 +456,26 @@ namespace MMR.Randomizer
             twinislandsSceneData[0xD6] = 0xAE;
             twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall wtf
 
-            // backup actor 39 x711 525 1021
+            // testing: change the environment var for tf object_kankyo
+            //var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
+            //terminafieldScene.Maps[0].Actors[0].ChangeActor(GameObjects.Actor.Weather, vars: 3);
+
+            // test: clear away all weather tag actors and see what that changes
+            /* this did NOTHING?? what
+            foreach (var s in RomData.SceneList)
+            {
+                foreach (var m in s.Maps)
+                {
+                    foreach (var a in m.Actors)
+                    {
+                        if (a.ActorEnum == GameObjects.Actor.WeatherTag)
+                        {
+                            a.ChangeActor(GameObjects.Actor.Empty);
+                            Debug.WriteLine($"Weather tag found in scene:{s.SceneEnum.ToString()}");
+                        }
+                    }
+                }
+            } //  */
 
             /*
             var greatBayCoast = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
@@ -1319,23 +1338,23 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Treee.ObjectIndex()
+                            NewV = GameObjects.Actor.Moon1.ObjectIndex()
                         }); 
                         continue;
                     }
-                    /*if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID()
+                    /* if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Romani1.ObjectIndex()
+                            NewV = GameObjects.Actor.Lulu.ObjectIndex()
                         });
                         continue;
                     }
@@ -1529,6 +1548,9 @@ namespace MMR.Randomizer
             /////////////////////////////
             #endif
             /////////////////////////////
+            
+
+
 
             // print debug enemy locations
             for (int i = 0; i < chosenReplacementEnemies.Count; i++)

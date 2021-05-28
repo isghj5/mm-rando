@@ -278,7 +278,7 @@ namespace MMR.Randomizer
             int[] roomFDs = new int[] { terminaFieldRoom0FID, roadtosouthernswampRoom0FID, milkroadRoom0FID, gormantrackRoom0FD,
                 greatbaycoastRoom0FID, pinnacleRockRoom0FID, piratesExteriorRoom0FID, piratesInteriorRoom0FID,
                 zoracapeRoom0FID,  waterfallRapidsRoom0FID};
-
+            
             foreach (var fid in roomFDs)
             {
                 RomUtils.CheckCompressed(fid);
@@ -2885,7 +2885,7 @@ namespace MMR.Randomizer
             progressReporter.ReportProgress(72, "Writing cosmetics...");
             WriteTatlColour(new Random(BitConverter.ToInt32(hash, 0)));
             WriteTunicColor();
-            MakeItRain();
+            //MakeItRain();
             WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
             progressReporter.ReportProgress(73, "Writing music...");
