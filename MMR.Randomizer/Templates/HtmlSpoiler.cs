@@ -231,53 +231,55 @@ namespace MMR.Randomizer.Templates
                     "         saveItems();\r\n        }\r\n    }\r\n\r\n    var logic = ");
             this.Write(this.ToStringHelper.ToStringWithCulture(spoiler.LogicJson));
             this.Write(";\r\n\r\n    for (var i = 0; i < logic.length; i++) {\r\n        var item = logic[i];\r\n" +
-                    "        if (item.Acquired) {\r\n            item.Checked = true;\r\n            docu" +
-                    "ment.querySelector(\"tr[data-newlocationid=\'\" + i + \"\'] input\").checked = true;\r\n" +
-                    "        }\r\n        if (item.RequiredItemIds !== null) {\r\n            for (var j " +
-                    "= 0; j < item.RequiredItemIds.length; j++) {\r\n                var id = item.Requ" +
-                    "iredItemIds[j];\r\n                if (!logic[id].LocksLocations) {\r\n             " +
-                    "       logic[id].LocksLocations = [];\r\n                }\r\n                if (!i" +
-                    "ncludes(logic[id].LocksLocations, i)) {\r\n                    logic[id].LocksLoca" +
-                    "tions.push(i);\r\n                }\r\n            }\r\n        }\r\n        if (item.Co" +
-                    "nditionalItemIds !== null) {\r\n            for (var k = 0; k < item.ConditionalIt" +
-                    "emIds.length; k++) {\r\n                for (var j = 0; j < item.ConditionalItemId" +
-                    "s[k].length; j++) {\r\n                    var id = item.ConditionalItemIds[k][j];" +
-                    "\r\n                    if (!logic[id].LocksLocations) {\r\n                        " +
-                    "logic[id].LocksLocations = [];\r\n                    }\r\n                    if (!" +
-                    "includes(logic[id].LocksLocations, i)) {\r\n                        logic[id].Lock" +
-                    "sLocations.push(i);\r\n                    }\r\n                }\r\n            }\r\n  " +
-                    "      }\r\n    }\r\n\r\n    function checkItems(itemIds) {\r\n        var locationsToChe" +
-                    "ck = [];\r\n        for (var i = 0; i < itemIds.length; i++) {\r\n            var it" +
-                    "emId = itemIds[i];\r\n            if (logic[itemId].LocksLocations) {\r\n           " +
-                    "     for (var j = 0; j < logic[itemId].LocksLocations.length; j++) {\r\n          " +
-                    "          var locationId = logic[itemId].LocksLocations[j];\r\n                   " +
-                    " if (!includes(locationsToCheck, locationId)) {\r\n                        locatio" +
-                    "nsToCheck.push(locationId);\r\n                    }\r\n                }\r\n         " +
-                    "   }\r\n        }\r\n        checkLocations(locationsToCheck);\r\n    }\r\n\r\n    var sta" +
-                    "rtingLocations = [0, 94, 274, 275, 276, 277];\r\n    for (var id of startingLocati" +
-                    "ons) {\r\n        logic[id].Checked = true;\r\n        var itemId = document.querySe" +
-                    "lector(\"tr[data-newlocationid=\'\" + id + \"\']\").dataset.id;\r\n        logic[itemId]" +
-                    ".Acquired = true;\r\n        document.querySelector(\"tr[data-newlocationid=\'\" + id" +
-                    " + \"\'] input\").checked = true;\r\n    }\r\n\r\n    var allLocationIds = [];\r\n    for (" +
-                    "var i = 0; i < logic.length; i++) {\r\n        allLocationIds.push(i);\r\n    }\r\n   " +
-                    " checkLocations(allLocationIds);\r\n\r\n    var rows = document.querySelectorAll(\"tr" +
-                    "\");\r\n    for (var i = 1; i < rows.length; i++) {\r\n        var row = rows[i];\r\n  " +
-                    "      var checkbox = row.querySelector(\"input\");\r\n        if (checkbox) {\r\n     " +
-                    "       checkbox.addEventListener(\"click\", function(e) {\r\n                var row" +
-                    " = e.target.closest(\"tr\");\r\n                var rowId = parseInt(row.dataset.id)" +
-                    ";\r\n                var newLocationId = parseInt(row.dataset.newlocationid);\r\n   " +
-                    "             logic[newLocationId].Checked = e.target.checked;\r\n                l" +
-                    "ogic[rowId].Acquired = e.target.checked;\r\n                checkLocations([newLoc" +
-                    "ationId]);\r\n                checkItems([rowId]);\r\n            });\r\n        }\r\n  " +
-                    "  }\r\n\r\n    document.querySelector(\"#highlight-checks\").addEventListener(\"click\"," +
-                    " function(e) {\r\n        var tables = document.querySelectorAll(\"table.item-repla" +
-                    "cements\");\r\n        for (var i = 0; i < tables.length; i++) {\r\n            if (e" +
-                    ".target.checked) {\r\n                tables[i].classList.add(\"show-highlight\");\r\n" +
-                    "            } else {\r\n                tables[i].classList.remove(\"show-highlight" +
-                    "\");\r\n            }\r\n        }\r\n    });\r\n\r\n    function toggleDarkLight() {\r\n    " +
-                    "    var body = document.getElementsByTagName(\'body\')[0];\r\n        var currentCla" +
-                    "ssBody = body.className;\r\n        body.className = currentClassBody === \"dark-mo" +
-                    "de\" ? \"light-mode\" : \"dark-mode\";\r\n    }\r\n</script>\r\n</body>\r\n</html>\r\n");
+                    "        if (item.Acquired) {\r\n            item.Checked = true;\r\n            var " +
+                    "input = document.querySelector(\"tr[data-newlocationid=\'\" + i + \"\'] input\");\r\n   " +
+                    "         if (input) {\r\n                input.checked = true;\r\n            }\r\n   " +
+                    "     }\r\n        if (item.RequiredItemIds !== null) {\r\n            for (var j = 0" +
+                    "; j < item.RequiredItemIds.length; j++) {\r\n                var id = item.Require" +
+                    "dItemIds[j];\r\n                if (!logic[id].LocksLocations) {\r\n                " +
+                    "    logic[id].LocksLocations = [];\r\n                }\r\n                if (!incl" +
+                    "udes(logic[id].LocksLocations, i)) {\r\n                    logic[id].LocksLocatio" +
+                    "ns.push(i);\r\n                }\r\n            }\r\n        }\r\n        if (item.Condi" +
+                    "tionalItemIds !== null) {\r\n            for (var k = 0; k < item.ConditionalItemI" +
+                    "ds.length; k++) {\r\n                for (var j = 0; j < item.ConditionalItemIds[k" +
+                    "].length; j++) {\r\n                    var id = item.ConditionalItemIds[k][j];\r\n " +
+                    "                   if (!logic[id].LocksLocations) {\r\n                        log" +
+                    "ic[id].LocksLocations = [];\r\n                    }\r\n                    if (!inc" +
+                    "ludes(logic[id].LocksLocations, i)) {\r\n                        logic[id].LocksLo" +
+                    "cations.push(i);\r\n                    }\r\n                }\r\n            }\r\n     " +
+                    "   }\r\n    }\r\n\r\n    function checkItems(itemIds) {\r\n        var locationsToCheck " +
+                    "= [];\r\n        for (var i = 0; i < itemIds.length; i++) {\r\n            var itemI" +
+                    "d = itemIds[i];\r\n            if (logic[itemId].LocksLocations) {\r\n              " +
+                    "  for (var j = 0; j < logic[itemId].LocksLocations.length; j++) {\r\n             " +
+                    "       var locationId = logic[itemId].LocksLocations[j];\r\n                    if" +
+                    " (!includes(locationsToCheck, locationId)) {\r\n                        locationsT" +
+                    "oCheck.push(locationId);\r\n                    }\r\n                }\r\n            " +
+                    "}\r\n        }\r\n        checkLocations(locationsToCheck);\r\n    }\r\n\r\n    var starti" +
+                    "ngLocations = [0, 94, 274, 275, 276, 277];\r\n    for (var id of startingLocations" +
+                    ") {\r\n        logic[id].Checked = true;\r\n        var row = document.querySelector" +
+                    "(\"tr[data-newlocationid=\'\" + id + \"\']\");\r\n        var itemId = id;\r\n        if (" +
+                    "row) {\r\n            itemId = row.dataset.id;\r\n            document.querySelector" +
+                    "(\"tr[data-newlocationid=\'\" + id + \"\'] input\").checked = true;\r\n        }\r\n      " +
+                    "  logic[itemId].Acquired = true;\r\n    }\r\n\r\n    var allLocationIds = [];\r\n    for" +
+                    " (var i = 0; i < logic.length; i++) {\r\n        allLocationIds.push(i);\r\n    }\r\n " +
+                    "   checkLocations(allLocationIds);\r\n\r\n    var rows = document.querySelectorAll(\"" +
+                    "tr\");\r\n    for (var i = 1; i < rows.length; i++) {\r\n        var row = rows[i];\r\n" +
+                    "        var checkbox = row.querySelector(\"input\");\r\n        if (checkbox) {\r\n   " +
+                    "         checkbox.addEventListener(\"click\", function(e) {\r\n                var r" +
+                    "ow = e.target.closest(\"tr\");\r\n                var rowId = parseInt(row.dataset.i" +
+                    "d);\r\n                var newLocationId = parseInt(row.dataset.newlocationid);\r\n " +
+                    "               logic[newLocationId].Checked = e.target.checked;\r\n               " +
+                    " logic[rowId].Acquired = e.target.checked;\r\n                checkLocations([newL" +
+                    "ocationId]);\r\n                checkItems([rowId]);\r\n            });\r\n        }\r\n" +
+                    "    }\r\n\r\n    document.querySelector(\"#highlight-checks\").addEventListener(\"click" +
+                    "\", function(e) {\r\n        var tables = document.querySelectorAll(\"table.item-rep" +
+                    "lacements\");\r\n        for (var i = 0; i < tables.length; i++) {\r\n            if " +
+                    "(e.target.checked) {\r\n                tables[i].classList.add(\"show-highlight\");" +
+                    "\r\n            } else {\r\n                tables[i].classList.remove(\"show-highlig" +
+                    "ht\");\r\n            }\r\n        }\r\n    });\r\n\r\n    function toggleDarkLight() {\r\n  " +
+                    "      var body = document.getElementsByTagName(\'body\')[0];\r\n        var currentC" +
+                    "lassBody = body.className;\r\n        body.className = currentClassBody === \"dark-" +
+                    "mode\" ? \"light-mode\" : \"dark-mode\";\r\n    }\r\n</script>\r\n</body>\r\n</html>\r\n");
             return this.GenerationEnvironment.ToString();
         }
     }

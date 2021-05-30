@@ -19,7 +19,18 @@ namespace MMR.CLI
     {
         static int Main(string[] args)
         {
-            var argsDictionary = DictionaryHelper.FromProgramArguments(args);
+            Dictionary<string, List<string>> argsDictionary;
+            if (args.Length == 1 && File.Exists(args[0]) && Path.GetExtension(args[0]) == ".mmr")
+            {
+                argsDictionary = new Dictionary<string, List<string>>
+                {
+                    { "-inputpatch", args.ToList() }
+                };
+            }
+            else
+            {
+                argsDictionary = DictionaryHelper.FromProgramArguments(args);
+            }
             if (argsDictionary.ContainsKey("-help"))
             {
                 Console.WriteLine("All arguments are optional.");
@@ -304,7 +315,7 @@ namespace MMR.CLI
         private const string SETTINGS_EXTENSION = "json";
         private static void SaveSettings(Configuration configuration, string filename = null)
         {
-            var path = Path.ChangeExtension(filename ?? DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION);
+            var path = Path.ChangeExtension(filename ?? Path.Combine(Values.MainDirectory, DEFAULT_SETTINGS_FILENAME), SETTINGS_EXTENSION);
             string logicFilePath = null;
             //if (filename != null)
             //{
@@ -340,7 +351,7 @@ namespace MMR.CLI
 
         private static Configuration LoadSettings(string filename = null)
         {
-            var path = Path.ChangeExtension(filename ?? DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION);
+            var path = Path.ChangeExtension(filename ?? Path.Combine(Values.MainDirectory, DEFAULT_SETTINGS_FILENAME), SETTINGS_EXTENSION);
             if (File.Exists(path))
             {
                 Configuration configuration;

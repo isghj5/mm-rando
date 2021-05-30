@@ -285,10 +285,12 @@ namespace MMR.Randomizer.Utils
                             var zSeq = new SequenceBinaryData() { SequenceBinary = zSeqData };
 
                             // zseq filename is the instrument set
-                            var fileNameInstrumentSet = zSeqFile.Name.Substring(0, zSeqFile.Name.LastIndexOf(".zseq"));
+                            var filename = zSeqFile.Name.Substring(0, zSeqFile.Name.LastIndexOf(".zseq"));
+                            var commentSplit = filename.Split('_'); // everything before _ is a comment, readability, discard here
+                            var fileNameInstrumentSet = commentSplit.Length > 1 ? commentSplit[commentSplit.Length - 1] : filename;
                             currentSong.Instrument = Convert.ToInt32(fileNameInstrumentSet, 16);
 
-                            var bankFileEntry = zip.GetEntry(zSeqFile.Name.Substring(0, zSeqFile.Name.LastIndexOf(".zseq")) + ".zbank");
+                            var bankFileEntry = zip.GetEntry(filename + ".zbank");
                             if (bankFileEntry != null) // custom bank detected
                             {
                                 // read bank file
@@ -296,7 +298,7 @@ namespace MMR.Randomizer.Utils
                                 bankFileEntry.Open().Read(zBankData, 0, zBankData.Length);
 
                                 // read bankmeta file
-                                var bankmetaFileEntry = zip.GetEntry(fileNameInstrumentSet + ".bankmeta");
+                                var bankmetaFileEntry = zip.GetEntry(filename + ".bankmeta");
                                 var bankmetaData = new byte[bankmetaFileEntry.Length];
                                 bankmetaFileEntry.Open().Read(bankmetaData, 0, bankmetaData.Length);
 

@@ -465,16 +465,16 @@ void Models_DrawBossRemains(Actor* actor, GlobalContext* ctxt, u32 graphicIdMinu
         u16 giIndex;
         switch (actor->params) {
             case 0:
-                giIndex = 0x447;
-                break;
-            case 1:
                 giIndex = 0x448;
                 break;
-            case 2:
+            case 1:
                 giIndex = 0x449;
                 break;
-            case 3:
+            case 2:
                 giIndex = 0x44A;
+                break;
+            case 3:
+                giIndex = 0x44B;
                 break;
             default:
                 return;

@@ -859,7 +859,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a distant memory"), GossipItemHint("a forgotten melody")]
         [ShopText("This melody is a song of memories of Princess Zelda.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
-        [GetItemIndex(0x44B), ItemPool(ItemCategory.TimeTravel, LocationCategory.BossFights)]
+        [GetItemIndex(0x44C), ItemPool(ItemCategory.TimeTravel, LocationCategory.BossFights)]
         SongTime,
 
         [StartingItem(0xC5CE72, 0x20)]
@@ -3581,7 +3581,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x1D2), ItemPool(ItemCategory.Arrows, LocationCategory.Jars), CollectableIndex(0x1807)]
-        CollectableDampéSHouseBasementPot1,
+        CollectableDampesHouseBasementPot1,
 
 
         [Visible]
@@ -3591,7 +3591,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x1D3), ItemPool(ItemCategory.Arrows, LocationCategory.Jars), CollectableIndex(0x180A)]
-        CollectableDampéSHouseBasementPot2,
+        CollectableDampesHouseBasementPot2,
 
 
         [Visible]
@@ -3601,7 +3601,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x1D4), ItemPool(ItemCategory.Arrows, LocationCategory.Jars), CollectableIndex(0x180C)]
-        CollectableDampéSHouseBasementPot3,
+        CollectableDampesHouseBasementPot3,
 
 
         [Visible]
@@ -3611,7 +3611,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x1D5), ItemPool(ItemCategory.Arrows, LocationCategory.Jars), CollectableIndex(0x180D)]
-        CollectableDampéSHouseBasementPot4,
+        CollectableDampesHouseBasementPot4,
 
 
         [Visible]
@@ -5161,7 +5161,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x270), ItemPool(ItemCategory.GreenRupees, LocationCategory.Jars), CollectableIndex(0x1805)]
-        CollectableDampéSHouseBasementPot5,
+        CollectableDampesHouseBasementPot5,
 
 
         [Visible]
@@ -5171,7 +5171,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x271), ItemPool(ItemCategory.GreenRupees, LocationCategory.Jars), CollectableIndex(0x1806)]
-        CollectableDampéSHouseBasementPot6,
+        CollectableDampesHouseBasementPot6,
 
 
         [Visible]
@@ -5181,7 +5181,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x272), ItemPool(ItemCategory.GreenRupees, LocationCategory.Jars), CollectableIndex(0x1809)]
-        CollectableDampéSHouseBasementPot7,
+        CollectableDampesHouseBasementPot7,
 
 
         [Visible]
@@ -6451,7 +6451,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("This is worth 50 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0x2F1), ItemPool(ItemCategory.PurpleRupees, LocationCategory.Jars), CollectableIndex(0x180B)]
-        CollectableDampéSHouseBasementPot8,
+        CollectableDampesHouseBasementPot8,
 
 
         [Visible]
@@ -9871,12 +9871,22 @@ namespace MMR.Randomizer.GameObjects
 
 
         [Visible]
+        [Repeatable]
+        [ItemName("Blue Rupee"), LocationName("Cucco Shack Potted Plant"), Region(Region.RomaniRanch)]
+        [GossipLocationHint("a potted plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
+        [ShopText("This is worth 5 rupees.")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [GetItemIndex(0x447), ItemPool(ItemCategory.BlueRupees, LocationCategory.Jars), CollectableIndex(0x210B)]
+        CollectableCuccoShackPottedPlant1,
+
+
+        [Visible]
         [StartingItem(0xC5CE73, 0x01)]
         [ItemName("Odolwa's Remains"), LocationName("Woodfall Boss Warp"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
         [ShopText("The remains of the boss in Woodfall Temple.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
-        [GetItemIndex(0x447), ItemPool(ItemCategory.BossRemains, LocationCategory.BossFights)]
+        [GetItemIndex(0x448), ItemPool(ItemCategory.BossRemains, LocationCategory.BossFights)]
         RemainsOdolwa,
 
 
@@ -9886,7 +9896,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
         [ShopText("The remains of the boss in Snowhead Temple.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
-        [GetItemIndex(0x448), ItemPool(ItemCategory.BossRemains, LocationCategory.BossFights)]
+        [GetItemIndex(0x449), ItemPool(ItemCategory.BossRemains, LocationCategory.BossFights)]
         RemainsGoht,
 
 
@@ -9896,7 +9906,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
         [ShopText("The remains of the boss in Great Bay Temple.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
-        [GetItemIndex(0x449), ItemPool(ItemCategory.BossRemains, LocationCategory.BossFights)]
+        [GetItemIndex(0x44A), ItemPool(ItemCategory.BossRemains, LocationCategory.BossFights)]
         RemainsGyorg,
 
 
@@ -9906,7 +9916,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
         [ShopText("The remains of the boss in Stone Tower Temple.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
-        [GetItemIndex(0x44A), ItemPool(ItemCategory.BossRemains, LocationCategory.BossFights)]
+        [GetItemIndex(0x44B), ItemPool(ItemCategory.BossRemains, LocationCategory.BossFights)]
         RemainsTwinmold,
 
 
