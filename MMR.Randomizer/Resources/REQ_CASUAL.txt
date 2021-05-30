@@ -52180,6 +52180,14 @@
       "IsTrick": false
     },
     {
+      "Id": "CollectableCuccoShackPottedPlant1",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "IsTrick": false
+    },
+    {
       "Id": "RemainsOdolwa",
       "RequiredItems": [
         "Access Odolwa"
