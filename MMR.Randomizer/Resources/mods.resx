@@ -298,6 +298,9 @@
   <data name="reloc_audio" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\reloc-audio;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="remove_morning_music" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\remove-morning-music;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="remove_tatl_interrupts" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\remove-tatl-interrupts;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

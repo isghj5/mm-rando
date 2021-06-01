@@ -10,6 +10,11 @@
     <ApplicationIcon>200px_majoramask_rtw_icon.ico</ApplicationIcon>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>none</DebugType>
+    <DebugSymbols>false</DebugSymbols>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\MMR.Common\MMR.Common.csproj" />
     <ProjectReference Include="..\MMR.Randomizer\MMR.Randomizer.csproj" />

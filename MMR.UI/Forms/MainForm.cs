@@ -20,6 +20,7 @@ using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Extensions;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using MMR.Randomizer.Constants;
 
 namespace MMR.UI.Forms
 {
@@ -73,6 +74,19 @@ namespace MMR.UI.Forms
             #else
             Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Enemizer Test 17.1";
             #endif
+
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+            {
+                var openWithArg = args[1];
+                if (Path.GetExtension(openWithArg) == ".mmr")
+                {
+                    ttOutput.SelectedIndex = 1;
+                    TogglePatchSettings(false);
+                    _configuration.OutputSettings.InputPatchFilename = openWithArg;
+                    tPatch.Text = _configuration.OutputSettings.InputPatchFilename;
+                }
+            }
         }
 
         private void InitializeTooltips()
@@ -1787,7 +1801,7 @@ namespace MMR.UI.Forms
         private const string DEFAULT_SETTINGS_FILENAME = "settings";
         private void SaveSettings(string filename = null)
         {
-            var path = Path.ChangeExtension(filename ?? DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION);
+            var path = Path.ChangeExtension(filename ?? Path.Combine(Values.MainDirectory, DEFAULT_SETTINGS_FILENAME), SETTINGS_EXTENSION);
             string logicFilePath = null;
             Configuration configurationToSave = _configuration;
             if (filename != null)
@@ -1824,7 +1838,7 @@ namespace MMR.UI.Forms
         
         private void LoadSettings(string filename = null)
         {
-            var path = Path.ChangeExtension(filename ?? DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION);
+            var path = Path.ChangeExtension(filename ?? Path.Combine(Values.MainDirectory, DEFAULT_SETTINGS_FILENAME), SETTINGS_EXTENSION);
             if (File.Exists(path))
             {
                 try

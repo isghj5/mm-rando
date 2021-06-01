@@ -7,7 +7,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 18;
+        public const int CurrentVersion = 19;
 
         public static string ApplyMigrations(string logic)
         {

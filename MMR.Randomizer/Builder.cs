@@ -139,6 +139,7 @@ namespace MMR.Randomizer
             {
                 SequenceUtils.PointerizeSequenceSlots();
                 BGMShuffle(random, _settings);
+                ResourceUtils.ApplyHack(Resources.mods.remove_morning_music);
             }
 
             ResourceUtils.ApplyHack(Resources.mods.fix_music);
