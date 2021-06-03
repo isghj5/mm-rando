@@ -1092,6 +1092,7 @@ namespace MMR.Randomizer
 
             PlaceFreeItems(itemPool);
             PlaceOcarinaAndSongOfTime(itemPool);
+            PlaceBossRemains(itemPool);
             PlaceQuestItems(itemPool);
             PlaceTradeItems(itemPool);
             PlaceDungeonItems(itemPool);
@@ -1394,6 +1395,14 @@ namespace MMR.Randomizer
         {
             PlaceItem(Item.ItemOcarina, itemPool);
             PlaceItem(Item.SongTime, itemPool);
+        }
+
+        private void PlaceBossRemains(List<Item> itemPool)
+        {
+            for (var i = Item.RemainsOdolwa; i <= Item.RemainsTwinmold; i++)
+            {
+                PlaceItem(i, itemPool);
+            }
         }
 
         /// <summary>
