@@ -42862,7 +42862,7 @@
       "IsTrick": false
     },
     {
-      "Id": "CollectableDampÃƒÂ©SHouseBasementPot1",
+      "Id": "CollectableDampesHouseBasementPot1",
       "RequiredItems": [
         "MaskCaptainHat",
         "Ikana Graveyard Access"
@@ -42873,7 +42873,7 @@
       "IsTrick": false
     },
     {
-      "Id": "CollectableDampÃƒÂ©SHouseBasementPot2",
+      "Id": "CollectableDampesHouseBasementPot2",
       "RequiredItems": [
         "MaskCaptainHat",
         "Ikana Graveyard Access"
@@ -42884,7 +42884,7 @@
       "IsTrick": false
     },
     {
-      "Id": "CollectableDampÃƒÂ©SHouseBasementPot3",
+      "Id": "CollectableDampesHouseBasementPot3",
       "RequiredItems": [
         "MaskCaptainHat",
         "Ikana Graveyard Access"
@@ -42895,7 +42895,7 @@
       "IsTrick": false
     },
     {
-      "Id": "CollectableDampÃƒÂ©SHouseBasementPot4",
+      "Id": "CollectableDampesHouseBasementPot4",
       "RequiredItems": [
         "MaskCaptainHat",
         "Ikana Graveyard Access"
@@ -45390,7 +45390,7 @@
       "IsTrick": false
     },
     {
-      "Id": "CollectableDampÃƒÂ©SHouseBasementPot5",
+      "Id": "CollectableDampesHouseBasementPot5",
       "RequiredItems": [
         "MaskCaptainHat",
         "Ikana Graveyard Access"
@@ -45401,7 +45401,7 @@
       "IsTrick": false
     },
     {
-      "Id": "CollectableDampÃƒÂ©SHouseBasementPot6",
+      "Id": "CollectableDampesHouseBasementPot6",
       "RequiredItems": [
         "MaskCaptainHat",
         "Ikana Graveyard Access"
@@ -45412,7 +45412,7 @@
       "IsTrick": false
     },
     {
-      "Id": "CollectableDampÃƒÂ©SHouseBasementPot7",
+      "Id": "CollectableDampesHouseBasementPot7",
       "RequiredItems": [
         "MaskCaptainHat",
         "Ikana Graveyard Access"
@@ -47581,7 +47581,7 @@
       "IsTrick": false
     },
     {
-      "Id": "CollectableDampÃƒÂ©SHouseBasementPot8",
+      "Id": "CollectableDampesHouseBasementPot8",
       "RequiredItems": [
         "MaskCaptainHat",
         "Ikana Graveyard Access"
