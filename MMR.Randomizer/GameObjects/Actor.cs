@@ -21,6 +21,15 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.Woodfall)]
         Flame = 0x4, // En_Light
 
+        // real fake doors
+        [ActorizerEnabled]
+        // different doors have different variables for different objects, unless I program multiple objects only one can be used
+        [ObjectListIndex(0x231)]
+        [WallVariants(0x7F)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.ZoraHall)]
+        Door = 0x5, // En_Door
+
         [ActorizerEnabled]
         [ObjectListIndex(0xC)]
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
@@ -266,7 +275,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [AlignedCompanionActor(MothSwarm, CompanionAlignment.Above, ourVariant: -1,
            variant: 1, 2, 3, 4, 7)] // they're free, and they are moths, makes sense
-        [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SouthernSwamp, Scene.SouthClockTown, Scene.DekuShrine, Scene.WestClockTown,
+        [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SouthernSwamp, Scene.SouthClockTown, Scene.DekuShrine, Scene.WestClockTown, Scene.SouthernSwampClear,
             Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast, Scene.GreatBayTemple, Scene.OceanSpiderHouse, Scene.BeneathTheWell, Scene.PiratesFortressRooms)]
         Torch = 0x39, // Obj_Syokudai
 
@@ -691,7 +700,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         // twinislands 0x5D snowhead 0x21, observatory 0x29, zora hall 0x33, trade 0x34, 0x48 goron village
         //[EnemizerScenesExcluded(0x5D, 0x21, 0x29, 0x33, 0x34, 0x37, 0x48, 0x4D, 0x50, 0x38, 0x5B, 0x53, 0x58, 0x5A, 0x5E)] 
-        [EnemizerScenesExcluded(Scene.TradingPost)]//, Scene.AstralObservatory)]
+        [EnemizerScenesExcluded(Scene.TradingPost)]//, Scene.AstralObservatory)] // re-disable this if playing Entrando
         Scarecrow = 0xCA, // En_Kakasi
 
         //[ActorizerEnabled] // does not spawn, grotto does weird stuff to it, use TreasureChest instead
@@ -761,7 +770,7 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.MilkRoad,
-            Scene.RomaniRanch, Scene.IkanaCanyon)]
+            Scene.RomaniRanch, Scene.IkanaCanyon, Scene.LinkTrial)]
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // crash
         GossipStone = 0xEF,
 
@@ -999,6 +1008,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x185)]
         [FlyingVariants(0, 1, 2, 3, 4, 5)]
+        // works as a wall enemy, but cannot be marked wall in case other walls replace tingle
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [EnemizerScenesExcluded(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
@@ -1008,7 +1018,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0xE3)]
         [GroundVariants(0xFF)]
-        [OnlyOneActorPerRoom]
+        //[OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.WestClockTown)]
         Banker = 0x177, // En_Ginko_Man
@@ -1404,7 +1414,8 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:2, variant:1)]
         [UnkillableAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
         [CompanionActor(Flame, 0x7FE)] // blue flames
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
+        [EnemizerScenesPlacementBlock( Scene.TerminaField, // suspected weird un-reproducable crashes always seems to happen when they are around
+            Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208,
 
         [ActorizerEnabled]

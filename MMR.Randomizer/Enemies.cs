@@ -362,7 +362,6 @@ namespace MMR.Randomizer
             // biobaba in the right room spawns under the bridge, if octarock it pops up through the tile, move to the side of the bridge
             stonetowertempleScene.Maps[3].Actors[19].Position.x = 1530;
 
-
             // the dinofos spawn is near the roof in woodfall, lower
             // TODO: do secret shrine too maybe
             var woodfalltempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
@@ -375,11 +374,6 @@ namespace MMR.Randomizer
             // lower to the floor 
             storageroomBo.Position = new vec16(-726, -118, -1651);
 
-            // in order to randomize dog, without adding that dog back in because it can crash, we need to change the vars on the dog we want changed
-            //  should add a "randomize but do not-reuse vars" attribute to get around this, but there just aren't enough uses right this second
-            var swampspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
-            swampspiderhouseScene.Maps[0].Actors[2].Variants[0] = 0x3FF;
-
             // the bombchus in GBT are in bad spots to be replaced by something unpassable,
             // but most people dont notice where their original spawn even is so move them
             var greatbaytempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayTemple.FileID());
@@ -391,9 +385,39 @@ namespace MMR.Randomizer
             var grottosScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Grottos.FileID());
             grottosScene.Maps[13].Actors[1].Variants[0] = 1; // change the grass in peahat grotto to drop items like TF grass
 
-            var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
-            var torchRotation = dekuPalaceScene.Maps[2].Actors[26].Rotation.z;
-            torchRotation = (short)MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
+            if (ACTORSENABLED)
+            {
+                // in order to randomize dog, without adding that dog back in because it can crash, we need to change the vars on the dog we want changed
+                //  should add a "randomize but do not-reuse vars" attribute to get around this, but there just aren't enough uses right this second
+                var swampspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
+                swampspiderhouseScene.Maps[0].Actors[2].Variants[0] = 0x3FF;
+
+                var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
+                var torchRotation = dekuPalaceScene.Maps[2].Actors[26].Rotation.z;
+                torchRotation = (short)MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
+
+                // change the torch in pirates fort exterior to all day, remove second one, or free 
+                var piratesExteriorScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.PiratesFortressExterior.FileID());
+                var nightTorch = piratesExteriorScene.Maps[0].Actors[15];
+                nightTorch.Rotation.x = (short)MergeRotationAndFlags(rotation: nightTorch.Rotation.x, flags: 0x7F); // always spawn flags
+                nightTorch.Rotation.z = (short)MergeRotationAndFlags(rotation: nightTorch.Rotation.z, flags: 0x7F);
+
+                // day torch
+                piratesExteriorScene.Maps[0].Actors[13].ChangeActor(GameObjects.Actor.Empty); // dangeon object so no grotto, empty for now
+
+                // todo: 14/16 are also torches, we dont really need both here
+
+                // anju's actor spawns behind the inn door, move her to be visible in sct
+                var eastclocktownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.EastClockTown.FileID());
+                var anju = eastclocktownScene.Maps[0].Actors[0];
+                anju.Position = new vec16(-101, 5, 180);
+                //anju.Rotation.y = (short)MergeRotationAndFlags(rotation: 270, flags: anju.Rotation.y); // rotate to away from us
+
+                // move next to mayors building
+                // bug this is not next to mayor building for some reason, next to inn
+                var gorman = eastclocktownScene.Maps[0].Actors[4];
+                gorman.Position = new vec16(1026, 205, -1947);
+            }
         }
 
         private static void Shinanigans()
@@ -410,6 +434,7 @@ namespace MMR.Randomizer
 
                 // it was two torches, turn the other into a secret grotto, at least for now
                 var randomGrotto = new List<ushort> { 0x6033, 0x603B, 0x6018, 0x605C, 0x8000, 0xA000, 0x7000, 0xC000, 0xE000, 0xF000, 0xD000 };
+                var hiddenGrottos = new List<ushort> { 0x6233, 0x623B, 0x6218, 0x625C, 0x8200, 0xA200, 0x7200, 0xC200, 0xE200, 0xF200, 0xD200 };
                 laundryPoolScene.Maps[0].Actors[1].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)]);
                 laundryPoolScene.Maps[0].Actors[1].Rotation = new vec16(0x7f, 0x7f, 0x7f);
                 laundryPoolScene.Maps[0].Actors[1].Position = new vec16(-1502, 35, 555); // old: new vec16(-1872, -120, 229);
@@ -424,6 +449,11 @@ namespace MMR.Randomizer
                 winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)] & 0xFCFF);
                 //winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: 0x4000);
                 winterVillage.Maps[0].Actors[2].Position = new vec16(504, 365, 800);
+
+                var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
+                var elf6grotto = terminafieldScene.Maps[0].Actors[2];
+                elf6grotto.Position = new vec16(-5539, -275, -701);
+                elf6grotto.ChangeActor(GameObjects.Actor.GrottoHole, vars: hiddenGrottos[seedrng.Next(hiddenGrottos.Count)]);
             }
 
             // testing why zrotation can be so broken for grottos
@@ -456,13 +486,14 @@ namespace MMR.Randomizer
             twinislandsSceneData[0xD6] = 0xAE;
             twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall wtf
 
+
             // testing: change the environment var for tf object_kankyo
             //var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
             //terminafieldScene.Maps[0].Actors[0].ChangeActor(GameObjects.Actor.Weather, vars: 3);
 
             // test: clear away all weather tag actors and see what that changes
-            /* this did NOTHING?? what
-            foreach (var s in RomData.SceneList)
+            //this did NOTHING?? what
+            /* foreach (var s in RomData.SceneList)
             {
                 foreach (var m in s.Maps)
                 {
@@ -470,7 +501,8 @@ namespace MMR.Randomizer
                     {
                         if (a.ActorEnum == GameObjects.Actor.WeatherTag)
                         {
-                            a.ChangeActor(GameObjects.Actor.Empty);
+                            //a.ChangeActor(GameObjects.Actor.Empty);
+                            a.Variants[0] = 0x1D04;
                             Debug.WriteLine($"Weather tag found in scene:{s.SceneEnum.ToString()}");
                         }
                     }
@@ -850,7 +882,8 @@ namespace MMR.Randomizer
             return sceneFreeActors;
         }
 
-        public static void TrimExtraActors(GameObjects.Actor actorType, List<Actor> roomEnemies, List<GameObjects.Actor> roomFreeActors, bool roomIsClearPuzzleRoom, Random rng, int variant = -1)
+        public static void TrimExtraActors(GameObjects.Actor actorType, List<Actor> roomEnemies, List<GameObjects.Actor> roomFreeActors,
+                                           bool roomIsClearPuzzleRoom, Random rng, int variant = -1, int randomRate = 0x50)
         {
             /// actors with maximum counts have their extras trimmed off, replaced with free or empty actors
 
@@ -899,7 +932,7 @@ namespace MMR.Randomizer
                 foreach (var enemy in roomEnemiesWithVariant)
                 {
                     var enemyIndex = roomEnemies.IndexOf(enemy);
-                    EmptyOrFreeActor(enemy, rng, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom);
+                    EmptyOrFreeActor(enemy, rng, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, randomRate);
                     if (((GameObjects.Actor)enemy.ActorID).OnlyOnePerRoom())
                     {
                         roomFreeActors.Remove((GameObjects.Actor)enemy.ActorID);
@@ -908,12 +941,13 @@ namespace MMR.Randomizer
             }
         }
 
-        public static void EmptyOrFreeActor(Actor targetActor, Random rng, List<Actor> currentRoomActorList, List<GameObjects.Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false)
+        public static void EmptyOrFreeActor(Actor targetActor, Random rng, List<Actor> currentRoomActorList,
+                                            List<GameObjects.Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false, int randomRate = 0x50)
         {
             /// returns an actor that is either an empty actor or a free actor that can be placed here beacuse it doesn't require a new unique object
 
             // roll dice: either get a free actor, or empty
-            if (rng.Next(100) < 50) // for now a static chance
+            if (rng.Next(100) < randomRate) // for now a static chance
             {
                 // pick random replacement by selecting random start of array and traversing sequentially until we find a match
                 int randomStart = rng.Next(acceptableFreeActors.Count);
@@ -1277,6 +1311,7 @@ namespace MMR.Randomizer
             WriteOutput(" time to generate candidate list: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             int loopsCount = 0;
+            int freeEnemyRate = 75;
             int oldObjectSize = sceneObjects.Select(x => ObjUtils.GetObjSize(x)).Sum();
             //int oldActorSize = sceneEnemies.Select(u => u.ActorID).Distinct().Select(x => GetOvlRamSize(x)).Sum(); // one per enemy is wrong
             //int oldActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
@@ -1294,6 +1329,7 @@ namespace MMR.Randomizer
                 /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
 
                 // if we've tried 25 seeds and no results, re-shuffle the candidate lists, maybe the rng was bad
+                loopsCount++;
                 if (loopsCount % 25 == 0)
                 {
                     // reinit actorCandidatesLists because this RNG is bad
@@ -1310,7 +1346,6 @@ namespace MMR.Randomizer
                 if (loopsCount >= 900) //1200) // inf loop catch
                 {
 
-
                     var error = " No enemy combo could be found to fill this scene: " + scene.SceneEnum.ToString() + " w sid:" + scene.Number.ToString("X2");
                     WriteOutput(error);
                     WriteOutput("Failed Candidate List:");
@@ -1326,7 +1361,11 @@ namespace MMR.Randomizer
                     FlushLog();
                     throw new Exception(error);
                 }
-                loopsCount++;
+                if (loopsCount > 50 && freeEnemyRate > 0) // reduce free enemy rate 1 percentage per loop over 50
+                {
+                    freeEnemyRate--; 
+                }
+                
 
                 chosenReplacementEnemies = new List<Actor>();
                 chosenReplacementObjects = new List<ValueSwap>();
@@ -1484,14 +1523,14 @@ namespace MMR.Randomizer
 
                             if (problemEnemy.OnlyOnePerRoom())
                             {
-                                TrimExtraActors(problemEnemy, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, rng);
+                                TrimExtraActors(problemEnemy, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, rng, randomRate: freeEnemyRate);
                             }
                             else
                             {
                                 var limitedVariants = problemEnemy.AllVariants().FindAll(u => problemEnemy.VariantMaxCountPerRoom(u) >= 0);
                                 foreach (var variant in limitedVariants)
                                 {
-                                    TrimExtraActors(problemEnemy, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, rng, variant);
+                                    TrimExtraActors(problemEnemy, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, rng, variant: variant, randomRate: freeEnemyRate);
                                 }
                             }
                         }
