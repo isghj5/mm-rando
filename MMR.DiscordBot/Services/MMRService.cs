@@ -13,7 +13,7 @@ namespace MMR.DiscordBot.Services
     public class MMRService
     {
         private const string MMR_CLI = "MMR_CLI";
-        private readonly string _cliPath;
+        protected string _cliPath;
         private readonly HttpClient _httpClient;
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         private readonly Random _random = new Random();
@@ -33,6 +33,11 @@ namespace MMR.DiscordBot.Services
             _httpClient = new HttpClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(10);
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "zoey.zolotova at gmail.com");
+        }
+
+        public bool IsReady()
+        {
+            return !string.IsNullOrWhiteSpace(_cliPath);
         }
 
         public (string filename, string patchPath, string hashIconPath, string spoilerLogPath, string version) GetSeedPaths(DateTime seedDate, string version)

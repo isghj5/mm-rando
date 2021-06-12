@@ -6726,7 +6726,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Red Rupee"), LocationName("Woodfall Temple Pre-Boss Pillar Item"), Region(Region.WoodfallTemple)]
+        [ItemName("Red Rupee"), LocationName("Woodfall Temple Pre-Boss Left Pillar Item"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6736,7 +6736,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Red Rupee"), LocationName("Woodfall Temple Pre-Boss Pillar Item 2"), Region(Region.WoodfallTemple)]
+        [ItemName("Red Rupee"), LocationName("Woodfall Temple Pre-Boss Right Pillar Item"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]

@@ -48098,20 +48098,15 @@
       "Id": "CollectableWoodfallTemplePreBossRoomItem5",
       "RequiredItems": [
         "AreaWoodFallTempleAccess",
-        "OtherArrow"
+        "OtherArrow",
+        "MaskZora"
       ],
       "ConditionalItems": [
         [
           "MaskDeku"
         ],
         [
-          "WFT 2nd Floor Skip",
-          "MaskZora"
-        ],
-        [
-          "Long Jump",
-          "WFT 2nd Floor Skip",
-          "Take Damage"
+          "WFT 2nd Floor Skip"
         ]
       ],
       "TimeNeeded": "None",
