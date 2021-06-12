@@ -39927,10 +39927,10 @@
     {
       "Id": "AreaMoonAccess",
       "RequiredItems": [
-        "AreaStoneTowerClear",
-        "AreaGreatBayTempleClear",
-        "AreaSnowheadTempleClear",
-        "AreaWoodFallTempleClear",
+        "RemainsTwinmold",
+        "RemainsGyorg",
+        "RemainsGoht",
+        "RemainsOdolwa",
         "Play Oath to Order"
       ],
       "ConditionalItems": [],
