@@ -147,11 +147,6 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_settings.CustomItemList.Any(item => item.LocationCategory() == LocationCategory.Purchases))
-            {
-                ItemList[Item.ShopItemWitchBluePotion].DependsOnItems?.Remove(Item.BottleCatchMushroom);
-            }
-
             if (_settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.ScoopedItems) && _settings.LogicMode == LogicMode.Casual)
             {
                 var anyBottleIndex = ItemList.FindIndex(io => io.Name == "Any Bottle");

@@ -1984,6 +1984,32 @@ namespace MMR.Randomizer
                     })
                     .Build()
                 );
+
+                // Update Witch Blue Potion message
+                var witchBluePotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemWitchBluePotion);
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x881)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("What's that? You want ")
+                            .RuntimeArticle(witchBluePotionItem.DisplayItem, witchBluePotionItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(witchBluePotionItem.DisplayName(), witchBluePotionItem.NewLocation.Value);
+                            })
+                            .Text(", do you?")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("Well, you gave me a mushroom, so").NewLine()
+                        .Text("I'll give you").RuntimePronounOrAmount(witchBluePotionItem.DisplayItem, witchBluePotionItem.NewLocation.Value).Text(" for free.")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
             }
 
             // Update messages to match updated world models.
