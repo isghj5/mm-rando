@@ -1661,9 +1661,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0xF0)]
         [GroundVariants(0)]
+        [UnkillableAllVariants]
         [VariantsWithRoomMax(max:0, variant:0)] // hard coded only spawn final night
         [EnemizerScenesExcluded(Scene.MayorsResidence)]
-        Muto = 0x26B,
+        Mutoh = 0x26B,
 
         [ActorizerEnabled]
         [ObjectListIndex(0x243)]
