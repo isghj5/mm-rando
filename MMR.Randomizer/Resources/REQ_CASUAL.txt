@@ -176,7 +176,7 @@
           "Magic Meter"
         ],
         [
-          "SongSoaring"
+          "Play Song of Soaring"
         ],
         [
           "Lensless Jumping"
@@ -265,7 +265,7 @@
       "Id": "FairyDoubleMagic",
       "RequiredItems": [
         "MaskGoron",
-        "SongLullaby",
+        "Play Goron Lullaby",
         "CollectibleStrayFairySnowhead1",
         "CollectibleStrayFairySnowhead2",
         "CollectibleStrayFairySnowhead3",
@@ -457,7 +457,7 @@
       ],
       "ConditionalItems": [
         [
-          "SongSoaring",
+          "Play Song of Soaring",
           "BottleCatchHotSpringWater"
         ],
         [
@@ -479,7 +479,7 @@
       ],
       "ConditionalItems": [
         [
-          "SongSoaring",
+          "Play Song of Soaring",
           "BottleCatchHotSpringWater"
         ],
         [
@@ -906,27 +906,27 @@
       "ConditionalItems": [
         [
           "MaskGoron",
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
           "MaskDeku",
-          "SongSonata",
+          "Play Sonata of Awakening",
           "OtherExplosive"
         ],
         [
           "MaskDeku",
           "MaskGoron",
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
           "MaskZora",
-          "SongNewWaveBossaNova",
+          "Play New Wave Bossa Nova",
           "OtherExplosive"
         ],
         [
           "MaskGoron",
           "MaskZora",
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -1060,7 +1060,8 @@
       "Id": "HeartPieceEvan",
       "RequiredItems": [
         "MaskZora",
-        "AreaWestAccess"
+        "AreaWestAccess",
+        "ItemOcarina"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -1280,7 +1281,7 @@
           "Goron Fence Jump"
         ],
         [
-          "SongEpona"
+          "Play Epona's Song"
         ]
       ],
       "TimeNeeded": "None",
@@ -1451,7 +1452,7 @@
     {
       "Id": "MaskKamaro",
       "RequiredItems": [
-        "SongHealing"
+        "Play Song of Healing"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -1461,9 +1462,9 @@
     {
       "Id": "MaskGibdo",
       "RequiredItems": [
-        "SongHealing",
+        "Play Song of Healing",
         "AreaIkanaCanyonAccess",
-        "SongStorms"
+        "Play Song of Storms"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -1473,7 +1474,7 @@
     {
       "Id": "MaskGaro",
       "RequiredItems": [
-        "SongEpona"
+        "Play Epona's Song"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -1483,7 +1484,7 @@
     {
       "Id": "MaskCaptainHat",
       "RequiredItems": [
-        "SongSonata",
+        "Play Sonata of Awakening",
         "Ikana Graveyard Access",
         "Fighting"
       ],
@@ -1515,7 +1516,7 @@
     {
       "Id": "MaskGoron",
       "RequiredItems": [
-        "SongHealing",
+        "Play Song of Healing",
         "AreaNorthAccess",
         "ItemLens",
         "Magic Meter"
@@ -1528,7 +1529,7 @@
     {
       "Id": "MaskZora",
       "RequiredItems": [
-        "SongHealing",
+        "Play Song of Healing",
         "AreaWestAccess"
       ],
       "ConditionalItems": [],
@@ -1642,7 +1643,8 @@
       "Id": "SongSonata",
       "RequiredItems": [
         "AreaSouthAccess",
-        "MaskDeku"
+        "MaskDeku",
+        "ItemOcarina"
       ],
       "ConditionalItems": [
         [
@@ -1672,7 +1674,8 @@
       "RequiredItems": [
         "BottleCatchEgg",
         "MaskZora",
-        "AreaWestAccess"
+        "AreaWestAccess",
+        "ItemOcarina"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -1771,7 +1774,7 @@
       "Id": "AreaWoodFallTempleAccess",
       "RequiredItems": [
         "MaskDeku",
-        "SongSonata",
+        "Play Sonata of Awakening",
         "AreaSouthAccess",
         "Fighting"
       ],
@@ -1805,13 +1808,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSoaring",
+          "Play Song of Soaring",
           "OtherExplosive",
           "BottleCatchHotSpringWater"
         ],
         [
           "MaskGoron",
-          "SongSoaring",
+          "Play Song of Soaring",
           "BottleCatchHotSpringWater"
         ],
         [
@@ -1838,11 +1841,11 @@
       ],
       "ConditionalItems": [
         [
-          "SongLullaby",
+          "Play Goron Lullaby",
           "Path to Snowhead without Magic"
         ],
         [
-          "SongLullaby",
+          "Play Goron Lullaby",
           "Magic Meter"
         ],
         [
@@ -1882,7 +1885,7 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongEpona"
+          "Play Epona's Song"
         ],
         [
           "Goron Fence Jump"
@@ -1907,7 +1910,7 @@
       "Id": "AreaGreatBayTempleAccess",
       "RequiredItems": [
         "AreaPiratesFortressAccess",
-        "SongNewWaveBossaNova",
+        "Play New Wave Bossa Nova",
         "ItemHookshot"
       ],
       "ConditionalItems": [],
@@ -1976,7 +1979,7 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "ItemHookshot",
-        "SongElegy"
+        "Play Elegy of Emptiness"
       ],
       "ConditionalItems": [
         [
@@ -2116,7 +2119,7 @@
         "AreaStoneTowerTempleAccess",
         "MaskGoron",
         "MaskZora",
-        "SongElegy",
+        "Play Elegy of Emptiness",
         "UpgradeMirrorShield",
         "OtherExplosive",
         "OtherArrow",
@@ -2137,7 +2140,7 @@
         "MaskDeku",
         "MaskGoron",
         "MaskZora",
-        "SongElegy",
+        "Play Elegy of Emptiness",
         "ItemHookshot",
         "Magic Meter"
       ],
@@ -2618,7 +2621,7 @@
           "MaskDeku",
           "Take Damage",
           "Use Light Arrow",
-          "SongElegy"
+          "Play Elegy of Emptiness"
         ],
         [
           "ItemHookshot",
@@ -2634,7 +2637,7 @@
         [
           "Long Jump",
           "Take Damage",
-          "SongElegy"
+          "Play Elegy of Emptiness"
         ]
       ],
       "TimeNeeded": "None",
@@ -2949,7 +2952,7 @@
           "AreaSnowheadTempleClear"
         ],
         [
-          "SongSoaring",
+          "Play Song of Soaring",
           "BottleCatchHotSpringWater"
         ],
         [
@@ -3007,7 +3010,7 @@
           "Magic Meter"
         ],
         [
-          "SongSoaring",
+          "Play Song of Soaring",
           "Lensless Chests"
         ],
         [
@@ -3031,7 +3034,7 @@
           "Magic Meter"
         ],
         [
-          "SongSoaring"
+          "Play Song of Soaring"
         ],
         [
           "Lensless Jumping"
@@ -3076,7 +3079,7 @@
       ],
       "ConditionalItems": [
         [
-          "SongSoaring",
+          "Play Song of Soaring",
           "BottleCatchHotSpringWater"
         ],
         [
@@ -39928,7 +39931,7 @@
         "AreaGreatBayTempleClear",
         "AreaSnowheadTempleClear",
         "AreaWoodFallTempleClear",
-        "SongOath"
+        "Play Oath to Order"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -40095,7 +40098,7 @@
     {
       "Id": "ItemRanchBarnMainCowMilk",
       "RequiredItems": [
-        "SongEpona",
+        "Play Epona's Song",
         "OtherEpona"
       ],
       "ConditionalItems": [],
@@ -40106,7 +40109,7 @@
     {
       "Id": "ItemRanchBarnOtherCowMilk1",
       "RequiredItems": [
-        "SongEpona",
+        "Play Epona's Song",
         "OtherEpona"
       ],
       "ConditionalItems": [],
@@ -40119,12 +40122,12 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongEpona",
+          "Play Epona's Song",
           "OtherEpona",
           "Close Cows"
         ],
         [
-          "SongEpona",
+          "Play Epona's Song",
           "OtherEpona",
           "Milk Multiple Cows"
         ],
@@ -40139,10 +40142,10 @@
     {
       "Id": "ItemWellCowMilk",
       "RequiredItems": [
-        "SongEpona",
+        "Play Epona's Song",
         "AreaIkanaCanyonAccess",
         "MaskGibdo",
-        "SongSoaring",
+        "Play Song of Soaring",
         "BottleCatchHotSpringWater"
       ],
       "ConditionalItems": [
@@ -40160,7 +40163,7 @@
     {
       "Id": "ItemTerminaGrottoCowMilk1",
       "RequiredItems": [
-        "SongEpona",
+        "Play Epona's Song",
         "OtherExplosive"
       ],
       "ConditionalItems": [],
@@ -40171,7 +40174,7 @@
     {
       "Id": "ItemTerminaGrottoCowMilk2",
       "RequiredItems": [
-        "SongEpona",
+        "Play Epona's Song",
         "OtherExplosive"
       ],
       "ConditionalItems": [],
@@ -40183,7 +40186,7 @@
       "Id": "ItemCoastGrottoCowMilk1",
       "RequiredItems": [
         "ItemHookshot",
-        "SongEpona"
+        "Play Epona's Song"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -40194,7 +40197,7 @@
       "Id": "ItemCoastGrottoCowMilk2",
       "RequiredItems": [
         "ItemHookshot",
-        "SongEpona"
+        "Play Epona's Song"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -43353,7 +43356,7 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "ItemHookshot",
-        "SongElegy"
+        "Play Elegy of Emptiness"
       ],
       "ConditionalItems": [
         [
@@ -43373,7 +43376,7 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "ItemHookshot",
-        "SongElegy"
+        "Play Elegy of Emptiness"
       ],
       "ConditionalItems": [
         [
@@ -43515,7 +43518,7 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "ItemHookshot",
-        "SongElegy"
+        "Play Elegy of Emptiness"
       ],
       "ConditionalItems": [
         [
@@ -45164,7 +45167,7 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "ItemHookshot",
-        "SongElegy"
+        "Play Elegy of Emptiness"
       ],
       "ConditionalItems": [
         [
@@ -47491,7 +47494,7 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "ItemHookshot",
-        "SongElegy"
+        "Play Elegy of Emptiness"
       ],
       "ConditionalItems": [
         [
@@ -48987,7 +48990,7 @@
       "RequiredItems": [
         "AreaNorthAccess",
         "MaskGoron",
-        "SongLullaby"
+        "Play Goron Lullaby"
       ],
       "ConditionalItems": [
         [
@@ -49006,7 +49009,7 @@
       "RequiredItems": [
         "AreaNorthAccess",
         "MaskGoron",
-        "SongLullaby"
+        "Play Goron Lullaby"
       ],
       "ConditionalItems": [
         [
@@ -49025,7 +49028,7 @@
       "RequiredItems": [
         "AreaNorthAccess",
         "MaskGoron",
-        "SongLullaby"
+        "Play Goron Lullaby"
       ],
       "ConditionalItems": [
         [
@@ -49044,7 +49047,7 @@
       "RequiredItems": [
         "AreaNorthAccess",
         "MaskGoron",
-        "SongLullaby"
+        "Play Goron Lullaby"
       ],
       "ConditionalItems": [
         [
@@ -49063,7 +49066,7 @@
       "RequiredItems": [
         "AreaNorthAccess",
         "MaskGoron",
-        "SongLullaby"
+        "Play Goron Lullaby"
       ],
       "ConditionalItems": [
         [
@@ -49082,7 +49085,7 @@
       "RequiredItems": [
         "AreaNorthAccess",
         "MaskGoron",
-        "SongLullaby"
+        "Play Goron Lullaby"
       ],
       "ConditionalItems": [
         [
@@ -49101,7 +49104,7 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "ItemHookshot",
-        "SongElegy"
+        "Play Elegy of Emptiness"
       ],
       "ConditionalItems": [
         [
@@ -49121,7 +49124,7 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "ItemHookshot",
-        "SongElegy"
+        "Play Elegy of Emptiness"
       ],
       "ConditionalItems": [
         [
@@ -49141,7 +49144,7 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "ItemHookshot",
-        "SongElegy"
+        "Play Elegy of Emptiness"
       ],
       "ConditionalItems": [
         [
@@ -49161,7 +49164,7 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "ItemHookshot",
-        "SongElegy"
+        "Play Elegy of Emptiness"
       ],
       "ConditionalItems": [
         [
@@ -49181,7 +49184,7 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "ItemHookshot",
-        "SongElegy"
+        "Play Elegy of Emptiness"
       ],
       "ConditionalItems": [
         [
@@ -49682,13 +49685,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49700,13 +49703,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49718,13 +49721,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49736,13 +49739,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49754,13 +49757,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49772,13 +49775,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49790,13 +49793,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49808,13 +49811,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49826,13 +49829,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49844,13 +49847,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49862,13 +49865,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49880,13 +49883,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49898,13 +49901,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49916,13 +49919,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49934,13 +49937,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49952,13 +49955,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49970,13 +49973,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -49988,13 +49991,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -50006,13 +50009,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -50024,13 +50027,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata"
+          "Play Sonata of Awakening"
         ],
         [
-          "SongLullaby"
+          "Play Goron Lullaby"
         ],
         [
-          "SongNewWaveBossaNova"
+          "Play New Wave Bossa Nova"
         ]
       ],
       "TimeNeeded": "None",
@@ -50042,28 +50045,28 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata",
+          "Play Sonata of Awakening",
           "MaskGoron"
         ],
         [
-          "SongSonata",
-          "SongEpona"
+          "Play Sonata of Awakening",
+          "Play Epona's Song"
         ],
         [
-          "SongLullaby",
+          "Play Goron Lullaby",
           "MaskGoron"
         ],
         [
-          "SongLullaby",
-          "SongEpona"
+          "Play Goron Lullaby",
+          "Play Epona's Song"
         ],
         [
-          "SongNewWaveBossaNova",
+          "Play New Wave Bossa Nova",
           "MaskGoron"
         ],
         [
-          "SongNewWaveBossaNova",
-          "SongEpona"
+          "Play New Wave Bossa Nova",
+          "Play Epona's Song"
         ]
       ],
       "TimeNeeded": "None",
@@ -50075,28 +50078,28 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata",
+          "Play Sonata of Awakening",
           "MaskGoron"
         ],
         [
-          "SongSonata",
-          "SongEpona"
+          "Play Sonata of Awakening",
+          "Play Epona's Song"
         ],
         [
-          "SongLullaby",
+          "Play Goron Lullaby",
           "MaskGoron"
         ],
         [
-          "SongLullaby",
-          "SongEpona"
+          "Play Goron Lullaby",
+          "Play Epona's Song"
         ],
         [
-          "SongNewWaveBossaNova",
+          "Play New Wave Bossa Nova",
           "MaskGoron"
         ],
         [
-          "SongNewWaveBossaNova",
-          "SongEpona"
+          "Play New Wave Bossa Nova",
+          "Play Epona's Song"
         ]
       ],
       "TimeNeeded": "None",
@@ -50108,28 +50111,28 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongSonata",
+          "Play Sonata of Awakening",
           "MaskGoron"
         ],
         [
-          "SongSonata",
-          "SongEpona"
+          "Play Sonata of Awakening",
+          "Play Epona's Song"
         ],
         [
-          "SongLullaby",
+          "Play Goron Lullaby",
           "MaskGoron"
         ],
         [
-          "SongLullaby",
-          "SongEpona"
+          "Play Goron Lullaby",
+          "Play Epona's Song"
         ],
         [
-          "SongNewWaveBossaNova",
+          "Play New Wave Bossa Nova",
           "MaskGoron"
         ],
         [
-          "SongNewWaveBossaNova",
-          "SongEpona"
+          "Play New Wave Bossa Nova",
+          "Play Epona's Song"
         ]
       ],
       "TimeNeeded": "None",
@@ -50334,7 +50337,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall1",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50342,7 +50347,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall2",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50350,7 +50357,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall3",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50358,7 +50367,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall4",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50366,7 +50377,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall5",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50374,7 +50387,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall6",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50382,7 +50397,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall7",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50390,7 +50407,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall8",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50398,7 +50417,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall9",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50406,7 +50427,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall10",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50414,7 +50437,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall11",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50422,7 +50447,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall12",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50430,7 +50457,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall13",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50438,7 +50467,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall14",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -50446,7 +50477,9 @@
     },
     {
       "Id": "CollectableTerminaFieldSongWall15",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -51547,7 +51580,7 @@
       "RequiredItems": [
         "Ikana Graveyard Access",
         "Any Bomb Bag",
-        "SongSonata"
+        "Play Sonata of Awakening"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51559,7 +51592,7 @@
       "RequiredItems": [
         "OtherExplosive",
         "Ikana Graveyard Access",
-        "SongSonata"
+        "Play Sonata of Awakening"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51571,7 +51604,7 @@
       "RequiredItems": [
         "OtherExplosive",
         "Ikana Graveyard Access",
-        "SongSonata"
+        "Play Sonata of Awakening"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51633,7 +51666,7 @@
       "RequiredItems": [
         "Ikana Graveyard Access",
         "Any Bomb Bag",
-        "SongSonata"
+        "Play Sonata of Awakening"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51645,7 +51678,7 @@
       "RequiredItems": [
         "Ikana Graveyard Access",
         "Any Bomb Bag",
-        "SongSonata"
+        "Play Sonata of Awakening"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -52300,7 +52333,7 @@
           "OtherArrow"
         ],
         [
-          "SongSoaring",
+          "Play Song of Soaring",
           "BottleCatchHotSpringWater"
         ]
       ],
@@ -52907,7 +52940,7 @@
           "BottleCatchHotSpringWater"
         ],
         [
-          "SongStorms"
+          "Play Song of Storms"
         ]
       ],
       "TimeNeeded": "None",
@@ -53232,7 +53265,7 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "SongEpona"
+          "Play Epona's Song"
         ],
         [
           "Goron Fence Jump"
@@ -53493,12 +53526,14 @@
     },
     {
       "Id": "Bowless Aliens",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "ItemOcarina"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "IsTrick": true,
-      "TrickTooltip": "Pause and unpause until 5:15"
+      "TrickTooltip": "Pause and unpause until 5:15. Logic expects Sun's Song."
     },
     {
       "Id": "Guess Bomber Code",
@@ -54126,6 +54161,116 @@
       "TimeAvailable": "None",
       "IsTrick": true,
       "TrickTooltip": "Shoot Goht with Arrows."
+    },
+    {
+      "Id": "Play Song of Time",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongTime"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Play Song of Healing",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongHealing"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Play Epona's Song",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongEpona"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Play Song of Soaring",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongSoaring"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Play Song of Storms",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongStorms"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Play Sonata of Awakening",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongSonata"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Play Goron Lullaby",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongLullaby"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Play New Wave Bossa Nova",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongNewWaveBossaNova"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Play Elegy of Emptiness",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongElegy"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Play Oath to Order",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongOath"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
     }
   ]
 }
