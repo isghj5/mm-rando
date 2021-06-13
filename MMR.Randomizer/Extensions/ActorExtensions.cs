@@ -163,15 +163,6 @@ namespace MMR.Randomizer.Extensions
                     theirAttr = otherActor.GetAttribute<PatrolVariantsAttribute>();
                 }*/
 
-                // small chance of getting flying enemies on ground enemies
-                if (variant == 2 && ourAttr == null) // we are land and they are not
-                {
-                    theirAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
-                    if (theirAttr != null && rng.Next(100) < 10)
-                    {
-                        return theirAttr.Variants;
-                    }
-                }
 
                 if (ourAttr != null && theirAttr != null) // both have same type
                 {
@@ -181,6 +172,17 @@ namespace MMR.Randomizer.Extensions
                         && ourAttr.Variants.Contains(oldActorVariant)) // old actor had to actually be this attribute
                     {
                         return compatibleVariants;
+                    }
+                }
+
+                // small chance of getting flying enemies on ground or wall enemies
+                // if both were ground variant we wouldn't get this far; if we are ground here they are not
+                if ((variant == 2 || variant == 4) && ourAttr != null)
+                {
+                    theirAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
+                    if (theirAttr != null && rng.Next(100) < 10)
+                    {
+                        return theirAttr.Variants;
                     }
                 }
             }

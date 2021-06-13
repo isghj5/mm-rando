@@ -738,8 +738,6 @@ namespace MMR.Randomizer.GameObjects
         Dog = 0xE2, // En_Dg
 
         [ObjectListIndex(0x133)]
-        //[GroundVariants(0x1E,0x2A02,0x2C0A,0x320F)]
-        [UnkillableAllVariants] // killing one not possible
         LargeCrate = 0xE5,
 
         [EnemizerEnabled]

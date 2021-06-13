@@ -1387,7 +1387,7 @@ namespace MMR.Randomizer
                         }); 
                         continue;
                     } // */
-                    if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
+                    /*if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.RealBombchu.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
