@@ -1286,6 +1286,8 @@ namespace MMR.Randomizer
 
             // some scenes are blocked from having enemies, do this ONCE before GetMatchPool, which would do it per-enemy
             var sceneAcceptableEnemies = EnemyList.FindAll( u => ! u.BlockedScenes().Contains(scene.SceneEnum));
+            // some enemies are marked do-not-re-use by having no vairants with max > 0, remove now
+            sceneAcceptableEnemies = EnemyList.FindAll(u => !u.NoPlacableVariants());
 
             // issue: this function is called in paralel, if the order is different the Random object will be different and not seed-reproducable
             // instead of passing the random obj, we pass seed and add it to the unique scene number to get a replicatable, but random, seed
@@ -1313,8 +1315,6 @@ namespace MMR.Randomizer
             int loopsCount = 0;
             int freeEnemyRate = 75;
             int oldObjectSize = sceneObjects.Select(x => ObjUtils.GetObjSize(x)).Sum();
-            //int oldActorSize = sceneEnemies.Select(u => u.ActorID).Distinct().Select(x => GetOvlRamSize(x)).Sum(); // one per enemy is wrong
-            //int oldActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
             var previousyAssignedActor = new List<GameObjects.Actor>();
             var chosenReplacementEnemies = new List<Actor>();
             var sceneFreeActors = GetSceneFreeActors(scene, log);

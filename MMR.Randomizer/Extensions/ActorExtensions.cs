@@ -263,6 +263,30 @@ namespace MMR.Randomizer.Extensions
             return actor.GetAttribute<OnlyOneActorPerRoom>() != null;
         }
 
+        public static bool NoPlacableVariants(this Actor actor)
+        {
+            var allVariantsAttrs = actor.GetAttributes<ActorVariantsAttribute>();
+            if (allVariantsAttrs == null) {
+                return true;
+            }
+
+            foreach (var attr in allVariantsAttrs)
+            {
+                var allVariants = attr.Variants;
+                for (int i = 0; i < allVariants.Count(); i++)
+                {
+                    var max = VariantMaxCountPerRoom(actor, i);
+                    // if -1, no max. if 1 or greater, does not quality as zero
+                    if (max != 0)
+                    {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+
         public static bool HasOptionalCompanions(this Actor actor)
         {
             return actor.GetAttributes<AlignedCompanionActorAttribute>() != null;
