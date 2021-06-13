@@ -712,26 +712,29 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(215)]
         [ObjectListIndex(0x132)]
-        // 0xFFFF does not spawn
         // 0xA9F and the 0x29F crashes, but... was there ever a dog in that house?
         // 3FF is SCT dog, 0x22BF is spiderhouse dog, makes no sense if use mask
         // 0xD9F is old ranch dog WORKS, racetrack dogs unknown, spawned by the game
         // in mamuyan: (phi_s0 << 5) | (arg0->unk1C & 0x7E00) unk1C seems static
         // from mamuyan code we know the colors are 1-E shifted right by 5
         // colors: (white, brown, dark grey, bluedog, gold)
+        // 0x001F params are unknown, they aren't checked in init
+        // 0xFC00 is the path section of vars, we must keep this zero
+        // D9F crashes in road to southernswamp turned into 19F
         [GroundVariants(0x20, 0x40, 0x60, 0x80, 0x120,
-            0x3FF, 0xD9F, 0x22BF)]
-        //[GroundVariants(0x60, 0x40, 0xD9F)] // f0x22BF, 0x3FF fine in snowhead, 0x120, 
-        //[GroundVariants(0x60)] //testing // f0x22BF, 0x3FF fine in snowhead, 0x120, 
+            0x3FF, 0x19F, 0x02BF)]
+        //[GroundVariants(0x19F)]
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max:5, 0x3FF)]
+        [VariantsWithRoomMax(max:1, 0x3FF, 0x19F, 0x02BF, 0x20, 0x40, 0x60, 0x80, 0x120)] // this many dogs is enough honestly
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
         // dog safe areas: TF, roadtoSS, SS, SSC, deku palace, sspiderhouse
         // path to mountain village
-        // gbc
+        // now that I know what the path vars is, any area with at least one path per room should be safe
+        // these used to be banned, but we should be able to use them now:
+        //DekuShrine RoadToIkana GoronVillage
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, // cursed if put on hms
-            Scene.DekuShrine, Scene.Woodfall,
-            Scene.RoadToIkana, Scene.MountainVillageSpring, Scene.GoronVillage)]
+            Scene.Woodfall, // they fall off into the water and quietly swim, lame?
+            Scene.MountainVillageSpring)]
         Dog = 0xE2, // En_Dg
 
         [ObjectListIndex(0x133)]

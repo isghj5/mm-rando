@@ -1387,13 +1387,13 @@ namespace MMR.Randomizer
                         }); 
                         continue;
                     } // */
-                    /* if (scene.File == GameObjects.Scene.SouthClockTown.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.Muto.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.RealBombchu.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.BombchuGirl.ObjectIndex()
+                            NewV = GameObjects.Actor.Dog.ObjectIndex()
                         });
                         continue;
                     }// */
