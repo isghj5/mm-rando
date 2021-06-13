@@ -68,19 +68,6 @@ namespace MMR.UI.Forms
 
 
             Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion}";
-
-            var args = Environment.GetCommandLineArgs();
-            if (args.Length > 1)
-            {
-                var openWithArg = args[1];
-                if (Path.GetExtension(openWithArg) == ".mmr")
-                {
-                    ttOutput.SelectedIndex = 1;
-                    TogglePatchSettings(false);
-                    _configuration.OutputSettings.InputPatchFilename = openWithArg;
-                    tPatch.Text = _configuration.OutputSettings.InputPatchFilename;
-                }
-            }
         }
 
         private void InitializeTooltips()
@@ -382,6 +369,11 @@ namespace MMR.UI.Forms
             if (_itemPoolRecalculating)
             {
                 return;
+            }
+
+            if (_configuration.GameplaySettings.CustomItemList == null)
+            {
+                _configuration.GameplaySettings.CustomItemList = new HashSet<Item>();
             }
 
             var checkbox = (CheckBox)sender;
@@ -690,6 +682,19 @@ namespace MMR.UI.Forms
 
             LoadSettings();
 
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+            {
+                var openWithArg = args[1];
+                if (Path.GetExtension(openWithArg) == ".mmr")
+                {
+                    ttOutput.SelectedIndex = 1;
+                    TogglePatchSettings(false);
+                    _configuration.OutputSettings.InputPatchFilename = openWithArg;
+                    tPatch.Text = _configuration.OutputSettings.InputPatchFilename;
+                }
+            }
+
             _isUpdating = false;
         }
 
@@ -837,18 +842,25 @@ namespace MMR.UI.Forms
 
         private void Randomize()
         {
-            var validationResult = _configuration.GameplaySettings.Validate() ?? _configuration.OutputSettings.Validate();
+            string validationResult;
+            if (!string.IsNullOrWhiteSpace(_configuration.OutputSettings.InputPatchFilename))
+            {
+                validationResult = _configuration.OutputSettings.Validate();
+                saveROM.FileName = Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64");
+            }
+            else
+            {
+                validationResult = _configuration.GameplaySettings.Validate() ?? _configuration.OutputSettings.Validate();
+                var defaultOutputROMFilename = FileUtils.MakeFilenameValid($"MMR-{typeof(Randomizer).Assembly.GetName().Version}-{DateTime.UtcNow:o}");
+                saveROM.FileName = defaultOutputROMFilename;
+            }
+
             if (validationResult != null)
             {
                 MessageBox.Show(validationResult, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var defaultOutputROMFilename = FileUtils.MakeFilenameValid($"MMR-{typeof(Randomizer).Assembly.GetName().Version}-{DateTime.UtcNow:o}");
-
-            saveROM.FileName = !string.IsNullOrWhiteSpace(_configuration.OutputSettings.InputPatchFilename)
-                ? Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64")
-                : defaultOutputROMFilename;
             if (saveROM.ShowDialog() != DialogResult.OK)
             {
                 return;
