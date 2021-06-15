@@ -851,6 +851,8 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a stolen possession"), GossipItemHint("a musical instrument")]
         [ShopText("This musical instrument is filled with memories of Princess Zelda.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [HackContent(nameof(Resources.mods.fix_ocarina_checks))]
+        [HackContent(nameof(Resources.mods.fix_song_of_time))]
         [GetItemIndex(0x4C), ItemPool(ItemCategory.TimeTravel, LocationCategory.BossFights)]
         ItemOcarina,
 
@@ -859,6 +861,8 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a distant memory"), GossipItemHint("a forgotten melody")]
         [ShopText("This melody is a song of memories of Princess Zelda.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [HackContent(nameof(Resources.mods.fix_ocarina_checks))]
+        [HackContent(nameof(Resources.mods.fix_song_of_time))]
         [GetItemIndex(0x44C), ItemPool(ItemCategory.TimeTravel, LocationCategory.BossFights)]
         SongTime,
 
@@ -1246,6 +1250,7 @@ namespace MMR.Randomizer.GameObjects
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 2)]
         [ShopText("Replenishes both life energy and magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [HackContent(nameof(Resources.mods.fix_shop_witch_bluepotion))]
         [GetItemIndex(0xC2), ItemPool(ItemCategory.BluePotions, LocationCategory.Purchases)]
         ShopItemWitchBluePotion,
 
@@ -2177,6 +2182,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("the lonely child"), GossipItemHint("the wrath of a god")]
         [ShopText("A mask that contains the merits of all masks.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [HackContent(nameof(Resources.mods.fix_fd_mask_reset))]
         [GetItemIndex(0x7B), ItemPool(ItemCategory.Masks, LocationCategory.MoonItems)]
         MaskFierceDeity,
 
@@ -2211,6 +2217,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a new file", "a quest's inception"), GossipItemHint("a forest blade")]
         [ShopText("A sword created by forest folk.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [HackContent(nameof(Resources.mods.fix_sword_song_of_time))]
         [GetItemIndex(0x37), ItemPool(ItemCategory.MainInventory, LocationCategory.StartingItems)]
         StartingSword,
 
@@ -3305,6 +3312,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a town shop"), GossipItemHint("a dairy product", "an adult beverage")]
         [ShopText("Drink it to get lasting stamina for your magic power.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [HackContent(nameof(Resources.mods.fix_shop_milkbar))]
         [GetItemIndex(0x180), ItemPool(ItemCategory.Chateau, LocationCategory.Purchases)]
         ShopItemMilkBarChateau,
 
@@ -3313,6 +3321,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a town shop"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [HackContent(nameof(Resources.mods.fix_shop_milkbar))]
         [GetItemIndex(0x181), ItemPool(ItemCategory.Milk, LocationCategory.Purchases)]
         ShopItemMilkBarMilk,
 
@@ -3377,6 +3386,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a western merchant"), GossipItemHint("a magic potion", "a green drink")]
         [ShopText("Replenishes your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [HackContent(nameof(Resources.mods.fix_shop_businessscrub_greenpotion))]
         [GetItemIndex(0x19C), ItemPool(ItemCategory.GreenPotions, LocationCategory.Purchases)]
         ShopItemBusinessScrubGreenPotion,
 
@@ -3385,6 +3395,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("an eastern merchant"), GossipItemHint("consumable strength", "a magic potion", "a blue drink")]
         [ShopText("Replenishes both life energy and magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [HackContent(nameof(Resources.mods.fix_shop_businessscrub_bluepotion))]
         [GetItemIndex(0x19D), ItemPool(ItemCategory.BluePotions, LocationCategory.Purchases)]
         ShopItemBusinessScrubBluePotion,
 
@@ -3401,6 +3412,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a dairy product", "the produce of cows")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [HackContent(nameof(Resources.mods.fix_shop_gorman_milk))]
         [GetItemIndex(0x1A0), ItemPool(ItemCategory.Milk, LocationCategory.Purchases)]
         ShopItemGormanBrosMilk,
 
@@ -3509,6 +3521,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a fisherman"), GossipItemHint("a sea creature")]
         [ShopText("It wants to go back home to Pinnacle Rock.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [HackContent(nameof(Resources.mods.fix_fisherman))]
         [GetItemIndex(0x95), ItemPool(ItemCategory.Seahorse, LocationCategory.NpcRewards)]
         MundaneItemSeahorse,
 

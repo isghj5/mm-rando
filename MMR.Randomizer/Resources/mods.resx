@@ -229,8 +229,23 @@
   <data name="fix_piece_of_heart_message" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-piece-of-heart-message;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="fix_shop_checks" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>mods\fix-shop-checks;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="fix_shop_businessscrub_bluepotion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-shop-businessscrub-bluepotion;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_shop_businessscrub_greenpotion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-shop-businessscrub-greenpotion;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_shop_curiosity_bigbombbag" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-shop-curiosity-bigbombbag;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_shop_gorman_milk" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-shop-gorman-milk;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_shop_milkbar" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-shop-milkbar;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="fix_shop_witch_bluepotion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-shop-witch-bluepotion;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="fix_skulltula_tokens" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-skulltula-tokens;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

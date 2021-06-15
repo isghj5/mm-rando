@@ -433,9 +433,59 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
-        internal static byte[] fix_shop_checks {
+        internal static byte[] fix_shop_businessscrub_bluepotion {
             get {
-                object obj = ResourceManager.GetObject("fix_shop_checks", resourceCulture);
+                object obj = ResourceManager.GetObject("fix_shop_businessscrub_bluepotion", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fix_shop_businessscrub_greenpotion {
+            get {
+                object obj = ResourceManager.GetObject("fix_shop_businessscrub_greenpotion", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fix_shop_curiosity_bigbombbag {
+            get {
+                object obj = ResourceManager.GetObject("fix_shop_curiosity_bigbombbag", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fix_shop_gorman_milk {
+            get {
+                object obj = ResourceManager.GetObject("fix_shop_gorman_milk", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fix_shop_milkbar {
+            get {
+                object obj = ResourceManager.GetObject("fix_shop_milkbar", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fix_shop_witch_bluepotion {
+            get {
+                object obj = ResourceManager.GetObject("fix_shop_witch_bluepotion", resourceCulture);
                 return ((byte[])(obj));
             }
         }

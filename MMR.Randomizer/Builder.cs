@@ -2415,10 +2415,7 @@ namespace MMR.Randomizer
 
             _messageTable.UpdateMessages(newMessages);
 
-            if (_randomized.Settings.CustomItemList.Any(item => item.LocationCategory() == LocationCategory.Purchases)) // TODO only apply when actual shops are randomized
-            {
-                ResourceUtils.ApplyHack(Resources.mods.fix_shop_checks);
-            }
+            ResourceUtils.ApplyHack(Resources.mods.fix_shop_curiosity_bigbombbag);
         }
 
         private void WriteGossipQuotes()

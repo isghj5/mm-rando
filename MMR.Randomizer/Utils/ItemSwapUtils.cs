@@ -7,6 +7,7 @@ using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MMR.Randomizer.Utils
 {
@@ -179,25 +180,10 @@ namespace MMR.Randomizer.Utils
 
             if (location != item)
             {
-                if (location == Item.StartingSword)
+                var hackContentAttributes = location.GetAttributes<HackContentAttribute>();
+                foreach (var hackContent in hackContentAttributes.Select(h => h.HackContent))
                 {
-                    ResourceUtils.ApplyHack(Resources.mods.fix_sword_song_of_time);
-                }
-
-                if (location == Item.MundaneItemSeahorse)
-                {
-                    ResourceUtils.ApplyHack(Resources.mods.fix_fisherman);
-                }
-
-                if (location == Item.MaskFierceDeity)
-                {
-                    ResourceUtils.ApplyHack(Resources.mods.fix_fd_mask_reset);
-                }
-
-                if (location == Item.ItemOcarina || location == Item.SongTime)
-                {
-                    ResourceUtils.ApplyHack(Resources.mods.fix_ocarina_checks);
-                    ResourceUtils.ApplyHack(Resources.mods.fix_song_of_time);
+                    ResourceUtils.ApplyHack(hackContent);
                 }
             }
         }
