@@ -12,7 +12,7 @@
 #define ActorOverlayTableAddr            0x801AEFD0
 #define GetItemGraphicTableAddr          0x801BB170
 #define GameStateTableAddr               0x801BD910
-#define ItemUpgradeCapacityAddr          0x801C1E00
+#define ItemUpgradeCapacityAddr          0x801C1E04
 #define ItemTextureSegAddrTableAddr      0x801C1E6C // Segment address table used for item textures.
 #define ObjectTableAddr                  0x801C2740
 #define SongNotesAddr                    0x801CFC98
@@ -155,6 +155,8 @@ extern void z2_Yaz0_LoadAndDecompressFile(u32 promAddr, void* dest, u32 length);
 extern void z2_SetGetItem(Actor* actor, GlobalContext* ctxt, s32 unk2, u32 unk3);
 extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 extern void z2_GiveItem(GlobalContext* ctxt, u8 itemId);
+extern s8 z2_IsItemKnown(u8 itemId);
+extern bool z2_HasEmptyBottle();
 extern void z2_GiveMap(u32 mapIndex);
 extern void z2_AddRupees(s32 amount);
 

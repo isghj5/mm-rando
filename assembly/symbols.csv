@@ -76,7 +76,9 @@
 0x80110038,z2_UpdateButtonUsability
 0x80112B40,z2_ReloadButtonTexture
 0x80112E80,z2_GiveItem
+0x801143CC,z2_IsItemKnown
 0x801149A0,z2_RemoveItem
+0x80114E90,z2_HasEmptyBottle
 0x8011552C,z2_HudSetAButtonText
 0x801159EC,z2_AddRupees
 0x80117BD0,z2_DrawButtonAmounts

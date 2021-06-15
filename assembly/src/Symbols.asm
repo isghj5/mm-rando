@@ -78,7 +78,9 @@
 .definelabel z2_UpdateButtonUsability, 0x80110038
 .definelabel z2_ReloadButtonTexture, 0x80112B40
 .definelabel z2_GiveItem, 0x80112E80
+.definelabel z2_IsItemKnown, 0x801143CC
 .definelabel z2_RemoveItem, 0x801149A0
+.definelabel z2_HasEmptyBottle, 0x80114E90
 .definelabel z2_HudSetAButtonText, 0x8011552C
 .definelabel z2_AddRupees, 0x801159EC
 .definelabel z2_DrawButtonAmounts, 0x80117BD0

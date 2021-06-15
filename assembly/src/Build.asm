@@ -74,6 +74,7 @@
 .include "Scene.Patch.asm"
 .include "Scopecoin.Patch.asm"
 .include "ScRuppe.Patch.asm"
+.include "Shops.Patch.asm"
 .include "SoftSoilPrize.Patch.asm"
 .include "SongState.Patch.asm"
 .include "Speedups.Patch.asm"

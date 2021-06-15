@@ -744,9 +744,10 @@ typedef struct {
     /* 0x12044 */ s16 unk12044;
     /* 0x12046 */ UNK_TYPE1 pad12046[0x24];
     /* 0x1206A */ s16 messageBoxScreenY;
-    /* 0x1206C */ UNK_TYPE1 pad1206C[0xC];
+    /* 0x1206C */ s32 messageCost;
+    /* 0x12070 */ UNK_TYPE1 pad12070[0x8];
     /* 0x12078 */ u32 bankRupeesSelected;
-    /* 0x1207C */ u32 bankRupees; 
+    /* 0x1207C */ u32 bankRupees;
     /* 0x12080 */ UNK_TYPE1 pad12080[0x4];
     /* 0x12084 */ void* messageTable;
     /* 0x12088 */ UNK_TYPE1 pad12088[0x8];
@@ -1492,10 +1493,18 @@ typedef struct {
 } ActorEnAkindonuts; // size = ?
 
 // En_GirlA actor (Shop Inventory Data).
-typedef struct {
+typedef struct ActorEnGirlA {
     /* 0x000 */ Actor base;
     /* 0x144 */ UNK_TYPE1 pad144[0x5A];
     /* 0x19E */ u16 giIndex;
+    /* 0x1A0 */ UNK_TYPE4 unk1A0;
+    /* 0x1A4 */ UNK_TYPE4 cleanupPurchase;
+    /* 0x1A8 */ UNK_TYPE4 unk1A8;
+    /* 0x1AC */ UNK_TYPE4 unk1AC;
+    /* 0x1B0 */ UNK_TYPE4 unk1B0;
+    /* 0x1B4 */ u8 (*checkPurchase)(GlobalContext* ctxt, struct ActorEnGirlA* self);
+    /* 0x1B8 */ void (*handleInstantPurchase)(GlobalContext* ctxt, struct ActorEnGirlA* self);
+    /* 0x1BC */ UNK_TYPE4 afterPurchase;
 } ActorEnGirlA; // size = ?
 
 // En_Item00 actor (Collectable Field Item).
@@ -1695,16 +1704,16 @@ typedef struct {
 } GetItemGraphicEntry; // size = 0x24
 
 typedef struct {
-    /* 0x00 */ u8 upgradeShiftAmount[0xC];
-    /* 0x0C */ u16 arrowCapacity[4];
-    /* 0x14 */ u16 bombCapacity[4];
-    /* 0x1C */ u16 unkCapacity1C[4];
-    /* 0x24 */ u16 unkCapacity24[4];
-    /* 0x2C */ u16 walletCapacity[4];
-    /* 0x34 */ u16 unkCapacity34[4];
-    /* 0x3C */ u16 stickCapacity[4];
-    /* 0x44 */ u16 nutCapacity[4];
-} ItemUpgradeCapacity; // size = 0x4C
+    /* 0x00 */ u8 upgradeShiftAmount[0x8];
+    /* 0x08 */ u16 arrowCapacity[4];
+    /* 0x10 */ u16 bombCapacity[4];
+    /* 0x18 */ u16 unkCapacity18[4];
+    /* 0x20 */ u16 unkCapacity20[4];
+    /* 0x28 */ u16 walletCapacity[4];
+    /* 0x30 */ u16 unkCapacity30[4];
+    /* 0x38 */ u16 stickCapacity[4];
+    /* 0x40 */ u16 nutCapacity[4];
+} ItemUpgradeCapacity; // size = 0x48
 
 /// =============================================================
 /// File Select Context
