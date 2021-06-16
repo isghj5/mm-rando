@@ -462,24 +462,7 @@ void Models_WriteBossRemainsObjectSegment(GlobalContext* ctxt, u32 graphicIdMinu
  **/
 void Models_DrawBossRemains(Actor* actor, GlobalContext* ctxt, u32 graphicIdMinus1) {
     if (MISC_CONFIG.flags.freestanding) {
-        u16 giIndex;
-        switch (actor->params) {
-            case 0:
-                giIndex = 0x448;
-                break;
-            case 1:
-                giIndex = 0x449;
-                break;
-            case 2:
-                giIndex = 0x44A;
-                break;
-            case 3:
-                giIndex = 0x44B;
-                break;
-            default:
-                return;
-        }
-        DrawFromGiTable(actor, ctxt, 1.0, giIndex);
+        DrawFromGiTable(actor, ctxt, 1.0, 0x448 + actor->params);
     } else {
         DrawModelLowLevel(actor, ctxt, graphicIdMinus1);
     }
