@@ -1988,6 +1988,22 @@ namespace MMR.Randomizer
                 // Update Witch Blue Potion message
                 var witchBluePotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemWitchBluePotion);
                 newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x880)
+                    .Message(it =>
+                    {
+                        it.Red(() =>
+                        {
+                            it.RuntimeItemName(witchBluePotionItem.DisplayName(), witchBluePotionItem.NewLocation.Value).Text(": 60 Rupees").NewLine();
+                        })
+                        .Text("Actually, I can't get the").NewLine()
+                        .Text("ingredients for this, so I'm sold").NewLine()
+                        .Text("out. Sorry.")
+                        .DisableTextBoxClose()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
                     .Id(0x881)
                     .Message(it =>
                     {
