@@ -91,12 +91,14 @@ u8 ShopInventoryData_CheckPurchase(GlobalContext* ctxt, ActorEnGirlA* actor) {
         return actor->checkPurchase(ctxt, actor);
     }
 
-    u8 item;
+    if (gSaveContext.perm.unk24.rupees < ctxt->msgCtx.messageCost) {
+        return 4;
+    }
 
     if (MISC_CONFIG.flags.shopModels) {
         u16 giIndex = MMR_GetNewGiIndex(ctxt, NULL, actor->giIndex, false);
         GetItemEntry* giEntry = MMR_GetGiEntry(giIndex);
-        item = giEntry->item;
+        u8 item = giEntry->item;
 
         if (IsItemAtMaxCapacity(item)) {
             return 2;
@@ -105,13 +107,7 @@ u8 ShopInventoryData_CheckPurchase(GlobalContext* ctxt, ActorEnGirlA* actor) {
         if (DoesItemRequireBottle(item) && !z2_HasEmptyBottle()) {
             return 3;
         }
-    }
 
-    if (gSaveContext.perm.unk24.rupees < ctxt->msgCtx.messageCost) {
-        return 4;
-    }
-
-    if (MISC_CONFIG.flags.shopModels) {
         if (IsItemInstant(item)) {
             return 1;
         }
