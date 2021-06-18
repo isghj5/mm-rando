@@ -20,6 +20,10 @@ bool Icetrap_Give(ActorPlayer* player, GlobalContext* ctxt) {
         return false;
     }
 
+    if (player->getItem) {
+        return false;
+    }
+
     u32 mask1 = PLAYER_STATE1_TIME_STOP |
                 PLAYER_STATE1_TIME_STOP_2 |
                 PLAYER_STATE1_DAMAGED;
