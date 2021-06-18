@@ -148,11 +148,6 @@ namespace MMR.Randomizer.Extensions
             return item.HasAttribute<OverwritableAttribute>();
         }
 
-        public static bool IsShop(this Item item)
-        {
-            return item.HasAttribute<ShopRoomAttribute>();
-        }
-
         public static bool IsSong(this Item item)
         {
             return (Item.SongHealing <= item && item <= Item.SongOath);

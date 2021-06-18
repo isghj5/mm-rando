@@ -191,33 +191,10 @@ namespace MMR.Randomizer.Utils
         private static void UpdateShop(ItemObject itemObject, List<MessageEntry> newMessages)
         {
             var location = itemObject.NewLocation.Value;
-            GetItemEntry newItem;
-            if (itemObject.Mimic != null)
-            {
-                newItem = RomData.GetItemList[itemObject.Mimic.Item.GetItemIndex().Value];
-            }
-            else if (itemObject.Item.IsExclusiveItem())
-            {
-                newItem = itemObject.Item.ExclusiveItemEntry();
-            }
-            else
-            {
-                newItem = RomData.GetItemList[itemObject.Item.GetItemIndex().Value];
-            }
-
-            var shopRooms = location.GetAttributes<ShopRoomAttribute>();
-            foreach (var shopRoom in shopRooms)
-            {
-                ReadWriteUtils.WriteToROM(shopRoom.RoomObjectAddress, (ushort)newItem.Object);
-            }
 
             var shopInventories = location.GetAttributes<ShopInventoryAttribute>();
             foreach (var shopInventory in shopInventories)
             {
-                ReadWriteUtils.WriteToROM(shopInventory.ShopItemAddress, (ushort)newItem.Object);
-                var index = newItem.Index > 0x7F ? (byte)(0xFF - newItem.Index) : (byte)(newItem.Index - 1);
-                ReadWriteUtils.WriteToROM(shopInventory.ShopItemAddress + 0x03, index);
-
                 var messageId = ReadWriteUtils.ReadU16(shopInventory.ShopItemAddress + 0x0A);
                 newMessages.Add(new MessageEntryBuilder()
                     .Id(messageId)

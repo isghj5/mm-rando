@@ -52,11 +52,11 @@ namespace MMR.Randomizer.GameObjects
         ItemLightArrow,
 
         [Progressive]
+        [Purchaseable, Visible]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x08)]
         [ItemName("Bomb Bag"), LocationName("Bomb Bag Purchase"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("an item carrier", "a vessel of explosives")]
-        [ShopRoom(ShopRoomAttribute.Room.BombShop, 0x48)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.BombShop, 0)]
         [ShopText("This can hold up to a maximum of 20 bombs.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -274,12 +274,11 @@ namespace MMR.Randomizer.GameObjects
 
         [Progressive]
         [Downgradable]
+        [Purchaseable, Visible]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x10)]
         [ItemName("Big Bomb Bag"), LocationName("Big Bomb Bag Purchase"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town shop"), GossipItemHint("an item carrier", "a vessel of explosives")]
-        [ShopRoom(ShopRoomAttribute.Room.BombShop, 0x52)]
-        [ShopRoom(ShopRoomAttribute.Room.CuriosityShop, 0x44)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.BombShop, 1)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.CuriosityShop, 2)]
         [ShopText("This can hold up to a maximum of 30 bombs.")]
@@ -668,10 +667,10 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x84), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards)]
         MaskPostmanHat,
 
+        [Purchaseable, Visible]
         [StartingItem(0xC5CE3D, 0x38)]
         [ItemName("All-Night Mask"), LocationName("All-Night Mask Purchase"), Region(Region.WestClockTown)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("insomnia"), GossipCompetitiveHint(0, nameof(GameplaySettings.UpdateShopAppearance), false)]
-        [ShopRoom(ShopRoomAttribute.Room.CuriosityShop, 0x54)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.CuriosityShop, 0)]
         [ShopText("When you wear it you don't get sleepy.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -1155,10 +1154,10 @@ namespace MMR.Randomizer.GameObjects
         ItemStoneTowerKey4,
 
         //shop items
+        [Purchaseable, Visible]
         [Repeatable, Temporary, Overwritable]
         [ItemName("Red Potion"), LocationName("Trading Post Red Potion"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
-        [ShopRoom(ShopRoomAttribute.Room.TradingPost, 0x42)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 7)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 7)]
         [ShopText("Replenishes your life energy.")]
@@ -1166,10 +1165,10 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xCD), ItemPool(ItemCategory.RedPotions, LocationCategory.Purchases)]
         ShopItemTradingPostRedPotion,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary, Overwritable]
         [ItemName("Green Potion"), LocationName("Trading Post Green Potion"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a magic potion", "a green drink")]
-        [ShopRoom(ShopRoomAttribute.Room.TradingPost, 0x62)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 2)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 3)]
         [ShopText("Replenishes your magic power.")]
@@ -1177,10 +1176,10 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xBB), ItemPool(ItemCategory.GreenPotions, LocationCategory.Purchases)]
         ShopItemTradingPostGreenPotion,
 
+        [Purchaseable, Visible]
         [Repeatable]
         [ItemName("Hero's Shield"), LocationName("Trading Post Hero's Shield"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a basic guard", "protection")]
-        [ShopRoom(ShopRoomAttribute.Room.TradingPost, 0x44)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 3)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 6)]
         [ShopText("Use it to defend yourself.")]
@@ -1188,10 +1187,10 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xBC), ItemPool(ItemCategory.Shields, LocationCategory.Purchases)]
         ShopItemTradingPostShield,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary, Overwritable]
         [ItemName("Fairy"), LocationName("Trading Post Fairy"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a winged friend", "a healer")]
-        [ShopRoom(ShopRoomAttribute.Room.TradingPost, 0x5C)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 0)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 0)]
         [ShopText("Recovers life energy. If you run out of life energy you'll automatically use this.")]
@@ -1199,10 +1198,10 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xBD), ItemPool(ItemCategory.Fairy, LocationCategory.Purchases)]
         ShopItemTradingPostFairy,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary]
         [ItemName("Deku Stick"), LocationName("Trading Post Deku Stick"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a flammable weapon", "a flimsy weapon")]
-        [ShopRoom(ShopRoomAttribute.Room.TradingPost, 0x48)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 4)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 5)]
         [ShopText("Deku Sticks burn well. You can only carry 10.")]
@@ -1210,10 +1209,10 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xBE), ItemPool(ItemCategory.DekuSticks, LocationCategory.Purchases)]
         ShopItemTradingPostStick,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary]
         [ItemName("30 Arrows"), LocationName("Trading Post 30 Arrows"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
-        [ShopRoom(ShopRoomAttribute.Room.TradingPost, 0x4A)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 5)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 1)]
         [ShopText("Ammo for your bow.", isMultiple: true)]
@@ -1221,10 +1220,10 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xBF), ItemPool(ItemCategory.Arrows, LocationCategory.Purchases)]
         ShopItemTradingPostArrow30,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary]
         [ItemName("10 Deku Nuts"), LocationName("Trading Post 10 Deku Nuts"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a flashing impact")]
-        [ShopRoom(ShopRoomAttribute.Room.TradingPost, 0x46)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 6)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 4)]
         [ShopText("Its flash blinds enemies.", isMultiple: true)]
@@ -1232,10 +1231,10 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC0), ItemPool(ItemCategory.DekuNuts, LocationCategory.Purchases)]
         ShopItemTradingPostNut10,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary]
         [ItemName("50 Arrows"), LocationName("Trading Post 50 Arrows"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant", "a convenience store", "a market"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
-        [ShopRoom(ShopRoomAttribute.Room.TradingPost, 0x64)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostMain, 1)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.TradingPostPartTimer, 2)]
         [ShopText("Ammo for your bow.", isMultiple: true)]
@@ -1243,10 +1242,10 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC1), ItemPool(ItemCategory.Arrows, LocationCategory.Purchases)]
         ShopItemTradingPostArrow50,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary, Overwritable]
         [ItemName("Blue Potion"), LocationName("Witch Shop Blue Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("consumable strength", "a magic potion", "a blue drink")]
-        [ShopRoom(ShopRoomAttribute.Room.WitchShop, 0x42)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 2)]
         [ShopText("Replenishes both life energy and magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -1254,50 +1253,50 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC2), ItemPool(ItemCategory.BluePotions, LocationCategory.Purchases)]
         ShopItemWitchBluePotion,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary, Overwritable]
         [ItemName("Red Potion"), LocationName("Witch Shop Red Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
-        [ShopRoom(ShopRoomAttribute.Room.WitchShop, 0x48)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 0)]
         [ShopText("Replenishes your life energy.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xC3), ItemPool(ItemCategory.RedPotions, LocationCategory.Purchases)]
         ShopItemWitchRedPotion,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary, Overwritable]
         [ItemName("Green Potion"), LocationName("Witch Shop Green Potion"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a sleeping witch", "a southern merchant"), GossipItemHint("a magic potion", "a green drink")]
-        [ShopRoom(ShopRoomAttribute.Room.WitchShop, 0x4A)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.WitchShop, 1)]
         [ShopText("Replenishes your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0xC4), ItemPool(ItemCategory.GreenPotions, LocationCategory.Purchases)]
         ShopItemWitchGreenPotion,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary]
         [ItemName("10 Bombs"), LocationName("Bomb Shop 10 Bombs"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant"), GossipItemHint("explosives")]
-        [ShopRoom(ShopRoomAttribute.Room.BombShop, 0x44)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.BombShop, 3)]
         [ShopText("Explosives. You need a Bomb Bag to carry them.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0xC5), ItemPool(ItemCategory.Bombs, LocationCategory.Purchases)]
         ShopItemBombsBomb10,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary]
         [ItemName("10 Bombchu"), LocationName("Bomb Shop 10 Bombchu"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant"), GossipItemHint("explosives")]
-        [ShopRoom(ShopRoomAttribute.Room.BombShop, 0x42)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.BombShop, 2)]
         [ShopText("Mouse-shaped bombs that are practical, sleek and self-propelled.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0xC6), ItemPool(ItemCategory.Bombchu, LocationCategory.Purchases)]
         ShopItemBombsBombchu10,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary]
         [ItemName("10 Bombs"), LocationName("Goron Shop 10 Bombs"), Region(Region.GoronVillage)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("explosives")]
-        [ShopRoom(ShopRoomAttribute.Room.GoronShop, 0x48)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 0)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShopSpring, 0)]
         [ShopText("Explosives. You need a Bomb Bag to carry them.", isMultiple: true)]
@@ -1305,10 +1304,10 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC7), ItemPool(ItemCategory.Bombs, LocationCategory.Purchases)]
         ShopItemGoronBomb10,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary]
         [ItemName("10 Arrows"), LocationName("Goron Shop 10 Arrows"), Region(Region.GoronVillage)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
-        [ShopRoom(ShopRoomAttribute.Room.GoronShop, 0x44)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 1)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShopSpring, 1)]
         [ShopText("Ammo for your bow.", isMultiple: true)]
@@ -1316,10 +1315,10 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC8), ItemPool(ItemCategory.Arrows, LocationCategory.Purchases)]
         ShopItemGoronArrow10,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary, Overwritable]
         [ItemName("Red Potion"), LocationName("Goron Shop Red Potion"), Region(Region.GoronVillage)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
-        [ShopRoom(ShopRoomAttribute.Room.GoronShop, 0x46)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 2)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShopSpring, 2)]
         [ShopText("Replenishes your life energy.")]
@@ -1327,30 +1326,30 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xC9), ItemPool(ItemCategory.RedPotions, LocationCategory.Purchases)]
         ShopItemGoronRedPotion,
 
+        [Purchaseable, Visible]
         [Repeatable]
         [ItemName("Hero's Shield"), LocationName("Zora Shop Hero's Shield"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant", "an aquatic shop"), GossipItemHint("a basic guard", "protection")]
-        [ShopRoom(ShopRoomAttribute.Room.ZoraShop, 0x4A)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.ZoraShop, 0)]
         [ShopText("Use it to defend yourself.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0xCA), ItemPool(ItemCategory.Shields, LocationCategory.Purchases)]
         ShopItemZoraShield,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary]
         [ItemName("10 Arrows"), LocationName("Zora Shop 10 Arrows"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant", "an aquatic shop"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
-        [ShopRoom(ShopRoomAttribute.Room.ZoraShop, 0x44)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.ZoraShop, 1)]
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
         [GetItemIndex(0xCB), ItemPool(ItemCategory.Arrows, LocationCategory.Purchases)]
         ShopItemZoraArrow10,
 
+        [Purchaseable, Visible]
         [Repeatable, Temporary, Overwritable]
         [ItemName("Red Potion"), LocationName("Zora Shop Red Potion"), Region(Region.ZoraHall)]
         [GossipLocationHint("a western merchant", "an aquatic shop"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
-        [ShopRoom(ShopRoomAttribute.Room.ZoraShop, 0x46)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.ZoraShop, 2)]
         [ShopText("Replenishes your life energy.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]

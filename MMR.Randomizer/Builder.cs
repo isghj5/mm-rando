@@ -2543,29 +2543,6 @@ namespace MMR.Randomizer
             RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", string.Empty);
         }
 
-        private void WriteShopObjects()
-        {
-            RomUtils.CheckCompressed(1325); // trading post
-            var data = RomData.MMFileList[1325].Data.ToList();
-            data.RemoveRange(0x15C, 4); // reduce end padding from actors list
-            data.InsertRange(0x62, new byte[] { 0x00, 0xC1, 0x00, 0xAF }); // add extra objects
-            data[0x29] += 2; // increase object count by 2
-            data[0x37] += 4; // add 4 to actor list address
-            RomData.MMFileList[1325].Data = data.ToArray();
-
-            RomUtils.CheckCompressed(1503); // bomb shop
-            RomData.MMFileList[1503].Data[0x53] = 0x98; // add extra objects
-            RomData.MMFileList[1503].Data[0x29] += 1; // increase object count by 1
-
-            RomUtils.CheckCompressed(1142); // witch shop
-            data = RomData.MMFileList[1142].Data.ToList();
-            data.RemoveRange(0x78, 4); // reduce end padding from actors list
-            data.InsertRange(0x48, new byte[] { 0x00, 0xC1, 0x00, 0xC1 }); // add extra objects
-            data[0x29] += 2; // increase object count by 2
-            data[0x37] += 4; // add 4 to actor list address
-            RomData.MMFileList[1142].Data = data.ToArray();
-        }
-
         public void OutputHashIcons(IEnumerable<byte> iconFileIndices, string filename)
         {
             var iconFiles = RomUtils.GetFilesFromArchive(19);
@@ -2733,7 +2710,7 @@ namespace MMR.Randomizer
             foreach (var item in _randomized.IceTraps)
             {
                 var newLocation = item.NewLocation.Value;
-                if (newLocation.IsVisible() || newLocation.IsShop())
+                if (newLocation.IsVisible())
                 {
                     var giIndex = item.NewLocation.Value.GetItemIndex().Value;
                     var graphic = item.Mimic.ResolveGraphic();
@@ -2822,11 +2799,6 @@ namespace MMR.Randomizer
 
                 progressReporter.ReportProgress(66, "Writing enemies...");
                 WriteEnemies();
-
-                // if shop should match given items
-                {
-                    WriteShopObjects();
-                }
 
                 progressReporter.ReportProgress(67, "Writing items...");
                 WriteItems();
