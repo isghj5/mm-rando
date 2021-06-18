@@ -4232,7 +4232,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a frozen lake"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x212), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2E81)]
+        [GetItemIndex(0x212), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2E81), CollectableIndex(0x2F01)]
         CollectablePathToGoronVillageWinterItem1,
 
 
@@ -4242,7 +4242,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a frozen lake"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x213), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2E82)]
+        [GetItemIndex(0x213), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2E82), CollectableIndex(0x2F02)]
         CollectablePathToGoronVillageWinterItem2,
 
 
@@ -4252,7 +4252,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a frozen lake"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x214), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2E83)]
+        [GetItemIndex(0x214), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2E83), CollectableIndex(0x2F03)]
         CollectablePathToGoronVillageWinterItem3,
 
 
@@ -4262,7 +4262,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a frozen lake"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x215), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2E84)]
+        [GetItemIndex(0x215), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2E84), CollectableIndex(0x2F04)]
         CollectablePathToGoronVillageWinterItem4,
 
 
@@ -4452,7 +4452,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a swamp flower"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x228), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2295)]
+        [GetItemIndex(0x228), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2295), CollectableIndex(0x15)]
         CollectableSouthernSwampPoisonedCentralSwampItem1,
 
 
@@ -4462,7 +4462,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a swamp flower"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x229), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2296)]
+        [GetItemIndex(0x229), ItemPool(ItemCategory.BlueRupees, LocationCategory.Freestanding), CollectableIndex(0x2296), CollectableIndex(0x16)]
         CollectableSouthernSwampPoisonedCentralSwampItem2,
 
 
@@ -6602,7 +6602,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("an item under the stairs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x2FF), ItemPool(ItemCategory.RedRupees, LocationCategory.Rocks), CollectableIndex(0x2809)]
+        [GetItemIndex(0x2FF), ItemPool(ItemCategory.RedRupees, LocationCategory.Rocks), CollectableIndex(0x2809), CollectableIndex(0x2D09)]
         CollectableMountainVillageWinterMountainVillageSpringItem1,
 
 
