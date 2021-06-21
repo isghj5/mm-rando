@@ -2767,6 +2767,7 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyHack(Resources.mods.init_file);
                 ResourceUtils.ApplyHack(Resources.mods.fix_deku_drowning);
                 ResourceUtils.ApplyHack(Resources.mods.fix_collectable_flags);
+                ResourceUtils.ApplyHack(Resources.mods.fix_great_bay_clear_mikau);
 
                 // TODO: Move this to a helper function?
                 if (_randomized.Settings.EnablePictoboxSubject)
