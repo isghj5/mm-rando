@@ -4,6 +4,7 @@ using MMR.Common.Extensions;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Attributes.Entrance;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -14,9 +15,9 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<GetItemIndexAttribute>()?.Index;
         }
 
-        public static ushort? GetCollectableIndex(this Item item)
+        public static IEnumerable<ushort> GetCollectableIndices(this Item item)
         {
-            return item.GetAttribute<CollectableIndexAttribute>()?.Index;
+            return item.GetAttributes<CollectableIndexAttribute>().Select(x => x.Index);
         }
 
         public static bool IsNullableItem(this Item item)

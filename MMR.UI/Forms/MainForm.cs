@@ -75,6 +75,8 @@ namespace MMR.UI.Forms
             Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Enemizer Test 19.0";
             #endif
 
+            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion}";
+
             var args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
             {
@@ -390,6 +392,11 @@ namespace MMR.UI.Forms
                 return;
             }
 
+            if (_configuration.GameplaySettings.CustomItemList == null)
+            {
+                _configuration.GameplaySettings.CustomItemList = new HashSet<Item>();
+            }
+
             var checkbox = (CheckBox)sender;
             var items = (List<Item>)checkbox.Tag;
             if (checkbox.CheckState == CheckState.Unchecked)
@@ -696,6 +703,19 @@ namespace MMR.UI.Forms
 
             LoadSettings();
 
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+            {
+                var openWithArg = args[1];
+                if (Path.GetExtension(openWithArg) == ".mmr")
+                {
+                    ttOutput.SelectedIndex = 1;
+                    TogglePatchSettings(false);
+                    _configuration.OutputSettings.InputPatchFilename = openWithArg;
+                    tPatch.Text = _configuration.OutputSettings.InputPatchFilename;
+                }
+            }
+
             _isUpdating = false;
         }
 
@@ -853,46 +873,19 @@ namespace MMR.UI.Forms
 
         private void Randomize(bool filePromptBypass = false)
         {
-            var validationResult = _configuration.GameplaySettings.Validate() ?? _configuration.OutputSettings.Validate();
-            if (validationResult != null)
+            string validationResult;
+            if (!string.IsNullOrWhiteSpace(_configuration.OutputSettings.InputPatchFilename))
             {
-                MessageBox.Show(validationResult, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
-            var defaultOutputROMFilename = FileUtils.MakeFilenameValid($"MMR-{typeof(Randomizer).Assembly.GetName().Version}-{DateTime.UtcNow:o}");
-
-            saveROM.FileName = !string.IsNullOrWhiteSpace(_configuration.OutputSettings.InputPatchFilename)
-                             ? Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64")
-                             : defaultOutputROMFilename;
-
-            if (!filePromptBypass)
-            {
-                if (saveROM.ShowDialog() != DialogResult.OK)
-                {
-                    return;
-                }
+                validationResult = _configuration.OutputSettings.Validate();
+                saveROM.FileName = Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64");
             }
             else
             {
-                var directory = "output";
-                if (_configuration.OutputSettings.OutputROMFilename != null && _configuration.OutputSettings.OutputROMFilename.Length > 0)
-                {
-                    directory = Path.GetDirectoryName(_configuration.OutputSettings.OutputROMFilename);
-                }
-                else if (! Directory.Exists(directory))
-                {
-                    Directory.CreateDirectory(directory);
-                }
-
-                saveROM.FileName = saveROM.FileName + "." + saveROM.DefaultExt;
-                saveROM.FileName = Path.Combine(directory, saveROM.FileName);
+                validationResult = _configuration.GameplaySettings.Validate() ?? _configuration.OutputSettings.Validate();
+                var defaultOutputROMFilename = FileUtils.MakeFilenameValid($"MMR-{typeof(Randomizer).Assembly.GetName().Version}-{DateTime.UtcNow:o}");
+                saveROM.FileName = defaultOutputROMFilename;
             }
 
-            _configuration.OutputSettings.OutputROMFilename = saveROM.FileName;
-
-            EnableAllControls(false);
-            bgWorker.RunWorkerAsync();
         }
 
         private void bRandomise_MouseDown(object sender, MouseEventArgs e)

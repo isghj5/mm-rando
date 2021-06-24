@@ -4523,13 +4523,13 @@
 0
 0
 
-- Woodfall Temple Pre-Boss Pillar Item
-104,120
-0;1116,93;1158,1116,1180
+- Woodfall Temple Pre-Boss Left Pillar Item
+104,120,93
+0;1116
 0
 0
 
-- Woodfall Temple Pre-Boss Pillar Item 2
+- Woodfall Temple Pre-Boss Right Pillar Item
 104,120
 0;1116,93;1158,1116,1180
 0

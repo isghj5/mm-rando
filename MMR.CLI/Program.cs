@@ -55,6 +55,8 @@ namespace MMR.CLI
                 Console.WriteLine("settings.json details:");
                 Console.WriteLine(GetSettingPath(cfg => cfg.GameplaySettings) + ":");
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.LogicMode));
+                Console.WriteLine(GetArrayValueDescription(nameof(GameplaySettings.ItemCategoriesRandomized), Enum.GetValues<ItemCategory>().Where(c => c > 0).Select(c => c.ToString())));
+                Console.WriteLine(GetArrayValueDescription(nameof(GameplaySettings.LocationCategoriesRandomized), Enum.GetValues<LocationCategory>().Where(c => c > 0).Select(c => c.ToString())));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.DamageMode));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.DamageEffect));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.MovementMode));
@@ -73,7 +75,7 @@ namespace MMR.CLI
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.TatlColorSchema));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.Music));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.DisableCombatMusic));
-                Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.Instruments), Enum.GetNames(typeof(Instrument))));
+                Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.Instruments), Enum.GetNames<Instrument>()));
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.HeartsSelection), ColorSelectionManager.Hearts.GetItems().Select(csi => csi.Name)));
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.MagicSelection), ColorSelectionManager.MagicMeter.GetItems().Select(csi => csi.Name)));
                 Console.WriteLine(GetSettingPath(cfg => cfg.CosmeticSettings.DPad.Pad) + ":");

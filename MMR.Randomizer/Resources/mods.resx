@@ -205,6 +205,9 @@
   <data name="fix_fisherman" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-fisherman;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="fix_great_bay_clear_mikau" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-great-bay-clear-mikau;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="fix_item_checks" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-item-checks;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

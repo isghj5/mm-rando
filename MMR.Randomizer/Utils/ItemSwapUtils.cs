@@ -7,6 +7,7 @@ using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MMR.Randomizer.Utils
 {
@@ -111,10 +112,13 @@ namespace MMR.Randomizer.Utils
 
             if (!itemObject.IsRandomized)
             {
-                var collectableIndex = location.GetCollectableIndex();
-                if (collectableIndex.HasValue)
+                var indices = location.GetCollectableIndices();
+                if (indices.Any())
                 {
-                    ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[COLLECTABLE_TABLE_FILE_INDEX].Data, collectableIndex.Value * 2, 0);
+                    foreach (var collectableIndex in location.GetCollectableIndices())
+                    {
+                        ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[COLLECTABLE_TABLE_FILE_INDEX].Data, collectableIndex * 2, 0);
+                    }
                     return;
                 }
             }

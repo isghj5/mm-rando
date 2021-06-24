@@ -13,7 +13,7 @@ namespace MMR.DiscordBot.Services
     public class MMRService
     {
         private const string MMR_CLI = "MMR_CLI";
-        private readonly string _cliPath;
+        protected string _cliPath;
         private readonly HttpClient _httpClient;
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         private readonly Random _random = new Random();
@@ -31,8 +31,13 @@ namespace MMR.DiscordBot.Services
             }
 
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(10);
+            _httpClient.Timeout = TimeSpan.FromSeconds(120);
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "zoey.zolotova at gmail.com");
+        }
+
+        public bool IsReady()
+        {
+            return !string.IsNullOrWhiteSpace(_cliPath);
         }
 
         public (string filename, string patchPath, string hashIconPath, string spoilerLogPath, string version) GetSeedPaths(DateTime seedDate, string version)
@@ -150,7 +155,7 @@ namespace MMR.DiscordBot.Services
                 var response = await _httpClient.GetStringAsync("https://www.random.org/integers/?num=1&min=-1000000000&max=1000000000&col=1&base=10&format=plain&rnd=new");
                 seed = int.Parse(response) + 1000000000;
             }
-            catch (HttpRequestException e)
+            catch (Exception e) when (e is HttpRequestException || e is TaskCanceledException)
             {
                 seed = _random.Next();
             }
