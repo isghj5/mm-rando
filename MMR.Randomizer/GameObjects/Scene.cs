@@ -229,6 +229,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1326)]
         [SceneInternalId(0x35)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Treee, Actor.Carpenter)]
         RomaniRanch = 0x32,
 
         [FileID(1328)]

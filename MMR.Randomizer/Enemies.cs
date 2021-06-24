@@ -745,25 +745,6 @@ namespace MMR.Randomizer
             encounter3.Position = new vec16(300, 0, 700);
         }
 
-        public static void RemovePostGBTMikau()
-        {
-            // talking to him post-GBT can softlock, just remove him from the second stage alltogether, why was he even there?
-            var GBTMapfid = GameObjects.Scene.GreatBayCoast.FileID() + 1;
-            RomUtils.CheckCompressed(GBTMapfid);
-
-            // enemizer SceneList would make this easy, but this fix needs to work without us scanning all scenes in the wholegame
-            var actorListLoc = 0xD94; // easier to look up than to use the scene->setup->actorlist chain, bleh
-            // the three different spots, per day, are differenet actors with time spawn flags to only spawn one
-            List<int> threeMikauActors = new List<int> { 8, 9, 10 };
-            foreach (var actorIndex in threeMikauActors)
-            {
-                var offset = actorListLoc + (actorIndex * 16);
-                // first two bytes are actor index, first nibble is flags that dont matter if empty, so ignoring
-                RomData.MMFileList[GBTMapfid].Data[offset + 0] = 0xFF; // empty is -1
-                RomData.MMFileList[GBTMapfid].Data[offset + 1] = 0xFF;
-            }
-        }
-
         public static void NudgeFlyingEnemiesForTingle()
         {
             /// if tingle can be randomized, he can end up on any flying enemy in scenes that don't already have a tingle
@@ -1921,7 +1902,7 @@ namespace MMR.Randomizer
 
 
             // if the new size is smaller than the old size we should be dandy, if not...
-            if (dayOvlDiff + dayInstDiff + dayObjDiff <= -0x800)  // conservative estimate for now
+            if (dayOvlDiff + dayInstDiff + dayObjDiff <= -0x300)  // conservative estimate for now
             {
                 // lets assume a general headroom that not all scenes used, smaller scenes should get some excess
                 if (newCollection.OverlayRamSize + newCollection.ActorInstanceSum + newCollection.ObjectRamSize > 0x90000)
