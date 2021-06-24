@@ -239,6 +239,7 @@ namespace MMR.Randomizer.Utils
                         var currentSong = new SequenceInfo(); ;
                         var splitFilePath = filePath.Split('\\');
                         currentSong.Name = splitFilePath[splitFilePath.Length - 1];
+                        var usedBanks = 0;
 
                         //read categories file
                         ZipArchiveEntry categoriesFileEntry = zip.GetEntry("categories.txt");
@@ -264,6 +265,11 @@ namespace MMR.Randomizer.Utils
                         else  // there should always be one, if not, print error and stop
                         {
                             throw new Exception("ERROR: cannot find a categories file for " + currentSong.Name);
+                        }
+
+                        if (zip.Entries.Where(e => e.Name.Contains("zseq")).Count() == 0)
+                        {
+                            throw new Exception("ERROR: cannot find a single zseq in file " + currentSong.Name);
                         }
 
                         // read list of sound samples
@@ -305,6 +311,8 @@ namespace MMR.Randomizer.Utils
                             var bankFileEntry = zip.GetEntry(filename + ".zbank");
                             if (bankFileEntry != null) // custom bank detected
                             {
+                                usedBanks++;
+
                                 // read bank file
                                 byte[] zBankData = new byte[bankFileEntry.Length];
                                 bankFileEntry.Open().Read(zBankData, 0, zBankData.Length);
@@ -334,6 +342,11 @@ namespace MMR.Randomizer.Utils
                                 currentSong.SequenceBinaryList.Add(zSeq);
                             }
                         } // foreach zip entry
+
+                        if (usedBanks < zip.Entries.Where(e => e.Name.Contains("zbank")).Count())
+                        {
+                            throw new Exception("ERROR: more banks than zseq found for " + currentSong.Name + "\n Probably a misnamed zseq");
+                        }
 
                         if (currentSong != null && currentSong.SequenceBinaryList != null)
                         {

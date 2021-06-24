@@ -72,10 +72,8 @@ namespace MMR.UI.Forms
             #if DEBUG
             Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + DEBUG ON";
             #else
-            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Enemizer Test 19.0";
+            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion} + Isghj's Enemizer Test 19.1";
             #endif
-
-            Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion}";
 
             var args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
@@ -873,19 +871,46 @@ namespace MMR.UI.Forms
 
         private void Randomize(bool filePromptBypass = false)
         {
-            string validationResult;
-            if (!string.IsNullOrWhiteSpace(_configuration.OutputSettings.InputPatchFilename))
+                        var validationResult = _configuration.GameplaySettings.Validate() ?? _configuration.OutputSettings.Validate();
+            if (validationResult != null)
             {
-                validationResult = _configuration.OutputSettings.Validate();
-                saveROM.FileName = Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64");
+                MessageBox.Show(validationResult, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var defaultOutputROMFilename = FileUtils.MakeFilenameValid($"MMR-{typeof(Randomizer).Assembly.GetName().Version}-{DateTime.UtcNow:o}");
+
+            saveROM.FileName = !string.IsNullOrWhiteSpace(_configuration.OutputSettings.InputPatchFilename)
+                             ? Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64")
+                             : defaultOutputROMFilename;
+
+            if (!filePromptBypass)
+            {
+                if (saveROM.ShowDialog() != DialogResult.OK)
+                {
+                    return;
+                }
             }
             else
             {
-                validationResult = _configuration.GameplaySettings.Validate() ?? _configuration.OutputSettings.Validate();
-                var defaultOutputROMFilename = FileUtils.MakeFilenameValid($"MMR-{typeof(Randomizer).Assembly.GetName().Version}-{DateTime.UtcNow:o}");
-                saveROM.FileName = defaultOutputROMFilename;
+                var directory = "output";
+                if (_configuration.OutputSettings.OutputROMFilename != null && _configuration.OutputSettings.OutputROMFilename.Length > 0)
+                {
+                    directory = Path.GetDirectoryName(_configuration.OutputSettings.OutputROMFilename);
+                }
+                else if (! Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+
+                saveROM.FileName = saveROM.FileName + "." + saveROM.DefaultExt;
+                saveROM.FileName = Path.Combine(directory, saveROM.FileName);
             }
 
+            _configuration.OutputSettings.OutputROMFilename = saveROM.FileName;
+
+            EnableAllControls(false);
+            bgWorker.RunWorkerAsync();
         }
 
         private void bRandomise_MouseDown(object sender, MouseEventArgs e)
