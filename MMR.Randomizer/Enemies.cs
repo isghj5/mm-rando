@@ -1269,6 +1269,8 @@ namespace MMR.Randomizer
             //var blockedEnemies = EnemyList.FindAll(u => u.BlockedScenes().Contains(scene.SceneEnum)); // debug
             var sceneAcceptableEnemies = EnemyList.FindAll( u => ! u.BlockedScenes().Contains(scene.SceneEnum));
             // some enemies are marked do-not-re-use by having no vairants with max > 0, remove now
+            var nonPlacable = sceneAcceptableEnemies.FindAll(u => u.NoPlacableVariants());
+
             sceneAcceptableEnemies = sceneAcceptableEnemies.FindAll(u => !u.NoPlacableVariants());
 
             // issue: this function is called in paralel, if the order is different the Random object will be different and not seed-reproducable
@@ -1369,13 +1371,13 @@ namespace MMR.Randomizer
                         }); 
                         continue;
                     } // */
-                    if (scene.File == GameObjects.Scene.SouthClockTown.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.RealBombchu.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.BombchuGirl.ObjectIndex()
+                            NewV = GameObjects.Actor.Carpenter.ObjectIndex()
                         });
                         continue;
                     }// */

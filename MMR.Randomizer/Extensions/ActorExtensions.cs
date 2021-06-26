@@ -125,6 +125,29 @@ namespace MMR.Randomizer.Extensions
             };
         }
 
+        public static List<int> GetUnPlacableVariants(this Actor actor)
+        {
+            // if variants with zero max exist, we cannot use them, look them up and return
+            var limitedVariantsAttrs = actor.GetAttributes<VariantsWithRoomMax>();
+            if (limitedVariantsAttrs == null)
+            {
+                return new List<int>();
+
+            } else {
+
+                var unplacable = new List<int>();
+                foreach(var combo in limitedVariantsAttrs)
+                {
+                    if (combo.RoomMax == 0)
+                    {
+                        unplacable.AddRange(combo.Variants);
+                    }
+                }
+
+                return unplacable;
+            }
+        }
+
         public static List<int> CompatibleVariants(this Actor actor, Actor otherActor, Random rng, int oldActorVariant)
         {
             // with mixed types, typing could be messy, keep it hidden here
@@ -165,24 +188,20 @@ namespace MMR.Randomizer.Extensions
 
 
                 if (ourAttr != null && theirAttr != null) // both have same type
+                    //|| (variant == 3 && )
+                    //|| ((variant == 2 || variant == 4) && actor.GetAttribute<FlyingVariantsAttribute>() && ourAttr != null)) // small chance of wall or ground enemies becoming flying
                 {
                     var compatibleVariants = theirAttr.Variants;
+
+                    // make sure their variants aren't un-placable either
+                    var zeroPlacementVarieties = GetUnPlacableVariants(otherActor);
+                    compatibleVariants = compatibleVariants.FindAll(u => ! zeroPlacementVarieties.Contains(u));
+
                     // our old actor variant was this type
                     if (compatibleVariants.Count > 0 && ourAttr.Variants.Count > 0 
                         && ourAttr.Variants.Contains(oldActorVariant)) // old actor had to actually be this attribute
                     {
                         return compatibleVariants;
-                    }
-                }
-
-                // small chance of getting flying enemies on ground or wall enemies
-                // if both were ground variant we wouldn't get this far; if we are ground here they are not
-                if ((variant == 2 || variant == 4) && ourAttr != null)
-                {
-                    theirAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
-                    if (theirAttr != null && rng.Next(100) < 10)
-                    {
-                        return theirAttr.Variants;
                     }
                 }
             }
