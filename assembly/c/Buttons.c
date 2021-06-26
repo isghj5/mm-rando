@@ -2,14 +2,17 @@
 #include <z64.h>
 
 void Buttons_CheckItemUsability(bool* dest, GlobalContext* ctxt, u8 b, u8 cLeft, u8 cDown, u8 cRight) {
-    u8 previous[4], prevstates[5];
+    u8 previous[4][4], prevstates[5];
 
     // Backup modified fields
     ButtonsState buttonsState = gSaveContext.extra.buttonsState;
 
     // Backup button items
-    for (int i = 0; i < 4; i++)
-        previous[i] = gSaveContext.perm.unk4C.formButtonItems[0].buttons[i];
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            previous[i][j] = gSaveContext.perm.unk4C.formButtonItems[i].buttons[j];
+        }
+    }
 
     // Backup button states
     for (int i = 0; i < 5; i++)
@@ -27,8 +30,11 @@ void Buttons_CheckItemUsability(bool* dest, GlobalContext* ctxt, u8 b, u8 cLeft,
         dest[i] = (gSaveContext.extra.buttonsUsable[i] == 0);
 
     // Restore button items
-    for (int i = 0; i < 4; i++)
-        gSaveContext.perm.unk4C.formButtonItems[0].buttons[i] = previous[i];
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 4; j++) {
+            gSaveContext.perm.unk4C.formButtonItems[i].buttons[j] = previous[i][j];
+        }
+    }
 
     // Restore button states
     for (int i = 0; i < 5; i++)
