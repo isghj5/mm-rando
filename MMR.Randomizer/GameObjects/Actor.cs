@@ -1245,7 +1245,8 @@ namespace MMR.Randomizer.GameObjects
         // only one 0x600 can exist without crashing
         //[GroundVariants(0xFFFF, 0x600, 0x702, 0x801)]
         [GroundVariants(0xFFFF, 0x600, 0x702, 0x801)]
-        [VariantsWithRoomMax(max:1, 0xFFFF, 0x600, 0x702, 0x801)]
+        //[VariantsWithRoomMax(max:1, 0xFFFF, 0x600, 0x702, 0x801)]
+        [OnlyOneActorPerRoom] // issue: three on redead in stonetower is crash, but not two, not worth issue
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, // blocking enemies

@@ -1266,9 +1266,10 @@ namespace MMR.Randomizer
             WriteOutput(" time to finish removing unnecessary objects: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             // some scenes are blocked from having enemies, do this ONCE before GetMatchPool, which would do it per-enemy
+            //var blockedEnemies = EnemyList.FindAll(u => u.BlockedScenes().Contains(scene.SceneEnum)); // debug
             var sceneAcceptableEnemies = EnemyList.FindAll( u => ! u.BlockedScenes().Contains(scene.SceneEnum));
             // some enemies are marked do-not-re-use by having no vairants with max > 0, remove now
-            sceneAcceptableEnemies = EnemyList.FindAll(u => !u.NoPlacableVariants());
+            sceneAcceptableEnemies = sceneAcceptableEnemies.FindAll(u => !u.NoPlacableVariants());
 
             // issue: this function is called in paralel, if the order is different the Random object will be different and not seed-reproducable
             // instead of passing the random obj, we pass seed and add it to the unique scene number to get a replicatable, but random, seed
@@ -1368,24 +1369,24 @@ namespace MMR.Randomizer
                         }); 
                         continue;
                     } // */
-                    /*if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.RealBombchu.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.SouthClockTown.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Dog.ObjectIndex()
+                            NewV = GameObjects.Actor.BombchuGirl.ObjectIndex()
                         });
                         continue;
                     }// */
                     // todo torch on leevers is throwing wierd errors when it comes to companions
-                    /* if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.RealBombchu.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.SouthernSwamp.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.DekuBaba.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Bumper.ObjectIndex()
+                            NewV = GameObjects.Actor.DekuPatrolGuard.ObjectIndex()
                         });
                         continue;
                     } // */
