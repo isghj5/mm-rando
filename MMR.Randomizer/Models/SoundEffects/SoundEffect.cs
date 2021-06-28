@@ -84,6 +84,11 @@ namespace MMR.Randomizer.Models.SoundEffects
         //[Tags(Long, Debug)]
         //MoonEarthQuake= 0x2098, // loops, damnit
 
+        [Replacable(0x010504C0 + 0x14E, 0x010504C0 + 0x18A)]
+        [Tags(Short)]
+        [ReplacableByTags(Short, Long)]
+        DoorBell = 0x209E,
+
         [Tags(Long)]
         BeehiveFall = 0x20A0,
 

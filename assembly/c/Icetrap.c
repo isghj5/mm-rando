@@ -20,7 +20,8 @@ bool Icetrap_Give(ActorPlayer* player, GlobalContext* ctxt) {
         return false;
     }
 
-    if (player->getItem) {
+    // If player is receiving item from shop.
+    if (player->getItem && player->givingActor && (player->givingActor->id == ACTOR_EN_OSSAN || player->givingActor->id == ACTOR_EN_TRT || player->givingActor->id == ACTOR_EN_SOB1)) {
         return false;
     }
 

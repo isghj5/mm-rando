@@ -1405,6 +1405,7 @@ namespace MMR.UI.Forms
                         }
                     }
                 }
+                nItem.Maximum = ITEM_NAMES.Length - 1;
                 SetIndex(n);
             }
         }
