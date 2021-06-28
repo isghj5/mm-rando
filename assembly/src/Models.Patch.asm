@@ -481,3 +481,18 @@
 ;   jal     0x80133F28
 .org 0x80AADBCC
     jal     Models_DrawGibdoMask
+
+
+;==================================================================================================
+; Freestanding Models (Hero's Shield)
+;==================================================================================================
+
+.headersize G_CODE_DELTA
+
+; Replaces:
+;   jal     0x800EE320
+.org 0x800A726C
+    jal     Models_DrawItem00Shield
+
+.org 0x800A6088
+    .dw 0x00000000
