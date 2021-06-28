@@ -74,9 +74,9 @@ namespace MMR.Randomizer.Attributes.Actor
         public WallVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
     }
 
-    public class PatrolVariantsAttribute : ActorVariantsAttribute
+    public class PathingVariantsAttribute : ActorVariantsAttribute
     {
-        public PatrolVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
+        public PathingVariantsAttribute(int variant, params int[] additionalVariants) : base(variant, additionalVariants) { }
     }
 
     // we often want to place restrictions on how many of an actor can possibly spawn

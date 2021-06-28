@@ -44,7 +44,7 @@ namespace MMR.Randomizer
 
         public static List<Actor> GetSceneEnemyActors(Scene scene)
         {
-            /// this is separate from object because actors and objects are a different list in the scene data
+            /// this is separate from object because actors and objects are a different list in the scene/room data
 
             // I prefer foreach, but in benchmarks its considerably slower, and enemizer has performance issues
 
@@ -65,6 +65,7 @@ namespace MMR.Randomizer
                             mapActor.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(mapNumber)
                                                    || scene.SceneEnum.IsFairyDroppingEnemy(mapNumber, actorNumber);
                             mapActor.RoomActorIndex = scene.Maps[mapNumber].Actors.IndexOf(mapActor);
+                            mapActor.Type = matchingEnemy.GetType(mapActor.OldVariant);
                             enemyList.Add(mapActor);
                         }
                     }
@@ -75,7 +76,7 @@ namespace MMR.Randomizer
 
         public static List<int> GetSceneEnemyObjects(Scene scene)
         {
-            /// this is separate from actor because actors and objects are a different list in the scene data
+            /// this is separate from actor because actors and objects are a different list in the scene/room data
 
             List<int> objList = new List<int>();
             foreach (var sceneMap in scene.Maps)
@@ -454,6 +455,12 @@ namespace MMR.Randomizer
                 var elf6grotto = terminafieldScene.Maps[0].Actors[2];
                 elf6grotto.Position = new vec16(-5539, -275, -701);
                 elf6grotto.ChangeActor(GameObjects.Actor.GrottoHole, vars: hiddenGrottos[seedrng.Next(hiddenGrottos.Count)]);
+
+                // one of the torches in palace is facing into the wall, actors replacing it also face the same way, bad
+                // one of these is not required and does nothing
+                var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
+                dekuPalaceScene.Maps[2].Actors[25].Rotation.y = (short)MergeRotationAndFlags(rotation: 180, flags: 0x7F);
+                dekuPalaceScene.Maps[2].Actors[26].Rotation.y = (short)MergeRotationAndFlags(rotation: 180, flags: dekuPalaceScene.Maps[2].Actors[26].Rotation.y);
             }
 
             // testing why zrotation can be so broken for grottos
@@ -837,6 +844,48 @@ namespace MMR.Randomizer
                 int newIndex = newVariant & 0xF; // in vanilla the array is only 15 long
                 enemy.Rotation.x = (short)MergeRotationAndFlags(rotation: 0, flags: 0x7F);
                 enemy.Rotation.z = (short)MergeRotationAndFlags(rotation: newIndex, flags: 0x7F);//: enemy.Rotation.z);
+            }
+        }
+
+        public static void FixPatrollingEnemyVars(List<Actor> chosenReplacementEnemies)
+        {
+            /// fixes the patrolling enemy paths to make sure it matches the previous actor path
+            // we do this last, because its possible there are no patrolling enemies, and we dont want to waste time doing this per-attempt
+
+            // for now, adding extra code just so I can keep track of what is happening
+            for (int i = 0; i < chosenReplacementEnemies.Count; i++)
+            {
+                Actor actor = chosenReplacementEnemies[i];
+                var newType = actor.ActorEnum.GetType(actor.Variants[0]);
+
+                if (actor.Type == GameObjects.ActorType.Pathing // set on scene actor load
+                  && newType == GameObjects.ActorType.Pathing) // pulled from replacement vars
+                {
+                    var debugOldVariant = actor.Variants[0];
+                    var oldPathBehaviorAttr = actor.OldActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
+                    var newdoldPathBehaviorAttr = actor.ActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
+                    if (oldPathBehaviorAttr == null || newdoldPathBehaviorAttr == null)
+                    {
+                        continue;
+                        //throw new Exception();
+                    }
+
+                    // need to get the path value from the old variant
+                    var oldPath = actor.OldVariant;
+                    var oldPathShifted = (oldPath & (oldPathBehaviorAttr.Mask)) >> oldPathBehaviorAttr.Shift;
+
+                    // clear the old path from this vars
+                    var newVarsWithoutPath = actor.Variants[0] & ~newdoldPathBehaviorAttr.Mask;
+                    // shift the path into the new location
+                    var newPath = oldPathShifted << newdoldPathBehaviorAttr.Shift;
+
+                    // set variant from cleaned old variant ored against the new path
+                    actor.Variants[0] = newVarsWithoutPath | newPath;
+                }
+                if (i > 100000)
+                {
+                    continue;
+                }
             }
         }
 
@@ -1367,11 +1416,11 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Moon1.ObjectIndex()
+                            NewV = GameObjects.Actor.Dog.ObjectIndex()
                         }); 
                         continue;
                     } // */
-                    if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
+                    /* if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.RealBombchu.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
@@ -1382,13 +1431,13 @@ namespace MMR.Randomizer
                         continue;
                     }// */
                     // todo torch on leevers is throwing wierd errors when it comes to companions
-                    /* if (scene.File == GameObjects.Scene.SouthernSwamp.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.DekuBaba.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.DekuPalace.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.DekuPatrolGuard.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.DekuPatrolGuard.ObjectIndex()
+                            NewV = GameObjects.Actor.GibdoIkana.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1478,10 +1527,11 @@ namespace MMR.Randomizer
                                 continue; // most companions currently are not killable, skip
                             }
 
-                            if (oldEnemy.Type == testActor.Type || (subMatches.FindIndex(u => u.Type == oldEnemy.Type) == -1))
+                            /*if (oldEnemy.Type == testActor.Type || (subMatches.FindIndex(u => u.Type == oldEnemy.Type) == -1))
                             {
                                 break;
-                            }
+                            }// */
+                            break;
                         }
 
                         oldEnemy.ChangeActor(newActorType: (GameObjects.Actor)testActor.ActorID,
@@ -1571,9 +1621,9 @@ namespace MMR.Randomizer
             /////////////////////////////
             #endif
             /////////////////////////////
-            
 
-
+            // any patrolling types need their vars fixed
+            FixPatrollingEnemyVars(chosenReplacementEnemies);
 
             // print debug enemy locations
             for (int i = 0; i < chosenReplacementEnemies.Count; i++)
@@ -1908,7 +1958,8 @@ namespace MMR.Randomizer
             if (dayOvlDiff + dayInstDiff + dayObjDiff <= -0x300)  // conservative estimate for now
             {
                 // lets assume a general headroom that not all scenes used, smaller scenes should get some excess
-                if (newCollection.OverlayRamSize + newCollection.ActorInstanceSum + newCollection.ObjectRamSize > 0x90000)
+                // 0x90000 was safe, but maybe too small, the three biggest scenes are all 0xC0000 or bigger (0x100000)
+                if (newCollection.OverlayRamSize + newCollection.ActorInstanceSum + newCollection.ObjectRamSize > 0xB0000) // boosted to 0xB for testing
                 {
                     return false;
                 }
@@ -1925,6 +1976,12 @@ namespace MMR.Randomizer
             void PrintCombineRatioNewOld(string text, int newv, int oldv){
                 log.AppendLine(text + " ratio: [" + ((float) newv / (float) oldv).ToString("F4")
                     + "] newsize: [" + newv.ToString("X6") + "] oldsize: [" + oldv.ToString("X6") + "]");
+            }
+
+            if (newMapList == null)
+            {
+                log.AppendLine(" ERROR: New list was dead!");
+                return;
             }
 
             for (int map = 0; map < oldMapList.Count; ++map) // per map

@@ -79,7 +79,7 @@ namespace MMR.Randomizer.Extensions
             {
                 variants.AddRange(attrWall.Variants);
             }
-            var attrPatrol = actor.GetAttribute<PatrolVariantsAttribute>();
+            var attrPatrol = actor.GetAttribute<PathingVariantsAttribute>();
             if (attrPatrol != null)
             {
                 variants.AddRange(attrPatrol.Variants);
@@ -154,42 +154,68 @@ namespace MMR.Randomizer.Extensions
             // EG. like like can spawn on the sand (land), but also on the bottom of GBC (water floor)
 
             // I'm sure theres a cleaner way, but everything I tried C# said no
-            var listOfVariants = new List<byte>() {1, 2, 3, 4}; // 5
+            //var listOfVariants = new List<int>() { 1, 2, 3, 4 };
+            var listOfVariants = Enum.GetValues(typeof(ActorType)).Cast<ActorType>().ToList();
             listOfVariants = listOfVariants.OrderBy(u => rng.Next()).ToList(); // random sort in case it has multiple types
-            foreach( var variant in listOfVariants)
+            foreach( var randomVariant in listOfVariants)
             {
                 ActorVariantsAttribute ourAttr = null;
                 ActorVariantsAttribute theirAttr = null;
-                if (variant == 1) // water
+                if (randomVariant == ActorType.Water)
                 {
                     ourAttr = actor.GetAttribute < WaterVariantsAttribute >();
                     theirAttr = otherActor.GetAttribute< WaterVariantsAttribute >();
                 }
-                if (variant == 2) // ground
+                if (randomVariant == ActorType.Ground)
                 {
                     ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
                     theirAttr = otherActor.GetAttribute<GroundVariantsAttribute>();
                 }
-                if (variant == 3) // flying
+                if (randomVariant == ActorType.Flying)
                 {
                     ourAttr = actor.GetAttribute<FlyingVariantsAttribute>();
                     theirAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
                 }
-                if (variant == 4) // wall
+                if (randomVariant == ActorType.Wall)
                 {
                     ourAttr = actor.GetAttribute<WallVariantsAttribute>();
                     theirAttr = otherActor.GetAttribute<WallVariantsAttribute>();
                 }
-                /*if (variant == 5) // patrol
+                if (randomVariant == ActorType.Pathing)
                 {
-                    ourAttr = actor.GetAttribute<PatrolVariantsAttribute>();
-                    theirAttr = otherActor.GetAttribute<PatrolVariantsAttribute>();
-                }*/
+                    ourAttr = actor.GetAttribute<PathingVariantsAttribute>();
+                    theirAttr = otherActor.GetAttribute<PathingVariantsAttribute>();
+                }
+
+                var waterTest = actor.GetAttribute<WaterVariantsAttribute>();
+                // if enemy type is ground or flying, we can put them on wall or ground or flying or pathing, just not water
+                /*if ((randomVariant == ActorType.Ground || randomVariant == ActorType.Flying) && theirAttr != null && waterTest == null) {
+                    theirAttr = actor.GetAttribute<FlyingVariantsAttribute>();
+                    if (ourAttr == null)
+                    {
+                        ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
+                    }
+                } */
+
+                // large chance of pathing enemies allowing ground or flying
+                if (randomVariant == ActorType.Pathing &&  ourAttr != null && theirAttr == null && rng.Next(100) < 80)
+                {
+                    theirAttr = actor.GetAttribute<FlyingVariantsAttribute>();
+                    if (ourAttr == null)
+                    {
+                        ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
+                    }
+                }
+
+                // small chance of ground enemies allowing flying
+                if (randomVariant == ActorType.Ground && ourAttr != null && theirAttr == null && rng.Next(100) < 30)
+                {
+                    theirAttr = actor.GetAttribute<FlyingVariantsAttribute>();
+                }
 
 
-                if (ourAttr != null && theirAttr != null) // both have same type
-                    //|| (variant == 3 && )
-                    //|| ((variant == 2 || variant == 4) && actor.GetAttribute<FlyingVariantsAttribute>() && ourAttr != null)) // small chance of wall or ground enemies becoming flying
+                if ((ourAttr != null && theirAttr != null) // both have same type
+                    )//|| ((randomVariant == ActorType.Ground || randomVariant == ActorType.Wall) && ourAttr != null)) // small chance of wall or ground enemies becoming flying
                 {
                     var compatibleVariants = theirAttr.Variants;
 
@@ -207,6 +233,67 @@ namespace MMR.Randomizer.Extensions
             }
 
             return null;
+        }
+
+
+        public static ActorType GetType(this Actor actor, int variant)
+        {
+            /// gets a rough type of the actor based on vars
+            // this is going to be rough estimate, if pathing or wall will have priority
+
+            // issue: there doesn't seem to be a way to have a list of Attributes and use them, maaan
+
+            ActorVariantsAttribute pathingVariants = actor.GetAttribute<PathingVariantsAttribute>();
+            if (pathingVariants != null)
+            {
+                // if their variant is in this list, return type
+                if (pathingVariants.Variants.Contains(variant))
+                {
+                    return ActorType.Pathing;
+                }
+            }
+
+            ActorVariantsAttribute wallVariants = actor.GetAttribute<WallVariantsAttribute>();
+            if (wallVariants != null)
+            {
+                // if their variant is in this list, return type
+                if (wallVariants.Variants.Contains(variant))
+                {
+                    return ActorType.Wall;
+                }
+            }
+
+            ActorVariantsAttribute flyingVariants = actor.GetAttribute<FlyingVariantsAttribute>();
+            if (flyingVariants != null)
+            {
+                // if their variant is in this list, return type
+                if (flyingVariants.Variants.Contains(variant))
+                {
+                    return ActorType.Flying;
+                }
+            }
+
+            ActorVariantsAttribute waterVariants = actor.GetAttribute<WaterVariantsAttribute>();
+            if (waterVariants != null)
+            {
+                // if their variant is in this list, return type
+                if (waterVariants.Variants.Contains(variant))
+                {
+                    return ActorType.Water;
+                }
+            }
+
+            ActorVariantsAttribute GroundVariants = actor.GetAttribute<GroundVariantsAttribute>();
+            if (GroundVariants != null)
+            {
+                // if their variant is in this list, return type
+                if (GroundVariants.Variants.Contains(variant))
+                {
+                    return ActorType.Ground;
+                }
+            }
+
+            return ActorType.Unset;
         }
 
         public static bool IsGroundVariant(this Actor actor, int varient)

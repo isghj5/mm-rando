@@ -175,7 +175,8 @@ namespace MMR.Randomizer.Utils
                 ushort an = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16));
                 a.ActorIDFlags = an & 0xF000; // unused
                 a.ActorID = an & 0x0FFF;
-                a.ActorEnum = (GameObjects.Actor) a.ActorID;
+                a.ActorEnum = (GameObjects.Actor)a.ActorID;
+                a.OldActorEnum = a.ActorEnum;
                 a.OldName = a.ActorEnum.ToString();
                 a.ObjectID = a.ActorEnum.ObjectIndex();
                 //a.ObjectSize = ObjUtils.GetObjSize(a.ObjectIndex());
@@ -186,6 +187,7 @@ namespace MMR.Randomizer.Utils
                 a.Rotation.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 10);
                 a.Rotation.z = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 12);
                 a.Variants[0] = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 14);
+                a.OldVariant = a.Variants[0];
                 a.sceneID = RomData.SceneList[sceneID].Number;
                 a.Room = mapID;
                 a.RoomActorIndex = i;

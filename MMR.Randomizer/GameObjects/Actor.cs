@@ -210,11 +210,10 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0xEF, 0x7F, 0x3F, 0x4)]
         //[RespawningVariants(0x4)] // doesn't respawn after death, so dont put where respawning enemies are bad either
         [VariantsWithRoomMax(max: 0, variant: 4)] // just dont use, it might be more broken and a cause of a crash? doubt
-        //[GroundVariants(0xEF,0x7F,4)] // remember, this works for _spawns_
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, 
             Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
-        Skulltula = 0x24,
+        Skulltula = 0x24, // En_St
 
         //[ActorizerEnabled]
         // issues: listing all the vars for all signs is going to be hell
@@ -231,6 +230,8 @@ namespace MMR.Randomizer.GameObjects
         //   would be better if it patroled or something but better that crash at least
         [FlyingVariants(0xFF)]
         [GroundVariants(0xFF)]
+        [PathingVariants(1,2,3,4,7)]
+        [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
         [VariantsWithRoomMax(max: 10, variant: 0xFF)]
         [RespawningAllVariants] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
         //[EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
@@ -287,7 +288,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFF02, 0xFF00, 0xFF01)]
         [UnkillableVariants(0xFF01)]
         [CompanionActor(DekuFlower, variant: 0x7F, 0x17F)] // do you think they make them or trade like hermitcrabs?
-        [EnemizerScenesExcluded(Scene.Woodfall, Scene.DekuPalace)]
+        [EnemizerScenesExcluded(Scene.Woodfall)]//, Scene.DekuPalace)]
         MadShrub = 0x3B,
 
         [EnemizerEnabled]
@@ -413,6 +414,9 @@ namespace MMR.Randomizer.GameObjects
         // known fine: FF53, FF3B, FF76
         [WallVariants(0xFF53, 0xFF07, 0xFF56, 0xFF62, 0xFF76, 0xFF03,
             0xFF3F, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0xFF0B, 0xFF0F, 0xFFFC)]
+        [PathingVariants(0xEF, 0x7F, 4, 0x55B, 0x637, 0x113, 0x91F, 0x909, 0xB0C, 0xC0F)]
+        //[PathingTypeVarsPlacement(mask: 0xFE00, shift: 9)]
+        [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)] // this one is hard to tell, guessing this one safer less crashy
         [VariantsWithRoomMax(max: 1, 
             0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F,
             0xFF3F, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x11F)]
@@ -602,7 +606,9 @@ namespace MMR.Randomizer.GameObjects
         // 1 scoffing at poster, 2 is shouting at the sky looker
         // 603 should be the path follower
         [GroundVariants(1, 2, 0x503, 0x603)]
-        [VariantsWithRoomMax(max:0, variant: 0x603, 0x503)] // at least one variant is pathing
+        [PathingVariants(0x603, 0x503)]
+        [PathingTypeVarsPlacement(mask:0xFF00, shift:8)]
+        //[VariantsWithRoomMax(max:0, variant: 0x603, 0x503)] // at least one variant is pathing
         [UnkillableAllVariants]
         Carpenter = 0x9C, // En_Daiku
 
@@ -715,20 +721,21 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(215)]
         [ObjectListIndex(0x132)]
-        // 0xA9F and the 0x29F crashes, but... was there ever a dog in that house?
         // 3FF is SCT dog, 0x22BF is spiderhouse dog, makes no sense if use mask
         // 0xD9F is old ranch dog WORKS, racetrack dogs unknown, spawned by the game
         // in mamuyan: (phi_s0 << 5) | (arg0->unk1C & 0x7E00) unk1C seems static
         // from mamuyan code we know the colors are 1-E shifted right by 5
         // colors: (white, brown, dark grey, bluedog, gold)
         // 0x001F params are unknown, they aren't checked in init
-        // 0xFC00 is the path section of vars, we must keep this zero
         // D9F crashes in road to southernswamp turned into 19F
+        //[GroundVariants(0xFC20)] // testing max path is no path // does not spawn, sad
         [GroundVariants(0x20, 0x40, 0x60, 0x80, 0x120,
             0x3FF, 0x19F, 0x02BF)]
-        //[GroundVariants(0x19F)]
+        [PathingVariants(0x19F, 0xD9F, 0x3FF, 0x22BF,
+            0x20, 0x40, 0x60, 0x80, 0x120)]
+        [PathingTypeVarsPlacement(mask: 0xFC00, shift:10)]
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max:1, 0x3FF, 0x19F, 0x02BF, 0x20, 0x40, 0x60, 0x80, 0x120)] // this many dogs is enough honestly
+        [VariantsWithRoomMax(max:2, 0x3FF, 0x19F, 0x02BF, 0x20, 0x40, 0x60, 0x80, 0x120)] // this many dogs is enough honestly
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
         // dog safe areas: TF, roadtoSS, SS, SSC, deku palace, sspiderhouse
         // path to mountain village
@@ -1027,11 +1034,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.WestClockTown)]
         Banker = 0x177, // En_Ginko_Man
 
-        //[ActorizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
+        [EnemizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
         [ObjectListIndex(0x135)]
-        [PatrolVariants(0x12FF)]
+        // variants 0x7F is the switch range (unused) where 7F tells the actor to ignore switches
+        // 0x0F80 is the pathing range, and 0xF000 is the kickout entrance to use
+        [PathingVariants(0x127F, 0x12FF, 0x137F, 0x13FF, 0x147F, 0x14FF, 0x157F, 0x15FF, 0x177F, 0x17FF, 0x187F)]
+        [PathingTypeVarsPlacement(mask: 0x0F80, shift: 7)]
         [UnkillableAllVariants]
-        DekuPatrolGuard = 0x17A,
+        DekuPatrolGuard = 0x17A, // En_Look_Nuts
 
         //[ActorizerEnabled] // no point, if it spawns on the ground its too big and you can't tell you are inside of it
         // and enemies are so far away they are culled so you cant see them
@@ -1068,14 +1078,14 @@ namespace MMR.Randomizer.GameObjects
             Scene.EastClockTown, Scene.NorthClockTown, Scene.IkanaCastle, Scene.SnowheadTemple)] 
         DekuFlower = 0x183,
        
-        //[EnemizerEnabled] // AI gets confused, backwalks forever, pathing?
+        [EnemizerEnabled] // AI gets confused, backwalks forever, pathing?
         [ActorInitVarOffset(0x445C)]
         [FileID(250)]
         [ObjectListIndex(0x18D)]
-        [PatrolVariants(0x700)]
+        [PathingVariants(0x700,0x940)]
         [OnlyOneActorPerRoom]
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
-        Eyegore = 0x184,// walking laser cyclops in inverted stone tower
+        Eyegore = 0x184, // En_Egol
 
         [EnemizerEnabled]
         [ObjectListIndex(0xBB)]
@@ -1166,6 +1176,14 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0x1)] // unk because spawned by H+D
         [UnkillableAllVariants] // not enemy type, right?
         BombBasket = 0x1B4, // En_Fu_Kago
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x18F)]
+        [PathingVariants(0x2400, 0x2000)]
+        [PathingTypeVarsPlacement(mask:0xFC00, shift: 10)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.WoodsOfMystery, Scene.SouthernSwamp)]
+        KotakeOnBroom = 0x1B7, // En_Trt2
 
         [UnkillableAllVariants]
         Lillypad = 0x1B9,
@@ -1497,11 +1515,13 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(0x23)] // do not remove original, for now
         PirateColonel = 0x21D,
 
-        //[EnemizerEnabled]
+        [EnemizerEnabled]
         [ObjectListIndex(0x12E)]
-        [PatrolVariants(0xEA)]
+        [PathingVariants(0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
+                0x144B, 0x14EA, 0x18EA, 0x284B, 0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
+        [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [UnkillableAllVariants]
-        PatrollingPirate = 0x21E,
+        PatrollingPirate = 0x21E, // En_Ge2
 
         // lame: saves take you to the real spawn, owl soar takes you to the real spawn, this only lets us activate and save warp
         [ActorizerEnabled] 
@@ -1543,15 +1563,16 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.MilkBar)]
         Toto = 0x234, // En_Toto
 
-        //[EnemizerEnabled] // does not spawn outside of ikana
+        [EnemizerEnabled] // does not spawn outside of ikana
         [ActorInitVarOffset(0x2CA0)]  // combat music disable does not work
         [FileID(524)]
         [ObjectListIndex(0x75)]
-        [GroundVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)]
-        [RespawningAllVariants]
+        [PathingVariants(0, 0x81, 0x82, 0x83, 0x84, 0x85)]
+        [PathingTypeVarsPlacement(mask:0xFF00, shift:8)]
+        [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.IkanaCanyon)] // dont replace the train
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
-        GibdoIkana = 0x235,
+        GibdoIkana = 0x235, // En_Railgibud
 
         [ActorizerEnabled]
         [ObjectListIndex(0x216)]
@@ -1559,7 +1580,26 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0xFE0F, 0xFE02, 0xFE01)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        Tijo = 0x238,
+        Tijo = 0x238, // En_Zod
+
+        //[ActorizerEnabled] // does not spawn, even the daytime frollicing one
+        // both of his vars are paths, sooo I'm guessing his behavior is hard coded
+        [ObjectListIndex(0xE3)]
+        // dont replace any: for one, this object is used by multiple actors
+        // can't replace the one in west clocktown without killing bank
+        // can't replace the one in ikana without killing the kafei quest (even if they are different rooms)
+        [PathingVariants(0x85FF)]
+        [PathingTypeVarsPlacement(mask:0x7E00, shift:9)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.NorthClockTown, Scene.WestClockTown, Scene.IkanaCanyon)]
+        Sakon = 0x237, // En_Suttari
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x263)]
+        [WallVariants(0xFF)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.LotteryShop)]
+        LotteryKiosk = 0x239, // En_Kujiya
 
         //[ActorizerEnabled] // boring since its hidden unless you wear one often junk mask, just decreases chances of noticable enemies
         [ObjectListIndex(1)]
@@ -1579,9 +1619,9 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.Snowhead)]
         MothSwarm = 0x23D,
 
-        //[EnemizerEnabled]
+        //[EnemizerEnabled] // just crashes, probably wants to be spawned with parent big fish gyorg
         [ObjectListIndex(0x15C)] // this is gyorgs object, probably too big, but our code would handle that
-        //[WaterVariants(0)] // vars unknown, 0 crashes
+        //[WaterVariants(0)] // vars unknown, 0x0 crashes
         GyorgSpawn = 0x23F, // En_Tanron3
 
         [ActorizerEnabled]
@@ -1775,5 +1815,15 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0), FlyingVariants(0), WaterVariants(0)]
         [UnkillableAllVariants]
         Empty = -1
+    }
+
+    public enum ActorType
+    {
+        Unset   = 0,
+        Water   = 1,
+        Ground  = 2,
+        Flying  = 3,
+        Wall    = 4,
+        Pathing = 5,
     }
 }
