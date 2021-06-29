@@ -22,7 +22,7 @@ namespace MMR.Randomizer.GameObjects
         Flame = 0x4, // En_Light
 
         // real fake doors
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // crash if placed in lens cave? huh? todo reenable and figure out
         // different doors have different variables for different objects, unless I program multiple objects only one can be used
         [ObjectListIndex(0x231)]
         [WallVariants(0x7F)]
@@ -1040,6 +1040,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x0F80 is the pathing range, and 0xF000 is the kickout entrance to use
         [PathingVariants(0x127F, 0x12FF, 0x137F, 0x13FF, 0x147F, 0x14FF, 0x157F, 0x15FF, 0x177F, 0x17FF, 0x187F)]
         [PathingTypeVarsPlacement(mask: 0x0F80, shift: 7)]
+        [PathingKickoutAddrVarsPlacement(mask: 0xF, shift: 12)]
         [UnkillableAllVariants]
         DekuPatrolGuard = 0x17A, // En_Look_Nuts
 
@@ -1520,7 +1521,9 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
                 0x144B, 0x14EA, 0x18EA, 0x284B, 0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
+        [PathingKickoutAddrVarsPlacement(mask:0x1F, shift: 0x0)]
         [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
         PatrollingPirate = 0x21E, // En_Ge2
 
         // lame: saves take you to the real spawn, owl soar takes you to the real spawn, this only lets us activate and save warp

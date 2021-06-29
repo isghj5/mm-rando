@@ -866,9 +866,10 @@ namespace MMR.Randomizer
                     var newdoldPathBehaviorAttr = actor.ActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
                     if (oldPathBehaviorAttr == null || newdoldPathBehaviorAttr == null)
                     {
-                        continue;
-                        //throw new Exception();
+                        continue; // this enemy doesn't need it
                     }
+
+
 
                     // need to get the path value from the old variant
                     var oldPath = actor.OldVariant;
@@ -876,6 +877,29 @@ namespace MMR.Randomizer
 
                     // clear the old path from this vars
                     var newVarsWithoutPath = actor.Variants[0] & ~newdoldPathBehaviorAttr.Mask;
+
+                    // in addition, enemies with kickout addresses need their vars changed too
+
+                    var newKickoutAttr = actor.ActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
+                    if (newKickoutAttr != null) // new actor has kick out address, need to read the old one
+                    {
+                        var oldnewKickoutAttr = actor.OldActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
+                        var kickoutMask = 0; // separate for debuging
+                        int kickoutAddr = 0; // safest bet, there should always be at least one exit address per scene
+                        if (oldnewKickoutAttr != null)
+                        {
+                            // gen new kick at old shift
+                            kickoutMask = oldnewKickoutAttr.Mask << oldnewKickoutAttr.Shift;
+                            kickoutAddr = (actor.OldVariant & kickoutMask) >> oldnewKickoutAttr.Shift;
+                        }
+                        // erase the kick location from the old vars
+                        kickoutMask = newKickoutAttr.Mask << newKickoutAttr.Shift;
+                        newVarsWithoutPath &= ~(kickoutMask);
+                        // replace with new address
+                        newVarsWithoutPath |= (kickoutAddr << newKickoutAttr.Shift);
+                    }
+
+
                     // shift the path into the new location
                     var newPath = oldPathShifted << newdoldPathBehaviorAttr.Shift;
 
@@ -1431,13 +1455,13 @@ namespace MMR.Randomizer
                         continue;
                     }// */
                     // todo torch on leevers is throwing wierd errors when it comes to companions
-                    /* if (scene.File == GameObjects.Scene.DekuPalace.FileID()
+                    if (scene.File == GameObjects.Scene.DekuPalace.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.DekuPatrolGuard.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.GibdoIkana.ObjectIndex()
+                            NewV = GameObjects.Actor.PatrollingPirate.ObjectIndex()
                         });
                         continue;
                     } // */
