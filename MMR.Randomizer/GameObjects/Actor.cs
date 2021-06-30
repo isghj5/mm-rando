@@ -744,7 +744,7 @@ namespace MMR.Randomizer.GameObjects
         //DekuShrine RoadToIkana GoronVillage
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, // cursed if put on hms
             Scene.Woodfall, // they fall off into the water and quietly swim, lame?
-            Scene.MountainVillageSpring)]
+            Scene.MountainVillageSpring, Scene.RanchBuildings)]
         Dog = 0xE2, // En_Dg
 
         [ObjectListIndex(0x133)]

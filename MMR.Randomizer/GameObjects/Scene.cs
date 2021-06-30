@@ -80,7 +80,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1175)]
         [SceneInternalId(0x16)]
         [ClearEnemyPuzzleRooms(4, 7)]// basement lava
-        [FairyDroppingEnemies(1, 2)] // eygore 
+        [FairyDroppingEnemies(1, 2)] // eygore
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
+            Actor.IkanaGravestone, Actor.Bumper)]
         StoneTowerTemple = 0x13,
 
         [FileID(1188)]
@@ -108,11 +110,11 @@ namespace MMR.Randomizer.GameObjects
         [FairyDroppingEnemies(1, 4, 34)] // wooden flower room, deku baba and stray fairy in bubble
         [FairyDroppingEnemies(3, 3)] // west wing, skulltula:3
         [FairyDroppingEnemies(5, 22)] // east wing, beehive:22
-        [EnemizerSceneEnemyReplacementBlock(Actor.Dinofos, // weak enemies are kinda lame here
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Dinofos, // weak enemies are kinda lame here
             Actor.Leever, Actor.ChuChu, Actor.DekuBabaWithered)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.Skulltula, // weak enemies are kinda lame here
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula, // weak enemies are kinda lame here
             Actor.BigPoe)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.Bo,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
             Actor.GibdoWell, Actor.Peahat)] // We consider them killable, but killing this many...
         WoodfallTemple = 0x18,
 

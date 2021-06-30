@@ -160,37 +160,37 @@ namespace MMR.Randomizer.Extensions
             foreach( var randomVariant in listOfVariants)
             {
                 ActorVariantsAttribute ourAttr = null;
-                ActorVariantsAttribute theirAttr = null;
+                ActorVariantsAttribute otherAttr = null;
                 if (randomVariant == ActorType.Water)
                 {
                     ourAttr = actor.GetAttribute < WaterVariantsAttribute >();
-                    theirAttr = otherActor.GetAttribute< WaterVariantsAttribute >();
+                    otherAttr = otherActor.GetAttribute< WaterVariantsAttribute >();
                 }
                 if (randomVariant == ActorType.Ground)
                 {
                     ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
-                    theirAttr = otherActor.GetAttribute<GroundVariantsAttribute>();
+                    otherAttr = otherActor.GetAttribute<GroundVariantsAttribute>();
                 }
                 if (randomVariant == ActorType.Flying)
                 {
                     ourAttr = actor.GetAttribute<FlyingVariantsAttribute>();
-                    theirAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
+                    otherAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
                 }
                 if (randomVariant == ActorType.Wall)
                 {
                     ourAttr = actor.GetAttribute<WallVariantsAttribute>();
-                    theirAttr = otherActor.GetAttribute<WallVariantsAttribute>();
+                    otherAttr = otherActor.GetAttribute<WallVariantsAttribute>();
                 }
                 if (randomVariant == ActorType.Pathing)
                 {
                     ourAttr = actor.GetAttribute<PathingVariantsAttribute>();
-                    theirAttr = otherActor.GetAttribute<PathingVariantsAttribute>();
+                    otherAttr = otherActor.GetAttribute<PathingVariantsAttribute>();
                 }
 
                 var waterTest = actor.GetAttribute<WaterVariantsAttribute>();
                 // if enemy type is ground or flying, we can put them on wall or ground or flying or pathing, just not water
-                /*if ((randomVariant == ActorType.Ground || randomVariant == ActorType.Flying) && theirAttr != null && waterTest == null) {
-                    theirAttr = actor.GetAttribute<FlyingVariantsAttribute>();
+                /*if ((randomVariant == ActorType.Ground || randomVariant == ActorType.Flying) && otherAttr != null && waterTest == null) {
+                    otherAttr = actor.GetAttribute<FlyingVariantsAttribute>();
                     if (ourAttr == null)
                     {
                         ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
@@ -198,26 +198,26 @@ namespace MMR.Randomizer.Extensions
                 } */
 
                 // large chance of pathing enemies allowing ground or flying
-                if (randomVariant == ActorType.Pathing &&  ourAttr != null && theirAttr == null && rng.Next(100) < 80)
+                if (randomVariant == ActorType.Pathing &&  ourAttr != null && otherAttr == null && rng.Next(100) < 80)
                 {
-                    theirAttr = actor.GetAttribute<FlyingVariantsAttribute>();
-                    if (ourAttr == null)
+                    otherAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
+                    if (otherAttr == null)
                     {
-                        ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
+                        otherAttr = otherActor.GetAttribute<GroundVariantsAttribute>();
                     }
                 }
 
                 // small chance of ground enemies allowing flying
-                if (randomVariant == ActorType.Ground && ourAttr != null && theirAttr == null && rng.Next(100) < 30)
+                if (randomVariant == ActorType.Ground && ourAttr != null && otherAttr == null && rng.Next(100) < 30)
                 {
-                    theirAttr = actor.GetAttribute<FlyingVariantsAttribute>();
+                    otherAttr = otherActor.GetAttribute<FlyingVariantsAttribute>();
                 }
 
 
-                if ((ourAttr != null && theirAttr != null) // both have same type
+                if ((ourAttr != null && otherAttr != null) // both have same type
                     )//|| ((randomVariant == ActorType.Ground || randomVariant == ActorType.Wall) && ourAttr != null)) // small chance of wall or ground enemies becoming flying
                 {
-                    var compatibleVariants = theirAttr.Variants;
+                    var compatibleVariants = otherAttr.Variants;
 
                     // make sure their variants aren't un-placable either
                     var zeroPlacementVarieties = GetUnPlacableVariants(otherActor);

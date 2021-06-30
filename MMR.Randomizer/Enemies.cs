@@ -300,13 +300,15 @@ namespace MMR.Randomizer
             EnableTwinIslandsSpringSkullfish();
             FixSouthernSwampDekuBaba();
             FixRoadToSouthernSwampBadBat();
-            NudgeFlyingEnemiesForTingle();
-            //FixScarecrowTalk();
-            //FixLikeLikeShieldDrop();
+            if (ACTORSENABLED)
+            {
+                NudgeFlyingEnemiesForTingle();
+                //FixScarecrowTalk();
+                EnablePoFusenAnywhere();
+            }
 
             FixSpawnLocations();
             ExtendGrottoDirectIndexByte();
-            EnablePoFusenAnywhere();
             ShortenChickenPatience();
             Shinanigans();
         }
@@ -548,8 +550,8 @@ namespace MMR.Randomizer
 
         private static void PrintActorValues()
         {
-            
-            // debugging, checking if ram sizes are relevant
+            /// debugging, checking if ram sizes are correct
+
             for (var i = 0; i < 0x2B3; ++i)
             {
                 var actor = (GameObjects.Actor) i;
@@ -589,48 +591,6 @@ namespace MMR.Randomizer
             {
                 return;
             }
-        }
-
-        private static void CreateTuboChest()
-        {
-            // issue: we either cannot use or dont know the proper chest display lists
-
-            // attempt to turn tubo trap into tubo chest owo amazing chest ahead
-            /*
-            var tuboFID = 132;
-            RomUtils.CheckCompressed(tuboFID);
-            var tuboData = RomData.MMFileList[tuboFID].Data;
-            // set test trap box in SCT
-            var sctScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SouthClockTown.FileID());
-            sctScene.Maps[0].Actors[11].ChangeActor(GameObjects.Actor.FlyingPot); // dog -> trap
-            // change object to en_box @C65
-            tuboData[0xC65] = 0xC;
-            // change hit sfx to box breaking bigbox:0x2839 alt; wood thud is 21C9 2887 is pot broken
-            ReadWriteUtils.Arr_WriteU16(tuboData, 0x6CE, 0x2839); // four of them this actor cares a lot where and how it hits the player
-            ReadWriteUtils.Arr_WriteU16(tuboData, 0x73A, 0x2839); // sound here is correct
-            ReadWriteUtils.Arr_WriteU16(tuboData, 0x78E, 0x2839);
-            ReadWriteUtils.Arr_WriteU16(tuboData, 0x7FA, 0x2839);
-
-            // change take off sfx to box take off @92A boxputdown: 21AB
-            ReadWriteUtils.Arr_WriteU16(tuboData, 0x92A, 0x21AB); // sounds bad
-
-            // change display list to that of chest
-            // C0A /b //C0E/f
-            ReadWriteUtils.Arr_WriteU16(tuboData, 0xC0A, 0x0600);
-            ReadWriteUtils.Arr_WriteU16(tuboData, 0xC0E, 0x0128);
-
-            // different chest display lists 7E54 i crash
-            //0x0600024C .word 0x06007E54 .word 0x0600024C .word 0x06007F30 .word 0x06000128
-
-            // also need to find the box breaking effect too
-            // big wood planks from big box is 0x6001040 from D_05018090
-            // unfortunately this might not be available... hmm
-            //ReadWriteUtils.Arr_WriteU16(tuboData, 0x17A, 0x0600); // crate effect does not exist in SCT
-            //ReadWriteUtils.Arr_WriteU16(tuboData, 0x182, 0x1040);
-
-            ReadWriteUtils.Arr_WriteU16(tuboData, 0x17A, 0x0600);
-            ReadWriteUtils.Arr_WriteU16(tuboData, 0x182, 0x024C);
-            */
         }
 
         /// <summary>
@@ -720,9 +680,9 @@ namespace MMR.Randomizer
             var wallmaster = dampehouseScene.Maps[0].Actors[0];
             // move to center of the main room,
             wallmaster.Position.z = 0x40;
-            //and straighten because for some reason its really off scew
+            //and straighten because for some reason its really off scew, probably using rotation as parameters
             FlattenPitchRoll(wallmaster);
-            // change actor to wallmaster proper
+            // change actor to wallmaster proper for enemizer detection
             wallmaster.ChangeActor(newActorType: GameObjects.Actor.WallMaster, vars: 0x1);
         }
 
@@ -850,7 +810,8 @@ namespace MMR.Randomizer
         public static void FixPatrollingEnemyVars(List<Actor> chosenReplacementEnemies)
         {
             /// fixes the patrolling enemy paths to make sure it matches the previous actor path
-            // we do this last, because its possible there are no patrolling enemies, and we dont want to waste time doing this per-attempt
+            
+            // this also sets their kickout address index to 0, because they use different systems which are not compatible
 
             // for now, adding extra code just so I can keep track of what is happening
             for (int i = 0; i < chosenReplacementEnemies.Count; i++)
@@ -869,8 +830,6 @@ namespace MMR.Randomizer
                         continue; // this enemy doesn't need it
                     }
 
-
-
                     // need to get the path value from the old variant
                     var oldPath = actor.OldVariant;
                     var oldPathShifted = (oldPath & (oldPathBehaviorAttr.Mask)) >> oldPathBehaviorAttr.Shift;
@@ -880,25 +839,27 @@ namespace MMR.Randomizer
 
                     // in addition, enemies with kickout addresses need their vars changed too
 
+
+                    // hey so it turns out they dont use the same indexing system! fucking hell
+                    // fornow, pass ZERO to both actors, it should give us a basic entrance to work with that wont crash anywhere where pathing enemies can exist
                     var newKickoutAttr = actor.ActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
                     if (newKickoutAttr != null) // new actor has kick out address, need to read the old one
                     {
                         var oldnewKickoutAttr = actor.OldActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
                         var kickoutMask = 0; // separate for debuging
                         int kickoutAddr = 0; // safest bet, there should always be at least one exit address per scene
-                        if (oldnewKickoutAttr != null)
+                        /* if (oldnewKickoutAttr != null)
                         {
                             // gen new kick at old shift
                             kickoutMask = oldnewKickoutAttr.Mask << oldnewKickoutAttr.Shift;
                             kickoutAddr = (actor.OldVariant & kickoutMask) >> oldnewKickoutAttr.Shift;
-                        }
+                        } // */
                         // erase the kick location from the old vars
                         kickoutMask = newKickoutAttr.Mask << newKickoutAttr.Shift;
                         newVarsWithoutPath &= ~(kickoutMask);
                         // replace with new address
                         newVarsWithoutPath |= (kickoutAddr << newKickoutAttr.Shift);
-                    }
-
+                    } // */
 
                     // shift the path into the new location
                     var newPath = oldPathShifted << newdoldPathBehaviorAttr.Shift;
@@ -1444,24 +1405,23 @@ namespace MMR.Randomizer
                         }); 
                         continue;
                     } // */
-                    /* if (scene.File == GameObjects.Scene.RoadToIkana.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.RealBombchu.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.Grottos.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.Peahat.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Carpenter.ObjectIndex()
+                            NewV = GameObjects.Actor.DekuPatrolGuard.ObjectIndex()
                         });
                         continue;
                     }// */
-                    // todo torch on leevers is throwing wierd errors when it comes to companions
-                    if (scene.File == GameObjects.Scene.DekuPalace.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.DekuPatrolGuard.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.PiratesFortress.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.PatrollingPirate.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.PatrollingPirate.ObjectIndex()
+                            NewV = GameObjects.Actor.DekuPatrolGuard.ObjectIndex()
                         });
                         continue;
                     } // */
