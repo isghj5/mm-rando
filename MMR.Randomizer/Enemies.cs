@@ -98,6 +98,7 @@ namespace MMR.Randomizer
         public static void SetSceneEnemyObjects(Scene scene, List<ValueSwap> newObjects)
         {
             foreach (var sceneMap in scene.Maps)
+            {
                 for (int sceneObjIndex = 0; sceneObjIndex < sceneMap.Objects.Count; sceneObjIndex++)
                 {
                     var valueSwapObject = newObjects.Find(u => u.OldV == sceneMap.Objects[sceneObjIndex]);
@@ -106,6 +107,7 @@ namespace MMR.Randomizer
                         sceneMap.Objects[sceneObjIndex] = valueSwapObject.NewV;
                     }
                 }
+            }
         }
 
         public static List<GameObjects.Actor> GetSceneFairyDroppingEnemyTypes(Scene scene, List<Actor> listOfReadEnemies)
@@ -155,7 +157,7 @@ namespace MMR.Randomizer
 
         public static int GetOvlInstanceRamSize(int actorOvlTblIndex)
         {
-            /// this is the size of the actor's instance state in ram
+            /// this is the size of the actor's struct instance in ram
 
             // to get this, we either need to save it or read it from the overlay's init vars
             var attr = ((GameObjects.Actor)actorOvlTblIndex).GetAttribute<ActorInstanceSizeAttribute>();
@@ -262,6 +264,7 @@ namespace MMR.Randomizer
             return -1;
         }
 
+        // todo: now that we know this works, switch over a bunch of code to it
         public static int GetFID(int actorID)
         {
             var fidLookup = ((GameObjects.Actor)actorID).FileListIndex();
@@ -278,7 +281,8 @@ namespace MMR.Randomizer
 
         public static int MergeRotationAndFlags(int rotation, int flags)
         {
-            /// actors spawn rotation is merged with their flags, so that the 7 most right bits are flags
+            /// in a map's actor list: actors spawn rotation is merged with their flags,
+            ///   so that the 7 most right bits are flags
             /// bits: XXXX XXXX XFFF FFFF where X is rotation, F is flags
             /// where rotation is 1 = 1 degree, 360 is 0x168, so it does use all 9 bits
             ///  looks to me like rotation increases in a counter-clockwise direction
@@ -287,8 +291,8 @@ namespace MMR.Randomizer
 
         public static void FlattenPitchRoll(Actor actor)
         {
-            actor.Rotation.x = (short)MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.x);
-            actor.Rotation.z = (short)MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.z);
+            actor.Rotation.x = (short) MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.x);
+            actor.Rotation.z = (short) MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.z);
         }
 
         #region Static Enemizer Changes and Fixes
@@ -310,6 +314,7 @@ namespace MMR.Randomizer
             FixSpawnLocations();
             ExtendGrottoDirectIndexByte();
             ShortenChickenPatience();
+            //FixThornTraps();
             Shinanigans();
         }
 
@@ -402,8 +407,8 @@ namespace MMR.Randomizer
                 // change the torch in pirates fort exterior to all day, remove second one, or free 
                 var piratesExteriorScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.PiratesFortressExterior.FileID());
                 var nightTorch = piratesExteriorScene.Maps[0].Actors[15];
-                nightTorch.Rotation.x = (short)MergeRotationAndFlags(rotation: nightTorch.Rotation.x, flags: 0x7F); // always spawn flags
-                nightTorch.Rotation.z = (short)MergeRotationAndFlags(rotation: nightTorch.Rotation.z, flags: 0x7F);
+                nightTorch.Rotation.x |= 0x7F; // always spawn flags
+                nightTorch.Rotation.z |= 0x7F;
 
                 // day torch
                 piratesExteriorScene.Maps[0].Actors[13].ChangeActor(GameObjects.Actor.Empty); // dangeon object so no grotto, empty for now
@@ -582,6 +587,17 @@ namespace MMR.Randomizer
             } // */
 
             int breakpointherestupid = 0;
+        }
+
+        public static void PrintDataBytes(byte[] data, int location)
+        {
+            Debug.WriteLine("Printing data at: " + location + " hex: " + location.ToString("X2"));
+            Debug.WriteLine(data[location + 0].ToString("X2"));
+            Debug.WriteLine(data[location + 1].ToString("X2") + " < unk ?");
+            Debug.WriteLine(data[location + 2].ToString("X2") + " < ");
+            Debug.WriteLine(data[location + 3].ToString("X2") + " < ");
+            Debug.WriteLine("folowing words: " + location + " hex: " + location.ToString("X2"));
+            Debug.WriteLine(data[location + 4].ToString("X2"));
         }
 
         private static void FixScarecrowTalk()
@@ -789,6 +805,21 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU16(niwData, 0x156, 0x3f80); // 10 -> 1 in f32(first short only as literal) (in init)
         }
 
+        public static void FixThornTraps()
+        {
+            /// in thorn traps init code it checks if a path has only 2 nodes, if it has more or less than 2 it dies
+
+            // let's just remove that jal
+            var location = 0x3A8;// 234 * 4;
+            RomUtils.CheckCompressed(GameObjects.Actor.ThornTrap.FileListIndex());
+            var thornData = RomData.MMFileList[GameObjects.Actor.ThornTrap.FileListIndex()].Data;
+            PrintDataBytes(thornData, location);
+
+            ReadWriteUtils.Arr_WriteU32(thornData, location, 0x00000000);
+            ReadWriteUtils.Arr_WriteU32(thornData, 0x378, 0x00000000);
+        }
+
+
         #endregion
 
         public static void SetupGrottoActor(Actor enemy, int newVariant)
@@ -802,8 +833,8 @@ namespace MMR.Randomizer
             //if ((newVariant & 0x0400) != 0) // grotto that uses rotation to set value
             {
                 int newIndex = newVariant & 0xF; // in vanilla the array is only 15 long
-                enemy.Rotation.x = (short)MergeRotationAndFlags(rotation: 0, flags: 0x7F);
-                enemy.Rotation.z = (short)MergeRotationAndFlags(rotation: newIndex, flags: 0x7F);//: enemy.Rotation.z);
+                enemy.Rotation.x = (short) MergeRotationAndFlags(rotation: 0, flags: 0x7F);
+                enemy.Rotation.z = (short) MergeRotationAndFlags(rotation: newIndex, flags: 0x7F);//: enemy.Rotation.z);
             }
         }
 
@@ -838,8 +869,6 @@ namespace MMR.Randomizer
                     var newVarsWithoutPath = actor.Variants[0] & ~newdoldPathBehaviorAttr.Mask;
 
                     // in addition, enemies with kickout addresses need their vars changed too
-
-
                     // hey so it turns out they dont use the same indexing system! fucking hell
                     // fornow, pass ZERO to both actors, it should give us a basic entrance to work with that wont crash anywhere where pathing enemies can exist
                     var newKickoutAttr = actor.ActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
@@ -848,12 +877,14 @@ namespace MMR.Randomizer
                         var oldnewKickoutAttr = actor.OldActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
                         var kickoutMask = 0; // separate for debuging
                         int kickoutAddr = 0; // safest bet, there should always be at least one exit address per scene
+
                         /* if (oldnewKickoutAttr != null)
                         {
                             // gen new kick at old shift
                             kickoutMask = oldnewKickoutAttr.Mask << oldnewKickoutAttr.Shift;
                             kickoutAddr = (actor.OldVariant & kickoutMask) >> oldnewKickoutAttr.Shift;
                         } // */
+
                         // erase the kick location from the old vars
                         kickoutMask = newKickoutAttr.Mask << newKickoutAttr.Shift;
                         newVarsWithoutPath &= ~(kickoutMask);
@@ -877,8 +908,9 @@ namespace MMR.Randomizer
         public static List<GameObjects.Actor> GetSceneFreeActors(Scene scene, StringBuilder log)
         {
             /// some actors don't require unique objects, they can use objects that are generally loaded, we can use these almost anywhere
-            ///  any actor that is object type 1 is free anywhere
-            ///  scenes can have a special object loaded by themselves, this is either dangeon_keep or field_keep
+            ///  any actor that is object type 1 (gameplay_keep) is free to use anywhere
+            ///  scenes can have a special object loaded by themselves, this is either dangeon_keep or field_keep, or none
+
             var sceneIsDungeon = scene.HasDungeonObject();
             var sceneIsField = scene.HasFieldObject();
             //log.WriteLine(" Scene Special Object: [" + scene.SpecialObject.ToString() + "]");
@@ -889,8 +921,6 @@ namespace MMR.Randomizer
                                                  && !u.BlockedScenes().Contains(scene.SceneEnum)
                                                  && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized())))
                                                  .ToList();
-
-            // todo: find some way to add ONLY dungeon var pots for dungeons
 
             // todo: search all untouched objects and add those actors too
 
@@ -1162,14 +1192,16 @@ namespace MMR.Randomizer
             }
 
             // for every 50 loops
-            int removeCount = loopCount / 50; // yes int division
-            for(int i = 0; i < removeCount; ++i)
+            /* int removeCount = loopCount / 100; // yes int division
+            if (removeCount > 0)
             {
-                //attempt to find an enemy to remove, ideally not one that is super small
-            }
+                for (int i = 0; i < removeCount; ++i)
+                {
+                    //attempt to find an enemy to remove, ideally not one that is super small
+                }
 
+            } // */
         }
-
 
         public static List<Actor> GetMatchPool(List<Actor> oldActors, Random random, Scene scene, List<GameObjects.Actor> reducedCandidateList, bool containsFairyDroppingEnemy)
         {
@@ -1415,13 +1447,13 @@ namespace MMR.Randomizer
                         });
                         continue;
                     }// */
-                    /* if (scene.File == GameObjects.Scene.PiratesFortress.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.PatrollingPirate.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.DekuPalace.FileID()
+                        && sceneObjects[objCount] == GameObjects.Actor.DekuPatrolGuard.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.DekuPatrolGuard.ObjectIndex()
+                            NewV = GameObjects.Actor.RosaSisters.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1622,7 +1654,6 @@ namespace MMR.Randomizer
             // realign all scene companion actors
             MoveAlignedCompanionActors(chosenReplacementEnemies, rng, log);
 
-            //SetSceneEnemyActors(scene, chosenReplacementEnemies); // we now modify the scene actors directly in the scenelist
             SetSceneEnemyObjects(scene, chosenReplacementObjects);
             SceneUtils.UpdateScene(scene);
             WriteOutput( " time to complete randomizing scene: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
@@ -1686,24 +1717,6 @@ namespace MMR.Randomizer
                     Debug.WriteLine(dataBlob[actorInitLoc + 8].ToString("X2") +
                                     dataBlob[actorInitLoc + 9].ToString("X2") + " < object id");
                 }
-
-                // bits (from 0) 4 should be always update, 5 should be always draw, 6 should be no cull
-                //RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 7] |= 0x80; // "invisible" is weirder than you think
-
-                /*foreach (var a2 in Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                            .Where(u => u.IsEnemyRandomized() &&  u.ActorInitOffset() > 100)
-                            .ToList())
-                {
-                    RomUtils.CheckCompressed(a2.FileListIndex());
-                    // to test invisibility in all enemies
-                    //RomData.MMFileList[a2.FileListIndex()].Data[a2.ActorInitOffset() + 7] |= 0x80; // test invisible
-                }*/
-
-                // todo: bombiwa
-                var actor = GameObjects.Actor.PoeSisters;
-                RomUtils.CheckCompressed(actor.FileListIndex());
-                PrintActorInitFlags(actor.ToString(), RomData.MMFileList[actor.FileListIndex()].Data, actor.ActorInitOffset());
-                //RomData.MMFileList[actor.FileListIndex()].Data[actor.ActorInitOffset() + 7] |= 0x80; // test invisible
 
                 using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
@@ -1843,7 +1856,6 @@ namespace MMR.Randomizer
             // untested for accuracy, actors without correct objects might be inccorectly sized
             objectSizes = objList.Select(x => ObjUtils.GetObjSize(x)).ToArray();
             ObjectRamSize = objList.Select(x => ObjUtils.GetObjSize(x)).Sum();
-            // = distinctActors.Select(x => ObjUtils.GetObjSize(x.ActorEnum.ObjectIndex())).ToArray(); // old object gathering from actors, think this included gamplay keep
         }
     }
 
@@ -1902,8 +1914,7 @@ namespace MMR.Randomizer
                     }
                 }
 
-                newMapList.Add(new MapEnemiesCollection(map.Actors, newObjList)); // for some reason some actors are added???
-                //newMapList.Add(new MapEnemiesCollection(oldMapList.old newObjList));
+                newMapList.Add(new MapEnemiesCollection(map.Actors, newObjList));
             }
         }
 
@@ -1934,12 +1945,8 @@ namespace MMR.Randomizer
             var dayInstDiff = oldCollection.ActorInstanceSum - newCollection.ActorInstanceSum;
             var dayObjDiff  = oldCollection.ObjectRamSize    - newCollection.ObjectRamSize;
 
-            //wtf is wrong with my seed gen that this is so big a hurdle it wont make ONE seed
-             // || dayOvlDiff < -0x10000 || dayInstDiff < -0x10000 || dayObjDiff < -0x10000)  // theory: these can have their own limits
-
-
             // if the new size is smaller than the old size we should be dandy, if not...
-            if (dayOvlDiff + dayInstDiff + dayObjDiff <= -0x300)  // conservative estimate for now
+            if (dayOvlDiff + dayInstDiff + dayObjDiff <= -0x100)  // now that we have enemy deletion, lets drop this from 0x300 to zero
             {
                 // lets assume a general headroom that not all scenes used, smaller scenes should get some excess
                 // 0x90000 was safe, but maybe too small, the three biggest scenes are all 0xC0000 or bigger (0x100000)
@@ -1947,8 +1954,6 @@ namespace MMR.Randomizer
                 {
                     return false;
                 }
-
-                //return false;
             }
 
             return true;

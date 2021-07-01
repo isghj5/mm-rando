@@ -111,9 +111,10 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
-        // 4 is group of fairies out of a fountain, 7 is large healing fairy, 9 is yellow fairy
-        [GroundVariants(2, 4, 7, 9)]
-        [FlyingVariants(2, 4, 7, 9)]
+        // 4 is group of fairies out of a fountain, 7 is large healing fairy, 9 is yellow fairy (unused)
+        // 4 has been removed because its unlikely to make sense for the location, and if its in TF it might contribute hard to TFG
+        [GroundVariants(2, 7, 9)]
+        [FlyingVariants(2, 7, 9)]
         [VariantsWithRoomMax(max: 1, variant: 4)] // don't create too many fairy fountains
         [VariantsWithRoomMax(max: 2, variant: 7)] // maybe limit the secret menu fairies
         [UnkillableAllVariants]
@@ -645,6 +646,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFFFF)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
+        [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)] // FIRE AND DARKNESS
         [EnemizerScenesExcluded(Scene.MarineLab)]
         Scientist = 0xAE,
 
@@ -695,6 +697,16 @@ namespace MMR.Randomizer.GameObjects
         // var 1 southern swamp (clear), 
         // a04: romani ranch, a36: zora cape/coast
         WeatherTag = 0xBC, // En_Weather_Tag
+
+        //[ActorizerEnabled] // warp addresses are offsets, dangerous until we can hard code
+        [ObjectListIndex(0x271)]
+        [PathingVariants(0x11, 0x422, 0x833, 0xC44)]
+        [PathingTypeVarsPlacement(mask:0xFC00, shift:10)]
+        [VariantsWithRoomMax(max:1, variant: 0x11, 0x422, 0x833, 0xC44)]
+        [PathingKickoutAddrVarsPlacement(mask: 0x3F0, shift: 4)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.TheMoon)]
+        MoonChild = 0xBF, // En_Js
 
         [ActorizerEnabled]
         [FileID(172)]
@@ -807,6 +819,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemy
         Cow = 0xF3,
 
+        //[ActorizerEnabled]
+        //[ObjectListIndex]
+        //[GroundVariants(0xCB1)]
+        //GerudoQueen = 0xFA, 
+
         //[ActorizerEnabled] // we dont want as an actual actor, we want as a companion
         // why is the letter of all things in gameplay_keep? maybe its the same texture of LTK?
         [ObjectListIndex(0x1CB)] // gameplay_keep obj 1
@@ -814,13 +831,21 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         LetterToPostman = 0xFE,
 
+        //[ActorizerEnabled] // crash
+        [FileID(238)]
+        [ObjectListIndex(0x64)]
+        [PathingVariants(0x405, 0x406, 0x407, 0x408)]
+        [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
+        [UnkillableAllVariants]
+        ThornTrap = 0x103, // Obj_Toge "Thorn"
+
         [ActorizerEnabled]
         [ObjectListIndex(0x14F)]
         [GroundVariants(0x0)]
         [VariantsWithRoomMax(max: 5, variant:0)] // culling distance is too long
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)]
         [UnkillableAllVariants]
-        Bumper = 0x106, // obj_Boyo
+        Bumper = 0x106, // Obj_Boyo
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2A7C)]
@@ -874,10 +899,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // cannot talk to them BUT YOU CAN KILL THEM
         [ObjectListIndex(0xBC)]
         [GroundVariants(0,1,2,3,4,5)] // 6 colors
-        [UnkillableAllVariants]
-        Frog2 = 0x147, // this doesn't exist in the actors by area list, not vanilla
+        [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)] // FIRE AND DARKNESS
+        [UnkillableAllVariants] // animated kill but not enemy category
+        ImposterFrog = 0x147, // En_Fg  // unused beta frog
 
-        //[EnemizerEnabled] // crash, also object is huge so never gets put places
+        //[EnemizerEnabled] // crash, also object is huge so never gets put places anyway
         [ObjectListIndex(0x192)] // cutscene object shared with zelda and skullkid, so BIG
         [GroundVariants(0)]
         [UnkillableAllVariants]
@@ -1014,6 +1040,7 @@ namespace MMR.Randomizer.GameObjects
             variant: 0x2324, 0x4324)] // butterflies over the bushes
         [GroundVariants(0x7F00, 0x400, 0x1F00)] //400 is milkroad, 7F00 is opening area, spring is 1F00
         [UnkillableAllVariants] // untested
+        [EnemizerScenesPlacementBlock(Scene.TerminaField)] // lag
         KeatonGrass = 0x171, // En_Kusa2
 
         [ActorizerEnabled]
@@ -1041,6 +1068,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0x127F, 0x12FF, 0x137F, 0x13FF, 0x147F, 0x14FF, 0x157F, 0x15FF, 0x177F, 0x17FF, 0x187F)]
         [PathingTypeVarsPlacement(mask: 0x0F80, shift: 7)]
         [PathingKickoutAddrVarsPlacement(mask: 0xF, shift: 12)]
+        [EnemizerScenesPlacementBlock(Scene.SouthClockTown)]
         [UnkillableAllVariants]
         DekuPatrolGuard = 0x17A, // En_Look_Nuts
 
@@ -1083,7 +1111,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x445C)]
         [FileID(250)]
         [ObjectListIndex(0x18D)]
-        [PathingVariants(0x700,0x940)]
+        // params: 7x >> 6 is switch, 0x3F is unk
+        [PathingVariants(0x700, 0x940)]
+        [PathingTypeVarsPlacement(mask: 0x3F, shift: 0)]
         [OnlyOneActorPerRoom]
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
         Eyegore = 0x184, // En_Egol
@@ -1117,9 +1147,9 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.DekuPalace)] // do not remove original for now
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 4, 9)]
+        [EnemizerScenesExcluded(Scene.DekuPalace)] // do not remove original for now
         PalaceGuardDeku = 0x1A0, // En_Guard_Nuts
 
         //[ActorizerEnabled] // crash in clocktower, too big for anywhere else
@@ -1211,6 +1241,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0)] // zero is regular, -1 is credits?
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
+        [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)]
         [EnemizerScenesPlacementBlock(Scene.SouthClockTown)]
         [EnemizerScenesExcluded(Scene.TreasureChestShop)]
         BombchuGirl = 0x1C1, // En_Takaraya
@@ -1523,6 +1554,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [PathingKickoutAddrVarsPlacement(mask:0x1F, shift: 0x0)]
         [UnkillableAllVariants]
+        [EnemizerScenesPlacementBlock(Scene.SouthClockTown)]
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
         PatrollingPirate = 0x21E, // En_Ge2
 
@@ -1545,6 +1577,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [WaterVariants(0)]
         [UnkillableAllVariants]
+        [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)] // FIRE AND DARKNESS
         [EnemizerScenesExcluded(Scene.ZoraHallRooms)]
         [OnlyOneActorPerRoom]
         Japas = 0x231, // En_Zob
@@ -1564,7 +1597,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:0, variant:0x050B)] // we dont want a sitting npc to be placed places, just replace
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.MilkBar)]
-        Toto = 0x234, // En_Toto
+        Toto = 0x234, // En_Toto // manager zora band member
 
         [EnemizerEnabled] // does not spawn outside of ikana
         [ActorInitVarOffset(0x2CA0)]  // combat music disable does not work
@@ -1583,7 +1616,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0xFE0F, 0xFE02, 0xFE01)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        Tijo = 0x238, // En_Zod
+        Tijo = 0x238, // En_Zod // drummer zora band member
 
         //[ActorizerEnabled] // does not spawn, even the daytime frollicing one
         // both of his vars are paths, sooo I'm guessing his behavior is hard coded
@@ -1733,9 +1766,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x24B)]
         // 0xA00 is lobby pacing
-        [GroundVariants(0x0A00, 0x7E01, 0x8000, 0xFE01,  0x7E02, 0xFE02, 0x7E02)]
-        [VariantsWithRoomMax(max: 0, variant: 0xA00)] // pathing I bet, will likely crash in too many palces
-        [VariantsWithRoomMax(max: 0, variant: 0x7E01, 0x8000, 0xFE01)] // also likely to path
+        // params: 8000 is a talking flag, 0x7E00 >> 9 is pathing, 0x7E00 is non-pathing though, the one value
+        [GroundVariants(0x7E01, 0x8000, 0xFE01,  0x7E02, 0xFE02, 0x7E02)]
+        [PathingVariants(0xA00, 0x7E01, 0x8000, 0xFE01, 0x7E02)]
+        [PathingTypeVarsPlacement(0x7E00, 9)]
         //[OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.WestClockTown)]
