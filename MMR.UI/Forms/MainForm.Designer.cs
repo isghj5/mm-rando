@@ -196,6 +196,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
+            this.cHookshotAnySurface = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -851,6 +852,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox10
             // 
+            this.groupBox10.Controls.Add(this.cHookshotAnySurface);
             this.groupBox10.Controls.Add(this.cFloors);
             this.groupBox10.Controls.Add(this.lFloors);
             this.groupBox10.Controls.Add(this.lGravity);
@@ -2189,6 +2191,20 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
+            // cHookshotAnySurface
+            // 
+            this.cHookshotAnySurface.AutoSize = true;
+            this.cHookshotAnySurface.BackColor = System.Drawing.Color.Transparent;
+            this.cHookshotAnySurface.ForeColor = System.Drawing.Color.Black;
+            this.cHookshotAnySurface.Location = new System.Drawing.Point(7, 135);
+            this.cHookshotAnySurface.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHookshotAnySurface.Name = "cHookshotAnySurface";
+            this.cHookshotAnySurface.Size = new System.Drawing.Size(144, 19);
+            this.cHookshotAnySurface.TabIndex = 27;
+            this.cHookshotAnySurface.Text = "Hookshot Any Surface";
+            this.cHookshotAnySurface.UseVisualStyleBackColor = false;
+            this.cHookshotAnySurface.CheckedChanged += new System.EventHandler(this.cHookshotAnySurface_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2435,6 +2451,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lStartingItems;
         private System.Windows.Forms.CheckBox cInstantPictobox;
         private System.Windows.Forms.CheckBox cImprovedPictobox;
+        private System.Windows.Forms.CheckBox cHookshotAnySurface;
     }
 }
 

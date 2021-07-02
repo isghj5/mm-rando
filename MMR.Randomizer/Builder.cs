@@ -956,6 +956,11 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Resources.mods.death_moon_crash);
             }
+
+            if (_randomized.Settings.HookshotAnySurface)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.hookshot_any_surface);
+            }
         }
 
         private void WriteSunsSong()

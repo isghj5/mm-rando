@@ -287,6 +287,8 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool DeathMoonCrash { get; set; }
 
+        public bool HookshotAnySurface { get; set; }
+
         #endregion
 
         #region Comfort / Cosmetics

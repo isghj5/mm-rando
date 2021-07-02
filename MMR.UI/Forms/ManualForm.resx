@@ -239,6 +239,9 @@ Sets the physics for the ground Link is standing on. In random mode, this will p
 Continuous Deku Hopping.
 Press A while hopping across water to keep hopping.
 
+Hookshot Any Surface.
+Allows the hookshot to latch onto any type of terrain.
+
 
 Challenges
 Damage mode
@@ -390,8 +393,8 @@ Item repeatability is handled in the same way as scene switches (flags) are, all
 
 Quite a lot of the work was done using external programs written to read and write the in-game file formats - these returned and updated lists of actors/variables, converted music data, and did the model swapping required for the play as options, for example.</value>
   </data>
-  <assembly alias="System.Drawing.Common" name="System.Drawing.Common, Version=5.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
-  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing.Common" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         AAABAAUAEBAAAAEAIABoBAAAVgAAABgYAAABACAAiAkAAL4EAAAgIAAAAQAgAKgQAABGDgAAMDAAAAEA
         IACoJQAA7h4AAMjIAAABACAACIcCAJZEAAAoAAAAEAAAACAAAAABACAAAAAAAAAEAAATCwAAEwsAAAAA
