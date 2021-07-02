@@ -278,7 +278,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(MothSwarm, CompanionAlignment.Above, ourVariant: -1,
            variant: 1, 2, 3, 4, 7)] // they're free, and they are moths, makes sense
         [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SouthernSwamp, Scene.SouthClockTown, Scene.DekuShrine, Scene.WestClockTown, Scene.SouthernSwampClear,
-            Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast, Scene.GreatBayTemple, Scene.OceanSpiderHouse, Scene.BeneathTheWell, Scene.PiratesFortressRooms)]
+            Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast, Scene.GreatBayTemple, Scene.OceanSpiderHouse, Scene.BeneathTheWell, Scene.PiratesFortressRooms, Scene.PoeHut)]
         Torch = 0x39, // Obj_Syokudai
 
         [EnemizerEnabled]
@@ -915,10 +915,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(296)]
         [ObjectListIndex(0x16A)]
         [GroundVariants(0x0C01,0x1402,0xFF03,0xFF01,0xFF00,0x0A01,0x0202,0x801,0xFF02)]
-        [EnemizerScenesExcluded(Scene.GreatBayTemple)] // necessary to climb
+        [EnemizerScenesExcluded(Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)] // necessary to climb
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)] // crash transitioning witch shop room
         // termina field, ff00 gbt waterchu, the rest are assumed respawn until proven otherwise
-        [RespawningVariants(0xFF03,0xFF01,0xFF00,    0x0C01,0x1402,0x0A01,0x0202,0x801,0xFF02)]
+        [RespawningVariants(0xFF03,0xFF01,0xFF00,   0x0C01,0x1402,0x0A01,0x0202,0x801,0xFF02)]
         ChuChu = 0x14A, // En_Slime
 
         [EnemizerEnabled]

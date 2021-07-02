@@ -286,6 +286,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1351)]
         [SceneInternalId(0x42)]
+        [ClearEnemyPuzzleRooms(0, 1)] // respawning enemies can break chick round-up
         CuccoShack = 0x3F,
 
         [FileID(1353)]
