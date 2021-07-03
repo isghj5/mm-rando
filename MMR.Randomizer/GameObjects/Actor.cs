@@ -819,10 +819,12 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemy
         Cow = 0xF3,
 
-        //[ActorizerEnabled]
-        //[ObjectListIndex]
-        //[GroundVariants(0xCB1)]
-        //GerudoQueen = 0xFA, 
+        //[ActorizerEnabled] // she kicks you out like guards but without caring about direction/proximity
+        [ObjectListIndex(0x130)]
+        [GroundVariants(0xCB1)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.PiratesFortressRooms)]
+        Aviel = 0xFA, // En_Ge3, the Pirate Leader
 
         //[ActorizerEnabled] // we dont want as an actual actor, we want as a companion
         // why is the letter of all things in gameplay_keep? maybe its the same texture of LTK?
@@ -831,7 +833,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         LetterToPostman = 0xFE,
 
-        //[ActorizerEnabled] // crash
+        //[ActorizerEnabled] // doesnt spawn without 2 node path, if you remove the code to allow for more:crash
         [FileID(238)]
         [ObjectListIndex(0x64)]
         [PathingVariants(0x405, 0x406, 0x407, 0x408)]
@@ -875,6 +877,12 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(04,02,0)]
         [EnemizerScenesExcluded(Scene.GreatBayTemple)] // need their lilipads to reach compass chest and fairy chest
         BioDekuBaba = 0x12D, // Boss_05
+
+        //[EnemizerEnabled]
+        [ObjectListIndex(0x156)]
+        //[GroundVariants(0)]
+        [UnkillableAllVariants]
+        KingIkanaController = 0x12E, //Boss_06
 
         //[ActorizerEnabled] // field of effect is so HUG
         [ObjectListIndex(0xA1)]
@@ -1060,6 +1068,13 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.WestClockTown)]
         Banker = 0x177, // En_Ginko_Man
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x186)]
+        [GroundVariants(0xFFFF)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        PirateTelescope = 0x178, // En_Warp_Uzu
 
         [EnemizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
         [ObjectListIndex(0x135)]
@@ -1264,6 +1279,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         IceBlock = 0x1C8, // Obj_BigIcicle
 
+        //[EnemizerEnabled] // no spawn, probably requires ikana king as parent
+        [ObjectListIndex(0x1B5)]
+        [WallVariants(0x1)]
+        [GroundVariants(0x1)]
+        Mir_Ray2 = 0x1D0, // Mir_Ray2
+
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1FD0)]
         [FileID(426)]
@@ -1342,10 +1363,11 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(1)] // doubt
         Fireworks = 0x1EB, // En_Hanabi
 
-        //[ActorizerEnabled] // thank god for m2c
-        // turns out mamu yan spawns regular dogs, for the dogs meandering around
+        [ActorizerEnabled] // thank god for m2c
         [ObjectListIndex(0x132)]
-        [GroundVariants(0x2)]
+        [PathingVariants(0x19F, 0xD9F, 0x3FF, 0x22BF,
+            0x20, 0x40, 0x60, 0x80, 0x120)]
+        [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [UnkillableAllVariants]
         RaceDog = 0x1EE, // En_Racedog
 
@@ -1571,6 +1593,9 @@ namespace MMR.Randomizer.GameObjects
              Scene.Woodfall, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.MountainVillage, Scene.MountainVillageSpring, Scene.Snowhead,
              Scene.GreatBayCoast, Scene.ZoraCape, Scene.IkanaCanyon, Scene.StoneTower, Scene.InvertedStoneTower)] 
         OwlStatue = 0x223, // Obj_Warpstone
+
+        [ObjectListIndex(0x87)]
+        MirLight = 230,
 
         [ActorizerEnabled] // BUG: do not teach him song or cursed
         [ObjectListIndex(0x211)]

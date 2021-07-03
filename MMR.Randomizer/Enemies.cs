@@ -1433,7 +1433,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Dog.ObjectIndex()
+                            NewV = GameObjects.Actor.KingIkana.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1443,11 +1443,11 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.DekuPatrolGuard.ObjectIndex()
+                            NewV = GameObjects.Actor.Aviel.ObjectIndex()
                         });
                         continue;
                     }// */
-                    if (scene.File == GameObjects.Scene.DekuPalace.FileID()
+                    /* if (scene.File == GameObjects.Scene.DekuPalace.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.DekuPatrolGuard.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
