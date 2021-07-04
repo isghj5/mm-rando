@@ -271,6 +271,16 @@
     b       0x800A6550
     nop
 
+; Allow rotating backwards for bouncing En_Item00.
+; Replaces:
+;   lh      t7, 0x00BE (s0)
+;   addiu   t8, t7, 0x03C0
+;   sh      t8, 0x00BE (s0)
+.org 0x800A6674
+    jal     Models_RotateEnItem00
+    nop
+    nop
+
 ; Allow items that normally don't rotate to rotate.
 ; Replaces:
 ;   LH      V1, 0x001C (S0)

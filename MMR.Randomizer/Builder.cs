@@ -297,6 +297,26 @@ namespace MMR.Randomizer
         private void WriteInstruments(Random random)
         {
             var codeFileAddress = 0xB3C000;
+
+            var milkBarActions = new List<Action>();
+            var audioSeqFileAddress = 0x46AF0;
+            var milkBarSequenceOffset = 0x3AC90;
+            var formOffsets = new Dictionary<TransformationForm, int>
+            {
+                { TransformationForm.Human, 0x85 },
+                { TransformationForm.Deku, 0xE6 },
+                { TransformationForm.Zora, 0x158 },
+                { TransformationForm.Goron, 0x16A },
+            };
+            var stringOffset = 0x178;
+            milkBarActions.Add(() =>
+            {
+                // Change instrument for sequence 0x54 (milk bar performance) to 0x00
+                ReadWriteUtils.WriteToROM(codeFileAddress + 0x13BB0A, 0x00);
+                ReadWriteUtils.WriteToROM(audioSeqFileAddress + milkBarSequenceOffset + stringOffset, Instrument.FemaleVoice.Id());
+            });
+            var shouldPerformMilkBarActions = false;
+
             var playbackInstrumentsOffset = 0x12A8DC; // data for playback instruments
             var freePlayInstrumentsOffset = 0x12A8E4; // data for free play instruments
             var freePlayInstrumentsArrayAddress = 0x51CBE;
@@ -315,9 +335,12 @@ namespace MMR.Randomizer
 
                 if (instrument == form.DefaultInstrument())
                 {
+                    milkBarActions.Add(() => ReadWriteUtils.WriteToROM(audioSeqFileAddress + milkBarSequenceOffset + formOffsets[form], instrument.Id()));
                     previouslyUsedInstruments.Add(instrument);
                     continue;
                 }
+
+                shouldPerformMilkBarActions = true;
 
                 if (instrument == Instrument.Random)
                 {
@@ -326,12 +349,22 @@ namespace MMR.Randomizer
                         .Random(random);
                 }
 
+                milkBarActions.Add(() => ReadWriteUtils.WriteToROM(audioSeqFileAddress + milkBarSequenceOffset + formOffsets[form], instrument.Id()));
+
                 previouslyUsedInstruments.Add(instrument);
                 var freePlayInstrumentIndex = ReadWriteUtils.Read(codeFileAddress + freePlayInstrumentsOffset + index) - 1;
                 ReadWriteUtils.WriteToROM(freePlayInstrumentsArrayAddress + freePlayInstrumentIndex, instrument.Id());
 
                 ReadWriteUtils.WriteToROM(codeFileAddress + playbackInstrumentsOffset + index, instrument.Id());
                 Debug.WriteLine($" form: {form} was assigned instrument: {instrument}");
+            }
+
+            if (shouldPerformMilkBarActions)
+            {
+                foreach (var action in milkBarActions)
+                {
+                    action();
+                }
             }
         }
 
