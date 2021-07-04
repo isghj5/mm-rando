@@ -265,6 +265,18 @@ bool Models_ShouldEnItem00Rotate(ActorEnItem00* actor, GlobalContext* ctxt) {
     return false;
 }
 
+void Models_DrawItem00Shield(GlobalContext* ctxt, s8 graphicIdMinus1) {
+    struct ObjheapItem* object = Objheap_Allocate(&gObjheap, OBJECT_GI_SHIELD_2);
+    if (object) {
+        // Update RDRAM segment table with object pointer during the draw function.
+        // This is required by Moon's Tear (and possibly others), which programatically resolves a
+        // segmented address using that table when writing instructions to the display list.
+        gRspSegmentPhysAddrs.currentObject = (u32)object->buf & 0xFFFFFF;
+        SetObjectSegment(ctxt, object->buf);
+        z2_BaseDrawGiModel(ctxt, graphicIdMinus1);
+    }
+}
+
 /**
  * Get the Get-Item index for a Skulltula Token actor.
  **/

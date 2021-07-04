@@ -505,6 +505,7 @@ namespace MMR.UI.Forms
             {
                 _logic.Logic.RemoveAt(n);
                 //ItemSelectorForm.RemoveItem(n);
+                nItem.Maximum = _logic.Logic.Count - 1;
                 SetIndex(n);
             }
         }

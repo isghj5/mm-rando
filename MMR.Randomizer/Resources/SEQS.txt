@@ -367,7 +367,7 @@ oot-shadowtemple
 E
 oot-spirittemple
 2
-11
+21
 oot-ganoncastle
 2
 3
