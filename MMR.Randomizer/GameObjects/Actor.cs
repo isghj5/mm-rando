@@ -606,7 +606,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xF1)]
         // 1 scoffing at poster, 2 is shouting at the sky looker
         // 603 should be the path follower
-        [GroundVariants(1, 2, 0x503, 0x603)]
+        [GroundVariants(1, 2)]
         [PathingVariants(0x603, 0x503)]
         [PathingTypeVarsPlacement(mask:0xFF00, shift:8)]
         //[VariantsWithRoomMax(max:0, variant: 0x603, 0x503)] // at least one variant is pathing
