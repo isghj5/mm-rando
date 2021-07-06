@@ -12,6 +12,12 @@ namespace MMR.Randomizer.GameObjects
         // warning: companion actors can bypass variants that exist, you might remove a variant but it still exists as a companion
         // fixing this is a performance loss, just dont be stupid
 
+        Player = 0x0,
+
+        En_Test = 0x1,
+
+        En_GirlA = 0x2,
+
         //[EnemizerEnabled] // we dont want as an actual actor, we want as a companion
         [ObjectListIndex(1)] // gameplay_keep obj 1
         // 0x83F0 is tiny candle light
@@ -191,12 +197,13 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         // Ben seems to be cursed, if you enter a scene with him from a grotto it can crash (~90% chance?) 
         // but entering those same scenes from horizontal loading zones is fine
-        [EnemizerScenesPlacementBlock(Scene.TerminaField,
+        /*[EnemizerScenesPlacementBlock(Scene.TerminaField,
             Scene.WoodsOfMystery, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.SouthernSwampClear,
             Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.MountainVillageSpring, Scene.PathToSnowhead,
             Scene.GreatBayCoast, Scene.ZoraCape, Scene.RoadToIkana, Scene.IkanaGraveyard, Scene.IkanaCanyon,
             Scene.Grottos)]
-        Ben = 0x21,
+        */
+        Ben = 0x21, // En_Torch2
 
         [ActorizerEnabled]
         [ObjectListIndex(0xBC)]
@@ -221,7 +228,7 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabled]
         // issues: listing all the vars for all signs is going to be hell
-        [ObjectListIndex(0xFC)] // the spreadsheet thinks this is free but I dont think so
+        [ObjectListIndex(0xFC)] // the spreadsheet thinks this is free but I dont think so, think its a multi-object like tsubo
         //[GroundVariants()]
         [UnkillableAllVariants]
         Sign = 0x26, // En_A_Obj
@@ -260,15 +267,16 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x30)]
         [GroundVariants(0xFFFF, 0x7F)]
         [VariantsWithRoomMax(max: 7, variant: 0xFFFF, 0x7F)] // weirdly high cpu usage, not a low as other still enemies
-        Armos = 0x32,
+        Armos = 0x32, // En_Am
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3A10)]
         [FileID(74)]
         [ObjectListIndex(0x31)]
-        [GroundVariants(0)]
+        [GroundVariants(1,0)] // 0 regular, 1 is big one from OOT forest temple
+        [VariantsWithRoomMax(max: 1, variant: 1)]
         [VariantsWithRoomMax(max: 8, variant: 0)]
-        DekuBaba = 0x33,
+        DekuBaba = 0x33, // En_Dekubaba
 
         [ActorizerEnabled]
         [ObjectListIndex(0x80)]
@@ -293,7 +301,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableVariants(0xFF01)]
         [CompanionActor(DekuFlower, variant: 0x7F, 0x17F)] // do you think they make them or trade like hermitcrabs?
         [EnemizerScenesExcluded(Scene.Woodfall)]//, Scene.DekuPalace)]
-        MadShrub = 0x3B,
+        MadShrub = 0x3B, // En_Dekunuts
 
         [EnemizerEnabled]
         [ActorInstanceSize(0x464)]
@@ -1086,7 +1094,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0x127F, 0x12FF, 0x137F, 0x13FF, 0x147F, 0x14FF, 0x157F, 0x15FF, 0x177F, 0x17FF, 0x187F)]
         [PathingTypeVarsPlacement(mask: 0x0F80, shift: 7)]
         [PathingKickoutAddrVarsPlacement(mask: 0xF, shift: 12)]
-        [EnemizerScenesPlacementBlock(Scene.SouthClockTown)]
+        [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.SwampSpiderHouse)]
         [UnkillableAllVariants]
         DekuPatrolGuard = 0x17A, // En_Look_Nuts
 
@@ -1579,7 +1587,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [PathingKickoutAddrVarsPlacement(mask:0x1F, shift: 0x0)]
         [UnkillableAllVariants]
-        [EnemizerScenesPlacementBlock(Scene.SouthClockTown)]
+        [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.SwampSpiderHouse)]
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
         PatrollingPirate = 0x21E, // En_Ge2
 

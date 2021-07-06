@@ -1427,8 +1427,7 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
@@ -1437,13 +1436,12 @@ namespace MMR.Randomizer
                         }); 
                         continue;
                     } // */
-                    /* if (scene.File == GameObjects.Scene.Grottos.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.Peahat.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.CuccoShack.FileID() && sceneObjects[objCount] == GameObjects.Actor.Treee.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Aviel.ObjectIndex()
+                            NewV = GameObjects.Actor.Treee.ObjectIndex()
                         });
                         continue;
                     }// */
@@ -1722,6 +1720,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 20.3\n");
 
                 }
             }
