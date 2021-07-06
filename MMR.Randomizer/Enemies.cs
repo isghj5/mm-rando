@@ -1702,25 +1702,11 @@ namespace MMR.Randomizer
 
                 LowerEnemiesResourceLoad();
 
-                void PrintActorInitFlags(string name, byte[] dataBlob, int actorInitLoc){
-                    Debug.WriteLine("Printing actor: " + name);
-                    Debug.WriteLine(dataBlob[actorInitLoc].ToString("X2") + 
-                                    dataBlob[actorInitLoc + 1].ToString("X2") + " < actor id");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 2].ToString("X2") + " < type");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 3].ToString("X2") + " < unk ?");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 4].ToString("X2") + " < init var first byte");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 5].ToString("X2") + " < init var second byte");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 6].ToString("X2") + " < init var third byte");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 7].ToString("X2") + " < init var last byte");
-                    Debug.WriteLine(dataBlob[actorInitLoc + 8].ToString("X2") +
-                                    dataBlob[actorInitLoc + 9].ToString("X2") + " < object id");
-                }
-
                 using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 20.3\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 21.0\n");
 
                 }
             }
