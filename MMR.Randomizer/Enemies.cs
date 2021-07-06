@@ -1427,13 +1427,13 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID()
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID()
                         && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.KingIkana.ObjectIndex()
+                            NewV = GameObjects.Actor.Scientist.ObjectIndex()
                         }); 
                         continue;
                     } // */

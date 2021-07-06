@@ -7,7 +7,10 @@ namespace MMR.Randomizer.GameObjects
 {
     public enum Actor
     {
-        // the main enumator value is the actor list ID
+        /// the main enumator value is the vanilla actor list ID
+
+        // warning: companion actors can bypass variants that exist, you might remove a variant but it still exists as a companion
+        // fixing this is a performance loss, just dont be stupid
 
         //[EnemizerEnabled] // we dont want as an actual actor, we want as a companion
         [ObjectListIndex(1)] // gameplay_keep obj 1
@@ -48,7 +51,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x3F5F)] // can place around chests
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
-            variant: 2, 4, 9)] // fairies around chests make sense, just not a full fairy fountain
+            variant: 2, 9)] // fairies around chests make sense, just not a full fairy fountain
         [EnemizerScenesExcluded(Scene.InvertedStoneTower)]
         [EnemizerScenesPlacementBlock(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, 
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
@@ -115,7 +118,7 @@ namespace MMR.Randomizer.GameObjects
         // 4 has been removed because its unlikely to make sense for the location, and if its in TF it might contribute hard to TFG
         [GroundVariants(2, 7, 9)]
         [FlyingVariants(2, 7, 9)]
-        [VariantsWithRoomMax(max: 1, variant: 4)] // don't create too many fairy fountains
+        //[VariantsWithRoomMax(max: 1, variant: 4)] // don't create too many fairy fountains
         [VariantsWithRoomMax(max: 2, variant: 7)] // maybe limit the secret menu fairies
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.BeneathTheWell)] // dont remove from well
@@ -509,7 +512,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
-            variant: 2, 4, 9)]
+            variant: 2, 9)]
         Ruto = 0x69, // En_Ru
 
         [EnemizerEnabled]
@@ -1163,7 +1166,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
-            variant: 2, 4, 9)]
+            variant: 2, 9)]
         [EnemizerScenesExcluded(Scene.DekuPalace)] // do not remove original for now
         PalaceGuardDeku = 0x1A0, // En_Guard_Nuts
 
@@ -1396,7 +1399,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.WestClockTown, Scene.SouthClockTown, Scene.NorthClockTown, Scene.EastClockTown)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
-            variant: 2, 4, 9)]
+            variant: 2, 9)]
         Postbox = 0x1F2,
 
         [EnemizerEnabled]
@@ -1523,7 +1526,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
-            variant: 2, 4, 9)]
+            variant: 2, 9)]
         // looking at moon, don't place him underground
         [EnemizerScenesPlacementBlock(Scene.Grottos, Scene.InvertedStoneTower, Scene.BeneathGraveyard, Scene.BeneathTheWell,
             Scene.GoronShrine, Scene.IkanaCastle, Scene.OceanSpiderHouse, Scene.SwampSpiderHouse,
@@ -1545,7 +1548,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.GoronShrine)] // remove and it crashes, dont know why
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
-            variant: 2, 4, 9)]
+            variant: 2, 9)]
         GoronElder = 0x213,
 
         [EnemizerEnabled]
@@ -1693,7 +1696,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.BombShop, Scene.GoronShrine)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
-            variant: 2, 4, 9)]
+            variant: 2, 9)]
         Goron = 0x242, // En_S_Goro
 
         //[ActorizerEnabled] // does not spawn, time varibles? second required object?
@@ -1813,7 +1816,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
-            variant: 4, 7)] // fairy fountain
+            variant: 7)] // fairy fountain
         [OnlyOneActorPerRoom]
         ButlersSon = 0x289, // En_Nnh
 
