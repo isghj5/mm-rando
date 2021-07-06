@@ -1427,7 +1427,7 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
@@ -1436,12 +1436,12 @@ namespace MMR.Randomizer
                         }); 
                         continue;
                     } // */
-                    /* if (scene.File == GameObjects.Scene.CuccoShack.FileID() && sceneObjects[objCount] == GameObjects.Actor.Treee.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.DekuPalace.FileID() && sceneObjects[objCount] == GameObjects.Actor.DekuPatrolGuard.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Treee.ObjectIndex()
+                            NewV = GameObjects.Actor.Romani1.ObjectIndex()
                         });
                         continue;
                     }// */

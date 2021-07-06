@@ -1178,10 +1178,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.DekuPalace)] // do not remove original for now
         PalaceGuardDeku = 0x1A0, // En_Guard_Nuts
 
-        //[ActorizerEnabled] // crash in clocktower, too big for anywhere else
+        [ActorizerEnabled] // crash in clocktower, too big for anywhere else
         // 100 does not spawn
         [ObjectListIndex(0xB7)] // 100 and FF00
-        [GroundVariants(0xFF00)] // all vanilla are 0xB7
+        [PathingVariants(0xFF00)] // all vanilla are 0xB7
+        [PathingTypeVarsPlacement(mask:0xFF00, shift:8)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.RomaniRanch, Scene.RanchBuildings)]
         Romani1 = 0x1A4, // En_Ma4
