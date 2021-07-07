@@ -893,7 +893,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // assumption: need mirror shield
         SkeleKnight = 0x116, // En_Knight
 
-        [EnemizerEnabled]
+        //[EnemizerEnabled]
         [ObjectListIndex(0x15A)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(max:1, variant:0)]
