@@ -1464,7 +1464,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.SkeleKnight.ObjectIndex()
+                            NewV = GameObjects.Actor.Odolwa.ObjectIndex()
                         });
                         continue;
                     } // */
