@@ -12,9 +12,15 @@ namespace MMR.Randomizer.GameObjects
         // warning: companion actors can bypass variants that exist, you might remove a variant but it still exists as a companion
         // fixing this is a performance loss, just dont be stupid
 
+        //[ActorizerEnabled] // crashes, probably because there are now two players
+        [GroundVariants(0x0E02)] // sitting in clocktown?
         Player = 0x0,
 
-        En_Test = 0x1,
+        [ObjectListIndex(1)]
+        [GroundVariants(0x7FF, 0xFFFF)] // params: > 0 and else, -1
+        // not stalfos in this game
+        // like, goron punch crator, or moon tear
+        SmallCrator = 0x1, // En_Test
 
         En_GirlA = 0x2,
 
@@ -878,6 +884,14 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x155)]
         [GroundVariants(0x2243)]
         GaroActual = 0x113,
+
+        //[EnemizerEnabled] // wont spawn, just spawns green tatl points but no actual knight
+        [ObjectListIndex(0x156)]
+        // params 0 vanilla
+        // init checks if 64, C8, CA, 23
+        [GroundVariants(0x23)]
+        [UnkillableAllVariants] // assumption: need mirror shield
+        SkeleKnight = 0x116, // En_Knight
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3760)]
@@ -1759,6 +1773,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // I think?
         SleepingScrub = 0x25F,
 
+        //[ActorizerEnabled] // does not spawn, reason unknown
+        [ObjectListIndex(0x13)]
+        [GroundVariants(0)] // might be time gated though
+        [UnkillableAllVariants]
+        Bartender = 0x263, // En_Tab
+
         [ActorizerEnabled] // spawned for me, but not streamers? weird time dependencies?
         [FileID(267)]
         [ObjectListIndex(0x23F)]
@@ -1799,6 +1819,14 @@ namespace MMR.Randomizer.GameObjects
         // todo: test randomizing
         [ObjectListIndex(0x1E5)]
         LinkTheGoro = 0x276,
+
+        [ActorizerEnabled] // does not spawn, but looks up a flag and killsitelf, so that migh tbe it
+        [FileID(592)]
+        [ObjectListIndex(0x26A)] // the spreadsheet says he is obj 1 but that is a mistake
+        [GroundVariants(0xFE01)]
+        [UnkillableAllVariants]
+        // probably the telescope seth
+        Seth2 = 0x279, // En_Sth2
 
         [ActorizerEnabled]
         [ObjectListIndex(0x24B)]

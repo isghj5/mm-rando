@@ -291,8 +291,8 @@ namespace MMR.Randomizer
 
         public static void FlattenPitchRoll(Actor actor)
         {
-            actor.Rotation.x = (short) MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.x);
-            actor.Rotation.z = (short) MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.z);
+            actor.Rotation.x = (short)MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.x);
+            actor.Rotation.z = (short)MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.z);
         }
 
         #region Static Enemizer Changes and Fixes
@@ -315,6 +315,8 @@ namespace MMR.Randomizer
             ExtendGrottoDirectIndexByte();
             ShortenChickenPatience();
             //FixThornTraps();
+            FixSeth2();
+
             Shinanigans();
         }
 
@@ -559,7 +561,7 @@ namespace MMR.Randomizer
 
             for (var i = 0; i < 0x2B3; ++i)
             {
-                var actor = (GameObjects.Actor) i;
+                var actor = (GameObjects.Actor)i;
                 var actorName = actor.ToActorModel().Name;
                 actorName = actorName == "" ? "UNKOWN" : actorName;
                 // we nee to make sure ram and overlay are the same
@@ -576,7 +578,7 @@ namespace MMR.Randomizer
                     objVarString = " and obj: 0x" + ObjUtils.GetObjSize(actor.ObjectIndex()).ToString("X5");
                 }
 
-                Debug.WriteLine("[" + actorName + "] FID:["+ GetFID(i) + "] AID:[" + i.ToString("X3") + "] codesize: 0x" + GetOvlCodeRamSize(i).ToString("X5") + initVarString + objVarString);
+                Debug.WriteLine("[" + actorName + "] FID:[" + GetFID(i) + "] AID:[" + i.ToString("X3") + "] codesize: 0x" + GetOvlCodeRamSize(i).ToString("X5") + initVarString + objVarString);
             } // */
 
             for (int i = 0; i < 0x283; ++i)
@@ -819,6 +821,18 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU32(thornData, 0x378, 0x00000000);
         }
 
+        public static void FixSeth2(){
+            /// seth 2, the guy waving his arms in the termina field telescope, like oot spiderhouse
+            /// his init code checks for a value, and does not spawn if the value is different than expected
+
+            var sethFid = GameObjects.Actor.Seth2.FileListIndex();
+            RomUtils.CheckCompressed(sethFid);
+            var sethData = RomData.MMFileList[sethFid].Data;
+            //nopping the mark for death
+            ReadWriteUtils.Arr_WriteU32(sethData, 0x88, 0x00000000);
+            //nopping the early return
+            ReadWriteUtils.Arr_WriteU32(sethData, 0x90, 0x00000000);
+        }
 
         #endregion
 
@@ -1427,12 +1441,12 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Scientist.ObjectIndex()
+                            NewV = GameObjects.Actor.SkeleKnight.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1445,17 +1459,16 @@ namespace MMR.Randomizer
                         });
                         continue;
                     }// */
-                    /* if (scene.File == GameObjects.Scene.DekuPalace.FileID()
-                        && sceneObjects[objCount] == GameObjects.Actor.DekuPatrolGuard.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.RosaSisters.ObjectIndex()
+                            NewV = GameObjects.Actor.SkeleKnight.ObjectIndex()
                         });
                         continue;
                     } // */
-                    #endif
+#endif
 
                     var reducedCandidateList = actorCandidatesLists[objCount].ToList();
                     foreach (var objectSwap in chosenReplacementObjects)
