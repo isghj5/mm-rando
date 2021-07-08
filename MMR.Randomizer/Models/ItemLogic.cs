@@ -13,6 +13,9 @@ namespace MMR.Randomizer.Models
         public int ItemId;
 
         [DataMember]
+        public int? NewLocationId;
+
+        [DataMember]
         public List<int> RequiredItemIds;
 
         [DataMember]
@@ -27,6 +30,7 @@ namespace MMR.Randomizer.Models
         public ItemLogic(ItemLogic copyFrom)
         {
             ItemId = copyFrom.ItemId;
+            NewLocationId = copyFrom.NewLocationId;
             RequiredItemIds = copyFrom.RequiredItemIds?.ToList();
             ConditionalItemIds = copyFrom.ConditionalItemIds?.Select(c => c.ToList()).ToList();
             Acquired = copyFrom.Acquired;
@@ -36,6 +40,7 @@ namespace MMR.Randomizer.Models
         public ItemLogic(ItemObject itemObject)
         {
             ItemId = itemObject.ID;
+            NewLocationId = (int?)itemObject.NewLocation;
             RequiredItemIds = itemObject.DependsOnItems?.Cast<int>().ToList();
             ConditionalItemIds = itemObject.Conditionals?.Select(c => c.Cast<int>().ToList()).ToList();
             IsFakeItem = itemObject.Item.IsFake() && (itemObject.Item.Entrance() == null || !itemObject.IsRandomized);

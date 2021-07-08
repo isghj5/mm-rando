@@ -1,11 +1,13 @@
 ﻿using MMR.Randomizer.Asm;
+using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Utils;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MMR.Randomizer.Models.Settings
 {
@@ -20,11 +22,6 @@ namespace MMR.Randomizer.Models.Settings
         public string UserLogicFileName { get; set; } = "";
 
         public string Logic { get; set; }
-
-        /// <summary>
-        /// Use Custom Item list for the logic.
-        /// </summary>
-        public bool UseCustomItemList { get; set; }
 
         /// <summary>
         /// Options for the Asm <see cref="Patcher"/>.
@@ -161,71 +158,6 @@ namespace MMR.Randomizer.Models.Settings
         public bool AddSongs { get; set; }
 
         /// <summary>
-        /// (KeySanity) Add dungeon items (maps, compasses, keys) to the randomization pool
-        /// </summary>
-        public bool AddDungeonItems { get; set; }
-
-        /// <summary>
-        /// Add shop items to the randomization pool
-        /// </summary>
-        public bool AddShopItems { get; set; }
-
-        /// <summary>
-        /// Add moon items to the randomization pool
-        /// </summary>
-        public bool AddMoonItems { get; set; }
-
-        /// <summary>
-        /// Add great fairy rewards to the randomization pool
-        /// </summary>
-        public bool AddFairyRewards { get; set; }
-
-        /// <summary>
-        /// Add everything else to the randomization pool
-        /// </summary>
-        public bool AddOther { get; set; } = true;
-
-        /// <summary>
-        /// Add pre-clocktown nut chest to the randomization pool
-        /// </summary>
-        public bool AddNutChest { get; set; }
-
-        /// <summary>
-        /// Add starting sword/shield/heart containers to the randomization pool
-        /// </summary>
-        public bool CrazyStartingItems { get; set; }
-
-        /// <summary>
-        /// Add cow milk to the randomization pool
-        /// </summary>
-        public bool AddCowMilk { get; set; }
-
-        /// <summary>
-        /// Add skulltula tokens to the randomization pool
-        /// </summary>
-        public bool AddSkulltulaTokens { get; set; }
-
-        /// <summary>
-        /// Add stray fairies to the randomization pool
-        /// </summary>
-        public bool AddStrayFairies { get; set; }
-
-        /// <summary>
-        /// Add mundane rewards to the randomization pool
-        /// </summary>
-        public bool AddMundaneRewards { get; set; }
-
-        /// <summary>
-        /// Randomize the content of a bottle when catching (e.g. catching a fairy puts poe in bottle)
-        /// </summary>
-        public bool RandomizeBottleCatchContents { get; set; }
-
-        /// <summary>
-        /// Exclude song of soaring from randomization (it will be found in vanilla location)
-        /// </summary>
-        public bool ExcludeSongOfSoaring { get; set; } = true;
-
-        /// <summary>
         /// Randomize which dungeon you appear in when entering one
         /// </summary>
         public bool RandomizeDungeonEntrances { get; set; }
@@ -236,16 +168,26 @@ namespace MMR.Randomizer.Models.Settings
         public bool RandomizeEnemies { get; set; }
 
         /// <summary>
-        /// Prevents player starting with any items that are randomized.
+        /// Set how starting items are randomized
         /// </summary>
-        public bool NoStartingItems { get; set; } = true;
+        public StartingItemMode StartingItemMode { get; set; }
+
+        public SmallKeyMode SmallKeyMode { get; set; }
+
+        public BossKeyMode BossKeyMode { get; set; }
+
+        public StrayFairyMode StrayFairyMode { get; set; }
 
 
         /// <summary>
         ///  Custom item list selections
         /// </summary>
         [JsonIgnore]
-        public List<int> CustomItemList { get; set; } = new List<int>();
+        public HashSet<Item> CustomItemList { get; set; } = new HashSet<Item>();
+
+        public List<ItemCategory> ItemCategoriesRandomized { get; set; }
+
+        public List<LocationCategory> LocationCategoriesRandomized { get; set; }
 
         /// <summary>
         ///  Custom item list string
@@ -256,7 +198,7 @@ namespace MMR.Randomizer.Models.Settings
         ///  Custom starting item list selections
         /// </summary>
         [JsonIgnore]
-        public List<GameObjects.Item> CustomStartingItemList { get; set; } = new List<GameObjects.Item>();
+        public List<Item> CustomStartingItemList { get; set; } = new List<Item>();
 
         /// <summary>
         ///  Custom starting item list string
@@ -394,6 +336,11 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool FixEponaSword { get; set; } = true;
 
+        /// <summary>
+        /// Enables Pictobox prompt text to display the picture subject depending on flags.
+        /// </summary>
+        public bool EnablePictoboxSubject { get; set; } = true;
+
         #endregion
 
         #region Speedups
@@ -429,16 +376,19 @@ namespace MMR.Randomizer.Models.Settings
 
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this, _jsonSerializerSettings);
+            return JsonSerializer.Serialize(this, _jsonSerializerOptions);
         }
 
-        private readonly static JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        private readonly static JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
         {
-            ContractResolver = new WritablePropertiesOnlyResolver(),
-            NullValueHandling = NullValueHandling.Ignore,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            IgnoreReadOnlyFields = true,
+            IgnoreReadOnlyProperties = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             Converters =
             {
-                new StringEnumConverter(),
+                new JsonColorConverter(),
+                new JsonStringEnumConverter(),
             }
         };
 
@@ -448,7 +398,7 @@ namespace MMR.Randomizer.Models.Settings
             {
                 return "User Logic not found or invalid, please load User Logic or change logic mode.";
             }
-            if (UseCustomItemList && CustomItemList == null)
+            if (CustomItemList == null)
             {
                 return "Invalid custom item list.";
             }

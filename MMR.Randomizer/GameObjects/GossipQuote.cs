@@ -10,16 +10,25 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongLullaby)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongNewWaveBossaNova)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongElegy)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongOath)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableTerminaFieldGuay20)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableTerminaFieldTelescopeGuay1)]
         [GossipStone(Item.GossipTerminaSouth)]
         TerminaSouth = 0x20B0,
 
         //The Swamp Tourist Center will not accept pictographs taken outside the swamp.
         //But if you bring a pictograph of the guide's son, he'll give you something nice...
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPiecePictobox)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MundaneItemPictographContestRedRupee)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MundaneItemPictographContestBlueRupee)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MundaneItemLuluBadPictographBlueRupee)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MundaneItemLuluGoodPictographRedRupee)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemPictobox)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemPictobox)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceSwampArchery)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestWoodsGrotto)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskScents)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceBoatArchery)]
         [GossipStone(Item.GossipSwampPotionShop)]
         SwampPotionShop = 0x20B1,
 
@@ -33,6 +42,8 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeGildedSword)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleGoronRace)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleGoronRace)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemPowderKeg)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemPowderKeg)]
         [GossipStone(Item.GossipMountainSpringPath)]
         MountainSpringPath = 0x20B2,
 
@@ -43,6 +54,8 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeGildedSword)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleGoronRace)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleGoronRace)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MundaneItemCuriosityShopGoldRupee)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MundaneItemCuriosityShopGoldRupee)]
         [GossipStone(Item.GossipMountainPath)]
         MountainPath = 0x20B3,
 
@@ -53,6 +66,9 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceBeaverRace)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskZora)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemHookshot)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableZoraCapeJarGame1)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MundaneItemLuluBadPictographBlueRupee)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MundaneItemLuluGoodPictographRedRupee)]
         [GossipStone(Item.GossipOceanZoraGame)]
         OceanZoraGame = 0x20B4,
 
@@ -64,7 +80,9 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskGaro)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskGibdo)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskCaptainHat)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskCaptainHat)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleDampe)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceKnuckle)]
         [GossipStone(Item.GossipCanyonRoad)]
         CanyonRoad = 0x20B5,
 
@@ -74,10 +92,11 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleDampe)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemIceArrow)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestSecretShrineHeartPiece)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestSecretShrineDinoGrotto)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestSecretShrineGaroGrotto)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestSecretShrineWartGrotto)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestSecretShrineWizzGrotto)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemLightArrow)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskCouple)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskGibdo)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskGaro)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskCaptainHat)]
         [GossipStone(Item.GossipCanyonDock)]
         CanyonDock = 0x20B6,
 
@@ -88,31 +107,49 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongStorms)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleDampe)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongHealing)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPiecePoeHut)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.SongElegy)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeMirrorShield)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemLightArrow)]
         [GossipStone(Item.GossipCanyonSpiritHouse)]
         CanyonSpiritHouse = 0x20B7,
 
         //It seems that you can become a Milk Bar member if you do a good deed at the ranch.
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskRomani)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskRomani)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleAliens)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskAllNight)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestTerminaUnderwaterRedRupee)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableTerminaFieldEnemy1)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.CollectableTerminaFieldEnemy1)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableMilkRoadKeatonGrass9)]
         [GossipStone(Item.GossipTerminaMilk)]
         TerminaMilk = 0x20B8,
 
         //The symbol of marriage, the Couple's Mask seems to have the power to calm and silence arguments.
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceNotebookMayor)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskCouple)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongEpona)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskZora)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceTerminaGossipStones)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskBlast)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceBank)]
         [GossipStone(Item.GossipTerminaWest)]
         TerminaWest = 0x20B9,
 
         //Anju, the woman at the inn, is known for being careless and frequently mixes up guests.
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.TradeItemRoomKey)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestInnStaffRoom)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBow)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.UpgradeBigQuiver)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.UpgradeBiggestQuiver)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemFireArrow)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskGoron)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskKafei)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBombBag)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.UpgradeBigBombBag)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.UpgradeBiggestBombBag)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableNorthClockTownKeatonGrass9)]
         [GossipStone(Item.GossipTerminaNorth)]
         TerminaNorth = 0x20BA,
 
@@ -120,6 +157,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskCouple)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongEpona)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleDampe)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestToIkanaGrotto)]
         [GossipStone(Item.GossipTerminaEast)]
         TerminaEast = 0x20BB,
 
@@ -128,14 +166,20 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskRomani)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleAliens)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceDekuPlayground)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableRomaniRanchSoftSoil1)]
         [GossipStone(Item.GossipRanchTree)]
         RanchTree = 0x20BC,
 
         //It seems that Kafei, whose whereabouts are unknown, is awaiting a letter from Anju...
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.TradeItemKafeiLetter)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.TradeItemPendant)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskKafei)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleAliens)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleAliens)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableRomaniRanchSoftSoil1)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemRanchBarnMainCowMilk)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemRanchBarnOtherCowMilk1)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemRanchBarnOtherCowMilk2)]
         [GossipStone(Item.GossipRanchBarn)]
         RanchBarn = 0x20BD,
 
@@ -144,6 +188,10 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskKamaro)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceDekuPlayground)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskRomani)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.TradeItemKafeiLetter)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableMilkRoadKeatonGrass9)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemPowderKeg)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongEpona)]
         [GossipStone(Item.GossipMilkRoad)]
         MilkRoad = 0x20BE,
 
@@ -154,12 +202,19 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleMadameAroma)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleWitch)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleGoronRace)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskZora)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemHookshot)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleAliens)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceLabFish)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.SongNewWaveBossaNova)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemHookshot)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPiecePiratesFortress)]
         [GossipStone(Item.GossipOceanFortress)]
         OceanFortress = 0x20BF,
+
         //It seems the veranda door of the town's Stock Pot Inn has carelessly been left unlocked...
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.TradeItemRoomKey)] // maybe make this something more useful?
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.TradeItemKafeiLetter)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeBiggestQuiver)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceSwampArchery)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBow)]
@@ -192,8 +247,9 @@ namespace MMR.Randomizer.GameObjects
 
         //It seems that drinking Chateau Romani makes your magic power last for three days...
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemBottleMadameAroma)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ShopItemMilkBarChateau)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskTruth)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceDogRace)]
-        // todo add more
         [GossipStone(Item.GossipRanchRacetrack)]
         RanchRacetrack = 0x20C3,
 
@@ -202,15 +258,20 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskKeaton)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskTruth)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeGiantWallet)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableMilkRoadKeatonGrass9)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableMountainVillageSpringKeatonGrass9)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableNorthClockTownKeatonGrass9)]
         [GossipStone(Item.GossipRanchEntrance)]
         RanchEntrance = 0x20C4,
 
         //The Fierce Deity Mask, a mask that contains the merits of all masks seems to be...
         //somewhere in this world...
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskFierceDeity)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskFierceDeity)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemIceArrow)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemHookshot)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemFairySword)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskCouple)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongOath)]
         [GossipStone(Item.GossipCanyonRavine)]
         CanyonRavine = 0x20C5,
 
@@ -220,6 +281,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeRazorSword)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeGildedSword)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBottleGoronRace)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.CollectableMountainVillageSpringKeatonGrass9)]
         [GossipStone(Item.GossipMountainSpringFrog)]
         MountainSpringFrog = 0x20C6,
 
@@ -240,13 +302,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskGiant)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemLightArrow)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskGiant)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemStoneTowerMap)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemStoneTowerCompass)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemStoneTowerBossKey)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemStoneTowerKey1)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemStoneTowerKey2)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemStoneTowerKey3)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemStoneTowerKey4)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartContainerStoneTower)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceLinkTrial)]
         [GossipStone(Item.GossipTerminaGossipLarge)]
@@ -256,10 +312,6 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongNewWaveBossaNova)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskZora)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemIceArrow)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemGreatBayMap)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemGreatBayCompass)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemGreatBayBossKey)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemGreatBayKey1)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartContainerGreatBay)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceZoraTrial)]
         [GossipStone(Item.GossipTerminaGossipGuitar)]
@@ -269,10 +321,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongSonata)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskDeku)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemBow)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemWoodfallMap)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemWoodfallCompass)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemWoodfallBossKey)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemWoodfallKey1)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartContainerWoodfall)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceDekuTrial)]
         [GossipStone(Item.GossipTerminaGossipPipes)]
@@ -282,12 +331,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongLullaby)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskGoron)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemFireArrow)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemSnowheadMap)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemSnowheadCompass)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemSnowheadBossKey)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemSnowheadKey1)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemSnowheadKey2)]
-        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ItemSnowheadKey3)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartContainerSnowhead)]
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.HeartPieceGoronTrial)]
         [GossipStone(Item.GossipTerminaGossipDrums)]

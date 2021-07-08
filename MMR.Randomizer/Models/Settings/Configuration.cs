@@ -1,5 +1,6 @@
-﻿using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
+﻿using System.Text.Encodings.Web;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace MMR.Randomizer.Models.Settings
 {
@@ -11,22 +12,25 @@ namespace MMR.Randomizer.Models.Settings
 
         public override string ToString()
         {
-            return JsonConvert.SerializeObject(this, _jsonSerializerSettings);
+            return JsonSerializer.Serialize(this, _jsonSerializerOptions);
         }
 
         public static Configuration FromJson(string json)
         {
-            return JsonConvert.DeserializeObject<Configuration>(json, _jsonSerializerSettings);
+            return JsonSerializer.Deserialize<Configuration>(json, _jsonSerializerOptions);
         }
 
-        private readonly static JsonSerializerSettings _jsonSerializerSettings = new JsonSerializerSettings
+        private readonly static JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
         {
-            ContractResolver = new WritablePropertiesOnlyResolver(),
-            NullValueHandling = NullValueHandling.Ignore,
-            Formatting = Formatting.Indented,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
+            IgnoreReadOnlyFields = true,
+            IgnoreReadOnlyProperties = true,
+            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
+            WriteIndented = true,
             Converters =
             {
-                new StringEnumConverter(),
+                new JsonColorConverter(),
+                new JsonStringEnumConverter(),
             }
         };
     }

@@ -55,6 +55,11 @@ namespace MMR.Randomizer.Asm
         public bool DonGero { get; set; }
 
         /// <summary>
+        /// Whether or not inputting Z/R should be handled during bank withdraw/deposit.
+        /// </summary>
+        public bool FastBankRupees { get; set; }
+
+        /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
@@ -66,6 +71,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FishermanGame ? (uint)1 : 0) << 29;
             flags |= (this.BoatArchery ? (uint)1 : 0) << 28;
             flags |= (this.DonGero ? (uint)1 : 0) << 27;
+            flags |= (this.FastBankRupees ? (uint)1 : 0) << 26;
             return flags;
         }
     }
@@ -112,6 +118,11 @@ namespace MMR.Randomizer.Asm
         /// Whether or not to activate beach cutscene earlier when pushing Mikau to shore.
         /// </summary>
         public bool EarlyMikau { get; set; }
+
+        /// <summary>
+        /// Whether or not to make Stray Fairy chests behave like normal chests.
+        /// </summary>
+        public bool FairyChests { get; set; }
 
         /// <summary>
         /// Whether or not to apply Elegy of Emptiness speedups.
@@ -215,6 +226,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.ProgressiveUpgrades ? (uint)1 : 0) << 16;
             flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 15;
             flags |= (this.EarlyMikau ? (uint)1 : 0) << 14;
+            flags |= (this.FairyChests ? (uint)1 : 0) << 13;
             return flags;
         }
     }
@@ -229,6 +241,8 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool VanillaLayout { get; set; }
 
+        public ushort CollectableTableFileIndex { get; set; }
+
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
@@ -237,6 +251,7 @@ namespace MMR.Randomizer.Asm
         {
             uint flags = 0;
             flags |= (this.VanillaLayout ? (uint)1 : 0) << 31;
+            flags |= CollectableTableFileIndex;
             return flags;
         }
     }
@@ -334,12 +349,16 @@ namespace MMR.Randomizer.Asm
             this.Speedups.FishermanGame = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FishermanGame);
             this.Speedups.SoundCheck = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.MilkBarPerformance);
             this.Speedups.DonGero = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.HungryGoron);
+            this.Speedups.FastBankRupees = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText);
 
             // If using Adult Link model, allow Mikau cutscene to activate early.
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;
 
+            this.Flags.FairyChests = settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly);
+
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;
+            this.InternalFlags.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
         }
 
         /// <summary>

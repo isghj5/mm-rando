@@ -114,18 +114,15 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Get which D-Pad directions are in use.
         /// </summary>
-        public bool[] InUse
+        public bool[] InUse()
         {
-            get
+            if (this.State == DPadState.Disabled)
             {
-                if (this.State == DPadState.Disabled)
-                {
-                    return this.Pad.Values.Select(x => false).ToArray();
-                }
-                else
-                {
-                    return this.Pad.Values.Select(x => x != DPadValue.None).ToArray();
-                }
+                return this.Pad.Values.Select(x => false).ToArray();
+            }
+            else
+            {
+                return this.Pad.Values.Select(x => x != DPadValue.None).ToArray();
             }
         }
 

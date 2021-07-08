@@ -57,6 +57,7 @@
             this.bReqClear = new System.Windows.Forms.Button();
             this.lRequired = new System.Windows.Forms.ListBox();
             this.tCond = new System.Windows.Forms.TableLayoutPanel();
+            this.bConClone = new System.Windows.Forms.Button();
             this.bConAdd = new System.Windows.Forms.Button();
             this.bConClear = new System.Windows.Forms.Button();
             this.lConditional = new System.Windows.Forms.ListBox();
@@ -78,7 +79,7 @@
             this.bRenameItem = new System.Windows.Forms.Button();
             this.cTrick = new System.Windows.Forms.CheckBox();
             this.tTrickDescription = new System.Windows.Forms.TextBox();
-            this.bConClone = new System.Windows.Forms.Button();
+            this.bCopy = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.nItem)).BeginInit();
             this.tMain.SuspendLayout();
             this.tTimes.SuspendLayout();
@@ -89,9 +90,10 @@
             // 
             // nItem
             // 
-            this.nItem.Location = new System.Drawing.Point(113, 54);
+            this.nItem.Location = new System.Drawing.Point(132, 62);
+            this.nItem.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.nItem.Name = "nItem";
-            this.nItem.Size = new System.Drawing.Size(120, 20);
+            this.nItem.Size = new System.Drawing.Size(140, 23);
             this.nItem.TabIndex = 0;
             this.nItem.Value = new decimal(new int[] {
             1,
@@ -103,17 +105,19 @@
             // lINo
             // 
             this.lINo.AutoSize = true;
-            this.lINo.Location = new System.Drawing.Point(39, 56);
+            this.lINo.Location = new System.Drawing.Point(46, 65);
+            this.lINo.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lINo.Name = "lINo";
-            this.lINo.Size = new System.Drawing.Size(68, 13);
+            this.lINo.Size = new System.Drawing.Size(79, 15);
             this.lINo.TabIndex = 1;
             this.lINo.Text = "Item number:";
             // 
             // lIName
             // 
             this.lIName.AutoSize = true;
-            this.lIName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lIName.Location = new System.Drawing.Point(110, 38);
+            this.lIName.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.lIName.Location = new System.Drawing.Point(128, 44);
+            this.lIName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lIName.Name = "lIName";
             this.lIName.Size = new System.Drawing.Size(70, 13);
             this.lIName.TabIndex = 2;
@@ -132,22 +136,24 @@
             this.tMain.Controls.Add(this.tTimes, 2, 1);
             this.tMain.Controls.Add(this.tReq, 0, 1);
             this.tMain.Controls.Add(this.tCond, 1, 1);
-            this.tMain.Location = new System.Drawing.Point(12, 109);
+            this.tMain.Location = new System.Drawing.Point(14, 126);
+            this.tMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tMain.Name = "tMain";
             this.tMain.RowCount = 2;
-            this.tMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 28F));
+            this.tMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 32F));
             this.tMain.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tMain.Size = new System.Drawing.Size(682, 418);
+            this.tMain.Size = new System.Drawing.Size(796, 482);
             this.tMain.TabIndex = 3;
             // 
             // lTime
             // 
             this.lTime.AutoSize = true;
             this.lTime.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lTime.Location = new System.Drawing.Point(457, 0);
+            this.lTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lTime.Location = new System.Drawing.Point(534, 0);
+            this.lTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lTime.Name = "lTime";
-            this.lTime.Size = new System.Drawing.Size(222, 28);
+            this.lTime.Size = new System.Drawing.Size(258, 32);
             this.lTime.TabIndex = 2;
             this.lTime.Text = "Time dependence";
             this.lTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -156,10 +162,11 @@
             // 
             this.lCond.AutoSize = true;
             this.lCond.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lCond.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lCond.Location = new System.Drawing.Point(230, 0);
+            this.lCond.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lCond.Location = new System.Drawing.Point(269, 0);
+            this.lCond.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lCond.Name = "lCond";
-            this.lCond.Size = new System.Drawing.Size(221, 28);
+            this.lCond.Size = new System.Drawing.Size(257, 32);
             this.lCond.TabIndex = 1;
             this.lCond.Text = "Conditional items";
             this.lCond.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -168,10 +175,11 @@
             // 
             this.lReq.AutoSize = true;
             this.lReq.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lReq.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lReq.Location = new System.Drawing.Point(3, 0);
+            this.lReq.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.lReq.Location = new System.Drawing.Point(4, 0);
+            this.lReq.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lReq.Name = "lReq";
-            this.lReq.Size = new System.Drawing.Size(221, 28);
+            this.lReq.Size = new System.Drawing.Size(257, 32);
             this.lReq.TabIndex = 0;
             this.lReq.Text = "Required items";
             this.lReq.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -197,7 +205,8 @@
             this.tTimes.Controls.Add(this.cNDay1, 0, 1);
             this.tTimes.Controls.Add(this.lNote, 0, 8);
             this.tTimes.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tTimes.Location = new System.Drawing.Point(457, 31);
+            this.tTimes.Location = new System.Drawing.Point(534, 35);
+            this.tTimes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tTimes.Name = "tTimes";
             this.tTimes.RowCount = 9;
             this.tTimes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
@@ -208,8 +217,8 @@
             this.tTimes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.tTimes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
             this.tTimes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 12.5F));
-            this.tTimes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tTimes.Size = new System.Drawing.Size(222, 384);
+            this.tTimes.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
+            this.tTimes.Size = new System.Drawing.Size(258, 444);
             this.tTimes.TabIndex = 3;
             // 
             // cANight3
@@ -217,9 +226,10 @@
             this.cANight3.AutoSize = true;
             this.cANight3.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cANight3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cANight3.Location = new System.Drawing.Point(114, 318);
+            this.cANight3.Location = new System.Drawing.Point(133, 367);
+            this.cANight3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cANight3.Name = "cANight3";
-            this.cANight3.Size = new System.Drawing.Size(105, 39);
+            this.cANight3.Size = new System.Drawing.Size(121, 46);
             this.cANight3.TabIndex = 13;
             this.cANight3.Text = "Night 3";
             this.cANight3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -231,9 +241,10 @@
             this.cADay3.AutoSize = true;
             this.cADay3.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cADay3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cADay3.Location = new System.Drawing.Point(3, 318);
+            this.cADay3.Location = new System.Drawing.Point(4, 367);
+            this.cADay3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cADay3.Name = "cADay3";
-            this.cADay3.Size = new System.Drawing.Size(105, 39);
+            this.cADay3.Size = new System.Drawing.Size(121, 46);
             this.cADay3.TabIndex = 12;
             this.cADay3.Text = "Day 3";
             this.cADay3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -245,9 +256,10 @@
             this.cANight2.AutoSize = true;
             this.cANight2.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cANight2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cANight2.Location = new System.Drawing.Point(114, 273);
+            this.cANight2.Location = new System.Drawing.Point(133, 315);
+            this.cANight2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cANight2.Name = "cANight2";
-            this.cANight2.Size = new System.Drawing.Size(105, 39);
+            this.cANight2.Size = new System.Drawing.Size(121, 46);
             this.cANight2.TabIndex = 11;
             this.cANight2.Text = "Night 2";
             this.cANight2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -259,9 +271,10 @@
             this.cADay2.AutoSize = true;
             this.cADay2.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cADay2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cADay2.Location = new System.Drawing.Point(3, 273);
+            this.cADay2.Location = new System.Drawing.Point(4, 315);
+            this.cADay2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cADay2.Name = "cADay2";
-            this.cADay2.Size = new System.Drawing.Size(105, 39);
+            this.cADay2.Size = new System.Drawing.Size(121, 46);
             this.cADay2.TabIndex = 10;
             this.cADay2.Text = "Day 2";
             this.cADay2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -273,9 +286,10 @@
             this.cANight1.AutoSize = true;
             this.cANight1.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cANight1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cANight1.Location = new System.Drawing.Point(114, 228);
+            this.cANight1.Location = new System.Drawing.Point(133, 263);
+            this.cANight1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cANight1.Name = "cANight1";
-            this.cANight1.Size = new System.Drawing.Size(105, 39);
+            this.cANight1.Size = new System.Drawing.Size(121, 46);
             this.cANight1.TabIndex = 9;
             this.cANight1.Text = "Night 1";
             this.cANight1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -287,9 +301,10 @@
             this.cADay1.AutoSize = true;
             this.cADay1.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cADay1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cADay1.Location = new System.Drawing.Point(3, 228);
+            this.cADay1.Location = new System.Drawing.Point(4, 263);
+            this.cADay1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cADay1.Name = "cADay1";
-            this.cADay1.Size = new System.Drawing.Size(105, 39);
+            this.cADay1.Size = new System.Drawing.Size(121, 46);
             this.cADay1.TabIndex = 8;
             this.cADay1.Text = "Day 1";
             this.cADay1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -301,9 +316,10 @@
             this.cNNight3.AutoSize = true;
             this.cNNight3.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cNNight3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cNNight3.Location = new System.Drawing.Point(114, 138);
+            this.cNNight3.Location = new System.Drawing.Point(133, 159);
+            this.cNNight3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNNight3.Name = "cNNight3";
-            this.cNNight3.Size = new System.Drawing.Size(105, 39);
+            this.cNNight3.Size = new System.Drawing.Size(121, 46);
             this.cNNight3.TabIndex = 7;
             this.cNNight3.Text = "Night 3";
             this.cNNight3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -315,9 +331,10 @@
             this.cNDay3.AutoSize = true;
             this.cNDay3.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cNDay3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cNDay3.Location = new System.Drawing.Point(3, 138);
+            this.cNDay3.Location = new System.Drawing.Point(4, 159);
+            this.cNDay3.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNDay3.Name = "cNDay3";
-            this.cNDay3.Size = new System.Drawing.Size(105, 39);
+            this.cNDay3.Size = new System.Drawing.Size(121, 46);
             this.cNDay3.TabIndex = 6;
             this.cNDay3.Text = "Day 3";
             this.cNDay3.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -329,9 +346,10 @@
             this.cNNight2.AutoSize = true;
             this.cNNight2.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cNNight2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cNNight2.Location = new System.Drawing.Point(114, 93);
+            this.cNNight2.Location = new System.Drawing.Point(133, 107);
+            this.cNNight2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNNight2.Name = "cNNight2";
-            this.cNNight2.Size = new System.Drawing.Size(105, 39);
+            this.cNNight2.Size = new System.Drawing.Size(121, 46);
             this.cNNight2.TabIndex = 5;
             this.cNNight2.Text = "Night 2";
             this.cNNight2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -343,9 +361,10 @@
             this.cNDay2.AutoSize = true;
             this.cNDay2.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cNDay2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cNDay2.Location = new System.Drawing.Point(3, 93);
+            this.cNDay2.Location = new System.Drawing.Point(4, 107);
+            this.cNDay2.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNDay2.Name = "cNDay2";
-            this.cNDay2.Size = new System.Drawing.Size(105, 39);
+            this.cNDay2.Size = new System.Drawing.Size(121, 46);
             this.cNDay2.TabIndex = 4;
             this.cNDay2.Text = "Day 2";
             this.cNDay2.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -357,9 +376,10 @@
             this.cNNight1.AutoSize = true;
             this.cNNight1.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cNNight1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cNNight1.Location = new System.Drawing.Point(114, 48);
+            this.cNNight1.Location = new System.Drawing.Point(133, 55);
+            this.cNNight1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNNight1.Name = "cNNight1";
-            this.cNNight1.Size = new System.Drawing.Size(105, 39);
+            this.cNNight1.Size = new System.Drawing.Size(121, 46);
             this.cNNight1.TabIndex = 3;
             this.cNNight1.Text = "Night 1";
             this.cNNight1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -371,9 +391,10 @@
             this.lTNeed.AutoSize = true;
             this.tTimes.SetColumnSpan(this.lTNeed, 2);
             this.lTNeed.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lTNeed.Location = new System.Drawing.Point(3, 0);
+            this.lTNeed.Location = new System.Drawing.Point(4, 0);
+            this.lTNeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lTNeed.Name = "lTNeed";
-            this.lTNeed.Size = new System.Drawing.Size(216, 45);
+            this.lTNeed.Size = new System.Drawing.Size(250, 52);
             this.lTNeed.TabIndex = 0;
             this.lTNeed.Text = "Needed on";
             this.lTNeed.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -383,9 +404,10 @@
             this.lTAvail.AutoSize = true;
             this.tTimes.SetColumnSpan(this.lTAvail, 2);
             this.lTAvail.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lTAvail.Location = new System.Drawing.Point(3, 180);
+            this.lTAvail.Location = new System.Drawing.Point(4, 208);
+            this.lTAvail.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lTAvail.Name = "lTAvail";
-            this.lTAvail.Size = new System.Drawing.Size(216, 45);
+            this.lTAvail.Size = new System.Drawing.Size(250, 52);
             this.lTAvail.TabIndex = 1;
             this.lTAvail.Text = "Available on";
             this.lTAvail.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -395,9 +417,10 @@
             this.cNDay1.AutoSize = true;
             this.cNDay1.CheckAlign = System.Drawing.ContentAlignment.TopCenter;
             this.cNDay1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.cNDay1.Location = new System.Drawing.Point(3, 48);
+            this.cNDay1.Location = new System.Drawing.Point(4, 55);
+            this.cNDay1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNDay1.Name = "cNDay1";
-            this.cNDay1.Size = new System.Drawing.Size(105, 39);
+            this.cNDay1.Size = new System.Drawing.Size(121, 46);
             this.cNDay1.TabIndex = 2;
             this.cNDay1.Text = "Day 1";
             this.cNDay1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
@@ -409,9 +432,10 @@
             this.lNote.AutoSize = true;
             this.tTimes.SetColumnSpan(this.lNote, 2);
             this.lNote.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lNote.Location = new System.Drawing.Point(3, 360);
+            this.lNote.Location = new System.Drawing.Point(4, 416);
+            this.lNote.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lNote.Name = "lNote";
-            this.lNote.Size = new System.Drawing.Size(216, 24);
+            this.lNote.Size = new System.Drawing.Size(250, 28);
             this.lNote.TabIndex = 14;
             this.lNote.Text = "If there is no time restriction, leave blank.";
             this.lNote.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -425,20 +449,22 @@
             this.tReq.Controls.Add(this.bReqClear, 1, 1);
             this.tReq.Controls.Add(this.lRequired, 0, 0);
             this.tReq.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tReq.Location = new System.Drawing.Point(3, 31);
+            this.tReq.Location = new System.Drawing.Point(4, 35);
+            this.tReq.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tReq.Name = "tReq";
             this.tReq.RowCount = 2;
             this.tReq.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tReq.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tReq.Size = new System.Drawing.Size(221, 384);
+            this.tReq.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tReq.Size = new System.Drawing.Size(257, 444);
             this.tReq.TabIndex = 4;
             // 
             // bReqAdd
             // 
             this.bReqAdd.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bReqAdd.Location = new System.Drawing.Point(3, 351);
+            this.bReqAdd.Location = new System.Drawing.Point(4, 405);
+            this.bReqAdd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bReqAdd.Name = "bReqAdd";
-            this.bReqAdd.Size = new System.Drawing.Size(104, 30);
+            this.bReqAdd.Size = new System.Drawing.Size(120, 36);
             this.bReqAdd.TabIndex = 0;
             this.bReqAdd.Text = "Add";
             this.bReqAdd.UseVisualStyleBackColor = true;
@@ -447,9 +473,10 @@
             // bReqClear
             // 
             this.bReqClear.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bReqClear.Location = new System.Drawing.Point(113, 351);
+            this.bReqClear.Location = new System.Drawing.Point(132, 405);
+            this.bReqClear.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bReqClear.Name = "bReqClear";
-            this.bReqClear.Size = new System.Drawing.Size(105, 30);
+            this.bReqClear.Size = new System.Drawing.Size(121, 36);
             this.bReqClear.TabIndex = 1;
             this.bReqClear.Text = "Clear selected";
             this.bReqClear.UseVisualStyleBackColor = true;
@@ -461,9 +488,11 @@
             this.lRequired.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lRequired.FormattingEnabled = true;
             this.lRequired.HorizontalScrollbar = true;
-            this.lRequired.Location = new System.Drawing.Point(3, 3);
+            this.lRequired.ItemHeight = 15;
+            this.lRequired.Location = new System.Drawing.Point(4, 3);
+            this.lRequired.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.lRequired.Name = "lRequired";
-            this.lRequired.Size = new System.Drawing.Size(215, 342);
+            this.lRequired.Size = new System.Drawing.Size(249, 396);
             this.lRequired.TabIndex = 2;
             this.lRequired.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lRequired_MouseDoubleClick);
             // 
@@ -478,21 +507,35 @@
             this.tCond.Controls.Add(this.lConditional, 0, 0);
             this.tCond.Controls.Add(this.bConEdit, 1, 2);
             this.tCond.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tCond.Location = new System.Drawing.Point(230, 31);
+            this.tCond.Location = new System.Drawing.Point(269, 35);
+            this.tCond.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tCond.Name = "tCond";
             this.tCond.RowCount = 3;
             this.tCond.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tCond.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tCond.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tCond.Size = new System.Drawing.Size(221, 384);
+            this.tCond.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tCond.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 42F));
+            this.tCond.Size = new System.Drawing.Size(257, 444);
             this.tCond.TabIndex = 5;
+            // 
+            // bConClone
+            // 
+            this.bConClone.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.bConClone.Location = new System.Drawing.Point(4, 405);
+            this.bConClone.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bConClone.Name = "bConClone";
+            this.bConClone.Size = new System.Drawing.Size(120, 36);
+            this.bConClone.TabIndex = 4;
+            this.bConClone.Text = "Clone";
+            this.bConClone.UseVisualStyleBackColor = true;
+            this.bConClone.Click += new System.EventHandler(this.bConClone_Click);
             // 
             // bConAdd
             // 
             this.bConAdd.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bConAdd.Location = new System.Drawing.Point(3, 315);
+            this.bConAdd.Location = new System.Drawing.Point(4, 363);
+            this.bConAdd.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bConAdd.Name = "bConAdd";
-            this.bConAdd.Size = new System.Drawing.Size(104, 30);
+            this.bConAdd.Size = new System.Drawing.Size(120, 36);
             this.bConAdd.TabIndex = 0;
             this.bConAdd.Text = "Add";
             this.bConAdd.UseVisualStyleBackColor = true;
@@ -501,9 +544,10 @@
             // bConClear
             // 
             this.bConClear.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bConClear.Location = new System.Drawing.Point(113, 315);
+            this.bConClear.Location = new System.Drawing.Point(132, 363);
+            this.bConClear.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bConClear.Name = "bConClear";
-            this.bConClear.Size = new System.Drawing.Size(105, 30);
+            this.bConClear.Size = new System.Drawing.Size(121, 36);
             this.bConClear.TabIndex = 1;
             this.bConClear.Text = "Remove";
             this.bConClear.UseVisualStyleBackColor = true;
@@ -515,18 +559,21 @@
             this.lConditional.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lConditional.FormattingEnabled = true;
             this.lConditional.HorizontalScrollbar = true;
-            this.lConditional.Location = new System.Drawing.Point(3, 3);
+            this.lConditional.ItemHeight = 15;
+            this.lConditional.Location = new System.Drawing.Point(4, 3);
+            this.lConditional.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.lConditional.Name = "lConditional";
-            this.lConditional.Size = new System.Drawing.Size(215, 306);
+            this.lConditional.Size = new System.Drawing.Size(249, 354);
             this.lConditional.TabIndex = 2;
             this.lConditional.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.lConditional_MouseDoubleClick);
             // 
             // bConEdit
             // 
             this.bConEdit.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bConEdit.Location = new System.Drawing.Point(113, 351);
+            this.bConEdit.Location = new System.Drawing.Point(132, 405);
+            this.bConEdit.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bConEdit.Name = "bConEdit";
-            this.bConEdit.Size = new System.Drawing.Size(105, 30);
+            this.bConEdit.Size = new System.Drawing.Size(121, 36);
             this.bConEdit.TabIndex = 3;
             this.bConEdit.Text = "Edit";
             this.bConEdit.UseVisualStyleBackColor = true;
@@ -539,7 +586,8 @@
             this.mMenu.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.HorizontalStackWithOverflow;
             this.mMenu.Location = new System.Drawing.Point(0, 0);
             this.mMenu.Name = "mMenu";
-            this.mMenu.Size = new System.Drawing.Size(706, 24);
+            this.mMenu.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
+            this.mMenu.Size = new System.Drawing.Size(824, 24);
             this.mMenu.TabIndex = 4;
             this.mMenu.Text = "menuStrip1";
             // 
@@ -608,9 +656,10 @@
             // 
             // btn_new_item
             // 
-            this.btn_new_item.Location = new System.Drawing.Point(113, 81);
+            this.btn_new_item.Location = new System.Drawing.Point(132, 93);
+            this.btn_new_item.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btn_new_item.Name = "btn_new_item";
-            this.btn_new_item.Size = new System.Drawing.Size(120, 23);
+            this.btn_new_item.Size = new System.Drawing.Size(140, 27);
             this.btn_new_item.TabIndex = 5;
             this.btn_new_item.Text = "New Item";
             this.btn_new_item.UseVisualStyleBackColor = true;
@@ -618,9 +667,10 @@
             // 
             // button_goto
             // 
-            this.button_goto.Location = new System.Drawing.Point(60, 81);
+            this.button_goto.Location = new System.Drawing.Point(70, 93);
+            this.button_goto.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.button_goto.Name = "button_goto";
-            this.button_goto.Size = new System.Drawing.Size(47, 23);
+            this.button_goto.Size = new System.Drawing.Size(55, 27);
             this.button_goto.TabIndex = 6;
             this.button_goto.Text = "Go To";
             this.button_goto.UseVisualStyleBackColor = true;
@@ -628,9 +678,10 @@
             // 
             // bDeleteItem
             // 
-            this.bDeleteItem.Location = new System.Drawing.Point(240, 81);
+            this.bDeleteItem.Location = new System.Drawing.Point(280, 93);
+            this.bDeleteItem.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bDeleteItem.Name = "bDeleteItem";
-            this.bDeleteItem.Size = new System.Drawing.Size(75, 23);
+            this.bDeleteItem.Size = new System.Drawing.Size(88, 27);
             this.bDeleteItem.TabIndex = 7;
             this.bDeleteItem.Text = "Delete";
             this.bDeleteItem.UseVisualStyleBackColor = true;
@@ -639,9 +690,10 @@
             // 
             // bRenameItem
             // 
-            this.bRenameItem.Location = new System.Drawing.Point(322, 81);
+            this.bRenameItem.Location = new System.Drawing.Point(376, 93);
+            this.bRenameItem.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bRenameItem.Name = "bRenameItem";
-            this.bRenameItem.Size = new System.Drawing.Size(75, 23);
+            this.bRenameItem.Size = new System.Drawing.Size(88, 27);
             this.bRenameItem.TabIndex = 8;
             this.bRenameItem.Text = "Rename";
             this.bRenameItem.UseVisualStyleBackColor = true;
@@ -651,9 +703,10 @@
             // cTrick
             // 
             this.cTrick.AutoSize = true;
-            this.cTrick.Location = new System.Drawing.Point(403, 85);
+            this.cTrick.Location = new System.Drawing.Point(470, 98);
+            this.cTrick.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cTrick.Name = "cTrick";
-            this.cTrick.Size = new System.Drawing.Size(50, 17);
+            this.cTrick.Size = new System.Drawing.Size(50, 19);
             this.cTrick.TabIndex = 9;
             this.cTrick.Text = "Trick";
             this.cTrick.UseVisualStyleBackColor = true;
@@ -663,31 +716,32 @@
             // tTrickDescription
             // 
             this.tTrickDescription.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.tTrickDescription.Location = new System.Drawing.Point(459, 83);
+            this.tTrickDescription.Location = new System.Drawing.Point(536, 96);
+            this.tTrickDescription.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tTrickDescription.Name = "tTrickDescription";
-            this.tTrickDescription.Size = new System.Drawing.Size(235, 20);
+            this.tTrickDescription.Size = new System.Drawing.Size(274, 23);
             this.tTrickDescription.TabIndex = 10;
             this.tTrickDescription.Text = "(optional tooltip)";
             this.tTrickDescription.TextChanged += new System.EventHandler(this.tTrickDescription_TextChanged);
             this.tTrickDescription.Enter += new System.EventHandler(this.tTrickDescription_Enter);
             this.tTrickDescription.Leave += new System.EventHandler(this.tTrickDescription_Leave);
             // 
-            // bConClone
+            // bCopy
             // 
-            this.bConClone.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.bConClone.Location = new System.Drawing.Point(3, 351);
-            this.bConClone.Name = "bConClone";
-            this.bConClone.Size = new System.Drawing.Size(104, 30);
-            this.bConClone.TabIndex = 4;
-            this.bConClone.Text = "Clone";
-            this.bConClone.UseVisualStyleBackColor = true;
-            this.bConClone.Click += new System.EventHandler(this.bConClone_Click);
+            this.bCopy.Location = new System.Drawing.Point(14, 93);
+            this.bCopy.Name = "bCopy";
+            this.bCopy.Size = new System.Drawing.Size(49, 27);
+            this.bCopy.TabIndex = 11;
+            this.bCopy.Text = "Copy";
+            this.bCopy.UseVisualStyleBackColor = true;
+            this.bCopy.Click += new System.EventHandler(this.bCopy_Click);
             // 
             // LogicEditorForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(706, 539);
+            this.ClientSize = new System.Drawing.Size(824, 622);
+            this.Controls.Add(this.bCopy);
             this.Controls.Add(this.tTrickDescription);
             this.Controls.Add(this.cTrick);
             this.Controls.Add(this.bRenameItem);
@@ -701,6 +755,7 @@
             this.Controls.Add(this.mMenu);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "LogicEditorForm";
             this.Text = "Logic Editor";
@@ -771,5 +826,6 @@
         private System.Windows.Forms.CheckBox cTrick;
         private System.Windows.Forms.TextBox tTrickDescription;
         private System.Windows.Forms.Button bConClone;
+        private System.Windows.Forms.Button bCopy;
     }
 }

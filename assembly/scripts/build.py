@@ -104,11 +104,20 @@ def write_pj64_symbols(f, symbols):
 
 def get_parser():
     parser = argparse.ArgumentParser()
+    parser.add_argument('-j', '--jobs', action='store', const=True, default=None, nargs='?', type=int, help='Number of jobs to run simultaneously when compiling C code')
     parser.add_argument('-t', '--target', default='mm', help='Target directory name')
     parser.add_argument('--pj64sym', help="Output path for PJ64 debugging symbols")
     parser.add_argument('--compile-c', action='store_true', help="Recompile C modules")
     parser.add_argument('--virtual', action='store_true', help='Use virtual addresses in diff')
     return parser
+
+def get_jobs_arguments(value):
+    if value is True:
+        return ['-j']
+    elif value is not None:
+        return ['-j', str(value)]
+    else:
+        return []
 
 def main():
     args = get_parser().parse_args()
@@ -128,10 +137,14 @@ def main():
 
     if compile_c:
         os.chdir(os.path.join(run_dir, relpath, 'c'))
-        call(['make'])
+        if args.jobs is not None:
+            # Call `make` with `-j` or `-j <number>` to run multiple jobs simultaneously.
+            call(['make', '--always-make'] + get_jobs_arguments(args.jobs))
+        else:
+            call(['make'])
 
     os.chdir(os.path.join(run_dir, relpath, 'src'))
-    call(['armips', '-sym2', '../build/asm_symbols.txt', 'build.asm'])
+    call(['armips', '-sym2', '../build/asm_symbols.txt', 'Build.asm'])
     os.chdir(run_dir)
 
     fixup_asm_symbols(os.path.join(relpath, 'build/asm_symbols.txt'))
@@ -146,10 +159,14 @@ def main():
 
     os.chdir(run_dir)
 
+    # Create subdirectory for generated files if it doesn't exist.
+    generated_path = os.path.join(relpath, 'build/generated')
+    os.makedirs(generated_path, exist_ok=True)
+
     # Dump symbols as JSON
     offsets = get_offsets_by_target(args.target)
     data_symbols = build_data_symbols(symbols, offsets)
-    dump_json_to_file(data_symbols, os.path.join(relpath, 'data/generated/symbols.json'))
+    dump_json_to_file(data_symbols, os.path.join(generated_path, 'symbols.json'))
 
     if pj64_sym_path:
         pj64_sym_path = os.path.realpath(pj64_sym_path)
@@ -162,7 +179,7 @@ def main():
     create_diff(
         os.path.join(relpath, 'roms/base.z64'),
         os.path.join(relpath, 'roms/patched.z64'),
-        os.path.join(relpath, 'data/generated/rom_patch.bin'),
+        os.path.join(generated_path, 'rom_patch.bin'),
         virtual=args.virtual,
         offset=offsets.table,
     )

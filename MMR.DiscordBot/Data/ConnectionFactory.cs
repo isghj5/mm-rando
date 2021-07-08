@@ -1,8 +1,6 @@
 ﻿using MMR.DiscordBot.Data.Entities;
 using ServiceStack.OrmLite;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MMR.DiscordBot.Data
 {
@@ -14,7 +12,14 @@ namespace MMR.DiscordBot.Data
 
             using (var db = this.Open())
             {
-                db.CreateTableIfNotExists<UserSeedEntity>();
+                if (!db.TableExists<UserSeedEntity>())
+                {
+                    db.CreateTable<UserSeedEntity>();
+                }
+                if (!db.ColumnExists<UserSeedEntity>(x => x.Version))
+                {
+                    db.AddColumn<UserSeedEntity>(x => x.Version);
+                }
                 db.CreateTableIfNotExists<GuildModEntity>();
             }
         }

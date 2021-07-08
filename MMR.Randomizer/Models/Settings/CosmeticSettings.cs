@@ -2,9 +2,9 @@
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models.Colors;
-using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Text.Json.Serialization;
 
 namespace MMR.Randomizer.Models.Settings
 {
@@ -56,6 +56,12 @@ namespace MMR.Randomizer.Models.Settings
         /// Enables playing BGM at night for scenes that switch to night sfx
         /// </summary>
         public bool EnableNightBGM { get; set; }
+
+        /// <summary>
+        /// Enabling this makes the randomizer not remove the pictobox antialiasing function.
+        /// Pictobox antialiasing is what makes the Pictobox incredibly slow on emulators.
+        /// </summary>
+        public bool KeepPictoboxAntialiasing { get; set; }
 
         /// <summary>
         /// Sets the Low health beeping sfx

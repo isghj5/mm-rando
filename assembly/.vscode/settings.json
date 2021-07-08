@@ -1,5 +1,13 @@
 {
     "files.exclude": {
-        "**/*.o": true
-    }
+        "**/*.o": true,
+        "**/__pycache__": true,
+        "output/": true,
+        "resources/": true,
+        "roms/": true,
+    },
+    "C_Cpp.default.includePath": [
+        "include",
+        "n64/include"
+    ]
 }

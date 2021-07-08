@@ -16,8 +16,17 @@ namespace MMR.Randomizer.Utils
         public static void CreateSpoilerLog(RandomizedResult randomized, GameplaySettings settings, OutputSettings outputSettings)
         {
             var itemList = randomized.ItemList
-                .Where(io => !io.Item.IsFake() && io.NewLocation.HasValue)
+                .Where(io => !io.Item.IsFake() && io.NewLocation.HasValue && io.IsRandomized)
                 .Select(u => new SpoilerItem(u, ItemUtils.IsRequired(u.Item, randomized), ItemUtils.IsImportant(u.Item, randomized), settings.ProgressiveUpgrades));
+
+            randomized.Logic.ForEach((il) =>
+            {
+                if (il.ItemId >= 0)
+                {
+                    var io = randomized.ItemList[il.ItemId];
+                    il.IsFakeItem = (io.Item.IsFake() && io.Item.Entrance() == null) || !io.IsRandomized;
+                }
+            });
 
             Dictionary<Item, Item> dungeonEntrances = new Dictionary<Item, Item>();
             if (settings.RandomizeDungeonEntrances)

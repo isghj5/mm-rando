@@ -10,5 +10,7 @@ namespace MMR.DiscordBot.Data.Entities
         public ulong UserId { get; set; }
 
         public DateTime LastSeedRequest { get; set; }
+
+        public string Version { get; set; }
     }
 }

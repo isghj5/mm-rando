@@ -159,8 +159,13 @@ namespace MMR.Randomizer.Utils
         public static ItemList PopulateItemListWithoutLogic()
         {
             var itemList = new ItemList();
-            foreach (var item in Enum.GetValues(typeof(Item)).Cast<Item>())
+            foreach (var item in Enum.GetValues<Item>())
             {
+                if (item < 0)
+                {
+                    continue;
+                }
+
                 var currentItem = new ItemObject
                 {
                     ID = (int)item,
@@ -209,7 +214,7 @@ namespace MMR.Randomizer.Utils
             }
             if (exclude.Contains(item))
             {
-                if (settings.AddSongs || !ItemUtils.IsSong(item) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsSong(i)))
+                if (settings.AddSongs || !ItemUtils.IsSong(item) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i) && !ItemUtils.IsSong(i)))
                 {
                     return null;
                 }
@@ -234,14 +239,20 @@ namespace MMR.Randomizer.Utils
             var important = new List<Item>();
             if (locationLogic.RequiredItemIds != null && locationLogic.RequiredItemIds.Any())
             {
-                foreach (var requiredItemId in locationLogic.RequiredItemIds)
+                foreach (var requiredItemId in locationLogic.RequiredItemIds.Cast<Item>())
                 {
-                    var childPaths = GetImportantItems(itemList, settings, (Item)requiredItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                    if (itemList[requiredItemId].Item != requiredItemId)
+                    {
+                        continue;
+                    }
+
+                    var childPaths = GetImportantItems(itemList, settings, requiredItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
                     if (childPaths == null)
                     {
                         return null;
                     }
-                    required.Add((Item)requiredItemId);
+
+                    required.Add(requiredItemId);
                     if (childPaths.Required != null)
                     {
                         required.AddRange(childPaths.Required);
@@ -259,9 +270,14 @@ namespace MMR.Randomizer.Utils
                 {
                     var conditionalRequired = new List<Item>();
                     var conditionalImportant = new List<Item>();
-                    foreach (var conditionalItemId in conditions)
+                    foreach (var conditionalItemId in conditions.Cast<Item>())
                     {
-                        var childPaths = GetImportantItems(itemList, settings, (Item)conditionalItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                        if (itemList[conditionalItemId].Item != conditionalItemId)
+                        {
+                            continue;
+                        }
+
+                        var childPaths = GetImportantItems(itemList, settings, conditionalItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
                         if (childPaths == null)
                         {
                             conditionalRequired = null;
@@ -269,7 +285,7 @@ namespace MMR.Randomizer.Utils
                             break;
                         }
 
-                        conditionalRequired.Add((Item)conditionalItemId);
+                        conditionalRequired.Add(conditionalItemId);
                         if (childPaths.Required != null)
                         {
                             conditionalRequired.AddRange(childPaths.Required);

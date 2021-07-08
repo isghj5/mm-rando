@@ -196,6 +196,13 @@ namespace MMR.Randomizer.Models.Rom
                 Append(0x09).Append(0x12);
 
             /// <summary>
+            /// Appends the picture subject control characters (0x09 0x13) to the message.
+            /// </summary>
+            /// <returns></returns>
+            public MessageBuilder PictureSubject() =>
+                Append(0x09).Append(0x13);
+
+            /// <summary>
             /// Appends the runtime item name start control characters (0x09 0x03) to the message and then appends the location's GetItemIndex
             /// </summary>
             /// <returns></returns>
@@ -401,6 +408,13 @@ namespace MMR.Randomizer.Models.Rom
             /// <returns></returns>
             public MessageBuilder StartGreenText() =>
                 PushTextColor(TextCommands.ColorGreen);
+
+            /// <summary>
+            /// Appends the start dark blue text control character (0x03) to the message.
+            /// </summary>
+            /// <returns></returns>
+            public MessageBuilder StartDarkBlueText() =>
+                PushTextColor(TextCommands.ColorDarkBlue);
 
             /// <summary>
             /// Appends the start yellow text control character (0x04) to the message.
@@ -707,6 +721,28 @@ namespace MMR.Randomizer.Models.Rom
         /// <param name="text"></param>
         /// <returns></returns>
         public static MessageEntryBuilder.MessageBuilder Green(this MessageEntryBuilder.MessageBuilder @this, string text) => @this.Green(() => @this.Text(text));
+
+        /// <summary>
+        /// Appends the start dark blue text control character (0x03) to the message, and executes the specified action.
+        /// </summary>
+        /// <param name="this"></param>
+        /// <param name="action"></param>
+        /// <returns></returns>
+        public static MessageEntryBuilder.MessageBuilder DarkBlue(this MessageEntryBuilder.MessageBuilder @this, Action action)
+        {
+            @this.StartDarkBlueText();
+            action();
+            @this.PopTextColor();
+            return @this;
+        }
+
+        /// <summary>
+        /// Appends the start dark blue text control character (0x03) to the message, and writes the specified text.
+        /// </summary>
+        /// <param name="this">this message builder</param>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static MessageEntryBuilder.MessageBuilder DarkBlue(this MessageEntryBuilder.MessageBuilder @this, string text) => @this.DarkBlue(() => @this.Text(text));
 
         /// <summary>
         /// Appends the start yellow text control character (0x04) to the message, and executes the specified action.

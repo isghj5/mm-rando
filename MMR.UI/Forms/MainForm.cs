@@ -19,6 +19,7 @@ using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Extensions;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
+using MMR.Randomizer.Constants;
 
 namespace MMR.UI.Forms
 {
@@ -32,7 +33,7 @@ namespace MMR.UI.Forms
         public AboutForm About { get; private set; }
         public ManualForm Manual { get; private set; }
         public LogicEditorForm LogicEditor { get; private set; }
-        public ItemEditForm ItemEditor { get; private set; }
+        public CustomItemListEditForm ItemEditor { get; }
         public StartingItemEditForm StartingItemEditor { get; private set; }
         public JunkLocationEditForm JunkLocationEditor { get; private set; }
         public HudConfigForm HudConfig { get; private set; }
@@ -48,16 +49,17 @@ namespace MMR.UI.Forms
             InitializeHUDGroupBox();
             InitializeTransformationFormSettings();
             InitializeShortenCutsceneSettings();
+            InitializeItemPoolSettings();
+            InitializeDungeonModeSettings();
             InitalizeLowHealthSFXOptions();
-
-            ItemEditor = new ItemEditForm();
-            UpdateCustomItemAmountLabel();
 
             StartingItemEditor = new StartingItemEditForm();
             UpdateCustomStartingItemAmountLabel();
 
             JunkLocationEditor = new JunkLocationEditForm();
             UpdateJunkLocationAmountLabel();
+
+            ItemEditor = new CustomItemListEditForm(ItemUtils.AllLocations(), item => $"{item.Location()} ({item.Name()})", "Invalid custom item string");
 
             LogicEditor = new LogicEditorForm();
             Manual = new ManualForm();
@@ -80,24 +82,10 @@ namespace MMR.UI.Forms
             // Main Settings
             TooltipBuilder.SetTooltip(cMode, "Select mode of logic:\n - Casual: The randomization logic ensures that the game can be beaten casually.\n - Using glitches: The randomization logic allows for placement of items that are only obtainable using known glitches.\n - Vanilla Layout: All items are left vanilla.\n - User logic: Upload your own custom logic to be used in the randomization.\n - No logic: Completely random, no guarantee the game is beatable.");
 
-            TooltipBuilder.SetTooltip(cUserItems, "Only randomize a custom list of items.\n\nThe item list can be edited from the menu: Customize -> Item List Editor. When checked, some settings will become disabled.");
             TooltipBuilder.SetTooltip(cMixSongs, "Enable songs being placed among items in the randomization pool.");
             TooltipBuilder.SetTooltip(cProgressiveUpgrades, "Enable swords, wallets, magic, bomb bags and quivers to be found in the intended order.");
-            TooltipBuilder.SetTooltip(cDChests, "Enable keys, boss keys, maps and compasses being placed in the randomization pool.");
-            TooltipBuilder.SetTooltip(cShop, "Enable shop items being placed in the randomization pool.");
-            TooltipBuilder.SetTooltip(cBottled, "Enable captured bottle contents being randomized.");
-            TooltipBuilder.SetTooltip(cSoS, "Exclude song of soaring from being placed in the randomization pool.");
             TooltipBuilder.SetTooltip(cDEnt, "Enable randomization of dungeon entrances. \n\nStone Tower Temple is always vanilla, but Inverted Stone Tower Temple is randomized.");
-            TooltipBuilder.SetTooltip(cAdditional, "Enable miscellaneous items being placed in the randomization pool.\n\nAmong the miscellaneous items are:\nFreestanding heartpieces, overworld chests, (hidden) grotto chests, Tingle's maps and bank heartpiece.");
             TooltipBuilder.SetTooltip(cEnemy, "Enable randomization of enemies. May cause softlocks in some circumstances, use at your own risk.");
-            TooltipBuilder.SetTooltip(cMoonItems, "Enable moon items being placed in the randomization pool.\n\nIncludes the four Moon Trial Heart Pieces, Fierce Deity's Mask and the two Link Trial chests.");
-            TooltipBuilder.SetTooltip(cFairyRewards, "Enable great fairy rewards being placed in the randomization pool.\n\nIncludes Magic Power, Great Spin Attack, Extended Magic Power, Double Defense, Great Fairy's Sword and Great Fairy's Mask.");
-            TooltipBuilder.SetTooltip(cNutChest, "Enable randomization of the pre-clocktown deku nut chest. Not available when using Casual logic.");
-            TooltipBuilder.SetTooltip(cCrazyStartingItems, "Enable randomization of starting Sword, Shield, and two Heart Containers.");
-            TooltipBuilder.SetTooltip(cCowMilk, "Enable randomization of cow milk.\n\nOne inaccessible ranch cow is not included for Casual logic.");
-            TooltipBuilder.SetTooltip(cSpiders, "Enable randomization of golden skulltula tokens. Tokens will not reset to 0 after Song of Time.");
-            TooltipBuilder.SetTooltip(cStrayFairies, "Enable randomization of stray fairies. Stray fairies will not reset to 0 after Song of Time.");
-            TooltipBuilder.SetTooltip(cMundaneRewards, "Enable randomization of mundane rewards. See Help > Manual (F1) > Shuffles for details.");
 
             // Gimmicks
             TooltipBuilder.SetTooltip(cDMult, "Select a damage mode, affecting how much damage Link takes:\n\n - Default: Link takes normal damage.\n - 2x: Link takes double damage.\n - 4x: Link takes quadruple damage.\n - 1-hit KO: Any damage kills Link.\n - Doom: Hardcore mode. Link's hearts are slowly being drained continuously.");
@@ -108,7 +96,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFloors, "Select a floortype for every floor ingame:\n\n - Default: Vanilla floortypes.\n - Sand: Link sinks slowly into every floor, affecting movement speed.\n - Ice: Every floor is slippery.\n - Snow: Similar to sand. \n - Random: Any random floortypes of the above.");
             TooltipBuilder.SetTooltip(cClockSpeed, "Modify the speed of time.");
             TooltipBuilder.SetTooltip(cHideClock, "Clock UI will be hidden.");
-            TooltipBuilder.SetTooltip(cNoStartingItems, "You will not start with any randomized starting items.");
+            TooltipBuilder.SetTooltip(cStartingItems, "Select a starting item mode:\n\nNone - You will not start with any randomized starting items.\nRandom - You will start with randomized starting items.\nAllow Temporary Items - You will start with randomized starting items including Keg, Magic Bean and Bottles with X.");
             TooltipBuilder.SetTooltip(cBlastCooldown, "Adjust the cooldown timer after using the Blast Mask.");
             TooltipBuilder.SetTooltip(cIceTraps, "Amount of ice traps to be added to pool by replacing junk items.");
             TooltipBuilder.SetTooltip(cIceTrapsAppearance, "Appearance of ice traps in pool for world models.");
@@ -150,6 +138,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cCombatMusicDisable, "Disables combat music around all regular (non boss or miniboss) enemies in the game.");
             TooltipBuilder.SetTooltip(cHueShiftMiscUI, "Shifts the color of miscellaneous UI elements.");
             TooltipBuilder.SetTooltip(cElegySpeedups, "Applies various Elegy of Emptiness speedups.");
+            TooltipBuilder.SetTooltip(cInstantPictobox, "Remove anti-aliasing from the Pictobox pictures, which is what makes Pictobox on emulator so slow.");
+            TooltipBuilder.SetTooltip(cImprovedPictobox, "Display extra text showing which type of picture was captured by the Pictobox.");
         }
 
         /// <summary>
@@ -167,6 +157,286 @@ namespace MMR.UI.Forms
         }
 
         Regex addSpacesRegex = new Regex("(?<!^)([A-Z])");
+
+        private void InitializeDungeonModeSettings()
+        {
+            //var dungeonModeSettings = new List<Type> { typeof(SmallKeyMode), typeof(BossKeyMode), typeof(StrayFairyMode) };
+            var properties = new List<PropertyInfo>();
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.SmallKeyMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossKeyMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.StrayFairyMode)));
+            foreach (var propertyInfo in properties)
+            {
+                var tabPage = new TabPage
+                {
+                    Tag = propertyInfo,
+                    Text = propertyInfo.PropertyType.GetCustomAttribute<DescriptionAttribute>().Description,
+                    UseVisualStyleBackColor = true,
+                };
+                tOtherCustomizations.TabPages.Add(tabPage);
+
+                var initialX = 6;
+                var initialY = 7;
+                var deltaX = 187;
+                var deltaY = 23;
+                var width = 187;
+                var height = 23;
+                var currentX = initialX;
+                var currentY = initialY;
+                foreach (var value in Enum.GetValues(propertyInfo.PropertyType).Cast<Enum>())
+                {
+                    if (Convert.ToInt32(value) == 0)
+                    {
+                        continue;
+                    }
+                    var checkBox = new CheckBox
+                    {
+                        Tag = value,
+                        Name = "cDungeonMode_" + value.ToString(),
+                        Text = addSpacesRegex.Replace(value.ToString(), " $1"),
+                        Location = new Point(currentX, currentY),
+                        Size = new Size(width, height),
+                    };
+                    var description = value.GetAttribute<DescriptionAttribute>()?.Description;
+                    if (description != null)
+                    {
+                        TooltipBuilder.SetTooltip(checkBox, description);
+                    }
+                    checkBox.CheckedChanged += cDungeonMode_CheckedChanged;
+                    tabPage.Controls.Add(checkBox);
+                    currentX += deltaX;
+                    if (currentX > tShortenCutscenes.Width - width)
+                    {
+                        currentX = initialX;
+                        currentY += deltaY;
+                    }
+                }
+            }
+        }
+
+        private void cDungeonMode_CheckedChanged(object sender, EventArgs e)
+        {
+            var checkBox = (CheckBox)sender;
+            var propertyInfo = (PropertyInfo)checkBox.Parent.Tag;
+            var cutsceneFlag = (int)checkBox.Tag;
+            var value = (int)propertyInfo.GetValue(_configuration.GameplaySettings);
+            var newValue = checkBox.Checked ? value | cutsceneFlag : value & ~cutsceneFlag;
+            UpdateSingleSetting(() => propertyInfo.SetValue(_configuration.GameplaySettings, newValue));
+        }
+
+        private class InvertIndeterminateCheckBox : CheckBox
+        {
+            protected override void OnClick(EventArgs e)
+            {
+                CheckState = CheckState switch
+                {
+                    CheckState.Checked => CheckState.Unchecked,
+                    CheckState.Unchecked => CheckState.Checked,
+                    CheckState.Indeterminate => CheckState.Checked,
+                    _ => CheckState,
+                };
+            }
+        }
+
+        private class LocationCategoryLabel : Label
+        {
+            public List<string> Lines { get; set; }
+
+            protected override void OnPaint(PaintEventArgs e)
+            {
+                base.OnPaint(e);
+                var b = new SolidBrush(ForeColor);
+                e.Graphics.TranslateTransform(0, Height);
+                e.Graphics.RotateTransform(-90);
+                foreach (var line in Lines)
+                {
+                    e.Graphics.RotateTransform(15);
+                    e.Graphics.DrawString(line, Font, b, 0f, 0f);
+                    e.Graphics.RotateTransform(-15);
+                    e.Graphics.TranslateTransform(0, 26);
+                }
+            }
+        }
+
+        private void InitializeItemPoolSettings()
+        {
+            var itemsByItemCategory = ItemUtils.ItemsByItemCategory();
+
+            var itemsByLocationCategory = ItemUtils.ItemsByLocationCategory();
+
+            tableItemPool.RowCount = Enum.GetValues<ItemCategory>().Count() - 2;
+            tableItemPool.ColumnCount = Enum.GetValues<LocationCategory>().Count() - 1;
+
+            var locationCategoriesX = 141;
+
+            var locationCategoryLabel = new LocationCategoryLabel();
+            locationCategoryLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
+            locationCategoryLabel.Location = new Point(locationCategoriesX + 24, 30);
+            locationCategoryLabel.Width = 610;
+            locationCategoryLabel.Height = 105;
+            locationCategoryLabel.Lines = Enum.GetValues<LocationCategory>().Where(c => c > 0).Select(c => $"{addSpacesRegex.Replace(c.ToString(), " $1")}: +{itemsByLocationCategory[c].Count}").ToList();
+
+            tabItemPool.Controls.Add(locationCategoryLabel);
+
+            foreach (var locationCategory in Enum.GetValues<LocationCategory>())
+            {
+                if (locationCategory < 0)
+                {
+                    continue;
+                }
+
+                var checkbox = new InvertIndeterminateCheckBox();
+                var items = locationCategory == 0 ? ItemUtils.AllLocations().ToList() : itemsByLocationCategory[locationCategory];
+                checkbox.Tag = items;
+                var description = locationCategory.GetAttribute<DescriptionAttribute>()?.Description;
+                if (description != null)
+                {
+                    TooltipBuilder.SetTooltip(checkbox, description);
+                }
+                checkbox.Location = new Point(locationCategoriesX, 140);
+                checkbox.Width = 17;
+                checkbox.Height = 17;
+                checkbox.CheckStateChanged += cItemCategory2_CheckStateChanged;
+                tableItemPool.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 25));
+                tabItemPool.Controls.Add(checkbox);
+
+                locationCategoriesX += 26;
+            }
+
+            foreach (var itemCategory in Enum.GetValues<ItemCategory>())
+            {
+                if (itemCategory <= 0)
+                {
+                    continue;
+                }
+
+                foreach (var locationCategory in Enum.GetValues<LocationCategory>())
+                {
+                    if (locationCategory < 0)
+                    {
+                        continue;
+                    }
+
+                    if (itemCategory == 0 && locationCategory == 0)
+                    {
+                        continue;
+                    }
+
+                    InvertIndeterminateCheckBox checkbox = null;
+
+                    if (locationCategory == 0)
+                    {
+                        checkbox = new InvertIndeterminateCheckBox();
+                        var items = itemsByItemCategory[itemCategory];
+                        checkbox.Tag = items;
+                        checkbox.Text = $"{addSpacesRegex.Replace(itemCategory.ToString(), " $1")}: +{items.Count}";
+                        checkbox.CheckAlign = ContentAlignment.MiddleRight;
+                        checkbox.TextAlign = ContentAlignment.MiddleRight;
+                        checkbox.Width = 148;
+                        checkbox.Margin = new Padding(3, 3, 6, 3);
+                        var description = itemCategory.GetAttribute<DescriptionAttribute>()?.Description;
+                        if (description != null)
+                        {
+                            TooltipBuilder.SetTooltip(checkbox, description);
+                        }
+                        checkbox.CheckStateChanged += cItemCategory2_CheckStateChanged;
+                    }
+
+                    if (locationCategory > 0 && itemCategory > 0)
+                    {
+                        var items = itemsByItemCategory[itemCategory].Intersect(itemsByLocationCategory[locationCategory]).ToList();
+                        if (items.Count > 0)
+                        {
+                            checkbox = new InvertIndeterminateCheckBox();
+                            checkbox.Tag = items;
+                            checkbox.Dock = DockStyle.Fill;
+                            checkbox.CheckAlign = ContentAlignment.MiddleCenter;
+                            checkbox.CheckStateChanged += cItemCategory2_CheckStateChanged;
+                        }
+                    }
+
+                    if (checkbox != null)
+                    {
+                        tableItemPool.Controls.Add(checkbox, (int)locationCategory, (int)itemCategory - 1);
+                    }
+                }
+            }
+        }
+
+        private bool _itemPoolRecalculating = false;
+        private void cItemCategory2_CheckStateChanged(object sender, EventArgs e)
+        {
+            if (_itemPoolRecalculating)
+            {
+                return;
+            }
+
+            if (_configuration.GameplaySettings.CustomItemList == null)
+            {
+                _configuration.GameplaySettings.CustomItemList = new HashSet<Item>();
+            }
+
+            var checkbox = (CheckBox)sender;
+            var items = (List<Item>)checkbox.Tag;
+            if (checkbox.CheckState == CheckState.Unchecked)
+            {
+                foreach (var item in items)
+                {
+                    _configuration.GameplaySettings.CustomItemList.Remove(item);
+                }
+            }
+            else
+            {
+                foreach (var item in items)
+                {
+                    _configuration.GameplaySettings.CustomItemList.Add(item);
+                }
+            }
+
+            UpdateItemPoolCheckboxes();
+        }
+
+        private void UpdateItemPoolCheckboxes()
+        {
+            if (_itemPoolRecalculating)
+            {
+                return;
+            }
+            _itemPoolRecalculating = true;
+
+            if (_configuration.GameplaySettings.CustomItemList != null)
+            {
+                // todo keep checkboxes cached
+                var checkboxes = new List<CheckBox>();
+                checkboxes.AddRange(tabItemPool.Controls.OfType<CheckBox>().ToList());
+                checkboxes.AddRange(tableItemPool.Controls.OfType<CheckBox>().ToList());
+
+                foreach (var otherCheckbox in checkboxes)
+                {
+                    var otherItems = (List<Item>)otherCheckbox.Tag;
+                    var matchingItems = _configuration.GameplaySettings.CustomItemList.Intersect(otherItems).Count();
+                    if (matchingItems == 0)
+                    {
+                        otherCheckbox.CheckState = CheckState.Unchecked;
+                    }
+                    else if (matchingItems == otherItems.Count)
+                    {
+                        otherCheckbox.CheckState = CheckState.Checked;
+                    }
+                    else
+                    {
+                        otherCheckbox.CheckState = CheckState.Indeterminate;
+                    }
+                }
+
+                tItemPool.Text = ItemUtils.ConvertItemListToString(ItemEditor.BaseItemList, _configuration.GameplaySettings.CustomItemList.ToList());
+                _configuration.GameplaySettings.CustomItemListString = tItemPool.Text;
+            }
+            ItemEditor.UpdateChecks(tItemPool.Text);
+            lItemPoolText.Text = ItemEditor.ExternalLabel;
+
+            _itemPoolRecalculating = false;
+        }
 
         private void InitializeShortenCutsceneSettings()
         {
@@ -187,7 +457,7 @@ namespace MMR.UI.Forms
                 var deltaX = 150;
                 var deltaY = 23;
                 var width = 150;
-                var height = 17;
+                var height = 23;
                 var currentX = initialX;
                 var currentY = initialY;
                 foreach (var value in Enum.GetValues(shortenCutsceneGroup.PropertyType).Cast<Enum>())
@@ -245,7 +515,7 @@ namespace MMR.UI.Forms
 
         private void InitializeTransformationFormSettings()
         {
-            foreach (var form in Enum.GetValues(typeof(TransformationForm)).Cast<TransformationForm>())
+            foreach (var form in Enum.GetValues<TransformationForm>())
             {
                 var tabPage = new TabPage
                 {
@@ -261,8 +531,8 @@ namespace MMR.UI.Forms
                     tabPage.Controls.Add(new Label
                     {
                         Text = "Instrument:",
-                        Location = new Point(26, 33),
-                        Size = new Size(59, 13),
+                        Location = new Point(24, 33),
+                        Size = new Size(79, 13),
                     });
                     tabPage.Controls.Add(CreateInstrumentComboBox(form));
                 }
@@ -272,7 +542,7 @@ namespace MMR.UI.Forms
                     {
                         Name = "lEnergyColorDefault",
                         Text = "Default",
-                        Location = new Point(91, 63),
+                        Location = new Point(111, 63),
                         Size = new Size(135, 23),
                         TextAlign = ContentAlignment.MiddleCenter,
                         Visible = !use,
@@ -297,7 +567,7 @@ namespace MMR.UI.Forms
                 Tag = transformationForm,
                 Name = "cEnergyRandomize",
                 Text = "🎲",
-                Location = new Point(91 + (3 * 34), 62),
+                Location = new Point(111 + (3 * 34), 62),
                 Size = new Size(33, 25),
                 TextAlign = ContentAlignment.TopRight,
             };
@@ -315,7 +585,7 @@ namespace MMR.UI.Forms
                 Name = "cEnergy",
                 Text = "Energy color:",
                 Location = new Point(6, 67),
-                Size = new Size(88, 17),
+                Size = new Size(120, 25),
             };
             checkBox.CheckedChanged += cEnergy_CheckedChanged;
             return checkBox;
@@ -331,7 +601,7 @@ namespace MMR.UI.Forms
                 {
                     Tag = transformationForm,
                     Name = $"bEnergy{i}",
-                    Location = new Point(91 + (i * 34), 63),
+                    Location = new Point(111 + (i * 34), 63),
                     Size = new Size(32, 23),
                     BackColor = current[i],
                     FlatStyle = FlatStyle.Flat,
@@ -352,7 +622,7 @@ namespace MMR.UI.Forms
                 Name = "cTunic",
                 Text = "Tunic color:",
                 Location = new Point(6, 7),
-                Size = new Size(82, 17),
+                Size = new Size(102, 25),
             };
             checkBox.CheckedChanged += create_cTunic_CheckedChanged(bTunic);
             return checkBox;
@@ -364,7 +634,7 @@ namespace MMR.UI.Forms
             {
                 Tag = transformationForm,
                 Name = "bTunic",
-                Location = new Point(91, 3),
+                Location = new Point(111, 3),
                 Size = new Size(135, 23),
                 BackColor = Color.FromArgb(0x1E, 0x69, 0x1B),
                 FlatStyle = FlatStyle.Flat,
@@ -382,7 +652,7 @@ namespace MMR.UI.Forms
             {
                 Tag = transformationForm,
                 Name = "cInstrument",
-                Location = new Point(91, 30),
+                Location = new Point(111, 30),
                 Size = new Size(135, 21),
                 DropDownStyle = ComboBoxStyle.DropDownList,
                 DataSource = new BindingSource(data, null),
@@ -411,6 +681,19 @@ namespace MMR.UI.Forms
             InitializeBackgroundWorker();
 
             LoadSettings();
+
+            var args = Environment.GetCommandLineArgs();
+            if (args.Length > 1)
+            {
+                var openWithArg = args[1];
+                if (Path.GetExtension(openWithArg) == ".mmr")
+                {
+                    ttOutput.SelectedIndex = 1;
+                    TogglePatchSettings(false);
+                    _configuration.OutputSettings.InputPatchFilename = openWithArg;
+                    tPatch.Text = _configuration.OutputSettings.InputPatchFilename;
+                }
+            }
 
             _isUpdating = false;
         }
@@ -559,18 +842,25 @@ namespace MMR.UI.Forms
 
         private void Randomize()
         {
-            var validationResult = _configuration.GameplaySettings.Validate() ?? _configuration.OutputSettings.Validate();
+            string validationResult;
+            if (!string.IsNullOrWhiteSpace(_configuration.OutputSettings.InputPatchFilename))
+            {
+                validationResult = _configuration.OutputSettings.Validate();
+                saveROM.FileName = Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64");
+            }
+            else
+            {
+                validationResult = _configuration.GameplaySettings.Validate() ?? _configuration.OutputSettings.Validate();
+                var defaultOutputROMFilename = FileUtils.MakeFilenameValid($"MMR-{typeof(Randomizer).Assembly.GetName().Version}-{DateTime.UtcNow:o}");
+                saveROM.FileName = defaultOutputROMFilename;
+            }
+
             if (validationResult != null)
             {
                 MessageBox.Show(validationResult, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            var defaultOutputROMFilename = FileUtils.MakeFilenameValid(DateTime.UtcNow.ToString("o"));
-
-            saveROM.FileName = !string.IsNullOrWhiteSpace(_configuration.OutputSettings.InputPatchFilename)
-                ? Path.ChangeExtension(Path.GetFileName(_configuration.OutputSettings.InputPatchFilename), "z64")
-                : defaultOutputROMFilename;
             if (saveROM.ShowDialog() != DialogResult.OK)
             {
                 return;
@@ -627,14 +917,8 @@ namespace MMR.UI.Forms
             cVC.Checked = _configuration.OutputSettings.OutputVC;
             cPatch.Checked = _configuration.OutputSettings.GeneratePatch;
 
-            cUserItems.Checked = _configuration.GameplaySettings.UseCustomItemList;
-            cAdditional.Checked = _configuration.GameplaySettings.AddOther;
-            cSoS.Checked = _configuration.GameplaySettings.ExcludeSongOfSoaring;
             cMixSongs.Checked = _configuration.GameplaySettings.AddSongs;
             cProgressiveUpgrades.Checked = _configuration.GameplaySettings.ProgressiveUpgrades;
-            cBottled.Checked = _configuration.GameplaySettings.RandomizeBottleCatchContents;
-            cDChests.Checked = _configuration.GameplaySettings.AddDungeonItems;
-            cShop.Checked = _configuration.GameplaySettings.AddShopItems;
             cDEnt.Checked = _configuration.GameplaySettings.RandomizeDungeonEntrances;
             cSFX.Checked = _configuration.CosmeticSettings.RandomizeSounds;
             cEnemy.Checked = _configuration.GameplaySettings.RandomizeEnemies;
@@ -656,10 +940,26 @@ namespace MMR.UI.Forms
                     cShortenCutscene.Checked = value.HasFlag(flagValue);
                 }
             }
+            foreach (TabPage dungeonModeTab in tOtherCustomizations.TabPages)
+            {
+                var propertyInfo = (PropertyInfo)dungeonModeTab.Tag;
+                if (propertyInfo == null)
+                {
+                    continue;
+                }
+                var value = (Enum)propertyInfo.GetValue(_configuration.GameplaySettings);
+                foreach (var flagValue in Enum.GetValues(propertyInfo.PropertyType).Cast<Enum>())
+                {
+                    if (Convert.ToInt32(flagValue) == 0)
+                    {
+                        continue;
+                    }
+                    var cDungeonMode = (CheckBox)dungeonModeTab.Controls.Find("cDungeonMode_" + flagValue.ToString(), false)[0];
+                    cDungeonMode.Checked = value.HasFlag(flagValue);
+                }
+            }
             cQText.Checked = _configuration.GameplaySettings.QuickTextEnabled;
             cFreeHints.Checked = _configuration.GameplaySettings.FreeHints;
-            cMoonItems.Checked = _configuration.GameplaySettings.AddMoonItems;
-            cFairyRewards.Checked = _configuration.GameplaySettings.AddFairyRewards;
             cClearHints.Checked = _configuration.GameplaySettings.ClearHints;
             cHideClock.Checked = _configuration.GameplaySettings.HideClock;
             cSunsSong.Checked = _configuration.GameplaySettings.EnableSunsSong;
@@ -670,13 +970,7 @@ namespace MMR.UI.Forms
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
             cNoDowngrades.Checked = _configuration.GameplaySettings.PreventDowngrades;
             cShopAppearance.Checked = _configuration.GameplaySettings.UpdateShopAppearance;
-            cNutChest.Checked = _configuration.GameplaySettings.AddNutChest;
-            cCrazyStartingItems.Checked = _configuration.GameplaySettings.CrazyStartingItems;
-            cCowMilk.Checked = _configuration.GameplaySettings.AddCowMilk;
-            cSpiders.Checked = _configuration.GameplaySettings.AddSkulltulaTokens;
-            cMundaneRewards.Checked = _configuration.GameplaySettings.AddMundaneRewards;
-            cStrayFairies.Checked = _configuration.GameplaySettings.AddStrayFairies;
-            cNoStartingItems.Checked = _configuration.GameplaySettings.NoStartingItems;
+            cStartingItems.SelectedIndex = (int)_configuration.GameplaySettings.StartingItemMode;
             cEponaSword.Checked = _configuration.GameplaySettings.FixEponaSword;
             cUpdateChests.Checked = _configuration.GameplaySettings.UpdateChests;
             cSkipBeaver.Checked = _configuration.GameplaySettings.SpeedupBeavers;
@@ -737,6 +1031,7 @@ namespace MMR.UI.Forms
                 }
             }
             cTargettingStyle.Checked = _configuration.CosmeticSettings.EnableHoldZTargeting;
+            cInstantPictobox.Checked = !_configuration.CosmeticSettings.KeepPictoboxAntialiasing;
             cEnableNightMusic.Checked = _configuration.CosmeticSettings.EnableNightBGM;
 
             // Misc config options
@@ -753,6 +1048,7 @@ namespace MMR.UI.Forms
             cCombatMusicDisable.Checked = _configuration.CosmeticSettings.DisableCombatMusic != CombatMusic.Normal;
             cHueShiftMiscUI.Checked = _configuration.CosmeticSettings.ShiftHueMiscUI;
             cElegySpeedups.Checked = _configuration.GameplaySettings.ElegySpeedup;
+            cImprovedPictobox.Checked = _configuration.GameplaySettings.EnablePictoboxSubject;
 
             // HUD config options
             var heartItems = ColorSelectionManager.Hearts.GetItems();
@@ -776,43 +1072,6 @@ namespace MMR.UI.Forms
             {
                 cDummy.Select();
             }
-        }
-
-        private void cUserItems_CheckedChanged(object sender, EventArgs e)
-        {
-
-            cDChests.Visible = !cUserItems.Checked;
-
-            cShop.Visible = !cUserItems.Checked;
-
-            cBottled.Visible = !cUserItems.Checked;
-
-            cSoS.Visible = !cUserItems.Checked;
-
-            cAdditional.Visible = !cUserItems.Checked;
-
-            cMoonItems.Visible = !cUserItems.Checked;
-
-            cFairyRewards.Visible = !cUserItems.Checked;
-
-            cNutChest.Visible = !cUserItems.Checked;
-
-            cCrazyStartingItems.Visible = !cUserItems.Checked;
-
-            cCowMilk.Visible = !cUserItems.Checked;
-
-            cSpiders.Visible = !cUserItems.Checked;
-
-            cMundaneRewards.Visible = !cUserItems.Checked;
-
-            cStrayFairies.Visible = !cUserItems.Checked;
-
-            bItemListEditor.Visible = cUserItems.Checked;
-            tCustomItemList.Visible = cUserItems.Checked;
-            lCustomItemAmount.Visible = cUserItems.Checked;
-
-            UpdateSingleSetting(() => _configuration.GameplaySettings.UseCustomItemList = cUserItems.Checked);
-
         }
 
         private void cN64_CheckedChanged(object sender, EventArgs e)
@@ -840,52 +1099,6 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.OutputSettings.GenerateHTMLLog = cHTMLLog.Checked);
         }
 
-
-        private void cAdditional_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AddOther = cAdditional.Checked);
-        }
-
-        private void cMoonItems_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AddMoonItems = cMoonItems.Checked);
-        }
-
-        private void cFairyRewards_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AddFairyRewards = cFairyRewards.Checked);
-        }
-
-        private void cNutChest_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AddNutChest = cNutChest.Checked);
-        }
-
-        private void cCrazyStartingItems_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.CrazyStartingItems = cCrazyStartingItems.Checked);
-        }
-
-        private void cCowMilk_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AddCowMilk = cCowMilk.Checked);
-        }
-
-        private void cSpiders_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AddSkulltulaTokens = cSpiders.Checked);
-        }
-
-        private void cMundaneRewards_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AddMundaneRewards = cMundaneRewards.Checked);
-        }
-
-        private void cStrayFairies_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AddStrayFairies = cStrayFairies.Checked);
-        }
-
         private void cSFX_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.CosmeticSettings.RandomizeSounds = cSFX.Checked);
@@ -900,16 +1113,6 @@ namespace MMR.UI.Forms
         private void cMusic_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.CosmeticSettings.Music = (Music)cMusic.SelectedIndex);
-        }
-
-        private void cBottled_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.RandomizeBottleCatchContents = cBottled.Checked);
-        }
-
-        private void cDChests_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AddDungeonItems = cDChests.Checked);
         }
 
         private void cDEnt_CheckedChanged(object sender, EventArgs e)
@@ -1022,24 +1225,14 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.IceTrapQuirks = cIceTrapQuirks.Checked);
         }
 
-        private void cNoStartingItems_CheckedChanged(object sender, EventArgs e)
+        private void cStartingItems_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.NoStartingItems = cNoStartingItems.Checked);
+            UpdateSingleSetting(() => _configuration.GameplaySettings.StartingItemMode = (StartingItemMode)cStartingItems.SelectedIndex);
         }
 
         private void cQText_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.QuickTextEnabled = cQText.Checked);
-        }
-
-        private void cShop_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.AddShopItems = cShop.Checked);
-        }
-
-        private void cSoS_CheckedChanged(object sender, EventArgs e)
-        {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.ExcludeSongOfSoaring = cSoS.Checked);
         }
 
         private void cTatl_SelectedIndexChanged(object sender, EventArgs e)
@@ -1232,34 +1425,6 @@ namespace MMR.UI.Forms
             LogicEditor.Show();
         }
 
-        private void bItemListEditor_Click(object sender, EventArgs e)
-        {
-            if (ItemEditor.ShowDialog() == DialogResult.Cancel)
-            {
-                tCustomItemList.Text = ItemEditor.CustomItemListString;
-            }
-        }
-
-        private void tCustomItemList_TextChanged(object sender, EventArgs e)
-        {
-            ItemEditor.UpdateChecks(tCustomItemList.Text);
-            UpdateCustomItemAmountLabel();
-        }
-
-        private void UpdateCustomItemAmountLabel()
-        {
-            _configuration.GameplaySettings.CustomItemList = ItemEditor.CustomItemList.ToList();
-            _configuration.GameplaySettings.CustomItemListString = ItemEditor.CustomItemListString;
-            if (_configuration.GameplaySettings.CustomItemList.Contains(-1))
-            {
-                lCustomItemAmount.Text = "Invalid custom item string";
-            }
-            else
-            {
-                lCustomItemAmount.Text = $"{_configuration.GameplaySettings.CustomItemList.Count}/{ItemUtils.AllLocations().Count()} items randomized";
-            }
-        }
-
         private void bStartingItemEditor_Click(object sender, EventArgs e)
         {
             if (StartingItemEditor.ShowDialog() == DialogResult.Cancel)
@@ -1312,37 +1477,25 @@ namespace MMR.UI.Forms
             var vanillaMode = _configuration.GameplaySettings.LogicMode == LogicMode.Vanilla;
             cMixSongs.Enabled = !vanillaMode;
             cProgressiveUpgrades.Enabled = !vanillaMode;
-            cSoS.Enabled = !vanillaMode;
-            cDChests.Enabled = !vanillaMode;
+            foreach (Control control in tabItemPool.Controls)
+            {
+                control.Enabled = !vanillaMode;
+            }
+            foreach (Control control in tableItemPool.Controls)
+            {
+                control.Enabled = !vanillaMode;
+            }
             cDEnt.Enabled = !vanillaMode;
-            cBottled.Enabled = !vanillaMode;
-            cShop.Enabled = !vanillaMode;
             cSpoiler.Enabled = !vanillaMode;
             cHTMLLog.Enabled = !vanillaMode;
             cGossipHints.Enabled = !vanillaMode;
-            cAdditional.Enabled = !vanillaMode;
-            cUserItems.Enabled = !vanillaMode;
-            cMoonItems.Enabled = !vanillaMode;
-            cFairyRewards.Enabled = !vanillaMode;
-            cNutChest.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.Casual;
-            cCrazyStartingItems.Enabled = !vanillaMode;
-            cNoStartingItems.Enabled = !vanillaMode && (_configuration.GameplaySettings.AddOther || _configuration.GameplaySettings.UseCustomItemList);
-            cCowMilk.Enabled = !vanillaMode;
-            cSpiders.Enabled = !vanillaMode;
-            cStrayFairies.Enabled = !vanillaMode;
-            cMundaneRewards.Enabled = !vanillaMode;
+            cStartingItems.Enabled = !vanillaMode;
             tJunkLocationsList.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
             bJunkLocationsEditor.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
             bToggleTricks.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
             cIceTraps.Enabled = !vanillaMode;
             cIceTrapsAppearance.Enabled = !vanillaMode;
             cIceTrapQuirks.Enabled = !vanillaMode;
-
-            if (!vanillaMode && !cNoStartingItems.Enabled)
-            {
-                cNoStartingItems.Checked = false;
-                _configuration.GameplaySettings.NoStartingItems = false;
-            }
 
             bLoadLogic.Enabled = _configuration.GameplaySettings.LogicMode == LogicMode.UserLogic;
 
@@ -1395,12 +1548,8 @@ namespace MMR.UI.Forms
             bJunkLocationsEditor.Enabled = v;
             tJunkLocationsList.Enabled = v;
 
-            cUserItems.Enabled = v;
-            bItemListEditor.Enabled = v;
-            tCustomItemList.Enabled = v;
-
             cDEnt.Enabled = v;
-            cNoStartingItems.Enabled = v;
+            cStartingItems.Enabled = v;
             cMixSongs.Enabled = v;
             cProgressiveUpgrades.Enabled = v;
             cEnemy.Enabled = v;
@@ -1410,7 +1559,6 @@ namespace MMR.UI.Forms
             cTatl.Enabled = v;
             cMusic.Enabled = v;
             cEnableNightMusic.Enabled = v;
-            cBottled.Enabled = v;
             cLink.Enabled = v;
 
             cHUDHeartsComboBox.Enabled = v;
@@ -1422,6 +1570,7 @@ namespace MMR.UI.Forms
             cClearHints.Enabled = v;
 
             cTargettingStyle.Enabled = v;
+            cInstantPictobox.Enabled = v;
             cSFX.Enabled = v;
             cDisableCritWiggle.Enabled = v;
             cQText.Enabled = v;
@@ -1435,6 +1584,7 @@ namespace MMR.UI.Forms
             cArrowCycling.Enabled = v;
             cCloseCows.Enabled = v;
             cElegySpeedups.Enabled = v;
+            cImprovedPictobox.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
@@ -1458,19 +1608,15 @@ namespace MMR.UI.Forms
             cDeathMoonCrash.Enabled = v;
             cIceTrapQuirks.Enabled = v;
 
-            cSoS.Enabled = v;
-            cDChests.Enabled = v;
-            cShop.Enabled = v;
-            cBottled.Enabled = v;
-            cCowMilk.Enabled = v;
-            cSpiders.Enabled = v;
-            cMundaneRewards.Enabled = v;
-            cMoonItems.Enabled = v;
-            cFairyRewards.Enabled = v;
-            cAdditional.Enabled = v;
-            cNutChest.Enabled = v;
-            cCrazyStartingItems.Enabled = v;
-            cStrayFairies.Enabled = v;
+            foreach (Control control in tabItemPool.Controls)
+            {
+                control.Enabled = v;
+            }
+
+            foreach (Control control in tableItemPool.Controls)
+            {
+                control.Enabled = v;
+            }
 
             cDummy.Enabled = v;
             bopen.Enabled = v;
@@ -1592,14 +1738,16 @@ namespace MMR.UI.Forms
                 if (!tSettings.TabPages.Contains(tabMain))
                 {
                     tSettings.TabPages.Insert(0, tabMain);
-                    tSettings.TabPages.Insert(1, tabGimmicks);
-                    tSettings.TabPages.Insert(2, tabComfort);
-                    tSettings.TabPages.Insert(3, tabShortenCutscenes);
+                    tSettings.TabPages.Insert(1, tabItemPool);
+                    tSettings.TabPages.Insert(2, tabGimmicks);
+                    tSettings.TabPages.Insert(3, tabComfort);
+                    tSettings.TabPages.Insert(4, tabShortenCutscenes);
                 }
             }
             else
             {
                 tSettings.TabPages.Remove(tabMain);
+                tSettings.TabPages.Remove(tabItemPool);
                 tSettings.TabPages.Remove(tabGimmicks);
                 tSettings.TabPages.Remove(tabComfort);
                 tSettings.TabPages.Remove(tabShortenCutscenes);
@@ -1615,7 +1763,7 @@ namespace MMR.UI.Forms
         private const string DEFAULT_SETTINGS_FILENAME = "settings";
         private void SaveSettings(string filename = null)
         {
-            var path = Path.ChangeExtension(filename ?? DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION);
+            var path = Path.ChangeExtension(filename ?? Path.Combine(Values.MainDirectory, DEFAULT_SETTINGS_FILENAME), SETTINGS_EXTENSION);
             string logicFilePath = null;
             Configuration configurationToSave = _configuration;
             if (filename != null)
@@ -1652,7 +1800,7 @@ namespace MMR.UI.Forms
         
         private void LoadSettings(string filename = null)
         {
-            var path = Path.ChangeExtension(filename ?? DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION);
+            var path = Path.ChangeExtension(filename ?? Path.Combine(Values.MainDirectory, DEFAULT_SETTINGS_FILENAME), SETTINGS_EXTENSION);
             if (File.Exists(path))
             {
                 try
@@ -1676,6 +1824,7 @@ namespace MMR.UI.Forms
                     {
                         newConfiguration.GameplaySettings.UserLogicFileName = string.Empty;
                     }
+
                     if (filename != null)
                     {
                         _configuration.GameplaySettings = newConfiguration.GameplaySettings;
@@ -1691,7 +1840,32 @@ namespace MMR.UI.Forms
                 }
             }
 
-            tCustomItemList.Text = _configuration.GameplaySettings.CustomItemListString;
+            if (_configuration.GameplaySettings.ItemCategoriesRandomized != null || _configuration.GameplaySettings.LocationCategoriesRandomized != null)
+            {
+                var items = new List<Item>();
+                if (_configuration.GameplaySettings.ItemCategoriesRandomized != null)
+                {
+                    items.AddRange(ItemUtils.ItemsByItemCategory().Where(kvp => _configuration.GameplaySettings.ItemCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
+                    _configuration.GameplaySettings.ItemCategoriesRandomized = null;
+                }
+                if (_configuration.GameplaySettings.LocationCategoriesRandomized != null)
+                {
+                    items.AddRange(ItemUtils.ItemsByLocationCategory().Where(kvp => _configuration.GameplaySettings.LocationCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
+                    _configuration.GameplaySettings.LocationCategoriesRandomized = null;
+                }
+                _configuration.GameplaySettings.CustomItemList.Clear();
+                foreach (var item in items)
+                {
+                    _configuration.GameplaySettings.CustomItemList.Add(item);
+                }
+                UpdateItemPoolCheckboxes();
+            }
+            else
+            {
+                _configuration.GameplaySettings.CustomItemList = ItemUtils.ConvertStringToItemList(ItemEditor.BaseItemList, _configuration.GameplaySettings.CustomItemListString)?.ToHashSet();
+                UpdateItemPoolCheckboxes();
+            }
+
 
             tStartingItemList.Text = _configuration.GameplaySettings.CustomStartingItemListString;
 
@@ -1699,7 +1873,7 @@ namespace MMR.UI.Forms
 
             HudConfig.Update(_configuration.CosmeticSettings.AsmOptions.HudColorsConfig.Colors);
 
-            foreach (var form in Enum.GetValues(typeof(TransformationForm)).Cast<TransformationForm>())
+            foreach (var form in Enum.GetValues<TransformationForm>())
             {
                 if (!_configuration.CosmeticSettings.UseTunicColors.ContainsKey(form))
                 {
@@ -1722,7 +1896,6 @@ namespace MMR.UI.Forms
 
             UpdateJunkLocationAmountLabel();
             UpdateCustomStartingItemAmountLabel();
-            UpdateCustomItemAmountLabel();
             UpdateCheckboxes();
             ToggleCheckBoxes();
             tROMName.Text = _configuration.OutputSettings.InputROMFilename;
@@ -1796,6 +1969,36 @@ namespace MMR.UI.Forms
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void bItemPoolEdit_Click(object sender, EventArgs e)
+        {
+            if (ItemEditor.ShowDialog() == DialogResult.Cancel)
+            {
+                tItemPool.Text = ItemEditor.ItemListString;
+            }
+        }
+
+        private void tItemPool_TextChanged(object sender, EventArgs e)
+        {
+            if (_itemPoolRecalculating)
+            {
+                return;
+            }
+
+            _configuration.GameplaySettings.CustomItemList = ItemUtils.ConvertStringToItemList(ItemEditor.BaseItemList, tItemPool.Text)?.ToHashSet();
+
+            UpdateItemPoolCheckboxes();
+        }
+
+        private void cInstantPictobox_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.KeepPictoboxAntialiasing = !cInstantPictobox.Checked);
+        }
+
+        private void cImprovedPictobox_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.EnablePictoboxSubject = cImprovedPictobox.Checked);
         }
     }
 }

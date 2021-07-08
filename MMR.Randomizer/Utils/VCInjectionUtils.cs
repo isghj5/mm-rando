@@ -73,7 +73,7 @@ namespace MMR.Randomizer.Utils
         {
             using (var app1 = new BeBinaryWriter(File.OpenWrite(Path.Combine(VCDir, "00000001.app"))))
             {
-                var used = config.InUse;
+                var used = config.InUse();
                 var buttons = new VCControllerButton[]
                 {
                     VCControllerButton.DPadUp,

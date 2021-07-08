@@ -3,13 +3,14 @@
 
 using Nake;
 using System;
+using System.IO;
 
 const string DefaultConfig = "Release";
 
 var ScriptDirectory = "%NakeScriptDirectory%";
 var RandoCliPath = $"{ScriptDirectory}/../MMR.CLI";
 var RandoUiPath = $"{ScriptDirectory}/../MMR.UI";
-var RomPath = $"{ScriptDirectory}/input/Rom.z64";
+var RomPath = $"{ScriptDirectory}/roms/Rom.z64";
 
 /// Build Asm blob using docker-compose.
 [Nake] async Task RunDockerCompose() => await "docker-compose up --abort-on-container-exit";
@@ -24,6 +25,9 @@ var RomPath = $"{ScriptDirectory}/input/Rom.z64";
 /// Run MMR.CLI to generate a patched ROM.
 [Nake] async Task RunRandoCli(string config, bool useUiConfig = true)
 {
+    // Create output directory used by MMR.CLI.
+    Directory.CreateDirectory($"{ScriptDirectory}/output");
+
     var cliDllPath = Path.GetFullPath($"{RandoCliPath}/bin/{config}/netcoreapp3.1/MMR.CLI.dll");
     var settingsPath = Path.GetFullPath($"{RandoUiPath}/bin/{config}/settings.json");
     await $"dotnet '{cliDllPath}' -input '{RomPath}' {(useUiConfig ? $"-settings '{settingsPath}'" : "")}";

@@ -9,6 +9,7 @@
             | ShortenCutsceneGeneral.MilkBarPerformance
             | ShortenCutsceneGeneral.HungryGoron
             | ShortenCutsceneGeneral.TatlInterrupts
+            | ShortenCutsceneGeneral.FasterBankText
             | ShortenCutsceneGeneral.EverythingElse
             ;
 

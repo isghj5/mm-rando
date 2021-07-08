@@ -2,12 +2,12 @@
 using MMR.Common.Extensions;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models.Colors;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Text.Json.Serialization;
 
 namespace MMR.Randomizer.Asm
 {
@@ -72,61 +72,63 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Get all colors in the order of serialization.
         /// </summary>
-        public Color[] All => new Color[]
+        public Color[] All()
         {
-            ButtonA,
-            ButtonB,
-            ButtonC,
-            ButtonStart,
-            ClockEmblem,
-            ClockEmblemInverted1,
-            ClockEmblemInverted2,
-            ClockEmblemSun,
-            ClockMoon,
-            ClockSun,
-            Heart,
-            HeartDD,
-            Magic,
-            MagicInf,
-            Map,
-            MapEntranceCursor,
-            MapPlayerCursor,
-            RupeeIcon1,
-            RupeeIcon2,
-            RupeeIcon3,
-            ButtonIconA,
-            ButtonIconB,
-            ButtonIconC,
-            MenuAInner1,
-            MenuAInner2,
-            MenuAOuter1,
-            MenuAOuter2,
-            MenuCInner1,
-            MenuCInner2,
-            MenuCOuter1,
-            MenuCOuter2,
-            NoteA1,
-            NoteA2,
-            NoteAShadow1,
-            NoteAShadow2,
-            NoteC1,
-            NoteC2,
-            NoteCShadow1,
-            NoteCShadow2,
-            PauseTitleA,
-            PauseTitleC,
-            Prompt1,
-            Prompt2,
-            PromptGlow,
-            ScoreLines,
-            ScoreNote,
-            DPad,
-            MenuBorder1,
-            MenuBorder2,
-            MenuSubtitleText,
-            ShopCursor1,
-            ShopCursor2,
-        };
+            return new Color[] {
+                ButtonA,
+                ButtonB,
+                ButtonC,
+                ButtonStart,
+                ClockEmblem,
+                ClockEmblemInverted1,
+                ClockEmblemInverted2,
+                ClockEmblemSun,
+                ClockMoon,
+                ClockSun,
+                Heart,
+                HeartDD,
+                Magic,
+                MagicInf,
+                Map,
+                MapEntranceCursor,
+                MapPlayerCursor,
+                RupeeIcon1,
+                RupeeIcon2,
+                RupeeIcon3,
+                ButtonIconA,
+                ButtonIconB,
+                ButtonIconC,
+                MenuAInner1,
+                MenuAInner2,
+                MenuAOuter1,
+                MenuAOuter2,
+                MenuCInner1,
+                MenuCInner2,
+                MenuCOuter1,
+                MenuCOuter2,
+                NoteA1,
+                NoteA2,
+                NoteAShadow1,
+                NoteAShadow2,
+                NoteC1,
+                NoteC2,
+                NoteCShadow1,
+                NoteCShadow2,
+                PauseTitleA,
+                PauseTitleC,
+                Prompt1,
+                Prompt2,
+                PromptGlow,
+                ScoreLines,
+                ScoreNote,
+                DPad,
+                MenuBorder1,
+                MenuBorder2,
+                MenuSubtitleText,
+                ShopCursor1,
+                ShopCursor2,
+            };
+        }
 
         public HudColors()
         {
@@ -150,19 +152,19 @@ namespace MMR.Randomizer.Asm
         {
             if (version == 0)
             {
-                return this.All.Take(20).ToArray();
+                return this.All().Take(20).ToArray();
             }
             else if (version == 1)
             {
-                return this.All.Take(46).ToArray();
+                return this.All().Take(46).ToArray();
             }
             else if (version == 2)
             {
-                return this.All.Take(47).ToArray();
+                return this.All().Take(47).ToArray();
             }
             else
             {
-                return this.All.Take(52).ToArray();
+                return this.All().Take(52).ToArray();
             }
         }
 

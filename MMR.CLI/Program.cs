@@ -19,7 +19,18 @@ namespace MMR.CLI
     {
         static int Main(string[] args)
         {
-            var argsDictionary = DictionaryHelper.FromProgramArguments(args);
+            Dictionary<string, List<string>> argsDictionary;
+            if (args.Length == 1 && File.Exists(args[0]) && Path.GetExtension(args[0]) == ".mmr")
+            {
+                argsDictionary = new Dictionary<string, List<string>>
+                {
+                    { "-inputpatch", args.ToList() }
+                };
+            }
+            else
+            {
+                argsDictionary = DictionaryHelper.FromProgramArguments(args);
+            }
             if (argsDictionary.ContainsKey("-help"))
             {
                 Console.WriteLine("All arguments are optional.");
@@ -44,6 +55,8 @@ namespace MMR.CLI
                 Console.WriteLine("settings.json details:");
                 Console.WriteLine(GetSettingPath(cfg => cfg.GameplaySettings) + ":");
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.LogicMode));
+                Console.WriteLine(GetArrayValueDescription(nameof(GameplaySettings.ItemCategoriesRandomized), Enum.GetValues<ItemCategory>().Where(c => c > 0).Select(c => c.ToString())));
+                Console.WriteLine(GetArrayValueDescription(nameof(GameplaySettings.LocationCategoriesRandomized), Enum.GetValues<LocationCategory>().Where(c => c > 0).Select(c => c.ToString())));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.DamageMode));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.DamageEffect));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.MovementMode));
@@ -51,6 +64,9 @@ namespace MMR.CLI
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.ClockSpeed));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.BlastMaskCooldown));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.GossipHintStyle));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.SmallKeyMode));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.BossKeyMode));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.StrayFairyMode));
                 Console.WriteLine(GetSettingDescription(nameof(GameplaySettings.EnabledTricks), "Array of trick IDs."));
                 Console.WriteLine(GetSettingPath(cfg => cfg.GameplaySettings.ShortenCutsceneSettings) + ":");
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.ShortenCutsceneSettings.General));
@@ -59,7 +75,7 @@ namespace MMR.CLI
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.TatlColorSchema));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.Music));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.CosmeticSettings.DisableCombatMusic));
-                Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.Instruments), Enum.GetNames(typeof(Instrument))));
+                Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.Instruments), Enum.GetNames<Instrument>()));
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.HeartsSelection), ColorSelectionManager.Hearts.GetItems().Select(csi => csi.Name)));
                 Console.WriteLine(GetArrayValueDescription(nameof(CosmeticSettings.MagicSelection), ColorSelectionManager.MagicMeter.GetItems().Select(csi => csi.Name)));
                 Console.WriteLine(GetSettingPath(cfg => cfg.CosmeticSettings.DPad.Pad) + ":");
@@ -103,7 +119,7 @@ namespace MMR.CLI
                 Console.WriteLine($"Loaded GameplaySettings from \"{settingsPath}\".");
             }
 
-            configuration.GameplaySettings.CustomItemList = ConvertIntString(configuration.GameplaySettings.CustomItemListString);
+            configuration.GameplaySettings.CustomItemList = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomItemListString).ToHashSet();
             configuration.GameplaySettings.CustomStartingItemList = ConvertItemString(ItemUtils.StartingItems().Where(item => !item.Name().Contains("Heart")).ToList(), configuration.GameplaySettings.CustomStartingItemListString);
             configuration.GameplaySettings.CustomJunkLocations = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomJunkLocationsString);
 
@@ -151,7 +167,7 @@ namespace MMR.CLI
             }
             if (string.IsNullOrWhiteSpace(filename))
             {
-                filename = FileUtils.MakeFilenameValid(DateTime.UtcNow.ToString("o")) + ".z64";
+                filename = FileUtils.MakeFilenameValid($"MMR-{typeof(Randomizer.Randomizer).Assembly.GetName().Version}-{DateTime.UtcNow:o}") + ".z64";
             }
             else if (Path.GetExtension(filename) != ".z64")
             {
@@ -301,7 +317,7 @@ namespace MMR.CLI
         private const string SETTINGS_EXTENSION = "json";
         private static void SaveSettings(Configuration configuration, string filename = null)
         {
-            var path = Path.ChangeExtension(filename ?? DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION);
+            var path = Path.ChangeExtension(filename ?? Path.Combine(Values.MainDirectory, DEFAULT_SETTINGS_FILENAME), SETTINGS_EXTENSION);
             string logicFilePath = null;
             //if (filename != null)
             //{
@@ -337,7 +353,7 @@ namespace MMR.CLI
 
         private static Configuration LoadSettings(string filename = null)
         {
-            var path = Path.ChangeExtension(filename ?? DEFAULT_SETTINGS_FILENAME, SETTINGS_EXTENSION);
+            var path = Path.ChangeExtension(filename ?? Path.Combine(Values.MainDirectory, DEFAULT_SETTINGS_FILENAME), SETTINGS_EXTENSION);
             if (File.Exists(path))
             {
                 Configuration configuration;

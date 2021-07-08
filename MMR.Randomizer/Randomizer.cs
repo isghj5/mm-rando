@@ -1,4 +1,5 @@
 using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
@@ -19,7 +20,7 @@ namespace MMR.Randomizer
 {
     public class Randomizer
     {
-        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString();
+        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString() + "-beta";
 
         private Random Random { get; set; }
 
@@ -48,16 +49,7 @@ namespace MMR.Randomizer
         }
 
         // Starting items should not be replaced by trade items, or items that can be downgraded.
-        private readonly List<Item> ForbiddenStartingItems = new List<Item>
-            {
-                // Starting with Magic Bean or Powder Keg doesn't actually give you one,
-                // nor do you get one when you play Song of Time.
-                Item.ItemMagicBean,
-                Item.ItemPowderKeg,
-            }
-            .Concat(Enumerable.Range((int)Item.TradeItemMoonTear, Item.TradeItemMamaLetter - Item.TradeItemMoonTear + 1).Cast<Item>())
-            .Concat(Enumerable.Range((int)Item.ItemBottleWitch, Item.ItemBottleMadameAroma - Item.ItemBottleWitch + 1).Cast<Item>())
-            .ToList();
+        private readonly List<Item> ForbiddenStartingItems = new List<Item>();
 
         private readonly Dictionary<Item, List<Item>> ForbiddenReplacedBy = new Dictionary<Item, List<Item>>
         {
@@ -155,12 +147,12 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_settings.AddShopItems)
+            if (_settings.CustomItemList.Any(item => item.LocationCategory() == LocationCategory.Purchases))
             {
                 ItemList[Item.ShopItemWitchBluePotion].DependsOnItems?.Remove(Item.BottleCatchMushroom);
             }
 
-            if (_settings.RandomizeBottleCatchContents && _settings.LogicMode == LogicMode.Casual)
+            if (_settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.ScoopedItems) && _settings.LogicMode == LogicMode.Casual)
             {
                 var anyBottleIndex = ItemList.FindIndex(io => io.Name == "Any Bottle");
                 var twoBottlesIndex = ItemList.FindIndex(io => io.Name == "2 Bottles");
@@ -545,68 +537,12 @@ namespace MMR.Randomizer
                 ItemList = LogicUtils.PopulateItemListWithoutLogic();
             }
 
-            if (_settings.UseCustomItemList)
-            {
-                UpdateCustomItemListSettings();
-            }
-
             UpdateLogicForSettings();
 
             ItemUtils.PrepareJunkItems(ItemList);
             if (_settings.CustomJunkLocations.Count > ItemUtils.JunkItems.Count)
             {
                 throw new Exception($"Too many Enforced Junk Locations. Select up to {ItemUtils.JunkItems.Count}.");
-            }
-        }
-
-        private void UpdateCustomItemListSettings()
-        {
-            if (_settings.CustomItemList.Contains(-1))
-            {
-                throw new Exception("Invalid custom item string.");
-            }
-
-            // Keep shop items vanilla, unless custom item list contains a shop item
-            _settings.AddShopItems = false;
-
-            // Keep cows vanilla, unless custom item list contains a cow
-            _settings.AddCowMilk = false;
-
-            // Keep skulltula tokens vanilla, unless custom item list contains a token
-            _settings.AddSkulltulaTokens = false;
-
-            // Keep stray fairies vanilla, unless custom item list contains a fairy
-            _settings.AddStrayFairies = false;
-
-            // Keep scoops vanilla, unless custom item list contains a scoop
-            _settings.RandomizeBottleCatchContents = false;
-
-            foreach (var item in _settings.CustomItemList.Select(ItemUtils.AddItemOffset).Cast<Item>())
-            {
-                if (ItemUtils.IsShopItem(item))
-                {
-                    _settings.AddShopItems = true;
-                }
-
-                if (ItemUtils.IsCowItem(item))
-                {
-                    _settings.AddCowMilk = true;
-                }
-
-                if (ItemUtils.IsSkulltulaToken(item))
-                {
-                    _settings.AddSkulltulaTokens = true;
-                }
-
-                if (ItemUtils.IsStrayFairy(item))
-                {
-                    _settings.AddStrayFairies = true;
-                }
-
-                if (ItemUtils.IsBottleCatchContent(item))
-                {
-                    _settings.RandomizeBottleCatchContents = true;
-                }
             }
         }
 
@@ -660,6 +596,7 @@ namespace MMR.Randomizer
 
                 int k = 0;
                 var circularDependencies = new List<Item>();
+                var conditionRemoves = new List<int[]>();
                 for (int i = 0; i < currentTargetObject.Conditionals.Count; i++)
                 {
                     bool match = false;
@@ -670,19 +607,18 @@ namespace MMR.Randomizer
                         {
                             continue;
                         }
-
-                        int[] check = new int[] { (int)target, i, j };
-
-                        if (ItemList[d].NewLocation.HasValue)
+                        if (ItemList[d].Item < 0)
                         {
-                            d = ItemList[d].NewLocation.Value;
+                            continue;
                         }
+
                         if (d == currentItem)
                         {
                             DependenceChecked[d] = Dependence.Dependent;
                         }
                         else
                         {
+                            d = ItemList[d].NewLocation ?? d;
                             if (dependencyPath.Contains(d))
                             {
                                 DependenceChecked[d] = Dependence.Circular(d);
@@ -703,9 +639,11 @@ namespace MMR.Randomizer
                             }
                             if (DependenceChecked[d].Type == DependenceType.Dependent)
                             {
-                                if (!ConditionRemoves.Any(c => c.SequenceEqual(check)))
+                                int[] check = new int[] { (int)target, i, j };
+
+                                if (!conditionRemoves.Any(c => c.SequenceEqual(check)))
                                 {
-                                    ConditionRemoves.Add(check);
+                                    conditionRemoves.Add(check);
                                 }
                             }
                             else
@@ -730,6 +668,16 @@ namespace MMR.Randomizer
                     Debug.WriteLine($"All conditionals of {target} failed dependency check for {currentItem}.");
                     return Dependence.Dependent;
                 }
+                else
+                {
+                    foreach (var cr in conditionRemoves)
+                    {
+                        if (!ConditionRemoves.Any(c => c.SequenceEqual(cr)))
+                        {
+                            ConditionRemoves.Add(cr);
+                        }
+                    }
+                }
             }
 
             if (currentTargetObject.DependsOnItems == null)
@@ -752,6 +700,10 @@ namespace MMR.Randomizer
                 if (!currentItem.IsTemporary() && target == Item.MaskBlast && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
                 {
                     // Permanent items ignore Kafei Letter and Pendant on Blast Mask check.
+                    continue;
+                }
+                if (ItemList[dependency].Item < 0)
+                {
                     continue;
                 }
                 if (dependency == currentItem)
@@ -955,6 +907,11 @@ namespace MMR.Randomizer
 
         private bool CheckMatch(Item currentItem, Item target)
         {
+            if (currentItem < 0)
+            {
+                return true;
+            }
+
             if (_settings.CustomStartingItemList.Contains(currentItem))
             {
                 return true;
@@ -991,7 +948,7 @@ namespace MMR.Randomizer
 
             if (currentItem.IsTemporary())
             {
-                if (ItemUtils.IsMoonLocation(target))
+                if (target.Region() == Region.TheMoon)
                 {
                     Debug.WriteLine($"{currentItem} is temporary and cannot be placed on the moon.");
                     return false;
@@ -1023,7 +980,7 @@ namespace MMR.Randomizer
             return true;
         }
 
-        private void PlaceItem(Item currentItem, List<Item> targets)
+        private void PlaceItem(Item currentItem, List<Item> targets, bool lockRegion = false)
         {
             var currentItemObject = ItemList[currentItem];
             if (currentItemObject.NewLocation.HasValue)
@@ -1038,6 +995,12 @@ namespace MMR.Randomizer
                 availableItems.Remove(Item.SongHealing);
             }
 
+            if (lockRegion)
+            {
+                availableItems.RemoveAll(location => location.Region() != currentItem.Region());
+            }
+
+            currentItem = currentItemObject.Item;
             while (true)
             {
                 if (availableItems.Count == 0)
@@ -1067,20 +1030,73 @@ namespace MMR.Randomizer
             }
         }
 
+        private void SetupItems()
+        {
+            SetupCustomItems();
+
+            foreach (var item in _settings.CustomStartingItemList)
+            {
+                ItemList[item].ItemOverride = Item.RecoveryHeart;
+            }
+
+            if (_randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.DoorsOpen))
+            {
+                foreach (var item in ItemUtils.SmallKeys())
+                {
+                    ItemList[item].ItemOverride = Item.RecoveryHeart;
+                }
+            }
+
+            if (_randomized.Settings.BossKeyMode.HasFlag(BossKeyMode.DoorsOpen))
+            {
+                foreach (var item in ItemUtils.BossKeys())
+                {
+                    ItemList[item].ItemOverride = Item.RecoveryHeart;
+                }
+            }
+
+            if (_randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly))
+            {
+                foreach (var item in ItemUtils.DungeonStrayFairies())
+                {
+                    ItemList[item].ItemOverride = Item.RecoveryHeart;
+                    if (!item.HasAttribute<ChestAttribute>())
+                    {
+                        ItemList[item].NewLocation = item;
+                    }
+                }
+            }
+        }
+
+        private void ReplaceRecoveryHeartsWithJunk()
+        {
+            var allUsableJunk = ItemUtils.JunkItems.Where(item => item.IsRepeatable()).ToList();
+            var usableJunk = allUsableJunk.Where(item => ItemList[item].IsRandomized).ToList();
+            if (!usableJunk.Any())
+            {
+                usableJunk = allUsableJunk;
+            }
+            foreach (var io in ItemList.Where(io => !io.Item.IsFake()))
+            {
+                if (!ItemUtils.IsStartingLocation(io.NewLocation.Value) && (!io.NewLocation.Value.IsSong() || _settings.AddSongs) && io.Item == Item.RecoveryHeart)
+                {
+                    io.ItemOverride = usableJunk.Random(Random);
+                }
+            }
+        }
+
         private void RandomizeItems()
         {
-            if (_settings.UseCustomItemList)
+            if (!_settings.AddSongs)
             {
-                SetupCustomItems();
-            }
-            else
-            {
-                Setup();
+                ShuffleSongs();
             }
 
             var itemPool = new List<Item>();
 
             AddAllItems(itemPool);
+
+            PlaceRestrictedDungeonItems(itemPool);
 
             PlaceFreeItems(itemPool);
             PlaceQuestItems(itemPool);
@@ -1097,11 +1113,23 @@ namespace MMR.Randomizer
             PlaceShopItems(itemPool);
             PlaceCowMilk(itemPool);
             PlaceMoonItems(itemPool);
-            PlaceHeartpieces(itemPool);
-            PlaceOther(itemPool);
-            PlaceTingleMaps(itemPool);
+            PlaceRemainingItems(itemPool);
 
             _randomized.ItemList = ItemList;
+        }
+
+        /// <summary>
+        /// Places remaining items in the randomization pool.
+        /// </summary>
+        private void PlaceRemainingItems(List<Item> itemPool)
+        {
+            foreach (var item in ItemUtils.AllLocations().OrderBy(ItemUtils.IsJunk))
+            {
+                if (ItemList[item].NewLocation == null)
+                {
+                    PlaceItem(item, itemPool);
+                }
+            }
         }
 
         /// <summary>
@@ -1121,17 +1149,6 @@ namespace MMR.Randomizer
         private void PlaceMoonItems(List<Item> itemPool)
         {
             for (var i = Item.HeartPieceDekuTrial; i <= Item.ChestLinkTrialBombchu10; i++)
-            {
-                PlaceItem(i, itemPool);
-            }
-        }
-
-        /// <summary>
-        /// Places tingle maps in the randomization pool.
-        /// </summary>
-        private void PlaceTingleMaps(List<Item> itemPool)
-        {
-            for (var i = Item.ItemTingleMapTown; i <= Item.ItemTingleMapStoneTower; i++)
             {
                 PlaceItem(i, itemPool);
             }
@@ -1171,43 +1188,6 @@ namespace MMR.Randomizer
         }
 
         /// <summary>
-        /// Places other chests and grottos in the randomization pool.
-        /// </summary>
-        /// <param name="itemPool"></param>
-        private void PlaceOther(List<Item> itemPool)
-        {
-            for (var i = Item.ChestLensCaveRedRupee; i <= Item.ChestSouthClockTownPurpleRupee; i++)
-            {
-                PlaceItem(i, itemPool);
-            }
-
-            PlaceItem(Item.ChestToGoronRaceGrotto, itemPool);
-            PlaceItem(Item.IkanaScrubGoldRupee, itemPool);
-            PlaceItem(Item.ChestPreClocktownDekuNut, itemPool);
-        }
-
-        /// <summary>
-        /// Places heart pieces in the randomization pool. Includes rewards/chests, as well as standing heart pieces.
-        /// </summary>
-        private void PlaceHeartpieces(List<Item> itemPool)
-        {
-            // Rewards/chests
-            for (var i = Item.HeartPieceNotebookMayor; i <= Item.HeartPieceKnuckle; i++)
-            {
-                PlaceItem(i, itemPool);
-            }
-
-            // Bank reward
-            PlaceItem(Item.HeartPieceBank, itemPool);
-
-            // Standing heart pieces
-            for (var i = Item.HeartPieceSouthClockTown; i <= Item.HeartContainerStoneTower; i++)
-            {
-                PlaceItem(i, itemPool);
-            }
-        }
-
-        /// <summary>
         /// Places shop items in the randomization pool
         /// </summary>
         private void PlaceShopItems(List<Item> itemPool)
@@ -1226,6 +1206,33 @@ namespace MMR.Randomizer
             for (var i = Item.ItemRanchBarnMainCowMilk; i <= Item.ItemCoastGrottoCowMilk2; i++)
             {
                 PlaceItem(i, itemPool);
+            }
+        }
+
+        private void PlaceRestrictedDungeonItems(List<Item> itemPool)
+        {
+            if (_randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon))
+            {
+                foreach (var item in ItemUtils.SmallKeys())
+                {
+                    PlaceItem(item, itemPool, true);
+                }
+            }
+
+            if (_randomized.Settings.BossKeyMode.HasFlag(BossKeyMode.KeepWithinDungeon))
+            {
+                foreach (var item in ItemUtils.BossKeys())
+                {
+                    PlaceItem(item, itemPool, true);
+                }
+            }
+
+            if (_randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinDungeon))
+            {
+                foreach (var item in ItemUtils.DungeonStrayFairies())
+                {
+                    PlaceItem(item, itemPool, true);
+                }
             }
         }
 
@@ -1298,9 +1305,11 @@ namespace MMR.Randomizer
                 Item.StartingHeartContainer1,
                 Item.StartingHeartContainer2,
             };
-            var availableStartingItems = (_settings.NoStartingItems
-                ? ItemUtils.AllRupees()
-                : ItemUtils.StartingItems())
+            var availableStartingItems = (_settings.StartingItemMode switch {
+                    StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary() && item != Item.ItemPowderKeg),
+                    StartingItemMode.AllowTemporaryItems => ItemUtils.StartingItems(),
+                    _ => ItemUtils.AllRupees(),
+                })
                 .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item))
                 .Cast<Item?>()
                 .ToList();
@@ -1360,102 +1369,6 @@ namespace MMR.Randomizer
         }
 
         /// <summary>
-        /// Adds items to randomization pool based on settings.
-        /// </summary>
-        private void Setup()
-        {
-            if (_settings.ExcludeSongOfSoaring)
-            {
-                ItemList[Item.SongSoaring].NewLocation = Item.SongSoaring;
-            }
-
-            if (!_settings.AddSongs)
-            {
-                ShuffleSongs();
-            }
-
-            if (!_settings.AddDungeonItems)
-            {
-                PreserveDungeonItems();
-            }
-
-            if (!_settings.AddShopItems)
-            {
-                PreserveShopItems();
-            }
-
-            if (!_settings.AddOther)
-            {
-                PreserveOther();
-            }
-
-            if (_settings.RandomizeBottleCatchContents)
-            {
-                AddBottleCatchContents();
-            }
-            else
-            {
-                PreserveBottleCatchContents();
-            }
-
-            if (!_settings.AddMoonItems)
-            {
-                PreserveMoonItems();
-            }
-
-            if (!_settings.AddFairyRewards)
-            {
-                PreserveFairyRewards();
-            }
-
-            if (!_settings.AddNutChest || _settings.LogicMode == LogicMode.Casual)
-            {
-                PreserveNutChest();
-            }
-
-            if (!_settings.CrazyStartingItems)
-            {
-                PreserveStartingItems();
-            }
-
-            if (!_settings.AddCowMilk)
-            {
-                PreserveCowMilk();
-            }
-
-            if (!_settings.AddSkulltulaTokens)
-            {
-                PreserveSkulltulaTokens();
-            }
-
-            if (!_settings.AddStrayFairies)
-            {
-                PreserveStrayFairies();
-            }
-
-            if (!_settings.AddMundaneRewards)
-            {
-                PreserveMundaneRewards();
-            }
-
-            if (_settings.LogicMode == LogicMode.Casual && ItemList[Item.ItemRanchBarnOtherCowMilk2].Conditionals.Count == 1)
-            {
-                PreserveGlitchedCowMilk();
-            }
-        }
-
-        /// <summary>
-        /// Keeps bottle catch contents vanilla
-        /// </summary>
-        private void PreserveBottleCatchContents()
-        {
-            for (var i = Item.BottleCatchFairy; i <= Item.BottleCatchMushroom; i++)
-            {
-                ItemList[i].NewLocation = i;
-            }
-        }
-
-        /// <summary>
         /// Randomizes bottle catch contents
         /// </summary>
         private void AddBottleCatchContents()
@@ -1477,144 +1390,6 @@ namespace MMR.Randomizer
         }
 
         /// <summary>
-        /// Keeps other vanilla
-        /// </summary>
-        private void PreserveOther()
-        {
-            for (var i = Item.ChestLensCaveRedRupee; i <= Item.IkanaScrubGoldRupee; i++)
-            {
-                ItemList[i].NewLocation = i;
-            }
-        }
-
-        /// <summary>
-        /// Keeps shop items vanilla
-        /// </summary>
-        private void PreserveShopItems()
-        {
-            for (var i = Item.ShopItemTradingPostRedPotion; i <= Item.ShopItemZoraRedPotion; i++)
-            {
-                ItemList[i].NewLocation = i;
-            }
-
-            ItemList[Item.ItemBombBag].NewLocation = Item.ItemBombBag;
-            ItemList[Item.UpgradeBigBombBag].NewLocation = Item.UpgradeBigBombBag;
-            ItemList[Item.MaskAllNight].NewLocation = Item.MaskAllNight;
-
-            ItemList[Item.ShopItemMilkBarChateau].NewLocation = Item.ShopItemMilkBarChateau;
-            ItemList[Item.ShopItemMilkBarMilk].NewLocation = Item.ShopItemMilkBarMilk;
-            ItemList[Item.ShopItemBusinessScrubMagicBean].NewLocation = Item.ShopItemBusinessScrubMagicBean;
-            ItemList[Item.ShopItemBusinessScrubGreenPotion].NewLocation = Item.ShopItemBusinessScrubGreenPotion;
-            ItemList[Item.ShopItemBusinessScrubBluePotion].NewLocation = Item.ShopItemBusinessScrubBluePotion;
-            ItemList[Item.ShopItemGormanBrosMilk].NewLocation = Item.ShopItemGormanBrosMilk;
-        }
-
-        /// <summary>
-        /// Keeps dungeon items vanilla
-        /// </summary>
-        private void PreserveDungeonItems()
-        {
-            for (var i = Item.ItemWoodfallMap; i <= Item.ItemStoneTowerKey4; i++)
-            {
-                ItemList[i].NewLocation = i;
-            };
-        }
-
-        /// <summary>
-        /// Keeps moon items vanilla
-        /// </summary>
-        private void PreserveMoonItems()
-        {
-            for (var i = Item.HeartPieceDekuTrial; i <= Item.ChestLinkTrialBombchu10; i++)
-            {
-                ItemList[i].NewLocation = i;
-            }
-        }
-
-        /// <summary>
-        /// Keeps great fairy rewards vanilla
-        /// </summary>
-        private void PreserveFairyRewards()
-        {
-            for (var i = Item.FairyMagic; i <= Item.ItemFairySword; i++)
-            {
-                ItemList[i].NewLocation = i;
-            }
-            ItemList[Item.MaskGreatFairy].NewLocation = Item.MaskGreatFairy;
-        }
-
-        /// <summary>
-        /// Keeps nut chest vanilla
-        /// </summary>
-        private void PreserveNutChest()
-        {
-            ItemList[Item.ChestPreClocktownDekuNut].NewLocation = Item.ChestPreClocktownDekuNut;
-        }
-
-        /// <summary>
-        /// Keeps regular starting items vanilla
-        /// </summary>
-        private void PreserveStartingItems()
-        {
-            for (var i = Item.StartingSword; i <= Item.StartingHeartContainer2; i++)
-            {
-                ItemList[i].NewLocation = i;
-            }
-        }
-
-        /// <summary>
-        /// Keeps cow milk vanilla
-        /// </summary>
-        private void PreserveCowMilk()
-        {
-            for (var i = Item.ItemRanchBarnMainCowMilk; i <= Item.ItemCoastGrottoCowMilk2; i++)
-            {
-                ItemList[i].NewLocation = i;
-            }
-        }
-
-        /// <summary>
-        /// Keeps skulltula tokens vanilla
-        /// </summary>
-        private void PreserveSkulltulaTokens()
-        {
-            for (var i = Item.CollectibleSwampSpiderToken1; i <= Item.CollectibleOceanSpiderToken30; i++)
-            {
-                ItemList[i].NewLocation = i;
-            }
-        }
-
-        /// <summary>
-        /// Keeps stray fairies vanilla
-        /// </summary>
-        private void PreserveStrayFairies()
-        {
-            for (var i = Item.CollectibleStrayFairyClockTown; i <= Item.CollectibleStrayFairyStoneTower15; i++)
-            {
-                ItemList[i].NewLocation = i;
-            }
-        }
-
-        private void PreserveMundaneRewards()
-        {
-            for (var i = Item.MundaneItemLotteryPurpleRupee; i <= Item.MundaneItemSeahorse; i++)
-            {
-                if (!ItemUtils.IsShopItem(i))
-                {
-                    ItemList[i].NewLocation = i;
-                }
-            }
-        }
-
-        /// <summary>
-        /// Keeps glitched cow milk vanilla
-        /// </summary>
-        private void PreserveGlitchedCowMilk()
-        {
-            ItemList[Item.ItemRanchBarnOtherCowMilk2].NewLocation = Item.ItemRanchBarnOtherCowMilk2;
-        }
-
-        /// <summary>
         /// Randomizes songs with other songs
         /// </summary>
         private void ShuffleSongs()
@@ -1629,9 +1404,11 @@ namespace MMR.Randomizer
                 itemPool.Add(i);
             }
 
-            for (var i = Item.SongHealing; i <= Item.SongOath; i++)
+            var songs = Enumerable.Range((int)Item.SongHealing, Item.SongOath - Item.SongHealing + 1).Cast<Item>();
+
+            foreach (var song in songs.OrderBy(s => _randomized.Settings.CustomStartingItemList.Contains(s)))
             {
-                PlaceItem(i, itemPool);
+                PlaceItem(song, itemPool);
             }
         }
 
@@ -1648,11 +1425,6 @@ namespace MMR.Randomizer
 
             // Should these be randomized by default? Why not check settings.
             AddBottleCatchContents();
-
-            if (!_settings.AddSongs)
-            {
-                ShuffleSongs();
-            }
         }
 
         /// <summary>
@@ -1671,22 +1443,13 @@ namespace MMR.Randomizer
         /// </summary>
         private void ApplyCustomItemList()
         {
-            if (_settings.CustomItemList.Contains(-1))
+            if (_settings.CustomItemList == null)
             {
                 throw new Exception("Invalid custom item string.");
             }
-            for (int i = 0; i < _settings.CustomItemList.Count; i++)
+            foreach (var selectedItem in _settings.CustomItemList)
             {
-                int selectedItem = _settings.CustomItemList[i];
-
-                selectedItem = ItemUtils.AddItemOffset(selectedItem);
-
-                int selectedItemIndex = ItemList.FindIndex(u => u.ID == selectedItem);
-
-                if (selectedItemIndex != -1)
-                {
-                    ItemList[selectedItemIndex].NewLocation = null;
-                }
+                ItemList[selectedItem].NewLocation = null;
             }
         }
 
@@ -1763,12 +1526,9 @@ namespace MMR.Randomizer
                 _randomized.Logic = ItemList.Select(io => new ItemLogic(io)).ToList();
 
                 progressReporter.ReportProgress(30, "Shuffling items...");
+                SetupItems();
                 RandomizeItems();
-
-                foreach (var item in _settings.CustomStartingItemList)
-                {
-                    ItemList[item].ItemOverride = Item.RecoveryHeart;
-                }
+                ReplaceRecoveryHeartsWithJunk(); // TODO make this an option?
 
                 // Replace junk items with ice traps according to settings.
                 AddIceTraps(_randomized.Settings.IceTraps, _randomized.Settings.IceTrapAppearance);

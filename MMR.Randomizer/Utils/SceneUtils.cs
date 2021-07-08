@@ -19,6 +19,11 @@ namespace MMR.Randomizer.Utils
         public static void UpdateSceneFlagMask(int num)
         {
             int offset = num >> 3;
+            if (num >= 0x380) // skip scene 7 (Grottos)
+            {
+                offset += 0x10;
+            }
+            // TODO maybe skip Cutscene Map?
             int mod = offset % 16;
             if (mod < 4)
             {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
+using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using MMR.Common.Utils;
@@ -12,7 +13,7 @@ namespace MMR.DiscordBot.Services
     public class MMRService
     {
         private const string MMR_CLI = "MMR_CLI";
-        private readonly string _cliPath;
+        protected string _cliPath;
         private readonly HttpClient _httpClient;
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         private readonly Random _random = new Random();
@@ -30,14 +31,27 @@ namespace MMR.DiscordBot.Services
             }
 
             _httpClient = new HttpClient();
-            _httpClient.Timeout = TimeSpan.FromSeconds(10);
+            _httpClient.Timeout = TimeSpan.FromSeconds(120);
             _httpClient.DefaultRequestHeaders.Add("User-Agent", "zoey.zolotova at gmail.com");
         }
 
-        public string GetSpoilerLogPath(DateTime seedDate)
+        public bool IsReady()
         {
-            var requestedLog = FileUtils.MakeFilenameValid(seedDate.ToString("o"));
-            return Path.Combine(_cliPath, "output", $"{requestedLog}_SpoilerLog.txt");
+            return !string.IsNullOrWhiteSpace(_cliPath);
+        }
+
+        public (string filename, string patchPath, string hashIconPath, string spoilerLogPath, string version) GetSeedPaths(DateTime seedDate, string version)
+        {
+            if (string.IsNullOrWhiteSpace(version))
+            {
+                var randomizerDllPath = Path.Combine(_cliPath, "MMR.Randomizer.dll");
+                version = AssemblyName.GetAssemblyName(randomizerDllPath).Version.ToString();
+            }
+            var filename = FileUtils.MakeFilenameValid($"MMR-{version}-{seedDate:o}");
+            var patchPath = Path.Combine(_cliPath, "output", $"{filename}.mmr");
+            var hashIconPath = Path.Combine(_cliPath, "output", $"{filename}.png");
+            var spoilerLogPath = Path.Combine(_cliPath, "output", $"{filename}_SpoilerLog.txt");
+            return (filename, patchPath, hashIconPath, spoilerLogPath, version);
         }
 
         public string GetSettingsPath(ulong guildId, string settingName)
@@ -71,10 +85,10 @@ namespace MMR.DiscordBot.Services
             return Directory.EnumerateFiles(guildRoot);
         }
 
-        public async Task<(string patchPath, string hashIconPath, string spoilerLogPath)> GenerateSeed(DateTime now, string settingsPath)
+        public async Task<(string patchPath, string hashIconPath, string spoilerLogPath, string version)> GenerateSeed(DateTime now, string settingsPath)
         {
             await Task.Delay(1);
-            var filename = FileUtils.MakeFilenameValid(now.ToString("o"));
+            var (filename, patchPath, hashIconPath, spoilerLogPath, version) = GetSeedPaths(now, null);
             var attempts = 1; // TODO increase number of attempts and alter seed each attempt
             while (attempts > 0)
             {
@@ -83,12 +97,9 @@ namespace MMR.DiscordBot.Services
                     var success = await GenerateSeed(filename, settingsPath);
                     if (success)
                     {
-                        var patchPath = Path.Combine(_cliPath, "output", $"{filename}.mmr");
-                        var hashIconPath = Path.ChangeExtension(patchPath, "png");
-                        var spoilerLogPath = GetSpoilerLogPath(now);
                         if (File.Exists(patchPath) && File.Exists(hashIconPath))
                         {
-                            return (patchPath, hashIconPath, spoilerLogPath);
+                            return (patchPath, hashIconPath, spoilerLogPath, version);
                         }
                         else
                         {
@@ -110,11 +121,12 @@ namespace MMR.DiscordBot.Services
 
         private async Task<bool> GenerateSeed(string filename, string settingsPath)
         {
+            var cliDllPath = Path.Combine(_cliPath, "MMR.CLI.dll");
             var output = Path.Combine("output", filename);
             var seed = await GetSeed();
             var processInfo = new ProcessStartInfo("dotnet");
             processInfo.WorkingDirectory = _cliPath;
-            processInfo.Arguments = $"{Path.Combine(_cliPath, @"MMR.CLI.dll")} -output \"{output}.z64\" -seed {seed} -spoiler -patch";
+            processInfo.Arguments = $"{cliDllPath} -output \"{output}.z64\" -seed {seed} -spoiler -patch";
             if (!string.IsNullOrWhiteSpace(settingsPath))
             {
                 processInfo.Arguments += $" -settings \"{settingsPath}\"";
@@ -143,7 +155,7 @@ namespace MMR.DiscordBot.Services
                 var response = await _httpClient.GetStringAsync("https://www.random.org/integers/?num=1&min=-1000000000&max=1000000000&col=1&base=10&format=plain&rnd=new");
                 seed = int.Parse(response) + 1000000000;
             }
-            catch (HttpRequestException e)
+            catch (Exception e) when (e is HttpRequestException || e is TaskCanceledException)
             {
                 seed = _random.Next();
             }

@@ -1,4 +1,4 @@
-﻿using MMR.Common.Extensions;
+using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
@@ -7,6 +7,7 @@ using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MMR.Randomizer.Utils
 {
@@ -14,6 +15,7 @@ namespace MMR.Randomizer.Utils
     {
         const int BOTTLE_CATCH_TABLE = 0xCD7C08;
         static int GET_ITEM_TABLE = 0;
+        public static ushort COLLECTABLE_TABLE_FILE_INDEX { get; private set; } = 0;
 
         public static void ReplaceGetItemTable()
         {
@@ -24,6 +26,8 @@ namespace MMR.Randomizer.Utils
             ResourceUtils.ApplyHack(Resources.mods.update_chests);
             RomUtils.AddNewFile(Resources.mods.chest_table);
             ReadWriteUtils.WriteToROM(0xBDAEA8, (uint)last_file + 2);
+            RomUtils.AddNewFile(Resources.mods.collectable_table);
+            COLLECTABLE_TABLE_FILE_INDEX = (ushort)(last_file + 3);
             ResourceUtils.ApplyHack(Resources.mods.standing_hearts);
             ResourceUtils.ApplyHack(Resources.mods.fix_item_checks);
             SceneUtils.ResetSceneFlagMask();
@@ -106,6 +110,19 @@ namespace MMR.Randomizer.Utils
             var location = itemObject.NewLocation.Value;
             System.Diagnostics.Debug.WriteLine($"Writing {item.Name()} --> {location.Location()}");
 
+            if (!itemObject.IsRandomized)
+            {
+                var indices = location.GetCollectableIndices();
+                if (indices.Any())
+                {
+                    foreach (var collectableIndex in location.GetCollectableIndices())
+                    {
+                        ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[COLLECTABLE_TABLE_FILE_INDEX].Data, collectableIndex * 2, 0);
+                    }
+                    return;
+                }
+            }
+
             int f = RomUtils.GetFileIndexForWriting(GET_ITEM_TABLE);
             int baseaddr = GET_ITEM_TABLE - RomData.MMFileList[f].Addr;
             var getItemIndex = location.GetItemIndex().Value;
@@ -113,7 +130,11 @@ namespace MMR.Randomizer.Utils
             var fileData = RomData.MMFileList[f].Data;
 
             GetItemEntry newItem;
-            if (item.IsExclusiveItem())
+            if (!itemObject.IsRandomized && location.IsNullableItem())
+            {
+                newItem = new GetItemEntry();
+            }
+            else if (item.IsExclusiveItem())
             {
                 newItem = item.ExclusiveItemEntry();
             }
@@ -135,19 +156,9 @@ namespace MMR.Randomizer.Utils
             };
             ReadWriteUtils.Arr_Insert(data, 0, data.Length, fileData, offset);
 
-            // todo use Logic Editor to handle which locations should be repeatable and which shouldn't.
-            var isCycleRepeatable = item.IsCycleRepeatable();
-            if (item.Name().Contains("Rupee") && location.IsRupeeRepeatable())
+            if (location.IsRupeeRepeatable())
             {
-                isCycleRepeatable = true;
-            }
-            if (item.ToString().StartsWith("Trade") && settings.QuestItemStorage)
-            {
-                isCycleRepeatable = false;
-            }
-            if (isCycleRepeatable)
-            {
-                settings.AsmOptions.MMRConfig.CycleRepeatableLocations.Add(getItemIndex);
+                settings.AsmOptions.MMRConfig.RupeeRepeatableLocations.Add(getItemIndex);
             }
 
             var isRepeatable = item.IsRepeatable() || (!settings.PreventDowngrades && item.IsDowngradable());

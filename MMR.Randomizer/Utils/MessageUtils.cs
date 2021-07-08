@@ -50,14 +50,19 @@ namespace MMR.Randomizer.Utils
                     continue;
                 }
 
-                randomizedItems.Add(item);
-
-                var itemName = item.Item.Name();
-                if (randomizedResult.Settings.GossipHintStyle != GossipHintStyle.Competitive 
-                    && (itemName.Contains("Heart") || itemName.Contains("Rupee"))
-                    && (randomizedResult.Settings.ClearHints || random.Next(8) != 0))
+                if (ItemUtils.IsRegionRestricted(randomizedResult.Settings, item.Item))
                 {
                     continue;
+                }
+
+                randomizedItems.Add(item);
+
+                if (randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Random)
+                {
+                    if (ItemUtils.IsJunk(item.Item) && (randomizedResult.Settings.ClearHints || random.Next(8) != 0))
+                    {
+                        continue;
+                    }
                 }
 
                 if (randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Competitive)
@@ -266,7 +271,7 @@ namespace MMR.Randomizer.Utils
                 }
             }
 
-            foreach (var gossipQuote in Enum.GetValues(typeof(GossipQuote)).Cast<GossipQuote>().OrderBy(gq => random.Next()))
+            foreach (var gossipQuote in Enum.GetValues<GossipQuote>().OrderBy(gq => random.Next()))
             {
                 if (finalHints.Any(me => me.Id == (ushort)gossipQuote))
                 {

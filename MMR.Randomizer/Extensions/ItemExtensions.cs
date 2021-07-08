@@ -4,6 +4,7 @@ using MMR.Common.Extensions;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Attributes.Entrance;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -12,6 +13,16 @@ namespace MMR.Randomizer.Extensions
         public static ushort? GetItemIndex(this Item item)
         {
             return item.GetAttribute<GetItemIndexAttribute>()?.Index;
+        }
+
+        public static IEnumerable<ushort> GetCollectableIndices(this Item item)
+        {
+            return item.GetAttributes<CollectableIndexAttribute>().Select(x => x.Index);
+        }
+
+        public static bool IsNullableItem(this Item item)
+        {
+            return item.HasAttribute<NullableItemAttribute>();
         }
 
         public static int[] GetBottleItemIndices(this Item item)
@@ -87,11 +98,6 @@ namespace MMR.Randomizer.Extensions
             return item.HasAttribute<RepeatableAttribute>();
         }
 
-        public static bool IsCycleRepeatable(this Item item)
-        {
-            return item.HasAttribute<CycleRepeatableAttribute>();
-        }
-
         public static bool IsRupeeRepeatable(this Item item)
         {
             return item.HasAttribute<RupeeRepeatableAttribute>();
@@ -105,6 +111,16 @@ namespace MMR.Randomizer.Extensions
         public static bool IsTemporary(this Item item)
         {
             return item.HasAttribute<TemporaryAttribute>();
+        }
+
+        public static ItemCategory? ItemCategory(this Item item)
+        {
+            return item.GetAttribute<ItemPoolAttribute>()?.ItemCategory;
+        }
+
+        public static LocationCategory? LocationCategory(this Item item)
+        {
+            return item.GetAttribute<ItemPoolAttribute>()?.LocationCategory;
         }
 
         public static bool IsFake(this Item item)
