@@ -715,6 +715,14 @@ namespace MMR.Randomizer.GameObjects
         // a04: romani ranch, a36: zora cape/coast
         WeatherTag = 0xBC, // En_Weather_Tag
 
+        [ActorizerEnabled]
+        [ObjectListIndex(0xC2)]
+        // 0 does nothing just stands there and stares at you
+        // 1 is climbing in the tree trying to get rups
+        [GroundVariants(0)]
+        [UnkillableAllVariants]
+        En_Ani = 0xBD, // En_Ani
+
         //[ActorizerEnabled] // warp addresses are offsets, dangerous until we can hard code
         [ObjectListIndex(0x271)]
         [PathingVariants(0x11, 0x422, 0x833, 0xC44)]
@@ -724,6 +732,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.TheMoon)]
         MoonChild = 0xBF, // En_Js
+
+        //[ActorizerEnabled] // yeah it just takes you back to file select if you hit two buttons
+        [ObjectListIndex(0x115)]
+        [GroundVariants(0)]
+        [UnkillableAllVariants]
+        TitleLogo = 0xC5,
 
         [ActorizerEnabled]
         [FileID(172)]
@@ -775,6 +789,13 @@ namespace MMR.Randomizer.GameObjects
             Scene.Woodfall, // they fall off into the water and quietly swim, lame?
             Scene.MountainVillageSpring, Scene.RanchBuildings)]
         Dog = 0xE2, // En_Dg
+
+        [ActorizerEnabled]
+        [ObjectListIndex(0x1B9)]
+        [WallVariants(0x81, 0x82, 0x83)]
+        [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.Grottos, Scene.SwampSpiderHouse, Scene.SouthernSwamp, Scene.PiratesFortressRooms)]
+        [UnkillableAllVariants]
+        HoneyComb = 0xE4, // Obj_Comb
 
         [ObjectListIndex(0x133)]
         LargeCrate = 0xE5,

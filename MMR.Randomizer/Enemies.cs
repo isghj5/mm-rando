@@ -1464,7 +1464,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Odolwa.ObjectIndex()
+                            NewV = GameObjects.Actor.En_Ani.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1719,7 +1719,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 21.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 22.0\n");
 
                 }
             }
