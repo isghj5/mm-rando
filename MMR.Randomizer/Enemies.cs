@@ -1441,16 +1441,16 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.SkeleKnight.ObjectIndex()
+                            NewV = GameObjects.Actor.En_Ani.ObjectIndex()
                         }); 
                         continue;
                     } // */
-                    if (scene.File == GameObjects.Scene.DekuPalace.FileID() && sceneObjects[objCount] == GameObjects.Actor.DekuPatrolGuard.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.DekuPalace.FileID() && sceneObjects[objCount] == GameObjects.Actor.DekuPatrolGuard.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
@@ -1459,7 +1459,7 @@ namespace MMR.Randomizer
                         });
                         continue;
                     }// */
-                    if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
@@ -1468,7 +1468,16 @@ namespace MMR.Randomizer
                         });
                         continue;
                     } // */
-#endif
+                    if (scene.File == GameObjects.Scene.StockPotInn.FileID() && sceneObjects[objCount] == GameObjects.Actor.Clock.ObjectIndex())
+                    {
+                        chosenReplacementObjects.Add(new ValueSwap()
+                        {
+                            OldV = sceneObjects[objCount],
+                            NewV = GameObjects.Actor.En_Ani.ObjectIndex()
+                        });
+                        continue;
+                    } // */
+                    #endif
 
                     var reducedCandidateList = actorCandidatesLists[objCount].ToList();
                     foreach (var objectSwap in chosenReplacementObjects)
@@ -1719,7 +1728,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 22.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 22.1\n");
 
                 }
             }

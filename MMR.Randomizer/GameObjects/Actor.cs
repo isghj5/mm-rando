@@ -720,6 +720,9 @@ namespace MMR.Randomizer.GameObjects
         // 0 does nothing just stands there and stares at you
         // 1 is climbing in the tree trying to get rups
         [GroundVariants(0)]
+        //[WallVariants(1)] // facing the wrong way and no bonk, so not that interesting
+        [VariantsWithRoomMax(max:3, variant:0)]
+        [EnemizerScenesPlacementBlock(Scene.RomaniRanch)]
         [UnkillableAllVariants]
         En_Ani = 0xBD, // En_Ani
 
