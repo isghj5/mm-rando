@@ -289,6 +289,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public bool HookshotAnySurface { get; set; }
 
+        public bool ClimbMostSurfaces { get; set; }
+
         #endregion
 
         #region Comfort / Cosmetics

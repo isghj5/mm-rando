@@ -108,6 +108,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cDeathMoonCrash, "Dying causes the moon to crash, with all that that implies.");
             TooltipBuilder.SetTooltip(cContinuousDekuHopping, "Press A while hopping across water to keep hopping.");
             TooltipBuilder.SetTooltip(cHookshotAnySurface, "Hookshot can hook to any surface.");
+            TooltipBuilder.SetTooltip(cClimbMostSurfaces, "Link can climb most surfaces.");
             TooltipBuilder.SetTooltip(cIceTrapQuirks, "Ice traps will behave slightly differently from other items in certain situations.");
 
             // Comforts/cosmetics
@@ -1043,6 +1044,7 @@ namespace MMR.UI.Forms
             cQuestItemStorage.Checked = _configuration.GameplaySettings.QuestItemStorage;
             cContinuousDekuHopping.Checked = _configuration.GameplaySettings.ContinuousDekuHopping;
             cHookshotAnySurface.Checked = _configuration.GameplaySettings.HookshotAnySurface;
+            cClimbMostSurfaces.Checked = _configuration.GameplaySettings.ClimbMostSurfaces;
             cUnderwaterOcarina.Checked = _configuration.GameplaySettings.OcarinaUnderwater;
             cFreestanding.Checked = _configuration.GameplaySettings.UpdateWorldModels;
             cArrowCycling.Checked = _configuration.GameplaySettings.ArrowCycling;
@@ -1286,6 +1288,11 @@ namespace MMR.UI.Forms
         private void cHookshotAnySurface_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.HookshotAnySurface = cHookshotAnySurface.Checked);
+        }
+
+        private void cClimbMostSurfaces_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.ClimbMostSurfaces = cClimbMostSurfaces.Checked);
         }
 
         private void cDisableCritWiggle_CheckedChanged(object sender, EventArgs e)
@@ -1614,6 +1621,8 @@ namespace MMR.UI.Forms
             cByoAmmo.Enabled = v;
             cDeathMoonCrash.Enabled = v;
             cIceTrapQuirks.Enabled = v;
+            cHookshotAnySurface.Enabled = v;
+            cClimbMostSurfaces.Enabled = v;
 
             foreach (Control control in tabItemPool.Controls)
             {

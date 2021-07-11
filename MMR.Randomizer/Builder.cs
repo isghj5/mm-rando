@@ -994,6 +994,11 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Resources.mods.hookshot_any_surface);
             }
+
+            if (_randomized.Settings.ClimbMostSurfaces)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.climb_most_surfaces);
+            }
         }
 
         private void WriteSunsSong()

@@ -83,6 +83,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] climb_most_surfaces {
+            get {
+                object obj = ResourceManager.GetObject("climb_most_surfaces", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] cm_cs {
             get {
                 object obj = ResourceManager.GetObject("cm_cs", resourceCulture);

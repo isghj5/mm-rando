@@ -86,6 +86,7 @@ namespace MMR.UI.Forms
             this.cDMult = new System.Windows.Forms.ComboBox();
             this.lDMult = new System.Windows.Forms.Label();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.cHookshotAnySurface = new System.Windows.Forms.CheckBox();
             this.cFloors = new System.Windows.Forms.ComboBox();
             this.lFloors = new System.Windows.Forms.Label();
             this.lGravity = new System.Windows.Forms.Label();
@@ -196,7 +197,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cHookshotAnySurface = new System.Windows.Forms.CheckBox();
+            this.cClimbMostSurfaces = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -758,11 +759,11 @@ namespace MMR.UI.Forms
             this.groupBox11.Controls.Add(this.cByoAmmo);
             this.groupBox11.Controls.Add(this.cDMult);
             this.groupBox11.Controls.Add(this.lDMult);
-            this.groupBox11.Location = new System.Drawing.Point(573, 188);
+            this.groupBox11.Location = new System.Drawing.Point(8, 187);
             this.groupBox11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox11.Name = "groupBox11";
             this.groupBox11.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox11.Size = new System.Drawing.Size(198, 164);
+            this.groupBox11.Size = new System.Drawing.Size(174, 164);
             this.groupBox11.TabIndex = 33;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Challenges";
@@ -781,7 +782,7 @@ namespace MMR.UI.Forms
             this.cDType.Location = new System.Drawing.Point(7, 82);
             this.cDType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDType.Name = "cDType";
-            this.cDType.Size = new System.Drawing.Size(184, 23);
+            this.cDType.Size = new System.Drawing.Size(159, 23);
             this.cDType.TabIndex = 0;
             this.cDType.SelectedIndexChanged += new System.EventHandler(this.cDType_SelectedIndexChanged);
             // 
@@ -836,7 +837,7 @@ namespace MMR.UI.Forms
             this.cDMult.Location = new System.Drawing.Point(7, 38);
             this.cDMult.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDMult.Name = "cDMult";
-            this.cDMult.Size = new System.Drawing.Size(184, 23);
+            this.cDMult.Size = new System.Drawing.Size(159, 23);
             this.cDMult.TabIndex = 0;
             this.cDMult.SelectedIndexChanged += new System.EventHandler(this.cDMult_SelectedIndexChanged);
             // 
@@ -852,6 +853,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox10
             // 
+            this.groupBox10.Controls.Add(this.cClimbMostSurfaces);
             this.groupBox10.Controls.Add(this.cHookshotAnySurface);
             this.groupBox10.Controls.Add(this.cFloors);
             this.groupBox10.Controls.Add(this.lFloors);
@@ -862,10 +864,24 @@ namespace MMR.UI.Forms
             this.groupBox10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox10.Size = new System.Drawing.Size(198, 174);
+            this.groupBox10.Size = new System.Drawing.Size(198, 240);
             this.groupBox10.TabIndex = 32;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Movement";
+            // 
+            // cHookshotAnySurface
+            // 
+            this.cHookshotAnySurface.AutoSize = true;
+            this.cHookshotAnySurface.BackColor = System.Drawing.Color.Transparent;
+            this.cHookshotAnySurface.ForeColor = System.Drawing.Color.Black;
+            this.cHookshotAnySurface.Location = new System.Drawing.Point(7, 135);
+            this.cHookshotAnySurface.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHookshotAnySurface.Name = "cHookshotAnySurface";
+            this.cHookshotAnySurface.Size = new System.Drawing.Size(144, 19);
+            this.cHookshotAnySurface.TabIndex = 27;
+            this.cHookshotAnySurface.Text = "Hookshot Any Surface";
+            this.cHookshotAnySurface.UseVisualStyleBackColor = false;
+            this.cHookshotAnySurface.CheckedChanged += new System.EventHandler(this.cHookshotAnySurface_CheckedChanged);
             // 
             // cFloors
             // 
@@ -1022,11 +1038,11 @@ namespace MMR.UI.Forms
             this.groupBox1.Controls.Add(this.cClockSpeed);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.cHideClock);
-            this.groupBox1.Location = new System.Drawing.Point(4, 188);
+            this.groupBox1.Location = new System.Drawing.Point(574, 253);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Size = new System.Drawing.Size(178, 164);
+            this.groupBox1.Size = new System.Drawing.Size(197, 98);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Clock";
@@ -2191,19 +2207,19 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cHookshotAnySurface
+            // cClimbMostSurfaces
             // 
-            this.cHookshotAnySurface.AutoSize = true;
-            this.cHookshotAnySurface.BackColor = System.Drawing.Color.Transparent;
-            this.cHookshotAnySurface.ForeColor = System.Drawing.Color.Black;
-            this.cHookshotAnySurface.Location = new System.Drawing.Point(7, 135);
-            this.cHookshotAnySurface.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHookshotAnySurface.Name = "cHookshotAnySurface";
-            this.cHookshotAnySurface.Size = new System.Drawing.Size(144, 19);
-            this.cHookshotAnySurface.TabIndex = 27;
-            this.cHookshotAnySurface.Text = "Hookshot Any Surface";
-            this.cHookshotAnySurface.UseVisualStyleBackColor = false;
-            this.cHookshotAnySurface.CheckedChanged += new System.EventHandler(this.cHookshotAnySurface_CheckedChanged);
+            this.cClimbMostSurfaces.AutoSize = true;
+            this.cClimbMostSurfaces.BackColor = System.Drawing.Color.Transparent;
+            this.cClimbMostSurfaces.ForeColor = System.Drawing.Color.Black;
+            this.cClimbMostSurfaces.Location = new System.Drawing.Point(7, 160);
+            this.cClimbMostSurfaces.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cClimbMostSurfaces.Name = "cClimbMostSurfaces";
+            this.cClimbMostSurfaces.Size = new System.Drawing.Size(135, 19);
+            this.cClimbMostSurfaces.TabIndex = 28;
+            this.cClimbMostSurfaces.Text = "Climb Most Surfaces";
+            this.cClimbMostSurfaces.UseVisualStyleBackColor = false;
+            this.cClimbMostSurfaces.CheckedChanged += new System.EventHandler(this.cClimbMostSurfaces_CheckedChanged);
             // 
             // MainForm
             // 
@@ -2452,6 +2468,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cInstantPictobox;
         private System.Windows.Forms.CheckBox cImprovedPictobox;
         private System.Windows.Forms.CheckBox cHookshotAnySurface;
+        private System.Windows.Forms.CheckBox cClimbMostSurfaces;
     }
 }
 

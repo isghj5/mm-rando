@@ -124,6 +124,9 @@
   <data name="chest_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\chest-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="climb_most_surfaces" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\climb-most-surfaces.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="cm_cs" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\cm-cs;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
