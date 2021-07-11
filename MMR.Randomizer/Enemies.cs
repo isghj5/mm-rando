@@ -414,7 +414,6 @@ namespace MMR.Randomizer
 
                 // day torch
                 piratesExteriorScene.Maps[0].Actors[13].ChangeActor(GameObjects.Actor.Empty); // dangeon object so no grotto, empty for now
-
                 // todo: 14/16 are also torches, we dont really need both here
 
                 // anju's actor spawns behind the inn door, move her to be visible in sct
@@ -832,6 +831,15 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU32(sethData, 0x88, 0x00000000);
             //nopping the early return
             ReadWriteUtils.Arr_WriteU32(sethData, 0x90, 0x00000000);
+
+            //weirdly, even though the the telescope is a different SCENE, seth2 is found in the regular gamplay scene, his code just kills him
+            // until I move him hes in a bad spot on top of grottos, for now just kill him
+            // TODO: Free actor slots? 
+            var tfScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
+            tfScene.Maps[0].Actors[28].ChangeActor(GameObjects.Actor.Empty);
+            tfScene.Maps[0].Actors[29].ChangeActor(GameObjects.Actor.Empty);
+            tfScene.Maps[0].Objects[21] = GameObjects.Actor.Empty.ObjectIndex();
+            //var map = tfScene.Maps[0];
         }
 
         #endregion
@@ -1441,7 +1449,7 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
@@ -1459,16 +1467,16 @@ namespace MMR.Randomizer
                         });
                         continue;
                     }// */
-                    /*if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.RomaniRanch.FileID() && sceneObjects[objCount] == GameObjects.Actor.Treee.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.En_Ani.ObjectIndex()
+                            NewV = GameObjects.Actor.Carpenter.ObjectIndex()
                         });
                         continue;
                     } // */
-                    if (scene.File == GameObjects.Scene.StockPotInn.FileID() && sceneObjects[objCount] == GameObjects.Actor.Clock.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.StockPotInn.FileID() && sceneObjects[objCount] == GameObjects.Actor.Clock.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {

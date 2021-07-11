@@ -622,11 +622,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0xF1)]
         // 1 scoffing at poster, 2 is shouting at the sky looker
-        // 603 should be the path follower
+        // 0X03 is a walking type
         [GroundVariants(1, 2)]
         [PathingVariants(0x603, 0x503)]
         [PathingTypeVarsPlacement(mask:0xFF00, shift:8)]
-        //[VariantsWithRoomMax(max:0, variant: 0x603, 0x503)] // at least one variant is pathing
         [UnkillableAllVariants]
         Carpenter = 0x9C, // En_Daiku
 
@@ -1851,19 +1850,20 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1E5)]
         LinkTheGoro = 0x276,
 
-        [ActorizerEnabled] // does not spawn, but looks up a flag and killsitelf, so that migh tbe it
+        [ActorizerEnabled]
         [FileID(592)]
-        [ObjectListIndex(0x26A)] // the spreadsheet says he is obj 1 but that is a mistake
+        [ObjectListIndex(0x26A)] // the spreadsheet says he is obj 1 but that is a mistake, his code is stupid
         [GroundVariants(0xFE01)]
         [UnkillableAllVariants]
-        // probably the telescope seth
+        [EnemizerScenesExcluded(Scene.TerminaField)]
+        // This is the seth you see in the telescope on grottos, same animation as cured skultula man in kak
         Seth2 = 0x279, // En_Sth2
 
         [ActorizerEnabled]
         [ObjectListIndex(0x24B)]
         // 0xA00 is lobby pacing
         // params: 8000 is a talking flag, 0x7E00 >> 9 is pathing, 0x7E00 is non-pathing though, the one value
-        [GroundVariants(0x7E01, 0x8000, 0xFE01,  0x7E02, 0xFE02, 0x7E02)]
+        [GroundVariants(0x7E01, 0x8000, 0xFE01, 0x7E02, 0xFE02, 0x7E02)]
         [PathingVariants(0xA00, 0x7E01, 0x8000, 0xFE01, 0x7E02)]
         [PathingTypeVarsPlacement(0x7E00, 9)]
         //[OnlyOneActorPerRoom]
@@ -1944,7 +1944,8 @@ namespace MMR.Randomizer.GameObjects
         MoonBirdsBrown = 0x2A7,
 
         [FileID(1114)]
-        [ObjectListIndex(0)]
+        //[ObjectListIndex(0)]
+        [ObjectListIndex(0xF3)] // this object is size 0x10 its the smallest object
         [GroundVariants(0), FlyingVariants(0), WaterVariants(0)]
         [UnkillableAllVariants]
         Empty = -1
