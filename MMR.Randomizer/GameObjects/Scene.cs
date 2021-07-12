@@ -382,7 +382,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1437)]
         [SceneInternalId(0x56)]
-        IgosDuIkanasLair = 0x53,
+        IgosDuIkanasLair = 0x53, // 
 
         [FileID(1440)]
         [SceneInternalId(0x57)]

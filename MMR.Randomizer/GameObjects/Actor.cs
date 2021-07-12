@@ -910,9 +910,10 @@ namespace MMR.Randomizer.GameObjects
 
         //[EnemizerEnabled] // wont spawn, just spawns green tatl points but no actual knight
         [ObjectListIndex(0x156)]
+        [FileID(250)]
         // params 0 vanilla
         // init checks if 64, C8, CA, 23
-        [GroundVariants(0x23)]
+        //[GroundVariants(0x23)]
         [UnkillableAllVariants] // assumption: need mirror shield
         SkeleKnight = 0x116, // En_Knight
 
@@ -1179,7 +1180,7 @@ namespace MMR.Randomizer.GameObjects
        
         [EnemizerEnabled] // AI gets confused, backwalks forever, pathing?
         [ActorInitVarOffset(0x445C)]
-        [FileID(250)]
+        [FileID(350)]
         [ObjectListIndex(0x18D)]
         // params: 7x >> 6 is switch, 0x3F is unk
         [PathingVariants(0x700, 0x940)]

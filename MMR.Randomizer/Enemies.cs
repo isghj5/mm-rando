@@ -31,7 +31,7 @@ namespace MMR.Randomizer
 
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = true;
+        private static bool ACTORSENABLED = false;
         private static Random seedrng;
 
         public static void ReadEnemyList()
@@ -329,6 +329,7 @@ namespace MMR.Randomizer
             RomUtils.CheckCompressed(dinofos.FileListIndex());
             RomData.MMFileList[dinofos.FileListIndex()].Data[dinofos.ActorInitOffset() + 7] &= 0xBF;// 4 flag is the issue
             actorList.Remove(dinofos);
+            actorList.Remove(GameObjects.Actor.Eyegore);
 
             /// some enemies are really hard on the CPU/RSP, we can change some of them to behave nicer with flags
             foreach (var enemy in actorList)
@@ -500,7 +501,6 @@ namespace MMR.Randomizer
             var twinislandsSceneData = RomData.MMFileList[GameObjects.Scene.TwinIslands.FileID()].Data;
             twinislandsSceneData[0xD6] = 0xAE;
             twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall wtf
-
 
             // testing: change the environment var for tf object_kankyo
             //var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
@@ -1467,7 +1467,8 @@ namespace MMR.Randomizer
                         });
                         continue;
                     }// */
-                    if (scene.File == GameObjects.Scene.RomaniRanch.FileID() && sceneObjects[objCount] == GameObjects.Actor.Treee.ObjectIndex())
+                    //
+                    /*if (scene.File == GameObjects.Scene.RomaniRanch.FileID() && sceneObjects[objCount] == GameObjects.Actor.Treee.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
@@ -1736,7 +1737,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 22.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 22.2\n");
 
                 }
             }
