@@ -31,7 +31,7 @@ namespace MMR.Randomizer
 
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
-        private static bool ACTORSENABLED = false;
+        private static bool ACTORSENABLED = true;
         private static Random seedrng;
 
         public static void ReadEnemyList()
