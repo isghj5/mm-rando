@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace MMR.Randomizer.Models
 {
@@ -11,5 +12,8 @@ namespace MMR.Randomizer.Models
         public TimeOfDay TimeAvailable { get; set; }
         public bool IsTrick { get; set; }
         public string TrickTooltip { get; set; } = string.Empty;
+
+        [JsonIgnore]
+        public bool IsMultiLocation { get; set; }
     }
 }

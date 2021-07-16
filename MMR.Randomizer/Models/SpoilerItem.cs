@@ -19,13 +19,13 @@ namespace MMR.Randomizer.Models
 
         public bool IsRequired { get; }
 
-        public SpoilerItem(ItemObject itemObject, bool isRequired, bool isImportant, bool progressiveUpgrades)
+        public SpoilerItem(ItemObject itemObject, Region region, bool isRequired, bool isImportant, bool progressiveUpgrades)
         {
             Id = itemObject.ID;
             Name = itemObject.NameOverride ?? itemObject.Item.ProgressiveUpgradeName(progressiveUpgrades) ?? itemObject.Name;
             NewLocationId = (int)itemObject.NewLocation.Value;
             NewLocationName = itemObject.NewLocation.Value.Location();
-            Region = itemObject.NewLocation.Value.Region().Value;
+            Region = region;
             IsJunk = Name.Contains("Rupee") || Name.Contains("Heart") || itemObject.Item == Item.IceTrap;
             IsImportant = isImportant;
             IsRequired = isRequired;

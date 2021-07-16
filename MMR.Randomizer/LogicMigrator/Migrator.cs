@@ -11,7 +11,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 3;
+        public const int CurrentVersion = 4;
 
         public static string ApplyMigrations(string logic)
         {
@@ -152,6 +152,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 3)
             {
                 AddOcarinaAndSongOfTime(logicObject);
+            }
+
+            if (logicObject.Version < 4)
+            {
+                AddMultiLocations(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3668,6 +3673,44 @@ namespace MMR.Randomizer.LogicMigrator
             logicObject.Version = 3;
         }
 
+
+        private static void AddMultiLocations(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1075;
+            var itemNames = new string[]
+            {
+                "ItemTingleMapTownInTown",
+                "ItemTingleMapTownInCanyon",
+                "ItemTingleMapWoodfallInSwamp",
+                "ItemTingleMapWoodfallInTown",
+                "ItemTingleMapSnowheadInMountain",
+                "ItemTingleMapSnowheadInSwamp",
+                "ItemTingleMapRanchInRanch",
+                "ItemTingleMapRanchInMountain",
+                "ItemTingleMapGreatBayInOcean",
+                "ItemTingleMapGreatBayInRanch",
+                "ItemTingleMapStoneTowerInCanyon",
+                "ItemTingleMapStoneTowerInOcean",
+                "HeartPiecePostBoxInSCT",
+                "HeartPiecePostBoxInNCT",
+                "HeartPiecePostBoxInECT",
+                "HeartPieceKeatonQuizInNCT",
+                "HeartPieceKeatonQuizInMilkRoad",
+                "HeartPieceKeatonQuizInMountainVillage",
+                "SongOathInWFT",
+                "SongOathInSHT",
+                "SongOathInGBT",
+                "SongOathInISTT",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 4;
+        }
         private class MigrationItem
         {
             public int ID;

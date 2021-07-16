@@ -227,11 +227,16 @@ namespace MMR.UI.Forms
             FillConditional(n);
             FillTime(n);
             FillTrick(n);
+
             var isCustomItem = index >= _defaultItemCount;
             bRenameItem.Visible = isCustomItem;
             bDeleteItem.Visible = isCustomItem;
             cTrick.Visible = isCustomItem;
             tTrickDescription.Visible = isCustomItem;
+
+            var isMultiLocation = _logic.Logic[n].IsMultiLocation;
+            tMain.Enabled = !isMultiLocation;
+
             updating = false;
         }
 
@@ -419,7 +424,7 @@ namespace MMR.UI.Forms
         private void LoadLogic(string logicString)
         {
             logicString = Migrator.ApplyMigrations(logicString);
-            _logic = JsonSerializer.Deserialize<LogicFile>(logicString);
+            _logic = LogicFile.FromJson(logicString);
             _singleItemSelectorForm.SetLogicFile(_logic);
             _multiItemSelectorForm.SetLogicFile(_logic);
             _itemsById = _logic.Logic.ToDictionary(item => item.Id);

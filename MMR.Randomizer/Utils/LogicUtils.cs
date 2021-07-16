@@ -166,7 +166,7 @@ namespace MMR.Randomizer.Utils
                 return checkedItems[item];
             }
             var itemObject = itemList[item];
-            var locationId = itemObject.NewLocation.HasValue ? itemObject.NewLocation : item;
+            var locationId = itemObject.NewLocation.HasValue ? itemObject.NewLocation.Value : item;
             var locationLogic = itemLogic[(int)locationId];
             var required = new List<Item>();
             var important = new List<Item>();

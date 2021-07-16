@@ -16,8 +16,19 @@ namespace MMR.Randomizer.Utils
         public static void CreateSpoilerLog(RandomizedResult randomized, GameplaySettings settings, OutputSettings outputSettings)
         {
             var itemList = randomized.ItemList
-                .Where(io => !io.Item.IsFake() && io.NewLocation.HasValue && io.IsRandomized)
-                .Select(u => new SpoilerItem(u, ItemUtils.IsRequired(u.Item, randomized), ItemUtils.IsImportant(u.Item, randomized), settings.ProgressiveUpgrades));
+                .Where(io => (io.IsRandomized && io.NewLocation.Value.Region().HasValue) || (io.Item.MainLocation().HasValue && randomized.ItemList[io.Item.MainLocation().Value].IsRandomized))
+                .Select(io => new {
+                    ItemObject = io.Item.MainLocation().HasValue ? randomized.ItemList.Find(x => x.NewLocation == io.Item.MainLocation().Value) : io,
+                    ItemForImportance = io.Item,
+                    Region = io.IsRandomized ? io.NewLocation.Value.Region().Value : io.Item.Region().Value,
+                })
+                .Select(u => new SpoilerItem(
+                    u.ItemObject,
+                    u.Region,
+                    ItemUtils.IsRequired(u.ItemObject.Item, u.ItemForImportance, randomized),
+                    ItemUtils.IsImportant(u.ItemObject.Item, u.ItemForImportance, randomized),
+                    settings.ProgressiveUpgrades
+                ));
 
             randomized.Logic.ForEach((il) =>
             {

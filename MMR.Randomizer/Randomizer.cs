@@ -1604,7 +1604,7 @@ namespace MMR.Randomizer
                     }).ToList()
                     : _randomized.Logic;
 
-                _randomized.ImportantItems = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic)?.Important.Where(item => !item.IsFake()).ToList().AsReadOnly();
+                _randomized.ImportantItems = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic)?.Important.Where(item => item.Region().HasValue).ToList().AsReadOnly();
                 if (_randomized.ImportantItems == null)
                 {
                     throw new RandomizationException("Moon Access is unobtainable.");

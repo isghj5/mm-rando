@@ -444,7 +444,7 @@ namespace MMR.Randomizer.GameObjects
         //other hp
         [RupeeRepeatable]
         [StartingItem(0xC5CE70, 0x10, true)]
-        [ItemName("Piece of Heart"), LocationName("Keaton Quiz"), Region(Region.NorthClockTown)]
+        [ItemName("Piece of Heart"), LocationName("Keaton Quiz"), MultiLocation(HeartPieceKeatonQuizInNCT, HeartPieceKeatonQuizInMilkRoad, HeartPieceKeatonQuizInMountainVillage)]
         [GossipLocationHint("the ghost of a fox", "a mysterious fox"), GossipItemHint("a segment of health")]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -489,7 +489,7 @@ namespace MMR.Randomizer.GameObjects
         HeartPieceSwordsmanSchool,
 
         [StartingItem(0xC5CE70, 0x10, true)]
-        [ItemName("Piece of Heart"), LocationName("Postbox"), Region(Region.SouthClockTown)]
+        [ItemName("Piece of Heart"), LocationName("Postbox"), MultiLocation(HeartPiecePostBoxInECT, HeartPiecePostBoxInNCT, HeartPiecePostBoxInSCT)]
         [GossipLocationHint("an information carrier", "a correspondence box"), GossipItemHint("a segment of health")]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -932,7 +932,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [StartingItem(0xC5CE72, 0x04)]
-        [ItemName("Oath to Order"), LocationName("Boss Blue Warp"), Region(Region.Misc)]
+        [ItemName("Oath to Order"), LocationName("Boss Blue Warp"), MultiLocation(SongOathInWFT, SongOathInSHT, SongOathInGBT, SongOathInISTT)]
         [GossipLocationHint("cleansed evil", "a fallen evil"), GossipItemHint("a song of summoning", "a song of giants")]
         [ShopText("This melody will call the giants at the right moment.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -2064,7 +2064,7 @@ namespace MMR.Randomizer.GameObjects
         //maps
         [Purchaseable]
         [StartingTingleMap(TingleMap.Town)]
-        [ItemName("Map of Clock Town"), LocationName("Clock Town Map Purchase"), Region(Region.NorthClockTown)]
+        [ItemName("Map of Clock Town"), LocationName("Clock Town Map Purchase"), MultiLocation(ItemTingleMapTownInTown, ItemTingleMapTownInCanyon)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
         [ShopText("Map of Clock Town.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -2073,7 +2073,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable]
         [StartingTingleMap(TingleMap.Swamp)]
-        [ItemName("Map of Woodfall"), LocationName("Woodfall Map Purchase"), Region(Region.RoadToSouthernSwamp)]
+        [ItemName("Map of Woodfall"), LocationName("Woodfall Map Purchase"), MultiLocation(ItemTingleMapWoodfallInSwamp, ItemTingleMapWoodfallInTown)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
         [ShopText("Map of the south.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -2082,7 +2082,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable]
         [StartingTingleMap(TingleMap.Mountain)]
-        [ItemName("Map of Snowhead"), LocationName("Snowhead Map Purchase"), Region(Region.RoadToSouthernSwamp)]
+        [ItemName("Map of Snowhead"), LocationName("Snowhead Map Purchase"), MultiLocation(ItemTingleMapSnowheadInMountain, ItemTingleMapSnowheadInSwamp)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
         [ShopText("Map of the north.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -2091,7 +2091,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable]
         [StartingTingleMap(TingleMap.Ranch)]
-        [ItemName("Map of Romani Ranch"), LocationName("Romani Ranch Map Purchase"), Region(Region.MilkRoad)]
+        [ItemName("Map of Romani Ranch"), LocationName("Romani Ranch Map Purchase"), MultiLocation(ItemTingleMapRanchInRanch, ItemTingleMapRanchInMountain)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
         [ShopText("Map of the ranch.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -2100,7 +2100,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable]
         [StartingTingleMap(TingleMap.Ocean)]
-        [ItemName("Map of Great Bay"), LocationName("Great Bay Map Purchase"), Region(Region.MilkRoad)]
+        [ItemName("Map of Great Bay"), LocationName("Great Bay Map Purchase"), MultiLocation(ItemTingleMapGreatBayInOcean, ItemTingleMapGreatBayInRanch)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
         [ShopText("Map of the west.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -2109,7 +2109,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable]
         [StartingTingleMap(TingleMap.Canyon)]
-        [ItemName("Map of Stone Tower"), LocationName("Stone Tower Map Purchase"), Region(Region.GreatBayCoast)]
+        [ItemName("Map of Stone Tower"), LocationName("Stone Tower Map Purchase"), MultiLocation(ItemTingleMapStoneTowerInCanyon, ItemTingleMapStoneTowerInOcean)]
         [GossipLocationHint("a map maker", "a forest fairy"), GossipItemHint("a world map")]
         [ShopText("Map of the east.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -9930,6 +9930,75 @@ namespace MMR.Randomizer.GameObjects
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x44B), ItemPool(ItemCategory.BossRemains, LocationCategory.BossFights)]
         RemainsTwinmold,
+
+
+
+        //multilocation items
+        [MainLocation(ItemTingleMapTown), Region(Region.NorthClockTown)]
+        ItemTingleMapTownInTown,
+
+        [MainLocation(ItemTingleMapTown), Region(Region.IkanaCanyon)]
+        ItemTingleMapTownInCanyon,
+
+        [MainLocation(ItemTingleMapWoodfall), Region(Region.RoadToSouthernSwamp)]
+        ItemTingleMapWoodfallInSwamp,
+
+        [MainLocation(ItemTingleMapWoodfall), Region(Region.NorthClockTown)]
+        ItemTingleMapWoodfallInTown,
+
+        [MainLocation(ItemTingleMapSnowhead), Region(Region.TwinIslands)]
+        ItemTingleMapSnowheadInMountain,
+
+        [MainLocation(ItemTingleMapSnowhead), Region(Region.RoadToSouthernSwamp)]
+        ItemTingleMapSnowheadInSwamp,
+
+        [MainLocation(ItemTingleMapRanch), Region(Region.MilkRoad)]
+        ItemTingleMapRanchInRanch,
+
+        [MainLocation(ItemTingleMapRanch), Region(Region.TwinIslands)]
+        ItemTingleMapRanchInMountain,
+
+        [MainLocation(ItemTingleMapGreatBay), Region(Region.GreatBayCoast)]
+        ItemTingleMapGreatBayInOcean,
+
+        [MainLocation(ItemTingleMapGreatBay), Region(Region.MilkRoad)]
+        ItemTingleMapGreatBayInRanch,
+
+        [MainLocation(ItemTingleMapStoneTower), Region(Region.IkanaCanyon)]
+        ItemTingleMapStoneTowerInCanyon,
+
+        [MainLocation(ItemTingleMapStoneTower), Region(Region.GreatBayCoast)]
+        ItemTingleMapStoneTowerInOcean,
+
+        [MainLocation(HeartPiecePostBox), Region(Region.SouthClockTown)]
+        HeartPiecePostBoxInSCT,
+
+        [MainLocation(HeartPiecePostBox), Region(Region.NorthClockTown)]
+        HeartPiecePostBoxInNCT,
+
+        [MainLocation(HeartPiecePostBox), Region(Region.EastClockTown)]
+        HeartPiecePostBoxInECT,
+
+        [MainLocation(HeartPieceKeatonQuiz), Region(Region.NorthClockTown)]
+        HeartPieceKeatonQuizInNCT,
+
+        [MainLocation(HeartPieceKeatonQuiz), Region(Region.MilkRoad)]
+        HeartPieceKeatonQuizInMilkRoad,
+
+        [MainLocation(HeartPieceKeatonQuiz), Region(Region.MountainVillage)]
+        HeartPieceKeatonQuizInMountainVillage,
+
+        [MainLocation(SongOath), Region(Region.WoodfallTemple)]
+        SongOathInWFT,
+
+        [MainLocation(SongOath), Region(Region.SnowheadTemple)]
+        SongOathInSHT,
+
+        [MainLocation(SongOath), Region(Region.GreatBayTemple)]
+        SongOathInGBT,
+
+        [MainLocation(SongOath), Region(Region.StoneTowerTemple)]
+        SongOathInISTT,
 
 
 

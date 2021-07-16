@@ -1,5 +1,5 @@
 {
-  "Version": 3,
+  "Version": 4,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -841,10 +841,18 @@
     },
     {
       "Id": "HeartPieceKeatonQuiz",
-      "RequiredItems": [
-        "MaskKeaton"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "HeartPieceKeatonQuizInNCT"
+        ],
+        [
+          "HeartPieceKeatonQuizInMilkRoad"
+        ],
+        [
+          "HeartPieceKeatonQuizInMountainVillage"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "IsTrick": false
@@ -892,10 +900,18 @@
     },
     {
       "Id": "HeartPiecePostBox",
-      "RequiredItems": [
-        "MaskPostmanHat"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "HeartPiecePostBoxInECT"
+        ],
+        [
+          "HeartPiecePostBoxInNCT"
+        ],
+        [
+          "HeartPiecePostBoxInSCT"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "IsTrick": false
@@ -1728,16 +1744,16 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "AreaWoodFallTempleClear"
+          "SongOathInWFT"
         ],
         [
-          "AreaSnowheadTempleClear"
+          "SongOathInSHT"
         ],
         [
-          "AreaGreatBayTempleClear"
+          "SongOathInGBT"
         ],
         [
-          "AreaStoneTowerClear"
+          "SongOathInISTT"
         ]
       ],
       "TimeNeeded": "None",
@@ -4139,20 +4155,10 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "MaskDeku",
-          "Magic Meter"
+          "ItemTingleMapTownInTown"
         ],
         [
-          "ItemHookshot"
-        ],
-        [
-          "OtherArrow"
-        ],
-        [
-          "MaskZora"
-        ],
-        [
-          "Jump Slash Town Tingle"
+          "ItemTingleMapTownInCanyon"
         ]
       ],
       "TimeNeeded": "None",
@@ -4164,20 +4170,10 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "MaskDeku",
-          "Magic Meter"
+          "ItemTingleMapWoodfallInSwamp"
         ],
         [
-          "ItemHookshot"
-        ],
-        [
-          "OtherArrow"
-        ],
-        [
-          "MaskZora"
-        ],
-        [
-          "Jump Slash Town Tingle"
+          "ItemTingleMapWoodfallInTown"
         ]
       ],
       "TimeNeeded": "None",
@@ -4189,17 +4185,10 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "MaskDeku",
-          "Magic Meter"
+          "ItemTingleMapSnowheadInMountain"
         ],
         [
-          "ItemHookshot"
-        ],
-        [
-          "OtherArrow"
-        ],
-        [
-          "MaskZora"
+          "ItemTingleMapSnowheadInSwamp"
         ]
       ],
       "TimeNeeded": "None",
@@ -4211,17 +4200,10 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "MaskDeku",
-          "Magic Meter"
+          "ItemTingleMapRanchInRanch"
         ],
         [
-          "ItemHookshot"
-        ],
-        [
-          "MaskZora"
-        ],
-        [
-          "OtherArrow"
+          "ItemTingleMapRanchInMountain"
         ]
       ],
       "TimeNeeded": "None",
@@ -4233,17 +4215,10 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "ItemHookshot"
+          "ItemTingleMapGreatBayInOcean"
         ],
         [
-          "MaskDeku",
-          "Magic Meter"
-        ],
-        [
-          "MaskZora"
-        ],
-        [
-          "OtherArrow"
+          "ItemTingleMapGreatBayInRanch"
         ]
       ],
       "TimeNeeded": "None",
@@ -4252,15 +4227,13 @@
     },
     {
       "Id": "ItemTingleMapStoneTower",
-      "RequiredItems": [
-        "AreaWestAccess"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [
         [
-          "ItemHookshot"
+          "ItemTingleMapStoneTowerInCanyon"
         ],
         [
-          "OtherArrow"
+          "ItemTingleMapStoneTowerInOcean"
         ]
       ],
       "TimeNeeded": "None",
@@ -52293,6 +52266,280 @@
       "IsTrick": false
     },
     {
+      "Id": "ItemTingleMapTownInTown",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "Jump Slash Town Tingle"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ItemTingleMapTownInCanyon",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Short Ranged Weapon"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ItemTingleMapWoodfallInSwamp",
+      "RequiredItems": [
+        "Short Ranged Weapon"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ItemTingleMapWoodfallInTown",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "Jump Slash Town Tingle"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ItemTingleMapSnowheadInMountain",
+      "RequiredItems": [
+        "Short Ranged Weapon",
+        "AreaNorthAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ItemTingleMapSnowheadInSwamp",
+      "RequiredItems": [
+        "Short Ranged Weapon"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ItemTingleMapRanchInRanch",
+      "RequiredItems": [
+        "Short Ranged Weapon"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ItemTingleMapRanchInMountain",
+      "RequiredItems": [
+        "Short Ranged Weapon",
+        "AreaNorthAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ItemTingleMapGreatBayInOcean",
+      "RequiredItems": [
+        "Long Ranged Weapon",
+        "AreaWestAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ItemTingleMapGreatBayInRanch",
+      "RequiredItems": [
+        "Short Ranged Weapon"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ItemTingleMapStoneTowerInCanyon",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Short Ranged Weapon"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ItemTingleMapStoneTowerInOcean",
+      "RequiredItems": [
+        "Long Ranged Weapon",
+        "AreaWestAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HeartPiecePostBoxInSCT",
+      "RequiredItems": [
+        "MaskPostmanHat"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HeartPiecePostBoxInNCT",
+      "RequiredItems": [
+        "MaskPostmanHat"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HeartPiecePostBoxInECT",
+      "RequiredItems": [
+        "MaskPostmanHat"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HeartPieceKeatonQuizInNCT",
+      "RequiredItems": [
+        "MaskKeaton"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HeartPieceKeatonQuizInMilkRoad",
+      "RequiredItems": [
+        "MaskKeaton"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HeartPieceKeatonQuizInMountainVillage",
+      "RequiredItems": [
+        "MaskKeaton",
+        "AreaSnowheadTempleClear"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SongOathInWFT",
+      "RequiredItems": [
+        "Access Odolwa"
+      ],
+      "ConditionalItems": [
+        [
+          "Fighting"
+        ],
+        [
+          "MaskFierceDeity"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SongOathInSHT",
+      "RequiredItems": [
+        "Use Fire Arrow",
+        "Access Goht"
+      ],
+      "ConditionalItems": [
+        [
+          "Shoot Goht"
+        ],
+        [
+          "MaskGoron"
+        ],
+        [
+          "MaskFierceDeity"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SongOathInGBT",
+      "RequiredItems": [
+        "Magic Meter",
+        "Access Gyorg"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "MaskFierceDeity"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SongOathInISTT",
+      "RequiredItems": [
+        "Access Twinmold"
+      ],
+      "ConditionalItems": [
+        [
+          "Shoot Twinmold"
+        ],
+        [
+          "Fight Twinmold"
+        ],
+        [
+          "MaskFierceDeity",
+          "Magic Meter"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
       "Id": "GossipTerminaSouth",
       "RequiredItems": [],
       "ConditionalItems": [],
@@ -54268,6 +54515,43 @@
         "SongOath"
       ],
       "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Short Ranged Weapon",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "ItemHookshot"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "MaskDeku",
+          "Magic Meter"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Long Ranged Weapon",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "ItemHookshot"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "IsTrick": false
