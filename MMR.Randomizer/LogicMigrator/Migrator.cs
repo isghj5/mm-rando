@@ -11,7 +11,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 4;
+        public const int CurrentVersion = 5;
 
         public static string ApplyMigrations(string logic)
         {
@@ -157,6 +157,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 4)
             {
                 AddMultiLocations(logicObject);
+            }
+
+            if (logicObject.Version < 5)
+            {
+                AddMultiLocationGoronShop(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3673,7 +3678,6 @@ namespace MMR.Randomizer.LogicMigrator
             logicObject.Version = 3;
         }
 
-
         private static void AddMultiLocations(JsonFormatLogic logicObject)
         {
             const int startIndex = 1075;
@@ -3710,6 +3714,28 @@ namespace MMR.Randomizer.LogicMigrator
                 ConditionalItems = new List<List<string>>(),
             }));
             logicObject.Version = 4;
+        }
+
+        private static void AddMultiLocationGoronShop(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1097;
+            var itemNames = new string[]
+            {
+                "ShopItemGoronBomb10InWinter",
+                "ShopItemGoronBomb10InSpring",
+                "ShopItemGoronArrow10InWinter",
+                "ShopItemGoronArrow10InSpring",
+                "ShopItemGoronRedPotionInWinter",
+                "ShopItemGoronRedPotionInSpring",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 5;
         }
         private class MigrationItem
         {

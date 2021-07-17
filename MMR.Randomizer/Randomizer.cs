@@ -532,6 +532,8 @@ namespace MMR.Randomizer
                 ItemList = LogicUtils.PopulateItemListWithoutLogic();
             }
 
+            RandomizePrices();
+
             UpdateLogicForSettings();
 
             ItemUtils.PrepareJunkItems(ItemList);
@@ -1058,6 +1060,65 @@ namespace MMR.Randomizer
                     if (!item.HasAttribute<ChestAttribute>())
                     {
                         ItemList[item].NewLocation = item;
+                    }
+                }
+            }
+        }
+
+        private void RandomizePrices()
+        {
+            _randomized.MessageCosts = new List<ushort>();
+            // TODO if costs randomized
+            for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
+            {
+                _randomized.MessageCosts.Add((ushort)Random.Next(1, 500));
+            }
+
+            if (_settings.LogicMode != LogicMode.NoLogic)
+            {
+                var wallets200 = ItemList
+                    .FirstOrDefault(io =>
+                        io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeAdultWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet })));
+
+                if (wallets200 == null)
+                {
+                    wallets200 = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        Conditionals = new List<List<Item>>
+                        {
+                            new List<Item> { Item.UpgradeAdultWallet },
+                            new List<Item> { Item.UpgradeGiantWallet },
+                        },
+                    };
+                    ItemList.Add(wallets200);
+                }
+
+                var affectedLocations = new Dictionary<Item, short>();
+                for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
+                {
+                    var messageCost = MessageCost.MessageCosts[i];
+                    var cost = _randomized.MessageCosts[i];
+                    foreach (var location in messageCost.LocationsAffected)
+                    {
+                        var affectedCost = affectedLocations.GetValueOrDefault(location, short.MaxValue);
+                        if (cost < affectedCost)
+                        {
+                            ItemList[location].DependsOnItems.Remove(wallets200.Item);
+                            ItemList[location].DependsOnItems.Remove(Item.UpgradeGiantWallet);
+                            if (cost > 200)
+                            {
+                                ItemList[location].DependsOnItems.Add(Item.UpgradeGiantWallet);
+                            }
+                            else if (cost > 99)
+                            {
+                                ItemList[location].DependsOnItems.Add(wallets200.Item);
+                            }
+                        }
                     }
                 }
             }

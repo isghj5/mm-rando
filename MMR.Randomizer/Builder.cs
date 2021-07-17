@@ -1404,7 +1404,7 @@ namespace MMR.Randomizer
                     {
                         overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
                     }
-                    ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType);
+                    ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType, _messageTable);
                 }
             }
 
@@ -1431,17 +1431,6 @@ namespace MMR.Randomizer
             _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLarge = GetLocationIdOfItem(Item.UpgradeBigQuiver);
             _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLargest = GetLocationIdOfItem(Item.UpgradeBiggestQuiver);
 
-            var copyRupeesRegex = new Regex(": [0-9]+ Rupees");
-            foreach (var newMessage in newMessages)
-            {
-                var oldMessage = _messageTable.GetMessage(newMessage.Id);
-                if (oldMessage != null)
-                {
-                    var cost = copyRupeesRegex.Match(oldMessage.Message).Value;
-                    newMessage.Message = copyRupeesRegex.Replace(newMessage.Message, cost);
-                }
-            }
-
             if (_randomized.Settings.UpdateShopAppearance)
             {
                 // update tingle shops
@@ -1450,9 +1439,13 @@ namespace MMR.Randomizer
                     var messageShop = messageShopText.GetAttribute<MessageShopAttribute>();
                     var item1 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[0]);
                     var item2 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[1]);
+                    var messageId = (ushort)messageShopText;
+                    var messageHeader = _messageTable.GetMessage(messageId).Header;
+                    var cost1 = ReadWriteUtils.Arr_ReadU16(messageHeader, 5);
+                    var cost2 = ReadWriteUtils.Arr_ReadU16(messageHeader, 7);
 
                     newMessages.Add(new MessageEntryBuilder()
-                        .Id((ushort)messageShopText)
+                        .Id(messageId)
                         .Message(it =>
                         {
                             switch (messageShop.MessageShopStyle)
@@ -1460,8 +1453,8 @@ namespace MMR.Randomizer
                                 case MessageShopStyle.Tingle:
                                     it.StartGreenText()
                                     .ThreeChoices()
-                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Red($"{messageShop.Prices[0]} Rupees").NewLine()
-                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Red($"{messageShop.Prices[1]} Rupees").NewLine()
+                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Red($"{cost1} Rupees").NewLine()
+                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Red($"{cost2} Rupees").NewLine()
                                     .Text("No Thanks")
                                     .EndFinalTextBox();
                                     break;
@@ -1470,8 +1463,8 @@ namespace MMR.Randomizer
                                     .EndTextBox()
                                     .StartGreenText()
                                     .ThreeChoices()
-                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Pink($"{messageShop.Prices[0]} Rupees").NewLine()
-                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Pink($"{messageShop.Prices[1]} Rupees").NewLine()
+                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Pink($"{cost1} Rupees").NewLine()
+                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Pink($"{cost2} Rupees").NewLine()
                                     .Text("Nothing")
                                     .EndFinalTextBox();
                                     break;
@@ -2470,6 +2463,56 @@ namespace MMR.Randomizer
                     })
                     .Build()
                 );
+            }
+
+            // TODO if costs randomized
+            var messageCostRegex = new Regex("\\b[0-9]{1,3} Rupees?");
+            for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
+            {
+                var messageCost = MessageCost.MessageCosts[i];
+                var cost = _randomized.MessageCosts[i];
+                foreach (var (messageId, costIndex) in messageCost.MessageIds)
+                {
+                    var oldMessage = _messageTable.GetMessage(messageId);
+                    var newMessage = newMessages.FirstOrDefault(me => me.Id == messageId);
+                    if (newMessage == null)
+                    {
+                        newMessage = new MessageEntry
+                        {
+                            Id = messageId,
+                            Header = oldMessage.Header.ToArray(),
+                            Message = oldMessage.Message,
+                        };
+                        newMessages.Add(newMessage);
+                    }
+                    if (newMessage.Header == null)
+                    {
+                        newMessage.Header = oldMessage.Header.ToArray();
+                    }
+                    var oldCost = ReadWriteUtils.Arr_ReadS16(newMessage.Header, 5 + (costIndex * 2));
+                    if (oldCost >= 0)
+                    {
+                        ReadWriteUtils.Arr_WriteU16(newMessage.Header, 5 + (costIndex * 2), cost);
+                    }
+                    var replacementIndex = 0;
+                    newMessage.Message = messageCostRegex.Replace(newMessage.Message, match =>
+                    {
+                        return replacementIndex++ == costIndex ? $"{cost} Rupee{(cost != 1 && messageId != 1143 ? "s" : "")}" : match.Value;
+                    });
+                    if (messageId == 1143)
+                    {
+                        _randomized.Settings.AsmOptions.MiscConfig.Shorts.BankWithdrawFee = cost;
+                    }
+                }
+                foreach (var address in messageCost.PriceAddresses)
+                {
+                    ReadWriteUtils.WriteToROM(address, cost);
+                }
+                foreach (var address in messageCost.SubtractPriceAddresses)
+                {
+                    var subtractCost = (ushort)(0 - cost);
+                    ReadWriteUtils.WriteToROM(address, subtractCost);
+                }
             }
 
             _messageTable.UpdateMessages(newMessages);

@@ -104,7 +104,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void WriteNewItem(ItemObject itemObject, List<MessageEntry> newMessages, GameplaySettings settings, ChestTypeAttribute.ChestType? overrideChestType)
+        public static void WriteNewItem(ItemObject itemObject, List<MessageEntry> newMessages, GameplaySettings settings, ChestTypeAttribute.ChestType? overrideChestType, MessageTable messageTable)
         {
             var item = itemObject.Item;
             var location = itemObject.NewLocation.Value;
@@ -178,7 +178,7 @@ namespace MMR.Randomizer.Utils
 
             if (settings.UpdateShopAppearance)
             {
-                UpdateShop(itemObject, newMessages);
+                UpdateShop(itemObject, newMessages, messageTable);
             }
 
             if (location != item)
@@ -191,7 +191,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        private static void UpdateShop(ItemObject itemObject, List<MessageEntry> newMessages)
+        private static void UpdateShop(ItemObject itemObject, List<MessageEntry> newMessages, MessageTable messageTable)
         {
             var location = itemObject.NewLocation.Value;
 
@@ -199,13 +199,15 @@ namespace MMR.Randomizer.Utils
             foreach (var shopInventory in shopInventories)
             {
                 var messageId = ReadWriteUtils.ReadU16(shopInventory.ShopItemAddress + 0x0A);
+                var oldMessage = messageTable.GetMessage(messageId);
+                var cost = ReadWriteUtils.Arr_ReadU16(oldMessage.Header, 5);
                 newMessages.Add(new MessageEntryBuilder()
                     .Id(messageId)
                     .Message(it =>
                     {
                         it.Red(() =>
                         {
-                            it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text("20 Rupees").NewLine();
+                            it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text(cost.ToString()).Text(" Rupees").NewLine();
                         })
                         .RuntimeWrap(() =>
                         {
@@ -221,7 +223,7 @@ namespace MMR.Randomizer.Utils
                     .Id((ushort)(messageId + 1))
                     .Message(it =>
                     {
-                        it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text("20 Rupees").NewLine()
+                        it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text(cost.ToString()).Text(" Rupees").NewLine()
                         .Text(" ").NewLine()
                         .StartGreenText()
                         .TwoChoices()

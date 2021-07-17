@@ -116,6 +116,11 @@ namespace MMR.Randomizer.Utils
             return (ushort)((Arr[Src] << 8) | (Arr[Src + 1]));
         }
 
+        public static short Arr_ReadS16(byte[] Arr, int Src)
+        {
+            return (short)((Arr[Src] << 8) | (Arr[Src + 1]));
+        }
+
         public static void Arr_WriteU32(byte[] Arr, int Dest, uint val)
         {
             Arr[Dest] = (byte)((val & 0xFF000000) >> 24);

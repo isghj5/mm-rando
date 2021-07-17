@@ -1295,7 +1295,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable, Visible]
         [Repeatable, Temporary]
-        [ItemName("10 Bombs"), LocationName("Goron Shop 10 Bombs"), Region(Region.GoronVillage)]
+        [ItemName("10 Bombs"), LocationName("Goron Shop 10 Bombs"), MultiLocation(ShopItemGoronBomb10InWinter, ShopItemGoronBomb10InSpring)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("explosives")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 0)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShopSpring, 0)]
@@ -1306,7 +1306,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable, Visible]
         [Repeatable, Temporary]
-        [ItemName("10 Arrows"), LocationName("Goron Shop 10 Arrows"), Region(Region.GoronVillage)]
+        [ItemName("10 Arrows"), LocationName("Goron Shop 10 Arrows"), MultiLocation(ShopItemGoronArrow10InWinter, ShopItemGoronArrow10InSpring)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 1)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShopSpring, 1)]
@@ -1317,7 +1317,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable, Visible]
         [Repeatable, Temporary, Overwritable]
-        [ItemName("Red Potion"), LocationName("Goron Shop Red Potion"), Region(Region.GoronVillage)]
+        [ItemName("Red Potion"), LocationName("Goron Shop Red Potion"), MultiLocation(ShopItemGoronRedPotionInWinter, ShopItemGoronRedPotionInSpring)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 2)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShopSpring, 2)]
@@ -10000,7 +10000,23 @@ namespace MMR.Randomizer.GameObjects
         [MainLocation(SongOath), Region(Region.StoneTowerTemple)]
         SongOathInISTT,
 
+        [MainLocation(ShopItemGoronBomb10), Region(Region.GoronVillage)]
+        ShopItemGoronBomb10InWinter,
 
+        [MainLocation(ShopItemGoronBomb10), Region(Region.GoronVillage)]
+        ShopItemGoronBomb10InSpring,
+
+        [MainLocation(ShopItemGoronArrow10), Region(Region.GoronVillage)]
+        ShopItemGoronArrow10InWinter,
+
+        [MainLocation(ShopItemGoronArrow10), Region(Region.GoronVillage)]
+        ShopItemGoronArrow10InSpring,
+
+        [MainLocation(ShopItemGoronRedPotion), Region(Region.GoronVillage)]
+        ShopItemGoronRedPotionInWinter,
+
+        [MainLocation(ShopItemGoronRedPotion), Region(Region.GoronVillage)]
+        ShopItemGoronRedPotionInSpring,
 
 
         GossipTerminaSouth,

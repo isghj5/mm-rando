@@ -1,5 +1,5 @@
 {
-  "Version": 4,
+  "Version": 5,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -2768,30 +2768,45 @@
     },
     {
       "Id": "ShopItemGoronBomb10",
-      "RequiredItems": [
-        "AreaNorthAccess"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "ShopItemGoronBomb10InWinter"
+        ],
+        [
+          "ShopItemGoronBomb10InSpring"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "IsTrick": false
     },
     {
       "Id": "ShopItemGoronArrow10",
-      "RequiredItems": [
-        "AreaNorthAccess"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "ShopItemGoronArrow10InWinter"
+        ],
+        [
+          "ShopItemGoronArrow10InSpring"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "IsTrick": false
     },
     {
       "Id": "ShopItemGoronRedPotion",
-      "RequiredItems": [
-        "AreaNorthAccess"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "ShopItemGoronRedPotionInWinter"
+        ],
+        [
+          "ShopItemGoronRedPotionInSpring"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "IsTrick": false
@@ -52535,6 +52550,66 @@
           "Magic Meter"
         ]
       ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemGoronBomb10InWinter",
+      "RequiredItems": [
+        "AreaNorthAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemGoronBomb10InSpring",
+      "RequiredItems": [
+        "AreaSnowheadTempleClear"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemGoronArrow10InWinter",
+      "RequiredItems": [
+        "AreaNorthAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemGoronArrow10InSpring",
+      "RequiredItems": [
+        "AreaSnowheadTempleClear"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemGoronRedPotionInWinter",
+      "RequiredItems": [
+        "AreaNorthAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemGoronRedPotionInSpring",
+      "RequiredItems": [
+        "AreaSnowheadTempleClear"
+      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "IsTrick": false

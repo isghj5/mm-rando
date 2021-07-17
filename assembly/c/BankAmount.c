@@ -10,7 +10,7 @@ bool BankAmount_BeforeHandleInput(GlobalContext* ctxt) {
 
     if (gPlayUpdateInput.pressEdge.buttons.r || gPlayUpdateInput.pressEdge.buttons.z) {
         u16 amount;
-        
+
         if (gPlayUpdateInput.pressEdge.buttons.r) {
             if (ctxt->msgCtx.currentMessageId == 0x450) {
                 // depositing
@@ -19,7 +19,12 @@ bool BankAmount_BeforeHandleInput(GlobalContext* ctxt) {
                 // withdrawing
                 u16 bankRupees = (u16)(gSaveContext.perm.bankRupees & 0xFFFF);
                 if (gSaveContext.perm.isNight) {
-                    bankRupees -= 4;
+                    u16 withdrawFee = MISC_CONFIG.shorts.bankWithdrawFee;
+                    if (bankRupees < withdrawFee) {
+                        bankRupees = 0;
+                    } else {
+                        bankRupees -= withdrawFee;
+                    }
                 }
                 u16 capacity = gItemUpgradeCapacity.walletCapacity[gSaveContext.perm.inv.upgrades.wallet];
                 amount = capacity - gSaveContext.perm.unk24.rupees;
@@ -30,7 +35,7 @@ bool BankAmount_BeforeHandleInput(GlobalContext* ctxt) {
         } else if (gPlayUpdateInput.pressEdge.buttons.z) {
             amount = 0;
         }
-        
+
         if (amount > 999) {
             amount = 999;
         }
@@ -41,7 +46,7 @@ bool BankAmount_BeforeHandleInput(GlobalContext* ctxt) {
                 '0' + (amount / 10) % 10,
                 '0' + (amount % 10)
             };
-            
+
             for (u8 i = 0; i < 3; i++) {
                 u8 character = characters[i];
                 ctxt->msgCtx.currentMessageDisplayed[ctxt->msgCtx.selectionStartIndex + i] = character;

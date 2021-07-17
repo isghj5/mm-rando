@@ -29,8 +29,8 @@ void Item00_LoadCollectableTable(GlobalContext* ctxt) {
     }
 
     u16 sceneIndex = GetTweakedCollectableSceneIndex(ctxt->sceneNum);
-    
-    u32 index = MISC_CONFIG.internal.collectableTableFileIndex;
+
+    u32 index = MISC_CONFIG.shorts.collectableTableFileIndex;
     DmaEntry entry = dmadata[index];
 
     u32 start = entry.romStart + (sceneIndex * 0x100);
@@ -42,7 +42,7 @@ u16 Item00_CollectableFlagToGiIndex(u16 collectableFlag) {
     if (MISC_CONFIG.internal.vanillaLayout) {
         return 0;
     }
-    
+
     return collectableTable[collectableFlag];
 }
 

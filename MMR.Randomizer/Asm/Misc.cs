@@ -241,8 +241,6 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool VanillaLayout { get; set; }
 
-        public ushort CollectableTableFileIndex { get; set; }
-
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
@@ -251,7 +249,25 @@ namespace MMR.Randomizer.Asm
         {
             uint flags = 0;
             flags |= (this.VanillaLayout ? (uint)1 : 0) << 31;
-            flags |= CollectableTableFileIndex;
+            return flags;
+        }
+    }
+
+    public class MiscShorts
+    {
+        public ushort CollectableTableFileIndex { get; set; }
+
+        public ushort BankWithdrawFee { get; set; }
+
+        /// <summary>
+        /// Convert to a <see cref="uint"/> integer.
+        /// </summary>
+        /// <returns>Integer</returns>
+        public uint ToInt()
+        {
+            uint flags = 0;
+            flags |= (uint)CollectableTableFileIndex << 16;
+            flags |= BankWithdrawFee;
             return flags;
         }
     }
@@ -266,6 +282,7 @@ namespace MMR.Randomizer.Asm
         public uint Flags;
         public uint InternalFlags;
         public uint Speedups;
+        public uint Shorts;
 
         /// <summary>
         /// Convert to bytes.
@@ -292,6 +309,7 @@ namespace MMR.Randomizer.Asm
                 if (this.Version >= 3)
                 {
                     writer.WriteUInt32(this.Speedups);
+                    writer.WriteUInt32(this.Shorts);
                 }
 
                 return memStream.ToArray();
@@ -324,17 +342,20 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public MiscSpeedups Speedups { get; set; }
 
+        public MiscShorts Shorts { get; set; }
+
         public MiscConfig()
-            : this(new byte[0], new MiscFlags(), new InternalFlags(), new MiscSpeedups())
+            : this(new byte[0], new MiscFlags(), new InternalFlags(), new MiscSpeedups(), new MiscShorts())
         {
         }
 
-        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags, MiscSpeedups speedups)
+        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags, MiscSpeedups speedups, MiscShorts shorts)
         {
             this.Hash = hash;
             this.Flags = flags;
             this.InternalFlags = internalFlags;
             this.Speedups = speedups;
+            this.Shorts = shorts;
         }
 
         /// <summary>
@@ -358,7 +379,7 @@ namespace MMR.Randomizer.Asm
 
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;
-            this.InternalFlags.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
+            this.Shorts.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
         }
 
         /// <summary>
@@ -377,6 +398,7 @@ namespace MMR.Randomizer.Asm
                 Flags = this.Flags.ToInt(),
                 InternalFlags = this.InternalFlags.ToInt(),
                 Speedups = this.Speedups.ToInt(),
+                Shorts = this.Shorts.ToInt(),
             };
         }
     }
