@@ -76,6 +76,7 @@ namespace MMR.Randomizer
                 SequenceUtils.ReassignSongSlots();
             }
 
+            // songtest filename token allows music makers and users to force a song into a MMR seed for recording/testing
             SequenceUtils.CheckSongTest(unassigned, log);
 
             // music plando, user has selected they want an easier time specifying where and what songs are placed in specific spots
@@ -86,6 +87,7 @@ namespace MMR.Randomizer
                 RomData.TargetSequences.Remove(slot);
             }
 
+            // songforce filename token places music in a higher priority, check for songs with songforce here
             SequenceUtils.CheckSongForce(unassigned, log, random);
                 
             foreach (var targetSlot in RomData.TargetSequences)
@@ -95,9 +97,9 @@ namespace MMR.Randomizer
 
                 if (foundValidReplacement == false) // no available songs fit in this slot category
                 {
-                    WriteOutput("No song fits in " + targetSlot.Name + " slot, with categories: " + String.Join(", ", targetSlot.Type.Select(x => "0x" + x.ToString("X2"))));
+                    WriteOutput($"No song fits in [{targetSlot.Name}] slot, with categories: " + String.Join(", ", targetSlot.Type.Select(x => "0x" + x.ToString("X2"))));
                     // loosen song restrictions and re-attempt
-                    SequenceUtils.TryBackupSongPlacement(targetSlot, log, unassigned);
+                    SequenceUtils.TryBackupSongPlacement(targetSlot, log, unassigned, settings);
                 }
             }
 
@@ -105,23 +107,7 @@ namespace MMR.Randomizer
 
             if (_cosmeticSettings.Music == Music.Random && settings.GenerateSpoilerLog)
             {
-                String dir = Path.GetDirectoryName(settings.OutputROMFilename);
-                String path = $"{Path.GetFileNameWithoutExtension(settings.OutputROMFilename)}";
-                // spoiler log should already be written by the time we reach this far
-                if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
-                {
-                    path += "_SpoilerLog.txt";
-                }
-                else // TODO add HTML log compatibility
-                {
-                    path += "_SongLog.txt";
-                }
-
-                using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
-                {
-                    sw.WriteLine(""); // spacer
-                    sw.Write(log);
-                }
+                SequenceUtils.WriteSongLog(log, settings);
             }
         }
 

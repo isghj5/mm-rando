@@ -9,6 +9,7 @@ using System.Diagnostics;
 using System.IO.Compression;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
+using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.Utils
 {
@@ -159,6 +160,8 @@ namespace MMR.Randomizer.Utils
                     }
                 } // end while (i < lines.Length)
 
+                // MMR changes the music that plays when the player uses SOT
+                // however the original SOT doesn't have a unique sequence/slot, so we have to use an unused one
                 RomData.SequenceList.Add(new SequenceInfo
                 {
                     Name = nameof(Properties.Resources.mmr_f_sot),
@@ -174,12 +177,10 @@ namespace MMR.Randomizer.Utils
 
         public static void ScanZSEQUENCE(string directory) // TODO make this folder identifiable, add directory and list of banks from scanned directory to this
         {
-            // check if files were added by user to directory
-            // we're not going to check for non-zseq here until I find an easy way to do that
-            //  Just going to trust users aren't stupid enough to think renaming a mp3 to zseq will work
+            // check if files were added by user to music directory
             // format: FILENAME_InstrumentSet_Categories-separated-by-commas.zseq
             //  where the filename, instrumentset, and categories are separated by single underscore
-            // This method of adding music is deprecated, MMRS has rendered this filetype unnecessary, however leaving in to make debugging faster
+            // This method of adding music is deprecated, MMRS has rendered this filetype unnecessary, however I cant convince people to stop making zseq files
             foreach (String filePath in Directory.GetFiles(directory, "*.zseq"))
             {
                 String filename = Path.GetFileName(filePath);
@@ -223,8 +224,8 @@ namespace MMR.Randomizer.Utils
         {
             // check if user has added mmrs packed sequence files to the music folder
             //  mmrs is just a zip that has all the small files:
-            //  the sequence itself, the categories, and the instrument set value
-            //    if the song requires a custom audiobank, the bank and bank meta data are also here
+            //  the sequence itself, the categories, and the instrument set value (as part of the zseq name)
+            //    if the song requires a custom audiobank, the bank and bank meta data are also here (where the name is the bank being replaced)
             //    if the song requires custom instrument samples, those are also here
             //  the user should be able to pack the archive with multiple sequences and multiple banks to match,
             //   where the redundancy increases likley hood of a song being able to be placed in a free audiobank slot
@@ -236,12 +237,12 @@ namespace MMR.Randomizer.Utils
                 {
                     using (ZipArchive zip = ZipFile.OpenRead(filePath))
                     {
-                        var currentSong = new SequenceInfo(); ;
+                        var currentSong = new SequenceInfo();
                         var splitFilePath = filePath.Split('\\');
                         currentSong.Name = splitFilePath[splitFilePath.Length - 1];
                         var usedBanks = 0;
 
-                        //read categories file
+                        // read categories file
                         ZipArchiveEntry categoriesFileEntry = zip.GetEntry("categories.txt");
                         if (categoriesFileEntry != null)
                         {
@@ -258,18 +259,18 @@ namespace MMR.Randomizer.Utils
                             }
                             foreach (var line in categoryData.Split(delimitingChar))
                             {
-                                categoriesList.Add(Convert.ToInt32(line, 16));
+                                categoriesList.Add(Convert.ToInt32(line.Trim(), 16));
                             }
                             currentSong.Type = categoriesList;
                         }
                         else  // there should always be one, if not, print error and stop
                         {
-                            throw new Exception("ERROR: cannot find a categories file for " + currentSong.Name);
+                            throw new Exception($"ERROR: cannot find a categories file for {currentSong.Name}");
                         }
 
                         if (zip.Entries.Where(e => e.Name.Contains("zseq")).Count() == 0)
                         {
-                            throw new Exception("ERROR: cannot find a single zseq in file " + currentSong.Name);
+                            throw new Exception($"ERROR: cannot find a single zseq in file {currentSong.Name}");
                         }
 
                         // read list of sound samples
@@ -308,6 +309,13 @@ namespace MMR.Randomizer.Utils
                             var fileNameInstrumentSet = commentSplit.Length > 1 ? commentSplit[commentSplit.Length - 1] : filename;
                             currentSong.Instrument = Convert.ToInt32(fileNameInstrumentSet, 16);
 
+                            if (currentSong.Instrument > 0x28) // mmrs instrument set too high
+                            {
+                                throw new Exception($"MMRS file [{currentSong.Name}]" +
+                                    $" has a zseq named after an instrument set that does not exist: [{currentSong.Instrument.ToString("X")}]" +
+                                    $" zseq filename: [{zSeqFile.Name}]");
+                            }
+
                             var bankFileEntry = zip.GetEntry(filename + ".zbank");
                             if (bankFileEntry != null) // custom bank detected
                             {
@@ -343,9 +351,12 @@ namespace MMR.Randomizer.Utils
                             }
                         } // foreach zip entry
 
+                        // sometime music makers forget that the bank and zseq files have to match,
+                        // if this happens, zseq files will be used without their banks being detected, and songs will play with the wrong instruments
+                        // normally, only the vanilla instruments from the bank will play, sometimes nothing plays
                         if (usedBanks < zip.Entries.Where(e => e.Name.Contains("zbank")).Count())
                         {
-                            throw new Exception("ERROR: more banks than zseq found for " + currentSong.Name + "\n Probably a misnamed zseq");
+                            throw new Exception($"ERROR: more banks than zseq found for {currentSong.Name}\n (Probably a misnamed zseq)");
                         }
 
                         if (currentSong != null && currentSong.SequenceBinaryList != null)
@@ -353,14 +364,13 @@ namespace MMR.Randomizer.Utils
                             RomData.SequenceList.Add(currentSong);
                         }
 
-                    }// zip as file
-                }// for each zip
-                catch (Exception e) // log it, continue with other songs
+                    }// zip as file end
+                } // try end
+                catch (Exception e)
                 {
-
-                    throw new Exception("Error attempting to read archive: " + filePath + " -- \n" + e);
+                    throw new Exception($"Error attempting to read archive: {filePath} -- \n" + e);
                 }
-            }
+            } // for each mmrs end
         }
 
         public static void PointerizeSequenceSlots()
@@ -730,7 +740,7 @@ namespace MMR.Randomizer.Utils
             return false;
         }
 
-        public static void TryBackupSongPlacement(SequenceInfo targetSlot, StringBuilder log, List<SequenceInfo> unassignedSequences)
+        public static void TryBackupSongPlacement(SequenceInfo targetSlot, StringBuilder log, List<SequenceInfo> unassignedSequences, OutputSettings settings)
         {
             /// sometimes, the remaining song slots can't find a compatible song, here we loosen restrictions until we can build a seed
 
@@ -756,7 +766,7 @@ namespace MMR.Randomizer.Utils
             }
 
             // second attempt, copy a song already used
-            replacementSong = RomData.SequenceList.Find(u => u.Type[0] == targetSlot.Type[0]);
+            replacementSong = RomData.SequenceList.Find(u => u.Type.Intersect(targetSlot.Type).Any());
             if (replacementSong != null)
             {
                 RomData.SequenceList.Add
@@ -783,9 +793,33 @@ namespace MMR.Randomizer.Utils
             log.AppendLine(" out of remaining songs:");
             foreach (SequenceInfo RemainingSong in unassignedSequences)
             {
-                log.AppendLine(" - " + RemainingSong.Name + " with categories " + String.Join(",", RemainingSong.Type));
+                log.AppendLine(" * [" + RemainingSong.Name + "] with categories [" + String.Join(",", RemainingSong.Type) + "]");
             }
-            throw new Exception("Cannot randomize music on this seed with available music");
+            WriteSongLog(log, settings);
+            throw new Exception("Cannot randomize music on this seed with available music: " + targetSlot.PreviousSlot.ToString("X"));
+        }
+
+        public static void WriteSongLog(StringBuilder log, OutputSettings settings)
+        {
+            String dir = Path.GetDirectoryName(settings.OutputROMFilename);
+            String path = $"{Path.GetFileNameWithoutExtension(settings.OutputROMFilename)}";
+
+            // spoiler log should already be written by the time we reach this far
+            // if no text log, create separate song log (mostly for mmr users)
+            if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
+            {
+                path += "_SpoilerLog.txt";
+            }
+            else
+            {
+                path += "_SongLog.txt";
+            }
+
+            using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
+            {
+                sw.WriteLine(""); // spacer between spoiler log and song log
+                sw.Write(log);
+            }
         }
 
         public static void AssignSequenceSlot(SequenceInfo slotSequence, SequenceInfo replacementSequence, List<SequenceInfo> remainingSequences, string debugString, StringBuilder log)
