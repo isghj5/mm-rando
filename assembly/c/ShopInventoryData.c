@@ -38,8 +38,11 @@ static bool IsItemInstant(u8 item) {
     if (item >= ITEM_HEART && item <= ITEM_GOLD_RUPEE) {
         return true;
     }
-    if (item >= ITEM_PICKUP_DEKU_STICKS_5 && item <= ITEM_PICKUP_BOMBCHU_5) {
+    if (item >= ITEM_PICKUP_DEKU_STICKS_5 && item <= ITEM_PICKUP_ARROWS_50) {
         return z2_IsItemKnown(item);
+    }
+    if (item >= ITEM_PICKUP_BOMBCHU_20 && item <= ITEM_PICKUP_BOMBCHU_5) {
+        return z2_IsItemKnown(ITEM_BOMBCHU);
     }
     return false;
 }
