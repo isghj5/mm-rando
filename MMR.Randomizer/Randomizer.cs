@@ -1071,7 +1071,13 @@ namespace MMR.Randomizer
             // TODO if costs randomized
             for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
             {
-                _randomized.MessageCosts.Add((ushort)Random.Next(1, 500));
+                var walletSize = Random.Next(3);
+                _randomized.MessageCosts.Add((ushort) (walletSize switch
+                {
+                    0 => Random.Next(1, 100),
+                    1 => Random.Next(100, 201),
+                    _ => Random.Next(201, 501),
+                }));
             }
 
             if (_settings.LogicMode != LogicMode.NoLogic)
