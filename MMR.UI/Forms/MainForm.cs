@@ -167,6 +167,7 @@ namespace MMR.UI.Forms
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.SmallKeyMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossKeyMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.StrayFairyMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.PriceMode)));
             foreach (var propertyInfo in properties)
             {
                 var tabPage = new TabPage
@@ -207,7 +208,7 @@ namespace MMR.UI.Forms
                     checkBox.CheckedChanged += cDungeonMode_CheckedChanged;
                     tabPage.Controls.Add(checkBox);
                     currentX += deltaX;
-                    if (currentX > tShortenCutscenes.Width - width)
+                    if (currentX > tOtherCustomizations.Width - width)
                     {
                         currentX = initialX;
                         currentY += deltaY;

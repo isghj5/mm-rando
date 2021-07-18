@@ -2471,6 +2471,10 @@ namespace MMR.Randomizer
             {
                 var messageCost = MessageCost.MessageCosts[i];
                 var cost = _randomized.MessageCosts[i];
+                if (!cost.HasValue)
+                {
+                    continue;
+                }
                 foreach (var (messageId, costIndex) in messageCost.MessageIds)
                 {
                     var oldMessage = _messageTable.GetMessage(messageId);
@@ -2492,7 +2496,7 @@ namespace MMR.Randomizer
                     var oldCost = ReadWriteUtils.Arr_ReadS16(newMessage.Header, 5 + (costIndex * 2));
                     if (oldCost >= 0)
                     {
-                        ReadWriteUtils.Arr_WriteU16(newMessage.Header, 5 + (costIndex * 2), cost);
+                        ReadWriteUtils.Arr_WriteU16(newMessage.Header, 5 + (costIndex * 2), cost.Value);
                     }
                     var replacementIndex = 0;
                     newMessage.Message = messageCostRegex.Replace(newMessage.Message, match =>
@@ -2501,12 +2505,12 @@ namespace MMR.Randomizer
                     });
                     if (messageId == 1143)
                     {
-                        _randomized.Settings.AsmOptions.MiscConfig.Shorts.BankWithdrawFee = cost;
+                        _randomized.Settings.AsmOptions.MiscConfig.Shorts.BankWithdrawFee = cost.Value;
                     }
                 }
                 foreach (var address in messageCost.PriceAddresses)
                 {
-                    ReadWriteUtils.WriteToROM(address, cost);
+                    ReadWriteUtils.WriteToROM(address, cost.Value);
                 }
                 foreach (var address in messageCost.SubtractPriceAddresses)
                 {

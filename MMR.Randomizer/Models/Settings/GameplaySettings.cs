@@ -178,6 +178,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public StrayFairyMode StrayFairyMode { get; set; }
 
+        public PriceMode PriceMode { get; set; }
+
 
         /// <summary>
         ///  Custom item list selections

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MMR.Randomizer.Models;
+using System;
 using System.Collections.Generic;
 
 namespace MMR.Randomizer.GameObjects
@@ -10,6 +11,7 @@ namespace MMR.Randomizer.GameObjects
         public IList<Item> ItemsAffected { get; set; } = new List<Item>();
         public IList<int> PriceAddresses { get; set; } = new List<int>();
         public IList<int> SubtractPriceAddresses { get; set; } = new List<int>();
+        public PriceMode Category { get; set; } = PriceMode.Purchases;
 
         public static MessageCost[] MessageCosts = new MessageCost[]
         {
@@ -22,6 +24,7 @@ namespace MMR.Randomizer.GameObjects
                 LocationsAffected = { Item.HeartPieceHoneyAndDarling, Item.MundaneItemHoneyAndDarlingPurpleRupee },
                 SubtractPriceAddresses = { 0xDD53B2 },
                 PriceAddresses = { 0xDD539A },
+                Category = PriceMode.Minigames,
             },
 
             // Town Archery
@@ -31,12 +34,14 @@ namespace MMR.Randomizer.GameObjects
                 LocationsAffected = { Item.UpgradeBigQuiver, Item.HeartPieceTownArchery },
                 SubtractPriceAddresses = { 0xE38A26 },
                 PriceAddresses = { 0xE3897A },
+                Category = PriceMode.Minigames,
             },
 
             // Night Withdraw
             new MessageCost
             {
                 MessageIds = { (1143, 0) },
+                Category = PriceMode.Misc,
             },
 
             // Bomb Shop Keg
@@ -51,6 +56,7 @@ namespace MMR.Randomizer.GameObjects
             {
                 MessageIds = { (1904, 0) },
                 LocationsAffected = { Item.MundaneItemTreasureChestGameDekuNuts },
+                Category = PriceMode.Minigames,
             },
 
             // TCG Human
@@ -58,6 +64,7 @@ namespace MMR.Randomizer.GameObjects
             {
                 MessageIds = { (1905, 0) },
                 LocationsAffected = { Item.MundaneItemTreasureChestGamePurpleRupee },
+                Category = PriceMode.Minigames,
             },
 
             // TCG Goron
@@ -65,6 +72,7 @@ namespace MMR.Randomizer.GameObjects
             {
                 MessageIds = { (1906, 0) },
                 LocationsAffected = { Item.HeartPieceTreasureChestGame },
+                Category = PriceMode.Minigames,
             },
 
             // TCG Zora
@@ -72,12 +80,14 @@ namespace MMR.Randomizer.GameObjects
             {
                 MessageIds = { (1907, 0) },
                 LocationsAffected = { Item.MundaneItemTreasureChestGameRedRupee },
+                Category = PriceMode.Minigames,
             },
 
             // Boat Ride Adult
             new MessageCost
             {
                 MessageIds = { (2139, 0) },
+                Category = PriceMode.Misc,
             },
 
             // Boat Ride Child
@@ -86,6 +96,7 @@ namespace MMR.Randomizer.GameObjects
                 MessageIds = { (2139, 1), (2142, 0) },
                 SubtractPriceAddresses = { 0xEBADB0 },
                 PriceAddresses = { 0xEBADA6 },
+                Category = PriceMode.Misc,
             },
 
             // Boat Archery
@@ -95,6 +106,7 @@ namespace MMR.Randomizer.GameObjects
                 LocationsAffected = { Item.HeartPieceBoatArchery },
                 SubtractPriceAddresses = { 0xEBAE3A },
                 PriceAddresses = { 0xEBAE2E },
+                Category = PriceMode.Minigames,
             },
 
             // Magic Bean
@@ -112,6 +124,7 @@ namespace MMR.Randomizer.GameObjects
                 LocationsAffected = { Item.UpgradeBiggestQuiver, Item.HeartPieceSwampArchery },
                 SubtractPriceAddresses = { 0xE3801E },
                 PriceAddresses = { 0xE37FC2 },
+                Category = PriceMode.Minigames,
             },
 
             // Smithy 1
@@ -136,6 +149,7 @@ namespace MMR.Randomizer.GameObjects
                 LocationsAffected = { Item.HeartPieceFishermanGame },
                 SubtractPriceAddresses = { 0x1079672 },
                 PriceAddresses = { 0x107964A },
+                Category = PriceMode.Minigames,
             },
 
             // Swamp Scrub Purchase
@@ -278,6 +292,7 @@ namespace MMR.Randomizer.GameObjects
             new MessageCost
             {
                 MessageIds = { (10006, 0) },
+                Category = PriceMode.Minigames,
             },
 
             // Sword School HP
@@ -285,6 +300,7 @@ namespace MMR.Randomizer.GameObjects
             {
                 MessageIds = { (10006, 1) },
                 LocationsAffected = { Item.HeartPieceSwordsmanSchool },
+                Category = PriceMode.Minigames,
             },
 
             // Postman Game
@@ -292,6 +308,7 @@ namespace MMR.Randomizer.GameObjects
             {
                 MessageIds = { (10126, 0), (10137, 0), (10138, 0), (10143, 0) },
                 //LocationsAffected = { Item.HeartPieceNotebookPostman },
+                Category = PriceMode.Minigames,
             },
 
             // Deku Playground
@@ -301,6 +318,7 @@ namespace MMR.Randomizer.GameObjects
                 LocationsAffected = { Item.HeartPieceDekuPlayground, Item.MundaneItemDekuPlaygroundPurpleRupee },
                 SubtractPriceAddresses = { 0xF4FBBE },
                 PriceAddresses = { 0xF4FB8E },
+                Category = PriceMode.Minigames,
                 // TODO make a 'Play Deku Playground' grouping for the rupees
             },
 
@@ -329,6 +347,7 @@ namespace MMR.Randomizer.GameObjects
                 LocationsAffected = { Item.MundaneItemLotteryPurpleRupee},
                 SubtractPriceAddresses = { 0x1015CE6 },
                 PriceAddresses = { 0x1015CAA },
+                Category = PriceMode.Minigames,
             },
 
             // Gorman Milk
@@ -343,6 +362,7 @@ namespace MMR.Randomizer.GameObjects
             {
                 MessageIds = { (13423, 0), (13425, 0), (13427, 0), (13432, 0) },
                 LocationsAffected = { Item.MaskGaro },
+                Category = PriceMode.Minigames,
             },
 
             // Bomb Shop

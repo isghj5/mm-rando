@@ -1067,10 +1067,15 @@ namespace MMR.Randomizer
 
         private void RandomizePrices()
         {
-            _randomized.MessageCosts = new List<ushort>();
+            _randomized.MessageCosts = new List<ushort?>();
             // TODO if costs randomized
             for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
             {
+                if (!_settings.PriceMode.HasFlag(MessageCost.MessageCosts[i].Category))
+                {
+                    _randomized.MessageCosts.Add(null);
+                    continue;
+                }
                 var walletSize = Random.Next(3);
                 _randomized.MessageCosts.Add((ushort) (walletSize switch
                 {
@@ -1109,6 +1114,10 @@ namespace MMR.Randomizer
                 {
                     var messageCost = MessageCost.MessageCosts[i];
                     var cost = _randomized.MessageCosts[i];
+                    if (!cost.HasValue)
+                    {
+                        continue;
+                    }
                     foreach (var location in messageCost.LocationsAffected)
                     {
                         var affectedCost = affectedLocations.GetValueOrDefault(location, short.MaxValue);
