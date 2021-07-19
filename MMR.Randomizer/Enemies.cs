@@ -430,6 +430,51 @@ namespace MMR.Randomizer
             }
         }
 
+        private static void RecreateFishing()
+        {
+
+            /// fishing testing
+
+            // to place in spring, we remove some  other actors and objects to get fishing working
+
+            var springTwinIslandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslandsSpring.FileID());
+            var springTwinIsleMap = springTwinIslandsScene.Maps[0];
+            // wolfos
+            //springTwinIsleMap.Actors[0].ChangeActor(GameObjects.Actor.Empty); // woflos one, we want him to become fisherman
+            springTwinIsleMap.Actors[0].Position = new vec16(199, 100, 809); // move fisherman to spot in the lake -50
+            springTwinIsleMap.Actors[0].Rotation.y = (short) MergeRotationAndFlags(-270, 0x7F);
+            springTwinIsleMap.Actors[0].ChangeActor(GameObjects.Actor.OOTFishing, 0x200); // 0xFFFF is the whole thing
+            springTwinIsleMap.Actors[0].OldActorEnum = GameObjects.Actor.OOTFishing;
+            springTwinIsleMap.Objects[9] = GameObjects.Actor.OOTFishing.ObjectIndex();
+
+            springTwinIsleMap.Actors[1].ChangeActor(GameObjects.Actor.Empty); // worthless one
+            springTwinIsleMap.Actors[1].OldActorEnum = GameObjects.Actor.OOTFishing;
+
+            // tektite
+            springTwinIsleMap.Actors[2].ChangeActor(GameObjects.Actor.Empty); // one whole tek
+            springTwinIsleMap.Objects[1] = GameObjects.Actor.Empty.ObjectIndex();
+
+            // goron son
+            springTwinIsleMap.Actors[20].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Objects[6] = GameObjects.Actor.Empty.ObjectIndex();
+
+            // guay
+            springTwinIsleMap.Actors[5].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Actors[6].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Objects[7] = GameObjects.Actor.Empty.ObjectIndex();
+            // keese // why is there a keese object here?
+            springTwinIsleMap.Objects[0] = 0x1AB; // either empty or we could try to spawn the proprietor
+            // skullfish encounter
+            springTwinIsleMap.Actors[21].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Actors[27].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Actors[28].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Objects[8] = GameObjects.Actor.Empty.ObjectIndex();
+
+            // nothing left for enemizer to do so it wont write the scene
+            SceneUtils.UpdateScene(springTwinIslandsScene);
+
+        }
+
         private static void Shinanigans()
         {
             if (ACTORSENABLED)
@@ -470,6 +515,8 @@ namespace MMR.Randomizer
                 var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
                 dekuPalaceScene.Maps[2].Actors[25].Rotation.y = (short)MergeRotationAndFlags(rotation: 180, flags: 0x7F);
                 dekuPalaceScene.Maps[2].Actors[26].Rotation.y = (short)MergeRotationAndFlags(rotation: 180, flags: dekuPalaceScene.Maps[2].Actors[26].Rotation.y);
+
+                RecreateFishing();
             }
 
             // testing why zrotation can be so broken for grottos
@@ -501,6 +548,10 @@ namespace MMR.Randomizer
             var twinislandsSceneData = RomData.MMFileList[GameObjects.Scene.TwinIslands.FileID()].Data;
             twinislandsSceneData[0xD6] = 0xAE;
             twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall wtf
+
+            // test if we can make it dark at night everywhere?
+            // dark room just enables point lights, is that it for inside?
+            //foreach (var s in RomData.SceneList)
 
             // testing: change the environment var for tf object_kankyo
             //var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
@@ -1468,15 +1519,16 @@ namespace MMR.Randomizer
                         continue;
                     }// */
                     //
-                    /*if (scene.File == GameObjects.Scene.RomaniRanch.FileID() && sceneObjects[objCount] == GameObjects.Actor.Treee.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.NorthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Carpenter.ObjectIndex()
+                            NewV = GameObjects.Actor.FloorMaster.ObjectIndex()
                         });
                         continue;
                     } // */
+
                     /* if (scene.File == GameObjects.Scene.StockPotInn.FileID() && sceneObjects[objCount] == GameObjects.Actor.Clock.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
@@ -1737,7 +1789,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 22.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 22.3\n");
 
                 }
             }

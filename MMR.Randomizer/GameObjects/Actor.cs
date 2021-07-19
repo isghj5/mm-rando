@@ -8,6 +8,7 @@ namespace MMR.Randomizer.GameObjects
     public enum Actor
     {
         /// the main enumator value is the vanilla actor list ID
+        /// 
 
         // warning: companion actors can bypass variants that exist, you might remove a variant but it still exists as a companion
         // fixing this is a performance loss, just dont be stupid
@@ -344,7 +345,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0xA1A)]// has the shop keeper
         //[GroundVariants(0xFF01, 0xFF1A)] //testing
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.TerminaField)] // need to keep in termina field for rupee rando
+        [EnemizerScenesExcluded(Scene.TerminaField, Scene.TwinIslandsSpring)] // need to keep in termina field for rupee rando
         Treee = 0x41, // En_Wood2
 
         //[EnemizerEnabled] //hardcoded values for his entrance spawn make the camera wonky, and his color darkening is wack
@@ -433,8 +434,7 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0xFF53, 0xFF07, 0xFF56, 0xFF62, 0xFF76, 0xFF03,
             0xFF3F, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0xFF0B, 0xFF0F, 0xFFFC)]
         [PathingVariants(0xEF, 0x7F, 4, 0x55B, 0x637, 0x113, 0x91F, 0x909, 0xB0C, 0xC0F)]
-        //[PathingTypeVarsPlacement(mask: 0xFE00, shift: 9)]
-        [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)] // this one is hard to tell, guessing this one safer less crashy
+        [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)]
         [VariantsWithRoomMax(max: 1, 
             0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F,
             0xFF3F, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x11F)]
@@ -545,6 +545,16 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerEnabled] // we dont actually want this detected automatically, this will be added per-likelike manually
         [ObjectListIndex(0xB3)] // this is really the shield, we're using it as the second likelike object
         LikeLikeShield = 0x28E, // 28E is a dummy actor ID, we only use it because it will never conflict with enemizer
+
+        //[ActorizerEnabled]
+        [ObjectListIndex(0x124)]
+        // params: FFFF is the main all-in-one
+        // 100-MAX is per-single fish
+        // 200 is something, it causes splashes you can hear but if you get close to it it crashes
+        [GroundVariants(0xFFFF)] // assumption, the main vars will be the man in the hat
+        [WaterVariants(0xFFFF)] // assumption, the main vars will be the man in the hat
+        [UnkillableAllVariants]
+        OOTFishing = 0x79,
 
         [ActorizerEnabled]
         // this is marked 2 and not 1 because 0x100 pots dont spawn in dungeons
@@ -913,7 +923,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(250)]
         // params 0 vanilla
         // init checks if 64, C8, CA, 23
-        //[GroundVariants(0x23)]
+        [GroundVariants(0x23)]
         [UnkillableAllVariants] // assumption: need mirror shield
         SkeleKnight = 0x116, // En_Knight
 
