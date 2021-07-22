@@ -132,7 +132,7 @@ namespace MMR.Randomizer
 
             ResourceUtils.ApplyHack(Resources.mods.fix_music);
             ResourceUtils.ApplyHack(Resources.mods.inst24_swap_guitar);
-            SequenceUtils.RebuildAudioSeq(RomData.SequenceList);
+            SequenceUtils.RebuildAudioSeq(RomData.SequenceList, _cosmeticSettings.AsmOptions.MusicConfig.SequenceMaskFileIndex);
             SequenceUtils.WriteNewSoundSamples(RomData.InstrumentSetList);
             SequenceUtils.RebuildAudioBank(RomData.InstrumentSetList);
         }

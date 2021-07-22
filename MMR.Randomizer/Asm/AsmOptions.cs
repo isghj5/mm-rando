@@ -43,6 +43,8 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public WorldColorsConfig WorldColorsConfig { get; set; } = new WorldColorsConfig();
 
+        public MusicConfig MusicConfig { get; set; } = new MusicConfig();
+
         /// <summary>
         /// Finalize all settings given a <see cref="CosmeticSettings"/>.
         /// </summary>
@@ -50,6 +52,7 @@ namespace MMR.Randomizer.Asm
         public void FinalizeSettings(CosmeticSettings settings)
         {
             WorldColorsConfig.FinalizeSettings(settings);
+            MusicConfig.FinalizeSettings(settings);
         }
     }
 }

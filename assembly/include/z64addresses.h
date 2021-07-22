@@ -21,6 +21,7 @@
 #define SegmentTableAddr                 0x801F8180
 #define StaticContextAddr                0x803824D0
 #define GlobalContextAddr                0x803E6B20 // Todo: Remove.
+#define SequenceContextAddr              0x802050D0
 
 // Data.
 #define gActorOverlayTable               ((ActorOverlay*)            ActorOverlayTableAddr)
@@ -34,6 +35,7 @@
 #define gRspSegmentPhysAddrs             (*(SegmentTable*)           SegmentTableAddr)
 #define gSongNotes                       (*(SongNotes*)              SongNotesAddr)
 #define s803824D0                        (*(StaticContext*)          StaticContextAddr)
+#define gSequenceContext                 ((SequenceContext*)         SequenceContextAddr)
 
 // Data (non-struct).
 #define gItemTextureSegAddrTable         ((u32*)                     ItemTextureSegAddrTableAddr)

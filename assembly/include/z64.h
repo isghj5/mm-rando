@@ -1072,6 +1072,42 @@ struct GlobalContext {
     /* 0x18E58 */ UNK_TYPE1 pad18E58[0x400];
 }; // size = 0x19258
 
+typedef struct SequenceChannelContext {
+    /* 0x00 */ UNK_TYPE1 unk0[0x2C];
+    /* 0x2C */ f32 unk2C;
+    /* 0x30 */ f32 unk30; // volume?
+    /* 0x34 */ UNK_TYPE1 unk34[0x4];
+    /* 0x38 */ f32 unk38;
+    /* 0x3C */ f32 unk3C;
+    /* 0x40 */ UNK_TYPE1 unk40[0x4];
+    /* 0x44 */ UNK_PTR unk44[0x3];
+    /* 0x50 */ struct SequenceContext* sequence;
+    /* 0x54 */ UNK_PTR unk54[0x2];
+    /* 0x5C */ UNK_TYPE1 unk5C[0x8];
+    /* 0x64 */ UNK_PTR unk64[0x2];
+    /* 0x6C */ UNK_TYPE1 unk6C[0x18];
+    /* 0x84 */ UNK_PTR unk84[0x1B]; // might not all be pointers. some are 0, some are -1.
+} SequenceChannelContext; // size = 0xF0
+
+typedef struct SequenceContext {
+    /* 0x000 */ UNK_TYPE1 unk0[0x4];
+    /* 0x004 */ u8 sequenceId;
+    /* 0x005 */ UNK_TYPE1 unk5[0x3];
+    /* 0x008 */ UNK_TYPE1 unk8[0x10];
+    /* 0x018 */ UNK_PTR unk18;
+    /* 0x01C */ f32 unk1C;
+    /* 0x020 */ UNK_TYPE1 unk20[0x8];
+    /* 0x028 */ f32 unk28;
+    /* 0x02C */ f32 unk2C;
+    /* 0x030 */ f32 unk30;
+    /* 0x034 */ f32 unk34;
+    /* 0x038 */ SequenceChannelContext* channels[0x10];
+    /* 0x078 */ UNK_PTR unk78; // maybe track pointer
+    /* 0x07C */ UNK_TYPE1 unk7C[0x18];
+    /* 0x094 */ UNK_PTR unk94[0x12];
+    /* 0x0DC */ UNK_TYPE1 unkDC[0x84];
+} SequenceContext; // size = 0x160
+
 /// =============================================================
 /// Savefile Structure
 /// =============================================================

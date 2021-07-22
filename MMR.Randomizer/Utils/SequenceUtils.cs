@@ -312,6 +312,22 @@ namespace MMR.Randomizer.Utils
                                 };
                             }//if requires bank
 
+                            // read form mask file
+                            var formMaskFileEntry = zip.GetEntry(filename + ".formmask");
+                            if (formMaskFileEntry != null)
+                            {
+                                using var reader = new StreamReader(formMaskFileEntry.Open(), Encoding.Default);
+                                var formMaskData = reader.ReadToEnd();
+                                try
+                                {
+                                    zSeq.FormMask = Convert.ToUInt64(formMaskData, 16);
+                                }
+                                catch (Exception e)
+                                {
+                                    Debug.WriteLine($"ERROR: formMask file is invalid - {e.Message}");
+                                }
+                            }
+
                             // multiple seq possible, add depending on if first or not
                             if (currentSong.SequenceBinaryList == null)
                             {
@@ -412,7 +428,7 @@ namespace MMR.Randomizer.Utils
 
 
         // gets passed RomData.SequenceList in Builder.cs::WriteAudioSeq
-        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList)
+        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList, int? sequenceMaskFileIndex)
         {
             // spoiler log output DEBUG
             StringBuilder log = new StringBuilder();
@@ -604,6 +620,13 @@ namespace MMR.Randomizer.Utils
                 if (j != -1)
                 {
                     RomData.MMFileList[f].Data[paddr] = (byte)sequenceList[j].Instrument;
+
+                    if (sequenceMaskFileIndex.HasValue)
+                    {
+                        var formMask = sequenceList[j].SequenceBinaryList?.FirstOrDefault()?.FormMask ?? 0;
+                        ReadWriteUtils.Arr_WriteU32(RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 8, (uint)(formMask >> 32));
+                        ReadWriteUtils.Arr_WriteU32(RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 8 + 4, (uint)(formMask & uint.MaxValue));
+                    }
                 }
 
             }
@@ -655,7 +678,7 @@ namespace MMR.Randomizer.Utils
                 // randomize instrument sets last second, so the early banks don't get ravaged based on order
                 if (testSeq.SequenceBinaryList.Count > 1)
                 {
-                    testSeq.SequenceBinaryList.OrderBy(x => rng.Next()).ToList();
+                    testSeq.SequenceBinaryList = testSeq.SequenceBinaryList.OrderBy(x => rng.Next()).ToList();
                 }
 
                 testSeq.ClearUnavailableBanks(); // clear the sequence list of {bank/sequence} we cannot use
