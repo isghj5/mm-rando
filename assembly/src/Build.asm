@@ -106,6 +106,7 @@ PAYLOAD_START:
 .include "Dampe.asm"
 .include "DekuScrubPlaygroundElevator.asm"
 .include "DekuScrubPlaygroundRupee.asm"
+.include "DoorWarp.asm"
 .include "Dpad.asm"
 .include "ElegySpeedup.asm"
 .include "ExtendedObjects.asm"

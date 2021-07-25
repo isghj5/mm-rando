@@ -18,6 +18,7 @@ typedef struct {
 } GetItemEntry; // size = 0x8
 
 GetItemEntry* MMR_GetGiEntry(u16 index);
+bool MMR_GetGiFlag(u16 giIndex);
 void MMR_Init(void);
 u16 MMR_GetNewGiIndex(GlobalContext* ctxt, Actor* actor, u16 giIndex, bool grant);
 void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex);

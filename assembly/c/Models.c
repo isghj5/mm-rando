@@ -474,7 +474,20 @@ void Models_WriteBossRemainsObjectSegment(GlobalContext* ctxt, u32 graphicIdMinu
  **/
 void Models_DrawBossRemains(Actor* actor, GlobalContext* ctxt, u32 graphicIdMinus1) {
     if (MISC_CONFIG.flags.freestanding) {
-        DrawFromGiTable(actor, ctxt, 1.0, 0x448 + actor->params);
+        //DrawFromGiTable(actor, ctxt, 1.0, 0x448 + actor->params);
+
+        u16 giIndex = 0x448 + actor->params;
+        if (actor->parent->parent == NULL || actor->parent->parent->id != 0) {
+            u16 drawGiIndex = MMR_GetNewGiIndex(ctxt, 0, giIndex, false);
+            Rupee_SetDrawGiIndex(actor, drawGiIndex);
+        }
+        u16 giIndexToDraw = Rupee_GetDrawGiIndex(actor);
+
+        struct Model model;
+        GetItemEntry* entry = PrepareGiEntry(&model, ctxt, giIndexToDraw, false);
+
+        z2_CallSetupDList(ctxt->state.gfxCtx);
+        DrawModel(model, actor, ctxt, 1.0);
     } else {
         DrawModelLowLevel(actor, ctxt, graphicIdMinus1);
     }

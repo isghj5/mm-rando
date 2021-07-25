@@ -1645,6 +1645,7 @@ typedef struct {
     /* 0x000 */ Actor base;
     /* 0x144 */ UNK_TYPE1 pad144[0x8A];
     /* 0x1CE */ s16 warpTimer;
+    /* 0x1D0 */ s16 warpTimer2;
 } ActorDoorWarp1;
 
 /// =============================================================
