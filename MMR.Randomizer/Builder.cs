@@ -1330,6 +1330,8 @@ namespace MMR.Randomizer
             {
                 freeItems.Add(Item.FairyMagic);
                 freeItems.Add(Item.MaskDeku);
+                freeItems.Add(Item.ItemOcarina);
+                freeItems.Add(Item.SongTime);
                 freeItems.Add(Item.SongHealing);
                 freeItems.Add(Item.StartingSword);
                 freeItems.Add(Item.StartingShield);
