@@ -854,9 +854,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1520)]
         [FileID(226)]
         [ObjectListIndex(0x6)]
-        [FlyingVariants(0,1)]
+        [FlyingVariants(0, 1)]
         [RespawningVariants(0, 1)] // weirdly, all versions of regular guay are respawning
-        [VariantsWithRoomMax(max: 10, variant: 0)]
+        [VariantsWithRoomMax(max: 8, variant: 0, 1)]
         Guay = 0xF1,
 
         [ActorizerEnabled]

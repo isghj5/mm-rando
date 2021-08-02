@@ -516,7 +516,7 @@ namespace MMR.Randomizer
                 dekuPalaceScene.Maps[2].Actors[25].Rotation.y = (short)MergeRotationAndFlags(rotation: 180, flags: 0x7F);
                 dekuPalaceScene.Maps[2].Actors[26].Rotation.y = (short)MergeRotationAndFlags(rotation: 180, flags: dekuPalaceScene.Maps[2].Actors[26].Rotation.y);
 
-                RecreateFishing();
+                // RecreateFishing();
             }
 
             // testing why zrotation can be so broken for grottos
@@ -1789,7 +1789,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 22.3\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 22.4\n");
 
                 }
             }
