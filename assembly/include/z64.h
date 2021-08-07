@@ -1073,7 +1073,7 @@ struct GlobalContext {
 }; // size = 0x19258
 
 typedef struct SequenceChannelContext {
-    /* 0x00 */ UNK_TYPE1 unk0[0x2C];
+    /* 0x00 */ u8 unk0[0x2C];
     /* 0x2C */ f32 unk2C;
     /* 0x30 */ f32 unk30; // volume?
     /* 0x34 */ UNK_TYPE1 unk34[0x4];
@@ -1107,6 +1107,12 @@ typedef struct SequenceContext {
     /* 0x094 */ UNK_PTR unk94[0x12];
     /* 0x0DC */ UNK_TYPE1 unkDC[0x84];
 } SequenceContext; // size = 0x160
+
+typedef struct ChannelState {
+    /* 0x00 */ UNK_TYPE1 unk0[0x4];
+    /* 0x04 */ s8 param;
+    /* 0x05 */ UNK_TYPE1 unk5[0x3];
+} ChannelState;
 
 /// =============================================================
 /// Savefile Structure

@@ -39,9 +39,12 @@ static void ProcessChannel(u8 channelIndex, s8 state) {
     SequenceChannelContext* channelContext = gSequenceContext->channels[channelIndex];
     bool isPlaying = channelContext->unk0[0] & 0x80;
     if (isPlaying) {
-        u8 muteMask = musicState.muteMask[channelIndex / 2];
-        u8 stateMask = ((1 << state) << 4) >> ((channelIndex & 1) << 2);
-        bool shouldBeMuted = muteMask & stateMask;
+        bool shouldBeMuted = musicState.forceMute & (1 << channelIndex);
+        if (!shouldBeMuted) {
+            u8 muteMask = musicState.muteMask[channelIndex / 2];
+            u8 stateMask = ((1 << state) << 4) >> ((channelIndex & 1) << 2);
+            shouldBeMuted = muteMask & stateMask;
+        }
         bool isMuted = channelContext->unk0[0] & 0x10;
         if (!isMuted && shouldBeMuted) {
             channelContext->unk0[0] |= 0x10;
@@ -75,5 +78,22 @@ void Music_AfterChannelInit(SequenceContext* sequence, u8 channelIndex) {
         s8 state = CalculateCurrentState();
         musicState.currentState = state;
         ProcessChannel(channelIndex, state);
+    }
+}
+
+void Music_HandleChannelMute(SequenceChannelContext* channelContext, ChannelState* channelState, SequenceContext* sequence, u8 channelIndex) {
+    u8 shouldBeMuted = channelState->param;
+    if (shouldBeMuted) {
+        if (sequence == gSequenceContext) {
+            musicState.forceMute |= (1 << channelIndex);
+        }
+        channelContext->unk0[0] |= 0x10;
+    } else {
+        if (sequence == gSequenceContext) {
+            musicState.forceMute &= ~(1 << channelIndex);
+            ProcessChannel(channelIndex, musicState.currentState);
+        } else {
+            channelContext->unk0[0] &= ~0x10;
+        }
     }
 }

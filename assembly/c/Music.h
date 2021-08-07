@@ -11,7 +11,7 @@ void Music_Update(GlobalContext* ctxt);
 typedef struct MusicState {
     u8 loadedSequenceId;
     s8 currentState;
-    u8 pad8[2];
+    u16 forceMute;
     u8 muteMask[0x8];
 } MusicState;
 
