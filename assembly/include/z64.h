@@ -1648,6 +1648,16 @@ typedef struct {
     /* 0x1D0 */ s16 warpTimer2;
 } ActorDoorWarp1;
 
+// En_Kakasi actor (Scarecrow).
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0x4];
+    /* 0x148 */ void* function;
+    /* 0x14C */ UNK_TYPE1 pad14C[0x62];
+    /* 0x1AE */ s16 spawnCutsceneIndex;
+    /* 0x1B0 */ UNK_TYPE1 pad1B0[0xF0];
+} ActorEnKakasi; // size = 0x2A0
+
 /// =============================================================
 /// Actor Cutscene
 /// =============================================================

@@ -71,6 +71,7 @@ namespace MMR.UI.Forms
             this.tableItemPool = new System.Windows.Forms.TableLayoutPanel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.cFreeScarecrow = new System.Windows.Forms.CheckBox();
             this.cFDAnywhere = new System.Windows.Forms.CheckBox();
             this.cBlastCooldown = new System.Windows.Forms.ComboBox();
             this.cUnderwaterOcarina = new System.Windows.Forms.CheckBox();
@@ -86,6 +87,7 @@ namespace MMR.UI.Forms
             this.cDMult = new System.Windows.Forms.ComboBox();
             this.lDMult = new System.Windows.Forms.Label();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.cClimbMostSurfaces = new System.Windows.Forms.CheckBox();
             this.cHookshotAnySurface = new System.Windows.Forms.CheckBox();
             this.cFloors = new System.Windows.Forms.ComboBox();
             this.lFloors = new System.Windows.Forms.Label();
@@ -197,7 +199,6 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cClimbMostSurfaces = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -639,6 +640,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox12
             // 
+            this.groupBox12.Controls.Add(this.cFreeScarecrow);
             this.groupBox12.Controls.Add(this.cFDAnywhere);
             this.groupBox12.Controls.Add(this.cBlastCooldown);
             this.groupBox12.Controls.Add(this.cUnderwaterOcarina);
@@ -654,6 +656,20 @@ namespace MMR.UI.Forms
             this.groupBox12.TabIndex = 34;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Other";
+            // 
+            // cFreeScarecrow
+            // 
+            this.cFreeScarecrow.AutoSize = true;
+            this.cFreeScarecrow.BackColor = System.Drawing.Color.Transparent;
+            this.cFreeScarecrow.ForeColor = System.Drawing.Color.Black;
+            this.cFreeScarecrow.Location = new System.Drawing.Point(148, 100);
+            this.cFreeScarecrow.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFreeScarecrow.Name = "cFreeScarecrow";
+            this.cFreeScarecrow.Size = new System.Drawing.Size(143, 19);
+            this.cFreeScarecrow.TabIndex = 27;
+            this.cFreeScarecrow.Text = "Free Scarecrow\'s Song";
+            this.cFreeScarecrow.UseVisualStyleBackColor = false;
+            this.cFreeScarecrow.CheckedChanged += new System.EventHandler(this.cFreeScarecrow_CheckedChanged);
             // 
             // cFDAnywhere
             // 
@@ -868,6 +884,20 @@ namespace MMR.UI.Forms
             this.groupBox10.TabIndex = 32;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Movement";
+            // 
+            // cClimbMostSurfaces
+            // 
+            this.cClimbMostSurfaces.AutoSize = true;
+            this.cClimbMostSurfaces.BackColor = System.Drawing.Color.Transparent;
+            this.cClimbMostSurfaces.ForeColor = System.Drawing.Color.Black;
+            this.cClimbMostSurfaces.Location = new System.Drawing.Point(7, 160);
+            this.cClimbMostSurfaces.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cClimbMostSurfaces.Name = "cClimbMostSurfaces";
+            this.cClimbMostSurfaces.Size = new System.Drawing.Size(135, 19);
+            this.cClimbMostSurfaces.TabIndex = 28;
+            this.cClimbMostSurfaces.Text = "Climb Most Surfaces";
+            this.cClimbMostSurfaces.UseVisualStyleBackColor = false;
+            this.cClimbMostSurfaces.CheckedChanged += new System.EventHandler(this.cClimbMostSurfaces_CheckedChanged);
             // 
             // cHookshotAnySurface
             // 
@@ -2207,20 +2237,6 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cClimbMostSurfaces
-            // 
-            this.cClimbMostSurfaces.AutoSize = true;
-            this.cClimbMostSurfaces.BackColor = System.Drawing.Color.Transparent;
-            this.cClimbMostSurfaces.ForeColor = System.Drawing.Color.Black;
-            this.cClimbMostSurfaces.Location = new System.Drawing.Point(7, 160);
-            this.cClimbMostSurfaces.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cClimbMostSurfaces.Name = "cClimbMostSurfaces";
-            this.cClimbMostSurfaces.Size = new System.Drawing.Size(135, 19);
-            this.cClimbMostSurfaces.TabIndex = 28;
-            this.cClimbMostSurfaces.Text = "Climb Most Surfaces";
-            this.cClimbMostSurfaces.UseVisualStyleBackColor = false;
-            this.cClimbMostSurfaces.CheckedChanged += new System.EventHandler(this.cClimbMostSurfaces_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2469,6 +2485,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cImprovedPictobox;
         private System.Windows.Forms.CheckBox cHookshotAnySurface;
         private System.Windows.Forms.CheckBox cClimbMostSurfaces;
+        private System.Windows.Forms.CheckBox cFreeScarecrow;
     }
 }
 

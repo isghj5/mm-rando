@@ -174,6 +174,11 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool QuestItemStorage { get; set; } = true;
 
+        /// <summary>
+        /// Whether or not to enable spawning scarecrow without Scarecrow's Song.
+        /// </summary>
+        public bool FreeScarecrow { get; set; }
+
         public MiscFlags()
         {
         }
@@ -227,6 +232,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 15;
             flags |= (this.EarlyMikau ? (uint)1 : 0) << 14;
             flags |= (this.FairyChests ? (uint)1 : 0) << 13;
+            flags |= (this.FreeScarecrow ? (uint)1 : 0) << 12;
             return flags;
         }
     }

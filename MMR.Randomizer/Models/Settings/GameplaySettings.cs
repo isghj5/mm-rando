@@ -141,6 +141,15 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.ProgressiveUpgrades = value; }
         }
 
+        /// <summary>
+        /// Whether or not to enable spawning scarecrow without Scarecrow's Song.
+        /// </summary>
+        public bool FreeScarecrow
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.FreeScarecrow; }
+            set { this.AsmOptions.MiscConfig.Flags.FreeScarecrow = value; }
+        }
+
         #endregion
 
         #region Random Elements
