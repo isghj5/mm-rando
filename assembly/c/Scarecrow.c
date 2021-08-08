@@ -8,9 +8,8 @@ bool Scarecrow_ShouldActivate(ActorEnKakasi* actor, GlobalContext* ctxt) {
     if (MISC_CONFIG.flags.freeScarecrow) {
         ActorPlayer *player = GET_PLAYER(ctxt);
         // At this point the player should be within range of Scarecrow, so assign as cutscene actor.
-        Actor** cutsceneActor = (Actor**)(((u8*)player) + 0xA90);
         // Scarecrow should already have cutscene Id field set.
-        *cutsceneActor = &(actor->base);
+        player->ocarinaCutsceneActor = &(actor->base);
         if (player->stateFlags.state2 & PLAYER_STATE2_OCARINA) {
             return true;
         }
@@ -29,8 +28,7 @@ bool Scarecrow_ShouldSpawn(ActorEnKakasi* actor, GlobalContext* ctxt) {
         ActorPlayer *player = GET_PLAYER(ctxt);
         // Check if pulling out ocarina is complete (outside of typical actor cutscene).
         // Logic inferred from player_actor code.
-        u8 value = *(((u8*)player) + 0x241);
-        if (value == 0 && player->frozenTimer != 0) {
+        if (player->unk241 == 0 && player->frozenTimer != 0) {
             return true;
         } else {
             return false;
