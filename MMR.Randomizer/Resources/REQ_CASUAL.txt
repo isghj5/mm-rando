@@ -1646,9 +1646,6 @@
         ],
         [
           "MaskGoron"
-        ],
-        [
-          "MaskZora"
         ]
       ],
       "TimeNeeded": "None",
