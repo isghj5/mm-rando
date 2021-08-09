@@ -3378,7 +3378,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a southern merchant"), GossipItemHint("a plant seed")]
         [ShopText("Plant it in soft soil.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
-        [HackContent(nameof(Resources.mods.fix_shop_businessscrub_magicbean))]
+        [HackContent(nameof(Resources.mods.fix_shop_businessscrub_magicbean), false)]
         [GetItemIndex(0x19B), ItemPool(ItemCategory.MainInventory, LocationCategory.Purchases)]
         ShopItemBusinessScrubMagicBean,
 

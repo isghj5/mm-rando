@@ -181,9 +181,13 @@ namespace MMR.Randomizer.Utils
                 UpdateShop(itemObject, newMessages, messageTable);
             }
 
-            if (location != item)
+            if (itemObject.IsRandomized)
             {
                 var hackContentAttributes = location.GetAttributes<HackContentAttribute>();
+                if (location == item)
+                {
+                    hackContentAttributes = hackContentAttributes.Where(h => !h.ApplyOnlyIfItemIsDifferent);
+                }
                 foreach (var hackContent in hackContentAttributes.Select(h => h.HackContent))
                 {
                     ResourceUtils.ApplyHack(hackContent);
