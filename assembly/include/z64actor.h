@@ -234,7 +234,9 @@ typedef struct {
     /* 0xA88 */ Actor* unkA88;
     /* 0xA8C */ f32 unkA8C;
     /* 0xA90 */ Actor* ocarinaCutsceneActor;
-    /* 0xA94 */ UNK_TYPE1 padA94[0x3C];
+    /* 0xA94 */ UNK_TYPE1 padA94[0x11];
+    /* 0xAA5 */ u8 unkAA5;
+    /* 0xAA6 */ UNK_TYPE1 padAA6[0x2A];
     /* 0xAD0 */ f32 linearVelocity;
     /* 0xAD4 */ u16 movementAngle;
     /* 0xAD6 */ UNK_TYPE1 padAD6[0x5];

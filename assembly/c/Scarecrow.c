@@ -27,8 +27,10 @@ bool Scarecrow_ShouldSpawn(ActorEnKakasi* actor, GlobalContext* ctxt) {
     if (MISC_CONFIG.flags.freeScarecrow) {
         ActorPlayer *player = GET_PLAYER(ctxt);
         // Check if pulling out ocarina is complete (outside of typical actor cutscene).
-        // Logic inferred from player_actor code.
-        if (player->unk241 == 0 && player->frozenTimer != 0) {
+        // Logic inferred from player_actor code. See (vanilla RDRAM): 0x8076FB2C
+        bool condition1 = (player->unkAA5 == 4) || (player->unk241 != 0) || (player->frozenTimer != 0);
+        bool condition2 = (player->frozenTimer != 0) && (ctxt->msgCtx.unk1202A == 4);
+        if (condition1 && condition2) {
             return true;
         } else {
             return false;
