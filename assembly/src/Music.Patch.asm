@@ -23,3 +23,22 @@
     nop
     b       0x801942AC
     nop
+
+; Replaces:
+;   LW      T0, 0x0034 (SP)
+;   LW      V0, 0x2860 (S3)
+.org 0x8018FBE4
+    jal     Music_SetLoadingSequenceId_Hook
+    lw      a0, 0x0034 (sp)
+
+; Replaces:
+;   JAL     0x8018FCCC
+.org 0x8018FC34
+    jal     Music_LoadSequence_Hook
+
+; Replaces:
+;   LB      A1, 0x0019 (A0)
+;   LW      T6, 0x0010 (V1)
+.org 0x8018FFE8
+    jal     Music_GetAudioLoadType_Hook
+    lw      a1, 0x0058 (sp)

@@ -1114,6 +1114,12 @@ typedef struct ChannelState {
     /* 0x05 */ UNK_TYPE1 unk5[0x3];
 } ChannelState;
 
+typedef struct AudioInfo {
+    /* 0x0 */ u32 address;
+    /* 0x4 */ u32 length;
+    /* 0x8 */ s8 metadata[0x8];
+} AudioInfo;
+
 /// =============================================================
 /// Savefile Structure
 /// =============================================================

@@ -56,6 +56,7 @@ extern void z2_PopMatrixStack();
 extern f32* z2_GetMatrixStackTop();
 extern void z2_TransformMatrixStackTop(Vec3f* pos, Vec3s* rot);
 extern Gfx* z2_ShiftMatrix(GraphicsContext* gfxCtx);
+extern AudioInfo* z2_GetAudioTable(u8 audioType);
 extern void z2_PlaySfx(u32 id);
 extern void z2_PlaySfxAtActor(Actor* actor, u32 id);
 extern void z2_PlayLoopingSfxAtActor(Actor* actor, u32 id);

@@ -110,6 +110,7 @@
 0x80180234,z2_GetMatrixStackTop
 0x801812FC,z2_TransformMatrixStackTop
 0x80181A40,z2_ShiftMatrix
+0x80190294,z2_GetAudioTable
 0x8019C300,z2_ToggleSfxDampen
 0x8019F0C8,z2_PlaySfx
 0x801A3098,z2_SetBGM2

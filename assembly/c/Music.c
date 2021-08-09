@@ -12,6 +12,8 @@ static MusicState musicState = {
     .currentState = -1,
 };
 
+static u32 loadingSequenceId = 0;
+
 static void LoadMuteMask() {
     u8 sequenceId = gSequenceContext->sequenceId;
     if (musicState.loadedSequenceId != sequenceId) {
@@ -95,5 +97,19 @@ void Music_HandleChannelMute(SequenceChannelContext* channelContext, ChannelStat
         } else {
             channelContext->unk0[0] &= ~0x10;
         }
+    }
+}
+
+void Music_SetLoadingSequenceId(u32 id) {
+    loadingSequenceId = id;
+}
+
+s8 Music_GetAudioLoadType(AudioInfo* audioInfo, u8 audioType) {
+    s8 defaultLoadType = audioInfo[1].metadata[1];
+    if (audioType == 1 && defaultLoadType != 0 && loadingSequenceId != 0) {
+        AudioInfo* sequenceInfoTable = z2_GetAudioTable(0);
+        return sequenceInfoTable[loadingSequenceId + 1].metadata[1];
+    } else {
+        return defaultLoadType;
     }
 }
