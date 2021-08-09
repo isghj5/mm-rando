@@ -11,7 +11,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 5;
+        public const int CurrentVersion = 6;
 
         public static string ApplyMigrations(string logic)
         {
@@ -162,6 +162,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 5)
             {
                 AddMultiLocationGoronShop(logicObject);
+            }
+
+            if (logicObject.Version < 6)
+            {
+                AddOtherMagicBean(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3737,6 +3742,24 @@ namespace MMR.Randomizer.LogicMigrator
             }));
             logicObject.Version = 5;
         }
+
+        private static void AddOtherMagicBean(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 123;
+            var itemNames = new string[]
+            {
+                "OtherMagicBean",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 6;
+        }
+
         private class MigrationItem
         {
             public int ID;

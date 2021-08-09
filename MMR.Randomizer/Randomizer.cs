@@ -147,6 +147,11 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (_settings.CustomItemList.Contains(Item.ShopItemBusinessScrubMagicBean))
+            {
+                ItemList[Item.ShopItemBusinessScrubMagicBean].DependsOnItems.Remove(Item.OtherMagicBean);
+            }
+
             if (_settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.ScoopedItems) && _settings.LogicMode == LogicMode.Casual)
             {
                 var anyBottleIndex = ItemList.FindIndex(io => io.Name == "Any Bottle");

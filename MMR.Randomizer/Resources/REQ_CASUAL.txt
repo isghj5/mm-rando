@@ -1,5 +1,5 @@
 {
-  "Version": 5,
+  "Version": 6,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -2084,6 +2084,32 @@
       "IsTrick": false
     },
     {
+      "Id": "OtherMagicBean",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "ItemMagicBean"
+        ],
+        [
+          "ChestInvertedStoneTowerBean"
+        ],
+        [
+          "ShopItemBusinessScrubMagicBean"
+        ],
+        [
+          "AreaSouthAccess",
+          "MaskDeku"
+        ],
+        [
+          "AreaSouthAccess",
+          "Deku Guard Skip"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
       "Id": "AreaWoodfallNew",
       "RequiredItems": [
         "AreaWoodFallTempleAccess",
@@ -3336,7 +3362,7 @@
           "ItemHookshot"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ],
         [
@@ -3456,7 +3482,7 @@
           "ItemHookshot"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ],
         [
@@ -3615,7 +3641,7 @@
       "Id": "ChestInvertedStoneTowerSilverRupee",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "Any Magic Bean",
+        "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
       ],
@@ -3628,7 +3654,7 @@
       "Id": "ChestInvertedStoneTowerBombchu10",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "Any Magic Bean",
+        "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
       ],
@@ -3641,7 +3667,7 @@
       "Id": "ChestInvertedStoneTowerBean",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "Any Magic Bean",
+        "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
       ],
@@ -4021,7 +4047,7 @@
       ],
       "ConditionalItems": [
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ],
         [
@@ -40356,12 +40382,12 @@
         ],
         [
           "MaskGoron",
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ],
         [
           "OtherExplosive",
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -42470,7 +42496,9 @@
     },
     {
       "Id": "ShopItemBusinessScrubMagicBean",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "OtherMagicBean"
+      ],
       "ConditionalItems": [
         [
           "MaskDeku"
@@ -45171,7 +45199,7 @@
       "Id": "CollectableStoneTowerInvertedStoneTowerFlippedPot1",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "Any Magic Bean",
+        "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
       ],
@@ -46277,7 +46305,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46295,7 +46323,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46313,7 +46341,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46331,7 +46359,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46349,7 +46377,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46367,7 +46395,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46385,7 +46413,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46403,7 +46431,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46421,7 +46449,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46439,7 +46467,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46457,7 +46485,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46475,7 +46503,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46493,7 +46521,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46511,7 +46539,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46529,7 +46557,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46547,7 +46575,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -46565,7 +46593,7 @@
           "MaskZora"
         ],
         [
-          "Any Magic Bean",
+          "OtherMagicBean",
           "Water for Magic Bean"
         ]
       ],
@@ -47498,7 +47526,7 @@
       "Id": "CollectableStoneTowerInvertedStoneTowerFlippedPot2",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "Any Magic Bean",
+        "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow"
       ],
@@ -49564,7 +49592,7 @@
       "Id": "CollectableStoneTowerSoftSoil2",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "Any Magic Bean",
+        "OtherMagicBean",
         "Water for Magic Bean",
         "Use Light Arrow",
         "BottleCatchBug"
@@ -53220,28 +53248,6 @@
         ],
         [
           "ShopItemBusinessScrubBluePotion"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "Any Magic Bean",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "ItemMagicBean"
-        ],
-        [
-          "ChestInvertedStoneTowerBean"
-        ],
-        [
-          "ShopItemBusinessScrubMagicBean"
-        ],
-        [
-          "MaskDeku",
-          "AreaSouthAccess"
         ]
       ],
       "TimeNeeded": "None",

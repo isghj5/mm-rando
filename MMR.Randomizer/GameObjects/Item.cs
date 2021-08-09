@@ -978,6 +978,7 @@ namespace MMR.Randomizer.GameObjects
         AreaStoneTowerClear,
         OtherExplosive,
         OtherArrow,
+        OtherMagicBean,
         AreaWoodfallNew,
         AreaSnowheadNew,
         AreaGreatBayNew,
@@ -3375,8 +3376,9 @@ namespace MMR.Randomizer.GameObjects
         [StartingItemId(0x0A)]
         [ItemName("Magic Bean"), LocationName("Swamp Scrub Purchase"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a southern merchant"), GossipItemHint("a plant seed")]
-        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [ShopText("Plant it in soft soil.")]
+        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [HackContent(nameof(Resources.mods.fix_shop_businessscrub_magicbean))]
         [GetItemIndex(0x19B), ItemPool(ItemCategory.MainInventory, LocationCategory.Purchases)]
         ShopItemBusinessScrubMagicBean,
 
