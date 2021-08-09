@@ -31,7 +31,7 @@ namespace MMR.Randomizer.Utils
             #if DEBUG
             string settingstring = $"{setting} + DEBUG BUILD\x00";
             #else
-            string settingstring = $"{setting} + Isghj's Enemizer Test 22.4\x00";
+            string settingstring = $"{setting} + Isghj's Enemizer Test 22.4 + Cogsy's Lunar Contingency\x00";
             #endif
             int f = GetFileIndexForWriting(veraddr);
             var file = RomData.MMFileList[f];
@@ -161,6 +161,26 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        private static void UpdateOverlayTable(int actorOvlTblFID, MMFile file, int fileIndex)
+        {
+            // copied from getting the overlay size
+            if (actorOvlTblFID <= 0){
+                actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
+            }
+            // this got moved up out of this function because of expense, UpdateOverlayTable is called per file
+            //RomUtils.CheckCompressed(actorOvlTblFID);
+
+            // the overlay table exists inside of another file, we need the offset to the table
+            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
+            var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
+            // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb pppppppp iiiiiiii nnnnnnnn ???? cc ??
+            // X Y should be start end of VROM, A B should be start end of VRAM
+            // A and B should be start and end of vram address, which is what we want as we want the ram size
+            //return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 12)
+            //           - ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8));
+
+        }
+
         public static byte[] BuildROM()
         {
             // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
@@ -178,18 +198,41 @@ namespace MMR.Randomizer.Utils
 
             byte[] ROM = new byte[0x2000000];
             int ROMAddr = 0;
+            int lastDecompressedAddr = 0;
+
+            // probably needs to be re-written, do this ONCE not per file
+            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
+            RomUtils.CheckCompressed(actorOvlTblFID);
+
             // write all files to rom
             for (int i = 0; i < RomData.MMFileList.Count; i++)
             {
-                if (RomData.MMFileList[i].Cmp_Addr == -1)
+                var file = RomData.MMFileList[i];
+                if (file.Cmp_Addr == -1)
                 {
                     continue;
                 }
-                RomData.MMFileList[i].Cmp_Addr = ROMAddr;
-                int fileLength = RomData.MMFileList[i].Data.Length;
-                if (RomData.MMFileList[i].IsCompressed)
+
+                file.Cmp_Addr = ROMAddr;
+                int fileLength = file.Data.Length;
+
+                // new attempt at getting rom shifting of oversized overlays working
+                if (file.Addr < lastDecompressedAddr)
                 {
-                    RomData.MMFileList[i].Cmp_End = ROMAddr + fileLength;
+                    Debug.WriteLine($"FileID [{i}] need moving from {file.Addr.ToString("X")} to {lastDecompressedAddr.ToString("X")}");
+                    var diff = lastDecompressedAddr - file.Addr;
+                    file.Addr = lastDecompressedAddr;
+                    // too late to get the size of decompressed file unless we keep it as a value, but we know how far off we should be
+                    file.End += diff;// file.Addr + file.Data.Length;
+                }
+                lastDecompressedAddr = file.End;
+
+                // we also need to update the overlay table
+                UpdateOverlayTable(actorOvlTblFID, file, i);
+
+                if (file.IsCompressed)
+                {
+                    file.Cmp_End = ROMAddr + fileLength;
                 }
                 if (ROMAddr + fileLength > ROM.Length) // rom too small
                 {
@@ -204,7 +247,7 @@ namespace MMR.Randomizer.Utils
                     Debug.WriteLine("*** Expanding rom to size 0x" + ROM.Length.ToString("X2") + "***");
                 }
 
-                ReadWriteUtils.Arr_Insert(RomData.MMFileList[i].Data, 0, fileLength, ROM, ROMAddr);
+                ReadWriteUtils.Arr_Insert(file.Data, 0, fileLength, ROM, ROMAddr);
                 ROMAddr += fileLength;
 
             }

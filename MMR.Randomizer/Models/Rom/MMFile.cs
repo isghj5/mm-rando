@@ -17,11 +17,11 @@ namespace MMR.Randomizer.Models.Rom
         {
             return new MMFile
             {
-                Addr = Addr,
-                End = End,
+                Addr = Addr, // decompressed VROM start
+                End = End, // decompressed VROM end
                 Cmp_Addr = Cmp_Addr,
                 Cmp_End = Cmp_End,
-                IsCompressed = IsCompressed,
+                IsCompressed = IsCompressed, // is normally compressed
                 WasEdited = WasEdited,
                 IsStatic = IsStatic,
                 Data = Data?.ToArray()

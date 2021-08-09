@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.IO.Compression;
+using System.Security.Cryptography;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -1519,12 +1521,12 @@ namespace MMR.Randomizer
                         continue;
                     }// */
                     //
-                    if (scene.File == GameObjects.Scene.NorthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.FloorMaster.ObjectIndex()
+                            NewV = GameObjects.Actor.Bumper.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1741,6 +1743,65 @@ namespace MMR.Randomizer
             FlushLog();
         }
 
+        public static void ScanForMMRA(string directory)
+        {
+            // decomp lets us more easily modify actors now
+            // for now, until cat/zoey figure out how to directly integrate the projects
+            // I will, instead, compile with decomp, and then extract the binaries and inject here
+            // MMRA files: Majora Mask Rando Actor files, just zip files that contain binaries and extras later
+            // ideas for extras: notes to tell rando where sound effects are to be replaced
+            // function pointers to interconnect the code
+
+            // TODO add ability to add completely new actors instead of modifying
+            //   reason: some actors have a lot of hardcoded shit but we just want to put them in the overworld for flavor
+            // cutting out a lot of the actor's weird code and leaving them with a basic actor seems reasonable if we have actors/file slots
+
+            foreach (string filePath in Directory.GetFiles(directory, "*.mmra"))
+            {
+                try
+                {
+                    using (ZipArchive zip = ZipFile.OpenRead(filePath))
+                    {
+
+                        if (zip.Entries.Where(e => e.Name.Contains(".bin")).Count() == 0)
+                        {
+                            throw new Exception($"ERROR: cannot find a single binary actor in file {filePath}");
+                        }
+
+                        // per binary, since MMRA should support multiple binaries
+                        foreach (ZipArchiveEntry binFile in zip.Entries.Where(e => e.Name.Contains(".bin")))
+                        {
+                            // read overlay binary data
+                            int newBinLen = ((int)binFile.Length);// + ((int) binFile.Length % 0x10); // dma padding
+                            var overlayData = new byte[newBinLen];
+                            binFile.Open().Read(overlayData, 0, overlayData.Length);
+
+                            // the binary filename convention will be NOTES_fileID.bin, where fileID is in base 10 to match spreadsheet
+
+                            var binFilenameSplit = binFile.Name.Split('_'); // everything before _ is a comment, readability, discard here
+                            var fileIDtext = binFilenameSplit.Length > 1 ? binFilenameSplit[binFilenameSplit.Length - 1] : binFile.Name;
+                            fileIDtext = fileIDtext.Split('.')[0];        // we don't need the filetype after here either at this point
+                            int fileID = Convert.ToInt32(fileIDtext);
+
+                            //RomUtils.CheckCompressed(fileID);
+                            RomData.MMFileList[fileID].Data = overlayData;
+                            RomData.MMFileList[fileID].End = RomData.MMFileList[fileID].Addr + newBinLen;
+                            //RomData.MMFileList[fileID].IsCompressed = false; // think this means it was compressed to begin with, not now
+                            RomData.MMFileList[fileID].WasEdited = true;
+
+
+                        } // foreach zip entry
+
+                    }// zip as file end
+                } // try end
+                catch (Exception e)
+                {
+                    throw new Exception($"Error attempting to read archive: {filePath} -- \n" + e);
+                }
+            } // for each mmra end
+        }
+
+
         public static void ShuffleEnemies(OutputSettings settings, Random random)
         {
             try
@@ -1750,7 +1811,11 @@ namespace MMR.Randomizer
 
                 // these are: cutscene map, town and swamp shooting gallery, 
                 // sakons hideout, and giants chamber (shabom), milkbar
-                int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x15};
+                //int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x15 };
+                // if you have an idiot that needs moonwarp to beat no logics:
+                int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x15, 0x2B };
+
+                ScanForMMRA("./actors");
 
                 ReadEnemyList();
                 SceneUtils.ReadSceneTable();

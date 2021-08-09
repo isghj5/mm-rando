@@ -1560,7 +1560,7 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(Flame, 0x7FE)] // blue flames
         [EnemizerScenesPlacementBlock( Scene.TerminaField, // suspected weird un-reproducable crashes always seems to happen when they are around
             Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
-        BigPoe = 0x208,
+        BigPoe = 0x208, // En_Bigpo
 
         [ActorizerEnabled]
         [ObjectListIndex(0x1EE)]
