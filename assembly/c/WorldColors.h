@@ -22,6 +22,12 @@ struct WorldColorConfig {
     Color swordBeamEnergyPri;
     Color swordBeamDamageEnv;
     Color blueBubble;
+    Color fireArrowEffectEnv;
+    Color fireArrowEffectPri;
+    Color iceArrowEffectEnv;
+    Color iceArrowEffectPri;
+    Color lightArrowEffectEnv;
+    Color lightArrowEffectPri;
 };
 
 void WorldColors_Init(void);

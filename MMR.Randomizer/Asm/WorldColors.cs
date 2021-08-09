@@ -42,6 +42,12 @@ namespace MMR.Randomizer.Asm
         public Color ZoraEnergyPrim1 { get; set; } = Color.FromArgb(0x00, 0x96, 0xFF);
         public Color ZoraEnergyPrim2 { get; set; } = Color.FromArgb(0xAA, 0xFF, 0xFF);
         public Color BlueBubble { get; set; } = Color.FromArgb(0x00, 0x00, 0xFF);
+        public Color FireArrowEffectEnv { get; set; } = Color.FromArgb(0xFF, 0x00, 0x00);
+        public Color FireArrowEffectPrim { get; set; } = Color.FromArgb(0xFF, 0xC8, 0x00);
+        public Color IceArrowEffectEnv { get; set; } = Color.FromArgb(0x00, 0x00, 0xFF);
+        public Color IceArrowEffectPrim { get; set; } = Color.FromArgb(0xAA, 0xFF, 0xFF);
+        public Color LightArrowEffectEnv { get; set; } = Color.FromArgb(0xFF, 0xFF, 0x00);
+        public Color LightArrowEffectPrim { get; set; } = Color.FromArgb(0xFF, 0xFF, 0xAA);
 
         /// <summary>
         /// Instance of <see cref="WorldColors"/> with default values.
@@ -110,6 +116,12 @@ namespace MMR.Randomizer.Asm
             SwordBeamEnergyPrim,
             SwordBeamDamageEnv,
             BlueBubble,
+            FireArrowEffectEnv,
+            FireArrowEffectPrim,
+            IceArrowEffectEnv,
+            IceArrowEffectPrim,
+            LightArrowEffectEnv,
+            LightArrowEffectPrim,
         };
     }
 }
