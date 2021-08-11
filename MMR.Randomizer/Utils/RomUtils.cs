@@ -11,6 +11,7 @@ using System.IO.Compression;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Threading;
+using MMR.Randomizer.Extensions;
 using System.Numerics;
 
 namespace MMR.Randomizer.Utils
@@ -141,8 +142,126 @@ namespace MMR.Randomizer.Utils
             return -1;
         }
 
-        private static void UpdateFileTable(byte[] ROM)
+        private static void UpdateVirtualFileAddresses()
         {
+            /// shift the decompressed virtual addresses to the requirements of the new files
+
+            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
+            RomUtils.CheckCompressed(actorOvlTblFID);
+
+            int previousLastVROM;
+            int lastDecompressedAddr = 0;
+            int ROMAddr = 0;
+            // write all files to rom
+            for (int i = 0; i < RomData.MMFileList.Count; i++)
+            {
+                var file = RomData.MMFileList[i];
+                if (file.Cmp_Addr == -1) // file slot is empty, ignore
+                {
+                    continue;
+                }
+               
+                // new attempt at getting rom shifting of oversized overlays working
+                // since all files are shifted after the first shift, would it make sense to just always update all files?
+                if (file.Addr < lastDecompressedAddr)
+                {
+                    Debug.WriteLine($"FileID [{i}] need moving from {file.Addr.ToString("X")} to {lastDecompressedAddr.ToString("X")}");
+                    var diff = lastDecompressedAddr - file.Addr;
+                    file.Addr = lastDecompressedAddr;
+                    // too late to get the size of decompressed file unless we keep it as a value, but we know how far off we should be
+                    file.End += diff;
+                }
+                lastDecompressedAddr = file.End;
+            }
+        }
+
+        public static void UpdateCompressedDMAAddresses()
+        {
+
+            int ROMAddr = 0;
+            // write all files to rom
+            for (int i = 0; i < RomData.MMFileList.Count; i++)
+            {
+                var file = RomData.MMFileList[i];
+                if (file.Cmp_Addr == -1) // file slot is empty, ignore
+                {
+                    continue;
+                }
+
+                file.Cmp_Addr = ROMAddr;
+                int fileLength = file.Data.Length;
+                file.Cmp_End = ROMAddr + fileLength;
+            }
+
+        }
+        public static void UpdateOverlayTable(int actorOvlTblFID, int actorOvlTblOffset)
+        {
+            /// if overlays have shifted, we need to modify their overlay table to use the right values for the new files
+            /// lookinag at vanilla overlay table, it sure looks like the VROM and VRAM are sequential, when there is a gap they dont jump they ignore it
+
+            // generate an array of actor->fileid
+            var actorList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList();
+            actorList.Remove(GameObjects.Actor.Empty);
+            // there's probably a lambda to do this I can't remember how to make it right now
+            int[] actorFileList = new int[0x2B3];
+            // per actor, lookup fileid, populate the slot in array
+            for (int i = 0; i < actorList.Count; ++i)
+            {
+                int fid = actorList[i].FileListIndex();
+                if (fid > 0)
+                {
+                    // actor enum converts directly to overlay list index
+                    var overlayListIndex = (int)actorList[i];
+                    actorFileList[overlayListIndex] = fid;
+                }
+            }
+
+            // the overlay table exists inside of another file, we need the offset to the table
+            //int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
+            var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
+
+            // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb pppppppp iiiiiiii nnnnnnnn ???? cc ??
+            // X Y should be start end of VROM, A B should be start end of VRAM
+            // A and B should be start and end of vram address, which is what we want as we want the ram size
+            //return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 12)
+            //           - ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8));
+
+            // I don't know HOW vram is started, let's assume for now nothing before overlays is shifted,
+            // we need to start where the old vram ended
+            // read the vram start entry (0xC) from index 0x1, player's values are empty for some reason
+            uint previousLastVRAMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (1 * 32) + 0xC);
+            for (int actID = 0; actID < 0x2B2; actID++)
+            {
+                int entryLoc = actorOvlTblOffset + (actID * 32);
+
+                // convert actorid to fileid and get file
+
+                var fileID = actorFileList[actID];
+
+                var file = RomData.MMFileList[fileID];
+
+                // update VROM
+                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint) file.Addr);
+                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint) file.End);
+
+                // we need to use the old vram, and measure the diff
+                var VROMsize = file.End - file.Addr;
+
+                // update VRAM (VROM shifted into ram space?)
+                var newVRAMEnd = (uint) (previousLastVRAMEnd + VROMsize);
+                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, previousLastVRAMEnd);
+                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, newVRAMEnd);
+                previousLastVRAMEnd = newVRAMEnd;
+            }
+        }
+
+        private static void UpdateDMAFileTable(byte[] ROM)
+        {
+            /// the DMA filetable stores the decompressed and compressed file start/end for every file
+            /// AAAAAAAA BBBBBBBB CCCCCCCC DDDDDDDD size = 0x10
+            /// where A and B are the start of VROM, where the files are located in decompressed space in-game and decompressed rom
+            /// C and D are start/end of where the compressed version of the file exists in the compressed rom
+
             for (int i = 0; i < RomData.MMFileList.Count; i++)
             {
                 int offset = FILE_TABLE + (i * 16);
@@ -161,28 +280,22 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        private static void UpdateOverlayTable(int actorOvlTblFID, MMFile file, int fileIndex)
-        {
-            // copied from getting the overlay size
-            if (actorOvlTblFID <= 0){
-                actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
-            }
-            // this got moved up out of this function because of expense, UpdateOverlayTable is called per file
-            //RomUtils.CheckCompressed(actorOvlTblFID);
-
-            // the overlay table exists inside of another file, we need the offset to the table
-            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
-            var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
-            // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb pppppppp iiiiiiii nnnnnnnn ???? cc ??
-            // X Y should be start end of VROM, A B should be start end of VRAM
-            // A and B should be start and end of vram address, which is what we want as we want the ram size
-            //return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 12)
-            //           - ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8));
-
-        }
-
         public static byte[] BuildROM()
         {
+            // get the last data we need to find the overlay table
+
+            // our code that looks up the location in old-rom space of an address looks at file locations
+            //  the following function (UpdateVirtualFileAddresses) changes these so we need to get these first
+            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
+            RomUtils.CheckCompressed(actorOvlTblFID);
+
+            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
+
+            // all of our files need their addresses shifted
+            UpdateVirtualFileAddresses();
+            // we need to update overlay table if actors changed size
+            UpdateOverlayTable(actorOvlTblFID, actorOvlTblOffset);
+
             // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
             var previousThreadPriority = Thread.CurrentThread.Priority;
             Thread.CurrentThread.Priority = ThreadPriority.Lowest;
@@ -196,44 +309,26 @@ namespace MMR.Randomizer.Utils
             // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
             Thread.CurrentThread.Priority = previousThreadPriority;
 
+            UpdateCompressedDMAAddresses();
+
             byte[] ROM = new byte[0x2000000];
+
             int ROMAddr = 0;
-            int lastDecompressedAddr = 0;
-
-            // probably needs to be re-written, do this ONCE not per file
-            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
-            RomUtils.CheckCompressed(actorOvlTblFID);
-
             // write all files to rom
             for (int i = 0; i < RomData.MMFileList.Count; i++)
             {
-                var file = RomData.MMFileList[i];
-                if (file.Cmp_Addr == -1)
+
+                if (RomData.MMFileList[i].Cmp_Addr == -1) // empty file slot, ignore
                 {
                     continue;
                 }
-
-                file.Cmp_Addr = ROMAddr;
-                int fileLength = file.Data.Length;
-
-                // new attempt at getting rom shifting of oversized overlays working
-                if (file.Addr < lastDecompressedAddr)
+                // issue with this error logic: the first couple files have Cmp_Addr == 0
+                /*if (ROMAddr != RomData.MMFileList[i].Cmp_Addr && RomData.MMFileList[i].Cmp_Addr)
                 {
-                    Debug.WriteLine($"FileID [{i}] need moving from {file.Addr.ToString("X")} to {lastDecompressedAddr.ToString("X")}");
-                    var diff = lastDecompressedAddr - file.Addr;
-                    file.Addr = lastDecompressedAddr;
-                    // too late to get the size of decompressed file unless we keep it as a value, but we know how far off we should be
-                    file.End += diff;// file.Addr + file.Data.Length;
-                }
-                lastDecompressedAddr = file.End;
+                    throw new Exception(); // these should already be in sync, files are static now
+                }*/
 
-                // we also need to update the overlay table
-                UpdateOverlayTable(actorOvlTblFID, file, i);
-
-                if (file.IsCompressed)
-                {
-                    file.Cmp_End = ROMAddr + fileLength;
-                }
+                int fileLength = RomData.MMFileList[i].Data.Length;
                 if (ROMAddr + fileLength > ROM.Length) // rom too small
                 {
                     // assuming the largest file isn't the last one, we still want some extra space for further files
@@ -247,12 +342,14 @@ namespace MMR.Randomizer.Utils
                     Debug.WriteLine("*** Expanding rom to size 0x" + ROM.Length.ToString("X2") + "***");
                 }
 
-                ReadWriteUtils.Arr_Insert(file.Data, 0, fileLength, ROM, ROMAddr);
+                ReadWriteUtils.Arr_Insert(RomData.MMFileList[i].Data, 0, fileLength, ROM, ROMAddr);
                 ROMAddr += fileLength;
-
             }
+
+            // should this be moved up now that I split up the file updated values?
             SequenceUtils.UpdateBankInstrumentPointers(ROM);
-            UpdateFileTable(ROM);
+
+            UpdateDMAFileTable(ROM);
             SignROM(ROM);
             FixCRC(ROM);
 

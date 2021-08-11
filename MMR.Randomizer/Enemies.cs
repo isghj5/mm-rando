@@ -1743,6 +1743,8 @@ namespace MMR.Randomizer
             FlushLog();
         }
 
+        
+
         public static void ScanForMMRA(string directory)
         {
             // decomp lets us more easily modify actors now
@@ -1755,6 +1757,8 @@ namespace MMR.Randomizer
             // TODO add ability to add completely new actors instead of modifying
             //   reason: some actors have a lot of hardcoded shit but we just want to put them in the overworld for flavor
             // cutting out a lot of the actor's weird code and leaving them with a basic actor seems reasonable if we have actors/file slots
+
+            // todo: we need to be able to specify what the object the actor uses is, or specify the actorinit table location? or find a better way to map this?
 
             foreach (string filePath in Directory.GetFiles(directory, "*.mmra"))
             {
