@@ -368,8 +368,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(77)]
         Bg_Breakwall = 0x36, // Bg_Breakwall
 
-
         Empty37 = 0x37,
+
+        [FileID(78)]
+        [ObjectListIndex(0x3E)]
+        Door_Warp1 = 0x38, // Door_Warp1
 
         [ActorizerEnabled]
         [ObjectListIndex(0x80)]
@@ -385,6 +388,10 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SouthernSwamp, Scene.SouthClockTown, Scene.DekuShrine, Scene.WestClockTown, Scene.SouthernSwampClear,
             Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast, Scene.GreatBayTemple, Scene.OceanSpiderHouse, Scene.BeneathTheWell, Scene.PiratesFortressRooms, Scene.PoeHut)]
         Torch = 0x39, // Obj_Syokudai
+
+        [FileID(80)]
+        [ObjectListIndex(0x96)]
+        Item_B_Heart = 0x3A, // Item_B_Heart
 
         [EnemizerEnabled]
         [ActorInstanceSize(0x2C8)]
@@ -729,6 +736,7 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabled]
         [ObjectListIndex(0x124)]
+        [FileID(114)]
         // params: FFFF is the main all-in-one
         // 100-MAX is per-single fish
         // 200 is something, it causes splashes you can hear but if you get close to it it crashes
@@ -939,6 +947,7 @@ namespace MMR.Randomizer.GameObjects
 
         // in MM this is NOT arwing, its an multi-use effect
         // multiple explosion visual effects, light arrows, stuff like that
+        [FileID(149)]
         [ObjectListIndex(0x1)]
         En_Clear_Tag = 0xA2, // En_Clear_Tag
 
@@ -1245,6 +1254,7 @@ namespace MMR.Randomizer.GameObjects
         En_Si = 0xE3, // En_Si
 
         [ActorizerEnabled]
+        [FileID(217)]
         [ObjectListIndex(0x1B9)]
         [WallVariants(0x81, 0x82, 0x83)]
         [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.Grottos, Scene.SwampSpiderHouse, Scene.SouthernSwamp, Scene.PiratesFortressRooms)]
@@ -1354,15 +1364,12 @@ namespace MMR.Randomizer.GameObjects
         Obj_Makekinsuta = 0xF9, // Obj_Makekinsuta
 
         //[ActorizerEnabled] // she kicks you out like guards but without caring about direction/proximity
+        [FileID(232)]
         [ObjectListIndex(0x130)]
         [GroundVariants(0xCB1)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)]
         Aviel = 0xFA, // En_Ge3, the Pirate Leader
-
-        [FileID(232)]
-        [ObjectListIndex(0x130)]
-        En_Ge3 = 0xFA, // En_Ge3
 
         EmptyFB = 0xFB,
 
@@ -1384,6 +1391,7 @@ namespace MMR.Randomizer.GameObjects
 
         EmptyFF = 0xFF,
 
+        [FileID(236)]
         [ObjectListIndex(0x1)]
         Door_Spiral = 0x100, // Door_Spiral
 
@@ -2028,6 +2036,7 @@ namespace MMR.Randomizer.GameObjects
         En_Prz = 0x181, // En_Prz
 
         //[EnemizerEnabled]
+        [FileID(348)]
         [ObjectListIndex(0x155)]
         [GroundVariants(0)]  // does not spawn, but if you approach where he SHOULD BE you lose camera control
         [OnlyOneActorPerRoom]
@@ -2695,6 +2704,10 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.DekuKingChamber)] // if her object is not in the king chamber no cutscene after bottle delivery
         DekuPrincess = 0x1FC, // En_Dnp
 
+        [FileID(469)]
+        [ObjectListIndex(0x1D5)]
+        En_Dai = 0x1FD, // En_Dai
+
         [FileID(470)]
         [ObjectListIndex(0x1D3)]
         Bg_Goron_Oyu = 0x1FE, // Bg_Goron_Oyu
@@ -3114,6 +3127,7 @@ namespace MMR.Randomizer.GameObjects
         En_Tanron2 = 0x23E, // En_Tanron2
 
         //[EnemizerEnabled] // just crashes, probably wants to be spawned with parent big fish gyorg
+        [FileID(534)]
         [ObjectListIndex(0x15C)] // this is gyorgs object, probably too big, but our code would handle that
         //[WaterVariants(0)] // vars unknown, 0x0 crashes
         GyorgSpawn = 0x23F, // En_Tanron3
@@ -3154,6 +3168,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         Jugglers = 0x244, // En_Ja
 
+        [FileID(540)]
         [ObjectListIndex(0x5C)]
         Bg_F40_Block = 0x245, // Bg_F40_Block
         
@@ -3645,6 +3660,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         MoonBirdsBrown = 0x2A7,
 
+        [FileID(639)]
         [ObjectListIndex(0x247)]
         En_Ending_Hero2 = 0x2A8, // En_Ending_Hero2
         

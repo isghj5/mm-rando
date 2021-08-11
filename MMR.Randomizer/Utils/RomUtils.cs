@@ -153,7 +153,8 @@ namespace MMR.Randomizer.Utils
             int lastDecompressedAddr = 0;
             int ROMAddr = 0;
             // write all files to rom
-            for (int i = 0; i < RomData.MMFileList.Count; i++)
+            //for (int i = 0; i < RomData.MMFileList.Count; i++)
+            for (int i = 39; i < RomData.MMFileList.Count; i++)
             {
                 var file = RomData.MMFileList[i];
                 if (file.Cmp_Addr == -1) // file slot is empty, ignore
@@ -175,25 +176,6 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void UpdateCompressedDMAAddresses()
-        {
-
-            int ROMAddr = 0;
-            // write all files to rom
-            for (int i = 0; i < RomData.MMFileList.Count; i++)
-            {
-                var file = RomData.MMFileList[i];
-                if (file.Cmp_Addr == -1) // file slot is empty, ignore
-                {
-                    continue;
-                }
-
-                file.Cmp_Addr = ROMAddr;
-                int fileLength = file.Data.Length;
-                file.Cmp_End = ROMAddr + fileLength;
-            }
-
-        }
         public static void UpdateOverlayTable(int actorOvlTblFID, int actorOvlTblOffset)
         {
             /// if overlays have shifted, we need to modify their overlay table to use the right values for the new files
@@ -230,13 +212,22 @@ namespace MMR.Randomizer.Utils
             // we need to start where the old vram ended
             // read the vram start entry (0xC) from index 0x1, player's values are empty for some reason
             uint previousLastVRAMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (1 * 32) + 0xC);
-            for (int actID = 0; actID < 0x2B2; actID++)
+            // player cannot be updated, and since we have to look up the old vramend of 1 we cant modify it (En_Test)
+            for (int actID = 2; actID < 0x2B2; actID++)
             {
+                uint oldVramEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actID * 32) + 0xC);
+
+                if (oldVramEnd == 0)
+                {
+                    continue;
+                }
+
                 int entryLoc = actorOvlTblOffset + (actID * 32);
 
                 // convert actorid to fileid and get file
 
                 var fileID = actorFileList[actID];
+                Debug.WriteLine($" Actor aid[{actID.ToString("X")}]:  fid[{fileID}]");
 
                 var file = RomData.MMFileList[fileID];
 
@@ -248,11 +239,15 @@ namespace MMR.Randomizer.Utils
                 var VROMsize = file.End - file.Addr;
 
                 // update VRAM (VROM shifted into ram space?)
-                var newVRAMEnd = (uint) (previousLastVRAMEnd + VROMsize);
+                var newVRAMEnd = (uint) (previousLastVRAMEnd + VROMsize); // +30; // worth a shot
+                var diff = (newVRAMEnd - oldVramEnd).ToString("X");
+                Debug.WriteLine($" Replacing fid[{actID.ToString("X")}] old vramEnd [{oldVramEnd.ToString("X")}] with [{newVRAMEnd.ToString("X")}] delta:{diff}");
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, previousLastVRAMEnd);
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, newVRAMEnd);
                 previousLastVRAMEnd = newVRAMEnd;
             }
+
+            int breakhere = 0;
         }
 
         private static void UpdateDMAFileTable(byte[] ROM)
@@ -291,6 +286,7 @@ namespace MMR.Randomizer.Utils
 
             int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
 
+            // TODO renable
             // all of our files need their addresses shifted
             UpdateVirtualFileAddresses();
             // we need to update overlay table if actors changed size
@@ -309,7 +305,7 @@ namespace MMR.Randomizer.Utils
             // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
             Thread.CurrentThread.Priority = previousThreadPriority;
 
-            UpdateCompressedDMAAddresses();
+            //UpdateCompressedDMAAddresses(); // wait we dont need to separate anymore
 
             byte[] ROM = new byte[0x2000000];
 
@@ -317,18 +313,19 @@ namespace MMR.Randomizer.Utils
             // write all files to rom
             for (int i = 0; i < RomData.MMFileList.Count; i++)
             {
-
                 if (RomData.MMFileList[i].Cmp_Addr == -1) // empty file slot, ignore
                 {
                     continue;
                 }
-                // issue with this error logic: the first couple files have Cmp_Addr == 0
-                /*if (ROMAddr != RomData.MMFileList[i].Cmp_Addr && RomData.MMFileList[i].Cmp_Addr)
-                {
-                    throw new Exception(); // these should already be in sync, files are static now
-                }*/
+                var file = RomData.MMFileList[i];
 
-                int fileLength = RomData.MMFileList[i].Data.Length;
+                file.Cmp_Addr = ROMAddr;
+
+                int fileLength = file.Data.Length;
+                if (file.IsCompressed)
+                {
+                    file.Cmp_End = ROMAddr + fileLength;
+                }
                 if (ROMAddr + fileLength > ROM.Length) // rom too small
                 {
                     // assuming the largest file isn't the last one, we still want some extra space for further files
