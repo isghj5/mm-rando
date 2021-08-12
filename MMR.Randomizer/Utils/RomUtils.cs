@@ -198,6 +198,16 @@ namespace MMR.Randomizer.Utils
                 }
             }
 
+            // issue: vrom/vram are sequential, but not in the order they exist in the overlay table
+            // what I need to do now is change the list from array of fid to aid/fid list
+            //  get get fid from aid
+            //  get old values
+            //  update to new values
+            // save at aid
+            actorList.Remove(GameObjects.Actor.Player);
+            actorList.RemoveAll(u => u.FileListIndex() < 38);
+            var fidSortedActors = actorList.OrderBy(x => x.FileListIndex()).ToList();
+
             // the overlay table exists inside of another file, we need the offset to the table
             //int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
             var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
@@ -210,11 +220,14 @@ namespace MMR.Randomizer.Utils
 
             // I don't know HOW vram is started, let's assume for now nothing before overlays is shifted,
             // we need to start where the old vram ended
-            // read the vram start entry (0xC) from index 0x1, player's values are empty for some reason
-            uint previousLastVRAMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (1 * 32) + 0xC);
-            // player cannot be updated, and since we have to look up the old vramend of 1 we cant modify it (En_Test)
-            for (int actID = 2; actID < 0x2B2; actID++)
+            // read the vram start entry (0x8) from index 0x1, player's values are empty for some reason
+            // from that point on, keep the last acceptable spot
+            uint previousLastVRAMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (1 * 32) + 0x8);
+            int shift = 0;
+            foreach (var entry in fidSortedActors)
             {
+                var actID = (int) entry;
+                var fileID = entry.FileListIndex();
                 int entryLoc = actorOvlTblOffset + (actID * 32);
 
                 uint oldVROMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x0);
@@ -223,16 +236,33 @@ namespace MMR.Randomizer.Utils
                 {
                     continue;
                 }
-
-                var fileID = actorFileList[actID];
                 var file = RomData.MMFileList[fileID];
-                uint oldVramEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0xC);
-                uint oldVROMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x4);
-                uint oldVROMSize = oldVROMEnd - oldVROMStart;
+                // we didn't touch it, and it was already compressed
+                if (!file.WasEdited && file.IsCompressed)
+                {
+                    // shift vram, leave vrom?
+                    // we know the old vrom and vram size, leave them but shift them
+                }
+
+                uint oldVROMEnd   = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x4);
                 uint oldVramStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x8);
+                uint oldVramEnd   = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0xC);
+                uint oldVROMSize = oldVROMEnd - oldVROMStart;
                 uint oldVRAMSize = oldVramEnd - oldVramStart;
+                int newVROMDiff = file.Data.Length - (int) oldVROMSize;
+
+                if (newVROMDiff > 0)
+                {
+                    Debug.WriteLine($" + old[{oldVROMSize.ToString("X")}]:  new[{file.Data.Length.ToString("X")}] has shifted: {newVROMDiff.ToString("X")}");
+                    shift += newVROMDiff;
+                }
 
                 uint bssPadding = oldVRAMSize - oldVROMSize;
+
+                /* if (bssPadding < 0)
+                {
+                    bssPadding = 0;
+                } */
 
                 // we need to keep track of the old size and use diff because of BSS
                 // vram can be larger than vrom because of bss, let's fucking HOPE nobody tries to expand bss of a file
@@ -250,10 +280,25 @@ namespace MMR.Randomizer.Utils
 
                 // update VRAM (VROM shifted into ram space?)
                 var newVRAMEnd = (uint) (previousLastVRAMEnd + VROMsize) + bssPadding;
+                if (oldVramEnd > newVRAMEnd)
+                {
+                    Debug.WriteLine($"  bad new value [{newVRAMEnd - previousLastVRAMEnd}] negative jump: {(oldVramEnd - newVRAMEnd).ToString("X")}  ");
+
+                    //newVRAMEnd = (uint)VROMsize + bssPadding; // never go negative
+                }
                 var diff = (newVRAMEnd - oldVramEnd).ToString("X");
-                Debug.WriteLine($" Replacing fid[{actID.ToString("X")}] old vramEnd [{oldVramEnd.ToString("X")}] with [{newVRAMEnd.ToString("X")}] delta:{diff}");
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, previousLastVRAMEnd);
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, newVRAMEnd);
+                var newVramSize = newVRAMEnd - previousLastVRAMEnd;
+                //Debug.WriteLine($" Replacing fid[{actID.ToString("X")}] old vramEnd [{oldVramEnd.ToString("X")}] with [{newVRAMEnd.ToString("X")}] delta:{diff}");
+                //Debug.WriteLine($" Replacing aid[{actID.ToString("X")}] old Vram [{oldVRAMSize.ToString("X")}] new Vram [{newVramSize.ToString("X")}] delta:{diff}");
+                //ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, previousLastVRAMEnd);
+                //ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, newVRAMEnd);
+
+                // OKAY NEW PLAN
+                // dont calc new VRAM, just shift
+                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, oldVramStart + (uint) shift);
+                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, oldVramEnd + (uint) shift);
+
+
                 previousLastVRAMEnd = newVRAMEnd;
             }
 
