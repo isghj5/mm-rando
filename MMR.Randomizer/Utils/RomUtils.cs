@@ -215,21 +215,32 @@ namespace MMR.Randomizer.Utils
             // player cannot be updated, and since we have to look up the old vramend of 1 we cant modify it (En_Test)
             for (int actID = 2; actID < 0x2B2; actID++)
             {
-                uint oldVramEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actID * 32) + 0xC);
+                int entryLoc = actorOvlTblOffset + (actID * 32);
+
+                uint oldVramEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + 0xC);
 
                 if (oldVramEnd == 0)
                 {
                     continue;
                 }
 
-                int entryLoc = actorOvlTblOffset + (actID * 32);
+                var fileID = actorFileList[actID];
+                var file = RomData.MMFileList[fileID];
+                uint oldVROMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + 0x0);
+                uint oldVROMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + 0x4);
+                uint oldVROMSize = oldVROMEnd - oldVROMStart;
+                uint oldVramStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + 0x8);
+                uint oldVRAMSize = oldVramEnd - oldVramStart;
+
+                uint bssPadding = oldVRAMSize - oldVROMSize;
+
+                // we need to keep track of the old size and use diff because of BSS
+                // vram can be larger than vrom because of bss, let's fucking HOPE nobody tries to expand bss of a file
 
                 // convert actorid to fileid and get file
 
-                var fileID = actorFileList[actID];
                 Debug.WriteLine($" Actor aid[{actID.ToString("X")}]:  fid[{fileID}]");
 
-                var file = RomData.MMFileList[fileID];
 
                 // update VROM
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint) file.Addr);
@@ -239,7 +250,7 @@ namespace MMR.Randomizer.Utils
                 var VROMsize = file.End - file.Addr;
 
                 // update VRAM (VROM shifted into ram space?)
-                var newVRAMEnd = (uint) (previousLastVRAMEnd + VROMsize); // +30; // worth a shot
+                var newVRAMEnd = (uint) (previousLastVRAMEnd + VROMsize) + bssPadding;
                 var diff = (newVRAMEnd - oldVramEnd).ToString("X");
                 Debug.WriteLine($" Replacing fid[{actID.ToString("X")}] old vramEnd [{oldVramEnd.ToString("X")}] with [{newVRAMEnd.ToString("X")}] delta:{diff}");
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, previousLastVRAMEnd);
