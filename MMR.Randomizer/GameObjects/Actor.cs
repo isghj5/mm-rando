@@ -1461,16 +1461,16 @@ namespace MMR.Randomizer.GameObjects
         En_Bu = 0x111, // En_Bu
 
         //[EnemizerEnabled] //crash
-        [ActorInitVarOffset(0x3688)]
-        [FileID(248)]
-        [ObjectListIndex(0x155)]
+        //[ActorInitVarOffset(0x3688)]
+        [FileID(247)]
+        //[ObjectListIndex(0x23B)]
         [GroundVariants(0x2243)]
-        Garo = 0x112, //113 is the garo, but 112 is the encounter to get garo
+        En_Encount3 = 0x112, // En_Encount3
 
         [FileID(248)]
         [ObjectListIndex(0x155)]
         [GroundVariants(0x2243)]
-        GaroActual = 0x113,
+        Garo = 0x113, // En_Jso
 
         [FileID(249)]
         [ObjectListIndex(0xED)]
@@ -3332,7 +3332,7 @@ namespace MMR.Randomizer.GameObjects
         En_Ruppecrow = 0x266, // En_Ruppecrow
 
         [ActorizerEnabled] // spawned for me, but not streamers? weird time dependencies?
-        [FileID(267)]
+        [FileID(574)]
         [ObjectListIndex(0x23F)]
         [FlyingVariants(7, 5)]
         [UnkillableAllVariants]

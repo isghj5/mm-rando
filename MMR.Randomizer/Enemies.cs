@@ -1957,7 +1957,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Takkuri,
                 GameObjects.Actor.Eyegore,
                 GameObjects.Actor.IronKnuckle,
-                GameObjects.Actor.Garo,
+                //GameObjects.Actor.Garo, // todo looking actor init vars
                 GameObjects.Actor.PoeSisters
             }.ToList();
 

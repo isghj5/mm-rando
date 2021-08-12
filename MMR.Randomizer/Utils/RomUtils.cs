@@ -251,6 +251,7 @@ namespace MMR.Randomizer.Utils
                 uint oldVRAMSize = oldVramEnd - oldVramStart;
                 int newVROMDiff = file.Data.Length - (int) oldVROMSize;
 
+                Debug.WriteLine($" Actor aid[{actID.ToString("X")}]:  fid[{fileID}]");
                 if (newVROMDiff > 0)
                 {
                     Debug.WriteLine($" + old[{oldVROMSize.ToString("X")}]:  new[{file.Data.Length.ToString("X")}] has shifted: {newVROMDiff.ToString("X")}");
@@ -267,10 +268,6 @@ namespace MMR.Randomizer.Utils
                 // we need to keep track of the old size and use diff because of BSS
                 // vram can be larger than vrom because of bss, let's fucking HOPE nobody tries to expand bss of a file
 
-                // convert actorid to fileid and get file
-
-                Debug.WriteLine($" Actor aid[{actID.ToString("X")}]:  fid[{fileID}]");
-
                 // update VROM
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint) file.Addr);
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint) file.End);
@@ -280,12 +277,12 @@ namespace MMR.Randomizer.Utils
 
                 // update VRAM (VROM shifted into ram space?)
                 var newVRAMEnd = (uint) (previousLastVRAMEnd + VROMsize) + bssPadding;
-                if (oldVramEnd > newVRAMEnd)
+                /* if (oldVramEnd > newVRAMEnd)
                 {
                     Debug.WriteLine($"  bad new value [{newVRAMEnd - previousLastVRAMEnd}] negative jump: {(oldVramEnd - newVRAMEnd).ToString("X")}  ");
 
                     //newVRAMEnd = (uint)VROMsize + bssPadding; // never go negative
-                }
+                } */
                 var diff = (newVRAMEnd - oldVramEnd).ToString("X");
                 var newVramSize = newVRAMEnd - previousLastVRAMEnd;
                 //Debug.WriteLine($" Replacing fid[{actID.ToString("X")}] old vramEnd [{oldVramEnd.ToString("X")}] with [{newVRAMEnd.ToString("X")}] delta:{diff}");
