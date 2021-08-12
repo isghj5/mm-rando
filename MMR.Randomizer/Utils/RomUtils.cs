@@ -166,7 +166,7 @@ namespace MMR.Randomizer.Utils
                 // since all files are shifted after the first shift, would it make sense to just always update all files?
                 if (file.Addr < lastDecompressedAddr)
                 {
-                    Debug.WriteLine($"FileID [{i}] need moving from {file.Addr.ToString("X")} to {lastDecompressedAddr.ToString("X")}");
+                    // Debug.WriteLine($"FileID [{i}] need moving from {file.Addr.ToString("X")} to {lastDecompressedAddr.ToString("X")}");
                     var diff = lastDecompressedAddr - file.Addr;
                     file.Addr = lastDecompressedAddr;
                     // too late to get the size of decompressed file unless we keep it as a value, but we know how far off we should be
@@ -217,19 +217,19 @@ namespace MMR.Randomizer.Utils
             {
                 int entryLoc = actorOvlTblOffset + (actID * 32);
 
-                uint oldVramEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + 0xC);
+                uint oldVROMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x0);
 
-                if (oldVramEnd == 0)
+                if (oldVROMStart == 0) // empty file ignore
                 {
                     continue;
                 }
 
                 var fileID = actorFileList[actID];
                 var file = RomData.MMFileList[fileID];
-                uint oldVROMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + 0x0);
-                uint oldVROMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + 0x4);
+                uint oldVramEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0xC);
+                uint oldVROMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x4);
                 uint oldVROMSize = oldVROMEnd - oldVROMStart;
-                uint oldVramStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + 0x8);
+                uint oldVramStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x8);
                 uint oldVRAMSize = oldVramEnd - oldVramStart;
 
                 uint bssPadding = oldVRAMSize - oldVROMSize;
@@ -240,7 +240,6 @@ namespace MMR.Randomizer.Utils
                 // convert actorid to fileid and get file
 
                 Debug.WriteLine($" Actor aid[{actID.ToString("X")}]:  fid[{fileID}]");
-
 
                 // update VROM
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint) file.Addr);
