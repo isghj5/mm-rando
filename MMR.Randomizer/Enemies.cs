@@ -307,7 +307,7 @@ namespace MMR.Randomizer
             if (ACTORSENABLED)
             {
                 NudgeFlyingEnemiesForTingle();
-                //FixScarecrowTalk();
+                FixScarecrowTalk();
                 EnablePoFusenAnywhere();
             }
 
@@ -659,6 +659,17 @@ namespace MMR.Randomizer
             {
                 return;
             }
+
+            var scarecrowFID = GameObjects.Actor.Scarecrow.FileListIndex();
+            RomUtils.CheckCompressed(scarecrowFID);
+            var scarecrowFile = RomData.MMFileList[scarecrowFID].Data;
+
+            // song teaching scarecrow gets stuck after song is done
+            // the kakasi code tries to start a cutscene in stages the first stage doesn't trigger a second stage,
+            // so the code repeats going to the same spot over and over, never advacing
+            // instead, we can just branch from that spot to the finish code "shrug"
+
+            ReadWriteUtils.Arr_WriteU32(scarecrowFile, 0x11E0, 0x1000000F); // branch F down past the if (if state == 1)
         }
 
         /// <summary>
@@ -1519,12 +1530,12 @@ namespace MMR.Randomizer
                         continue;
                     }// */
                     //
-                    if (scene.File == GameObjects.Scene.NorthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.SouthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.FloorMaster.ObjectIndex()
+                            NewV = GameObjects.Actor.Scarecrow.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1789,7 +1800,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 22.4\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 23.0\n");
 
                 }
             }
