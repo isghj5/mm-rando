@@ -1,5 +1,5 @@
 {
-  "Version": 6,
+  "Version": 7,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -564,19 +564,13 @@
     },
     {
       "Id": "UpgradeBiggestBombBag",
-      "RequiredItems": [
-        "AreaNorthAccess",
-        "Any Wallet"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [
         [
-          "MaskGoron"
+          "UpgradeBiggestBombBagInMountain"
         ],
         [
-          "MaskDeku",
-          "TradeItemMoonTear",
-          "TradeItemLandDeed",
-          "TradeItemSwampDeed"
+          "UpgradeBiggestBombBagInSwamp"
         ]
       ],
       "TimeNeeded": "None",
@@ -42496,16 +42490,13 @@
     },
     {
       "Id": "ShopItemBusinessScrubMagicBean",
-      "RequiredItems": [
-        "OtherMagicBean"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [
         [
-          "MaskDeku"
+          "ShopItemBusinessScrubMagicBeanInSwamp"
         ],
         [
-          "TradeItemMoonTear",
-          "TradeItemLandDeed"
+          "ShopItemBusinessScrubMagicBeanInTown"
         ]
       ],
       "TimeNeeded": "None",
@@ -42514,22 +42505,30 @@
     },
     {
       "Id": "ShopItemBusinessScrubGreenPotion",
-      "RequiredItems": [
-        "MaskZora",
-        "AreaWestAccess"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "ShopItemBusinessScrubGreenPotionInOcean"
+        ],
+        [
+          "ShopItemBusinessScrubGreenPotionInMountain"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "IsTrick": false
     },
     {
       "Id": "ShopItemBusinessScrubBluePotion",
-      "RequiredItems": [
-        "AreaEastAccess",
-        "Any Wallet"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "ShopItemBusinessScrubBluePotionInCanyon"
+        ],
+        [
+          "ShopItemBusinessScrubBluePotionInOcean"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "IsTrick": false
@@ -52633,6 +52632,117 @@
       "Id": "ShopItemGoronRedPotionInSpring",
       "RequiredItems": [
         "AreaSnowheadTempleClear"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemBusinessScrubMagicBeanInSwamp",
+      "RequiredItems": [
+        "OtherMagicBean",
+        "MaskDeku"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemBusinessScrubMagicBeanInTown",
+      "RequiredItems": [
+        "OtherMagicBean",
+        "TradeItemMoonTear",
+        "TradeItemLandDeed"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "UpgradeBiggestBombBagInMountain",
+      "RequiredItems": [
+        "AreaNorthAccess",
+        "MaskGoron",
+        "Any Wallet"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "UpgradeBiggestBombBagInSwamp",
+      "RequiredItems": [
+        "Any Wallet",
+        "AreaNorthAccess",
+        "MaskDeku",
+        "TradeItemMoonTear",
+        "TradeItemLandDeed",
+        "TradeItemSwampDeed"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemBusinessScrubGreenPotionInOcean",
+      "RequiredItems": [
+        "MaskZora",
+        "AreaWestAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemBusinessScrubGreenPotionInMountain",
+      "RequiredItems": [
+        "MaskZora",
+        "AreaWestAccess",
+        "TradeItemMoonTear",
+        "TradeItemLandDeed",
+        "TradeItemSwampDeed",
+        "TradeItemMountainDeed",
+        "AreaNorthAccess",
+        "MaskDeku",
+        "MaskGoron"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemBusinessScrubBluePotionInCanyon",
+      "RequiredItems": [
+        "AreaEastAccess",
+        "Any Wallet"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ShopItemBusinessScrubBluePotionInOcean",
+      "RequiredItems": [
+        "AreaEastAccess",
+        "Any Wallet",
+        "MaskDeku",
+        "MaskGoron",
+        "MaskZora",
+        "TradeItemMoonTear",
+        "TradeItemLandDeed",
+        "TradeItemSwampDeed",
+        "TradeItemMountainDeed",
+        "TradeItemOceanDeed",
+        "AreaWestAccess",
+        "AreaNorthAccess"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",

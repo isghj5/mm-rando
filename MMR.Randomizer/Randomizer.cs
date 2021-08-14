@@ -149,7 +149,8 @@ namespace MMR.Randomizer
 
             if (_settings.CustomItemList.Contains(Item.ShopItemBusinessScrubMagicBean))
             {
-                ItemList[Item.ShopItemBusinessScrubMagicBean].DependsOnItems.Remove(Item.OtherMagicBean);
+                ItemList[Item.ShopItemBusinessScrubMagicBeanInSwamp].DependsOnItems.Remove(Item.OtherMagicBean);
+                ItemList[Item.ShopItemBusinessScrubMagicBeanInTown].DependsOnItems.Remove(Item.OtherMagicBean);
             }
 
             if (_settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.ScoopedItems) && _settings.LogicMode == LogicMode.Casual)

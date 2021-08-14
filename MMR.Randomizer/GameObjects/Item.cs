@@ -290,7 +290,7 @@ namespace MMR.Randomizer.GameObjects
         [Downgradable, Purchaseable]
         [StartingItem(0xC5CE2A, 0x06)]
         [StartingItem(0xC5CE6F, 0x18)]
-        [ItemName("Biggest Bomb Bag"), LocationName("Biggest Bomb Bag Purchase"), Region(Region.GoronVillage)]
+        [ItemName("Biggest Bomb Bag"), LocationName("Biggest Bomb Bag Purchase"), MultiLocation(UpgradeBiggestBombBagInMountain, UpgradeBiggestBombBagInSwamp)]
         [GossipLocationHint("a northern merchant"), GossipItemHint("an item carrier", "a vessel of explosives")]
         [ShopText("This can hold up to a maximum of 40 bombs.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -3374,7 +3374,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Repeatable, Temporary, Purchaseable]
         [StartingItemId(0x0A)]
-        [ItemName("Magic Bean"), LocationName("Swamp Scrub Purchase"), Region(Region.SouthernSwamp)]
+        [ItemName("Magic Bean"), LocationName("Swamp Scrub Purchase"), MultiLocation(ShopItemBusinessScrubMagicBeanInSwamp, ShopItemBusinessScrubMagicBeanInTown)]
         [GossipLocationHint("a southern merchant"), GossipItemHint("a plant seed")]
         [ShopText("Plant it in soft soil.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -3383,7 +3383,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemBusinessScrubMagicBean,
 
         [Repeatable, Temporary, Overwritable, Purchaseable]
-        [ItemName("Green Potion"), LocationName("Ocean Scrub Purchase"), Region(Region.ZoraHall)]
+        [ItemName("Green Potion"), LocationName("Ocean Scrub Purchase"), MultiLocation(ShopItemBusinessScrubGreenPotionInOcean, ShopItemBusinessScrubGreenPotionInMountain)]
         [GossipLocationHint("a western merchant"), GossipItemHint("a magic potion", "a green drink")]
         [ShopText("Replenishes your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3392,7 +3392,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemBusinessScrubGreenPotion,
 
         [Repeatable, Temporary, Overwritable, Purchaseable]
-        [ItemName("Blue Potion"), LocationName("Canyon Scrub Purchase"), Region(Region.IkanaCanyon)]
+        [ItemName("Blue Potion"), LocationName("Canyon Scrub Purchase"), MultiLocation(ShopItemBusinessScrubBluePotionInCanyon, ShopItemBusinessScrubBluePotionInOcean)]
         [GossipLocationHint("an eastern merchant"), GossipItemHint("consumable strength", "a magic potion", "a blue drink")]
         [ShopText("Replenishes both life energy and magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10019,6 +10019,30 @@ namespace MMR.Randomizer.GameObjects
 
         [MainLocation(ShopItemGoronRedPotion), Region(Region.GoronVillage)]
         ShopItemGoronRedPotionInSpring,
+
+        [MainLocation(ShopItemBusinessScrubMagicBean), Region(Region.SouthernSwamp)]
+        ShopItemBusinessScrubMagicBeanInSwamp,
+
+        [MainLocation(ShopItemBusinessScrubMagicBean), Region(Region.SouthClockTown)]
+        ShopItemBusinessScrubMagicBeanInTown,
+
+        [MainLocation(UpgradeBiggestBombBag), Region(Region.GoronVillage)]
+        UpgradeBiggestBombBagInMountain,
+
+        [MainLocation(UpgradeBiggestBombBag), Region(Region.SouthernSwamp)]
+        UpgradeBiggestBombBagInSwamp,
+
+        [MainLocation(ShopItemBusinessScrubGreenPotion), Region(Region.ZoraHall)]
+        ShopItemBusinessScrubGreenPotionInOcean,
+
+        [MainLocation(ShopItemBusinessScrubGreenPotion), Region(Region.GoronVillage)]
+        ShopItemBusinessScrubGreenPotionInMountain,
+
+        [MainLocation(ShopItemBusinessScrubBluePotion), Region(Region.IkanaCanyon)]
+        ShopItemBusinessScrubBluePotionInCanyon,
+
+        [MainLocation(ShopItemBusinessScrubBluePotion), Region(Region.ZoraHall)]
+        ShopItemBusinessScrubBluePotionInOcean,
 
 
         GossipTerminaSouth,

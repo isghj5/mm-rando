@@ -11,7 +11,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 6;
+        public const int CurrentVersion = 7;
 
         public static string ApplyMigrations(string logic)
         {
@@ -167,6 +167,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 6)
             {
                 AddOtherMagicBean(logicObject);
+            }
+
+            if (logicObject.Version < 7)
+            {
+                AddMultiLocationBusinessScrubs(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3758,6 +3763,30 @@ namespace MMR.Randomizer.LogicMigrator
                 ConditionalItems = new List<List<string>>(),
             }));
             logicObject.Version = 6;
+        }
+
+        private static void AddMultiLocationBusinessScrubs(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1104;
+            var itemNames = new string[]
+            {
+                "ShopItemBusinessScrubMagicBeanInSwamp",
+                "ShopItemBusinessScrubMagicBeanInTown",
+                "UpgradeBiggestBombBagInMountain",
+                "UpgradeBiggestBombBagInSwamp",
+                "ShopItemBusinessScrubGreenPotionInOcean",
+                "ShopItemBusinessScrubGreenPotionInMountain",
+                "ShopItemBusinessScrubBluePotionInCanyon",
+                "ShopItemBusinessScrubBluePotionInOcean",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 7;
         }
 
         private class MigrationItem
