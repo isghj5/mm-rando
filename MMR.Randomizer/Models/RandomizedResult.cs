@@ -14,8 +14,9 @@ namespace MMR.Randomizer.Models
         public ItemList ItemList { get; set; }
         public List<MessageEntry> GossipQuotes { get; set; }
         public List<ItemLogic> Logic { get; set; }
-        public ReadOnlyCollection<Item> ImportantItems { get; set; }
-        public ReadOnlyCollection<Item> ItemsRequiredForMoonAccess { get; set; }
+        public ReadOnlyCollection<Item> ImportantLocations { get; set; }
+        public ReadOnlyCollection<Item> ImportantSongLocations { get; set; }
+        public ReadOnlyCollection<Item> LocationsRequiredForMoonAccess { get; set; }
         public ReadOnlyCollection<ItemObject> IceTraps { get; set; }
         public List<ushort?> MessageCosts { get; set; }
         public int FileSelectSkybox { get; internal set; }

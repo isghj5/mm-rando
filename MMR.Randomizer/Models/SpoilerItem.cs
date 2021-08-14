@@ -19,7 +19,9 @@ namespace MMR.Randomizer.Models
 
         public bool IsRequired { get; }
 
-        public SpoilerItem(ItemObject itemObject, Region region, bool isRequired, bool isImportant, bool progressiveUpgrades)
+        public bool IsImportantSong { get; }
+
+        public SpoilerItem(ItemObject itemObject, Region region, bool isRequired, bool isImportant, bool isImportantSong, bool progressiveUpgrades)
         {
             Id = itemObject.ID;
             Name = itemObject.NameOverride ?? itemObject.Item.ProgressiveUpgradeName(progressiveUpgrades) ?? itemObject.Name;
@@ -29,6 +31,7 @@ namespace MMR.Randomizer.Models
             IsJunk = Name.Contains("Rupee") || Name.Contains("Heart") || itemObject.Item == Item.IceTrap;
             IsImportant = isImportant;
             IsRequired = isRequired;
+            IsImportantSong = isImportantSong;
         }
     }
 }

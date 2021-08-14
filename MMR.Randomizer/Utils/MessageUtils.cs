@@ -28,7 +28,7 @@ namespace MMR.Randomizer.Utils
 
             var randomizedItems = new List<ItemObject>();
             var hintableItems = new List<ItemObject>();
-            var itemsInRegions = new Dictionary<Region, List<(ItemObject io, Item itemForImportance)>>();
+            var itemsInRegions = new Dictionary<Region, List<(ItemObject io, Item locationForImportance)>>();
             foreach (var io in randomizedResult.ItemList)
             {
                 if ((!io.IsRandomized || !io.NewLocation.Value.Region().HasValue) && (!io.Item.MainLocation().HasValue || !randomizedResult.ItemList[io.Item.MainLocation().Value].IsRandomized))
@@ -65,7 +65,8 @@ namespace MMR.Randomizer.Utils
                 if (randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Competitive)
                 {
                     var preventRegions = new List<Region> { Region.TheMoon, Region.BottleCatch, Region.Misc };
-                    var itemRegion = io.Item.MainLocation().HasValue ? io.Item.Region() : io.NewLocation.Value.Region();
+                    var locationForImportance = io.Item.MainLocation().HasValue ? io.Item : io.NewLocation.Value;
+                    var itemRegion = locationForImportance.Region();
                     if (itemRegion.HasValue
                         && !preventRegions.Contains(itemRegion.Value)
                         && !randomizedResult.Settings.CustomJunkLocations.Contains(item.NewLocation.Value))
@@ -74,7 +75,7 @@ namespace MMR.Randomizer.Utils
                         {
                             itemsInRegions[itemRegion.Value] = new List<(ItemObject, Item)>();
                         }
-                        itemsInRegions[itemRegion.Value].Add((item, io.Item));
+                        itemsInRegions[itemRegion.Value].Add((item, locationForImportance));
                     }
 
                     var competitiveHintInfo = item.NewLocation.Value.GetAttribute<GossipCompetitiveHintAttribute>();
@@ -111,7 +112,6 @@ namespace MMR.Randomizer.Utils
 
                 var numberOfRequiredHints = randomizedResult.Settings.AddSongs ? 4 : 3;
                 var numberOfNonRequiredHints = 3;
-                var maxNumberOfSongOnlyHints = 3;
                 var maxNumberOfClockTownHints = 2;
 
                 var numberOfLocationHints = totalUniqueGossipHints - numberOfRequiredHints - numberOfNonRequiredHints;
@@ -158,26 +158,28 @@ namespace MMR.Randomizer.Utils
                 var clockTownRegionCounts = new Dictionary<Region, List<ItemObject>>();
                 foreach (var kvp in itemsInRegions)
                 {
-                    var requiredItems = kvp.Value.Where(io => ItemUtils.IsRequired(io.io.Item, io.itemForImportance, randomizedResult) && !unusedItems.Contains(io.io) && !itemsToCombineWith.Contains(io.io)).ToList();
-                    var importantItems = kvp.Value.Where(io => ItemUtils.IsImportant(io.io.Item, io.itemForImportance, randomizedResult)).ToList();
-
-                    if (requiredItems.Count == 0 && importantItems.Count > 0)
-                    {
-                        continue;
-                    }
+                    var requiredItems = kvp.Value.Where(io => ItemUtils.IsRequired(io.io.Item, io.locationForImportance, randomizedResult) && !unusedItems.Contains(io.io) && !itemsToCombineWith.Contains(io.io)).ToList();
+                    var importantItems = kvp.Value.Where(io => ItemUtils.IsImportant(io.io.Item, io.locationForImportance, randomizedResult)).ToList();
 
                     Dictionary<Region, List<ItemObject>> dict;
-                    if (requiredItems.Count == 0)
+                    if (requiredItems.Count == 0 && importantItems.Count > 0)
+                    {
+                        if (!randomizedResult.Settings.AddSongs && importantItems.All(io => ItemUtils.IsSong(io.io.Item) && !randomizedResult.ImportantSongLocations.Contains(io.locationForImportance)))
+                        {
+                            dict = songOnlyRegionCounts;
+                        }
+                        else
+                        {
+                            continue;
+                        }
+                    }
+                    else if (requiredItems.Count == 0)
                     {
                         dict = nonImportantRegionCounts;
                     }
                     else if (Gossip.ClockTownRegions.Contains(kvp.Key))
                     {
                         dict = clockTownRegionCounts;
-                    }
-                    else if (!randomizedResult.Settings.AddSongs && kvp.Value.Count(io => ItemUtils.IsRequired(io.io.Item, io.itemForImportance, randomizedResult) && !ItemUtils.IsSong(io.io.Item) && !unusedItems.Contains(io.io)) == 0)
-                    {
-                        dict = songOnlyRegionCounts;
                     }
                     else
                     {
@@ -187,7 +189,6 @@ namespace MMR.Randomizer.Utils
                     dict[kvp.Key] = requiredItems.Select(io => io.io).ToList();
                 }
 
-                var chosenSongOnlyRegions = 0;
                 var chosenClockTownRegions = 0;
                 for (var i = 0; i < numberOfRequiredHints; i++)
                 {
@@ -196,17 +197,9 @@ namespace MMR.Randomizer.Utils
                     {
                         regionCounts = regionCounts.Concat(clockTownRegionCounts);
                     }
-                    if (chosenSongOnlyRegions < maxNumberOfSongOnlyHints)
-                    {
-                        regionCounts = regionCounts.Concat(songOnlyRegionCounts);
-                    }
                     if (!regionCounts.Any())
                     {
                         regionCounts = regionCounts.Concat(clockTownRegionCounts);
-                    //}
-                    //if (!regionCounts.Any())
-                    //{
-                        regionCounts = regionCounts.Concat(songOnlyRegionCounts);
                     }
                     if (regionCounts.Any())
                     {
@@ -215,13 +208,9 @@ namespace MMR.Randomizer.Utils
                             .Select(io => gossipStoneRequirements.Where(kvp => !kvp.Value.Contains(io.Item)).Select(kvp => kvp.Key))
                             .Aggregate((list1, list2) => list1.Intersect(list2))
                             .ToList();
-                        competitiveHints.Add((BuildRegionHint(chosen, random), allowedGossipQuotes));
-                        competitiveHints.Add((BuildRegionHint(chosen, random), allowedGossipQuotes));
-                        if (songOnlyRegionCounts.Remove(chosen.Key))
-                        {
-                            chosenSongOnlyRegions++;
-                        }
-                        else if (clockTownRegionCounts.Remove(chosen.Key))
+                        competitiveHints.Add((BuildRegionHint(chosen, RegionHintType.SomeRequired, random), allowedGossipQuotes));
+                        competitiveHints.Add((BuildRegionHint(chosen, RegionHintType.SomeRequired, random), allowedGossipQuotes));
+                        if (clockTownRegionCounts.Remove(chosen.Key))
                         {
                             chosenClockTownRegions++;
                         }
@@ -234,12 +223,24 @@ namespace MMR.Randomizer.Utils
 
                 for (var i = 0; i < numberOfNonRequiredHints; i++)
                 {
-                    if (nonImportantRegionCounts.Any())
+                    var regionCounts = nonImportantRegionCounts.AsEnumerable();
+                    regionCounts = regionCounts.Concat(songOnlyRegionCounts);
+                    if (regionCounts.Any())
                     {
-                        var chosen = nonImportantRegionCounts.ToList().Random(random);
-                        competitiveHints.Add((BuildRegionHint(chosen, random), new List<GossipQuote>()));
-                        competitiveHints.Add((BuildRegionHint(chosen, random), new List<GossipQuote>()));
-                        nonImportantRegionCounts.Remove(chosen.Key);
+                        var chosen = regionCounts.ToList().Random(random);
+                        RegionHintType regionHintType;
+                        if (songOnlyRegionCounts.Remove(chosen.Key))
+                        {
+                            regionHintType = RegionHintType.OnlyImportantSong;
+                        }
+                        else
+                        {
+                            nonImportantRegionCounts.Remove(chosen.Key);
+                            regionHintType = RegionHintType.NoneRequired;
+                        }
+
+                        competitiveHints.Add((BuildRegionHint(chosen, regionHintType, random), new List<GossipQuote>()));
+                        competitiveHints.Add((BuildRegionHint(chosen, regionHintType, random), new List<GossipQuote>()));
                     }
                 }
             }
@@ -436,10 +437,17 @@ namespace MMR.Randomizer.Utils
             return (null, null);
         }
 
-        private static string BuildRegionHint(KeyValuePair<Region, List<ItemObject>> regionInfo, Random random)
+        private enum RegionHintType
+        {
+            NoneRequired,
+            SomeRequired,
+            OnlyImportantSong,
+        }
+
+        private static string BuildRegionHint(KeyValuePair<Region, List<ItemObject>> regionInfo, RegionHintType regionHintType, Random random)
         {
             var region = regionInfo.Key;
-            var numberOfRequiredItems = regionInfo.Value.Count;
+            //var numberOfRequiredItems = regionInfo.Value.Count;
 
             ushort soundEffectId = 0x690C; // grandma curious
             string start = Gossip.MessageStartSentences.Random(random);
@@ -447,18 +455,13 @@ namespace MMR.Randomizer.Utils
             string sfx = $"{(char)((soundEffectId >> 8) & 0xFF)}{(char)(soundEffectId & 0xFF)}";
             var locationMessage = region.Name();
             var mid = "is";
-            var itemMessage = numberOfRequiredItems > 0
-                ? "on the Way of the Hero"
-                : "a foolish choice";
-            char color;
-            if (numberOfRequiredItems > 0)
+            var (itemMessage, color) = regionHintType switch
             {
-                color = TextCommands.ColorYellow;
-            }
-            else
-            {
-                color = TextCommands.ColorSilver;
-            }
+                RegionHintType.NoneRequired => ("a foolish choice", TextCommands.ColorSilver),
+                RegionHintType.SomeRequired => ("on the Way of the Hero", TextCommands.ColorYellow),
+                RegionHintType.OnlyImportantSong => ("foolish except for its song", TextCommands.ColorOrange),
+                _ => throw new ArgumentException("Invalid argument.", nameof(regionHintType))
+            };
 
             return $"\x1E{sfx}{start} {color}{locationMessage}{TextCommands.ColorWhite} {mid} {itemMessage}...\xBF".Wrap(35, "\x11");
 

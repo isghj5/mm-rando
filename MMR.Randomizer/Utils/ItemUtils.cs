@@ -78,8 +78,9 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsSong(Item item)
         {
-            return item >= Item.SongHealing
-                && item <= Item.SongOath;
+            return (item >= Item.SongTime
+                && item <= Item.SongOath)
+                || (item.MainLocation().HasValue && IsSong(item.MainLocation().Value));
         }
 
         public static IEnumerable<Item> SmallKeys()
@@ -200,20 +201,20 @@ namespace MMR.Randomizer.Utils
             return item == Item.RecoveryHeart || JunkItems.Contains(item);
         }
 
-        public static bool IsRequired(Item item, Item itemForImportance, RandomizedResult randomizedResult)
+        public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult)
         {
             return !item.Name().Contains("Heart")
                         && !IsStrayFairy(item)
                         && !IsSkulltulaToken(item)
                         && item != Item.IceTrap
-                        && randomizedResult.ItemsRequiredForMoonAccess.Contains(itemForImportance);
+                        && randomizedResult.LocationsRequiredForMoonAccess.Contains(locationForImportance);
         }
 
-        public static bool IsImportant(Item item, Item itemForImportance, RandomizedResult randomizedResult)
+        public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)
         {
             return !item.Name().Contains("Heart")
                         && item != Item.IceTrap
-                        && randomizedResult.ImportantItems.Contains(itemForImportance);
+                        && randomizedResult.ImportantLocations.Contains(locationForImportance);
         }
 
         public static readonly ReadOnlyCollection<ReadOnlyCollection<Item>> ForbiddenStartTogether = new List<List<Item>>()

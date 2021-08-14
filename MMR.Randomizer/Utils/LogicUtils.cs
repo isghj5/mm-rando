@@ -122,18 +122,20 @@ namespace MMR.Randomizer.Utils
         public static ReadOnlyCollection<Item> GetGossipStoneRequirement(GossipQuote gossipQuote, ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
         {
             var gossipStoneItem = gossipQuote.GetAttribute<GossipStoneAttribute>().Item;
-            return GetImportantItems(itemList, settings, gossipStoneItem, logic).Required;
+            return GetImportantLocations(itemList, settings, gossipStoneItem, logic).Required;
         }
 
         public class LogicPaths
         {
             public ReadOnlyCollection<Item> Required { get; set; }
             public ReadOnlyCollection<Item> Important { get; set; }
+            public ReadOnlyCollection<Item> ImportantSongLocations { get; set; }
         }
 
-        public static LogicPaths GetImportantItems(ItemList itemList, GameplaySettings settings, Item item, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedItems = null, params Item[] exclude)
+        public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, params Item[] exclude)
         {
-            if (settings.CustomStartingItemList.Contains(item))
+            var itemObject = itemList.Find(io => io.NewLocation == location) ?? itemList[location];
+            if (settings.CustomStartingItemList.Contains(itemObject.Item))
             {
                 return new LogicPaths();
             }
@@ -141,33 +143,36 @@ namespace MMR.Randomizer.Utils
             {
                 logicPath = new List<Item>();
             }
-            if (logicPath.Contains(item))
+            if (logicPath.Contains(location))
             {
                 return null;
             }
-            if (exclude.Contains(item))
+            if (exclude.Contains(location))
             {
-                if (settings.AddSongs || !ItemUtils.IsSong(item) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i) && !ItemUtils.IsSong(i)))
+                if (settings.AddSongs || !ItemUtils.IsSong(location) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i) && !ItemUtils.IsSong(i)))
                 {
                     return null;
                 }
             }
-            logicPath.Add(item);
-            if (checkedItems == null)
+            var importantSongLocations = new List<Item>();
+            if (!settings.AddSongs && ItemUtils.IsSong(location) && logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i)))
             {
-                checkedItems = new Dictionary<Item, LogicPaths>();
+                importantSongLocations.Add(location);
             }
-            if (checkedItems.ContainsKey(item))
+            logicPath.Add(location);
+            if (checkedLocations == null)
             {
-                if (logicPath.Intersect(checkedItems[item].Required).Any())
+                checkedLocations = new Dictionary<Item, LogicPaths>();
+            }
+            if (checkedLocations.ContainsKey(location))
+            {
+                if (logicPath.Intersect(checkedLocations[location].Required).Any())
                 {
                     return null;
                 }
-                return checkedItems[item];
+                return checkedLocations[location];
             }
-            var itemObject = itemList[item];
-            var locationId = itemObject.NewLocation.HasValue ? itemObject.NewLocation.Value : item;
-            var locationLogic = itemLogic[(int)locationId];
+            var locationLogic = itemLogic[(int)location];
             var required = new List<Item>();
             var important = new List<Item>();
             if (locationLogic.RequiredItemIds != null && locationLogic.RequiredItemIds.Any())
@@ -179,13 +184,16 @@ namespace MMR.Randomizer.Utils
                         continue;
                     }
 
-                    var childPaths = GetImportantItems(itemList, settings, requiredItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                    var requiredLocation = itemList[requiredItemId].NewLocation ?? requiredItemId;
+
+                    var childPaths = GetImportantLocations(itemList, settings, requiredLocation, itemLogic, logicPath.ToList(), checkedLocations, exclude);
                     if (childPaths == null)
                     {
                         return null;
                     }
 
-                    required.Add(requiredItemId);
+                    required.Add(requiredLocation);
+                    important.Add(requiredLocation);
                     if (childPaths.Required != null)
                     {
                         required.AddRange(childPaths.Required);
@@ -193,6 +201,10 @@ namespace MMR.Randomizer.Utils
                     if (childPaths.Important != null)
                     {
                         important.AddRange(childPaths.Important);
+                    }
+                    if (childPaths.ImportantSongLocations != null)
+                    {
+                        importantSongLocations.AddRange(childPaths.ImportantSongLocations);
                     }
                 }
             }
@@ -203,6 +215,7 @@ namespace MMR.Randomizer.Utils
                 {
                     var conditionalRequired = new List<Item>();
                     var conditionalImportant = new List<Item>();
+                    var conditionalImportantSongLocations = new List<Item>();
                     foreach (var conditionalItemId in conditions.Cast<Item>())
                     {
                         if (itemList[conditionalItemId].Item != conditionalItemId)
@@ -210,7 +223,9 @@ namespace MMR.Randomizer.Utils
                             continue;
                         }
 
-                        var childPaths = GetImportantItems(itemList, settings, conditionalItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                        var conditionalLocation = itemList[conditionalItemId].NewLocation ?? conditionalItemId;
+
+                        var childPaths = GetImportantLocations(itemList, settings, conditionalLocation, itemLogic, logicPath.ToList(), checkedLocations, exclude);
                         if (childPaths == null)
                         {
                             conditionalRequired = null;
@@ -218,7 +233,8 @@ namespace MMR.Randomizer.Utils
                             break;
                         }
 
-                        conditionalRequired.Add(conditionalItemId);
+                        conditionalRequired.Add(conditionalLocation);
+                        conditionalImportant.Add(conditionalLocation);
                         if (childPaths.Required != null)
                         {
                             conditionalRequired.AddRange(childPaths.Required);
@@ -227,6 +243,10 @@ namespace MMR.Randomizer.Utils
                         {
                             conditionalImportant.AddRange(childPaths.Important);
                         }
+                        if (childPaths.ImportantSongLocations != null)
+                        {
+                            conditionalImportantSongLocations.AddRange(childPaths.ImportantSongLocations);
+                        }
                     }
 
                     if (conditionalRequired != null && conditionalImportant != null)
@@ -234,7 +254,8 @@ namespace MMR.Randomizer.Utils
                         logicPaths.Add(new LogicPaths
                         {
                             Required = conditionalRequired.AsReadOnly(),
-                            Important = conditionalImportant.AsReadOnly()
+                            Important = conditionalImportant.AsReadOnly(),
+                            ImportantSongLocations = conditionalImportantSongLocations.AsReadOnly()
                         });
                     }
                 }
@@ -244,15 +265,17 @@ namespace MMR.Randomizer.Utils
                 }
                 required.AddRange(logicPaths.Select(lp => lp.Required.AsEnumerable()).Aggregate((a, b) => a.Intersect(b)));
                 important.AddRange(logicPaths.SelectMany(lp => lp.Required.Union(lp.Important)).Distinct());
+                importantSongLocations.AddRange(logicPaths.SelectMany(lp => lp.ImportantSongLocations).Distinct());
             }
             var result = new LogicPaths
             {
                 Required = required.Distinct().ToList().AsReadOnly(),
-                Important = important.Union(required).Distinct().ToList().AsReadOnly()
+                Important = important.Union(required).Distinct().ToList().AsReadOnly(),
+                ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly()
             };
-            if (!item.IsFake())
+            if (!location.IsFake())
             {
-                checkedItems[item] = result;
+                checkedLocations[location] = result;
             }
             return result;
         }

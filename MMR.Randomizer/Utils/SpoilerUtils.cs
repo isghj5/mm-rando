@@ -19,14 +19,15 @@ namespace MMR.Randomizer.Utils
                 .Where(io => (io.IsRandomized && io.NewLocation.Value.Region().HasValue) || (io.Item.MainLocation().HasValue && randomized.ItemList[io.Item.MainLocation().Value].IsRandomized))
                 .Select(io => new {
                     ItemObject = io.Item.MainLocation().HasValue ? randomized.ItemList.Find(x => x.NewLocation == io.Item.MainLocation().Value) : io,
-                    ItemForImportance = io.Item,
+                    LocationForImportance = io.NewLocation ?? io.Item,
                     Region = io.IsRandomized ? io.NewLocation.Value.Region().Value : io.Item.Region().Value,
                 })
                 .Select(u => new SpoilerItem(
                     u.ItemObject,
                     u.Region,
-                    ItemUtils.IsRequired(u.ItemObject.Item, u.ItemForImportance, randomized),
-                    ItemUtils.IsImportant(u.ItemObject.Item, u.ItemForImportance, randomized),
+                    ItemUtils.IsRequired(u.ItemObject.Item, u.LocationForImportance, randomized),
+                    ItemUtils.IsImportant(u.ItemObject.Item, u.LocationForImportance, randomized),
+                    randomized.ImportantSongLocations.Contains(u.LocationForImportance),
                     settings.ProgressiveUpgrades
                 ));
 
@@ -132,7 +133,7 @@ namespace MMR.Randomizer.Utils
                 log.AppendLine($" {region.Key.Name()}");
                 foreach (var item in region.OrderBy(item => item.NewLocationName))
                 {
-                    log.AppendLine($"{item.NewLocationName,-50} -> {item.Name}" + (item.IsImportant ? "*" : "") + (item.IsRequired ? "*" : ""));
+                    log.AppendLine($"{item.NewLocationName,-50} -> {item.Name}" + (item.IsImportant ? "*" : "") + (item.IsRequired ? "*" : item.IsImportantSong ? "^" : ""));
                 }
             }
 

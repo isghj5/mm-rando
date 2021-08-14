@@ -1685,21 +1685,23 @@ namespace MMR.Randomizer
                     }).ToList()
                     : _randomized.Logic;
 
-                _randomized.ImportantItems = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic)?.Important.Where(item => item.Region().HasValue).ToList().AsReadOnly();
-                if (_randomized.ImportantItems == null)
+                var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic);
+                _randomized.ImportantLocations = logicPaths?.Important.Where(item => item.Region().HasValue).ToList().AsReadOnly();
+                _randomized.ImportantSongLocations = logicPaths?.ImportantSongLocations;
+                if (_randomized.ImportantLocations == null)
                 {
                     throw new RandomizationException("Moon Access is unobtainable.");
                 }
-                var itemsRequiredForMoonAccess = new List<Item>();
-                foreach (var item in _randomized.ImportantItems)
+                var locationsRequiredForMoonAccess = new List<Item>();
+                foreach (var location in _randomized.ImportantLocations)
                 {
-                    var checkPaths = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: item);
+                    var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: location);
                     if (checkPaths == null)
                     {
-                        itemsRequiredForMoonAccess.Add(item);
+                        locationsRequiredForMoonAccess.Add(location);
                     }
                 }
-                _randomized.ItemsRequiredForMoonAccess = itemsRequiredForMoonAccess.AsReadOnly();
+                _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.AsReadOnly();
 
                 if (_settings.GossipHintStyle != GossipHintStyle.Default)
                 {
