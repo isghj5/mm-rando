@@ -86,6 +86,7 @@
 0x80118890,z2_DrawCButtonIcons
 0x80123358,z2_CanInteract2
 0x801233E4,z2_CanInteract
+0x801242DC,z2_801242DC
 0x8012C2DC,z2_CallSetupDList
 0x8012E96C,z2_LoadRoom
 0x8012EBF8,z2_UnloadRoom

@@ -199,6 +199,9 @@ extern void z2_ShowMessage(GlobalContext* ctxt, u16 messageId, u8 something); //
 extern bool z2_IsMessageClosing(Actor* actor, GlobalContext *ctxt);
 extern u8 z2_GetMessageState(MessageContext* msgCtx);
 
+// Function Prototypes (Unknown).
+extern int z2_801242DC(GlobalContext* ctxt);
+
 // Relocatable Functions (kaleido_scope).
 #define z2_PauseDrawItemIcon_VRAM        0x80821AD4
 

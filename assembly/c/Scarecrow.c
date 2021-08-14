@@ -20,14 +20,15 @@ bool Scarecrow_ShouldActivate(ActorEnKakasi* actor, GlobalContext* ctxt) {
         const bool usingOcarina = player->stateFlags.state2 & PLAYER_STATE2_OCARINA;
         // Y limit 565.0: Allows Twin Islands from ground, disallows Great Bay ledge from ground.
         const bool inRangeY = ClearSignBit(actor->base.yDistanceFromLink) < 565.0;
+        const bool isOnLand = z2_801242DC(ctxt) < 2;
 
-        if (!playedScarecrowSong && inRangeY) {
+        if (!playedScarecrowSong && inRangeY && isOnLand) {
             // At this point the player should be within range of Scarecrow, so assign as ocarina cutscene actor.
             // Scarecrow should already have cutscene Id field set.
             player->ocarinaCutsceneActor = &(actor->base);
         }
 
-        return playedScarecrowSong || (usingOcarina && inRangeY);
+        return playedScarecrowSong || (usingOcarina && inRangeY && isOnLand);
     } else {
         return playedScarecrowSong;
     }
