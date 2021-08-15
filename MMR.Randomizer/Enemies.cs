@@ -1530,12 +1530,12 @@ namespace MMR.Randomizer
                         continue;
                     }// */
                     //
-                    if (scene.File == GameObjects.Scene.SouthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Scarecrow.ObjectIndex()
+                            NewV = GameObjects.Actor.Butler.ObjectIndex()
                         });
                         continue;
                     } // */

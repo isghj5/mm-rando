@@ -1788,7 +1788,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         ThreeDayTimer = 0x15A, // En_Test4
 
-
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1500)]
         [FileID(313)]
@@ -1873,6 +1872,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(324)]
         [ObjectListIndex(0x189)]
+        [UnkillableAllVariants]
         En_Dnb = 0x167, // En_Dnb
         
         [FileID(325)]
@@ -2007,10 +2007,17 @@ namespace MMR.Randomizer.GameObjects
         [FileID(344)]
         [ObjectListIndex(0x18A)]
         Bg_Crace_Movebg = 0x17E, // Bg_Crace_Movebg
-        
+
+        // todo come back and figure out how to spawn regular 
+        //[ActorizerEnabled]
         [FileID(345)]
         [ObjectListIndex(0x1F3)]
-        En_Dno = 0x17F, // En_Dno
+        // params 0xC000, 0x2F8, 0x7F, 0xF ???
+        // 0x8000 is cutscene version, 0x7FFF is main hall but doesn't spawn?
+        //[GroundVariants(0x2000)]
+        // good candidate for aligned front companions, to his son
+        [UnkillableAllVariants]
+        Butler = 0x17F, // En_Dno
 
         [EnemizerEnabled] // biggest issue: they dont really attack, this isn't the version that spawns over and over
         [ActorInitVarOffset(0x1C6C)]
@@ -3159,7 +3166,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(541)]
         [ObjectListIndex(0x222)]
-        Bg_F40_Switch = 0x246, // Bg_F40_Switch
+        ElegyStatueSwitch = 0x246, // Bg_F40_Switch
         
         [FileID(542)]
         [ObjectListIndex(0x5D)]
@@ -3178,7 +3185,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(544)]
         [ObjectListIndex(0x1)]
-        Oceff_Wipe5 = 0x249, // Oceff_Wipe5
+        SonataEffects = 0x249, // Oceff_Wipe5
 
         [ActorizerEnabled]
         [FileID(545)]
@@ -3211,11 +3218,11 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(551)]
         [ObjectListIndex(0x22A)]
-        En_Hg = 0x250, // En_Hg
+        PamelasFatherCured = 0x250, // En_Hg
         
         [FileID(552)]
         [ObjectListIndex(0x22A)]
-        En_Hgo = 0x251, // En_Hgo
+        PamelasFatherCursed = 0x251, // En_Hgo
 
         [ActorizerEnabled]
         [FileID(553)]
@@ -3229,9 +3236,10 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.ZoraCape)]
         Lulu = 0x252, // Ee_Zov
 
+        // probably boring actor with timed flags nonsense
         [FileID(554)]
         [ObjectListIndex(0x7)]
-        En_Ah = 0x253, // En_Ah
+        AnjusMother = 0x253, // En_Ah
         
         [FileID(555)]
         [ObjectListIndex(0x22C)]
@@ -3285,9 +3293,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // I think?
         SleepingScrub = 0x25F,
 
+        [ActorizerEnabled]
         [FileID(567)]
         [ObjectListIndex(0xD0)]
-        En_Zow = 0x260, // En_Zow
+        [WaterVariants(0,1)]
+        [UnkillableAllVariants]
+        SwimmingZora = 0x260, // En_Zow
 
         [FileID(568)]
         [ObjectListIndex(0x1)]
