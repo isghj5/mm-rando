@@ -255,7 +255,7 @@ namespace MMR.Randomizer.Templates
                     " (!includes(locationsToCheck, locationId)) {\r\n                        locationsT" +
                     "oCheck.push(locationId);\r\n                    }\r\n                }\r\n            " +
                     "}\r\n        }\r\n        checkLocations(locationsToCheck);\r\n    }\r\n\r\n    var starti" +
-                    "ngLocations = [0, 94, 274, 275, 276, 277];\r\n    for (var id of startingLocations" +
+                    "ngLocations = [0, 96, 277, 278, 279, 280];\r\n    for (var id of startingLocations" +
                     ") {\r\n        logic[id].Checked = true;\r\n        var row = document.querySelector" +
                     "(\"tr[data-newlocationid=\'\" + id + \"\']\");\r\n        var itemId = id;\r\n        if (" +
                     "row) {\r\n            itemId = row.dataset.id;\r\n            document.querySelector" +
