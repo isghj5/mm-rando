@@ -2193,6 +2193,32 @@ namespace MMR.Randomizer
                 }
             }
 
+            // Remove "...Suddenly, memories of Princess Zelda come rushing back to you..."
+            if (_randomized.ItemList[Item.ItemOcarina].NewLocation != Item.ItemOcarina)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x4C)
+                    .Message(it =>
+                    {
+                        it.QuickText(() =>
+                        {
+                            it.Text("You got the ").Red("Ocarina of Time").NewLine()
+                            .Text("back!");
+                        })
+                        .NewLine()
+                        .PauseText(10)
+                        .Red("Princess Zelda").Text(" gave you this").NewLine()
+                        .Text("precious instrument.")
+                        .EndTextBox()
+                        .Text("Set it to ").Yellow("\u00B2").Text(" and use ").Yellow("\u00B0 ").Text("and the").NewLine()
+                        .Text("four ").Yellow("\u00B2").Text(" Buttons to play it. Press").NewLine()
+                        .Text("\u00B1 to stop.")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
             // Update Zora Jar message.
             var zoraJarItem = _randomized.ItemList.First(io => io.NewLocation == Item.CollectableZoraCapeJarGame1);
             if (zoraJarItem.Item != Item.CollectableZoraCapeJarGame1)
