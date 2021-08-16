@@ -181,22 +181,19 @@ namespace MMR.Randomizer.Utils
             /// if overlays have shifted, we need to modify their overlay table to use the right values for the new files
             /// lookinag at vanilla overlay table, it sure looks like the VROM and VRAM are sequential, when there is a gap they dont jump they ignore it
 
+            // there is a deadzone in the middle, vram belonging to the effects, we leave this static I'm not bugging on effects
+            // 0x80977210 -> 0x80981760
+            // also files 385 389 are fbdemo overlays need to figure out what those aree called
+            // 390 right after is also an effect
+            // 391 after that is also a fbdemo so that whole block
+            var VRAMDeadzone = new List<(uint start, uint end)> { (0x80977210, 0x80981760), (0x80AC5070, 0x80AC94C0) };
+
+            // the last actor before objects in file list is 0x2B1 with vram finish: 0x80C260A0
+            uint theEndOfTakenVRAM = 0x80C260A0;
+
             // generate an array of actor->fileid
             var actorList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList();
             actorList.Remove(GameObjects.Actor.Empty);
-            // there's probably a lambda to do this I can't remember how to make it right now
-            int[] actorFileList = new int[0x2B3];
-            // per actor, lookup fileid, populate the slot in array
-            for (int i = 0; i < actorList.Count; ++i)
-            {
-                int fid = actorList[i].FileListIndex();
-                if (fid > 0)
-                {
-                    // actor enum converts directly to overlay list index
-                    var overlayListIndex = (int)actorList[i];
-                    actorFileList[overlayListIndex] = fid;
-                }
-            }
 
             // issue: vrom/vram are sequential, but not in the order they exist in the overlay table
             // what I need to do now is change the list from array of fid to aid/fid list
@@ -236,65 +233,79 @@ namespace MMR.Randomizer.Utils
                 {
                     continue;
                 }
-                var file = RomData.MMFileList[fileID];
-                // we didn't touch it, and it was already compressed
-                if (!file.WasEdited && file.IsCompressed)
-                {
-                    // shift vram, leave vrom?
-                    // we know the old vrom and vram size, leave them but shift them
-                }
 
+                var file = RomData.MMFileList[fileID];
                 uint oldVROMEnd   = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x4);
                 uint oldVramStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x8);
                 uint oldVramEnd   = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0xC);
+                uint oldInitAddr  = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x14);
                 uint oldVROMSize = oldVROMEnd - oldVROMStart;
                 uint oldVRAMSize = oldVramEnd - oldVramStart;
-                int newVROMDiff = file.Data.Length - (int) oldVROMSize;
 
-                Debug.WriteLine($" Actor aid[{actID.ToString("X")}]:  fid[{fileID}]");
-                if (newVROMDiff > 0)
-                {
-                    Debug.WriteLine($" + old[{oldVROMSize.ToString("X")}]:  new[{file.Data.Length.ToString("X")}] has shifted: {newVROMDiff.ToString("X")}");
-                    shift += newVROMDiff;
-                }
-
-                uint bssPadding = oldVRAMSize - oldVROMSize;
-
-                /* if (bssPadding < 0)
-                {
-                    bssPadding = 0;
-                } */
-
-                // we need to keep track of the old size and use diff because of BSS
-                // vram can be larger than vrom because of bss, let's fucking HOPE nobody tries to expand bss of a file
+                // if it was edited, its not compressed, get new filesize, else use the old values
+                var uncompresedVROMSize = (file.WasEdited) ? (file.Data.Length) : (file.End - file.Addr);
+                int newVROMDiff = uncompresedVROMSize - (int)oldVROMSize;
 
                 // update VROM
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint) file.Addr);
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint) file.End);
 
-                // we need to use the old vram, and measure the diff
-                var VROMsize = file.End - file.Addr;
-
-                // update VRAM (VROM shifted into ram space?)
-                var newVRAMEnd = (uint) (previousLastVRAMEnd + VROMsize) + bssPadding;
                 /* if (oldVramEnd > newVRAMEnd)
                 {
                     Debug.WriteLine($"  bad new value [{newVRAMEnd - previousLastVRAMEnd}] negative jump: {(oldVramEnd - newVRAMEnd).ToString("X")}  ");
 
                     //newVRAMEnd = (uint)VROMsize + bssPadding; // never go negative
                 } */
-                var diff = (newVRAMEnd - oldVramEnd).ToString("X");
-                var newVramSize = newVRAMEnd - previousLastVRAMEnd;
-                //Debug.WriteLine($" Replacing fid[{actID.ToString("X")}] old vramEnd [{oldVramEnd.ToString("X")}] with [{newVRAMEnd.ToString("X")}] delta:{diff}");
-                //Debug.WriteLine($" Replacing aid[{actID.ToString("X")}] old Vram [{oldVRAMSize.ToString("X")}] new Vram [{newVramSize.ToString("X")}] delta:{diff}");
-                //ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, previousLastVRAMEnd);
-                //ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, newVRAMEnd);
+                var newVramSize = oldVRAMSize + newVROMDiff;// newVRAMEnd - previousLastVRAMEnd;
+                // update VRAM (VROM shifted into ram space?)
+                var newVRAMStart = previousLastVRAMEnd;
+                var newVRAMEnd   = (uint)(newVRAMStart + newVramSize);// + bssPadding;
+
+                if (VRAMDeadzone.Count > 0 && newVRAMEnd > VRAMDeadzone[0].start)
+                {
+                    // this overaly is going to clip into a deadzone, move it past
+                    newVRAMStart = VRAMDeadzone[0].end;
+                    newVRAMEnd = (uint)(newVRAMStart + newVramSize);
+                    // remove this deadzone now that we past it
+                    VRAMDeadzone.RemoveAt(0);
+                }
+
+                var initOffset = oldInitAddr - oldVramStart;
+                //var newINITAddr = (uint)(newVRAMStart + (oldInitAddr - oldVramStart));
+                var newINITAddr = (uint)(newVRAMStart + initOffset);
 
                 // OKAY NEW PLAN
                 // dont calc new VRAM, just shift
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, oldVramStart + (uint) shift);
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, oldVramEnd + (uint) shift);
+                // no actor after inject works right, but doesnt crash at least
+                //ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, oldVramStart + (uint)shift);
+                //ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, oldVramEnd + (uint)shift);
 
+                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, newVRAMStart);
+                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, newVRAMEnd);
+                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newINITAddr);
+
+                if (newVROMDiff < 0)
+                {
+                    Debug.WriteLine($" +++ negative shift at actor [{actID.ToString("X")}]");
+
+                }
+                else if (newVROMDiff > 0)
+                {
+                    shift += newVROMDiff;
+                    Debug.WriteLine($" + old[{oldVROMSize.ToString("X")}]:  new[{file.Data.Length.ToString("X")}] has shifted: {newVROMDiff.ToString("X")}");
+                    //shift += newVROMDiff; // moved later
+                }
+
+
+                //if (fileID > 0x230 && fileID < 0x250)
+                {
+                    Debug.WriteLine($" Actor aid[{actID.ToString("X")}]:  fid[{fileID}]");
+                    Debug.WriteLine($"  file [{fileID}] old [{oldVramStart.ToString("X")}] [{oldVramEnd.ToString("X")}]");
+                    Debug.WriteLine($"    new          [{newVRAMStart.ToString("X")}] [{(newVRAMEnd).ToString("X")}]");
+                    Debug.WriteLine($"    INIT         [{oldInitAddr.ToString("X")}] [{(newINITAddr).ToString("X")}]");
+
+                    Debug.WriteLine($"    shift [{shift}] diff [{newVROMDiff}] init-diff []");
+                }
 
                 previousLastVRAMEnd = newVRAMEnd;
             }

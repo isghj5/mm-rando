@@ -1530,6 +1530,15 @@ namespace MMR.Randomizer
                         });
                         continue;
                     } // */
+                    if (scene.File == GameObjects.Scene.SouthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
+                    {
+                        chosenReplacementObjects.Add(new ValueSwap()
+                        {
+                            OldV = sceneObjects[objCount],
+                            NewV = GameObjects.Actor.Armos.ObjectIndex()
+                        });
+                        continue;
+                    } // */
 
                     /* if (scene.File == GameObjects.Scene.StockPotInn.FileID() && sceneObjects[objCount] == GameObjects.Actor.Clock.ObjectIndex())
                     {
@@ -1776,7 +1785,7 @@ namespace MMR.Randomizer
                         foreach (ZipArchiveEntry binFile in zip.Entries.Where(e => e.Name.Contains(".bin")))
                         {
                             // read overlay binary data
-                            int newBinLen = ((int)binFile.Length);// + ((int) binFile.Length % 0x10); // dma padding
+                            int newBinLen = ((int) binFile.Length) + ((int) binFile.Length % 0x10); // dma padding
                             var overlayData = new byte[newBinLen];
                             binFile.Open().Read(overlayData, 0, overlayData.Length);
 
