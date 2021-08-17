@@ -198,7 +198,7 @@ namespace MMR.Randomizer.Utils
 
             // the last actor before objects in file list is 0x2B1 with vram finish: 0x80C260A0
             //uint theEndOfTakenVRAM = 0x80C260A0;
-            uint theEndOfTakenVRAM = 0x80D00000;
+            uint theEndOfTakenVRAM = 0x80F00000;
 
             // generate an array of actor->fileid
             var actorList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList();
@@ -225,6 +225,7 @@ namespace MMR.Randomizer.Utils
             //uint previousLastVRAMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (1 * 32) + 0x8);
             uint previousLastVRAMEnd = theEndOfTakenVRAM;
             int shift = 0;
+
             foreach (var entry in fidSortedActors)
             {
                 var actID = (int) entry;
@@ -250,13 +251,12 @@ namespace MMR.Randomizer.Utils
                 var uncompresedVROMSize = (file.WasEdited) ? (file.Data.Length) : (file.End - file.Addr);
                 int newVROMDiff = uncompresedVROMSize - (int) oldVROMSize;
 
+                // always update VROM, as it always moves
+                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint)file.Addr);
+                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint)file.End);
+
                 if (newVROMDiff > 0)
                 {
-
-                    // update VROM
-                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint)file.Addr);
-                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint)file.End);
-
                     /* if (oldVramEnd > newVRAMEnd)
                     {
                         Debug.WriteLine($"  bad new value [{newVRAMEnd - previousLastVRAMEnd}] negative jump: {(oldVramEnd - newVRAMEnd).ToString("X")}  ");
@@ -280,7 +280,7 @@ namespace MMR.Randomizer.Utils
 
                     var initOffset = oldInitAddr - oldVramStart;
                     //var newINITAddr = (uint)(newVRAMStart + (oldInitAddr - oldVramStart));
-                    var newINITAddr = (uint)(newVRAMStart + initOffset);
+                    var newINITAddr = (uint)(newVRAMStart + initOffset + newVROMDiff);
 
                     // OKAY NEW PLAN
                     // dont calc new VRAM, just shift
@@ -358,10 +358,13 @@ namespace MMR.Randomizer.Utils
 
             int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
 
+            //boyo crashes if you enter a scene without updating VROM OR overlay, but the rest of the game works
+            // if you update VROM, crash after n64 logo
+
             // all of our files need their addresses shifted
             UpdateVirtualFileAddresses();
             // we need to update overlay table if actors changed size
-            //UpdateOverlayTable(actorOvlTblFID, actorOvlTblOffset);
+            UpdateOverlayTable(actorOvlTblFID, actorOvlTblOffset);
 
             // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
             var previousThreadPriority = Thread.CurrentThread.Priority;
