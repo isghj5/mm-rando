@@ -90,6 +90,37 @@ namespace MMR.Randomizer.Utils
                     }
                     return plainTextRegex.Replace(message.Replace("\x11", " "), "");
                 }),
+                MessageCosts = randomized.MessageCosts.Select((mc, i) =>
+                {
+                    if (!mc.HasValue)
+                    {
+                        return ((string, ushort)?) null;
+                    }
+                    var messageCost = MessageCost.MessageCosts[i];
+
+                    var name = messageCost.Name;
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        if (messageCost.LocationsAffected.Count > 0)
+                        {
+                            var location = messageCost.LocationsAffected[0];
+                            var mainLocation = location.MainLocation();
+                            if (mainLocation.HasValue)
+                            {
+                                name = $"{mainLocation.Value.Location()} ({location.ToString().Replace(mainLocation.Value.ToString(), "")})";
+                            }
+                            else
+                            {
+                                name = location.Location();
+                            }
+                        }
+                        else
+                        {
+                            name = $"Message Cost [{i}]";
+                        }
+                    }
+                    return (name, mc.Value);
+                }).Where(mc => mc != null).Select(mc => mc.Value).ToList(),
             };
 
             if (outputSettings.GenerateHTMLLog)
@@ -134,6 +165,16 @@ namespace MMR.Randomizer.Utils
                 foreach (var item in region.OrderBy(item => item.NewLocationName))
                 {
                     log.AppendLine($"{item.NewLocationName,-50} -> {item.Name}" + (item.IsImportant ? "*" : "") + (item.IsRequired ? "*" : item.IsImportantSong ? "^" : ""));
+                }
+            }
+
+            if (spoiler.MessageCosts.Count > 0)
+            {
+                log.AppendLine();
+                log.AppendLine($" {"Name", -50}    Cost");
+                foreach (var (name, cost) in spoiler.MessageCosts)
+                {
+                    log.AppendLine($"{name,-50} -> {cost}");
                 }
             }
 

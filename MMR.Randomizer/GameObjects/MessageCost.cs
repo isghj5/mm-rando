@@ -5,6 +5,7 @@ namespace MMR.Randomizer.GameObjects
 {
     public class MessageCost
     {
+        public string Name { get; set; }
         public IList<(ushort messageId, byte costIndex)> MessageIds { get; set; } = new List<(ushort, byte)>();
         public IList<Item> LocationsAffected { get; set; } = new List<Item>();
         public IList<Item> ItemsAffected { get; set; } = new List<Item>();
@@ -19,6 +20,7 @@ namespace MMR.Randomizer.GameObjects
             // Honey and Darling
             new MessageCost
             {
+                Name = "Honey and Darling",
                 MessageIds = { (10353, 0) },
                 LocationsAffected = { Item.HeartPieceHoneyAndDarling, Item.MundaneItemHoneyAndDarlingPurpleRupee },
                 SubtractPriceAddresses = { 0xDD53B2 },
@@ -29,6 +31,7 @@ namespace MMR.Randomizer.GameObjects
             // Town Archery
             new MessageCost
             {
+                Name = "Town Archery",
                 MessageIds = { (1014, 0) },
                 LocationsAffected = { Item.UpgradeBigQuiver, Item.HeartPieceTownArchery },
                 SubtractPriceAddresses = { 0xE38A26 },
@@ -39,6 +42,7 @@ namespace MMR.Randomizer.GameObjects
             // Night Withdraw
             new MessageCost
             {
+                Name = "Night Withdraw",
                 MessageIds = { (1143, 0) },
                 Category = PriceMode.Misc,
             },
@@ -46,6 +50,7 @@ namespace MMR.Randomizer.GameObjects
             // Bomb Shop Keg
             new MessageCost
             {
+                Name = "Bomb Shop Keg",
                 MessageIds = { (1647, 0), (1648, 0), (1656, 0), (1657, 0), (1658, 0) },
                 ItemsAffected = { Item.ItemPowderKeg },
             },
@@ -85,6 +90,7 @@ namespace MMR.Randomizer.GameObjects
             // Boat Ride Adult
             new MessageCost
             {
+                Name = "Boat Ride Adult",
                 MessageIds = { (2139, 0) },
                 Category = PriceMode.Misc,
             },
@@ -92,6 +98,7 @@ namespace MMR.Randomizer.GameObjects
             // Boat Ride Child
             new MessageCost
             {
+                Name = "Boat Ride Child",
                 MessageIds = { (2139, 1), (2142, 0) },
                 SubtractPriceAddresses = { 0xEBADB0 },
                 PriceAddresses = { 0xEBADA6 },
@@ -119,6 +126,7 @@ namespace MMR.Randomizer.GameObjects
             // Swamp Archery
             new MessageCost
             {
+                Name = "Swamp Archery",
                 MessageIds = { (2602, 0) },
                 LocationsAffected = { Item.UpgradeBiggestQuiver, Item.HeartPieceSwampArchery },
                 SubtractPriceAddresses = { 0xE3801E },
@@ -136,6 +144,7 @@ namespace MMR.Randomizer.GameObjects
             // Powder Keg
             new MessageCost
             {
+                Name = "Goron Village Powder Keg",
                 MessageIds = { (3212, 0) },
                 SubtractPriceAddresses = { 0xE800C5 },
                 PriceAddresses = { 0xE800B9 },
@@ -190,6 +199,7 @@ namespace MMR.Randomizer.GameObjects
             // Business Scrub Purchase 1
             new MessageCost
             {
+                Name = "Business Scrub Purchase 1",
                 MessageIds = { (5682, 0) },
                 LocationsAffected = { Item.HeartPieceTerminaBusinessScrub },
                 PriceAddresses = { 0x10316CA, 0x102FEF6 },
@@ -198,6 +208,7 @@ namespace MMR.Randomizer.GameObjects
             // Business Scrub Purchase 2
             new MessageCost
             {
+                Name = "Business Scrub Purchase 2",
                 MessageIds = { (5684, 0) },
                 LocationsAffected = { Item.HeartPieceTerminaBusinessScrub },
                 PriceAddresses = { 0x102FF02 },
@@ -290,6 +301,7 @@ namespace MMR.Randomizer.GameObjects
             // Sword School Novice
             new MessageCost
             {
+                Name = "Swordsman's School Novice",
                 MessageIds = { (10006, 0) },
                 Category = PriceMode.Minigames,
             },
@@ -305,6 +317,7 @@ namespace MMR.Randomizer.GameObjects
             // Postman Game
             new MessageCost
             {
+                Name = "Postman Game Retry",
                 MessageIds = { (10126, 0), (10137, 0), (10138, 0), (10143, 0) },
                 //LocationsAffected = { Item.HeartPieceNotebookPostman },
                 Category = PriceMode.Minigames,
@@ -313,6 +326,7 @@ namespace MMR.Randomizer.GameObjects
             // Deku Playground
             new MessageCost
             {
+                Name = "Deku Playground",
                 MessageIds = { (10210, 0) },
                 LocationsAffected = { Item.HeartPieceDekuPlayground, Item.MundaneItemDekuPlaygroundPurpleRupee },
                 SubtractPriceAddresses = { 0xF4FBBE },
@@ -483,6 +497,7 @@ namespace MMR.Randomizer.GameObjects
             },
             new MessageCost
             {
+                Name = "Witch Shop Blue Potion",
                 MessageIds = { (2115, 0), (2116, 0), (2176, 0) },
                 // Blue Potion logic not affected because of free sample
             },
@@ -491,34 +506,34 @@ namespace MMR.Randomizer.GameObjects
             new MessageCost
             {
                 MessageIds = { (3013, 0), (3014, 0) },
-                LocationsAffected = { Item.ShopItemGoronBomb10 },
+                LocationsAffected = { Item.ShopItemGoronBomb10InWinter },
             },
             new MessageCost
             {
                 MessageIds = { (3015, 0), (3016, 0) },
-                LocationsAffected = { Item.ShopItemGoronArrow10 },
+                LocationsAffected = { Item.ShopItemGoronArrow10InWinter },
             },
             new MessageCost
             {
                 MessageIds = { (3017, 0), (3018, 0) },
-                LocationsAffected = { Item.ShopItemGoronRedPotion },
+                LocationsAffected = { Item.ShopItemGoronRedPotionInWinter },
             },
 
             // Goron Shop (Spring)
             new MessageCost
             {
                 MessageIds = { (3019, 0), (3020, 0) },
-                LocationsAffected = { Item.ShopItemGoronBomb10 },
+                LocationsAffected = { Item.ShopItemGoronBomb10InSpring },
             },
             new MessageCost
             {
                 MessageIds = { (3021, 0), (3022, 0) },
-                LocationsAffected = { Item.ShopItemGoronArrow10 },
+                LocationsAffected = { Item.ShopItemGoronArrow10InSpring },
             },
             new MessageCost
             {
                 MessageIds = { (3023, 0), (3024, 0) },
-                LocationsAffected = { Item.ShopItemGoronRedPotion },
+                LocationsAffected = { Item.ShopItemGoronRedPotionInSpring },
             },
 
             // Zora Shop
@@ -546,22 +561,26 @@ namespace MMR.Randomizer.GameObjects
             },
             new MessageCost
             {
+                Name = "Curiosity Shop Big Bomb Bag",
                 MessageIds = { (10715, 0), (10716, 0) },
                 // Big Bomb Bag logic not affected due to time of day logic
             },
             new MessageCost
             {
                 // Nice Sword
+                Name = "Curiosity Shop Nice Sword",
                 MessageIds = { (10738, 0), (10739, 0) },
             },
             new MessageCost
             {
                 // Good Sword
+                Name = "Curiosity Shop Good Sword",
                 MessageIds = { (10740, 0), (10741, 0) },
             },
             new MessageCost
             {
                 // Cool Bottle
+                Name = "Curiosity Shop Cool Bottle",
                 MessageIds = { (10744, 0), (10745, 0) },
             },
         };

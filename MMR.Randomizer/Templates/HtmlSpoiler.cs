@@ -142,6 +142,20 @@ namespace MMR.Randomizer.Templates
             this.Write("\"></span></td>\r\n </tr>\r\n");
  } 
             this.Write("</table>\r\n");
+ if (spoiler.MessageCosts.Count > 0) { 
+
+            this.Write("<h2>Randomized Prices</h2>\r\n<table border=\"1\">\r\n    <tr>\r\n        <th>Name</th>\r\n" +
+                    "        <th>Cost</th>\r\n    </tr>\r\n");
+    foreach (var (name, cost) in spoiler.MessageCosts) { 
+
+            this.Write("    <tr>\r\n        <td>");
+            this.Write(this.ToStringHelper.ToStringWithCulture(name));
+            this.Write("</td>\r\n        <td class=\"spoiler\"><span data-content=\"");
+            this.Write(this.ToStringHelper.ToStringWithCulture(cost));
+            this.Write("\"></span></td>\r\n    </tr>\r\n");
+ } 
+            this.Write("</table>\r\n");
+ } 
  if (spoiler.GossipHints != null && spoiler.GossipHints.Any()) { 
 
             this.Write("<h2>Gossip Stone Hints</h2>\r\n<table border=\"1\">\r\n    <tr>\r\n        <th>Gossip Sto" +
