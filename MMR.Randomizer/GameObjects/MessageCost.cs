@@ -153,7 +153,7 @@ namespace MMR.Randomizer.GameObjects
             // Fisherman Game
             new MessageCost
             {
-                MessageIds = { (4251, 0) },
+                MessageIds = { (4246, 0), (4250, 0), (4251, 0) },
                 LocationsAffected = { Item.HeartPieceFishermanGame },
                 SubtractPriceAddresses = { 0x1079672 },
                 PriceAddresses = { 0x107964A },
