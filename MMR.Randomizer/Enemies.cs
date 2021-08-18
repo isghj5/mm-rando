@@ -28,8 +28,28 @@ namespace MMR.Randomizer
         public int NewV;
     }
 
+    public class InjectedActor
+    {
+        // when we inject a new actor theres some data we need
+        // and some adjustments we need to make based on where it gets placed in vram
+        public uint objID = 0;
+        public uint dmaFID = 0;
+
+        //init vars are located somewhere in .data, we want to know where exactly for reasons
+        public uint initVarsLocation = 0;
+
+        // the function locations are hard coded in the overlay to vram, but we likely wont put it back in the same old spot
+        // so these will need to be updated, these are offsets in the overlay to their new locations
+        public uint initFuncLocation = 0;
+        public uint destroyFuncLocation = 0;
+        public uint updateFuncLocation = 0;
+        public uint drawFuncLocation = 0;
+        // bin is not stored here, it gets injected immediately
+    }
+
     public class Enemies
     {
+        public static List<InjectedActor> InjectedActors = new List<InjectedActor>();
 
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
@@ -1752,7 +1772,81 @@ namespace MMR.Randomizer
             FlushLog();
         }
 
-        
+        public static InjectedActor ParseMMRAMeta(String metaFile)
+        {
+            var newInjectedActor = new InjectedActor();
+
+            // BUG this is not a character
+            foreach (var line in metaFile.Split('\n'))
+            {
+                var asignment = line.Split('#')[0].Trim(); // remove comments
+
+                if (asignment.Length == 0) // comment only
+                {
+                    continue;
+                }
+
+                var asignmentSplit = asignment.Split('=');
+                var command = asignmentSplit[0].Trim();
+                string valueStr = asignmentSplit[1].Trim();
+                uint value = Convert.ToUInt32(valueStr, fromBase: 16);
+
+                if (command == "obj_id")
+                {
+                    newInjectedActor.objID = value;
+                }
+                else if (command == "file_id")
+                {
+                    // dec instead of hex
+                    newInjectedActor.dmaFID = Convert.ToUInt32(valueStr, fromBase: 10);
+                }
+                else if (command == "initvars_offset")
+                {
+                    newInjectedActor.initVarsLocation = value;
+                }
+                else if (command == "init_offset")
+                {
+                    newInjectedActor.initFuncLocation = value;
+                }
+                else if (command == "destroy_offset")
+                {
+                    newInjectedActor.destroyFuncLocation = value;
+                }
+                else if (command == "update_offset")
+                {
+                    newInjectedActor.updateFuncLocation = value;
+                }
+                else if (command == "draw_offset")
+                {
+                    newInjectedActor.drawFuncLocation = value;
+                }
+            }
+
+            // TODO if fid == 0, instead of exception we should look up a free actor location to move it to
+
+            // update actor init vars in our actor
+            var actorGameObj = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList()
+                                   .Find(u =>u.FileListIndex() == newInjectedActor.dmaFID);
+            if (actorGameObj == 0)
+            {
+                throw new Exception("new actor meta has no matching gameobj type");
+            }
+            var initVarsAttr = actorGameObj.GetAttribute<ActorInitVarOffsetAttribute>();
+            if (initVarsAttr != null) // had one before, change now
+            {
+                // untested, might not work
+                initVarsAttr.Offset = (int)newInjectedActor.initVarsLocation;
+            }
+            // haven't found a way to do this yet, guess I need to populate the whole list first
+            /* else // did not have one, change
+            {
+                initVarsAttr = new ActorInitVarOffsetAttribute(newInjectedActor.initVarsLocation);
+                actorGameObj.att
+            }// */
+
+            InjectedActors.Add(newInjectedActor);
+            return newInjectedActor;
+        }
 
         public static void ScanForMMRA(string directory)
         {
@@ -1784,26 +1878,39 @@ namespace MMR.Randomizer
                         // per binary, since MMRA should support multiple binaries
                         foreach (ZipArchiveEntry binFile in zip.Entries.Where(e => e.Name.Contains(".bin")))
                         {
+                            var filename = binFile.Name.Substring(0, binFile.Name.LastIndexOf(".bin"));
+
                             // read overlay binary data
                             int newBinLen = ((int) binFile.Length) + ((int) binFile.Length % 0x10); // dma padding
                             var overlayData = new byte[newBinLen];
                             binFile.Open().Read(overlayData, 0, overlayData.Length);
 
-                            // the binary filename convention will be NOTES_fileID.bin, where fileID is in base 10 to match spreadsheet
+                            // the binary filename convention will be NOTES_name.bin
 
                             var binFilenameSplit = binFile.Name.Split('_'); // everything before _ is a comment, readability, discard here
                             var fileIDtext = binFilenameSplit.Length > 1 ? binFilenameSplit[binFilenameSplit.Length - 1] : binFile.Name;
-                            fileIDtext = fileIDtext.Split('.')[0];        // we don't need the filetype after here either at this point
-                            int fileID = Convert.ToInt32(fileIDtext);
+                           
+                            // read the associated meta file
+                            var metaFileEntry = zip.GetEntry(filename + ".meta");
+                            if (metaFileEntry == null) // meta not found
+                            {
+                                throw new Exception($"Could not find a meta for actor bin [{binFile.Name}]\n   in [{filePath}]");
+                            }
+
+                            var meta = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
+
+
+                            var newFID = (int) meta.dmaFID;
+                            // TODO if fileid is 0, we need to put this in an empty actor slot
 
                             //RomUtils.CheckCompressed(fileID);
-                            RomData.MMFileList[fileID].Data = overlayData;
-                            RomData.MMFileList[fileID].End = RomData.MMFileList[fileID].Addr + newBinLen;
+                            RomData.MMFileList[newFID].Data = overlayData;
+                            RomData.MMFileList[newFID].End = RomData.MMFileList[newFID].Addr + newBinLen;
                             //RomData.MMFileList[fileID].IsCompressed = false; // think this means it was compressed to begin with, not now
-                            RomData.MMFileList[fileID].WasEdited = true;
+                            RomData.MMFileList[newFID].WasEdited = true;
 
 
-                        } // foreach zip entry
+                        } // foreach bin entry
 
                     }// zip as file end
                 } // try end

@@ -188,6 +188,15 @@ namespace MMR.Randomizer.Utils
             // 391 after that is also a fbdemo so that whole block
             // there are two more effects burried in actors, after that..?
             //var VRAMDeadzone = new List<(uint start, uint end)> { (0x80977210, 0x80981760), (0x80AC5070, 0x80AC94C0) };
+            /* if (VRAMDeadzone.Count > 0 && newVRAMEnd > VRAMDeadzone[0].start)
+{
+    // this overaly is going to clip into a deadzone, move it past
+    newVRAMStart = VRAMDeadzone[0].end;
+    newVRAMEnd = (uint)(newVRAMStart + newVramSize);
+    // remove this deadzone now that we past it
+    VRAMDeadzone.RemoveAt(0);
+} // */
+
 
             // new idea: just move files that are too big? why do we assume they have to be sequential?
 
@@ -255,42 +264,34 @@ namespace MMR.Randomizer.Utils
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint)file.Addr);
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint)file.End);
 
+                // these are the files we want
                 if (newVROMDiff > 0)
                 {
-                    /* if (oldVramEnd > newVRAMEnd)
-                    {
-                        Debug.WriteLine($"  bad new value [{newVRAMEnd - previousLastVRAMEnd}] negative jump: {(oldVramEnd - newVRAMEnd).ToString("X")}  ");
-
-                        //newVRAMEnd = (uint)VROMsize + bssPadding; // never go negative
-                    } */
-
-                    var newVramSize = oldVRAMSize + newVROMDiff;// newVRAMEnd - previousLastVRAMEnd;
-                                                                // update VRAM (VROM shifted into ram space?)
+                    var newVramSize = oldVRAMSize + newVROMDiff;
                     var newVRAMStart = previousLastVRAMEnd;
-                    var newVRAMEnd = (uint)(newVRAMStart + newVramSize);// + bssPadding;
+                    var newVRAMEnd = (uint)(newVRAMStart + newVramSize);
 
-                    /* if (VRAMDeadzone.Count > 0 && newVRAMEnd > VRAMDeadzone[0].start)
+                    var newActorMeta = Enemies.InjectedActors.Find(u => u.dmaFID == fileID);
+
+                    if (newActorMeta == null)
                     {
-                        // this overaly is going to clip into a deadzone, move it past
-                        newVRAMStart = VRAMDeadzone[0].end;
-                        newVRAMEnd = (uint)(newVRAMStart + newVramSize);
-                        // remove this deadzone now that we past it
-                        VRAMDeadzone.RemoveAt(0);
-                    } // */
+                        throw new Exception("UpdateOverlayTable: Meta missing for injected actor");
+                    }
 
-                    var initOffset = oldInitAddr - oldVramStart;
-                    //var newINITAddr = (uint)(newVRAMStart + (oldInitAddr - oldVramStart));
-                    var newINITAddr = (uint)(newVRAMStart + initOffset + newVROMDiff);
-
-                    // OKAY NEW PLAN
-                    // dont calc new VRAM, just shift
-                    // no actor after inject works right, but doesnt crash at least
-                    //ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, oldVramStart + (uint)shift);
-                    //ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, oldVramEnd + (uint)shift);
+                    uint newInitVarAddr = (uint)(newVRAMStart + newActorMeta.initVarsLocation);
 
                     ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, newVRAMStart);
                     ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, newVRAMEnd);
-                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newINITAddr);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newInitVarAddr);
+
+                    // in addition to updating the overlay, now that we know vram, the file needs to be updated with vram addresses of base functions
+                    // warning: some actors come with NULL draw/update functions to start, just assume their custom actor handles that for now
+                    int initVarFBase = (int)newActorMeta.initVarsLocation + 0x10; // first 0x10 is data, second 0x10 are four function ptr
+                    ReadWriteUtils.Arr_WriteU32(file.Data, initVarFBase + 0x0, newVRAMStart + newActorMeta.initFuncLocation);
+                    ReadWriteUtils.Arr_WriteU32(file.Data, initVarFBase + 0x4, newVRAMStart + newActorMeta.destroyFuncLocation);
+                    ReadWriteUtils.Arr_WriteU32(file.Data, initVarFBase + 0x8, newVRAMStart + newActorMeta.updateFuncLocation);
+                    ReadWriteUtils.Arr_WriteU32(file.Data, initVarFBase + 0xC, newVRAMStart + newActorMeta.drawFuncLocation);
+
 
                     if (newVROMDiff < 0)
                     {
@@ -301,7 +302,6 @@ namespace MMR.Randomizer.Utils
                     {
                         shift += newVROMDiff;
                         Debug.WriteLine($" + old[{oldVROMSize.ToString("X")}]:  new[{file.Data.Length.ToString("X")}] has shifted: {newVROMDiff.ToString("X")}");
-                        //shift += newVROMDiff; // moved later
                     }
 
 
@@ -310,7 +310,7 @@ namespace MMR.Randomizer.Utils
                         Debug.WriteLine($" Actor aid[{actID.ToString("X")}]:  fid[{fileID}]");
                         Debug.WriteLine($"  file [{fileID}] old [{oldVramStart.ToString("X")}] [{oldVramEnd.ToString("X")}]");
                         Debug.WriteLine($"    new          [{newVRAMStart.ToString("X")}] [{(newVRAMEnd).ToString("X")}]");
-                        Debug.WriteLine($"    INIT         [{oldInitAddr.ToString("X")}] [{(newINITAddr).ToString("X")}]");
+                        Debug.WriteLine($"    INIT         [{oldInitAddr.ToString("X")}] [{(newInitVarAddr).ToString("X")}]");
 
                         Debug.WriteLine($"    shift [{shift}] diff [{newVROMDiff}] init-diff []");
                     }

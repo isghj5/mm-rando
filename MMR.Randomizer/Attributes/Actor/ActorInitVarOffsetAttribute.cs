@@ -10,7 +10,7 @@ namespace MMR.Randomizer.Attributes.Actor
         ///    we save it because I haven't found a way to look it up, and detecting it from actor+padding+object is hit or miss
         /// </summary>
 
-        public int Offset { get; private set; }
+        public int Offset { get; set; }
 
         public ActorInitVarOffsetAttribute(int offset)
         {
