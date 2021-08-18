@@ -1077,18 +1077,36 @@ namespace MMR.Randomizer
             // TODO if costs randomized
             for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
             {
-                if (!_settings.PriceMode.HasFlag(MessageCost.MessageCosts[i].Category))
+                var messageCost = MessageCost.MessageCosts[i];
+                if (!_settings.PriceMode.HasFlag(messageCost.Category))
                 {
                     _randomized.MessageCosts.Add(null);
                     continue;
                 }
                 var walletSize = Random.Next(3);
-                _randomized.MessageCosts.Add((ushort) (walletSize switch
+                var cost = (ushort)(walletSize switch
                 {
                     0 => Random.Next(1, 100),
                     1 => Random.Next(100, 201),
                     _ => Random.Next(201, 501),
-                }));
+                });
+
+                // this relies on puchase 2 appearing in the list directly after purchase 1
+                if (messageCost.Name == "Business Scrub Purchase 2")
+                {
+                    var purchase1Cost = _randomized.MessageCosts[i - 1] ?? 150;
+                    while (cost == purchase1Cost)
+                    {
+                        cost = (ushort)(walletSize switch
+                        {
+                            0 => Random.Next(1, 100),
+                            1 => Random.Next(100, 201),
+                            _ => Random.Next(201, 501),
+                        });
+                    }
+                }
+
+                _randomized.MessageCosts.Add(cost);
             }
 
             if (_settings.LogicMode != LogicMode.NoLogic)
