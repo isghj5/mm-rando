@@ -202,7 +202,7 @@ namespace MMR.Randomizer.GameObjects
                 Name = "Business Scrub Purchase 1",
                 MessageIds = { (5682, 0) },
                 LocationsAffected = { Item.HeartPieceTerminaBusinessScrub },
-                PriceAddresses = { 0x10316CA, 0x102FEF6 },
+                PriceAddresses = { 0x1030852, 0x10316CA, 0x102FEF6 },
             },
 
             // Business Scrub Purchase 2
