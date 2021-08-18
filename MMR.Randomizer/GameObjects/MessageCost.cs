@@ -373,7 +373,7 @@ namespace MMR.Randomizer.GameObjects
             // Gorman Race
             new MessageCost
             {
-                MessageIds = { (13423, 0), (13425, 0), (13427, 0), (13432, 0) },
+                MessageIds = { (13423, 0), (13425, 0), (13427, 0), (13432, 0), (13442, 0) },
                 LocationsAffected = { Item.MaskGaro },
                 Category = PriceMode.Minigames,
             },
