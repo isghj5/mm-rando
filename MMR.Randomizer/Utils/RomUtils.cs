@@ -292,6 +292,47 @@ namespace MMR.Randomizer.Utils
                     ReadWriteUtils.Arr_WriteU32(file.Data, initVarFBase + 0x8, newVRAMStart + newActorMeta.updateFuncLocation);
                     ReadWriteUtils.Arr_WriteU32(file.Data, initVarFBase + 0xC, newVRAMStart + newActorMeta.drawFuncLocation);
 
+                    // we need to update ALL references in the asm
+                    // every pointer in the code that fits the old vram range needs to be adjusted to fit the new range
+
+                    const uint LUI_MASK   = 0x3C000000;
+                    const uint ADDIU_MASK = 0x24000000;
+                    const uint LWC1_MASK  = 0xC4000000;
+
+                    // this is almost impossible because they can be out of order, I have to check what register they are loading too and lookahead
+                    // if command is LUI 3CRR XXXX and next command is ADDIU 24A5 YYYY, we need to combine, re-eval and re-insert
+                    /*
+                    int i = 0;
+                    while (i < file.Data.Length)
+                    {
+                        uint command1 = ReadWriteUtils.Arr_ReadU32(file.Data, i);
+                        if ((command1 & 0xFF000000) == LUI_MASK)
+                        {
+                            uint command2 = ReadWriteUtils.Arr_ReadU32(file.Data, i + 4);
+                            if ((command2 & 0xFC000000) == ADDIU_MASK) // data pointer
+                            {
+                                uint pointer = (command1 & 0xFFFF << 8) | (command2 & 0xFFFF);
+                                if (pointer > 0x80800000 && pointer < 0x81000000 // VRAM address
+                                    || (command2 & 0xFC000000) == LWC1_MASK) // rodata float
+                                {
+                                    // untested
+                                    var pointerDiff = pointer - newActorMeta.buildVramStart;
+                                    uint newPointer = newVRAMStart + pointerDiff;
+                                    ReadWriteUtils.Arr_WriteU16(file.Data, i + 0x2, (ushort)((newPointer >> 16) & 0xFFFF));
+                                    ReadWriteUtils.Arr_WriteU16(file.Data, i + 0x6, (ushort)(newPointer & 0xFFFF));
+                                    i += 8;
+                                    continue;
+                                }
+                            }
+
+                            {
+                                i += 8;
+                            }
+
+                        }
+                        i += 4;
+                    }// */
+
 
                     if (newVROMDiff < 0)
                     {

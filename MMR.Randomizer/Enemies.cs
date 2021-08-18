@@ -35,6 +35,9 @@ namespace MMR.Randomizer
         public uint objID = 0;
         public uint dmaFID = 0;
 
+        public uint buildVramStart = 0;
+        public uint buildVramEnd = 0;
+
         //init vars are located somewhere in .data, we want to know where exactly for reasons
         public uint initVarsLocation = 0;
 
