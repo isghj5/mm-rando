@@ -316,6 +316,7 @@ namespace MMR.Randomizer
             ShortenChickenPatience();
             //FixThornTraps();
             FixSeth2();
+            AllowGuruGuruOutside();
 
             Shinanigans();
         }
@@ -835,9 +836,9 @@ namespace MMR.Randomizer
 
         private static void EnablePoFusenAnywhere()
         {
-            //the flying poe baloon romani uses to play her game doesn't spawn unless it has an explosion fuse timer
-            //  or it detects romani actor in the scene, so it can count baloon pops
-            // but the code that blocks the baloon if neihter of these are true is nop-able
+            /// the flying poe baloon romani uses to play her game doesn't spawn unless it has an explosion fuse timer
+            ///  or it detects romani actor in the scene, so it can count baloon pops
+            /// but the code that blocks the baloon if neither of these are true is nop-able, and the rest of the code is fine without romani
 
             var enPoFusenFID = GameObjects.Actor.PoeBalloon.FileListIndex();
             RomUtils.CheckCompressed(enPoFusenFID);
@@ -860,8 +861,8 @@ namespace MMR.Randomizer
 
         public static void ShortenChickenPatience()
         {
-            // chickens take too many hits before they get mad, let's shrink this
-            // niw health is rand(0-9.9) + 10.0, lets replace with 0-2 + 1
+            /// chickens take too many hits before they get mad, let's shrink this
+            /// niw health is rand(0-9.9) + 10.0 (10-20 hits), lets replace with 0-2 + 1
             RomUtils.CheckCompressed(GameObjects.Actor.FriendlyCucco.FileListIndex());
             var niwData = RomData.MMFileList[GameObjects.Actor.FriendlyCucco.FileListIndex()].Data;
             ReadWriteUtils.Arr_WriteU32(niwData, 0x24A8, 0x40000000); // 9.9 -> 2 in f32 (in rodata, loaded into init)
@@ -870,6 +871,8 @@ namespace MMR.Randomizer
 
         public static void FixThornTraps()
         {
+            // this is incomplete, fixing thorn traps will likely take rewriting code not just removing
+
             /// in thorn traps init code it checks if a path has only 2 nodes, if it has more or less than 2 it dies
 
             // let's just remove that jal
@@ -902,6 +905,24 @@ namespace MMR.Randomizer
             tfScene.Maps[0].Actors[29].ChangeActor(GameObjects.Actor.Empty);
             tfScene.Maps[0].Objects[21] = GameObjects.Actor.Empty.ObjectIndex();
             //var map = tfScene.Maps[0];
+        }
+
+        private static void AllowGuruGuruOutside()
+        {
+            /// guruguru's actor spawns or kills itself based on time flags, ignoring that the spawn points themselves have timeflags
+            /// if we want guruguru to be placed in the world without being restricted to day/night only (which is lame) we have to stop this
+            var guruFid = GameObjects.Actor.GuruGuru.FileListIndex();
+            RomUtils.CheckCompressed(guruFid);
+            var guruData = RomData.MMFileList[guruFid].Data;
+            ReadWriteUtils.Arr_WriteU32(guruData, Dest: 0x104, val: 0x00000000); // BNE (if day, and not type 1, die) -> NOP
+
+            // funny enough, type 0 (talkable during day) and type 2 (creates music through the walls)
+            //  both are already time flag'd to not show up at night in the inn... so why did the code care?
+
+            // BUT EVEN MORE FUNNY, this funny guy, he CHECKS NIGHT in his update function too WTF
+            // jeez just branch past all that noise
+            ReadWriteUtils.Arr_WriteU32(guruData, Dest: 0x9BC, val: 0x10000013); // BNEL (test night checks) -> B past it all to actionfunc
+
         }
 
         #endregion
@@ -1529,13 +1550,22 @@ namespace MMR.Randomizer
                         });
                         continue;
                     }// */
-                    //
+                    
                     if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Butler.ObjectIndex()
+                            NewV = GameObjects.Actor.GuruGuru.ObjectIndex()
+                        });
+                        continue;
+                    } // */
+                    if (scene.File == GameObjects.Scene.SouthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
+                    {
+                        chosenReplacementObjects.Add(new ValueSwap()
+                        {
+                            OldV = sceneObjects[objCount],
+                            NewV = GameObjects.Actor.GuruGuru.ObjectIndex()
                         });
                         continue;
                     } // */

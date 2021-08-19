@@ -428,9 +428,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1466)]
         [SceneInternalId(0x61)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
-            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire)]
+            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LikeLike)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RosaSisters,
-            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire)]
+            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.Eyegore)]
         StockPotInn = 0x5E,
 
         [FileID(1472)]

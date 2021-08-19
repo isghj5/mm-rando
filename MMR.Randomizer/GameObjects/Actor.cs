@@ -1063,7 +1063,6 @@ namespace MMR.Randomizer.GameObjects
         EmptyBA = 0xBA,
         EmptyBB = 0xBB,
 
-
         [ObjectListIndex(0x1)] // gamplay_keep obj 1
         [FileID(165)]
         // variants: 607 is the rain in road to southern swamp, which gets rainier as you approach swamp and dry toward termina field
@@ -1080,7 +1079,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         //[WallVariants(1)] // facing the wrong way and no bonk, so not that interesting
         [VariantsWithRoomMax(max:3, variant:0)]
-        [EnemizerScenesPlacementBlock(Scene.RomaniRanch)]
+        [EnemizerScenesPlacementBlock(Scene.RomaniRanch, Scene.Woodfall)]
         [UnkillableAllVariants]
         En_Ani = 0xBD, // En_Ani
 
@@ -3172,12 +3171,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x5D)]
         En_Po_Composer = 0x247, // En_Po_Composer
 
-        //[ActorizerEnabled] // unless I write dayonly/nightonly, this is too flukey
+        [ActorizerEnabled]
         [ObjectListIndex(0xFF)]
         [FileID(543)]
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
-        // 2 doesn't ever seen to spawn, day or night, think its a fluke
-        [GroundVariants(0x2)] // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
+        // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
+        // 02 doesn't ever seen to spawn, day or night, think its a fluke
+        [GroundVariants(0x0)] 
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(0x15, 0x70, 0x61)]
         [EnemizerScenesExcluded(Scene.StockPotInn, Scene.LaundryPool, Scene.MilkBar)] // think him being in milkbar is a credits thing
