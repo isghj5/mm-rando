@@ -82,7 +82,10 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms(4, 7)]// basement lava
         [FairyDroppingEnemies(1, 2)] // eygore
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
-            Actor.IkanaGravestone, Actor.Bumper)]
+            Actor.IkanaGravestone, Actor.Bumper, Actor.En_Ani)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Hiploop,
+            Actor.En_Ani, Actor.Bumper)]
+
         StoneTowerTemple = 0x13,
 
         [FileID(1188)]
@@ -175,7 +178,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1284)]
         [SceneInternalId(0x27)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // blocking a few skulltulla
-            Actor.StockpotBell, Actor.Cow, Actor.IkanaGravestone, Actor.Bombiwa, Actor.Bumper, Actor.Postbox)]
+            Actor.StockpotBell, Actor.Cow, Actor.IkanaGravestone, Actor.Bombiwa, Actor.Bumper, Actor.Postbox, Actor.En_Ani)]
         SwampSpiderHouse = 0x24,
 
         [FileID(1291)]
@@ -466,6 +469,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1506)]
         [SceneInternalId(0x6A)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
+            Actor.PoeBalloon, Actor.BigPoe, Actor.CircleOfFire, Actor.FloorMaster, Actor.En_Ani)]
         GormanTrack = 0x67,
 
         [FileID(1508)]

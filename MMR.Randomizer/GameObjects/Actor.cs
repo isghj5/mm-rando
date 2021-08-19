@@ -1079,7 +1079,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         //[WallVariants(1)] // facing the wrong way and no bonk, so not that interesting
         [VariantsWithRoomMax(max:3, variant:0)]
-        [EnemizerScenesPlacementBlock(Scene.RomaniRanch, Scene.Woodfall)]
+        [EnemizerScenesPlacementBlock(Scene.RomaniRanch, Scene.Woodfall, Scene.DekuShrine)]
         [UnkillableAllVariants]
         En_Ani = 0xBD, // En_Ani
 
