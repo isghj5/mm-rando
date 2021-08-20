@@ -3741,7 +3741,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         Obj_Swprize = 0x2AE, // Obj_Swprize
         
-        [ActorizerEnabled]
+        //[ActorizerEnabled]
         [FileID(646)]
         [GroundVariants(0)] // todo search
         [ObjectListIndex(0x1)] // ooo free
