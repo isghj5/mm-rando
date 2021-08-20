@@ -680,6 +680,16 @@ namespace MMR.Randomizer
             // instead, we can just branch from that spot to the finish code
 
             ReadWriteUtils.Arr_WriteU32(scarecrowFile, 0x11E0, 0x1000000F); // branch F down past the if (if state == 1)
+
+            // however thats not the only issue, if you teach a song in TF before breaking the ice block, it triggers the ice break cutscene
+            // so we have to stop the cutscenes call
+            // cutscene call for songteaching camera swinging
+            // ReadWriteUtils.Arr_WriteU32(scarecrowFile, 0x1100, 0x00000000); // NOP the ActorCutscene_SetIntentToPlay
+
+            // cutscene call after twirl
+            // ReadWriteUtils.Arr_WriteU32(scarecrowFile, 0x1100, 0x00000000); // NOP the ActorCutscene_SetIntentToPlay
+
+            // UNFINISHED: TODO keep going, I think I have to change one of the function straight to digging away and skip dialogue because that function is long
         }
 
         /// <summary>
@@ -1546,12 +1556,12 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.GormanBuilding.ObjectIndex()
+                            NewV = GameObjects.Actor.Scarecrow.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1813,7 +1823,7 @@ namespace MMR.Randomizer
                     GameObjects.Scene.TownShootingGallery,
                     GameObjects.Scene.GiantsChamber,
                     GameObjects.Scene.SakonsHideout,
-                    GameObjects.Scene.MilkBar };//, (int) GameObjects.Scene.DekuPalace };
+                    GameObjects.Scene.MilkBar };//, GameObjects.Scene.DekuPalace };
 
                 ReadEnemyList();
                 SceneUtils.ReadSceneTable();

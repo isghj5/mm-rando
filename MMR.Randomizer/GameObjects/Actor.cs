@@ -1113,7 +1113,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         En_Okarina_Effect = 0xC4, // En_Okarina_Effect
 
-        //[ActorizerEnabled] // yeah it just takes you back to file select if you hit two buttons
+        //[ActorizerEnabled] // yeah it just takes you back to file select if you hit two buttons, bad
         [FileID(169)]
         [ObjectListIndex(0x115)]
         [GroundVariants(0)]
@@ -1140,9 +1140,9 @@ namespace MMR.Randomizer.GameObjects
         // trading post version is 1
         // wish I could spawn the ones that dance so they are always dancing when the player gets there
         [GroundVariants(1)]
-        [VariantsWithRoomMax(max: 1, variant: 1)]
+        [VariantsWithRoomMax(max: 5, variant: 1)]
         [UnkillableAllVariants]
-        // crash: if you teach song to him in TF the ice block cutscene triggers, gotta remove those cutscene functions I guess
+        // crash: if you teach song to him in TF the ice block cutscene triggers
         [EnemizerScenesPlacementBlock(Scene.TerminaField)]
         [EnemizerScenesExcluded(Scene.TradingPost)]//, Scene.AstralObservatory)] // re-disable this if playing Entrando
         Scarecrow = 0xCA, // En_Kakasi
@@ -1159,8 +1159,8 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabled] // does not spawn, grotto does weird stuff to it, use TreasureChest instead
         [FileID(175)]
-        [ObjectListIndex(0xC)] //same as chest, but wiwth weird requirements
-        //[GroundVariants(0)] // only option, hmm
+        [ObjectListIndex(0xC)] //same as chest, but with weird requirements
+        //[GroundVariants(0)] // only option, looks like grotto params are saved and used instead
         [UnkillableAllVariants]
         GrottoChest = 0xCE, // En_Torch
 
