@@ -304,12 +304,9 @@ namespace MMR.Randomizer
             EnableTwinIslandsSpringSkullfish();
             FixSouthernSwampDekuBaba();
             FixRoadToSouthernSwampBadBat();
-            if (ACTORSENABLED)
-            {
-                NudgeFlyingEnemiesForTingle();
-                FixScarecrowTalk();
-                EnablePoFusenAnywhere();
-            }
+            NudgeFlyingEnemiesForTingle();
+            FixScarecrowTalk();
+            EnablePoFusenAnywhere();
 
             FixSpawnLocations();
             ExtendGrottoDirectIndexByte();
@@ -330,6 +327,7 @@ namespace MMR.Randomizer
             RomUtils.CheckCompressed(dinofos.FileListIndex());
             RomData.MMFileList[dinofos.FileListIndex()].Data[dinofos.ActorInitOffset() + 7] &= 0xBF;// 4 flag is the issue
             actorList.Remove(dinofos);
+            actorList.Remove(GameObjects.Actor.Demo_Kankyo);
             actorList.Remove(GameObjects.Actor.Eyegore);
 
             /// some enemies are really hard on the CPU/RSP, we can change some of them to behave nicer with flags
@@ -549,6 +547,16 @@ namespace MMR.Randomizer
             var twinislandsSceneData = RomData.MMFileList[GameObjects.Scene.TwinIslands.FileID()].Data;
             twinislandsSceneData[0xD6] = 0xAE;
             twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall wtf
+
+            // demo_kankyo, can we just turn on its always update flag
+            /*
+            RomUtils.CheckCompressed(GameObjects.Actor.Demo_Kankyo.FileListIndex());
+            var demoKankyoData = RomData.MMFileList[GameObjects.Actor.Demo_Kankyo.FileListIndex()].Data;
+            var flagsOffset = GameObjects.Actor.Demo_Kankyo.ActorInitOffset() + 0x2;
+            demoKankyoData[flagsOffset] |= 0xFF;
+            */
+
+
 
             // test if we can make it dark at night everywhere?
             // dark room just enables point lights, is that it for inside?
@@ -1538,12 +1546,12 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.En_Ani.ObjectIndex()
+                            NewV = GameObjects.Actor.GormanBuilding.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1556,22 +1564,22 @@ namespace MMR.Randomizer
                         });
                         continue;
                     }// */
-                    
-                    if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
+
+                    /* if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.GuruGuru.ObjectIndex()
+                            NewV = GameObjects.Actor.ZoraSeller.ObjectIndex()
                         });
                         continue;
                     } // */
-                    if (scene.File == GameObjects.Scene.SouthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.SouthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.GuruGuru.ObjectIndex()
+                            NewV = GameObjects.Actor.WarpDoor.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1797,7 +1805,15 @@ namespace MMR.Randomizer
 
                 // these are: cutscene map, town and swamp shooting gallery, 
                 // sakons hideout, and giants chamber (shabom), milkbar
-                int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x15};
+                //int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x15 };
+
+                // for dingus that want moonwarp, re-enable dekupalace
+                var SceneSkip = new GameObjects.Scene[] { GameObjects.Scene.GreatBayCutscene,
+                    GameObjects.Scene.SwampShootingGallery,
+                    GameObjects.Scene.TownShootingGallery,
+                    GameObjects.Scene.GiantsChamber,
+                    GameObjects.Scene.SakonsHideout,
+                    GameObjects.Scene.MilkBar };//, (int) GameObjects.Scene.DekuPalace };
 
                 ReadEnemyList();
                 SceneUtils.ReadSceneTable();
@@ -1806,11 +1822,13 @@ namespace MMR.Randomizer
                 SceneUtils.GetActors();
                 EnemizerFixes();
 
+                var newSceneList = RomData.SceneList;
+                newSceneList.RemoveAll(u => SceneSkip.Contains(u.SceneEnum) );
+
                 // if using parallel, move biggest scenes to the front so that we dont get stuck waiting at the end for one big scene with multiple dead cores idle
                 // LIFO, biggest at the back of this list
                 // this should be all scenes that took > 500ms on Isghj's computer during alpha ~dec15
                 //  this is old, should be re-evaluated with different code
-                var newSceneList = RomData.SceneList;
                 foreach (var sceneIndex in new int[]{ 1442, 1353, 1258, 1358, 1449, 1291, 1224,  1522, 1388, 1165, 1421, 1431, 1241, 1222, 1330, 1208, 1451, 1332, 1446, 1310 }){
                     var item = newSceneList.Find(u => u.File == sceneIndex);
                     newSceneList.Remove(item);
@@ -1821,7 +1839,7 @@ namespace MMR.Randomizer
                 Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
                 //foreach (var scene in RomData.SceneList) if (!SceneSkip.Contains(scene.Number))
                 {
-                    if (!SceneSkip.Contains(scene.Number))
+                    //if (!SceneSkip.Contains((GameObjects.Scene) scene.Number))
                     {
                         var previousThreadPriority = Thread.CurrentThread.Priority;
                         Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
@@ -1837,7 +1855,6 @@ namespace MMR.Randomizer
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
                     sw.Write("Enemizer version: Isghj's Enemizer Test 23.0\n");
-
                 }
             }
             catch (Exception e)

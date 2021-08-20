@@ -465,7 +465,9 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x68)]
         BombShop = 0x65,
 
-        // GiantsChamber = 0x66,
+        [FileID(1504)]
+        [SceneInternalId(0x69)]
+        GiantsChamber = 0x66,
 
         [FileID(1506)]
         [SceneInternalId(0x6A)]
