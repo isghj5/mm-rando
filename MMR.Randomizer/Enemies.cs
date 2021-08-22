@@ -1911,16 +1911,10 @@ namespace MMR.Randomizer
         {
             // decomp lets us more easily modify actors now
             // for now, until cat/zoey figure out how to directly integrate the projects
-            // I will, instead, compile with decomp, and then extract the binaries and inject here
+            //   I will, instead, compile with decomp, and then extract the binaries and inject here
             // MMRA files: Majora Mask Rando Actor files, just zip files that contain binaries and extras later
             // ideas for extras: notes to tell rando where sound effects are to be replaced
             // function pointers to interconnect the code
-
-            // TODO add ability to add completely new actors instead of modifying
-            //   reason: some actors have a lot of hardcoded shit but we just want to put them in the overworld for flavor
-            // cutting out a lot of the actor's weird code and leaving them with a basic actor seems reasonable if we have actors/file slots
-
-            // todo: we need to be able to specify what the object the actor uses is, or specify the actorinit table location? or find a better way to map this?
 
             foreach (string filePath in Directory.GetFiles(directory, "*.mmra"))
             {
@@ -1946,8 +1940,8 @@ namespace MMR.Randomizer
 
                             // the binary filename convention will be NOTES_name.bin
 
-                            var binFilenameSplit = binFile.Name.Split('_'); // everything before _ is a comment, readability, discard here
-                            var fileIDtext = binFilenameSplit.Length > 1 ? binFilenameSplit[binFilenameSplit.Length - 1] : binFile.Name;
+                            //var binFilenameSplit = binFile.Name.Split('_'); // everything before _ is a comment, readability, discard here
+                            //var fileIDtext = binFilenameSplit.Length > 1 ? binFilenameSplit[binFilenameSplit.Length - 1] : binFile.Name;
                            
                             // read the associated meta file
                             var metaFileEntry = zip.GetEntry(filename + ".meta");
@@ -1958,16 +1952,12 @@ namespace MMR.Randomizer
 
                             var meta = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
 
-
                             var newFID = (int) meta.dmaFID;
                             // TODO if fileid is 0, we need to put this in an empty actor slot
 
-                            //RomUtils.CheckCompressed(fileID);
                             RomData.MMFileList[newFID].Data = overlayData;
                             RomData.MMFileList[newFID].End = RomData.MMFileList[newFID].Addr + newBinLen;
-                            //RomData.MMFileList[fileID].IsCompressed = false; // think this means it was compressed to begin with, not now
                             RomData.MMFileList[newFID].WasEdited = true;
-
 
                         } // foreach bin entry
 
@@ -1979,7 +1969,6 @@ namespace MMR.Randomizer
                 }
             } // for each mmra end
         }
-
 
         public static void ShuffleEnemies(OutputSettings settings, Random random)
         {
@@ -2006,6 +1995,7 @@ namespace MMR.Randomizer
                 SceneUtils.GetMapHeaders();
                 SceneUtils.GetActors();
                 EnemizerFixes();
+                ScanForMMRA("actors");
 
                 var newSceneList = RomData.SceneList;
                 newSceneList.RemoveAll(u => SceneSkip.Contains(u.SceneEnum) );
