@@ -375,6 +375,14 @@ namespace MMR.Randomizer.GameObjects
         Door_Warp1 = 0x38, // Door_Warp1
 
         [ActorizerEnabled]
+        [ObjectListIndex(0x3E)]
+        [FileID(79)]
+        [GroundVariants(0x0)] // the 101 and above are for warp TO bosses
+        [VariantsWithRoomMax(max: 1, variant:0x0)]
+        [UnkillableAllVariants]
+        WarpDoor = 0x38, // Door_Warp1
+
+        [ActorizerEnabled]
         [ObjectListIndex(0x80)]
         [FileID(79)]
         // 0x1180 below graveyard
@@ -487,9 +495,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(90)]
         Demo_Effect = 0x48, // Demo_Effect
 
-        [ActorizerEnabled] // temp, testing snowing
+        [ActorizerEnabled]
         [FileID(91)]
         [ActorInstanceSize(0x1650)]
+        [ActorInitVarOffset(0x1F78)]
         [ObjectListIndex(0x1)]// gameplay_keep obj 1
         // variety 01 in giants crashes if placed in goron shrine
         // variety 02 in moon, spawns a lighter version of 00, less particles, no whole chains
@@ -1012,7 +1021,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x198)]
         [ObjectListIndex(0x1)] // gamplaykeep obj 1 // the rocks are free, you can take them home
         //6a does not load
-        [GroundVariants(0x1F2)]
+        [GroundVariants(0x1F2)] // get bugs if pickup, best version
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         [EnemizerScenesExcluded(Scene.TerminaField)] // dont replace them in TF
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
@@ -1052,7 +1061,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(162)]
         [ObjectListIndex(0x140)]
-        En_Fu = 0xB5, // En_Fu
+        HoneyAndDarling = 0xB5, // En_Fu
 
         EmptyB6 = 0xB6,
         EmptyB7 = 0xB7,
@@ -1072,7 +1081,6 @@ namespace MMR.Randomizer.GameObjects
         EmptyBA = 0xBA,
         EmptyBB = 0xBB,
 
-
         [ObjectListIndex(0x1)] // gamplay_keep obj 1
         [FileID(165)]
         // variants: 607 is the rain in road to southern swamp, which gets rainier as you approach swamp and dry toward termina field
@@ -1089,7 +1097,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         //[WallVariants(1)] // facing the wrong way and no bonk, so not that interesting
         [VariantsWithRoomMax(max:3, variant:0)]
-        [EnemizerScenesPlacementBlock(Scene.RomaniRanch)]
+        [EnemizerScenesPlacementBlock(Scene.RomaniRanch, Scene.Woodfall, Scene.DekuShrine)]
         [UnkillableAllVariants]
         En_Ani = 0xBD, // En_Ani
 
@@ -1115,7 +1123,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         En_Okarina_Effect = 0xC4, // En_Okarina_Effect
 
-        //[ActorizerEnabled] // yeah it just takes you back to file select if you hit two buttons
+        //[ActorizerEnabled] // yeah it just takes you back to file select if you hit two buttons, bad
         [FileID(169)]
         [ObjectListIndex(0x115)]
         [GroundVariants(0)]
@@ -1142,10 +1150,10 @@ namespace MMR.Randomizer.GameObjects
         // trading post version is 1
         // wish I could spawn the ones that dance so they are always dancing when the player gets there
         [GroundVariants(1)]
-        [VariantsWithRoomMax(max: 1, variant: 1)]
+        [VariantsWithRoomMax(max: 5, variant: 1)]
         [UnkillableAllVariants]
-        // twinislands 0x5D snowhead 0x21, observatory 0x29, zora hall 0x33, trade 0x34, 0x48 goron village
-        //[EnemizerScenesExcluded(0x5D, 0x21, 0x29, 0x33, 0x34, 0x37, 0x48, 0x4D, 0x50, 0x38, 0x5B, 0x53, 0x58, 0x5A, 0x5E)] 
+        // crash: if you teach song to him in TF the ice block cutscene triggers
+        [EnemizerScenesPlacementBlock(Scene.TerminaField)]
         [EnemizerScenesExcluded(Scene.TradingPost)]//, Scene.AstralObservatory)] // re-disable this if playing Entrando
         Scarecrow = 0xCA, // En_Kakasi
 
@@ -1161,8 +1169,8 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabled] // does not spawn, grotto does weird stuff to it, use TreasureChest instead
         [FileID(175)]
-        [ObjectListIndex(0xC)] //same as chest, but wiwth weird requirements
-        //[GroundVariants(0)] // only option, hmm
+        [ObjectListIndex(0xC)] //same as chest, but with weird requirements
+        //[GroundVariants(0)] // only option, looks like grotto params are saved and used instead
         [UnkillableAllVariants]
         GrottoChest = 0xCE, // En_Torch
 
@@ -1279,7 +1287,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x140)]
         En_Tg = 0xE9, // En_Tg
 
-
         EmptyEA = 0xEA,
         EmptyEB = 0xEB,
 
@@ -1355,9 +1362,18 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x0)]
         EmptyF7 = 0xF7, // EmptyF7
 
+        // unused walking zora
+        [ActorizerEnabled]
         [FileID(229)]
         [ObjectListIndex(0xD0)]
-        En_Zo = 0xF8, // En_Zo
+        // hmm, params are 0x7E00 >> 9 and thats it. path?
+        // looks like -1 (7E) works as a path disable for this actor too
+        [GroundVariants(0x7E00)]
+        [WaterVariants(0x7E00)]
+        [PathingVariants(0x0)]
+        [PathingTypeVarsPlacement(mask: 0x7F00, shift: 9)]
+        [UnkillableAllVariants]
+        MuteZora = 0xF8, // En_Zo
 
         [FileID(231)]
         [ObjectListIndex(0x1)]
@@ -1486,8 +1502,14 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // assumption: need mirror shield
         SkeleKnight = 0x115, // En_Knight
 
+        // nvm not sure what this is
         [FileID(251)]
-        [ObjectListIndex(0x1)]
+        // in actor obj set to 1, so might be multiple types
+        [ObjectListIndex(0x3E)]
+        //[GroundVariants(0x83C1)]
+        [GroundVariants(0x3C1)]
+        [EnemizerScenesExcluded(Scene.GoronTrial)]
+        [UnkillableAllVariants]
         En_Warp_tag = 0x116, // En_Warp_tag
 
         [FileID(252)]
@@ -1542,7 +1564,6 @@ namespace MMR.Randomizer.GameObjects
         [FileID(265)]
         [ObjectListIndex(0x158)]
         Bg_Spdweb = 0x125, // Bg_Spdweb
-
 
         Empty126 = 0x126,
         Empty127 = 0x127,
@@ -1603,9 +1624,12 @@ namespace MMR.Randomizer.GameObjects
         Empty133 = 0x133,
         Empty134 = 0x134,
 
+        //[ActorizerEnabled] // wont spawn because the required item objects are likely missing
         [FileID(276)]
-        [ObjectListIndex(0x1)]
-        En_Sob1 = 0x135, // En_Sob1
+        [ObjectListIndex(0xD0)]
+        [GroundVariants(0x3E0)]
+        [UnkillableAllVariants]
+        ZoraSeller = 0x135, // En_Sob1
 
         Empty136 = 0x136,
         Empty137 = 0x137,
@@ -1796,7 +1820,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         ThreeDayTimer = 0x15A, // En_Test4
 
-
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1500)]
         [FileID(313)]
@@ -1881,15 +1904,22 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(324)]
         [ObjectListIndex(0x189)]
+        [UnkillableAllVariants]
         En_Dnb = 0x167, // En_Dnb
         
         [FileID(325)]
         [ObjectListIndex(0x224)]
         En_Dnh = 0x168, // En_Dnh
-        
+
+        // code suggests even more params might exist than are used in vanilla
+        [ActorizerEnabled]
         [FileID(326)]
-        [ObjectListIndex(0x1)]
-        En_Dnk = 0x169, // En_Dnk
+        [ObjectListIndex(0x40)] // 1? nah it uses something else
+        // 2 is smaller scrub that surrounds link
+        [GroundVariants(2,6)]
+        [VariantsWithRoomMax(max:1, variant:6)]
+        [UnkillableAllVariants]
+        HallucinationScrub = 0x169, // En_Dnk
         
         [FileID(327)]
         [ObjectListIndex(0x18B)]
@@ -2015,10 +2045,17 @@ namespace MMR.Randomizer.GameObjects
         [FileID(344)]
         [ObjectListIndex(0x18A)]
         Bg_Crace_Movebg = 0x17E, // Bg_Crace_Movebg
-        
+
+        // todo come back and figure out how to spawn regular 
+        //[ActorizerEnabled]
         [FileID(345)]
         [ObjectListIndex(0x1F3)]
-        En_Dno = 0x17F, // En_Dno
+        // params 0xC000, 0x2F8, 0x7F, 0xF ???
+        // 0x8000 is cutscene version, 0x7FFF is main hall but doesn't spawn?
+        //[GroundVariants(0x2000)]
+        // good candidate for aligned front companions, to his son
+        [UnkillableAllVariants]
+        Butler = 0x17F, // En_Dno
 
         [EnemizerEnabled] // biggest issue: they dont really attack, this isn't the version that spawns over and over
         [ActorInitVarOffset(0x1C6C)]
@@ -2977,10 +3014,31 @@ namespace MMR.Randomizer.GameObjects
         [FileID(510)]
         [ObjectListIndex(0x20C)]
         Bg_Inibs_Movebg = 0x227, // Bg_Inibs_Movebg
-        
+
+        [ActorizerEnabled]
         [FileID(511)]
         [ObjectListIndex(0xD0)]
-        En_Zot = 0x228, // En_Zot
+        // 0xXX00 is path, 0x00YY is type
+        // type 0 is the one asking if you got a bottle from beavers on beach
+        // FC08 is the guitar tuner, FC07 is the picture buyer
+        // 09 is lights are off guy
+        // 2 is standing guard in front of mikaus room
+        // 3/4 probably also guarding door
+        // 5 is creep trying to break into lulus room
+        // 6 is sitting waiting for the rehersal
+        // 0x12 is missing, checks for a flag makes snese
+        // 0x13/14/15 is jamming at the jazz session cutscene
+        // 0x140A is near the entrance
+        [WaterVariants(0xFC00, 0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15)] // no reason we cant talk to them underwater I dont think
+        [GroundVariants(0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15)]
+        //[GroundVariants(0xFC0B)] // testing dialogue without pathing
+        [PathingVariants(0x140A, 0xFC05, 0x2, 0x3, 0x4)]
+        [VariantsWithRoomMax(max: 1, variant: 0x2, 0x3, 0x4)]
+        // TODO add pathing thing
+        [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
+        [EnemizerScenesExcluded(Scene.ZoraHall)]
+        [UnkillableAllVariants]
+        RegularZora = 0x228, // En_Zot
         
         [FileID(512)]
         [ObjectListIndex(0x20D)]
@@ -3174,18 +3232,19 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(541)]
         [ObjectListIndex(0x222)]
-        Bg_F40_Switch = 0x246, // Bg_F40_Switch
+        ElegyStatueSwitch = 0x246, // Bg_F40_Switch
         
         [FileID(542)]
         [ObjectListIndex(0x5D)]
         En_Po_Composer = 0x247, // En_Po_Composer
 
-        //[ActorizerEnabled] // unless I write dayonly/nightonly, this is too flukey
+        [ActorizerEnabled]
         [ObjectListIndex(0xFF)]
         [FileID(543)]
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
-        // 2 doesn't ever seen to spawn, day or night, think its a fluke
-        [GroundVariants(0x2)] // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
+        // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
+        // 02 doesn't ever seen to spawn, day or night, think its a fluke
+        [GroundVariants(0x0)] 
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(0x15, 0x70, 0x61)]
         [EnemizerScenesExcluded(Scene.StockPotInn, Scene.LaundryPool, Scene.MilkBar)] // think him being in milkbar is a credits thing
@@ -3193,7 +3252,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(544)]
         [ObjectListIndex(0x1)]
-        Oceff_Wipe5 = 0x249, // Oceff_Wipe5
+        SonataEffects = 0x249, // Oceff_Wipe5
 
         [ActorizerEnabled]
         [FileID(545)]
@@ -3226,11 +3285,11 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(551)]
         [ObjectListIndex(0x22A)]
-        En_Hg = 0x250, // En_Hg
+        PamelasFatherCured = 0x250, // En_Hg
         
         [FileID(552)]
         [ObjectListIndex(0x22A)]
-        En_Hgo = 0x251, // En_Hgo
+        PamelasFatherCursed = 0x251, // En_Hgo
 
         [ActorizerEnabled]
         [FileID(553)]
@@ -3244,9 +3303,10 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.ZoraCape)]
         Lulu = 0x252, // Ee_Zov
 
+        // probably boring actor with timed flags nonsense
         [FileID(554)]
         [ObjectListIndex(0x7)]
-        En_Ah = 0x253, // En_Ah
+        AnjusMother = 0x253, // En_Ah
         
         [FileID(555)]
         [ObjectListIndex(0x22C)]
@@ -3300,9 +3360,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // I think?
         SleepingScrub = 0x25F,
 
+        [ActorizerEnabled]
         [FileID(567)]
         [ObjectListIndex(0xD0)]
-        En_Zow = 0x260, // En_Zow
+        [WaterVariants(0,1)]
+        [UnkillableAllVariants]
+        SwimmingZora = 0x260, // En_Zow
 
         [FileID(568)]
         [ObjectListIndex(0x1)]
@@ -3428,7 +3491,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(592)]
         [ObjectListIndex(0x26A)] // the spreadsheet says he is obj 1 but that is a mistake, his code is stupid
-        [GroundVariants(0xFE01)]
+        // uhhh code has no params, where did FE01 come from?
+        [GroundVariants(0x0)]
+        [VariantsWithRoomMax(max:4, variant:0x0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.TerminaField)]
         // This is the seth you see in the telescope on grottos, same animation as cured skultula man in kak
@@ -3497,15 +3562,17 @@ namespace MMR.Randomizer.GameObjects
         [FileID(605)]
         [ObjectListIndex(0x255)]
         Eff_Zoraband = 0x286, // Eff_Zoraband
-        
+
+        //[ActorizerEnabled] // crash, bg code? like majora baloon then
         [FileID(606)]
         [ObjectListIndex(0x256)]
-        Obj_Kepn_Koya = 0x287, // Obj_Kepn_Koya
+        [GroundVariants(0)]
+        [UnkillableAllVariants]
+        GormanBuilding = 0x287, // Obj_Kepn_Koya
         
         [FileID(607)]
         [ObjectListIndex(0x257)]
-        Obj_Usiyane = 0x288, // Obj_Usiyane
-
+        BarnRoof = 0x288, // Obj_Usiyane
 
         [ActorizerEnabled] // shows up too much tho, because small object
         [FileID(608)]
@@ -3540,10 +3607,13 @@ namespace MMR.Randomizer.GameObjects
         [FileID(614)]
         [ObjectListIndex(0x268)]
         En_Bsb = 0x28F, // En_Bsb
-        
+
+        [ActorizerEnabled]
         [FileID(615)]
         [ObjectListIndex(0x129)]
-        En_Recepgirl = 0x290, // En_Recepgirl
+        [GroundVariants(5)]
+        [UnkillableAllVariants]
+        Secretary = 0x290, // En_Recepgirl
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2E30)]
@@ -3688,7 +3758,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         Obj_Swprize = 0x2AE, // Obj_Swprize
         
-        [ActorizerEnabled]
+        //[ActorizerEnabled]
         [FileID(646)]
         [GroundVariants(0)] // todo search
         [ObjectListIndex(0x1)] // ooo free

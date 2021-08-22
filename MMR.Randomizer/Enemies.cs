@@ -329,18 +329,16 @@ namespace MMR.Randomizer
             EnableTwinIslandsSpringSkullfish();
             FixSouthernSwampDekuBaba();
             FixRoadToSouthernSwampBadBat();
-            if (ACTORSENABLED)
-            {
-                NudgeFlyingEnemiesForTingle();
-                //FixScarecrowTalk();
-                EnablePoFusenAnywhere();
-            }
+            NudgeFlyingEnemiesForTingle();
+            FixScarecrowTalk();
+            EnablePoFusenAnywhere();
 
             FixSpawnLocations();
             ExtendGrottoDirectIndexByte();
             ShortenChickenPatience();
             //FixThornTraps();
             FixSeth2();
+            AllowGuruGuruOutside();
 
             Shinanigans();
         }
@@ -354,6 +352,7 @@ namespace MMR.Randomizer
             RomUtils.CheckCompressed(dinofos.FileListIndex());
             RomData.MMFileList[dinofos.FileListIndex()].Data[dinofos.ActorInitOffset() + 7] &= 0xBF;// 4 flag is the issue
             actorList.Remove(dinofos);
+            actorList.Remove(GameObjects.Actor.Demo_Kankyo);
             actorList.Remove(GameObjects.Actor.Eyegore);
 
             /// some enemies are really hard on the CPU/RSP, we can change some of them to behave nicer with flags
@@ -574,6 +573,16 @@ namespace MMR.Randomizer
             twinislandsSceneData[0xD6] = 0xAE;
             twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall wtf
 
+            // demo_kankyo, can we just turn on its always update flag
+            /*
+            RomUtils.CheckCompressed(GameObjects.Actor.Demo_Kankyo.FileListIndex());
+            var demoKankyoData = RomData.MMFileList[GameObjects.Actor.Demo_Kankyo.FileListIndex()].Data;
+            var flagsOffset = GameObjects.Actor.Demo_Kankyo.ActorInitOffset() + 0x2;
+            demoKankyoData[flagsOffset] |= 0xFF;
+            */
+
+
+
             // test if we can make it dark at night everywhere?
             // dark room just enables point lights, is that it for inside?
             //foreach (var s in RomData.SceneList)
@@ -684,6 +693,28 @@ namespace MMR.Randomizer
             {
                 return;
             }
+
+            var scarecrowFID = GameObjects.Actor.Scarecrow.FileListIndex();
+            RomUtils.CheckCompressed(scarecrowFID);
+            var scarecrowFile = RomData.MMFileList[scarecrowFID].Data;
+
+            // song teaching scarecrow gets stuck after song is done
+            // the kakasi code tries to start a cutscene in stages per frame
+            // first frame: tell game you want to start cutscene, second frame check if cs available to start... we never succeed here
+            // so the code repeats going to the same spot over and over, never advancing
+            // instead, we can just branch from that spot to the finish code
+
+            ReadWriteUtils.Arr_WriteU32(scarecrowFile, 0x11E0, 0x1000000F); // branch F down past the if (if state == 1)
+
+            // however thats not the only issue, if you teach a song in TF before breaking the ice block, it triggers the ice break cutscene
+            // so we have to stop the cutscenes call
+            // cutscene call for songteaching camera swinging
+            // ReadWriteUtils.Arr_WriteU32(scarecrowFile, 0x1100, 0x00000000); // NOP the ActorCutscene_SetIntentToPlay
+
+            // cutscene call after twirl
+            // ReadWriteUtils.Arr_WriteU32(scarecrowFile, 0x1100, 0x00000000); // NOP the ActorCutscene_SetIntentToPlay
+
+            // UNFINISHED: TODO keep going, I think I have to change one of the function straight to digging away and skip dialogue because that function is long
         }
 
         /// <summary>
@@ -809,29 +840,30 @@ namespace MMR.Randomizer
         {
             /// if tingle can be randomized, he can end up on any flying enemy in scenes that don't already have a tingle
             /// some of these scenes would drop him into water or off the cliff where he cannot be reached
-
-            if (ACTORSENABLED) // only if tingle can be randomized
+            if (!EnemyList.Contains(GameObjects.Actor.Tingle))
             {
-                var woodfallexteriorScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Woodfall.FileID());
-                var firstDragonfly = woodfallexteriorScene.Maps[0].Actors[4];
-                firstDragonfly.Position.x = 990; // over a deku scrub
-                firstDragonfly.Position.z = 690;
-
-                var secondDragonfly = woodfallexteriorScene.Maps[0].Actors[5];
-                secondDragonfly.Position.x = 615; // over a lillypad
-                secondDragonfly.Position.z = -495;
-
-                var lilypad = woodfallexteriorScene.Maps[0].Actors[37];
-                lilypad.Position.x = 615; // move lilypad over
-                lilypad.Position.z = -495;
-
-                var coastScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
-                coastScene.Maps[0].Actors[17].Position.z = 3033; // edge the guay over the land just a bit
-
-                // not sure if this will even work, will he get blown away? would it not be better to let him fall away into the abyss?
-                var snowheadKeese = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Snowhead.FileID()).Maps[0].Actors[0];
-                snowheadKeese.Position.x = -758;
+                return;
             }
+
+            var woodfallexteriorScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Woodfall.FileID());
+            var firstDragonfly = woodfallexteriorScene.Maps[0].Actors[4];
+            firstDragonfly.Position.x = 990; // over a deku scrub
+            firstDragonfly.Position.z = 690;
+
+            var secondDragonfly = woodfallexteriorScene.Maps[0].Actors[5];
+            secondDragonfly.Position.x = 615; // over a lillypad
+            secondDragonfly.Position.z = -495;
+
+            var lilypad = woodfallexteriorScene.Maps[0].Actors[37];
+            lilypad.Position.x = 615; // move lilypad over
+            lilypad.Position.z = -495;
+
+            var coastScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
+            coastScene.Maps[0].Actors[17].Position.z = 3033; // edge the guay over the land just a bit
+
+            // not sure if this will even work, will he get blown away? would it not be better to let him fall away into the abyss?
+            var snowheadKeese = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Snowhead.FileID()).Maps[0].Actors[0];
+            snowheadKeese.Position.x = -758;
         }
 
         private static void ExtendGrottoDirectIndexByte()
@@ -849,9 +881,13 @@ namespace MMR.Randomizer
 
         private static void EnablePoFusenAnywhere()
         {
-            //the flying poe baloon romani uses to play her game doesn't spawn unless it has an explosion fuse timer
-            //  or it detects romani actor in the scene, so it can count baloon pops
-            // but the code that blocks the baloon if neihter of these are true is nop-able
+            /// the flying poe baloon romani uses to play her game doesn't spawn unless it has an explosion fuse timer
+            ///  or it detects romani actor in the scene, so it can count baloon pops
+            /// but the code that blocks the baloon if neither of these are true is nop-able, and the rest of the code is fine without romani
+            if (!EnemyList.Contains(GameObjects.Actor.PoeBalloon))
+            {
+                return;
+            }
 
             var enPoFusenFID = GameObjects.Actor.PoeBalloon.FileListIndex();
             RomUtils.CheckCompressed(enPoFusenFID);
@@ -874,8 +910,8 @@ namespace MMR.Randomizer
 
         public static void ShortenChickenPatience()
         {
-            // chickens take too many hits before they get mad, let's shrink this
-            // niw health is rand(0-9.9) + 10.0, lets replace with 0-2 + 1
+            /// chickens take too many hits before they get mad, let's shrink this
+            /// niw health is rand(0-9.9) + 10.0 (10-20 hits), lets replace with 0-2 + 1
             RomUtils.CheckCompressed(GameObjects.Actor.FriendlyCucco.FileListIndex());
             var niwData = RomData.MMFileList[GameObjects.Actor.FriendlyCucco.FileListIndex()].Data;
             ReadWriteUtils.Arr_WriteU32(niwData, 0x24A8, 0x40000000); // 9.9 -> 2 in f32 (in rodata, loaded into init)
@@ -884,6 +920,8 @@ namespace MMR.Randomizer
 
         public static void FixThornTraps()
         {
+            // this is incomplete, fixing thorn traps will likely take rewriting code not just removing
+
             /// in thorn traps init code it checks if a path has only 2 nodes, if it has more or less than 2 it dies
 
             // let's just remove that jal
@@ -899,6 +937,10 @@ namespace MMR.Randomizer
         public static void FixSeth2(){
             /// seth 2, the guy waving his arms in the termina field telescope, like oot spiderhouse
             /// his init code checks for a value, and does not spawn if the value is different than expected
+            if (!EnemyList.Contains(GameObjects.Actor.Seth2))
+            {
+                return;
+            }
 
             var sethFid = GameObjects.Actor.Seth2.FileListIndex();
             RomUtils.CheckCompressed(sethFid);
@@ -916,6 +958,28 @@ namespace MMR.Randomizer
             tfScene.Maps[0].Actors[29].ChangeActor(GameObjects.Actor.Empty);
             tfScene.Maps[0].Objects[21] = GameObjects.Actor.Empty.ObjectIndex();
             //var map = tfScene.Maps[0];
+        }
+
+        private static void AllowGuruGuruOutside()
+        {
+            /// guruguru's actor spawns or kills itself based on time flags, ignoring that the spawn points themselves have timeflags
+            /// if we want guruguru to be placed in the world without being restricted to day/night only (which is lame) we have to stop this
+            if (!EnemyList.Contains(GameObjects.Actor.GuruGuru))
+            {
+                return;
+            }
+
+            var guruFid = GameObjects.Actor.GuruGuru.FileListIndex();
+            RomUtils.CheckCompressed(guruFid);
+            var guruData = RomData.MMFileList[guruFid].Data;
+            ReadWriteUtils.Arr_WriteU32(guruData, Dest: 0x104, val: 0x00000000); // BNE (if day, and not type 1, die) -> NOP
+
+            // funny enough, type 0 (talkable during day) and type 2 (creates music through the walls)
+            //  both are already time flag'd to not show up at night in the inn... so why did the code care?
+
+            // BUT EVEN MORE FUNNY, this funny guy, he CHECKS NIGHT in his update function too WTF
+            // jeez just branch past all that noise
+            ReadWriteUtils.Arr_WriteU32(guruData, Dest: 0x9BC, val: 0x10000013); // BNEL (test night checks) -> B past it all to actionfunc
         }
 
         #endregion
@@ -940,7 +1004,8 @@ namespace MMR.Randomizer
         {
             /// fixes the patrolling enemy paths to make sure it matches the previous actor path
             
-            // this also sets their kickout address index to 0, because they use different systems which are not compatible
+            // this also sets actor kickout address index to 0 (if they have one),
+            // because they use different systems which are not compatible
 
             // for now, adding extra code just so I can keep track of what is happening
             for (int i = 0; i < chosenReplacementEnemies.Count; i++)
@@ -949,9 +1014,8 @@ namespace MMR.Randomizer
                 var newType = actor.ActorEnum.GetType(actor.Variants[0]);
 
                 if (actor.Type == GameObjects.ActorType.Pathing // set on scene actor load
-                  && newType == GameObjects.ActorType.Pathing) // pulled from replacement vars
+                  && newType == GameObjects.ActorType.Pathing)  // pulled from replacement vars
                 {
-                    var debugOldVariant = actor.Variants[0];
                     var oldPathBehaviorAttr = actor.OldActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
                     var newdoldPathBehaviorAttr = actor.ActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
                     if (oldPathBehaviorAttr == null || newdoldPathBehaviorAttr == null)
@@ -960,35 +1024,28 @@ namespace MMR.Randomizer
                     }
 
                     // need to get the path value from the old variant
-                    var oldPath = actor.OldVariant;
-                    var oldPathShifted = (oldPath & (oldPathBehaviorAttr.Mask)) >> oldPathBehaviorAttr.Shift;
+                    var oldVariant = actor.OldVariant;
+                    var oldPathShifted = (oldVariant & (oldPathBehaviorAttr.Mask)) >> oldPathBehaviorAttr.Shift;
 
                     // clear the old path from this vars
                     var newVarsWithoutPath = actor.Variants[0] & ~newdoldPathBehaviorAttr.Mask;
 
                     // in addition, enemies with kickout addresses need their vars changed too
-                    // hey so it turns out they dont use the same indexing system! fucking hell
-                    // fornow, pass ZERO to both actors, it should give us a basic entrance to work with that wont crash anywhere where pathing enemies can exist
+                    // hey so it turns out they dont use the same indexing system
+                    // fornow, pass ZERO to both actors (use the main exit)
+                    // it should give us a basic entrance to work with that wont crash anywhere where pathing enemies can exist
                     var newKickoutAttr = actor.ActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
                     if (newKickoutAttr != null) // new actor has kick out address, need to read the old one
                     {
-                        var oldnewKickoutAttr = actor.OldActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
-                        var kickoutMask = 0; // separate for debuging
+                        int kickoutMask; // separate for debuging
                         int kickoutAddr = 0; // safest bet, there should always be at least one exit address per scene
-
-                        /* if (oldnewKickoutAttr != null)
-                        {
-                            // gen new kick at old shift
-                            kickoutMask = oldnewKickoutAttr.Mask << oldnewKickoutAttr.Shift;
-                            kickoutAddr = (actor.OldVariant & kickoutMask) >> oldnewKickoutAttr.Shift;
-                        } // */
 
                         // erase the kick location from the old vars
                         kickoutMask = newKickoutAttr.Mask << newKickoutAttr.Shift;
                         newVarsWithoutPath &= ~(kickoutMask);
                         // replace with new address
                         newVarsWithoutPath |= (kickoutAddr << newKickoutAttr.Shift);
-                    } // */
+                    }
 
                     // shift the path into the new location
                     var newPath = oldPathShifted << newdoldPathBehaviorAttr.Shift;
@@ -996,10 +1053,11 @@ namespace MMR.Randomizer
                     // set variant from cleaned old variant ored against the new path
                     actor.Variants[0] = newVarsWithoutPath | newPath;
                 }
-                if (i > 100000)
+                // the fuck was this doing? remove if no errors after 3 versions
+                /* if (i > 100000)
                 {
                     continue;
-                }
+                } */
             }
         }
 
@@ -1161,16 +1219,15 @@ namespace MMR.Randomizer
                     }
                 }
             }
-            //else // empty actor
+            //else: empty actor
 
             targetActor.ChangeActor(GameObjects.Actor.Empty, vars: 0);
-            //targetActor.ChangeActor(GameObjects.Actor.Horse, vars: 0x4600); // debug for free actors
-
         }
 
         public static void MoveAlignedCompanionActors(List<Actor> changedEnemies, Random rng, StringBuilder log)
         {
             /// companion actors can sometimes be alligned, to increase immersion
+            /// example: putting hidden grottos inside of a stone circle
 
             var actorsWithCompanions = changedEnemies.FindAll(u => ((GameObjects.Actor)u.ActorID).HasOptionalCompanions())
                                                      .OrderBy(x => rng.Next()).ToList();
@@ -1186,7 +1243,7 @@ namespace MMR.Randomizer
                     // todo detection of ourVars too
                     // scan for companions that can be moved
                     // for now, assume all previously used companions must be left untouched, no shuffling
-                    var eligibleCompanions = changedEnemies.FindAll(u => u.ActorID == (int)actorEnum       // correct actor
+                    var eligibleCompanions = changedEnemies.FindAll(u => u.ActorID == (int)actorEnum        // correct actor
                                                             && u.previouslyMovedCompanion == false          // not already used
                                                             && companion.Variants.Contains(u.Variants[0])); // correct variant
 
@@ -1214,9 +1271,8 @@ namespace MMR.Randomizer
 
         private static void CullActors(Scene scene, List<ValueSwap> objList, int loopCount)
         {
-            // issue: sometimes some of the big scenes get stuck in a weird spot where they can't find any combos that fit
+            // issue: sometimes some of the big scenes get stuck in a weird spot where they can't find any actor combos that fit
             // one day I will figure out this bug, for now, attempt to remove some actors/objects to make it fit
-            // TODO find the real smallest object
 
             // medium goron, unused object, size: 0x10
             // alternative: tanron1 is also size 0x10
@@ -1530,7 +1586,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.En_Ani.ObjectIndex()
+                            NewV = GameObjects.Actor.Scarecrow.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1935,10 +1991,14 @@ namespace MMR.Randomizer
                 // these are: cutscene map, town and swamp shooting gallery, 
                 // sakons hideout, and giants chamber (shabom), milkbar
                 //int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x15 };
-                // if you have an idiot that needs moonwarp to beat no logics:
-                int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x15, 0x2B };
 
-                ScanForMMRA("./actors");
+                // for dingus that want moonwarp, re-enable dekupalace
+                var SceneSkip = new GameObjects.Scene[] { GameObjects.Scene.GreatBayCutscene,
+                    GameObjects.Scene.SwampShootingGallery,
+                    GameObjects.Scene.TownShootingGallery,
+                    GameObjects.Scene.GiantsChamber,
+                    GameObjects.Scene.SakonsHideout,
+                    GameObjects.Scene.MilkBar };//, GameObjects.Scene.DekuPalace };
 
                 ReadEnemyList();
                 SceneUtils.ReadSceneTable();
@@ -1947,11 +2007,13 @@ namespace MMR.Randomizer
                 SceneUtils.GetActors();
                 EnemizerFixes();
 
+                var newSceneList = RomData.SceneList;
+                newSceneList.RemoveAll(u => SceneSkip.Contains(u.SceneEnum) );
+
                 // if using parallel, move biggest scenes to the front so that we dont get stuck waiting at the end for one big scene with multiple dead cores idle
                 // LIFO, biggest at the back of this list
                 // this should be all scenes that took > 500ms on Isghj's computer during alpha ~dec15
                 //  this is old, should be re-evaluated with different code
-                var newSceneList = RomData.SceneList;
                 foreach (var sceneIndex in new int[]{ 1442, 1353, 1258, 1358, 1449, 1291, 1224,  1522, 1388, 1165, 1421, 1431, 1241, 1222, 1330, 1208, 1451, 1332, 1446, 1310 }){
                     var item = newSceneList.Find(u => u.File == sceneIndex);
                     newSceneList.Remove(item);
@@ -1962,7 +2024,7 @@ namespace MMR.Randomizer
                 Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
                 //foreach (var scene in RomData.SceneList) if (!SceneSkip.Contains(scene.Number))
                 {
-                    if (!SceneSkip.Contains(scene.Number))
+                    //if (!SceneSkip.Contains((GameObjects.Scene) scene.Number))
                     {
                         var previousThreadPriority = Thread.CurrentThread.Priority;
                         Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
@@ -1977,8 +2039,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 22.4\n");
-
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 23.1\n");
                 }
             }
             catch (Exception e)
