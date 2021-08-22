@@ -42,3 +42,17 @@
 .org 0x8018FFE8
     jal     Music_GetAudioLoadType_Hook
     lw      a1, 0x0058 (sp)
+
+; Replaces:
+;   LBU     T6, 0x0000 (V0)
+;   LW      T5, 0x0034 (SP)
+.org 0x801A7F1C
+    jal     Music_SetLoadingSequenceId2_Hook
+    lw      a0, 0x0044 (sp)
+
+; Replaces:
+;   LB      A1, 0x0019 (A0)
+;   LW      T9, 0x0010 (V1)
+.org 0x8019089C
+    jal     Music_GetAudioLoadType2_Hook
+    or      a1, s0, r0
