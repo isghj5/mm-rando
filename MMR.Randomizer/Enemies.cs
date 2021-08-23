@@ -33,20 +33,18 @@ namespace MMR.Randomizer
         // when we inject a new actor theres some data we need
         // and some adjustments we need to make based on where it gets placed in vram
         public uint objID = 0;
-        public uint dmaFID = 0;
+        public uint fileID = 0;
 
+        // if all new actor, we meed to know where the old vram start was
         public uint buildVramStart = 0;
-        public uint buildVramEnd = 0;
 
-        //init vars are located somewhere in .data, we want to know where exactly for reasons
+        // init vars are located somewhere in .data, we want to know where exactly for reasons
         public uint initVarsLocation = 0;
 
-        // the function locations are hard coded in the overlay to vram, but we likely wont put it back in the same old spot
-        // so these will need to be updated, these are offsets in the overlay to their new locations
-        public uint initFuncLocation = 0;
-        public uint destroyFuncLocation = 0;
-        public uint updateFuncLocation = 0;
-        public uint drawFuncLocation = 0;
+        public List<ushort> groundVariants;
+        // variants with max
+
+
         // bin is not stored here, it gets injected immediately
     }
 
@@ -274,8 +272,8 @@ namespace MMR.Randomizer
         public static int GetFIDFromVROM(int actorStart)
         {
             // assuming the actor overlay table vrom addresses can match DMA table, search through the DMA table
-            var dmaFID = 2;
-            var dmaData = RomData.MMFileList[dmaFID].Data;
+            var fileID = 2;
+            var dmaData = RomData.MMFileList[fileID].Data;
 
             for (int i = 0; i < 1550; ++i)
             {
@@ -1605,7 +1603,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Bumper.ObjectIndex()
+                            NewV = GameObjects.Actor.FriendlyCucco.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1614,7 +1612,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Armos.ObjectIndex()
+                            NewV = GameObjects.Actor.FriendlyCucco.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1835,7 +1833,6 @@ namespace MMR.Randomizer
         {
             var newInjectedActor = new InjectedActor();
 
-            // BUG this is not a character
             foreach (var line in metaFile.Split('\n'))
             {
                 var asignment = line.Split('#')[0].Trim(); // remove comments
@@ -1848,6 +1845,16 @@ namespace MMR.Randomizer
                 var asignmentSplit = asignment.Split('=');
                 var command = asignmentSplit[0].Trim();
                 string valueStr = asignmentSplit[1].Trim();
+
+                if (command == "ground_variants")
+                {
+                    var newGroundVariants = valueStr.Split(",").ToList();
+                    var newGroundVariantsShort = newGroundVariants.Select(u => Convert.ToUInt16(u.Trim())).ToList();
+
+                    newInjectedActor.groundVariants = newGroundVariantsShort;
+                    continue;
+                }
+
                 uint value = Convert.ToUInt32(valueStr, fromBase: 16);
 
                 if (command == "obj_id")
@@ -1857,35 +1864,20 @@ namespace MMR.Randomizer
                 else if (command == "file_id")
                 {
                     // dec instead of hex
-                    newInjectedActor.dmaFID = Convert.ToUInt32(valueStr, fromBase: 10);
+                    newInjectedActor.fileID = Convert.ToUInt32(valueStr, fromBase: 10);
                 }
                 else if (command == "initvars_offset")
                 {
                     newInjectedActor.initVarsLocation = value;
                 }
-                else if (command == "init_offset")
-                {
-                    newInjectedActor.initFuncLocation = value;
-                }
-                else if (command == "destroy_offset")
-                {
-                    newInjectedActor.destroyFuncLocation = value;
-                }
-                else if (command == "update_offset")
-                {
-                    newInjectedActor.updateFuncLocation = value;
-                }
-                else if (command == "draw_offset")
-                {
-                    newInjectedActor.drawFuncLocation = value;
-                }
+
             }
 
             // TODO if fid == 0, instead of exception we should look up a free actor location to move it to
 
             // update actor init vars in our actor
             var actorGameObj = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList()
-                                   .Find(u =>u.FileListIndex() == newInjectedActor.dmaFID);
+                                   .Find(u =>u.FileListIndex() == newInjectedActor.fileID);
             if (actorGameObj == 0)
             {
                 throw new Exception("new actor meta has no matching gameobj type");
@@ -1952,7 +1944,7 @@ namespace MMR.Randomizer
 
                             var meta = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
 
-                            var newFID = (int) meta.dmaFID;
+                            var newFID = (int) meta.fileID;
                             // TODO if fileid is 0, we need to put this in an empty actor slot
 
                             RomData.MMFileList[newFID].Data = overlayData;
