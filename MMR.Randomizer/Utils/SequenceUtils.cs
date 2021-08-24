@@ -8,6 +8,8 @@ using System.Text;
 using System.Diagnostics;
 using System.IO.Compression;
 using System.Security.Cryptography;
+using MMR.Randomizer.Models;
+using MMR.Common.Utils;
 
 namespace MMR.Randomizer.Utils
 {
@@ -317,10 +319,13 @@ namespace MMR.Randomizer.Utils
                             if (formMaskFileEntry != null)
                             {
                                 using var reader = new StreamReader(formMaskFileEntry.Open(), Encoding.Default);
-                                var formMaskData = reader.ReadToEnd();
+                                var formMaskJson = reader.ReadToEnd();
                                 try
                                 {
-                                    zSeq.FormMask = Convert.ToUInt64(formMaskData, 16);
+                                    // playState is configured in the file as "play in these states", but in the code it's "mute in these states"
+                                    // so we need to reverse it
+                                    var playState = JsonSerializer.Deserialize<SequencePlayState[]>(formMaskJson);
+                                    zSeq.FormMask = playState.Select(b => (byte) (SequencePlayState.All ^ b)).ToArray();
                                 }
                                 catch (Exception e)
                                 {
@@ -623,9 +628,11 @@ namespace MMR.Randomizer.Utils
 
                     if (sequenceMaskFileIndex.HasValue)
                     {
-                        var formMask = sequenceList[j].SequenceBinaryList?.FirstOrDefault()?.FormMask ?? 0;
-                        ReadWriteUtils.Arr_WriteU32(RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 8, (uint)(formMask >> 32));
-                        ReadWriteUtils.Arr_WriteU32(RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 8 + 4, (uint)(formMask & uint.MaxValue));
+                        var formMask = sequenceList[j].SequenceBinaryList?.FirstOrDefault()?.FormMask;
+                        if (formMask != null)
+                        {
+                            ReadWriteUtils.Arr_Insert(formMask, 0, 16, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 16);
+                        }
                     }
                 }
 

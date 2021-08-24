@@ -1,12 +1,9 @@
-﻿using MMR.Randomizer.Asm;
+﻿using MMR.Common.Utils;
+using MMR.Randomizer.Asm;
 using MMR.Randomizer.GameObjects;
-using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace MMR.Randomizer.Models.Settings
@@ -382,21 +379,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public override string ToString()
         {
-            return JsonSerializer.Serialize(this, _jsonSerializerOptions);
+            return JsonSerializer.Serialize(this);
         }
-
-        private readonly static JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
-        {
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            IgnoreReadOnlyFields = true,
-            IgnoreReadOnlyProperties = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            Converters =
-            {
-                new JsonColorConverter(),
-                new JsonStringEnumConverter(),
-            }
-        };
 
         public string Validate()
         {

@@ -22,29 +22,28 @@ static void LoadMuteMask() {
         u32 index = MUSIC_CONFIG.sequenceMaskFileIndex;
         DmaEntry entry = dmadata[index];
 
-        u32 start = entry.romStart + (sequenceId * 0x8);
+        u32 start = entry.romStart + (sequenceId * sizeof(musicState.muteMask));
 
         z2_RomToRam(start, &musicState.muteMask, sizeof(musicState.muteMask));
     }
 }
 
-static s8 CalculateCurrentState() {
-    s8 state = 0;
+static u8 CalculateCurrentState() {
+    u8 state = 0;
     ActorPlayer* player = GET_PLAYER(&gGlobalContext);
     if (player) {
         state = player->form & 3;
     }
-    return state;
+    return 1 << state;
 }
 
-static void ProcessChannel(u8 channelIndex, s8 state) {
+static void ProcessChannel(u8 channelIndex, u8 stateMask) {
     SequenceChannelContext* channelContext = gSequenceContext->channels[channelIndex];
     bool isPlaying = channelContext->unk0[0] & 0x80;
     if (isPlaying) {
         bool shouldBeMuted = musicState.forceMute & (1 << channelIndex);
         if (!shouldBeMuted) {
-            u8 muteMask = musicState.muteMask[channelIndex / 2];
-            u8 stateMask = ((1 << state) << 4) >> ((channelIndex & 1) << 2);
+            u8 muteMask = musicState.muteMask[channelIndex];
             shouldBeMuted = muteMask & stateMask;
         }
         bool isMuted = channelContext->unk0[0] & 0x10;
@@ -59,7 +58,7 @@ static void ProcessChannel(u8 channelIndex, s8 state) {
 static void HandleFormChannels(GlobalContext* ctxt) {
     LoadMuteMask();
 
-    s8 state = CalculateCurrentState();
+    u8 state = CalculateCurrentState();
     if (musicState.currentState != state) {
         musicState.currentState = state;
 
@@ -77,7 +76,7 @@ void Music_AfterChannelInit(SequenceContext* sequence, u8 channelIndex) {
     if (sequence == gSequenceContext) {
         LoadMuteMask();
 
-        s8 state = CalculateCurrentState();
+        u8 state = CalculateCurrentState();
         musicState.currentState = state;
         ProcessChannel(channelIndex, state);
     }

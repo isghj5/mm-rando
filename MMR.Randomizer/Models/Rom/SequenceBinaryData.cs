@@ -6,7 +6,7 @@ namespace MMR.Randomizer.Models.Rom
     {
         public byte[] SequenceBinary { get; set; } = null; // binary copy of the zsequence
         public InstrumentSetInfo InstrumentSet { get; set; } = null;
-        public ulong FormMask { get; internal set; }
+        public byte[] FormMask { get; internal set; }
     }
 }
 

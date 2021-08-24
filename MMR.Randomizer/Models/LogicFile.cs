@@ -1,12 +1,9 @@
 ﻿using MMR.Common.Extensions;
+using MMR.Common.Utils;
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.GameObjects;
-using MMR.Randomizer.Models.Settings;
 using System;
 using System.Collections.Generic;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace MMR.Randomizer.Models
 {
@@ -17,12 +14,12 @@ namespace MMR.Randomizer.Models
 
         public override string ToString()
         {
-            return JsonSerializer.Serialize(this, _jsonSerializerOptions);
+            return JsonSerializer.Serialize(this);
         }
 
         public static LogicFile FromJson(string json)
         {
-            var _logic = JsonSerializer.Deserialize<LogicFile>(json, _jsonSerializerOptions);
+            var _logic = JsonSerializer.Deserialize<LogicFile>(json);
             foreach (var logicItem in _logic.Logic)
             {
                 if (Enum.TryParse(logicItem.Id, out Item item))
@@ -47,19 +44,5 @@ namespace MMR.Randomizer.Models
 
             return _logic;
         }
-
-        private readonly static JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
-        {
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            IgnoreReadOnlyFields = true,
-            IgnoreReadOnlyProperties = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            WriteIndented = true,
-            Converters =
-            {
-                new JsonColorConverter(),
-                new JsonStringEnumConverter(),
-            }
-        };
     }
 }

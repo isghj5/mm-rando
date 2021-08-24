@@ -1,6 +1,4 @@
-﻿using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Json.Serialization;
+﻿using MMR.Common.Utils;
 
 namespace MMR.Randomizer.Models.Settings
 {
@@ -12,26 +10,12 @@ namespace MMR.Randomizer.Models.Settings
 
         public override string ToString()
         {
-            return JsonSerializer.Serialize(this, _jsonSerializerOptions);
+            return JsonSerializer.Serialize(this);
         }
 
         public static Configuration FromJson(string json)
         {
-            return JsonSerializer.Deserialize<Configuration>(json, _jsonSerializerOptions);
+            return JsonSerializer.Deserialize<Configuration>(json);
         }
-
-        private readonly static JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
-        {
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            IgnoreReadOnlyFields = true,
-            IgnoreReadOnlyProperties = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            WriteIndented = true,
-            Converters =
-            {
-                new JsonColorConverter(),
-                new JsonStringEnumConverter(),
-            }
-        };
     }
 }

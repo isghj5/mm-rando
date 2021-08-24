@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace MMR.Randomizer.Models.Settings
+namespace MMR.Common.Utils
 {
     public class JsonColorConverter : JsonConverter<Color>
     {

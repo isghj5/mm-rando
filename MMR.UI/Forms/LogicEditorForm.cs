@@ -8,12 +8,9 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using System.Text.Json;
-using System.Text.Encodings.Web;
-using System.Text.Json.Serialization;
-using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models;
+using MMR.Common.Utils;
 
 namespace MMR.UI.Forms
 {
@@ -306,19 +303,7 @@ namespace MMR.UI.Forms
                 _logic.Version = Migrator.CurrentVersion;
                 using (var writer = new StreamWriter(File.Open(saveLogic.FileName, FileMode.Create)))
                 {
-                    writer.Write(JsonSerializer.Serialize(_logic, new JsonSerializerOptions
-                    {
-                        Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                        IgnoreReadOnlyFields = true,
-                        IgnoreReadOnlyProperties = true,
-                        DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-                        WriteIndented = true,
-                        Converters =
-                        {
-                            new JsonColorConverter(),
-                            new JsonStringEnumConverter(),
-                        }
-                    }));
+                    writer.Write(JsonSerializer.Serialize(_logic));
                 }
             }
         }

@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Encodings.Web;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using MMR.Common.Extensions;
-using MMR.Randomizer.Models.Settings;
+using MMR.Common.Utils;
 
 namespace MMR.Randomizer.LogicMigrator
 {
@@ -18,21 +15,9 @@ namespace MMR.Randomizer.LogicMigrator
             JsonFormatLogic logicObject;
             try
             {
-                logicObject = JsonSerializer.Deserialize<JsonFormatLogic>(logic, new JsonSerializerOptions
-                {
-                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                    IgnoreReadOnlyFields = true,
-                    IgnoreReadOnlyProperties = true,
-                    DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-                    WriteIndented = true,
-                    Converters =
-                    {
-                        new JsonColorConverter(),
-                        new JsonStringEnumConverter(),
-                    }
-                });
+                logicObject = JsonSerializer.Deserialize<JsonFormatLogic>(logic);
             }
-            catch (JsonException)
+            catch (System.Text.Json.JsonException)
             {
                 var lines = logic.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
 
