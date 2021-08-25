@@ -160,7 +160,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled] // now that they are testy, lets count them as enemies
         [FileID(54)]
         [ObjectListIndex(0xF)]
-        [GroundVariants(0x1)]
+        [GroundVariants(0x0)]
         [VariantsWithRoomMax(max: 10, variant:0xFFFF)]
         [UnkillableAllVariants]
         // I would like a flying variant, but they seem to drop like a rock instead of float down
@@ -1717,7 +1717,7 @@ namespace MMR.Randomizer.GameObjects
         Dm_Ravine = 0x148, // Dm_Ravine
 
         //[EnemizerEnabled] // crash, also object is huge so never gets put places anyway
-        [FileID(294)]
+        [FileID(295)]
         [ObjectListIndex(0x192)] // cutscene object shared with zelda and skullkid, so BIG
         [GroundVariants(0)]
         [UnkillableAllVariants]
@@ -2647,7 +2647,7 @@ namespace MMR.Randomizer.GameObjects
         RaceDog = 0x1EE, // En_Racedog
 
         //[ActorizerEnabled] // does not spawn, again with the hardcoded nonsense
-        [FileID(454)]
+        [FileID(455)]
         [ObjectListIndex(0x10F)]
         [GroundVariants(0xFF01)]
         [UnkillableAllVariants]

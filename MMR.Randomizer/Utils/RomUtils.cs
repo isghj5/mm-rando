@@ -232,9 +232,9 @@ namespace MMR.Randomizer.Utils
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint) file.End);
 
                 // files have grown in size, these are the files we need to move
-                if (newVROMDiff > 0)
+                if (newVROMDiff != 0)
                 {
-                    var newActorMeta = Enemies.InjectedActors.Find(u => u.dmaFID == fileID);
+                    var newActorMeta = Enemies.InjectedActors.Find(u => u.fileID == fileID);
 
                     if (newActorMeta == null)
                     {
@@ -287,21 +287,25 @@ namespace MMR.Randomizer.Utils
                         // LUI/ADDIU combo
                         if (commandType == 0x5 && commandTypeNext == 0x6)
                         {
-                            int luiLoc   = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc)) & 0x00FFFFFF;
+                            int luiLoc   = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
                             int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
+                            // combine the halves from asm back into one pointer
                             uint pointer = 0;
                             pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, luiLoc   + 2) << 16);
                             pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2));
+                            // offset the pointer to our new VRAM
                             pointer += newVRAMOffset;
-                            ReadWriteUtils.Arr_WriteU16(file.Data, luiLoc   + 2, (ushort)((pointer & 0xFFFF0000) >> 16));
+                            // separate the pointer again into halves and put back
+                            int LUIAdd = ((pointer & 0xFFFF) > 0x8000) ? 1 : 0; // if the lower half is too big we have to add one to LUI
+                            ReadWriteUtils.Arr_WriteU16(file.Data, luiLoc   + 2, (ushort)(((pointer & 0xFFFF0000) >> 16) + LUIAdd));
                             ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, (ushort)(pointer & 0xFFFF));
 
                             relocEntryLoc += 8;
                         }
-                        // JAL
+                        // JAL function calls
                         else if (commandType == 0x4)
                         {
-                            int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc)) & 0x00FFFFFF;
+                            int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
                             uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
                             uint shiftedJal = jal << 2;
                             shiftedJal += newVRAMOffset;
@@ -315,7 +319,9 @@ namespace MMR.Randomizer.Utils
                         // Hard pointer (init vars actor funcs like init for instance)
                         else if (commandType == 0x2)
                         {
-                            int ptrLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc)) & 0x00FFFFFF;
+                            // issue: this is also used for jump table pointers but those work different I guess? 
+
+                            int ptrLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
                             uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
                             ptrValue += newVRAMOffset;
                             ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);

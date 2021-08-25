@@ -32,6 +32,7 @@ namespace MMR.Randomizer
     {
         // when we inject a new actor theres some data we need
         // and some adjustments we need to make based on where it gets placed in vram
+        public uint actorID = 0;
         public uint objID = 0;
         public uint fileID = 0;
 
@@ -1788,19 +1789,19 @@ namespace MMR.Randomizer
             ///////   DEBUGGING   ///////
             /////////////////////////////
             #if DEBUG
-            if (scene.SceneEnum == GameObjects.Scene.RomaniRanch) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.ClockTowerInterior) // force specific actor/variant for debugging
             {
-                /*
-                chosenReplacementEnemies[3].ActorID = (int)GameObjects.Actor.CircleOfFire;
-                chosenReplacementEnemies[3].ActorEnum = GameObjects.Actor.CircleOfFire;
-                chosenReplacementEnemies[3].Variants[0] = 0x3F5F;
-                chosenReplacementEnemies[7].ActorID = (int) GameObjects.Actor.CircleOfFire;
+                
+                //chosenReplacementEnemies[0].ActorID = (int)GameObjects.Actor.CircleOfFire;
+                //chosenReplacementEnemies[0].ActorEnum = GameObjects.Actor.CircleOfFire;
+                chosenReplacementEnemies[0].Variants[0] = 1;
+                /* chosenReplacementEnemies[7].ActorID = (int) GameObjects.Actor.CircleOfFire;
                 chosenReplacementEnemies[7].ActorEnum = GameObjects.Actor.CircleOfFire;
                 chosenReplacementEnemies[7].Variants[0] = 0x3F5F;
                 chosenReplacementEnemies[1].ActorID = (int)GameObjects.Actor.Demo_Kankyo;
                 chosenReplacementEnemies[1].ActorEnum = GameObjects.Actor.Demo_Kankyo;
                 chosenReplacementEnemies[1].Variants[0] = 0;
-                */
+                // */
 
             }
             /////////////////////////////
@@ -1849,9 +1850,13 @@ namespace MMR.Randomizer
                 if (command == "ground_variants")
                 {
                     var newGroundVariants = valueStr.Split(",").ToList();
-                    var newGroundVariantsShort = newGroundVariants.Select(u => Convert.ToUInt16(u.Trim())).ToList();
+                    var newGroundVariantsShort = newGroundVariants.Select(u => Convert.ToUInt16(u.Trim(), 16)).ToList();
 
                     newInjectedActor.groundVariants = newGroundVariantsShort;
+                    continue;
+                }
+                if (command == "variants_with_max")
+                {
                     continue;
                 }
 
@@ -1943,6 +1948,11 @@ namespace MMR.Randomizer
                             }
 
                             var meta = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
+
+                            // can we inject new attributes?
+                            var gameobject = (GameObjects.Actor) meta.actorID;
+                            //GroundVariantsAttribute newGroundVariants = new GroundVariantsAttribute(0);
+                            //gameobject.add//; gameobject.SetAttribute<GroundVariantsAttribute>();
 
                             var newFID = (int) meta.fileID;
                             // TODO if fileid is 0, we need to put this in an empty actor slot
