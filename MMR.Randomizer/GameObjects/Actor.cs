@@ -160,7 +160,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled] // now that they are testy, lets count them as enemies
         [FileID(54)]
         [ObjectListIndex(0xF)]
-        [GroundVariants(0x1)]
+        [GroundVariants(0x0)]
         [VariantsWithRoomMax(max: 10, variant:0xFFFF)]
         [UnkillableAllVariants]
         // I would like a flying variant, but they seem to drop like a rock instead of float down
