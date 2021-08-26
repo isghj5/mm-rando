@@ -45,40 +45,109 @@ namespace MMR.Randomizer
         public List<ushort> groundVariants;
         // variants with max
 
-
         // bin is not stored here, it gets injected immediately
+    }
+
+    public class ReplacementActor
+    {
+        // because I cannot add values to the actor enum at runtime, the list of replacment actors will need to be a different type
+
+        public GameObjects.Actor actorEnum;
+        public InjectedActor replacementActor;
+
+        public ReplacementActor(GameObjects.Actor actorEnum)
+        {
+            this.actorEnum = actorEnum;
+        }
+
+        public void SetInjectedActor(InjectedActor actor)
+        {
+            replacementActor = actor;
+        }
+
+        public bool NoPlacableVariants()
+        {
+            // assumption: if you injected a new actor, you WANT it placed
+            return (this.replacementActor != null) ? (false) : (actorEnum.NoPlacableVariants());
+        }
+
+        // get Variants, if custom get custom, if not use enum
+
     }
 
     public class Enemies
     {
         public static List<InjectedActor> InjectedActors = new List<InjectedActor>();
 
-        private static List<GameObjects.Actor> EnemyList { get; set; }
+        private static List<GameObjects.Actor> VanillaEnemyList { get; set; }
+        private static List<ReplacementActor> ReplacementCandidateList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
         private static Random seedrng;
 
-        public static void ReadEnemyList()
+        public static void PrepareEnemyLists()
         {
-            EnemyList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+            // list of slots to use
+            VanillaEnemyList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                             .Where(u => u.ObjectIndex() > 3
                                 && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized()))) // both
                             .ToList();
+
+           /* var EmemiesOnly = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+                            .Where(u => u.ObjectIndex() > 3
+                                && (u.IsEnemyRandomized()))
+                            .ToList();
+           //*/
+
+            // list of replacement actors we can use to replace with
+            // for now they are the same, in the future players will control how they load
+            ReplacementCandidateList = new List<ReplacementActor>();
+            //foreach (var actor in EmemiesOnly)
+            foreach (var actor in VanillaEnemyList)
+            {
+                var newReplacementActor = new ReplacementActor(actor);
+                var injectedActorSearch = InjectedActors.Find(u => u.actorID == (int) actor);
+                if (injectedActorSearch != null)
+                {
+                    newReplacementActor.SetInjectedActor(injectedActorSearch);
+                }
+                ReplacementCandidateList.Add(newReplacementActor);
+            }
         }
+
+        public static bool ReplacementListContains(GameObjects.Actor actor)
+        {
+            return ReplacementCandidateList.Find(u => u.actorEnum == actor) != null;
+        }
+        public static void ReplacementListRemove(List<ReplacementActor> replaceList, GameObjects.Actor actor)
+        {
+            var removeActor = replaceList.Find(u => u.actorEnum == GameObjects.Actor.Armos);
+            if (removeActor != null)
+            {
+                replaceList.Remove(removeActor);
+            }
+        }
+
 
         public static List<Actor> GetSceneEnemyActors(Scene scene)
         {
             /// this is separate from object because actors and objects are a different list in the scene/room data
 
-            // I prefer foreach, but in benchmarks its considerably slower, and enemizer has performance issues
+            // I prefer foreach, but in benchmarks it's considerably slower, and enemizer has performance issues
 
-            var enemyList = new List<Actor>();
+            var SceneEnemyList = new List<Actor>();
             for (int mapNumber = 0; mapNumber < scene.Maps.Count; ++mapNumber)
             {
                 for (int actorNumber = 0; actorNumber < scene.Maps[mapNumber].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapNumber].Actors)
                 {
                     var mapActor = scene.Maps[mapNumber].Actors[actorNumber];
-                    var matchingEnemy = EnemyList.Find(u => (int)u == mapActor.ActorID);
+                    //var test = ReplacementCandidateList.Find(u => (int)u.actorEnum == mapActor.ActorID);
+                    //if (test == null)
+                    //{
+                    //    continue;
+                    //}
+                    //var matchingEnemy = test.actorEnum;
+                    var matchingEnemy = VanillaEnemyList.Find(u => (int)u == mapActor.ActorID);
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.AllVariants();
                         if (!matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)
@@ -90,12 +159,12 @@ namespace MMR.Randomizer
                                                    || scene.SceneEnum.IsFairyDroppingEnemy(mapNumber, actorNumber);
                             mapActor.RoomActorIndex = scene.Maps[mapNumber].Actors.IndexOf(mapActor);
                             mapActor.Type = matchingEnemy.GetType(mapActor.OldVariant);
-                            enemyList.Add(mapActor);
+                            SceneEnemyList.Add(mapActor);
                         }
                     }
                 }
             }
-            return enemyList;
+            return SceneEnemyList;
         }
 
         public static List<int> GetSceneEnemyObjects(Scene scene)
@@ -107,7 +176,7 @@ namespace MMR.Randomizer
             {
                 foreach (var mapObject in sceneMap.Objects)
                 {
-                    var matchingEnemy = EnemyList.Find(u => u.ObjectIndex() == mapObject);
+                    var matchingEnemy = VanillaEnemyList.Find(u => u.ObjectIndex() == mapObject);
                     if (matchingEnemy > 0                                               // exists in the list
                        && !objList.Contains(matchingEnemy.ObjectIndex())                     // not already extracted from this scene
                        && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
@@ -344,7 +413,7 @@ namespace MMR.Randomizer
 
         public static void LowerEnemiesResourceLoad()
         {
-            var actorList = EnemyList.Where(u => u.ActorInitOffset() > 0).ToList();
+            var actorList = VanillaEnemyList.Where(u => u.ActorInitOffset() > 0).ToList();
             var dinofos = GameObjects.Actor.Dinofos;
 
             // separated because for some reason this can cause cutscene dinofos to delay and even softlock
@@ -688,7 +757,7 @@ namespace MMR.Randomizer
         private static void FixScarecrowTalk()
         {
             /// scarecrow breaks if you try to teach him a song anywhere where he normally does not exist
-            if (!EnemyList.Contains(GameObjects.Actor.Scarecrow))
+            if (!ReplacementListContains(GameObjects.Actor.Scarecrow))
             {
                 return;
             }
@@ -839,7 +908,7 @@ namespace MMR.Randomizer
         {
             /// if tingle can be randomized, he can end up on any flying enemy in scenes that don't already have a tingle
             /// some of these scenes would drop him into water or off the cliff where he cannot be reached
-            if (!EnemyList.Contains(GameObjects.Actor.Tingle))
+            if (!ReplacementListContains(GameObjects.Actor.Tingle))
             {
                 return;
             }
@@ -883,7 +952,7 @@ namespace MMR.Randomizer
             /// the flying poe baloon romani uses to play her game doesn't spawn unless it has an explosion fuse timer
             ///  or it detects romani actor in the scene, so it can count baloon pops
             /// but the code that blocks the baloon if neither of these are true is nop-able, and the rest of the code is fine without romani
-            if (!EnemyList.Contains(GameObjects.Actor.PoeBalloon))
+            if (!ReplacementListContains(GameObjects.Actor.PoeBalloon))
             {
                 return;
             }
@@ -936,7 +1005,7 @@ namespace MMR.Randomizer
         public static void FixSeth2(){
             /// seth 2, the guy waving his arms in the termina field telescope, like oot spiderhouse
             /// his init code checks for a value, and does not spawn if the value is different than expected
-            if (!EnemyList.Contains(GameObjects.Actor.Seth2))
+            if (!ReplacementListContains(GameObjects.Actor.Seth2))
             {
                 return;
             }
@@ -963,7 +1032,7 @@ namespace MMR.Randomizer
         {
             /// guruguru's actor spawns or kills itself based on time flags, ignoring that the spawn points themselves have timeflags
             /// if we want guruguru to be placed in the world without being restricted to day/night only (which is lame) we have to stop this
-            if (!EnemyList.Contains(GameObjects.Actor.GuruGuru))
+            if (!ReplacementListContains(GameObjects.Actor.GuruGuru))
             {
                 return;
             }
@@ -1356,7 +1425,7 @@ namespace MMR.Randomizer
             } // */
         }
 
-        public static List<Actor> GetMatchPool(List<Actor> oldActors, Random random, Scene scene, List<GameObjects.Actor> reducedCandidateList, bool containsFairyDroppingEnemy)
+        public static List<Actor> GetMatchPool(List<Actor> oldActors, Random random, Scene scene, List<ReplacementActor> reducedCandidateList, bool containsFairyDroppingEnemy)
         {
             List<Actor> enemyMatchesPool = new List<Actor>();
 
@@ -1368,14 +1437,14 @@ namespace MMR.Randomizer
             if (containsFairyDroppingEnemy) // scene.SceneEnum.GetSceneFairyDroppingEnemies().Contains((GameObjects.Actor) oldActors[0].Actor))
             {
                 /// special case: armos does not drop stray fairies, and I dont know why
-                reducedCandidateList.Remove(GameObjects.Actor.Armos);
+                ReplacementListRemove(reducedCandidateList, GameObjects.Actor.Armos);
                 MustBeKillable = true; // we dont want respawning or unkillable enemies here either
             }
 
             // this could be per-enemy, but right now its only used where enemies and objects match, so to save cpu cycles do it once per object not per enemy
             foreach(var enemy in scene.SceneEnum.GetBlockedReplacementActors((GameObjects.Actor) oldActors[0].ActorID))
             {
-                reducedCandidateList.Remove(enemy);
+                ReplacementListRemove(reducedCandidateList, enemy);
             }
 
 
@@ -1384,8 +1453,9 @@ namespace MMR.Randomizer
             {
                 // the enemy we got from the scene has the specific variant number, the general game object has all
                 var enemyMatch = (GameObjects.Actor) oldEnemy.ActorID;
-                foreach (var enemy in reducedCandidateList)
+                foreach (var candidateEnemy in reducedCandidateList)
                 {
+                    var enemy = candidateEnemy.actorEnum;
                     var compatibleVariants = enemyMatch.CompatibleVariants(enemy, random, oldEnemy.Variants[0]);
                     if (compatibleVariants == null)
                     {
@@ -1394,8 +1464,6 @@ namespace MMR.Randomizer
 
                     // TODO here would be a great place to test if the requirements to kill an enemy are met with given items
 
-                    // TODO re-enable and test stationary, which is currently missing
-                    //&& (enemy.Stationary == enemyMatch.Stationary)&& )
                     if ( ! enemyMatchesPool.Any(u => u.ActorID == (int) enemy))
                     {
                         var newEnemy = enemy.ToActorModel();
@@ -1459,7 +1527,7 @@ namespace MMR.Randomizer
             // example: dinofos has a second object: dodongo, just for the fire breath dlist
             foreach (int obj in sceneObjects.ToList())
             {
-                if ( ! (EnemyList.FindAll(u => u.ObjectIndex() == obj)).Any( u => sceneEnemies.Any( w => w.ActorID == (int) u)))
+                if ( ! (VanillaEnemyList.FindAll(u => u.ObjectIndex() == obj)).Any( u => sceneEnemies.Any( w => w.ActorID == (int) u)))
                 { 
                     sceneObjects.Remove(obj);
                 }
@@ -1472,7 +1540,7 @@ namespace MMR.Randomizer
             {
                 // add shield object to list of objects we can swap out
                 sceneObjects.Add(GameObjects.Actor.LikeLikeShield.ObjectIndex());
-                // generate a a candidate list for the second likelike
+                // generate a candidate list for the second likelike
                 for( int i = 0; i < sceneEnemies.Count; ++i)
                 {
                     if ( sceneEnemies[i].ActorID == (int)GameObjects.Actor.LikeLike
@@ -1485,15 +1553,14 @@ namespace MMR.Randomizer
             WriteOutput(" time to finish removing unnecessary objects: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             // some scenes are blocked from having enemies, do this ONCE before GetMatchPool, which would do it per-enemy
-            //var blockedEnemies = EnemyList.FindAll(u => u.BlockedScenes().Contains(scene.SceneEnum)); // debug
-            var sceneAcceptableEnemies = EnemyList.FindAll( u => ! u.BlockedScenes().Contains(scene.SceneEnum));
+            var sceneAcceptableEnemies = ReplacementCandidateList.FindAll( u => ! u.actorEnum.BlockedScenes().Contains(scene.SceneEnum));
             // some enemies are marked do-not-re-use by having no vairants with max > 0, remove now
-            var nonPlacable = sceneAcceptableEnemies.FindAll(u => u.NoPlacableVariants());
+            //var nonPlaceable = sceneAcceptableEnemies.FindAll(u => u.NoPlacableVariants());
 
             sceneAcceptableEnemies = sceneAcceptableEnemies.FindAll(u => !u.NoPlacableVariants());
 
             // issue: this function is called in paralel, if the order is different the Random object will be different and not seed-reproducable
-            // instead of passing the random obj, we pass seed and add it to the unique scene number to get a replicatable, but random, seed
+            // instead of passing the Random instance, we pass seed and add it to the unique scene number to get a replicatable, but random, seed
             var rng = new Random(seed + scene.File);
 
             // we want to check for actor types that contain fairies per-scene for speed
@@ -1503,20 +1570,24 @@ namespace MMR.Randomizer
             var actorCandidatesLists        = new List<List<Actor>>();
             List<ValueSwap> chosenReplacementObjects;
 
-            // get a matching set of possible replacement objects and enemies that we can use
-            // moving out of loop, this should be static except for RNG changes, which we can leave static per seed
-            for (int i = 0; i < sceneObjects.Count; i++)
-            {
-                // get a list of all enemies (in this room) from enemylist that have the same OBJECT as our object that have an actor we also have
-                originalEnemiesPerObject.Add(sceneEnemies.FindAll(u => u.ObjectID == sceneObjects[i]));
-                // get a list of matching actors that can fit in the place of the previous actor
-                var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == sceneObjects[i]);
-                actorCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene, sceneAcceptableEnemies.ToList(), objectHasFairyDroppingEnemy));
+            void GenerateActorCandidates(){
+                // get a matching set of possible replacement objects and enemies that we can use
+                // turned into a inline function because we re-do this every N attempts of the bogo loop
+                for (int i = 0; i < sceneObjects.Count; i++)
+                {
+                    // get a list of all enemies (in this room) that have the same OBJECT as our object that have an actor we also have
+                    originalEnemiesPerObject.Add(sceneEnemies.FindAll(u => u.ObjectID == sceneObjects[i]));
+                    // get a list of matching actors that can fit in the place of the previous actor
+                    var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == sceneObjects[i]);
+                    actorCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene, sceneAcceptableEnemies.ToList(), objectHasFairyDroppingEnemy));
+                }
             }
+
+            GenerateActorCandidates();
             WriteOutput(" time to generate candidate list: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             int loopsCount = 0;
-            int freeEnemyRate = 75;
+            int freeEnemyRate = 75; // starting value, as attempts increase this shrinks which lowers budget
             int oldObjectSize = sceneObjects.Select(x => ObjUtils.GetObjSize(x)).Sum();
             var previousyAssignedActor = new List<GameObjects.Actor>();
             var chosenReplacementEnemies = new List<Actor>();
@@ -1536,19 +1607,10 @@ namespace MMR.Randomizer
                 if (loopsCount % 25 == 0)
                 {
                     // reinit actorCandidatesLists because this RNG is bad
-                    // TODO: turn this into a function as it copies code from above
-                    for (int i = 0; i < sceneObjects.Count; i++)
-                    {
-                        // get a list of all enemies (in this room) from enemylist that have the same OBJECT as our object that have an actor we also have
-                        originalEnemiesPerObject.Add(sceneEnemies.FindAll(u => u.ObjectID == sceneObjects[i]));
-                        // get a list of matching actors that can fit in the place of the previous actor
-                        var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == sceneObjects[i]);
-                        actorCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene, sceneAcceptableEnemies.ToList(), objectHasFairyDroppingEnemy));
-                    }
+                    GenerateActorCandidates();
                 }
-                if (loopsCount >= 900) //1200) // inf loop catch
+                if (loopsCount >= 900) // inf loop catch
                 {
-
                     var error = " No enemy combo could be found to fill this scene: " + scene.SceneEnum.ToString() + " w sid:" + scene.Number.ToString("X2");
                     WriteOutput(error);
                     WriteOutput("Failed Candidate List:");
@@ -1569,7 +1631,6 @@ namespace MMR.Randomizer
                     freeEnemyRate--; 
                 }
                 
-
                 chosenReplacementEnemies = new List<Actor>();
                 chosenReplacementObjects = new List<ValueSwap>();
                 int newObjectSize = 0;
@@ -1795,13 +1856,6 @@ namespace MMR.Randomizer
                 //chosenReplacementEnemies[0].ActorID = (int)GameObjects.Actor.CircleOfFire;
                 //chosenReplacementEnemies[0].ActorEnum = GameObjects.Actor.CircleOfFire;
                 chosenReplacementEnemies[0].Variants[0] = 1;
-                /* chosenReplacementEnemies[7].ActorID = (int) GameObjects.Actor.CircleOfFire;
-                chosenReplacementEnemies[7].ActorEnum = GameObjects.Actor.CircleOfFire;
-                chosenReplacementEnemies[7].Variants[0] = 0x3F5F;
-                chosenReplacementEnemies[1].ActorID = (int)GameObjects.Actor.Demo_Kankyo;
-                chosenReplacementEnemies[1].ActorEnum = GameObjects.Actor.Demo_Kankyo;
-                chosenReplacementEnemies[1].Variants[0] = 0;
-                // */
 
             }
             /////////////////////////////
@@ -1991,7 +2045,7 @@ namespace MMR.Randomizer
                     GameObjects.Scene.SakonsHideout,
                     GameObjects.Scene.MilkBar };//, GameObjects.Scene.DekuPalace };
 
-                ReadEnemyList();
+                PrepareEnemyLists();
                 SceneUtils.ReadSceneTable();
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();

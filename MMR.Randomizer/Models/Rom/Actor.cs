@@ -21,7 +21,6 @@ namespace MMR.Randomizer.Models.Rom
         public int ActorSize; // todo
         public int ObjectSize; // read by enemizer at scene actor reading
         public int ActorIDFlags; // we just want to keep them when re-writing, but I'm not sure they even matter
-        //public int Timeflags;
         public List<int> Variants = new List<int> { 0 };
         public int OldVariant;
         public bool MustNotRespawn = false;
