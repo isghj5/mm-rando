@@ -148,6 +148,44 @@ namespace MMR.Randomizer.Extensions
             }
         }
 
+        public static List<int> CompatibleVariants(this Actor actor, ReplacementActor otherActor, Random rng, int oldActorVariant)
+        {
+            var regularVariants = CompatibleVariants(actor, otherActor.actorEnum, rng, oldActorVariant);
+            if (otherActor.replacementActor == null || otherActor.replacementActor.groundVariants == null)
+            {
+                return regularVariants;
+            }
+            else
+            {
+                // for now ground type only, until I'm in a good enough mood to try to re-mix the enum version down below
+
+                var ourGroundVariantsAttr = actor.GetAttribute<GroundVariantsAttribute>();
+                if (ourGroundVariantsAttr == null)
+                {
+                    return null;
+                }
+
+                var ourGroundVariants = ourGroundVariantsAttr.Variants;
+                var newGroundVariants = otherActor.replacementActor.groundVariants;
+                if (regularVariants != null)
+                {
+                    newGroundVariants.AddRange(regularVariants);
+                }
+
+                // our old actor variant was this type
+                if (ourGroundVariants.Count > 0
+                    && ourGroundVariants.Contains(oldActorVariant)) // old actor had to actually be this attribute
+                {
+                    return newGroundVariants;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+        }
+
+
         public static List<int> CompatibleVariants(this Actor actor, Actor otherActor, Random rng, int oldActorVariant)
         {
             // with mixed types, typing could be messy, keep it hidden here

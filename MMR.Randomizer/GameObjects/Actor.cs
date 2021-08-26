@@ -3407,13 +3407,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x15B)]
         En_Tanron5 = 0x268, // En_Tanron5
 
-        //[ActorizerEnabled] // didn't spawn with 0, don't know what vars work
+        //[ActorizerEnabled] // this actor is EMPTY the code has nothing in it
         [FileID(576)]
         [ObjectListIndex(0x1EB)]
         // m2c suggests either param 1 or 2 could work
         // 1 spins in circles like giant bee, 2 did not spawn
         [FlyingVariants(2)]
-        BeeSwarm = 0x269, // En_Tanron6
+        En_Tanron6 = 0x269, // En_Tanron6
 
         [FileID(577)]
         [ObjectListIndex(0xF1)]

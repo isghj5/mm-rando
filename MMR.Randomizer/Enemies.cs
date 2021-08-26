@@ -42,7 +42,7 @@ namespace MMR.Randomizer
         // init vars are located somewhere in .data, we want to know where exactly for reasons
         public uint initVarsLocation = 0;
 
-        public List<ushort> groundVariants;
+        public List<int> groundVariants;
         // variants with max
 
         // bin is not stored here, it gets injected immediately
@@ -105,13 +105,7 @@ namespace MMR.Randomizer
             //foreach (var actor in EmemiesOnly)
             foreach (var actor in VanillaEnemyList)
             {
-                var newReplacementActor = new ReplacementActor(actor);
-                var injectedActorSearch = InjectedActors.Find(u => u.actorID == (int) actor);
-                if (injectedActorSearch != null)
-                {
-                    newReplacementActor.SetInjectedActor(injectedActorSearch);
-                }
-                ReplacementCandidateList.Add(newReplacementActor);
+                ReplacementCandidateList.Add(new ReplacementActor(actor));
             }
         }
 
@@ -119,15 +113,16 @@ namespace MMR.Randomizer
         {
             return ReplacementCandidateList.Find(u => u.actorEnum == actor) != null;
         }
+
         public static void ReplacementListRemove(List<ReplacementActor> replaceList, GameObjects.Actor actor)
         {
+            // might be an easier one liner but this could get used a lot
             var removeActor = replaceList.Find(u => u.actorEnum == GameObjects.Actor.Armos);
             if (removeActor != null)
             {
                 replaceList.Remove(removeActor);
             }
         }
-
 
         public static List<Actor> GetSceneEnemyActors(Scene scene)
         {
@@ -1456,7 +1451,8 @@ namespace MMR.Randomizer
                 foreach (var candidateEnemy in reducedCandidateList)
                 {
                     var enemy = candidateEnemy.actorEnum;
-                    var compatibleVariants = enemyMatch.CompatibleVariants(enemy, random, oldEnemy.Variants[0]);
+                    // right here, we need a new compatibleVariants function
+                    var compatibleVariants = enemyMatch.CompatibleVariants(candidateEnemy, random, oldEnemy.Variants[0]);
                     if (compatibleVariants == null)
                     {
                         continue;
@@ -1886,6 +1882,8 @@ namespace MMR.Randomizer
 
         public static InjectedActor ParseMMRAMeta(String metaFile)
         {
+            /// every MMRA comes with one meta file per bin, this contains metadata
+
             var newInjectedActor = new InjectedActor();
 
             foreach (var line in metaFile.Split('\n'))
@@ -1904,7 +1902,7 @@ namespace MMR.Randomizer
                 if (command == "ground_variants")
                 {
                     var newGroundVariants = valueStr.Split(",").ToList();
-                    var newGroundVariantsShort = newGroundVariants.Select(u => Convert.ToUInt16(u.Trim(), 16)).ToList();
+                    var newGroundVariantsShort = newGroundVariants.Select(u => Convert.ToInt32(u.Trim(), 16)).ToList();
 
                     newInjectedActor.groundVariants = newGroundVariantsShort;
                     continue;
@@ -1924,6 +1922,7 @@ namespace MMR.Randomizer
                 {
                     // dec instead of hex
                     newInjectedActor.fileID = Convert.ToUInt32(valueStr, fromBase: 10);
+                    newInjectedActor.actorID = (uint) VanillaEnemyList.Find(u => u.FileListIndex() == newInjectedActor.fileID);
                 }
                 else if (command == "initvars_offset")
                 {
@@ -1955,6 +1954,15 @@ namespace MMR.Randomizer
             }// */
 
             InjectedActors.Add(newInjectedActor);
+
+            var injectedActorSearch = ReplacementCandidateList.Find(u => (int) u.actorEnum == newInjectedActor.actorID);
+            if (injectedActorSearch == null)
+            {
+                throw new Exception("Parse MMRA: no previous actor exists for this actortype");
+            }
+            injectedActorSearch.SetInjectedActor(newInjectedActor);
+
+
             return newInjectedActor;
         }
 
