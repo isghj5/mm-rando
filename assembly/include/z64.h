@@ -1073,7 +1073,17 @@ struct GlobalContext {
 }; // size = 0x19258
 
 typedef struct SequenceChannelContext {
-    /* 0x00 */ u8 unk0[0x2C];
+    /* 0x00 */ struct {
+        u8 playing : 1;
+        u8 stopped : 1;
+        u8 unk3    : 1;
+        u8 muted   : 1;
+        u8 unk5    : 1;
+        u8 unk6    : 1;
+        u8 unk7    : 1;
+        u8 unk8    : 1;
+    } playState;
+    /* 0x01 */ u8 unk1[0x2B];
     /* 0x2C */ f32 unk2C;
     /* 0x30 */ f32 unk30; // volume?
     /* 0x34 */ UNK_TYPE1 unk34[0x4];
