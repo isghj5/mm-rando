@@ -158,7 +158,7 @@ extern void z2_Yaz0_LoadAndDecompressFile(u32 promAddr, void* dest, u32 length);
 extern void z2_SetGetItem(Actor* actor, GlobalContext* ctxt, s32 unk2, u32 unk3);
 extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 extern void z2_GiveItem(GlobalContext* ctxt, u8 itemId);
-extern s8 z2_IsItemKnown(u8 itemId);
+extern u8 z2_IsItemKnown(u8 itemId);
 extern bool z2_HasEmptyBottle();
 extern void z2_GiveMap(u32 mapIndex);
 extern void z2_AddRupees(s32 amount);

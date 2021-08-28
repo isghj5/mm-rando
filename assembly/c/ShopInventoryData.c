@@ -24,10 +24,10 @@ static bool DoesItemRequireBottle(u8 item) {
 
 static bool IsItemInstant(u8 item) {
     if (item >= ITEM_BOMB && item <= ITEM_MAGIC_BEAN) {
-        return z2_IsItemKnown(item);
+        return z2_IsItemKnown(item) != 0xFF;
     }
     if (item == ITEM_POWDER_KEG) {
-        return z2_IsItemKnown(item);
+        return z2_IsItemKnown(item) != 0xFF;
     }
     if (DoesItemRequireBottle(item)) {
         return true;
@@ -39,10 +39,10 @@ static bool IsItemInstant(u8 item) {
         return true;
     }
     if (item >= ITEM_PICKUP_DEKU_STICKS_5 && item <= ITEM_PICKUP_ARROWS_50) {
-        return z2_IsItemKnown(item);
+        return z2_IsItemKnown(item) != 0xFF;
     }
     if (item >= ITEM_PICKUP_BOMBCHU_20 && item <= ITEM_PICKUP_BOMBCHU_5) {
-        return z2_IsItemKnown(ITEM_BOMBCHU);
+        return z2_IsItemKnown(ITEM_BOMBCHU) != 0xFF;
     }
     return false;
 }
