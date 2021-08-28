@@ -126,7 +126,7 @@ void ShopInventoryData_HandleInstantPurchase(GlobalContext* ctxt, ActorEnGirlA* 
     }
     u16 giIndex = MMR_GetNewGiIndex(ctxt, NULL, actor->giIndex, true);
     GetItemEntry* giEntry = MMR_GetGiEntry(giIndex);
-    z2_memcpy((void*)0x800B35F0, giEntry, 8); // copy entry to 0x800B35F0 otherwise hacky stuff i wrote ages ago won't work.
+    *MMR_GetItemEntryContext = *giEntry;
     z2_GiveItem(ctxt, giEntry->item);
     z2_AddRupees(-ctxt->msgCtx.messageCost);
 }

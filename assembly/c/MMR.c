@@ -264,7 +264,7 @@ static u16 itemQueue[ITEM_QUEUE_LENGTH] = { 0, 0, 0, 0 };
 void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex) {
     giIndex = MMR_GetNewGiIndex(ctxt, NULL, giIndex, true);
     GetItemEntry* entry = MMR_GetGiEntry(giIndex);
-    z2_memcpy((void*)0x800B35F0, entry, 8); // copy entry to 0x800B35F0 otherwise hacky stuff i wrote ages ago won't work.
+    *MMR_GetItemEntryContext = *entry;
     z2_ShowMessage(ctxt, entry->message, 0);
     u8 soundType = entry->type & 0x0F;
     if (soundType == 0) {

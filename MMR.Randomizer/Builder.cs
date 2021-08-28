@@ -2787,14 +2787,14 @@ namespace MMR.Randomizer
                 }
 
                 // Update gi-table for Stray Fairies.
-                if (e.ItemGained == 0x9D && e.Object == 0x13A && extended.Indexes.Fairies != null)
+                if (e.ItemGained == 0xA8 && e.Object == 0x13A && extended.Indexes.Fairies != null)
                 {
                     var index = e.Type >> 4;
                     e.Object = (short)(extended.Indexes.Fairies.Value + index);
                 }
 
                 // Update gi-table for Double Defense.
-                if (e.ItemGained == 0x9E && e.Object == 0x96 && extended.Indexes.DoubleDefense != null)
+                if (e.ItemGained == 0xA7 && e.Object == 0x96 && extended.Indexes.DoubleDefense != null)
                 {
                     e.Object = extended.Indexes.DoubleDefense.Value;
                 }
@@ -2806,7 +2806,7 @@ namespace MMR.Randomizer
                 }
 
                 // Update gi-table for Magic Power
-                if (e.ItemGained == 0x9B && e.Object == 0xA4 && extended.Indexes.MagicPower != null)
+                if (e.ItemGained == 0xA5 && e.Object == 0xA4 && extended.Indexes.MagicPower != null)
                 {
                     e.Object = extended.Indexes.MagicPower.Value;
                 }
