@@ -1307,6 +1307,11 @@ namespace MMR.Randomizer
                 hacks.AddRange(BossKeyMode.DoorsOpen.GetAttributes<HackContentAttribute>().Select(hc => hc.HackContent));
             }
 
+            if (_randomized.Settings.BossKeyMode.HasFlag(BossKeyMode.KeepThroughTime))
+            {
+                hacks.AddRange(BossKeyMode.KeepThroughTime.GetAttributes<HackContentAttribute>().Select(hc => hc.HackContent));
+            }
+
             ushort requiredStrayFairies = 15;
             if (_randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly))
             {
