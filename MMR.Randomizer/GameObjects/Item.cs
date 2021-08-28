@@ -1010,7 +1010,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x3D), ItemPool(ItemCategory.DungeonKeys, LocationCategory.BossFights)]
         ItemWoodfallBossKey,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary, Returnable(nameof(GameplaySettings.SmallKeyMode), (int)SmallKeyMode.KeepThroughTime, true)]
         [ItemName("Woodfall Small Key"), LocationName("Woodfall Small Key Chest"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("access to a locked door", "a useful key")]
         [ShopText("A small key for use in Woodfall Temple.")]
@@ -1042,7 +1042,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4E), ItemPool(ItemCategory.DungeonKeys, LocationCategory.BossFights)]
         ItemSnowheadBossKey,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary, Returnable(nameof(GameplaySettings.SmallKeyMode), (int)SmallKeyMode.KeepThroughTime, true)]
         [ItemName("Snowhead Small Key"), LocationName("Snowhead Block Room Chest"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("access to a locked door", "a useful key")]
         [ShopText("A small key for use in Snowhead Temple.")]
@@ -1050,7 +1050,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x46), ItemPool(ItemCategory.DungeonKeys, LocationCategory.Chests)]
         ItemSnowheadKey1,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary, Returnable(nameof(GameplaySettings.SmallKeyMode), (int)SmallKeyMode.KeepThroughTime, true)]
         [ItemName("Snowhead Small Key"), LocationName("Snowhead Icicle Room Chest"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("access to a locked door", "a useful key")]
         [ShopText("A small key for use in Snowhead Temple.")]
@@ -1058,7 +1058,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x47), ItemPool(ItemCategory.DungeonKeys, LocationCategory.Chests)]
         ItemSnowheadKey2,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary, Returnable(nameof(GameplaySettings.SmallKeyMode), (int)SmallKeyMode.KeepThroughTime, true)]
         [ItemName("Snowhead Small Key"), LocationName("Snowhead Bridge Room Chest"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("access to a locked door", "a useful key")]
         [ShopText("A small key for use in Snowhead Temple.")]
@@ -1090,7 +1090,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4F), ItemPool(ItemCategory.DungeonKeys, LocationCategory.BossFights)]
         ItemGreatBayBossKey,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary, Returnable(nameof(GameplaySettings.SmallKeyMode), (int)SmallKeyMode.KeepThroughTime, true)]
         [ItemName("Great Bay Small Key"), LocationName("Great Bay Small Key Chest"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("access to a locked door", "a useful key")]
         [ShopText("A small key for use in Great Bay Temple.")]
@@ -1122,7 +1122,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x53), ItemPool(ItemCategory.DungeonKeys, LocationCategory.BossFights)]
         ItemStoneTowerBossKey,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary, Returnable(nameof(GameplaySettings.SmallKeyMode), (int)SmallKeyMode.KeepThroughTime, true)]
         [ItemName("Stone Tower Small Key"), LocationName("Stone Tower Armos Room Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("access to a locked door", "a useful key")]
         [ShopText("A small key for use in Stone Tower Temple.")]
@@ -1130,7 +1130,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x49), ItemPool(ItemCategory.DungeonKeys, LocationCategory.Chests)]
         ItemStoneTowerKey1,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary, Returnable(nameof(GameplaySettings.SmallKeyMode), (int)SmallKeyMode.KeepThroughTime, true)]
         [ItemName("Stone Tower Small Key"), LocationName("Stone Tower Eyegore Room Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("access to a locked door", "a useful key")]
         [ShopText("A small key for use in Stone Tower Temple.")]
@@ -1138,7 +1138,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4A), ItemPool(ItemCategory.DungeonKeys, LocationCategory.Chests)]
         ItemStoneTowerKey2,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary, Returnable(nameof(GameplaySettings.SmallKeyMode), (int)SmallKeyMode.KeepThroughTime, true)]
         [ItemName("Stone Tower Small Key"), LocationName("Stone Tower Updraft Room Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("access to a locked door", "a useful key")]
         [ShopText("A small key for use in Stone Tower Temple.")]
@@ -1146,7 +1146,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x4B), ItemPool(ItemCategory.DungeonKeys, LocationCategory.Chests)]
         ItemStoneTowerKey3,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary, Returnable(nameof(GameplaySettings.SmallKeyMode), (int)SmallKeyMode.KeepThroughTime, true)]
         [ItemName("Stone Tower Small Key"), LocationName("Stone Tower Death Armos Maze Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("access to a locked door", "a useful key")]
         [ShopText("A small key for use in Stone Tower Temple.")]

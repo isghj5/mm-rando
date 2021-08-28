@@ -16,5 +16,8 @@ namespace MMR.Randomizer.Models
 
         [Description("Randomization algorithm will place any randomized Small Keys into a location within the same region, even if the Small Key has been replaced via another Small Key Mode.")]
         KeepWithinDungeon,
+
+        [Description("Small Keys will go back in time with Link. Any used Small Keys will return to Link's inventory.")]
+        KeepThroughTime,
     }
 }

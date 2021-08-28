@@ -18,7 +18,7 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
         case CUSTOM_ITEM_SPIN_ATTACK:
             gSaveContext.perm.weekEventReg.hasGreatSpin = true;
             break;
-        case CUSTOM_ITEM_MAGIC_POWER:
+        case CUSTOM_ITEM_MAGIC_POWER:;
             // TODO allow downgrades if they're not disabled
             // technically not vanilla behavior, as in vanilla getting double magic doesn't grant you magic if you don't have it
             bool isDoubleMagic = MMR_GetItemEntryContext->type >> 4;
@@ -37,7 +37,7 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
             gSaveContext.perm.unk24.hasDoubleDefense = true;
             gSaveContext.perm.inv.defenseHearts = 20;
             break;
-        case CUSTOM_ITEM_STRAY_FAIRY:
+        case CUSTOM_ITEM_STRAY_FAIRY:;
             u8 type = MMR_GetItemEntryContext->type >> 4;
             if (type > 0) {
                 gSaveContext.perm.inv.strayFairies[type-1]++;

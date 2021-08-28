@@ -166,6 +166,11 @@ namespace MMR.Randomizer.Utils
             {
                 isRepeatable = false;
             }
+            if (item.IsReturnable(settings))
+            {
+                isRepeatable = false;
+                settings.AsmOptions.MMRConfig.ItemsToReturnIds.Add(getItemIndex);
+            }
             if (!isRepeatable)
             {
                 SceneUtils.UpdateSceneFlagMask(getItemIndex);

@@ -67,6 +67,16 @@ static void Savedata_ResetStartingItems(GlobalContext* ctxt) {
             }
         }
     }
+
+    // Give returnable items
+    for (u8 i = 0; i < MMR_CONFIG.itemsToReturn.length; i++) {
+        u16 itemId = MMR_CONFIG.itemsToReturn.ids[i];
+        if (MMR_GetGiFlag(itemId)) {
+            GetItemEntry* getItemEntry = MMR_GetGiEntry(itemId);
+            *MMR_GetItemEntryContext = *getItemEntry;
+            z2_GiveItem(ctxt, getItemEntry->item);
+        }
+    }
 }
 
 void Savedata_AfterFileInit(GlobalContext* ctxt) {

@@ -5,6 +5,7 @@ using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Attributes.Entrance;
 using System.Collections.Generic;
 using System.Linq;
+using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -101,6 +102,11 @@ namespace MMR.Randomizer.Extensions
         public static bool IsRepeatable(this Item item)
         {
             return item.HasAttribute<RepeatableAttribute>();
+        }
+
+        public static bool IsReturnable(this Item item, GameplaySettings settings)
+        {
+            return item.GetAttribute<ReturnableAttribute>()?.Condition(settings) ?? false;
         }
 
         public static bool IsRupeeRepeatable(this Item item)

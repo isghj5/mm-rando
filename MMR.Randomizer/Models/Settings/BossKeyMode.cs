@@ -16,5 +16,9 @@ namespace MMR.Randomizer.Models
 
         [Description("Randomization algorithm will place any randomized Boss Keys into a location within the same region, even if the Boss Key has been replaced via another Boss Key Mode.")]
         KeepWithinDungeon,
+
+        [Description("Boss Keys will go back in time with Link.")]
+        [HackContent(nameof(Resources.mods.key_boss_sot))]
+        KeepThroughTime,
     }
 }

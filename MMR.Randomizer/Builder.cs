@@ -1382,6 +1382,7 @@ namespace MMR.Randomizer
 
             var newMessages = new List<MessageEntry>();
             _randomized.Settings.AsmOptions.MMRConfig.RupeeRepeatableLocations.Clear();
+            _randomized.Settings.AsmOptions.MMRConfig.ItemsToReturnIds.Clear();
             foreach (var item in _randomized.ItemList)
             {
                 // Unused item
