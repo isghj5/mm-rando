@@ -32,7 +32,7 @@ namespace MMR.Randomizer.Utils
             #if DEBUG
             string settingstring = $"{setting} + DEBUG BUILD\x00";
             #else
-            string settingstring = $"{setting} + Isghj's Enemizer Test 22.4 + Cogsy's Lunar Contingency\x00";
+            string settingstring = $"{setting} + Isghj's Enemizer Test 22.4\x00";
             #endif
             int f = GetFileIndexForWriting(veraddr);
             var file = RomData.MMFileList[f];
@@ -176,11 +176,16 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void UpdateOverlayTable(int actorOvlTblFID, int actorOvlTblOffset)
+        public static void UpdateActorOverlayTable()
         {
             /// if overlays have grown, we need to modify their overlay table to use the right values for the new files
             /// every time you move an overlay you need to relocate the vram addresses, so instead of shifting all of them
             ///  we just move the new larger files to the end and leave a hole behind for now
+
+            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
+            RomUtils.CheckCompressed(actorOvlTblFID);
+
+            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
 
             uint theEndOfTakenVRAM = 0x80C27000; // 0x80C260A0 <- actual
 
@@ -238,7 +243,7 @@ namespace MMR.Randomizer.Utils
 
                     if (newActorMeta == null)
                     {
-                        throw new Exception("UpdateOverlayTable: Meta missing for injected actor");
+                        throw new Exception("UpdateActorOverlayTable: Meta missing for injected actor");
                     }
 
                     // TODO check if we can place it in an old hole left behind by a previously moved actor
@@ -331,7 +336,7 @@ namespace MMR.Randomizer.Utils
                         // unknown command? supposidly Z64 only uses these three although it could support more
                         else
                         {
-                            throw new Exception($"UpdateOverlayTable: unknown reloc entry value:\n" +
+                            throw new Exception($"UpdateActorOverlayTable: unknown reloc entry value:\n" +
                                 $" {ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc).ToString("X")}");
                         }
                     }
@@ -358,6 +363,122 @@ namespace MMR.Randomizer.Utils
                     previousLastVRAMEnd = newVRAMEnd;
                 }
             }
+        }
+
+        private static void UpdateTranstionOverlayTable()
+        {
+            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.TransitionOverlayTable);
+            RomUtils.CheckCompressed(actorOvlTblFID);
+            var codefile = RomData.MMFileList[actorOvlTblFID].Data;
+            int transitionOvlTblOffset = Constants.Addresses.TransitionOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
+
+            // file ids of transition overlays, in order, I can't be bothered to make a new enum yet
+            var transitionsFiles = new List<int>
+            {
+                0,   // empty
+                385, // unk
+                386, // unk
+                387, // unk
+                388, // unk
+                0,   // empty 
+                389, // unk
+            };
+
+            // first entry is empty
+            for (int i = 0;  i < transitionsFiles.Count; i++) // size not actually known
+            {
+                if (transitionsFiles[i] == 0)
+                {
+                    continue; // empty file slot keep going
+                }
+                // can you believe its not 0x20? its 0x1C....
+                var entryLoc = transitionOvlTblOffset + (i * 0x1C);
+
+                var transitionFile = RomData.MMFileList[transitionsFiles[i]];
+                ReadWriteUtils.Arr_WriteU32(codefile, entryLoc + 0xC, (uint) transitionFile.Addr);
+                ReadWriteUtils.Arr_WriteU32(codefile, entryLoc + 0x10, (uint) transitionFile.End);
+            }
+        }
+
+        private static void UpdateEffectOverlayTable()
+        {
+            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.EffectOverlayTable);
+            RomUtils.CheckCompressed(actorOvlTblFID);
+            var codefile = RomData.MMFileList[actorOvlTblFID].Data;
+            int transitionOvlTblOffset = Constants.Addresses.EffectOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
+
+            // file ids of effect overlays, in order, I can't be bothered to make a new enum yet
+            var effectFiles = new List<int>
+            {
+                180, // Effect_Ss_Dust
+                181, // Effect_Ss_Kirakira 
+                0,   // empty 
+                182, // Effect_Ss_Bomb2
+                183, // Effect_Ss_Blast
+                184, // Effect_Ss_G_Spk
+                185, // Effect_Ss_D_Fire
+                186, // Effect_Ss_Bubble
+                0,   // empty 
+                187, // Effect_Ss_G_Ripple
+                188, // Effect_Ss_G_Splash
+                0,   // empty 
+                189, // Effect_Ss_G_Fire
+                190, // Effect_Ss_Lightning
+                191, // Effect_Ss_Dt_Bubble
+                192, // Effect_Ss_Hahen
+                193, // Effect_Ss_Stick
+                194, // Effect_Ss_Sibuki
+                0,   // empty 
+                0,   // empty 
+                195, // Effect_Ss_Stone1
+                196, // Effect_Ss_Hitmark
+                197, // Effect_Ss_Fhg_Flash
+                198, // Effect_Ss_K_Fire
+                199, // Effect_Ss_Solder_Srch_Ball
+                200, // Effect_Ss_Kakera
+                201, // Effect_Ss_Ice_Piece
+                202, // Effect_Ss_En_Ice
+                203, // Effect_Ss_Fire_tail
+                204, // Effect_Ss_En_Fire
+                205, // Effect_Ss_Extra
+                0,   // empty 
+                206, // Effect_Ss_Dead_Db
+                207, // Effect_Ss_Dead_Dd
+                208, // Effect_Ss_Dead_Ds
+                0,   // empty 
+                230, // Effect_Ss_Ice_Smoke
+                287, // Effect_Ss_En_Ice_Block
+                390, // Effect_Ss_Sbn
+            };
+
+            for (int i = 0; i < effectFiles.Count; i++) // size not actually known
+            {
+                if (effectFiles[i] == 0)
+                {
+                    continue; // empty file slot keep going
+                }
+                // can you believe its not 0x20? its 0x1C....
+                var entryLoc = transitionOvlTblOffset + (i * 0x1C);
+                var transitionFile = RomData.MMFileList[effectFiles[i]];
+                ReadWriteUtils.Arr_WriteU32(codefile, entryLoc + 0x0, (uint)transitionFile.Addr);
+                ReadWriteUtils.Arr_WriteU32(codefile, entryLoc + 0x4, (uint)transitionFile.End);
+            }
+        }
+
+
+        public static void UpdateAllOverlayTables()
+        {
+            /// if you update one with new VROM addresses, then you need to update them all, or at least all after your changes
+
+            // gamestate overlay table
+            // these all seem to be at the start, waaay up above actors, so I think we've fine not updating it until we do more than actors
+
+            // actor overlay table
+            UpdateActorOverlayTable();
+            // effect overlay table
+            UpdateEffectOverlayTable();
+            // transition draw table
+            UpdateTranstionOverlayTable();
         }
 
         private static void UpdateDMAFileTable(byte[] ROM)
@@ -389,20 +510,13 @@ namespace MMR.Randomizer.Utils
         {
             // get the last data we need to find the overlay table
 
-            // our code that looks up the location in old-rom space of an address looks at file locations
-            //  the following function (UpdateVirtualFileAddresses) changes these so we need to get these first
-            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
-            RomUtils.CheckCompressed(actorOvlTblFID);
-
-            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
-
             //boyo crashes if you enter a scene without updating VROM OR overlay, but the rest of the game works
             // if you update VROM, crash after n64 logo
 
             // all of our files need their addresses shifted
             UpdateVirtualFileAddresses();
-            // we need to update overlay table if actors changed size
-            UpdateOverlayTable(actorOvlTblFID, actorOvlTblOffset);
+            // we need to update overlay tables if files changed size
+            UpdateAllOverlayTables();
 
             // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
             var previousThreadPriority = Thread.CurrentThread.Priority;

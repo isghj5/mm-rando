@@ -11,7 +11,12 @@
         public const int SeqTable           = 0xC77B80; // audioseq table (70 + 0x10)
         public const int AudiobankTable     = 0xC776D0; // audiobank index (c0 + 0x10)
         public const int Audiobank          = 0x020700;
-        public const int ActorOverlayTable  = 0xC45510;
+
+        // every overylay type has a different table for dynamic file loading
+        public const int EffectOverlayTable     = 0xC449E0;
+        public const int ActorOverlayTable      = 0xC45510;
+        public const int GameStateOverlayTable  = 0xC53E50;
+        public const int TransitionOverlayTable = 0xC670F0;
 
         // TODO add audiobank and soundbank pointers
     }
