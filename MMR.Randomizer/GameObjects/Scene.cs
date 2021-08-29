@@ -84,7 +84,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
             Actor.IkanaGravestone, Actor.Bumper, Actor.En_Ani)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Hiploop,
-            Actor.En_Ani, Actor.Bumper)]
+            Actor.En_Ani, Actor.Bumper, Actor.Tijo)]
 
         StoneTowerTemple = 0x13,
 
@@ -178,7 +178,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1284)]
         [SceneInternalId(0x27)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // blocking a few skulltulla
-            Actor.StockpotBell, Actor.Cow, Actor.IkanaGravestone, Actor.Bombiwa, Actor.Bumper, Actor.Postbox, Actor.En_Ani)]
+            Actor.StockpotBell, Actor.Cow, Actor.IkanaGravestone, Actor.Bombiwa, Actor.Bumper, Actor.Postbox, Actor.En_Ani, Actor.Tijo)]
         SwampSpiderHouse = 0x24,
 
         [FileID(1291)]
@@ -311,7 +311,7 @@ namespace MMR.Randomizer.GameObjects
         //  we want the hiploop to be non-blocking actors, making them killable with this flag does the job
         [FairyDroppingEnemies(24, 25, 26)] // hiploops
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
-            Actor.Wolfos, Actor.Peahat, Actor.Seth1)] // blocking enemies (wolfos:iceblock)
+            Actor.Wolfos, Actor.Peahat, Actor.Seth1, Actor.Tijo)] // blocking enemies (wolfos:iceblock)
         Woodfall = 0x43,
 
         [FileID(1364)]

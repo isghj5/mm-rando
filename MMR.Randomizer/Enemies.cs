@@ -2093,7 +2093,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 23.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 23.3\n");
                 }
             }
             catch (Exception e)

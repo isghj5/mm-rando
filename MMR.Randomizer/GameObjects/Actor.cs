@@ -3036,7 +3036,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0x2, 0x3, 0x4)]
         // TODO add pathing thing
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
-        [EnemizerScenesExcluded(Scene.ZoraHall)]
+        [EnemizerScenesExcluded(Scene.ZoraHall, Scene.ZoraCape)]
         [UnkillableAllVariants]
         RegularZora = 0x228, // En_Zot
         
@@ -3142,7 +3142,6 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         Tijo = 0x238, // En_Zod // drummer zora band member
-
 
         [ActorizerEnabled]
         [FileID(528)]
