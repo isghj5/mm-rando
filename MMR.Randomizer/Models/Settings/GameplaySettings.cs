@@ -344,6 +344,8 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool EnablePictoboxSubject { get; set; } = true;
 
+        public bool LenientGoronSpikes { get; set; }
+
         #endregion
 
         #region Speedups

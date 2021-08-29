@@ -86,6 +86,7 @@ namespace MMR.UI.Forms
             this.cDMult = new System.Windows.Forms.ComboBox();
             this.lDMult = new System.Windows.Forms.Label();
             this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.cClimbMostSurfaces = new System.Windows.Forms.CheckBox();
             this.cHookshotAnySurface = new System.Windows.Forms.CheckBox();
             this.cFloors = new System.Windows.Forms.ComboBox();
             this.lFloors = new System.Windows.Forms.Label();
@@ -197,7 +198,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cClimbMostSurfaces = new System.Windows.Forms.CheckBox();
+            this.cLenientGoronSpikes = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -869,6 +870,20 @@ namespace MMR.UI.Forms
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Movement";
             // 
+            // cClimbMostSurfaces
+            // 
+            this.cClimbMostSurfaces.AutoSize = true;
+            this.cClimbMostSurfaces.BackColor = System.Drawing.Color.Transparent;
+            this.cClimbMostSurfaces.ForeColor = System.Drawing.Color.Black;
+            this.cClimbMostSurfaces.Location = new System.Drawing.Point(7, 160);
+            this.cClimbMostSurfaces.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cClimbMostSurfaces.Name = "cClimbMostSurfaces";
+            this.cClimbMostSurfaces.Size = new System.Drawing.Size(135, 19);
+            this.cClimbMostSurfaces.TabIndex = 28;
+            this.cClimbMostSurfaces.Text = "Climb Most Surfaces";
+            this.cClimbMostSurfaces.UseVisualStyleBackColor = false;
+            this.cClimbMostSurfaces.CheckedChanged += new System.EventHandler(this.cClimbMostSurfaces_CheckedChanged);
+            // 
             // cHookshotAnySurface
             // 
             this.cHookshotAnySurface.AutoSize = true;
@@ -1308,6 +1323,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cLenientGoronSpikes);
             this.groupBox7.Controls.Add(this.cImprovedPictobox);
             this.groupBox7.Controls.Add(this.cElegySpeedups);
             this.groupBox7.Controls.Add(this.cCloseCows);
@@ -2207,19 +2223,17 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cClimbMostSurfaces
+            // cLenientGoronSpikes
             // 
-            this.cClimbMostSurfaces.AutoSize = true;
-            this.cClimbMostSurfaces.BackColor = System.Drawing.Color.Transparent;
-            this.cClimbMostSurfaces.ForeColor = System.Drawing.Color.Black;
-            this.cClimbMostSurfaces.Location = new System.Drawing.Point(7, 160);
-            this.cClimbMostSurfaces.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cClimbMostSurfaces.Name = "cClimbMostSurfaces";
-            this.cClimbMostSurfaces.Size = new System.Drawing.Size(135, 19);
-            this.cClimbMostSurfaces.TabIndex = 28;
-            this.cClimbMostSurfaces.Text = "Climb Most Surfaces";
-            this.cClimbMostSurfaces.UseVisualStyleBackColor = false;
-            this.cClimbMostSurfaces.CheckedChanged += new System.EventHandler(this.cClimbMostSurfaces_CheckedChanged);
+            this.cLenientGoronSpikes.AutoSize = true;
+            this.cLenientGoronSpikes.Location = new System.Drawing.Point(10, 155);
+            this.cLenientGoronSpikes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cLenientGoronSpikes.Name = "cLenientGoronSpikes";
+            this.cLenientGoronSpikes.Size = new System.Drawing.Size(137, 19);
+            this.cLenientGoronSpikes.TabIndex = 39;
+            this.cLenientGoronSpikes.Text = "Lenient Goron Spikes";
+            this.cLenientGoronSpikes.UseVisualStyleBackColor = true;
+            this.cLenientGoronSpikes.CheckedChanged += new System.EventHandler(this.cLenientGoronSpikes_CheckedChanged);
             // 
             // MainForm
             // 
@@ -2469,6 +2483,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cImprovedPictobox;
         private System.Windows.Forms.CheckBox cHookshotAnySurface;
         private System.Windows.Forms.CheckBox cClimbMostSurfaces;
+        private System.Windows.Forms.CheckBox cLenientGoronSpikes;
     }
 }
 

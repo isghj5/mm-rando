@@ -1322,6 +1322,11 @@ namespace MMR.Randomizer
             requiredStrayFairies += 0xA; // Needed for the value to be correct.
             ReadWriteUtils.WriteToROM(0x00EA3366, requiredStrayFairies);
 
+            if (_randomized.Settings.LenientGoronSpikes)
+            {
+                hacks.Add(Resources.mods.lenient_goron_spikes);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);
