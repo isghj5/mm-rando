@@ -125,7 +125,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x445C)]
         Eyegore = 250,
 
-        [ActorInitVarOffset(0x21C0)]
+        [ActorInitVarOffset(0x1FF0)]
         Snapper = 406,
 
         [ActorInitVarOffset(0x1FD0)]
