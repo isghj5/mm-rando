@@ -836,27 +836,76 @@ namespace MMR.Randomizer.Utils
         public static void CheckSongTest(List<SequenceInfo> sequences, StringBuilder log)
         {
             /// For song makers: songtest is a debug token found in the song filename that specifies to flood the seed with the music for testing
-            SequenceInfo testSequenceFileselect = RomData.SequenceList.Find(u => u.Name.Contains("songtest") == true);
-            if (testSequenceFileselect != null)
+            SequenceInfo songtestSequence = RomData.SequenceList.Find(u => u.Name.Contains("songtest") == true);
+            if (songtestSequence == null)
             {
-                // we always put songtest music on fileselect, titlescreen, ctd1, and combat music
-                SequenceInfo targetSlot = RomData.TargetSequences.Find(u => u.Name.Contains("mm-fileselect"));
-                AssignSequenceSlot(targetSlot, testSequenceFileselect, sequences, "SONGTEST", log); // file select
-
-                // rather than copy the song, we point the songslots at file select so they play the same songtest sequence
-                ConvertSequenceSlotToPointer(0x76, 0x18);  // titlescreen
-                ConvertSequenceSlotToPointer(0x15, 0x18);  // clocktown 1
-                ConvertSequenceSlotToPointer(0x1a, 0x18);  // combat
-
-                // in addition, we take all song slots that share a category with the song and add those too
-                List<SequenceInfo> allRegularSongs = RomData.SequenceList.FindAll(u => u.Type.Intersect(testSequenceFileselect.Type).Any());
-                foreach (SequenceInfo songslot in allRegularSongs)
-                {
-                    ConvertSequenceSlotToPointer(songslot.MM_seq, 0x18);
-                }
-                RomData.TargetSequences.Remove(targetSlot);
+                return;
             }
 
+            // we always put songtest music on fileselect, titlescreen, ctd1, and combat music
+            SequenceInfo fileselectSlot = RomData.TargetSequences.Find(u => u.Name.Contains("mm-fileselect"));
+            AssignSequenceSlot(fileselectSlot, songtestSequence, sequences, "SONGTEST", log); // file select
+
+            // rather than copy the song, we point the songslots at file select so they play the same songtest sequence
+            ConvertSequenceSlotToPointer(0x76, 0x18);  // titlescreen
+            ConvertSequenceSlotToPointer(0x15, 0x18);  // clocktown 1
+            ConvertSequenceSlotToPointer(0x1A, 0x18);  // combat
+
+            // in addition, we take all song slots that share a category with the song and add those too
+            List<SequenceInfo> allRegularSongs = RomData.SequenceList.FindAll(u => u.Type.Intersect(songtestSequence.Type).Any());
+            foreach (SequenceInfo songslot in allRegularSongs)
+            {
+                ConvertSequenceSlotToPointer(songslot.MM_seq, 0x18);
+            }
+            RomData.TargetSequences.Remove(fileselectSlot);
+
+            // in addition, because songs that use custom banks replace the original bank
+            //  by design, the replacement bank should be a super set of the original, and old songs should still work
+            //  however, sometimes, the old instruments in the new bank are broken, we need to test this
+            // we will test this by turning the lottery into a new song slot with a vanilla song using the songtest bank
+
+            if (songtestSequence.SequenceBinaryList == null)
+            {
+                return;
+            }
+
+            void ConvertRoomForSongTest(int sceneFID, int roomFID, int actorIDOffset, int musicOffset, List<SequenceInfo> replacementSequences)
+            {
+                if (replacementSequences.Count > 0)
+                {
+                    // pull a sequence from randomized list
+                    var validSequence = replacementSequences[0];
+                    var newSlot = RomData.PointerizedSequences[0].PreviousSlot;
+                    RomData.PointerizedSequences.RemoveAt(0);
+                    validSequence.Replaces = newSlot;
+                    replacementSequences.Remove(validSequence);
+                    sequences.Remove(validSequence);
+                    log.AppendLine($" -- ^ -- Instrument set number {validSequence.Instrument.ToString("X2")} also used by {validSequence.Name}");
+
+                    // set the scene to use this new song slot
+                    RomUtils.CheckCompressed(sceneFID);
+                    var scene = RomData.MMFileList[sceneFID].Data;
+                    scene[musicOffset] = (byte) newSlot;
+                }
+                // mute the previous music by killing the sfx actor which plays the filtered shop music
+                RomUtils.CheckCompressed(roomFID);
+                var room = RomData.MMFileList[roomFID].Data;
+                room[actorIDOffset]   = 0xFF; // kill the sfx actor by setting its room slot ID to -1
+                room[actorIDOffset+1] = 0xFF;
+            }
+
+            // generate a list of sequences that use the same bank as our songtest
+            var sharedBankSequences = RomData.SequenceList.FindAll(u => u.Instrument == songtestSequence.Instrument);
+            sharedBankSequences.Remove(songtestSequence);
+            sharedBankSequences.Remove(fileselectSlot); // file select was already set, so the values are broken
+            sharedBankSequences.RemoveAll(u => u.SequenceBinaryList != null);
+            Random newRandom = new Random();
+            sharedBankSequences = sharedBankSequences.OrderBy(x => newRandom.Next()).ToList(); // random
+
+            ConvertRoomForSongTest(sceneFID: 1334, 1335, actorIDOffset: 0x98, 0x7, sharedBankSequences); // lottery
+            ConvertRoomForSongTest(sceneFID: 1158, 1159, actorIDOffset: 0x88, 0x7, sharedBankSequences); // honey and darling
+            ConvertRoomForSongTest(sceneFID: 1188, 1189, actorIDOffset: 0x88, 0x7, sharedBankSequences); // treasure shop
+            ConvertRoomForSongTest(sceneFID: 1502, 1503, actorIDOffset: 0xC4, 0x7, sharedBankSequences); // bomb shop
         }
 
         public static void CheckSongForce(List<SequenceInfo> sequences, StringBuilder log, Random rng)
