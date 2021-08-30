@@ -145,39 +145,78 @@ namespace MMR.Randomizer.Utils
             return -1;
         }
 
-        private static void UpdateVirtualFileAddresses()
+        public static void UpdateOverlayVRAMReloc(MMFile file, int[] sectionOffsets, uint newVRAMOffset)
         {
-            /// shift the decompressed virtual addresses to the requirements of the new files
+            /// overlay c code is compiled with VRAM addresses already baked in,
+            /// these get adjusted when the overlay is loaded into RAM, to match the RAM locations
+            /// but when we inject this new overlay we move its VRAM to a different place than where it was compiled to
+            /// so now, we must re-apply the VRAM addresses so when the game shifts them into RAM it will have the correct values
 
-            int previousLastVROM;
-            int lastDecompressedAddr = 0;
-            //for (int i = 0; i < RomData.MMFileList.Count; i++)
-            for (int i = 39; i < RomData.MMFileList.Count; i++)
+            var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
+            // the table pointer at the end is an offset from the end, we need to swap it
+            int tableOffset = (int)(file.Data.Length - relocSize);
+            int relocEntryCountLocation = (int)(tableOffset + (4 * 4)); // first four ints are section sizes
+            // we need the difference between the old VRAM and new VRAM starting locations to re-align our vram
+
+            uint relocEntryCount = ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryCountLocation);
+
+            var relocEntryLoc = relocEntryCountLocation + 4; // first overlayEntry immediately after count
+            var relocEntryEndLoc = relocEntryLoc + (relocEntryCount * 4);
+            while (relocEntryLoc < relocEntryEndLoc)
             {
-                var file = RomData.MMFileList[i];
-                if (file.Cmp_Addr == -1) // file slot is empty, ignore
+                // for some reason text starts at 1, and so we cant reach bss unless we wrap around to 00?
+                var section = ((file.Data[relocEntryLoc] & 0xC0) >> 6) - 1;
+                var sectionOffset = sectionOffsets[section];
+
+                // each overlayEntry in reloc is one nibble of shifted section, one nible of type, and 3 bytes of address
+                // where address is an offset of the section, section starts at 1 because bss doesnt exist outside of RAM
+                var commandType = (file.Data[relocEntryLoc] & 0xF);
+                var commandTypeNext = (file.Data[relocEntryLoc + 4] & 0xF);
+
+                if (commandType == 0x5 && commandTypeNext == 0x6) // LUI/ADDIU combo
                 {
-                    continue;
+                    int luiLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
+                    // combine the halves from asm back into one pointer
+                    uint pointer = 0;
+                    pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, luiLoc   + 2) << 16);
+                    pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2));
+                    pointer += newVRAMOffset;
+                    // separate the pointer again into halves and put back
+                    int LUIIncr = ((pointer & 0xFFFF) > 0x8000) ? 1 : 0; // if the lower half is too big we have to add one to LUI
+                    ReadWriteUtils.Arr_WriteU16(file.Data, luiLoc   + 2, (ushort)(((pointer & 0xFFFF0000) >> 16) + LUIIncr));
+                    ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, (ushort)(pointer & 0xFFFF));
+
+                    relocEntryLoc += 8;
                 }
-
-                //Debug.WriteLine($"  file [{i}] old [{file.Addr.ToString("X")}] [{file.End.ToString("X")}]");
-
-                // new attempt at getting rom shifting of oversized overlays working
-                // since all files are shifted after the first shift, would it make sense to just always update all files?
-                if (file.Addr < lastDecompressedAddr)
+                else if (commandType == 0x4) // JAL function calls
                 {
-                    // Debug.WriteLine($"FileID [{i}] need moving from {file.Addr.ToString("X")} to {lastDecompressedAddr.ToString("X")}");
-                    var diff = lastDecompressedAddr - file.Addr;
-                    file.Addr = lastDecompressedAddr;
-                    // too late to get the size of decompressed file unless we keep it as a value, but we know how far off we should be
-                    file.End += diff;
+                    int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
+                    uint shiftedJal = jal << 2;
+                    shiftedJal += newVRAMOffset;
+                    shiftedJal = shiftedJal >> 2;
+                    ReadWriteUtils.Arr_WriteU32(file.Data, jalLoc, 0x0C000000 | shiftedJal);
+
+                    relocEntryLoc += 4;
                 }
+                else if (commandType == 0x2) // Hard pointer (init/destroy/update/draw pointers can be here, also actual ptr in rodata)
+                {
+                    int ptrLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
+                    ptrValue += newVRAMOffset;
+                    ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);
 
-                lastDecompressedAddr = file.End;
-                //Debug.WriteLine($"    new          [{file.Addr.ToString("X")}] [{(file.End).ToString("X")}]");
-
+                    relocEntryLoc += 4;
+                }
+                else // unknown command? supposidly Z64 only uses these three although it could support more
+                {
+                    throw new Exception($"UpdateActorOverlayTable: unknown reloc overlayEntry value:\n" +
+                        $" {ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc).ToString("X")}");
+                }
             }
         }
+
 
         public static void UpdateActorOverlayTable()
         {
@@ -185,16 +224,18 @@ namespace MMR.Randomizer.Utils
             /// every time you move an overlay you need to relocate the vram addresses, so instead of shifting all of them
             ///  we just move the new larger files to the end and leave a hole behind for now
 
+            // todo: how can we detect if enemizer is ON from here so we dont do this for every seed?
+
+            const uint theEndOfTakenVRAM = 0x80C27000; // 0x80C260A0 <- actual
+            const int  theEndOfTakenVROM = 0x04000000; // 0x02EE7XXX <- actual
+
             int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
             RomUtils.CheckCompressed(actorOvlTblFID);
-
-            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
-
-            uint theEndOfTakenVRAM = 0x80C27000; // 0x80C260A0 <- actual
 
             // the overlay table exists inside of another file, we need the offset to the table
             //int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
             var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
+            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
 
             // generate a list of actors sorted by fid
             var actorList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList();
@@ -203,30 +244,27 @@ namespace MMR.Randomizer.Utils
             actorList.RemoveAll(u => u.FileListIndex() < 38);
             var fidSortedActors = actorList.OrderBy(x => x.FileListIndex()).ToList();
 
-            // I don't know HOW vram is started, let's assume for now nothing before overlays is shifted,
-            // we need to start where the old vram ended
-            // read the vram start entry (0x8) from index 0x1, player's values are empty for some reason
-            // from that point on, keep the last acceptable spot
             uint previousLastVRAMEnd = theEndOfTakenVRAM;
+            int previousLastVROMEnd = theEndOfTakenVROM;
             int shift = 0;
 
-            foreach (var entry in fidSortedActors)
+            foreach (var overlayEntry in fidSortedActors)
             {
-                var actorID = (int) entry;
+                var actorID = (int) overlayEntry;
                 int entryLoc = actorOvlTblOffset + (actorID * 32); // overlay table is sorted by actorID
 
                 uint oldVROMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x0);
                 uint oldVROMEnd   = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x4);
 
-                if (oldVROMStart == 0) // empty file ignore
+                if (oldVROMStart == 0) // empty file
                 {
                     continue;
                 }
 
-                var fileID = entry.FileListIndex();
+                var fileID = overlayEntry.FileListIndex();
                 var file = RomData.MMFileList[fileID];
-                uint oldVRAMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x8);
-                uint oldVRAMEnd   = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0xC);
+                uint oldVRAMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x08);
+                uint oldVRAMEnd   = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x0C);
                 uint oldInitAddr  = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x14);
                 uint oldVROMSize = oldVROMEnd - oldVROMStart;
                 uint oldVRAMSize = oldVRAMEnd - oldVRAMStart;
@@ -234,10 +272,6 @@ namespace MMR.Randomizer.Utils
                 // if it was edited, its not compressed, get new filesize, else diff old address values
                 var uncompresedVROMSize = (file.WasEdited) ? (file.Data.Length) : (file.End - file.Addr);
                 int newVROMDiff = uncompresedVROMSize - (int) oldVROMSize;
-
-                // always update VROM, as it always moves in DMA table now
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint) file.Addr);
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint) file.End);
 
                 // files have grown in size, these are the files we need to move
                 if (newVROMDiff != 0)
@@ -249,11 +283,16 @@ namespace MMR.Randomizer.Utils
                         throw new Exception("UpdateActorOverlayTable: Meta missing for injected actor");
                     }
 
+                    // if its too big to fit in the old slot, move it to the end
+                    // TODO make a list of previously free holes we can stick stuff into and check that
+                    file.Addr = previousLastVROMEnd;
+                    file.End = previousLastVROMEnd + uncompresedVROMSize;
+                    previousLastVROMEnd = file.End;
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint) file.Addr);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint) file.End);
+
                     // TODO check if we can place it in an old hole left behind by a previously moved actor
                     var newVRAMStart = previousLastVRAMEnd;
-
-                    // we need the difference between the old VRAM and new VRAM starting locations to re-align our vram
-                    uint newVRAMOffset = newVRAMStart - oldVRAMStart;
 
                     // we know where in the overlay pointers exist that need to be updated for VROM->VRAM
                     // .reloc stores this info for us as a table of words that contain enough info to help us update
@@ -263,91 +302,26 @@ namespace MMR.Randomizer.Utils
                     var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
                     // the table pointer at the end is an offset from the end, we need to swap it
                     int tableOffset = (int)(file.Data.Length - relocSize);
-                    int relocEntryCountLocation = (int)(tableOffset + (4 * 4));
-                    uint relocEntryCount = ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryCountLocation);
-
-                    // each entry in reloc is one nibble of shifted section, one nible of type, and 3 bytes of address
-                    // where address is an offset of the section, section starts at 1 for some reason, and there are only three types in Z64
 
                     // the section table only contains section sizes, we need to walk it to know the offsets
                     var sectionOffsets = new int[4];
                     sectionOffsets[0] = 0; // text (always at the start for our overlay system)
-                    sectionOffsets[1] = sectionOffsets[0] + (int) ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset); // data
+                    sectionOffsets[1] = sectionOffsets[0] + (int) ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 0); // data
                     sectionOffsets[2] = sectionOffsets[1] + (int) ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 4); // rodata
                     sectionOffsets[3] = sectionOffsets[2] + (int) ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 8); // bss
 
                     // from what I can tell, if you sum the section sizes and then the reloc total (final byte)
                     // you should get the total vram size. Works for boyo so far ...
                     var newVramSize  = sectionOffsets[3] + relocSize;
-                    var newVRAMEnd = (uint)(newVRAMStart + newVramSize);
+                    var newVRAMEnd   = (uint)(newVRAMStart + newVramSize);
+                    uint newVRAMOffset = newVRAMStart - oldVRAMStart;
 
-                    var relocEntryLoc = relocEntryCountLocation + 4; // first entry immediately after count
-                    var relocEntryEndLoc = relocEntryLoc + (relocEntryCount * 4);
-                    while (relocEntryLoc < relocEntryEndLoc)
-                    {
-                        // for some reason text starts at 1, and so we cant reach bss unless we wrap around to 00?
-                        var section = ((file.Data[relocEntryLoc] & 0xC0) >> 6) - 1;
-                        var sectionOffset = sectionOffsets[section];
-
-                        var commandType     = (file.Data[relocEntryLoc] & 0xF);
-                        var commandTypeNext = (file.Data[relocEntryLoc + 4] & 0xF);
-
-                        // LUI/ADDIU combo
-                        if (commandType == 0x5 && commandTypeNext == 0x6)
-                        {
-                            int luiLoc   = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
-                            int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
-                            // combine the halves from asm back into one pointer
-                            uint pointer = 0;
-                            pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, luiLoc   + 2) << 16);
-                            pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2));
-                            // offset the pointer to our new VRAM
-                            pointer += newVRAMOffset;
-                            // separate the pointer again into halves and put back
-                            int LUIAdd = ((pointer & 0xFFFF) > 0x8000) ? 1 : 0; // if the lower half is too big we have to add one to LUI
-                            ReadWriteUtils.Arr_WriteU16(file.Data, luiLoc   + 2, (ushort)(((pointer & 0xFFFF0000) >> 16) + LUIAdd));
-                            ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, (ushort)(pointer & 0xFFFF));
-
-                            relocEntryLoc += 8;
-                        }
-                        // JAL function calls
-                        else if (commandType == 0x4)
-                        {
-                            int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
-                            uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
-                            uint shiftedJal = jal << 2;
-                            shiftedJal += newVRAMOffset;
-                            shiftedJal = shiftedJal >> 2;
-
-                            // might be another kind that isn't 0C, so far so good
-                            ReadWriteUtils.Arr_WriteU32(file.Data, jalLoc, 0x0C000000 | shiftedJal);
-
-                            relocEntryLoc += 4;
-                        }
-                        // Hard pointer (init vars actor funcs like init for instance)
-                        else if (commandType == 0x2)
-                        {
-                            // issue: this is also used for jump table pointers but those work different I guess? 
-
-                            int ptrLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
-                            uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
-                            ptrValue += newVRAMOffset;
-                            ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);
-
-                            relocEntryLoc += 4;
-                        }
-                        // unknown command? supposidly Z64 only uses these three although it could support more
-                        else
-                        {
-                            throw new Exception($"UpdateActorOverlayTable: unknown reloc entry value:\n" +
-                                $" {ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc).ToString("X")}");
-                        }
-                    }
+                    UpdateOverlayVRAMReloc(file, sectionOffsets, newVRAMOffset); 
 
                     uint newInitVarAddr = (uint)(newVRAMStart + newActorMeta.initVarsLocation);
 
-                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x8, newVRAMStart);
-                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0xC, newVRAMEnd);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x08, newVRAMStart);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0C, newVRAMEnd);
                     ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newInitVarAddr);
 
                     if (newVROMDiff > 0)
@@ -356,158 +330,12 @@ namespace MMR.Randomizer.Utils
                         Debug.WriteLine($" + old[{oldVROMSize.ToString("X")}]:  new[{file.Data.Length.ToString("X")}] has shifted: {newVROMDiff.ToString("X")}");
                     }
 
-                    Debug.WriteLine($" Actor aid[{actorID.ToString("X")}]:  fid[{fileID}]");
-                    Debug.WriteLine($"  file [{fileID}] old [{oldVRAMStart.ToString("X")}] [{oldVRAMEnd.ToString("X")}]");
-                    Debug.WriteLine($"    new          [{newVRAMStart.ToString("X")}] [{(newVRAMEnd).ToString("X")}]");
-                    Debug.WriteLine($"    INIT         [{oldInitAddr.ToString("X")}] [{(newInitVarAddr).ToString("X")}]");
-
-                    Debug.WriteLine($"    shift [{shift}] diff [{newVROMDiff}] init-diff []");
-
                     previousLastVRAMEnd = newVRAMEnd;
-                }
-            }
-        }
+                }// end if changed overlay
+            }// end for overlay in overlaylist
 
-        private static void UpdateTranstionOverlayTable()
-        {
-            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.TransitionOverlayTable);
-            RomUtils.CheckCompressed(actorOvlTblFID);
-            var codefile = RomData.MMFileList[actorOvlTblFID].Data;
-            int transitionOvlTblOffset = Constants.Addresses.TransitionOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
+            // todo detect new actors, add them too
 
-            // file ids of transition overlays, in order, I can't be bothered to make a new enum yet
-            var transitionsFiles = new List<int>
-            {
-                0,   // empty
-                385, // unk
-                386, // unk
-                387, // unk
-                388, // unk
-                0,   // empty 
-                389, // unk
-            };
-
-            for (int i = 0;  i < transitionsFiles.Count; i++)
-            {
-                if (transitionsFiles[i] == 0)
-                {
-                    continue; // empty file slot keep going
-                }
-                // can you believe its not 0x20 or 0x18? its 0x1C....
-                var entryLoc = transitionOvlTblOffset + (i * 0x1C);
-
-                var transitionFile = RomData.MMFileList[transitionsFiles[i]];
-                ReadWriteUtils.Arr_WriteU32(codefile, entryLoc + 0xC, (uint) transitionFile.Addr);
-                ReadWriteUtils.Arr_WriteU32(codefile, entryLoc + 0x10, (uint) transitionFile.End);
-            }
-        }
-
-        private static void UpdateEffectOverlayTable()
-        {
-            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.EffectOverlayTable);
-            RomUtils.CheckCompressed(actorOvlTblFID);
-            var codefile = RomData.MMFileList[actorOvlTblFID].Data;
-            int transitionOvlTblOffset = Constants.Addresses.EffectOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
-
-            // file ids of effect overlays, in order, I can't be bothered to make a new enum yet
-            var effectFiles = new List<int>
-            {
-                180, // Effect_Ss_Dust
-                181, // Effect_Ss_Kirakira 
-                0,   // empty 
-                182, // Effect_Ss_Bomb2
-                183, // Effect_Ss_Blast
-                184, // Effect_Ss_G_Spk
-                185, // Effect_Ss_D_Fire
-                186, // Effect_Ss_Bubble
-                0,   // empty 
-                187, // Effect_Ss_G_Ripple
-                188, // Effect_Ss_G_Splash
-                0,   // empty 
-                189, // Effect_Ss_G_Fire
-                190, // Effect_Ss_Lightning
-                191, // Effect_Ss_Dt_Bubble
-                192, // Effect_Ss_Hahen
-                193, // Effect_Ss_Stick
-                194, // Effect_Ss_Sibuki
-                0,   // empty 
-                0,   // empty 
-                195, // Effect_Ss_Stone1
-                196, // Effect_Ss_Hitmark
-                197, // Effect_Ss_Fhg_Flash
-                198, // Effect_Ss_K_Fire
-                199, // Effect_Ss_Solder_Srch_Ball
-                200, // Effect_Ss_Kakera
-                201, // Effect_Ss_Ice_Piece
-                202, // Effect_Ss_En_Ice
-                203, // Effect_Ss_Fire_tail
-                204, // Effect_Ss_En_Fire
-                205, // Effect_Ss_Extra
-                0,   // empty 
-                206, // Effect_Ss_Dead_Db
-                207, // Effect_Ss_Dead_Dd
-                208, // Effect_Ss_Dead_Ds
-                0,   // empty 
-                230, // Effect_Ss_Ice_Smoke
-                287, // Effect_Ss_En_Ice_Block
-                390, // Effect_Ss_Sbn
-            };
-
-            for (int i = 0; i < effectFiles.Count; i++)
-            {
-                if (effectFiles[i] == 0)
-                {
-                    continue; // empty file slot keep going
-                }
-                // can you believe its not 0x20 or 0x18? its 0x1C....
-                var entryLoc = transitionOvlTblOffset + (i * 0x1C);
-                var transitionFile = RomData.MMFileList[effectFiles[i]];
-                ReadWriteUtils.Arr_WriteU32(codefile, entryLoc + 0x0, (uint)transitionFile.Addr);
-                ReadWriteUtils.Arr_WriteU32(codefile, entryLoc + 0x4, (uint)transitionFile.End);
-            }
-        }
-
-        public static void UpdateObjectList()
-        {
-            var objectList = Enum.GetValues(typeof(GameObjects.Object)).Cast<GameObjects.Object>().ToList();
-
-            int objectListFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ObjectList);
-            RomUtils.CheckCompressed(objectListFID);
-            var codefile = RomData.MMFileList[objectListFID].Data;
-            int objectListOffset = Constants.Addresses.ObjectList - RomData.MMFileList[objectListFID].Addr;
-
-            // the object list is 8 bytes wide, first four is VROM start, then VROM end
-            for (int i = 0; i < objectList.Count; i++)
-            {
-                var obj = objectList[i];
-                var fileAttr = obj.GetAttribute<FileIDAttribute>();
-                if (fileAttr != null) // not empty slot
-                {
-                    var offset = objectListOffset + (i * 8);
-                    var file = RomData.MMFileList[fileAttr.ID];
-                    ReadWriteUtils.Arr_WriteU32(codefile, offset + 0, (uint) file.Addr);
-                    ReadWriteUtils.Arr_WriteU32(codefile, offset + 4, (uint) file.End);
-                }
-            }
-        }
-
-        public static void UpdateSceneList()
-        {
-            // todo the scene list will need to be updated vrom too
-        }
-
-        public static void UpdateAllOverlayTables()
-        {
-            /// if you update one with new VROM addresses, then you need to update them all, or at least all after your changes
-
-            // gamestate overlay table
-            // these all seem to be at the start, waaay up above actors, so I think we've fine not updating it until we do more than actors
-
-            UpdateActorOverlayTable();
-            UpdateEffectOverlayTable();
-            UpdateTranstionOverlayTable();
-
-            UpdateObjectList();
         }
 
         private static void UpdateDMAFileTable(byte[] ROM)
@@ -520,10 +348,10 @@ namespace MMR.Randomizer.Utils
             for (int i = 0; i < RomData.MMFileList.Count; i++)
             {
                 int offset = FILE_TABLE + (i * 16);
-                ReadWriteUtils.Arr_WriteU32(ROM, offset, (uint)RomData.MMFileList[i].Addr);
-                ReadWriteUtils.Arr_WriteU32(ROM, offset + 4, (uint)RomData.MMFileList[i].End);
-                ReadWriteUtils.Arr_WriteU32(ROM, offset + 8, (uint)RomData.MMFileList[i].Cmp_Addr);
-                ReadWriteUtils.Arr_WriteU32(ROM, offset + 12, (uint)RomData.MMFileList[i].Cmp_End);
+                ReadWriteUtils.Arr_WriteU32(ROM, offset + 0x0, (uint)RomData.MMFileList[i].Addr);
+                ReadWriteUtils.Arr_WriteU32(ROM, offset + 0x4, (uint)RomData.MMFileList[i].End);
+                ReadWriteUtils.Arr_WriteU32(ROM, offset + 0x8, (uint)RomData.MMFileList[i].Cmp_Addr);
+                ReadWriteUtils.Arr_WriteU32(ROM, offset + 0xC, (uint)RomData.MMFileList[i].Cmp_End);
             }
         }
 
@@ -537,15 +365,8 @@ namespace MMR.Randomizer.Utils
 
         public static byte[] BuildROM()
         {
-            // get the last data we need to find the overlay table
-
-            //boyo crashes if you enter a scene without updating VROM OR overlay, but the rest of the game works
-            // if you update VROM, crash after n64 logo
-
-            // all of our files need their addresses shifted
-            UpdateVirtualFileAddresses();
-            // we need to update overlay tables if files changed size
-            UpdateAllOverlayTables();
+            // if injecting new actors, we need to update the actor overlay table overlayEntry
+            UpdateActorOverlayTable();
 
             // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
             var previousThreadPriority = Thread.CurrentThread.Priority;
