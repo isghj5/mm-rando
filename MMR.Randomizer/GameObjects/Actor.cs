@@ -3243,7 +3243,8 @@ namespace MMR.Randomizer.GameObjects
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
         // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
         // 02 doesn't ever seen to spawn, day or night, think its a fluke
-        [GroundVariants(0x0)] 
+        [GroundVariants(0x0)]
+        [VariantsWithRoomMax(max:1, variant: 0)]
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(0x15, 0x70, 0x61)]
         [EnemizerScenesExcluded(Scene.StockPotInn, Scene.LaundryPool, Scene.MilkBar)] // think him being in milkbar is a credits thing
