@@ -11,8 +11,11 @@ using System.IO.Compression;
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Threading;
+using MMR.Common.Extensions;
 using MMR.Randomizer.Extensions;
+using MMR.Randomizer.Attributes;
 using System.Numerics;
+
 
 namespace MMR.Randomizer.Utils
 {
@@ -384,14 +387,13 @@ namespace MMR.Randomizer.Utils
                 389, // unk
             };
 
-            // first entry is empty
-            for (int i = 0;  i < transitionsFiles.Count; i++) // size not actually known
+            for (int i = 0;  i < transitionsFiles.Count; i++)
             {
                 if (transitionsFiles[i] == 0)
                 {
                     continue; // empty file slot keep going
                 }
-                // can you believe its not 0x20? its 0x1C....
+                // can you believe its not 0x20 or 0x18? its 0x1C....
                 var entryLoc = transitionOvlTblOffset + (i * 0x1C);
 
                 var transitionFile = RomData.MMFileList[transitionsFiles[i]];
@@ -451,13 +453,13 @@ namespace MMR.Randomizer.Utils
                 390, // Effect_Ss_Sbn
             };
 
-            for (int i = 0; i < effectFiles.Count; i++) // size not actually known
+            for (int i = 0; i < effectFiles.Count; i++)
             {
                 if (effectFiles[i] == 0)
                 {
                     continue; // empty file slot keep going
                 }
-                // can you believe its not 0x20? its 0x1C....
+                // can you believe its not 0x20 or 0x18? its 0x1C....
                 var entryLoc = transitionOvlTblOffset + (i * 0x1C);
                 var transitionFile = RomData.MMFileList[effectFiles[i]];
                 ReadWriteUtils.Arr_WriteU32(codefile, entryLoc + 0x0, (uint)transitionFile.Addr);
@@ -465,6 +467,34 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        public static void UpdateObjectList()
+        {
+            var objectList = Enum.GetValues(typeof(GameObjects.Object)).Cast<GameObjects.Object>().ToList();
+
+            int objectListFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ObjectList);
+            RomUtils.CheckCompressed(objectListFID);
+            var codefile = RomData.MMFileList[objectListFID].Data;
+            int objectListOffset = Constants.Addresses.ObjectList - RomData.MMFileList[objectListFID].Addr;
+
+            // the object list is 8 bytes wide, first four is VROM start, then VROM end
+            for (int i = 0; i < objectList.Count; i++)
+            {
+                var obj = objectList[i];
+                var fileAttr = obj.GetAttribute<FileIDAttribute>();
+                if (fileAttr != null) // not empty slot
+                {
+                    var offset = objectListOffset + (i * 8);
+                    var file = RomData.MMFileList[fileAttr.ID];
+                    ReadWriteUtils.Arr_WriteU32(codefile, offset + 0, (uint) file.Addr);
+                    ReadWriteUtils.Arr_WriteU32(codefile, offset + 4, (uint) file.End);
+                }
+            }
+        }
+
+        public static void UpdateSceneList()
+        {
+            // todo the scene list will need to be updated vrom too
+        }
 
         public static void UpdateAllOverlayTables()
         {
@@ -473,12 +503,11 @@ namespace MMR.Randomizer.Utils
             // gamestate overlay table
             // these all seem to be at the start, waaay up above actors, so I think we've fine not updating it until we do more than actors
 
-            // actor overlay table
             UpdateActorOverlayTable();
-            // effect overlay table
             UpdateEffectOverlayTable();
-            // transition draw table
             UpdateTranstionOverlayTable();
+
+            UpdateObjectList();
         }
 
         private static void UpdateDMAFileTable(byte[] ROM)

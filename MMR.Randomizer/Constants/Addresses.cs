@@ -16,6 +16,7 @@
         // every overylay type has a different table for dynamic file loading
         public const int EffectOverlayTable     = 0xC449E0;
         public const int ActorOverlayTable      = 0xC45510;
+        public const int ObjectList             = 0xC58C88;
         public const int GameStateOverlayTable  = 0xC53E50;
         public const int TransitionOverlayTable = 0xC670F0;
 
