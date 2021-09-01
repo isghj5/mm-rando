@@ -109,21 +109,28 @@ namespace MMR.Randomizer.Extensions
             return actor.GetAttribute<EnemizerScenesExcludedAttribute>()?.ScenesExcluded ?? new List<Scene>();
         }
 
-        public static Models.Rom.Actor ToActorModel(this Actor actor)
+        // depreciated
+        /* public static Models.Rom.Actor ToActorModel(this Actor actor)
         {
             // turning static actor enum into enemy instance
             return new Models.Rom.Actor()
             {
-                Name = (actor).ToString(),
+                Name = actor.ToString(),
                 ActorID = (int)actor,
                 ActorEnum = actor,
                 ObjectID = actor.ObjectIndex(),
                 ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex()),
                 Variants = actor.AllVariants(),
                 Rotation = new Models.Vectors.vec16(),
-                SceneExclude = actor.ScenesRandomizationExcluded()
+
+                SceneExclude = actor.ScenesRandomizationExcluded(),
+                BlockedScenes = actor.BlockedScenes(),
+                RespawningVariants = actor.RespawningVariants(),
+                //AllVariants = BuildVariantList(actor),
+
             };
-        }
+        } */
+
 
         public static List<int> GetUnPlacableVariants(this Actor actor)
         {
@@ -145,43 +152,6 @@ namespace MMR.Randomizer.Extensions
                 }
 
                 return unplacable;
-            }
-        }
-
-        public static List<int> CompatibleVariants(this Actor actor, ReplacementActor otherActor, Random rng, int oldActorVariant)
-        {
-            var regularVariants = CompatibleVariants(actor, otherActor.actorEnum, rng, oldActorVariant);
-            if (otherActor.replacementActor == null || otherActor.replacementActor.groundVariants == null)
-            {
-                return regularVariants;
-            }
-            else
-            {
-                // for now ground type only, until I'm in a good enough mood to try to re-mix the enum version down below
-
-                var ourGroundVariantsAttr = actor.GetAttribute<GroundVariantsAttribute>();
-                if (ourGroundVariantsAttr == null)
-                {
-                    return null;
-                }
-
-                var ourGroundVariants = ourGroundVariantsAttr.Variants;
-                var newGroundVariants = otherActor.replacementActor.groundVariants;
-                if (regularVariants != null)
-                {
-                    newGroundVariants.AddRange(regularVariants);
-                }
-
-                // our old actor variant was this type
-                if (ourGroundVariants.Count > 0
-                    && ourGroundVariants.Contains(oldActorVariant)) // old actor had to actually be this attribute
-                {
-                    return newGroundVariants;
-                }
-                else
-                {
-                    return null;
-                }
             }
         }
 

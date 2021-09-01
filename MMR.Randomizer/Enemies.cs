@@ -32,47 +32,22 @@ namespace MMR.Randomizer
     {
         // when we inject a new actor theres some data we need
         // and some adjustments we need to make based on where it gets placed in vram
-        public uint actorID = 0;
-        public uint objID = 0;
-        public uint fileID = 0;
+        public int actorID = 0;
+        public int objID   = 0;
+        public int fileID  = 0;
 
-        // if all new actor, we meed to know where the old vram start was
+        // if all new actor, we meed to know where the old vram start was when we shift VRAM for the actor
         public uint buildVramStart = 0;
-
-        // init vars are located somewhere in .data, we want to know where exactly for reasons
+        // init vars are located somewhere in .data, we want to know where exactly because its hard coded in overlay table
         public uint initVarsLocation = 0;
 
         public List<int> groundVariants;
+        public List<int> respawningVariants;
         // variants with max
+        public UnkillableAllVariantsAttribute unkillableAttr = null;
 
-        // bin is not stored here, it gets injected immediately
-    }
-
-    public class ReplacementActor
-    {
-        // because I cannot add values to the actor enum at runtime, the list of replacment actors will need to be a different type
-
-        public GameObjects.Actor actorEnum;
-        public InjectedActor replacementActor;
-
-        public ReplacementActor(GameObjects.Actor actorEnum)
-        {
-            this.actorEnum = actorEnum;
-        }
-
-        public void SetInjectedActor(InjectedActor actor)
-        {
-            replacementActor = actor;
-        }
-
-        public bool NoPlacableVariants()
-        {
-            // assumption: if you injected a new actor, you WANT it placed
-            return (this.replacementActor != null) ? (false) : (actorEnum.NoPlacableVariants());
-        }
-
-        // get Variants, if custom get custom, if not use enum
-
+        // should only be stored here if new actor
+        public byte[] overlayBin;
     }
 
     public class Enemies
@@ -80,7 +55,7 @@ namespace MMR.Randomizer
         public static List<InjectedActor> InjectedActors = new List<InjectedActor>();
 
         private static List<GameObjects.Actor> VanillaEnemyList { get; set; }
-        private static List<ReplacementActor> ReplacementCandidateList { get; set; }
+        private static List<Actor> ReplacementCandidateList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
         private static Random seedrng;
@@ -101,23 +76,23 @@ namespace MMR.Randomizer
 
             // list of replacement actors we can use to replace with
             // for now they are the same, in the future players will control how they load
-            ReplacementCandidateList = new List<ReplacementActor>();
+            ReplacementCandidateList = new List<Actor>();
             //foreach (var actor in EmemiesOnly)
             foreach (var actor in VanillaEnemyList)
             {
-                ReplacementCandidateList.Add(new ReplacementActor(actor));
+                ReplacementCandidateList.Add(new Actor(actor));
             }
         }
 
         public static bool ReplacementListContains(GameObjects.Actor actor)
         {
-            return ReplacementCandidateList.Find(u => u.actorEnum == actor) != null;
+            return ReplacementCandidateList.Find(u => u.ActorEnum == actor) != null;
         }
 
-        public static void ReplacementListRemove(List<ReplacementActor> replaceList, GameObjects.Actor actor)
+        public static void ReplacementListRemove(List<Actor> replaceList, GameObjects.Actor actor)
         {
             // might be an easier one liner but this could get used a lot
-            var removeActor = replaceList.Find(u => u.actorEnum == GameObjects.Actor.Armos);
+            var removeActor = replaceList.Find(u => u.ActorEnum == actor);
             if (removeActor != null)
             {
                 replaceList.Remove(removeActor);
@@ -136,12 +111,6 @@ namespace MMR.Randomizer
                 for (int actorNumber = 0; actorNumber < scene.Maps[mapNumber].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapNumber].Actors)
                 {
                     var mapActor = scene.Maps[mapNumber].Actors[actorNumber];
-                    //var test = ReplacementCandidateList.Find(u => (int)u.actorEnum == mapActor.ActorID);
-                    //if (test == null)
-                    //{
-                    //    continue;
-                    //}
-                    //var matchingEnemy = test.actorEnum;
                     var matchingEnemy = VanillaEnemyList.Find(u => (int)u == mapActor.ActorID);
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.AllVariants();
@@ -154,6 +123,7 @@ namespace MMR.Randomizer
                                                    || scene.SceneEnum.IsFairyDroppingEnemy(mapNumber, actorNumber);
                             mapActor.RoomActorIndex = scene.Maps[mapNumber].Actors.IndexOf(mapActor);
                             mapActor.Type = matchingEnemy.GetType(mapActor.OldVariant);
+                            mapActor.AllVariants = Actor.BuildVariantList(matchingEnemy);
                             SceneEnemyList.Add(mapActor);
                         }
                     }
@@ -204,7 +174,8 @@ namespace MMR.Randomizer
             // why? because our object focused code needs to whittle the list of actors for a enemy replacement, 
             //   but has to know if even one enemy is used for fairies that it cannot be unkillable
             // doing that last second per-enemy would be expensive, so we need to check per-scene
-            // we COULD hard code these types into the scene data, but if someone in the distant future doesn't realize they have to add both, might be a hard bug to find
+            // we COULD hard code these types into the scene data, but if someone in the distant future
+            //   doesn't realize they have to add both, might be a hard bug to find
 
             var actorsThatDropFairies = scene.SceneEnum.GetSceneFairyDroppingEnemies();
             var returnActorTypes = new List<GameObjects.Actor>();
@@ -709,7 +680,7 @@ namespace MMR.Randomizer
             for (var i = 0; i < 0x2B3; ++i)
             {
                 var actor = (GameObjects.Actor)i;
-                var actorName = actor.ToActorModel().Name;
+                var actorName = new Actor(actor).Name;
                 actorName = actorName == "" ? "UNKOWN" : actorName;
                 // we nee to make sure ram and overlay are the same
                 // read Init offset from overlay table
@@ -1124,7 +1095,7 @@ namespace MMR.Randomizer
             }
         }
 
-        public static List<GameObjects.Actor> GetSceneFreeActors(Scene scene, StringBuilder log)
+        public static List<Actor> GetSceneFreeActors(Scene scene, StringBuilder log)
         {
             /// some actors don't require unique objects, they can use objects that are generally loaded, we can use these almost anywhere
             ///  any actor that is object type 1 (gameplay_keep) is free to use anywhere
@@ -1132,21 +1103,22 @@ namespace MMR.Randomizer
 
             var sceneIsDungeon = scene.HasDungeonObject();
             var sceneIsField = scene.HasFieldObject();
-            //log.WriteLine(" Scene Special Object: [" + scene.SpecialObject.ToString() + "]");
-            var sceneFreeActors = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                                      .Where(u => (u.ObjectIndex() == 1
-                                                    || (sceneIsField && u.ObjectIndex() == (int)Scene.SceneSpecialObject.FieldKeep)
-                                                    || (sceneIsDungeon && u.ObjectIndex() == (int)Scene.SceneSpecialObject.DungeonKeep))
-                                                 && !u.BlockedScenes().Contains(scene.SceneEnum)
-                                                 && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized())))
-                                                 .ToList();
+            // todo: replace enum.IsEnemyRandomized
+            var sceneFreeActors = ReplacementCandidateList.Where(u => (u.ObjectID == 1
+                                                    || (sceneIsField && u.ObjectID == (int)Scene.SceneSpecialObject.FieldKeep)
+                                                    || (sceneIsDungeon && u.ObjectID == (int)Scene.SceneSpecialObject.DungeonKeep))
+                                                 && !u.BlockedScenes.Contains(scene.SceneEnum)).ToList();
+
+            // uhhh why are we checking this here, it should already be in our Replacement list it should be fine, right?
+            // && (u.ActorEnum.IsEnemyRandomized() || (ACTORSENABLED && u.ActorEnum.IsActorRandomized())))
+
 
             // todo: search all untouched objects and add those actors too
 
             return sceneFreeActors;
         }
 
-        public static void TrimExtraActors(GameObjects.Actor actorType, List<Actor> roomEnemies, List<GameObjects.Actor> roomFreeActors,
+        public static void TrimExtraActors(GameObjects.Actor actorType, List<Actor> roomEnemies, List<Actor> roomFreeActors,
                                            bool roomIsClearPuzzleRoom, Random rng, int variant = -1, int randomRate = 0x50)
         {
             /// actors with maximum counts have their extras trimmed off, replaced with free or empty actors
@@ -1187,9 +1159,10 @@ namespace MMR.Randomizer
                     roomEnemiesWithVariant.Remove(roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)]);
                 }
                 // if the actor being trimmed is a free actor, remove from possible replacements
-                if (roomFreeActors.Contains(actorType))
+                var search = roomFreeActors.Find(u => u.ActorEnum == actorType);
+                if (search != null)
                 {
-                    roomFreeActors.Remove(actorType);
+                    roomFreeActors.Remove(search);
                 }
 
                 // kill the rest of variant X since max is reached
@@ -1197,16 +1170,18 @@ namespace MMR.Randomizer
                 {
                     var enemyIndex = roomEnemies.IndexOf(enemy);
                     EmptyOrFreeActor(enemy, rng, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, randomRate);
+                    /* // todo reintrigrate this
                     if (((GameObjects.Actor)enemy.ActorID).OnlyOnePerRoom())
                     {
                         roomFreeActors.Remove((GameObjects.Actor)enemy.ActorID);
                     }
+                    */
                 }
             }
         }
 
         public static void EmptyOrFreeActor(Actor targetActor, Random rng, List<Actor> currentRoomActorList,
-                                            List<GameObjects.Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false, int randomRate = 0x50)
+                                            List<Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false, int randomRate = 0x50)
         {
             /// returns an actor that is either an empty actor or a free actor that can be placed here beacuse it doesn't require a new unique object
 
@@ -1222,12 +1197,12 @@ namespace MMR.Randomizer
 
                     int listIndex = (randomStart + matchAttempt) % acceptableFreeActors.Count;
                     var testEnemy = acceptableFreeActors[listIndex];
-                    var testEnemyCompatibleVariants = targetActor.ActorEnum.CompatibleVariants(testEnemy, rng, targetActor.Variants[0]);
+                    var testEnemyCompatibleVariants = targetActor.CompatibleVariants(testEnemy, targetActor.Variants[0], rng);
                     if (testEnemyCompatibleVariants == null)
                     {
                         continue;  // no type compatibility, skip
                     }
-                    var respawningVariants = testEnemy.RespawningVariants();
+                    var respawningVariants = testEnemy.RespawningVariants;
                     if ((targetActor.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
                     {
                         testEnemyCompatibleVariants.RemoveAll(u => respawningVariants.Contains(u));
@@ -1242,14 +1217,14 @@ namespace MMR.Randomizer
 
                     if (enemyHasMaximums)
                     {
-                        var enemiesInRoom = currentRoomActorList.FindAll(u => u.ActorID == (int)testEnemy);
+                        var enemiesInRoom = currentRoomActorList.FindAll(u => u.ActorID == testEnemy.ActorID);
                         if (enemiesInRoom.Count > 0)  // only test for specific variants if there are already some in the room
                         {
                             // find variant that is not maxed out
                             foreach (var variant in testEnemyCompatibleVariants)
                             {
                                 // if the varient limit has not been reached
-                                var variantMax = testEnemy.VariantMaxCountPerRoom(variant);
+                                var variantMax = Actor.VariantMaxCountPerRoom(testEnemy, variant);
                                 var variantCount = enemiesInRoom.Count(u => u.Variants[0] == variant);
                                 if (variantCount < variantMax)
                                 {
@@ -1270,13 +1245,13 @@ namespace MMR.Randomizer
                     if (acceptableVariants.Count > 0)
                     {
                         int randomVariant = acceptableVariants[rng.Next(acceptableVariants.Count)];
-                        if (testEnemy == GameObjects.Actor.GrottoHole)
+                        if (testEnemy.ActorEnum == GameObjects.Actor.GrottoHole)
                         {
                             SetupGrottoActor(targetActor, randomVariant);
                         }
                         else
                         {
-                            targetActor.ChangeActor(testEnemy, vars: randomVariant);
+                            targetActor.ChangeActor(testEnemy.ActorEnum, vars: randomVariant);
                         }
                         return;
                     }
@@ -1420,7 +1395,7 @@ namespace MMR.Randomizer
             } // */
         }
 
-        public static List<Actor> GetMatchPool(List<Actor> oldActors, Random random, Scene scene, List<ReplacementActor> reducedCandidateList, bool containsFairyDroppingEnemy)
+        public static List<Actor> GetMatchPool(List<Actor> oldActors, Random random, Scene scene, List<Actor> reducedCandidateList, bool containsFairyDroppingEnemy)
         {
             List<Actor> enemyMatchesPool = new List<Actor>();
 
@@ -1450,9 +1425,9 @@ namespace MMR.Randomizer
                 var enemyMatch = (GameObjects.Actor) oldEnemy.ActorID;
                 foreach (var candidateEnemy in reducedCandidateList)
                 {
-                    var enemy = candidateEnemy.actorEnum;
+                    var enemy = candidateEnemy.ActorEnum;
                     // right here, we need a new compatibleVariants function
-                    var compatibleVariants = enemyMatch.CompatibleVariants(candidateEnemy, random, oldEnemy.Variants[0]);
+                    var compatibleVariants = oldEnemy.CompatibleVariants(candidateEnemy, oldEnemy.Variants[0], random);
                     if (compatibleVariants == null)
                     {
                         continue;
@@ -1462,7 +1437,7 @@ namespace MMR.Randomizer
 
                     if ( ! enemyMatchesPool.Any(u => u.ActorID == (int) enemy))
                     {
-                        var newEnemy = enemy.ToActorModel();
+                        var newEnemy = new Actor(enemy);
                         if (MustBeKillable)
                         {
                             newEnemy.Variants = enemy.KillableVariants(compatibleVariants); // reduce to available
@@ -1549,7 +1524,7 @@ namespace MMR.Randomizer
             WriteOutput(" time to finish removing unnecessary objects: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             // some scenes are blocked from having enemies, do this ONCE before GetMatchPool, which would do it per-enemy
-            var sceneAcceptableEnemies = ReplacementCandidateList.FindAll( u => ! u.actorEnum.BlockedScenes().Contains(scene.SceneEnum));
+            var sceneAcceptableEnemies = ReplacementCandidateList.FindAll( u => ! u.ActorEnum.BlockedScenes().Contains(scene.SceneEnum));
             // some enemies are marked do-not-re-use by having no vairants with max > 0, remove now
             //var nonPlaceable = sceneAcceptableEnemies.FindAll(u => u.NoPlacableVariants());
 
@@ -1637,12 +1612,12 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                     if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Scarecrow.ObjectIndex()
+                            NewV = GameObjects.Actor.ClayPot.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1665,7 +1640,7 @@ namespace MMR.Randomizer
                         });
                         continue;
                     } // */
-                    if (scene.File == GameObjects.Scene.SouthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
+                   /* if (scene.File == GameObjects.Scene.SouthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
@@ -1720,11 +1695,12 @@ namespace MMR.Randomizer
                 }
 
                 // reset early if obviously too large
-                if ( (newObjectSize > oldObjectSize && newObjectSize >= scene.SceneEnum.GetSceneObjLimit()) 
+                // todo broken needs fix
+                /* if ( (newObjectSize > oldObjectSize && newObjectSize >= scene.SceneEnum.GetSceneObjLimit()) 
                   || (scene.SceneEnum == GameObjects.Scene.SnowheadTemple && newObjectSize > 0x20000) )
                 {
                     continue; // reset start over
-                }
+                } // */
 
                 // this used to be outside of the loop, but now we need to keep track of actor size with "free" actors
                 for (int objCount = 0; objCount < chosenReplacementObjects.Count; objCount++)
@@ -1742,7 +1718,7 @@ namespace MMR.Randomizer
                                 var cObj = companion.Companion.ObjectIndex();
                                 if (cObj == 1 || cObj == actor.ObjectID)    // todo: add object search across other actors chosen
                                 {
-                                    var newCompanion = companion.Companion.ToActorModel();
+                                    var newCompanion = new Actor(companion.Companion);
                                     newCompanion.Variants = companion.Variants;
                                     newCompanion.IsCompanion = true;
                                     subMatches.Add(newCompanion);
@@ -1777,8 +1753,7 @@ namespace MMR.Randomizer
                             break;
                         }
 
-                        oldEnemy.ChangeActor(newActorType: (GameObjects.Actor)testActor.ActorID,
-                                              vars: testActor.Variants[rng.Next(testActor.Variants.Count)]);
+                        oldEnemy.ChangeActor(testActor, vars: testActor.Variants[rng.Next(testActor.Variants.Count)]);
 
                         temporaryMatchEnemyList.Add(oldEnemy);
                         if (!previousyAssignedActor.Contains((GameObjects.Actor)oldEnemy.ActorID))
@@ -1883,20 +1858,26 @@ namespace MMR.Randomizer
         public static InjectedActor ParseMMRAMeta(String metaFile)
         {
             /// every MMRA comes with one meta file per bin, this contains metadata
-
+            var vanillaActors = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList();
             var newInjectedActor = new InjectedActor();
 
             foreach (var line in metaFile.Split('\n'))
             {
                 var asignment = line.Split('#')[0].Trim(); // remove comments
 
-                if (asignment.Length == 0) // comment only
+                if (asignment.Length == 0) // comment or empty line: ignore
                 {
                     continue;
                 }
 
                 var asignmentSplit = asignment.Split('=');
                 var command = asignmentSplit[0].Trim();
+                if (command == "unkillable")
+                {
+                    newInjectedActor.unkillableAttr = new UnkillableAllVariantsAttribute();
+                    continue;
+                }
+
                 string valueStr = asignmentSplit[1].Trim();
 
                 if (command == "ground_variants")
@@ -1912,7 +1893,8 @@ namespace MMR.Randomizer
                     continue;
                 }
 
-                uint value = Convert.ToUInt32(valueStr, fromBase: 16);
+
+                var value = Convert.ToInt32(valueStr, fromBase: 16);
 
                 if (command == "obj_id")
                 {
@@ -1921,47 +1903,35 @@ namespace MMR.Randomizer
                 else if (command == "file_id")
                 {
                     // dec instead of hex
-                    newInjectedActor.fileID = Convert.ToUInt32(valueStr, fromBase: 10);
-                    newInjectedActor.actorID = (uint) VanillaEnemyList.Find(u => u.FileListIndex() == newInjectedActor.fileID);
-                }
-                else if (command == "initvars_offset")
-                {
-                    newInjectedActor.initVarsLocation = value;
+                    newInjectedActor.fileID = Convert.ToInt32(valueStr, fromBase: 10);
+                    newInjectedActor.actorID = (int) VanillaEnemyList.Find(u => u.FileListIndex() == newInjectedActor.fileID);
                 }
 
+                var uvalue = Convert.ToUInt32(valueStr, fromBase: 16);
+
+                if (command == "initvars_offset")
+                {
+                    newInjectedActor.initVarsLocation = uvalue;
+                }
+                else if (command == "vram_start")
+                {
+                    newInjectedActor.buildVramStart = uvalue;
+                }
             }
 
             // TODO if fid == 0, instead of exception we should look up a free actor location to move it to
 
             // update actor init vars in our actor
-            var actorGameObj = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList()
-                                   .Find(u =>u.FileListIndex() == newInjectedActor.fileID);
-            if (actorGameObj == 0)
+            var actorGameObj = vanillaActors.Find(u =>u.FileListIndex() == newInjectedActor.fileID);
+            if (actorGameObj != 0)
             {
-                throw new Exception("new actor meta has no matching gameobj type");
+                var initVarsAttr = actorGameObj.GetAttribute<ActorInitVarOffsetAttribute>();
+                if (initVarsAttr != null) // had one before, change now
+                {
+                    // untested, might not work
+                    initVarsAttr.Offset = (int)newInjectedActor.initVarsLocation;
+                }
             }
-            var initVarsAttr = actorGameObj.GetAttribute<ActorInitVarOffsetAttribute>();
-            if (initVarsAttr != null) // had one before, change now
-            {
-                // untested, might not work
-                initVarsAttr.Offset = (int)newInjectedActor.initVarsLocation;
-            }
-            // haven't found a way to do this yet, guess I need to populate the whole list first
-            /* else // did not have one, change
-            {
-                initVarsAttr = new ActorInitVarOffsetAttribute(newInjectedActor.initVarsLocation);
-                actorGameObj.att
-            }// */
-
-            InjectedActors.Add(newInjectedActor);
-
-            var injectedActorSearch = ReplacementCandidateList.Find(u => (int) u.actorEnum == newInjectedActor.actorID);
-            if (injectedActorSearch == null)
-            {
-                throw new Exception("Parse MMRA: no previous actor exists for this actortype");
-            }
-            injectedActorSearch.SetInjectedActor(newInjectedActor);
-
 
             return newInjectedActor;
         }
@@ -2009,22 +1979,39 @@ namespace MMR.Randomizer
                                 throw new Exception($"Could not find a meta for actor bin [{binFile.Name}]\n   in [{filePath}]");
                             }
 
-                            var meta = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
+                            var injectedActor = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
+
+                            InjectedActors.Add(injectedActor);
+
+                            var injectedActorSearch = ReplacementCandidateList.Find(u => u.ActorID == injectedActor.actorID);
+                            if (injectedActorSearch != null) // previous actor
+                            {
+                                injectedActorSearch.InjectedActor = injectedActor;
+                            }
+                            else
+                            { 
+                                injectedActorSearch = new Actor(injectedActor, filename);
+                                ReplacementCandidateList.Add(injectedActorSearch);
+                            }
 
                             // can we inject new attributes?
-                            var gameobject = (GameObjects.Actor) meta.actorID;
+                            var gameobject = (GameObjects.Actor) injectedActor.actorID;
                             //GroundVariantsAttribute newGroundVariants = new GroundVariantsAttribute(0);
                             //gameobject.add//; gameobject.SetAttribute<GroundVariantsAttribute>();
 
-                            var newFID = (int) meta.fileID;
-                            // TODO if fileid is 0, we need to put this in an empty actor slot
+                            var newFID = (int)injectedActor.fileID;
 
-                            RomData.MMFileList[newFID].Data = overlayData;
-                            RomData.MMFileList[newFID].End = RomData.MMFileList[newFID].Addr + newBinLen;
-                            RomData.MMFileList[newFID].WasEdited = true;
-
+                            if (newFID == 0)
+                            {
+                                injectedActor.overlayBin = overlayData;
+                            }
+                            else
+                            {
+                                RomData.MMFileList[newFID].Data = overlayData;
+                                RomData.MMFileList[newFID].End = RomData.MMFileList[newFID].Addr + newBinLen;
+                                RomData.MMFileList[newFID].WasEdited = true;
+                            }
                         } // foreach bin entry
-
                     }// zip as file end
                 } // try end
                 catch (Exception e)
@@ -2032,6 +2019,222 @@ namespace MMR.Randomizer
                     throw new Exception($"Error attempting to read archive: {filePath} -- \n" + e);
                 }
             } // for each mmra end
+        }
+
+        public static void UpdateOverlayVRAMReloc(MMFile file, int[] sectionOffsets, uint newVRAMOffset)
+        {
+            /// overlay c code is compiled with VRAM addresses already baked in,
+            /// these get adjusted when the overlay is loaded into RAM, to match the RAM locations
+            /// but when we inject this new overlay we move its VRAM to a different place, so its wrong
+            /// so now, we must re-apply the VRAM addresses so when the game shifts them into RAM it will have the correct values
+
+            var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
+            // the table pointer at the end is an offset from the end, we need to swap it
+            int tableOffset = (int)(file.Data.Length - relocSize);
+            int relocEntryCountLocation = (int)(tableOffset + (4 * 4)); // first four ints are section sizes
+            // we need the difference between the old VRAM and new VRAM starting locations to re-align our vram
+
+            uint relocEntryCount = ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryCountLocation);
+
+            var relocEntryLoc = relocEntryCountLocation + 4; // first overlayEntry immediately after count
+            var relocEntryEndLoc = relocEntryLoc + (relocEntryCount * 4);
+            while (relocEntryLoc < relocEntryEndLoc)
+            {
+                // for some reason text starts at 1, and so we cant reach bss unless we wrap around to 00?
+                var section = ((file.Data[relocEntryLoc] & 0xC0) >> 6) - 1;
+                var sectionOffset = sectionOffsets[section];
+
+                // each overlayEntry in reloc is one nibble of shifted section, one nible of type, and 3 bytes of address
+                // where address is an offset of the section, section starts at 1 because bss doesnt exist outside of RAM
+                var commandType = (file.Data[relocEntryLoc] & 0xF);
+                var commandTypeNext = (file.Data[relocEntryLoc + 4] & 0xF);
+
+                if (commandType == 0x5 && commandTypeNext == 0x6) // LUI/ADDIU combo
+                {
+                    int luiLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
+                    // combine the halves from asm back into one pointer
+                    uint pointer = 0;
+                    pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, luiLoc + 2) << 16);
+                    pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2));
+                    pointer += newVRAMOffset;
+                    // separate the pointer again into halves and put back
+                    int LUIIncr = ((pointer & 0xFFFF) > 0x8000) ? 1 : 0; // if the lower half is too big we have to add one to LUI
+                    ReadWriteUtils.Arr_WriteU16(file.Data, luiLoc + 2, (ushort)(((pointer & 0xFFFF0000) >> 16) + LUIIncr));
+                    ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, (ushort)(pointer & 0xFFFF));
+
+                    relocEntryLoc += 8;
+                }
+                else if (commandType == 0x4) // JAL function calls
+                {
+                    int jalLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    uint jal = ReadWriteUtils.Arr_ReadU32(file.Data, jalLoc) & 0x00FFFFFF;
+                    uint shiftedJal = jal << 2;
+                    shiftedJal += newVRAMOffset;
+                    shiftedJal = shiftedJal >> 2;
+                    ReadWriteUtils.Arr_WriteU32(file.Data, jalLoc, 0x0C000000 | shiftedJal);
+
+                    relocEntryLoc += 4;
+                }
+                else if (commandType == 0x2) // Hard pointer (init/destroy/update/draw pointers can be here, also actual ptr in rodata)
+                {
+                    int ptrLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
+                    uint ptrValue = ReadWriteUtils.Arr_ReadU32(file.Data, ptrLoc);
+                    ptrValue += newVRAMOffset;
+                    ReadWriteUtils.Arr_WriteU32(file.Data, ptrLoc, ptrValue);
+
+                    relocEntryLoc += 4;
+                }
+                else // unknown command? supposidly Z64 only uses these three although it could support more
+                {
+                    throw new Exception($"UpdateActorOverlayTable: unknown reloc overlayEntry value:\n" +
+                        $" {ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc).ToString("X")}");
+                }
+            }
+        }
+
+        public static void UpdateActorOverlayTable()
+        {
+            /// if overlays have grown, we need to modify their overlay table to use the right values for the new files
+            /// every time you move an overlay you need to relocate the vram addresses, so instead of shifting all of them
+            ///  we just move the new larger files to the end and leave a hole behind for now
+
+            // todo: how can we detect if enemizer is ON from here so we dont do this for every seed?
+
+            const uint theEndOfTakenVRAM = 0x80C27000; // 0x80C260A0 <- actual
+            const int  theEndOfTakenVROM = 0x04000000; // 0x02EE7XXX <- actual
+
+            var freeOverlaySlots = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+                                    .Where(u => u.ToString().Contains("Empty")).ToList();
+
+            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
+            RomUtils.CheckCompressed(actorOvlTblFID);
+
+            // the overlay table exists inside of another file, we need the offset to the table
+            //int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
+            var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
+            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
+
+            // generate a list of actors sorted by fid
+            var actorList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList();
+            actorList.Remove(GameObjects.Actor.Empty);
+            actorList.Remove(GameObjects.Actor.Player);
+            actorList.RemoveAll(u => u.FileListIndex() < 38);
+            var fidSortedActors = actorList.OrderBy(x => x.FileListIndex()).ToList();
+
+            uint previousLastVRAMEnd = theEndOfTakenVRAM;
+            int previousLastVROMEnd = theEndOfTakenVROM;
+            int shift = 0;
+
+            // todo: we no longer have to have a sorted actor list we can just look at our injected actor list for speed
+            //foreach (var overlayEntry in fidSortedActors)
+            foreach (var injectedActor in InjectedActors)
+            {
+                var actorID = injectedActor.actorID;
+                var fileID = injectedActor.fileID;
+                MMFile file;
+                if (actorID == 0) // new actor
+                {
+                    var newFileID = RomUtils.GetTailFileIndex();
+                    if (newFileID <= 0)
+                    {
+                        throw new Exception($"Overlay Table Update: we have run out of DMA slots, remove an actor");
+                    }
+                    injectedActor.actorID = actorID = (int)freeOverlaySlots[0];
+                    injectedActor.fileID = fileID = RomUtils.AppendFile(injectedActor.overlayBin);
+                    file = RomData.MMFileList[fileID];
+                    file.WasEdited = true;
+                    //file.Addr = previousLastVROMEnd;
+                    //file.End  = previousLastVROMEnd + injectedActor.overlayBin.Length;
+                    freeOverlaySlots.RemoveAt(0);
+                }
+                else // old file being updated
+                {
+                    file = RomData.MMFileList[fileID];
+                }
+
+                int entryLoc = actorOvlTblOffset + (actorID * 32); // overlay table is sorted by actorID
+
+                uint oldVROMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x0);
+                uint oldVROMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x4);
+
+                // if build knows where VRAM used to start for this actor, use that
+                // else, use the old VRAM build for the given actor in this slot
+                uint oldVRAMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x08);
+                oldVRAMStart = (injectedActor.buildVramStart != 0) ? (injectedActor.buildVramStart) : (oldVRAMStart);
+                
+                //uint oldVRAMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x0C);
+                //uint oldInitAddr = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x14);
+                //uint oldVROMSize = oldVROMEnd - oldVROMStart;
+                //uint oldVRAMSize = oldVRAMEnd - oldVRAMStart;
+
+                // if it was edited, its not compressed, get new filesize, else diff old address values
+                var uncompresedVROMSize = (file.WasEdited) ? (file.Data.Length) : (file.End - file.Addr);
+                //int newVROMDiff = uncompresedVROMSize - (int)oldVROMSize;
+
+                // files have grown in size, these are the files we need to move
+                //if (newVROMDiff != 0)
+                {
+
+                    // for now since we have the space, just move all injected actors to the end, even if they are smaller
+                    // TODO make a list of previously free holes we can stick stuff into and check that
+                    file.Addr = previousLastVROMEnd;
+                    file.End  = previousLastVROMEnd + uncompresedVROMSize;
+                    previousLastVROMEnd = file.End;
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint) file.Addr);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint) file.End);
+
+                    // TODO check if we can place it in an old hole left behind by a previously moved actor
+                    var newVRAMStart = previousLastVRAMEnd;
+
+                    // we know where in the overlay pointers exist that need to be updated for VROM->VRAM
+                    // .reloc stores this info for us as a table of words that contain enough info to help us update
+                    // the very last byte in the overlay is (from end) offset
+                    //   of the table that declares size of text/data/rodata/bss
+                    // following those is a count of the reloc entries, followed by the actual entries
+                    var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
+                    // the table pointer at the end is an offset from the end, we need to swap it
+                    int tableOffset = (int)(file.Data.Length - relocSize);
+
+                    // the section table only contains section sizes, we need to walk it to know the offsets
+                    var sectionOffsets = new int[4];
+                    sectionOffsets[0] = 0; // text (always at the start for our overlay system)
+                    sectionOffsets[1] = sectionOffsets[0] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 0); // data
+                    sectionOffsets[2] = sectionOffsets[1] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 4); // rodata
+                    sectionOffsets[3] = sectionOffsets[2] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 8); // bss
+
+                    // from what I can tell, if you sum the section sizes and then the reloc total (final byte)
+                    // you should get the total vram size. Works for boyo so far ...
+                    var  newVramSize   = sectionOffsets[3] + relocSize;
+                    var  newVRAMEnd    = (uint)(newVRAMStart + newVramSize);
+                    uint newVRAMOffset = newVRAMStart - oldVRAMStart;
+
+                    UpdateOverlayVRAMReloc(file, sectionOffsets, newVRAMOffset);
+
+                    uint newInitVarAddr = newVRAMStart + injectedActor.initVarsLocation;
+
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x08, newVRAMStart);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0C, newVRAMEnd);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newInitVarAddr);
+
+                    previousLastVRAMEnd = newVRAMEnd;
+                }// end if changed overlay
+            }// end for overlay in overlaylist
+
+            //Enemies.InjectNewActors(previousLastVROMEnd, previousLastVRAMEnd);
+        }
+
+        public static void InjectNewActors(int availableVROMAddr, int availableVRAMAddr)
+        {
+            var newActorList = InjectedActors.FindAll(u => u.fileID == 0);
+
+            // foreach actor in newActorlist
+            // if new object, inject object
+            // find spot in DMA table
+            // update vram offsets
+            // find spot in overlay list, update entry there
+            // update actor ID in overlay init vars
+
         }
 
         public static void ShuffleEnemies(OutputSettings settings, Random random)
