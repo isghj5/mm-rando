@@ -1560,7 +1560,7 @@ namespace MMR.Randomizer
             int loopsCount = 0;
             int freeEnemyRate = 75; // starting value, as attempts increase this shrinks which lowers budget
             int oldObjectSize = sceneObjects.Select(x => ObjUtils.GetObjSize(x)).Sum();
-            var previousyAssignedActor = new List<GameObjects.Actor>();
+            var previousyAssignedCandidate = new List<GameObjects.Actor>();
             var chosenReplacementEnemies = new List<Actor>();
             var sceneFreeActors = GetSceneFreeActors(scene, log);
 
@@ -1707,6 +1707,14 @@ namespace MMR.Randomizer
                 {
                     var temporaryMatchEnemyList = new List<Actor>();
                     List<Actor> subMatches = actorCandidatesLists[objCount].FindAll(u => u.ObjectID == chosenReplacementObjects[objCount].NewV);
+
+                    //foreach (var list in chosenReplacementEnemies)
+                    {
+                        var search = subMatches.Find(u => u.Variants.Count == 0);
+                        if (search != null)
+                            throw new Exception("WTF");
+                    }
+
                     // for actors that have companions, add them now
                     foreach (var actor in subMatches.ToList())
                     {
@@ -1756,14 +1764,14 @@ namespace MMR.Randomizer
                         oldEnemy.ChangeActor(testActor, vars: testActor.Variants[rng.Next(testActor.Variants.Count)]);
 
                         temporaryMatchEnemyList.Add(oldEnemy);
-                        if (!previousyAssignedActor.Contains((GameObjects.Actor)oldEnemy.ActorID))
+                        if (!previousyAssignedCandidate.Contains((GameObjects.Actor)oldEnemy.ActorID))
                         {
-                            previousyAssignedActor.Add((GameObjects.Actor)oldEnemy.ActorID);
+                            previousyAssignedCandidate.Add((GameObjects.Actor)oldEnemy.ActorID);
                         }
                     }
 
                     // enemies can have max per room variants, if these show up we should cull the extra over the max
-                    var restrictedEnemies = previousyAssignedActor.FindAll(u => u.HasVariantsWithRoomLimits() || u.OnlyOnePerRoom());
+                    var restrictedEnemies = previousyAssignedCandidate.FindAll(u => u.HasVariantsWithRoomLimits() || u.OnlyOnePerRoom());
                     foreach (var problemEnemy in restrictedEnemies)
                     {
                         // we need to split enemies per room
@@ -1790,8 +1798,9 @@ namespace MMR.Randomizer
 
                     // add temp list back to chosenRepalcementEnemies
                     chosenReplacementEnemies.AddRange(temporaryMatchEnemyList);
-                    previousyAssignedActor.Clear();
+                    previousyAssignedCandidate.Clear();
                 }
+
 
                 // we need a list of actors that are NOT randomized, left alone, they still exist, and we can ignore new duplicates
 

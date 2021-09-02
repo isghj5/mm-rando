@@ -56,25 +56,17 @@ namespace MMR.Randomizer.Models.Rom
         public List<VariantsWithRoomMax> VariantsWithRoomMax;
         public List<List<int>> AllVariants = null;
 
-        public Actor() { }
-
-        public Actor(InjectedActor injected, string name)
-        {
-            InjectedActor = injected;
-            Name = OldName = name;
-            ActorID = injected.actorID;
-            ObjectID = injected.objID;
-            // variants?
-        }
+        public Actor() { } // default, used when building from scene/room read
 
         public Actor(GameObjects.Actor actor)
         {
+            // converted from enum, used for building replacement candidate actors
+
             Name = actor.ToString();
             ActorID = (int)actor;
             ActorEnum = actor;
             ObjectID = actor.ObjectIndex();
             ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex());
-            Variants = actor.AllVariants();
             Rotation = new vec16();
 
             SceneExclude = actor.ScenesRandomizationExcluded();
@@ -83,6 +75,27 @@ namespace MMR.Randomizer.Models.Rom
             Variants = AllVariants.SelectMany(u => u).ToList();
             RespawningVariants = actor.RespawningVariants();
         }
+
+        public Actor(InjectedActor injected, string name)
+        {
+            // create actor from injected actor
+
+            InjectedActor = injected;
+            Name = OldName = name;
+            ActorID = injected.actorID;
+            ObjectID = injected.objID;
+            // for now injected actors can only be of type ground
+            Variants = injected.groundVariants;
+            AllVariants = new List<List<int>>()
+            {
+                new List<int>(),
+                Variants,
+                new List<int>(),
+                new List<int>(),
+                new List<int>(),
+            };
+        }
+
 
         public static List<List<int>> BuildVariantList(GameObjects.Actor actor)
         {
