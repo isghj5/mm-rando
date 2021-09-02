@@ -52,7 +52,11 @@ typedef struct {
     /* 0x0C */ void* shadowDrawFunc;
     /* 0x10 */ f32 scale;
     /* 0x14 */ u8 alphaScale; // 255 means always draw full opacity if visible
-} ActorShape; // size = 0x18
+    /* 0x15 */ u8 feetFloorFlags; // Set if the actor's foot is clipped under the floor. & 1 is right foot, & 2 is left
+    /* 0x16 */ UNK_TYPE1 pad16;
+    /* 0x17 */ UNK_TYPE1 pad17;
+    /* 0x18 */ Vec3f feetPos[2]; // Update by using `Actor_SetFeetPos` in PostLimbDraw
+} ActorShape; // size = 0x30
 
 typedef struct {
     /* 0x00 */ s16 id;
@@ -123,8 +127,6 @@ typedef struct Actor {
     /* 0x09C */ f32 yDistanceFromLink;
     /* 0x0A0 */ ActorA0 unkA0;
     /* 0x0BC */ ActorShape shape;
-    /* 0x0D4 */ Vec3f unkD4;
-    /* 0x0E0 */ Vec3f unkE0;
     /* 0x0EC */ Vec3f projectedPos;
     /* 0x0F8 */ f32 unkF8;
     /* 0x0FC */ f32 unkFC;

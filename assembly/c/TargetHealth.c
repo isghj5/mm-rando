@@ -45,7 +45,7 @@ static void TargetHealth_Draw(GlobalContext* ctxt, Vec3f* pos, ColorRGBA8* color
     gDPFillRectangle(gfxCtx->overlay.p++, x + 4, y + 2, x + 4 + (u8)(48.0 * (f32)health / (f32)maxHealth), y + 2 + 3);
 }
 
-#define MaxHealthPtr(actor) ((s8*)(&actor->unkE0) + 7)
+#define MaxHealthPtr(actor) ((s8*)(&actor->shape.pad17))
 
 static s8 TargetHealth_GetMaxHealth(Actor* actor, u8* currentHealth) {
     s8 maxHealth = *MaxHealthPtr(actor);
