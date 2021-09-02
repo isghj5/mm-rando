@@ -222,7 +222,7 @@ typedef struct {
     /* 0x3CC */ s16 unk3CC;
     /* 0x3CE */ s8 unk3CE;
     /* 0x3CF */ UNK_TYPE1 pad3CF[0x361];
-    /* 0x730 */ Actor* unk730;
+    /* 0x730 */ Actor* target;
     /* 0x734 */ UNK_TYPE1 pad734[0x334];
     /* 0xA68 */ f32 *tableA68; // Transformation-dependant f32 array, [11] used for distance to begin swimming.
     /* 0xA6C */ PlayerStateFlags stateFlags;

@@ -305,12 +305,12 @@ typedef struct {
     /* 0x2C */ f32 unk2C;
     /* 0x30 */ f32 unk30;
     /* 0x34 */ f32 unk34;
-    /* 0x38 */ Actor* unk38;
-    /* 0x3C */ Actor* unk3C;
+    /* 0x38 */ Actor* targetHover;
+    /* 0x3C */ Actor* targetLocked;
     /* 0x40 */ f32 unk40;
     /* 0x44 */ f32 unk44;
     /* 0x48 */ s16 unk48;
-    /* 0x4A */ u8 unk4A;
+    /* 0x4A */ u8 targetType;
     /* 0x4B */ u8 unk4B;
     /* 0x4C */ s8 unk4C;
     /* 0x4D */ UNK_TYPE1 pad4D[0x3];

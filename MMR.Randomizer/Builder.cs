@@ -1327,6 +1327,11 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.lenient_goron_spikes);
             }
 
+            // if (_randomized.Settings.ShowEnemyHealth)
+            {
+                hacks.Add(Resources.mods.enemy_max_health);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);

@@ -166,6 +166,9 @@
   <data name="enable_sunssong" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\enable-sunssong;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="enemy_max_health" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\enemy-max-health.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="fairies_chests_only" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fairies-chests-only;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

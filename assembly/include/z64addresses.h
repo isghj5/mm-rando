@@ -68,6 +68,9 @@ extern void z2_ToggleSfxDampen(int enable);
 extern void z2_HandleInputVelocity(f32* linearVelocity, f32 inputVelocity, f32 increaseBy, f32 decreaseBy);
 extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 extern void z2_UpdatePictoFlags(GlobalContext* ctxt);
+extern void z2_8012C654(GraphicsContext* gfxCtx);
+extern Gfx* z2_8010CFBC(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a);
+extern Gfx* z2_8010D480(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a, u16 arg14, u16 arg15);
 
 // Function Prototypes (Scene Flags).
 // TODO parameters
@@ -136,6 +139,7 @@ extern void z2_Kanfont_LoadAsciiChar(GlobalContext* ctxt, u8 character, s32 iPar
 extern void z2_BaseDrawCollectable(Actor* actor, GlobalContext* ctxt);
 extern void z2_BaseDrawGiModel(GlobalContext* ctxt, u32 graphicIdMinus1);
 extern void z2_CallSetupDList(GraphicsContext* gfx);
+extern Gfx* z2_Gfx_CallSetupDL(Gfx* gfx, u32 i);
 extern void z2_DrawHeartPiece(Actor* actor, GlobalContext* ctxt);
 extern void z2_DrawRupee(Actor* actor, GlobalContext* ctxt);
 extern void z2_PreDraw1(Actor* actor, GlobalContext* ctxt, u32 unknown);

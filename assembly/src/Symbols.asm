@@ -74,6 +74,8 @@
 .definelabel z2_HandleInputVelocity, 0x800FF2F8
 .definelabel z2_Math_Vec3f_DistXZ, 0x800FF92C
 .definelabel z2_WriteHeartColors, 0x8010069C
+.definelabel z2_8010CFBC, 0x8010CFBC
+.definelabel z2_8010D480, 0x8010D480
 .definelabel z2_UpdateButtonsState, 0x8010EF68
 .definelabel z2_UpdateButtonUsability, 0x80110038
 .definelabel z2_ReloadButtonTexture, 0x80112B40
@@ -88,7 +90,9 @@
 .definelabel z2_DrawCButtonIcons, 0x80118890
 .definelabel z2_CanInteract2, 0x80123358
 .definelabel z2_CanInteract, 0x801233E4
+.definelabel z2_Gfx_CallSetupDL, 0x8012BF78
 .definelabel z2_CallSetupDList, 0x8012C2DC
+.definelabel z2_8012C654, 0x8012C654
 .definelabel z2_LoadRoom, 0x8012E96C
 .definelabel z2_UnloadRoom, 0x8012EBF8
 .definelabel z2_GiveMap, 0x8012EF0C
