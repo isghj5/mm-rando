@@ -40,7 +40,12 @@ static u8 CalculateCurrentState() {
 static void ProcessChannel(u8 channelIndex, u8 stateMask) {
     SequenceChannelContext* channelContext = gSequenceContext->channels[channelIndex];
     if (channelContext->playState.playing) {
-        bool shouldBeMuted = musicState.forceMute & (1 << channelIndex);
+        bool shouldBeMuted = false;
+        if (!channelContext->playState.muted) {
+            musicState.forceMute &= ~(1 << channelIndex);
+        } else {
+            shouldBeMuted = musicState.forceMute & (1 << channelIndex);
+        }
         if (!shouldBeMuted) {
             u8 muteMask = musicState.muteMask[channelIndex];
             shouldBeMuted = muteMask & stateMask;
