@@ -49,20 +49,14 @@ static void TargetHealth_Draw(GlobalContext* ctxt, Vec3f* pos, ColorRGBA8* color
 
 static s8 TargetHealth_GetMaxHealth(Actor* actor, u8* currentHealth) {
     s8 maxHealth = *MaxHealthPtr(actor);
-    u8 health = actor->unkA0.health;
-    if (maxHealth == 0 || maxHealth < health) {
-        if (actor->parent) {
-            return TargetHealth_GetMaxHealth(actor->parent, currentHealth);
-        }
-
-        maxHealth = health;
-
-        if (maxHealth == 0) {
-            maxHealth = -1;
-        }
-        *MaxHealthPtr(actor) = maxHealth;
+    *currentHealth = actor->colChkInfo.health;
+    switch (actor->id) {
+        case ACTOR_BOSS_02: // Twinmold
+            maxHealth = *MaxHealthPtr(actor->parent);
+            *currentHealth = actor->parent->colChkInfo.health;
+            break;
     }
-    *currentHealth = health;
+
     return maxHealth;
 }
 
@@ -81,4 +75,8 @@ void TargetHealth_Draw_Hook(GlobalContext* ctxt, Vec3f* pos) {
 
     // Displaced Code
     ctxt->state.gfxCtx->overlay.p = z2_Gfx_CallSetupDL(ctxt->state.gfxCtx->overlay.p, 0x39);
+}
+
+void TargetHealth_AfterActorInit(Actor* actor, GlobalContext* ctxt) {
+    *MaxHealthPtr(actor) = actor->colChkInfo.health;
 }

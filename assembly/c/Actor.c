@@ -1,6 +1,7 @@
 #include <z64.h>
 #include "ActorExt.h"
 #include "Models.h"
+#include "TargetHealth.h"
 
 /**
  * Hook function called after an actor's deconstructor function has been called.
@@ -10,6 +11,11 @@ void Actor_AfterDtor(Actor* actor, GlobalContext* ctxt) {
     ActorExt_AfterActorDtor(actor);
     // Unload actor model information after dtor.
     Models_AfterActorDtor(actor);
+}
+
+void Actor_Init(Actor* actor, GlobalContext* ctxt) {
+    actor->init(actor, ctxt);
+    TargetHealth_AfterActorInit(actor, ctxt);
 }
 
 Actor* Actor_Spawn(GlobalContext* ctxt, u8 id, Vec3f pos, Vec3s rot, u16 params) {
