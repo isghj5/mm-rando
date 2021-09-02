@@ -1431,7 +1431,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x30)]
         Obj_Armos = 0x105, // Obj_Armos
 
-        [ActorizerEnabled]
+        [EnemizerEnabled]
         [FileID(240)]
         [ObjectListIndex(0x14F)]
         [GroundVariants(0x0)]
@@ -1918,6 +1918,7 @@ namespace MMR.Randomizer.GameObjects
         // 2 is smaller scrub that surrounds link
         [GroundVariants(2,6)]
         [VariantsWithRoomMax(max:1, variant:6)]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)]
         [UnkillableAllVariants]
         HallucinationScrub = 0x169, // En_Dnk
         

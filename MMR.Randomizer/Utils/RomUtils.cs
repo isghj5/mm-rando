@@ -34,9 +34,9 @@ namespace MMR.Randomizer.Utils
 
             #if DEBUG
             string settingstring = $"{setting} + DEBUG BUILD\x00";
-            #else
-            string settingstring = $"{setting} + Isghj's Enemizer Test 22.4\x00";
-            #endif
+#else
+            string settingstring = $"{setting} + Isghj's Extra Enemy Test 23.4\x00";
+#endif
             int f = GetFileIndexForWriting(veraddr);
             var file = RomData.MMFileList[f];
 

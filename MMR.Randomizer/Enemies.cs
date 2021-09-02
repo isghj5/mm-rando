@@ -93,7 +93,7 @@ namespace MMR.Randomizer
                                 && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized()))) // both
                             .ToList();
 
-           /* var EmemiesOnly = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+           var EmemiesOnly = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                             .Where(u => u.ObjectIndex() > 3
                                 && (u.IsEnemyRandomized()))
                             .ToList();
@@ -103,10 +103,10 @@ namespace MMR.Randomizer
             // for now they are the same, in the future players will control how they load
             ReplacementCandidateList = new List<ReplacementActor>();
             //foreach (var actor in EmemiesOnly)
-            foreach (var actor in VanillaEnemyList)
+            foreach (var actor in EmemiesOnly)
             {
                 ReplacementCandidateList.Add(new ReplacementActor(actor));
-            }
+            }// */
         }
 
         public static bool ReplacementListContains(GameObjects.Actor actor)
@@ -1665,12 +1665,12 @@ namespace MMR.Randomizer
                         });
                         continue;
                     } // */
-                    if (scene.File == GameObjects.Scene.SouthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.SouthernSwampClear.FileID() && sceneObjects[objCount] == GameObjects.Actor.DekuBaba.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.FriendlyCucco.ObjectIndex()
+                            NewV = GameObjects.Actor.HallucinationScrub.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -2093,7 +2093,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 23.3\n");
+                    sw.Write("Enemizer version: Isghj's Extra Enemy Test 23.4\n");
                 }
             }
             catch (Exception e)
