@@ -77,6 +77,8 @@ namespace MMR.Randomizer
 
             SequenceUtils.CheckSongForce(unassigned, log, random);
 
+            SequenceUtils.ResetBudget();
+
             foreach (var targetSlot in RomData.TargetSequences)
             {
                 // scan all songs for a replacement that fits in this slot

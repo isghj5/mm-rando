@@ -26,7 +26,14 @@ namespace MMR.Randomizer.Utils
 
         public static int MAX_BGM_BUDGET            = 0x3800; // vanilla: 0x3800
         public static int MAX_COMBAT_BUDGET         = 0x3800; // unk
-        public static int MAX_TYPE1_MUSIC_BUGDET    = 0x4100; // vanilla: 0x4100
+        public static int MAX_TYPE2_MUSIC_BUGDET    = 0x4100; // vanilla: 0x4100
+
+        public static void ResetBudget()
+        {
+            MAX_BGM_BUDGET          = 0x3800;
+            MAX_COMBAT_BUDGET       = 0x3800;
+            MAX_TYPE2_MUSIC_BUGDET  = 0x4100;
+        }
 
         public static void ReadSequenceInfo()
         {
@@ -1008,9 +1015,9 @@ namespace MMR.Randomizer.Utils
                     continue; // song unacceptable, continue
                 }
 
+                var maxSize = targetSlot.MM_seq == 0x1A ? MAX_COMBAT_BUDGET : MAX_BGM_BUDGET;
                 var seqSize = GetSequenceSize(testSeq);
-                if ( (seqSize > MAX_COMBAT_BUDGET &&    testSeq.Type.Contains(0x1A) )
-                    || (seqSize > MAX_BGM_BUDGET && (testSeq.Type.Contains(0x0) || testSeq.Type.Contains(0x2))) )
+                if (seqSize > maxSize)
                 {
                     continue; // too big
                 }
@@ -1047,9 +1054,9 @@ namespace MMR.Randomizer.Utils
             /// if their sum is greater than the size of the buffer they clip into each other when one loads, this kills one, usually bgm
 
 
-            var combatSequences     = RomData.SequenceList.FindAll(u => u.Type.Contains(5));
             var usedCombatSequence  = RomData.SequenceList.Find(u => u.Replaces == 0x1A);
-            var BGMSlots        = RomData.TargetSequences.FindAll(u => u.Type[0] == 0 || u.Type[0] == 2);
+            var combatSize = GetSequenceSize(usedCombatSequence);
+            var BGMSlots        = RomData.TargetSequences.FindAll(u => u.Type.Contains(0) || u.Type.Contains(2) || u.MM_seq == 0x12); // 0x12 is deku palace, which has an enemy
             var usedBGMSequences = new List<SequenceInfo>();
             foreach (var slot in BGMSlots)
             {
@@ -1069,8 +1076,8 @@ namespace MMR.Randomizer.Utils
             if (combatVsBGMCoinToss) // Combat chosen
             {
                 // get new BGM budget from combat file
-                var newBGMBudget = MAX_BGM_BUDGET = MAX_TYPE1_MUSIC_BUGDET - GetSequenceSize(usedCombatSequence);
-                log.AppendLine($" new BGM budget: {MAX_BGM_BUDGET.ToString("X")}, from combat size: {GetSequenceSize(usedCombatSequence).ToString("X")}");
+                var newBGMBudget = MAX_BGM_BUDGET = MAX_TYPE2_MUSIC_BUGDET - combatSize;
+                log.AppendLine($" new BGM budget: {MAX_BGM_BUDGET.ToString("X")}, from combat size: {combatSize.ToString("X")}");
 
                 // per BGM sequence
                 foreach (var seq in usedBGMSequences)
@@ -1095,18 +1102,13 @@ namespace MMR.Randomizer.Utils
             else // BGM chosen
             {
                 // get new combat budget by comparing to largest BGM
-                int largestBGMSize = 0;
-                foreach (var bgmSeq in usedBGMSequences)
-                {
-                    var seqSize = GetSequenceSize(bgmSeq);
-                    largestBGMSize = (seqSize > largestBGMSize) ? (seqSize) : (largestBGMSize);
-                }
-                log.AppendLine($" new Combat budget: {MAX_COMBAT_BUDGET.ToString("X")} from bgm size: {largestBGMSize.ToString("X")}");
+                var largestBGMSize = usedBGMSequences.Max(GetSequenceSize);
 
                 // per BGM sequence
-                var combatSize = GetSequenceSize(usedCombatSequence);
-                var newCombatBudget = MAX_COMBAT_BUDGET = MAX_TYPE1_MUSIC_BUGDET - largestBGMSize;
-                if (combatSize > newCombatBudget) { 
+                var newCombatBudget = MAX_COMBAT_BUDGET = MAX_TYPE2_MUSIC_BUGDET - largestBGMSize;
+                log.AppendLine($" new Combat budget: {MAX_COMBAT_BUDGET.ToString("X")} from bgm size: {largestBGMSize.ToString("X")}");
+                if (combatSize > newCombatBudget)
+                { 
                     var seqName = usedCombatSequence.Name;
                     log.AppendLine($"Combat sequence {seqName} was too big to match your BGM music, replacing ... ");
                     var combatSlot = RomData.TargetSequences.Find(u => u.Name == "mm-combat");
