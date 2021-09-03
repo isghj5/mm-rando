@@ -90,6 +90,11 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (_cosmeticSettings.DisableCombatMusic != CombatMusic.All)
+            {
+                SequenceUtils.CheckBGMCombatMusicBudget(unassigned, random, log);
+            }
+
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
 
             if (_cosmeticSettings.Music == Music.Random && settings.GenerateSpoilerLog)
