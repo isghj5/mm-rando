@@ -1011,18 +1011,6 @@ namespace MMR.Randomizer.Utils
             return false; // ran out of songs to try
         }
 
-        public static int PopulateVanillaSequenceSize(int sequenceID)
-        {
-            // we know code file is already decompressed at this point
-            int codeFID = RomUtils.GetFileIndexForWriting(Addresses.SeqTable);
-            var codeFile = RomData.MMFileList[codeFID];
-            int audioseqIndexTableOffset = Addresses.SeqTable - codeFile.Addr;
-
-            int entryaddr = audioseqIndexTableOffset + (sequenceID * 16);
-            var size = (int)ReadWriteUtils.Arr_ReadU32(codeFile.Data, entryaddr + 4);
-            return size;
-        }
-
         public static void CheckBGMCombatMusicBudget(List<SequenceInfo> unassignedSequences, Random rng, StringBuilder log)
         {
             /// in any scene, BGM and Combat music share the same buffer, loading to the other side,
