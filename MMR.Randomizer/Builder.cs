@@ -72,7 +72,9 @@ namespace MMR.Randomizer
             RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
             WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + unassigned.Count + " available songs:");
 
+            // songtest filename token allows music makers and users to force a song into a MMR seed for recording/testing
             SequenceUtils.CheckSongTest(unassigned, log);
+
             SequenceUtils.CheckSongForce(unassigned, log, random);
 
             foreach (var targetSlot in RomData.TargetSequences)
@@ -82,36 +84,24 @@ namespace MMR.Randomizer
 
                 if (foundValidReplacement == false) // no available songs fit in this slot category
                 {
-                    WriteOutput("No song fits in " + targetSlot.Name + " slot, with categories: " + String.Join(", ", targetSlot.Type.Select(x => "0x" + x.ToString("X2"))));
+                    WriteOutput($"No song fits in [{targetSlot.Name}] slot, with categories: " + String.Join(", ", targetSlot.Type.Select(x => "0x" + x.ToString("X2"))));
                     // loosen song restrictions and re-attempt
-                    SequenceUtils.TryBackupSongPlacement(targetSlot, log, unassigned);
+                    SequenceUtils.TryBackupSongPlacement(targetSlot, log, unassigned, settings);
                 }
+            }
+
+            if (_cosmeticSettings.DisableCombatMusic != CombatMusic.All)
+            {
+                SequenceUtils.CheckBGMCombatMusicBudget(unassigned, random, log);
             }
 
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
 
             if (_cosmeticSettings.Music == Music.Random && settings.GenerateSpoilerLog)
             {
-                String dir = Path.GetDirectoryName(settings.OutputROMFilename);
-                String path = $"{Path.GetFileNameWithoutExtension(settings.OutputROMFilename)}";
-                // spoiler log should already be written by the time we reach this far
-                if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
-                {
-                    path += "_SpoilerLog.txt";
-                }
-                else // TODO add HTML log compatibility
-                {
-                    path += "_SongLog.txt";
-                }
-
-                using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
-                {
-                    sw.WriteLine(""); // spacer
-                    sw.Write(log);
-                }
+                SequenceUtils.WriteSongLog(log, settings);
             }
         }
-        #endregion
 
         private void WriteAudioSeq(Random random, OutputSettings _settings)
         {
@@ -141,19 +131,27 @@ namespace MMR.Randomizer
         {
             if (_cosmeticSettings.Music == Music.None)
             {
+                /// mute all music by setting their master volume to zero
                 // Traverse the audioseq index table to get the locations of all sequences
-                byte[] audioseq_table = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.SeqTable)].Data;
-                // turns out the randomizer doesn't consider the table to be its own file, we need the offset
-                int audioseq_table_baseaddr = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.SeqTable)].Addr;
-                byte[] audioseq = RomData.MMFileList[RomUtils.GetFileIndexForWriting(0x00046AF0)].Data; // 46AF0 is audioseq starting location
+                // the audioseq index table is not its own file, its buried within the code file, we need the offset to the table
+                var codeFile = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.SeqTable)];
+                var audioseqIndexTable = codeFile.Data;
+                int audioseqIndexTableAddr = Addresses.SeqTable - codeFile.Addr;
+                var audioseq = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.AudioSequence)].Data;
                 // for each sequence, search for the master volume byte and change to zero
-                for (int seq = 2; seq < 128; seq += 1){
+                for (int seq = 2; seq < 128; seq += 1)
+                {
                     if (seq == 0x54) // It was requested that the bar band minigame not be silenced
+                    {
                         continue;
-                    int seq_location_offset = (int)ReadWriteUtils.Arr_ReadU32(audioseq_table, (Addresses.SeqTable + seq * 16) - audioseq_table_baseaddr);
-                    for (int byte_iter = 3; byte_iter < 128; byte_iter++){
-                        if (audioseq[seq_location_offset + byte_iter] == 0xDB){
-                            audioseq[seq_location_offset + byte_iter + 1] = 0x0;
+                    }
+
+                    int seqLocation = (int)ReadWriteUtils.Arr_ReadU32(audioseqIndexTable, audioseqIndexTableAddr + (seq * 16));
+                    for (int b = 3; b < 128; b++) // search for master volume byte
+                    {
+                        if (audioseq[seqLocation + b] == 0xDB) // master volume byte
+                        { 
+                            audioseq[seqLocation + b + 1] = 0x0; // set value to zero
                             continue;
                         }
                     }
@@ -170,6 +168,7 @@ namespace MMR.Randomizer
 
             Enemies.DisableEnemyCombatMusic(_cosmeticSettings.DisableCombatMusic == CombatMusic.WeakEnemies);
         }
+        #endregion
 
         private void WritePlayerModel()
         {
