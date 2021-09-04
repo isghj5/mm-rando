@@ -175,12 +175,17 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        private static int RoundTo16(int value)
+        {
+            return (value + 0xF) & ~0xF;
+        }
+
         public static int GetSequenceSize(SequenceInfo seq)
         {
             // if it was loading at the MMRS read time, the zseq is already loading in memory
             if (seq.SequenceBinaryList != null && seq.SequenceBinaryList.Count > 0)
             {
-                return seq.SequenceBinaryList[0].SequenceBinary.Length;
+                return RoundTo16(seq.SequenceBinaryList[0].SequenceBinary.Length);
             }
             else if (seq.Name.StartsWith("mm-")) // vanilla mm, look up from audioseq index table
             {
@@ -191,7 +196,7 @@ namespace MMR.Randomizer.Utils
 
                 int entryaddr = audioseqIndexTableOffset + (seq.Replaces * 16);
                 var size = (int) ReadWriteUtils.Arr_ReadU32(codeFile.Data, entryaddr + 4);
-                return size;
+                return RoundTo16(size);
             }
             else // not already loaded, we have to search for the file and look it up
             {
@@ -201,7 +206,7 @@ namespace MMR.Randomizer.Utils
                     using (var reader = new BinaryReader(File.OpenRead(seq.Filename)))
                     {
                         data = new byte[(int)reader.BaseStream.Length];
-                        return data.Length;
+                        return RoundTo16(data.Length);
                     }
                 }
             }
