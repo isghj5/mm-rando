@@ -1053,7 +1053,7 @@ namespace MMR.Randomizer.Utils
             return false; // ran out of songs to try
         }
 
-        public static void CheckBGMCombatMusicBudget(List<SequenceInfo> unassignedSequences, Random rng, StringBuilder log)
+        public static void CheckBGMCombatMusicBudget(List<SequenceInfo> unassignedSequences, CombatMusic combatMusic, Random rng, StringBuilder log)
         {
             /// in any scene, BGM and Combat music share the same buffer, loading to the other side,
             /// if their sum is greater than the size of the buffer they clip into each other when one loads, this kills one, usually bgm
@@ -1077,6 +1077,11 @@ namespace MMR.Randomizer.Utils
             bool combatVsBGMCoinToss =  rng.Next(2) == 1;
             string coinResult = (combatVsBGMCoinToss ? ("COMB") : ("BGM"));
             log.AppendLine($" SECOND PASS: Scanning for oversized BGM or combat cointoss: ({coinResult})");
+            if (combatMusic == CombatMusic.All)
+            {
+                combatVsBGMCoinToss = false;
+                log.AppendLine($" Prioritizing BGM music because combat music is set to disabled");
+            }
 
             if (combatVsBGMCoinToss) // Combat chosen
             {
