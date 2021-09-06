@@ -583,6 +583,24 @@ namespace MMR.Randomizer.GameObjects
                 Name = "Curiosity Shop Cool Bottle",
                 MessageIds = { (10744, 0), (10745, 0) },
             },
+
+            // Poe Hut
+            new MessageCost
+            {
+                Name = "Poe Hut",
+                MessageIds = { (5332, 0), (5349, 0) },
+                LocationsAffected = { Item.HeartPiecePoeHut },
+                PriceAddresses = { 0xF748F0 + 0x132, 0xF748F0 + 0x18E, 0xF748F0 + 0xA3E },
+            },
+
+            // Healed Poe Hut
+            new MessageCost
+            {
+                Name = "Healed Poe Hut",
+                MessageIds = { (5349, 1) },
+                LocationsAffected = { Item.HeartPiecePoeHut },
+                PriceAddresses = { 0xF748F0 + 0x18A, 0xF748F0 + 0x936 },
+            },
         };
     }
 }
