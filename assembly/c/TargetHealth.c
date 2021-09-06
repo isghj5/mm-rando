@@ -59,6 +59,12 @@ static s8 TargetHealth_GetMaxHealth(Actor* actor, s8* currentHealth) {
             maxHealth = *MaxHealthPtr(actor->parent);
             *currentHealth = actor->parent->colChkInfo.health;
             break;
+        case ACTOR_EN_PO_SISTERS: // Poe Sisters
+            if (actor->parent && actor->parent->id == ACTOR_EN_PO_SISTERS) {
+                maxHealth = *MaxHealthPtr(actor->parent);
+                *currentHealth = actor->parent->colChkInfo.health;
+            }
+            break;
     }
 
     return maxHealth;
