@@ -125,6 +125,11 @@ namespace MMR.Randomizer.Asm
         public bool FairyChests { get; set; }
 
         /// <summary>
+        /// Whether or not to show health bars when targeting an enemy.
+        /// </summary>
+        public bool TargetHealth { get; set; }
+
+        /// <summary>
         /// Whether or not to apply Elegy of Emptiness speedups.
         /// </summary>
         public bool ElegySpeedup { get; set; } = true;
@@ -201,6 +206,9 @@ namespace MMR.Randomizer.Asm
             this.ShopModels = ((flags >> 17) & 1) == 1;
             this.ProgressiveUpgrades = ((flags >> 16) & 1) == 1;
             this.IceTrapQuirks = ((flags >> 15) & 1) == 1;
+            this.EarlyMikau = ((flags >> 14) & 1) == 1;
+            this.FairyChests = ((flags >> 13) & 1) == 1;
+            this.TargetHealth = ((flags >> 12) & 1) == 1;
         }
 
         /// <summary>
@@ -227,6 +235,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 15;
             flags |= (this.EarlyMikau ? (uint)1 : 0) << 14;
             flags |= (this.FairyChests ? (uint)1 : 0) << 13;
+            flags |= (this.TargetHealth ? (uint)1 : 0) << 12;
             return flags;
         }
     }

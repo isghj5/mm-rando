@@ -120,6 +120,7 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cLenientGoronSpikes = new System.Windows.Forms.CheckBox();
             this.cImprovedPictobox = new System.Windows.Forms.CheckBox();
             this.cElegySpeedups = new System.Windows.Forms.CheckBox();
             this.cCloseCows = new System.Windows.Forms.CheckBox();
@@ -198,7 +199,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cLenientGoronSpikes = new System.Windows.Forms.CheckBox();
+            this.cTargetHealth = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1323,6 +1324,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cTargetHealth);
             this.groupBox7.Controls.Add(this.cLenientGoronSpikes);
             this.groupBox7.Controls.Add(this.cImprovedPictobox);
             this.groupBox7.Controls.Add(this.cElegySpeedups);
@@ -1346,10 +1348,22 @@ namespace MMR.UI.Forms
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
             // 
+            // cLenientGoronSpikes
+            // 
+            this.cLenientGoronSpikes.AutoSize = true;
+            this.cLenientGoronSpikes.Location = new System.Drawing.Point(10, 155);
+            this.cLenientGoronSpikes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cLenientGoronSpikes.Name = "cLenientGoronSpikes";
+            this.cLenientGoronSpikes.Size = new System.Drawing.Size(137, 19);
+            this.cLenientGoronSpikes.TabIndex = 39;
+            this.cLenientGoronSpikes.Text = "Lenient Goron Spikes";
+            this.cLenientGoronSpikes.UseVisualStyleBackColor = true;
+            this.cLenientGoronSpikes.CheckedChanged += new System.EventHandler(this.cLenientGoronSpikes_CheckedChanged);
+            // 
             // cImprovedPictobox
             // 
             this.cImprovedPictobox.AutoSize = true;
-            this.cImprovedPictobox.Location = new System.Drawing.Point(10, 130);
+            this.cImprovedPictobox.Location = new System.Drawing.Point(10, 129);
             this.cImprovedPictobox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cImprovedPictobox.Name = "cImprovedPictobox";
             this.cImprovedPictobox.Size = new System.Drawing.Size(127, 19);
@@ -1361,7 +1375,7 @@ namespace MMR.UI.Forms
             // cElegySpeedups
             // 
             this.cElegySpeedups.AutoSize = true;
-            this.cElegySpeedups.Location = new System.Drawing.Point(172, 211);
+            this.cElegySpeedups.Location = new System.Drawing.Point(172, 207);
             this.cElegySpeedups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cElegySpeedups.Name = "cElegySpeedups";
             this.cElegySpeedups.Size = new System.Drawing.Size(107, 19);
@@ -1373,7 +1387,7 @@ namespace MMR.UI.Forms
             // cCloseCows
             // 
             this.cCloseCows.AutoSize = true;
-            this.cCloseCows.Location = new System.Drawing.Point(10, 105);
+            this.cCloseCows.Location = new System.Drawing.Point(10, 103);
             this.cCloseCows.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cCloseCows.Name = "cCloseCows";
             this.cCloseCows.Size = new System.Drawing.Size(87, 19);
@@ -1385,7 +1399,7 @@ namespace MMR.UI.Forms
             // cArrowCycling
             // 
             this.cArrowCycling.AutoSize = true;
-            this.cArrowCycling.Location = new System.Drawing.Point(172, 185);
+            this.cArrowCycling.Location = new System.Drawing.Point(172, 181);
             this.cArrowCycling.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cArrowCycling.Name = "cArrowCycling";
             this.cArrowCycling.Size = new System.Drawing.Size(99, 19);
@@ -1397,7 +1411,7 @@ namespace MMR.UI.Forms
             // cFreestanding
             // 
             this.cFreestanding.AutoSize = true;
-            this.cFreestanding.Location = new System.Drawing.Point(172, 78);
+            this.cFreestanding.Location = new System.Drawing.Point(172, 77);
             this.cFreestanding.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFreestanding.Name = "cFreestanding";
             this.cFreestanding.Size = new System.Drawing.Size(139, 19);
@@ -1409,7 +1423,7 @@ namespace MMR.UI.Forms
             // cFastPush
             // 
             this.cFastPush.AutoSize = true;
-            this.cFastPush.Location = new System.Drawing.Point(10, 78);
+            this.cFastPush.Location = new System.Drawing.Point(10, 77);
             this.cFastPush.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cFastPush.Name = "cFastPush";
             this.cFastPush.Size = new System.Drawing.Size(132, 19);
@@ -1423,7 +1437,7 @@ namespace MMR.UI.Forms
             this.cQText.AutoSize = true;
             this.cQText.BackColor = System.Drawing.Color.Transparent;
             this.cQText.ForeColor = System.Drawing.Color.Black;
-            this.cQText.Location = new System.Drawing.Point(10, 52);
+            this.cQText.Location = new System.Drawing.Point(10, 51);
             this.cQText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cQText.Name = "cQText";
             this.cQText.Size = new System.Drawing.Size(80, 19);
@@ -1451,7 +1465,7 @@ namespace MMR.UI.Forms
             this.cEponaSword.AutoSize = true;
             this.cEponaSword.BackColor = System.Drawing.Color.Transparent;
             this.cEponaSword.ForeColor = System.Drawing.Color.Black;
-            this.cEponaSword.Location = new System.Drawing.Point(172, 132);
+            this.cEponaSword.Location = new System.Drawing.Point(172, 129);
             this.cEponaSword.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cEponaSword.Name = "cEponaSword";
             this.cEponaSword.Size = new System.Drawing.Size(112, 19);
@@ -1465,7 +1479,7 @@ namespace MMR.UI.Forms
             this.cUpdateChests.AutoSize = true;
             this.cUpdateChests.BackColor = System.Drawing.Color.Transparent;
             this.cUpdateChests.ForeColor = System.Drawing.Color.Black;
-            this.cUpdateChests.Location = new System.Drawing.Point(172, 52);
+            this.cUpdateChests.Location = new System.Drawing.Point(172, 51);
             this.cUpdateChests.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cUpdateChests.Name = "cUpdateChests";
             this.cUpdateChests.Size = new System.Drawing.Size(100, 19);
@@ -1491,7 +1505,7 @@ namespace MMR.UI.Forms
             // 
             this.cQuestItemStorage.AutoSize = true;
             this.cQuestItemStorage.BackColor = System.Drawing.Color.Transparent;
-            this.cQuestItemStorage.Location = new System.Drawing.Point(172, 158);
+            this.cQuestItemStorage.Location = new System.Drawing.Point(172, 155);
             this.cQuestItemStorage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cQuestItemStorage.Name = "cQuestItemStorage";
             this.cQuestItemStorage.Size = new System.Drawing.Size(155, 19);
@@ -1505,7 +1519,7 @@ namespace MMR.UI.Forms
             this.cNoDowngrades.AutoSize = true;
             this.cNoDowngrades.BackColor = System.Drawing.Color.Transparent;
             this.cNoDowngrades.ForeColor = System.Drawing.Color.Black;
-            this.cNoDowngrades.Location = new System.Drawing.Point(172, 105);
+            this.cNoDowngrades.Location = new System.Drawing.Point(172, 103);
             this.cNoDowngrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cNoDowngrades.Name = "cNoDowngrades";
             this.cNoDowngrades.Size = new System.Drawing.Size(110, 19);
@@ -2223,17 +2237,17 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cLenientGoronSpikes
+            // cTargetHealth
             // 
-            this.cLenientGoronSpikes.AutoSize = true;
-            this.cLenientGoronSpikes.Location = new System.Drawing.Point(10, 155);
-            this.cLenientGoronSpikes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cLenientGoronSpikes.Name = "cLenientGoronSpikes";
-            this.cLenientGoronSpikes.Size = new System.Drawing.Size(137, 19);
-            this.cLenientGoronSpikes.TabIndex = 39;
-            this.cLenientGoronSpikes.Text = "Lenient Goron Spikes";
-            this.cLenientGoronSpikes.UseVisualStyleBackColor = true;
-            this.cLenientGoronSpikes.CheckedChanged += new System.EventHandler(this.cLenientGoronSpikes_CheckedChanged);
+            this.cTargetHealth.AutoSize = true;
+            this.cTargetHealth.Location = new System.Drawing.Point(10, 181);
+            this.cTargetHealth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTargetHealth.Name = "cTargetHealth";
+            this.cTargetHealth.Size = new System.Drawing.Size(116, 19);
+            this.cTargetHealth.TabIndex = 40;
+            this.cTargetHealth.Text = "Target Health Bar";
+            this.cTargetHealth.UseVisualStyleBackColor = true;
+            this.cTargetHealth.CheckedChanged += new System.EventHandler(this.cTargetHealth_CheckedChanged);
             // 
             // MainForm
             // 
@@ -2484,6 +2498,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cHookshotAnySurface;
         private System.Windows.Forms.CheckBox cClimbMostSurfaces;
         private System.Windows.Forms.CheckBox cLenientGoronSpikes;
+        private System.Windows.Forms.CheckBox cTargetHealth;
     }
 }
 

@@ -37,7 +37,7 @@ typedef struct {
     /* 0x12 */ s16 cylHeight;
     /* 0x14 */ s16 cylYShift;
     /* 0x16 */ u8 mass;
-    /* 0x17 */ u8 health;
+    /* 0x17 */ s8 health;
     /* 0x18 */ u8 damage;
     /* 0x19 */ u8 damageEffect;
     /* 0x1A */ u8 atHitEffect;
@@ -54,7 +54,7 @@ typedef struct {
     /* 0x14 */ u8 alphaScale; // 255 means always draw full opacity if visible
     /* 0x15 */ u8 feetFloorFlags; // Set if the actor's foot is clipped under the floor. & 1 is right foot, & 2 is left
     /* 0x16 */ UNK_TYPE1 pad16;
-    /* 0x17 */ UNK_TYPE1 pad17;
+    /* 0x17 */ UNK_TYPE1 pad17; // Used by MMR for storing MaxHealth
     /* 0x18 */ Vec3f feetPos[2]; // Update by using `Actor_SetFeetPos` in PostLimbDraw
 } ActorShape; // size = 0x30
 

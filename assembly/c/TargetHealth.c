@@ -1,7 +1,8 @@
 #include <stdbool.h>
 #include <z64.h>
+#include "Misc.h"
 
-static void TargetHealth_Draw(GlobalContext* ctxt, Vec3f* pos, ColorRGBA8* color, u8 health, u8 maxHealth) {
+static void TargetHealth_Draw(GlobalContext* ctxt, Vec3f* pos, ColorRGBA8* color, s8 health, s8 maxHealth) {
     s16 x = (s16)(160.0 + pos->x) - 0x1C;
     s16 y = (s16)(120.0 - pos->y) - 0x20;
     u16 h = 8;
@@ -42,12 +43,15 @@ static void TargetHealth_Draw(GlobalContext* ctxt, Vec3f* pos, ColorRGBA8* color
 
     gDPSetPrimColor(gfxCtx->overlay.p++, 0, 0, color->r, color->g, color->b, 0xFF);
 
+    if (health < 0) {
+        health = 0;
+    }
     gDPFillRectangle(gfxCtx->overlay.p++, x + 4, y + 2, x + 4 + (u8)(48.0 * (f32)health / (f32)maxHealth), y + 2 + 3);
 }
 
 #define MaxHealthPtr(actor) ((s8*)(&actor->shape.pad17))
 
-static s8 TargetHealth_GetMaxHealth(Actor* actor, u8* currentHealth) {
+static s8 TargetHealth_GetMaxHealth(Actor* actor, s8* currentHealth) {
     s8 maxHealth = *MaxHealthPtr(actor);
     *currentHealth = actor->colChkInfo.health;
     switch (actor->id) {
@@ -61,15 +65,17 @@ static s8 TargetHealth_GetMaxHealth(Actor* actor, u8* currentHealth) {
 }
 
 void TargetHealth_Draw_Hook(GlobalContext* ctxt, Vec3f* pos) {
-    // TODO wearing mask of truth?
-    TargetContext* targetContext = &ctxt->actorCtx.targetContext;
-    bool isEnemy = targetContext->targetType == 5 || targetContext->targetType == 9;
-    if (targetContext->targetLocked && isEnemy) {
-        u8 currentHealth;
-        s8 maxHealth = TargetHealth_GetMaxHealth(targetContext->targetLocked, &currentHealth);
-        if (maxHealth > 0) {
-            s8 count = targetContext->unk4C;
-            TargetHealth_Draw(ctxt, pos, &targetContext->unk50[count].unk10, currentHealth, (u8)maxHealth);
+    if (MISC_CONFIG.flags.targetHealth) {
+        // TODO wearing mask of truth?
+        TargetContext* targetContext = &ctxt->actorCtx.targetContext;
+        bool isEnemy = targetContext->targetType == 5 || targetContext->targetType == 9;
+        if (targetContext->targetLocked && isEnemy) {
+            s8 currentHealth;
+            s8 maxHealth = TargetHealth_GetMaxHealth(targetContext->targetLocked, &currentHealth);
+            if (maxHealth > 0) {
+                s8 count = targetContext->unk4C;
+                TargetHealth_Draw(ctxt, pos, &targetContext->unk50[count].unk10, currentHealth, maxHealth);
+            }
         }
     }
 

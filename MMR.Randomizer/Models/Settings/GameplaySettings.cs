@@ -138,6 +138,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.ProgressiveUpgrades = value; }
         }
 
+        public bool TargetHealthBar
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.TargetHealth; }
+            set { this.AsmOptions.MiscConfig.Flags.TargetHealth = value; }
+        }
+
         #endregion
 
         #region Random Elements

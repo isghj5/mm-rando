@@ -143,6 +143,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cInstantPictobox, "Remove anti-aliasing from the Pictobox pictures, which is what makes Pictobox on emulator so slow.");
             TooltipBuilder.SetTooltip(cImprovedPictobox, "Display extra text showing which type of picture was captured by the Pictobox.");
             TooltipBuilder.SetTooltip(cLenientGoronSpikes, "Goron spikes can charge midair and keep their charge. Minimum speed for goron spikes is removed.");
+            TooltipBuilder.SetTooltip(cTargetHealth, "Targeting an enemy shows their health bar.");
         }
 
         /// <summary>
@@ -1056,6 +1057,7 @@ namespace MMR.UI.Forms
             cElegySpeedups.Checked = _configuration.GameplaySettings.ElegySpeedup;
             cImprovedPictobox.Checked = _configuration.GameplaySettings.EnablePictoboxSubject;
             cLenientGoronSpikes.Checked = _configuration.GameplaySettings.LenientGoronSpikes;
+            cTargetHealth.Checked = _configuration.GameplaySettings.TargetHealthBar;
 
             // HUD config options
             var heartItems = ColorSelectionManager.Hearts.GetItems();
@@ -1603,6 +1605,7 @@ namespace MMR.UI.Forms
             cElegySpeedups.Enabled = v;
             cImprovedPictobox.Enabled = v;
             cLenientGoronSpikes.Enabled = v;
+            cTargetHealth.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
@@ -2024,6 +2027,11 @@ namespace MMR.UI.Forms
         private void cLenientGoronSpikes_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.LenientGoronSpikes = cLenientGoronSpikes.Checked);
+        }
+
+        private void cTargetHealth_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TargetHealthBar = cTargetHealth.Checked);
         }
     }
 }
