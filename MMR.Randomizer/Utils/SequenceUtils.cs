@@ -1042,6 +1042,7 @@ namespace MMR.Randomizer.Utils
                     && testSeq.Type.Count > targetSlot.Type.Count
                     && rng.Next(30) == 0
                     && targetSlot.Type[0] <= 16
+                    && testSeq.Type[0] <= 16
                     && (testSeq.Type[0] & 8) == (targetSlot.Type[0] & 8)
                     && testSeq.Type.Contains(0x10) == targetSlot.Type.Contains(0x10)
                     && !testSeq.Type.Contains(0x16))
