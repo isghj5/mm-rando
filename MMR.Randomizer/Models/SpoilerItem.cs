@@ -1,5 +1,6 @@
 ﻿using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
+using MMR.Randomizer.Utils;
 
 namespace MMR.Randomizer.Models
 {
@@ -21,6 +22,8 @@ namespace MMR.Randomizer.Models
 
         public bool IsImportantSong { get; }
 
+        public ItemCategory ItemCategory { get; set; }
+
         public SpoilerItem(ItemObject itemObject, Region region, bool isRequired, bool isImportant, bool isImportantSong, bool progressiveUpgrades)
         {
             Id = itemObject.ID;
@@ -28,10 +31,11 @@ namespace MMR.Randomizer.Models
             NewLocationId = (int)itemObject.NewLocation.Value;
             NewLocationName = itemObject.NewLocation.Value.Location();
             Region = region;
-            IsJunk = Name.Contains("Rupee") || Name.Contains("Heart") || itemObject.Item == Item.IceTrap;
+            IsJunk = ItemUtils.IsJunk(itemObject.Item);
             IsImportant = isImportant;
             IsRequired = isRequired;
             IsImportantSong = isImportantSong;
+            ItemCategory = itemObject.Item.ItemCategory() ?? ItemCategory.None;
         }
     }
 }

@@ -198,7 +198,7 @@ namespace MMR.Randomizer.Utils
         }
         public static bool IsJunk(Item item)
         {
-            return item == Item.RecoveryHeart || JunkItems.Contains(item);
+            return item == Item.RecoveryHeart || item == Item.IceTrap || JunkItems.Contains(item);
         }
 
         public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult)

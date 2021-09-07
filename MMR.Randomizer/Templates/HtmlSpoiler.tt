@@ -107,13 +107,16 @@
      <th></th>
      <th>Location</th>
  </tr>
-<# foreach (var item in spoiler.ItemList.Where(item => !item.IsJunk)) {
+<# foreach (var itemCategory in spoiler.ItemList.Where(item => !item.IsJunk).GroupBy(item => item.ItemCategory).OrderBy(g => g.Key)) {
 #>
+ <tr class="region"><td colspan="3"><#= itemCategory.Key.ToString() #></td></tr>
+ <# foreach (var item in itemCategory.OrderBy(item => item.Id)) { #>
  <tr data-id="<#= item.Id #>" data-newlocationid="<#= item.NewLocationId #>">
     <td><#= item.Name #></td>
     <td><input type="checkbox"/></td>
     <td class="spoiler newlocation"> <span data-content="<#= item.NewLocationName #>"></span></td>
  </tr>
+ <# } #>
 <# } #>
 </table>
 <# if (spoiler.MessageCosts.Count > 0) { 
@@ -265,8 +268,8 @@
                 itemsToCheck.push(newLocation.ItemId);
             }
         
-            var locationRow = document.querySelector(".item-replacements tr[data-newlocationid='" + locations[i] + "']");
-            if (locationRow) {
+            var locationRows = document.querySelectorAll(".item-replacements tr[data-newlocationid='" + locations[i] + "']");
+            for (const locationRow of locationRows) {
                 locationRow.className = "";
                 locationRow.classList.add(location.IsAvailable ? "available" : "unavailable");
                 var itemName = locationRow.querySelector(".itemname");
@@ -279,8 +282,8 @@
                 }
             }
         
-            var itemRow = document.querySelector("#item-locations tr[data-newlocationid='" + locations[i] + "']");
-            if (itemRow) {
+            var itemRows = document.querySelectorAll("#item-locations tr[data-newlocationid='" + locations[i] + "']");
+            for (const itemRow of itemRows) {
                 var itemName = itemRow.querySelector(".newlocation");
                 var checkbox = itemRow.querySelector("input");
                 var item = logic[itemRow.dataset.id];
@@ -305,8 +308,8 @@
         var item = logic[i];
         if (item.Acquired) {
             item.Checked = true;
-            var input = document.querySelector("tr[data-newlocationid='" + i + "'] input");
-            if (input) {
+            var inputs = document.querySelectorAll("tr[data-newlocationid='" + i + "'] input");
+            for (const input of inputs) {
                 input.checked = true;
             }
         }
