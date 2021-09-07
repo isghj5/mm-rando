@@ -2078,6 +2078,189 @@ namespace MMR.Randomizer
                     })
                     .Build()
                 );
+
+                // Update Keg Challenge
+                var kegChallengeItem = _randomized.ItemList.First(io => io.NewLocation == Item.ItemPowderKeg);
+                if (kegChallengeItem.Item != Item.ItemPowderKeg)
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC80)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x38BB)
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("I'm the Goron who sells ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(", the most famous product of the Gorons.")
+                                ;
+                            })
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC81)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x38FC)
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("Want ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text("? ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(" ")
+                                .RuntimeVerb(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Text(" very dangerous...")
+                                ;
+                            })
+                            .EndTextBox()
+                            .CompileTimeWrap("Until I have tested you to see if you are responsible, I can't sell to you.")
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC83)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x38FC)
+                            .Text("If you can ").Red("destroy").Text(" the boulder").NewLine()
+                            .Text("that blocks the entrance to the").NewLine()
+                            .Red("Goron Racetrack").Text(" near here...").NewLine()
+                            .EndTextBox()
+                            .Text("using the ").Red("Powder Keg ").Text("I'm about").NewLine()
+                            .Text("to give you, then I'll sell to you.")
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC86)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x3A04)
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("It looks like you managed to succeed! Knowing your skills, I feel fine letting you handle ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value)
+                                .Text("on your own.")
+                                ;
+                            })
+                            .EndTextBox()
+                            .Text("It was bad of me to put you").NewLine()
+                            .Text("through such a dangerous test. I").NewLine()
+                            .Text("want you to take this as my").NewLine()
+                            .Text("apology.")
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC88)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x38FC)
+                            .Text("You failed?").NewLine()
+                            .Text("In that case, I can't sell").NewLine()
+                            .Text("to you.")
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC8C)
+                        .Message(it =>
+                        {
+                            it.RuntimeWrap(() =>
+                            {
+                                it.Text("Will you a buy ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(" for ").Pink("100 Rupees").Text("?")
+                                ;
+                            })
+                            .NewLine()
+                            .TwoChoices()
+                            .Text("I'll buy ").RuntimePronoun(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value).NewLine()
+                            .Text("No thanks")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC8E)
+                        .Message(it =>
+                        {
+                            it.RuntimeWrap(() =>
+                            {
+                                it.Text("I'm the Goron who sells ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(", the most famous product of the Gorons.")
+                                ;
+                            })
+                            .EndTextBox()
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("But the rules say I can't sell ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(" to anyone who isn't a").Red(" Goron").Text(". ").PlaySoundEffect(0x391C).Text("Sorry.")
+                                ;
+                            })
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC8F)
+                        .Message(it =>
+                        {
+                            it.RuntimeWrap(() =>
+                            {
+                                it.Text("The rules say I can't sell ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(" to anyone who isn't a").Red(" Goron").Text(". ").PlaySoundEffect(0x391C).Text("Sorry.")
+                                ;
+                            })
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                }
             }
 
             // Update messages to match updated world models.
