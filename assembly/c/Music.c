@@ -2,6 +2,7 @@
 #include <z64.h>
 #include <z64addresses.h>
 #include "Music.h"
+#include "enums.h"
 
 struct MusicConfig MUSIC_CONFIG = {
     .magic = MUSIC_CONFIG_MAGIC,
@@ -22,19 +23,32 @@ static void LoadMuteMask() {
         u32 index = MUSIC_CONFIG.sequenceMaskFileIndex;
         DmaEntry entry = dmadata[index];
 
-        u32 start = entry.romStart + (sequenceId * sizeof(musicState.muteMask));
+        u32 start = entry.romStart + (sequenceId * 20);
 
-        z2_RomToRam(start, &musicState.muteMask, sizeof(musicState.muteMask));
+        z2_RomToRam(start, &musicState.playMask, 20);
     }
 }
 
 static u8 CalculateCurrentState() {
-    u8 state = 0;
+    u8 state = 1;
     ActorPlayer* player = GET_PLAYER(&gGlobalContext);
     if (player) {
-        state = player->form & 3;
+        state = 1 << (player->form & 3);
+
+        if (player->stateFlags.state1 & PLAYER_STATE1_EPONA) {
+            state = musicState.cumulativeStates.epona ? state | 0x10 : 0x10;
+        }
+        if (player->stateFlags.state1 & PLAYER_STATE1_SWIM) {
+            state = musicState.cumulativeStates.swimming ? state | 0x20 : 0x20;
+        }
+        if (player->stateFlags.state3 & PLAYER_STATE3_GORON_SPIKE) {
+            state = musicState.cumulativeStates.spikeRolling ? state | 0x40 : 0x40;
+        }
+        if (gGlobalContext.actorCtx.targetContext.nearbyEnemy) {
+            state = musicState.cumulativeStates.combat ? state | 0x80 : 0x80;
+        }
     }
-    return 1 << state;
+    return state;
 }
 
 static void ProcessChannel(u8 channelIndex, u8 stateMask) {
@@ -47,8 +61,13 @@ static void ProcessChannel(u8 channelIndex, u8 stateMask) {
             shouldBeMuted = musicState.forceMute & (1 << channelIndex);
         }
         if (!shouldBeMuted) {
-            u8 muteMask = musicState.muteMask[channelIndex];
-            shouldBeMuted = muteMask & stateMask;
+            u8 playMask = musicState.playMask[channelIndex];
+            u8 formMask = playMask & ~musicState.cumulativeStates.value;
+            u8 miscMask = playMask & musicState.cumulativeStates.value;
+            u8 formState = stateMask & ~musicState.cumulativeStates.value;
+            u8 miscState = stateMask & musicState.cumulativeStates.value;
+            bool shouldPlay = (!miscMask || (miscMask & miscState)) && (formMask & formState);
+            shouldBeMuted = !shouldPlay;
         }
         bool isMuted = channelContext->playState.muted;
         if (!isMuted && shouldBeMuted) {

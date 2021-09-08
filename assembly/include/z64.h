@@ -316,7 +316,7 @@ typedef struct {
     /* 0x4D */ UNK_TYPE1 pad4D[0x3];
     /* 0x50 */ TargetContextEntry unk50[3];
     /* 0x8C */ Actor* unk8C;
-    /* 0x90 */ Actor* unk90;
+    /* 0x90 */ Actor* nearbyEnemy;
     /* 0x94 */ UNK_TYPE1 pad94[0x4];
 } TargetContext; // size = 0x98
 

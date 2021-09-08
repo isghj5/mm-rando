@@ -9,11 +9,25 @@ void Music_Update(GlobalContext* ctxt);
 #define MUSIC_CONFIG_MAGIC 0x4D555349
 
 typedef struct MusicState {
-    u8 loadedSequenceId;
-    u8 currentState;
-    u16 forceMute;
-    u8 muteMask[0x10];
-} MusicState;
+    /* 0x00 */ u8 loadedSequenceId;
+    /* 0x01 */ u8 currentState;
+    /* 0x02 */ u16 forceMute;
+    /* 0x04 */ u8 playMask[0x10];
+    /* 0x14 */ union {
+        struct {
+            u8 combat         : 1;
+            u8 spikeRolling   : 1;
+            u8 swimming       : 1;
+            u8 epona          : 1;
+            u8 deku           : 1;
+            u8 zora           : 1;
+            u8 goron          : 1;
+            u8 human          : 1;
+        };
+        u8 value;
+    } cumulativeStates;
+    /* 0x15 */ u8 pad[3];
+} MusicState; // size = 0x18
 
 struct MusicConfig {
     /* 0x000 */ u32 magic;

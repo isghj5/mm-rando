@@ -36,7 +36,7 @@ namespace MMR.Randomizer.Asm
         {
             if (settings.Music == Models.Music.Random)
             {
-                SequenceMaskFileIndex = RomUtils.AppendFile(new byte[0x80*0x10]);
+                SequenceMaskFileIndex = RomUtils.AppendFile(new byte[0x80*0x14]);
             }
             else
             {

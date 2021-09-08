@@ -389,12 +389,16 @@ namespace MMR.Randomizer.Utils
                                     // playState is configured in the file as "play in these states", but in the code it's "mute in these states"
                                     // so we need to reverse it
                                     var playState = JsonSerializer.Deserialize<SequencePlayState[]>(formMaskJson);
-                                    zSeq.FormMask = playState.Select(b => (byte) (SequencePlayState.All ^ b)).ToArray();
+                                    zSeq.FormMask = playState.Cast<byte>().ToArray();
                                 }
                                 catch (Exception e)
                                 {
-                                    Debug.WriteLine($"ERROR: formMask file is invalid - {e.Message}");
+                                    throw new Exception($"Sequence formmask file is invalid - {e.Message}", e);
                                 }
+                            }
+                            if (zSeq.FormMask == null)
+                            {
+                                zSeq.FormMask = Enumerable.Repeat<byte>(0xFF, 16).ToArray();
                             }
 
                             // multiple seq possible, add depending on if first or not
@@ -703,7 +707,8 @@ namespace MMR.Randomizer.Utils
                         var formMask = sequenceList[j].SequenceBinaryList?.FirstOrDefault()?.FormMask;
                         if (formMask != null)
                         {
-                            ReadWriteUtils.Arr_Insert(formMask, 0, 16, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 16);
+                            Array.Resize(ref formMask, 20);
+                            ReadWriteUtils.Arr_Insert(formMask, 0, 20, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 20);
                         }
                     }
                 }
