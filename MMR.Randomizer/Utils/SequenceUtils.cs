@@ -34,6 +34,9 @@ namespace MMR.Randomizer.Utils
         // 7D is reunion, 0x50 is sword school
         public static List<int> lowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04, 0x42, 0x27, 0x31, 0x45, 0x72, 0x0E, 0x29, 0x2D, 0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50 };
 
+        public static int MAX_BGM_BUDGET            = 0x3800; // vanilla: 0x3800
+        public static int MAX_COMBAT_BUDGET         = 0x3800; // unk
+        public static int MAX_TYPE1_MUSIC_BUGDET    = 0x4100; // vanilla: 0x4100
 
         public static void ReadSequenceInfo()
         {
@@ -173,6 +176,40 @@ namespace MMR.Randomizer.Utils
                 ScanZSEQUENCE(directory); // scan for base zseq in music folder
                 ScanForMMRS(directory); // scan for base mmrs in music folder
             }
+        }
+
+        public static int GetSequenceSize(SequenceInfo seq)
+        {
+            // if it was loading at the MMRS read time, the zseq is already loading in memory
+            if (seq.SequenceBinaryList != null && seq.SequenceBinaryList.Count > 0)
+            {
+                return seq.SequenceBinaryList[0].SequenceBinary.Length;
+            }
+            else if (seq.Name.StartsWith("mm-")) // vanilla mm, look up from audioseq index table
+            {
+                // we know code file is already decompressed at this point
+                int codeFID = RomUtils.GetFileIndexForWriting(Addresses.SeqTable);
+                var codeFile = RomData.MMFileList[codeFID];
+                int audioseqIndexTableOffset = Addresses.SeqTable - codeFile.Addr;
+
+                int entryaddr = audioseqIndexTableOffset + (seq.Replaces * 16);
+                var size = (int) ReadWriteUtils.Arr_ReadU32(codeFile.Data, entryaddr + 4);
+                return size;
+            }
+            else // not already loaded, we have to search for the file and look it up
+            {
+                byte[] data;
+                if (File.Exists(seq.Filename))
+                {
+                    using (var reader = new BinaryReader(File.OpenRead(seq.Filename)))
+                    {
+                        data = new byte[(int)reader.BaseStream.Length];
+                        return data.Length;
+                    }
+                }
+            }
+
+            throw new Exception("GetSequenceSize: Sequence File is missing");
         }
 
         public static void ScanZSEQUENCE(string directory) // TODO make this folder identifiable, add directory and list of banks from scanned directory to this
@@ -955,6 +992,13 @@ namespace MMR.Randomizer.Utils
                     continue; // song unacceptable, continue
                 }
 
+                var seqSize = GetSequenceSize(testSeq);
+                if ( (seqSize > MAX_COMBAT_BUDGET &&    testSeq.Type.Contains(0x1A) )
+                    || (seqSize > MAX_BGM_BUDGET && (testSeq.Type.Contains(0x0) || testSeq.Type.Contains(0x2))) )
+                {
+                    continue; // too big
+                }
+
                 // do the target slot and the possible match seq share a category?
                 if (testSeq.Type.Intersect(targetSlot.Type).Any())
                 {
@@ -981,6 +1025,86 @@ namespace MMR.Randomizer.Utils
             return false; // ran out of songs to try
         }
 
+        public static void CheckBGMCombatMusicBudget(List<SequenceInfo> unassignedSequences, Random rng, StringBuilder log)
+        {
+            /// in any scene, BGM and Combat music share the same buffer, loading to the other side,
+            /// if their sum is greater than the size of the buffer they clip into each other when one loads, this kills one, usually bgm
+
+
+            var combatSequences     = RomData.SequenceList.FindAll(u => u.Type.Contains(5));
+            var usedCombatSequence  = RomData.SequenceList.Find(u => u.Replaces == 0x1A);
+            var BGMSlots        = RomData.TargetSequences.FindAll(u => u.Type[0] == 0 || u.Type[0] == 2);
+            var usedBGMSequences = new List<SequenceInfo>();
+            foreach (var slot in BGMSlots)
+            {
+                var searchResult = RomData.SequenceList.Find(u => u.Replaces == slot.Replaces);
+                if (searchResult != null)
+                {
+                    usedBGMSequences.Add(searchResult);
+                }
+            }
+
+
+            // we pick combat or BGM as the limiting factor, the other have to be smaller than what we chose
+            bool combatVsBGMCoinToss =  rng.Next(2) == 1;
+            string coinResult = (combatVsBGMCoinToss ? ("COMB") : ("BGM"));
+            log.AppendLine($" SECOND PASS: Scanning for oversized BGM or combat cointoss: ({coinResult})");
+
+            if (combatVsBGMCoinToss) // Combat chosen
+            {
+                // get new BGM budget from combat file
+                var newBGMBudget = MAX_BGM_BUDGET = MAX_TYPE1_MUSIC_BUGDET - GetSequenceSize(usedCombatSequence);
+                log.AppendLine($" new BGM budget: {MAX_BGM_BUDGET.ToString("X")}, from combat size: {GetSequenceSize(usedCombatSequence).ToString("X")}");
+
+                // per BGM sequence
+                foreach (var seq in usedBGMSequences)
+                {
+                    var bgmSeqSize = GetSequenceSize(seq);
+                    if (bgmSeqSize > newBGMBudget)
+                    {
+                        var seqName = seq.Name;
+                        log.AppendLine($"BGM sequence {seqName} was too big to match your combat music, replacing ... ");
+                        var bgmSlot = RomData.TargetSequences.Find(u => u.Replaces == seq.Replaces);
+                        seq.Replaces = -1; // cancel using this song
+                        bool status = SearchForValidSongReplacement(unassignedSequences, bgmSlot, rng, log);
+                        if (status == false)
+                        {
+                            throw new Exception("Music Budget Error: this seed cannot find acceptable music for this combat slot\n" +
+                                "Try another!");
+                        }
+                    }
+                }
+
+            }
+            else // BGM chosen
+            {
+                // get new combat budget by comparing to largest BGM
+                int largestBGMSize = 0;
+                foreach (var bgmSeq in usedBGMSequences)
+                {
+                    var seqSize = GetSequenceSize(bgmSeq);
+                    largestBGMSize = (seqSize > largestBGMSize) ? (seqSize) : (largestBGMSize);
+                }
+                log.AppendLine($" new Combat budget: {MAX_COMBAT_BUDGET.ToString("X")} from bgm size: {largestBGMSize.ToString("X")}");
+
+                // per BGM sequence
+                var combatSize = GetSequenceSize(usedCombatSequence);
+                var newCombatBudget = MAX_COMBAT_BUDGET = MAX_TYPE1_MUSIC_BUGDET - largestBGMSize;
+                if (combatSize > newCombatBudget) { 
+                    var seqName = usedCombatSequence.Name;
+                    log.AppendLine($"Combat sequence {seqName} was too big to match your BGM music, replacing ... ");
+                    var combatSlot = RomData.TargetSequences.Find(u => u.Name == "mm-combat");
+                    usedCombatSequence.Replaces = -1; // cancel using this song
+                    bool status = SearchForValidSongReplacement(unassignedSequences, combatSlot, rng, log);
+                    if (status == false)
+                    {
+                        throw new Exception("Music Budget Error: this seed cannot find acceptable music for this combat slot\n" +
+                            "Try another!");
+                    }
+                }
+
+            }
+        }
 
         public static bool SearchAndReplaceSceneBGM(int sceneFID, byte slotReplacement)
         {
