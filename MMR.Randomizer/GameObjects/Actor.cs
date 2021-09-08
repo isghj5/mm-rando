@@ -1372,6 +1372,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0x7E00)]
         [PathingVariants(0x0)]
         [PathingTypeVarsPlacement(mask: 0x7F00, shift: 9)]
+        [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         MuteZora = 0xF8, // En_Zo
 
@@ -1874,6 +1875,7 @@ namespace MMR.Randomizer.GameObjects
         // 3F60 woodfall small
         [GroundVariants(0x3F5F)]
         [VariantsWithRoomMax(max:1, variant: 0x3F5F)]
+        [EnemizerScenesPlacementBlock(Scene.Woodfall)] // hiploop only, bad spot for a fire
         [UnkillableAllVariants]
         CircleOfFire = 0x162, // Obj_Fireshield // tag: FireRing
 
@@ -1918,6 +1920,7 @@ namespace MMR.Randomizer.GameObjects
         // 2 is smaller scrub that surrounds link
         [GroundVariants(2,6)]
         [VariantsWithRoomMax(max:1, variant:6)]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)]
         [UnkillableAllVariants]
         HallucinationScrub = 0x169, // En_Dnk
         
@@ -2106,10 +2109,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xBB)]
         [WaterVariants(0x2002, 0x2006, 0x200B, 0x2003, 0x2004, 0x2005, 0x200C)]
         // if I had a hanging from cieling thing like spiders this would work fine
-        [WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
+        //[WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
         [UnkillableAllVariants] // actorcat PROP, not detected as enemy
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
-        Mine = 0x185, // Obj_Mine
+        SpikedMine = 0x185, // Obj_Mine
 
         [FileID(352)]
         [ObjectListIndex(0x1)]
@@ -2259,6 +2262,7 @@ namespace MMR.Randomizer.GameObjects
         // we have fixed 0x0 so that it doesn't auto-despawn, however, since the code handles her not being available anyway
         [GroundVariants(0x0)]
         [FlyingVariants(0x0)]
+        [VariantsWithRoomMax(max:6, variant:0x0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.RomaniRanch)] // dont replace actual romani balloons
         [EnemizerScenesPlacementBlock(Scene.TerminaField)] // long draw distance means they can overflow actor spawn
@@ -2612,7 +2616,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0, 0x100, 0x200, 0x300)] // only one per
         // no scene exclusion necessary, get spawned by the poe sisters minigame but they aren't actors in the scene to be randomized
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
-        PoeSisters = 0x1E8,
+        PoeSisters = 0x1E8, // En_Po_Sisters
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3794)]
@@ -3033,8 +3037,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15)]
         //[GroundVariants(0xFC0B)] // testing dialogue without pathing
         [PathingVariants(0x140A, 0xFC05, 0x2, 0x3, 0x4)]
-        [VariantsWithRoomMax(max: 1, variant: 0x2, 0x3, 0x4)]
-        // TODO add pathing thing
+        [VariantsWithRoomMax(max: 1, variant: 0x140A, 0xFC05, 0x2, 0x3, 0x4)]
+        [VariantsWithRoomMax(max: 1, variant: 0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15, 0xFC00)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [EnemizerScenesExcluded(Scene.ZoraHall, Scene.ZoraCape)]
         [UnkillableAllVariants]
@@ -3242,10 +3246,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(543)]
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
         // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
-        // 02 doesn't ever seen to spawn, day or night, think its a fluke
+        // 02 is the music-only one that spawns so you can hear him through the walls of the inn
         [GroundVariants(0x0)]
-        [VariantsWithRoomMax(max:1, variant: 0)]
         [UnkillableAllVariants]
+        [OnlyOneActorPerRoom] // if two of them are near to each other, and player appears near his nearby music can break
         //[EnemizerScenesExcluded(0x15, 0x70, 0x61)]
         [EnemizerScenesExcluded(Scene.StockPotInn, Scene.LaundryPool, Scene.MilkBar)] // think him being in milkbar is a credits thing
         GuruGuru = 0x248, // En_GuruGuru

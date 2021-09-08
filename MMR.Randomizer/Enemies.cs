@@ -732,7 +732,8 @@ namespace MMR.Randomizer
             var roadtoswampScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.RoadToSouthernSwamp.FileID());
             // move tree top bat down the tree vines
             var movedDownTreeBat = roadtoswampScene.Maps[0].Actors[7];
-            movedDownTreeBat.Position = new vec16(-420, -40, -2059); // placement: lower along the tree like the other bat
+            //movedDownTreeBat.Position = new vec16(-420, -40, 2059); // placement: lower along the tree like the other bat
+            movedDownTreeBat.Position = new vec16(927, -29, 2542); // placement: along the south east corner
 
             // match rotation with the other tree sitting bat
             movedDownTreeBat.Rotation.y = 90;
@@ -1556,12 +1557,12 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.RoadToSouthernSwamp.FileID() && sceneObjects[objCount] == GameObjects.Actor.BadBat.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Scarecrow.ObjectIndex()
+                            NewV = GameObjects.Actor.GoldSkullTula.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1765,8 +1766,10 @@ namespace MMR.Randomizer
             ///////   DEBUGGING   ///////
             /////////////////////////////
             #if DEBUG
-            if (scene.SceneEnum == GameObjects.Scene.RomaniRanch) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.TerminaField) // force specific actor/variant for debugging
             {
+                chosenReplacementEnemies[3].ChangeActor(GameObjects.Actor.Ben, vars: 0);
+
                 /*
                 chosenReplacementEnemies[3].ActorID = (int)GameObjects.Actor.CircleOfFire;
                 chosenReplacementEnemies[3].ActorEnum = GameObjects.Actor.CircleOfFire;
@@ -1781,7 +1784,7 @@ namespace MMR.Randomizer
 
             }
             /////////////////////////////
-            #endif
+#endif
             /////////////////////////////
 
             // any patrolling types need their vars fixed
@@ -1864,7 +1867,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 23.3\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 24.0\n");
                 }
             }
             catch (Exception e)
