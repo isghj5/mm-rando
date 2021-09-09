@@ -3505,7 +3505,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(593)]
         [ObjectListIndex(0x24A)]
-        En_Yb = 0x27A, // En_Yb
+        Kamaro = 0x27A, // En_Yb
 
         [ActorizerEnabled]
         [ObjectListIndex(0x24B)]
