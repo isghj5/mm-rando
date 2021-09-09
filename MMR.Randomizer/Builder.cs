@@ -72,12 +72,12 @@ namespace MMR.Randomizer
             RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
             WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + unassigned.Count + " available songs:");
 
+            SequenceUtils.ResetBudget();
+
             // songtest filename token allows music makers and users to force a song into a MMR seed for recording/testing
             SequenceUtils.CheckSongTest(unassigned, log);
 
             SequenceUtils.CheckSongForce(unassigned, log, random);
-
-            SequenceUtils.ResetBudget();
 
             foreach (var targetSlot in RomData.TargetSequences)
             {
