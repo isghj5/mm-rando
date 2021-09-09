@@ -1768,7 +1768,7 @@ namespace MMR.Randomizer
             #if DEBUG
             if (scene.SceneEnum == GameObjects.Scene.TerminaField) // force specific actor/variant for debugging
             {
-                chosenReplacementEnemies[3].ChangeActor(GameObjects.Actor.Ben, vars: 0);
+                //chosenReplacementEnemies[3].ChangeActor(GameObjects.Actor.Ben, vars: 0);
 
                 /*
                 chosenReplacementEnemies[3].ActorID = (int)GameObjects.Actor.CircleOfFire;
@@ -1784,7 +1784,7 @@ namespace MMR.Randomizer
 
             }
             /////////////////////////////
-#endif
+            #endif
             /////////////////////////////
 
             // any patrolling types need their vars fixed
