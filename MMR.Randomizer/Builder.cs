@@ -2166,7 +2166,7 @@ namespace MMR.Randomizer
                                 it.Text("It looks like you managed to succeed! Knowing your skills, I feel fine letting you handle ")
                                 .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                                 .RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value)
-                                .Text("on your own.")
+                                .Text(" on your own.")
                                 ;
                             })
                             .EndTextBox()
