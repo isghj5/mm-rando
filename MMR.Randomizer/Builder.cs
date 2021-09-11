@@ -100,6 +100,10 @@ namespace MMR.Randomizer
             {
                 SequenceUtils.WriteSongLog(log, settings);
             }
+
+            // write bigger music buffer
+            ReadWriteUtils.WriteCodeUInt32(0x801DB9B4, 0x6000);
+            ReadWriteUtils.WriteCodeUInt32(0x801DB9B8, 0x6000);
         }
 
         private void WriteAudioSeq(Random random, OutputSettings _settings)
@@ -165,7 +169,8 @@ namespace MMR.Randomizer
                 return;
             }
 
-            Enemies.DisableEnemyCombatMusic(_cosmeticSettings.DisableCombatMusic == CombatMusic.WeakEnemies);
+            ReadWriteUtils.WriteToROM(0xCA7F00 + 0x16818, 0x1000);
+            //Enemies.DisableEnemyCombatMusic(_cosmeticSettings.DisableCombatMusic == CombatMusic.WeakEnemies);
         }
         #endregion
 
@@ -2142,7 +2147,7 @@ namespace MMR.Randomizer
                             it.PlaySoundEffect(0x38FC)
                             .Text("If you can ").Red("destroy").Text(" the boulder").NewLine()
                             .Text("that blocks the entrance to the").NewLine()
-                            .Red("Goron Racetrack").Text(" near here...").NewLine()
+                            .Red("Goron Racetrack").Text(" near here...")
                             .EndTextBox()
                             .Text("using the ").Red("Powder Keg ").Text("I'm about").NewLine()
                             .Text("to give you, then I'll sell to you.")
