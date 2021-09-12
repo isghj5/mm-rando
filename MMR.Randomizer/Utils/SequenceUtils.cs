@@ -396,10 +396,6 @@ namespace MMR.Randomizer.Utils
                                     throw new Exception($"Sequence formmask file is invalid - {e.Message}", e);
                                 }
                             }
-                            if (zSeq.FormMask == null)
-                            {
-                                zSeq.FormMask = Enumerable.Repeat<byte>(0xFF, 16).ToArray();
-                            }
 
                             // multiple seq possible, add depending on if first or not
                             if (currentSong.SequenceBinaryList == null)
@@ -698,20 +694,24 @@ namespace MMR.Randomizer.Utils
                     j = sequenceList.FindIndex(u => u.Replaces == i);
                 }
 
+                byte[] formMask = null;
+
                 if (j != -1)
                 {
                     RomData.MMFileList[f].Data[paddr] = (byte)sequenceList[j].Instrument;
 
                     if (sequenceMaskFileIndex.HasValue)
                     {
-                        var formMask = sequenceList[j].SequenceBinaryList?.FirstOrDefault()?.FormMask;
-                        if (formMask != null)
-                        {
-                            Array.Resize(ref formMask, 20);
-                            ReadWriteUtils.Arr_Insert(formMask, 0, 20, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 20);
-                        }
+                        formMask = sequenceList[j].SequenceBinaryList?.FirstOrDefault()?.FormMask;
                     }
                 }
+
+                if (formMask == null)
+                {
+                    formMask = Enumerable.Repeat<byte>(0xFF, 16).ToArray();
+                }
+                Array.Resize(ref formMask, 20);
+                ReadWriteUtils.Arr_Insert(formMask, 0, 20, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 20);
 
             }
 
