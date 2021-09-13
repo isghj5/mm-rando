@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace MMR.Randomizer.Models.Rom
 {
-
+    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorID.ToString(\"X3\")}]")]
     public class Actor
     {
         // this is instance data, per actor, per scene.

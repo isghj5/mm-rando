@@ -2,6 +2,7 @@
 
 namespace MMR.Randomizer.Models.Rom
 {
+    [System.Diagnostics.DebuggerDisplay("[{SceneEnum}][{File}]")]
     public class Scene
     {
 

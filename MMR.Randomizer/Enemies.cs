@@ -17,6 +17,7 @@ using System.Threading.Tasks;
 
 // todo rename this actorutils.cs and move to MMR.Randomizer/Utils/
 
+
 namespace MMR.Randomizer
 {
     public class ValueSwap
@@ -28,6 +29,7 @@ namespace MMR.Randomizer
 
     public class Enemies
     {
+        const int SMALLEST_OBJ = 0xF3;
 
         private static List<GameObjects.Actor> EnemyList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
@@ -137,6 +139,7 @@ namespace MMR.Randomizer
         public static int GetOvlCodeRamSize(int actorOvlTblIndex)
         {
             /// this is the size of overlay (actor) code in ram
+            /// to get it, we can just diff the
 
             if (actorOvlTblIndex == (int)GameObjects.Actor.Empty || actorOvlTblIndex == 0)
             {
@@ -158,6 +161,7 @@ namespace MMR.Randomizer
         public static int GetOvlInstanceRamSize(int actorOvlTblIndex)
         {
             /// this is the size of the actor's struct instance in ram
+            if (actorOvlTblIndex == -1) return 0; // GameObjects.Actor.Empty;
 
             // to get this, we either need to save it or read it from the overlay's init vars
             var attr = ((GameObjects.Actor)actorOvlTblIndex).GetAttribute<ActorInstanceSizeAttribute>();
@@ -171,7 +175,9 @@ namespace MMR.Randomizer
             if (ovlFID == -1) // we dont know its fid, I forgot to write prewrite it
             {
                 ovlFID = GetFID(actorOvlTblIndex); // attempt to get it from the DMA table
-                if (ovlFID == -1) return 0xABCD; // conservative estimate
+                if (ovlFID == -1) { 
+                    return 0xABCD; // conservative estimate
+                }
             }
 
             var offset = GetOvlActorInit(actorOvlTblIndex);
@@ -199,33 +205,15 @@ namespace MMR.Randomizer
                 return actorAttr.Offset;
             }
 
-            int actorFID = GetFID(actorOvlTblIndex);
-            if (actorFID == -1)
-            {
-                return -1;
-            }
-            RomUtils.CheckCompressed(actorFID);
-            var actorData = RomData.MMFileList[actorFID].Data;
-
-            // going to gamble here: assuming init ALWAYS aligns with double word
-            for (int i = 0; i < actorData.Length - 16; i += 16)
-            {
-                var actorIdTest = ReadWriteUtils.Arr_ReadU16(actorData, i);
-                var objectIdTest = ReadWriteUtils.Arr_ReadU16(actorData, i + 8);
-                var padtest = ReadWriteUtils.Arr_ReadU32(actorData, i + 0xA);
-                var instTest = ReadWriteUtils.Arr_ReadU16(actorData, i + 0xE); // instance size
-                padtest &= 0xFFFFFFF0; // not sure if there are actors that need 5 diggits but might as well
-
-                // && objectIdTest == actor.ObjectIndex()
-
-                if (actorIdTest == actorOvlTblIndex
-                    && padtest == 0
-                    && instTest % 4 == 0) {
-                    return i;
-                }
-            }
-
-            return -1;
+            // just look it up in the actor overlay table, initvars - vram start is the offset
+            var actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
+            // dont need to check for compression, code has been un-compressed for ages
+            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
+            var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
+            // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb pppppppp iiiiiiii nnnnnnnn ???? cc ??
+            // A should be the start of vram address, i is init vars location in vram, take diff to get offset in overlay file
+            return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 20)
+                       - ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8));
         }
 
         public static int GetOvlActorVROMStart(int actorOvlTblIndex)
@@ -314,6 +302,7 @@ namespace MMR.Randomizer
             //FixThornTraps();
             FixSeth2();
             AllowGuruGuruOutside();
+            RemoveSTTUnusedPoe();
 
             Shinanigans();
         }
@@ -434,7 +423,7 @@ namespace MMR.Randomizer
 
             /// fishing testing
 
-            // to place in spring, we remove some  other actors and objects to get fishing working
+            // to place in spring, we remove some  other actors and objects to get fishing working, as its huge
 
             var springTwinIslandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslandsSpring.FileID());
             var springTwinIsleMap = springTwinIslandsScene.Maps[0];
@@ -443,7 +432,6 @@ namespace MMR.Randomizer
             springTwinIsleMap.Actors[0].Position = new vec16(199, 100, 809); // move fisherman to spot in the lake -50
             springTwinIsleMap.Actors[0].Rotation.y = (short) MergeRotationAndFlags(-270, 0x7F);
             springTwinIsleMap.Actors[0].ChangeActor(GameObjects.Actor.OOTFishing, 0x200); // 0xFFFF is the whole thing
-            springTwinIsleMap.Actors[0].OldActorEnum = GameObjects.Actor.OOTFishing;
             springTwinIsleMap.Objects[9] = GameObjects.Actor.OOTFishing.ObjectIndex();
 
             springTwinIsleMap.Actors[1].ChangeActor(GameObjects.Actor.Empty); // worthless one
@@ -469,7 +457,7 @@ namespace MMR.Randomizer
             springTwinIsleMap.Actors[28].ChangeActor(GameObjects.Actor.Empty);
             springTwinIsleMap.Objects[8] = GameObjects.Actor.Empty.ObjectIndex();
 
-            // nothing left for enemizer to do so it wont write the scene
+            // nothing left for enemizer to do so it wont write the scene, we have to do that here
             SceneUtils.UpdateScene(springTwinIslandsScene);
 
         }
@@ -548,6 +536,7 @@ namespace MMR.Randomizer
             twinislandsSceneData[0xD6] = 0xAE;
             twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall wtf
 
+
             // demo_kankyo, can we just turn on its always update flag
             /*
             RomUtils.CheckCompressed(GameObjects.Actor.Demo_Kankyo.FileListIndex());
@@ -618,11 +607,15 @@ namespace MMR.Randomizer
         {
             /// debugging, checking if ram sizes are correct
 
-            for (var i = 0; i < 0x2B3; ++i)
+            for (var i = 1; i < 0x2B2; ++i)
             {
-                var actor = (GameObjects.Actor)i;
+                var actor = (GameObjects.Actor) i;
                 var actorName = actor.ToActorModel().Name;
-                actorName = actorName == "" ? "UNKOWN" : actorName;
+                if (actorName.Contains("Empty")) {
+                    Debug.WriteLine($"[EMPTY]");
+                    continue;
+                }
+
                 // we nee to make sure ram and overlay are the same
                 // read Init offset from overlay table
                 var initVarString = "";
@@ -632,12 +625,26 @@ namespace MMR.Randomizer
                 {
                     initVarString = " and instance: 0x" + GetOvlInstanceRamSize(i).ToString("X5");
                 }
-                if (actor.ObjectIndex() > 3)
+                var objectIndex = actor.ObjectIndex();
+                if (objectIndex  > 3)
                 {
                     objVarString = " and obj: 0x" + ObjUtils.GetObjSize(actor.ObjectIndex()).ToString("X5");
                 }
+                else if (objectIndex <= 3 && objectIndex >= 0)
+                {
+                    objVarString = " using special obj";
+                }
+                else
+                {
+                    throw new Exception("oh no");
+                }
 
-                Debug.WriteLine("[" + actorName + "] FID:[" + GetFID(i) + "] AID:[" + i.ToString("X3") + "] codesize: 0x" + GetOvlCodeRamSize(i).ToString("X5") + initVarString + objVarString);
+                var filename = actorName.PadLeft(16, ' ');
+                var fid = GetFID(i).ToString("D3");
+                var aid = i.ToString("X3");
+                var codeSize = GetOvlCodeRamSize(i).ToString("X5");
+
+                Debug.WriteLine($"[{filename}] FID:[{fid}] AID:[{aid}] codesize: 0x{codeSize}" + initVarString + objVarString);
             } // */
 
             for (int i = 0; i < 0x283; ++i)
@@ -704,10 +711,8 @@ namespace MMR.Randomizer
             // because this room is already borderline lag fest, turn one into a lillypad
             // actor 7 is the furthest back in the cave, unreachable
             var newLilyPad = southernswampScene.Maps[0].Actors[6];
-            newLilyPad.ActorID = 0x1B9; // lilypad actor
-            newLilyPad.ActorEnum = GameObjects.Actor.Lillypad; // lilypad actor
+            newLilyPad.ChangeActor(GameObjects.Actor.Lilypad, vars: 0);
             newLilyPad.Position = new vec16(561, 0, 790); // placement: toward back wall behind tourist center
-            newLilyPad.Variants[0] = 0;
 
             var movedToTree = southernswampScene.Maps[0].Actors[4];
             movedToTree.Position = new vec16(2020, 22, 300); // placement: to the right as you approach witches, next to tree
@@ -754,7 +759,7 @@ namespace MMR.Randomizer
 
         private static void FixSpecificLikeLikeTypes()
         {
-            /// some likelikes dont follow the normal water/ground type variety,
+            /// some likelikes dont follow the normal water/ground type variety, we want detection to correctly ID them
             ///  here we switch their types to match for replacement in enemizer auto-detection
 
             var coastScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
@@ -956,6 +961,24 @@ namespace MMR.Randomizer
             // BUT EVEN MORE FUNNY, this funny guy, he CHECKS NIGHT in his update function too WTF
             // jeez just branch past all that noise
             ReadWriteUtils.Arr_WriteU32(guruData, Dest: 0x9BC, val: 0x10000013); // BNEL (test night checks) -> B past it all to actionfunc
+        }
+
+        public static void RemoveSTTUnusedPoe()
+        {
+            /// not inverted, REGULAR stone tower has a poe object... why?
+            /// we can recover some headroom by removing it
+            ///   remember to delete this if I ever get free objects working instead
+
+            var stonetowertempleScene = RomData.SceneList.Find(u => u.SceneEnum == GameObjects.Scene.StoneTowerTemple);
+            for (int i = 0; i < stonetowertempleScene.Maps.Count; ++i)
+            {
+                var room = stonetowertempleScene.Maps[i];
+                var poeIndex = room.Objects.FindIndex(u => u == 0x1C3);
+                if (poeIndex > 0)
+                {
+                    room.Objects[poeIndex] = SMALLEST_OBJ;
+                }
+            }
         }
 
         #endregion
@@ -1252,7 +1275,6 @@ namespace MMR.Randomizer
 
             // medium goron, unused object, size: 0x10
             // alternative: tanron1 is also size 0x10
-            const int SMALLEST_OBJ = 0xF3; 
 
             // there are three scenes that struggle the most: TF, RTIkana, and IkanaCanyon
             if (scene.SceneEnum == GameObjects.Scene.RoadToIkana)
@@ -1826,7 +1848,7 @@ namespace MMR.Randomizer
                     GameObjects.Scene.TownShootingGallery,
                     GameObjects.Scene.GiantsChamber,
                     GameObjects.Scene.SakonsHideout,
-                    GameObjects.Scene.MilkBar };//, GameObjects.Scene.DekuPalace };
+                    GameObjects.Scene.MilkBar , GameObjects.Scene.DekuPalace };
 
                 ReadEnemyList();
                 SceneUtils.ReadSceneTable();
@@ -1867,7 +1889,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 24.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 25.0\n");
                 }
             }
             catch (Exception e)

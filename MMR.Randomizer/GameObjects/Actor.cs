@@ -25,9 +25,11 @@ namespace MMR.Randomizer.GameObjects
         En_Test = 0x1, // En_Test
 
         [FileID(40)]
+        [ObjectListIndex(0x1)]
         En_GirlA = 0x2,
 
         [FileID(41)]
+        [ObjectListIndex(0x1)]
         En_Part = 0x3,
 
         //[EnemizerEnabled] // we dont want as an actual actor, we want as a companion
@@ -79,6 +81,7 @@ namespace MMR.Randomizer.GameObjects
         TreasureChest = 0x6, // En_Box
 
         [FileID(45)]
+        [ObjectListIndex(0x128)]
         PametFrog = 0x7, // En_Pammetfrog the frogminiboss
 
         [EnemizerEnabled]
@@ -90,6 +93,7 @@ namespace MMR.Randomizer.GameObjects
         Octarok = 0x8, // En_Okuta
 
         [FileID(47)]
+        [ObjectListIndex(0x1)]
         PowderKeg = 0x9, // En_Bom
 
         [EnemizerEnabled]
@@ -136,12 +140,13 @@ namespace MMR.Randomizer.GameObjects
         //[OnlyOneActorPerRoom]
         Horse = 0xD, // En_Horse
 
-        // NO FILE??? WHERE IS IT
         [ObjectListIndex(0x1)]
         [UnkillableAllVariants]
+        [ActorInstanceSize(0x1A8)]
         Item00 = 0xE, // En_Item00
 
         [FileID(52)]
+        [ObjectListIndex(0x1)]
         Arrow = 0xF, // En_Arrow
 
         [ActorizerEnabled]
@@ -193,9 +198,11 @@ namespace MMR.Randomizer.GameObjects
         Peahat = 0x14, // En_Peehat
 
         [FileID(119)]
+        [ObjectListIndex(0x2)]
         Butterfly = 0x15, // En_Butte
 
         [FileID(118)]
+        [ObjectListIndex(0x1)]
         Insect = 0x16, // En_Insect
 
         //[ActorizerEnabled] // not sure what to believe anymore, labfish is a different actor, school of fish is different, lets turn this off
@@ -207,6 +214,7 @@ namespace MMR.Randomizer.GameObjects
         Fish = 0x17, // En_Fish
 
         [FileID(57)]
+        [ObjectListIndex(0x1)]
         En_Holl = 0x18, // En_Holl
 
         [EnemizerEnabled]
@@ -220,12 +228,15 @@ namespace MMR.Randomizer.GameObjects
         Dinofos = 0x19,
 
         [FileID(59)]
+        [ObjectListIndex(0x5F)]
         Flagpole = 0x1A, // En_Hata
 
         [FileID(60)]
+        [ObjectListIndex(0x19)]
         ChildZelda = 0x1B, // En_Zl1
 
         [FileID(61)]
+        [ObjectListIndex(0x1)]
         Viewer = 0x1C, // En_Viewer
 
         [EnemizerEnabled]
@@ -238,12 +249,15 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(0x69)]
         Shabom = 0x1D,// the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
+        // this is a regular dungeon door in stonetower
         [FileID(63)]
+        [ObjectListIndex(0x1)]
         Door_Shutter = 0x1E, // Door_Shutter
 
         Empty1F = 0x1F,
 
         [FileID(64)]
+        [ObjectListIndex(0x1)]
         ZoraFinBoomerang = 0x20, // En_Boom
 
         //[ActorizerEnabled] // disabled for now because crash if leaving grotto into scene with ben
@@ -292,18 +306,22 @@ namespace MMR.Randomizer.GameObjects
         // issues: listing all the vars for all signs is going to be hell
         [ObjectListIndex(0xFC)] // the spreadsheet thinks this is free but I dont think so, think its a multi-object like tsubo
         //[GroundVariants()]
+        [ActorInstanceSize(0x1A8)]
         [UnkillableAllVariants]
         Sign = 0x26, // En_A_Obj
 
         [FileID(68)]
+        [ObjectListIndex(0x1)]
         Obj_Wturn = 0x27, // Obj_Wturn
 
         [FileID(69)]
+        [ObjectListIndex(0x1)]
         RiverSound = 0x28, // En_River_Sound
 
         Empty29 = 0x29,
 
         [FileID(70)]
+        [ObjectListIndex(0x1)]
         Ossan = 0x2A, // En_Ossan
 
         Empty2B = 0x2B,
@@ -360,12 +378,15 @@ namespace MMR.Randomizer.GameObjects
         DekuBaba = 0x33, // En_Dekubaba
 
         [FileID(75)]
+        [ObjectListIndex(0x1)]
         En_M_Fire1 = 0x34, // En_M_Fire1
 
-        [FileID(76)]        
+        [FileID(76)]
+        [ObjectListIndex(0x1)]
         En_M_Thunder = 0x35, // En_M_Thunder
 
         [FileID(77)]
+        [ObjectListIndex(0x1)]
         Bg_Breakwall = 0x36, // Bg_Breakwall
 
         Empty37 = 0x37,
@@ -425,6 +446,7 @@ namespace MMR.Randomizer.GameObjects
         RedBubble = 0x3C, // En_Bbfall
 
         [FileID(83)]
+        [ObjectListIndex(0x1)]
         Arms_Hook = 0x3D, // Arms_Hook
 
         [EnemizerEnabled]
@@ -438,6 +460,7 @@ namespace MMR.Randomizer.GameObjects
         BlueBubble = 0x3E, // En_Bb
 
         [FileID(85)]
+        [ObjectListIndex(0x17E)]
         Bg_Keikoku_Spr = 0x3F, // Bg_Keikoku_Spr
 
         Empty40 = 0x40,
@@ -477,6 +500,7 @@ namespace MMR.Randomizer.GameObjects
         Gomess = 0x43, // En_Death 🤘
 
         [FileID(88)]
+        [ObjectListIndex(0x52)]
         MiniDeath = 0x44, // En_MiniDeath
 
         Empty45 = 0x45,
@@ -493,6 +517,7 @@ namespace MMR.Randomizer.GameObjects
         Beamos = 0x47, // En_Vm 
 
         [FileID(90)]
+        [ObjectListIndex(0x1)]
         Demo_Effect = 0x48, // Demo_Effect
 
         [ActorizerEnabled]
@@ -538,9 +563,12 @@ namespace MMR.Randomizer.GameObjects
         ReDead = 0x4C, // En_Rd
 
         [FileID(94)]
+        [ObjectListIndex(0x5C)]
         Bg_F40_Flift = 0x4D, // Bg_F40_Flift
 
-        // MISSING FILE??
+        // Has no File
+        [ActorInstanceSize(0)] // unknown, never seen though
+        [ObjectListIndex(0x0)]
         Bg_Heavy_Block = 0x4E, // Bg_Heavy_Block
 
         [EnemizerEnabled]
@@ -587,6 +615,7 @@ namespace MMR.Randomizer.GameObjects
         Empty53 = 0x53,
 
         [FileID(98)]
+        [ObjectListIndex(0x7D)]
         En_Horse_Link_Child = 0x54, // En_Horse_Link_Child
 
         [ActorizerEnabled]
@@ -637,9 +666,11 @@ namespace MMR.Randomizer.GameObjects
         Empty5A = 0x5A,
 
         [FileID(100)]
+        [ObjectListIndex(0x1)]
         En_Encount1 = 0x5B, // En_Encount1
 
         [FileID(101)]
+        [ObjectListIndex(0xC)]
         Demo_Tre_Lgt = 0x5C, // Demo_Tre_Lgt
 
         Empty5D = 0x5D,
@@ -654,14 +685,16 @@ namespace MMR.Randomizer.GameObjects
         MajoraBalloonSewer = 0x5F, // En_Encount2
 
         [FileID(103)]
+        [ObjectListIndex(0x70)]
         En_Fire_Rock = 0x60, // En_Fire_Rock
 
         [FileID(104)]
+        [ObjectListIndex(0x88)]
         Bg_Ctower_Rot = 0x61, // Bg_Ctower_Rot
 
         [FileID(105)]
+        [ObjectListIndex(0x87)]
         Mir_Ray = 0x62, // Mir_Ray
-
 
         Empty63 = 0x63,
 
@@ -673,6 +706,7 @@ namespace MMR.Randomizer.GameObjects
         Shellblade = 0x64, // En_Sb
 
         [FileID(107)]
+        [ObjectListIndex(0x128)]
         En_Bigslime = 0x65, // En_Bigslime
 
         [EnemizerEnabled]
@@ -685,6 +719,7 @@ namespace MMR.Randomizer.GameObjects
 
         // ingo?
         [FileID(109)]
+        [ObjectListIndex(0x99)]
         En_In = 0x67, // En_In
 
         Empty68 = 0x68,
@@ -705,9 +740,11 @@ namespace MMR.Randomizer.GameObjects
         Ruto = 0x69, // En_Ru
 
         [FileID(110)]
+        [ObjectListIndex(1)]
         En_Bom_Chu = 0x6A, // En_Bom_Chu
 
         [FileID(111)]
+        [ObjectListIndex(0x191)]
         En_Horse_Game_Check = 0x6B, // En_Horse_Game_Check
 
         [EnemizerEnabled]
@@ -735,6 +772,7 @@ namespace MMR.Randomizer.GameObjects
         Empty72 = 0x72,
 
         [FileID(113)]
+        [ObjectListIndex(0x1)]
         En_Fr = 0x73, // En_Fr
 
         Empty74 = 0x74,
@@ -1480,7 +1518,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerEnabled] //crash
         //[ActorInitVarOffset(0x3688)]
         [FileID(247)]
-        //[ObjectListIndex(0x23B)]
+        [ObjectListIndex(0x23B)]
         [GroundVariants(0x2243)]
         En_Encount3 = 0x112, // En_Encount3
 
@@ -1718,7 +1756,7 @@ namespace MMR.Randomizer.GameObjects
         Dm_Ravine = 0x148, // Dm_Ravine
 
         //[EnemizerEnabled] // crash, also object is huge so never gets put places anyway
-        [FileID(294)]
+        [FileID(295)]
         [ObjectListIndex(0x192)] // cutscene object shared with zelda and skullkid, so BIG
         [GroundVariants(0)]
         [UnkillableAllVariants]
@@ -1830,7 +1868,7 @@ namespace MMR.Randomizer.GameObjects
         // one of these is sit on the wall bat from rtss: FF03/01/9F
         [VariantsWithRoomMax(max:1, 0xFF34)] // swarm
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
-        BadBat = 0x15B,
+        BadBat = 0x15B, // En_Bat
 
         // can hold many different types of graves or stones containing.. nothing bit broke
         //[ActorizerEnabled] // this works fine but shows up waay too often
@@ -2367,7 +2405,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(405)]
         [ObjectListIndex(0x1A5)]
-        Lillypad = 0x1B9, // Bg_Lotus
+        Lilypad = 0x1B9, // Bg_Lotus
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1FF0)]
