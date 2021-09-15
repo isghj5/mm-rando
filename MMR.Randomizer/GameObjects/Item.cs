@@ -78,6 +78,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a large goron"), GossipItemHint("gunpowder", "a dangerous item", "an explosive barrel")]
         [ShopText("Both its power and its size are immense!")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [HackContent(nameof(Resources.mods.fix_keg_check))]
         [GetItemIndex(0x123), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards)]
         ItemPowderKeg,
 

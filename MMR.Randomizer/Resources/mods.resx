@@ -220,6 +220,9 @@
   <data name="fix_kafei" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-kafei;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="fix_keg_check" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\fix-keg-check.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="fix_link_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\fix-link-1;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
