@@ -1,8 +1,12 @@
 #include <z64.h>
 #include "BaseRupee.h"
 #include "MMR.h"
+#include "Misc.h"
 
 u16 Scopecoin_GetGiIndex(Actor* actor) {
+    if (MISC_CONFIG.internal.vanillaLayout) {
+        return 0;
+    }
     s16 flag = (actor->params & 0x7F0) >> 4;
     u16 giIndex = 0;
     if (flag == 0xA) {
@@ -12,7 +16,7 @@ u16 Scopecoin_GetGiIndex(Actor* actor) {
         // Red Rupee in pillar
         giIndex = 0x361;
     }
-    
+
     if (giIndex > 0) {
         GetItemEntry* entry = MMR_GetGiEntry(giIndex);
         if (entry->message == 0) {
