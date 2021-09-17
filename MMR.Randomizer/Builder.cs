@@ -2203,6 +2203,7 @@ namespace MMR.Randomizer
                                 ;
                             })
                             .NewLine()
+                            .StartGreenText()
                             .TwoChoices()
                             .Text("I'll buy ").RuntimePronoun(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value).NewLine()
                             .Text("No thanks")
