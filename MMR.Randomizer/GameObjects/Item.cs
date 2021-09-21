@@ -7771,21 +7771,21 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Blue Rupee"), LocationName("Ranch Day 1 Soil"), Region(Region.RomaniRanch)]
-        [GossipLocationHint("early soil"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
-        [ShopText("This is worth 5 rupees.")]
+        [ItemName("30 Arrows"), LocationName("Ranch Day 1 Soil"), Region(Region.RomaniRanch)]
+        [GossipLocationHint("early soil"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
+        [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x370), ItemPool(ItemCategory.BlueRupees, LocationCategory.SoftSoil), NullableItem]
+        [GetItemIndex(0x376), ItemPool(ItemCategory.Arrows, LocationCategory.SoftSoil), NullableItem]
         CollectableRomaniRanchSoftSoil1,
 
 
         [Visible]
         [Repeatable]
-        [ItemName("30 Arrows"), LocationName("Ranch Day 2 or 3 Soil"), Region(Region.RomaniRanch)]
-        [GossipLocationHint("late soil"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
-        [ShopText("Ammo for your bow.", isMultiple: true)]
+        [ItemName("Blue Rupee"), LocationName("Ranch Day 2 or 3 Soil"), Region(Region.RomaniRanch)]
+        [GossipLocationHint("late soil"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
+        [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x376), ItemPool(ItemCategory.Arrows, LocationCategory.SoftSoil), NullableItem]
+        [GetItemIndex(0x370), ItemPool(ItemCategory.BlueRupees, LocationCategory.SoftSoil), NullableItem]
         CollectableRomaniRanchSoftSoil2,
 
 
