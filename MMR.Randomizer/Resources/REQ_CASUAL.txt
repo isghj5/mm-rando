@@ -45119,7 +45119,8 @@
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
         "MaskZora",
-        "Use Ice Arrow"
+        "Use Ice Arrow",
+        "ItemHookshot"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
