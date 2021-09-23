@@ -761,7 +761,7 @@
         ]
       ],
       "TimeNeeded": "None",
-      "TimeAvailable": "Day1, Night1, Day2, Night2",
+      "TimeAvailable": "Day1",
       "IsTrick": false
     },
     {
