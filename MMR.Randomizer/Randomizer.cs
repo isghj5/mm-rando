@@ -571,7 +571,7 @@ namespace MMR.Randomizer
             }
 
             //check timing
-            if (currentItemObject.TimeNeeded != 0 && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary()))
+            if (currentItemObject.TimeNeeded != 0 && (!_timeTravelPlaced || dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary())))
             {
                 if ((currentItemObject.TimeNeeded & currentTargetObject.TimeAvailable) == 0)
                 {
@@ -880,6 +880,7 @@ namespace MMR.Randomizer
                 {
                     dependencyObject.CannotRequireItems.Add(currentItem);
                 }
+
                 if (dependency.IsFake() || dependencyObject.NewLocation.HasValue)
                 {
                     var location = dependencyObject.NewLocation ?? dependency;
@@ -891,7 +892,7 @@ namespace MMR.Randomizer
                         CheckConditionals(currentItem, location, childPath);
                     }
                 }
-                else if (ItemList[currentItem].TimeNeeded != 0 && dependency.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary()))
+                else if (ItemList[currentItem].TimeNeeded != 0 && (!_timeTravelPlaced || (dependency.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary()))))
                 {
                     if (dependencyObject.TimeNeeded == 0)
                     {
@@ -949,9 +950,9 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            if (currentItem.IsTemporary())
+            if (!_timeTravelPlaced || currentItem.IsTemporary())
             {
-                if (target.Region() == Region.TheMoon)
+                if (target.Region() == Region.TheMoon && currentItem.ItemCategory() != ItemCategory.TimeTravel)
                 {
                     Debug.WriteLine($"{currentItem} is temporary and cannot be placed on the moon.");
                     return false;
@@ -980,12 +981,37 @@ namespace MMR.Randomizer
             RemoveConditionals(currentItem);
             ConditionsChecked = new List<Item>();
             CheckConditionals(currentItem, target, dependencyPath);
+
+            if (currentItem == Item.SongTime && target.Region() != Region.TheMoon)
+            {
+                foreach (var itemObject in ItemList.Where(io => io.Item.Region() == Region.TheMoon))
+                {
+                    itemObject.DependsOnItems.Add(Item.SongTime);
+                }
+            }
+
             return true;
         }
 
         private void PlaceItem(Item currentItem, List<Item> targets, bool lockRegion = false)
         {
             var currentItemObject = ItemList[currentItem];
+            if (currentItem.IsFake() || (!_settings.AddSongs && currentItem == Item.SongTime))
+            {
+                foreach (var requiredItem in currentItemObject.DependsOnItems.Where(item => item.IsSameType(currentItem)))
+                {
+                    PlaceItem(requiredItem, targets);
+                }
+                var conditional = currentItemObject.Conditionals.RandomOrDefault(Random);
+                if (conditional != null)
+                {
+                    foreach (var item in conditional.Where(item => item.IsSameType(currentItem)))
+                    {
+                        PlaceItem(item, targets);
+                    }
+                }
+                return;
+            }
             if (currentItemObject.NewLocation.HasValue)
             {
                 return;
@@ -1023,12 +1049,57 @@ namespace MMR.Randomizer
                     Debug.WriteLine($"----Placed {currentItem.Name()} at {targetLocation.Location()}----");
 
                     targets.Remove(targetLocation);
-                    return;
+
+                    break;
                 }
                 else
                 {
                     Debug.WriteLine($"----Failed to place {currentItem.Name()} at {targetLocation.Location()}----");
                     availableItems.Remove(targetLocation);
+                }
+            }
+
+            if (!_timeTravelPlaced && !ItemUtils.IsJunk(currentItem))
+            {
+                var location = ItemList[currentItemObject.NewLocation.Value];
+                var placed = new List<Item>();
+                for (var requiredItem = location.DependsOnItems.Cast<Item?>().FirstOrDefault(); requiredItem != null; placed.Add(requiredItem.Value), requiredItem = location.DependsOnItems.Except(placed).Cast<Item?>().FirstOrDefault())
+                {
+                    if (!_timeTravelPlaced && location.TimeSetup != 0)
+                    {
+                        var requiredItemObject = ItemList[requiredItem.Value];
+                        if (requiredItemObject.TimeNeeded == 0)
+                        {
+                            requiredItemObject.TimeNeeded = location.TimeSetup;
+                        }
+                        else
+                        {
+                            requiredItemObject.TimeNeeded &= location.TimeSetup;
+                        }
+                    }
+
+                    PlaceItem(requiredItem.Value, targets);
+                }
+                var conditional = location.Conditionals.RandomOrDefault(Random);
+                if (conditional != null)
+                {
+                    foreach (var item in conditional.Where(item => item.IsSameType(currentItem)))
+                    {
+                        if (!_timeTravelPlaced && location.TimeSetup != 0)
+                        {
+                            var requiredItemObject = ItemList[item];
+                            if (requiredItemObject.TimeNeeded == 0)
+                            {
+                                requiredItemObject.TimeNeeded = location.TimeSetup;
+                            }
+                            else
+                            {
+                                requiredItemObject.TimeNeeded &= location.TimeSetup;
+                            }
+                        }
+
+                        PlaceItem(item, targets);
+                    }
                 }
             }
         }
@@ -1180,12 +1251,15 @@ namespace MMR.Randomizer
             }
         }
 
+        private bool _timeTravelPlaced = false;
         private void RandomizeItems()
         {
+            _timeTravelPlaced = true;
             if (!_settings.AddSongs)
             {
                 ShuffleSongs();
             }
+            _timeTravelPlaced = false;
 
             var itemPool = new List<Item>();
 
@@ -1194,6 +1268,11 @@ namespace MMR.Randomizer
             PlaceRestrictedDungeonItems(itemPool);
 
             PlaceFreeItems(itemPool);
+
+            PlaceItem(Item.SongTime, itemPool);
+            PlaceItem(Item.OtherTimeTravel, itemPool);
+            _timeTravelPlaced = true;
+
             PlaceOcarinaAndSongOfTime(itemPool);
             PlaceBossRemains(itemPool);
             PlaceQuestItems(itemPool);
@@ -1445,8 +1524,8 @@ namespace MMR.Randomizer
 
         private void PlaceOcarinaAndSongOfTime(List<Item> itemPool)
         {
-            PlaceItem(Item.ItemOcarina, itemPool);
             PlaceItem(Item.SongTime, itemPool);
+            PlaceItem(Item.ItemOcarina, itemPool);
         }
 
         private void PlaceBossRemains(List<Item> itemPool)

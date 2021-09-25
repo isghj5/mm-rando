@@ -31,6 +31,7 @@ namespace MMR.Randomizer.Models
                         logicItem.ConditionalItems.Clear();
                         logicItem.TimeAvailable = TimeOfDay.None;
                         logicItem.TimeNeeded = TimeOfDay.None;
+                        logicItem.TimeSetup = TimeOfDay.None;
                         logicItem.IsTrick = false;
                         logicItem.TrickTooltip = null;
                         foreach (var location in multiLocationAttribute.Locations)

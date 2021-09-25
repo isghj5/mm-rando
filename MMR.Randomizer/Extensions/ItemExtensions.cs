@@ -202,5 +202,16 @@ namespace MMR.Randomizer.Extensions
         {
             return item.GetAttribute<ExclusiveItemMessageAttribute>().Message;
         }
+
+        public static bool IsBottleCatchContent(this Item item)
+        {
+            return item >= Item.BottleCatchFairy
+                   && item <= Item.BottleCatchMushroom;
+        }
+
+        public static bool IsSameType(this Item item, Item other)
+        {
+            return item.IsBottleCatchContent() == other.IsBottleCatchContent();
+        }
     }
 }

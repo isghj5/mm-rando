@@ -10,8 +10,21 @@ namespace MMR.Randomizer.Models
         public List<List<string>> ConditionalItems { get; set; } = new List<List<string>>();
         public TimeOfDay TimeNeeded { get; set; }
         public TimeOfDay TimeAvailable { get; set; }
+        public TimeOfDay TimeSetup { get; set; }
         public bool IsTrick { get; set; }
-        public string TrickTooltip { get; set; } = string.Empty;
+
+        private string _trickTooltip;
+        public string TrickTooltip
+        {
+            get
+            {
+                return IsTrick ? _trickTooltip : null;
+            }
+            set
+            {
+                _trickTooltip = value;
+            }
+        }
 
         [JsonIgnore]
         public bool IsMultiLocation { get; set; }

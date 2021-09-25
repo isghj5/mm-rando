@@ -145,6 +145,13 @@ namespace MMR.UI.Forms
             cANight2.Checked = itemLogic.TimeAvailable.HasFlag(TimeOfDay.Night2);
             cADay3.Checked = itemLogic.TimeAvailable.HasFlag(TimeOfDay.Day3);
             cANight3.Checked = itemLogic.TimeAvailable.HasFlag(TimeOfDay.Night3);
+
+            cSDay1.Checked = itemLogic.TimeSetup.HasFlag(TimeOfDay.Day1);
+            cSNight1.Checked = itemLogic.TimeSetup.HasFlag(TimeOfDay.Night1);
+            cSDay2.Checked = itemLogic.TimeSetup.HasFlag(TimeOfDay.Day2);
+            cSNight2.Checked = itemLogic.TimeSetup.HasFlag(TimeOfDay.Night2);
+            cSDay3.Checked = itemLogic.TimeSetup.HasFlag(TimeOfDay.Day3);
+            cSNight3.Checked = itemLogic.TimeSetup.HasFlag(TimeOfDay.Night3);
         }
 
         private void UpdateTime(int n)
@@ -157,6 +164,7 @@ namespace MMR.UI.Forms
             if (cADay3.Checked) { Av |= TimeOfDay.Day3; }
             if (cANight3.Checked) { Av |= TimeOfDay.Night3; }
             _logic.Logic[n].TimeAvailable = Av;
+
             var Ne = TimeOfDay.None;
             if (cNDay1.Checked) { Ne |= TimeOfDay.Day1; }
             if (cNNight1.Checked) { Ne |= TimeOfDay.Night1; }
@@ -165,6 +173,15 @@ namespace MMR.UI.Forms
             if (cNDay3.Checked) { Ne |= TimeOfDay.Day3; }
             if (cNNight3.Checked) { Ne |= TimeOfDay.Night3; }
             _logic.Logic[n].TimeNeeded = Ne;
+
+            var Se = TimeOfDay.None;
+            if (cSDay1.Checked) { Se |= TimeOfDay.Day1; }
+            if (cSNight1.Checked) { Se |= TimeOfDay.Night1; }
+            if (cSDay2.Checked) { Se |= TimeOfDay.Day2; }
+            if (cSNight2.Checked) { Se |= TimeOfDay.Night2; }
+            if (cSDay3.Checked) { Se |= TimeOfDay.Day3; }
+            if (cSNight3.Checked) { Se |= TimeOfDay.Night3; }
+            _logic.Logic[n].TimeSetup = Se;
         }
 
         private void FillTrick(int n)
@@ -214,6 +231,11 @@ namespace MMR.UI.Forms
             if (Enum.TryParse(_logic.Logic[n].Id, out Item item))
             {
                 lIName.Text = item.Location() ?? item.ToString();
+                var itemName = item.Name();
+                if (!string.IsNullOrWhiteSpace(itemName))
+                {
+                    lIName.Text += $" ({itemName})";
+                }
             }
             else
             {

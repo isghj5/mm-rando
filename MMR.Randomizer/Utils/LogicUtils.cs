@@ -64,6 +64,7 @@ namespace MMR.Randomizer.Utils
                     Name = logicItem.Id,
                     TimeNeeded = (int)logicItem.TimeNeeded,
                     TimeAvailable = logicItem.TimeAvailable > 0 ? (int)logicItem.TimeAvailable : 63,
+                    TimeSetup = (int)logicItem.TimeSetup,
                     IsTrick = logicItem.IsTrick,
                     TrickTooltip = logicItem.TrickTooltip,
                     DependsOnItems = logicItem.RequiredItems.Select(item => (Item)logic.FindIndex(li => li.Id == item)).ToList(),

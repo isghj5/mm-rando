@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 7;
+        public const int CurrentVersion = 8;
 
         public static string ApplyMigrations(string logic)
         {
@@ -157,6 +157,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 7)
             {
                 AddMultiLocationBusinessScrubs(logicObject);
+            }
+
+            if (logicObject.Version < 8)
+            {
+                AddOtherTimeTravel(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3772,6 +3777,23 @@ namespace MMR.Randomizer.LogicMigrator
                 ConditionalItems = new List<List<string>>(),
             }));
             logicObject.Version = 7;
+        }
+
+        private static void AddOtherTimeTravel(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 124;
+            var itemNames = new string[]
+            {
+                "OtherTimeTravel",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 8;
         }
 
         private class MigrationItem

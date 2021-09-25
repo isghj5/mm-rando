@@ -980,6 +980,7 @@ namespace MMR.Randomizer.GameObjects
         OtherExplosive,
         OtherArrow,
         OtherMagicBean,
+        OtherTimeTravel,
         AreaWoodfallNew,
         AreaSnowheadNew,
         AreaGreatBayNew,
