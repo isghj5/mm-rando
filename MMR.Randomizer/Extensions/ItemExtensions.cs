@@ -162,7 +162,7 @@ namespace MMR.Randomizer.Extensions
 
         public static bool IsSong(this Item item)
         {
-            return (Item.SongHealing <= item && item <= Item.SongOath);
+            return (Item.SongTime <= item && item <= Item.SongOath);
         }
 
         public static ChestTypeAttribute.ChestType ChestType(this Item item)

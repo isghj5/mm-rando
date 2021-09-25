@@ -996,16 +996,16 @@ namespace MMR.Randomizer
         private void PlaceItem(Item currentItem, List<Item> targets, bool lockRegion = false)
         {
             var currentItemObject = ItemList[currentItem];
-            if (currentItem.IsFake() || (!_settings.AddSongs && currentItem == Item.SongTime))
+            if (currentItem.IsFake())
             {
-                foreach (var requiredItem in currentItemObject.DependsOnItems.Where(item => item.IsSameType(currentItem)))
+                foreach (var requiredItem in currentItemObject.DependsOnItems.AllowModification().Where(item => item.IsSameType(currentItem)))
                 {
                     PlaceItem(requiredItem, targets);
                 }
                 var conditional = currentItemObject.Conditionals.RandomOrDefault(Random);
                 if (conditional != null)
                 {
-                    foreach (var item in conditional.Where(item => item.IsSameType(currentItem)))
+                    foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
                     {
                         PlaceItem(item, targets);
                     }
@@ -1027,6 +1027,11 @@ namespace MMR.Randomizer
             if (lockRegion)
             {
                 availableItems.RemoveAll(location => location.Region() != currentItem.Region());
+            }
+
+            if (!_settings.AddSongs)
+            {
+                availableItems.RemoveAll(location => location.IsSong() != currentItem.IsSong());
             }
 
             currentItem = currentItemObject.Item;
@@ -1063,11 +1068,11 @@ namespace MMR.Randomizer
             {
                 var location = ItemList[currentItemObject.NewLocation.Value];
                 var placed = new List<Item>();
-                for (var requiredItem = location.DependsOnItems.Cast<Item?>().FirstOrDefault(); requiredItem != null; placed.Add(requiredItem.Value), requiredItem = location.DependsOnItems.Except(placed).Cast<Item?>().FirstOrDefault())
+                foreach (var requiredItem in location.DependsOnItems.AllowModification())
                 {
                     if (!_timeTravelPlaced && location.TimeSetup != 0)
                     {
-                        var requiredItemObject = ItemList[requiredItem.Value];
+                        var requiredItemObject = ItemList[requiredItem];
                         if (requiredItemObject.TimeNeeded == 0)
                         {
                             requiredItemObject.TimeNeeded = location.TimeSetup;
@@ -1078,12 +1083,12 @@ namespace MMR.Randomizer
                         }
                     }
 
-                    PlaceItem(requiredItem.Value, targets);
+                    PlaceItem(requiredItem, targets);
                 }
                 var conditional = location.Conditionals.RandomOrDefault(Random);
                 if (conditional != null)
                 {
-                    foreach (var item in conditional.Where(item => item.IsSameType(currentItem)))
+                    foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
                     {
                         if (!_timeTravelPlaced && location.TimeSetup != 0)
                         {
@@ -1254,11 +1259,6 @@ namespace MMR.Randomizer
         private bool _timeTravelPlaced = false;
         private void RandomizeItems()
         {
-            _timeTravelPlaced = true;
-            if (!_settings.AddSongs)
-            {
-                ShuffleSongs();
-            }
             _timeTravelPlaced = false;
 
             var itemPool = new List<Item>();
@@ -1428,9 +1428,11 @@ namespace MMR.Randomizer
         /// </summary>
         private void PlaceSongs(List<Item> itemPool)
         {
-            for (var i = Item.SongHealing; i <= Item.SongOath; i++)
+            var songs = Enumerable.Range((int)Item.SongHealing, Item.SongOath - Item.SongHealing + 1).Cast<Item>();
+
+            foreach (var song in songs.OrderBy(s => _randomized.Settings.CustomStartingItemList.Contains(s)))
             {
-                PlaceItem(i, itemPool);
+                PlaceItem(song, itemPool);
             }
         }
 
@@ -1489,12 +1491,17 @@ namespace MMR.Randomizer
                 .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item))
                 .Cast<Item?>()
                 .ToList();
+            var availableSongs = ItemUtils.StartingItems()
+                .Where(item => item.IsSong())
+                .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item))
+                .Cast<Item?>()
+                .ToList();
             foreach (var location in freeItemLocations)
             {
                 var placedItem = ItemList.FirstOrDefault(item => item.NewLocation == location)?.Item;
                 if (placedItem == null)
                 {
-                    placedItem = availableStartingItems.RandomOrDefault(Random);
+                    placedItem = (!_settings.AddSongs && location.IsSong() ? availableSongs : availableStartingItems).RandomOrDefault(Random);
                     if (placedItem == null)
                     {
                         throw new Exception("Failed to replace a starting item. Not enough items that can be started with are randomized or too many Extra Starting Items are selected.");
@@ -1576,29 +1583,6 @@ namespace MMR.Randomizer
             for (var i = Item.BottleCatchFairy; i <= Item.BottleCatchMushroom; i++)
             {
                 PlaceItem(i, itemPool);
-            }
-        }
-
-        /// <summary>
-        /// Randomizes songs with other songs
-        /// </summary>
-        private void ShuffleSongs()
-        {
-            var itemPool = new List<Item>();
-            for (var i = Item.SongTime; i <= Item.SongOath; i++)
-            {
-                if (ItemList[i].NewLocation.HasValue)
-                {
-                    continue;
-                }
-                itemPool.Add(i);
-            }
-
-            var songs = Enumerable.Range((int)Item.SongTime, Item.SongOath - Item.SongTime + 1).Cast<Item>();
-
-            foreach (var song in songs.OrderBy(s => _randomized.Settings.CustomStartingItemList.Contains(s)))
-            {
-                PlaceItem(song, itemPool);
             }
         }
 
