@@ -26,7 +26,8 @@ typedef struct MusicState {
         };
         u8 value;
     } cumulativeStates;
-    /* 0x15 */ u8 pad[3];
+    /* 0x15 */ u8 hasSequenceMaskFile;
+    /* 0x16 */ u8 pad[2];
 } MusicState; // size = 0x18
 
 struct MusicConfig {
