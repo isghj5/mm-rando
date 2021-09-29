@@ -66,7 +66,7 @@ static s8 TargetHealth_GetMaxHealth(Actor* actor, s8* currentHealth) {
             }
             break;
         case ACTOR_EN_PAMETFROG: // Gekko (Mini-Boss)
-            if (actor->child && actor->child->id == ACTOR_EN_BIGPAMET && actor->child->draw) { // Phase 2
+            if (((actor->flags & 1) == 0) || (actor->child && actor->child->id == ACTOR_EN_BIGPAMET && actor->child->draw)) { // Phase 2
                 maxHealth = 6;
             }
             break;
