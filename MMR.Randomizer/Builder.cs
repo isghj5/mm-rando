@@ -2117,7 +2117,7 @@ namespace MMR.Randomizer
                                 {
                                     it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
                                 })
-                                .Text("? ")
+                                .Text("? Be careful, ")
                                 .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                                 .Red(() =>
                                 {
