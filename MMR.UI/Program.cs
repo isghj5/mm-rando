@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
 using MMR.UI.Forms;
 
 namespace MMR.UI
@@ -17,7 +15,23 @@ namespace MMR.UI
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            var services = new ServiceCollection();
+
+            ConfigureServices(services);
+
+            using (var serviceProvider = services.BuildServiceProvider())
+            {
+                var mainForm = serviceProvider.GetRequiredService<MainForm>();
+                Application.Run(mainForm);
+            }
+        }
+
+        private static void ConfigureServices(ServiceCollection services)
+        {
+            Enemizer.Module.ConfigureServices(services);
+            Randomizer.Module.ConfigureServices(services);
+            services.AddScoped<MainForm>();
         }
     }
 }

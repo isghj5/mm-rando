@@ -25,22 +25,32 @@ using System.Text;
 using System.Text.RegularExpressions;
 using SixLabors.ImageSharp.Formats.Png;
 using System.Security.Cryptography;
+using MMR.Common.Interfaces;
 
 namespace MMR.Randomizer
 {
     public class Builder
     {
-        private RandomizedResult _randomized;
-        private CosmeticSettings _cosmeticSettings;
+        private readonly ISceneUtils _sceneUtils;
+        private readonly IEnemies _enemies;
+
+        private RandomizedResultStore _randomizedResultStore;
+        private ConfigurationStore _configurationStore;
         private MessageTable _messageTable;
         private ExtendedObjects _extendedObjects;
         private List<MessageEntry> _extraMessages;
         private Dictionary<int, ItemGraphic> _graphicOverrides;
 
-        public Builder(RandomizedResult randomized, CosmeticSettings cosmeticSettings)
+        private CosmeticSettings _cosmeticSettings => _configurationStore.Configuration.CosmeticSettings;
+        private RandomizedResult _randomized => _randomizedResultStore.RandomizedResult;
+
+        public Builder(RandomizedResultStore randomizedResultStore, ConfigurationStore configurationStore, ISceneUtils sceneUtils, IEnemies enemies)
         {
-            _randomized = randomized;
-            _cosmeticSettings = cosmeticSettings;
+            _enemies = enemies;
+            _sceneUtils = sceneUtils;
+            _randomizedResultStore = randomizedResultStore;
+            _configurationStore = configurationStore;
+
             _messageTable = null;
             _extendedObjects = null;
             _extraMessages = new List<MessageEntry>();
@@ -330,7 +340,7 @@ namespace MMR.Randomizer
 
             if (_cosmeticSettings.EnableNightBGM)
             {
-                SceneUtils.ReenableNightBGM();
+                _sceneUtils.ReenableNightBGM();
             }
 
             if (!_cosmeticSettings.KeepPictoboxAntialiasing)
@@ -742,8 +752,8 @@ namespace MMR.Randomizer
                 return;
             }
 
-            SceneUtils.ReadSceneTable();
-            SceneUtils.GetMaps();
+            _sceneUtils.ReadSceneTable();
+            _sceneUtils.GetMaps();
 
             var entrances = new List<Item>
             {
@@ -1191,7 +1201,7 @@ namespace MMR.Randomizer
         {
             if (_randomized.Settings.RandomizeEnemies)
             {
-                Enemies.ShuffleEnemies(new Random(_randomized.Seed));
+                _enemies.ShuffleEnemies(new Random(_randomized.Seed));
             }
         }
 

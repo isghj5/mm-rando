@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace MMR.Randomizer.Models.Rom
+namespace MMR.Common.Models
 {
     public class Map
     {

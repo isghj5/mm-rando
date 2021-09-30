@@ -1,10 +1,6 @@
-﻿using MMR.Randomizer.Models.Vectors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using MMR.Common.Models.Vectors;
 
-namespace MMR.Randomizer.Models.Rom
+namespace MMR.Common.Models
 {
     public class Actor
     {

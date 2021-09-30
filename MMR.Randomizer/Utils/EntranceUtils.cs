@@ -1,4 +1,4 @@
-﻿using MMR.Randomizer.Models.Rom;
+﻿using MMR.Common.Models;
 using System.Diagnostics;
 using System.Linq;
 

@@ -1,4 +1,5 @@
-﻿using MMR.Randomizer.Models.Rom;
+﻿using MMR.Common.Models;
+using MMR.Randomizer.Models.Rom;
 using System.Collections.Generic;
 
 namespace MMR.Randomizer

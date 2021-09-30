@@ -12,6 +12,7 @@ using System.IO;
 using System.Linq.Expressions;
 using MMR.Randomizer.Models.Colors;
 using MMR.Randomizer.Constants;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MMR.CLI
 {
@@ -19,6 +20,12 @@ namespace MMR.CLI
     {
         static int Main(string[] args)
         {
+            var services = new ServiceCollection();
+
+            ConfigureServices(services);
+
+            using var serviceProvider = services.BuildServiceProvider();
+
             Dictionary<string, List<string>> argsDictionary;
             if (args.Length == 1 && File.Exists(args[0]) && Path.GetExtension(args[0]) == ".mmr")
             {
@@ -229,7 +236,8 @@ namespace MMR.CLI
                 {
                     //var progressReporter = new TextWriterProgressReporter(Console.Out);
                     var progressReporter = new ProgressBarProgressReporter(progressBar);
-                    result = ConfigurationProcessor.Process(configuration, seed, progressReporter);
+                    var configurationProcessor = serviceProvider.GetRequiredService<ConfigurationProcessor>();
+                    result = configurationProcessor.Process(configuration, seed, progressReporter);
                 }
                 if (result != null)
                 {
@@ -423,6 +431,12 @@ namespace MMR.CLI
         private static string GetSettingDescription(string name, string description)
         {
             return $"{name,-17} {description}";
+        }
+
+        private static void ConfigureServices(ServiceCollection services)
+        {
+            Enemizer.Module.ConfigureServices(services);
+            Randomizer.Module.ConfigureServices(services);
         }
     }
 }

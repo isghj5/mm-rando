@@ -118,16 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="mmr_f_sot" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\music\mmr-f-sot;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="REQ_CASUAL" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\REQ_CASUAL.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="REQ_GLITCH" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\REQ_GLITCH.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
-  </data>
-  <data name="SEQS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\SEQS.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
+  <data name="ENEMIES" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\ENEMIES.txt;System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;Windows-1252</value>
   </data>
 </root>

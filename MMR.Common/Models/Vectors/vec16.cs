@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace MMR.Randomizer.Models.Vectors
+﻿namespace MMR.Common.Models.Vectors
 {
     public class vec16
     {

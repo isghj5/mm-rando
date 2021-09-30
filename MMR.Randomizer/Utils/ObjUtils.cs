@@ -1,12 +1,12 @@
-﻿using MMR.Randomizer.Models.Rom;
+﻿using MMR.Common.Interfaces;
+using MMR.Randomizer.Models.Rom;
 
 namespace MMR.Randomizer.Utils
 {
-
-    public static class ObjUtils
+    public class ObjUtils : IObjectUtils
     {
         const int OBJECT_TABLE = 0xC58C80;
-        public static int GetObjSize(int obj)
+        public int GetObjSize(int obj)
         {
             int f = RomUtils.GetFileIndexForWriting(OBJECT_TABLE);
             int basea = OBJECT_TABLE - RomData.MMFileList[f].Addr;
