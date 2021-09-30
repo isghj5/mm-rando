@@ -165,7 +165,7 @@ namespace MMR.Randomizer
                 return;
             }
 
-            Enemies.DisableEnemyCombatMusic(_cosmeticSettings.DisableCombatMusic == CombatMusic.WeakEnemies);
+            ReadWriteUtils.WriteToROM(0xCA7F00 + 0x16818, 0x1000);
         }
         #endregion
 
