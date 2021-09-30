@@ -1425,7 +1425,13 @@ typedef struct {
     // [5] & 0x08 = Goht Unfrozen cutscene seen
     // [6] & 0x04 = Goht Intro cutscene seen
     // [6] & 0x02 = Majora Intro cutscene seen
-    /* 0x0008 */ UNK_TYPE1 pad8[0x2];
+    // [7] & 0x01 = Has Rupees
+    // [7] & 0x02 = Has Bombs
+    // [7] & 0x04 = Has Deku Nuts
+    // [7] & 0x08 = Has Deku Sticks
+    // [7] & 0x10 = Has Arrows
+    /* 0x0008 */ s8 unk8;
+    /* 0x0009 */ UNK_TYPE1 pad9;
     /* 0x000A */ u16 jinxCounter;
     /* 0x000C */ s16 rupeeCounter;
     /* 0x000E */ UNK_TYPE1 padE[0xC6];
@@ -1453,9 +1459,10 @@ typedef struct {
     /* 0x27D */ UNK_TYPE1 pad27D[0x3];
     /* 0x280 */ ButtonsState buttonsState;
     /* 0x288 */ s16 magicConsumeState;
-    /* 0x28A */ UNK_TYPE1 pad28A[0x4];
+    /* 0x28A */ s16 shouldAddMagic;
+    /* 0x28C */ UNK_TYPE1 pad28C[0x2];
     /* 0x28E */ u16 magicMeterSize;
-    /* 0x290 */ UNK_TYPE1 pad290[0x2];
+    /* 0x290 */ u16 magicAmountTarget;
     /* 0x292 */ s16 magicConsumeCost;
     /* 0x294 */ UNK_TYPE1 pad294[0x6];
     /* 0x29A */ u16 minigameCounter[2];
