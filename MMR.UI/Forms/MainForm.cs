@@ -1104,6 +1104,7 @@ namespace MMR.UI.Forms
 
             cDrawHash.CheckedChanged -= cDrawHash_CheckedChanged;
             cDrawHash.Checked = cPatch.Checked ? true : _drawHashChecked && (_configuration.OutputSettings.GenerateROM || _configuration.OutputSettings.OutputVC);
+            _configuration.GameplaySettings.DrawHash = cDrawHash.Checked;
             cDrawHash.CheckedChanged += cDrawHash_CheckedChanged;
         }
 
