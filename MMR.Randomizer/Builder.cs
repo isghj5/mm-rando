@@ -1340,6 +1340,12 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.enemy_max_health);
             }
 
+            if (!_randomized.Settings.CustomStartingItemList.Contains(Item.ItemOcarina) || !_randomized.Settings.CustomStartingItemList.Contains(Item.SongTime))
+            {
+                hacks.Add(Resources.mods.fix_ocarina_checks);
+                hacks.Add(Resources.mods.fix_song_of_time);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);
@@ -2402,7 +2408,7 @@ namespace MMR.Randomizer
             }
 
             // Remove "...Suddenly, memories of Princess Zelda come rushing back to you..."
-            if (_randomized.ItemList[Item.ItemOcarina].NewLocation != Item.ItemOcarina)
+            if (_randomized.ItemList[Item.ItemOcarina].NewLocation != Item.ItemOcarina || _randomized.ItemList[Item.SongTime].NewLocation != Item.SongTime)
             {
                 newMessages.Add(new MessageEntryBuilder()
                     .Id(0x4C)

@@ -851,8 +851,6 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a stolen possession"), GossipItemHint("a musical instrument")]
         [ShopText("This musical instrument is filled with memories of Princess Zelda.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
-        [HackContent(nameof(Resources.mods.fix_ocarina_checks))]
-        [HackContent(nameof(Resources.mods.fix_song_of_time))]
         [GetItemIndex(0x4C), ItemPool(ItemCategory.TimeTravel, LocationCategory.BossFights)]
         ItemOcarina,
 
@@ -861,8 +859,6 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a distant memory"), GossipItemHint("a forgotten melody")]
         [ShopText("This melody is a song of memories of Princess Zelda.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
-        [HackContent(nameof(Resources.mods.fix_ocarina_checks))]
-        [HackContent(nameof(Resources.mods.fix_song_of_time))]
         [GetItemIndex(0x44C), ItemPool(ItemCategory.TimeTravel, LocationCategory.BossFights)]
         SongTime,
 
