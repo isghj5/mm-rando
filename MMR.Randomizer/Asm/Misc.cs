@@ -130,6 +130,11 @@ namespace MMR.Randomizer.Asm
         public bool TargetHealth { get; set; }
 
         /// <summary>
+        /// Whether or not to allow player to climb anywhere. (Combined with additional hacks)
+        /// </summary>
+        public bool ClimbAnything { get; set; }
+
+        /// <summary>
         /// Whether or not to apply Elegy of Emptiness speedups.
         /// </summary>
         public bool ElegySpeedup { get; set; } = true;
@@ -209,6 +214,7 @@ namespace MMR.Randomizer.Asm
             this.EarlyMikau = ((flags >> 14) & 1) == 1;
             this.FairyChests = ((flags >> 13) & 1) == 1;
             this.TargetHealth = ((flags >> 12) & 1) == 1;
+            this.ClimbAnything = ((flags >> 11) & 1) == 1;
         }
 
         /// <summary>
@@ -236,6 +242,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.EarlyMikau ? (uint)1 : 0) << 14;
             flags |= (this.FairyChests ? (uint)1 : 0) << 13;
             flags |= (this.TargetHealth ? (uint)1 : 0) << 12;
+            flags |= (this.ClimbAnything ? (uint)1 : 0) << 11;
             return flags;
         }
     }

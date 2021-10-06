@@ -109,3 +109,18 @@ DekuHop_GetSpeedModifier_Hook:
     lw      ra, 0x0010 (sp)
     jr      ra
     addiu   sp, sp, 0x14
+
+Player_GetCollisionType_Hook:
+    addiu   sp, sp, -0x14
+    sw      ra, 0x0010 (sp)
+
+    jal     Player_GetCollisionType
+    nop
+
+    ; Displaced code.
+    or      t0, r0, r0
+    andi    t1, v0, 0x0008
+
+    lw      ra, 0x0010 (sp)
+    jr      ra
+    addiu   sp, sp, 0x14

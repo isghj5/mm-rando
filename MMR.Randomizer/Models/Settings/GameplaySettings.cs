@@ -144,6 +144,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.TargetHealth = value; }
         }
 
+        public bool ClimbMostSurfaces
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.ClimbAnything; }
+            set { this.AsmOptions.MiscConfig.Flags.ClimbAnything = value; }
+        }
+
         #endregion
 
         #region Random Elements
@@ -293,8 +299,6 @@ namespace MMR.Randomizer.Models.Settings
         public bool DeathMoonCrash { get; set; }
 
         public bool HookshotAnySurface { get; set; }
-
-        public bool ClimbMostSurfaces { get; set; }
 
         #endregion
 

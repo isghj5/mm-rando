@@ -40,6 +40,7 @@ typedef struct {
     u32 mikauEarlyBeach     : 1;
     u32 fairyChests         : 1;
     u32 targetHealth        : 1;
+    u32 climbAnything       : 1;
     u32                     : 12;
 } MiscFlags;
 

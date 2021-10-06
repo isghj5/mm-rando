@@ -7,6 +7,7 @@
 #include "ExternalEffects.h"
 #include "Icetrap.h"
 #include "Reloc.h"
+#include "Misc.h"
 
 bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
     return Icetrap_Give(player, ctxt);
@@ -129,4 +130,28 @@ bool Player_ShouldIceVoidZora(ActorPlayer* player, GlobalContext* ctxt) {
 bool Player_ShouldPreventRestoringSwimState(ActorPlayer* player, GlobalContext* ctxt, void* function) {
     void* handleFrozen = Reloc_ResolvePlayerOverlay(&s801D0B70.playerActor, 0x808546D0); // Offset: 0x26C40
     return function == handleFrozen;
+}
+
+static u32 lastClimbFrame = 0;
+static u32 startClimbingTimer = 5;
+u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collisionType) {
+    if (!MISC_CONFIG.flags.climbAnything) {
+        return collisionType;
+    }
+
+    u32 currentClimbFrame = ctxt->state.frames;
+
+    if (currentClimbFrame == lastClimbFrame + 1) {
+        startClimbingTimer--;
+    } else {
+        startClimbingTimer = 5;
+    }
+
+    if (startClimbingTimer == 0) {
+        return 8;
+    }
+
+    lastClimbFrame = currentClimbFrame;
+
+    return collisionType;
 }
