@@ -8,6 +8,7 @@
 #include "Icetrap.h"
 #include "Reloc.h"
 #include "Misc.h"
+#include "enums.h"
 
 bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
     return Icetrap_Give(player, ctxt);
@@ -137,6 +138,10 @@ static u32 startClimbingTimer = 5;
 u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collisionType) {
     if (!MISC_CONFIG.flags.climbAnything) {
         return collisionType;
+    }
+
+    if ((player->stateFlags.state1 & PLAYER_STATE1_SWIM) && !(player->stateFlags.state2 & PLAYER_STATE2_DIVING_2)) {
+        return 8;
     }
 
     u32 currentClimbFrame = ctxt->state.frames;
