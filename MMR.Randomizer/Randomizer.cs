@@ -1218,6 +1218,7 @@ namespace MMR.Randomizer
                     {
                         continue;
                     }
+
                     foreach (var location in messageCost.LocationsAffected)
                     {
                         var affectedCost = affectedLocations.GetValueOrDefault(location, short.MaxValue);
@@ -1232,6 +1233,49 @@ namespace MMR.Randomizer
                             else if (cost > 99)
                             {
                                 ItemList[location].DependsOnItems.Add(wallets200.Item);
+                            }
+                        }
+                    }
+                }
+
+                for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
+                {
+                    var messageCost = MessageCost.MessageCosts[i];
+                    var cost = _randomized.MessageCosts[i];
+                    if (!cost.HasValue)
+                    {
+                        continue;
+                    }
+
+                    Item walletRequired;
+                    if (cost > 200)
+                    {
+                        walletRequired = Item.UpgradeGiantWallet;
+                    }
+                    else if (cost > 99)
+                    {
+                        walletRequired = wallets200.Item;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                    foreach (var item in messageCost.ItemsAffected)
+                    {
+                        foreach (var io in ItemList)
+                        {
+                            if (io.DependsOnItems.Contains(item))
+                            {
+                                io.DependsOnItems.Add(walletRequired);
+                            }
+
+                            foreach (var conditionalItems in io.Conditionals)
+                            {
+                                if (conditionalItems.Contains(item))
+                                {
+                                    conditionalItems.Add(walletRequired);
+                                }
                             }
                         }
                     }
