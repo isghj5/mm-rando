@@ -598,7 +598,7 @@ namespace MMR.Randomizer.GameObjects
             {
                 Name = "Healed Poe Hut",
                 MessageIds = { (5349, 1) },
-                LocationsAffected = { Item.HeartPiecePoeHut },
+                // LocationsAffected = { Item.HeartPiecePoeHut }, // TODO handle logic. This should be a separate logic entry.
                 PriceAddresses = { 0xF748F0 + 0x18A, 0xF748F0 + 0x936 },
             },
         };
