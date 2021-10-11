@@ -2110,7 +2110,7 @@ namespace MMR.Randomizer
                                 .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                                 .Red(() =>
                                 {
-                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
                                 })
                                 .Text(", the most famous product of the Gorons.")
                                 ;
@@ -2137,7 +2137,7 @@ namespace MMR.Randomizer
                                 .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                                 .Red(() =>
                                 {
-                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
                                 })
                                 .Text(" ")
                                 .RuntimeVerb(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
@@ -2176,7 +2176,7 @@ namespace MMR.Randomizer
                             {
                                 it.Text("It looks like you managed to succeed! Knowing your skills, I feel fine letting you handle ")
                                 .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
-                                .RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value)
+                                .RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value)
                                 .Text(" on your own.")
                                 ;
                             })
@@ -2237,7 +2237,7 @@ namespace MMR.Randomizer
                                 .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                                 .Red(() =>
                                 {
-                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
                                 })
                                 .Text(", the most famous product of the Gorons.")
                                 ;
@@ -2249,7 +2249,7 @@ namespace MMR.Randomizer
                                 .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                                 .Red(() =>
                                 {
-                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
                                 })
                                 .Text(" to anyone who isn't a").Red(" Goron").Text(". ").PlaySoundEffect(0x391C).Text("Sorry.")
                                 ;
@@ -2268,7 +2268,7 @@ namespace MMR.Randomizer
                                 .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
                                 .Red(() =>
                                 {
-                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
                                 })
                                 .Text(" to anyone who isn't a").Red(" Goron").Text(". ").PlaySoundEffect(0x391C).Text("Sorry.")
                                 ;
