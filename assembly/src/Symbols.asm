@@ -90,6 +90,7 @@
 .definelabel z2_DrawCButtonIcons, 0x80118890
 .definelabel z2_CanInteract2, 0x80123358
 .definelabel z2_CanInteract, 0x801233E4
+.definelabel z2_801242DC, 0x801242DC
 .definelabel z2_Gfx_CallSetupDL, 0x8012BF78
 .definelabel z2_CallSetupDList, 0x8012C2DC
 .definelabel z2_8012C654, 0x8012C654

@@ -208,7 +208,9 @@ typedef struct {
     /* 0x153 */ u8 mask;
     /* 0x154 */ u8 maskC; // C button index (starting at 1) of current/recently worn mask.
     /* 0x155 */ u8 previousMask;
-    /* 0x156 */ UNK_TYPE1 pad156[0xF2];
+    /* 0x156 */ UNK_TYPE1 pad156[0xEB];
+    /* 0x241 */ u8 unk241;
+    /* 0x242 */ UNK_TYPE1 pad242[0x6];
     /* 0x248 */ PlayerAnimation currentAnimation;
     /* 0x24C */ UNK_TYPE1 pad24C[0x100];
     /* 0x34C */ Actor* heldActor;
@@ -233,7 +235,10 @@ typedef struct {
     /* 0xA84 */ UNK_TYPE1 padA84[0x4];
     /* 0xA88 */ Actor* unkA88;
     /* 0xA8C */ f32 unkA8C;
-    /* 0xA90 */ UNK_TYPE1 padA90[0x40];
+    /* 0xA90 */ Actor* ocarinaCutsceneActor;
+    /* 0xA94 */ UNK_TYPE1 padA94[0x11];
+    /* 0xAA5 */ u8 unkAA5;
+    /* 0xAA6 */ UNK_TYPE1 padAA6[0x2A];
     /* 0xAD0 */ f32 linearVelocity;
     /* 0xAD4 */ u16 movementAngle;
     /* 0xAD6 */ UNK_TYPE1 padAD6[0x5];

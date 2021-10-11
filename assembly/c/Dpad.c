@@ -328,9 +328,10 @@ void Dpad_Draw(GlobalContext* ctxt) {
         u16 ix = x + gPositions[i][0];
         u16 iy = y + gPositions[i][1];
 
-        // Show nothing if not in inventory
-        if (!HasInventoryItem(value))
+        // Show nothing if D-Pad slot is empty, or item is not in inventory.
+        if (value == ITEM_NONE || !HasInventoryItem(value)) {
             continue;
+        }
 
         // Draw faded
         u8 alpha = primAlpha;

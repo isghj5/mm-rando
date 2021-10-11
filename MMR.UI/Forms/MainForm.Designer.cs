@@ -71,6 +71,7 @@ namespace MMR.UI.Forms
             this.tableItemPool = new System.Windows.Forms.TableLayoutPanel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.cFreeScarecrow = new System.Windows.Forms.CheckBox();
             this.cFDAnywhere = new System.Windows.Forms.CheckBox();
             this.cBlastCooldown = new System.Windows.Forms.ComboBox();
             this.cUnderwaterOcarina = new System.Windows.Forms.CheckBox();
@@ -641,6 +642,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox12
             // 
+            this.groupBox12.Controls.Add(this.cFreeScarecrow);
             this.groupBox12.Controls.Add(this.cFDAnywhere);
             this.groupBox12.Controls.Add(this.cBlastCooldown);
             this.groupBox12.Controls.Add(this.cUnderwaterOcarina);
@@ -656,6 +658,20 @@ namespace MMR.UI.Forms
             this.groupBox12.TabIndex = 34;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Other";
+            // 
+            // cFreeScarecrow
+            // 
+            this.cFreeScarecrow.AutoSize = true;
+            this.cFreeScarecrow.BackColor = System.Drawing.Color.Transparent;
+            this.cFreeScarecrow.ForeColor = System.Drawing.Color.Black;
+            this.cFreeScarecrow.Location = new System.Drawing.Point(148, 100);
+            this.cFreeScarecrow.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFreeScarecrow.Name = "cFreeScarecrow";
+            this.cFreeScarecrow.Size = new System.Drawing.Size(143, 19);
+            this.cFreeScarecrow.TabIndex = 27;
+            this.cFreeScarecrow.Text = "Free Scarecrow\'s Song";
+            this.cFreeScarecrow.UseVisualStyleBackColor = false;
+            this.cFreeScarecrow.CheckedChanged += new System.EventHandler(this.cFreeScarecrow_CheckedChanged);
             // 
             // cFDAnywhere
             // 
@@ -2499,6 +2515,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cClimbMostSurfaces;
         private System.Windows.Forms.CheckBox cLenientGoronSpikes;
         private System.Windows.Forms.CheckBox cTargetHealth;
+        private System.Windows.Forms.CheckBox cFreeScarecrow;
     }
 }
 

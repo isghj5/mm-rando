@@ -20,6 +20,12 @@ struct WorldColorConfig WORLD_COLOR_CONFIG = {
     .swordBeamEnergyPri      = { 0xAA, 0xFF, 0xFF, },
     .swordBeamDamageEnv      = { 0x00, 0xFF, 0xFF, },
     .blueBubble              = { 0x00, 0x00, 0xFF, },
+    .fireArrowEffectEnv      = { 0xFF, 0x00, 0x00, },
+    .fireArrowEffectPri      = { 0xFF, 0xC8, 0x00, },
+    .iceArrowEffectEnv       = { 0x00, 0x00, 0xFF, },
+    .iceArrowEffectPri       = { 0xAA, 0xFF, 0xFF, },
+    .lightArrowEffectEnv     = { 0xFF, 0xFF, 0x00, },
+    .lightArrowEffectPri     = { 0xFF, 0xFF, 0xAA, },
 };
 
 u32 WorldColors_GetBlueBubbleColor(Actor* actor, GlobalContext* ctxt) {
@@ -42,4 +48,6 @@ void WorldColors_Init(void) {
     WORLD_COLOR_CONFIG.swordChargeEnergyBluEnv.a = 0x80;
     WORLD_COLOR_CONFIG.swordChargeEnergyRedEnv.a = 0x80;
     WORLD_COLOR_CONFIG.swordBeamEnergyEnv.a = 0x80;
+    WORLD_COLOR_CONFIG.iceArrowEffectEnv.a = 0x80;
+    WORLD_COLOR_CONFIG.lightArrowEffectEnv.a = 0x80;
 }

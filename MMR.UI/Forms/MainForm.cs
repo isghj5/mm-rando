@@ -148,6 +148,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cImprovedPictobox, "Display extra text showing which type of picture was captured by the Pictobox.");
             TooltipBuilder.SetTooltip(cLenientGoronSpikes, "Goron spikes can charge midair and keep their charge. Minimum speed for goron spikes is removed.");
             TooltipBuilder.SetTooltip(cTargetHealth, "Targeting an enemy shows their health bar.");
+            TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
         }
 
         /// <summary>
@@ -1062,6 +1063,7 @@ namespace MMR.UI.Forms
             cImprovedPictobox.Checked = _configuration.GameplaySettings.EnablePictoboxSubject;
             cLenientGoronSpikes.Checked = _configuration.GameplaySettings.LenientGoronSpikes;
             cTargetHealth.Checked = _configuration.GameplaySettings.TargetHealthBar;
+            cFreeScarecrow.Checked = _configuration.GameplaySettings.FreeScarecrow;
 
             // HUD config options
             var heartItems = ColorSelectionManager.Hearts.GetItems();
@@ -1611,6 +1613,7 @@ namespace MMR.UI.Forms
             cImprovedPictobox.Enabled = v;
             cLenientGoronSpikes.Enabled = v;
             cTargetHealth.Enabled = v;
+            cFreeScarecrow.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
@@ -2037,6 +2040,11 @@ namespace MMR.UI.Forms
         private void cTargetHealth_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.TargetHealthBar = cTargetHealth.Checked);
+        }
+
+        private void cFreeScarecrow_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.FreeScarecrow = cFreeScarecrow.Checked);
         }
     }
 }
