@@ -743,6 +743,61 @@ namespace MMR.Randomizer
                     }
                 }
             }
+
+            if (_randomized.Settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.AutomaticCredits))
+            {
+                for (ushort i = 0x1F5F; i <= 0x1F75; i++)
+                {
+                    var message = _messageTable.GetMessage(i);
+                    if (!message.Message.Contains('\x1C'))
+                    {
+                        if (message.Message.Contains('\x13'))
+                        {
+                            var messages = message.Message.Split("\u0011\u0013\u0012");
+                            ushort? nextMessageId = null;
+                            for (var j = messages.Length - 1; j >= 0; j--)
+                            {
+                                var newMessage = messages[j];
+                                var lines = newMessage.Count(c => c == '\x11') + 1;
+                                newMessage = newMessage.Replace("\u00BF", "") + "\u001C\u0000" + (char)(lines * 0x20) + "\u00BF";
+                                var newMessageId = (ushort) ((_extraMessages.Max(me => (ushort?)me.Id) ?? 0x9001) + 1);
+                                var newHeader = message.Header.ToArray();
+                                if (nextMessageId.HasValue)
+                                {
+                                    ReadWriteUtils.Arr_WriteU16(newHeader, 3, nextMessageId.Value);
+                                }
+                                if (j > 0)
+                                {
+                                    if (message.Message.StartsWith('\x05'))
+                                    {
+                                        newMessage = '\x05' + newMessage;
+                                    }
+
+                                    _extraMessages.Add(new MessageEntry
+                                    {
+                                        Id = newMessageId,
+                                        Header = newHeader,
+                                        Message = newMessage,
+                                    });
+                                }
+                                else
+                                {
+                                    message.Message = newMessage;
+                                    message.Header = newHeader;
+                                }
+                                nextMessageId = newMessageId;
+                            }
+                        }
+                        else
+                        {
+                            var lines = message.Message.Count(c => c == '\x11') + 1;
+                            message.Message = message.Message.Replace("\u00BF", "\u001C\u0000" + (char)(lines * 0x20) + "\u00BF");
+                        }
+
+                        message.Message = message.Message.Replace("\u0015", "");
+                    }
+                }
+            }
         }
 
         private void WriteDungeons()

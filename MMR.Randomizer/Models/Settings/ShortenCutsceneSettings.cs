@@ -10,6 +10,8 @@
             | ShortenCutsceneGeneral.HungryGoron
             | ShortenCutsceneGeneral.TatlInterrupts
             | ShortenCutsceneGeneral.FasterBankText
+            | ShortenCutsceneGeneral.GoronVillageOwl
+            | ShortenCutsceneGeneral.AutomaticCredits
             | ShortenCutsceneGeneral.EverythingElse
             ;
 
