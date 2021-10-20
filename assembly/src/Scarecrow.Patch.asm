@@ -11,12 +11,14 @@
 ;   andi    t7, t6, 0x0008
 ;   beqz    t7, 0x80971854
 ;   nop
+;   lwc1    f4, 0x0098 (a0)
 .org 0x809717D0 ; Offset: 0x21F0
-    or      t5, ra, r0 ; Preserve RA.
+    addiu   sp, sp, -0x14
+    sw      ra, 0x0010 (sp)
     jal     Scarecrow_CheckSongFlag_Hook
-    lui     t6, 0x801F
+    nop
     beqz    v0, 0x80971854
-    or      ra, t5, r0 ; Restore RA.
+    lw      ra, 0x0010 (sp)
 
 ; Check if Scarecrow actor should "activate" and update its function pointer.
 ; Replaces:
@@ -28,7 +30,12 @@
     jal     Scarecrow_ShouldActivate_Hook
     lhu     t0, 0x6932 (t0)
     beqz    v0, 0x80971854
-    or      ra, t5, r0 ; Restore RA.
+    lw      ra, 0x0010 (sp)
+
+; Replaces:
+;   nop
+.org 0x80971858
+    addiu   sp, sp, 0x14
 
 ; Check if Scarecrow actor should spawn.
 ; Replaces:

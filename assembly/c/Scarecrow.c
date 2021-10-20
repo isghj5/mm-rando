@@ -10,6 +10,10 @@ static f32 ClearSignBit(f32 f) {
     return raw.f;
 }
 
+bool Scarecrow_CheckSongFlag(ActorEnKakasi* actor, GlobalContext* ctxt) {
+    return MISC_CONFIG.flags.freeScarecrow || gSaveContext.perm.weekEventReg.scarecrowSongSet;
+}
+
 /**
  * Hook function which checks if Scarecrow actor should "activate" and prepare for spawning.
  **/

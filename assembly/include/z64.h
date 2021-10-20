@@ -1360,6 +1360,15 @@ typedef union {
             };
             u8 pad37;
         };
+        /* 0x38 */ UNK_TYPE1 pad38[0x17];
+        /* 0x4F */ union {
+            struct {
+                u8                         : 4;
+                u8 scarecrowSongSet        : 1;
+            };
+            u8 pad4F;
+        };
+        /* 0x50 */ UNK_TYPE1 pad50[0x14];
     };
     u8 bytes[0x64];
 } WeekEventReg; // size = 0x64
