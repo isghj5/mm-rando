@@ -1289,7 +1289,8 @@ typedef struct {
     /* 0x14 */ u8 magicLevel;
     /* 0x15 */ s8 currentMagic;
     /* 0x16 */ u16 rupees;
-    /* 0x18 */ u32 tatlTimer;
+    /* 0x18 */ s16 swordHealth;
+    /* 0x1A */ s16 tatlTimer;
     /* 0x1C */ u8 hasMagic;
     /* 0x1D */ u8 hasDoubleMagic;
     /* 0x1E */ u8 hasDoubleDefense;
