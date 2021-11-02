@@ -23,4 +23,6 @@ typedef struct {
 
 void ExternalEffects_Handle(ActorPlayer* player, GlobalContext* ctxt);
 
+extern ExternalEffectsConfig gExternalEffects;
+
 #endif // EXTERNAL_EFFECTS_H
