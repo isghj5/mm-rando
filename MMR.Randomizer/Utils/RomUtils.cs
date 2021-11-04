@@ -213,15 +213,16 @@ namespace MMR.Randomizer.Utils
 
         private static void SignROM(byte[] ROM)
         {
-            string VersionString = "MajoraRando"; // ??????
-            string DateString = DateTime.UtcNow.ToString("yy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
-            for (int i = 0; i < VersionString.Length; i++)
+            var values = new List<string>
             {
-                ROM[SIGNATURE_ADDRESS + i] = (byte)VersionString[i];
-            }
-            for (int i = 0; i < DateString.Length; i++)
+                "MajoraRando",
+                DateTime.UtcNow.ToString("yy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture),
+                "\x01\x01" // versionCode
+            };
+            var signature = string.Join('\x00', values);
+            for (var i = 0; i < signature.Length && i < 0x30; i++)
             {
-                ROM[SIGNATURE_ADDRESS + i + 12] = (byte)DateString[i];
+                ROM[SIGNATURE_ADDRESS + i] = (byte)signature[i];
             }
         }
 
