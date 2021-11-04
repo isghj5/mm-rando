@@ -19,6 +19,10 @@ typedef struct {
     u8 jinx;
     u8 noZ;
     u8 reverseControls;
+    u16 playSfx;
+    u16 lowHpSfx;
+    u8 yellowIframe;
+    u8 pad[3];
 } ExternalEffectsConfig;
 
 void ExternalEffects_Handle(ActorPlayer* player, GlobalContext* ctxt);

@@ -44,6 +44,7 @@
 .include "Dpad.Patch.asm"
 .include "ElegySpeedup.Patch.asm"
 .include "ExtendedObjects.Patch.asm"
+.include "ExternalEffects.Patch.asm"
 .include "FileSelect.Patch.asm"
 .include "FloorPhysics.Patch.asm"
 .include "Game.Patch.asm"

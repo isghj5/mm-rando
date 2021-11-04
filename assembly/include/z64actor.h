@@ -260,7 +260,9 @@ typedef struct {
     /* 0xB72 */ u16 floorType; // Determines sound effect used while walking.
     /* 0xB74 */ UNK_TYPE1 padB74[0x28];
     /* 0xB9C */ Vec3f unkB9C;
-    /* 0xBA8 */ UNK_TYPE1 padBA8[0x1D0];
+    /* 0xBA8 */ UNK_TYPE1 padBA8[0x1B4];
+    /* 0xD5C */ s8 invincibilityFrames;
+    /* 0xD5D */ UNK_TYPE1 padD5D[0x1B];
 } ActorPlayer; // size = 0xD78
 
 typedef enum {

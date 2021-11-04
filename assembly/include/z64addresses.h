@@ -139,6 +139,7 @@ extern void z2_Kanfont_LoadAsciiChar(GlobalContext* ctxt, u8 character, s32 iPar
 extern void z2_BaseDrawCollectable(Actor* actor, GlobalContext* ctxt);
 extern void z2_BaseDrawGiModel(GlobalContext* ctxt, u32 graphicIdMinus1);
 extern void z2_CallSetupDList(GraphicsContext* gfx);
+extern Gfx* z2_8012BC50(Gfx* gfx, u8 r, u8 g, u8 b, u8 a, u16 unk_a5, f32 unk_a6);
 extern Gfx* z2_Gfx_CallSetupDL(Gfx* gfx, u32 i);
 extern void z2_DrawHeartPiece(Actor* actor, GlobalContext* ctxt);
 extern void z2_DrawRupee(Actor* actor, GlobalContext* ctxt);

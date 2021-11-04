@@ -1234,9 +1234,12 @@ namespace MMR.Randomizer
             
             if (_cosmeticSettings.LowHealthSFX == LowHealthSFX.Disabled)
             {
-                // we can mute the SFX by nulling the function call to play the low health sfx
-                // turning JAL 0x80XXXXXX into NOP, in RAM this is location 801018E4
-                ReadWriteUtils.WriteToROM(0x0B97E24, (uint) 0x00000000);
+                var replacableAttribute = SoundEffect.LowHealthBeep.GetAttribute<ReplacableAttribute>();
+                var addresses = replacableAttribute.Addresses;
+                foreach (var address in addresses)
+                {
+                    ReadWriteUtils.WriteToROM(address, (ushort)0);
+                }
             }
             else if ((int) _cosmeticSettings.LowHealthSFX > (int) LowHealthSFX.Random)
             {
