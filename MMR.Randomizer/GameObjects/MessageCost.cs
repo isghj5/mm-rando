@@ -591,6 +591,7 @@ namespace MMR.Randomizer.GameObjects
                 MessageIds = { (5332, 0), (5349, 0) },
                 LocationsAffected = { Item.HeartPiecePoeHut },
                 PriceAddresses = { 0xF748F0 + 0x132, 0xF748F0 + 0x18E, 0xF748F0 + 0xA3E },
+                Category = PriceMode.Minigames,
             },
 
             // Healed Poe Hut
@@ -600,6 +601,7 @@ namespace MMR.Randomizer.GameObjects
                 MessageIds = { (5349, 1) },
                 // LocationsAffected = { Item.HeartPiecePoeHut }, // TODO handle logic. This should be a separate logic entry.
                 PriceAddresses = { 0xF748F0 + 0x18A, 0xF748F0 + 0x936 },
+                Category = PriceMode.Minigames,
             },
         };
     }
