@@ -20,13 +20,14 @@ using MMR.Randomizer.Extensions;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using MMR.Randomizer.Constants;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace MMR.UI.Forms
 {
     using Randomizer = Randomizer.Randomizer;
     public partial class MainForm : Form
     {
-        private readonly ConfigurationProcessor _configurationProcessor;
+        private readonly IServiceProvider _serviceProvider;
 
         private bool _isUpdating = false;
         private int _seedOld = 0;
@@ -43,9 +44,9 @@ namespace MMR.UI.Forms
 
         public const string SETTINGS_EXTENSION = ".json";
 
-        public MainForm(ConfigurationProcessor configurationProcessor)
+        public MainForm(IServiceProvider serviceProvider)
         {
-            _configurationProcessor = configurationProcessor;
+            _serviceProvider = serviceProvider;
 
             InitializeComponent();
             InitializeSettings();
@@ -1714,7 +1715,8 @@ namespace MMR.UI.Forms
         private void TryRandomize(BackgroundWorker worker, DoWorkEventArgs e)
         {
             var seed = Convert.ToInt32(tSeed.Text);
-            var result = _configurationProcessor.Process(_configuration, seed, new BackgroundWorkerProgressReporter(worker));
+            var configurationProcessor = _serviceProvider.GetRequiredService<ConfigurationProcessor>();
+            var result = configurationProcessor.Process(_configuration, seed, new BackgroundWorkerProgressReporter(worker));
             if (result != null)
             {
                 MessageBox.Show(result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
