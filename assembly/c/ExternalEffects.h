@@ -14,7 +14,7 @@ typedef struct {
     u8 cameraOverlook;
     u8 chateau;
     u8 fairy;
-    u8 freeze;
+    u8 damageEffect;
     u8 icePhysics;
     u8 jinx;
     u8 noZ;

@@ -23,7 +23,7 @@ ExternalEffectsConfig gExternalEffects = {
     .cameraOverlook = 0,
     .chateau = 0,
     .fairy = 0,
-    .freeze = 0,
+    .damageEffect = 0,
     .icePhysics = 0,
     .jinx = 0,
     .noZ = 0,
@@ -216,11 +216,11 @@ static void HandleFairyEffect(GlobalContext* ctxt, ActorPlayer* player) {
     }
 }
 
-static void HandleFreezeEffect(GlobalContext* ctxt, ActorPlayer* player) {
-    // Handle "Freeze" effect.
-    if (gExternalEffects.freeze) {
-        Icetrap_PushPending();
-        gExternalEffects.freeze = 0;
+static void HandleDamageEffect(GlobalContext* ctxt, ActorPlayer* player) {
+    // Handle "Damage Effect" effect.
+    if (gExternalEffects.damageEffect) {
+        Icetrap_PushPending(gExternalEffects.damageEffect);
+        gExternalEffects.damageEffect = 0;
     }
 }
 
@@ -319,7 +319,7 @@ void ExternalEffects_Handle(ActorPlayer* player, GlobalContext* ctxt) {
     HandleCameraOverlookEffect(ctxt, player);
     HandleChateauEffect(ctxt, player);
     HandleFairyEffect(ctxt, player);
-    HandleFreezeEffect(ctxt, player);
+    HandleDamageEffect(ctxt, player);
     HandleIcePhysicsEffect(ctxt, player);
     HandleJinxEffect(ctxt, player);
     HandleNoZEffect(ctxt, player);

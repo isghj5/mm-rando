@@ -10,7 +10,7 @@
 static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
     switch (item) {
         case CUSTOM_ITEM_ICE_TRAP:
-            Icetrap_PushPending();
+            Icetrap_PushPending(DAMAGE_EFFECT_FREEZE);
             break;
         case CUSTOM_ITEM_CRIMSON_RUPEE:
             z2_AddRupees(30);

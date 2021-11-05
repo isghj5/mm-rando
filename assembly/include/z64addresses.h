@@ -225,7 +225,7 @@ extern int z2_801242DC(GlobalContext* ctxt);
 typedef void (*z2_PauseDrawItemIcon_Func)(GraphicsContext* gfx, u32 segAddr, u16 width, u16 height, u16 quadVtxIdx);
 
 // Function Prototypes (Relocatable player_actor functions).
-typedef void (*z2_LinkDamage_Func)(GlobalContext* ctxt, ActorPlayer* player, u32 type, u32 arg3);
+typedef void (*z2_LinkDamage_Func)(GlobalContext* ctxt, ActorPlayer* player, u32 type, f32 xzKnockback, f32 yKnockback, s16 knockbackDirection);
 typedef void (*z2_LinkInvincibility_Func)(ActorPlayer* player, u8 frames);
 typedef void (*z2_PerformEnterWaterEffects_Func)(GlobalContext* ctxt, ActorPlayer* player);
 typedef void (*z2_PlayerHandleBuoyancy_Func)(ActorPlayer* player);
