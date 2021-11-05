@@ -110,6 +110,10 @@ namespace MMR.Randomizer
             {
                 SequenceUtils.WriteSongLog(log, settings);
             }
+
+            // write bigger music buffer
+            ReadWriteUtils.WriteCodeUInt32(0x801DB9B4, 0x6000);
+            ReadWriteUtils.WriteCodeUInt32(0x801DB9B8, 0x6000);
         }
 
         private void WriteAudioSeq(Random random, OutputSettings _settings)

@@ -26,13 +26,13 @@ namespace MMR.Randomizer.Utils
 
         public static int MAX_BGM_BUDGET            = 0x3800; // vanilla: 0x3800
         public static int MAX_COMBAT_BUDGET         = 0x3800; // unk
-        public static int MAX_TYPE2_MUSIC_BUDGET    = 0x4100; // vanilla: 0x4100
+        public static int MAX_TYPE2_MUSIC_BUDGET    = 0x6000; // vanilla: 0x4100
 
         public static void ResetBudget()
         {
             MAX_BGM_BUDGET          = 0x3800;
             MAX_COMBAT_BUDGET       = 0x3800;
-            MAX_TYPE2_MUSIC_BUDGET  = 0x4100;
+            MAX_TYPE2_MUSIC_BUDGET  = 0x6000;
         }
 
         public static void ReadSequenceInfo()
