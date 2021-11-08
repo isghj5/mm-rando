@@ -70,370 +70,370 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="music\botw-hyrulecastle">
+    <None Update="music\botw-hyrulecastle.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\botw-kass">
+    <None Update="music\botw-kass.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-battle">
+    <None Update="music\mk64-battle.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-bb">
+    <None Update="music\mk64-bb.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-bc">
+    <None Update="music\mk64-bc.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-ceremony">
+    <None Update="music\mk64-ceremony-loss.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-ceremony-loss">
+    <None Update="music\mk64-ceremony.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-cm">
+    <None Update="music\mk64-cm.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-dkjp">
+    <None Update="music\mk64-dkjp.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-fs">
+    <None Update="music\mk64-fs.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-kb">
+    <None Update="music\mk64-kb.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-kd">
+    <None Update="music\mk64-kd.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-lr">
+    <None Update="music\mk64-lr.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-menu">
+    <None Update="music\mk64-menu.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-mmf">
+    <None Update="music\mk64-mmf.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-rr">
+    <None Update="music\mk64-rr.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-star">
+    <None Update="music\mk64-star.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mk64-tt">
+    <None Update="music\mk64-tt.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mmr-jazz">
+    <None Update="music\mmr-jazz.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\mmr-theme">
+    <None Update="music\mmr-theme.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-boss">
+    <None Update="music\oot-boss.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-c-goddess">
+    <None Update="music\oot-c-goddess.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-castlecollapse">
+    <None Update="music\oot-castlecollapse.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-castlecourtyard">
+    <None Update="music\oot-castlecourtyard.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-chamberofsages">
+    <None Update="music\oot-chamberofsages.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-dekutree">
+    <None Update="music\oot-dekutree.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-dinosaur">
+    <None Update="music\oot-dinosaur.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-dodongocavern">
+    <None Update="music\oot-dodongocavern.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-f-ganondorf">
+    <None Update="music\oot-f-ganondorf.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-f-medallion">
+    <None Update="music\oot-f-medallion.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-f-opendot">
+    <None Update="music\oot-f-opendot.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-f-stone">
+    <None Update="music\oot-f-stone.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-f-timetravel">
+    <None Update="music\oot-f-timetravel.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-firetemple">
+    <None Update="music\oot-firetemple.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-foresttemple">
+    <None Update="music\oot-foresttemple.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-ganon">
+    <None Update="music\oot-ganon.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-ganoncastle">
+    <None Update="music\oot-ganoncastle.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-ganondorf">
+    <None Update="music\oot-ganondorf.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-ganondorfbattle">
+    <None Update="music\oot-ganondorfbattle.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-gerudovalley">
+    <None Update="music\oot-gerudovalley.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-icecavern">
+    <None Update="music\oot-icecavern.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-insidedekutree">
+    <None Update="music\oot-insidedekutree.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-jabu">
+    <None Update="music\oot-jabu.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-kakariko1">
+    <None Update="music\oot-kakariko1.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-kakariko2">
+    <None Update="music\oot-kakariko2.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-kokiriforest">
+    <None Update="music\oot-kokiriforest.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-market">
+    <None Update="music\oot-market.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-miniboss">
+    <None Update="music\oot-miniboss.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-navi">
+    <None Update="music\oot-navi.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-shadowtemple">
+    <None Update="music\oot-shadowtemple.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-sheik">
+    <None Update="music\oot-sheik.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-spirittemple">
+    <None Update="music\oot-spirittemple.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-templeoftime">
+    <None Update="music\oot-templeoftime.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\oot-watertemple">
+    <None Update="music\oot-watertemple.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\pa-ikanacastle">
+    <None Update="music\pa-ikanacastle.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\pm-field">
+    <None Update="music\pm-field.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-aquas">
+    <None Update="music\sf64-aquas.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-area6">
+    <None Update="music\sf64-area6.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-bolse">
+    <None Update="music\sf64-bolse.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-boss1">
+    <None Update="music\sf64-boss1.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-boss2">
+    <None Update="music\sf64-boss2.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-boss3">
+    <None Update="music\sf64-boss3.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-corneria">
+    <None Update="music\sf64-corneria.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-fichina">
+    <None Update="music\sf64-fichina.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-katarina">
+    <None Update="music\sf64-katarina.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-meteo">
+    <None Update="music\sf64-meteo.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-sectorx">
+    <None Update="music\sf64-sectorx.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-sectory">
+    <None Update="music\sf64-sectory.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-starwolf">
+    <None Update="music\sf64-starwolf.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-titania">
+    <None Update="music\sf64-titania.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-venom">
+    <None Update="music\sf64-venom.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sf64-zoness">
+    <None Update="music\sf64-zoness.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-battlefield">
+    <None Update="music\sm64-battlefield.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-bbh">
+    <None Update="music\sm64-bbh.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-bitdw">
+    <None Update="music\sm64-bitdw.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-boss">
+    <None Update="music\sm64-boss.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-castle">
+    <None Update="music\sm64-castle.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-ccm">
+    <None Update="music\sm64-ccm.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-bitsclear">
+    <None Update="music\sm64-f-bitsclear.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-bowser">
+    <None Update="music\sm64-f-bowser.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-bowserclear">
+    <None Update="music\sm64-f-bowserclear.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-intro">
+    <None Update="music\sm64-f-intro.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-lakitu">
+    <None Update="music\sm64-f-lakitu.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-peach">
+    <None Update="music\sm64-f-peach.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-race">
+    <None Update="music\sm64-f-race.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-savepeach">
+    <None Update="music\sm64-f-savepeach.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-solved">
+    <None Update="music\sm64-f-solved.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-star">
+    <None Update="music\sm64-f-star.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-starget">
+    <None Update="music\sm64-f-starget.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-toad">
+    <None Update="music\sm64-f-toad.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-f-unlock">
+    <None Update="music\sm64-f-unlock.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-fileselect">
+    <None Update="music\sm64-fileselect.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-finalbowser">
+    <None Update="music\sm64-finalbowser.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-hmc">
+    <None Update="music\sm64-hmc.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-jrb">
+    <None Update="music\sm64-jrb.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-lll">
+    <None Update="music\sm64-lll.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-lullaby">
+    <None Update="music\sm64-lullaby.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-mgr">
+    <None Update="music\sm64-mgr.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-slide">
+    <None Update="music\sm64-slide.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\sm64-steps">
+    <None Update="music\sm64-steps.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\smg2-skystation">
+    <None Update="music\smg2-skystation.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\ss-groose">
+    <None Update="music\ss-groose.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-boss">
+    <None Update="music\uc-boss.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-dekuforest">
+    <None Update="music\uc-dekuforest.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-dekutree">
+    <None Update="music\uc-dekutree.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-dream">
+    <None Update="music\uc-dream.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-dungeon">
+    <None Update="music\uc-dungeon.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-field">
+    <None Update="music\uc-field.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-fileselect">
+    <None Update="music\uc-fileselect.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-foresttemple">
+    <None Update="music\uc-foresttemple.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-gerudobay">
+    <None Update="music\uc-gerudobay.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-goronvillage">
+    <None Update="music\uc-goronvillage.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-miniboss">
+    <None Update="music\uc-miniboss.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-minigame">
+    <None Update="music\uc-minigame.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-mountain">
+    <None Update="music\uc-mountain.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-navi">
+    <None Update="music\uc-navi.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-predungeon">
+    <None Update="music\uc-predungeon.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-snowfield">
+    <None Update="music\uc-snowfield.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-snowfieldold">
+    <None Update="music\uc-snowfieldold.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-village">
+    <None Update="music\uc-village.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-zelda">
+    <None Update="music\uc-zelda.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="music\uc-zora">
+    <None Update="music\uc-zora.mmrs">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
