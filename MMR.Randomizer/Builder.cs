@@ -351,6 +351,8 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Resources.mods.instant_pictobox);
             }
+
+            WriteCrashDebuggerShow();
         }
 
         /// <summary>
@@ -2925,6 +2927,17 @@ namespace MMR.Randomizer
                     ReadWriteUtils.WriteROMAddr(Addrs[i], new byte[] { FSDefault[i] });
                 }
             }
+        }
+
+        private void WriteCrashDebuggerShow()
+        {
+            /// in vanilla, if you hit the crash screen you have to know the secret button combo to see debug info
+            /// here we bypass this to allow players to see the debug info and post it for us to help fix
+
+            // we need to set 0x80082C1C to 0x1000000C which bypasses
+            //   the conditional branches detecting if you haven't hit the right buttons, leaving function
+            var bootFile = RomData.MMFileList[1].Data;
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x2BBC, 0x1000000C);
         }
 
         private void WriteStartupStrings()
