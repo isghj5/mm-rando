@@ -10,6 +10,12 @@
 .org 0x80145024
     jal     Savedata_AfterLoad_Hook
 
+; Hook after loading savedata into z2_file from buffer after flash after moon crash.
+; Replaces:
+;   jal     0x800FEC90
+.org 0x80144B34
+    jal     Savedata_MoonCrashAfterLoad_Hook
+
 ; Hook after preparing savedata.
 ; Replaces:
 ;   lw      s5, 0x0028 (sp)

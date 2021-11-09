@@ -72,7 +72,11 @@ namespace MMR.Randomizer
             RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
             WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + unassigned.Count + " available songs:");
 
+            SequenceUtils.ResetBudget();
+
+            // songtest filename token allows music makers and users to force a song into a MMR seed for recording/testing
             SequenceUtils.CheckSongTest(unassigned, log);
+
             SequenceUtils.CheckSongForce(unassigned, log, random);
 
             foreach (var targetSlot in RomData.TargetSequences)
@@ -82,36 +86,25 @@ namespace MMR.Randomizer
 
                 if (foundValidReplacement == false) // no available songs fit in this slot category
                 {
-                    WriteOutput("No song fits in " + targetSlot.Name + " slot, with categories: " + String.Join(", ", targetSlot.Type.Select(x => "0x" + x.ToString("X2"))));
+                    WriteOutput($"No song fits in [{targetSlot.Name}] slot, with categories: " + String.Join(", ", targetSlot.Type.Select(x => "0x" + x.ToString("X2"))));
                     // loosen song restrictions and re-attempt
-                    SequenceUtils.TryBackupSongPlacement(targetSlot, log, unassigned);
+                    SequenceUtils.TryBackupSongPlacement(targetSlot, log, unassigned, settings);
                 }
             }
+
+            SequenceUtils.CheckBGMCombatMusicBudget(unassigned, _cosmeticSettings.DisableCombatMusic, random, log);
 
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
 
             if (_cosmeticSettings.Music == Music.Random && settings.GenerateSpoilerLog)
             {
-                String dir = Path.GetDirectoryName(settings.OutputROMFilename);
-                String path = $"{Path.GetFileNameWithoutExtension(settings.OutputROMFilename)}";
-                // spoiler log should already be written by the time we reach this far
-                if (File.Exists(Path.Combine(dir, path + "_SpoilerLog.txt")))
-                {
-                    path += "_SpoilerLog.txt";
-                }
-                else // TODO add HTML log compatibility
-                {
-                    path += "_SongLog.txt";
-                }
-
-                using (StreamWriter sw = new StreamWriter(Path.Combine(dir, path), append: true))
-                {
-                    sw.WriteLine(""); // spacer
-                    sw.Write(log);
-                }
+                SequenceUtils.WriteSongLog(log, settings);
             }
+
+            // write bigger music buffer
+            ReadWriteUtils.WriteCodeUInt32(0x801DB9B4, 0x6000);
+            ReadWriteUtils.WriteCodeUInt32(0x801DB9B8, 0x6000);
         }
-        #endregion
 
         private void WriteAudioSeq(Random random, OutputSettings _settings)
         {
@@ -132,7 +125,7 @@ namespace MMR.Randomizer
 
             ResourceUtils.ApplyHack(Resources.mods.fix_music);
             ResourceUtils.ApplyHack(Resources.mods.inst24_swap_guitar);
-            SequenceUtils.RebuildAudioSeq(RomData.SequenceList);
+            SequenceUtils.RebuildAudioSeq(RomData.SequenceList, _cosmeticSettings.AsmOptions.MusicConfig.SequenceMaskFileIndex);
             SequenceUtils.WriteNewSoundSamples(RomData.InstrumentSetList);
             SequenceUtils.RebuildAudioBank(RomData.InstrumentSetList);
         }
@@ -141,19 +134,27 @@ namespace MMR.Randomizer
         {
             if (_cosmeticSettings.Music == Music.None)
             {
+                /// mute all music by setting their master volume to zero
                 // Traverse the audioseq index table to get the locations of all sequences
-                byte[] audioseq_table = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.SeqTable)].Data;
-                // turns out the randomizer doesn't consider the table to be its own file, we need the offset
-                int audioseq_table_baseaddr = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.SeqTable)].Addr;
-                byte[] audioseq = RomData.MMFileList[RomUtils.GetFileIndexForWriting(0x00046AF0)].Data; // 46AF0 is audioseq starting location
+                // the audioseq index table is not its own file, its buried within the code file, we need the offset to the table
+                var codeFile = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.SeqTable)];
+                var audioseqIndexTable = codeFile.Data;
+                int audioseqIndexTableAddr = Addresses.SeqTable - codeFile.Addr;
+                var audioseq = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.AudioSequence)].Data;
                 // for each sequence, search for the master volume byte and change to zero
-                for (int seq = 2; seq < 128; seq += 1){
+                for (int seq = 2; seq < 128; seq += 1)
+                {
                     if (seq == 0x54) // It was requested that the bar band minigame not be silenced
+                    {
                         continue;
-                    int seq_location_offset = (int)ReadWriteUtils.Arr_ReadU32(audioseq_table, (Addresses.SeqTable + seq * 16) - audioseq_table_baseaddr);
-                    for (int byte_iter = 3; byte_iter < 128; byte_iter++){
-                        if (audioseq[seq_location_offset + byte_iter] == 0xDB){
-                            audioseq[seq_location_offset + byte_iter + 1] = 0x0;
+                    }
+
+                    int seqLocation = (int)ReadWriteUtils.Arr_ReadU32(audioseqIndexTable, audioseqIndexTableAddr + (seq * 16));
+                    for (int b = 3; b < 128; b++) // search for master volume byte
+                    {
+                        if (audioseq[seqLocation + b] == 0xDB) // master volume byte
+                        { 
+                            audioseq[seqLocation + b + 1] = 0x0; // set value to zero
                             continue;
                         }
                     }
@@ -168,8 +169,9 @@ namespace MMR.Randomizer
                 return;
             }
 
-            Enemies.DisableEnemyCombatMusic(_cosmeticSettings.DisableCombatMusic == CombatMusic.WeakEnemies);
+            ReadWriteUtils.WriteToROM(0xCA7F00 + 0x16818, 0x1000);
         }
+        #endregion
 
         private void WritePlayerModel()
         {
@@ -339,6 +341,8 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Resources.mods.instant_pictobox);
             }
+
+            WriteCrashDebuggerShow();
         }
 
         /// <summary>
@@ -735,6 +739,61 @@ namespace MMR.Randomizer
                     }
                 }
             }
+
+            if (_randomized.Settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.AutomaticCredits))
+            {
+                for (ushort i = 0x1F5F; i <= 0x1F75; i++)
+                {
+                    var message = _messageTable.GetMessage(i);
+                    if (!message.Message.Contains('\x1C'))
+                    {
+                        if (message.Message.Contains('\x13'))
+                        {
+                            var messages = message.Message.Split("\u0011\u0013\u0012");
+                            ushort? nextMessageId = null;
+                            for (var j = messages.Length - 1; j >= 0; j--)
+                            {
+                                var newMessage = messages[j];
+                                var lines = newMessage.Count(c => c == '\x11') + 1;
+                                newMessage = newMessage.Replace("\u00BF", "") + "\u001C\u0000" + (char)(lines * 0x20) + "\u00BF";
+                                var newMessageId = (ushort) ((_extraMessages.Max(me => (ushort?)me.Id) ?? 0x9001) + 1);
+                                var newHeader = message.Header.ToArray();
+                                if (nextMessageId.HasValue)
+                                {
+                                    ReadWriteUtils.Arr_WriteU16(newHeader, 3, nextMessageId.Value);
+                                }
+                                if (j > 0)
+                                {
+                                    if (message.Message.StartsWith('\x05'))
+                                    {
+                                        newMessage = '\x05' + newMessage;
+                                    }
+
+                                    _extraMessages.Add(new MessageEntry
+                                    {
+                                        Id = newMessageId,
+                                        Header = newHeader,
+                                        Message = newMessage,
+                                    });
+                                }
+                                else
+                                {
+                                    message.Message = newMessage;
+                                    message.Header = newHeader;
+                                }
+                                nextMessageId = newMessageId;
+                            }
+                        }
+                        else
+                        {
+                            var lines = message.Message.Count(c => c == '\x11') + 1;
+                            message.Message = message.Message.Replace("\u00BF", "\u001C\u0000" + (char)(lines * 0x20) + "\u00BF");
+                        }
+
+                        message.Message = message.Message.Replace("\u0015", "");
+                    }
+                }
+            }
         }
 
         private void WriteDungeons()
@@ -989,6 +1048,16 @@ namespace MMR.Randomizer
             {
                 ResourceUtils.ApplyHack(Resources.mods.death_moon_crash);
             }
+
+            if (_randomized.Settings.HookshotAnySurface)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.hookshot_any_surface);
+            }
+
+            if (_randomized.Settings.ClimbMostSurfaces)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.climb_most_surfaces);
+            }
         }
 
         private void WriteSunsSong()
@@ -1161,9 +1230,12 @@ namespace MMR.Randomizer
             
             if (_cosmeticSettings.LowHealthSFX == LowHealthSFX.Disabled)
             {
-                // we can mute the SFX by nulling the function call to play the low health sfx
-                // turning JAL 0x80XXXXXX into NOP, in RAM this is location 801018E4
-                ReadWriteUtils.WriteToROM(0x0B97E24, (uint) 0x00000000);
+                var replacableAttribute = SoundEffect.LowHealthBeep.GetAttribute<ReplacableAttribute>();
+                var addresses = replacableAttribute.Addresses;
+                foreach (var address in addresses)
+                {
+                    ReadWriteUtils.WriteToROM(address, (ushort)0);
+                }
             }
             else if ((int) _cosmeticSettings.LowHealthSFX > (int) LowHealthSFX.Random)
             {
@@ -1199,7 +1271,6 @@ namespace MMR.Randomizer
         private void WriteFreeItems(params Item[] items)
         {
             Dictionary<int, byte> startingItems = new Dictionary<int, byte>();
-            PutOrCombine(startingItems, 0xC5CE72, 0x10); // add Song of Time
             if (_randomized.Settings.EnableSunsSong)
             {
                 PutOrCombine(startingItems, 0xC5CE71, 0x02);
@@ -1298,6 +1369,11 @@ namespace MMR.Randomizer
                 hacks.AddRange(BossKeyMode.DoorsOpen.GetAttributes<HackContentAttribute>().Select(hc => hc.HackContent));
             }
 
+            if (_randomized.Settings.BossKeyMode.HasFlag(BossKeyMode.KeepThroughTime))
+            {
+                hacks.AddRange(BossKeyMode.KeepThroughTime.GetAttributes<HackContentAttribute>().Select(hc => hc.HackContent));
+            }
+
             ushort requiredStrayFairies = 15;
             if (_randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly))
             {
@@ -1307,6 +1383,23 @@ namespace MMR.Randomizer
 
             requiredStrayFairies += 0xA; // Needed for the value to be correct.
             ReadWriteUtils.WriteToROM(0x00EA3366, requiredStrayFairies);
+
+            if (_randomized.Settings.LenientGoronSpikes)
+            {
+                hacks.Add(Resources.mods.lenient_goron_spikes);
+            }
+
+            if (_randomized.Settings.TargetHealthBar)
+            {
+                hacks.Add(Resources.mods.enemy_max_health);
+            }
+
+            if (!_randomized.Settings.CustomStartingItemList.Contains(Item.ItemOcarina) || !_randomized.Settings.CustomStartingItemList.Contains(Item.SongTime)
+                || _randomized.Settings.CustomItemList.Contains(Item.ItemOcarina) || _randomized.Settings.CustomItemList.Contains(Item.SongTime))
+            {
+                hacks.Add(Resources.mods.fix_ocarina_checks);
+                hacks.Add(Resources.mods.fix_song_of_time);
+            }
 
             foreach (var hack in hacks)
             {
@@ -1321,6 +1414,8 @@ namespace MMR.Randomizer
             {
                 freeItems.Add(Item.FairyMagic);
                 freeItems.Add(Item.MaskDeku);
+                freeItems.Add(Item.ItemOcarina);
+                freeItems.Add(Item.SongTime);
                 freeItems.Add(Item.SongHealing);
                 freeItems.Add(Item.StartingSword);
                 freeItems.Add(Item.StartingShield);
@@ -1371,6 +1466,7 @@ namespace MMR.Randomizer
 
             var newMessages = new List<MessageEntry>();
             _randomized.Settings.AsmOptions.MMRConfig.RupeeRepeatableLocations.Clear();
+            _randomized.Settings.AsmOptions.MMRConfig.ItemsToReturnIds.Clear();
             foreach (var item in _randomized.ItemList)
             {
                 // Unused item
@@ -1395,7 +1491,7 @@ namespace MMR.Randomizer
                     {
                         overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
                     }
-                    ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType);
+                    ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType, _messageTable);
                 }
             }
 
@@ -1422,17 +1518,6 @@ namespace MMR.Randomizer
             _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLarge = GetLocationIdOfItem(Item.UpgradeBigQuiver);
             _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLargest = GetLocationIdOfItem(Item.UpgradeBiggestQuiver);
 
-            var copyRupeesRegex = new Regex(": [0-9]+ Rupees");
-            foreach (var newMessage in newMessages)
-            {
-                var oldMessage = _messageTable.GetMessage(newMessage.Id);
-                if (oldMessage != null)
-                {
-                    var cost = copyRupeesRegex.Match(oldMessage.Message).Value;
-                    newMessage.Message = copyRupeesRegex.Replace(newMessage.Message, cost);
-                }
-            }
-
             if (_randomized.Settings.UpdateShopAppearance)
             {
                 // update tingle shops
@@ -1441,9 +1526,13 @@ namespace MMR.Randomizer
                     var messageShop = messageShopText.GetAttribute<MessageShopAttribute>();
                     var item1 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[0]);
                     var item2 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[1]);
+                    var messageId = (ushort)messageShopText;
+                    var messageHeader = _messageTable.GetMessage(messageId).Header;
+                    var cost1 = ReadWriteUtils.Arr_ReadU16(messageHeader, 5);
+                    var cost2 = ReadWriteUtils.Arr_ReadU16(messageHeader, 7);
 
                     newMessages.Add(new MessageEntryBuilder()
-                        .Id((ushort)messageShopText)
+                        .Id(messageId)
                         .Message(it =>
                         {
                             switch (messageShop.MessageShopStyle)
@@ -1451,8 +1540,8 @@ namespace MMR.Randomizer
                                 case MessageShopStyle.Tingle:
                                     it.StartGreenText()
                                     .ThreeChoices()
-                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Red($"{messageShop.Prices[0]} Rupees").NewLine()
-                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Red($"{messageShop.Prices[1]} Rupees").NewLine()
+                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Red($"{cost1} Rupees").NewLine()
+                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Red($"{cost2} Rupees").NewLine()
                                     .Text("No Thanks")
                                     .EndFinalTextBox();
                                     break;
@@ -1461,8 +1550,8 @@ namespace MMR.Randomizer
                                     .EndTextBox()
                                     .StartGreenText()
                                     .ThreeChoices()
-                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Pink($"{messageShop.Prices[0]} Rupees").NewLine()
-                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Pink($"{messageShop.Prices[1]} Rupees").NewLine()
+                                    .RuntimeItemName(item1.DisplayName(), item1.NewLocation.Value).Text(": ").Pink($"{cost1} Rupees").NewLine()
+                                    .RuntimeItemName(item2.DisplayName(), item2.NewLocation.Value).Text(": ").Pink($"{cost2} Rupees").NewLine()
                                     .Text("Nothing")
                                     .EndFinalTextBox();
                                     break;
@@ -2018,6 +2107,232 @@ namespace MMR.Randomizer
                     })
                     .Build()
                 );
+
+                // Update Witch Blue Potion message
+                var witchBluePotionItem = _randomized.ItemList.First(io => io.NewLocation == Item.ShopItemWitchBluePotion);
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x880)
+                    .Message(it =>
+                    {
+                        it.Red(() =>
+                        {
+                            it.RuntimeItemName(witchBluePotionItem.DisplayName(), witchBluePotionItem.NewLocation.Value).Text(": 60 Rupees").NewLine();
+                        })
+                        .Text("Actually, I can't get the").NewLine()
+                        .Text("ingredients for this, so I'm sold").NewLine()
+                        .Text("out. Sorry.")
+                        .DisableTextBoxClose()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x881)
+                    .Message(it =>
+                    {
+                        it.RuntimeWrap(() =>
+                        {
+                            it.Text("What's that? You want ")
+                            .RuntimeArticle(witchBluePotionItem.DisplayItem, witchBluePotionItem.NewLocation.Value)
+                            .Red(() =>
+                            {
+                                it.RuntimeItemName(witchBluePotionItem.DisplayName(), witchBluePotionItem.NewLocation.Value);
+                            })
+                            .Text(", do you?")
+                            ;
+                        })
+                        .EndTextBox()
+                        .Text("Well, you gave me a mushroom, so").NewLine()
+                        .Text("I'll give you").RuntimePronounOrAmount(witchBluePotionItem.DisplayItem, witchBluePotionItem.NewLocation.Value).Text(" for free.")
+                        .DisableTextSkip2()
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                // Update Keg Challenge
+                var kegChallengeItem = _randomized.ItemList.First(io => io.NewLocation == Item.ItemPowderKeg);
+                if (kegChallengeItem.Item != Item.ItemPowderKeg)
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC80)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x38BB)
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("I'm the Goron who sells ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(", the most famous product of the Gorons.")
+                                ;
+                            })
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC81)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x38FC)
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("Want ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text("? Be careful, ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(" ")
+                                .RuntimeVerb(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Text(" very dangerous...")
+                                ;
+                            })
+                            .EndTextBox()
+                            .CompileTimeWrap("Until I have tested you to see if you are responsible, I can't sell to you.")
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC83)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x38FC)
+                            .Text("If you can ").Red("destroy").Text(" the boulder").NewLine()
+                            .Text("that blocks the entrance to the").NewLine()
+                            .Red("Goron Racetrack").Text(" near here...")
+                            .EndTextBox()
+                            .Text("using the ").Red("Powder Keg ").Text("I'm about").NewLine()
+                            .Text("to give you, then I'll sell to you.")
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC86)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x3A04)
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("It looks like you managed to succeed! Knowing your skills, I feel fine letting you handle ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value)
+                                .Text(" on your own.")
+                                ;
+                            })
+                            .EndTextBox()
+                            .Text("It was bad of me to put you").NewLine()
+                            .Text("through such a dangerous test. I").NewLine()
+                            .Text("want you to take this as my").NewLine()
+                            .Text("apology.")
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC88)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x38FC)
+                            .Text("You failed?").NewLine()
+                            .Text("In that case, I can't sell").NewLine()
+                            .Text("to you.")
+                            .DisableTextSkip2()
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC8C)
+                        .Message(it =>
+                        {
+                            it.RuntimeWrap(() =>
+                            {
+                                it.Text("Will you a buy ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.DisplayName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(" for ").Pink("100 Rupees").Text("?")
+                                ;
+                            })
+                            .NewLine()
+                            .StartGreenText()
+                            .TwoChoices()
+                            .Text("I'll buy ").RuntimePronoun(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value).NewLine()
+                            .Text("No thanks")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC8E)
+                        .Message(it =>
+                        {
+                            it.RuntimeWrap(() =>
+                            {
+                                it.Text("I'm the Goron who sells ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(", the most famous product of the Gorons.")
+                                ;
+                            })
+                            .EndTextBox()
+                            .RuntimeWrap(() =>
+                            {
+                                it.Text("But the rules say I can't sell ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(" to anyone who isn't a").Red(" Goron").Text(". ").PlaySoundEffect(0x391C).Text("Sorry.")
+                                ;
+                            })
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0xC8F)
+                        .Message(it =>
+                        {
+                            it.RuntimeWrap(() =>
+                            {
+                                it.Text("The rules say I can't sell ")
+                                .RuntimeArticle(kegChallengeItem.DisplayItem, kegChallengeItem.NewLocation.Value)
+                                .Red(() =>
+                                {
+                                    it.RuntimeItemName(kegChallengeItem.AlternateName(), kegChallengeItem.NewLocation.Value);
+                                })
+                                .Text(" to anyone who isn't a").Red(" Goron").Text(". ").PlaySoundEffect(0x391C).Text("Sorry.")
+                                ;
+                            })
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                }
             }
 
             // Update messages to match updated world models.
@@ -2145,6 +2460,32 @@ namespace MMR.Randomizer
                         .Build()
                     );
                 }
+            }
+
+            // Remove "...Suddenly, memories of Princess Zelda come rushing back to you..."
+            if (_randomized.ItemList[Item.ItemOcarina].NewLocation != Item.ItemOcarina || _randomized.ItemList[Item.SongTime].NewLocation != Item.SongTime)
+            {
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x4C)
+                    .Message(it =>
+                    {
+                        it.QuickText(() =>
+                        {
+                            it.Text("You got the ").Red("Ocarina of Time").NewLine()
+                            .Text("back!");
+                        })
+                        .NewLine()
+                        .PauseText(10)
+                        .Red("Princess Zelda").Text(" gave you this").NewLine()
+                        .Text("precious instrument.")
+                        .EndTextBox()
+                        .Text("Set it to ").Yellow("\u00B2").Text(" and use ").Yellow("\u00B0 ").Text("and the").NewLine()
+                        .Text("four ").Yellow("\u00B2").Text(" Buttons to play it. Press").NewLine()
+                        .Text("\u00B1 to stop.")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
             }
 
             // Update Zora Jar message.
@@ -2421,12 +2762,63 @@ namespace MMR.Randomizer
                 );
             }
 
+            // TODO if costs randomized
+            var messageCostRegex = new Regex("\\b[0-9]{1,3} Rupees?");
+            for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
+            {
+                var messageCost = MessageCost.MessageCosts[i];
+                var cost = _randomized.MessageCosts[i];
+                if (!cost.HasValue)
+                {
+                    continue;
+                }
+                foreach (var (messageId, costIndex) in messageCost.MessageIds)
+                {
+                    var oldMessage = _messageTable.GetMessage(messageId);
+                    var newMessage = newMessages.FirstOrDefault(me => me.Id == messageId);
+                    if (newMessage == null)
+                    {
+                        newMessage = new MessageEntry
+                        {
+                            Id = messageId,
+                            Header = oldMessage.Header.ToArray(),
+                            Message = oldMessage.Message,
+                        };
+                        newMessages.Add(newMessage);
+                    }
+                    if (newMessage.Header == null)
+                    {
+                        newMessage.Header = oldMessage.Header.ToArray();
+                    }
+                    var oldCost = ReadWriteUtils.Arr_ReadS16(newMessage.Header, 5 + (costIndex * 2));
+                    if (oldCost >= 0)
+                    {
+                        ReadWriteUtils.Arr_WriteU16(newMessage.Header, 5 + (costIndex * 2), cost.Value);
+                    }
+                    var replacementIndex = 0;
+                    newMessage.Message = messageCostRegex.Replace(newMessage.Message, match =>
+                    {
+                        return replacementIndex++ == costIndex ? $"{cost} Rupee{(cost != 1 && messageId != 1143 ? "s" : "")}" : match.Value;
+                    });
+                    if (messageId == 1143)
+                    {
+                        _randomized.Settings.AsmOptions.MiscConfig.Shorts.BankWithdrawFee = cost.Value;
+                    }
+                }
+                foreach (var address in messageCost.PriceAddresses)
+                {
+                    ReadWriteUtils.WriteToROM(address, cost.Value);
+                }
+                foreach (var address in messageCost.SubtractPriceAddresses)
+                {
+                    var subtractCost = (ushort)(0 - cost);
+                    ReadWriteUtils.WriteToROM(address, subtractCost);
+                }
+            }
+
             _messageTable.UpdateMessages(newMessages);
 
-            if (_randomized.Settings.CustomItemList.Any(item => item.LocationCategory() == LocationCategory.Purchases)) // TODO only apply when actual shops are randomized
-            {
-                ResourceUtils.ApplyHack(Resources.mods.fix_shop_checks);
-            }
+            ResourceUtils.ApplyHack(Resources.mods.fix_shop_curiosity_bigbombbag);
         }
 
         private void WriteGossipQuotes()
@@ -2528,6 +2920,17 @@ namespace MMR.Randomizer
             }
         }
 
+        private void WriteCrashDebuggerShow()
+        {
+            /// in vanilla, if you hit the crash screen you have to know the secret button combo to see debug info
+            /// here we bypass this to allow players to see the debug info and post it for us to help fix
+
+            // we need to set 0x80082C1C to 0x1000000C which bypasses
+            //   the conditional branches detecting if you haven't hit the right buttons, leaving function
+            var bootFile = RomData.MMFileList[1].Data;
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x2BBC, 0x1000000C);
+        }
+
         private void WriteStartupStrings()
         {
             if (_randomized.Settings.LogicMode == LogicMode.Vanilla)
@@ -2536,29 +2939,6 @@ namespace MMR.Randomizer
                 return;
             }
             RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", string.Empty);
-        }
-
-        private void WriteShopObjects()
-        {
-            RomUtils.CheckCompressed(1325); // trading post
-            var data = RomData.MMFileList[1325].Data.ToList();
-            data.RemoveRange(0x15C, 4); // reduce end padding from actors list
-            data.InsertRange(0x62, new byte[] { 0x00, 0xC1, 0x00, 0xAF }); // add extra objects
-            data[0x29] += 2; // increase object count by 2
-            data[0x37] += 4; // add 4 to actor list address
-            RomData.MMFileList[1325].Data = data.ToArray();
-
-            RomUtils.CheckCompressed(1503); // bomb shop
-            RomData.MMFileList[1503].Data[0x53] = 0x98; // add extra objects
-            RomData.MMFileList[1503].Data[0x29] += 1; // increase object count by 1
-
-            RomUtils.CheckCompressed(1142); // witch shop
-            data = RomData.MMFileList[1142].Data.ToList();
-            data.RemoveRange(0x78, 4); // reduce end padding from actors list
-            data.InsertRange(0x48, new byte[] { 0x00, 0xC1, 0x00, 0xC1 }); // add extra objects
-            data[0x29] += 2; // increase object count by 2
-            data[0x37] += 4; // add 4 to actor list address
-            RomData.MMFileList[1142].Data = data.ToArray();
         }
 
         public void OutputHashIcons(IEnumerable<byte> iconFileIndices, string filename)
@@ -2687,14 +3067,14 @@ namespace MMR.Randomizer
                 }
 
                 // Update gi-table for Stray Fairies.
-                if (e.ItemGained == 0x9D && e.Object == 0x13A && extended.Indexes.Fairies != null)
+                if (e.ItemGained == 0xA8 && e.Object == 0x13A && extended.Indexes.Fairies != null)
                 {
                     var index = e.Type >> 4;
                     e.Object = (short)(extended.Indexes.Fairies.Value + index);
                 }
 
                 // Update gi-table for Double Defense.
-                if (e.ItemGained == 0x9E && e.Object == 0x96 && extended.Indexes.DoubleDefense != null)
+                if (e.ItemGained == 0xA7 && e.Object == 0x96 && extended.Indexes.DoubleDefense != null)
                 {
                     e.Object = extended.Indexes.DoubleDefense.Value;
                 }
@@ -2706,7 +3086,7 @@ namespace MMR.Randomizer
                 }
 
                 // Update gi-table for Magic Power
-                if (e.ItemGained == 0x9B && e.Object == 0xA4 && extended.Indexes.MagicPower != null)
+                if (e.ItemGained == 0xA5 && e.Object == 0xA4 && extended.Indexes.MagicPower != null)
                 {
                     e.Object = extended.Indexes.MagicPower.Value;
                 }
@@ -2728,7 +3108,7 @@ namespace MMR.Randomizer
             foreach (var item in _randomized.IceTraps)
             {
                 var newLocation = item.NewLocation.Value;
-                if (newLocation.IsVisible() || newLocation.IsShop())
+                if (newLocation.IsVisible())
                 {
                     var giIndex = item.NewLocation.Value.GetItemIndex().Value;
                     var graphic = item.Mimic.ResolveGraphic();
@@ -2818,11 +3198,6 @@ namespace MMR.Randomizer
 
                 progressReporter.ReportProgress(66, "Writing enemies...");
                 WriteEnemies();
-
-                // if shop should match given items
-                {
-                    WriteShopObjects();
-                }
 
                 progressReporter.ReportProgress(67, "Writing items...");
                 WriteItems();

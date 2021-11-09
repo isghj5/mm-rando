@@ -39,7 +39,10 @@ typedef struct {
     u32 iceTrapQuirks       : 1;
     u32 mikauEarlyBeach     : 1;
     u32 fairyChests         : 1;
-    u32                     : 13;
+    u32 targetHealth        : 1;
+    u32 climbAnything       : 1;
+    u32 freeScarecrow       : 1;
+    u32                     : 10;
 } MiscFlags;
 
 typedef union {
@@ -51,8 +54,7 @@ typedef union {
 typedef struct {
     // Version 1 flags
     u32 vanillaLayout             : 1;
-    u32                           : 15;
-    u32 collectableTableFileIndex : 16;
+    u32                           : 31;
 } MiscInternal;
 
 typedef struct {
@@ -66,6 +68,11 @@ typedef struct {
     u32                : 26;
 } MiscSpeedups;
 
+typedef struct {
+    u16 collectableTableFileIndex;
+    u16 bankWithdrawFee;
+} MiscShorts;
+
 struct MiscConfig {
     /* 0x00 */ u32 magic;
     /* 0x04 */ u32 version;
@@ -73,7 +80,8 @@ struct MiscConfig {
     /* 0x18 */ MiscFlags flags;
     /* 0x1C */ MiscInternal internal;
     /* 0x20 */ MiscSpeedups speedups;
-}; // size = 0x24
+    /* 0x24 */ MiscShorts shorts;
+}; // size = 0x28
 
 extern struct MiscConfig MISC_CONFIG;
 

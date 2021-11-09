@@ -6,6 +6,7 @@
 
 #define MMR_ChestTableFileIndex (*(u32*)(0x80144968))
 #define MMR_GiTableFileIndex (*(u32*)(0x8014496C))
+#define MMR_GetItemEntryContext ((GetItemEntry*)0x800B35F0)
 
 // MMR get-item table entry.
 typedef struct {
@@ -18,8 +19,10 @@ typedef struct {
 } GetItemEntry; // size = 0x8
 
 GetItemEntry* MMR_GetGiEntry(u16 index);
+bool MMR_GetGiFlag(u16 giIndex);
 void MMR_Init(void);
 u16 MMR_GetNewGiIndex(GlobalContext* ctxt, Actor* actor, u16 giIndex, bool grant);
+void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex);
 void MMR_ClearItemQueue();
 void MMR_ProcessItemQueue(GlobalContext* ctxt);
 void MMR_GiveItemToHold(Actor* actor, GlobalContext* ctxt, u16 giIndex);
@@ -66,6 +69,11 @@ typedef struct {
     /* 0x10 */ u16 length;
 } ExtraStartingItems; // size = 0x12
 
+typedef struct {
+    /* 0x00 */ u16 ids[0x10];
+    /* 0x20 */ u16 length;
+} ItemsToReturn; // size = 0x22
+
 typedef union {
     struct {
         u8          : 2;
@@ -87,7 +95,8 @@ struct MMRConfig {
     /* 0x12C */ ExtraStartingMaps extraStartingMaps;
     /* 0x12D */ u8 unused12D; // Padding.
     /* 0x12E */ ExtraStartingItems extraStartingItems;
-}; // size = 0x140
+    /* 0x140 */ ItemsToReturn itemsToReturn;
+}; // size = 0x162
 
 extern struct MMRConfig MMR_CONFIG;
 

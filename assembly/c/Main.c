@@ -7,6 +7,7 @@
 #include "MMR.h"
 #include "Models.h"
 #include "Sprite.h"
+#include "StaticAddress.h"
 #include "Text.h"
 #include "Util.h"
 #include "WorldColors.h"
@@ -22,4 +23,5 @@ void Main_CInit(void) {
     Misc_Init();
     Text_Init();
     WorldColors_Init();
+    StaticAddress_Init();
 }

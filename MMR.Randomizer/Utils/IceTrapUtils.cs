@@ -99,24 +99,33 @@ namespace MMR.Randomizer.Utils
         public static HashSet<MimicItem> BuildIceTrapMimicSet(ItemList itemList, IceTrapAppearance appearance, bool songs = false)
         {
             var mimics = new HashSet<MimicItem>();
-            foreach (var itemObj in itemList)
+            bool allowNonRandomized = false;
+            do
             {
-                var index = itemObj.Item.GetItemIndex();
-                var allowSong = songs || !itemObj.Item.IsSong();
-                if (index.HasValue && allowSong)
+                foreach (var itemObj in itemList.Where(io => allowNonRandomized || io.IsRandomized))
                 {
-                    var chestType = itemObj.Item.ChestType();
-                    if ((appearance == IceTrapAppearance.MajorItems && chestType == ChestTypeAttribute.ChestType.LargeGold) ||
-                        (appearance == IceTrapAppearance.MajorItems && chestType == ChestTypeAttribute.ChestType.SmallGold) ||
-                        (appearance == IceTrapAppearance.JunkItems && chestType == ChestTypeAttribute.ChestType.SmallWooden) ||
-                        (appearance == IceTrapAppearance.Anything))
+                    var index = itemObj.Item.GetItemIndex();
+                    var allowSong = songs || !itemObj.Item.IsSong();
+                    if (index.HasValue && allowSong)
                     {
-                        // Add mimic item to set.
-                        var mimicItem = new MimicItem(itemObj.Item);
-                        mimics.Add(mimicItem);
+                        var chestType = itemObj.Item.ChestType();
+                        if ((appearance == IceTrapAppearance.MajorItems && chestType == ChestTypeAttribute.ChestType.LargeGold) ||
+                            (appearance == IceTrapAppearance.MajorItems && chestType == ChestTypeAttribute.ChestType.SmallGold) ||
+                            (appearance == IceTrapAppearance.JunkItems && chestType == ChestTypeAttribute.ChestType.SmallWooden) ||
+                            (appearance == IceTrapAppearance.Anything))
+                        {
+                            // Add mimic item to set.
+                            var mimicItem = new MimicItem(itemObj.Item);
+                            mimics.Add(mimicItem);
+                        }
                     }
                 }
-            }
+                if (allowNonRandomized && mimics.Count == 0)
+                {
+                    throw new Exception("Failed to build a Mimic set.");
+                }
+                allowNonRandomized = true;
+            } while (mimics.Count == 0);
             return mimics;
         }
     }

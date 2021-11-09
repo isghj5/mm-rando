@@ -264,7 +264,7 @@ static u16 itemQueue[ITEM_QUEUE_LENGTH] = { 0, 0, 0, 0 };
 void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex) {
     giIndex = MMR_GetNewGiIndex(ctxt, NULL, giIndex, true);
     GetItemEntry* entry = MMR_GetGiEntry(giIndex);
-    z2_memcpy((void*)0x800B35F0, entry, 8); // copy entry to 0x800B35F0 otherwise hacky stuff i wrote ages ago won't work.
+    *MMR_GetItemEntryContext = *entry;
     z2_ShowMessage(ctxt, entry->message, 0);
     u8 soundType = entry->type & 0x0F;
     if (soundType == 0) {
@@ -309,19 +309,22 @@ void MMR_ProcessItemQueue(GlobalContext* ctxt) {
 }
 
 u32 MMR_GetMinorItemSfxId(u8 item) {
-    if (item >= 0x84 && item <= 0x8A) {
+    if (item >= ITEM_GREEN_RUPEE && item <= ITEM_GOLD_RUPEE) {
         return 0x4803; // Rupee
     }
-    if (item == 0x83) {
+    if (item == ITEM_HEART) {
         return 0x480B; // Recovery Heart
     }
-    if (item >= 0x8B && item <= 0x9A) {
+    if (item >= ITEM_BOMB && item <= ITEM_MAGIC_BEAN && z2_IsItemKnown(item) != 0xFF) {
         return 0x4824;
     }
-    if (item >= 0x6 && item <= 0x9) {
+    if (item >= ITEM_PICKUP_DEKU_STICKS_5 && item <= ITEM_PICKUP_ARROWS_50 && z2_IsItemKnown(item) != 0xFF) {
         return 0x4824;
     }
-    if (item == 0x79 || item == 0x7A || item == CUSTOM_ITEM_CRIMSON_RUPEE) {
+    if (item >= ITEM_PICKUP_BOMBCHU_20 && item <= ITEM_PICKUP_BOMBCHU_5 && z2_IsItemKnown(ITEM_BOMBCHU) != 0xFF) {
+        return 0x4824;
+    }
+    if (item == ITEM_MAGIC_JAR || item == ITEM_MAGIC_JAR_LARGE || item == CUSTOM_ITEM_CRIMSON_RUPEE) {
         return 0x4824;
     }
     if (item == CUSTOM_ITEM_ICE_TRAP) {

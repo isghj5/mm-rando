@@ -266,3 +266,119 @@
     nop
     nop
 .endarea
+
+;==================================================================================================
+; Arrow Effect Colors (Fire Arrow)
+;==================================================================================================
+
+.headersize G_ARROW_FIRE_DELTA
+
+@FireArrowEffectEnvColor equ (WORLD_COLOR_CONFIG + 0x40)
+@FireArrowEffectPriColor equ (WORLD_COLOR_CONFIG + 0x44)
+
+; Replaces:
+;   addiu   t8, v0, 0x0008
+;   sw      t8, 0x02C0 (s0)
+;   sw      t5, 0x0000 (v0)
+;   lw      t9, 0x0080 (sp)
+;   lui     at, 0xFFC8 ; Prim color = 0xFFC800
+;   lui     t8, 0xFB00
+;   lbu     t4, 0x0260 (t9)
+;   addiu   a0, r0, 0x4000
+;   or      a1, r0, r0
+;   or      t6, t4, at
+;   sw      t6, 0x0004 (v0)
+;   lw      v0, 0x02C0 (s0)
+;   lui     t5, 0xFF00 ; Env color = 0xFF0000
+;   ori     t5, t5, 0x0080
+;   addiu   t7, v0, 0x0008
+.org 0x80920BE0 ; Offset: 0x8A0
+.area 0x3C
+    sw      t5, 0x0000 (v0)
+    lw      t9, 0x0080 (sp)
+    lbu     t4, 0x0260 (t9)
+    addiu   a0, r0, 0x4000
+    or      a1, r0, r0
+    lui     t8, 0xFB00
+    lui     at, hi(@FireArrowEffectPriColor)
+    lw      at, lo(@FireArrowEffectPriColor) (at)
+    or      t6, t4, at
+    sw      t6, 0x0004 (v0)
+    lui     t5, hi(@FireArrowEffectEnvColor)
+    lw      t5, lo(@FireArrowEffectEnvColor) (t5)
+    ori     t5, t5, 0x0080
+    addiu   v0, v0, 0x0008
+    addiu   t7, v0, 0x0008
+.endarea
+
+;==================================================================================================
+; Arrow Effect Colors (Ice Arrow)
+;==================================================================================================
+
+.headersize G_ARROW_ICE_DELTA
+
+@IceArrowEffectEnvColor equ (WORLD_COLOR_CONFIG + 0x48)
+@IceArrowEffectPriColor equ (WORLD_COLOR_CONFIG + 0x4C)
+
+; Replaces:
+;   lui     at, 0xAAFF
+;   ori     at, at, 0xFF00 ; Prim color = 0xAAFFFF
+.org 0x80922BC0 ; Offset: 0x790
+    lui     at, hi(@IceArrowEffectPriColor)
+    lw      at, lo(@IceArrowEffectPriColor) (at)
+
+; Replaces:
+;   lw      v0, 0x02C0 (s0)
+;   lui     t5, 0xFB00
+;   ori     t8, r0, 0xFF80 ; Env color = 0x0000FF
+;   addiu   t4, v0, 0x0008
+;   sw      t4, 0x02C0 (s0)
+;   sw      t8, 0x0004 (v0)
+;   sw      t5, 0x0000 (v0)
+.org 0x80922BE4 ; Offset: 0x7B4
+.area 0x1C
+    lui     t5, 0xFB00
+    lui     t8, hi(@IceArrowEffectEnvColor)
+    lw      t8, lo(@IceArrowEffectEnvColor) (t8)
+    addiu   t4, v1, 0x0010
+    sw      t4, 0x02C0 (s0)
+    sw      t8, 0x000C (v1)
+    sw      t5, 0x0008 (v1)
+.endarea
+
+;==================================================================================================
+; Arrow Effect Colors (Light Arrow)
+;==================================================================================================
+
+.headersize G_ARROW_LIGHT_DELTA
+
+@LightArrowEffectEnvColor equ (WORLD_COLOR_CONFIG + 0x50)
+@LightArrowEffectPriColor equ (WORLD_COLOR_CONFIG + 0x54)
+
+; Replaces:
+;   addiu   at, r0, 0xAA00 ; Prim color = 0xFFFFAA
+.org 0x80924A58 ; Offset: 0x758
+    lui     at, hi(@LightArrowEffectPriColor)
+
+; Replaces:
+;   or      t6, t3, at
+;   sw      t6, 0x0004 (v0)
+;   lw      v0, 0x02C0 (s0)
+;   lui     t4, 0xFFFF
+;   ori     t4, t4, 0x0080 ; Env color = 0xFFFF00
+;   addiu   t7, v0, 0x0008
+;   sw      t7, 0x02C0 (s0)
+;   sw      t4, 0x0004 (v0)
+;   sw      t8, 0x0000 (v0)
+.org 0x80924A6C ; Offset: 0x76C
+.area 0x24
+    lw      at, lo(@LightArrowEffectPriColor) (at)
+    or      t6, t3, at
+    sw      t6, 0x0004 (v0)
+    lui     t4, hi(@LightArrowEffectEnvColor)
+    lw      t4, lo(@LightArrowEffectEnvColor) (t4)
+    addiu   t7, v0, 0x0010
+    sw      t7, 0x02C0 (s0)
+    sw      t4, 0x000C (v0)
+    sw      t8, 0x0008 (v0)
+.endarea

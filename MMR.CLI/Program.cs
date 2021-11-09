@@ -67,6 +67,7 @@ namespace MMR.CLI
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.SmallKeyMode));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.BossKeyMode));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.StrayFairyMode));
+                Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.PriceMode));
                 Console.WriteLine(GetSettingDescription(nameof(GameplaySettings.EnabledTricks), "Array of trick IDs."));
                 Console.WriteLine(GetSettingPath(cfg => cfg.GameplaySettings.ShortenCutsceneSettings) + ":");
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.ShortenCutsceneSettings.General));
@@ -119,7 +120,30 @@ namespace MMR.CLI
                 Console.WriteLine($"Loaded GameplaySettings from \"{settingsPath}\".");
             }
 
-            configuration.GameplaySettings.CustomItemList = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomItemListString).ToHashSet();
+            if (configuration.GameplaySettings.ItemCategoriesRandomized != null || configuration.GameplaySettings.LocationCategoriesRandomized != null)
+            {
+                var items = new List<Item>();
+                if (configuration.GameplaySettings.ItemCategoriesRandomized != null)
+                {
+                    items.AddRange(ItemUtils.ItemsByItemCategory().Where(kvp => configuration.GameplaySettings.ItemCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
+                    configuration.GameplaySettings.ItemCategoriesRandomized = null;
+                }
+                if (configuration.GameplaySettings.LocationCategoriesRandomized != null)
+                {
+                    items.AddRange(ItemUtils.ItemsByLocationCategory().Where(kvp => configuration.GameplaySettings.LocationCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
+                    configuration.GameplaySettings.LocationCategoriesRandomized = null;
+                }
+                configuration.GameplaySettings.CustomItemList.Clear();
+                foreach (var item in items)
+                {
+                    configuration.GameplaySettings.CustomItemList.Add(item);
+                }
+            }
+            else
+            {
+                configuration.GameplaySettings.CustomItemList = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomItemListString).ToHashSet();
+            }
+
             configuration.GameplaySettings.CustomStartingItemList = ConvertItemString(ItemUtils.StartingItems().Where(item => !item.Name().Contains("Heart")).ToList(), configuration.GameplaySettings.CustomStartingItemListString);
             configuration.GameplaySettings.CustomJunkLocations = ConvertItemString(ItemUtils.AllLocations().ToList(), configuration.GameplaySettings.CustomJunkLocationsString);
 

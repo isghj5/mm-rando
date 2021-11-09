@@ -2,15 +2,35 @@
 #include <z64.h>
 #include "Reloc.h"
 
+// TODO rename file to Trap.c or DamageTrap.c
+
+static u8 gPendingKnockdowns = 0;
+static u8 gPendingPokes = 0;
 static u8 gPendingFreezes = 0;
+static u8 gPendingShocks = 0;
 
-bool Icetrap_IsPending(void) {
-    return gPendingFreezes > 0;
-}
-
-void Icetrap_PushPending(void) {
-    if (gPendingFreezes < 0xFF) {
-        gPendingFreezes += 1;
+void Icetrap_PushPending(u8 type) {
+    switch (type) {
+        case DAMAGE_EFFECT_FLY_BACK:
+            if (gPendingKnockdowns < 0xFF) {
+                gPendingKnockdowns++;
+            }
+            break;
+        case DAMAGE_EFFECT_FLY_BACK_2:
+            if (gPendingPokes < 0xFF) {
+                gPendingPokes++;
+            }
+            break;
+        case DAMAGE_EFFECT_FREEZE:
+            if (gPendingFreezes < 0xFF) {
+                gPendingFreezes++;
+            }
+            break;
+        case DAMAGE_EFFECT_ELECTRIC:
+            if (gPendingShocks < 0xFF) {
+                gPendingShocks++;
+            }
+            break;
     }
 }
 
@@ -34,10 +54,24 @@ bool Icetrap_Give(ActorPlayer* player, GlobalContext* ctxt) {
         return false;
     }
 
-    if (gPendingFreezes) {
-        gPendingFreezes -= 1;
+    u32 damageEffectType = 0;
+    if (gPendingKnockdowns) {
+        gPendingKnockdowns--;
+        damageEffectType = DAMAGE_EFFECT_FLY_BACK;
+    } else if (gPendingPokes) {
+        gPendingPokes--;
+        damageEffectType = DAMAGE_EFFECT_FLY_BACK_2;
+    } else if (gPendingFreezes) {
+        gPendingFreezes--;
+        damageEffectType = DAMAGE_EFFECT_FREEZE;
+    } else if (gPendingShocks) {
+        gPendingShocks--;
+        damageEffectType = DAMAGE_EFFECT_ELECTRIC;
+    }
+
+    if (damageEffectType) {
         z2_LinkInvincibility(player, 0x14);
-        z2_LinkDamage(ctxt, player, DAMAGE_EFFECT_FREEZE, 0x40800000);
+        z2_LinkDamage(ctxt, player, damageEffectType, 4.0, 4.0, player->base.shape.rot.y);
         return true;
     } else {
         return false;

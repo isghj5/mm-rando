@@ -36,9 +36,9 @@ ActorEnItem00* SoftSoilPrize_ItemSpawn(GlobalContext* ctxt, Actor* actor, u16 ty
             break;
         case 0x35: // Romani Ranch
             if (gSaveContext.perm.day <= 1) {
-                giIndex = 0x370;
-            } else {
                 giIndex = 0x376;
+            } else {
+                giIndex = 0x370;
             }
             break;
         case 0x37: // Great Bay Coast

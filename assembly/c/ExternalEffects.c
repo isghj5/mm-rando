@@ -23,11 +23,13 @@ ExternalEffectsConfig gExternalEffects = {
     .cameraOverlook = 0,
     .chateau = 0,
     .fairy = 0,
-    .freeze = 0,
+    .damageEffect = 0,
     .icePhysics = 0,
     .jinx = 0,
     .noZ = 0,
     .reverseControls = 0,
+    .playSfx = 0,
+    .lowHpSfx = 0,
 };
 
 // Specifies camera states that can be changed via an effect.
@@ -214,11 +216,11 @@ static void HandleFairyEffect(GlobalContext* ctxt, ActorPlayer* player) {
     }
 }
 
-static void HandleFreezeEffect(GlobalContext* ctxt, ActorPlayer* player) {
-    // Handle "Freeze" effect.
-    if (gExternalEffects.freeze) {
-        Icetrap_PushPending();
-        gExternalEffects.freeze = 0;
+static void HandleDamageEffect(GlobalContext* ctxt, ActorPlayer* player) {
+    // Handle "Damage Effect" effect.
+    if (gExternalEffects.damageEffect) {
+        Icetrap_PushPending(gExternalEffects.damageEffect);
+        gExternalEffects.damageEffect = 0;
     }
 }
 
@@ -284,13 +286,44 @@ static void HandleReverseControlsEffect(GlobalContext* ctxt, ActorPlayer* player
     }
 }
 
+static void HandlePlaySfxEffect(GlobalContext* ctxt, ActorPlayer* player) {
+    if (gExternalEffects.playSfx) {
+        z2_PlaySfx(gExternalEffects.playSfx);
+        gExternalEffects.playSfx = 0;
+    }
+}
+
+static void HandleIFrameGlow(GlobalContext* ctxt, ActorPlayer* player) {
+    if (gExternalEffects.yellowIframe == 1 && player->invincibilityFrames == 0) {
+        gExternalEffects.yellowIframe = 0;
+    }
+}
+
+void ExternalEffects_PlayLowHpSfx(u32 id) {
+    if (gExternalEffects.lowHpSfx) {
+        z2_PlaySfx(gExternalEffects.lowHpSfx);
+    }
+    else if (id) {
+        z2_PlaySfx(id);
+    }
+}
+
+Gfx* ExternalEffects_IFrameGlow(Gfx* gfx, u8 r, u8 g, u8 b, u8 a, u16 unk_a5, f32 unk_a6) {
+    if (gExternalEffects.yellowIframe) {
+        g = 0xFF;
+    }
+    return z2_8012BC50(gfx, r, g, b, a, unk_a5, unk_a6);
+}
+
 void ExternalEffects_Handle(ActorPlayer* player, GlobalContext* ctxt) {
     HandleCameraOverlookEffect(ctxt, player);
     HandleChateauEffect(ctxt, player);
     HandleFairyEffect(ctxt, player);
-    HandleFreezeEffect(ctxt, player);
+    HandleDamageEffect(ctxt, player);
     HandleIcePhysicsEffect(ctxt, player);
     HandleJinxEffect(ctxt, player);
     HandleNoZEffect(ctxt, player);
     HandleReverseControlsEffect(ctxt, player);
+    HandlePlaySfxEffect(ctxt, player);
+    HandleIFrameGlow(ctxt, player);
 }

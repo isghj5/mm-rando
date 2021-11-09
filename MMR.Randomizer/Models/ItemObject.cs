@@ -15,6 +15,7 @@ namespace MMR.Randomizer.Models
         public List<Item> CannotRequireItems { get; set; } = new List<Item>();
         public int TimeNeeded { get; set; }
         public int TimeAvailable { get; set; }
+        public int TimeSetup { get; set; }
         public Item? NewLocation { get; set; }
 
         public bool IsTrick { get; set; }

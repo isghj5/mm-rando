@@ -54,10 +54,8 @@ namespace MMR.UI.Forms
             InitalizeLowHealthSFXOptions();
 
             StartingItemEditor = new StartingItemEditForm();
-            UpdateCustomStartingItemAmountLabel();
 
             JunkLocationEditor = new JunkLocationEditForm();
-            UpdateJunkLocationAmountLabel();
 
             ItemEditor = new CustomItemListEditForm(ItemUtils.AllLocations(), item => $"{item.Location()} ({item.Name()})", "Invalid custom item string");
 
@@ -107,6 +105,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cByoAmmo, "Arrows, Bombs, and Bombchu will not be provided for minigames. You must bring your own. Logic Modes other than No Logic will account for this.");
             TooltipBuilder.SetTooltip(cDeathMoonCrash, "Dying causes the moon to crash, with all that that implies.");
             TooltipBuilder.SetTooltip(cContinuousDekuHopping, "Press A while hopping across water to keep hopping.");
+            TooltipBuilder.SetTooltip(cHookshotAnySurface, "Hookshot can hook to any surface.");
+            TooltipBuilder.SetTooltip(cClimbMostSurfaces, "Link can climb most surfaces.");
             TooltipBuilder.SetTooltip(cIceTrapQuirks, "Ice traps will behave slightly differently from other items in certain situations.");
 
             // Comforts/cosmetics
@@ -140,6 +140,9 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cElegySpeedups, "Applies various Elegy of Emptiness speedups.");
             TooltipBuilder.SetTooltip(cInstantPictobox, "Remove anti-aliasing from the Pictobox pictures, which is what makes Pictobox on emulator so slow.");
             TooltipBuilder.SetTooltip(cImprovedPictobox, "Display extra text showing which type of picture was captured by the Pictobox.");
+            TooltipBuilder.SetTooltip(cLenientGoronSpikes, "Goron spikes can charge midair and keep their charge. Minimum speed for goron spikes is removed.");
+            TooltipBuilder.SetTooltip(cTargetHealth, "Targeting an enemy shows their health bar.");
+            TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
         }
 
         /// <summary>
@@ -165,6 +168,7 @@ namespace MMR.UI.Forms
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.SmallKeyMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossKeyMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.StrayFairyMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.PriceMode)));
             foreach (var propertyInfo in properties)
             {
                 var tabPage = new TabPage
@@ -205,7 +209,7 @@ namespace MMR.UI.Forms
                     checkBox.CheckedChanged += cDungeonMode_CheckedChanged;
                     tabPage.Controls.Add(checkBox);
                     currentX += deltaX;
-                    if (currentX > tShortenCutscenes.Width - width)
+                    if (currentX > tOtherCustomizations.Width - width)
                     {
                         currentX = initialX;
                         currentY += deltaY;
@@ -1041,6 +1045,8 @@ namespace MMR.UI.Forms
             cFastPush.Checked = _configuration.GameplaySettings.FastPush;
             cQuestItemStorage.Checked = _configuration.GameplaySettings.QuestItemStorage;
             cContinuousDekuHopping.Checked = _configuration.GameplaySettings.ContinuousDekuHopping;
+            cHookshotAnySurface.Checked = _configuration.GameplaySettings.HookshotAnySurface;
+            cClimbMostSurfaces.Checked = _configuration.GameplaySettings.ClimbMostSurfaces;
             cUnderwaterOcarina.Checked = _configuration.GameplaySettings.OcarinaUnderwater;
             cFreestanding.Checked = _configuration.GameplaySettings.UpdateWorldModels;
             cArrowCycling.Checked = _configuration.GameplaySettings.ArrowCycling;
@@ -1049,6 +1055,9 @@ namespace MMR.UI.Forms
             cHueShiftMiscUI.Checked = _configuration.CosmeticSettings.ShiftHueMiscUI;
             cElegySpeedups.Checked = _configuration.GameplaySettings.ElegySpeedup;
             cImprovedPictobox.Checked = _configuration.GameplaySettings.EnablePictoboxSubject;
+            cLenientGoronSpikes.Checked = _configuration.GameplaySettings.LenientGoronSpikes;
+            cTargetHealth.Checked = _configuration.GameplaySettings.TargetHealthBar;
+            cFreeScarecrow.Checked = _configuration.GameplaySettings.FreeScarecrow;
 
             // HUD config options
             var heartItems = ColorSelectionManager.Hearts.GetItems();
@@ -1091,6 +1100,7 @@ namespace MMR.UI.Forms
 
             cDrawHash.CheckedChanged -= cDrawHash_CheckedChanged;
             cDrawHash.Checked = cPatch.Checked ? true : _drawHashChecked && (_configuration.OutputSettings.GenerateROM || _configuration.OutputSettings.OutputVC);
+            _configuration.GameplaySettings.DrawHash = cDrawHash.Checked;
             cDrawHash.CheckedChanged += cDrawHash_CheckedChanged;
         }
 
@@ -1279,6 +1289,16 @@ namespace MMR.UI.Forms
         private void cContinuousDekuHopping_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.ContinuousDekuHopping = cContinuousDekuHopping.Checked);
+        }
+
+        private void cHookshotAnySurface_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.HookshotAnySurface = cHookshotAnySurface.Checked);
+        }
+
+        private void cClimbMostSurfaces_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.ClimbMostSurfaces = cClimbMostSurfaces.Checked);
         }
 
         private void cDisableCritWiggle_CheckedChanged(object sender, EventArgs e)
@@ -1585,6 +1605,9 @@ namespace MMR.UI.Forms
             cCloseCows.Enabled = v;
             cElegySpeedups.Enabled = v;
             cImprovedPictobox.Enabled = v;
+            cLenientGoronSpikes.Enabled = v;
+            cTargetHealth.Enabled = v;
+            cFreeScarecrow.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
@@ -1607,6 +1630,8 @@ namespace MMR.UI.Forms
             cByoAmmo.Enabled = v;
             cDeathMoonCrash.Enabled = v;
             cIceTrapQuirks.Enabled = v;
+            cHookshotAnySurface.Enabled = v;
+            cClimbMostSurfaces.Enabled = v;
 
             foreach (Control control in tabItemPool.Controls)
             {
@@ -1999,6 +2024,21 @@ namespace MMR.UI.Forms
         private void cImprovedPictobox_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.EnablePictoboxSubject = cImprovedPictobox.Checked);
+        }
+
+        private void cLenientGoronSpikes_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.LenientGoronSpikes = cLenientGoronSpikes.Checked);
+        }
+
+        private void cTargetHealth_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.TargetHealthBar = cTargetHealth.Checked);
+        }
+
+        private void cFreeScarecrow_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.FreeScarecrow = cFreeScarecrow.Checked);
         }
     }
 }

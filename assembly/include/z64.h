@@ -305,18 +305,18 @@ typedef struct {
     /* 0x2C */ f32 unk2C;
     /* 0x30 */ f32 unk30;
     /* 0x34 */ f32 unk34;
-    /* 0x38 */ Actor* unk38;
-    /* 0x3C */ Actor* unk3C;
+    /* 0x38 */ Actor* targetHover;
+    /* 0x3C */ Actor* targetLocked;
     /* 0x40 */ f32 unk40;
     /* 0x44 */ f32 unk44;
     /* 0x48 */ s16 unk48;
-    /* 0x4A */ u8 unk4A;
+    /* 0x4A */ u8 targetType;
     /* 0x4B */ u8 unk4B;
     /* 0x4C */ s8 unk4C;
     /* 0x4D */ UNK_TYPE1 pad4D[0x3];
     /* 0x50 */ TargetContextEntry unk50[3];
     /* 0x8C */ Actor* unk8C;
-    /* 0x90 */ Actor* unk90;
+    /* 0x90 */ Actor* nearbyEnemy;
     /* 0x94 */ UNK_TYPE1 pad94[0x4];
 } TargetContext; // size = 0x98
 
@@ -744,9 +744,10 @@ typedef struct {
     /* 0x12044 */ s16 unk12044;
     /* 0x12046 */ UNK_TYPE1 pad12046[0x24];
     /* 0x1206A */ s16 messageBoxScreenY;
-    /* 0x1206C */ UNK_TYPE1 pad1206C[0xC];
+    /* 0x1206C */ s32 messageCost;
+    /* 0x12070 */ UNK_TYPE1 pad12070[0x8];
     /* 0x12078 */ u32 bankRupeesSelected;
-    /* 0x1207C */ u32 bankRupees; 
+    /* 0x1207C */ u32 bankRupees;
     /* 0x12080 */ UNK_TYPE1 pad12080[0x4];
     /* 0x12084 */ void* messageTable;
     /* 0x12088 */ UNK_TYPE1 pad12088[0x8];
@@ -1071,6 +1072,64 @@ struct GlobalContext {
     /* 0x18E58 */ UNK_TYPE1 pad18E58[0x400];
 }; // size = 0x19258
 
+typedef struct SequenceChannelContext {
+    /* 0x00 */ struct {
+        u8 playing : 1;
+        u8 stopped : 1;
+        u8 unk3    : 1;
+        u8 muted   : 1;
+        u8 unk5    : 1;
+        u8 unk6    : 1;
+        u8 unk7    : 1;
+        u8 unk8    : 1;
+    } playState;
+    /* 0x01 */ u8 unk1[0x2B];
+    /* 0x2C */ f32 unk2C;
+    /* 0x30 */ f32 unk30; // volume?
+    /* 0x34 */ UNK_TYPE1 unk34[0x4];
+    /* 0x38 */ f32 unk38;
+    /* 0x3C */ f32 unk3C;
+    /* 0x40 */ UNK_TYPE1 unk40[0x4];
+    /* 0x44 */ UNK_PTR unk44[0x3];
+    /* 0x50 */ struct SequenceContext* sequence;
+    /* 0x54 */ UNK_PTR unk54[0x2];
+    /* 0x5C */ UNK_TYPE1 unk5C[0x8];
+    /* 0x64 */ UNK_PTR unk64[0x2];
+    /* 0x6C */ UNK_TYPE1 unk6C[0x18];
+    /* 0x84 */ UNK_PTR unk84[0x1B]; // might not all be pointers. some are 0, some are -1.
+} SequenceChannelContext; // size = 0xF0
+
+typedef struct SequenceContext {
+    /* 0x000 */ UNK_TYPE1 unk0[0x4];
+    /* 0x004 */ u8 sequenceId;
+    /* 0x005 */ UNK_TYPE1 unk5[0x3];
+    /* 0x008 */ UNK_TYPE1 unk8[0x10];
+    /* 0x018 */ UNK_PTR unk18;
+    /* 0x01C */ f32 unk1C;
+    /* 0x020 */ UNK_TYPE1 unk20[0x8];
+    /* 0x028 */ f32 unk28;
+    /* 0x02C */ f32 unk2C;
+    /* 0x030 */ f32 unk30;
+    /* 0x034 */ f32 unk34;
+    /* 0x038 */ SequenceChannelContext* channels[0x10];
+    /* 0x078 */ UNK_PTR unk78; // maybe track pointer
+    /* 0x07C */ UNK_TYPE1 unk7C[0x18];
+    /* 0x094 */ UNK_PTR unk94[0x12];
+    /* 0x0DC */ UNK_TYPE1 unkDC[0x84];
+} SequenceContext; // size = 0x160
+
+typedef struct ChannelState {
+    /* 0x00 */ UNK_TYPE1 unk0[0x4];
+    /* 0x04 */ s8 param;
+    /* 0x05 */ UNK_TYPE1 unk5[0x3];
+} ChannelState;
+
+typedef struct AudioInfo {
+    /* 0x0 */ u32 address;
+    /* 0x4 */ u32 length;
+    /* 0x8 */ s8 metadata[0x8];
+} AudioInfo;
+
 /// =============================================================
 /// Savefile Structure
 /// =============================================================
@@ -1230,7 +1289,8 @@ typedef struct {
     /* 0x14 */ u8 magicLevel;
     /* 0x15 */ s8 currentMagic;
     /* 0x16 */ u16 rupees;
-    /* 0x18 */ u32 tatlTimer;
+    /* 0x18 */ s16 swordHealth;
+    /* 0x1A */ s16 tatlTimer;
     /* 0x1C */ u8 hasMagic;
     /* 0x1D */ u8 hasDoubleMagic;
     /* 0x1E */ u8 hasDoubleDefense;
@@ -1301,6 +1361,15 @@ typedef union {
             };
             u8 pad37;
         };
+        /* 0x38 */ UNK_TYPE1 pad38[0x17];
+        /* 0x4F */ union {
+            struct {
+                u8                         : 4;
+                u8 scarecrowSongSet        : 1;
+            };
+            u8 pad4F;
+        };
+        /* 0x50 */ UNK_TYPE1 pad50[0x14];
     };
     u8 bytes[0x64];
 } WeekEventReg; // size = 0x64
@@ -1366,7 +1435,13 @@ typedef struct {
     // [5] & 0x08 = Goht Unfrozen cutscene seen
     // [6] & 0x04 = Goht Intro cutscene seen
     // [6] & 0x02 = Majora Intro cutscene seen
-    /* 0x0008 */ UNK_TYPE1 pad8[0x2];
+    // [7] & 0x01 = Has Rupees
+    // [7] & 0x02 = Has Bombs
+    // [7] & 0x04 = Has Deku Nuts
+    // [7] & 0x08 = Has Deku Sticks
+    // [7] & 0x10 = Has Arrows
+    /* 0x0008 */ s8 unk8;
+    /* 0x0009 */ UNK_TYPE1 pad9;
     /* 0x000A */ u16 jinxCounter;
     /* 0x000C */ s16 rupeeCounter;
     /* 0x000E */ UNK_TYPE1 padE[0xC6];
@@ -1394,9 +1469,10 @@ typedef struct {
     /* 0x27D */ UNK_TYPE1 pad27D[0x3];
     /* 0x280 */ ButtonsState buttonsState;
     /* 0x288 */ s16 magicConsumeState;
-    /* 0x28A */ UNK_TYPE1 pad28A[0x4];
+    /* 0x28A */ s16 shouldAddMagic;
+    /* 0x28C */ UNK_TYPE1 pad28C[0x2];
     /* 0x28E */ u16 magicMeterSize;
-    /* 0x290 */ UNK_TYPE1 pad290[0x2];
+    /* 0x290 */ u16 magicAmountTarget;
     /* 0x292 */ s16 magicConsumeCost;
     /* 0x294 */ UNK_TYPE1 pad294[0x6];
     /* 0x29A */ u16 minigameCounter[2];
@@ -1492,10 +1568,18 @@ typedef struct {
 } ActorEnAkindonuts; // size = ?
 
 // En_GirlA actor (Shop Inventory Data).
-typedef struct {
+typedef struct ActorEnGirlA {
     /* 0x000 */ Actor base;
     /* 0x144 */ UNK_TYPE1 pad144[0x5A];
     /* 0x19E */ u16 giIndex;
+    /* 0x1A0 */ UNK_TYPE4 unk1A0;
+    /* 0x1A4 */ UNK_TYPE4 cleanupPurchase;
+    /* 0x1A8 */ UNK_TYPE4 unk1A8;
+    /* 0x1AC */ UNK_TYPE4 unk1AC;
+    /* 0x1B0 */ UNK_TYPE4 unk1B0;
+    /* 0x1B4 */ u8 (*checkPurchase)(GlobalContext* ctxt, struct ActorEnGirlA* self);
+    /* 0x1B8 */ void (*handleInstantPurchase)(GlobalContext* ctxt, struct ActorEnGirlA* self);
+    /* 0x1BC */ UNK_TYPE4 afterPurchase;
 } ActorEnGirlA; // size = ?
 
 // En_Item00 actor (Collectable Field Item).
@@ -1595,6 +1679,26 @@ typedef struct {
     /* 0x16A */ UNK_TYPE1 pad16A[0x26];
 } ActorBgIngate; // size = 0x190
 
+// Door_Warp1 actor.
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0x8A];
+    /* 0x1CE */ s16 warpTimer;
+    /* 0x1D0 */ s16 warpTimer2;
+} ActorDoorWarp1;
+
+// En_Kakasi actor (Scarecrow).
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0x4];
+    /* 0x148 */ void* function;
+    /* 0x14C */ UNK_TYPE1 pad14C[0x62];
+    /* 0x1AE */ s16 spawnCutsceneIndex;
+    /* 0x1B0 */ UNK_TYPE1 pad1B0[0xA0];
+    /* 0x250 */ f32 xzRequiredDistance;
+    /* 0x254 */ UNK_TYPE1 pad254[0x4C];
+} ActorEnKakasi; // size = 0x2A0
+
 /// =============================================================
 /// Actor Cutscene
 /// =============================================================
@@ -1688,16 +1792,16 @@ typedef struct {
 } GetItemGraphicEntry; // size = 0x24
 
 typedef struct {
-    /* 0x00 */ u8 upgradeShiftAmount[0xC];
-    /* 0x0C */ u16 arrowCapacity[4];
-    /* 0x14 */ u16 bombCapacity[4];
-    /* 0x1C */ u16 unkCapacity1C[4];
-    /* 0x24 */ u16 unkCapacity24[4];
-    /* 0x2C */ u16 walletCapacity[4];
-    /* 0x34 */ u16 unkCapacity34[4];
-    /* 0x3C */ u16 stickCapacity[4];
-    /* 0x44 */ u16 nutCapacity[4];
-} ItemUpgradeCapacity; // size = 0x4C
+    /* 0x00 */ u8 upgradeShiftAmount[0x8];
+    /* 0x08 */ u16 arrowCapacity[4];
+    /* 0x10 */ u16 bombCapacity[4];
+    /* 0x18 */ u16 unkCapacity18[4];
+    /* 0x20 */ u16 unkCapacity20[4];
+    /* 0x28 */ u16 walletCapacity[4];
+    /* 0x30 */ u16 unkCapacity30[4];
+    /* 0x38 */ u16 stickCapacity[4];
+    /* 0x40 */ u16 nutCapacity[4];
+} ItemUpgradeCapacity; // size = 0x48
 
 /// =============================================================
 /// File Select Context

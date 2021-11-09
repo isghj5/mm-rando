@@ -11,115 +11,65 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 
 namespace MMR.Randomizer.Utils
 {
     public static class LogicUtils
     {
-        public static string[] ReadRulesetFromResources(LogicMode mode, string userLogicFileName)
+        public static LogicFile ReadRulesetFromResources(LogicMode mode, string userLogicFileName)
         {
-            string[] lines = null;
-
             if (mode == LogicMode.Casual)
             {
-                lines = Properties.Resources.REQ_CASUAL.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                return LogicFile.FromJson(Properties.Resources.REQ_CASUAL);
             }
             else if (mode == LogicMode.Glitched)
             {
-                lines = Properties.Resources.REQ_GLITCH.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                return LogicFile.FromJson(Properties.Resources.REQ_GLITCH);
             }
             else if (mode == LogicMode.UserLogic)
             {
                 using (StreamReader Req = new StreamReader(File.OpenRead(userLogicFileName)))
                 {
                     var logic = Req.ReadToEnd();
-                    if (logic.StartsWith("{"))
-                    {
-                        var configurationLogic = Configuration.FromJson(logic);
-                        logic = configurationLogic.GameplaySettings.Logic;
-                    }
-                    lines = logic.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+
+                    return LogicFile.FromJson(logic);
+
+                    // TODO handle logic within settings file
                 }
             }
 
-            return lines;
+            return null;
         }
 
         /// <summary>
         /// Populates the item list using the lines from a logic file, processes them 4 lines per item. 
         /// </summary>
         /// <param name="data">The lines from a logic file</param>
-        public static ItemList PopulateItemListFromLogicData(string[] data)
+        public static ItemList PopulateItemListFromLogicData(LogicFile logicFile)
         {
             var itemList = new ItemList();
-            if (Migrator.GetVersion(data.ToList()) != Migrator.CurrentVersion)
+            if (logicFile.Version != Migrator.CurrentVersion)
             {
                 throw new Exception("Logic file is out of date or invalid. Open it in the Logic Editor to bring it up to date.");
             }
 
-            int itemId = 0;
-            int lineNumber = 0;
-
-            var currentItem = new ItemObject();
-
-            // Process lines in groups of 4
-            foreach (string line in data)
+            var logic = logicFile.Logic;
+            for (var i = 0; i < logic.Count; i++)
             {
-                if (line.StartsWith("#"))
+                var logicItem = logic[i];
+                itemList.Add(new ItemObject
                 {
-                    continue;
-                }
-                if (line.StartsWith("-"))
-                {
-                    currentItem.Name = line.Substring(2);
-                    continue;
-                }
-
-                switch (lineNumber)
-                {
-                    case 0:
-                        //dependence
-                        ProcessDependenciesForItem(currentItem, line);
-                        break;
-                    case 1:
-                        //conditionals
-                        ProcessConditionalsForItem(currentItem, line);
-                        break;
-                    case 2:
-                        //time needed
-                        currentItem.TimeNeeded = Convert.ToInt32(line);
-                        break;
-                    case 3:
-                        //time available
-                        currentItem.TimeAvailable = Convert.ToInt32(line);
-                        if (currentItem.TimeAvailable == 0)
-                        {
-                            currentItem.TimeAvailable = 63;
-                        }
-                        break;
-                    case 4:
-                        var trickInfo = line.Split(new char[] { ';' }, 2);
-                        currentItem.IsTrick = trickInfo.Length > 1;
-                        currentItem.TrickTooltip = currentItem.IsTrick ? trickInfo[1] : null;
-                        if (string.IsNullOrWhiteSpace(currentItem.TrickTooltip))
-                        {
-                            currentItem.TrickTooltip = null;
-                        }
-                        break;
-                }
-
-                lineNumber++;
-
-                if (lineNumber == 5)
-                {
-                    currentItem.ID = itemId;
-                    itemList.Add(currentItem);
-
-                    currentItem = new ItemObject();
-
-                    itemId++;
-                    lineNumber = 0;
-                }
+                    ID = i,
+                    Name = logicItem.Id,
+                    TimeNeeded = (int)logicItem.TimeNeeded,
+                    TimeAvailable = logicItem.TimeAvailable > 0 ? (int)logicItem.TimeAvailable : 63,
+                    TimeSetup = (int)logicItem.TimeSetup,
+                    IsTrick = logicItem.IsTrick,
+                    TrickTooltip = logicItem.TrickTooltip,
+                    DependsOnItems = logicItem.RequiredItems.Select(item => (Item)logic.FindIndex(li => li.Id == item)).ToList(),
+                    Conditionals = logicItem.ConditionalItems.Select(c => c.Select(item => (Item)logic.FindIndex(li => li.Id == item)).ToList()).ToList(),
+                });
             }
 
             foreach (var io in itemList)
@@ -135,22 +85,6 @@ namespace MMR.Randomizer.Utils
             }
 
             return itemList;
-        }
-
-        private static void ProcessConditionalsForItem(ItemObject currentItem, string line)
-        {
-            foreach (string conditions in line.Split(new[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                currentItem.Conditionals.Add(Array.ConvertAll(conditions.Split(','), int.Parse).Select(i => (Item)i).ToList());
-            }
-        }
-
-        private static void ProcessDependenciesForItem(ItemObject currentItem, string line)
-        {
-            foreach (string dependency in line.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
-            {
-                currentItem.DependsOnItems.Add((Item)Convert.ToInt32(dependency));
-            }
         }
 
         /// <summary>
@@ -189,18 +123,20 @@ namespace MMR.Randomizer.Utils
         public static ReadOnlyCollection<Item> GetGossipStoneRequirement(GossipQuote gossipQuote, ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
         {
             var gossipStoneItem = gossipQuote.GetAttribute<GossipStoneAttribute>().Item;
-            return GetImportantItems(itemList, settings, gossipStoneItem, logic).Required;
+            return GetImportantLocations(itemList, settings, gossipStoneItem, logic).Required;
         }
 
         public class LogicPaths
         {
             public ReadOnlyCollection<Item> Required { get; set; }
             public ReadOnlyCollection<Item> Important { get; set; }
+            public ReadOnlyCollection<Item> ImportantSongLocations { get; set; }
         }
 
-        public static LogicPaths GetImportantItems(ItemList itemList, GameplaySettings settings, Item item, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedItems = null, params Item[] exclude)
+        public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, params Item[] exclude)
         {
-            if (settings.CustomStartingItemList.Contains(item))
+            var itemObject = itemList.Find(io => io.NewLocation == location) ?? itemList[location];
+            if (settings.CustomStartingItemList.Contains(itemObject.Item))
             {
                 return new LogicPaths();
             }
@@ -208,33 +144,36 @@ namespace MMR.Randomizer.Utils
             {
                 logicPath = new List<Item>();
             }
-            if (logicPath.Contains(item))
+            if (logicPath.Contains(location))
             {
                 return null;
             }
-            if (exclude.Contains(item))
+            if (exclude.Contains(location))
             {
-                if (settings.AddSongs || !ItemUtils.IsSong(item) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i) && !ItemUtils.IsSong(i)))
+                if (settings.AddSongs || !ItemUtils.IsSong(location) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i) && !ItemUtils.IsSong(i)))
                 {
                     return null;
                 }
             }
-            logicPath.Add(item);
-            if (checkedItems == null)
+            var importantSongLocations = new List<Item>();
+            if (!settings.AddSongs && ItemUtils.IsSong(location) && logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i)))
             {
-                checkedItems = new Dictionary<Item, LogicPaths>();
+                importantSongLocations.Add(location);
             }
-            if (checkedItems.ContainsKey(item))
+            logicPath.Add(location);
+            if (checkedLocations == null)
             {
-                if (logicPath.Intersect(checkedItems[item].Required).Any())
+                checkedLocations = new Dictionary<Item, LogicPaths>();
+            }
+            if (checkedLocations.ContainsKey(location))
+            {
+                if (logicPath.Intersect(checkedLocations[location].Required).Any())
                 {
                     return null;
                 }
-                return checkedItems[item];
+                return checkedLocations[location];
             }
-            var itemObject = itemList[item];
-            var locationId = itemObject.NewLocation.HasValue ? itemObject.NewLocation : item;
-            var locationLogic = itemLogic[(int)locationId];
+            var locationLogic = itemLogic[(int)location];
             var required = new List<Item>();
             var important = new List<Item>();
             if (locationLogic.RequiredItemIds != null && locationLogic.RequiredItemIds.Any())
@@ -246,13 +185,16 @@ namespace MMR.Randomizer.Utils
                         continue;
                     }
 
-                    var childPaths = GetImportantItems(itemList, settings, requiredItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                    var requiredLocation = itemList[requiredItemId].NewLocation ?? requiredItemId;
+
+                    var childPaths = GetImportantLocations(itemList, settings, requiredLocation, itemLogic, logicPath.ToList(), checkedLocations, exclude);
                     if (childPaths == null)
                     {
                         return null;
                     }
 
-                    required.Add(requiredItemId);
+                    required.Add(requiredLocation);
+                    important.Add(requiredLocation);
                     if (childPaths.Required != null)
                     {
                         required.AddRange(childPaths.Required);
@@ -260,6 +202,10 @@ namespace MMR.Randomizer.Utils
                     if (childPaths.Important != null)
                     {
                         important.AddRange(childPaths.Important);
+                    }
+                    if (childPaths.ImportantSongLocations != null)
+                    {
+                        importantSongLocations.AddRange(childPaths.ImportantSongLocations);
                     }
                 }
             }
@@ -270,6 +216,7 @@ namespace MMR.Randomizer.Utils
                 {
                     var conditionalRequired = new List<Item>();
                     var conditionalImportant = new List<Item>();
+                    var conditionalImportantSongLocations = new List<Item>();
                     foreach (var conditionalItemId in conditions.Cast<Item>())
                     {
                         if (itemList[conditionalItemId].Item != conditionalItemId)
@@ -277,7 +224,9 @@ namespace MMR.Randomizer.Utils
                             continue;
                         }
 
-                        var childPaths = GetImportantItems(itemList, settings, conditionalItemId, itemLogic, logicPath.ToList(), checkedItems, exclude);
+                        var conditionalLocation = itemList[conditionalItemId].NewLocation ?? conditionalItemId;
+
+                        var childPaths = GetImportantLocations(itemList, settings, conditionalLocation, itemLogic, logicPath.ToList(), checkedLocations, exclude);
                         if (childPaths == null)
                         {
                             conditionalRequired = null;
@@ -285,7 +234,8 @@ namespace MMR.Randomizer.Utils
                             break;
                         }
 
-                        conditionalRequired.Add(conditionalItemId);
+                        conditionalRequired.Add(conditionalLocation);
+                        conditionalImportant.Add(conditionalLocation);
                         if (childPaths.Required != null)
                         {
                             conditionalRequired.AddRange(childPaths.Required);
@@ -294,6 +244,10 @@ namespace MMR.Randomizer.Utils
                         {
                             conditionalImportant.AddRange(childPaths.Important);
                         }
+                        if (childPaths.ImportantSongLocations != null)
+                        {
+                            conditionalImportantSongLocations.AddRange(childPaths.ImportantSongLocations);
+                        }
                     }
 
                     if (conditionalRequired != null && conditionalImportant != null)
@@ -301,7 +255,8 @@ namespace MMR.Randomizer.Utils
                         logicPaths.Add(new LogicPaths
                         {
                             Required = conditionalRequired.AsReadOnly(),
-                            Important = conditionalImportant.AsReadOnly()
+                            Important = conditionalImportant.AsReadOnly(),
+                            ImportantSongLocations = conditionalImportantSongLocations.AsReadOnly()
                         });
                     }
                 }
@@ -311,15 +266,17 @@ namespace MMR.Randomizer.Utils
                 }
                 required.AddRange(logicPaths.Select(lp => lp.Required.AsEnumerable()).Aggregate((a, b) => a.Intersect(b)));
                 important.AddRange(logicPaths.SelectMany(lp => lp.Required.Union(lp.Important)).Distinct());
+                importantSongLocations.AddRange(logicPaths.SelectMany(lp => lp.ImportantSongLocations).Distinct());
             }
             var result = new LogicPaths
             {
                 Required = required.Distinct().ToList().AsReadOnly(),
-                Important = important.Union(required).Distinct().ToList().AsReadOnly()
+                Important = important.Union(required).Distinct().ToList().AsReadOnly(),
+                ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly()
             };
-            if (!item.IsFake())
+            if (!location.IsFake())
             {
-                checkedItems[item] = result;
+                checkedLocations[location] = result;
             }
             return result;
         }

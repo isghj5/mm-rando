@@ -352,26 +352,39 @@ namespace MMR.Randomizer.Utils
                 GameObjects.Scene.MountainVillageSpring,
                 GameObjects.Scene.TwinIslands,
                 GameObjects.Scene.TwinIslandsSpring,
+                GameObjects.Scene.GoronRacetrack,
                 GameObjects.Scene.GoronVillage,
                 GameObjects.Scene.GoronVillageSpring,
                 GameObjects.Scene.PathToSnowhead,
+                GameObjects.Scene.Snowhead,
                 GameObjects.Scene.MilkRoad,
                 GameObjects.Scene.GreatBayCoast,
                 GameObjects.Scene.PinnacleRock,
                 GameObjects.Scene.ZoraCape,
                 GameObjects.Scene.WaterfallRapids,
                 GameObjects.Scene.RoadToIkana,
+                GameObjects.Scene.IkanaCanyon,
                 GameObjects.Scene.EastClockTown,
                 GameObjects.Scene.WestClockTown,
                 GameObjects.Scene.NorthClockTown,
                 GameObjects.Scene.SouthClockTown,
-                GameObjects.Scene.LaundryPool
+                GameObjects.Scene.LaundryPool,
+                GameObjects.Scene.Woodfall,
             }.ToList();
 
             foreach (var SceneEnum in TargetSceneEnums)
             {
                 ReenableNightBGMSingle(RomData.SceneList.Find(u => u.Number == SceneEnum.Id()).File);
             }
+
+            // Kamaro the dancing ghost in Termina Field breaks night music
+            //   he calls a function that sets an unknown actor flag unk39 & 20, he calls this function per frame from multiple places
+            // if we nop it his music never plays, and might music is never interupted by him
+            var kamaroFID = 593; //GameObjects.Actor.En_Yb.FileListIndex();
+            RomUtils.CheckCompressed(kamaroFID);
+            var kamaroData = RomData.MMFileList[kamaroFID].Data;
+            // null function call to func_800B9084 -> NOP
+            ReadWriteUtils.Arr_WriteU32(kamaroData, 0x618, 0x00000000);
         }
     }
 }

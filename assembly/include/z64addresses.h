@@ -12,7 +12,7 @@
 #define ActorOverlayTableAddr            0x801AEFD0
 #define GetItemGraphicTableAddr          0x801BB170
 #define GameStateTableAddr               0x801BD910
-#define ItemUpgradeCapacityAddr          0x801C1E00
+#define ItemUpgradeCapacityAddr          0x801C1E04
 #define ItemTextureSegAddrTableAddr      0x801C1E6C // Segment address table used for item textures.
 #define ObjectTableAddr                  0x801C2740
 #define SongNotesAddr                    0x801CFC98
@@ -21,6 +21,7 @@
 #define SegmentTableAddr                 0x801F8180
 #define StaticContextAddr                0x803824D0
 #define GlobalContextAddr                0x803E6B20 // Todo: Remove.
+#define SequenceContextAddr              0x802050D0
 
 // Data.
 #define gActorOverlayTable               ((ActorOverlay*)            ActorOverlayTableAddr)
@@ -34,6 +35,7 @@
 #define gRspSegmentPhysAddrs             (*(SegmentTable*)           SegmentTableAddr)
 #define gSongNotes                       (*(SongNotes*)              SongNotesAddr)
 #define s803824D0                        (*(StaticContext*)          StaticContextAddr)
+#define gSequenceContext                 ((SequenceContext*)         SequenceContextAddr)
 
 // Data (non-struct).
 #define gItemTextureSegAddrTable         ((u32*)                     ItemTextureSegAddrTableAddr)
@@ -54,6 +56,7 @@ extern void z2_PopMatrixStack();
 extern f32* z2_GetMatrixStackTop();
 extern void z2_TransformMatrixStackTop(Vec3f* pos, Vec3s* rot);
 extern Gfx* z2_ShiftMatrix(GraphicsContext* gfxCtx);
+extern AudioInfo* z2_GetAudioTable(u8 audioType);
 extern void z2_PlaySfx(u32 id);
 extern void z2_PlaySfxAtActor(Actor* actor, u32 id);
 extern void z2_PlayLoopingSfxAtActor(Actor* actor, u32 id);
@@ -65,6 +68,9 @@ extern void z2_ToggleSfxDampen(int enable);
 extern void z2_HandleInputVelocity(f32* linearVelocity, f32 inputVelocity, f32 increaseBy, f32 decreaseBy);
 extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 extern void z2_UpdatePictoFlags(GlobalContext* ctxt);
+extern void z2_8012C654(GraphicsContext* gfxCtx);
+extern Gfx* z2_8010CFBC(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a);
+extern Gfx* z2_8010D480(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a, u16 arg14, u16 arg15);
 
 // Function Prototypes (Scene Flags).
 // TODO parameters
@@ -133,6 +139,8 @@ extern void z2_Kanfont_LoadAsciiChar(GlobalContext* ctxt, u8 character, s32 iPar
 extern void z2_BaseDrawCollectable(Actor* actor, GlobalContext* ctxt);
 extern void z2_BaseDrawGiModel(GlobalContext* ctxt, u32 graphicIdMinus1);
 extern void z2_CallSetupDList(GraphicsContext* gfx);
+extern Gfx* z2_8012BC50(Gfx* gfx, u8 r, u8 g, u8 b, u8 a, u16 unk_a5, f32 unk_a6);
+extern Gfx* z2_Gfx_CallSetupDL(Gfx* gfx, u32 i);
 extern void z2_DrawHeartPiece(Actor* actor, GlobalContext* ctxt);
 extern void z2_DrawRupee(Actor* actor, GlobalContext* ctxt);
 extern void z2_PreDraw1(Actor* actor, GlobalContext* ctxt, u32 unknown);
@@ -155,6 +163,8 @@ extern void z2_Yaz0_LoadAndDecompressFile(u32 promAddr, void* dest, u32 length);
 extern void z2_SetGetItem(Actor* actor, GlobalContext* ctxt, s32 unk2, u32 unk3);
 extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 extern void z2_GiveItem(GlobalContext* ctxt, u8 itemId);
+extern u8 z2_IsItemKnown(u8 itemId);
+extern bool z2_HasEmptyBottle();
 extern void z2_GiveMap(u32 mapIndex);
 extern void z2_AddRupees(s32 amount);
 
@@ -173,6 +183,7 @@ extern s8 z2_GetObjectIndex(const SceneContext* ctxt, u16 objectId);
 
 extern void z2_SkelAnime_DrawLimb(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, bool* overrideLimbDraw, void* postLimbDraw, Actor* actor);
 extern void z2_SkelAnime_DrawLimb2(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, Actor* actor);
+extern void z2_SkelAnime_DrawLimb3(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, void* unkDraw, Actor* actor);
 
 // Function Prototypes (OS).
 extern void z2_memcpy(void* dest, const void* src, u32 size);
@@ -194,6 +205,9 @@ extern void z2_ShowMessage(GlobalContext* ctxt, u16 messageId, u8 something); //
 extern bool z2_IsMessageClosing(Actor* actor, GlobalContext *ctxt);
 extern u8 z2_GetMessageState(MessageContext* msgCtx);
 
+// Function Prototypes (Unknown).
+extern int z2_801242DC(GlobalContext* ctxt);
+
 // Relocatable Functions (kaleido_scope).
 #define z2_PauseDrawItemIcon_VRAM        0x80821AD4
 
@@ -211,7 +225,7 @@ extern u8 z2_GetMessageState(MessageContext* msgCtx);
 typedef void (*z2_PauseDrawItemIcon_Func)(GraphicsContext* gfx, u32 segAddr, u16 width, u16 height, u16 quadVtxIdx);
 
 // Function Prototypes (Relocatable player_actor functions).
-typedef void (*z2_LinkDamage_Func)(GlobalContext* ctxt, ActorPlayer* player, u32 type, u32 arg3);
+typedef void (*z2_LinkDamage_Func)(GlobalContext* ctxt, ActorPlayer* player, u32 type, f32 xzKnockback, f32 yKnockback, s16 knockbackDirection);
 typedef void (*z2_LinkInvincibility_Func)(ActorPlayer* player, u8 frames);
 typedef void (*z2_PerformEnterWaterEffects_Func)(GlobalContext* ctxt, ActorPlayer* player);
 typedef void (*z2_PlayerHandleBuoyancy_Func)(ActorPlayer* player);

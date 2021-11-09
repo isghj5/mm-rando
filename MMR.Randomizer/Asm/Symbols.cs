@@ -252,6 +252,11 @@ namespace MMR.Randomizer.Asm
             WriteAsmConfig("WORLD_COLOR_CONFIG", config);
         }
 
+        public void WriteMusicConfig(MusicConfig config)
+        {
+            WriteAsmConfig("MUSIC_CONFIG", config);
+        }
+
         /// <summary>
         /// Try and write a <see cref="DPadConfig"/> to the ROM.
         /// </summary>
@@ -316,6 +321,19 @@ namespace MMR.Randomizer.Asm
             try
             {
                 WriteWorldColorsConfig(config);
+                return true;
+            }
+            catch (KeyNotFoundException)
+            {
+                return false;
+            }
+        }
+
+        public bool TryWriteMusicConfig(MusicConfig config)
+        {
+            try
+            {
+                WriteMusicConfig(config);
                 return true;
             }
             catch (KeyNotFoundException)
@@ -448,6 +466,7 @@ namespace MMR.Randomizer.Asm
             this.WriteDPadConfig(options.DPadConfig);
             this.WriteHudColorsConfig(options.HudColorsConfig);
             this.WriteWorldColorsConfig(options.WorldColorsConfig);
+            this.WriteMusicConfig(options.MusicConfig);
 
             // Only write the MiscConfig hash (the rest should not be changeable post-patch)
             this.WriteMiscHash(options.Hash);
@@ -462,6 +481,7 @@ namespace MMR.Randomizer.Asm
             this.TryWriteDPadConfig(options.DPadConfig);
             this.TryWriteHudColorsConfig(options.HudColorsConfig);
             this.TryWriteWorldColorsConfig(options.WorldColorsConfig);
+            this.TryWriteMusicConfig(options.MusicConfig);
 
             // Try and write the MiscConfig hash
             this.TryWriteMiscHash(options.Hash);

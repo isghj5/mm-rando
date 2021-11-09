@@ -125,6 +125,16 @@ namespace MMR.Randomizer.Asm
         public bool FairyChests { get; set; }
 
         /// <summary>
+        /// Whether or not to show health bars when targeting an enemy.
+        /// </summary>
+        public bool TargetHealth { get; set; }
+
+        /// <summary>
+        /// Whether or not to allow player to climb anywhere. (Combined with additional hacks)
+        /// </summary>
+        public bool ClimbAnything { get; set; }
+
+        /// <summary>
         /// Whether or not to apply Elegy of Emptiness speedups.
         /// </summary>
         public bool ElegySpeedup { get; set; } = true;
@@ -162,7 +172,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Whether or not to allow using the ocarina underwater.
         /// </summary>
-        public bool OcarinaUnderwater { get; set; }
+        public bool OcarinaUnderwater { get; set; } = true;
 
         /// <summary>
         /// Behaviour of how quest items should be consumed.
@@ -173,6 +183,11 @@ namespace MMR.Randomizer.Asm
         /// Whether or not to enable Quest Item Storage.
         /// </summary>
         public bool QuestItemStorage { get; set; } = true;
+
+        /// <summary>
+        /// Whether or not to enable spawning scarecrow without Scarecrow's Song.
+        /// </summary>
+        public bool FreeScarecrow { get; set; }
 
         public MiscFlags()
         {
@@ -201,6 +216,11 @@ namespace MMR.Randomizer.Asm
             this.ShopModels = ((flags >> 17) & 1) == 1;
             this.ProgressiveUpgrades = ((flags >> 16) & 1) == 1;
             this.IceTrapQuirks = ((flags >> 15) & 1) == 1;
+            this.EarlyMikau = ((flags >> 14) & 1) == 1;
+            this.FairyChests = ((flags >> 13) & 1) == 1;
+            this.TargetHealth = ((flags >> 12) & 1) == 1;
+            this.ClimbAnything = ((flags >> 11) & 1) == 1;
+            this.FreeScarecrow = ((flags >> 10) & 1) == 1;
         }
 
         /// <summary>
@@ -227,6 +247,9 @@ namespace MMR.Randomizer.Asm
             flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 15;
             flags |= (this.EarlyMikau ? (uint)1 : 0) << 14;
             flags |= (this.FairyChests ? (uint)1 : 0) << 13;
+            flags |= (this.TargetHealth ? (uint)1 : 0) << 12;
+            flags |= (this.ClimbAnything ? (uint)1 : 0) << 11;
+            flags |= (this.FreeScarecrow ? (uint)1 : 0) << 10;
             return flags;
         }
     }
@@ -241,8 +264,6 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool VanillaLayout { get; set; }
 
-        public ushort CollectableTableFileIndex { get; set; }
-
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
@@ -251,7 +272,25 @@ namespace MMR.Randomizer.Asm
         {
             uint flags = 0;
             flags |= (this.VanillaLayout ? (uint)1 : 0) << 31;
-            flags |= CollectableTableFileIndex;
+            return flags;
+        }
+    }
+
+    public class MiscShorts
+    {
+        public ushort CollectableTableFileIndex { get; set; }
+
+        public ushort BankWithdrawFee { get; set; }
+
+        /// <summary>
+        /// Convert to a <see cref="uint"/> integer.
+        /// </summary>
+        /// <returns>Integer</returns>
+        public uint ToInt()
+        {
+            uint flags = 0;
+            flags |= (uint)CollectableTableFileIndex << 16;
+            flags |= BankWithdrawFee;
             return flags;
         }
     }
@@ -266,6 +305,7 @@ namespace MMR.Randomizer.Asm
         public uint Flags;
         public uint InternalFlags;
         public uint Speedups;
+        public uint Shorts;
 
         /// <summary>
         /// Convert to bytes.
@@ -292,6 +332,7 @@ namespace MMR.Randomizer.Asm
                 if (this.Version >= 3)
                 {
                     writer.WriteUInt32(this.Speedups);
+                    writer.WriteUInt32(this.Shorts);
                 }
 
                 return memStream.ToArray();
@@ -324,17 +365,20 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public MiscSpeedups Speedups { get; set; }
 
+        public MiscShorts Shorts { get; set; }
+
         public MiscConfig()
-            : this(new byte[0], new MiscFlags(), new InternalFlags(), new MiscSpeedups())
+            : this(new byte[0], new MiscFlags(), new InternalFlags(), new MiscSpeedups(), new MiscShorts())
         {
         }
 
-        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags, MiscSpeedups speedups)
+        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags, MiscSpeedups speedups, MiscShorts shorts)
         {
             this.Hash = hash;
             this.Flags = flags;
             this.InternalFlags = internalFlags;
             this.Speedups = speedups;
+            this.Shorts = shorts;
         }
 
         /// <summary>
@@ -358,7 +402,7 @@ namespace MMR.Randomizer.Asm
 
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;
-            this.InternalFlags.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
+            this.Shorts.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
         }
 
         /// <summary>
@@ -377,6 +421,7 @@ namespace MMR.Randomizer.Asm
                 Flags = this.Flags.ToInt(),
                 InternalFlags = this.InternalFlags.ToInt(),
                 Speedups = this.Speedups.ToInt(),
+                Shorts = this.Shorts.ToInt(),
             };
         }
     }

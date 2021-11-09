@@ -45,6 +45,9 @@ namespace MMR.Randomizer.Asm
         public byte[] ExtraStartingItemIds;
         public ushort ExtraStartingItemIdsLength;
 
+        public ushort[] ItemsToReturnIds;
+        public ushort ItemsToReturnIdsLength;
+
         /// <summary>
         /// Convert to bytes.
         /// </summary>
@@ -90,6 +93,11 @@ namespace MMR.Randomizer.Asm
                 writer.WriteByte(0); // padding
                 writer.WriteBytes(this.ExtraStartingItemIds);
                 writer.WriteUInt16(this.ExtraStartingItemIdsLength);
+                foreach (var val in this.ItemsToReturnIds)
+                {
+                    writer.WriteUInt16(val);
+                }
+                writer.WriteUInt16(this.ItemsToReturnIdsLength);
 
                 return memStream.ToArray();
             }
@@ -130,10 +138,13 @@ namespace MMR.Randomizer.Asm
 
         public List<byte> ExtraStartingItemIds { get; set; }
 
+        public List<ushort> ItemsToReturnIds { get; set; }
+
         public MMRConfig()
         {
             ExtraStartingItemIds = new List<byte>();
             RupeeRepeatableLocations = new List<ushort>();
+            ItemsToReturnIds = new List<ushort>();
         }
 
         /// <summary>
@@ -157,6 +168,9 @@ namespace MMR.Randomizer.Asm
             var rupeeRepeatableLocations = this.RupeeRepeatableLocations.Concat(Enumerable.Repeat((ushort)0, endBuffer)).ToArray();
             var extraStartingItemIds = this.ExtraStartingItemIds.ToArray();
             Array.Resize(ref extraStartingItemIds, 0x10);
+
+            var itemsToReturnIds = this.ItemsToReturnIds.ToArray();
+            Array.Resize(ref itemsToReturnIds, 0x10);
             return new MMRConfigStruct
             {
                 Version = version,
@@ -189,6 +203,9 @@ namespace MMR.Randomizer.Asm
                 ExtraStartingMaps = (byte)this.ExtraStartingMaps,
                 ExtraStartingItemIds = extraStartingItemIds,
                 ExtraStartingItemIdsLength = (ushort)this.ExtraStartingItemIds.Count,
+
+                ItemsToReturnIds = itemsToReturnIds,
+                ItemsToReturnIdsLength = (ushort)this.ItemsToReturnIds.Count,
             };
         }
     }

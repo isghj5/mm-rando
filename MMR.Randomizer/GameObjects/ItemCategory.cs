@@ -19,6 +19,9 @@ namespace MMR.Randomizer.GameObjects
         [Description("Randomize Heart Containers.")]
         HeartContainers,
 
+        [Description("Randomize Boss Remains.")]
+        BossRemains,
+
         [Description("Randomize Pieces of Heart.")]
         PiecesOfHeart,
 
@@ -108,6 +111,9 @@ namespace MMR.Randomizer.GameObjects
 
         [Description("Randomize bottle scoops.")]
         ScoopedItems,
+
+        [Description("Randomize Ocarina and Song of Time.")]
+        TimeTravel,
     }
 
     public enum LocationCategory

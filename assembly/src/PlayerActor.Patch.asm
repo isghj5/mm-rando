@@ -115,3 +115,23 @@
 .org 0x8084C2AC
     jal     DekuHop_GetSpeedModifier_Hook
     nop
+
+;==================================================================================================
+; Handle climbing anywhere
+;==================================================================================================
+
+.headersize G_PLAYER_ACTOR_DELTA
+
+; Replaces:
+;   or      t0, r0, r0
+;   andi    t1, v0, 0x0008
+.org 0x8083D8D4
+    jal     Player_GetCollisionType_Hook
+    nop
+
+; Replaces:
+;   lw      v0, 0x2B0C (v0) ; relocated
+; With:
+;   lw      a2, 0x2B0C (v0) ; relocated
+.org 0x8083D8D0
+    .dh 0x8C46

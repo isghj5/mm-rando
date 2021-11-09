@@ -41,6 +41,8 @@ namespace MMR.Randomizer.Models
                 }
             }
         }
+
+        public List<(string name, ushort cost)> MessageCosts { get; set; }
     }
 }
 

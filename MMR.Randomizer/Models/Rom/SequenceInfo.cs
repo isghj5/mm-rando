@@ -4,6 +4,8 @@ using MMR.Randomizer.Constants;
 
 namespace MMR.Randomizer.Models.Rom
 {
+    //[System.Diagnostics.DebuggerDisplay("[{Name}][{Replaces.ToString(\"X2\")}]")] // slower but more debug
+    [System.Diagnostics.DebuggerDisplay("{Name}")]
     public class SequenceInfo
     {
         public string Name { get; set; }

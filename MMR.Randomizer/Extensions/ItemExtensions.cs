@@ -5,6 +5,7 @@ using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Attributes.Entrance;
 using System.Collections.Generic;
 using System.Linq;
+using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -73,6 +74,11 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<RegionAttribute>()?.Region;
         }
 
+        public static Item? MainLocation(this Item item)
+        {
+            return item.GetAttribute<MainLocationAttribute>()?.Location;
+        }
+
         public static string Entrance(this Item item)
         {
             return item.GetAttribute<EntranceNameAttribute>()?.Name;
@@ -96,6 +102,11 @@ namespace MMR.Randomizer.Extensions
         public static bool IsRepeatable(this Item item)
         {
             return item.HasAttribute<RepeatableAttribute>();
+        }
+
+        public static bool IsReturnable(this Item item, GameplaySettings settings)
+        {
+            return item.GetAttribute<ReturnableAttribute>()?.Condition(settings) ?? false;
         }
 
         public static bool IsRupeeRepeatable(this Item item)
@@ -149,14 +160,9 @@ namespace MMR.Randomizer.Extensions
             return item.HasAttribute<OverwritableAttribute>();
         }
 
-        public static bool IsShop(this Item item)
-        {
-            return item.HasAttribute<ShopRoomAttribute>();
-        }
-
         public static bool IsSong(this Item item)
         {
-            return (Item.SongHealing <= item && item <= Item.SongOath);
+            return (Item.SongTime <= item && item <= Item.SongOath);
         }
 
         public static ChestTypeAttribute.ChestType ChestType(this Item item)
@@ -195,6 +201,17 @@ namespace MMR.Randomizer.Extensions
         public static string ExclusiveItemMessage(this Item item)
         {
             return item.GetAttribute<ExclusiveItemMessageAttribute>().Message;
+        }
+
+        public static bool IsBottleCatchContent(this Item item)
+        {
+            return item >= Item.BottleCatchFairy
+                   && item <= Item.BottleCatchMushroom;
+        }
+
+        public static bool IsSameType(this Item item, Item other)
+        {
+            return item.IsBottleCatchContent() == other.IsBottleCatchContent();
         }
     }
 }

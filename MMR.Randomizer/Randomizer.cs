@@ -20,7 +20,7 @@ namespace MMR.Randomizer
 {
     public class Randomizer
     {
-        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString();
+        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString() + "-beta";
 
         private Random Random { get; set; }
 
@@ -147,9 +147,10 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_settings.CustomItemList.Any(item => item.LocationCategory() == LocationCategory.Purchases))
+            if (_settings.CustomItemList.Contains(Item.ShopItemBusinessScrubMagicBean))
             {
-                ItemList[Item.ShopItemWitchBluePotion].DependsOnItems?.Remove(Item.BottleCatchMushroom);
+                ItemList[Item.ShopItemBusinessScrubMagicBeanInSwamp].DependsOnItems.Remove(Item.OtherMagicBean);
+                ItemList[Item.ShopItemBusinessScrubMagicBeanInTown].DependsOnItems.Remove(Item.OtherMagicBean);
             }
 
             if (_settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.ScoopedItems) && _settings.LogicMode == LogicMode.Casual)
@@ -529,13 +530,15 @@ namespace MMR.Randomizer
                 || _settings.LogicMode == LogicMode.Glitched
                 || _settings.LogicMode == LogicMode.UserLogic)
             {
-                string[] data = LogicUtils.ReadRulesetFromResources(_settings.LogicMode, _settings.UserLogicFileName);
+                var data = LogicUtils.ReadRulesetFromResources(_settings.LogicMode, _settings.UserLogicFileName);
                 ItemList = LogicUtils.PopulateItemListFromLogicData(data);
             }
             else
             {
                 ItemList = LogicUtils.PopulateItemListWithoutLogic();
             }
+
+            RandomizePrices();
 
             UpdateLogicForSettings();
 
@@ -568,7 +571,7 @@ namespace MMR.Randomizer
             }
 
             //check timing
-            if (currentItemObject.TimeNeeded != 0 && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary()))
+            if (currentItemObject.TimeNeeded != 0 && (!_timeTravelPlaced || dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary())))
             {
                 if ((currentItemObject.TimeNeeded & currentTargetObject.TimeAvailable) == 0)
                 {
@@ -877,6 +880,7 @@ namespace MMR.Randomizer
                 {
                     dependencyObject.CannotRequireItems.Add(currentItem);
                 }
+
                 if (dependency.IsFake() || dependencyObject.NewLocation.HasValue)
                 {
                     var location = dependencyObject.NewLocation ?? dependency;
@@ -888,7 +892,7 @@ namespace MMR.Randomizer
                         CheckConditionals(currentItem, location, childPath);
                     }
                 }
-                else if (ItemList[currentItem].TimeNeeded != 0 && dependency.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary()))
+                else if (ItemList[currentItem].TimeNeeded != 0 && (!_timeTravelPlaced || (dependency.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary()))))
                 {
                     if (dependencyObject.TimeNeeded == 0)
                     {
@@ -946,11 +950,11 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            if (currentItem.IsTemporary())
+            if (!_timeTravelPlaced || currentItem.IsTemporary())
             {
-                if (target.Region() == Region.TheMoon)
+                if ((target.Region() == Region.TheMoon || target.Region() == Region.ClockTowerRoof) && currentItem.ItemCategory() != ItemCategory.TimeTravel)
                 {
-                    Debug.WriteLine($"{currentItem} is temporary and cannot be placed on the moon.");
+                    Debug.WriteLine($"{currentItem} is temporary and cannot be placed on the moon or clock tower roof.");
                     return false;
                 }
 
@@ -977,12 +981,37 @@ namespace MMR.Randomizer
             RemoveConditionals(currentItem);
             ConditionsChecked = new List<Item>();
             CheckConditionals(currentItem, target, dependencyPath);
+
+            if (currentItem == Item.SongTime && (target.Region() != Region.TheMoon || target.Region() != Region.ClockTowerRoof))
+            {
+                foreach (var itemObject in ItemList.Where(io => (io.Item.Region() == Region.TheMoon || io.Item.Region() == Region.ClockTowerRoof)))
+                {
+                    itemObject.DependsOnItems.Add(Item.SongTime);
+                }
+            }
+
             return true;
         }
 
         private void PlaceItem(Item currentItem, List<Item> targets, bool lockRegion = false)
         {
             var currentItemObject = ItemList[currentItem];
+            if (currentItem.IsFake())
+            {
+                foreach (var requiredItem in currentItemObject.DependsOnItems.AllowModification().Where(item => item.IsSameType(currentItem)))
+                {
+                    PlaceItem(requiredItem, targets);
+                }
+                var conditional = currentItemObject.Conditionals.RandomOrDefault(Random);
+                if (conditional != null)
+                {
+                    foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
+                    {
+                        PlaceItem(item, targets);
+                    }
+                }
+                return;
+            }
             if (currentItemObject.NewLocation.HasValue)
             {
                 return;
@@ -998,6 +1027,11 @@ namespace MMR.Randomizer
             if (lockRegion)
             {
                 availableItems.RemoveAll(location => location.Region() != currentItem.Region());
+            }
+
+            if (!_settings.AddSongs)
+            {
+                availableItems.RemoveAll(location => location.IsSong() != currentItem.IsSong());
             }
 
             currentItem = currentItemObject.Item;
@@ -1020,12 +1054,57 @@ namespace MMR.Randomizer
                     Debug.WriteLine($"----Placed {currentItem.Name()} at {targetLocation.Location()}----");
 
                     targets.Remove(targetLocation);
-                    return;
+
+                    break;
                 }
                 else
                 {
                     Debug.WriteLine($"----Failed to place {currentItem.Name()} at {targetLocation.Location()}----");
                     availableItems.Remove(targetLocation);
+                }
+            }
+
+            if (!_timeTravelPlaced && !ItemUtils.IsJunk(currentItem))
+            {
+                var location = ItemList[currentItemObject.NewLocation.Value];
+                var placed = new List<Item>();
+                foreach (var requiredItem in location.DependsOnItems.AllowModification())
+                {
+                    if (!_timeTravelPlaced && location.TimeSetup != 0)
+                    {
+                        var requiredItemObject = ItemList[requiredItem];
+                        if (requiredItemObject.TimeNeeded == 0)
+                        {
+                            requiredItemObject.TimeNeeded = location.TimeSetup;
+                        }
+                        else
+                        {
+                            requiredItemObject.TimeNeeded &= location.TimeSetup;
+                        }
+                    }
+
+                    PlaceItem(requiredItem, targets);
+                }
+                var conditional = location.Conditionals.RandomOrDefault(Random);
+                if (conditional != null)
+                {
+                    foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
+                    {
+                        if (!_timeTravelPlaced && location.TimeSetup != 0)
+                        {
+                            var requiredItemObject = ItemList[item];
+                            if (requiredItemObject.TimeNeeded == 0)
+                            {
+                                requiredItemObject.TimeNeeded = location.TimeSetup;
+                            }
+                            else
+                            {
+                                requiredItemObject.TimeNeeded &= location.TimeSetup;
+                            }
+                        }
+
+                        PlaceItem(item, targets);
+                    }
                 }
             }
         }
@@ -1068,6 +1147,142 @@ namespace MMR.Randomizer
             }
         }
 
+        private void RandomizePrices()
+        {
+            _randomized.MessageCosts = new List<ushort?>();
+            // TODO if costs randomized
+            for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
+            {
+                var messageCost = MessageCost.MessageCosts[i];
+                if (!_settings.PriceMode.HasFlag(messageCost.Category))
+                {
+                    _randomized.MessageCosts.Add(null);
+                    continue;
+                }
+                var walletSize = Random.Next(3);
+                var cost = (ushort)(walletSize switch
+                {
+                    0 => Random.Next(1, 100),
+                    1 => Random.Next(100, 201),
+                    _ => Random.Next(201, 501),
+                });
+
+                // this relies on puchase 2 appearing in the list directly after purchase 1
+                if (messageCost.Name == "Business Scrub Purchase 2")
+                {
+                    var purchase1Cost = _randomized.MessageCosts[i - 1] ?? 150;
+                    while (cost == purchase1Cost)
+                    {
+                        cost = (ushort)(walletSize switch
+                        {
+                            0 => Random.Next(1, 100),
+                            1 => Random.Next(100, 201),
+                            _ => Random.Next(201, 501),
+                        });
+                    }
+                }
+
+                _randomized.MessageCosts.Add(cost);
+            }
+
+            if (_settings.LogicMode != LogicMode.NoLogic)
+            {
+                var wallets200 = ItemList
+                    .FirstOrDefault(io =>
+                        io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeAdultWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet })));
+
+                if (wallets200 == null)
+                {
+                    wallets200 = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        Conditionals = new List<List<Item>>
+                        {
+                            new List<Item> { Item.UpgradeAdultWallet },
+                            new List<Item> { Item.UpgradeGiantWallet },
+                        },
+                    };
+                    ItemList.Add(wallets200);
+                }
+
+                var affectedLocations = new Dictionary<Item, short>();
+                for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
+                {
+                    var messageCost = MessageCost.MessageCosts[i];
+                    var cost = _randomized.MessageCosts[i];
+                    if (!cost.HasValue)
+                    {
+                        continue;
+                    }
+
+                    foreach (var location in messageCost.LocationsAffected)
+                    {
+                        var affectedCost = affectedLocations.GetValueOrDefault(location, short.MaxValue);
+                        if (cost < affectedCost)
+                        {
+                            ItemList[location].DependsOnItems.Remove(wallets200.Item);
+                            ItemList[location].DependsOnItems.Remove(Item.UpgradeGiantWallet);
+                            if (cost > 200)
+                            {
+                                ItemList[location].DependsOnItems.Add(Item.UpgradeGiantWallet);
+                            }
+                            else if (cost > 99)
+                            {
+                                ItemList[location].DependsOnItems.Add(wallets200.Item);
+                            }
+                        }
+                    }
+                }
+
+                for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
+                {
+                    var messageCost = MessageCost.MessageCosts[i];
+                    var cost = _randomized.MessageCosts[i];
+                    if (!cost.HasValue)
+                    {
+                        continue;
+                    }
+
+                    Item walletRequired;
+                    if (cost > 200)
+                    {
+                        walletRequired = Item.UpgradeGiantWallet;
+                    }
+                    else if (cost > 99)
+                    {
+                        walletRequired = wallets200.Item;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                    foreach (var item in messageCost.ItemsAffected)
+                    {
+                        foreach (var io in ItemList)
+                        {
+                            if (io.DependsOnItems.Contains(item))
+                            {
+                                io.DependsOnItems.Add(walletRequired);
+                            }
+
+                            foreach (var conditionalItems in io.Conditionals)
+                            {
+                                if (conditionalItems.Contains(item))
+                                {
+                                    conditionalItems.Add(walletRequired);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void ReplaceRecoveryHeartsWithJunk()
         {
             var allUsableJunk = ItemUtils.JunkItems.Where(item => item.IsRepeatable()).ToList();
@@ -1085,12 +1300,10 @@ namespace MMR.Randomizer
             }
         }
 
+        private bool _timeTravelPlaced = false;
         private void RandomizeItems()
         {
-            if (!_settings.AddSongs)
-            {
-                ShuffleSongs();
-            }
+            _timeTravelPlaced = false;
 
             var itemPool = new List<Item>();
 
@@ -1099,6 +1312,13 @@ namespace MMR.Randomizer
             PlaceRestrictedDungeonItems(itemPool);
 
             PlaceFreeItems(itemPool);
+
+            PlaceItem(Item.SongTime, itemPool);
+            PlaceItem(Item.OtherTimeTravel, itemPool);
+            _timeTravelPlaced = true;
+
+            PlaceOcarinaAndSongOfTime(itemPool);
+            PlaceBossRemains(itemPool);
             PlaceQuestItems(itemPool);
             PlaceTradeItems(itemPool);
             PlaceDungeonItems(itemPool);
@@ -1252,9 +1472,11 @@ namespace MMR.Randomizer
         /// </summary>
         private void PlaceSongs(List<Item> itemPool)
         {
-            for (var i = Item.SongHealing; i <= Item.SongOath; i++)
+            var songs = Enumerable.Range((int)Item.SongHealing, Item.SongOath - Item.SongHealing + 1).Cast<Item>();
+
+            foreach (var song in songs.OrderBy(s => _randomized.Settings.CustomStartingItemList.Contains(s)))
             {
-                PlaceItem(i, itemPool);
+                PlaceItem(song, itemPool);
             }
         }
 
@@ -1313,12 +1535,17 @@ namespace MMR.Randomizer
                 .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item))
                 .Cast<Item?>()
                 .ToList();
+            var availableSongs = ItemUtils.StartingItems()
+                .Where(item => item.IsSong())
+                .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item))
+                .Cast<Item?>()
+                .ToList();
             foreach (var location in freeItemLocations)
             {
                 var placedItem = ItemList.FirstOrDefault(item => item.NewLocation == location)?.Item;
                 if (placedItem == null)
                 {
-                    placedItem = availableStartingItems.RandomOrDefault(Random);
+                    placedItem = (!_settings.AddSongs && location.IsSong() ? availableSongs : availableStartingItems).RandomOrDefault(Random);
                     if (placedItem == null)
                     {
                         throw new Exception("Failed to replace a starting item. Not enough items that can be started with are randomized or too many Extra Starting Items are selected.");
@@ -1344,6 +1571,20 @@ namespace MMR.Randomizer
         private void AddAllItems(List<Item> itemPool)
         {
             itemPool.AddRange(ItemUtils.AllLocations().Where(location => !ItemList.Any(io => io.NewLocation == location)));
+        }
+
+        private void PlaceOcarinaAndSongOfTime(List<Item> itemPool)
+        {
+            PlaceItem(Item.SongTime, itemPool);
+            PlaceItem(Item.ItemOcarina, itemPool);
+        }
+
+        private void PlaceBossRemains(List<Item> itemPool)
+        {
+            for (var i = Item.RemainsOdolwa; i <= Item.RemainsTwinmold; i++)
+            {
+                PlaceItem(i, itemPool);
+            }
         }
 
         /// <summary>
@@ -1386,29 +1627,6 @@ namespace MMR.Randomizer
             for (var i = Item.BottleCatchFairy; i <= Item.BottleCatchMushroom; i++)
             {
                 PlaceItem(i, itemPool);
-            }
-        }
-
-        /// <summary>
-        /// Randomizes songs with other songs
-        /// </summary>
-        private void ShuffleSongs()
-        {
-            var itemPool = new List<Item>();
-            for (var i = Item.SongHealing; i <= Item.SongOath; i++)
-            {
-                if (ItemList[i].NewLocation.HasValue)
-                {
-                    continue;
-                }
-                itemPool.Add(i);
-            }
-
-            var songs = Enumerable.Range((int)Item.SongHealing, Item.SongOath - Item.SongHealing + 1).Cast<Item>();
-
-            foreach (var song in songs.OrderBy(s => _randomized.Settings.CustomStartingItemList.Contains(s)))
-            {
-                PlaceItem(song, itemPool);
             }
         }
 
@@ -1479,13 +1697,13 @@ namespace MMR.Randomizer
                 item.Mimic = mimic;
 
                 var newLocation = item.NewLocation.Value;
-                if (newLocation.IsVisible() || newLocation.IsShop() || newLocation.IsPurchaseable())
+                if (newLocation.IsVisible() || newLocation.IsPurchaseable())
                 {
                     // Store name override for logging in HTML tracker.
                     item.NameOverride = $"{Item.IceTrap.Name()} ({mimic.Item.Name()})";
 
                     // If ice trap quirks enabled and placed as a shop item, use a fake shop item name.
-                    if (_settings.IceTrapQuirks && (newLocation.IsShop() || newLocation.IsPurchaseable()))
+                    if (_settings.IceTrapQuirks && newLocation.IsPurchaseable())
                     {
                         item.Mimic.FakeName = FakeNameUtils.CreateFakeName(item.Mimic.Item.Name(), random);
                     }
@@ -1593,21 +1811,23 @@ namespace MMR.Randomizer
                     }).ToList()
                     : _randomized.Logic;
 
-                _randomized.ImportantItems = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic)?.Important.Where(item => !item.IsFake()).ToList().AsReadOnly();
-                if (_randomized.ImportantItems == null)
+                var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic);
+                _randomized.ImportantLocations = logicPaths?.Important.Where(item => item.Region().HasValue).ToList().AsReadOnly();
+                _randomized.ImportantSongLocations = logicPaths?.ImportantSongLocations;
+                if (_randomized.ImportantLocations == null)
                 {
                     throw new RandomizationException("Moon Access is unobtainable.");
                 }
-                var itemsRequiredForMoonAccess = new List<Item>();
-                foreach (var item in _randomized.ImportantItems)
+                var locationsRequiredForMoonAccess = new List<Item>();
+                foreach (var location in _randomized.ImportantLocations)
                 {
-                    var checkPaths = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: item);
+                    var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: location);
                     if (checkPaths == null)
                     {
-                        itemsRequiredForMoonAccess.Add(item);
+                        locationsRequiredForMoonAccess.Add(location);
                     }
                 }
-                _randomized.ItemsRequiredForMoonAccess = itemsRequiredForMoonAccess.AsReadOnly();
+                _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.AsReadOnly();
 
                 if (_settings.GossipHintStyle != GossipHintStyle.Default)
                 {
