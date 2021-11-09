@@ -35,7 +35,7 @@ namespace MMR.UI.Forms
             }
 
             UpdateString(ItemList);
-            ExternalLabel = $"{ItemList.Count}/{BaseItemList.Count} items selected";
+            ExternalLabel = $"{ItemList.Count}/{BaseItemList.Count} items randomized";
         }
 
         private void StartingItemEditForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -109,7 +109,7 @@ namespace MMR.UI.Forms
                         l.Checked = false;
                     }
                 }
-                ExternalLabel = $"{ItemList.Count}/{BaseItemList.Count} items selected";
+                ExternalLabel = $"{ItemList.Count}/{BaseItemList.Count} items randomized";
             }
             catch
             {
