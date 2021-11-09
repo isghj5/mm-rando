@@ -952,9 +952,9 @@ namespace MMR.Randomizer
 
             if (!_timeTravelPlaced || currentItem.IsTemporary())
             {
-                if (target.Region() == Region.TheMoon && currentItem.ItemCategory() != ItemCategory.TimeTravel)
+                if ((target.Region() == Region.TheMoon || target.Region() == Region.ClockTowerRoof) && currentItem.ItemCategory() != ItemCategory.TimeTravel)
                 {
-                    Debug.WriteLine($"{currentItem} is temporary and cannot be placed on the moon.");
+                    Debug.WriteLine($"{currentItem} is temporary and cannot be placed on the moon or clock tower roof.");
                     return false;
                 }
 
@@ -982,9 +982,9 @@ namespace MMR.Randomizer
             ConditionsChecked = new List<Item>();
             CheckConditionals(currentItem, target, dependencyPath);
 
-            if (currentItem == Item.SongTime && target.Region() != Region.TheMoon)
+            if (currentItem == Item.SongTime && (target.Region() != Region.TheMoon || target.Region() != Region.ClockTowerRoof))
             {
-                foreach (var itemObject in ItemList.Where(io => io.Item.Region() == Region.TheMoon))
+                foreach (var itemObject in ItemList.Where(io => (io.Item.Region() == Region.TheMoon || io.Item.Region() == Region.ClockTowerRoof)))
                 {
                     itemObject.DependsOnItems.Add(Item.SongTime);
                 }

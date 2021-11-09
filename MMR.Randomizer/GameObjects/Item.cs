@@ -847,7 +847,7 @@ namespace MMR.Randomizer.GameObjects
         //song
         [Visible]
         [StartingItem(0xC5CE24, 0x00)]
-        [ItemName("Ocarina of Time"), LocationName("Skull Kid"), Region(Region.TheMoon)]
+        [ItemName("Ocarina of Time"), LocationName("Skull Kid"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a stolen possession"), GossipItemHint("a musical instrument")]
         [ShopText("This musical instrument is filled with memories of Princess Zelda.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -855,7 +855,7 @@ namespace MMR.Randomizer.GameObjects
         ItemOcarina,
 
         [StartingItem(0xC5CE72, 0x10)]
-        [ItemName("Song of Time"), LocationName("Skull Kid Song"), Region(Region.TheMoon)]
+        [ItemName("Song of Time"), LocationName("Skull Kid Song"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a distant memory"), GossipItemHint("a forgotten melody")]
         [ShopText("This melody is a song of memories of Princess Zelda.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -2317,7 +2317,7 @@ namespace MMR.Randomizer.GameObjects
         ItemCoastGrottoCowMilk2,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Near Ceiling"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Near Ceiling"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2325,7 +2325,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken1,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Near Ceiling"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Near Ceiling"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2333,7 +2333,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken2,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Torch"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Torch"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2341,7 +2341,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken3,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Pillar"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Pillar"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2349,7 +2349,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken4,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Jar"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Jar"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2357,7 +2357,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken5,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Grass 1"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Grass 1"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2365,7 +2365,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken6,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Grass 2"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Grass 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2373,7 +2373,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken7,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Water"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Water"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2381,7 +2381,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken8,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Lower Left Soft Soil"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Lower Left Soft Soil"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2389,7 +2389,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken9,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Crate 1"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Crate 1"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2397,7 +2397,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken10,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Upper Soft Soil"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Upper Soft Soil"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2405,7 +2405,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken11,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Lower Right Soft Soil"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Lower Right Soft Soil"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2413,7 +2413,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken12,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Lower Wall"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Lower Wall"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2421,7 +2421,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken13,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room On Monument"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room On Monument"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2429,7 +2429,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken14,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Pillar"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Pillar"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2437,7 +2437,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken15,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Pot 1"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Pot 1"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2445,7 +2445,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken16,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Pot 2"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Pot 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2453,7 +2453,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken17,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Hive"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Hive"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2461,7 +2461,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken18,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Upper Pillar"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Upper Pillar"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2469,7 +2469,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken19,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Behind Vines"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Behind Vines"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2477,7 +2477,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken20,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Tree 1"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Tree 1"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2485,7 +2485,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken21,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Wall"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Wall"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2493,7 +2493,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken22,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Hive 1"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Hive 1"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2501,7 +2501,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken23,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Tree 2"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Tree 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2509,7 +2509,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken24,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Wall"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Gold Room Wall"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2517,7 +2517,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken25,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Hive"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Hive"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2525,7 +2525,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken26,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Crate 2"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Monument Room Crate 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2533,7 +2533,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken27,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Hive 2"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Pot Room Hive 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2541,7 +2541,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken28,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Tree 3"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Tree Room Tree 3"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2549,7 +2549,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken29,
 
         [Visible]
-        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Jar"), Region(Region.SouthernSwamp)]
+        [ItemName("Swamp Skulltula Spirit"), LocationName("Swamp Skulltula Main Room Jar"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the swamp spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2557,7 +2557,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleSwampSpiderToken30,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Behind Boat"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Behind Boat"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2565,7 +2565,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken1,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Hole Behind Picture"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Hole Behind Picture"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2573,7 +2573,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken2,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Hole Behind Cabinet"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Hole Behind Cabinet"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2581,7 +2581,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken3,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library On Corner Bookshelf"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library On Corner Bookshelf"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2589,7 +2589,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken4,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Ceiling Edge"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Ceiling Edge"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2597,7 +2597,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken5,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Ceiling Plank"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Ceiling Plank"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2605,7 +2605,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken6,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Ceiling Edge"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Ceiling Edge"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2613,7 +2613,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken7,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Ceiling Edge"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Ceiling Edge"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2621,7 +2621,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken8,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Ceiling Web"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Ceiling Web"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2629,7 +2629,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken9,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Behind Crate"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Behind Crate"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2637,7 +2637,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken10,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Jar"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Jar"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2645,7 +2645,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken11,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Entrance Right Wall"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Entrance Right Wall"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2653,7 +2653,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken12,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Entrance Left Wall"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Entrance Left Wall"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2661,7 +2661,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken13,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Webbed Hole"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Webbed Hole"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2669,7 +2669,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken14,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Entrance Web"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Entrance Web"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2677,7 +2677,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken15,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Chandelier 1"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Chandelier 1"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2685,7 +2685,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken16,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Chandelier 2"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Chandelier 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2693,7 +2693,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken17,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Chandelier 3"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Chandelier 3"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2701,7 +2701,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken18,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Behind Picture"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Behind Picture"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2709,7 +2709,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken19,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Behind Picture"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Behind Picture"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2717,7 +2717,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken20,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Behind Bookcase 1"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Behind Bookcase 1"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2725,7 +2725,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken21,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Crate"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Crate"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2733,7 +2733,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken22,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Webbed Pot"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Webbed Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2741,7 +2741,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken23,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Upper Pot"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Upper Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2749,7 +2749,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken24,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Pot"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Colored Skulls Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2757,7 +2757,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken25,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Jar"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Storage Room Jar"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2765,7 +2765,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken26,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Lower Pot"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Lower Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2773,7 +2773,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken27,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Behind Bookcase 2"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula Library Behind Bookcase 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2781,7 +2781,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken28,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Behind Skull 1"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Behind Skull 1"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -2789,7 +2789,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken29,
 
         [Visible]
-        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Behind Skull 2"), Region(Region.GreatBayCoast)]
+        [ItemName("Ocean Skulltula Spirit"), LocationName("Ocean Skulltula 2nd Room Behind Skull 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a golden spider"), GossipItemHint("a golden token")]
         [ShopText("Collect 30 to lift the curse in the ocean spider house.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -3748,7 +3748,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("10 Arrows"), LocationName("Oceanside Spider House Entrance Pot"), Region(Region.GreatBayCoast)]
+        [ItemName("10 Arrows"), LocationName("Oceanside Spider House Entrance Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -3758,7 +3758,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("10 Arrows"), LocationName("Oceanside Spider House Entrance Pot 2"), Region(Region.GreatBayCoast)]
+        [ItemName("10 Arrows"), LocationName("Oceanside Spider House Entrance Pot 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5328,7 +5328,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5338,7 +5338,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 2"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 2"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5348,7 +5348,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 3"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 3"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5358,7 +5358,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 4"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 4"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5368,7 +5368,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 5"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 5"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5378,7 +5378,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 6"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Pillar Item 6"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5388,7 +5388,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race River Item"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race River Item"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5398,7 +5398,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race River Item 2"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race River Item 2"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5408,7 +5408,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race River Item 3"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race River Item 3"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5418,7 +5418,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race River Item 4"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race River Item 4"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5428,7 +5428,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race River Item 5"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race River Item 5"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5438,7 +5438,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race River Item 6"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race River Item 6"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5448,7 +5448,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5458,7 +5458,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 2"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 2"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5468,7 +5468,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 3"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 3"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5478,7 +5478,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 4"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 4"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5488,7 +5488,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 5"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 5"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5498,7 +5498,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 6"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Right Path Item 6"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5508,7 +5508,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5518,7 +5518,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 2"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 2"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5528,7 +5528,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 3"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 3"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5538,7 +5538,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 4"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 4"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5548,7 +5548,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 5"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 5"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5558,7 +5558,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 6"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 6"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5568,7 +5568,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 7"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 7"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5578,7 +5578,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 8"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 8"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5588,7 +5588,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 9"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 9"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5598,7 +5598,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 10"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Final Room Item 10"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5608,7 +5608,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Butler Race Dual Pot"), Region(Region.DekuPalace)]
+        [ItemName("Green Rupee"), LocationName("Butler Race Dual Pot"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5938,7 +5938,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot"), Region(Region.TheMoon)]
+        [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a rooftop pot"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5948,7 +5948,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot 2"), Region(Region.TheMoon)]
+        [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot 2"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a rooftop pot"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5958,7 +5958,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot 3"), Region(Region.TheMoon)]
+        [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot 3"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a rooftop pot"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5968,7 +5968,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot 4"), Region(Region.TheMoon)]
+        [ItemName("Large Magic Jar"), LocationName("Clock Tower Rooftop Pot 4"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a rooftop pot"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5978,7 +5978,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5988,7 +5988,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 2"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 2"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -5998,7 +5998,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 3"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 3"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6008,7 +6008,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 4"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 4"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6018,7 +6018,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 5"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 5"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6028,7 +6028,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 6"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 6"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6038,7 +6038,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 7"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 7"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6048,7 +6048,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 8"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 8"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6058,7 +6058,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 9"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 9"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6068,7 +6068,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 10"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 10"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6078,7 +6078,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 11"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 11"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6088,7 +6088,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 12"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 12"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6098,7 +6098,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 13"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 13"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6108,7 +6108,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 14"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 14"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6118,7 +6118,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 15"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 15"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6128,7 +6128,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 16"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 16"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6138,7 +6138,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 17"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 17"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6148,7 +6148,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 18"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 18"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6158,7 +6158,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 19"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 19"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6168,7 +6168,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 20"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 20"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6178,7 +6178,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 21"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 21"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6188,7 +6188,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 22"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 22"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6198,7 +6198,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 23"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 23"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6208,7 +6208,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 24"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 24"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6218,7 +6218,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 25"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 25"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6228,7 +6228,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 26"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 26"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6238,7 +6238,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 27"), Region(Region.TwinIslands)]
+        [ItemName("Large Magic Jar"), LocationName("Goron Racetrack Pot 27"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6498,7 +6498,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Red Rupee"), LocationName("Butler Race Pillar Item 7"), Region(Region.DekuPalace)]
+        [ItemName("Red Rupee"), LocationName("Butler Race Pillar Item 7"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6508,7 +6508,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Red Rupee"), LocationName("Butler Race Pillar Item 8"), Region(Region.DekuPalace)]
+        [ItemName("Red Rupee"), LocationName("Butler Race Pillar Item 8"), Region(Region.ButlerRaceItems)]
         [GossipLocationHint("a royal race"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6868,7 +6868,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Small Magic Jar"), LocationName("Goron Racetrack Pot 28"), Region(Region.TwinIslands)]
+        [ItemName("Small Magic Jar"), LocationName("Goron Racetrack Pot 28"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6878,7 +6878,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Small Magic Jar"), LocationName("Goron Racetrack Pot 29"), Region(Region.TwinIslands)]
+        [ItemName("Small Magic Jar"), LocationName("Goron Racetrack Pot 29"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -6888,7 +6888,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Small Magic Jar"), LocationName("Goron Racetrack Pot 30"), Region(Region.TwinIslands)]
+        [ItemName("Small Magic Jar"), LocationName("Goron Racetrack Pot 30"), Region(Region.GoronRaceItems)]
         [GossipLocationHint("a racetrack jar"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7028,7 +7028,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Main Room Pot"), Region(Region.GreatBayCoast)]
+        [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Main Room Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7038,7 +7038,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Entrance Pot 3"), Region(Region.GreatBayCoast)]
+        [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Entrance Pot 3"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7048,7 +7048,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Main Room Pot 2"), Region(Region.GreatBayCoast)]
+        [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Main Room Pot 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7058,7 +7058,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Storage Room Pot"), Region(Region.GreatBayCoast)]
+        [ItemName("Small Magic Jar"), LocationName("Oceanside Spider House Storage Room Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7238,7 +7238,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Small Snowball"), Region(Region.MountainVillage)]
+        [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Small Snowball"), Region(Region.PathToMountainVillage)]
         [GossipLocationHint("a foothill snowball"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7638,7 +7638,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Invisible Item"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Invisible Item"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a large jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7648,7 +7648,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Invisible Item 2"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Invisible Item 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a large jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7658,7 +7658,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Invisible Item 3"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Invisible Item 3"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a large jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7668,7 +7668,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Blue Rupee"), LocationName("Swamp Spider House Invisible Item 4"), Region(Region.SouthernSwamp)]
+        [ItemName("Blue Rupee"), LocationName("Swamp Spider House Invisible Item 4"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a large jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7678,7 +7678,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Red Rupee"), LocationName("Swamp Spider House Invisible Item 5"), Region(Region.SouthernSwamp)]
+        [ItemName("Red Rupee"), LocationName("Swamp Spider House Invisible Item 5"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a large jar"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 20 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7818,7 +7818,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Blue Rupee"), LocationName("Swamp Spider House Rock Soft Soil"), Region(Region.SouthernSwamp)]
+        [ItemName("Blue Rupee"), LocationName("Swamp Spider House Rock Soft Soil"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("rock soil"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -7828,7 +7828,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("30 Arrows"), LocationName("Swamp Spider House Gold Room Soft Soil"), Region(Region.SouthernSwamp)]
+        [ItemName("30 Arrows"), LocationName("Swamp Spider House Gold Room Soft Soil"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("gold soil"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8398,7 +8398,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8408,7 +8408,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 2"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 2"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8418,7 +8418,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 3"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 3"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8428,7 +8428,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 4"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 4"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8438,7 +8438,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 5"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 2 Item 5"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8448,7 +8448,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Blue Rupee"), LocationName("Deku Playground Day 2 Item 6"), Region(Region.NorthClockTown)]
+        [ItemName("Blue Rupee"), LocationName("Deku Playground Day 2 Item 6"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8458,7 +8458,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8468,7 +8468,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 2"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 2"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8478,7 +8478,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 3"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 3"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8488,7 +8488,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 4"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 4"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8498,7 +8498,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 5"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 1 Item 5"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8508,7 +8508,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Blue Rupee"), LocationName("Deku Playground Day 1 Item 6"), Region(Region.NorthClockTown)]
+        [ItemName("Blue Rupee"), LocationName("Deku Playground Day 1 Item 6"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8518,7 +8518,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8528,7 +8528,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 2"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 2"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8538,7 +8538,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 3"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 3"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8548,7 +8548,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 4"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 4"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8558,7 +8558,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Blue Rupee"), LocationName("Deku Playground Day 3 Item 5"), Region(Region.NorthClockTown)]
+        [ItemName("Blue Rupee"), LocationName("Deku Playground Day 3 Item 5"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 5 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8568,7 +8568,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 6"), Region(Region.NorthClockTown)]
+        [ItemName("Green Rupee"), LocationName("Deku Playground Day 3 Item 6"), Region(Region.DekuPlaygroundItems)]
         [GossipLocationHint("a game for scrubs", "a playground", "a town game"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8668,7 +8668,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8678,7 +8678,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 2"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 2"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8688,7 +8688,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 3"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 3"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8698,7 +8698,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 4"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 4"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8708,7 +8708,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 5"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 5"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8718,7 +8718,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 6"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 6"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8728,7 +8728,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 7"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 7"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8738,7 +8738,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 8"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 8"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8748,7 +8748,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 9"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 9"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8758,7 +8758,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 10"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 10"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8768,7 +8768,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 11"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 11"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8778,7 +8778,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 12"), Region(Region.SouthernSwamp)]
+        [ItemName("Green Rupee"), LocationName("Swamp Spider House Blue Gem 12"), Region(Region.SwampSpiderHouseItems)]
         [GossipLocationHint("a blue gem"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8788,7 +8788,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask"), Region(Region.GreatBayCoast)]
+        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8798,7 +8798,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 2"), Region(Region.GreatBayCoast)]
+        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8808,7 +8808,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 3"), Region(Region.GreatBayCoast)]
+        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 3"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8818,7 +8818,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 4"), Region(Region.GreatBayCoast)]
+        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 4"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8828,7 +8828,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 5"), Region(Region.GreatBayCoast)]
+        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 5"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8838,7 +8838,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 6"), Region(Region.GreatBayCoast)]
+        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 6"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8848,7 +8848,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 7"), Region(Region.GreatBayCoast)]
+        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 7"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8858,7 +8858,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 8"), Region(Region.GreatBayCoast)]
+        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 8"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -8868,7 +8868,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 9"), Region(Region.GreatBayCoast)]
+        [ItemName("Green Rupee"), LocationName("Oceanside Spider House Mask 9"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement mask"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -9740,7 +9740,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("10 Arrows"), LocationName("Oceanside Spider House Mask Room Pot"), Region(Region.GreatBayCoast)]
+        [ItemName("10 Arrows"), LocationName("Oceanside Spider House Mask Room Pot"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -9750,7 +9750,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("10 Arrows"), LocationName("Oceanside Spider House Mask Room Pot 2"), Region(Region.GreatBayCoast)]
+        [ItemName("10 Arrows"), LocationName("Oceanside Spider House Mask Room Pot 2"), Region(Region.OceanSpiderHouseItems)]
         [GossipLocationHint("a creepy basement pot"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -9833,7 +9833,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball"), Region(Region.MountainVillage)]
+        [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball"), Region(Region.PathToMountainVillage)]
         [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -9843,7 +9843,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball 2"), Region(Region.MountainVillage)]
+        [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball 2"), Region(Region.PathToMountainVillage)]
         [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -9853,7 +9853,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
-        [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball 3"), Region(Region.MountainVillage)]
+        [ItemName("Small Magic Jar"), LocationName("Path to Mountain Village Spring Snowball 3"), Region(Region.PathToMountainVillage)]
         [GossipLocationHint("a melting snowball"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
