@@ -706,12 +706,15 @@ namespace MMR.Randomizer.Utils
                     }
                 }
 
-                if (formMask == null)
+                if (sequenceMaskFileIndex.HasValue)
                 {
-                    formMask = Enumerable.Repeat<byte>(0xFF, 16).ToArray();
+                    if (formMask == null)
+                    {
+                        formMask = Enumerable.Repeat<byte>(0xFF, 16).ToArray();
+                    }
+                    Array.Resize(ref formMask, 20);
+                    ReadWriteUtils.Arr_Insert(formMask, 0, 20, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 20);
                 }
-                Array.Resize(ref formMask, 20);
-                ReadWriteUtils.Arr_Insert(formMask, 0, 20, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 20);
 
             }
 
