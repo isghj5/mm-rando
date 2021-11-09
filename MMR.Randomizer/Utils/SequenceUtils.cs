@@ -114,7 +114,7 @@ namespace MMR.Randomizer.Utils
                         {
                             targetSequence.Replaces = Convert.ToInt32(lines[i + 3], 16);
                             sourceSequence.MM_seq = Convert.ToInt32(lines[i + 3], 16);
-                            if (lines[i + 4] == "no-recycle")
+                            if (i + 4 < lines.Length && lines[i + 4] == "no-recycle")
                             {
                                 //Debug.WriteLine("Player does not want to reuse song: " + sourceSequence.Name);
                                 sourceSequence.Name = "drop";
