@@ -172,7 +172,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Whether or not to allow using the ocarina underwater.
         /// </summary>
-        public bool OcarinaUnderwater { get; set; }
+        public bool OcarinaUnderwater { get; set; } = true;
 
         /// <summary>
         /// Behaviour of how quest items should be consumed.

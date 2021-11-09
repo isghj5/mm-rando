@@ -59,10 +59,8 @@ namespace MMR.UI.Forms
             InitalizeLowHealthSFXOptions();
 
             StartingItemEditor = new StartingItemEditForm();
-            UpdateCustomStartingItemAmountLabel();
 
             JunkLocationEditor = new JunkLocationEditForm();
-            UpdateJunkLocationAmountLabel();
 
             ItemEditor = new CustomItemListEditForm(ItemUtils.AllLocations(), item => $"{item.Location()} ({item.Name()})", "Invalid custom item string");
 

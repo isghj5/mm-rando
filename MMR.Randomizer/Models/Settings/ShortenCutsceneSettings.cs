@@ -19,9 +19,7 @@
             ShortenCutsceneBossIntro.Odolwa
             | ShortenCutsceneBossIntro.Goht
             | ShortenCutsceneBossIntro.Gyorg
-            | ShortenCutsceneBossIntro.Twinmold
             | ShortenCutsceneBossIntro.Majora
-            | ShortenCutsceneBossIntro.Wart
             | ShortenCutsceneBossIntro.IgosDuIkana
             | ShortenCutsceneBossIntro.Gomess;
     }

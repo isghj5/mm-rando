@@ -168,7 +168,7 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public LogicMode LogicMode { get; set; }
 
-        public List<int> EnabledTricks { get; set; } = new List<int>();
+        public List<int> EnabledTricks { get; set; } = new List<int> { 1205,1209,1171,1207,1194,1161,1167,1160,1223,1159 };
 
         /// <summary>
         /// Add songs to the randomization pool
@@ -190,7 +190,7 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public StartingItemMode StartingItemMode { get; set; }
 
-        public SmallKeyMode SmallKeyMode { get; set; }
+        public SmallKeyMode SmallKeyMode { get; set; } = SmallKeyMode.DoorsOpen;
 
         public BossKeyMode BossKeyMode { get; set; }
 
@@ -212,7 +212,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom item list string
         /// </summary>
-        public string CustomItemListString { get; set; }
+        public string CustomItemListString { get; set; } = "--------------------206-40000000----10ffff-ffffffff-ffffffff-f8000000-3ddf77fd-3fffffff-f378ffff-ffffffff";
 
         /// <summary>
         ///  Custom starting item list selections
@@ -223,7 +223,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom starting item list string
         /// </summary>
-        public string CustomStartingItemListString { get; set; }
+        public string CustomStartingItemListString { get; set; } = "fdfe-2c00000-";
 
         /// <summary>
         /// List of locations that must be randomized to junk
@@ -234,7 +234,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom junk location string
         /// </summary>
-        public string CustomJunkLocationsString { get; set; }
+        public string CustomJunkLocationsString { get; set; } = "-------------------------100000-----200000--f000";
 
         /// <summary>
         /// Defines number of ice traps.
@@ -331,17 +331,17 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Method to write the gossip stone hints.
         /// </summary>
-        public GossipHintStyle GossipHintStyle { get; set; }
+        public GossipHintStyle GossipHintStyle { get; set; } = GossipHintStyle.Competitive;
 
         /// <summary>
         /// FrEe HiNtS FoR WeEnIeS
         /// </summary>
-        public bool FreeHints { get; set; }
+        public bool FreeHints { get; set; } = true;
 
         /// <summary>
         /// Clear hints
         /// </summary>
-        public bool ClearHints { get; set; }
+        public bool ClearHints { get; set; } = true;
 
         /// <summary>
         /// Prevent downgrades
@@ -351,7 +351,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Updates chest appearance to match contents
         /// </summary>
-        public bool UpdateChests { get; set; } = true;
+        public bool UpdateChests { get; set; }
 
         /// <summary>
         /// Change epona B button behavior to prevent player losing sword if they don't have a bow.
