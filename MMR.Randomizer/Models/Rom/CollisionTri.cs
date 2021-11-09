@@ -1,4 +1,4 @@
-﻿using MMR.Common.Models.Vectors;
+﻿using MMR.Randomizer.Models.Vectors;
 
 namespace MMR.Randomizer.Models.Rom
 {

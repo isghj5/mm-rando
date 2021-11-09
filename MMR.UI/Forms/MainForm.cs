@@ -26,8 +26,6 @@ namespace MMR.UI.Forms
     using Randomizer = Randomizer.Randomizer;
     public partial class MainForm : Form
     {
-        private readonly ConfigurationProcessor _configurationProcessor;
-
         private bool _isUpdating = false;
         private int _seedOld = 0;
         public Configuration _configuration { get; set; }
@@ -43,10 +41,8 @@ namespace MMR.UI.Forms
 
         public const string SETTINGS_EXTENSION = ".json";
 
-        public MainForm(ConfigurationProcessor configurationProcessor)
+        public MainForm()
         {
-            _configurationProcessor = configurationProcessor;
-
             InitializeComponent();
             InitializeSettings();
             InitializeTooltips();
@@ -1712,7 +1708,7 @@ namespace MMR.UI.Forms
         private void TryRandomize(BackgroundWorker worker, DoWorkEventArgs e)
         {
             var seed = Convert.ToInt32(tSeed.Text);
-            var result = _configurationProcessor.Process(_configuration, seed, new BackgroundWorkerProgressReporter(worker));
+            var result = ConfigurationProcessor.Process(_configuration, seed, new BackgroundWorkerProgressReporter(worker));
             if (result != null)
             {
                 MessageBox.Show(result, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

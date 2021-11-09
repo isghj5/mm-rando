@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 
-namespace MMR.Enemizer.Models
+namespace MMR.Randomizer.Models.Rom
 {
     public class Enemy
     {

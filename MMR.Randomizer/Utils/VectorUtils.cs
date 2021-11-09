@@ -1,4 +1,4 @@
-﻿using MMR.Common.Models.Vectors;
+﻿using MMR.Randomizer.Models.Vectors;
 using System;
 using System.Collections.Generic;
 

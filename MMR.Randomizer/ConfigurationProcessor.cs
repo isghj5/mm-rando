@@ -8,22 +8,10 @@ using System.IO;
 
 namespace MMR.Randomizer
 {
-    public class ConfigurationProcessor
+    public static class ConfigurationProcessor
     {
-        private readonly Builder _builder;
-        private readonly RandomizedResultStore _randomizedResultStore;
-        private readonly ConfigurationStore _configurationStore;
-
-        public ConfigurationProcessor(Builder builder, RandomizedResultStore randomizedResultStore, ConfigurationStore configurationStore)
+        public static string Process(Configuration configuration, int seed, IProgressReporter progressReporter)
         {
-            _builder = builder;
-            _randomizedResultStore = randomizedResultStore;
-            _configurationStore = configurationStore;
-        }
-
-        public string Process(Configuration configuration, int seed, IProgressReporter progressReporter)
-        {
-            _configurationStore.Configuration = configuration;
             var randomizer = new Randomizer(configuration.GameplaySettings, seed);
             RandomizedResult randomized = null;
             if (string.IsNullOrWhiteSpace(configuration.OutputSettings.InputPatchFilename))
@@ -61,11 +49,11 @@ namespace MMR.Randomizer
                         + "If you did not extract the whole randomizer, you must extract the vc folder. If this is a beta release, copy the vc folder from the main release.";
                 }
 
-                _randomizedResultStore.RandomizedResult = randomized;
+                var builder = new Builder(randomized, configuration.CosmeticSettings);
 
                 try
                 {
-                    _builder.MakeROM(configuration.OutputSettings, progressReporter);
+                    builder.MakeROM(configuration.OutputSettings, progressReporter);
                 }
                 catch (ROMOverflowException ex)
                 {
@@ -91,5 +79,10 @@ namespace MMR.Randomizer
             return null;
             //return "Generation complete!";
         }
+    }
+
+    public interface IProgressReporter
+    {
+        void ReportProgress(int percentProgress, string message);
     }
 }

@@ -1,24 +1,16 @@
-﻿using MMR.Common.Interfaces;
-using MMR.Common.Models;
-using MMR.Enemizer.Models;
+﻿using MMR.Common.Extensions;
+using MMR.Randomizer.Attributes.Actor;
+using MMR.Randomizer.Models.Rom;
+using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MMR.Enemizer
+namespace MMR.Randomizer
 {
-    public class Enemies : IEnemies
+    public class Enemies
     {
-        private readonly IObjectUtils _objectUtils;
-        private readonly ISceneUtils _sceneUtils;
-
-        public Enemies(IObjectUtils objectUtils, ISceneUtils sceneUtils)
-        {
-            _objectUtils = objectUtils;
-            _sceneUtils = sceneUtils;
-        }
-
-        private class ValueSwap
+        public class ValueSwap
         {
             public int OldV;
             public int NewV;
@@ -26,7 +18,7 @@ namespace MMR.Enemizer
 
         private static List<Enemy> EnemyList { get; set; }
 
-        private void ReadEnemyList()
+        public static void ReadEnemyList()
         {
             EnemyList = new List<Enemy>();
             string[] lines = Properties.Resources.ENEMIES.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
@@ -41,7 +33,7 @@ namespace MMR.Enemizer
                 Enemy e = new Enemy();
                 e.Actor = Convert.ToInt32(lines[i], 16);
                 e.Object = Convert.ToInt32(lines[i + 1], 16);
-                e.ObjectSize = _objectUtils.GetObjSize(e.Object);
+                e.ObjectSize = ObjUtils.GetObjSize(e.Object);
                 string[] varlist = lines[i + 2].Split(',');
                 for (int j = 0; j <  varlist.Length; j++)
                 {
@@ -62,7 +54,7 @@ namespace MMR.Enemizer
             }
         }
 
-        private static List<int> GetSceneEnemyActors(Scene scene)
+        public static List<int> GetSceneEnemyActors(Scene scene)
         {
             List<int> ActorList = new List<int>();
             for (int i = 0; i < scene.Maps.Count; i++)
@@ -82,7 +74,7 @@ namespace MMR.Enemizer
             return ActorList;
         }
 
-        private static List<int> GetSceneEnemyObjects(Scene scene)
+        public static List<int> GetSceneEnemyObjects(Scene scene)
         {
             List<int> ObjList = new List<int>();
             for (int i = 0; i < scene.Maps.Count; i++)
@@ -105,7 +97,7 @@ namespace MMR.Enemizer
             return ObjList;
         }
 
-        private static void SetSceneEnemyActors(Scene scene, List<ValueSwap[]> A)
+        public static void SetSceneEnemyActors(Scene scene, List<ValueSwap[]> A)
         {
             for (int i = 0; i < scene.Maps.Count; i++)
             {
@@ -122,7 +114,7 @@ namespace MMR.Enemizer
             }
         }
 
-        private static void SetSceneEnemyObjects(Scene scene, List<ValueSwap> O)
+        public static void SetSceneEnemyObjects(Scene scene, List<ValueSwap> O)
         {
             for (int i = 0; i < scene.Maps.Count; i++)
             {
@@ -137,7 +129,7 @@ namespace MMR.Enemizer
             }
         }
 
-        private static List<Enemy> GetMatchPool(List<Enemy> Actors, Random R)
+        public static List<Enemy> GetMatchPool(List<Enemy> Actors, Random R)
         {
             List<Enemy> Pool = new List<Enemy>();
             for (int i = 0; i < Actors.Count; i++)
@@ -164,7 +156,7 @@ namespace MMR.Enemizer
             return Pool;
         }
 
-        private static void SwapSceneEnemies(Scene scene, Random rng)
+        public static void SwapSceneEnemies(Scene scene, Random rng)
         {
             List<int> Actors = GetSceneEnemyActors(scene);
             if (Actors.Count == 0)
@@ -271,25 +263,122 @@ namespace MMR.Enemizer
             }
             SetSceneEnemyActors(scene, ActorsUpdate);
             SetSceneEnemyObjects(scene, ObjsUpdate);
+            SceneUtils.UpdateScene(scene);
         }
 
-        public void ShuffleEnemies(Random random)
+        public static void ShuffleEnemies(Random random)
         {
             int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69 };
             ReadEnemyList();
-            _sceneUtils.ReadSceneTable();
-            _sceneUtils.GetMaps();
-            _sceneUtils.GetMapHeaders();
-            _sceneUtils.GetActors();
-
-            var sceneList = _sceneUtils.GetScenes();
-            foreach (var scene in sceneList)
+            SceneUtils.ReadSceneTable();
+            SceneUtils.GetMaps();
+            SceneUtils.GetMapHeaders();
+            SceneUtils.GetActors();
+            for (int i = 0; i < RomData.SceneList.Count; i++)
             {
-                if (!SceneSkip.Contains(scene.Number))
+                if (!SceneSkip.Contains(RomData.SceneList[i].Number))
                 {
-                    SwapSceneEnemies(scene, random);
-                    _sceneUtils.UpdateScene(scene);
+                    SwapSceneEnemies(RomData.SceneList[i], random);
                 }
+            }
+        }
+
+        public static void DisableCombatMusicOnEnemy(GameObjects.Actor actor)
+        {
+            int actorInitVarRomAddr = actor.GetAttribute<ActorInitVarOffsetAttribute>().Offset;
+            /// each enemy actor has actor init variables, 
+            /// if they have combat music is determined if a flag is set in the seventh byte
+            /// disabling combat music means disabling this bit for most enemies
+            int actorFileID = (int)actor;
+            RomUtils.CheckCompressed(actorFileID);
+            int actorFlagLocation = (actorInitVarRomAddr + 7);// - RomData.MMFileList[ActorFID].Addr; // file offset
+            byte flagByte = RomData.MMFileList[actorFileID].Data[actorFlagLocation];
+            RomData.MMFileList[actorFileID].Data[actorFlagLocation] = (byte)(flagByte & 0xFB);
+
+            if (actor == GameObjects.Actor.DekuBabaWithered) // special case: when they regrow music returns
+            {
+                // when they finish regrowing their combat music bit is reset, we need to no-op this to stop it
+                // 	[ori t3,t1,0x0005] which is [35 2B 00 05] becomes [35 2B 00 01] as the 4 bit is combat music, 1 is R-targetable
+                RomData.MMFileList[actorFileID].Data[0x12BF] = 0x01;
+            }
+        }
+
+
+        public static void DisableEnemyCombatMusic(bool weakEnemiesOnly = false)
+        {
+            /// each enemy has one int flag that contains a single bit that enables combat music
+            /// to get these values I used the starting rom addr of the enemy actor
+            ///  searched the ram for the actor overlay table that has rom and ram per actor,
+            ///  there it lists the actor init var ram and actor ram locations, diff, apply to rom start
+            ///  the combat music flag is part of the seventh byte of the actor init variables, but our fuction knows this
+
+            // we always disable wizrobe because he's a miniboss, 
+            // but when you enter his room you hear regular combat music for a few frames before his fight really starts
+            // this isn't noticed in vanilla because vanilla combat starts slow
+            DisableCombatMusicOnEnemy(GameObjects.Actor.Wizrobe);
+
+            var weakEnemyList = new GameObjects.Actor[]
+            {
+                GameObjects.Actor.ChuChu,
+                GameObjects.Actor.SkullFish,
+                GameObjects.Actor.DekuBaba,
+                GameObjects.Actor.DekuBabaWithered,
+                GameObjects.Actor.BioDekuBaba,
+                GameObjects.Actor.RealBombchu,
+                GameObjects.Actor.Guay,
+                GameObjects.Actor.Wolfos,
+                GameObjects.Actor.Keese,
+                GameObjects.Actor.Leever,
+                GameObjects.Actor.Bo,
+                GameObjects.Actor.DekuBaba,
+                GameObjects.Actor.Shellblade,
+                GameObjects.Actor.Tektite,
+                GameObjects.Actor.BadBat,
+                GameObjects.Actor.Eeno,
+                GameObjects.Actor.MadShrub,
+                GameObjects.Actor.Nejiron,
+                GameObjects.Actor.Hiploop,
+                GameObjects.Actor.Octarok,
+                GameObjects.Actor.Shabom,
+                GameObjects.Actor.Dexihand,
+                GameObjects.Actor.Freezard,
+                GameObjects.Actor.Armos,
+                GameObjects.Actor.Snapper,
+                GameObjects.Actor.Desbreko,
+                GameObjects.Actor.Poe,
+                GameObjects.Actor.GibdoIkana,
+                GameObjects.Actor.GibdoWell,
+                GameObjects.Actor.RedBubble,
+                GameObjects.Actor.Stalchild
+            }.ToList();
+
+            var annoyingEnemyList = new GameObjects.Actor[]
+            {
+                GameObjects.Actor.BlueBubble,
+                GameObjects.Actor.LikeLike,
+                GameObjects.Actor.Beamos,
+                GameObjects.Actor.DeathArmos,
+                GameObjects.Actor.Dinofos,
+                GameObjects.Actor.DragonFly,
+                GameObjects.Actor.GiantBeee,
+                GameObjects.Actor.WallMaster,
+                GameObjects.Actor.FloorMaster,
+                GameObjects.Actor.Skulltula,
+                GameObjects.Actor.SkullWallTula,
+                GameObjects.Actor.ReDead,
+                GameObjects.Actor.Peahat,
+                GameObjects.Actor.Dodongo,
+                GameObjects.Actor.Takkuri,
+                GameObjects.Actor.Eyegore,
+                GameObjects.Actor.IronKnuckle,
+                GameObjects.Actor.Garo
+            }.ToList();
+
+            var disableList = weakEnemiesOnly ? weakEnemyList : weakEnemyList.Concat(annoyingEnemyList);
+
+            foreach (var enemy in disableList)
+            {
+                DisableCombatMusicOnEnemy(enemy);
             }
         }
     }

@@ -61,6 +61,80 @@ namespace MMR.Randomizer.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to -actor
+        ///-obj
+        ///-vars - todo: may connect to switches
+        ///-type - 0=ground, 1=water, 2=air, 3=other, 4=respawn
+        ///-moving - 0=no, 1=yes
+        ///-scene excludes
+        ///-octorok
+        ///0008
+        ///0005
+        ///ff00
+        ///1
+        ///0
+        ///13,49
+        ///-wallmaster
+        ///000a
+        ///0009
+        ///0001
+        ///0
+        ///1
+        ///
+        ///-dodongo
+        ///000b
+        ///000a
+        ///0001,0000
+        ///0
+        ///1
+        ///
+        ///-keese
+        ///000c
+        ///000b
+        ///8003,0004,0000
+        ///2
+        ///1
+        ///
+        ///-tektite
+        ///0012
+        ///0012
+        ///fffd,fffe,ffff
+        ///0
+        ///1
+        ///
+        ///-peahat
+        ///0014
+        ///0014
+        ///0000
+        ///0
+        ///1
+        ///7
+        ///-dinolfos
+        ///0019
+        ///0017
+        ///0000
+        ///0
+        ///1
+        ///1b,21,60,66
+        ///-shabom
+        ///001d
+        ///000e
+        ///0000
+        ///2
+        ///1
+        ///69
+        ///-skulltula
+        ///0024
+        ///0020
+        ///003f,007f [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string ENEMIES {
+            get {
+                return ResourceManager.GetString("ENEMIES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
         public static byte[] mmr_f_sot {
@@ -71,41 +145,7 @@ namespace MMR.Randomizer.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {
-        ///  &quot;Version&quot;: 8,
-        ///  &quot;Logic&quot;: [
-        ///    {
-        ///      &quot;Id&quot;: &quot;MaskDeku&quot;,
-        ///      &quot;RequiredItems&quot;: [],
-        ///      &quot;ConditionalItems&quot;: [],
-        ///      &quot;TimeNeeded&quot;: &quot;None&quot;,
-        ///      &quot;TimeAvailable&quot;: &quot;None&quot;,
-        ///      &quot;TimeSetup&quot;: &quot;None&quot;,
-        ///      &quot;IsTrick&quot;: false
-        ///    },
-        ///    {
-        ///      &quot;Id&quot;: &quot;ItemBow&quot;,
-        ///      &quot;RequiredItems&quot;: [
-        ///        &quot;AreaWoodFallTempleAccess&quot;
-        ///      ],
-        ///      &quot;ConditionalItems&quot;: [
-        ///        [
-        ///          &quot;WFT 2nd Floor Skip&quot;
-        ///        ],
-        ///        [
-        ///          &quot;MaskDeku&quot;,
-        ///          &quot;OtherArrow&quot;
-        ///        ],
-        ///        [ [rest of string was truncated]&quot;;.
-        /// </summary>
-        public static string REQ_CASUAL {
-            get {
-                return ResourceManager.GetString("REQ_CASUAL", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to -version 19
+        ///   Looks up a localized string similar to -version 15
         ///- Deku Mask
         ///
         ///
@@ -114,25 +154,97 @@ namespace MMR.Randomizer.Properties {
         ///
         ///- Hero&apos;s Bow
         ///104
-        ///0,129;1099,1107;10;0,120;119,120,1107;120,270;129,270;119,270
+        ///480;0,120;0,129
+        ///0
+        ///0
+        ///
+        ///- Fire Arrow
+        ///107,541
+        ///2,120,461;10,481;92,119,461,462;119,462,522,544;92,119,461,463,93;93,119,463,522,544
+        ///0
+        ///0
+        ///
+        ///- Ice Arrow
+        ///112,139,10,93
+        ///
+        ///0
+        ///0
+        ///
+        ///- Light Arrow
+        ///116
+        ///4,120,464,461;0,25,92,93,119,465
+        ///0
+        ///0
+        ///
+        ///- Bomb Bag (20)
+        ///
+        ///
+        ///0
+        ///0
+        ///
+        ///- Magic Bean
+        ///103
+        ///0;483
+        ///0
+        ///0
+        ///
+        ///- Powder Keg
+        ///106,92
+        ///2,120,461;108
+        ///0
+        ///0
+        ///
+        ///- Pictobox
+        ///
+        ///472;475
+        ///0
+        ///0
+        ///
+        ///- Lens of Truth
+        ///106
+        ///9,461;95;484
+        ///0
+        ///0
+        ///
+        ///- Hookshot
+        ///111
+        ///92,120;0,92,4 [rest of string was truncated]&quot;;.
+        /// </summary>
+        public static string REQ_CASUAL {
+            get {
+                return ResourceManager.GetString("REQ_CASUAL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to -version 15
+        ///- Deku Mask
+        ///
+        ///
+        ///0
+        ///0
+        ///
+        ///- Hero&apos;s Bow
+        ///104
+        ///0,129;463,472,473;10;0,120;119,120,472;120,270;129,270;119,270
         ///0
         ///0
         ///
         ///- Fire Arrow
         ///107
-        ///119,1104;93,119,1103;1114;1099,1107;10;270
+        ///119,469;93,119,468;2,120,461;463,472,473;10;270
         ///0
         ///0
         ///
         ///- Ice Arrow
-        ///112,139
-        ///1099,1107;92,1108;93;119,270,1108
+        ///112,139,466
+        ///463,472,473;92,473;93;119,270,473
         ///0
         ///0
         ///
         ///- Light Arrow
-        ///116,1105
-        ///1116;0,25,92,93,101,1106;25,92,119;10,1099,1107;25,92,101,270,1106;1099,1107
+        ///116,470
+        ///4,120,461;0,25,92,93,101,471;25,92,119;10,463,472;25,92,101,270,471;463,472,473
         ///0
         ///0
         ///
@@ -150,13 +262,11 @@ namespace MMR.Randomizer.Properties {
         ///
         ///- Powder Keg
         ///92,106
-        ///119,1107;120;108;173,270
+        ///119,472,473;120;108;173,270,464
         ///0
         ///0
         ///
-        ///- Pictobox
-        ///1100
-        ///16;14 [rest of string was truncated]&quot;;.
+        ///- Pi [rest of string was truncated]&quot;;.
         /// </summary>
         public static string REQ_GLITCH {
             get {
@@ -166,70 +276,82 @@ namespace MMR.Randomizer.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to mm-terminafield
-        ///0,102
+        ///0
         ///3
         ///2
-        ///mm-snowheadmountains
-        ///0,113
+        ///mm-snowhead
+        ///0
         ///15
         ///13
-        ///mm-greatbaycoast
-        ///0,110
+        ///mm-greatbay
+        ///0
         ///1d
         ///10
         ///mm-ikanacanyon
-        ///0,1,111
+        ///0
         ///1e
         ///11
-        ///mm-southernswamp
-        ///0,1,10C
-        ///1C
+        ///mm-swamp
+        ///0
+        ///1c
         ///c
         ///mm-clocktown1
-        ///1,115
+        ///1,6
         ///19
         ///15
         ///mm-clocktown2
-        ///1,116
+        ///1
         ///19
         ///16
         ///mm-clocktown3
-        ///1,117
+        ///1
         ///19
         ///17
-        ///mm-goroncity
-        ///1,130
+        ///mm-goronshrine
+        ///1
         ///26
         ///30
         ///mm-romaniranch
-        ///1,12F
+        ///1
         ///7
-        ///2F
+        ///2f
         ///mm-zorahall
-        ///1,136
+        ///1,3
         ///b
         ///36
         ///mm-dekupalace
-        ///1,112
+        ///1
         ///19
         ///12
         ///mm-caves
-        ///2,13B
-        ///1A
-        ///3B
+        ///2,3
+        ///1a
+        ///3b
         ///mm-snowheadtemple
-        ///2,165
+        ///2
         ///15
         ///65
         ///mm-greatbaytemple
-        ///2,166
+        ///2
         ///16
         ///66
         ///mm-piratefortress
-        ///2,0,114
+        ///2,0
         ///3
         ///14
-        ///mm-ikanacas [rest of string was truncated]&quot;;.
+        ///mm-ikanacastle
+        ///2,0
+        ///21
+        ///6f
+        ///mm-stonetower
+        ///2
+        ///19
+        ///6
+        ///mm-invertedstonetower
+        ///2
+        ///19
+        ///7
+        ///mm-woo [rest of string was truncated]&quot;;.
         /// </summary>
         public static string SEQS {
             get {

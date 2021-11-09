@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using MMR.Randomizer.Extensions;
-using MMR.Common.Models;
-using MMR.Common.Interfaces;
 
 namespace MMR.Randomizer.Utils
 {
 
-    public class SceneUtils : ISceneUtils
+    public class SceneUtils
     {
         const int SCENE_TABLE = 0xC5A1E0;
         const int SCENE_FLAG_MASKS = 0xC5C500;
@@ -42,7 +40,7 @@ namespace MMR.Randomizer.Utils
             RomData.MMFileList[f].Data[addr] |= (byte)bit;
         }
 
-        public void ReadSceneTable()
+        public static void ReadSceneTable()
         {
             RomData.SceneList = new List<Scene>();
             int f = RomUtils.GetFileIndexForWriting(SCENE_TABLE);
@@ -66,12 +64,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public List<Scene> GetScenes()
-        {
-            return RomData.SceneList;
-        }
-
-        public void GetMaps()
+        public static void GetMaps()
         {
             foreach (var scene in RomData.SceneList)
             {
@@ -108,7 +101,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public void GetMapHeaders()
+        public static void GetMapHeaders()
         {
             for (int i = 0; i < RomData.SceneList.Count; i++)
             {
@@ -196,7 +189,7 @@ namespace MMR.Randomizer.Utils
             return Objects;
         }
 
-        private void WriteMapActors(byte[] Map, int Addr, List<Actor> Actors)
+        private static void WriteMapActors(byte[] Map, int Addr, List<Actor> Actors)
         {
             for (int i = 0; i < Actors.Count; i++)
             {
@@ -211,7 +204,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        private void WriteMapObjects(byte[] Map, int Addr, List<int> Objects)
+        private static void WriteMapObjects(byte[] Map, int Addr, List<int> Objects)
         {
             for (int i = 0; i < Objects.Count; i++)
             {
@@ -219,13 +212,13 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        private void UpdateMap(Map M)
+        private static void UpdateMap(Map M)
         {
             WriteMapActors(RomData.MMFileList[M.File].Data, M.ActorAddr, M.Actors);
             WriteMapObjects(RomData.MMFileList[M.File].Data, M.ObjAddr, M.Objects);
         }
 
-        public void UpdateScene(Scene scene)
+        public static void UpdateScene(Scene scene)
         {
             for (int i = 0; i < scene.Maps.Count; i++)
             {
@@ -233,7 +226,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public void GetActors()
+        public static void GetActors()
         {
             for (int i = 0; i < RomData.SceneList.Count; i++)
             {
@@ -337,7 +330,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public void ReenableNightBGM()
+        public static void ReenableNightBGM()
         {
             // summary: there is a scene header which has a single byte that determines what plays at night, setting to 13 re-enables BGM at night
 

@@ -17,7 +17,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MMR.Common\MMR.Common.csproj" />
-    <ProjectReference Include="..\MMR.Enemizer\MMR.Enemizer.csproj" />
     <ProjectReference Include="..\MMR.Randomizer\MMR.Randomizer.csproj" />
   </ItemGroup>
 
@@ -38,7 +37,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.2" />
     <Compile Update="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
