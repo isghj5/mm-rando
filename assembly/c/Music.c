@@ -10,7 +10,7 @@ struct MusicConfig MUSIC_CONFIG = {
 };
 
 static MusicState musicState = {
-    .currentState = -1,
+    .currentState = 0,
 };
 
 static u32 loadingSequenceId = 0;
@@ -24,9 +24,9 @@ static void LoadMuteMask() {
         if (index) {
             DmaEntry entry = dmadata[index];
 
-            u32 start = entry.romStart + (sequenceId * 20);
+            u32 start = entry.romStart + (sequenceId * 0x20);
 
-            z2_RomToRam(start, &musicState.playMask, 20);
+            z2_RomToRam(start, &musicState.playMask, 0x20);
             musicState.hasSequenceMaskFile = 1;
         } else {
             musicState.hasSequenceMaskFile = 0;
@@ -35,7 +35,7 @@ static void LoadMuteMask() {
 }
 
 static u8 CalculateCurrentState() {
-    u8 state = 1;
+    u8 state;
     ActorPlayer* player = GET_PLAYER(&gGlobalContext);
     if (player) {
         state = 1 << (player->form & 3);
@@ -52,6 +52,48 @@ static u8 CalculateCurrentState() {
         if (gGlobalContext.actorCtx.targetContext.nearbyEnemy) {
             state = musicState.cumulativeStates.combat ? state | 0x80 : 0x80;
         }
+    } else if (gGameStateInfo.fileSelect.loadedRamAddr) {
+        u8 formMask = 0;
+        u8 cumulativeStates = musicState.cumulativeStates.value;
+        u8 nonCumulativeStates = ~cumulativeStates;
+        if (gGlobalContext.state.input[0].pressEdge.buttons.du || gGlobalContext.state.input[0].pressEdge.buttons.l) {
+            u8 startIndex = musicState.fileSelectMusicFormIndex;
+            do {
+                musicState.fileSelectMusicFormIndex = (musicState.fileSelectMusicFormIndex + 1) & 7;
+                formMask = (1 << musicState.fileSelectMusicFormIndex) & nonCumulativeStates;
+            } while (!formMask && musicState.fileSelectMusicFormIndex != startIndex);
+        } else if (gGlobalContext.state.input[0].pressEdge.buttons.dd) {
+            u8 startIndex = musicState.fileSelectMusicFormIndex;
+            do {
+                musicState.fileSelectMusicFormIndex = (musicState.fileSelectMusicFormIndex - 1) & 7;
+                formMask = (1 << musicState.fileSelectMusicFormIndex) & nonCumulativeStates;
+            } while (!formMask && musicState.fileSelectMusicFormIndex != startIndex);
+        } else {
+            formMask = (1 << musicState.fileSelectMusicFormIndex) & nonCumulativeStates;
+        }
+
+        u8 miscMask = 0;
+        if (gGlobalContext.state.input[0].pressEdge.buttons.dr) {
+            u8 startIndex = musicState.fileSelectMusicMiscIndex;
+            do {
+                musicState.fileSelectMusicMiscIndex = (musicState.fileSelectMusicMiscIndex + 1) & 7;
+                miscMask = (1 << musicState.fileSelectMusicMiscIndex) & cumulativeStates;
+            } while (!miscMask && musicState.fileSelectMusicMiscIndex != startIndex && musicState.fileSelectMusicMiscIndex);
+        } else if (gGlobalContext.state.input[0].pressEdge.buttons.dl) {
+            u8 startIndex = musicState.fileSelectMusicMiscIndex;
+            do {
+                musicState.fileSelectMusicMiscIndex = (musicState.fileSelectMusicMiscIndex - 1) & 7;
+                miscMask = (1 << musicState.fileSelectMusicMiscIndex) & cumulativeStates;
+            } while (!miscMask && musicState.fileSelectMusicMiscIndex != startIndex && musicState.fileSelectMusicMiscIndex);
+        } else {
+            miscMask = (1 << musicState.fileSelectMusicMiscIndex) & cumulativeStates;
+        }
+
+        state = formMask | miscMask;
+    } else if (musicState.currentState) {
+        state = musicState.currentState;
+    } else {
+        state = 1;
     }
     return state;
 }

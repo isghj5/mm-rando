@@ -32,11 +32,13 @@ namespace MMR.Randomizer.Asm
     {
         public int? SequenceMaskFileIndex { get; set; }
 
+        public const byte SEQUENCE_DATA_SIZE = 0x20;
+
         public void FinalizeSettings(CosmeticSettings settings)
         {
             if (settings.Music == Models.Music.Random)
             {
-                SequenceMaskFileIndex = RomUtils.AppendFile(new byte[0x80*0x14]);
+                SequenceMaskFileIndex = RomUtils.AppendFile(new byte[0x80 * SEQUENCE_DATA_SIZE]);
             }
             else
             {

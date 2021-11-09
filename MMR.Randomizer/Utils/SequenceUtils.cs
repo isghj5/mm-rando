@@ -11,6 +11,7 @@ using System.Security.Cryptography;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Models;
 using MMR.Common.Utils;
+using MMR.Randomizer.Asm;
 
 namespace MMR.Randomizer.Utils
 {
@@ -712,8 +713,8 @@ namespace MMR.Randomizer.Utils
                     {
                         formMask = Enumerable.Repeat<byte>(0xFF, 16).ToArray();
                     }
-                    Array.Resize(ref formMask, 20);
-                    ReadWriteUtils.Arr_Insert(formMask, 0, 20, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * 20);
+                    Array.Resize(ref formMask, MusicConfig.SEQUENCE_DATA_SIZE);
+                    ReadWriteUtils.Arr_Insert(formMask, 0, MusicConfig.SEQUENCE_DATA_SIZE, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * MusicConfig.SEQUENCE_DATA_SIZE);
                 }
 
             }

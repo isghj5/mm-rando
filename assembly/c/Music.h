@@ -26,9 +26,12 @@ typedef struct MusicState {
         };
         u8 value;
     } cumulativeStates;
-    /* 0x15 */ u8 hasSequenceMaskFile;
-    /* 0x16 */ u8 pad[2];
-} MusicState; // size = 0x18
+    /* 0x15 */ u8 pad15[0xF]; // everdrive rounds down to 0x10s when loading from rom
+    /* 0x24 */ u8 hasSequenceMaskFile;
+    /* 0x25 */ u8 fileSelectMusicFormIndex;
+    /* 0x26 */ u8 fileSelectMusicMiscIndex;
+    /* 0x27 */ u8 pad27;
+} MusicState; // size = 0x28
 
 struct MusicConfig {
     /* 0x000 */ u32 magic;
