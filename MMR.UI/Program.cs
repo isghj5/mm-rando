@@ -22,7 +22,7 @@ namespace MMR.UI
 
             using (var serviceProvider = services.BuildServiceProvider())
             {
-                var mainForm = new MainForm(serviceProvider);
+                var mainForm = serviceProvider.GetRequiredService<MainForm>();
                 Application.Run(mainForm);
             }
         }
