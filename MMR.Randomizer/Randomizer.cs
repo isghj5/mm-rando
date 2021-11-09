@@ -1299,8 +1299,8 @@ namespace MMR.Randomizer
                 }
             }
         }
-
-        private bool _timeTravelPlaced = false;
+         
+        private bool _timeTravelPlaced = true;
         private void RandomizeItems()
         {
             _timeTravelPlaced = false;
