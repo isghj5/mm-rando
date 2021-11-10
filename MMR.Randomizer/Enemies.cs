@@ -1848,7 +1848,7 @@ namespace MMR.Randomizer
                     GameObjects.Scene.TownShootingGallery,
                     GameObjects.Scene.GiantsChamber,
                     GameObjects.Scene.SakonsHideout,
-                    GameObjects.Scene.MilkBar , GameObjects.Scene.DekuPalace };
+                    GameObjects.Scene.MilkBar };// , GameObjects.Scene.DekuPalace };
 
                 ReadEnemyList();
                 SceneUtils.ReadSceneTable();

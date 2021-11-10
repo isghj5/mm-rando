@@ -980,9 +980,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0001)]
         Item_Inbox = 0x9E, // Item_Inbox
 
+        // pirate that tells leader they cant get near the eggs because of seasnakes
+        [ActorizerEnabled]
         [FileID(146)]
         [ObjectListIndex(0xE6)]
-        En_Ge1 = 0x9F, // En_Ge1
+        [GroundVariants(1)]
+        [UnkillableAllVariants]
+        CutscenePirate = 0x9F, // En_Ge1
 
         [FileID(147)]
         [ObjectListIndex(0001)]
@@ -1432,8 +1436,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x2)]
         Obj_Hamishi = 0xFC, // Obj_Hamishi
 
+        //[ActorizerEnabled] // overloads something, crashes in almost all cases
         [FileID(234)]
         [ObjectListIndex(0x192)]
+        // cutscene actor of some sort, if it doesnt crash it loads a tpose skullkid with missing model parts
         En_Zl4 = 0xFD, // En_Zl4
 
         //[ActorizerEnabled] // we dont want as an actual actor, we want as a companion
@@ -1551,9 +1557,11 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         En_Warp_tag = 0x116, // En_Warp_tag
 
+	// dog race owner
         [FileID(252)]
         [ObjectListIndex(0xD7)]
-        En_Aob_01 = 0x117, // En_Aob_01
+        MammauYan = 0x117, // En_Aob_01
+
         [FileID(253)]
         [ObjectListIndex(0x1)]
         En_Boj_01 = 0x118, // En_Boj_01
@@ -1588,13 +1596,27 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         En_Boj_04 = 0x121, // En_Boj_04
 
-        [FileID(262)]
-        [ObjectListIndex(0x1)]
-        En_Cne_01 = 0x122, // En_Cne_01
 
+        // broken actor, needs two objects such a pain
+        //[ActorizerEnabled]
+        [FileID(262)]
+        [ObjectListIndex(0xDA)] // 1
+        // needs anime object and cne object, pain
+        [GroundVariants(0x7E00)]
+        [PathingVariants(0x0)]
+        [PathingTypeVarsPlacement(mask: 0x3F, shift: 9)]
+        [UnkillableAllVariants]
+        BetaVampireGirl = 0x122, // En_Cne_01
+
+        // beta bomb shop wife
+        [ActorizerEnabled]
         [FileID(263)]
-        [ObjectListIndex(0x1)]
-        En_Bba_01 = 0x123, // En_Bba_01
+        [ObjectListIndex(0xDF)] // 1
+        // 7E is a range, unkown, looks like a path since it comes with a ==7E check
+        [GroundVariants(0)]
+        // Pathing Variants todo
+        [UnkillableAllVariants]
+        BabaIsUnused = 0x123, // En_Bba_01
 
         [FileID(264)]
         [ObjectListIndex(0xDE)]
@@ -1622,9 +1644,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(268)]
         [ObjectListIndex(0x15B)]
         Boss_02 = 0x12A, // Boss_02
+
         [FileID(269)]
         [ObjectListIndex(0x15C)]
         Boss_03 = 0x12B, // Boss_03
+
         [FileID(270)]
         [ObjectListIndex(0x15D)]
         Boss_04 = 0x12C, // Boss_04
@@ -1820,7 +1844,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0xFFFF)] //unk
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
-        Zelda_152 = 0x0152,
+        Zelda_152 = 0x0152, // Dm_Zl
 
         [FileID(305)]
         [ObjectListIndex(0x1)]
@@ -2242,7 +2266,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x18C)]
         [WallVariants(0x907F, 0xA07F)]
         [UnkillableAllVariants]
-        Clock = 0x19C, // En_Tokeidai
+        Clock = 0x19C, // Obj_Tokeidai
 
         Empty19D = 0x19D,
 
@@ -2457,10 +2481,13 @@ namespace MMR.Randomizer.GameObjects
         [FileID(413)]
         [ObjectListIndex(0x1A9)]
         En_Tsn = 0x1C2, // En_Tsn
-        
+
+        [ActorizerEnabled]
         [FileID(414)]
         [ObjectListIndex(0x1AA)]
-        En_Ds2n = 0x1C3, // En_Ds2n
+        [GroundVariants(0)] // just stands around
+        [UnkillableAllVariants]
+        OOTPotionShopMan = 0x1C3, // En_Ds2n
         
         [FileID(415)]
         [ObjectListIndex(0x1AB)]
