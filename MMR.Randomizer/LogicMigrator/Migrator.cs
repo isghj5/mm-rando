@@ -3525,6 +3525,7 @@ namespace MMR.Randomizer.LogicMigrator
                 "CollectablePathToMountainVillageSmallSnowball4",
                 "CollectableZoraCapeJarGame1",
                 "CollectableIkanaGraveyardDay2Bats1",
+                "CollectableCuccoShackPottedPlant1",
                 "GossipTerminaSouth",
                 "GossipSwampPotionShop",
                 "GossipMountainSpringPath",
