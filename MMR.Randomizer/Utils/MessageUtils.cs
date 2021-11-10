@@ -152,16 +152,16 @@ namespace MMR.Randomizer.Utils
                     competitiveHints.Add((messageText, allowedGossipQuotes));
                 }
 
-                var importantRegionCounts = new Dictionary<Region, List<ItemObject>>();
-                var nonImportantRegionCounts = new Dictionary<Region, List<ItemObject>>();
-                var songOnlyRegionCounts = new Dictionary<Region, List<ItemObject>>();
-                var clockTownRegionCounts = new Dictionary<Region, List<ItemObject>>();
+                var importantRegionCounts = new Dictionary<Region, List<(ItemObject io, Item locationForImportance)>>();
+                var nonImportantRegionCounts = new Dictionary<Region, List<(ItemObject, Item)>>();
+                var songOnlyRegionCounts = new Dictionary<Region, List<(ItemObject, Item)>>();
+                var clockTownRegionCounts = new Dictionary<Region, List<(ItemObject, Item)>>();
                 foreach (var kvp in itemsInRegions)
                 {
                     var requiredItems = kvp.Value.Where(io => ItemUtils.IsRequired(io.io.Item, io.locationForImportance, randomizedResult) && !unusedItems.Contains(io.io) && !itemsToCombineWith.Contains(io.io)).ToList();
                     var importantItems = kvp.Value.Where(io => ItemUtils.IsImportant(io.io.Item, io.locationForImportance, randomizedResult)).ToList();
 
-                    Dictionary<Region, List<ItemObject>> dict;
+                    Dictionary<Region, List<(ItemObject, Item)>> dict;
                     if (requiredItems.Count == 0 && importantItems.Count > 0)
                     {
                         if (!randomizedResult.Settings.AddSongs && importantItems.All(io => ItemUtils.IsSong(io.io.Item) && !randomizedResult.ImportantSongLocations.Contains(io.locationForImportance)))
@@ -186,7 +186,7 @@ namespace MMR.Randomizer.Utils
                         dict = importantRegionCounts;
                     }
                     
-                    dict[kvp.Key] = requiredItems.Select(io => io.io).ToList();
+                    dict[kvp.Key] = requiredItems;
                 }
 
                 var chosenClockTownRegions = 0;
@@ -205,7 +205,7 @@ namespace MMR.Randomizer.Utils
                     {
                         var chosen = regionCounts.ToList().Random(random);
                         var allowedGossipQuotes = chosen.Value
-                            .Select(io => gossipStoneRequirements.Where(kvp => !kvp.Value.Contains(io.Item)).Select(kvp => kvp.Key))
+                            .Select(io => gossipStoneRequirements.Where(kvp => !kvp.Value.Contains(io.locationForImportance)).Select(kvp => kvp.Key))
                             .Aggregate((list1, list2) => list1.Intersect(list2))
                             .ToList();
                         competitiveHints.Add((BuildRegionHint(chosen, RegionHintType.SomeRequired, random), allowedGossipQuotes));
@@ -444,7 +444,7 @@ namespace MMR.Randomizer.Utils
             OnlyImportantSong,
         }
 
-        private static string BuildRegionHint(KeyValuePair<Region, List<ItemObject>> regionInfo, RegionHintType regionHintType, Random random)
+        private static string BuildRegionHint(KeyValuePair<Region, List<(ItemObject, Item)>> regionInfo, RegionHintType regionHintType, Random random)
         {
             var region = regionInfo.Key;
             //var numberOfRequiredItems = regionInfo.Value.Count;
