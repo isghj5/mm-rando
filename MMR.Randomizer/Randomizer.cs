@@ -1303,8 +1303,6 @@ namespace MMR.Randomizer
         private bool _timeTravelPlaced = true;
         private void RandomizeItems()
         {
-            _timeTravelPlaced = false;
-
             var itemPool = new List<Item>();
 
             AddAllItems(itemPool);
@@ -1313,8 +1311,11 @@ namespace MMR.Randomizer
 
             PlaceFreeItems(itemPool);
 
+            _timeTravelPlaced = false;
+
             PlaceItem(Item.SongTime, itemPool);
             PlaceItem(Item.OtherTimeTravel, itemPool);
+
             _timeTravelPlaced = true;
 
             PlaceOcarinaAndSongOfTime(itemPool);
