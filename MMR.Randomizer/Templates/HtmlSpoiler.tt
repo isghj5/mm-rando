@@ -105,16 +105,18 @@
  <tr>
      <th>Item</th>
      <th></th>
+     <th>Region</th>
      <th>Location</th>
  </tr>
 <# foreach (var itemCategory in spoiler.ItemList.Where(item => !item.IsJunk).GroupBy(item => item.ItemCategory).OrderBy(g => g.Key)) {
 #>
- <tr class="region"><td colspan="3"><#= itemCategory.Key.ToString() #></td></tr>
- <# foreach (var item in itemCategory.OrderBy(item => item.Id)) { #>
- <tr data-id="<#= item.Id #>" data-newlocationid="<#= item.NewLocationId #>">
-    <td><#= item.Name #></td>
+ <tr class="region"><td colspan="4"><#= itemCategory.Key.ToString() #></td></tr>
+ <# foreach (var items in itemCategory.GroupBy(item => item.Id).OrderBy(g => g.Key)) { #>
+ <tr data-id="<#= items.Key #>" data-newlocationid="<#= items.First().NewLocationId #>">
+    <td><#= items.First().Name #></td>
     <td><input type="checkbox"/></td>
-    <td class="spoiler newlocation"> <span data-content="<#= item.NewLocationName #>"></span></td>
+    <td class="spoiler newlocation"> <span data-content="<#= string.Join(" / ", items.Select(item => item.Region.Name())) #>"></span></td>
+    <td class="spoiler newlocation"> <span data-content="<#= items.First().NewLocationName #>"></span></td>
  </tr>
  <# } #>
 <# } #>
@@ -284,14 +286,16 @@
         
             var itemRows = document.querySelectorAll("#item-locations tr[data-newlocationid='" + locations[i] + "']");
             for (const itemRow of itemRows) {
-                var itemName = itemRow.querySelector(".newlocation");
+                var itemNames = itemRow.querySelectorAll(".newlocation");
                 var checkbox = itemRow.querySelector("input");
                 var item = logic[itemRow.dataset.id];
                 checkbox.checked = item.Acquired;
-                if (item.Acquired) {
-                    itemName.classList.remove("spoiler");
-                } else {
-                    itemName.classList.add("spoiler");
+                for (const itemName of itemNames) {
+                    if (item.Acquired) {
+                        itemName.classList.remove("spoiler");
+                    } else {
+                        itemName.classList.add("spoiler");
+                    }
                 }
             }
         }

@@ -127,22 +127,25 @@ namespace MMR.Randomizer.Templates
  } 
  } 
             this.Write("</table>\r\n<h2>Item Locations</h2>\r\n<table border=\"1\" id=\"item-locations\">\r\n <tr>\r" +
-                    "\n     <th>Item</th>\r\n     <th></th>\r\n     <th>Location</th>\r\n </tr>\r\n");
+                    "\n     <th>Item</th>\r\n     <th></th>\r\n     <th>Region</th>\r\n     <th>Location</th" +
+                    ">\r\n </tr>\r\n");
  foreach (var itemCategory in spoiler.ItemList.Where(item => !item.IsJunk).GroupBy(item => item.ItemCategory).OrderBy(g => g.Key)) {
 
-            this.Write(" <tr class=\"region\"><td colspan=\"3\">");
+            this.Write(" <tr class=\"region\"><td colspan=\"4\">");
             this.Write(this.ToStringHelper.ToStringWithCulture(itemCategory.Key.ToString()));
             this.Write("</td></tr>\r\n ");
- foreach (var item in itemCategory.OrderBy(item => item.Id)) { 
+ foreach (var items in itemCategory.GroupBy(item => item.Id).OrderBy(g => g.Key)) { 
             this.Write(" <tr data-id=\"");
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.Id));
+            this.Write(this.ToStringHelper.ToStringWithCulture(items.Key));
             this.Write("\" data-newlocationid=\"");
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.NewLocationId));
+            this.Write(this.ToStringHelper.ToStringWithCulture(items.First().NewLocationId));
             this.Write("\">\r\n    <td>");
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.Name));
+            this.Write(this.ToStringHelper.ToStringWithCulture(items.First().Name));
             this.Write("</td>\r\n    <td><input type=\"checkbox\"/></td>\r\n    <td class=\"spoiler newlocation\"" +
                     "> <span data-content=\"");
-            this.Write(this.ToStringHelper.ToStringWithCulture(item.NewLocationName));
+            this.Write(this.ToStringHelper.ToStringWithCulture(string.Join(" / ", items.Select(item => item.Region.Name()))));
+            this.Write("\"></span></td>\r\n    <td class=\"spoiler newlocation\"> <span data-content=\"");
+            this.Write(this.ToStringHelper.ToStringWithCulture(items.First().NewLocationName));
             this.Write("\"></span></td>\r\n </tr>\r\n ");
  } 
  } 
@@ -240,15 +243,16 @@ namespace MMR.Randomizer.Templates
                     "        } else {\r\n                    itemName.classList.add(\"spoiler\");\r\n      " +
                     "          }\r\n            }\r\n        \r\n            var itemRows = document.queryS" +
                     "electorAll(\"#item-locations tr[data-newlocationid=\'\" + locations[i] + \"\']\");\r\n  " +
-                    "          for (const itemRow of itemRows) {\r\n                var itemName = item" +
-                    "Row.querySelector(\".newlocation\");\r\n                var checkbox = itemRow.query" +
-                    "Selector(\"input\");\r\n                var item = logic[itemRow.dataset.id];\r\n     " +
-                    "           checkbox.checked = item.Acquired;\r\n                if (item.Acquired)" +
-                    " {\r\n                    itemName.classList.remove(\"spoiler\");\r\n                }" +
-                    " else {\r\n                    itemName.classList.add(\"spoiler\");\r\n               " +
-                    " }\r\n            }\r\n        }\r\n        if (itemsToCheck.length > 0) {\r\n          " +
-                    "  checkItems(itemsToCheck);\r\n        } else {\r\n            saveItems();\r\n       " +
-                    " }\r\n    }\r\n\r\n    var logic = ");
+                    "          for (const itemRow of itemRows) {\r\n                var itemNames = ite" +
+                    "mRow.querySelectorAll(\".newlocation\");\r\n                var checkbox = itemRow.q" +
+                    "uerySelector(\"input\");\r\n                var item = logic[itemRow.dataset.id];\r\n " +
+                    "               checkbox.checked = item.Acquired;\r\n                for (const ite" +
+                    "mName of itemNames) {\r\n                    if (item.Acquired) {\r\n               " +
+                    "         itemName.classList.remove(\"spoiler\");\r\n                    } else {\r\n  " +
+                    "                      itemName.classList.add(\"spoiler\");\r\n                    }\r" +
+                    "\n                }\r\n            }\r\n        }\r\n        if (itemsToCheck.length > " +
+                    "0) {\r\n            checkItems(itemsToCheck);\r\n        } else {\r\n            saveI" +
+                    "tems();\r\n        }\r\n    }\r\n\r\n    var logic = ");
             this.Write(this.ToStringHelper.ToStringWithCulture(spoiler.LogicJson));
             this.Write(";\r\n\r\n    for (var i = 0; i < logic.length; i++) {\r\n        var item = logic[i];\r\n" +
                     "        if (item.Acquired) {\r\n            item.Checked = true;\r\n            var " +
