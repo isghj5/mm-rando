@@ -1699,6 +1699,18 @@ typedef struct {
     /* 0x254 */ UNK_TYPE1 pad254[0x4C];
 } ActorEnKakasi; // size = 0x2A0
 
+// En_Syateki_Man actor (Shooting Gallery Proprietors).
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0x44];
+    /* 0x188 */ void* actionFunc;
+    /* 0x18C */ UNK_TYPE1 pad18C[0xF4];
+    /* 0x280 */ u16 currentScore;
+    /* 0x282 */ UNK_TYPE1 pad282[0x2];
+    /* 0x284 */ s16 recentMessageId;
+    /* 0x286 */ UNK_TYPE1 pad286[0x2];
+} ActorEnSyatekiMan; // size = 0x288
+
 /// =============================================================
 /// Actor Cutscene
 /// =============================================================
