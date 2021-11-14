@@ -1813,21 +1813,28 @@ namespace MMR.Randomizer
                     : _randomized.Logic;
 
                 var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic);
-                _randomized.ImportantLocations = logicPaths?.Important.Where(item => item.Region().HasValue).ToList().AsReadOnly();
-                _randomized.ImportantSongLocations = logicPaths?.ImportantSongLocations;
-                if (_randomized.ImportantLocations == null)
+                var importantLocations = logicPaths?.Important.ToList();
+                var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
+                if (importantLocations == null)
                 {
                     throw new RandomizationException("Moon Access is unobtainable.");
                 }
                 var locationsRequiredForMoonAccess = new List<Item>();
-                foreach (var location in _randomized.ImportantLocations)
+                foreach (var location in importantLocations.AllowModification())
                 {
                     var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: location);
                     if (checkPaths == null)
                     {
                         locationsRequiredForMoonAccess.Add(location);
                     }
+                    else
+                    {
+                        importantLocations.AddRange(checkPaths.Important);
+                        importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
+                    }
                 }
+                _randomized.ImportantLocations = importantLocations.Where(item => item.Region().HasValue).Distinct().ToList().AsReadOnly();
+                _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
                 _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.AsReadOnly();
 
                 if (_settings.GossipHintStyle != GossipHintStyle.Default)
