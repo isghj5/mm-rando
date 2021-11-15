@@ -386,6 +386,11 @@ bool MMR_GiveItem(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
     return result;
 }
 
+bool MMR_IsRecoveryHeart(u16 giIndex) {
+    // Check that resolved get-item index does not evaluate to recovery heart (0xA).
+    return MMR_GetNewGiIndex(NULL, NULL, giIndex, false) == 0xA;
+}
+
 void MMR_Init(void) {
     // If using vanilla layout, gi-table mod file is not included.
     if (!MISC_CONFIG.internal.vanillaLayout) {

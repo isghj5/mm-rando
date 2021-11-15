@@ -22,6 +22,24 @@ inline bool TownReward2Flag() {
     return gSaveContext.perm.weekEventReg.bytes[32] & 4;
 }
 
+static inline bool ShouldGiveSwampReward2() {
+    // NOTE: Assumes swamp archery double reward feature is enabled.
+    if (MISC_CONFIG.internal.vanillaLayout) {
+        return !SwampReward1Flag();
+    } else {
+        return !SwampReward1Flag() || !MMR_IsRecoveryHeart(0x24);
+    }
+}
+
+static inline bool ShouldGiveTownReward2() {
+    // NOTE: Assumes town archery double reward feature is enabled.
+    if (MISC_CONFIG.internal.vanillaLayout) {
+        return !TownReward1Flag();
+    } else {
+        return !TownReward1Flag() || !MMR_IsRecoveryHeart(0x23);
+    }
+}
+
 /**
  * Action function used to handle giving second swamp archery reward.
  **/
@@ -42,7 +60,7 @@ static void SyatekiMan_Swamp_HandleGiveSecondItem(ActorEnSyatekiMan* actor, Glob
  **/
 void* SyatekiMan_Swamp_DetermineActionFunctionAfterGiveItem(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
     // Checks if we got the greater reward and don't have the flag for the lesser reward.
-    if (gGiveBothItems && actor->currentScore >= 0x884 && !SwampReward1Flag()) {
+    if (gGiveBothItems && actor->currentScore >= 0x884 && ShouldGiveSwampReward2()) {
         return SyatekiMan_Swamp_HandleGiveSecondItem;
     } else {
         // Set default function pointer.
@@ -88,7 +106,7 @@ static void SyatekiMan_Town_HandleGiveSecondItem(ActorEnSyatekiMan* actor, Globa
  **/
 void* SyatekiMan_Town_DetermineActionFunctionAfterGiveItem(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
     // Checks if we got the greater reward and don't have the flag for the lesser reward.
-    if (gGiveBothItems && actor->recentMessageId != 0x407 && !TownReward1Flag()) {
+    if (gGiveBothItems && actor->recentMessageId != 0x407 && ShouldGiveTownReward2()) {
         return SyatekiMan_Town_HandleGiveSecondItem;
     } else {
         // Set default function pointer.

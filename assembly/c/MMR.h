@@ -29,6 +29,7 @@ void MMR_GiveItemToHold(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 bool MMR_GiveItemIfMinor(GlobalContext* ctxt, Actor* actor, u16 giIndex);
 bool MMR_GiveItem(GlobalContext* ctxt, Actor* actor, u16 giIndex);
 u16 MMR_GetProcessingItemGiIndex(GlobalContext* ctxt);
+bool MMR_IsRecoveryHeart(u16 giIndex);
 
 // Function Addresses.
 #define MMR_LoadGiEntry_Addr 0x801449A4
