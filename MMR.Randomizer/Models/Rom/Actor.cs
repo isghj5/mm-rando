@@ -13,6 +13,7 @@ namespace MMR.Randomizer.Models.Rom
 {
     // todo consider breaking this up into slots and replacement actor subtypes
 
+    [System.Diagnostics.DebuggerDisplay("{Name}")]
     public class Actor
     {
         // this is instance data, per actor, per scene.
@@ -72,7 +73,7 @@ namespace MMR.Randomizer.Models.Rom
             SceneExclude = actor.ScenesRandomizationExcluded();
             BlockedScenes = actor.BlockedScenes();
             AllVariants = BuildVariantList(actor);
-            Variants = AllVariants.SelectMany(u => u).ToList();
+            Variants = AllVariants.SelectMany(u => u).ToList(); // might as well start with all
             RespawningVariants = actor.RespawningVariants();
         }
 
@@ -99,7 +100,7 @@ namespace MMR.Randomizer.Models.Rom
 
         public static List<List<int>> BuildVariantList(GameObjects.Actor actor)
         {
-            //var newList = new List<List<int>>();
+            // creates a list of lists of variants per type from attributes in the enumerator
             var wattr = actor.GetAttribute<WaterVariantsAttribute>();
             var wlist = (wattr == null) ? new List<int>() : wattr.Variants;
             var gattr = actor.GetAttribute<GroundVariantsAttribute>();
@@ -119,6 +120,65 @@ namespace MMR.Randomizer.Models.Rom
                 plist
             };
             return newList;
+        }
+
+        public Actor CopyActor()
+        {
+            // deep copy, well, at least some of these will be modified
+
+            Actor newActor = new Actor();
+
+            newActor.Name = this.Name;
+            newActor.ActorID = this.ActorID;
+            newActor.ActorEnum = this.ActorEnum;
+            newActor.ObjectID = this.ObjectID;
+            newActor.ObjectSize = this.ObjectID;
+            newActor.Rotation = this.Rotation;
+
+            newActor.SceneExclude = this.SceneExclude;
+            newActor.BlockedScenes = this.BlockedScenes;
+
+            var newVariantsList = new List<List<int>>();
+            for(int i = 0; i < this.AllVariants.Count; i++) // per variant type (water, ground, pathing, ect)
+            {
+                var specificVariantList = this.AllVariants[i];
+                var newVariantList = new List<int>();
+                for (int j = 0; j < specificVariantList.Count; j++) // per variant in type
+                {
+                    newVariantList.Add(specificVariantList[j]); 
+                }
+                newVariantsList.Add(newVariantList);
+            }
+            newActor.AllVariants = newVariantsList;
+
+            newActor.Variants = newActor.AllVariants.SelectMany(u => u).ToList(); // might as well start with all
+
+            if (this.RespawningVariants != null)
+            {
+                var newRespawningVariants = new List<int>();
+                for (int i = 0; i < this.RespawningVariants.Count; i++)
+                {
+                    newRespawningVariants.Add(this.RespawningVariants[i]);
+                }
+                newActor.RespawningVariants = newRespawningVariants;
+            }
+
+            return newActor;
+        }
+
+
+        public static List<Actor> CopyActorList(List<Actor> originalList)
+        {
+            // there's probably a newer c# lamda/predicate means of doing this but cant think of it right now
+
+            var actorList = new List<Actor>();
+            for(int i = 0; i < originalList.Count; i++) // for faster than foreach in c#
+            {
+                var newActor = originalList[i].CopyActor();
+                actorList.Add(newActor); // we want to COPY the object, use Actor contructor
+            }
+
+            return actorList;
         }
 
         public void ChangeActor(GameObjects.Actor newActorType, int vars = -1)
@@ -166,8 +226,8 @@ namespace MMR.Randomizer.Models.Rom
             listOfVariantTypes = listOfVariantTypes.OrderBy(u => rng.Next()).ToList(); // random sort in case it has multiple types
             foreach (var randomVariant in listOfVariantTypes)
             {
-                List<int> ourVariants   = this.AllVariants[(int)randomVariant - 1];
-                List<int> theirVariants = otherActor.AllVariants[(int)randomVariant - 1];
+                List<int> ourVariants = this.AllVariants[(int)randomVariant - 1].ToList();
+                List<int> theirVariants = otherActor.AllVariants[(int)randomVariant - 1].ToList();
 
                 // large chance of pathing enemies allowing ground or flying
                 //if (randomVariant == ActorType.Pathing && ourVariants != null && otherAttr == null && rng.Next(100) < 80)

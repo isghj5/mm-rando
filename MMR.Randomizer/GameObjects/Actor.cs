@@ -5,6 +5,7 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace MMR.Randomizer.GameObjects
 {
+    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
     public enum Actor
     {
         /// the main enumator value is the vanilla actor list ID
@@ -13,9 +14,10 @@ namespace MMR.Randomizer.GameObjects
         // fixing this is a performance loss, just dont be stupid
 
         //[ActorizerEnabled] // crashes, probably because there are now two players
-        [FileID(38)]
-        [GroundVariants(0x0E02)] // sitting in clocktown?
-        Player = 0x0,
+        //[FileID(38)]
+        //[GroundVariants(0x0E02)] // sitting in clocktown?
+        //Player = 0x0,
+        NULL = 0x0, // since we cant use player actor normally, leave this as NULL
 
         [FileID(39)]
         [ObjectListIndex(1)]
@@ -261,6 +263,7 @@ namespace MMR.Randomizer.GameObjects
         */
         Ben = 0x21, // En_Torch2
 
+        // regular frog as part of the don gero miniquest
         [ActorizerEnabled]
         [FileID(66)]
         [ObjectListIndex(0xBC)]

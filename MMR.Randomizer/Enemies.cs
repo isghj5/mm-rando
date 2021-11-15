@@ -17,6 +17,9 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
+// dotnet 4.5 req
+using System.Runtime.CompilerServices;
+
 // todo rename this actorutils.cs and move to MMR.Randomizer/Utils/
 
 namespace MMR.Randomizer
@@ -68,11 +71,11 @@ namespace MMR.Randomizer
                                 && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized()))) // both
                             .ToList();
 
-           /* var EmemiesOnly = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+            /* var EmemiesOnly = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                             .Where(u => u.ObjectIndex() > 3
                                 && (u.IsEnemyRandomized()))
                             .ToList();
-           //*/
+            //*/
 
             // list of replacement actors we can use to replace with
             // for now they are the same, in the future players will control how they load
@@ -84,6 +87,7 @@ namespace MMR.Randomizer
             }
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)] // TODO do this anywhere a function call gets used 50+ times
         public static bool ReplacementListContains(GameObjects.Actor actor)
         {
             return ReplacementCandidateList.Find(u => u.ActorEnum == actor) != null;
@@ -1109,11 +1113,7 @@ namespace MMR.Randomizer
                                                     || (sceneIsDungeon && u.ObjectID == (int)Scene.SceneSpecialObject.DungeonKeep))
                                                  && !u.BlockedScenes.Contains(scene.SceneEnum)).ToList();
 
-            // uhhh why are we checking this here, it should already be in our Replacement list it should be fine, right?
-            // && (u.ActorEnum.IsEnemyRandomized() || (ACTORSENABLED && u.ActorEnum.IsActorRandomized())))
-
-
-            // todo: search all untouched objects and add those actors too
+            // TODO: search all untouched objects and add those actors too
 
             return sceneFreeActors;
         }
@@ -1311,15 +1311,15 @@ namespace MMR.Randomizer
         {
             // issue: sometimes some of the big scenes get stuck in a weird spot where they can't find any actor combos that fit
             // one day I will figure out this bug, for now, attempt to remove some actors/objects to make it fit
+            // The actors we remove are all forgotten or forgettable, none of them can be required to beat a seed
 
             // medium goron, unused object, size: 0x10
             // alternative: tanron1 is also size 0x10
             const int SMALLEST_OBJ = 0xF3; 
 
-            // there are three scenes that struggle the most: TF, RTIkana, and IkanaCanyon
+            // road to ikana: there is a scarecrow that leads to a fairy pot unknown to most players, we can remove both
             if (scene.SceneEnum == GameObjects.Scene.RoadToIkana)
             {
-                // backup: shrink, there is a fairy pot that nobody uses, and a scarecrow almost nobody uses, remove them
                 scene.Maps[0].Actors[76].ChangeActor(GameObjects.Actor.Empty);
                 objList.Add(
                     new ValueSwap()
@@ -1337,9 +1337,10 @@ namespace MMR.Randomizer
                     }
                 );
             }
+
+            // mountain village spring: there is a scarecrow on top of the blacksmith leading to a clay fairy pot
             if (scene.SceneEnum == GameObjects.Scene.MountainVillageSpring)
             {
-                // backup: shrink, there is a fairy pot that nobody uses, and a scarecrow almost nobody uses, remove them
                 scene.Maps[0].Actors[3].ChangeActor(GameObjects.Actor.Empty);
                 objList.Add(
                     new ValueSwap()
@@ -1358,9 +1359,9 @@ namespace MMR.Randomizer
                 );
             }
 
+            // Ikanacanyon: in rando nobody bothers with garo ghosts
             if (scene.SceneEnum == GameObjects.Scene.IkanaCanyon)
             {
-                // backup: remove garo ghosts, they are not required and are easily ignored
                 objList.Add(
                     new ValueSwap()
                     {
@@ -1370,10 +1371,10 @@ namespace MMR.Randomizer
                 );
                 // for now dont remove the encounters as players expect the tatl notification
             }
+
+            // termina field: there is a single pot on a pilllar to the east with a fairy
             if (scene.SceneEnum == GameObjects.Scene.TerminaField)
             {
-                // backup: term field has one stupid pot with a fairy, nobody uses it
-
                 objList.Add(
                     new ValueSwap()
                     {
@@ -1422,17 +1423,17 @@ namespace MMR.Randomizer
             foreach (var oldEnemy in oldActors) // this is all copies of an enemy in a scene, so all bo or all guay
             {
                 // the enemy we got from the scene has the specific variant number, the general game object has all
-                var enemyMatch = (GameObjects.Actor) oldEnemy.ActorID;
+                GameObjects.Actor enemyMatch = (GameObjects.Actor) oldEnemy.ActorID; // todo can we just use the embedded enum now?
                 foreach (var candidateEnemy in reducedCandidateList)
                 {
                     var enemy = candidateEnemy.ActorEnum;
                     // right here, we need a new compatibleVariants function
                     var compatibleVariants = oldEnemy.CompatibleVariants(candidateEnemy, oldEnemy.Variants[0], random);
-                    if (compatibleVariants == null)
+                    if (compatibleVariants == null || compatibleVariants.Count == 0)
                     {
                         continue;
                     }
-
+                    
                     // TODO here would be a great place to test if the requirements to kill an enemy are met with given items
 
                     if ( ! enemyMatchesPool.Any(u => u.ActorID == (int) enemy))
@@ -1451,6 +1452,12 @@ namespace MMR.Randomizer
                             newEnemy.Variants = compatibleVariants;
                         }
                         enemyMatchesPool.Add(newEnemy);
+
+                        if (newEnemy.Variants.Count == 0)
+                        {
+                            throw new Exception("WTF3");
+                        }
+
                     }
                 }
             }
@@ -1543,14 +1550,27 @@ namespace MMR.Randomizer
 
             void GenerateActorCandidates(){
                 // get a matching set of possible replacement objects and enemies that we can use
-                // turned into a inline function because we re-do this every N attempts of the bogo loop
+                // turned into a inline function because we re-do this every N attempts of the bogo loop, and here at the top, so reusing code
                 for (int i = 0; i < sceneObjects.Count; i++)
                 {
                     // get a list of all enemies (in this room) that have the same OBJECT as our object that have an actor we also have
                     originalEnemiesPerObject.Add(sceneEnemies.FindAll(u => u.ObjectID == sceneObjects[i]));
                     // get a list of matching actors that can fit in the place of the previous actor
                     var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == sceneObjects[i]);
-                    actorCandidatesLists.Add(GetMatchPool(originalEnemiesPerObject[i], rng, scene, sceneAcceptableEnemies.ToList(), objectHasFairyDroppingEnemy));
+                    var newReducedList = Actor.CopyActorList(sceneAcceptableEnemies);
+                    var newCandiateList = GetMatchPool(originalEnemiesPerObject[i], rng, scene, newReducedList, objectHasFairyDroppingEnemy).ToList();
+                    //var newCandiateList = GetMatchPool(originalEnemiesPerObject[i], rng, scene, sceneAcceptableEnemies, objectHasFairyDroppingEnemy).ToList();
+                    var candidateTest = newCandiateList.Find(u => u.Variants.Count == 0);
+                    if (candidateTest != null)
+                    {
+                        throw new Exception("GenActorCandidatees: zero variants detected");
+                    }
+                    if (newCandiateList == null || newCandiateList.Count == 0)
+                    {
+                        throw new Exception("GenActorCandidatees: no candidates detected");
+                    }
+
+                    actorCandidatesLists.Add(newCandiateList);
                 }
             }
 
@@ -1580,6 +1600,13 @@ namespace MMR.Randomizer
                     // reinit actorCandidatesLists because this RNG is bad
                     GenerateActorCandidates();
                 }
+
+                if (actorCandidatesLists[0].Count == 0)
+                {
+                    throw new Exception("candidates list is empty");
+                    //continue;
+                }
+
                 if (loopsCount >= 900) // inf loop catch
                 {
                     var error = " No enemy combo could be found to fill this scene: " + scene.SceneEnum.ToString() + " w sid:" + scene.Number.ToString("X2");
@@ -1612,7 +1639,7 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                     if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    /* if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
@@ -1683,7 +1710,7 @@ namespace MMR.Randomizer
                     }
                     if (! newActorList.Contains(randomEnemy.ActorID))
                     {
-                        newActorList.Append(randomEnemy.ActorID);
+                        newActorList.Add(randomEnemy.ActorID);
                     }
 
                     // add random enemy to list
@@ -1710,9 +1737,12 @@ namespace MMR.Randomizer
 
                     //foreach (var list in chosenReplacementEnemies)
                     {
+                        if (subMatches.Count == 0)
+                            throw new Exception("subMatches is empty");
+
                         var search = subMatches.Find(u => u.Variants.Count == 0);
                         if (search != null)
-                            throw new Exception("WTF");
+                            throw new Exception("WTF: submatches contained a zero variant actor");
                     }
 
                     // for actors that have companions, add them now
@@ -2127,7 +2157,7 @@ namespace MMR.Randomizer
             // generate a list of actors sorted by fid
             var actorList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList();
             actorList.Remove(GameObjects.Actor.Empty);
-            actorList.Remove(GameObjects.Actor.Player);
+            actorList.Remove(GameObjects.Actor.NULL);
             actorList.RemoveAll(u => u.FileListIndex() < 38);
             var fidSortedActors = actorList.OrderBy(x => x.FileListIndex()).ToList();
 
@@ -2287,17 +2317,15 @@ namespace MMR.Randomizer
                 }
                 int seed = random.Next(); // order is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
 
-                Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
-                //foreach (var scene in RomData.SceneList) if (!SceneSkip.Contains(scene.Number))
+                //Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
+                foreach (var scene in newSceneList) // sequential for debugging only
                 {
-                    //if (!SceneSkip.Contains((GameObjects.Scene) scene.Number))
-                    {
-                        var previousThreadPriority = Thread.CurrentThread.Priority;
-                        Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
-                        SwapSceneEnemies(settings, scene, seed);
-                        Thread.CurrentThread.Priority = previousThreadPriority;
-                    }
-                });
+                    var previousThreadPriority = Thread.CurrentThread.Priority;
+                    Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
+                    SwapSceneEnemies(settings, scene, seed);
+                    Thread.CurrentThread.Priority = previousThreadPriority;
+                //});
+                }
 
                 LowerEnemiesResourceLoad();
 
