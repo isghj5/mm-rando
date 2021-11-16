@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 8;
+        public const int CurrentVersion = 9;
 
         public static string ApplyMigrations(string logic)
         {
@@ -162,6 +162,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 8)
             {
                 AddOtherTimeTravel(logicObject);
+            }
+
+            if (logicObject.Version < 9)
+            {
+                AddBeansAndDekuPlayground(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3795,6 +3800,24 @@ namespace MMR.Randomizer.LogicMigrator
                 ConditionalItems = new List<List<string>>(),
             }));
             logicObject.Version = 8;
+        }
+
+        private static void AddBeansAndDekuPlayground(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 124;
+            var itemNames = new string[]
+            {
+                "OtherLimitlessBeans",
+                "OtherPlayDekuPlayground",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 9;
         }
 
         private class MigrationItem

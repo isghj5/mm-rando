@@ -976,6 +976,8 @@ namespace MMR.Randomizer.GameObjects
         OtherExplosive,
         OtherArrow,
         OtherMagicBean,
+        OtherLimitlessBeans,
+        OtherPlayDekuPlayground,
         OtherTimeTravel,
         AreaWoodfallNew,
         AreaSnowheadNew,

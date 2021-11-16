@@ -1,5 +1,5 @@
 {
-  "Version": 8,
+  "Version": 9,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -536,7 +536,7 @@
           "BottleCatchFish",
           "BottleCatchBigPoe",
           "Any Milk",
-          "Limitless Magic Beans"
+          "OtherLimitlessBeans"
         ],
         [
           "Use Fire Arrow",
@@ -903,7 +903,7 @@
     {
       "Id": "HeartPieceDekuPlayground",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2182,14 +2182,38 @@
           "ShopItemBusinessScrubMagicBean"
         ],
         [
-          "AreaSouthAccess",
+          "OtherLimitlessBeans"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherLimitlessBeans",
+      "RequiredItems": [
+        "AreaSouthAccess"
+      ],
+      "ConditionalItems": [
+        [
           "MaskDeku"
         ],
         [
-          "AreaSouthAccess",
           "Deku Guard Skip"
         ]
       ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherPlayDekuPlayground",
+      "RequiredItems": [
+        "MaskDeku"
+      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -3125,11 +3149,11 @@
       "ConditionalItems": [
         [
           "OtherArrow",
-          "Limitless Magic Beans"
+          "OtherLimitlessBeans"
         ],
         [
           "MaskZora",
-          "Limitless Magic Beans"
+          "OtherLimitlessBeans"
         ],
         [
           "Use Light Arrow"
@@ -3756,7 +3780,7 @@
       "ConditionalItems": [
         [
           "BottleCatchFish",
-          "Limitless Magic Beans"
+          "OtherLimitlessBeans"
         ],
         [
           "Use Light Arrow"
@@ -40397,7 +40421,7 @@
       ],
       "ConditionalItems": [
         [
-          "Limitless Magic Beans"
+          "OtherLimitlessBeans"
         ],
         [
           "Use Light Arrow"
@@ -42803,7 +42827,7 @@
     {
       "Id": "MundaneItemDekuPlaygroundPurpleRupee",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51381,7 +51405,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem1",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51392,7 +51416,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem2",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51403,7 +51427,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem3",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51414,7 +51438,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem4",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51425,7 +51449,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem5",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51436,7 +51460,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem6",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51447,7 +51471,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem7",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51458,7 +51482,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem8",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51469,7 +51493,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem9",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51480,7 +51504,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem10",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51491,7 +51515,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem11",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51502,7 +51526,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem12",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51513,7 +51537,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem13",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51524,7 +51548,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem14",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51535,7 +51559,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem15",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51546,7 +51570,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem16",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51557,7 +51581,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem17",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -51568,7 +51592,7 @@
     {
       "Id": "CollectableDekuPlaygroundItem18",
       "RequiredItems": [
-        "MaskDeku"
+        "OtherPlayDekuPlayground"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54602,24 +54626,6 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Jump along invisible platforms without Lens of Truth."
-    },
-    {
-      "Id": "Limitless Magic Beans",
-      "RequiredItems": [
-        "AreaSouthAccess"
-      ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
     },
     {
       "Id": "Bomber Guard Skip",

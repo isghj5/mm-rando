@@ -116,12 +116,12 @@ namespace MMR.Randomizer.GameObjects
             },
 
             // Magic Bean
-            //new MessageCost
-            //{
-            //    MessageIds = { (2355, 0) },
-            //    ItemsAffected = { TODO Limitless Beans (New Grouping) },
-            //    PriceAddress = 0xDC572E,
-            //},
+            new MessageCost
+            {
+                MessageIds = { (2355, 0) },
+                LocationsAffected = { Item.OtherLimitlessBeans },
+                PriceAddresses = { 0xDC572E },
+            },
 
             // Swamp Archery
             new MessageCost
@@ -328,11 +328,10 @@ namespace MMR.Randomizer.GameObjects
             {
                 Name = "Deku Playground",
                 MessageIds = { (10210, 0) },
-                LocationsAffected = { Item.HeartPieceDekuPlayground, Item.MundaneItemDekuPlaygroundPurpleRupee },
+                LocationsAffected = { Item.OtherPlayDekuPlayground },
                 SubtractPriceAddresses = { 0xF4FBBE },
                 PriceAddresses = { 0xF4FB8E },
                 Category = PriceMode.Minigames,
-                // TODO make a 'Play Deku Playground' grouping for the rupees
             },
 
             // Milk Bar Milk
