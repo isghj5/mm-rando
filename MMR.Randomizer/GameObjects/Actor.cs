@@ -373,13 +373,9 @@ namespace MMR.Randomizer.GameObjects
 
         Empty37 = 0x37,
 
-        [FileID(78)]
-        [ObjectListIndex(0x3E)]
-        Door_Warp1 = 0x38, // Door_Warp1
-
         [ActorizerEnabled]
         [ObjectListIndex(0x3E)]
-        [FileID(79)]
+        [FileID(78)]
         [GroundVariants(0x0)] // the 101 and above are for warp TO bosses
         [VariantsWithRoomMax(max: 1, variant:0x0)]
         [UnkillableAllVariants]

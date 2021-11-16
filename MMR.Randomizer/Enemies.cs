@@ -119,8 +119,10 @@ namespace MMR.Randomizer
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.AllVariants();
                         if (!matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)
-                            && listOfAcceptableVariants.Contains(mapActor.Variants[0]))
+                            && listOfAcceptableVariants.Contains(mapActor.OldVariant))
                         {
+                            // since not all actors are usable, save doing some of this work only for actors we actually want to modify
+                            // do this only after we know this is an actor we want
                             mapActor.Name = mapActor.ActorEnum.ToString();
                             mapActor.ObjectSize = ObjUtils.GetObjSize(mapActor.ActorEnum.ObjectIndex());
                             mapActor.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(mapNumber)
@@ -1197,7 +1199,7 @@ namespace MMR.Randomizer
 
                     int listIndex = (randomStart + matchAttempt) % acceptableFreeActors.Count;
                     var testEnemy = acceptableFreeActors[listIndex];
-                    var testEnemyCompatibleVariants = targetActor.CompatibleVariants(testEnemy, targetActor.Variants[0], rng);
+                    var testEnemyCompatibleVariants = targetActor.CompatibleVariants(testEnemy, targetActor.OldVariant, rng);
                     if (testEnemyCompatibleVariants == null)
                     {
                         continue;  // no type compatibility, skip
@@ -1225,7 +1227,7 @@ namespace MMR.Randomizer
                             {
                                 // if the varient limit has not been reached
                                 var variantMax = Actor.VariantMaxCountPerRoom(testEnemy, variant);
-                                var variantCount = enemiesInRoom.Count(u => u.Variants[0] == variant);
+                                var variantCount = enemiesInRoom.Count(u => u.OldVariant == variant);
                                 if (variantCount < variantMax)
                                 {
                                     acceptableVariants.Add(variant);
@@ -1423,12 +1425,10 @@ namespace MMR.Randomizer
             foreach (var oldEnemy in oldActors) // this is all copies of an enemy in a scene, so all bo or all guay
             {
                 // the enemy we got from the scene has the specific variant number, the general game object has all
-                GameObjects.Actor enemyMatch = (GameObjects.Actor) oldEnemy.ActorID; // todo can we just use the embedded enum now?
                 foreach (var candidateEnemy in reducedCandidateList)
                 {
                     var enemy = candidateEnemy.ActorEnum;
-                    // right here, we need a new compatibleVariants function
-                    var compatibleVariants = oldEnemy.CompatibleVariants(candidateEnemy, oldEnemy.Variants[0], random);
+                    var compatibleVariants = oldEnemy.CompatibleVariants(candidateEnemy, oldEnemy.OldVariant, random);
                     if (compatibleVariants == null || compatibleVariants.Count == 0)
                     {
                         continue;
@@ -1522,7 +1522,7 @@ namespace MMR.Randomizer
                 for( int i = 0; i < sceneEnemies.Count; ++i)
                 {
                     if ( sceneEnemies[i].ActorID == (int)GameObjects.Actor.LikeLike
-                        && GameObjects.Actor.LikeLike.IsGroundVariant(sceneEnemies[i].Variants[0]))
+                        && GameObjects.Actor.LikeLike.IsGroundVariant(sceneEnemies[i].OldVariant))
                     {
                         sceneEnemies[i].ObjectID = GameObjects.Actor.LikeLikeShield.ObjectIndex();
                     }

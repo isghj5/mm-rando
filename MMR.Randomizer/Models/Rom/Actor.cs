@@ -210,7 +210,7 @@ namespace MMR.Randomizer.Models.Rom
             }
         }
 
-
+        // todo remove oldActorVariant no longer used
         public List<int> CompatibleVariants(Actor otherActor, int oldActorVariant, Random rng)
         {
             // with mixed types, typing could be messy, keep it hidden here
@@ -260,7 +260,7 @@ namespace MMR.Randomizer.Models.Rom
                     }
                     // our old actor variant was this type
                     if (compatibleVariants.Count > 0 && ourVariants.Count > 0
-                        && ourVariants.Contains(oldActorVariant)) // old actor had to actually be this attribute
+                        && ourVariants.Contains(this.OldVariant)) // old actor had to actually be this attribute
                     {
                         return compatibleVariants;
                     }
