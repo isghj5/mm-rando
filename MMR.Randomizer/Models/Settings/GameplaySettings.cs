@@ -159,6 +159,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.FreeScarecrow = value; }
         }
 
+        public bool DoubleArcheryRewards
+        {
+            get { return this.AsmOptions.MiscConfig.Speedups.DoubleArcheryRewards; }
+            set { this.AsmOptions.MiscConfig.Speedups.DoubleArcheryRewards = value; }
+        }
+
         #endregion
 
         #region Random Elements

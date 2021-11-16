@@ -60,6 +60,11 @@ namespace MMR.Randomizer.Asm
         public bool FastBankRupees { get; set; }
 
         /// <summary>
+        /// Whether or not to grant both archery rewards with a sufficient score when relevant.
+        /// </summary>
+        public bool DoubleArcheryRewards { get; set; } = true;
+
+        /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
@@ -72,6 +77,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.BoatArchery ? (uint)1 : 0) << 28;
             flags |= (this.DonGero ? (uint)1 : 0) << 27;
             flags |= (this.FastBankRupees ? (uint)1 : 0) << 26;
+            flags |= (this.DoubleArcheryRewards ? (uint)1 : 0) << 25;
             return flags;
         }
     }

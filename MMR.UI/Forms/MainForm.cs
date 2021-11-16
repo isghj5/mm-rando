@@ -130,6 +130,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cGoodDogRaceRNG, "Make Gold Dog always win if you have the Mask of Truth.");
             TooltipBuilder.SetTooltip(cFasterLabFish, "Change Lab Fish to only need to be fed one fish.");
             TooltipBuilder.SetTooltip(cFasterBank, "Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000. Also reduces maximum bank capacity from 5000 to 1000.");
+            TooltipBuilder.SetTooltip(cDoubleArcheryRewards, "Grant both archery rewards with a sufficient score.");
             TooltipBuilder.SetTooltip(cFastPush, "Increase the speed of pushing and pulling blocks and faucets.");
             TooltipBuilder.SetTooltip(cFreestanding, "Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.");
             TooltipBuilder.SetTooltip(cEnableNightMusic, "Enables playing daytime Background music during nighttime in the field.\n(Clocktown night music can be weird)");
@@ -982,6 +983,7 @@ namespace MMR.UI.Forms
             cGoodDogRaceRNG.Checked = _configuration.GameplaySettings.SpeedupDogRace;
             cFasterLabFish.Checked = _configuration.GameplaySettings.SpeedupLabFish;
             cFasterBank.Checked = _configuration.GameplaySettings.SpeedupBank;
+            cDoubleArcheryRewards.Checked = _configuration.GameplaySettings.DoubleArcheryRewards;
 
             cDMult.SelectedIndex = (int)_configuration.GameplaySettings.DamageMode;
             cDType.SelectedIndex = (int)_configuration.GameplaySettings.DamageEffect;
@@ -1614,6 +1616,7 @@ namespace MMR.UI.Forms
             cFasterLabFish.Enabled = v;
             cGoodDogRaceRNG.Enabled = v;
             cFasterBank.Enabled = v;
+            cDoubleArcheryRewards.Enabled = v;
 
             cDMult.Enabled = v;
             cDType.Enabled = v;
@@ -2039,6 +2042,11 @@ namespace MMR.UI.Forms
         private void cFreeScarecrow_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.FreeScarecrow = cFreeScarecrow.Checked);
+        }
+
+        private void cDoubleArcheryRewards_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.DoubleArcheryRewards = cDoubleArcheryRewards.Checked);
         }
     }
 }

@@ -121,6 +121,7 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cTargetHealth = new System.Windows.Forms.CheckBox();
             this.cLenientGoronSpikes = new System.Windows.Forms.CheckBox();
             this.cImprovedPictobox = new System.Windows.Forms.CheckBox();
             this.cElegySpeedups = new System.Windows.Forms.CheckBox();
@@ -200,7 +201,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cTargetHealth = new System.Windows.Forms.CheckBox();
+            this.cDoubleArcheryRewards = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1152,6 +1153,7 @@ namespace MMR.UI.Forms
             // 
             // gSpeedUps
             // 
+            this.gSpeedUps.Controls.Add(this.cDoubleArcheryRewards);
             this.gSpeedUps.Controls.Add(this.cFasterBank);
             this.gSpeedUps.Controls.Add(this.cSkipBeaver);
             this.gSpeedUps.Controls.Add(this.cFasterLabFish);
@@ -1363,6 +1365,18 @@ namespace MMR.UI.Forms
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
+            // 
+            // cTargetHealth
+            // 
+            this.cTargetHealth.AutoSize = true;
+            this.cTargetHealth.Location = new System.Drawing.Point(10, 181);
+            this.cTargetHealth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTargetHealth.Name = "cTargetHealth";
+            this.cTargetHealth.Size = new System.Drawing.Size(116, 19);
+            this.cTargetHealth.TabIndex = 40;
+            this.cTargetHealth.Text = "Target Health Bar";
+            this.cTargetHealth.UseVisualStyleBackColor = true;
+            this.cTargetHealth.CheckedChanged += new System.EventHandler(this.cTargetHealth_CheckedChanged);
             // 
             // cLenientGoronSpikes
             // 
@@ -2253,17 +2267,17 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cTargetHealth
+            // cDoubleArcheryRewards
             // 
-            this.cTargetHealth.AutoSize = true;
-            this.cTargetHealth.Location = new System.Drawing.Point(10, 181);
-            this.cTargetHealth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cTargetHealth.Name = "cTargetHealth";
-            this.cTargetHealth.Size = new System.Drawing.Size(116, 19);
-            this.cTargetHealth.TabIndex = 40;
-            this.cTargetHealth.Text = "Target Health Bar";
-            this.cTargetHealth.UseVisualStyleBackColor = true;
-            this.cTargetHealth.CheckedChanged += new System.EventHandler(this.cTargetHealth_CheckedChanged);
+            this.cDoubleArcheryRewards.AutoSize = true;
+            this.cDoubleArcheryRewards.Location = new System.Drawing.Point(172, 77);
+            this.cDoubleArcheryRewards.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDoubleArcheryRewards.Name = "cDoubleArcheryRewards";
+            this.cDoubleArcheryRewards.Size = new System.Drawing.Size(155, 19);
+            this.cDoubleArcheryRewards.TabIndex = 5;
+            this.cDoubleArcheryRewards.Text = "Double Archery Rewards";
+            this.cDoubleArcheryRewards.UseVisualStyleBackColor = true;
+            this.cDoubleArcheryRewards.CheckedChanged += new System.EventHandler(this.cDoubleArcheryRewards_CheckedChanged);
             // 
             // MainForm
             // 
@@ -2516,6 +2530,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cLenientGoronSpikes;
         private System.Windows.Forms.CheckBox cTargetHealth;
         private System.Windows.Forms.CheckBox cFreeScarecrow;
+        private System.Windows.Forms.CheckBox cDoubleArcheryRewards;
     }
 }
 

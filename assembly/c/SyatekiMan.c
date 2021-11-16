@@ -3,9 +3,6 @@
 #include "MMR.h"
 #include "Reloc.h"
 
-// TODO: Replace with Misc flag(s).
-static bool gGiveBothItems = true;
-
 inline bool SwampReward1Flag() {
     return gSaveContext.perm.weekEventReg.bytes[59] & 0x10;
 }
@@ -64,7 +61,7 @@ static void SyatekiMan_Swamp_HandleGiveSecondItem(ActorEnSyatekiMan* actor, Glob
  **/
 void* SyatekiMan_Swamp_DetermineActionFunctionAfterGiveItem(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
     // Check if we are set up to grant second swamp archery reward.
-    if (gGiveBothItems && actor->currentScore >= 0x884 && ShouldGiveSwampReward2() && actor->currentScore != 0x7FFF) {
+    if (MISC_CONFIG.speedups.doubleArchery && actor->currentScore >= 0x884 && ShouldGiveSwampReward2() && actor->currentScore != 0x7FFF) {
         return SyatekiMan_Swamp_HandleGiveSecondItem;
     } else {
         // Set default function pointer.
@@ -76,7 +73,7 @@ void* SyatekiMan_Swamp_DetermineActionFunctionAfterGiveItem(ActorEnSyatekiMan* a
  * Whether or not the quiver reward should be given.
  **/
 static inline bool SyatekiMan_Swamp_ShouldGiveQuiverReward(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
-    if (gGiveBothItems) {
+    if (MISC_CONFIG.speedups.doubleArchery) {
         // Check for special score value to prevent giving quiver reward again.
         return ShouldGiveSwampReward2() && actor->currentScore != 0x7FFF;
     } else {
@@ -110,7 +107,7 @@ static void SyatekiMan_Town_HandleGiveSecondItem(ActorEnSyatekiMan* actor, Globa
  **/
 void* SyatekiMan_Town_DetermineActionFunctionAfterGiveItem(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
     // Check if we are set up to grant second town archery reward.
-    if (gGiveBothItems && !IsTownPerfectScoreMessage(actor->recentMessageId) && actor->currentScore == 50 && ShouldGiveTownReward2()) {
+    if (MISC_CONFIG.speedups.doubleArchery && !IsTownPerfectScoreMessage(actor->recentMessageId) && actor->currentScore == 50 && ShouldGiveTownReward2()) {
         return SyatekiMan_Town_HandleGiveSecondItem;
     } else {
         // Set default function pointer.
@@ -119,7 +116,7 @@ void* SyatekiMan_Town_DetermineActionFunctionAfterGiveItem(ActorEnSyatekiMan* ac
 }
 
 static inline bool SyatekiMan_Town_ShouldGiveLesserReward(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
-    if (gGiveBothItems) {
+    if (MISC_CONFIG.speedups.doubleArchery) {
         // Check if lesser reward should be granted.
         return !TownReward1Flag() || actor->currentScore < 50 || (actor->currentScore == 50 && ShouldGiveTownReward2());
     } else {

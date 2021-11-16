@@ -65,7 +65,8 @@ typedef struct {
     u32 boatArchery    : 1;
     u32 donGero        : 1;
     u32 fastBankRupees : 1;
-    u32                : 26;
+    u32 doubleArchery  : 1;
+    u32                : 25;
 } MiscSpeedups;
 
 typedef struct {
