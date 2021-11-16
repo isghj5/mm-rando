@@ -431,17 +431,29 @@ namespace MMR.UI.Forms
         private void LoadLogic(string logicString)
         {
             logicString = Migrator.ApplyMigrations(logicString);
-            _logic = LogicFile.FromJson(logicString);
-            _singleItemSelectorForm.SetLogicFile(_logic);
-            _multiItemSelectorForm.SetLogicFile(_logic);
-            _itemsById = _logic.Logic.ToDictionary(item => item.Id);
-            // TODO update ItemSelectorForm
-            nItem.Maximum = _logic.Logic.Count - 1;
-            SetIndex((int)nItem.Value);
-            VerifyLogic();
+            var logic = LogicFile.FromJson(logicString);
+            try
+            {
+                var itemsById = logic.Logic.ToDictionary(item => item.Id);
+
+                VerifyLogic(logic, itemsById);
+
+                _singleItemSelectorForm.SetLogicFile(_logic);
+                _multiItemSelectorForm.SetLogicFile(_logic);
+
+                nItem.Maximum = _logic.Logic.Count - 1;
+                SetIndex((int)nItem.Value);
+
+                _logic = logic;
+                _itemsById = itemsById;
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show(e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void VerifyLogic()
+        private void VerifyLogic(LogicFile logic, Dictionary<string, JsonFormatLogicItem> itemsById)
         {
             foreach (var item in _logic.Logic)
             {
