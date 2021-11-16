@@ -3818,6 +3818,7 @@ namespace MMR.Randomizer.LogicMigrator
             public List<List<string>> ConditionalItems { get; set; }
             public TimeOfDay TimeNeeded { get; set; }
             public TimeOfDay TimeAvailable { get; set; }
+            public TimeOfDay TimeSetup { get; set; }
             public bool IsTrick { get; set; }
             public string TrickTooltip { get; set; }
         }
