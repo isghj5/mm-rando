@@ -31,6 +31,7 @@ namespace MMR.Randomizer
         public int NewV;
     }
 
+    [System.Diagnostics.DebuggerDisplay("0x{actorID.ToString(\"X3\")}:{fileID}")]
     public class InjectedActor
     {
         // when we inject a new actor theres some data we need
@@ -51,6 +52,7 @@ namespace MMR.Randomizer
 
         // should only be stored here if new actor
         public byte[] overlayBin;
+        public string filename = ""; // debugging
     }
 
     public class Enemies
@@ -2020,6 +2022,8 @@ namespace MMR.Randomizer
 
                             var injectedActor = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
 
+                            injectedActor.filename = filePath; // debugging
+
                             InjectedActors.Add(injectedActor);
 
                             var injectedActorSearch = ReplacementCandidateList.Find(u => u.ActorID == injectedActor.actorID);
@@ -2317,15 +2321,15 @@ namespace MMR.Randomizer
                 }
                 int seed = random.Next(); // order is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
 
-                //Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
-                foreach (var scene in newSceneList) // sequential for debugging only
+                Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
+                //foreach (var scene in newSceneList) // sequential for debugging only
                 {
                     var previousThreadPriority = Thread.CurrentThread.Priority;
                     Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
                     SwapSceneEnemies(settings, scene, seed);
                     Thread.CurrentThread.Priority = previousThreadPriority;
-                //});
-                }
+                });
+                //}
 
                 LowerEnemiesResourceLoad();
 

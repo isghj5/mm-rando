@@ -2879,6 +2879,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(487)]
         [ObjectListIndex(0x1F5)]
         [WallVariants(0x3F)] // 3F has no cutscene, no camera concerns
+        [GroundVariants(0x3F)] // kinda silly
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // object is shared with multiple actors in this scene, breaks whole area
         SkullKidPainting = 0x210, // En_Kin2_Picture
@@ -2901,7 +2902,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
-        GoronElder = 0x213,
+        GoronElder = 0x213, // En_Jg
 
         [FileID(491)]
         [ObjectListIndex(0x18E)]
