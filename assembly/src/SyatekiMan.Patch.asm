@@ -14,10 +14,10 @@
 .org 0x809C7AB8 ; Offset: 0x15F8
     jal     SyatekiMan_Swamp_DetermineActionFunctionAfterGiveItem_Hook
     nop
-    jal     SyatekiMan_Swamp_ShouldSetQuiverObtainedFlag_Hook
-    nop
     lui     v0, 0x801F
     addiu   v0, v0, 0xF670
+    lbu     v1, 0x0F33 (v0)
+    andi    t6, v1, 0x0010
 
 ; Replaces:
 ;   lui     at, 0x42C8
@@ -48,7 +48,7 @@
 ;   bnez    t0, 0x809C8CAC
 ;   nop
 .org 0x809C8C80 ; Offset: 0x27C0
-    jal     SyatekiMan_Town_ShouldGiveGreaterReward_Hook
+    jal     SyatekiMan_Town_ShouldNotGiveLesserReward_Hook
     or      a0, s0, r0
     or      a0, s1, r0
     or      a2, s0, r0

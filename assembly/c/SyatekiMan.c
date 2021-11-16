@@ -40,6 +40,10 @@ static inline bool ShouldGiveTownReward2() {
     }
 }
 
+static inline bool IsTownPerfectScoreMessage(u16 messageId) {
+    return (messageId == 0x405) || (messageId == 0x406);
+}
+
 /**
  * Action function used to handle giving second swamp archery reward.
  **/
@@ -48,8 +52,8 @@ static void SyatekiMan_Swamp_HandleGiveSecondItem(ActorEnSyatekiMan* actor, Glob
         z2_ShowMessage(ctxt, 0xA34, &actor->base);
         actor->recentMessageId = 0xA34;
         actor->actionFunc = Reloc_ResolveActorOverlay(&gActorOverlayTable[ACTOR_EN_SYATEKI_MAN], 0x809C6E30);
-        // Reset score so that we fallback to lesser reward next run.
-        actor->currentScore = 0;
+        // Set special score value to indicate processing second reward.
+        actor->currentScore = 0x7FFF;
     } else {
         z2_800B85E0(&actor->base, ctxt, 500.0f, -1);
     }
@@ -59,8 +63,8 @@ static void SyatekiMan_Swamp_HandleGiveSecondItem(ActorEnSyatekiMan* actor, Glob
  * Hook function to determine the next action function after giving a swamp archery reward.
  **/
 void* SyatekiMan_Swamp_DetermineActionFunctionAfterGiveItem(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
-    // Checks if we got the greater reward and don't have the flag for the lesser reward.
-    if (gGiveBothItems && actor->currentScore >= 0x884 && ShouldGiveSwampReward2()) {
+    // Check if we are set up to grant second swamp archery reward.
+    if (gGiveBothItems && actor->currentScore >= 0x884 && ShouldGiveSwampReward2() && actor->currentScore != 0x7FFF) {
         return SyatekiMan_Swamp_HandleGiveSecondItem;
     } else {
         // Set default function pointer.
@@ -73,8 +77,8 @@ void* SyatekiMan_Swamp_DetermineActionFunctionAfterGiveItem(ActorEnSyatekiMan* a
  **/
 static inline bool SyatekiMan_Swamp_ShouldGiveQuiverReward(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
     if (gGiveBothItems) {
-        // Enforce low score check for giving quiver reward.
-        return !SwampReward1Flag() && actor->currentScore < 0x884;
+        // Check for special score value to prevent giving quiver reward again.
+        return ShouldGiveSwampReward2() && actor->currentScore != 0x7FFF;
     } else {
         // Default behavior, only give quiver reward if lesser reward flag not set.
         return !SwampReward1Flag();
@@ -93,8 +97,8 @@ bool SyatekiMan_Swamp_ShouldNotGiveQuiverReward(ActorEnSyatekiMan* actor, Global
  **/
 static void SyatekiMan_Town_HandleGiveSecondItem(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
     if (z2_800B84D0(&actor->base, ctxt)) {
-        z2_ShowMessage(ctxt, 0x407, &actor->base);
-        actor->recentMessageId = 0x407;
+        z2_ShowMessage(ctxt, 0x405, &actor->base);
+        actor->recentMessageId = 0x405;
         actor->actionFunc = Reloc_ResolveActorOverlay(&gActorOverlayTable[ACTOR_EN_SYATEKI_MAN], 0x809C7990);
     } else {
         z2_800B85E0(&actor->base, ctxt, 500.0f, -1);
@@ -105,8 +109,8 @@ static void SyatekiMan_Town_HandleGiveSecondItem(ActorEnSyatekiMan* actor, Globa
  * Hook function to determine the next action function after giving a town archery reward.
  **/
 void* SyatekiMan_Town_DetermineActionFunctionAfterGiveItem(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
-    // Checks if we got the greater reward and don't have the flag for the lesser reward.
-    if (gGiveBothItems && actor->recentMessageId != 0x407 && ShouldGiveTownReward2()) {
+    // Check if we are set up to grant second town archery reward.
+    if (gGiveBothItems && !IsTownPerfectScoreMessage(actor->recentMessageId) && actor->currentScore == 50 && ShouldGiveTownReward2()) {
         return SyatekiMan_Town_HandleGiveSecondItem;
     } else {
         // Set default function pointer.
@@ -114,15 +118,19 @@ void* SyatekiMan_Town_DetermineActionFunctionAfterGiveItem(ActorEnSyatekiMan* ac
     }
 }
 
-/**
- * Hook function to check if the greater reward should be given for a perfect score.
- **/
-bool SyatekiMan_Town_ShouldGiveGreaterReward(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
+static inline bool SyatekiMan_Town_ShouldGiveLesserReward(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
     if (gGiveBothItems) {
-        // Always give greater reward if feature enabled.
-        return true;
+        // Check if lesser reward should be granted.
+        return !TownReward1Flag() || actor->currentScore < 50 || (actor->currentScore == 50 && ShouldGiveTownReward2());
     } else {
         // Default behavior, only give greater reward if lesser reward has been received.
-        return TownReward1Flag();
+        return !TownReward1Flag();
     }
+}
+
+/**
+ * Hook function to check if the initial lesser reward check should be skipped in conditionals.
+ **/
+bool SyatekiMan_Town_ShouldNotGiveLesserReward(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
+    return !SyatekiMan_Town_ShouldGiveLesserReward(actor, ctxt);
 }
