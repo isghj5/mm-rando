@@ -1149,6 +1149,11 @@ namespace MMR.Randomizer
 
         private void RandomizePrices()
         {
+            ushort RandomPrice()
+            {
+                return (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 4.0) * 500, 1, 500);
+            }
+
             _randomized.MessageCosts = new List<ushort?>();
             // TODO if costs randomized
             for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
@@ -1159,13 +1164,7 @@ namespace MMR.Randomizer
                     _randomized.MessageCosts.Add(null);
                     continue;
                 }
-                var walletSize = Random.Next(3);
-                var cost = (ushort)(walletSize switch
-                {
-                    0 => Random.Next(1, 100),
-                    1 => Random.Next(100, 201),
-                    _ => Random.Next(201, 501),
-                });
+                var cost = RandomPrice();
 
                 // this relies on puchase 2 appearing in the list directly after purchase 1
                 if (messageCost.Name == "Business Scrub Purchase 2")
@@ -1173,12 +1172,7 @@ namespace MMR.Randomizer
                     var purchase1Cost = _randomized.MessageCosts[i - 1] ?? 150;
                     while (cost == purchase1Cost)
                     {
-                        cost = (ushort)(walletSize switch
-                        {
-                            0 => Random.Next(1, 100),
-                            1 => Random.Next(100, 201),
-                            _ => Random.Next(201, 501),
-                        });
+                        cost = RandomPrice();
                     }
                 }
 
