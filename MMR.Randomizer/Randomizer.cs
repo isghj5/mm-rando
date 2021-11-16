@@ -166,7 +166,8 @@ namespace MMR.Randomizer
 
             var arrows40 = ItemList
                 .FirstOrDefault(io =>
-                    io.DependsOnItems.Count == 0
+                    io.Item.IsFake()
+                    && io.DependsOnItems.Count == 0
                     && io.Conditionals.Count == 2
                     && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigQuiver }))
                     && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBiggestQuiver })));
@@ -269,7 +270,8 @@ namespace MMR.Randomizer
 
                 var bombs20 = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 3
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ItemBombBag }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigBombBag }))
@@ -277,7 +279,8 @@ namespace MMR.Randomizer
 
                 var bombs30 = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 2
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigBombBag }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBiggestBombBag})));
@@ -322,7 +325,8 @@ namespace MMR.Randomizer
 
                 var sword1 = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 3
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.StartingSword }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRazorSword }))
@@ -330,7 +334,8 @@ namespace MMR.Randomizer
 
                 var sword2 = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 2
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRazorSword }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGildedSword })));
@@ -375,7 +380,8 @@ namespace MMR.Randomizer
 
                 var wallets200 = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 2
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeAdultWallet }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet })));
@@ -394,7 +400,8 @@ namespace MMR.Randomizer
 
                 var magicAny = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 2
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.FairyMagic }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.FairyDoubleMagic })));
@@ -1183,7 +1190,8 @@ namespace MMR.Randomizer
             {
                 var wallets200 = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 2
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeAdultWallet }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet })));
