@@ -366,6 +366,29 @@ namespace MMR.Randomizer
         }
 
         /// <summary>
+        /// Write text for swamp archery double reward message.
+        /// </summary>
+        /// <param name="table"><see cref="MessageTable"/> to update.</param>
+        private void WriteArcheryDoubleRewardText(MessageTable table)
+        {
+            table.UpdateMessages(new MessageEntryBuilder()
+                .Id(0x23E)
+                .Header(it =>
+                {
+                    it.Standard().Y(0).Icon(0xFE);
+                })
+                .Message(it =>
+                {
+                    it.Text("Y'played so well, y've'rned").NewLine()
+                    .Text("yuhself the ").Red("grand prize").Text("!")
+                    .DisableTextSkip2()
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+        }
+
+        /// <summary>
         /// Write text for pictograph prompt.
         /// </summary>
         /// <param name="table"><see cref="MessageTable"/> to update.</param>
@@ -3180,6 +3203,8 @@ namespace MMR.Randomizer
                 {
                     WriteBankPromptText(_messageTable);
                 }
+
+                WriteArcheryDoubleRewardText(_messageTable);
 
                 progressReporter.ReportProgress(61, "Writing quick text...");
                 WriteQuickText();

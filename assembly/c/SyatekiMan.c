@@ -49,7 +49,7 @@ static inline bool IsTownPerfectScoreMessage(u16 messageId) {
  **/
 static void SyatekiMan_Swamp_HandleGiveSecondItem(ActorEnSyatekiMan* actor, GlobalContext* ctxt) {
     if (z2_800B84D0(&actor->base, ctxt)) {
-        z2_ShowMessage(ctxt, 0xA34, &actor->base);
+        z2_ShowMessage(ctxt, 0x23E, &actor->base);
         actor->recentMessageId = 0xA34;
         actor->actionFunc = Reloc_ResolveActorOverlay(&gActorOverlayTable[ACTOR_EN_SYATEKI_MAN], 0x809C6E30);
         // Set special score value to indicate processing second reward.
