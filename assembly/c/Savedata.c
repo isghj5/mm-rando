@@ -84,6 +84,11 @@ void Savedata_AfterFileInit(GlobalContext* ctxt) {
     Savedata_SetStartingItems(ctxt);
 }
 
+static inline s32 GetInvertedClockSpeed(void) {
+    // Read inverted clock speed value from code used by Inverted Song of Time.
+    return *(s16*)(0x8015764E);
+}
+
 static bool ShouldAutoInvert(const SaveContext* file) {
     switch (MISC_CONFIG.flags.autoInvert) {
         case AUTO_INVERT_ALWAYS:
@@ -97,14 +102,14 @@ static bool ShouldAutoInvert(const SaveContext* file) {
 
 static void HandleAutoInvert_AfterLoad(SaveContext* file) {
     if (ShouldAutoInvert(file)) {
-        file->perm.timeSpeed = -2;
+        file->perm.timeSpeed = GetInvertedClockSpeed();
     }
 }
 
 static void HandleAutoInvert_AfterSoT(SaveContext* file) {
     // Called after Song of Time, so only invert if always.
     if (MISC_CONFIG.flags.autoInvert == AUTO_INVERT_ALWAYS) {
-        file->perm.timeSpeed = -2;
+        file->perm.timeSpeed = GetInvertedClockSpeed();
     }
 }
 
