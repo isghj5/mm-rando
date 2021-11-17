@@ -188,7 +188,7 @@ namespace MMR.Randomizer.Utils
                 a.Rotation.z = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 12);
                 a.Variants[0] = ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 14);
                 a.OldVariant = a.Variants[0];
-                a.sceneID = RomData.SceneList[sceneID].Number;
+                //a.sceneID = RomData.SceneList[sceneID].Number;
                 a.Room = mapID;
                 a.RoomActorIndex = i;
 

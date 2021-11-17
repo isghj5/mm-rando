@@ -3,7 +3,6 @@
 namespace MMR.Randomizer.Models.Rom
 {
     [System.Diagnostics.DebuggerDisplay("{Addr}")]
-
     public class MMFile
     {
         public int Addr;

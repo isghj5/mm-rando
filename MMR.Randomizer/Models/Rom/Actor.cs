@@ -22,28 +22,32 @@ namespace MMR.Randomizer.Models.Rom
 
         public string Name = ""; // for debug mostly, got real sick of looking up each and every actor index
         public string OldName = ""; // for debug mostly, got real sick of looking up each and every actor index
+        [System.Diagnostics.DebuggerDisplay("{ActorID.ToString(\"X3\")}")]
         public int ActorID; // in-game actor list index
         public GameObjects.Actor ActorEnum; // enumerator with metadata about the actor and actor extensions
         public GameObjects.Actor OldActorEnum; // enumerator with metadata about the actor and actor extensions
+        [System.Diagnostics.DebuggerDisplay("{ObjectID.ToString(\"X3\")}")]
         public int ObjectID; // in-game object list index
-        public int ActorSize; // todo
-        public int ObjectSize; // read by enemizer at scene actor reading
         public int ActorIDFlags; // we just want to keep them when re-writing, but I'm not sure they even matter
         public List<int> Variants = new List<int> { 0 };
         public int OldVariant;
         public bool MustNotRespawn = false;
-        public int Room;           // this specific actor, which map/room was it in
-        public int RoomActorIndex; // the index of this actor in its room's actor list
         public ActorType Type; 
-        //public int Stationary; // Deathbasket used to use this, I dont see the point except around water
-        public vec16 Position = new vec16();
-        public vec16 Rotation = new vec16();
         public bool IsCompanion = false;
         public bool previouslyMovedCompanion = false;
 
+        // used for vanilla actors (not for replacements)
+        public int ActorSize; // todo
+        public int ObjectSize; // read by enemizer at scene actor reading
+        public int Room;           // this specific actor, which map/room was it in
+        public int RoomActorIndex; // the index of this actor in its room's actor list
+        //public int Stationary; // Deathbasket used to use this, I dont see the point except around water
+        public vec16 Position = new vec16();
+        public vec16 Rotation = new vec16();
+
         public List<GameObjects.Scene> SceneExclude = new List<GameObjects.Scene>();
 
-        public int sceneID; // do we still need this?
+        //public int sceneID; // do we still need this?
         public bool modified = false;
 
         // we no longer want to pull this stuff every actor, we want this stuff static
@@ -193,7 +197,7 @@ namespace MMR.Randomizer.Models.Rom
             {
                 Variants[0] = vars;
             }
-        }
+        } // */
 
         public void ChangeActor(Actor otherActor, int vars)
         {
