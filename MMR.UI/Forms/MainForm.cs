@@ -93,6 +93,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cNutAndStickDrops, "Adds Deku nuts and Deku sticks to drop tables in the field:\n\n - Default: No change, vanilla behavior.\n - Light: one stick and nut 1/16 chance termina bush.\n - Medium: More nuts, twice the chance\n - Extra: More sticks, more nuts, more drop locations.\n - Mayhem: You're crazy in the coconut!");
             TooltipBuilder.SetTooltip(cFloors, "Select a floortype for every floor ingame:\n\n - Default: Vanilla floortypes.\n - Sand: Link sinks slowly into every floor, affecting movement speed.\n - Ice: Every floor is slippery.\n - Snow: Similar to sand. \n - Random: Any random floortypes of the above.");
             TooltipBuilder.SetTooltip(cClockSpeed, "Modify the speed of time.");
+            TooltipBuilder.SetTooltip(cAutoInvert, "Auto-invert time at the start of a cycle.");
             TooltipBuilder.SetTooltip(cHideClock, "Clock UI will be hidden.");
             TooltipBuilder.SetTooltip(cStartingItems, "Select a starting item mode:\n\nNone - You will not start with any randomized starting items.\nRandom - You will start with randomized starting items.\nAllow Temporary Items - You will start with randomized starting items including Keg, Magic Bean and Bottles with X.");
             TooltipBuilder.SetTooltip(cBlastCooldown, "Adjust the cooldown timer after using the Blast Mask.");
@@ -130,6 +131,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cGoodDogRaceRNG, "Make Gold Dog always win if you have the Mask of Truth.");
             TooltipBuilder.SetTooltip(cFasterLabFish, "Change Lab Fish to only need to be fed one fish.");
             TooltipBuilder.SetTooltip(cFasterBank, "Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000. Also reduces maximum bank capacity from 5000 to 1000.");
+            TooltipBuilder.SetTooltip(cDoubleArcheryRewards, "Grant both archery rewards with a sufficient score.");
             TooltipBuilder.SetTooltip(cFastPush, "Increase the speed of pushing and pulling blocks and faucets.");
             TooltipBuilder.SetTooltip(cFreestanding, "Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.");
             TooltipBuilder.SetTooltip(cEnableNightMusic, "Enables playing daytime Background music during nighttime in the field.\n(Clocktown night music can be weird)");
@@ -143,6 +145,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cLenientGoronSpikes, "Goron spikes can charge midair and keep their charge. Minimum speed for goron spikes is removed.");
             TooltipBuilder.SetTooltip(cTargetHealth, "Targeting an enemy shows their health bar.");
             TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
+            TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
         }
 
         /// <summary>
@@ -973,6 +976,7 @@ namespace MMR.UI.Forms
             cDeathMoonCrash.Checked = _configuration.GameplaySettings.DeathMoonCrash;
             cIceTrapQuirks.Checked = _configuration.GameplaySettings.IceTrapQuirks;
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
+            cAutoInvert.SelectedIndex = (int)_configuration.GameplaySettings.AutoInvert;
             cNoDowngrades.Checked = _configuration.GameplaySettings.PreventDowngrades;
             cShopAppearance.Checked = _configuration.GameplaySettings.UpdateShopAppearance;
             cStartingItems.SelectedIndex = (int)_configuration.GameplaySettings.StartingItemMode;
@@ -983,6 +987,7 @@ namespace MMR.UI.Forms
             cGoodDogRaceRNG.Checked = _configuration.GameplaySettings.SpeedupDogRace;
             cFasterLabFish.Checked = _configuration.GameplaySettings.SpeedupLabFish;
             cFasterBank.Checked = _configuration.GameplaySettings.SpeedupBank;
+            cDoubleArcheryRewards.Checked = _configuration.GameplaySettings.DoubleArcheryRewards;
 
             cDMult.SelectedIndex = (int)_configuration.GameplaySettings.DamageMode;
             cDType.SelectedIndex = (int)_configuration.GameplaySettings.DamageEffect;
@@ -1059,6 +1064,7 @@ namespace MMR.UI.Forms
             cLenientGoronSpikes.Checked = _configuration.GameplaySettings.LenientGoronSpikes;
             cTargetHealth.Checked = _configuration.GameplaySettings.TargetHealthBar;
             cFreeScarecrow.Checked = _configuration.GameplaySettings.FreeScarecrow;
+            cFillWallet.Checked = _configuration.GameplaySettings.FillWallet;
 
             // HUD config options
             var heartItems = ColorSelectionManager.Hearts.GetItems();
@@ -1609,18 +1615,21 @@ namespace MMR.UI.Forms
             cLenientGoronSpikes.Enabled = v;
             cTargetHealth.Enabled = v;
             cFreeScarecrow.Enabled = v;
+            cFillWallet.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
             cFasterLabFish.Enabled = v;
             cGoodDogRaceRNG.Enabled = v;
             cFasterBank.Enabled = v;
+            cDoubleArcheryRewards.Enabled = v;
 
             cDMult.Enabled = v;
             cDType.Enabled = v;
             cGravity.Enabled = v;
             cFloors.Enabled = v;
             cClockSpeed.Enabled = v;
+            cAutoInvert.Enabled = v;
             cBlastCooldown.Enabled = v;
             cIceTraps.Enabled = v;
             cIceTrapsAppearance.Enabled = v;
@@ -2040,6 +2049,21 @@ namespace MMR.UI.Forms
         private void cFreeScarecrow_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.FreeScarecrow = cFreeScarecrow.Checked);
+        }
+
+        private void cDoubleArcheryRewards_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.DoubleArcheryRewards = cDoubleArcheryRewards.Checked);
+        }
+
+        private void cFillWallet_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.FillWallet = cFillWallet.Checked);
+        }
+
+        private void cAutoInvert_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.AutoInvert = (AutoInvertState)cAutoInvert.SelectedIndex);
         }
     }
 }

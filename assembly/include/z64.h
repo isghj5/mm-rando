@@ -1283,7 +1283,8 @@ typedef union {
 
 typedef struct {
     /* 0x00 */ u8 zelda[6]; // Will always be "ZELDA3" for a valid save
-    /* 0x06 */ UNK_TYPE1 pad6[0xA];
+    /* 0x06 */ u16 songOfTimeCount;
+    /* 0x08 */ UNK_TYPE1 pad8[0x8];
     /* 0x10 */ s16 maxLife;
     /* 0x12 */ s16 currentLife;
     /* 0x14 */ u8 magicLevel;
@@ -1698,6 +1699,18 @@ typedef struct {
     /* 0x250 */ f32 xzRequiredDistance;
     /* 0x254 */ UNK_TYPE1 pad254[0x4C];
 } ActorEnKakasi; // size = 0x2A0
+
+// En_Syateki_Man actor (Shooting Gallery Proprietors).
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0x44];
+    /* 0x188 */ void* actionFunc;
+    /* 0x18C */ UNK_TYPE1 pad18C[0xF4];
+    /* 0x280 */ u16 currentScore;
+    /* 0x282 */ UNK_TYPE1 pad282[0x2];
+    /* 0x284 */ s16 recentMessageId;
+    /* 0x286 */ UNK_TYPE1 pad286[0x2];
+} ActorEnSyatekiMan; // size = 0x288
 
 /// =============================================================
 /// Actor Cutscene

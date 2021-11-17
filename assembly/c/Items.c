@@ -2,6 +2,7 @@
 #include "Icetrap.h"
 #include "Items.h"
 #include "QuestItems.h"
+#include "Misc.h"
 #include "MMR.h"
 
 /**
@@ -48,6 +49,31 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
     }
 }
 
+static void SetRupeeCount(u16 rupees) {
+    // Clear rupee counter if negative.
+    if (gSaveContext.owl.rupeeCounter < 0) {
+        gSaveContext.owl.rupeeCounter = 0;
+    }
+    gSaveContext.perm.unk24.rupees = rupees;
+}
+
+/**
+ * Helper function used to fill rupees based on wallet if enabled.
+ **/
+static void HandleFillWallet(u8 item) {
+    if (!MISC_CONFIG.flags.fillWallet)
+        return;
+
+    switch (item) {
+        case ITEM_ADULT_WALLET:
+            SetRupeeCount(gItemUpgradeCapacity.walletCapacity[1]);
+            break;
+        case ITEM_GIANT_WALLET:
+            SetRupeeCount(gItemUpgradeCapacity.walletCapacity[2]);
+            break;
+    }
+}
+
 /**
  * Hook function called after receiving an item.
  *
@@ -58,6 +84,8 @@ void Items_AfterReceive(GlobalContext* ctxt, u8 item) {
     QuestItems_AfterReceive(item);
     // Handle custom items.
     HandleCustomItem(ctxt, item);
+    // Fill rupees if wallet upgrade.
+    HandleFillWallet(item);
 }
 
 /**

@@ -159,6 +159,24 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.FreeScarecrow = value; }
         }
 
+        public bool FillWallet
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.FillWallet; }
+            set { this.AsmOptions.MiscConfig.Flags.FillWallet = value; }
+        }
+
+        public AutoInvertState AutoInvert
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.AutoInvert; }
+            set { this.AsmOptions.MiscConfig.Flags.AutoInvert = value; }
+        }
+
+        public bool DoubleArcheryRewards
+        {
+            get { return this.AsmOptions.MiscConfig.Speedups.DoubleArcheryRewards; }
+            set { this.AsmOptions.MiscConfig.Speedups.DoubleArcheryRewards = value; }
+        }
+
         #endregion
 
         #region Random Elements
