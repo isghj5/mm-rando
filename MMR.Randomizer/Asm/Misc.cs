@@ -24,6 +24,13 @@ namespace MMR.Randomizer.Asm
         Never,
     }
 
+    public enum AutoInvertState : byte
+    {
+        Never,
+        FirstCycle,
+        Always,
+    }
+
     /// <summary>
     /// Speedups.
     /// </summary>
@@ -200,6 +207,11 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool FillWallet { get; set; }
 
+        /// <summary>
+        /// Whether or not time should be auto-inverted at the start of a cycle.
+        /// </summary>
+        public AutoInvertState AutoInvert { get; set; }
+
         public MiscFlags()
         {
         }
@@ -233,6 +245,7 @@ namespace MMR.Randomizer.Asm
             this.ClimbAnything = ((flags >> 11) & 1) == 1;
             this.FreeScarecrow = ((flags >> 10) & 1) == 1;
             this.FillWallet = ((flags >> 9) & 1) == 1;
+            this.AutoInvert = (AutoInvertState)((flags >> 7) & 3);
         }
 
         /// <summary>
@@ -263,6 +276,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.ClimbAnything ? (uint)1 : 0) << 11;
             flags |= (this.FreeScarecrow ? (uint)1 : 0) << 10;
             flags |= (this.FillWallet ? (uint)1 : 0) << 9;
+            flags |= (((uint)this.AutoInvert) & 3) << 7;
             return flags;
         }
     }

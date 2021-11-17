@@ -1283,7 +1283,8 @@ typedef union {
 
 typedef struct {
     /* 0x00 */ u8 zelda[6]; // Will always be "ZELDA3" for a valid save
-    /* 0x06 */ UNK_TYPE1 pad6[0xA];
+    /* 0x06 */ u16 songOfTimeCount;
+    /* 0x08 */ UNK_TYPE1 pad8[0x8];
     /* 0x10 */ s16 maxLife;
     /* 0x12 */ s16 currentLife;
     /* 0x14 */ u8 magicLevel;

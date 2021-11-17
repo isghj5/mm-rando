@@ -165,6 +165,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.FillWallet = value; }
         }
 
+        public AutoInvertState AutoInvert
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.AutoInvert; }
+            set { this.AsmOptions.MiscConfig.Flags.AutoInvert = value; }
+        }
+
         public bool DoubleArcheryRewards
         {
             get { return this.AsmOptions.MiscConfig.Speedups.DoubleArcheryRewards; }

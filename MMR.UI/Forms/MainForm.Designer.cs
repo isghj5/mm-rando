@@ -122,6 +122,7 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cFillWallet = new System.Windows.Forms.CheckBox();
             this.cTargetHealth = new System.Windows.Forms.CheckBox();
             this.cLenientGoronSpikes = new System.Windows.Forms.CheckBox();
             this.cImprovedPictobox = new System.Windows.Forms.CheckBox();
@@ -202,7 +203,8 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cFillWallet = new System.Windows.Forms.CheckBox();
+            this.cAutoInvert = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -884,7 +886,7 @@ namespace MMR.UI.Forms
             this.groupBox10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox10.Name = "groupBox10";
             this.groupBox10.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox10.Size = new System.Drawing.Size(198, 240);
+            this.groupBox10.Size = new System.Drawing.Size(198, 193);
             this.groupBox10.TabIndex = 32;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Movement";
@@ -1069,14 +1071,16 @@ namespace MMR.UI.Forms
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.cAutoInvert);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.cClockSpeed);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.cHideClock);
-            this.groupBox1.Location = new System.Drawing.Point(574, 253);
+            this.groupBox1.Location = new System.Drawing.Point(574, 206);
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Size = new System.Drawing.Size(197, 98);
+            this.groupBox1.Size = new System.Drawing.Size(197, 145);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Clock";
@@ -1114,7 +1118,7 @@ namespace MMR.UI.Forms
             this.cHideClock.AutoSize = true;
             this.cHideClock.BackColor = System.Drawing.Color.Transparent;
             this.cHideClock.ForeColor = System.Drawing.Color.Black;
-            this.cHideClock.Location = new System.Drawing.Point(7, 72);
+            this.cHideClock.Location = new System.Drawing.Point(6, 111);
             this.cHideClock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cHideClock.Name = "cHideClock";
             this.cHideClock.Size = new System.Drawing.Size(65, 19);
@@ -1379,6 +1383,18 @@ namespace MMR.UI.Forms
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
+            // 
+            // cFillWallet
+            // 
+            this.cFillWallet.AutoSize = true;
+            this.cFillWallet.Location = new System.Drawing.Point(10, 207);
+            this.cFillWallet.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFillWallet.Name = "cFillWallet";
+            this.cFillWallet.Size = new System.Drawing.Size(139, 19);
+            this.cFillWallet.TabIndex = 41;
+            this.cFillWallet.Text = "Fill wallet on upgrade";
+            this.cFillWallet.UseVisualStyleBackColor = true;
+            this.cFillWallet.CheckedChanged += new System.EventHandler(this.cFillWallet_CheckedChanged);
             // 
             // cTargetHealth
             // 
@@ -2281,17 +2297,30 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cFillWallet
+            // cAutoInvert
             // 
-            this.cFillWallet.AutoSize = true;
-            this.cFillWallet.Location = new System.Drawing.Point(10, 207);
-            this.cFillWallet.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cFillWallet.Name = "cFillWallet";
-            this.cFillWallet.Size = new System.Drawing.Size(139, 19);
-            this.cFillWallet.TabIndex = 41;
-            this.cFillWallet.Text = "Fill wallet on upgrade";
-            this.cFillWallet.UseVisualStyleBackColor = true;
-            this.cFillWallet.CheckedChanged += new System.EventHandler(this.cFillWallet_CheckedChanged);
+            this.cAutoInvert.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cAutoInvert.FormattingEnabled = true;
+            this.cAutoInvert.Items.AddRange(new object[] {
+            "Never",
+            "First Cycle",
+            "Always"});
+            this.cAutoInvert.Location = new System.Drawing.Point(7, 82);
+            this.cAutoInvert.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cAutoInvert.Name = "cAutoInvert";
+            this.cAutoInvert.Size = new System.Drawing.Size(164, 23);
+            this.cAutoInvert.TabIndex = 18;
+            this.cAutoInvert.SelectedIndexChanged += new System.EventHandler(this.cAutoInvert_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 66);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(68, 15);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Auto-invert";
             // 
             // MainForm
             // 
@@ -2546,6 +2575,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFreeScarecrow;
         private System.Windows.Forms.CheckBox cDoubleArcheryRewards;
         private System.Windows.Forms.CheckBox cFillWallet;
+        private System.Windows.Forms.ComboBox cAutoInvert;
+        private System.Windows.Forms.Label label3;
     }
 }
 

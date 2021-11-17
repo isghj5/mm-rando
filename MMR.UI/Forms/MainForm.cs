@@ -93,6 +93,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cNutAndStickDrops, "Adds Deku nuts and Deku sticks to drop tables in the field:\n\n - Default: No change, vanilla behavior.\n - Light: one stick and nut 1/16 chance termina bush.\n - Medium: More nuts, twice the chance\n - Extra: More sticks, more nuts, more drop locations.\n - Mayhem: You're crazy in the coconut!");
             TooltipBuilder.SetTooltip(cFloors, "Select a floortype for every floor ingame:\n\n - Default: Vanilla floortypes.\n - Sand: Link sinks slowly into every floor, affecting movement speed.\n - Ice: Every floor is slippery.\n - Snow: Similar to sand. \n - Random: Any random floortypes of the above.");
             TooltipBuilder.SetTooltip(cClockSpeed, "Modify the speed of time.");
+            TooltipBuilder.SetTooltip(cAutoInvert, "Auto-invert time at the start of a cycle.");
             TooltipBuilder.SetTooltip(cHideClock, "Clock UI will be hidden.");
             TooltipBuilder.SetTooltip(cStartingItems, "Select a starting item mode:\n\nNone - You will not start with any randomized starting items.\nRandom - You will start with randomized starting items.\nAllow Temporary Items - You will start with randomized starting items including Keg, Magic Bean and Bottles with X.");
             TooltipBuilder.SetTooltip(cBlastCooldown, "Adjust the cooldown timer after using the Blast Mask.");
@@ -974,6 +975,7 @@ namespace MMR.UI.Forms
             cDeathMoonCrash.Checked = _configuration.GameplaySettings.DeathMoonCrash;
             cIceTrapQuirks.Checked = _configuration.GameplaySettings.IceTrapQuirks;
             cClockSpeed.SelectedIndex = (int)_configuration.GameplaySettings.ClockSpeed;
+            cAutoInvert.SelectedIndex = (int)_configuration.GameplaySettings.AutoInvert;
             cNoDowngrades.Checked = _configuration.GameplaySettings.PreventDowngrades;
             cShopAppearance.Checked = _configuration.GameplaySettings.UpdateShopAppearance;
             cStartingItems.SelectedIndex = (int)_configuration.GameplaySettings.StartingItemMode;
@@ -1626,6 +1628,7 @@ namespace MMR.UI.Forms
             cGravity.Enabled = v;
             cFloors.Enabled = v;
             cClockSpeed.Enabled = v;
+            cAutoInvert.Enabled = v;
             cBlastCooldown.Enabled = v;
             cIceTraps.Enabled = v;
             cIceTrapsAppearance.Enabled = v;
@@ -2055,6 +2058,11 @@ namespace MMR.UI.Forms
         private void cFillWallet_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.FillWallet = cFillWallet.Checked);
+        }
+
+        private void cAutoInvert_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.AutoInvert = (AutoInvertState)cAutoInvert.SelectedIndex);
         }
     }
 }
