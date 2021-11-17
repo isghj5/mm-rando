@@ -152,6 +152,8 @@ namespace MMR.Randomizer.Utils
                     competitiveHints.Add((messageText, allowedGossipQuotes));
                 }
 
+                unusedItems.Clear();
+
                 var importantRegionCounts = new Dictionary<Region, List<(ItemObject io, Item locationForImportance)>>();
                 var nonImportantRegionCounts = new Dictionary<Region, List<(ItemObject, Item)>>();
                 var songOnlyRegionCounts = new Dictionary<Region, List<(ItemObject, Item)>>();
