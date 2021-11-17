@@ -118,9 +118,11 @@ namespace MMR.Randomizer.GameObjects
             // Magic Bean
             new MessageCost
             {
+                Name = "Bean Salesman",
                 MessageIds = { (2355, 0) },
                 LocationsAffected = { Item.OtherLimitlessBeans },
-                PriceAddresses = { 0xDC572E },
+                SubtractPriceAddresses = { 0xDC572E },
+                PriceAddresses = { 0xDC56A6 },
             },
 
             // Swamp Archery
