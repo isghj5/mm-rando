@@ -27,9 +27,11 @@ namespace MMR.Randomizer.GameObjects
         En_Test = 0x1, // En_Test
 
         [FileID(40)]
+        [ObjectListIndex(0x1)]
         En_GirlA = 0x2,
 
         [FileID(41)]
+        [ObjectListIndex(0x1)]
         En_Part = 0x3,
 
         //[EnemizerEnabled] // we dont want as an actual actor, we want as a companion
@@ -81,6 +83,7 @@ namespace MMR.Randomizer.GameObjects
         TreasureChest = 0x6, // En_Box
 
         [FileID(45)]
+        [ObjectListIndex(0x128)]
         PametFrog = 0x7, // En_Pammetfrog the frogminiboss
 
         [EnemizerEnabled]
@@ -92,6 +95,7 @@ namespace MMR.Randomizer.GameObjects
         Octarok = 0x8, // En_Okuta
 
         [FileID(47)]
+        [ObjectListIndex(0x1)]
         PowderKeg = 0x9, // En_Bom
 
         [EnemizerEnabled]
@@ -138,12 +142,13 @@ namespace MMR.Randomizer.GameObjects
         //[OnlyOneActorPerRoom]
         Horse = 0xD, // En_Horse
 
-        // NO FILE??? WHERE IS IT
         [ObjectListIndex(0x1)]
         [UnkillableAllVariants]
+        [ActorInstanceSize(0x1A8)]
         Item00 = 0xE, // En_Item00
 
         [FileID(52)]
+        [ObjectListIndex(0x1)]
         Arrow = 0xF, // En_Arrow
 
         [ActorizerEnabled]
@@ -195,9 +200,11 @@ namespace MMR.Randomizer.GameObjects
         Peahat = 0x14, // En_Peehat
 
         [FileID(119)]
+        [ObjectListIndex(0x2)]
         Butterfly = 0x15, // En_Butte
 
         [FileID(118)]
+        [ObjectListIndex(0x1)]
         Insect = 0x16, // En_Insect
 
         //[ActorizerEnabled] // not sure what to believe anymore, labfish is a different actor, school of fish is different, lets turn this off
@@ -209,6 +216,7 @@ namespace MMR.Randomizer.GameObjects
         Fish = 0x17, // En_Fish
 
         [FileID(57)]
+        [ObjectListIndex(0x1)]
         En_Holl = 0x18, // En_Holl
 
         [EnemizerEnabled]
@@ -222,12 +230,15 @@ namespace MMR.Randomizer.GameObjects
         Dinofos = 0x19,
 
         [FileID(59)]
+        [ObjectListIndex(0x5F)]
         Flagpole = 0x1A, // En_Hata
 
         [FileID(60)]
+        [ObjectListIndex(0x19)]
         ChildZelda = 0x1B, // En_Zl1
 
         [FileID(61)]
+        [ObjectListIndex(0x1)]
         Viewer = 0x1C, // En_Viewer
 
         [EnemizerEnabled]
@@ -240,12 +251,15 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(0x69)]
         Shabom = 0x1D,// the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
+        // this is a regular dungeon door in stonetower
         [FileID(63)]
+        [ObjectListIndex(0x1)]
         Door_Shutter = 0x1E, // Door_Shutter
 
         Empty1F = 0x1F,
 
         [FileID(64)]
+        [ObjectListIndex(0x1)]
         ZoraFinBoomerang = 0x20, // En_Boom
 
         //[ActorizerEnabled] // disabled for now because crash if leaving grotto into scene with ben
@@ -295,18 +309,22 @@ namespace MMR.Randomizer.GameObjects
         // issues: listing all the vars for all signs is going to be hell
         [ObjectListIndex(0xFC)] // the spreadsheet thinks this is free but I dont think so, think its a multi-object like tsubo
         //[GroundVariants()]
+        [ActorInstanceSize(0x1A8)]
         [UnkillableAllVariants]
         Sign = 0x26, // En_A_Obj
 
         [FileID(68)]
+        [ObjectListIndex(0x1)]
         Obj_Wturn = 0x27, // Obj_Wturn
 
         [FileID(69)]
+        [ObjectListIndex(0x1)]
         RiverSound = 0x28, // En_River_Sound
 
         Empty29 = 0x29,
 
         [FileID(70)]
+        [ObjectListIndex(0x1)]
         Ossan = 0x2A, // En_Ossan
 
         Empty2B = 0x2B,
@@ -363,12 +381,15 @@ namespace MMR.Randomizer.GameObjects
         DekuBaba = 0x33, // En_Dekubaba
 
         [FileID(75)]
+        [ObjectListIndex(0x1)]
         En_M_Fire1 = 0x34, // En_M_Fire1
 
-        [FileID(76)]        
+        [FileID(76)]
+        [ObjectListIndex(0x1)]
         En_M_Thunder = 0x35, // En_M_Thunder
 
         [FileID(77)]
+        [ObjectListIndex(0x1)]
         Bg_Breakwall = 0x36, // Bg_Breakwall
 
         Empty37 = 0x37,
@@ -424,6 +445,7 @@ namespace MMR.Randomizer.GameObjects
         RedBubble = 0x3C, // En_Bbfall
 
         [FileID(83)]
+        [ObjectListIndex(0x1)]
         Arms_Hook = 0x3D, // Arms_Hook
 
         [EnemizerEnabled]
@@ -437,6 +459,7 @@ namespace MMR.Randomizer.GameObjects
         BlueBubble = 0x3E, // En_Bb
 
         [FileID(85)]
+        [ObjectListIndex(0x17E)]
         Bg_Keikoku_Spr = 0x3F, // Bg_Keikoku_Spr
 
         Empty40 = 0x40,
@@ -476,6 +499,7 @@ namespace MMR.Randomizer.GameObjects
         Gomess = 0x43, // En_Death 🤘
 
         [FileID(88)]
+        [ObjectListIndex(0x52)]
         MiniDeath = 0x44, // En_MiniDeath
 
         Empty45 = 0x45,
@@ -492,6 +516,7 @@ namespace MMR.Randomizer.GameObjects
         Beamos = 0x47, // En_Vm 
 
         [FileID(90)]
+        [ObjectListIndex(0x1)]
         Demo_Effect = 0x48, // Demo_Effect
 
         [ActorizerEnabled]
@@ -537,9 +562,12 @@ namespace MMR.Randomizer.GameObjects
         ReDead = 0x4C, // En_Rd
 
         [FileID(94)]
+        [ObjectListIndex(0x5C)]
         Bg_F40_Flift = 0x4D, // Bg_F40_Flift
 
-        // MISSING FILE??
+        // Has no File
+        [ActorInstanceSize(0)] // unknown, never seen though
+        [ObjectListIndex(0x0)]
         Bg_Heavy_Block = 0x4E, // Bg_Heavy_Block
 
         [EnemizerEnabled]
@@ -586,6 +614,7 @@ namespace MMR.Randomizer.GameObjects
         Empty53 = 0x53,
 
         [FileID(98)]
+        [ObjectListIndex(0x7D)]
         En_Horse_Link_Child = 0x54, // En_Horse_Link_Child
 
         [ActorizerEnabled]
@@ -636,9 +665,11 @@ namespace MMR.Randomizer.GameObjects
         Empty5A = 0x5A,
 
         [FileID(100)]
+        [ObjectListIndex(0x1)]
         En_Encount1 = 0x5B, // En_Encount1
 
         [FileID(101)]
+        [ObjectListIndex(0xC)]
         Demo_Tre_Lgt = 0x5C, // Demo_Tre_Lgt
 
         Empty5D = 0x5D,
@@ -653,14 +684,16 @@ namespace MMR.Randomizer.GameObjects
         MajoraBalloonSewer = 0x5F, // En_Encount2
 
         [FileID(103)]
+        [ObjectListIndex(0x70)]
         En_Fire_Rock = 0x60, // En_Fire_Rock
 
         [FileID(104)]
+        [ObjectListIndex(0x88)]
         Bg_Ctower_Rot = 0x61, // Bg_Ctower_Rot
 
         [FileID(105)]
+        [ObjectListIndex(0x87)]
         Mir_Ray = 0x62, // Mir_Ray
-
 
         Empty63 = 0x63,
 
@@ -672,6 +705,7 @@ namespace MMR.Randomizer.GameObjects
         Shellblade = 0x64, // En_Sb
 
         [FileID(107)]
+        [ObjectListIndex(0x128)]
         En_Bigslime = 0x65, // En_Bigslime
 
         [EnemizerEnabled]
@@ -684,6 +718,7 @@ namespace MMR.Randomizer.GameObjects
 
         // ingo?
         [FileID(109)]
+        [ObjectListIndex(0x99)]
         En_In = 0x67, // En_In
 
         Empty68 = 0x68,
@@ -704,9 +739,11 @@ namespace MMR.Randomizer.GameObjects
         Ruto = 0x69, // En_Ru
 
         [FileID(110)]
+        [ObjectListIndex(1)]
         En_Bom_Chu = 0x6A, // En_Bom_Chu
 
         [FileID(111)]
+        [ObjectListIndex(0x191)]
         En_Horse_Game_Check = 0x6B, // En_Horse_Game_Check
 
         [EnemizerEnabled]
@@ -734,6 +771,7 @@ namespace MMR.Randomizer.GameObjects
         Empty72 = 0x72,
 
         [FileID(113)]
+        [ObjectListIndex(0x1)]
         En_Fr = 0x73, // En_Fr
 
         Empty74 = 0x74,
@@ -941,9 +979,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0001)]
         Item_Inbox = 0x9E, // Item_Inbox
 
+        // pirate that tells leader they cant get near the eggs because of seasnakes
+        [ActorizerEnabled]
         [FileID(146)]
         [ObjectListIndex(0xE6)]
-        En_Ge1 = 0x9F, // En_Ge1
+        [GroundVariants(1)]
+        [UnkillableAllVariants]
+        CutscenePirate = 0x9F, // En_Ge1
 
         [FileID(147)]
         [ObjectListIndex(0001)]
@@ -1371,6 +1413,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0x7E00)]
         [PathingVariants(0x0)]
         [PathingTypeVarsPlacement(mask: 0x7F00, shift: 9)]
+        [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         MuteZora = 0xF8, // En_Zo
 
@@ -1392,8 +1435,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x2)]
         Obj_Hamishi = 0xFC, // Obj_Hamishi
 
+        //[ActorizerEnabled] // overloads something, crashes in almost all cases
         [FileID(234)]
         [ObjectListIndex(0x192)]
+        // cutscene actor of some sort, if it doesnt crash it loads a tpose skullkid with missing model parts
         En_Zl4 = 0xFD, // En_Zl4
 
         //[ActorizerEnabled] // we dont want as an actual actor, we want as a companion
@@ -1478,7 +1523,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerEnabled] //crash
         //[ActorInitVarOffset(0x3688)]
         [FileID(247)]
-        //[ObjectListIndex(0x23B)]
+        [ObjectListIndex(0x23B)]
         [GroundVariants(0x2243)]
         En_Encount3 = 0x112, // En_Encount3
 
@@ -1511,9 +1556,11 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         En_Warp_tag = 0x116, // En_Warp_tag
 
+	// dog race owner
         [FileID(252)]
         [ObjectListIndex(0xD7)]
-        En_Aob_01 = 0x117, // En_Aob_01
+        MammauYan = 0x117, // En_Aob_01
+
         [FileID(253)]
         [ObjectListIndex(0x1)]
         En_Boj_01 = 0x118, // En_Boj_01
@@ -1548,13 +1595,27 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         En_Boj_04 = 0x121, // En_Boj_04
 
-        [FileID(262)]
-        [ObjectListIndex(0x1)]
-        En_Cne_01 = 0x122, // En_Cne_01
 
+        // broken actor, needs two objects such a pain
+        //[ActorizerEnabled]
+        [FileID(262)]
+        [ObjectListIndex(0xDA)] // 1
+        // needs anime object and cne object, pain
+        [GroundVariants(0x7E00)]
+        [PathingVariants(0x0)]
+        [PathingTypeVarsPlacement(mask: 0x3F, shift: 9)]
+        [UnkillableAllVariants]
+        BetaVampireGirl = 0x122, // En_Cne_01
+
+        // beta bomb shop wife
+        [ActorizerEnabled]
         [FileID(263)]
-        [ObjectListIndex(0x1)]
-        En_Bba_01 = 0x123, // En_Bba_01
+        [ObjectListIndex(0xDF)] // 1
+        // 7E is a range, unkown, looks like a path since it comes with a ==7E check
+        [GroundVariants(0)]
+        // Pathing Variants todo
+        [UnkillableAllVariants]
+        BabaIsUnused = 0x123, // En_Bba_01
 
         [FileID(264)]
         [ObjectListIndex(0xDE)]
@@ -1582,9 +1643,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(268)]
         [ObjectListIndex(0x15B)]
         Boss_02 = 0x12A, // Boss_02
+
         [FileID(269)]
         [ObjectListIndex(0x15C)]
         Boss_03 = 0x12B, // Boss_03
+
         [FileID(270)]
         [ObjectListIndex(0x15D)]
         Boss_04 = 0x12C, // Boss_04
@@ -1780,7 +1843,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0xFFFF)] //unk
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
-        Zelda_152 = 0x0152,
+        Zelda_152 = 0x0152, // Dm_Zl
 
         [FileID(305)]
         [ObjectListIndex(0x1)]
@@ -1828,7 +1891,7 @@ namespace MMR.Randomizer.GameObjects
         // one of these is sit on the wall bat from rtss: FF03/01/9F
         [VariantsWithRoomMax(max:1, 0xFF34)] // swarm
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
-        BadBat = 0x15B,
+        BadBat = 0x15B, // En_Bat
 
         // can hold many different types of graves or stones containing.. nothing bit broke
         //[ActorizerEnabled] // this works fine but shows up waay too often
@@ -1873,6 +1936,7 @@ namespace MMR.Randomizer.GameObjects
         // 3F60 woodfall small
         [GroundVariants(0x3F5F)]
         [VariantsWithRoomMax(max:1, variant: 0x3F5F)]
+        [EnemizerScenesPlacementBlock(Scene.Woodfall)] // hiploop only, bad spot for a fire
         [UnkillableAllVariants]
         CircleOfFire = 0x162, // Obj_Fireshield // tag: FireRing
 
@@ -1917,6 +1981,7 @@ namespace MMR.Randomizer.GameObjects
         // 2 is smaller scrub that surrounds link
         [GroundVariants(2,6)]
         [VariantsWithRoomMax(max:1, variant:6)]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)]
         [UnkillableAllVariants]
         HallucinationScrub = 0x169, // En_Dnk
         
@@ -2105,10 +2170,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xBB)]
         [WaterVariants(0x2002, 0x2006, 0x200B, 0x2003, 0x2004, 0x2005, 0x200C)]
         // if I had a hanging from cieling thing like spiders this would work fine
-        [WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
+        //[WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
         [UnkillableAllVariants] // actorcat PROP, not detected as enemy
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
-        Mine = 0x185, // Obj_Mine
+        SpikedMine = 0x185, // Obj_Mine
 
         [FileID(352)]
         [ObjectListIndex(0x1)]
@@ -2200,7 +2265,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x18C)]
         [WallVariants(0x907F, 0xA07F)]
         [UnkillableAllVariants]
-        Clock = 0x19C, // En_Tokeidai
+        Clock = 0x19C, // Obj_Tokeidai
 
         Empty19D = 0x19D,
 
@@ -2258,6 +2323,7 @@ namespace MMR.Randomizer.GameObjects
         // we have fixed 0x0 so that it doesn't auto-despawn, however, since the code handles her not being available anyway
         [GroundVariants(0x0)]
         [FlyingVariants(0x0)]
+        [VariantsWithRoomMax(max:6, variant:0x0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.RomaniRanch)] // dont replace actual romani balloons
         [EnemizerScenesPlacementBlock(Scene.TerminaField)] // long draw distance means they can overflow actor spawn
@@ -2362,7 +2428,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(405)]
         [ObjectListIndex(0x1A5)]
-        Lillypad = 0x1B9, // Bg_Lotus
+        Lilypad = 0x1B9, // Bg_Lotus
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1FF0)]
@@ -2414,10 +2480,13 @@ namespace MMR.Randomizer.GameObjects
         [FileID(413)]
         [ObjectListIndex(0x1A9)]
         En_Tsn = 0x1C2, // En_Tsn
-        
+
+        [ActorizerEnabled]
         [FileID(414)]
         [ObjectListIndex(0x1AA)]
-        En_Ds2n = 0x1C3, // En_Ds2n
+        [GroundVariants(0)] // just stands around
+        [UnkillableAllVariants]
+        OOTPotionShopMan = 0x1C3, // En_Ds2n
         
         [FileID(415)]
         [ObjectListIndex(0x1AB)]
@@ -2608,10 +2677,11 @@ namespace MMR.Randomizer.GameObjects
         //0x100 is red, 0x200 is blue, 0x300 is green, 00 is purple, however, its difficult to fight more than 2
         [FlyingVariants(0x300, 0x200, 0x100)]
         [GroundVariants(0x300, 0x200, 0x100, 0)]
+        [RespawningVariants(0x0)] // meg does NOT respawn but her death doesnt always trigger kills rooms, not sure why
         [VariantsWithRoomMax(max: 1, variant: 0, 0x100, 0x200, 0x300)] // only one per
         // no scene exclusion necessary, get spawned by the poe sisters minigame but they aren't actors in the scene to be randomized
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
-        PoeSisters = 0x1E8,
+        PoeSisters = 0x1E8, // En_Po_Sisters
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3794)]
@@ -3033,8 +3103,8 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15)]
         //[GroundVariants(0xFC0B)] // testing dialogue without pathing
         [PathingVariants(0x140A, 0xFC05, 0x2, 0x3, 0x4)]
-        [VariantsWithRoomMax(max: 1, variant: 0x2, 0x3, 0x4)]
-        // TODO add pathing thing
+        [VariantsWithRoomMax(max: 1, variant: 0x140A, 0xFC05, 0x2, 0x3, 0x4)]
+        [VariantsWithRoomMax(max: 1, variant: 0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15, 0xFC00)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [EnemizerScenesExcluded(Scene.ZoraHall, Scene.ZoraCape)]
         [UnkillableAllVariants]
@@ -3242,9 +3312,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(543)]
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
         // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
-        // 02 doesn't ever seen to spawn, day or night, think its a fluke
-        [GroundVariants(0x0)] 
+        // 02 is the music-only one that spawns so you can hear him through the walls of the inn
+        [GroundVariants(0x0)]
         [UnkillableAllVariants]
+        [OnlyOneActorPerRoom] // if two of them are near to each other, and player appears near his nearby music can break
         //[EnemizerScenesExcluded(0x15, 0x70, 0x61)]
         [EnemizerScenesExcluded(Scene.StockPotInn, Scene.LaundryPool, Scene.MilkBar)] // think him being in milkbar is a credits thing
         GuruGuru = 0x248, // En_GuruGuru
@@ -3500,7 +3571,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(593)]
         [ObjectListIndex(0x24A)]
-        En_Yb = 0x27A, // En_Yb
+        Kamaro = 0x27A, // En_Yb
 
         [ActorizerEnabled]
         [ObjectListIndex(0x24B)]

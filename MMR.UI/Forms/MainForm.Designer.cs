@@ -33,7 +33,6 @@ namespace MMR.UI.Forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.bopen = new System.Windows.Forms.Button();
             this.openROM = new System.Windows.Forms.OpenFileDialog();
             this.openLogic = new System.Windows.Forms.OpenFileDialog();
@@ -1950,7 +1949,7 @@ namespace MMR.UI.Forms
             // 
             // bReroll
             // 
-            this.bReroll.Location = new System.Drawing.Point(212, 9);
+            this.bReroll.Location = new System.Drawing.Point(262, 10);
             this.bReroll.Name = "bReroll";
             this.bReroll.Size = new System.Drawing.Size(88, 23);
             this.bReroll.TabIndex = 8;
@@ -2031,7 +2030,7 @@ namespace MMR.UI.Forms
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mLogicEdit});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(48, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // mLogicEdit
@@ -2101,11 +2100,11 @@ namespace MMR.UI.Forms
             // 
             // tSeed
             // 
-            this.tSeed.Location = new System.Drawing.Point(90, 12);
+            this.tSeed.Location = new System.Drawing.Point(90, 10);
             this.tSeed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tSeed.MaxLength = 10;
             this.tSeed.Name = "tSeed";
-            this.tSeed.Size = new System.Drawing.Size(129, 20);
+            this.tSeed.Size = new System.Drawing.Size(165, 23);
             this.tSeed.TabIndex = 2;
             this.tSeed.Enter += new System.EventHandler(this.tSeed_Enter);
             this.tSeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tSeed_KeyDown);
@@ -2116,7 +2115,7 @@ namespace MMR.UI.Forms
             this.lSeed.AutoSize = true;
             this.lSeed.BackColor = System.Drawing.Color.Transparent;
             this.lSeed.ForeColor = System.Drawing.Color.Black;
-            this.lSeed.Location = new System.Drawing.Point(1, 15);
+            this.lSeed.Location = new System.Drawing.Point(4, 14);
             this.lSeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lSeed.Name = "lSeed";
             this.lSeed.Size = new System.Drawing.Size(82, 15);
@@ -2219,7 +2218,6 @@ namespace MMR.UI.Forms
             this.Controls.Add(this.mMenu);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            //this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon"))); // why is this broken now
             this.MainMenuStrip = this.mMenu;
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;

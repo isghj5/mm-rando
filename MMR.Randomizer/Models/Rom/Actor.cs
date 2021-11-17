@@ -11,9 +11,7 @@ using System;
 
 namespace MMR.Randomizer.Models.Rom
 {
-    // todo consider breaking this up into slots and replacement actor subtypes
-
-    [System.Diagnostics.DebuggerDisplay("{Name}")]
+    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorID.ToString(\"X3\")}]")]
     public class Actor
     {
         // this is instance data, per actor, per scene.

@@ -10,7 +10,7 @@
         public const int InstSetMap         = 0xC77A60; // pointer table: sequence -> instrumentset
         public const int AudioSequence      = 0x046AF0; // audioseq
         public const int SeqTable           = 0xC77B80; // audioseq table (70 + 0x10)
-        public const int AudiobankTable     = 0xC776D0; // audiobank index (c0 + 0x10)
+        public const int AudiobankTable     = 0xC776D0; // audiobank index (c0 + 0x10) (RAM: 801E1190)
         public const int Audiobank          = 0x020700;
 
         // every overylay type has a different table for dynamic file loading
