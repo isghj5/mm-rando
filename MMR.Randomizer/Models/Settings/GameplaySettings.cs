@@ -196,6 +196,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public StrayFairyMode StrayFairyMode { get; set; }
 
+        public BossRemainsMode BossRemainsMode { get; set; }
+
         public PriceMode PriceMode { get; set; }
 
 

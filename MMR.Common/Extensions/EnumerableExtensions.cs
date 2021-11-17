@@ -67,10 +67,10 @@ namespace MMR.Common.Extensions
             return source.Distinct(new KeyEqualityComparer<TSource, TKey>(keySelector));
         }
 
-        public static IEnumerable<T> AllowModification<T>(this IList<T> list) where T : struct
+        public static IEnumerable<T> AllowModification<T>(this IEnumerable<T> source) where T : struct
         {
             var used = new List<T>();
-            for (var item = list.Cast<T?>().FirstOrDefault(); item != null; used.Add(item.Value), item = list.Except(used).Cast<T?>().FirstOrDefault())
+            for (var item = source.Cast<T?>().FirstOrDefault(); item != null; used.Add(item.Value), item = source.Except(used).Cast<T?>().FirstOrDefault())
             {
                 yield return item.Value;
             }

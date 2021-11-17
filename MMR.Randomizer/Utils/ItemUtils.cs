@@ -115,6 +115,11 @@ namespace MMR.Randomizer.Utils
             return Enumerable.Range((int)Item.CollectibleStrayFairyWoodfall1, 60).Cast<Item>();
         }
 
+        public static IEnumerable<Item> BossRemains()
+        {
+            return Enumerable.Range((int)Item.RemainsOdolwa, 4).Cast<Item>();
+        }
+
         // todo cache
         public static IEnumerable<Item> DowngradableItems()
         {
@@ -201,13 +206,17 @@ namespace MMR.Randomizer.Utils
             return item == Item.RecoveryHeart || item == Item.IceTrap || JunkItems.Contains(item);
         }
 
-        public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult)
+        public static bool CanBeRequired(Item item)
         {
             return !item.Name().Contains("Heart")
-                        && !IsStrayFairy(item)
-                        && !IsSkulltulaToken(item)
-                        && item != Item.IceTrap
-                        && randomizedResult.LocationsRequiredForMoonAccess.Contains(locationForImportance);
+                && !IsStrayFairy(item)
+                && !IsSkulltulaToken(item)
+                && item != Item.IceTrap;
+        }
+
+        public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult)
+        {
+            return CanBeRequired(item) && randomizedResult.LocationsRequiredForMoonAccess.Contains(locationForImportance);
         }
 
         public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)

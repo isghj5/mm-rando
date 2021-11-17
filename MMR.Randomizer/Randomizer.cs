@@ -1000,7 +1000,7 @@ namespace MMR.Randomizer
             return true;
         }
 
-        private void PlaceItem(Item currentItem, List<Item> targets, bool lockRegion = false)
+        private void PlaceItem(Item currentItem, List<Item> targets, Func<Item, Item, bool> restriction = null)
         {
             var currentItemObject = ItemList[currentItem];
             if (currentItem.IsFake())
@@ -1031,9 +1031,9 @@ namespace MMR.Randomizer
                 availableItems.Remove(Item.SongHealing);
             }
 
-            if (lockRegion)
+            if (restriction != null)
             {
-                availableItems.RemoveAll(location => location.Region() != currentItem.Region());
+                availableItems.RemoveAll(location => !restriction(currentItem, location));
             }
 
             if (!_settings.AddSongs)
@@ -1434,11 +1434,16 @@ namespace MMR.Randomizer
 
         private void PlaceRestrictedDungeonItems(List<Item> itemPool)
         {
+            bool LockRegion(Item item, Item location)
+            {
+                return item.Region() == location.Region();
+            }
+
             if (_randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon))
             {
                 foreach (var item in ItemUtils.SmallKeys())
                 {
-                    PlaceItem(item, itemPool, true);
+                    PlaceItem(item, itemPool, LockRegion);
                 }
             }
 
@@ -1446,7 +1451,7 @@ namespace MMR.Randomizer
             {
                 foreach (var item in ItemUtils.BossKeys())
                 {
-                    PlaceItem(item, itemPool, true);
+                    PlaceItem(item, itemPool, LockRegion);
                 }
             }
 
@@ -1454,7 +1459,23 @@ namespace MMR.Randomizer
             {
                 foreach (var item in ItemUtils.DungeonStrayFairies())
                 {
-                    PlaceItem(item, itemPool, true);
+                    PlaceItem(item, itemPool, LockRegion);
+                }
+            }
+
+            if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
+            {
+                PlaceItem(Item.RemainsOdolwa, itemPool, (item, location) => location == Item.FairySpinAttack);
+                PlaceItem(Item.RemainsGoht, itemPool, (item, location) => location == Item.FairyDoubleMagic);
+                PlaceItem(Item.RemainsGyorg, itemPool, (item, location) => location == Item.FairyDoubleDefense);
+                PlaceItem(Item.RemainsTwinmold, itemPool, (item, location) => location == Item.ItemFairySword);
+            }
+
+            if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinDungeon))
+            {
+                foreach (var item in ItemUtils.BossRemains())
+                {
+                    PlaceItem(item, itemPool, LockRegion);
                 }
             }
         }
@@ -1802,6 +1823,8 @@ namespace MMR.Randomizer
                     }
                 }
 
+                progressReporter.ReportProgress(32, "Calculating item importance...");
+
                 var logicForRequiredItems = _settings.LogicMode == LogicMode.Casual && _settings.GossipHintStyle == GossipHintStyle.Competitive
                     ? _randomized.Logic.Select(il =>
                     {
@@ -1815,7 +1838,7 @@ namespace MMR.Randomizer
                     : _randomized.Logic;
 
                 var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic);
-                var importantLocations = logicPaths?.Important.ToList();
+                var importantLocations = logicPaths?.Important.Where(item => item.Region().HasValue).Distinct().ToHashSet();
                 var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
                 if (importantLocations == null)
                 {
@@ -1824,6 +1847,10 @@ namespace MMR.Randomizer
                 var locationsRequiredForMoonAccess = new List<Item>();
                 foreach (var location in importantLocations.AllowModification())
                 {
+                    if (!ItemUtils.CanBeRequired(ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item))
+                    {
+                        continue;
+                    }
                     var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: location);
                     if (checkPaths == null)
                     {
@@ -1831,11 +1858,14 @@ namespace MMR.Randomizer
                     }
                     else
                     {
-                        importantLocations.AddRange(checkPaths.Important);
+                        foreach (var checkedLocation in checkPaths.Important.Distinct().Where(item => item.Region().HasValue))
+                        {
+                            importantLocations.Add(checkedLocation);
+                        }
                         importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
                     }
                 }
-                _randomized.ImportantLocations = importantLocations.Where(item => item.Region().HasValue).Distinct().ToList().AsReadOnly();
+                _randomized.ImportantLocations = importantLocations.ToList().AsReadOnly();
                 _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
                 _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.AsReadOnly();
 
