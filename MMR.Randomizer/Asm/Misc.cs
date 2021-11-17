@@ -195,6 +195,11 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool FreeScarecrow { get; set; }
 
+        /// <summary>
+        /// Whether or not to max out rupees when finding a wallet upgrade.
+        /// </summary>
+        public bool FillWallet { get; set; }
+
         public MiscFlags()
         {
         }
@@ -227,6 +232,7 @@ namespace MMR.Randomizer.Asm
             this.TargetHealth = ((flags >> 12) & 1) == 1;
             this.ClimbAnything = ((flags >> 11) & 1) == 1;
             this.FreeScarecrow = ((flags >> 10) & 1) == 1;
+            this.FillWallet = ((flags >> 9) & 1) == 1;
         }
 
         /// <summary>
@@ -256,6 +262,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.TargetHealth ? (uint)1 : 0) << 12;
             flags |= (this.ClimbAnything ? (uint)1 : 0) << 11;
             flags |= (this.FreeScarecrow ? (uint)1 : 0) << 10;
+            flags |= (this.FillWallet ? (uint)1 : 0) << 9;
             return flags;
         }
     }

@@ -107,6 +107,7 @@ namespace MMR.UI.Forms
             this.label4 = new System.Windows.Forms.Label();
             this.tabComfort = new System.Windows.Forms.TabPage();
             this.gSpeedUps = new System.Windows.Forms.GroupBox();
+            this.cDoubleArcheryRewards = new System.Windows.Forms.CheckBox();
             this.cFasterBank = new System.Windows.Forms.CheckBox();
             this.cSkipBeaver = new System.Windows.Forms.CheckBox();
             this.cFasterLabFish = new System.Windows.Forms.CheckBox();
@@ -201,7 +202,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cDoubleArcheryRewards = new System.Windows.Forms.CheckBox();
+            this.cFillWallet = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1168,6 +1169,18 @@ namespace MMR.UI.Forms
             this.gSpeedUps.TabStop = false;
             this.gSpeedUps.Text = "Speed Ups";
             // 
+            // cDoubleArcheryRewards
+            // 
+            this.cDoubleArcheryRewards.AutoSize = true;
+            this.cDoubleArcheryRewards.Location = new System.Drawing.Point(172, 77);
+            this.cDoubleArcheryRewards.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDoubleArcheryRewards.Name = "cDoubleArcheryRewards";
+            this.cDoubleArcheryRewards.Size = new System.Drawing.Size(155, 19);
+            this.cDoubleArcheryRewards.TabIndex = 5;
+            this.cDoubleArcheryRewards.Text = "Double Archery Rewards";
+            this.cDoubleArcheryRewards.UseVisualStyleBackColor = true;
+            this.cDoubleArcheryRewards.CheckedChanged += new System.EventHandler(this.cDoubleArcheryRewards_CheckedChanged);
+            // 
             // cFasterBank
             // 
             this.cFasterBank.AutoSize = true;
@@ -1342,6 +1355,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cFillWallet);
             this.groupBox7.Controls.Add(this.cTargetHealth);
             this.groupBox7.Controls.Add(this.cLenientGoronSpikes);
             this.groupBox7.Controls.Add(this.cImprovedPictobox);
@@ -2267,17 +2281,17 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cDoubleArcheryRewards
+            // cFillWallet
             // 
-            this.cDoubleArcheryRewards.AutoSize = true;
-            this.cDoubleArcheryRewards.Location = new System.Drawing.Point(172, 77);
-            this.cDoubleArcheryRewards.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cDoubleArcheryRewards.Name = "cDoubleArcheryRewards";
-            this.cDoubleArcheryRewards.Size = new System.Drawing.Size(155, 19);
-            this.cDoubleArcheryRewards.TabIndex = 5;
-            this.cDoubleArcheryRewards.Text = "Double Archery Rewards";
-            this.cDoubleArcheryRewards.UseVisualStyleBackColor = true;
-            this.cDoubleArcheryRewards.CheckedChanged += new System.EventHandler(this.cDoubleArcheryRewards_CheckedChanged);
+            this.cFillWallet.AutoSize = true;
+            this.cFillWallet.Location = new System.Drawing.Point(10, 207);
+            this.cFillWallet.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFillWallet.Name = "cFillWallet";
+            this.cFillWallet.Size = new System.Drawing.Size(139, 19);
+            this.cFillWallet.TabIndex = 41;
+            this.cFillWallet.Text = "Fill wallet on upgrade";
+            this.cFillWallet.UseVisualStyleBackColor = true;
+            this.cFillWallet.CheckedChanged += new System.EventHandler(this.cFillWallet_CheckedChanged);
             // 
             // MainForm
             // 
@@ -2531,6 +2545,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cTargetHealth;
         private System.Windows.Forms.CheckBox cFreeScarecrow;
         private System.Windows.Forms.CheckBox cDoubleArcheryRewards;
+        private System.Windows.Forms.CheckBox cFillWallet;
     }
 }
 

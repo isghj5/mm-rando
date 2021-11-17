@@ -42,7 +42,8 @@ typedef struct {
     u32 targetHealth        : 1;
     u32 climbAnything       : 1;
     u32 freeScarecrow       : 1;
-    u32                     : 10;
+    u32 fillWallet          : 1;
+    u32                     : 9;
 } MiscFlags;
 
 typedef union {

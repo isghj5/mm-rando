@@ -144,6 +144,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cLenientGoronSpikes, "Goron spikes can charge midair and keep their charge. Minimum speed for goron spikes is removed.");
             TooltipBuilder.SetTooltip(cTargetHealth, "Targeting an enemy shows their health bar.");
             TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
+            TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
         }
 
         /// <summary>
@@ -1060,6 +1061,7 @@ namespace MMR.UI.Forms
             cLenientGoronSpikes.Checked = _configuration.GameplaySettings.LenientGoronSpikes;
             cTargetHealth.Checked = _configuration.GameplaySettings.TargetHealthBar;
             cFreeScarecrow.Checked = _configuration.GameplaySettings.FreeScarecrow;
+            cFillWallet.Checked = _configuration.GameplaySettings.FillWallet;
 
             // HUD config options
             var heartItems = ColorSelectionManager.Hearts.GetItems();
@@ -1610,6 +1612,7 @@ namespace MMR.UI.Forms
             cLenientGoronSpikes.Enabled = v;
             cTargetHealth.Enabled = v;
             cFreeScarecrow.Enabled = v;
+            cFillWallet.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
@@ -2047,6 +2050,11 @@ namespace MMR.UI.Forms
         private void cDoubleArcheryRewards_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.DoubleArcheryRewards = cDoubleArcheryRewards.Checked);
+        }
+
+        private void cFillWallet_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.FillWallet = cFillWallet.Checked);
         }
     }
 }
