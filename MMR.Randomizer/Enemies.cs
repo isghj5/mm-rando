@@ -223,7 +223,7 @@ namespace MMR.Randomizer
             // A and B should be start and end of vram address, which is what we want as we want the ram size
             return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 12)
                        - ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8));
-        }
+        } 
 
         public static int GetOvlInstanceRamSize(int actorOvlTblIndex)
         {
@@ -237,6 +237,14 @@ namespace MMR.Randomizer
                 return attr.Size;
             }
 
+            // if its an injected actor, we get from the actor not the vanilla rom
+            InjectedActor injectedActor = InjectedActors.Find(u => u.actorID == actorOvlTblIndex);
+            if (injectedActor != null && injectedActor.overlayBin != null) {
+                // E/F are the actor's instance size
+                // no check compressed: user has to submit uncompressed actor binary
+                return ReadWriteUtils.Arr_ReadU16(injectedActor.overlayBin, (int)injectedActor.initVarsLocation + 0xE);
+            }
+
             // if we didn't pre-save it, we need to extract it
             var ovlFID = ((GameObjects.Actor)actorOvlTblIndex).FileListIndex();
             if (ovlFID == -1) // we dont know its fid, I forgot to write prewrite it
@@ -248,7 +256,7 @@ namespace MMR.Randomizer
             }
 
             var offset = GetOvlActorInit(actorOvlTblIndex);
-            if (offset == -1)
+            if (offset <= 0)
             {
                 return 0x1001;
             }
