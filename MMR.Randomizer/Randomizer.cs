@@ -143,7 +143,7 @@ namespace MMR.Randomizer
 
                 if (itemObject.Conditionals != null)
                 {
-                    itemObject.Conditionals.RemoveAll(c => c.Any(item => ItemList[item].IsTrick && !_settings.EnabledTricks.Contains((int)item)));
+                    itemObject.Conditionals.RemoveAll(c => c.Any(item => ItemList[item].IsTrick && !_settings.EnabledTricks.Contains(ItemList[item].Name)));
                 }
             }
 
@@ -567,7 +567,7 @@ namespace MMR.Randomizer
             var currentItemObject = ItemList[currentItem];
             var currentTargetObject = ItemList[target];
 
-            if (currentTargetObject.IsTrick && !_settings.EnabledTricks.Contains(currentTargetObject.ID))
+            if (currentTargetObject.IsTrick && !_settings.EnabledTricks.Contains(currentTargetObject.Name))
             {
                 return Dependence.Dependent;
             }

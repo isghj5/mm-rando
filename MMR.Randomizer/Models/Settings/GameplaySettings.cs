@@ -186,7 +186,19 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public LogicMode LogicMode { get; set; }
 
-        public List<int> EnabledTricks { get; set; } = new List<int> { 1205,1209,1171,1207,1194,1161,1167,1160,1223,1159 };
+        public List<string> EnabledTricks { get; set; } = new List<string>
+        {
+            "Exit Ocean Spider House without Goron",
+            "Lensless Chests",
+            "Lensless Walking",
+            "Lensless Walls/Ceilings",
+            "Pinnacle Rock without Seahorse",
+            "Poisoned Water as Zora",
+            "Quest Item Extra Storage",
+            "Scarecrow's Song",
+            "Take Damage",
+            "WFT 2nd Floor Skip",
+        };
 
         /// <summary>
         /// Add songs to the randomization pool
