@@ -1018,9 +1018,9 @@ namespace MMR.Randomizer
 
         private void PlaceRequirements(Item currentItem, List<Item> targets)
         {
-            var currentItemObject = ItemList[currentItem];
             if (!ItemUtils.IsJunk(currentItem))
             {
+                var currentItemObject = ItemList[currentItem];
                 var location = ItemList[currentItemObject.NewLocation.Value];
                 var placed = new List<Item>();
                 foreach (var requiredItem in location.DependsOnItems.AllowModification().Where(item => item.IsSameType(currentItem)))
