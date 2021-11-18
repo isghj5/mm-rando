@@ -27,6 +27,7 @@ void MMR_ClearItemQueue();
 void MMR_ProcessItemQueue(GlobalContext* ctxt);
 void MMR_GiveItemToHold(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 bool MMR_GiveItemIfMinor(GlobalContext* ctxt, Actor* actor, u16 giIndex);
+void MMR_QueueItem(u16 giIndex, bool forceProcess);
 bool MMR_GiveItem(GlobalContext* ctxt, Actor* actor, u16 giIndex);
 u16 MMR_GetProcessingItemGiIndex(GlobalContext* ctxt);
 bool MMR_IsRecoveryHeart(u16 giIndex);

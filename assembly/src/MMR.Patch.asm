@@ -30,3 +30,8 @@
     lw      ra, 0x001C (sp)
     jr      ra
     addiu   sp, sp, 0x20
+
+; Directly after above code
+.org 0x801DC7D8
+    j       MMR_QueueItem
+    nop
