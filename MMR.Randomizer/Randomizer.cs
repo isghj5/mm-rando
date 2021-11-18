@@ -578,7 +578,7 @@ namespace MMR.Randomizer
             }
 
             //check timing
-            if (currentItemObject.TimeNeeded != 0 && (!_timeTravelPlaced || dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary())))
+            if (currentItemObject.TimeNeeded != 0 && (!_timeTravelPlaced || dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary(_randomized.Settings))))
             {
                 if ((currentItemObject.TimeNeeded & currentTargetObject.TimeAvailable) == 0)
                 {
@@ -707,7 +707,7 @@ namespace MMR.Randomizer
             //cycle through all things
             foreach (var dependency in currentTargetObject.DependsOnItems)
             {
-                if (!currentItem.IsTemporary() && target == Item.MaskBlast && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
+                if (!currentItem.IsTemporary(_randomized.Settings) && target == Item.MaskBlast && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
                 {
                     // Permanent items ignore Kafei Letter and Pendant on Blast Mask check.
                     continue;
@@ -870,7 +870,7 @@ namespace MMR.Randomizer
             var targetItemObject = ItemList[target];
             if (target == Item.MaskBlast)
             {
-                if (!currentItem.IsTemporary())
+                if (!currentItem.IsTemporary(_randomized.Settings))
                 {
                     targetItemObject.DependsOnItems?.Remove(Item.TradeItemKafeiLetter);
                     targetItemObject.DependsOnItems?.Remove(Item.TradeItemPendant);
@@ -899,7 +899,7 @@ namespace MMR.Randomizer
                         CheckConditionals(currentItem, location, childPath);
                     }
                 }
-                else if (ItemList[currentItem].TimeNeeded != 0 && (!_timeTravelPlaced || (dependency.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary()))))
+                else if (ItemList[currentItem].TimeNeeded != 0 && (!_timeTravelPlaced || (dependency.IsTemporary(_randomized.Settings) && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary(_randomized.Settings)))))
                 {
                     if (dependencyObject.TimeNeeded == 0)
                     {
@@ -957,7 +957,7 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            if (!_timeTravelPlaced || currentItem.IsTemporary())
+            if (!_timeTravelPlaced || currentItem.IsTemporary(_randomized.Settings))
             {
                 if ((target.Region() == Region.TheMoon || target.Region() == Region.ClockTowerRoof) && currentItem.ItemCategory() != ItemCategory.TimeTravel)
                 {
@@ -1563,7 +1563,7 @@ namespace MMR.Randomizer
                 Item.StartingHeartContainer2,
             };
             var availableStartingItems = (_settings.StartingItemMode switch {
-                    StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary() && item != Item.ItemPowderKeg),
+                    StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary(_randomized.Settings) && item != Item.ItemPowderKeg),
                     StartingItemMode.AllowTemporaryItems => ItemUtils.StartingItems(),
                     _ => ItemUtils.AllRupees(),
                 })

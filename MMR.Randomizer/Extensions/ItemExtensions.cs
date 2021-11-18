@@ -119,9 +119,9 @@ namespace MMR.Randomizer.Extensions
             return item.HasAttribute<DowngradableAttribute>();
         }
 
-        public static bool IsTemporary(this Item item)
+        public static bool IsTemporary(this Item item, GameplaySettings settings)
         {
-            return item.HasAttribute<TemporaryAttribute>();
+            return item.GetAttribute<TemporaryAttribute>()?.Condition(settings) ?? false;
         }
 
         public static ItemCategory? ItemCategory(this Item item)
