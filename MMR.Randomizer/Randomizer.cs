@@ -1067,10 +1067,6 @@ namespace MMR.Randomizer
             }
             if (currentItemObject.NewLocation.HasValue)
             {
-                if (!_timeTravelPlaced)
-                {
-                    PlaceRequirements(currentItem, targets);
-                }
                 return;
             }
 
