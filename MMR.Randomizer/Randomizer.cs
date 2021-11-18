@@ -1000,6 +1000,48 @@ namespace MMR.Randomizer
             return true;
         }
 
+        private void UpdateTimeNeeded(ItemObject source, ItemObject target)
+        {
+            if (!_timeTravelPlaced && source.TimeSetup != 0)
+            {
+                if (target.TimeNeeded == 0)
+                {
+                    target.TimeNeeded = source.TimeSetup;
+                }
+                else
+                {
+                    target.TimeNeeded &= source.TimeSetup;
+                }
+            }
+
+        }
+
+        private void PlaceRequirements(Item currentItem, List<Item> targets)
+        {
+            var currentItemObject = ItemList[currentItem];
+            if (!ItemUtils.IsJunk(currentItem))
+            {
+                var location = ItemList[currentItemObject.NewLocation.Value];
+                var placed = new List<Item>();
+                foreach (var requiredItem in location.DependsOnItems.AllowModification().Where(item => item.IsSameType(currentItem)))
+                {
+                    UpdateTimeNeeded(location, ItemList[requiredItem]);
+
+                    PlaceItem(requiredItem, targets);
+                }
+                var conditional = location.Conditionals.RandomOrDefault(Random);
+                if (conditional != null)
+                {
+                    foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
+                    {
+                        UpdateTimeNeeded(location, ItemList[item]);
+
+                        PlaceItem(item, targets);
+                    }
+                }
+            }
+        }
+
         private void PlaceItem(Item currentItem, List<Item> targets, Func<Item, Item, bool> restriction = null)
         {
             var currentItemObject = ItemList[currentItem];
@@ -1007,6 +1049,8 @@ namespace MMR.Randomizer
             {
                 foreach (var requiredItem in currentItemObject.DependsOnItems.AllowModification().Where(item => item.IsSameType(currentItem)))
                 {
+                    UpdateTimeNeeded(currentItemObject, ItemList[requiredItem]);
+
                     PlaceItem(requiredItem, targets);
                 }
                 var conditional = currentItemObject.Conditionals.RandomOrDefault(Random);
@@ -1014,6 +1058,8 @@ namespace MMR.Randomizer
                 {
                     foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
                     {
+                        UpdateTimeNeeded(currentItemObject, ItemList[item]);
+
                         PlaceItem(item, targets);
                     }
                 }
@@ -1021,6 +1067,10 @@ namespace MMR.Randomizer
             }
             if (currentItemObject.NewLocation.HasValue)
             {
+                if (!_timeTravelPlaced)
+                {
+                    PlaceRequirements(currentItem, targets);
+                }
                 return;
             }
 
@@ -1071,48 +1121,9 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (!_timeTravelPlaced && !ItemUtils.IsJunk(currentItem))
+            if (!_timeTravelPlaced)
             {
-                var location = ItemList[currentItemObject.NewLocation.Value];
-                var placed = new List<Item>();
-                foreach (var requiredItem in location.DependsOnItems.AllowModification())
-                {
-                    if (!_timeTravelPlaced && location.TimeSetup != 0)
-                    {
-                        var requiredItemObject = ItemList[requiredItem];
-                        if (requiredItemObject.TimeNeeded == 0)
-                        {
-                            requiredItemObject.TimeNeeded = location.TimeSetup;
-                        }
-                        else
-                        {
-                            requiredItemObject.TimeNeeded &= location.TimeSetup;
-                        }
-                    }
-
-                    PlaceItem(requiredItem, targets);
-                }
-                var conditional = location.Conditionals.RandomOrDefault(Random);
-                if (conditional != null)
-                {
-                    foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
-                    {
-                        if (!_timeTravelPlaced && location.TimeSetup != 0)
-                        {
-                            var requiredItemObject = ItemList[item];
-                            if (requiredItemObject.TimeNeeded == 0)
-                            {
-                                requiredItemObject.TimeNeeded = location.TimeSetup;
-                            }
-                            else
-                            {
-                                requiredItemObject.TimeNeeded &= location.TimeSetup;
-                            }
-                        }
-
-                        PlaceItem(item, targets);
-                    }
-                }
+                PlaceRequirements(currentItem, targets);
             }
         }
 
