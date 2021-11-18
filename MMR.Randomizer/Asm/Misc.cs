@@ -69,7 +69,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Whether or not to grant both archery rewards with a sufficient score when relevant.
         /// </summary>
-        public bool DoubleArcheryRewards { get; set; } = true;
+        public bool DoubleArcheryRewards { get; set; }
 
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
