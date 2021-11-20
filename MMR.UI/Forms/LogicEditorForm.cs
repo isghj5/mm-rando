@@ -438,14 +438,14 @@ namespace MMR.UI.Forms
 
                 VerifyLogic(logic, itemsById);
 
+                _logic = logic;
+                _itemsById = itemsById;
+
                 _singleItemSelectorForm.SetLogicFile(_logic);
                 _multiItemSelectorForm.SetLogicFile(_logic);
 
                 nItem.Maximum = _logic.Logic.Count - 1;
                 SetIndex((int)nItem.Value);
-
-                _logic = logic;
-                _itemsById = itemsById;
             }
             catch (Exception e)
             {
