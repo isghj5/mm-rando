@@ -67,6 +67,16 @@ namespace MMR.Randomizer.Utils
                 return true;
             }
 
+            if (settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinDungeon) && BossRemains().Contains(item))
+            {
+                return true;
+            }
+
+            if (settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards) && BossRemains().Contains(item))
+            {
+                return true;
+            }
+
             return false;
         }
 
