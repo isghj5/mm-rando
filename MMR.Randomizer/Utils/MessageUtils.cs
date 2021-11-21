@@ -152,8 +152,6 @@ namespace MMR.Randomizer.Utils
                     competitiveHints.Add((messageText, allowedGossipQuotes));
                 }
 
-                unusedItems.Clear();
-
                 var importantRegionCounts = new Dictionary<Region, List<(ItemObject io, Item locationForImportance)>>();
                 var nonImportantRegionCounts = new Dictionary<Region, List<(ItemObject, Item)>>();
                 var songOnlyRegionCounts = new Dictionary<Region, List<(ItemObject, Item)>>();
@@ -245,6 +243,8 @@ namespace MMR.Randomizer.Utils
                         competitiveHints.Add((BuildRegionHint(chosen, regionHintType, random), new List<GossipQuote>()));
                     }
                 }
+
+                unusedItems.Clear();
             }
 
             List<MessageEntry> finalHints = new List<MessageEntry>();
