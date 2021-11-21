@@ -421,6 +421,30 @@ namespace MMR.Randomizer
             );
         }
 
+        /// <summary>
+        /// Write text for Royal Wallet get-item message.
+        /// </summary>
+        /// <param name="table">Table to update.</param>
+        private void WriteRoyalWalletText(MessageTable table)
+        {
+            table.UpdateMessages(new MessageEntryBuilder()
+                .Id(0xB)
+                .Header(it =>
+                {
+                    // Using icon from Giant Wallet message.
+                    it.FaintBlue().Y(1).Icon(0x9);
+                })
+                .Message(it =>
+                {
+                    // Note: Messages for Adult Wallet and Giant Wallet use 0xC2 (TwoChoices) before ending text box?
+                    it.Text("You got a ").Red("Royal Wallet").Text("!").NewLine()
+                    .Text("It can hold up to ").Red("999 Rupees").Text(".")
+                    .EndFinalTextBox();
+                })
+                .Build()
+            );
+        }
+
         private void WriteMiscText()
         {
             _messageTable.UpdateMessages(new MessageEntryBuilder()
@@ -1514,9 +1538,11 @@ namespace MMR.Randomizer
                     {
                         overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
                     }
-                    ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType, _messageTable);
+                    ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType, _messageTable, _extendedObjects);
                 }
             }
+
+            var royalWalletIndex = _randomized.RoyalWalletLocation.GetItemIndex();
 
             _randomized.Settings.AsmOptions.MMRConfig.LocationBottleRedPotion = GetLocationIdOfItem(Item.ItemBottleWitch);
             _randomized.Settings.AsmOptions.MMRConfig.LocationBottleGoldDust = GetLocationIdOfItem(Item.ItemBottleGoronRace);
@@ -1532,6 +1558,7 @@ namespace MMR.Randomizer
 
             _randomized.Settings.AsmOptions.MMRConfig.LocationWalletAdult = GetLocationIdOfItem(Item.UpgradeAdultWallet);
             _randomized.Settings.AsmOptions.MMRConfig.LocationWalletGiant = GetLocationIdOfItem(Item.UpgradeGiantWallet);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationWalletRoyal = royalWalletIndex.HasValue ? royalWalletIndex.Value : (ushort)0;
 
             _randomized.Settings.AsmOptions.MMRConfig.LocationBombBagSmall = GetLocationIdOfItem(Item.ItemBombBag);
             _randomized.Settings.AsmOptions.MMRConfig.LocationBombBagBig = GetLocationIdOfItem(Item.UpgradeBigBombBag);
@@ -3205,6 +3232,7 @@ namespace MMR.Randomizer
                 }
 
                 WriteArcheryDoubleRewardText(_messageTable);
+                WriteRoyalWalletText(_messageTable);
 
                 progressReporter.ReportProgress(61, "Writing quick text...");
                 WriteQuickText();
