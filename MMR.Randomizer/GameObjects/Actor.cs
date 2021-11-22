@@ -1265,7 +1265,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(214)]
         [ObjectListIndex(0x1)]
-        Oceff_Wipe3 = 0xE0, // Oceff_Wipe3
+        SariaSongOcarinaEffects = 0xE0, // Oceff_Wipe3
 
         EmptyE1 = 0xE1,
 
@@ -1398,7 +1398,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(228)]
         [ObjectListIndex(0x1)]
-        Oceff_Wipe4 = 0xF6, // Oceff_Wipe4
+        ScarecrowSongOcarinaEffects = 0xF6, // Oceff_Wipe4
 
         [ObjectListIndex(0x0)]
         EmptyF7 = 0xF7, // EmptyF7

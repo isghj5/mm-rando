@@ -1080,7 +1080,7 @@ namespace MMR.Randomizer
             // this also sets actor kickout address index to 0 (if they have one),
             // because they use different systems which are not compatible
 
-            // for now, adding extra code just so I can keep track of what is happening
+            // find all pathing enemies
             for (int i = 0; i < chosenReplacementEnemies.Count; i++)
             {
                 Actor actor = chosenReplacementEnemies[i];
@@ -1468,12 +1468,13 @@ namespace MMR.Randomizer
                     
                     // TODO here would be a great place to test if the requirements to kill an enemy are met with given items
 
-                    if ( ! enemyMatchesPool.Any(u => u.ActorID == (int) enemy))
+                    if ( ! enemyMatchesPool.Any(u => u.ActorID == candidateEnemy.ActorID))
                     {
                         var newEnemy = candidateEnemy.CopyActor();
                         if (MustBeKillable)
                         {
-                            newEnemy.Variants = enemy.KillableVariants(compatibleVariants); // reduce to available
+                            //newEnemy.Variants = enemy.KillableVariants(compatibleVariants); // reduce to available
+                            newEnemy.Variants = candidateEnemy.KillableVariants(compatibleVariants); // reduce to available
                             if (newEnemy.Variants.Count == 0)
                             {
                                 continue; // can't put this enemy here: it has no non-respawning variants
@@ -1671,7 +1672,7 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.RoadToSouthernSwamp.FileID() && sceneObjects[objCount] == GameObjects.Actor.BadBat.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.RoadToSouthernSwamp.FileID() && sceneObjects[objCount] == GameObjects.Actor.ChuChu.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
@@ -2178,7 +2179,7 @@ namespace MMR.Randomizer
             // todo: how can we detect if enemizer is ON from here so we dont do this for every seed?
 
             const uint theEndOfTakenVRAM = 0x80C27000; // 0x80C260A0 <- actual
-            const int  theEndOfTakenVROM = 0x04000000; // 0x02EE7XXX <- actual
+            const int  theEndOfTakenVROM = 0x04100000; // 0x02EE7XXX <- actual
 
 
             int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
@@ -2286,20 +2287,54 @@ namespace MMR.Randomizer
             var freeOverlaySlots = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                         .Where(u => u.ToString().Contains("Empty")).ToList();
 
+            // right now appending to the end of DMA is not really an option, so lets use empty slots
+            var freeFileSlots = new List<int>
+            {
+                // these files at the end of the vanilla DMA are unused in USA
+                1538, 1539, 1540, 1541, 1542, 1543, 1544, 1545, 1546, 1547, 1548, 1549, 1550, 1551,
+                // unused actors or objects:
+                GameObjects.Actor.Obj_Toudai.FileListIndex(),
+                GameObjects.Actor.Obj_Ocarinalift.FileListIndex(),
+                GameObjects.Actor.Bg_F40_Swlift.FileListIndex(),
+                GameObjects.Actor.En_Stream.FileListIndex(), // is this really unused?
+                GameObjects.Actor.SariaSongOcarinaEffects.FileListIndex(), // should be lower down as we might need to use it later
+            };
+
+            int GetUnusedFileID(InjectedActor injActor)
+            {
+                if (freeFileSlots.Count > 0)
+                {
+                    var f = freeFileSlots[0];
+                    freeFileSlots.RemoveAt(0);
+                    return f;
+                } else // we have run out of known free file slots to use
+                {
+                    // back up, its broken though
+                    //return RomUtils.AppendFile(injActor.overlayBin)
+                    throw new Exception("We have run out of actors space to inject, please disable an actor in /actors");
+                }
+            }
+
+
             foreach (var injectedActor in InjectedActors)
             {
                 if (injectedActor.actorID == 0) // brand new actor, not replacement
                 {
+                    if (injectedActor.buildVramStart == 0)
+                    {
+                        throw new Exception("new actor missing starting vram:\n " + injectedActor.filename);
+                    }
 
-                    //var newFileID = GetUnusedFileID(); // todo change this back into hardcoded, its a static rom
-                    var newFileID = RomUtils.AppendFile(injectedActor.overlayBin);
-                    injectedActor.actorID = (int)freeOverlaySlots[0];
+                    var newFileID = GetUnusedFileID(injectedActor); // todo change this back into hardcoded, its a static rom
+                    //var newFileID = RomUtils.AppendFile(injectedActor.overlayBin); // broken, wants to put our actor outside of romspace
                     injectedActor.fileID = newFileID;
+                    injectedActor.actorID = (int)freeOverlaySlots[0];
+                    freeOverlaySlots.RemoveAt(0);
                     var file = RomData.MMFileList[newFileID];
+                    file.Data = injectedActor.overlayBin;
                     file.WasEdited = true;
                     file.IsCompressed = true; //assumption: all actors are compressed
-                    file.Data = injectedActor.overlayBin; // need to inject now that we know where to put it
-                    freeOverlaySlots.RemoveAt(0);
+                    //file.Data = injectedActor.overlayBin; // need to inject now that we know where to put it
 
                     var filenameSplit = injectedActor.filename.Split("\\");
                     var newActorName = filenameSplit[filenameSplit.Length - 1];

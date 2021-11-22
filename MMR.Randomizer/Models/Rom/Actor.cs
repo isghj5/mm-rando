@@ -271,6 +271,43 @@ namespace MMR.Randomizer.Models.Rom
             return null;
         }
 
+        // todo remove this as it should be built at enum->actor time
+        public List<int> UnkillableVariants()
+        {
+            // todo finish converting this from enum to actor base type
+
+            var actor = this.ActorEnum;
+            if (actor != null)
+            {
+                if (actor.GetAttribute<UnkillableAllVariantsAttribute>() != null) // all are unkillable
+                {
+                    return this.Variants;
+                }
+                else
+                {
+                    return actor.GetAttribute<UnkillableVariantsAttribute>()?.Variants;
+                }
+            }
+            // todo: injected actor unkillable variants
+            
+            return this.Variants;
+        }
+
+        public List<int> KillableVariants(List<int> acceptableVariants = null)
+        {
+            var killableVariants = acceptableVariants != null ? acceptableVariants : this.Variants;
+            var unkillableVariants = this.UnkillableVariants();
+            var respawningVariants = this.RespawningVariants;
+            if (unkillableVariants != null && unkillableVariants.Count > 0)
+            {
+                killableVariants.RemoveAll(u => unkillableVariants.Contains(u));
+            }
+            if (respawningVariants != null && respawningVariants.Count > 0)
+            {
+                killableVariants.RemoveAll(u => respawningVariants.Contains(u));
+            }
+            return killableVariants;
+        }
 
         public int GetRandomVariant(Random rng)
         {
