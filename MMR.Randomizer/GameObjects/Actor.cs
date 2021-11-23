@@ -61,22 +61,23 @@ namespace MMR.Randomizer.GameObjects
         [FileID(44)]
         [ObjectListIndex(0xC)]
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
-        // addresses make no sense
-        // the top nibble is type, 0x7 seems to be enemy clear, also type 1
-        //0x5 is woodentype, 0xC is switch activated
+        // type: 0x7 seems to be enemy clear, also type 1, 0x5 is woodentype, 0xC is switch activated
+        // 0xF000 is type, 0x001F are chest flags, 0x0FE would be the item then
         // gomess is 0x27BE, which does not spawn util you kill him, so obviously the top byte is NOT that simple in MM, snowhead is 27BE
-        // the MM item notes are just wrong it seems, unless it being open breaks invisible
-        [GroundVariants( 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
+        // dont use CM as reference, rando changes how the chests work for item rando to work
+        /* [GroundVariants( 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
-            0x0AFB, 0x099C)] // two free, the rest are gold invisible 
+            0x0AFB, 0x099C)] // two free, the rest are gold invisible
+        */
+        [GroundVariants(0x001F)] // testing
         [VariantsWithRoomMax( max:1, variant: 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79,0x5991, 0x5B58, 0x5A1E,
             0x0AFB, 0x099C)] // brown, harder to see in perpheral vision, not invisible
         [UnkillableAllVariants]
-        [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
-            variant: 0x3F5F)] // can place around chests
-        [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
-            variant: 2, 9)] // fairies around chests make sense, just not a full fairy fountain
+        //[AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
+        //    variant: 0x3F5F)] // can place around chests
+        //[AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
+        //    variant: 2, 9)] // fairies around chests make sense, just not a full fairy fountain
         [EnemizerScenesExcluded(Scene.InvertedStoneTower)]
         [EnemizerScenesPlacementBlock(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, 
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]

@@ -62,7 +62,9 @@ namespace MMR.Randomizer.GameObjects
 
         // Unused = 0x0D,
 
-        // CutsceneMap = 0x0E,
+        [FileID(1520)]
+        [SceneInternalId(0x12)]
+        CutsceneMap = 0x0E,
 
         // Unused = 0x0F,
 

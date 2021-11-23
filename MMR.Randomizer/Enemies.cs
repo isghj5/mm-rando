@@ -1677,7 +1677,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.ClayPot.ObjectIndex()
+                            NewV = GameObjects.Actor.ButlersSon.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1696,7 +1696,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.FriendlyCucco.ObjectIndex()
+                            NewV = GameObjects.Actor.TreasureChest.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -2179,7 +2179,7 @@ namespace MMR.Randomizer
             // todo: how can we detect if enemizer is ON from here so we dont do this for every seed?
 
             const uint theEndOfTakenVRAM = 0x80C27000; // 0x80C260A0 <- actual
-            const int  theEndOfTakenVROM = 0x04100000; // 0x02EE7XXX <- actual
+            const int  theEndOfTakenVROM = 0x03100000; // 0x02EE7XXX <- actual
 
 
             int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
@@ -2287,7 +2287,7 @@ namespace MMR.Randomizer
             var freeOverlaySlots = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                         .Where(u => u.ToString().Contains("Empty")).ToList();
 
-            // right now appending to the end of DMA is not really an option, so lets use empty slots
+            // in case DMA is restricted, start with a list of known bunk files
             var freeFileSlots = new List<int>
             {
                 // these files at the end of the vanilla DMA are unused in USA
@@ -2296,6 +2296,11 @@ namespace MMR.Randomizer
                 GameObjects.Actor.Obj_Toudai.FileListIndex(),
                 GameObjects.Actor.Obj_Ocarinalift.FileListIndex(),
                 GameObjects.Actor.Bg_F40_Swlift.FileListIndex(),
+                GameObjects.Actor.En_Boj_01.FileListIndex(),  // empty actors with nothing in them
+                GameObjects.Actor.En_Boj_02.FileListIndex(),
+                GameObjects.Actor.En_Boj_03.FileListIndex(),
+                GameObjects.Actor.En_Boj_04.FileListIndex(),
+                GameObjects.Actor.En_Boj_05.FileListIndex(),
                 GameObjects.Actor.En_Stream.FileListIndex(), // is this really unused?
                 GameObjects.Actor.SariaSongOcarinaEffects.FileListIndex(), // should be lower down as we might need to use it later
             };
@@ -2336,12 +2341,13 @@ namespace MMR.Randomizer
                     file.IsCompressed = true; //assumption: all actors are compressed
                     //file.Data = injectedActor.overlayBin; // need to inject now that we know where to put it
 
+                    // update actor ID in overlay init vars, now that we know the new actor ID value
+                    ReadWriteUtils.Arr_WriteU16(file.Data, (int)injectedActor.initVarsLocation, (ushort)injectedActor.actorID);
+
                     var filenameSplit = injectedActor.filename.Split("\\");
                     var newActorName = filenameSplit[filenameSplit.Length - 1];
                     ReplacementCandidateList.Add(new Actor(injectedActor, newActorName));
 
-                    // update actor ID in overlay init vars, now that we know the new actor ID value
-                    ReadWriteUtils.Arr_WriteU16(file.Data, (int) injectedActor.initVarsLocation, (ushort) injectedActor.actorID);
 
                     // TODO inject objects too, for actors that have custom objects
 
