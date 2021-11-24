@@ -146,7 +146,7 @@ namespace MMR.Randomizer.Utils
                         );
 
                     var allowedGossipQuotes = combined
-                        .Select(io => gossipStoneRequirements.Where(kvp => !kvp.Value.Contains(io.Item)).Select(kvp => kvp.Key))
+                        .Select(io => gossipStoneRequirements.Where(kvp => !kvp.Value.Contains(io.NewLocation.Value)).Select(kvp => kvp.Key))
                         .Aggregate((list1, list2) => list1.Intersect(list2))
                         .ToList();
                     competitiveHints.Add((messageText, allowedGossipQuotes));
