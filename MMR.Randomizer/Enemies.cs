@@ -1696,7 +1696,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.TreasureChest.ObjectIndex()
+                            NewV = GameObjects.Actor.FriendlyCucco.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -2111,19 +2111,21 @@ namespace MMR.Randomizer
             int relocEntryCountLocation = (int)(tableOffset + (4 * 4)); // first four ints are section sizes
             // we need the difference between the old VRAM and new VRAM starting locations to re-align our vram
 
-            uint relocEntryCount = ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryCountLocation);
 
+            // traverse the whole relocation section, parse the changes, apply
             var relocEntryLoc = relocEntryCountLocation + 4; // first overlayEntry immediately after count
+            uint relocEntryCount = ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryCountLocation);
             var relocEntryEndLoc = relocEntryLoc + (relocEntryCount * 4);
             while (relocEntryLoc < relocEntryEndLoc)
             {
-                // for some reason text starts at 1, and so we cant reach bss unless we wrap around to 00?
+                // each overlayEntry in reloc is one nibble of shifted section, one nible of type, and 3 bytes of address
+                // text section starts at 1 not 0
                 var section = ((file.Data[relocEntryLoc] & 0xC0) >> 6) - 1;
                 var sectionOffset = sectionOffsets[section];
 
-                // each overlayEntry in reloc is one nibble of shifted section, one nible of type, and 3 bytes of address
-                // where address is an offset of the section, section starts at 1 because bss doesnt exist outside of RAM
+                // where address is an offset of the section
                 var commandType = (file.Data[relocEntryLoc] & 0xF);
+                // double command look ahead for LUI/ADDIU
                 var commandTypeNext = (file.Data[relocEntryLoc + 4] & 0xF);
 
                 if (commandType == 0x5 && commandTypeNext == 0x6) // LUI/ADDIU combo
@@ -2172,6 +2174,8 @@ namespace MMR.Randomizer
 
         public static void UpdateActorOverlayTable()
         {
+            // if settings arent set, return
+
             /// if overlays have grown, we need to modify their overlay table to use the right values for the new files
             /// every time you move an overlay you need to relocate the vram addresses, so instead of shifting all of them
             ///  we just move the new larger files to the end and leave a hole behind for now
@@ -2270,6 +2274,7 @@ namespace MMR.Randomizer
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newInitVarAddr);
 
                 previousLastVRAMEnd = newVRAMEnd;
+                RomData.MMFileList[fileID] = file;
             }// end for overlay in overlaylist
 
         }
@@ -2320,41 +2325,35 @@ namespace MMR.Randomizer
                 }
             }
 
-
-            foreach (var injectedActor in InjectedActors)
+            foreach (var injectedActor in InjectedActors.FindAll(u => u.actorID == 0))
             {
-                if (injectedActor.actorID == 0) // brand new actor, not replacement
+                // brand new actors, not replacement
+                if (injectedActor.buildVramStart == 0)
                 {
-                    if (injectedActor.buildVramStart == 0)
-                    {
-                        throw new Exception("new actor missing starting vram:\n " + injectedActor.filename);
-                    }
-
-                    var newFileID = GetUnusedFileID(injectedActor); // todo change this back into hardcoded, its a static rom
-                    //var newFileID = RomUtils.AppendFile(injectedActor.overlayBin); // broken, wants to put our actor outside of romspace
-                    injectedActor.fileID = newFileID;
-                    injectedActor.actorID = (int)freeOverlaySlots[0];
-                    freeOverlaySlots.RemoveAt(0);
-                    var file = RomData.MMFileList[newFileID];
-                    file.Data = injectedActor.overlayBin;
-                    file.WasEdited = true;
-                    file.IsCompressed = true; //assumption: all actors are compressed
-                    //file.Data = injectedActor.overlayBin; // need to inject now that we know where to put it
-
-                    // update actor ID in overlay init vars, now that we know the new actor ID value
-                    ReadWriteUtils.Arr_WriteU16(file.Data, (int)injectedActor.initVarsLocation, (ushort)injectedActor.actorID);
-
-                    var filenameSplit = injectedActor.filename.Split("\\");
-                    var newActorName = filenameSplit[filenameSplit.Length - 1];
-                    ReplacementCandidateList.Add(new Actor(injectedActor, newActorName));
-
-
-                    // TODO inject objects too, for actors that have custom objects
-
-                    // update vram offsets: that happens later right? at actor tables set?
-
-                    RomData.MMFileList[newFileID] = file;
+                    throw new Exception("new actor missing starting vram:\n " + injectedActor.filename);
                 }
+
+                var newFileID = GetUnusedFileID(injectedActor); // todo change this back into hardcoded, its a static rom
+                //var newFileID = RomUtils.AppendFile(injectedActor.overlayBin); // broken, wants to put our actor outside of romspace
+                injectedActor.fileID = newFileID;
+                injectedActor.actorID = (int)freeOverlaySlots[0];
+                freeOverlaySlots.RemoveAt(0);
+                var file = RomData.MMFileList[newFileID];
+                file.Data = injectedActor.overlayBin;
+                file.WasEdited = true;
+                file.IsCompressed = true; //assumption: all actors are compressed
+                //file.Data = injectedActor.overlayBin; // need to inject now that we know where to put it
+
+                // update actor ID in overlay init vars, now that we know the new actor ID value
+                ReadWriteUtils.Arr_WriteU16(file.Data, (int)injectedActor.initVarsLocation, (ushort)injectedActor.actorID);
+
+                var filenameSplit = injectedActor.filename.Split("\\");
+                var newActorName = filenameSplit[filenameSplit.Length - 1];
+
+                RomData.MMFileList[newFileID] = file;
+                ReplacementCandidateList.Add(new Actor(injectedActor, newActorName));
+
+                // TODO inject objects too, for actors that have custom objects
             }
 
         }
@@ -2577,7 +2576,6 @@ namespace MMR.Randomizer
 
         public List<MapEnemiesCollection> oldMapList;
         public List<MapEnemiesCollection> newMapList;
-        string sName; // debugging
 
         public SceneActorsCollection(Scene s)
         {
@@ -2587,7 +2585,6 @@ namespace MMR.Randomizer
                 var map = s.Maps[i];
                 oldMapList.Add(new MapEnemiesCollection(map.Actors, map.Objects));
             }
-            this.sName = s.SceneEnum.ToString();
         }
 
         public void SetNewActors(Scene s, List<ValueSwap> newObjChanges)
