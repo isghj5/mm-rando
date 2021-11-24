@@ -231,9 +231,12 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)
         {
-            return !item.Name().Contains("Heart")
-                        && item != Item.IceTrap
-                        && randomizedResult.ImportantLocations.Contains(locationForImportance);
+            // todo maybe actually calculate if song of time is needed in the seed
+            return item == Item.SongTime || (
+                !item.Name().Contains("Heart")
+                    && item != Item.IceTrap
+                    && randomizedResult.ImportantLocations.Contains(locationForImportance)
+            );
         }
 
         public static readonly ReadOnlyCollection<ReadOnlyCollection<Item>> ForbiddenStartTogether = new List<List<Item>>()

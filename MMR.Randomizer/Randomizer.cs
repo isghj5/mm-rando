@@ -628,6 +628,10 @@ namespace MMR.Randomizer
                         }
                         else
                         {
+                            if (!_timeTravelPlaced && _timeTravelPath.Contains(d) && ItemList[d].NewLocation.HasValue)
+                            {
+                                DependenceChecked[ItemList[d].NewLocation.Value] = Dependence.Dependent;
+                            }
                             d = ItemList[d].NewLocation ?? d;
                             if (dependencyPath.Contains(d))
                             {
@@ -725,6 +729,12 @@ namespace MMR.Randomizer
                 if (dependency.IsFake()
                     || ItemList[dependency].NewLocation.HasValue)
                 {
+                    if (!_timeTravelPlaced && _timeTravelPath.Contains(dependency) && ItemList[dependency].NewLocation.HasValue)
+                    {
+                        Debug.WriteLine($"{dependency} has already been placed and must be avoided as a requirement during time travel logic.");
+                        return Dependence.Dependent;
+                    }
+
                     var location = ItemList[dependency].NewLocation ?? dependency;
 
                     if (dependencyPath.Contains(location))
@@ -1020,6 +1030,8 @@ namespace MMR.Randomizer
         {
             if (!ItemUtils.IsJunk(currentItem))
             {
+                _timeTravelPath.Push(currentItem);
+
                 var currentItemObject = ItemList[currentItem];
                 var location = ItemList[currentItemObject.NewLocation.Value];
                 var placed = new List<Item>();
@@ -1029,7 +1041,12 @@ namespace MMR.Randomizer
 
                     PlaceItem(requiredItem, targets);
                 }
-                var conditional = location.Conditionals.RandomOrDefault(Random);
+                var conditional = _timeTravelChosenConditionals.FirstOrDefault(location.Conditionals.Contains);
+                if (conditional == null)
+                {
+                    conditional = location.Conditionals.RandomOrDefault(Random);
+                    _timeTravelChosenConditionals.Add(conditional);
+                }
                 if (conditional != null)
                 {
                     foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
@@ -1039,6 +1056,8 @@ namespace MMR.Randomizer
                         PlaceItem(item, targets);
                     }
                 }
+
+                _timeTravelPath.Pop();
             }
         }
 
@@ -1053,7 +1072,12 @@ namespace MMR.Randomizer
 
                     PlaceItem(requiredItem, targets);
                 }
-                var conditional = currentItemObject.Conditionals.RandomOrDefault(Random);
+                var conditional = _timeTravelChosenConditionals.FirstOrDefault(currentItemObject.Conditionals.Contains);
+                if (conditional == null)
+                {
+                    conditional = currentItemObject.Conditionals.RandomOrDefault(Random);
+                    _timeTravelChosenConditionals.Add(conditional);
+                }
                 if (conditional != null)
                 {
                     foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
@@ -1308,8 +1332,43 @@ namespace MMR.Randomizer
                 }
             }
         }
+
+        private void RemoveFreeRequirements()
+        {
+            var freeItems = _settings.CustomStartingItemList
+                .Union(ItemList.Where(io => io.NewLocation.HasValue && ItemUtils.IsStartingLocation(io.NewLocation.Value)).Select(io => io.Item))
+                .ToList();
+
+            bool updated;
+            do
+            {
+                updated = false;
+                foreach (var itemObject in ItemList.Where(io => io.Item.IsFake() && !freeItems.Contains(io.Item)))
+                {
+                    if ((itemObject.DependsOnItems?.All(id => freeItems.Contains(id)) != false)
+                        && (itemObject.Conditionals?.Any(c => c.All(id => freeItems.Contains(id))) != false)
+                        && (itemObject.DependsOnItems != null || itemObject.Conditionals != null))
+                    {
+                        freeItems.Add(itemObject.Item);
+                        updated = true;
+                    }
+                }
+            } while (updated);
+
+            foreach (var itemObject in ItemList)
+            {
+                itemObject.DependsOnItems.RemoveAll(freeItems.Contains);
+
+                if (itemObject.Conditionals.Any(c => c.All(freeItems.Contains)))
+                {
+                    itemObject.Conditionals.Clear();
+                }
+            }
+        }
          
         private bool _timeTravelPlaced = true;
+        private Stack<Item> _timeTravelPath = new Stack<Item>();
+        private List<List<Item>> _timeTravelChosenConditionals = new List<List<Item>>();
         private void RandomizeItems()
         {
             var itemPool = new List<Item>();
@@ -1320,12 +1379,18 @@ namespace MMR.Randomizer
 
             PlaceFreeItems(itemPool);
 
+            RemoveFreeRequirements();
+
             _timeTravelPlaced = false;
+            _timeTravelPath.Clear();
+            _timeTravelChosenConditionals.Clear();
 
             PlaceItem(Item.SongTime, itemPool);
             PlaceItem(Item.OtherTimeTravel, itemPool);
 
             _timeTravelPlaced = true;
+            _timeTravelPath.Clear();
+            _timeTravelChosenConditionals.Clear();
 
             PlaceOcarinaAndSongOfTime(itemPool);
             PlaceBossRemains(itemPool);
