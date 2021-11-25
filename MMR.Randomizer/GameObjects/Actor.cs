@@ -872,9 +872,14 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0001)]
         Elf_Msg = 0x8B, // Elf_Msg
 
+        // todo finish testing
+        [EnemizerEnabled]
         [FileID(131)]
         [ObjectListIndex(0003)]
-        En_Honotrap = 0x8C, // En_Honotrap
+        // 3 is vanilla wall of flames, 0 spits a single flame that chases you
+        [WallVariants(0, 3)]
+        [UnkillableAllVariants]
+        FlameEyeTrap = 0x8C, // En_Honotrap
 
         [EnemizerEnabled]
         [FileID(132)]
@@ -1472,9 +1477,14 @@ namespace MMR.Randomizer.GameObjects
 
         Empty104 = 0x104,
 
+        [EnemizerEnabled]
         [FileID(239)]
         [ObjectListIndex(0x30)]
-        Obj_Armos = 0x105, // Obj_Armos
+        // 0x7F is switch flag (what is being switched?)
+        // oh no z rotation is a parameter.... and there appear to be at least two based on xz rotation
+        [GroundVariants(0)]
+        [UnkillableAllVariants]
+        ArmosStatue = 0x105, // Obj_Armos
 
         [ActorizerEnabled]
         [FileID(240)]
@@ -2410,9 +2420,13 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         HappyMaskSalesman = 0x1B5, // En_Osn
 
+        //[ActorizerEnabled] // issue: cannot place organ because its waiting for the cutscene part to appear
         [FileID(402)]
         [ObjectListIndex(0x88)]
-        Bg_Ctower_Gear = 0x1B6, // Bg_Ctower_Gear
+        // 3 is organ, the gears are other vars 
+        [GroundVariants(3)]
+        // should be both teh gears AND the organ
+        ClocktowerSurroundings = 0x1B6, // Bg_Ctower_Gear
 
         [ActorizerEnabled]
         [FileID(403)]
@@ -3620,10 +3634,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(602)]
         [ObjectListIndex(0x1B1)]
         Obj_Moon_Stone = 0x283, // Obj_Moon_Stone
-        
+
         [FileID(603)]
         [ObjectListIndex(0x1)]
-        Obj_Mu_Pict = 0x284, // Obj_Mu_Pict
+        PamelaHouseFatherInteractions = 0x284, // Obj_Mu_Pict
         
         [FileID(604)]
         [ObjectListIndex(0x236)]

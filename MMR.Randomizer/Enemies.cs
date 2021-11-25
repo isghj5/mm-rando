@@ -1598,12 +1598,12 @@ namespace MMR.Randomizer
                         continue;
                     }// */
 
-                    /* if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.ZoraSeller.ObjectIndex()
+                            NewV = GameObjects.Actor.En_Fr.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1622,7 +1622,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.En_Ani.ObjectIndex()
+                            NewV = GameObjects.Actor.GibdoPicture.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1788,9 +1788,9 @@ namespace MMR.Randomizer
             ///////   DEBUGGING   ///////
             /////////////////////////////
             #if DEBUG
-            if (scene.SceneEnum == GameObjects.Scene.TerminaField) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.PathToSnowhead) // force specific actor/variant for debugging
             {
-                //chosenReplacementEnemies[3].ChangeActor(GameObjects.Actor.Ben, vars: 0);
+                chosenReplacementEnemies[0].ChangeActor(GameObjects.Actor.Demo_Kankyo, vars: 0);
 
                 /*
                 chosenReplacementEnemies[3].ActorID = (int)GameObjects.Actor.CircleOfFire;
