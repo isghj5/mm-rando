@@ -10,6 +10,9 @@
  **/
 static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
     switch (item) {
+        case CUSTOM_ITEM_ROYAL_WALLET:
+            gSaveContext.perm.inv.upgrades.wallet = 3;
+            break;
         case CUSTOM_ITEM_ICE_TRAP:
             Icetrap_PushPending(DAMAGE_EFFECT_FREEZE);
             break;
@@ -66,6 +69,9 @@ static void HandleFillWallet(u8 item) {
             break;
         case ITEM_GIANT_WALLET:
             SetRupeeCount(gItemUpgradeCapacity.walletCapacity[2]);
+            break;
+        case CUSTOM_ITEM_ROYAL_WALLET:
+            SetRupeeCount(gItemUpgradeCapacity.walletCapacity[3]);
             break;
     }
 }

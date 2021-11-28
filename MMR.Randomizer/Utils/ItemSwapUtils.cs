@@ -1,4 +1,5 @@
 using MMR.Common.Extensions;
+using MMR.Randomizer.Asm;
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
@@ -104,7 +105,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void WriteNewItem(ItemObject itemObject, List<MessageEntry> newMessages, GameplaySettings settings, ChestTypeAttribute.ChestType? overrideChestType, MessageTable messageTable)
+        public static void WriteNewItem(ItemObject itemObject, List<MessageEntry> newMessages, GameplaySettings settings, ChestTypeAttribute.ChestType? overrideChestType, MessageTable messageTable, ExtendedObjects extendedObjects)
         {
             var item = itemObject.Item;
             var location = itemObject.NewLocation.Value;
@@ -142,6 +143,11 @@ namespace MMR.Randomizer.Utils
             {
                 newItem = RomData.GetItemList[item.GetItemIndex().Value];
             }
+
+            // Attempt to resolve extended object Id, which should affect "Exclusive Items" as well.
+            var objectId = extendedObjects.ResolveObjectId(newItem);
+            if (objectId.HasValue)
+                newItem.Object = objectId.Value;
 
             var data = new byte[]
             {

@@ -1767,6 +1767,14 @@ namespace MMR.Randomizer
             }
         }
 
+        public void AddRoyalWallet(RandomizedResult result)
+        {
+            var allJunk = IceTrapUtils.GetJunkItems(_randomized.ItemList);
+            var item = allJunk.Random(this.Random);
+            result.RoyalWalletLocation = item.NewLocation.Value;
+            item.ItemOverride = Item.UpgradeRoyalWallet;
+        }
+
         /// <summary>
         /// Overwrite junk items with ice traps.
         /// </summary>
@@ -1846,6 +1854,9 @@ namespace MMR.Randomizer
 
                 // Replace junk items with ice traps according to settings.
                 AddIceTraps(_randomized.Settings.IceTraps, _randomized.Settings.IceTrapAppearance);
+
+                // Replace junk item with Royal Wallet.
+                AddRoyalWallet(_randomized);
                 
                 var freeItemIds = _settings.CustomStartingItemList
                     .Cast<int>()

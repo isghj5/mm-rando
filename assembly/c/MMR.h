@@ -58,13 +58,14 @@ typedef struct {
     /* 0x112 */ u16 magicLarge;
     /* 0x114 */ u16 walletAdult;
     /* 0x116 */ u16 walletGiant;
-    /* 0x118 */ u16 bombBagSmall;
-    /* 0x11A */ u16 bombBagBig;
-    /* 0x11C */ u16 bombBagBiggest;
-    /* 0x11E */ u16 quiverSmall;
-    /* 0x120 */ u16 quiverLarge;
-    /* 0x122 */ u16 quiverLargest;
-} MMRLocations; // size = 0x124
+    /* 0x118 */ u16 walletRoyal;
+    /* 0x11A */ u16 bombBagSmall;
+    /* 0x11C */ u16 bombBagBig;
+    /* 0x11E */ u16 bombBagBiggest;
+    /* 0x120 */ u16 quiverSmall;
+    /* 0x122 */ u16 quiverLarge;
+    /* 0x124 */ u16 quiverLargest;
+} MMRLocations; // size = 0x126
 
 typedef struct {
     /* 0x00 */ u8 ids[0x10]; // Probably don't need much more than this, but can increase later if we need to.

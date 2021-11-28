@@ -1,4 +1,5 @@
 ﻿using MMR.Randomizer.Extensions;
+using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Utils;
 using System.Collections.Generic;
 using System.Drawing;
@@ -11,6 +12,7 @@ namespace MMR.Randomizer.Asm
     /// </summary>
     public class ObjectIndexes
     {
+        public short? RoyalWallet;
         public short? DoubleDefense;
         public short? MagicPower;
         public short? Fairies;
@@ -43,6 +45,24 @@ namespace MMR.Randomizer.Asm
         /// Object indexes.
         /// </summary>
         public ObjectIndexes Indexes { get; } = new ObjectIndexes();
+
+        /// <summary>
+        /// Attempt to resolve the extended object Id for a <see cref="GetItemEntry"/>.
+        /// </summary>
+        /// <param name="entry"></param>
+        /// <returns>Object Id if resolved.</returns>
+        public short? ResolveObjectId(GetItemEntry entry)
+        {
+            // Royal Wallet.
+            if (entry.ItemGained == 0xA4 && entry.Object == 0xA8)
+            {
+                return Indexes.RoyalWallet;
+            }
+
+            return null;
+
+            // TODO: Move behavior for resolving others into here.
+        }
 
         /// <summary>
         /// Create an <see cref="ExtendedObjects"/> with all relevant extended objects added.
@@ -88,6 +108,10 @@ namespace MMR.Randomizer.Asm
         /// <param name="skulltulas">Whether or not to include Skulltula Token objects</param>
         void AddExtendedObjects(bool fairies = false, bool skulltulas = false)
         {
+            // Add Royal Wallet.
+            this.Offsets.Add(AddRoyalWallet());
+            Indexes.RoyalWallet = AdvanceIndex();
+
             // Add Double Defense
             this.Offsets.Add(AddDoubleDefense());
             Indexes.DoubleDefense = AdvanceIndex();
@@ -390,6 +414,26 @@ namespace MMR.Randomizer.Asm
             //WriteByte(data, 0x4B4 + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Env
             //WriteByte(data, 0x4AC + 0xC0 + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Primary
             //WriteByte(data, 0x4B4 + 0xC0 + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Env
+
+            return this.Bundle.Append(data);
+        }
+
+        #endregion
+
+        #region Royal Wallet
+
+        (uint, uint) AddRoyalWallet()
+        {
+            var data = CloneExistingData(739);
+
+            WriteByte(data, 0x177C, 0xFF, 0xFF, 0xFF); // Wallet exterior prim.
+            WriteByte(data, 0x1784, 0xD0, 0xB0, 0xFF); // Wallet exterior env.
+            WriteByte(data, 0x17FC, 0xA0, 0x40, 0xFF); // Rupee exterior prim.
+            WriteByte(data, 0x1804, 0x50, 0x00, 0xC0); // Rupee exterior env.
+            WriteByte(data, 0x181C, 0x80, 0x00, 0xA0); // Rope color prim.
+            WriteByte(data, 0x1824, 0x20, 0x20, 0x20); // Rope color env.
+            WriteByte(data, 0x183C, 0xA0, 0x40, 0xFF); // Rupee interior prim.
+            WriteByte(data, 0x1844, 0xFF, 0xC0, 0xFF); // Rupee interior env.
 
             return this.Bundle.Append(data);
         }

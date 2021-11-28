@@ -21,6 +21,7 @@ struct MMRConfig MMR_CONFIG = {
         .magicLarge = 0x12E,
         .walletAdult = 0x08,
         .walletGiant = 0x09,
+        .walletRoyal = 0,
         .bombBagSmall = 0x1B,
         .bombBagBig = 0x1C,
         .bombBagBiggest = 0x1D,
@@ -130,11 +131,13 @@ u16 MMR_CheckProgressiveUpgrades(u16 giIndex) {
         }
         return MMR_CONFIG.locations.magicLarge;
     }
-    if (giIndex == MMR_CONFIG.locations.walletAdult || giIndex == MMR_CONFIG.locations.walletGiant) {
+    if (giIndex == MMR_CONFIG.locations.walletAdult || giIndex == MMR_CONFIG.locations.walletGiant || giIndex == MMR_CONFIG.locations.walletRoyal) {
         if (gSaveContext.perm.inv.upgrades.wallet == 0) {
             return MMR_CONFIG.locations.walletAdult;
+        } else if (gSaveContext.perm.inv.upgrades.wallet == 1) {
+            return MMR_CONFIG.locations.walletGiant;
         }
-        return MMR_CONFIG.locations.walletGiant;
+        return MMR_CONFIG.locations.walletRoyal;
     }
     if (giIndex == MMR_CONFIG.locations.bombBagSmall || giIndex == MMR_CONFIG.locations.bombBagBig || giIndex == MMR_CONFIG.locations.bombBagBiggest) {
         if (gSaveContext.perm.inv.upgrades.bombBag == 0) {

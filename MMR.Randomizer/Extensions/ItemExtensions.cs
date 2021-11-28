@@ -48,7 +48,7 @@ namespace MMR.Randomizer.Extensions
                 {
                     return "Magic Power Upgrade";
                 }
-                if (item == Item.UpgradeAdultWallet || item == Item.UpgradeGiantWallet)
+                if (item == Item.UpgradeAdultWallet || item == Item.UpgradeGiantWallet || item == Item.UpgradeRoyalWallet)
                 {
                     return "Wallet Upgrade";
                 }
