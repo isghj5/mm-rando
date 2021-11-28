@@ -50,11 +50,7 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
 }
 
 static void SetRupeeCount(u16 rupees) {
-    // Clear rupee counter if negative.
-    if (gSaveContext.owl.rupeeCounter < 0) {
-        gSaveContext.owl.rupeeCounter = 0;
-    }
-    gSaveContext.perm.unk24.rupees = rupees;
+    gSaveContext.owl.rupeeCounter += rupees;
 }
 
 /**
