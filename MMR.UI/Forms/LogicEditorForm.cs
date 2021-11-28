@@ -58,6 +58,7 @@ namespace MMR.UI.Forms
         private void UpdateDependence(int n)
         {
             _multiItemSelectorForm.SetSelectedItems(null);
+            _multiItemSelectorForm.SetHighlightedItems(null);
             _multiItemSelectorForm.UpdateItems();
             DialogResult R = _multiItemSelectorForm.ShowDialog();
             if (R == DialogResult.OK)
@@ -107,6 +108,7 @@ namespace MMR.UI.Forms
                 selectedItems = _logic.Logic[n].ConditionalItems[conditionalIndex.Value].ToList();
             }
             _multiItemSelectorForm.SetSelectedItems(selectedItems);
+            _multiItemSelectorForm.SetHighlightedItems(null);
             _multiItemSelectorForm.UpdateItems();
             DialogResult result = _multiItemSelectorForm.ShowDialog();
             if (result == DialogResult.OK)
