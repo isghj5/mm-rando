@@ -68,6 +68,10 @@ namespace MMR.Randomizer.Utils
                 mmFileList = RomData.MMFileList;
             }
             var file = mmFileList[fileIndex];
+            if (file.Data == null || file.Data.Length == 0)
+            {
+                return;
+            }
             if (file.IsCompressed && !file.WasEdited)
             {
                 file.Data = Yaz.Decode(file.Data);

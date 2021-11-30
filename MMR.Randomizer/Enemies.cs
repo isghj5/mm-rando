@@ -1677,7 +1677,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.ButlersSon.ObjectIndex()
+                            NewV = GameObjects.Actor.ClayPot.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -2341,8 +2341,7 @@ namespace MMR.Randomizer
                 var file = RomData.MMFileList[newFileID];
                 file.Data = injectedActor.overlayBin;
                 file.WasEdited = true;
-                file.IsCompressed = true; //assumption: all actors are compressed
-                //file.Data = injectedActor.overlayBin; // need to inject now that we know where to put it
+                file.IsCompressed = true; // assumption: all actors are compressed
 
                 // update actor ID in overlay init vars, now that we know the new actor ID value
                 ReadWriteUtils.Arr_WriteU16(file.Data, (int)injectedActor.initVarsLocation, (ushort)injectedActor.actorID);
@@ -2354,8 +2353,8 @@ namespace MMR.Randomizer
                 ReplacementCandidateList.Add(new Actor(injectedActor, newActorName));
 
                 // TODO inject objects too, for actors that have custom objects
-            }
 
+            } // end for each injected actor
         }
 
         public static void ShuffleEnemies(OutputSettings settings, Random random)
