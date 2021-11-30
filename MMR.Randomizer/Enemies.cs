@@ -1146,7 +1146,7 @@ namespace MMR.Randomizer
             var sceneFreeActors = ReplacementCandidateList.Where(u => (u.ObjectID == 1
                                                     || (sceneIsField && u.ObjectID == (int)Scene.SceneSpecialObject.FieldKeep)
                                                     || (sceneIsDungeon && u.ObjectID == (int)Scene.SceneSpecialObject.DungeonKeep))
-                                                 && !u.BlockedScenes.Contains(scene.SceneEnum)).ToList();
+                                                 && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum) )).ToList();
 
             // TODO: search all untouched objects and add those actors too
 
@@ -1696,7 +1696,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.FriendlyCucco.ObjectIndex()
+                            NewV = GameObjects.Actor.Bumper.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1893,13 +1893,12 @@ namespace MMR.Randomizer
             ///////   DEBUGGING   ///////
             /////////////////////////////
             #if DEBUG
-            if (scene.SceneEnum == GameObjects.Scene.ClockTowerInterior) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.PathToSnowhead) // force specific actor/variant for debugging
             {
                 
                 //chosenReplacementEnemies[0].ActorID = (int)GameObjects.Actor.CircleOfFire;
                 //chosenReplacementEnemies[0].ActorEnum = GameObjects.Actor.CircleOfFire;
-                chosenReplacementEnemies[0].Variants[0] = 1;
-
+                chosenReplacementEnemies[0].ChangeActor(GameObjects.Actor.Demo_Kankyo, 0);
             }
             /////////////////////////////
             #endif
@@ -1967,7 +1966,10 @@ namespace MMR.Randomizer
 
 
                 var value = Convert.ToInt32(valueStr, fromBase: 16);
-
+                if (command == "actor_id")
+                {
+                    newInjectedActor.actorID = value;
+                }
                 if (command == "obj_id")
                 {
                     newInjectedActor.objID = value;
@@ -1976,7 +1978,12 @@ namespace MMR.Randomizer
                 {
                     // dec instead of hex
                     newInjectedActor.fileID = Convert.ToInt32(valueStr, fromBase: 10);
-                    newInjectedActor.actorID = (int) VanillaEnemyList.Find(u => u.FileListIndex() == newInjectedActor.fileID);
+                    /*  if (newInjectedActor.actorID == 0)
+                    {
+                        // search all known actors for the file
+                        newInjectedActor.actorID = (int)Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList()
+                                                   .Find(u => u.FileListIndex() == newInjectedActor.fileID);
+                    } // */
                 }
 
                 var uvalue = Convert.ToUInt32(valueStr, fromBase: 16);
@@ -1990,8 +1997,6 @@ namespace MMR.Randomizer
                     newInjectedActor.buildVramStart = uvalue;
                 }
             }
-
-            // TODO if fid == 0, instead of exception we should look up a free actor location to move it to
 
             // update actor init vars in our actor
             var actorGameObj = vanillaActors.Find(u =>u.FileListIndex() == newInjectedActor.fileID);
@@ -2132,15 +2137,22 @@ namespace MMR.Randomizer
                 {
                     int luiLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc) & 0x00FFFFFF);
                     int addiuLoc = sectionOffset + ((int)ReadWriteUtils.Arr_ReadU32(file.Data, relocEntryLoc + 4)) & 0x00FFFFFF;
+                    // reminder: addu treats the last two bytes of our pointer as signed
+                    // to fix this, the LUI command is given a carry over bit to fix it, we need to read and write knowing this
+
                     // combine the halves from asm back into one pointer
                     uint pointer = 0;
-                    pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, luiLoc + 2) << 16);
                     pointer |= ((uint)ReadWriteUtils.Arr_ReadU16(file.Data, addiuLoc + 2));
+                    int LUIDecr = ((pointer & 0xFFFF) > 0x8000) ? 1 : 0;
+                    pointer |= ((uint)(ReadWriteUtils.Arr_ReadU16(file.Data, luiLoc + 2) - LUIDecr) << 16) ;
                     pointer += newVRAMOffset;
                     // separate the pointer again into halves and put back
+                    // are we sure about this? that we are doing it right?
                     int LUIIncr = ((pointer & 0xFFFF) > 0x8000) ? 1 : 0; // if the lower half is too big we have to add one to LUI
-                    ReadWriteUtils.Arr_WriteU16(file.Data, luiLoc + 2, (ushort)(((pointer & 0xFFFF0000) >> 16) + LUIIncr));
-                    ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, (ushort)(pointer & 0xFFFF));
+                    ushort luiPart = (ushort)(((pointer & 0xFFFF0000) >> 16) + LUIIncr);
+                    ushort adduPart = (ushort)(pointer & 0xFFFF);
+                    ReadWriteUtils.Arr_WriteU16(file.Data, luiLoc   + 2, luiPart);
+                    ReadWriteUtils.Arr_WriteU16(file.Data, addiuLoc + 2, adduPart);
 
                     relocEntryLoc += 8;
                 }
@@ -2174,17 +2186,14 @@ namespace MMR.Randomizer
 
         public static void UpdateActorOverlayTable()
         {
-            // if settings arent set, return
+            // todo: check if enemizer is set, return if not
 
             /// if overlays have grown, we need to modify their overlay table to use the right values for the new files
             /// every time you move an overlay you need to relocate the vram addresses, so instead of shifting all of them
             ///  we just move the new larger files to the end and leave a hole behind for now
 
-            // todo: how can we detect if enemizer is ON from here so we dont do this for every seed?
-
             const uint theEndOfTakenVRAM = 0x80C27000; // 0x80C260A0 <- actual
             const int  theEndOfTakenVROM = 0x03100000; // 0x02EE7XXX <- actual
-
 
             int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
             RomUtils.CheckCompressed(actorOvlTblFID);
@@ -2203,21 +2212,12 @@ namespace MMR.Randomizer
 
             uint previousLastVRAMEnd = theEndOfTakenVRAM;
             int previousLastVROMEnd = theEndOfTakenVROM;
-            int shift = 0;
 
-            // todo: we no longer have to have a sorted actor list we can just look at our injected actor list for speed
-            //foreach (var overlayEntry in fidSortedActors)
             foreach (var injectedActor in InjectedActors)
             {
                 var actorID = injectedActor.actorID;
                 var fileID = injectedActor.fileID;
-                MMFile file;
-                //if (actorID == 0) // new actor
-                //{                }
-                //else // old file being updated
-                {
-                    file = RomData.MMFileList[fileID];
-                }
+                MMFile file = RomData.MMFileList[fileID];
 
                 int entryLoc = actorOvlTblOffset + (actorID * 32); // overlay table is sorted by actorID
 
@@ -2240,9 +2240,6 @@ namespace MMR.Randomizer
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint) file.Addr);
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint) file.End);
 
-                // TODO check if we can place it in an old hole left behind by a previously moved actor
-                var newVRAMStart = previousLastVRAMEnd;
-
                 // we know where in the overlay pointers exist that need to be updated for VROM->VRAM
                 // .reloc stores this info for us as a table of words that contain enough info to help us update
                 // the very last byte in the overlay is (from end) offset
@@ -2259,24 +2256,27 @@ namespace MMR.Randomizer
                 sectionOffsets[2] = sectionOffsets[1] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 4); // rodata
                 sectionOffsets[3] = sectionOffsets[2] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 8); // bss
 
-                // from what I can tell, if you sum the section sizes and then the reloc total (final byte)
-                // you should get the total vram size. Works for boyo so far ...
-                var  newVramSize   = sectionOffsets[3] + relocSize;
-                var  newVRAMEnd    = (uint)(newVRAMStart + newVramSize);
-                uint newVRAMOffset = newVRAMStart - oldVRAMStart;
+                // have to move the overlay vram location assume its bigger
+                // calculate the new VRAM and offset for our new overlay VRAM location
+                var  newVRAMSize   = sectionOffsets[3] + relocSize;
+                // TODO check if we can place it in an old hole left behind by a previously moved actor
+                var newVRAMStart = previousLastVRAMEnd;
+                var newVRAMEnd    = (uint)(newVRAMStart + newVRAMSize);
+                var newVRAMOffset = newVRAMStart - oldVRAMStart;
 
+                // all the pointers and vram locations in the file need to be updated too
                 UpdateOverlayVRAMReloc(file, sectionOffsets, newVRAMOffset);
 
                 uint newInitVarAddr = newVRAMStart + injectedActor.initVarsLocation;
 
+                // write the VRAM sections of the overlay table entry
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x08, newVRAMStart);
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0C, newVRAMEnd);
                 ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newInitVarAddr);
 
-                previousLastVRAMEnd = newVRAMEnd;
+                previousLastVRAMEnd = newVRAMEnd + (newVRAMEnd % 0x10); // not sure if dma padding matters here
                 RomData.MMFileList[fileID] = file;
             }// end for overlay in overlaylist
-
         }
 
         public static void InjectNewActors()
