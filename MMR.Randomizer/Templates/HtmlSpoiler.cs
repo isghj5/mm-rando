@@ -279,7 +279,7 @@ namespace MMR.Randomizer.Templates
                     "                   if (!includes(locationsToCheck, locationId)) {\r\n             " +
                     "           locationsToCheck.push(locationId);\r\n                    }\r\n          " +
                     "      }\r\n            }\r\n        }\r\n        checkLocations(locationsToCheck);\r\n  " +
-                    "  }\r\n\r\n    var startingLocations = [0, 96, 280, 281, 282, 283];\r\n    for (var id" +
+                    "  }\r\n\r\n    var startingLocations = [0, 97, 281, 282, 283, 284];\r\n    for (var id" +
                     " of startingLocations) {\r\n        logic[id].Checked = true;\r\n        var row = d" +
                     "ocument.querySelector(\"tr[data-newlocationid=\'\" + id + \"\']\");\r\n        var itemI" +
                     "d = id;\r\n        if (row) {\r\n            itemId = row.dataset.id;\r\n            d" +
