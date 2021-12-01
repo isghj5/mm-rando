@@ -990,7 +990,7 @@ namespace MMR.Randomizer
                 return true;
             }
 
-            if (_settings.CustomJunkLocations.Contains(target) && !ItemUtils.IsJunk(currentItem))
+            if ((_settings.CustomJunkLocations.Contains(target) || target == Item.UpgradeRoyalWallet) && !ItemUtils.IsJunk(currentItem))
             {
                 return false;
             }
