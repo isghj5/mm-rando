@@ -325,7 +325,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipItemHint("a coin case", "great wealth")]
         [ShopText("This can hold up to a maximum of 999 rupees.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
-        [GetItemIndex(0x44D), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards)]
+        [GetItemIndex(0x44D), ItemPool(ItemCategory.Fake, LocationCategory.Fake)]
         UpgradeRoyalWallet,
 
         //trades

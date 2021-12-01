@@ -244,7 +244,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom item list string
         /// </summary>
-        public string CustomItemListString { get; set; } = "--------------------206-40000000----10ffff-ffffffff-ffffffff-f8000000-3ddf77fd-3fffffff-f378ffff-ffffffff";
+        public string CustomItemListString { get; set; } = "--------------------40c-80000000----21ffff-ffffffff-ffffffff-f0000000-7bbeeffa-7fffffff-e6f1fffe-ffffffff";
 
         /// <summary>
         ///  Custom starting item list selections
@@ -255,7 +255,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom starting item list string
         /// </summary>
-        public string CustomStartingItemListString { get; set; } = "fdfe-2c00000-";
+        public string CustomStartingItemListString { get; set; } = "1fbfc-5800000-";
 
         /// <summary>
         /// List of locations that must be randomized to junk
@@ -266,7 +266,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom junk location string
         /// </summary>
-        public string CustomJunkLocationsString { get; set; } = "-------------------------100000-----200000--f000";
+        public string CustomJunkLocationsString { get; set; } = "-------------------------200000-----400000--f000";
 
         /// <summary>
         /// Defines number of ice traps.
