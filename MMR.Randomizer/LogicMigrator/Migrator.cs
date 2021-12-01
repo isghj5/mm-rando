@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 9;
+        public const int CurrentVersion = 10;
 
         public static string ApplyMigrations(string logic)
         {
@@ -167,6 +167,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 9)
             {
                 AddBeansAndDekuPlayground(logicObject);
+            }
+
+            if (logicObject.Version < 10)
+            {
+                AddRoyalWallet(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3818,6 +3823,23 @@ namespace MMR.Randomizer.LogicMigrator
                 ConditionalItems = new List<List<string>>(),
             }));
             logicObject.Version = 9;
+        }
+
+        private static void AddRoyalWallet(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 32;
+            var itemNames = new string[]
+            {
+                "UpgradeRoyalWallet",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 10;
         }
 
         private class MigrationItem

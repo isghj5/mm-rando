@@ -36,6 +36,12 @@ namespace MMR.Randomizer.Utils
                     continue;
                 }
 
+                // TODO make this less hard-coded
+                if (io.NewLocation == Item.UpgradeRoyalWallet)
+                {
+                    continue;
+                }
+
                 var item = io.Item.MainLocation().HasValue ? randomizedResult.ItemList.Find(x => x.NewLocation == io.Item.MainLocation().Value) : io;
 
                 if (randomizedResult.Settings.ClearHints && !io.Item.MainLocation().HasValue)

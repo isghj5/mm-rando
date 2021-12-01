@@ -318,6 +318,16 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x09), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards)]
         UpgradeGiantWallet,
 
+        [Progressive]
+        [Downgradable]
+        [StartingItem(0xC5CE6E, 0x30)]
+        [ItemName("Royal Wallet"), LocationName("Removed by Royal Wallet"), Region(Region.Misc)]
+        [GossipItemHint("a coin case", "great wealth")]
+        [ShopText("This can hold up to a maximum of 999 rupees.")]
+        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [GetItemIndex(0x44D), ItemPool(ItemCategory.MainInventory, LocationCategory.NpcRewards)]
+        UpgradeRoyalWallet,
+
         //trades
         [Visible]
         [Repeatable, Temporary, Overwritable]
@@ -10090,14 +10100,5 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x0A), ItemPool(ItemCategory.Fake, LocationCategory.Fake)]
         RecoveryHeart = -2,
 
-        [ItemName("Royal Wallet")]
-        [Downgradable, Progressive]
-        [StartingItem(0xC5CE6E, 0x30)]
-        [GossipItemHint("a coin case", "great wealth")]
-        [ShopText("This can hold up to a maximum of 999 rupees.")]
-        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
-        [ItemPool(ItemCategory.MainInventory, LocationCategory.Fake)]
-        [ExclusiveItem(0xA4, 0xA0, 0x01), ExclusiveItemGraphic(0x22, 0xA8), ExclusiveItemMessage(0xB)]
-        UpgradeRoyalWallet = -3,
     }
 }

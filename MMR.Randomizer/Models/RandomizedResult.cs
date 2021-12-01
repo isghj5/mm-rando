@@ -22,7 +22,6 @@ namespace MMR.Randomizer.Models
         public int FileSelectSkybox { get; internal set; }
         public int FileSelectColor { get; internal set; }
         public int TitleLogoColor { get; internal set; }
-        public Item RoyalWalletLocation { get; set; }
 
         public RandomizedResult(GameplaySettings settings, int seed)
         {

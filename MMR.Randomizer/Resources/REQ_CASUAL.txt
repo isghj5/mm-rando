@@ -1,5 +1,5 @@
 {
-  "Version": 9,
+  "Version": 10,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -659,6 +659,17 @@
       "IsTrick": false
     },
     {
+      "Id": "UpgradeRoyalWallet",
+      "RequiredItems": [
+        "AreaMoonAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
       "Id": "TradeItemMoonTear",
       "RequiredItems": [],
       "ConditionalItems": [
@@ -1305,7 +1316,7 @@
     {
       "Id": "MaskAllNight",
       "RequiredItems": [
-        "UpgradeGiantWallet"
+        "Wallet (500)"
       ],
       "ConditionalItems": [
         [
@@ -54566,6 +54577,9 @@
         ],
         [
           "UpgradeGiantWallet"
+        ],
+        [
+          "UpgradeRoyalWallet"
         ]
       ],
       "TimeNeeded": "None",
@@ -55994,6 +56008,22 @@
         [
           "MaskFierceDeity",
           "Magic Meter"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Wallet (500)",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "UpgradeGiantWallet"
+        ],
+        [
+          "UpgradeRoyalWallet"
         ]
       ],
       "TimeNeeded": "None",

@@ -382,11 +382,45 @@ namespace MMR.Randomizer
                     .FirstOrDefault(io =>
                         io.Item.IsFake()
                         && io.DependsOnItems.Count == 0
-                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Count == 3
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeAdultWallet }))
-                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet })));
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
 
-                var wallets500 = new ItemObject
+                var wallets500 = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
+                if (wallets500 == null)
+                {
+                    wallets500 = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        Conditionals = new List<Item>
+                        {
+                            Item.UpgradeAdultWallet,
+                            Item.UpgradeGiantWallet,
+                            Item.UpgradeRoyalWallet,
+                        }.Combinations(2).Select(a => a.ToList()).ToList(),
+                    };
+                    ItemList.Add(wallets500);
+                }
+                else
+                {
+                    wallets500.Conditionals.Clear();
+                    wallets500.Conditionals.AddRange(new List<Item>
+                    {
+                        Item.UpgradeAdultWallet,
+                        Item.UpgradeGiantWallet,
+                        Item.UpgradeRoyalWallet,
+                    }.Combinations(2).Select(a => a.ToList()));
+                }
+
+                var wallets999 = new ItemObject
                 {
                     ID = ItemList.Count,
                     TimeAvailable = 63,
@@ -394,9 +428,10 @@ namespace MMR.Randomizer
                     {
                         Item.UpgradeAdultWallet,
                         Item.UpgradeGiantWallet,
+                        Item.UpgradeRoyalWallet,
                     },
                 };
-                ItemList.Add(wallets500);
+                ItemList.Add(wallets999);
 
                 var magicAny = ItemList
                     .FirstOrDefault(io =>
@@ -438,16 +473,22 @@ namespace MMR.Randomizer
                         }
                     }
 
-                    if (itemObject != wallets500 && itemObject.DependsOnItems.Contains(Item.UpgradeGiantWallet))
+                    if (itemObject != wallets999 && itemObject.DependsOnItems.Contains(Item.UpgradeRoyalWallet))
                     {
-                        itemObject.DependsOnItems.Remove(Item.UpgradeGiantWallet);
-                        itemObject.DependsOnItems.Add(wallets500.Item);
+                        itemObject.DependsOnItems.Remove(Item.UpgradeRoyalWallet);
+                        itemObject.DependsOnItems.Add(wallets999.Item);
                     }
 
-                    if (itemObject != wallets200)
+                    if (itemObject != wallets200 && itemObject != wallets500)
                     {
                         foreach (var conditions in itemObject.Conditionals)
                         {
+                            if (conditions.Contains(Item.UpgradeRoyalWallet))
+                            {
+                                conditions.Remove(Item.UpgradeRoyalWallet);
+                                conditions.Add(wallets999.Item);
+                            }
+
                             if (conditions.Contains(Item.UpgradeGiantWallet))
                             {
                                 conditions.Remove(Item.UpgradeGiantWallet);
@@ -1187,10 +1228,9 @@ namespace MMR.Randomizer
 
         private void RandomizePrices()
         {
-            ushort RandomPrice()
-            {
-                return (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 4.0) * 500, 1, 500);
-            }
+            Func<ushort> RandomPrice = _settings.PriceMode.HasFlag(PriceMode.AccountForRoyalWallet) && _settings.CustomItemList.Contains(Item.UpgradeRoyalWallet)
+                ? () => (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 8.5) * 999, 1, 999)
+                : () => (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 4.0) * 500, 1, 500);
 
             _randomized.MessageCosts = new List<ushort?>();
             // TODO if costs randomized
@@ -1223,9 +1263,10 @@ namespace MMR.Randomizer
                     .FirstOrDefault(io =>
                         io.Item.IsFake()
                         && io.DependsOnItems.Count == 0
-                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Count == 3
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeAdultWallet }))
-                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet })));
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
 
                 if (wallets200 == null)
                 {
@@ -1237,9 +1278,33 @@ namespace MMR.Randomizer
                         {
                             new List<Item> { Item.UpgradeAdultWallet },
                             new List<Item> { Item.UpgradeGiantWallet },
+                            new List<Item> { Item.UpgradeRoyalWallet },
                         },
                     };
                     ItemList.Add(wallets200);
+                }
+
+                var wallets500 = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
+
+                if (wallets500 == null)
+                {
+                    wallets500 = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        Conditionals = new List<List<Item>>
+                        {
+                            new List<Item> { Item.UpgradeGiantWallet },
+                            new List<Item> { Item.UpgradeRoyalWallet },
+                        },
+                    };
+                    ItemList.Add(wallets500);
                 }
 
                 var affectedLocations = new Dictionary<Item, short>();
@@ -1258,10 +1323,15 @@ namespace MMR.Randomizer
                         if (cost < affectedCost)
                         {
                             ItemList[location].DependsOnItems.Remove(wallets200.Item);
-                            ItemList[location].DependsOnItems.Remove(Item.UpgradeGiantWallet);
-                            if (cost > 200)
+                            ItemList[location].DependsOnItems.Remove(wallets500.Item);
+                            ItemList[location].DependsOnItems.Remove(Item.UpgradeRoyalWallet);
+                            if (cost > 500)
                             {
-                                ItemList[location].DependsOnItems.Add(Item.UpgradeGiantWallet);
+                                ItemList[location].DependsOnItems.Add(Item.UpgradeRoyalWallet);
+                            }
+                            else if (cost > 200)
+                            {
+                                ItemList[location].DependsOnItems.Add(wallets500.Item);
                             }
                             else if (cost > 99)
                             {
@@ -1592,7 +1662,7 @@ namespace MMR.Randomizer
         /// </summary>
         private void PlaceUpgrades(List<Item> itemPool)
         {
-            for (var i = Item.UpgradeRazorSword; i <= Item.UpgradeGiantWallet; i++)
+            for (var i = Item.UpgradeRazorSword; i <= Item.UpgradeRoyalWallet; i++)
             {
                 PlaceItem(i, itemPool);
             }
@@ -1767,14 +1837,6 @@ namespace MMR.Randomizer
             }
         }
 
-        public void AddRoyalWallet(RandomizedResult result)
-        {
-            var allJunk = IceTrapUtils.GetJunkItems(_randomized.ItemList);
-            var item = allJunk.Random(this.Random);
-            result.RoyalWalletLocation = item.NewLocation.Value;
-            item.ItemOverride = Item.UpgradeRoyalWallet;
-        }
-
         /// <summary>
         /// Overwrite junk items with ice traps.
         /// </summary>
@@ -1854,9 +1916,6 @@ namespace MMR.Randomizer
 
                 // Replace junk items with ice traps according to settings.
                 AddIceTraps(_randomized.Settings.IceTraps, _randomized.Settings.IceTrapAppearance);
-
-                // Replace junk item with Royal Wallet.
-                AddRoyalWallet(_randomized);
                 
                 var freeItemIds = _settings.CustomStartingItemList
                     .Cast<int>()
