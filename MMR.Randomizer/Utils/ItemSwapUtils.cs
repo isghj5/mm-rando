@@ -214,7 +214,7 @@ namespace MMR.Randomizer.Utils
             foreach (var shopInventory in shopInventories)
             {
                 var messageId = ReadWriteUtils.ReadU16(shopInventory.ShopItemAddress + 0x0A);
-                var oldMessage = messageTable.GetMessage(messageId);
+                var oldMessage = messageTable.GetMessage((ushort)(messageId + 1));
                 var cost = ReadWriteUtils.Arr_ReadU16(oldMessage.Header, 5);
                 newMessages.Add(new MessageEntryBuilder()
                     .Id(messageId)
