@@ -546,8 +546,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x3200)]
         [FileID(92)]
         [ObjectListIndex(0x9)]
-        [GroundVariants(0)]
-        [VariantsWithRoomMax(max: 3, 0)]
+        // 0x0 is regular, 0x8000 is invisible
+        // 0x10 wont spawn, 0x20 seems normal, 0x40?
+        [GroundVariants(0, 0x8000)]
+        //[VariantsWithRoomMax(max:1, variant:0x8000)]
+        [VariantsWithRoomMax(max: 3, variant: 0)]
         FloorMaster = 0x4A, // En_Floormas
 
         Empty4B = 0x4B,
@@ -556,8 +559,14 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x32A0)]
         [FileID(93)]
         [ObjectListIndex(0x75)]
-        [GroundVariants(0x7F07,0x7F05,0x7F06)]
-        [VariantsWithRoomMax(max: 5, variant: 0x7F07, 0x7F05, 0x7F06)]
+        // 0x8000 removes the freeze timer, like market town in OOT
+        // 0x7F00 is a switch flag check ???
+        // 0x5/6/7 have different actionfuncs, dont seem to do anything..?
+        // 3 is invisible, 2 is squatting
+        // 4 spawns inside of an ice block
+        [GroundVariants(0x7F07,0x7F05,0x7F06, 0x7F03, 0x7F04, 0x8005, 0x8006, 0x8007, 0x8003)]
+        [VariantsWithRoomMax(max: 3, variant: 0x7F07, 0x7F05, 0x7F06, 0x7F02, 0x8005, 0x8006, 0x8007, 0x7F04)]
+        [VariantsWithRoomMax(max: 1, variant: 0x7F03, 0x8003)]
         [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.BeneathTheWell)] // gibdo locations, but share the same object so gets detected
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows us down too much
         ReDead = 0x4C, // En_Rd
@@ -601,15 +610,17 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse)] // dont remove old spiders, the new ones might not be gettable
         GoldSkullTula = 0x50, // En_Sw "Skullwalltulla"
 
-        // hmm, this fights with demo_kankyo, need to think of a way to keep these two apart
         //[ActorizerEnabled] // wont snow with obj 1 or 0x1D8 might need weathertag
-        //[ObjectListIndex(1)] // gameplay_keep 1
+        [ObjectListIndex(1)] // gameplay_keep 1
         [FileID(97)]
-        [ObjectListIndex(0x1D8)] // the fuck is this object??
-        [FlyingVariants(3)] // 3 is snow
-        [GroundVariants(3)] // 3 is snow
+        // 0 is rain, but something else controls the rain counter not this actor
+        // 2 is the murk from the ocean, but full time
+        // 1 and 3 are snow, but you need to set E2 to non-zero
+        // 4 kill itself it not in the giants chamber
+        [FlyingVariants(3)]
+        //[GroundVariants(3)] // 3 is snow
         [UnkillableAllVariants]
-        Weather = 0x51, // Object_Kankyo
+        ObjectKankyo = 0x51, // Object_Kankyo
 
         Empty52 = 0x52,
         Empty53 = 0x53,
@@ -2100,9 +2111,10 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         DekuPatrolGuard = 0x17A, // En_Look_Nuts
 
+        // 1/3 bugs that could spawn from a bottle, dig away after a few seconds
         [FileID(341)]
         [ObjectListIndex(0x1)]
-        En_Mushi2 = 0x17B, // En_Mushi2
+        Mushi = 0x17B, // En_Mushi2
 
         //[ActorizerEnabled] // no point, if it spawns on the ground its too big and you can't tell you are inside of it
         // and enemies are so far away they are culled so you cant see them
@@ -2113,9 +2125,14 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         Moon1 = 0x17C, // En_Fall
 
+        [ActorizerEnabled]
         [FileID(343)]
         [ObjectListIndex(0x107)]
-        En_Mm3 = 0x17D, // En_Mm3
+        [GroundVariants(0)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.PostOffice)]
+        BedroomPostman = 0x17D, // En_Mm3
         
         [FileID(344)]
         [ObjectListIndex(0x18A)]
@@ -2142,7 +2159,6 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants( 0xA2, 0x82, 0x62, 0 )]
         SkullFish = 0x180, // En_Pr2
 
-
         [FileID(347)]
         [ObjectListIndex(0x16B)]
         En_Prz = 0x181, // En_Prz
@@ -2154,7 +2170,6 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [EnemizerScenesExcluded(Scene.StoneTowerTemple)]
         GaroMaster = 0x182, // En_Jso2
-
 
         [EnemizerEnabled] // free enemy, placed in places where enemies are normally
         [FileID(349)]
@@ -2192,30 +2207,33 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(353)]
         [ObjectListIndex(0x18E)]
-        En_Tru = 0x187, // En_Tru
+        InjuredKoume = 0x187, // En_Tru
         
         [FileID(354)]
         [ObjectListIndex(0x18F)]
-        En_Trt = 0x188, // En_Trt
+        ShopKeepKotake = 0x188, // En_Trt
         
         Empty189 = 0x189,
         Empty18A = 0x18A,
 
         [FileID(355)]
         [ObjectListIndex(0x1)]
-        En_Test5 = 0x18B, // En_Test5
+        SpringWater = 0x18B, // En_Test5
 
         [FileID(356)]
         [ObjectListIndex(0x1)]
-        En_Test6 = 0x18C, // En_Test6
+        SongOfTimeEffects = 0x18C, // En_Test6
         
         [FileID(357)]
         [ObjectListIndex(0x198)]
-        En_Az = 0x18D, // En_Az
+        // params: f0ff/f1ff is standing after getting the final item
+        //f603 is sitting on the bottom of the ocean
+        //[WaterVariants] //woried they are pathing
+        AngryBeavers = 0x18D, // En_Az
         
         [FileID(358)]
         [ObjectListIndex(0x18D)]
-        En_Estone = 0x18E, // En_Estone
+        EyeGoreRubble = 0x18E, // En_Estone
         
         [FileID(359)]
         [ObjectListIndex(0x190)]
@@ -2228,18 +2246,20 @@ namespace MMR.Randomizer.GameObjects
         [FileID(361)]
         [ObjectListIndex(0x192)]
         Dm_Stk = 0x191, // Dm_Stk
-        
+
+        // todo attempt randomize
         [FileID(362)]
         [ObjectListIndex(0x1C8)]
-        Dm_Char00 = 0x192, // Dm_Char00
-        
+        TatlTaelCutsceneActors = 0x192, // Dm_Char00
+
+        // todo attempt randomize
         [FileID(363)]
         [ObjectListIndex(0x1A2)]
-        Dm_Char01 = 0x193, // Dm_Char01
+        WFTSceneObjects = 0x193, // Dm_Char01
         
         [FileID(364)]
         [ObjectListIndex(0x1BE)]
-        Dm_Char02 = 0x194, // Dm_Char02
+        SkullKidsOcarina = 0x194, // Dm_Char02
         
         [FileID(365)]
         [ObjectListIndex(0x1A3)]
@@ -2267,9 +2287,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(370)]
         [ObjectListIndex(0x229)]
         Dm_Char08 = 0x19A, // Dm_Char08
+
+        // todo attempt randomize
         [FileID(371)]
         [ObjectListIndex(0x1EB)]
-        Dm_Char09 = 0x19B, // Dm_Char09
+        PiratesFortressCutsceneCharacters = 0x19B, // Dm_Char09
 
         [ActorizerEnabled]
         [FileID(372)]
