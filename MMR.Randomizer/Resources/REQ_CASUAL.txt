@@ -1,5 +1,5 @@
 {
-  "Version": 10,
+  "Version": 11,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -41478,7 +41478,14 @@
     {
       "Id": "CollectibleStrayFairyClockTown",
       "RequiredItems": [],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "CollectibleStrayFairyClockTownInLaundryPool"
+        ],
+        [
+          "CollectibleStrayFairyClockTownInECT"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -53938,6 +53945,44 @@
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectibleStrayFairyClockTownInLaundryPool",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2, Day3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "CollectibleStrayFairyClockTownInECT",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "MaskGoron"
+        ],
+        [
+          "MaskGreatFairy"
+        ],
+        [
+          "Long Jump",
+          "Take Damage"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "Recoil Flip"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2, Night3",
       "TimeSetup": "None",
       "IsTrick": false
     },

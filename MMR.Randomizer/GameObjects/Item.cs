@@ -2809,7 +2809,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken30,
 
         [Visible]
-        [ItemName("Clock Town Stray Fairy"), LocationName("Clock Town Stray Fairy"), Region(Region.LaundryPool)]
+        [ItemName("Clock Town Stray Fairy"), LocationName("Clock Town Stray Fairy"), MultiLocation(CollectibleStrayFairyClockTownInLaundryPool, CollectibleStrayFairyClockTownInECT)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Return it to the Fairy Fountain in North Clock Town.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10053,6 +10053,12 @@ namespace MMR.Randomizer.GameObjects
 
         [MainLocation(ShopItemBusinessScrubBluePotion), Region(Region.ZoraHall)]
         ShopItemBusinessScrubBluePotionInOcean,
+
+        [MainLocation(CollectibleStrayFairyClockTown), Region(Region.LaundryPool)]
+        CollectibleStrayFairyClockTownInLaundryPool,
+
+        [MainLocation(CollectibleStrayFairyClockTown), Region(Region.EastClockTown)]
+        CollectibleStrayFairyClockTownInECT,
 
 
         GossipTerminaSouth,

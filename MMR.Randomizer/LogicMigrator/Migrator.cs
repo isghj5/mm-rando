@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 10;
+        public const int CurrentVersion = 11;
 
         public static string ApplyMigrations(string logic)
         {
@@ -172,6 +172,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 10)
             {
                 AddRoyalWallet(logicObject);
+            }
+
+            if (logicObject.Version < 11)
+            {
+                AddMultiLocationClockTownFairy(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3840,6 +3845,24 @@ namespace MMR.Randomizer.LogicMigrator
                 ConditionalItems = new List<List<string>>(),
             }));
             logicObject.Version = 10;
+        }
+
+        private static void AddMultiLocationClockTownFairy(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1116;
+            var itemNames = new string[]
+            {
+                "CollectibleStrayFairyClockTownInLaundryPool",
+                "CollectibleStrayFairyClockTownInECT",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 11;
         }
 
         private class MigrationItem
