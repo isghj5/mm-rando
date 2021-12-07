@@ -52,10 +52,16 @@
           "2 Snowhead Keys"
         ],
         [
+          "MaskGoron",
+          "Magic Meter",
           "OtherExplosive",
-          "2 Snowhead Keys",
+          "1 Snowhead Key",
+          "ItemHookshot"
+        ],
+        [
           "Long Jump",
-          "Take Damage"
+          "Take Damage",
+          "2 Snowhead Keys"
         ],
         [
           "MaskGoron",
@@ -66,13 +72,31 @@
         ],
         [
           "MaskZora",
-          "OtherExplosive",
+          "Any Bomb Bag",
           "1 Snowhead Key",
           "Long Jump",
           "Take Damage"
         ],
         [
-          "Use Fire Arrow"
+          "MaskZora",
+          "MaskBlast",
+          "1 Snowhead Key",
+          "Long Jump",
+          "Take Damage"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
+          "1 Snowhead Key",
+          "SHT Zora Jumps"
+        ],
+        [
+          "Use Fire Arrow",
+          "MaskGoron"
+        ],
+        [
+          "Use Fire Arrow",
+          "SHT Zora Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -97,20 +121,18 @@
     {
       "Id": "ItemLightArrow",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "1 Stone Tower Key",
+          "MaskDeku"
+        ],
+        [
           "Use Light Arrow"
         ],
         [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -1284,17 +1306,28 @@
       "RequiredItems": [
         "MaskCaptainHat",
         "OtherExplosive",
-        "Any Sword",
         "Ikana Graveyard Access"
       ],
       "ConditionalItems": [
         [
           "Lensless Walking",
-          "Lensless Walls/Ceilings"
+          "Lensless Walls/Ceilings",
+          "Any Sword"
+        ],
+        [
+          "Lensless Walking",
+          "Lensless Walls/Ceilings",
+          "MaskGoron"
         ],
         [
           "ItemLens",
-          "Magic Meter"
+          "Magic Meter",
+          "Any Sword"
+        ],
+        [
+          "ItemLens",
+          "Magic Meter",
+          "MaskGoron"
         ]
       ],
       "TimeNeeded": "None",
@@ -1616,9 +1649,7 @@
       "Id": "MaskGiant",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ItemHookshot",
-        "ISTT Eyegore Access",
-        "Use Light Arrow"
+        "ISTT Eyegore Access"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2138,13 +2169,7 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "ItemBombBag"
-        ],
-        [
-          "UpgradeBigBombBag"
-        ],
-        [
-          "UpgradeBiggestBombBag"
+          "Any Bomb Bag"
         ],
         [
           "MaskBlast",
@@ -2153,6 +2178,10 @@
         [
           "MaskBlast",
           "Take Damage"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
         ]
       ],
       "TimeNeeded": "None",
@@ -2419,8 +2448,14 @@
           "ItemHookshot"
         ],
         [
+          "1 Snowhead Key",
+          "MaskZora",
+          "Gainer"
+        ],
+        [
           "OtherExplosive",
-          "2 Snowhead Keys"
+          "2 Snowhead Keys",
+          "MaskGoron"
         ],
         [
           "SHT Zora Jumps"
@@ -2428,6 +2463,9 @@
         [
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "Use Fire Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -2455,6 +2493,15 @@
           "MaskZora",
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "MaskZora",
+          "Use Fire Arrow"
+        ],
+        [
+          "MaskZora",
+          "MaskGoron",
+          "Magic Meter"
         ]
       ],
       "TimeNeeded": "None",
@@ -2473,10 +2520,14 @@
           "MaskGoron"
         ],
         [
-          "MaskZora",
           "1 Snowhead Key",
           "SHT Pillar Skip",
           "SHT Zora Jumps"
+        ],
+        [
+          "1 Snowhead Key",
+          "SHT Pillar Skip",
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -2504,6 +2555,9 @@
         ],
         [
           "Use Fire Arrow"
+        ],
+        [
+          "ItemHookshot"
         ]
       ],
       "TimeNeeded": "None",
@@ -2515,44 +2569,21 @@
       "Id": "ItemSnowheadKey2",
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
-        "Enter Snowhead Temple"
+        "Enter Snowhead Temple",
+        "SHT Icicle Room Access"
       ],
       "ConditionalItems": [
         [
-          "ItemHookshot",
-          "OtherExplosive",
-          "Magic Meter"
+          "Gainer"
         ],
         [
-          "MaskZora",
-          "OtherExplosive",
-          "SHT Zora Jumps"
+          "MaskZora"
         ],
         [
-          "MaskZora",
-          "OtherExplosive",
-          "Long Jump",
-          "Take Damage"
+          "OtherArrow"
         ],
         [
-          "Magic Meter",
-          "ItemHookshot",
-          "MaskGoron",
-          "1 Snowhead Key",
-          "Scarecrow's Song"
-        ],
-        [
-          "OtherExplosive",
-          "1 Snowhead Key"
-        ],
-        [
-          "1 Snowhead Key",
-          "Use Fire Arrow"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Use Fire Arrow"
+          "Pass through false walls"
         ]
       ],
       "TimeNeeded": "None",
@@ -2568,15 +2599,25 @@
       ],
       "ConditionalItems": [
         [
-          "ItemHookshot",
-          "MaskGoron"
+          "ItemHookshot"
         ],
         [
           "SHT Zora Jumps"
         ],
         [
           "Long Jump",
-          "Take Damage"
+          "Take Damage",
+          "Use Light Arrow"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ],
         [
           "Use Fire Arrow"
@@ -2675,6 +2716,10 @@
           "MaskZora",
           "1 Stone Tower Key",
           "Use Light Arrow"
+        ],
+        [
+          "MaskGoron",
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -2756,6 +2801,10 @@
           "MaskZora",
           "1 Stone Tower Key",
           "Use Light Arrow"
+        ],
+        [
+          "MaskGoron",
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -2787,15 +2836,30 @@
     {
       "Id": "ItemStoneTowerKey3",
       "RequiredItems": [
-        "AreaInvertedStoneTowerTempleAccess",
-        "Use Light Arrow"
+        "AreaInvertedStoneTowerTempleAccess"
       ],
       "ConditionalItems": [
         [
+          "Use Light Arrow",
+          "MaskDeku"
+        ],
+        [
+          "Use Light Arrow",
           "ISTT Updraft as Human"
         ],
         [
-          "MaskDeku"
+          "ISTT Eyegore Access",
+          "Recoil Flip",
+          "Any Bomb Bag",
+          "Any Shield",
+          "Any Sword"
+        ],
+        [
+          "ISTT Eyegore Access",
+          "Recoil Flip",
+          "MaskBlast",
+          "Any Shield",
+          "Any Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -2846,6 +2910,18 @@
           "Long Jump",
           "Take Damage",
           "Play Elegy of Emptiness"
+        ],
+        [
+          "ISTT Updraft as Human",
+          "Recoil Flip",
+          "Use Light Arrow",
+          "Play Elegy of Emptiness"
+        ],
+        [
+          "ISTT Updraft as Human",
+          "Recoil Flip",
+          "Use Light Arrow",
+          "ItemHookshot"
         ]
       ],
       "TimeNeeded": "None",
@@ -3123,25 +3199,32 @@
       "Id": "BottleCatchPoe",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "Any Bottle",
-        "Use Light Arrow"
+        "Any Bottle"
       ],
       "ConditionalItems": [
         [
           "MaskDeku",
           "ISTT Early Boss Key",
-          "Take Damage"
+          "Take Damage",
+          "Use Light Arrow"
         ],
         [
           "ISTT Hookshot to Eyegore",
           "ISTT Updraft as Human",
           "ISTT Early Boss Key",
-          "Take Damage"
+          "Take Damage",
+          "Use Light Arrow"
         ],
         [
           "ItemHookshot",
           "1 Stone Tower Key",
-          "MaskDeku"
+          "MaskDeku",
+          "Use Light Arrow"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
+          "Fighting"
         ]
       ],
       "TimeNeeded": "None",
@@ -3330,18 +3413,24 @@
     {
       "Id": "ChestHotSpringGrottoRedRupee",
       "RequiredItems": [
-        "AreaNorthAccess",
-        "OtherExplosive"
+        "AreaNorthAccess"
       ],
       "ConditionalItems": [
         [
           "Play Song of Soaring",
-          "BottleCatchHotSpringWater"
+          "BottleCatchHotSpringWater",
+          "OtherExplosive"
         ],
         [
-          "AreaSnowheadTempleClear"
+          "AreaSnowheadTempleClear",
+          "OtherExplosive"
         ],
         [
+          "Use Fire Arrow",
+          "OtherExplosive"
+        ],
+        [
+          "Powder Kegs as Explosives",
           "Use Fire Arrow"
         ]
       ],
@@ -3750,6 +3839,9 @@
         [
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -3955,7 +4047,6 @@
       "Id": "ChestSecretShrineHeartPiece",
       "RequiredItems": [
         "AreaEastAccess",
-        "Fighting",
         "Use Light Arrow"
       ],
       "ConditionalItems": [],
@@ -3968,7 +4059,6 @@
       "Id": "ChestSecretShrineDinoGrotto",
       "RequiredItems": [
         "AreaEastAccess",
-        "Fighting",
         "Use Light Arrow"
       ],
       "ConditionalItems": [],
@@ -4005,7 +4095,6 @@
       "Id": "ChestSecretShrineGaroGrotto",
       "RequiredItems": [
         "AreaEastAccess",
-        "Fighting",
         "Use Light Arrow"
       ],
       "ConditionalItems": [],
@@ -4530,16 +4619,25 @@
     {
       "Id": "ChestToGoronRaceGrotto",
       "RequiredItems": [
-        "AreaNorthAccess",
-        "OtherExplosive"
+        "AreaNorthAccess"
       ],
       "ConditionalItems": [
         [
-          "MaskGoron"
+          "MaskGoron",
+          "OtherExplosive"
         ],
         [
           "ItemHookshot",
-          "Scarecrow's Song"
+          "Scarecrow's Song",
+          "OtherExplosive"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "Use Fire Arrow"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "AreaSnowheadTempleClear"
         ]
       ],
       "TimeNeeded": "None",
@@ -41707,14 +41805,12 @@
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
           "1 Snowhead Key",
           "SHT Zora Jumps",
           "Use Fire Arrow"
         ],
         [
           "ItemHookshot",
-          "MaskZora",
           "1 Snowhead Key",
           "Use Fire Arrow"
         ],
@@ -41753,7 +41849,6 @@
           "1 Snowhead Key"
         ],
         [
-          "MaskZora",
           "OtherExplosive",
           "OtherArrow",
           "1 Snowhead Key",
@@ -41763,12 +41858,43 @@
           "MaskZora",
           "OtherArrow",
           "1 Snowhead Key",
-          "OtherExplosive",
+          "MaskBlast",
           "Long Jump",
           "Take Damage"
         ],
         [
-          "Use Fire Arrow"
+          "Use Fire Arrow",
+          "MaskGoron"
+        ],
+        [
+          "Use Fire Arrow",
+          "SHT Zora Jumps"
+        ],
+        [
+          "MaskZora",
+          "OtherArrow",
+          "1 Snowhead Key",
+          "Any Bomb Bag",
+          "Long Jump",
+          "Take Damage"
+        ],
+        [
+          "MaskGoron",
+          "Magic Meter",
+          "ItemHookshot",
+          "Scarecrow's Song"
+        ],
+        [
+          "OtherExplosive",
+          "Use Fire Arrow",
+          "MaskZora",
+          "1 Snowhead Key"
+        ],
+        [
+          "OtherExplosive",
+          "Use Fire Arrow",
+          "ItemHookshot",
+          "1 Snowhead Key"
         ]
       ],
       "TimeNeeded": "None",
@@ -41784,12 +41910,15 @@
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
           "1 Snowhead Key",
           "SHT Zora Jumps"
         ],
         [
           "MaskGoron"
+        ],
+        [
+          "1 Snowhead Key",
+          "ItemHookshot"
         ]
       ],
       "TimeNeeded": "None",
@@ -41919,12 +42048,15 @@
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
           "1 Snowhead Key",
           "SHT Zora Jumps"
         ],
         [
           "MaskGoron"
+        ],
+        [
+          "1 Snowhead Key",
+          "ItemHookshot"
         ]
       ],
       "TimeNeeded": "None",
@@ -41947,8 +42079,14 @@
           "ItemHookshot"
         ],
         [
+          "1 Snowhead Key",
+          "MaskZora",
+          "Gainer"
+        ],
+        [
           "OtherExplosive",
-          "2 Snowhead Keys"
+          "2 Snowhead Keys",
+          "MaskGoron"
         ],
         [
           "SHT Zora Jumps"
@@ -41956,6 +42094,9 @@
         [
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "Use Fire Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -41985,16 +42126,17 @@
         [
           "ItemHookshot",
           "OtherExplosive",
-          "2 Snowhead Keys"
-        ],
-        [
-          "ItemHookshot",
-          "MaskZora",
-          "OtherExplosive",
           "1 Snowhead Key"
         ],
         [
-          "OtherExplosive",
+          "Any Bomb Bag",
+          "2 Snowhead Keys",
+          "Long Jump",
+          "Jump along invisible platforms",
+          "Take Damage"
+        ],
+        [
+          "MaskBlast",
           "2 Snowhead Keys",
           "Long Jump",
           "Jump along invisible platforms",
@@ -42002,11 +42144,34 @@
         ],
         [
           "MaskZora",
-          "OtherExplosive",
+          "Any Bomb Bag",
           "1 Snowhead Key",
           "Long Jump",
           "Jump along invisible platforms",
           "Take Damage"
+        ],
+        [
+          "MaskZora",
+          "MaskBlast",
+          "1 Snowhead Key",
+          "Long Jump",
+          "Jump along invisible platforms",
+          "Take Damage"
+        ],
+        [
+          "MaskZora",
+          "Long Jump",
+          "Jump along invisible platforms",
+          "Take Damage",
+          "2 Snowhead Keys"
+        ],
+        [
+          "MaskZora",
+          "Long Jump",
+          "Jump along invisible platforms",
+          "Take Damage",
+          "1 Snowhead Key",
+          "SHT Zora Jumps"
         ],
         [
           "MaskGoron",
@@ -42066,6 +42231,11 @@
           "Use Fire Arrow"
         ],
         [
+          "1 Snowhead Key",
+          "MaskZora",
+          "Gainer"
+        ],
+        [
           "SHT Zora Jumps"
         ],
         [
@@ -42084,34 +42254,10 @@
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
         "Pass through false walls",
-        "Enter Snowhead Temple"
+        "Enter Snowhead Temple",
+        "SHT Icicle Room Access"
       ],
-      "ConditionalItems": [
-        [
-          "OtherExplosive",
-          "1 Snowhead Key"
-        ],
-        [
-          "MaskGoron",
-          "1 Snowhead Key",
-          "Use Fire Arrow"
-        ],
-        [
-          "ItemHookshot",
-          "MaskGoron",
-          "OtherExplosive"
-        ],
-        [
-          "OtherExplosive",
-          "SHT Zora Jumps"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Long Jump",
-          "Take Damage"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -42182,27 +42328,51 @@
       ],
       "ConditionalItems": [
         [
-          "MaskGoron",
           "1 Snowhead Key",
           "Any Bomb Bag",
           "Use Fire Arrow"
         ],
         [
-          "MaskGoron",
-          "MaskGreatFairy",
           "1 Snowhead Key",
-          "Any Bomb Bag"
+          "Any Bomb Bag",
+          "MaskGreatFairy"
         ],
         [
-          "ItemHookshot"
-        ],
-        [
+          "1 Snowhead Key",
+          "Any Bomb Bag",
           "MaskZora",
+          "Gainer"
+        ],
+        [
+          "ItemHookshot",
           "OtherExplosive"
         ],
         [
+          "ItemHookshot",
+          "MaskGoron"
+        ],
+        [
+          "SHT Zora Jumps",
+          "MaskGoron"
+        ],
+        [
+          "SHT Zora Jumps",
+          "OtherExplosive"
+        ],
+        [
+          "MaskZora",
+          "Long Jump",
+          "Take Damage"
+        ],
+        [
+          "MaskZora",
+          "Use Fire Arrow",
+          "OtherExplosive"
+        ],
+        [
+          "MaskZora",
           "MaskGoron",
-          "MaskZora"
+          "Magic Meter"
         ]
       ],
       "TimeNeeded": "None",
@@ -42287,11 +42457,17 @@
       "Id": "CollectibleStrayFairyGreatBay6",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "MaskZora",
         "ItemHookshot",
         "Use Ice Arrow"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "GBT Goron Waterwheel"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -42375,10 +42551,18 @@
       "Id": "CollectibleStrayFairyGreatBay12",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "MaskZora",
         "ItemHookshot"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "GBT Goron Waterwheel",
+          "OtherArrow",
+          "MaskGreatFairy"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -42388,10 +42572,16 @@
       "Id": "CollectibleStrayFairyGreatBay13",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "MaskZora",
         "ItemHookshot"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "GBT Goron Waterwheel"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -42436,21 +42626,10 @@
     {
       "Id": "CollectibleStrayFairyStoneTower1",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
-      "ConditionalItems": [
-        [
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
-        ],
-        [
-          "1 Stone Tower Key",
-          "Use Light Arrow"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -42459,20 +42638,27 @@
     {
       "Id": "CollectibleStrayFairyStoneTower2",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "MaskDeku"
         ],
         [
-          "1 Stone Tower Key",
           "Use Light Arrow"
+        ],
+        [
+          "Recoil Flip",
+          "Any Bomb Bag"
+        ],
+        [
+          "Recoil Flip",
+          "MaskBlast"
+        ],
+        [
+          "Recoil Flip",
+          "OtherArrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -42484,18 +42670,18 @@
       "Id": "CollectibleStrayFairyStoneTower3",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access",
         "MaskGoron"
       ],
       "ConditionalItems": [
         [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "MaskDeku"
         ],
         [
-          "1 Stone Tower Key",
           "Use Light Arrow"
+        ],
+        [
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -42508,11 +42694,48 @@
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
         "AreaStoneTowerTempleAccess",
-        "MaskZora",
-        "MaskDeku",
-        "Use Light Arrow"
+        "MaskZora"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskDeku",
+          "Use Light Arrow"
+        ],
+        [
+          "Recoil Flip",
+          "Any Bomb Bag",
+          "Any Shield",
+          "ISTT Updraft as Human",
+          "Use Light Arrow"
+        ],
+        [
+          "Recoil Flip",
+          "MaskBlast",
+          "Any Shield",
+          "ISTT Updraft as Human",
+          "Use Light Arrow"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
+          "Recoil Flip",
+          "Any Shield",
+          "Any Sword",
+          "1 Stone Tower Key",
+          "MaskGoron",
+          "Any Bomb Bag"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
+          "Recoil Flip",
+          "Any Shield",
+          "Any Sword",
+          "1 Stone Tower Key",
+          "MaskGoron",
+          "MaskBlast"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -42521,21 +42744,10 @@
     {
       "Id": "CollectibleStrayFairyStoneTower5",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
-      "ConditionalItems": [
-        [
-          "UpgradeMirrorShield",
-          "OtherExplosive",
-          "2 Stone Tower Keys",
-          "MaskGoron",
-          "MaskZora"
-        ],
-        [
-          "1 Stone Tower Key",
-          "Use Light Arrow"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -42556,31 +42768,59 @@
     {
       "Id": "CollectibleStrayFairyStoneTower7",
       "RequiredItems": [
-        "AreaInvertedStoneTowerTempleAccess",
-        "MaskDeku"
+        "AreaInvertedStoneTowerTempleAccess"
       ],
       "ConditionalItems": [
         [
           "ISTT Early Boss Key",
           "Take Damage",
-          "Use Light Arrow"
+          "Use Light Arrow",
+          "MaskDeku"
         ],
         [
           "ItemHookshot",
           "MaskGoron",
           "1 Stone Tower Key",
-          "Use Light Arrow"
+          "Use Light Arrow",
+          "MaskDeku"
         ],
         [
           "ItemHookshot",
           "1 Stone Tower Key",
           "Take Damage",
-          "Use Light Arrow"
+          "Use Light Arrow",
+          "MaskDeku"
+        ],
+        [
+          "ItemHookshot",
+          "1 Stone Tower Key",
+          "Use Light Arrow",
+          "MaskDeku",
+          "MaskZora",
+          "Gainer"
         ],
         [
           "Long Jump",
+          "Take Damage",
+          "MaskDeku"
+        ],
+        [
+          "Recoil Flip",
+          "ISTT Updraft as Human",
+          "Use Light Arrow",
           "ItemHookshot",
-          "Take Damage"
+          "1 Stone Tower Key",
+          "Any Bomb Bag",
+          "Any Shield"
+        ],
+        [
+          "Recoil Flip",
+          "ISTT Updraft as Human",
+          "Use Light Arrow",
+          "ItemHookshot",
+          "1 Stone Tower Key",
+          "MaskBlast",
+          "Any Shield"
         ]
       ],
       "TimeNeeded": "None",
@@ -42624,6 +42864,16 @@
           "ISTT Early Boss Key",
           "Take Damage",
           "Use Light Arrow"
+        ],
+        [
+          "Use Light Arrow",
+          "Recoil Flip",
+          "MaskDeku"
+        ],
+        [
+          "Use Light Arrow",
+          "Recoil Flip",
+          "ISTT Updraft as Human"
         ]
       ],
       "TimeNeeded": "None",
@@ -42635,15 +42885,35 @@
       "Id": "CollectibleStrayFairyStoneTower9",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "Use Fire Arrow",
-        "Use Light Arrow"
+        "Use Fire Arrow"
       ],
       "ConditionalItems": [
         [
+          "Use Light Arrow",
           "MaskDeku"
         ],
         [
+          "Use Light Arrow",
           "ItemHookshot"
+        ],
+        [
+          "Use Light Arrow",
+          "Recoil Flip",
+          "ISTT Updraft as Human"
+        ],
+        [
+          "ISTT Eyegore Access",
+          "Recoil Flip",
+          "Any Bomb Bag",
+          "Any Shield",
+          "Any Sword"
+        ],
+        [
+          "ISTT Eyegore Access",
+          "Recoil Flip",
+          "MaskBlast",
+          "Any Shield",
+          "Any Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -42654,37 +42924,28 @@
     {
       "Id": "CollectibleStrayFairyStoneTower10",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "OtherExplosive",
-          "1 Stone Tower Key",
           "Hit switches through walls",
-          "Use Light Arrow"
+          "Any Bomb Bag"
         ],
         [
-          "MaskDeku",
-          "MaskGoron",
+          "Hit switches through walls",
+          "MaskBlast",
+          "Take Damage"
+        ],
+        [
+          "Hit switches through walls",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
           "AreaInvertedStoneTowerTempleAccess",
-          "3 Stone Tower Keys",
-          "Use Light Arrow"
-        ],
-        [
-          "MaskDeku",
-          "AreaInvertedStoneTowerTempleAccess",
-          "3 Stone Tower Keys",
-          "Take Damage",
-          "Use Light Arrow"
-        ],
-        [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys",
-          "Hit switches through walls"
+          "ISTT Eyegore Access",
+          "3 Stone Tower Keys"
         ]
       ],
       "TimeNeeded": "None",
@@ -42754,10 +43015,19 @@
       "Id": "CollectibleStrayFairyStoneTower14",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "MaskZora",
-        "Use Light Arrow"
+        "MaskZora"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Use Light Arrow"
+        ],
+        [
+          "Hit switches through walls",
+          "Gainer",
+          "MaskGoron",
+          "1 Stone Tower Key"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -42767,19 +43037,14 @@
       "Id": "CollectibleStrayFairyStoneTower15",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "MaskDeku"
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "MaskDeku"
         ],
         [
-          "1 Stone Tower Key",
-          "Use Light Arrow"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -43729,46 +43994,10 @@
       "Id": "CollectableSnowheadTempleIceBlockRoomSmallSnowball1",
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
-        "Enter Snowhead Temple"
+        "Enter Snowhead Temple",
+        "SHT Icicle Room Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot",
-          "OtherExplosive",
-          "Magic Meter"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "SHT Zora Jumps"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Long Jump",
-          "Take Damage"
-        ],
-        [
-          "Magic Meter",
-          "ItemHookshot",
-          "MaskGoron",
-          "1 Snowhead Key",
-          "Scarecrow's Song"
-        ],
-        [
-          "OtherExplosive",
-          "1 Snowhead Key"
-        ],
-        [
-          "1 Snowhead Key",
-          "Use Fire Arrow"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Use Fire Arrow"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -43778,46 +44007,10 @@
       "Id": "CollectableSnowheadTempleIceBlockRoomSmallSnowball2",
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
-        "Enter Snowhead Temple"
+        "Enter Snowhead Temple",
+        "SHT Icicle Room Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot",
-          "OtherExplosive",
-          "Magic Meter"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "SHT Zora Jumps"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Long Jump",
-          "Take Damage"
-        ],
-        [
-          "Magic Meter",
-          "ItemHookshot",
-          "MaskGoron",
-          "1 Snowhead Key",
-          "Scarecrow's Song"
-        ],
-        [
-          "OtherExplosive",
-          "1 Snowhead Key"
-        ],
-        [
-          "1 Snowhead Key",
-          "Use Fire Arrow"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Use Fire Arrow"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -43894,11 +44087,17 @@
       "Id": "CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "MaskZora",
         "Use Ice Arrow",
         "ItemHookshot"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "GBT Goron Waterwheel"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -44505,44 +44704,21 @@
       "Id": "CollectableSnowheadTempleIceBlockRoomSmallSnowball3",
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
-        "Enter Snowhead Temple"
+        "Enter Snowhead Temple",
+        "SHT Icicle Room Access"
       ],
       "ConditionalItems": [
         [
-          "ItemHookshot",
-          "OtherExplosive",
-          "Magic Meter"
+          "Gainer"
         ],
         [
-          "MaskZora",
-          "OtherExplosive",
-          "SHT Zora Jumps"
+          "MaskZora"
         ],
         [
-          "MaskZora",
-          "OtherExplosive",
-          "Long Jump",
-          "Take Damage"
+          "OtherArrow"
         ],
         [
-          "Magic Meter",
-          "ItemHookshot",
-          "MaskGoron",
-          "1 Snowhead Key",
-          "Scarecrow's Song"
-        ],
-        [
-          "OtherExplosive",
-          "1 Snowhead Key"
-        ],
-        [
-          "1 Snowhead Key",
-          "Use Fire Arrow"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Use Fire Arrow"
+          "Pass through false walls"
         ]
       ],
       "TimeNeeded": "None",
@@ -44554,44 +44730,21 @@
       "Id": "CollectableSnowheadTempleIceBlockRoomSmallSnowball4",
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
-        "Enter Snowhead Temple"
+        "Enter Snowhead Temple",
+        "SHT Icicle Room Access"
       ],
       "ConditionalItems": [
         [
-          "ItemHookshot",
-          "OtherExplosive",
-          "Magic Meter"
+          "Gainer"
         ],
         [
-          "MaskZora",
-          "OtherExplosive",
-          "SHT Zora Jumps"
+          "MaskZora"
         ],
         [
-          "MaskZora",
-          "OtherExplosive",
-          "Long Jump",
-          "Take Damage"
+          "OtherArrow"
         ],
         [
-          "Magic Meter",
-          "ItemHookshot",
-          "MaskGoron",
-          "1 Snowhead Key",
-          "Scarecrow's Song"
-        ],
-        [
-          "OtherExplosive",
-          "1 Snowhead Key"
-        ],
-        [
-          "1 Snowhead Key",
-          "Use Fire Arrow"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Use Fire Arrow"
+          "Pass through false walls"
         ]
       ],
       "TimeNeeded": "None",
@@ -44603,44 +44756,21 @@
       "Id": "CollectableSnowheadTempleIceBlockRoomSmallSnowball5",
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
-        "Enter Snowhead Temple"
+        "Enter Snowhead Temple",
+        "SHT Icicle Room Access"
       ],
       "ConditionalItems": [
         [
-          "ItemHookshot",
-          "OtherExplosive",
-          "Magic Meter"
+          "Gainer"
         ],
         [
-          "MaskZora",
-          "OtherExplosive",
-          "SHT Zora Jumps"
+          "MaskZora"
         ],
         [
-          "MaskZora",
-          "OtherExplosive",
-          "Long Jump",
-          "Take Damage"
+          "OtherArrow"
         ],
         [
-          "Magic Meter",
-          "ItemHookshot",
-          "MaskGoron",
-          "1 Snowhead Key",
-          "Scarecrow's Song"
-        ],
-        [
-          "OtherExplosive",
-          "1 Snowhead Key"
-        ],
-        [
-          "1 Snowhead Key",
-          "Use Fire Arrow"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Use Fire Arrow"
+          "Pass through false walls"
         ]
       ],
       "TimeNeeded": "None",
@@ -44663,8 +44793,14 @@
           "ItemHookshot"
         ],
         [
+          "1 Snowhead Key",
+          "MaskZora",
+          "Gainer"
+        ],
+        [
           "OtherExplosive",
-          "2 Snowhead Keys"
+          "2 Snowhead Keys",
+          "MaskGoron"
         ],
         [
           "SHT Zora Jumps"
@@ -44672,6 +44808,9 @@
         [
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "Use Fire Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -44694,8 +44833,14 @@
           "ItemHookshot"
         ],
         [
+          "1 Snowhead Key",
+          "MaskZora",
+          "Gainer"
+        ],
+        [
           "OtherExplosive",
-          "2 Snowhead Keys"
+          "2 Snowhead Keys",
+          "MaskGoron"
         ],
         [
           "SHT Zora Jumps"
@@ -44703,6 +44848,9 @@
         [
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "Use Fire Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -44725,8 +44873,14 @@
           "ItemHookshot"
         ],
         [
+          "1 Snowhead Key",
+          "MaskZora",
+          "Gainer"
+        ],
+        [
           "OtherExplosive",
-          "2 Snowhead Keys"
+          "2 Snowhead Keys",
+          "MaskGoron"
         ],
         [
           "SHT Zora Jumps"
@@ -44734,6 +44888,9 @@
         [
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "Use Fire Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -44756,8 +44913,14 @@
           "ItemHookshot"
         ],
         [
+          "1 Snowhead Key",
+          "MaskZora",
+          "Gainer"
+        ],
+        [
           "OtherExplosive",
-          "2 Snowhead Keys"
+          "2 Snowhead Keys",
+          "MaskGoron"
         ],
         [
           "SHT Zora Jumps"
@@ -44765,6 +44928,9 @@
         [
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "Use Fire Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -44787,8 +44953,14 @@
           "ItemHookshot"
         ],
         [
+          "1 Snowhead Key",
+          "MaskZora",
+          "Gainer"
+        ],
+        [
           "OtherExplosive",
-          "2 Snowhead Keys"
+          "2 Snowhead Keys",
+          "MaskGoron"
         ],
         [
           "SHT Zora Jumps"
@@ -44796,6 +44968,9 @@
         [
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "Use Fire Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -44815,16 +44990,38 @@
           "Scarecrow's Song"
         ],
         [
+          "Use Fire Arrow"
+        ],
+        [
+          "ItemHookshot",
           "OtherExplosive",
+          "1 Snowhead Key"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
           "2 Snowhead Keys"
         ],
         [
-          "OtherExplosive",
+          "MaskZora",
+          "Long Jump",
+          "Take Damage",
           "1 Snowhead Key",
-          "MaskZora"
+          "Any Bomb Bag"
         ],
         [
-          "Use Fire Arrow"
+          "MaskZora",
+          "Long Jump",
+          "Take Damage",
+          "1 Snowhead Key",
+          "MaskBlast"
+        ],
+        [
+          "MaskZora",
+          "Long Jump",
+          "Take Damage",
+          "1 Snowhead Key",
+          "SHT Zora Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -44844,16 +45041,38 @@
           "Scarecrow's Song"
         ],
         [
+          "Use Fire Arrow"
+        ],
+        [
+          "ItemHookshot",
           "OtherExplosive",
+          "1 Snowhead Key"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
           "2 Snowhead Keys"
         ],
         [
-          "OtherExplosive",
+          "MaskZora",
+          "Long Jump",
+          "Take Damage",
           "1 Snowhead Key",
-          "MaskZora"
+          "Any Bomb Bag"
         ],
         [
-          "Use Fire Arrow"
+          "MaskZora",
+          "Long Jump",
+          "Take Damage",
+          "1 Snowhead Key",
+          "MaskBlast"
+        ],
+        [
+          "MaskZora",
+          "Long Jump",
+          "Take Damage",
+          "1 Snowhead Key",
+          "SHT Zora Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -44925,19 +45144,14 @@
       "Id": "CollectableStoneTowerTempleLavaRoomItem1",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "MaskDeku"
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "MaskDeku"
         ],
         [
-          "1 Stone Tower Key",
-          "Use Light Arrow"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -44949,19 +45163,14 @@
       "Id": "CollectableStoneTowerTempleLavaRoomItem2",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "MaskDeku"
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "MaskDeku"
         ],
         [
-          "1 Stone Tower Key",
-          "Use Light Arrow"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -44972,20 +45181,18 @@
     {
       "Id": "CollectableStoneTowerTempleRoomAfterLightArrowsItem1",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "1 Stone Tower Key",
+          "MaskDeku"
+        ],
+        [
           "Use Light Arrow"
         ],
         [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -44996,20 +45203,18 @@
     {
       "Id": "CollectableStoneTowerTempleRoomAfterLightArrowsItem2",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "1 Stone Tower Key",
+          "MaskDeku"
+        ],
+        [
           "Use Light Arrow"
         ],
         [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -45020,20 +45225,18 @@
     {
       "Id": "CollectableStoneTowerTempleRoomAfterLightArrowsItem3",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "1 Stone Tower Key",
+          "MaskDeku"
+        ],
+        [
           "Use Light Arrow"
         ],
         [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -45044,20 +45247,18 @@
     {
       "Id": "CollectableStoneTowerTempleRoomAfterLightArrowsItem4",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "1 Stone Tower Key",
+          "MaskDeku"
+        ],
+        [
           "Use Light Arrow"
         ],
         [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -45068,20 +45269,18 @@
     {
       "Id": "CollectableStoneTowerTempleRoomAfterLightArrowsItem5",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "1 Stone Tower Key",
+          "MaskDeku"
+        ],
+        [
           "Use Light Arrow"
         ],
         [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -45092,20 +45291,18 @@
     {
       "Id": "CollectableStoneTowerTempleRoomAfterLightArrowsItem6",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "1 Stone Tower Key",
+          "MaskDeku"
+        ],
+        [
           "Use Light Arrow"
         ],
         [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -45116,20 +45313,18 @@
     {
       "Id": "CollectableStoneTowerTempleRoomAfterLightArrowsItem7",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "1 Stone Tower Key",
+          "MaskDeku"
+        ],
+        [
           "Use Light Arrow"
         ],
         [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -45140,20 +45335,18 @@
     {
       "Id": "CollectableStoneTowerTempleRoomAfterLightArrowsItem8",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "1 Stone Tower Key",
+          "MaskDeku"
+        ],
+        [
           "Use Light Arrow"
         ],
         [
-          "MaskDeku",
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -45164,15 +45357,30 @@
     {
       "Id": "CollectableStoneTowerTempleInvertedEyegoreRoomItem1",
       "RequiredItems": [
-        "AreaInvertedStoneTowerTempleAccess",
-        "Use Light Arrow"
+        "AreaInvertedStoneTowerTempleAccess"
       ],
       "ConditionalItems": [
         [
+          "Use Light Arrow",
+          "MaskDeku"
+        ],
+        [
+          "Use Light Arrow",
           "ISTT Updraft as Human"
         ],
         [
-          "MaskDeku"
+          "ISTT Eyegore Access",
+          "Recoil Flip",
+          "Any Bomb Bag",
+          "Any Shield",
+          "Any Sword"
+        ],
+        [
+          "ISTT Eyegore Access",
+          "Recoil Flip",
+          "MaskBlast",
+          "Any Shield",
+          "Any Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -45185,8 +45393,7 @@
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
         "ItemHookshot",
-        "ISTT Eyegore Access",
-        "Use Light Arrow"
+        "ISTT Eyegore Access"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -45199,8 +45406,7 @@
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
         "ItemHookshot",
-        "ISTT Eyegore Access",
-        "Use Light Arrow"
+        "ISTT Eyegore Access"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -45213,8 +45419,7 @@
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
         "ItemHookshot",
-        "ISTT Eyegore Access",
-        "Use Light Arrow"
+        "ISTT Eyegore Access"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -45227,8 +45432,7 @@
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
         "ItemHookshot",
-        "ISTT Eyegore Access",
-        "Use Light Arrow"
+        "ISTT Eyegore Access"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -45241,8 +45445,7 @@
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
         "ItemHookshot",
-        "ISTT Eyegore Access",
-        "Use Light Arrow"
+        "ISTT Eyegore Access"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -45256,7 +45459,6 @@
         "AreaInvertedStoneTowerTempleAccess",
         "ItemHookshot",
         "ISTT Eyegore Access",
-        "Use Light Arrow",
         "MaskZora"
       ],
       "ConditionalItems": [],
@@ -45271,7 +45473,6 @@
         "AreaInvertedStoneTowerTempleAccess",
         "ItemHookshot",
         "ISTT Eyegore Access",
-        "Use Light Arrow",
         "MaskZora"
       ],
       "ConditionalItems": [],
@@ -45286,7 +45487,6 @@
         "AreaInvertedStoneTowerTempleAccess",
         "ItemHookshot",
         "ISTT Eyegore Access",
-        "Use Light Arrow",
         "MaskZora"
       ],
       "ConditionalItems": [],
@@ -45301,7 +45501,6 @@
         "AreaInvertedStoneTowerTempleAccess",
         "ItemHookshot",
         "ISTT Eyegore Access",
-        "Use Light Arrow",
         "MaskZora"
       ],
       "ConditionalItems": [],
@@ -45315,8 +45514,7 @@
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
         "ItemHookshot",
-        "ISTT Eyegore Access",
-        "Use Light Arrow"
+        "ISTT Eyegore Access"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -45329,8 +45527,7 @@
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
         "ItemHookshot",
-        "ISTT Eyegore Access",
-        "Use Light Arrow"
+        "ISTT Eyegore Access"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -45687,11 +45884,17 @@
       "Id": "CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "MaskZora",
         "Use Ice Arrow",
         "ItemHookshot"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "GBT Goron Waterwheel"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47288,19 +47491,14 @@
       "Id": "CollectableStoneTowerTempleLavaRoomItem3",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "MaskDeku"
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "MaskDeku"
         ],
         [
-          "1 Stone Tower Key",
-          "Use Light Arrow"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -47312,19 +47510,14 @@
       "Id": "CollectableStoneTowerTempleLavaRoomItem4",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "MaskDeku"
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "MaskDeku"
         ],
         [
-          "1 Stone Tower Key",
-          "Use Light Arrow"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -47336,19 +47529,14 @@
       "Id": "CollectableStoneTowerTempleLavaRoomItem5",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "MaskDeku"
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "MaskDeku"
         ],
         [
-          "1 Stone Tower Key",
-          "Use Light Arrow"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -47359,15 +47547,30 @@
     {
       "Id": "CollectableStoneTowerTempleInvertedEyegoreRoomItem2",
       "RequiredItems": [
-        "AreaInvertedStoneTowerTempleAccess",
-        "Use Light Arrow"
+        "AreaInvertedStoneTowerTempleAccess"
       ],
       "ConditionalItems": [
         [
+          "Use Light Arrow",
+          "MaskDeku"
+        ],
+        [
+          "Use Light Arrow",
           "ISTT Updraft as Human"
         ],
         [
-          "MaskDeku"
+          "ISTT Eyegore Access",
+          "Recoil Flip",
+          "Any Bomb Bag",
+          "Any Shield",
+          "Any Sword"
+        ],
+        [
+          "ISTT Eyegore Access",
+          "Recoil Flip",
+          "MaskBlast",
+          "Any Shield",
+          "Any Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -48465,11 +48668,17 @@
       "Id": "CollectableGreatBayTempleTopmostRoomWithGreenValveItem1",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "MaskZora",
         "Use Ice Arrow",
         "ItemHookshot"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "GBT Goron Waterwheel"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48479,11 +48688,17 @@
       "Id": "CollectableGreatBayTempleTopmostRoomWithGreenValveItem2",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "MaskZora",
         "Use Ice Arrow",
         "ItemHookshot"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "GBT Goron Waterwheel"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48532,45 +48747,10 @@
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
         "Enter Snowhead Temple",
-        "OtherArrow"
+        "OtherArrow",
+        "SHT Icicle Room Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot",
-          "OtherExplosive"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "SHT Zora Jumps"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Long Jump",
-          "Take Damage"
-        ],
-        [
-          "Magic Meter",
-          "ItemHookshot",
-          "MaskGoron",
-          "1 Snowhead Key",
-          "Scarecrow's Song"
-        ],
-        [
-          "OtherExplosive",
-          "1 Snowhead Key"
-        ],
-        [
-          "1 Snowhead Key",
-          "Use Fire Arrow"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Use Fire Arrow"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48581,45 +48761,10 @@
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
         "Enter Snowhead Temple",
-        "OtherArrow"
+        "OtherArrow",
+        "SHT Icicle Room Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot",
-          "OtherExplosive"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "SHT Zora Jumps"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Long Jump",
-          "Take Damage"
-        ],
-        [
-          "Magic Meter",
-          "ItemHookshot",
-          "MaskGoron",
-          "1 Snowhead Key",
-          "Scarecrow's Song"
-        ],
-        [
-          "OtherExplosive",
-          "1 Snowhead Key"
-        ],
-        [
-          "1 Snowhead Key",
-          "Use Fire Arrow"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Use Fire Arrow"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48630,45 +48775,10 @@
       "RequiredItems": [
         "AreaSnowheadTempleAccess",
         "Enter Snowhead Temple",
-        "OtherArrow"
+        "OtherArrow",
+        "SHT Icicle Room Access"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot",
-          "OtherExplosive"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "SHT Zora Jumps"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Long Jump",
-          "Take Damage"
-        ],
-        [
-          "Magic Meter",
-          "ItemHookshot",
-          "MaskGoron",
-          "1 Snowhead Key",
-          "Scarecrow's Song"
-        ],
-        [
-          "OtherExplosive",
-          "1 Snowhead Key"
-        ],
-        [
-          "1 Snowhead Key",
-          "Use Fire Arrow"
-        ],
-        [
-          "MaskZora",
-          "OtherExplosive",
-          "Use Fire Arrow"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48701,19 +48811,14 @@
       "Id": "CollectableStoneTowerTempleLavaRoomItem6",
       "RequiredItems": [
         "AreaStoneTowerTempleAccess",
-        "MaskDeku"
+        "STT Mirror Puzzle Access"
       ],
       "ConditionalItems": [
         [
-          "UpgradeMirrorShield",
-          "MaskGoron",
-          "MaskZora",
-          "OtherExplosive",
-          "2 Stone Tower Keys"
+          "MaskDeku"
         ],
         [
-          "1 Stone Tower Key",
-          "Use Light Arrow"
+          "Recoil Flip"
         ]
       ],
       "TimeNeeded": "None",
@@ -48796,15 +48901,30 @@
     {
       "Id": "CollectableStoneTowerTempleInvertedEyegoreRoomItem3",
       "RequiredItems": [
-        "AreaInvertedStoneTowerTempleAccess",
-        "Use Light Arrow"
+        "AreaInvertedStoneTowerTempleAccess"
       ],
       "ConditionalItems": [
         [
+          "Use Light Arrow",
+          "MaskDeku"
+        ],
+        [
+          "Use Light Arrow",
           "ISTT Updraft as Human"
         ],
         [
-          "MaskDeku"
+          "ISTT Eyegore Access",
+          "Recoil Flip",
+          "Any Bomb Bag",
+          "Any Shield",
+          "Any Sword"
+        ],
+        [
+          "ISTT Eyegore Access",
+          "Recoil Flip",
+          "MaskBlast",
+          "Any Shield",
+          "Any Sword"
         ]
       ],
       "TimeNeeded": "None",
@@ -54756,7 +54876,14 @@
     {
       "Id": "ISTT Updraft as Human",
       "RequiredItems": [],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Any Sword"
+        ],
+        [
+          "Deku Stick Fighting"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54865,7 +54992,9 @@
     },
     {
       "Id": "Shoot Twinmold",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "OtherArrow"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54943,7 +55072,22 @@
           "ItemHookshot",
           "1 Stone Tower Key",
           "Long Jump",
-          "Take Damage"
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "ItemHookshot",
+          "1 Stone Tower Key",
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
+        ],
+        [
+          "ItemHookshot",
+          "1 Stone Tower Key",
+          "Long Jump",
+          "Take Damage",
+          "OtherArrow"
         ],
         [
           "ItemHookshot",
@@ -54960,6 +55104,33 @@
           "ISTT Early Boss Key",
           "ISTT Hookshot to Eyegore",
           "Take Damage"
+        ],
+        [
+          "MaskDeku",
+          "Long Jump",
+          "Recoil Flip",
+          "Take Damage",
+          "1 Stone Tower Key",
+          "Any Bomb Bag"
+        ],
+        [
+          "MaskDeku",
+          "Long Jump",
+          "Recoil Flip",
+          "Take Damage",
+          "1 Stone Tower Key",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "MaskDeku",
+          "Recoil Flip",
+          "Use Light Arrow"
+        ],
+        [
+          "ISTT Updraft as Human",
+          "Recoil Flip",
+          "Use Light Arrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -55094,7 +55265,14 @@
     {
       "Id": "Jump Slash through One Sided Geometry",
       "RequiredItems": [],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Any Sword"
+        ],
+        [
+          "Deku Stick Fighting"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -55104,7 +55282,14 @@
     {
       "Id": "Avoid Swamp Tree Bat",
       "RequiredItems": [],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskStone"
+        ],
+        [
+          "Fighting"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -55727,13 +55912,15 @@
           "Use Fire Arrow",
           "Use Ice Arrow",
           "ItemHookshot",
-          "ItemGreatBayBossKey"
+          "ItemGreatBayBossKey",
+          "MaskZora"
         ],
         [
           "Use Ice Arrow",
           "ItemHookshot",
           "ItemGreatBayBossKey",
-          "GBT Fireless"
+          "GBT Fireless",
+          "MaskZora"
         ]
       ],
       "TimeNeeded": "None",
@@ -56024,6 +56211,132 @@
         ],
         [
           "UpgradeRoyalWallet"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "GBT Goron Waterwheel",
+      "RequiredItems": [
+        "MaskGoron"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Skip the first yellow turnkey with a precise Goron roll."
+    },
+    {
+      "Id": "Powder Kegs as Explosives",
+      "RequiredItems": [
+        "MaskGoron"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Use Powder Kegs in place of other explosives."
+    },
+    {
+      "Id": "Recoil Flip",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Any Shield",
+          "OtherExplosive"
+        ],
+        [
+          "MaskZora",
+          "Any Bomb Bag"
+        ],
+        [
+          "MaskZora",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Cross gaps by shielding an explosion during a backflip."
+    },
+    {
+      "Id": "SHT Icicle Room Access",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "OtherExplosive",
+          "1 Snowhead Key"
+        ],
+        [
+          "OtherExplosive",
+          "Use Fire Arrow",
+          "MaskZora"
+        ],
+        [
+          "OtherExplosive",
+          "Use Fire Arrow",
+          "ItemHookshot"
+        ],
+        [
+          "OtherExplosive",
+          "SHT Zora Jumps"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
+          "MaskZora",
+          "Any Bomb Bag"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
+          "MaskZora",
+          "MaskBlast"
+        ],
+        [
+          "1 Snowhead Key",
+          "Use Fire Arrow",
+          "MaskGoron"
+        ],
+        [
+          "1 Snowhead Key",
+          "Use Fire Arrow",
+          "SHT Zora Jumps"
+        ],
+        [
+          "1 Snowhead Key",
+          "MaskGoron",
+          "Magic Meter",
+          "ItemHookshot",
+          "Scarecrow's Song"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "STT Mirror Puzzle Access",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "1 Stone Tower Key",
+          "Use Light Arrow"
+        ],
+        [
+          "2 Stone Tower Keys",
+          "MaskGoron",
+          "MaskZora",
+          "UpgradeMirrorShield",
+          "OtherExplosive"
         ]
       ],
       "TimeNeeded": "None",
