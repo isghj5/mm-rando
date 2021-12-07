@@ -171,7 +171,10 @@ namespace MMR.Randomizer.Utils
                 {
                     return null;
                 }
-                return checkedLocations[location];
+                if (!exclude.Intersect(checkedLocations[location].Required).Any())
+                {
+                    return checkedLocations[location];
+                }
             }
             var locationLogic = itemLogic[(int)location];
             var required = new List<Item>();
