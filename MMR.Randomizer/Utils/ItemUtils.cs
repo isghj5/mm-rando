@@ -257,6 +257,7 @@ namespace MMR.Randomizer.Utils
             {
                 Item.UpgradeAdultWallet,
                 Item.UpgradeGiantWallet,
+                Item.UpgradeRoyalWallet,
             },
             new List<Item>
             {
