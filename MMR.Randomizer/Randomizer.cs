@@ -1192,6 +1192,14 @@ namespace MMR.Randomizer
         {
             SetupCustomItems();
 
+            if (_settings.ProgressiveUpgrades)
+            {
+                _settings.CustomStartingItemList = _settings.CustomStartingItemList
+                    .GroupBy(item => ItemUtils.ForbiddenStartTogether.FirstOrDefault(fst => fst.Contains(item)))
+                    .SelectMany(g => g.Key == null || g.Key.Contains(Item.StartingShield) ? g.ToList() : g.Key.Take(g.Count()))
+                    .ToList();
+            }
+
             foreach (var item in _settings.CustomStartingItemList)
             {
                 ItemList[item].ItemOverride = Item.RecoveryHeart;
