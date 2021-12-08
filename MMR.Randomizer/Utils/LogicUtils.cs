@@ -267,6 +267,29 @@ namespace MMR.Randomizer.Utils
                 {
                     return null;
                 }
+
+                // Hopefully this makes item importance a little smarter.
+                var shouldRemove = new List<int>();
+                for (var i = 0; i < logicPaths.Count; i++)
+                {
+                    var currentLogicPath = logicPaths[i];
+                    for (var j = 0; j < logicPaths.Count; j++)
+                    {
+                        if (i != j && !shouldRemove.Contains(i) && !shouldRemove.Contains(j))
+                        {
+                            var otherLogicPath = logicPaths[j];
+                            if (!currentLogicPath.Important.Except(otherLogicPath.Important).Any() && otherLogicPath.Important.Except(currentLogicPath.Important).Any())
+                            {
+                                shouldRemove.Add(j);
+                            }
+                        }
+                    }
+                }
+                foreach (var index in shouldRemove.OrderByDescending(x => x))
+                {
+                    logicPaths.RemoveAt(index);
+                }
+
                 required.AddRange(logicPaths.Select(lp => lp.Required.AsEnumerable()).Aggregate((a, b) => a.Intersect(b)));
                 important.AddRange(logicPaths.SelectMany(lp => lp.Required.Union(lp.Important)).Distinct());
                 importantSongLocations.AddRange(logicPaths.SelectMany(lp => lp.ImportantSongLocations).Distinct());
