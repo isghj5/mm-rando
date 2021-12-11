@@ -533,7 +533,19 @@ namespace MMR.UI.Forms
                 };
                 var bTunic = CreateTunicColorButton(form);
                 tabPage.Controls.Add(bTunic);
-                tabPage.Controls.Add(CreateTunicColorCheckBox(form, bTunic));
+                tabPage.Controls.Add(CreateTunicColorCheckBox(form));
+                tabPage.Controls.Add(CreateTunicColorRandomizeButton(form));
+                tabPage.Controls.Add(new Label
+                {
+                    Name = "lTunicColorDefault",
+                    Text = "Default",
+                    Location = new Point(111, 3),
+                    Size = new Size(135, 23),
+                    TextAlign = ContentAlignment.MiddleCenter,
+                    Visible = !_configuration.CosmeticSettings.UseTunicColors.GetValueOrDefault(form, false),
+                    BorderStyle = BorderStyle.FixedSingle,
+                });
+
                 if (form != TransformationForm.FierceDeity)
                 {
                     tabPage.Controls.Add(new Label
@@ -568,10 +580,11 @@ namespace MMR.UI.Forms
             }
         }
 
-        private Button CreateEnergyColorRandomizeButton(TransformationForm transformationForm)
+        private CheckBox CreateEnergyColorRandomizeButton(TransformationForm transformationForm)
         {
-            var button = new Button
+            var button = new CheckBox
             {
+                Appearance = Appearance.Button,
                 Tag = transformationForm,
                 Name = "cEnergyRandomize",
                 Text = "🎲",
@@ -581,7 +594,7 @@ namespace MMR.UI.Forms
             };
             button.Font = new Font(button.Font.FontFamily, 12);
             TooltipBuilder.SetTooltip(button, "Randomize the energy colors for this form.");
-            button.Click += bEnergyRandomize_Click;
+            button.Click += cEnergyRandomize_Click;
             return button;
         }
 
@@ -592,7 +605,7 @@ namespace MMR.UI.Forms
                 Tag = transformationForm,
                 Name = "cEnergy",
                 Text = "Energy color:",
-                Location = new Point(6, 67),
+                Location = new Point(6, 63),
                 Size = new Size(120, 25),
             };
             checkBox.CheckedChanged += cEnergy_CheckedChanged;
@@ -622,17 +635,17 @@ namespace MMR.UI.Forms
             return buttons.ToArray();
         }
 
-        private CheckBox CreateTunicColorCheckBox(TransformationForm transformationForm, Button bTunic)
+        private CheckBox CreateTunicColorCheckBox(TransformationForm transformationForm)
         {
             var checkBox = new CheckBox
             {
                 Tag = transformationForm,
                 Name = "cTunic",
                 Text = "Tunic color:",
-                Location = new Point(6, 7),
+                Location = new Point(6, 3),
                 Size = new Size(102, 25),
             };
-            checkBox.CheckedChanged += create_cTunic_CheckedChanged(bTunic);
+            checkBox.CheckedChanged += cTunic_CheckedChanged;
             return checkBox;
         }
 
@@ -643,13 +656,58 @@ namespace MMR.UI.Forms
                 Tag = transformationForm,
                 Name = "bTunic",
                 Location = new Point(111, 3),
-                Size = new Size(135, 23),
+                Size = new Size(101, 23),
                 BackColor = Color.FromArgb(0x1E, 0x69, 0x1B),
                 FlatStyle = FlatStyle.Flat,
-                Text = "Default",
             };
             TooltipBuilder.SetTooltip(button, "Select the color of this form's Tunic.");
             button.Click += bTunic_Click;
+            return button;
+        }
+
+        private void cTunicRandomize_Click(object sender, EventArgs e)
+        {
+            _isUpdating = true;
+
+            var checkBox = (CheckBox)sender;
+            var form = (TransformationForm)checkBox.Tag;
+            var random = new Random();
+            var selected = tFormCosmetics.SelectedTab;
+            var bTunic = (Button)selected.Controls.Find($"bTunic", false)[0];
+            if (checkBox.Checked)
+            {
+                var color = RandomUtils.GetRandomColor(random);
+                // Update the color in cosmetic settings.
+                _configuration.CosmeticSettings.TunicColors[form] = color;
+                bTunic.BackColor = Color.Transparent;
+                bTunic.Text = "?";
+                bTunic.Enabled = false;
+            }
+            else
+            {
+                bTunic.BackColor = _configuration.CosmeticSettings.TunicColors[form];
+                bTunic.Text = string.Empty;
+                bTunic.Enabled = true;
+            }
+
+            _isUpdating = false;
+        }
+
+        private CheckBox CreateTunicColorRandomizeButton(TransformationForm transformationForm)
+        {
+            var button = new CheckBox
+            {
+                Appearance = Appearance.Button,
+                Tag = transformationForm,
+                Name = "cTunicRandomize",
+                Text = "🎲",
+                Location = new Point(112 + (3 * 34), 2),
+                Size = new Size(33, 25),
+                TextAlign = ContentAlignment.TopRight,
+            };
+            button.Font = new Font(button.Font.FontFamily, 12);
+            TooltipBuilder.SetTooltip(button, "Randomize the tunic color for this form.");
+            button.Click += cTunicRandomize_Click;
             return button;
         }
 
@@ -751,7 +809,7 @@ namespace MMR.UI.Forms
                 var label = (Label)checkBox.Parent.Controls.Find("lEnergyColorDefault", false)[0];
                 label.Visible = !checkBox.Checked;
 
-                var randomizeButton = (Button)checkBox.Parent.Controls.Find("cEnergyRandomize", false)[0];
+                var randomizeButton = (CheckBox)checkBox.Parent.Controls.Find("cEnergyRandomize", false)[0];
                 randomizeButton.Visible = checkBox.Checked;
             }
 
@@ -775,44 +833,55 @@ namespace MMR.UI.Forms
             }
         }
 
-        private void bEnergyRandomize_Click(object sender, EventArgs e)
+        private void cEnergyRandomize_Click(object sender, EventArgs e)
         {
             _isUpdating = true;
 
-            var button = (Button)sender;
-            var form = (TransformationForm)button.Tag;
+            var checkBox = (CheckBox)sender;
+            var form = (TransformationForm)checkBox.Tag;
             var random = new Random();
             var selected = tFormCosmetics.SelectedTab;
             for (int i = 0; i < _configuration.CosmeticSettings.EnergyColors[form].Length; i++)
             {
-                var color = RandomUtils.GetRandomColor(random);
-                // Update the color in cosmetic settings.
-                _configuration.CosmeticSettings.EnergyColors[form][i] = color;
-                // Find the respective energy color button and update its color.
                 var bEnergy = (Button)selected.Controls.Find($"bEnergy{i}", false)[0];
-                bEnergy.BackColor = color;
+                if (checkBox.Checked)
+                {
+                    var color = RandomUtils.GetRandomColor(random);
+                    // Update the color in cosmetic settings.
+                    _configuration.CosmeticSettings.EnergyColors[form][i] = color;
+                    bEnergy.BackColor = Color.Transparent;
+                    bEnergy.Text = "?";
+                    bEnergy.Enabled = false;
+                }
+                else
+                {
+                    bEnergy.BackColor = _configuration.CosmeticSettings.EnergyColors[form][i];
+                    bEnergy.Text = string.Empty;
+                    bEnergy.Enabled = true;
+                }
             }
 
             _isUpdating = false;
         }
 
-        private EventHandler create_cTunic_CheckedChanged(Button bTunic)
+        private void cTunic_CheckedChanged(object sender, EventArgs e)
         {
-            void cTunic_CheckedChanged(object sender, EventArgs e)
-            {
-                _isUpdating = true;
+            _isUpdating = true;
 
-                var checkBox = (CheckBox)sender;
-                var form = (TransformationForm)checkBox.Tag;
-                _configuration.CosmeticSettings.UseTunicColors[form] = checkBox.Checked;
-                var color = _configuration.CosmeticSettings.TunicColors[form];
-                bTunic.Enabled = checkBox.Checked;
-                bTunic.BackColor = bTunic.Enabled ? color : Color.Transparent;
-                bTunic.Text = bTunic.Enabled ? string.Empty : "Default";
+            var checkBox = (CheckBox)sender;
+            var form = (TransformationForm)checkBox.Tag;
+            _configuration.CosmeticSettings.UseTunicColors[form] = checkBox.Checked;
 
-                _isUpdating = false;
-            };
-            return cTunic_CheckedChanged;
+            var button = (Button)checkBox.Parent.Controls.Find("bTunic", false)[0];
+            button.Visible = checkBox.Checked;
+
+            var label = (Label)checkBox.Parent.Controls.Find("lTunicColorDefault", false)[0];
+            label.Visible = !checkBox.Checked;
+
+            var randomizeButton = (CheckBox)checkBox.Parent.Controls.Find("cTunicRandomize", false)[0];
+            randomizeButton.Visible = checkBox.Checked;
+
+            _isUpdating = false;
         }
 
         private void bTunic_Click(object sender, EventArgs e)
@@ -1007,12 +1076,18 @@ namespace MMR.UI.Forms
             {
                 var form = (TransformationForm)cosmeticFormTab.Tag;
 
-                var bTunic = cosmeticFormTab.Controls.Find("bTunic", false)[0];
-                bTunic.Enabled = _configuration.CosmeticSettings.UseTunicColors.GetValueOrDefault(form);
-                bTunic.BackColor = bTunic.Enabled ? _configuration.CosmeticSettings.TunicColors.GetValueOrDefault(form) : Color.Transparent;
-
                 var cTunic = (CheckBox)cosmeticFormTab.Controls.Find("cTunic", false)[0];
-                cTunic.Checked = bTunic.Enabled;
+                cTunic.Checked = _configuration.CosmeticSettings.UseTunicColors.GetValueOrDefault(form);
+
+                var bTunic = cosmeticFormTab.Controls.Find("bTunic", false)[0];
+                bTunic.Visible = cTunic.Checked;
+                bTunic.BackColor = _configuration.CosmeticSettings.TunicColors.GetValueOrDefault(form);
+
+                var cTunicRandomize = (CheckBox)cosmeticFormTab.Controls.Find("cTunicRandomize", false)[0];
+                cTunicRandomize.Visible = cTunic.Checked;
+
+                var lTunicColorDefault = (Label)cosmeticFormTab.Controls.Find("lTunicColorDefault", false)[0];
+                lTunicColorDefault.Visible = !cTunic.Checked;
 
                 if (form != TransformationForm.FierceDeity)
                 {
@@ -1032,7 +1107,7 @@ namespace MMR.UI.Forms
                         bEnergy.BackColor = colors[i];
                         bEnergy.Visible = use;
 
-                        var cEnergyRandomize = (Button)cosmeticFormTab.Controls.Find("cEnergyRandomize", false)[0];
+                        var cEnergyRandomize = (CheckBox)cosmeticFormTab.Controls.Find("cEnergyRandomize", false)[0];
                         cEnergyRandomize.Visible = use;
 
                         var lEnergyColorDefault = (Label)cosmeticFormTab.Controls.Find("lEnergyColorDefault", false)[0];
