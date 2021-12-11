@@ -273,12 +273,14 @@ namespace MMR.Randomizer.Utils
                 for (var i = 0; i < logicPaths.Count; i++)
                 {
                     var currentLogicPath = logicPaths[i];
+                    var currentLogicImportant = currentLogicPath.Important.Except(important);
                     for (var j = 0; j < logicPaths.Count; j++)
                     {
                         if (i != j && !shouldRemove.Contains(i) && !shouldRemove.Contains(j))
                         {
                             var otherLogicPath = logicPaths[j];
-                            if (!currentLogicPath.Important.Except(otherLogicPath.Important).Any() && otherLogicPath.Important.Except(currentLogicPath.Important).Any())
+                            var otherLogicImportant = otherLogicPath.Important.Except(important);
+                            if (!currentLogicImportant.Except(otherLogicImportant).Any() && otherLogicImportant.Except(currentLogicImportant).Any())
                             {
                                 shouldRemove.Add(j);
                             }
