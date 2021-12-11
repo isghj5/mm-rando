@@ -1,7 +1,5 @@
 ﻿using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Attributes.Actor;
-using MMR.Randomizer.Models.Vectors;
-using System.Security.Cryptography.X509Certificates;
 
 namespace MMR.Randomizer.GameObjects
 {
@@ -522,6 +520,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         Demo_Effect = 0x48, // Demo_Effect
 
+        // MULTIPLE OBJECT ACTOR
         [ActorizerEnabled]
         [FileID(91)]
         [ActorInstanceSize(0x1650)]
@@ -575,7 +574,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(94)]
         [ObjectListIndex(0x5C)]
-        Bg_F40_Flift = 0x4D, // Bg_F40_Flift
+        StoneTowerGreyStoneElevator = 0x4D, // Bg_F40_Flift
 
         // Has no File
         [ActorInstanceSize(0)] // unknown, never seen though
@@ -627,6 +626,8 @@ namespace MMR.Randomizer.GameObjects
         Empty52 = 0x52,
         Empty53 = 0x53,
 
+        // a different child epona?
+        // todo
         [FileID(98)]
         [ObjectListIndex(0x7D)]
         En_Horse_Link_Child = 0x54, // En_Horse_Link_Child
@@ -678,6 +679,7 @@ namespace MMR.Randomizer.GameObjects
         Empty59 = 0x59,
         Empty5A = 0x5A,
 
+        // spawner for some enemies
         [FileID(100)]
         [ObjectListIndex(0x1)]
         En_Encount1 = 0x5B, // En_Encount1
@@ -732,7 +734,6 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // they grow back, dont count as killable
         DekuBabaWithered = 0x66, // En_Karebaba
 
-        // ingo?
         [FileID(109)]
         [ObjectListIndex(0x99)]
         GormanBros = 0x67, // En_In
@@ -787,7 +788,7 @@ namespace MMR.Randomizer.GameObjects
         Empty72 = 0x72,
 
         // ?? unused?
-        // has no draw function, checks for a switch flag and if the player is near, but doesnt seemt to do anything
+        // has no draw function, checks for a switch flag and if the player is near, but doesnt seem to do anything
         [FileID(113)]
         [ObjectListIndex(0x1)]
         En_Fr = 0x73, // En_Fr
@@ -798,6 +799,7 @@ namespace MMR.Randomizer.GameObjects
         Empty77 = 0x77,
         Empty78 = 0x78,
 
+        // whoever said this doesnt exist in english was a fucking liar
         // this actor is too hardcoded to do anything with, if we had a small water scene to fish in...
         //[ActorizerEnabled]
         [ObjectListIndex(0x124)]
@@ -842,7 +844,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0001)]
         SmallCrate = 0x81, // Obj_Kibako
 
-
+        // MULTIPLE OBJECT ACTOR
         [ActorizerEnabled]
         // this is marked 2 and not 1 because 0x100 pots dont spawn in dungeons
         //[ObjectListIndex(0x1)] // this is a lie, the pot DETECTS multiple objects but does NOT exist in gameplay keep
@@ -890,7 +892,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(130)]
         [ObjectListIndex(0001)]
-        Elf_Msg = 0x8B, // Elf_Msg
+        ProximityTatlTalkingSpot = 0x8B, // Elf_Msg
 
         // todo finish testing
         [EnemizerEnabled]
@@ -901,6 +903,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         FlameEyeTrap = 0x8C, // En_Honotrap
 
+        // MULTIPLE OBJECT ACTOR
         [EnemizerEnabled]
         [FileID(132)]
         [ActorInitVarOffset(0xC5C)]
@@ -912,8 +915,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // unknown, harder to test since its a free enemy
         FlyingPot = 0x8D, // En_Tubo_Trap
 
-        // todo
-        // iceblock used for frozen enemies and a few locations without an object?
+        // iceblock used for frozen enemies and a few locations without an object
         [ActorizerEnabled]
         [FileID(133)]
         [ObjectListIndex(1)]
@@ -922,7 +924,7 @@ namespace MMR.Randomizer.GameObjects
         // if 0xFFXX then dont check flags
         // 64 is size of HSW, 0xC8 in one of snowhead rooms, AA is compass room?
         // ice block room has 0x64 and 0x96, 0xFF in goron block puzzle room
-        // smithy uses size 0x78
+        // smithy uses size 0x78, 0x10 is smol
         [GroundVariants(0xFF10, 0xFF20, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
         [VariantsWithRoomMax(max: 1, variant: 0xFFFF)]
         [VariantsWithRoomMax(max: 2, variant: 0xFFC8, 0xFF96, 0xFF78)]
@@ -951,7 +953,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(136)]
         [ObjectListIndex(0xEE)]
-        Obj_Bean = 0x91, // Obj_Bean
+        SoftSoalAndBeans = 0x91, // Obj_Bean
 
         [ActorizerEnabled]
         [FileID(137)]
@@ -967,9 +969,8 @@ namespace MMR.Randomizer.GameObjects
         Bombiwa = 0x92, // Obj_Bombiwa
 
         [FileID(138)]
-        [ObjectListIndex(3)]
-        Obj_Switch = 0x93, // Obj_Switch
-
+        [ObjectListIndex(3)] // bleh, always with the dunegeon object
+        FloorAndEyeSwitches = 0x93, // Obj_Switch
 
         Empty94 = 0x94, // Empty94
 
@@ -988,13 +989,13 @@ namespace MMR.Randomizer.GameObjects
 
         Empty98 = 0x98,
 
+        // one day I need to try turning these things into pathing actors
         [FileID(142)]
         [ObjectListIndex(0xEF)]
-        En_Goroiwa = 0x99, // En_Goroiwa
+        RollingBoulder = 0x99, // En_Goroiwa
 
         Empty9A = 0x9A,
         Empty9B = 0x9B,
-
 
         [ActorizerEnabled]
         [ObjectListIndex(0xF1)]
@@ -1015,6 +1016,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.CuccoShack)]
         CuccoChick = 0x9D,
 
+        // ? todo findout
         [FileID(145)]
         [ObjectListIndex(0001)]
         Item_Inbox = 0x9E, // Item_Inbox
@@ -1033,9 +1035,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(148)]
         [ObjectListIndex(0001)]
-        En_Sda = 0xA1, // En_Sda
+        ShadowLink = 0xA1, // En_Sda
 
-        // in MM this is NOT arwing, its an multi-use effect
+        // in MM this is NOT arwing, its a multi-use bomb effect actor
         // multiple explosion visual effects, light arrows, stuff like that
         [FileID(149)]
         [ObjectListIndex(0x1)]
@@ -1062,22 +1064,24 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(152)]
         [ObjectListIndex(0xF5)]
-        En_Hs = 0xA6, // En_Hs
+        Grog = 0xA6, // En_Hs
 
+        // hmm
         [FileID(153)]
         [ObjectListIndex(0x17F)]
-        Bg_Ingate = 0xA7, // Bg_Ingate
+        SwampBoat = 0xA7, // Bg_Ingate
 
+        // todo make a huuuuge list of ground params for this one
         [FileID(154)]
         [ObjectListIndex(0xFC)]
-        En_Kanban = 0xA8, // En_Kanban
+        SquareSign = 0xA8, // En_Kanban
 
         EmptyA9 = 0xA9,
 
         // these are temporary, spawned by En_Niw
         [FileID(155)]
         [ObjectListIndex(0xF)]
-        En_Attack_Niw = 0xAA, // En_Attack_Niw
+        GangCucco = 0xAA, // En_Attack_Niw
 
         EmptyAB = 0xAB,
         EmptyAC = 0xAC,
@@ -1097,12 +1101,19 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xFD)]
         En_Owl = 0xAF, // En_Owl
 
+        // MULTIPLE OBJECT ACTOR
         // todo aparently there is a sliver boulder in this actor, does it need object?
         [EnemizerEnabled]
         [FileID(158)]
         [ActorInstanceSize(0x198)]
-        [ObjectListIndex(0x1)] // gamplaykeep obj 1 // the rocks are free, you can take them home
+        [ObjectListIndex(0x2)]
+        // it actually uses one of two objects: gameplay_field or object_ishi, which is only in SSHouse
         //6a does not load
+        // params from m2c:
+        // & 1 is something different with the collider
+        // 3 >> & 1 uses object_ishi instead of gameplay_field
+        // 9 >> 7F is switch flags
+        // sooo what is 0x1FE?
         [GroundVariants(0x1F2)] // get bugs if pickup, best version
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         [EnemizerScenesExcluded(Scene.TerminaField)] // dont replace them in TF
@@ -1148,6 +1159,7 @@ namespace MMR.Randomizer.GameObjects
         EmptyB6 = 0xB6,
         EmptyB7 = 0xB7,
 
+        // unused water vortex from water temple
         [FileID(163)]
         [ObjectListIndex(0x106)]
         En_Stream = 0xB8, // En_Stream
@@ -1180,7 +1192,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:3, variant:0)]
         [EnemizerScenesPlacementBlock(Scene.RomaniRanch, Scene.Woodfall, Scene.DekuShrine)]
         [UnkillableAllVariants]
-        En_Ani = 0xBD, // En_Ani
+        Ani = 0xBD, // En_Ani
 
         EmptyBE = 0xBE,
 
@@ -1204,7 +1216,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         En_Okarina_Effect = 0xC4, // En_Okarina_Effect
 
-        //[ActorizerEnabled] // yeah it just takes you back to file select if you hit two buttons, bad
+        // yeah it just takes you back to file select if you hit two buttons, bad
         [FileID(169)]
         [ObjectListIndex(0x115)]
         [GroundVariants(0)]
@@ -1215,9 +1227,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         Elf_Msg2 = 0xC6, // Elf_Msg2
 
+        // ?
         [FileID(171)]
         [ObjectListIndex(0x5C)]
-        Bg_F40_Swlift = 0xC7, // Bg_F40_Swlift
+        UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
         EmptyC8 = 0xC8,
         EmptyC9 = 0xC9,
@@ -1240,7 +1253,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(173)]
         [ObjectListIndex(0x1)]
-        Obj_Makeoshihiki = 0xCB, // Obj_Makeoshihiki
+        PushableBlockSwitchFlagsHandler = 0xCB, // Obj_Makeoshihiki
 
         [FileID(174)]
         [ObjectListIndex(0x1)]
@@ -1257,6 +1270,7 @@ namespace MMR.Randomizer.GameObjects
 
         EmptyCF = 0xCF,
 
+        // ? is this related to fire arrows in OOT?
         [FileID(176)]
         [ObjectListIndex(0x1)]
         Shot_Sun = 0xD0, // Shot_Sun
@@ -1270,18 +1284,19 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(178)]
         [ObjectListIndex(0x127)]
-        En_Ssh = 0xD4, // En_Ssh
+        CursedSwampSpiderhouseMan = 0xD4, // En_Ssh
 
         EmptyD5 = 0xD5, // EmptyD5
 
         [FileID(179)]
         [ObjectListIndex(0x1)]
-        Oceff_Wipe = 0xD6, // Oceff_Wipe
+        SongOfTimeOcarinaEffect = 0xD6, // Oceff_Wipe
 
         [FileID(209)]
         [ObjectListIndex(0x1)]
         Oceff_Storm = 0xD7, // Oceff_Storm
 
+        // ? cutscene related?
         [FileID(210)]
         [ObjectListIndex(0x1)]
         Obj_Demo = 0xD8, // Obj_Demo
@@ -1301,11 +1316,11 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(213)]
         [ObjectListIndex(0x1)]
-        Oceff_Wipe2 = 0xDF, // Oceff_Wipe2
+        EponaSongOcarinaEffect = 0xDF, // Oceff_Wipe2
 
         [FileID(214)]
         [ObjectListIndex(0x1)]
-        Oceff_Wipe3 = 0xE0, // Oceff_Wipe3
+        SariasSongOcarinaEffect = 0xE0, // Oceff_Wipe3
 
         EmptyE1 = 0xE1,
 
@@ -1340,7 +1355,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(216)]
         [ObjectListIndex(0x20)]
-        En_Si = 0xE3, // En_Si
+        GoldSkultulaToken = 0xE3, // En_Si
 
         [ActorizerEnabled]
         [FileID(217)]
@@ -1358,7 +1373,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(219)]
         [ObjectListIndex(0x1)]
-        En_Hs2 = 0xE7, // En_Hs2
+        BlueTargetSpot = 0xE7, // En_Hs2
 
         [FileID(220)]
         [ObjectListIndex(0x1)]
@@ -1410,7 +1425,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(225)]
         [ObjectListIndex(0x1)]
-        Obj_Sound = 0xF0, // Obj_Sound
+        VariousWorldSounds2 = 0xF0, // Obj_Sound
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1520)]
@@ -1438,7 +1453,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(228)]
         [ObjectListIndex(0x1)]
-        Oceff_Wipe4 = 0xF6, // Oceff_Wipe4
+        ScarecrowSongOcarinaEffect = 0xF6, // Oceff_Wipe4
 
         [ObjectListIndex(0x0)]
         EmptyF7 = 0xF7, // EmptyF7
@@ -1473,7 +1488,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(233)]
         [ObjectListIndex(0x2)]
-        Obj_Hamishi = 0xFC, // Obj_Hamishi
+        BronzeBoulder = 0xFC, // Obj_Hamishi
 
         //[ActorizerEnabled] // overloads something, crashes in almost all cases
         [FileID(234)]
@@ -1594,7 +1609,6 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // assumption: need mirror shield
         SkeleKnight = 0x115, // En_Knight
 
-        // nvm not sure what this is
         [FileID(251)]
         // in actor obj set to 1, so might be multiple types
         [ObjectListIndex(0x3E)]
@@ -1602,7 +1616,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x3C1)]
         [EnemizerScenesExcluded(Scene.GoronTrial)]
         [UnkillableAllVariants]
-        En_Warp_tag = 0x116, // En_Warp_tag
+        WarpToTrialEntrance = 0x116, // En_Warp_tag
 
 	    // dog race owner
         [FileID(252)]
@@ -1656,7 +1670,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         BetaVampireGirl = 0x122, // En_Cne_01
 
-        // beta bomb shop wife
+        // beta bomb shop grandma
         [ActorizerEnabled]
         [FileID(263)]
         [ObjectListIndex(0xDF)] // 1
@@ -1666,20 +1680,21 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         BabaIsUnused = 0x123, // En_Bba_01
 
+        // wont spawn if you place him outside of his office, needs modification
         [FileID(264)]
         [ObjectListIndex(0xDE)]
-        En_Bji_01 = 0x124, // En_Bji_01
+        Shikashi = 0x124, // En_Bji_01
 
         [FileID(265)]
         [ObjectListIndex(0x158)]
-        Bg_Spdweb = 0x125, // Bg_Spdweb
+        SpiderWeb = 0x125, // Bg_Spdweb
 
         Empty126 = 0x126,
         Empty127 = 0x127,
 
         [FileID(266)]
         [ObjectListIndex(0x1)]
-        En_Mt_tag = 0x128, // En_Mt_tag
+        GoronraceMinigameController = 0x128, // En_Mt_tag
 
         //[EnemizerEnabled]
         [FileID(267)]
@@ -1687,19 +1702,19 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [VariantsWithRoomMax(max:1, variant:0)]
         [EnemizerScenesExcluded(Scene.OdolwasLair)]
-        Odolwa = 0x129, // En_Boss01
+        Odolwa = 0x129, // Boss_01
 
         [FileID(268)]
         [ObjectListIndex(0x15B)]
-        Boss_02 = 0x12A, // Boss_02
+        Twinmold = 0x12A, // Boss_02
 
         [FileID(269)]
         [ObjectListIndex(0x15C)]
-        Boss_03 = 0x12B, // Boss_03
+        Gyorg = 0x12B, // Boss_03
 
         [FileID(270)]
         [ObjectListIndex(0x15D)]
-        Boss_04 = 0x12C, // Boss_04
+        Wart = 0x12C, // Boss_04
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3760)]
@@ -1720,7 +1735,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(273)]
         [ObjectListIndex(0x160)]
-        Boss_07 = 0x12F, // Boss_07
+        Majora = 0x12F, // Boss_07
 
         [FileID(274)]
         [ObjectListIndex(0x8)]
@@ -1766,7 +1781,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(279)]
         [ObjectListIndex(0x162)]
-        Obj_Funen = 0x13B, // Obj_Funen
+        UnusedStoneTowerSmoke = 0x13B, // Obj_Funen
 
         [FileID(280)]
         [ObjectListIndex(0x163)]
@@ -2093,7 +2108,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(290)]
         [ObjectListIndex(0x184)]
         GBTWatersheelsandPushblocks = 0x174, // Bg_Dblue_Movebg
-        
+
+        // great fairy beam
         [FileID(335)]
         [ObjectListIndex(0x8)]
         En_Dy_Extra = 0x175, // En_Dy_Extra
@@ -2126,9 +2142,10 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         PirateTelescope = 0x178, // En_Warp_Uzu
 
+        // flying ice platforms leading to lens cave
         [FileID(339)]
         [ObjectListIndex(0x187)]
-        Obj_Driftice = 0x179, // Obj_Driftice
+        FlyingIcePlatform = 0x179, // Obj_Driftice
 
         [EnemizerEnabled] // walks forever in a straight line, until we can keep them on a path they are a boring enemy
         [FileID(340)]
@@ -2192,7 +2209,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(347)]
         [ObjectListIndex(0x16B)]
-        En_Prz = 0x181, // En_Prz
+        DefeatedSkullfish = 0x181, // En_Prz
 
         //[EnemizerEnabled]
         [FileID(348)]
@@ -2284,9 +2301,11 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         LostWoodsCutsceneObjects = 0x190, // Dm_Opstage
 
-        // todo
+        // requires like 3 objects wtf
+        //0x192 0x1BE,0x277);
         [FileID(361)]
         [ObjectListIndex(0x192)]
+        // != 1 is a param, 1 is a param
         SkullkidCutscene = 0x191, // Dm_Stk
 
         // todo attempt randomize
@@ -2331,8 +2350,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x229)]
         Dm_Char08 = 0x19A, // Dm_Char08
 
-        // todo attempt randomize
+        // todo reattempt: could not spawn
         [FileID(371)]
+        // params: 0xF, 0x100
         [ObjectListIndex(0x1EB)]
         PiratesFortressCutsceneCharacters = 0x19B, // Dm_Char09
 
@@ -2378,8 +2398,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x190)]
         RaisableSnowheadPillar = 0x1A3, // Bg_Hakugin_Elvpole
 
-        [ActorizerEnabled] // crash in clocktower, too big for anywhere else
-        // 100 does not spawn
+        [ActorizerEnabled] 
         [FileID(379)]
         [ObjectListIndex(0xB7)] // 100 and FF00
         [PathingVariants(0xFF00)] // all vanilla are 0xB7
@@ -2407,12 +2426,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.TerminaField)] // long draw distance means they can overflow actor spawn
         PoeBalloon = 0x1A6, // En_Po_Fusen
 
+        // some type of wooden door
         [FileID(382)]
         [ObjectListIndex(0x1)]
         En_Door_Etc = 0x1A7, // En_Door_Etc
         
         [FileID(383)]
         [ObjectListIndex(0x19E)]
+        [EnemizerScenesExcluded(Scene.SouthernSwamp, Scene.DekuPalace)]
         BigOcto = 0x1A8, // En_Bigokuta
         
         [FileID(384)]
@@ -2422,7 +2443,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(391)]
         [ObjectListIndex(0x163)]
         Obj_Ocarinalift = 0x1AA, // Obj_Ocarinalift
-        
+
         [FileID(392)]
         [ObjectListIndex(0x1)]
         En_Time_Tag = 0x1AB, // En_Time_Tag
@@ -2430,10 +2451,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(393)]
         [ObjectListIndex(0x19F)]
         Bg_Open_Shutter = 0x1AC, // Bg_Open_Shutter
-        
+
+        // dont work probably because they need to turn ON for the cutscene
+        //[ActorizerEnabled]
         [FileID(394)]
         [ObjectListIndex(0x19F)]
-        Bg_Open_Spot = 0x1AD, // Bg_Open_Spot
+        [WallVariants(0)]
+        [UnkillableAllVariants]
+        SkullkidDekuCurseStarSpotlights = 0x1AD, // Bg_Open_Spot
         
         [FileID(395)]
         [ObjectListIndex(0x1A0)]
@@ -2462,8 +2487,6 @@ namespace MMR.Randomizer.GameObjects
 
         Empty1B2 = 0x1B2,
 
-
-
         // probably an object check missing somewhere
         //[ActorizerEnabled] // does not spawn
         [FileID(399)]
@@ -2487,7 +2510,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         HappyMaskSalesman = 0x1B5, // En_Osn
 
-        //[ActorizerEnabled] // issue: cannot place organ because its waiting for the cutscene part to appear
+        //[ActorizerEnabled] // issue: cannot place organ because its waiting for the cutscene part to appear, also no hitbox
         [FileID(402)]
         [ObjectListIndex(0x88)]
         // 3 is organ, the gears are other vars 
@@ -2506,7 +2529,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(404)]
         [ObjectListIndex(0x1A4)]
-        Obj_Tokei_Step = 0x1B8, // Obj_Tokei_Step
+        ClockTowerDoorAndStairs = 0x1B8, // Obj_Tokei_Step
         
         [FileID(405)]
         [ObjectListIndex(0x1A5)]
@@ -2521,14 +2544,15 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.WoodfallTemple)] // req for gekko miniboss, do not touch until fix
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         Snapper = 0x1BA, // En_Kame
-        
+
+        // ohhh this would be so stupid
         [FileID(407)]
         [ObjectListIndex(0x1B4)]
-        Obj_Takaraya_Wall = 0x1BB, // Obj_Takaraya_Wall
+        TreasureShopRisingWall = 0x1BB, // Obj_Takaraya_Wall
         
         [FileID(408)]
         [ObjectListIndex(0x1A0)]
-        Bg_Fu_Mizu = 0x1BC, // Bg_Fu_Mizu
+        HomeAndDarlingWaterLevel = 0x1BC, // Bg_Fu_Mizu
 
         //[ActorizerEnabled] //wrong one, the one we want is burrowed, but he also does NOT come with a flower, its secondary
         [FileID(409)]
@@ -2539,7 +2563,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(410)]
         [ObjectListIndex(0x1A7)]
-        Bg_Dkjail_Ivy = 0x1BE, // Bg_Dkjail_Ivy
+        SwampSpiderHouseCutableIvy = 0x1BE, // Bg_Dkjail_Ivy
         
         Empty1BF = 0x1BF,
 
@@ -2561,7 +2585,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(413)]
         [ObjectListIndex(0x1A9)]
-        En_Tsn = 0x1C2, // En_Tsn
+        GreatBayFisherman = 0x1C2, // En_Tsn
 
         [ActorizerEnabled]
         [FileID(414)]
@@ -2569,14 +2593,15 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // just stands around
         [UnkillableAllVariants]
         OOTPotionShopMan = 0x1C3, // En_Ds2n
-        
+
+        // probably hard time coded
         [FileID(415)]
         [ObjectListIndex(0x1AB)]
-        En_Fsn = 0x1C4, // En_Fsn
-        
+        CuriosityShopMan = 0x1C4, // En_Fsn
+
         [FileID(416)]
         [ObjectListIndex(0x1AC)]
-        En_Shn = 0x1C5, // En_Shn
+        SwampTouristGuide = 0x1C5, // En_Shn
 
         Empty1C6 = 0x1C6,
 
@@ -2611,11 +2636,12 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(422)]
         [ObjectListIndex(0x163)]
-        Obj_Lupygamelift = 0x1CD, // Obj_Lupygamelift
-        
+        DekuPlayGroundGameElevator = 0x1CD, // Obj_Lupygamelift
+
+        // the effects in the cutscene, where link is surrounded by feathers
         [FileID(423)]
         [ObjectListIndex(0x1)]
-        En_Test7 = 0x1CE, // En_Test7
+        SoaringEffects = 0x1CE, // En_Test7
         
         [FileID(424)]
         [ObjectListIndex(0x1B3)]
@@ -2639,7 +2665,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(427)]
         [ObjectListIndex(0x1)]
-        En_Gamelupy = 0x1D2, // En_Gamelupy
+        DekuPlayGroundGameRupee = 0x1D2, // En_Gamelupy
         
         [FileID(428)]
         [ObjectListIndex(0x1)]
@@ -2694,12 +2720,13 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(438)]
         [ObjectListIndex(0x1BB)]
-        Boss_Hakugin = 0x1DD, // Boss_Hakugin
+        Goht = 0x1DD, // Boss_Hakugin
         
         [FileID(439)]
         [ObjectListIndex(0x144)]
         SpiritHouseOwner = 0x1DE, // En_Gb2
-        
+
+        // unused monkey instrument prompt
         [FileID(440)]
         [ObjectListIndex(0x1)]
         En_Onpuman = 0x1DF, // En_Onpuman
@@ -2707,7 +2734,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(441)]
         [ObjectListIndex(0x1BF)]
         GoronShrineDoor = 0x1E0, // Bg_Tobira01
-        
+
+        // ?
         [FileID(442)]
         [ObjectListIndex(0x1)]
         En_Tag_Obj = 0x1E1, // En_Tag_Obj
@@ -2735,7 +2763,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(445)]
         [ObjectListIndex(0x1C7)]
-        Bg_Hakugin_Switch = 0x1E4, // Bg_Hakugin_Switch
+        GoronLinkPoundSwitch = 0x1E4, // Bg_Hakugin_Switch
         
         Empty1E5 = 0x1E5,
 
@@ -2775,7 +2803,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(450)]
         [ObjectListIndex(0x1BB)]
-        En_Hakurock = 0x1EA, // En_Hakurock
+        GohtKickedUpRocks = 0x1EA, // En_Hakurock
         
         [FileID(451)]
         [ObjectListIndex(0x1)] // doubt
@@ -2911,7 +2939,7 @@ namespace MMR.Randomizer.GameObjects
         // the wackest actor that controls the whole alien invasion event, and a lot of stuff at ranch
         [FileID(472)]
         [ObjectListIndex(0x1)]
-        En_Invadepoh = 0x200, // En_Invadepoh
+        AllAlienEventActors = 0x200, // En_Invadepoh
 
         //[ActorizerEnabled] // softlock if you enter the song teach cutscene, which in rando is proximity
         [FileID(473)]
@@ -3021,7 +3049,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(484)]
         [ObjectListIndex(0x1E0)]
-        Bg_Haka_Curtain = 0x20D, // Bg_Haka_Curtain
+        FlatsTombCurtain = 0x20D, // Bg_Haka_Curtain
         
         [FileID(485)]
         [ObjectListIndex(0x1F5)]
@@ -3083,7 +3111,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(495)]
         [ObjectListIndex(0x3)]
-        Bg_Ikana_Block = 0x218, // Bg_Ikana_Block
+        StoneTowerRotatingRoomPushBlock = 0x218, // Bg_Ikana_Block
 
         [ActorizerEnabled]
         [FileID(496)]
@@ -3129,7 +3157,7 @@ namespace MMR.Randomizer.GameObjects
         // romani talking to cremia only
         [FileID(502)]
         [ObjectListIndex(0xB7)]
-        En_Ma_Yts = 0x21F, // En_Ma_Yts
+        RomaniTalkingToCremia = 0x21F, // En_Ma_Yts
 
         // todo 
         [FileID(503)]
@@ -3142,7 +3170,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(505)]
         [ObjectListIndex(0x184)]
-        Bg_Dblue_Elevator = 0x222, // Bg_Dblue_Elevator
+        GreatBayTempleElevator = 0x222, // Bg_Dblue_Elevator
 
         // lame: saves take you to the real spawn, owl soar takes you to the real spawn, this only lets us activate and save warp
         [ActorizerEnabled] 
@@ -3199,10 +3227,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.ZoraHall, Scene.ZoraCape)]
         [UnkillableAllVariants]
         RegularZora = 0x228, // En_Zot
-        
+
+        // north clocktown tree
         [FileID(512)]
         [ObjectListIndex(0x20D)]
-        Obj_Tree = 0x229, // Obj_Tree
+        UglyTree = 0x229, // Obj_Tree
         
         [FileID(513)]
         [ObjectListIndex(0x20E)]
@@ -3282,7 +3311,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(525)]
         [ObjectListIndex(0xDF)]
-        En_Baba = 0x236, // En_Baba
+        BombShopLady = 0x236, // En_Baba
 
         //[ActorizerEnabled] // does not spawn, even the daytime frollicing one
         // both of his vars are paths, sooo I'm guessing his behavior is hard coded
@@ -3433,11 +3462,11 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(547)]
         [ObjectListIndex(0x1E5)]
-        En_Scopenuts = 0x24C, // En_Scopenuts
+        FlyingFieldScrub = 0x24C, // En_Scopenuts
         
         [FileID(548)]
         [ObjectListIndex(0x6)]
-        En_Scopecrow = 0x24D, // En_Scopecrow
+        TelescopeRupeeCrow = 0x24D, // En_Scopecrow
         
         [FileID(549)]
         [ObjectListIndex(0x1)]
@@ -3510,9 +3539,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x237)]
         IkanaThings = 0x25C, // Bg_Iknv_Obj
 
+        // probably pathing
         [FileID(564)]
         [ObjectListIndex(0x238)]
-        En_Pamera = 0x25D, // En_Pamera
+        Pamela = 0x25D, // En_Pamera
 
         [ActorizerEnabled]
         [FileID(565)]
@@ -3530,7 +3560,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x12B)]
         [GroundVariants(0x584)]
         [UnkillableAllVariants] // I think?
-        SleepingScrub = 0x25F,
+        SleepingScrub = 0x25F, // En_Hidden_Nuts
 
         [ActorizerEnabled]
         [FileID(567)]
@@ -3541,7 +3571,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(568)]
         [ObjectListIndex(0x1)]
-        En_Talk = 0x261, // En_Talk
+        IndigoGosPosterTalkSpot = 0x261, // En_Talk
 
         [FileID(569)]
         [ObjectListIndex(0xD)]
@@ -3966,22 +3996,6 @@ namespace MMR.Randomizer.GameObjects
         [FileID(648)]
         [ObjectListIndex(0x12C)]
         CreditsBombShopMan = 0x2B1, // En_Rsn
-
-/*
-        [ActorizerEnabled]
-        [ObjectListIndex(0x264)]
-        [AlignedCompanionActor(KeatonGrass, CompanionAlignment.OnTop, ourVariant: -1,
-           variant: 0x7F00, 0x400, 0x1F00)] // we want him to only show up if you kill grass right?
-        // summoning 0 crashes, so does 0xFFFF
-        [GroundVariants(0xFFFF)] // unkown, normally summoned by bushes?
-        [UnkillableAllVariants]
-        [OnlyOneActorPerRoom]
-        // for now, don't place in really small scenes where there is almost never enough space for keaton and keaton grass to spawn normally
-        [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.ClockTowerInterior, Scene.NorthClockTown, Scene.MountainVillageSpring, Scene.TwinIslands, Scene.OceanSpiderHouse)]
-        //Keaton = 0x289C, // En_Kitan
-        Keaton = 0x2B1, // THIS IS A LIE, its a trick until I can force second objects to load, but we do NOT want the actual actor to load for keaton
-        // 2b1 is really bomb shop proprietor
-*/
 
         [FileID(1114)]
         //[ObjectListIndex(0)]
