@@ -239,10 +239,10 @@ namespace MMR.Randomizer.Models.Rom
                     && ourVariants.Contains(oldActorVariant) && theirVariants.Count == 0 && rng.Next(100) < 80)
                 {
                     // todo could make this random
-                    theirVariants = otherActor.AllVariants[(int) ActorType.Flying];
+                    theirVariants = otherActor.AllVariants[(int) ActorType.Flying -1];
                     if (theirVariants.Count == 0)
                     {
-                        theirVariants = otherActor.AllVariants[(int) ActorType.Ground];
+                        theirVariants = otherActor.AllVariants[(int) ActorType.Ground -1];
                     }
                 }
 
@@ -251,7 +251,7 @@ namespace MMR.Randomizer.Models.Rom
                 if (randomVariantType == ActorType.Ground
                     && ourVariants.Contains(oldActorVariant) && theirVariants.Count == 0 && rng.Next(100) < 30)
                 {
-                    theirVariants = otherActor.AllVariants[(int) ActorType.Flying];
+                    theirVariants = otherActor.AllVariants[(int) ActorType.Flying -1];
                 }
 
                 //if ((ourAttr != null && otherAttr != null) // both have same type
@@ -282,7 +282,7 @@ namespace MMR.Randomizer.Models.Rom
             // todo finish converting this from enum to actor base type
 
             var actor = this.ActorEnum;
-            if (actor != null)
+            if (actor != GameObjects.Actor.NULL)
             {
                 if (actor.GetAttribute<UnkillableAllVariantsAttribute>() != null) // all are unkillable
                 {

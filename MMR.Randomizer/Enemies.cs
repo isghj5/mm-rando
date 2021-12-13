@@ -1672,12 +1672,12 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.RoadToSouthernSwamp.FileID() && sceneObjects[objCount] == GameObjects.Actor.ChuChu.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.ClayPot.ObjectIndex()
+                            NewV = GameObjects.Actor.ArmosStatue.ObjectIndex()
                         }); 
                         continue;
                     } // */
