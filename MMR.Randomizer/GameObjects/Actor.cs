@@ -3552,6 +3552,7 @@ namespace MMR.Randomizer.GameObjects
         // road to ikana is 1007
         // 0xF000, and 0x7F is switchflag, so zero is all we get
         [GroundVariants(0)]
+        [VariantsWithRoomMax(max:3, variant:0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.RoadToIkana)] // do not remove original
         IkanaCanyonHookshotStump = 0x25E, // Obj_HsStump
