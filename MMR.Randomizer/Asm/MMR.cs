@@ -32,6 +32,7 @@ namespace MMR.Randomizer.Asm
 
         public ushort LocationWalletAdult;
         public ushort LocationWalletGiant;
+        public ushort LocationWalletRoyal;
 
         public ushort LocationBombBagSmall;
         public ushort LocationBombBagBig;
@@ -44,6 +45,9 @@ namespace MMR.Randomizer.Asm
         public byte ExtraStartingMaps;
         public byte[] ExtraStartingItemIds;
         public ushort ExtraStartingItemIdsLength;
+
+        public ushort[] ItemsToReturnIds;
+        public ushort ItemsToReturnIdsLength;
 
         /// <summary>
         /// Convert to bytes.
@@ -77,6 +81,7 @@ namespace MMR.Randomizer.Asm
 
                 writer.WriteUInt16(this.LocationWalletAdult);
                 writer.WriteUInt16(this.LocationWalletGiant);
+                writer.WriteUInt16(this.LocationWalletRoyal);
 
                 writer.WriteUInt16(this.LocationBombBagSmall);
                 writer.WriteUInt16(this.LocationBombBagBig);
@@ -90,6 +95,11 @@ namespace MMR.Randomizer.Asm
                 writer.WriteByte(0); // padding
                 writer.WriteBytes(this.ExtraStartingItemIds);
                 writer.WriteUInt16(this.ExtraStartingItemIdsLength);
+                foreach (var val in this.ItemsToReturnIds)
+                {
+                    writer.WriteUInt16(val);
+                }
+                writer.WriteUInt16(this.ItemsToReturnIdsLength);
 
                 return memStream.ToArray();
             }
@@ -117,6 +127,7 @@ namespace MMR.Randomizer.Asm
 
         public ushort LocationWalletAdult { get; set; }
         public ushort LocationWalletGiant { get; set; }
+        public ushort LocationWalletRoyal { get; set; }
 
         public ushort LocationBombBagSmall { get; set; }
         public ushort LocationBombBagBig { get; set; }
@@ -130,10 +141,13 @@ namespace MMR.Randomizer.Asm
 
         public List<byte> ExtraStartingItemIds { get; set; }
 
+        public List<ushort> ItemsToReturnIds { get; set; }
+
         public MMRConfig()
         {
             ExtraStartingItemIds = new List<byte>();
             RupeeRepeatableLocations = new List<ushort>();
+            ItemsToReturnIds = new List<ushort>();
         }
 
         /// <summary>
@@ -157,6 +171,9 @@ namespace MMR.Randomizer.Asm
             var rupeeRepeatableLocations = this.RupeeRepeatableLocations.Concat(Enumerable.Repeat((ushort)0, endBuffer)).ToArray();
             var extraStartingItemIds = this.ExtraStartingItemIds.ToArray();
             Array.Resize(ref extraStartingItemIds, 0x10);
+
+            var itemsToReturnIds = this.ItemsToReturnIds.ToArray();
+            Array.Resize(ref itemsToReturnIds, 0x10);
             return new MMRConfigStruct
             {
                 Version = version,
@@ -177,6 +194,7 @@ namespace MMR.Randomizer.Asm
 
                 LocationWalletAdult = this.LocationWalletAdult,
                 LocationWalletGiant = this.LocationWalletGiant,
+                LocationWalletRoyal = this.LocationWalletRoyal,
 
                 LocationBombBagSmall = this.LocationBombBagSmall,
                 LocationBombBagBig = this.LocationBombBagBig,
@@ -189,6 +207,9 @@ namespace MMR.Randomizer.Asm
                 ExtraStartingMaps = (byte)this.ExtraStartingMaps,
                 ExtraStartingItemIds = extraStartingItemIds,
                 ExtraStartingItemIdsLength = (ushort)this.ExtraStartingItemIds.Count,
+
+                ItemsToReturnIds = itemsToReturnIds,
+                ItemsToReturnIdsLength = (ushort)this.ItemsToReturnIds.Count,
             };
         }
     }

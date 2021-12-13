@@ -110,6 +110,7 @@ namespace MMR.Randomizer.Utils
             return (uint)((Arr[Src] << 24) | (Arr[Src + 1] << 16) | (Arr[Src + 2] << 8) | Arr[Src + 3]);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int Arr_ReadS32(byte[] Arr, int Src)
         {
             return (Arr[Src] << 24) | (Arr[Src + 1] << 16) | (Arr[Src + 2] << 8) | Arr[Src + 3];
@@ -119,6 +120,12 @@ namespace MMR.Randomizer.Utils
         public static ushort Arr_ReadU16(byte[] Arr, int Src)
         {
             return (ushort)((Arr[Src] << 8) | (Arr[Src + 1]));
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static short Arr_ReadS16(byte[] Arr, int Src)
+        {
+            return (short)((Arr[Src] << 8) | (Arr[Src + 1]));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -19,6 +19,15 @@
 struct ObjheapItem gObjheapItems[OBJHEAP_SLOTS] = { 0 };
 struct Objheap gObjheap = { 0 };
 
+static SceneObject* FindObject(GlobalContext* ctxt, s16 objectId) {
+    for (int i = 0; i < 35; i++) {
+        if (ctxt->sceneContext.objects[i].id == objectId) {
+            return &ctxt->sceneContext.objects[i];
+        }
+    }
+    return NULL;
+}
+
 static void ScaleTopMatrix(f32 scaleFactor) {
     f32* matrix = z2_GetMatrixStackTop();
     for (int i = 0; i < 3; i++) {
@@ -213,7 +222,7 @@ bool Models_Item00_SetActorSize(GlobalContext* ctxt, Actor* actor) {
             return true;
         }
     }
-    
+
     return false;
 }
 
@@ -445,22 +454,40 @@ void Models_WriteBossRemainsObjectSegment(GlobalContext* ctxt, u32 graphicIdMinu
     // Get index of object, and use it to get the data pointer
     s8 index = z2_GetObjectIndex(&ctxt->sceneContext, OBJECT_BSMASK);
     // Only write segment instruction if object found in ctxt's object list.
-    // Otherwise, assume it was set by the caller.
+    // Otherwise, load it.
     if (index >= 0) {
         void* data = ctxt->sceneContext.objects[index].vramAddr;
         // Write segmented address instruction
         gSPSegment(opa->p++, 6, (u32)data);
+    } else {
+        struct ObjheapItem* object = Objheap_Allocate(&gObjheap, OBJECT_BSMASK);
+        if (object) {
+            // Scale matrix and call low-level draw functions.
+            SetObjectSegment(ctxt, object->buf);
+            //ScaleTopMatrix(baseScale);
+        }
     }
 }
 
 /**
  * Hook function for drawing Boss Remain actors as their new item.
- * Currently draws the item on the Oath to Order check. Will need
- * to be updated if Boss Remains are randomized.
  **/
 void Models_DrawBossRemains(Actor* actor, GlobalContext* ctxt, u32 graphicIdMinus1) {
-    if (MISC_CONFIG.flags.freestanding && (actor->parent->parent == NULL || actor->parent->parent->id != 0)) {
-        DrawFromGiTable(actor, ctxt, 1.0, 0x77);
+    if (MISC_CONFIG.flags.freestanding) {
+        //DrawFromGiTable(actor, ctxt, 1.0, 0x448 + actor->params);
+
+        u16 giIndex = 0x448 + actor->params;
+        if (actor->parent->parent == NULL || actor->parent->parent->id != 0) {
+            u16 drawGiIndex = MMR_GetNewGiIndex(ctxt, 0, giIndex, false);
+            Rupee_SetDrawGiIndex(actor, drawGiIndex);
+        }
+        u16 giIndexToDraw = Rupee_GetDrawGiIndex(actor);
+
+        struct Model model;
+        GetItemEntry* entry = PrepareGiEntry(&model, ctxt, giIndexToDraw, false);
+
+        z2_CallSetupDList(ctxt->state.gfxCtx);
+        DrawModel(model, actor, ctxt, 1.0);
     } else {
         DrawModelLowLevel(actor, ctxt, graphicIdMinus1);
     }
@@ -712,19 +739,19 @@ void Models_DrawCutsceneItem(GlobalContext* ctxt, Actor* actor, Vec3s* posRot, V
 
     Vec3f pos;
     Vec3s rot;
-    
+
     pos.x = (f32)posRot[0].x;
     pos.y = (f32)posRot[0].y;
-    pos.z = (f32)posRot[0].z;    
+    pos.z = (f32)posRot[0].z;
     rot.x = posRot[1].x;
     rot.y = posRot[1].y;
     rot.z = posRot[1].z;
     z2_TransformMatrixStackTop(&pos, &rot);
-    
+
     if (posRot2) {
         pos.x = (f32)posRot2[0].x;
         pos.y = (f32)posRot2[0].y;
-        pos.z = (f32)posRot2[0].z;    
+        pos.z = (f32)posRot2[0].z;
         rot.x = posRot2[1].x;
         rot.y = posRot2[1].y;
         rot.z = posRot2[1].z;
@@ -732,7 +759,7 @@ void Models_DrawCutsceneItem(GlobalContext* ctxt, Actor* actor, Vec3s* posRot, V
     }
 
     DrawFromGiTable(actor, ctxt, scale, giIndex);
-    
+
     // z2_PopMatrixStack();
 }
 
@@ -778,6 +805,48 @@ void Models_DrawGibdoMask(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTab
     }
 
     Models_DrawCutsceneMask(ctxt, actor, limbDrawTable, 0x87);
+}
+
+void Models_DrawOcarina(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, void* unkDraw, Actor* actor) {
+    if (!MISC_CONFIG.flags.freestanding) {
+        z2_SkelAnime_DrawLimb3(ctxt, skeleton, limbDrawTable, dListCount, overrideLimbDraw, postLimbDraw, unkDraw, actor);
+        return;
+    }
+
+    Vec3s posRot2[2] = {
+        {
+            .x = -384,
+            .y = -384,
+            .z = 384
+        },
+        {
+            .x = 0x0000,
+            .y = 0x2000,
+            .z = 0x4000
+        }
+    };
+
+    Models_DrawCutsceneItem(ctxt, actor, limbDrawTable, posRot2, 16.0, 0x4C);
+}
+
+void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
+    // Store backup of previous 0xDA (Mtx) instruction (for Skull Kid's hand) and overwrite it.
+    // Is this safe? Probably not. :)
+    Gfx backup = *(ctxt->state.gfxCtx->polyOpa.p-- - 1);
+
+    // Perform underlying draw.
+    DrawFromGiTable(actor, ctxt, 25.0, 0x4C);
+
+    // Find Skull Kid object data and restore segmented addresses.
+    SceneObject* obj = FindObject(ctxt, OBJECT_STK);
+    if (obj != NULL) {
+        // Restore object addresses in RDRAM table and DList.
+        gRspSegmentPhysAddrs.currentObject = (u32)obj->vramAddr & 0xFFFFFF;
+        SetObjectSegment(ctxt, (const void*)obj->vramAddr);
+    }
+
+    // Restore matrix pointer for Skull Kid's hand.
+    *(ctxt->state.gfxCtx->polyOpa.p++) = backup;
 }
 
 void Models_AfterActorDtor(Actor* actor) {

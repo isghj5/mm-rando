@@ -25,7 +25,7 @@ namespace MMR.DiscordBot.Modules
         private readonly IReadOnlyCollection<ulong> _tournamentChannels = new List<ulong>
         {
             709731024375906316, // ZoeyZolotova - tournament-admin
-            744581433481232425, // MMR - bracket-seeds
+            871199781454757969, // MMR - Season 2 Brackets - #bracket-seeds
         }.AsReadOnly();
 
         [Command("help")]
@@ -98,8 +98,13 @@ namespace MMR.DiscordBot.Modules
                         var (patchPath, hashIconPath, spoilerLogPath, _) = await MMRService.GenerateSeed(DateTime.UtcNow, null);
                         if (File.Exists(patchPath) && File.Exists(hashIconPath) && File.Exists(spoilerLogPath))
                         {
-                            foreach (var user in mentionedUsers)
+                            foreach (var socketUser in mentionedUsers)
                             {
+                                IUser user = socketUser;
+                                if (user.GetType() == typeof(SocketUnknownUser))
+                                {
+                                    user = await Context.Client.Rest.GetUserAsync(user.Id);
+                                }
                                 await user.SendFileAsync(patchPath, "Here is your tournament match seed! Please be sure your Hash matches and let an organizer know if you have any issues before you begin.");
                                 await user.SendFileAsync(hashIconPath);
                             }

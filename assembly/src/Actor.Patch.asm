@@ -14,3 +14,13 @@
     jal     Actor_AfterDtor_Hook
     sw      a1, 0x001C (sp)
     nop
+
+; Replaced:
+;   JALR    RA, T9
+.org 0x800B6928
+    jal     Actor_Init
+
+; Replaced:
+;   JALR    RA, T9
+.org 0x800B9510
+    jal     Actor_Init

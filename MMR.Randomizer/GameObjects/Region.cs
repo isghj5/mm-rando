@@ -13,11 +13,17 @@ namespace MMR.Randomizer.GameObjects
         [RegionName("Beneath Clocktown")]
         BeneathClocktown,
 
+        [RegionName("Clock Tower Roof")]
+        ClockTowerRoof,
+
         [RegionName("South Clock Town")]
         SouthClockTown,
 
         [RegionName("North Clock Town")]
         NorthClockTown,
+
+        [RegionName("Deku Playground Items")]
+        DekuPlaygroundItems,
 
         [RegionName("East Clock Town")]
         EastClockTown,
@@ -40,8 +46,14 @@ namespace MMR.Randomizer.GameObjects
         [RegionName("Southern Swamp")]
         SouthernSwamp,
 
+        [RegionName("Swamp Spider House Items")]
+        SwampSpiderHouseItems,
+
         [RegionName("Deku Palace")]
         DekuPalace,
+
+        [RegionName("Butler Race Items")]
+        ButlerRaceItems,
 
         [RegionName("Woodfall")]
         Woodfall,
@@ -49,11 +61,17 @@ namespace MMR.Randomizer.GameObjects
         [RegionName("Woodfall Temple")]
         WoodfallTemple,
 
+        [RegionName("Path to Mountain Village")]
+        PathToMountainVillage,
+
         [RegionName("Mountain Village")]
         MountainVillage,
 
         [RegionName("Twin Islands")]
         TwinIslands,
+
+        [RegionName("Goron Race Items")]
+        GoronRaceItems,
 
         [RegionName("Goron Village")]
         GoronVillage,
@@ -75,6 +93,9 @@ namespace MMR.Randomizer.GameObjects
 
         [RegionName("Great Bay Coast")]
         GreatBayCoast,
+
+        [RegionName("Ocean Spider House Items")]
+        OceanSpiderHouseItems,
 
         [RegionName("Zora Cape")]
         ZoraCape,

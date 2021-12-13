@@ -165,17 +165,39 @@
  <tr>
      <th>Item</th>
      <th></th>
+     <th>Region</th>
      <th>Location</th>
  </tr>
-<# foreach (var item in spoiler.ItemList.Where(item => !item.IsJunk)) {
+<# foreach (var itemCategory in spoiler.ItemList.Where(item => !item.IsJunk).GroupBy(item => item.ItemCategory).OrderBy(g => g.Key)) {
 #>
- <tr data-id="<#= item.Id #>" data-newlocationid="<#= item.NewLocationId #>">
-    <td><#= item.Name #></td>
+ <tr class="region"><td colspan="4"><#= itemCategory.Key.ToString() #></td></tr>
+ <# foreach (var items in itemCategory.GroupBy(item => item.Id).OrderBy(g => g.Key)) { #>
+ <tr data-id="<#= items.Key #>" data-newlocationid="<#= items.First().NewLocationId #>">
+    <td><#= items.First().Name #></td>
     <td><input type="checkbox"/></td>
-    <td class="spoiler newlocation"> <span data-content="<#= item.NewLocationName #>"></span></td>
+    <td class="spoiler newlocation"> <span data-content="<#= string.Join(" / ", items.Select(item => item.Region.Name())) #>"></span></td>
+    <td class="spoiler newlocation"> <span data-content="<#= items.First().NewLocationName #>"></span></td>
  </tr>
+ <# } #>
 <# } #>
 </table>
+<# if (spoiler.MessageCosts.Count > 0) { 
+#>
+<h2>Randomized Prices</h2>
+<table border="1">
+    <tr>
+        <th>Name</th>
+        <th>Cost</th>
+    </tr>
+<#    foreach (var (name, cost) in spoiler.MessageCosts) { 
+#>
+    <tr>
+        <td><#= name #></td>
+        <td class="spoiler"><span data-content="<#= cost #>"></span></td>
+    </tr>
+<# } #>
+</table>
+<# } #>
 <# if (spoiler.GossipHints != null && spoiler.GossipHints.Any()) { 
 #>
 <h2>Gossip Stone Hints</h2>
@@ -308,8 +330,8 @@
                 itemsToCheck.push(newLocation.ItemId);
             }
         
-            var locationRow = document.querySelector(".item-replacements tr[data-newlocationid='" + locations[i] + "']");
-            if (locationRow) {
+            var locationRows = document.querySelectorAll(".item-replacements tr[data-newlocationid='" + locations[i] + "']");
+            for (const locationRow of locationRows) {
                 locationRow.className = "";
                 locationRow.classList.add(location.IsAvailable ? "available" : "unavailable");
                 var itemName = locationRow.querySelector(".itemname");
@@ -322,16 +344,18 @@
                 }
             }
         
-            var itemRow = document.querySelector("#item-locations tr[data-newlocationid='" + locations[i] + "']");
-            if (itemRow) {
-                var itemName = itemRow.querySelector(".newlocation");
+            var itemRows = document.querySelectorAll("#item-locations tr[data-newlocationid='" + locations[i] + "']");
+            for (const itemRow of itemRows) {
+                var itemNames = itemRow.querySelectorAll(".newlocation");
                 var checkbox = itemRow.querySelector("input");
                 var item = logic[itemRow.dataset.id];
                 checkbox.checked = item.Acquired;
-                if (item.Acquired) {
-                    itemName.classList.remove("spoiler");
-                } else {
-                    itemName.classList.add("spoiler");
+                for (const itemName of itemNames) {
+                    if (item.Acquired) {
+                        itemName.classList.remove("spoiler");
+                    } else {
+                        itemName.classList.add("spoiler");
+                    }
                 }
             }
         }
@@ -348,8 +372,8 @@
         var item = logic[i];
         if (item.Acquired) {
             item.Checked = true;
-            var input = document.querySelector("tr[data-newlocationid='" + i + "'] input");
-            if (input) {
+            var inputs = document.querySelectorAll("tr[data-newlocationid='" + i + "'] input");
+            for (const input of inputs) {
                 input.checked = true;
             }
         }
@@ -395,7 +419,7 @@
         checkLocations(locationsToCheck);
     }
 
-    var startingLocations = [0, 94, 274, 275, 276, 277];
+    var startingLocations = [0, 97, 281, 282, 283, 284];
     for (var id of startingLocations) {
         logic[id].Checked = true;
         var row = document.querySelector("tr[data-newlocationid='" + id + "']");

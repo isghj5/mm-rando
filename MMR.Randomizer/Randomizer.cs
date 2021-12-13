@@ -20,7 +20,7 @@ namespace MMR.Randomizer
 {
     public class Randomizer
     {
-        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString();
+        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString() + "-beta";
 
         private Random Random { get; set; }
 
@@ -143,13 +143,14 @@ namespace MMR.Randomizer
 
                 if (itemObject.Conditionals != null)
                 {
-                    itemObject.Conditionals.RemoveAll(c => c.Any(item => ItemList[item].IsTrick && !_settings.EnabledTricks.Contains((int)item)));
+                    itemObject.Conditionals.RemoveAll(c => c.Any(item => ItemList[item].IsTrick && !_settings.EnabledTricks.Contains(ItemList[item].Name)));
                 }
             }
 
-            if (_settings.CustomItemList.Any(item => item.LocationCategory() == LocationCategory.Purchases))
+            if (_settings.CustomItemList.Contains(Item.ShopItemBusinessScrubMagicBean))
             {
-                ItemList[Item.ShopItemWitchBluePotion].DependsOnItems?.Remove(Item.BottleCatchMushroom);
+                ItemList[Item.ShopItemBusinessScrubMagicBeanInSwamp].DependsOnItems.Remove(Item.OtherMagicBean);
+                ItemList[Item.ShopItemBusinessScrubMagicBeanInTown].DependsOnItems.Remove(Item.OtherMagicBean);
             }
 
             if (_settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.ScoopedItems) && _settings.LogicMode == LogicMode.Casual)
@@ -165,7 +166,8 @@ namespace MMR.Randomizer
 
             var arrows40 = ItemList
                 .FirstOrDefault(io =>
-                    io.DependsOnItems.Count == 0
+                    io.Item.IsFake()
+                    && io.DependsOnItems.Count == 0
                     && io.Conditionals.Count == 2
                     && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigQuiver }))
                     && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBiggestQuiver })));
@@ -268,7 +270,8 @@ namespace MMR.Randomizer
 
                 var bombs20 = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 3
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ItemBombBag }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigBombBag }))
@@ -276,7 +279,8 @@ namespace MMR.Randomizer
 
                 var bombs30 = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 2
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBigBombBag }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeBiggestBombBag})));
@@ -321,7 +325,8 @@ namespace MMR.Randomizer
 
                 var sword1 = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 3
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.StartingSword }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRazorSword }))
@@ -329,7 +334,8 @@ namespace MMR.Randomizer
 
                 var sword2 = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 2
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRazorSword }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGildedSword })));
@@ -374,12 +380,47 @@ namespace MMR.Randomizer
 
                 var wallets200 = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
-                        && io.Conditionals.Count == 2
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 3
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeAdultWallet }))
-                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet })));
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
 
-                var wallets500 = new ItemObject
+                var wallets500 = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
+                if (wallets500 == null)
+                {
+                    wallets500 = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        Conditionals = new List<Item>
+                        {
+                            Item.UpgradeAdultWallet,
+                            Item.UpgradeGiantWallet,
+                            Item.UpgradeRoyalWallet,
+                        }.Combinations(2).Select(a => a.ToList()).ToList(),
+                    };
+                    ItemList.Add(wallets500);
+                }
+                else
+                {
+                    wallets500.Conditionals.Clear();
+                    wallets500.Conditionals.AddRange(new List<Item>
+                    {
+                        Item.UpgradeAdultWallet,
+                        Item.UpgradeGiantWallet,
+                        Item.UpgradeRoyalWallet,
+                    }.Combinations(2).Select(a => a.ToList()));
+                }
+
+                var wallets999 = new ItemObject
                 {
                     ID = ItemList.Count,
                     TimeAvailable = 63,
@@ -387,13 +428,15 @@ namespace MMR.Randomizer
                     {
                         Item.UpgradeAdultWallet,
                         Item.UpgradeGiantWallet,
+                        Item.UpgradeRoyalWallet,
                     },
                 };
-                ItemList.Add(wallets500);
+                ItemList.Add(wallets999);
 
                 var magicAny = ItemList
                     .FirstOrDefault(io =>
-                        io.DependsOnItems.Count == 0
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
                         && io.Conditionals.Count == 2
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.FairyMagic }))
                         && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.FairyDoubleMagic })));
@@ -430,16 +473,22 @@ namespace MMR.Randomizer
                         }
                     }
 
-                    if (itemObject != wallets500 && itemObject.DependsOnItems.Contains(Item.UpgradeGiantWallet))
+                    if (itemObject != wallets999 && itemObject.DependsOnItems.Contains(Item.UpgradeRoyalWallet))
                     {
-                        itemObject.DependsOnItems.Remove(Item.UpgradeGiantWallet);
-                        itemObject.DependsOnItems.Add(wallets500.Item);
+                        itemObject.DependsOnItems.Remove(Item.UpgradeRoyalWallet);
+                        itemObject.DependsOnItems.Add(wallets999.Item);
                     }
 
-                    if (itemObject != wallets200)
+                    if (itemObject != wallets200 && itemObject != wallets500)
                     {
                         foreach (var conditions in itemObject.Conditionals)
                         {
+                            if (conditions.Contains(Item.UpgradeRoyalWallet))
+                            {
+                                conditions.Remove(Item.UpgradeRoyalWallet);
+                                conditions.Add(wallets999.Item);
+                            }
+
                             if (conditions.Contains(Item.UpgradeGiantWallet))
                             {
                                 conditions.Remove(Item.UpgradeGiantWallet);
@@ -529,13 +578,15 @@ namespace MMR.Randomizer
                 || _settings.LogicMode == LogicMode.Glitched
                 || _settings.LogicMode == LogicMode.UserLogic)
             {
-                string[] data = LogicUtils.ReadRulesetFromResources(_settings.LogicMode, _settings.UserLogicFileName);
+                var data = LogicUtils.ReadRulesetFromResources(_settings.LogicMode, _settings.UserLogicFileName);
                 ItemList = LogicUtils.PopulateItemListFromLogicData(data);
             }
             else
             {
                 ItemList = LogicUtils.PopulateItemListWithoutLogic();
             }
+
+            RandomizePrices();
 
             UpdateLogicForSettings();
 
@@ -557,7 +608,7 @@ namespace MMR.Randomizer
             var currentItemObject = ItemList[currentItem];
             var currentTargetObject = ItemList[target];
 
-            if (currentTargetObject.IsTrick && !_settings.EnabledTricks.Contains(currentTargetObject.ID))
+            if (currentTargetObject.IsTrick && !_settings.EnabledTricks.Contains(currentTargetObject.Name))
             {
                 return Dependence.Dependent;
             }
@@ -568,7 +619,7 @@ namespace MMR.Randomizer
             }
 
             //check timing
-            if (currentItemObject.TimeNeeded != 0 && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary()))
+            if (currentItemObject.TimeNeeded != 0 && (!_timeTravelPlaced || dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary(_randomized.Settings))))
             {
                 if ((currentItemObject.TimeNeeded & currentTargetObject.TimeAvailable) == 0)
                 {
@@ -618,6 +669,10 @@ namespace MMR.Randomizer
                         }
                         else
                         {
+                            if (!_timeTravelPlaced && _timeTravelPath.Contains(d) && ItemList[d].NewLocation.HasValue)
+                            {
+                                DependenceChecked[ItemList[d].NewLocation.Value] = Dependence.Dependent;
+                            }
                             d = ItemList[d].NewLocation ?? d;
                             if (dependencyPath.Contains(d))
                             {
@@ -697,7 +752,7 @@ namespace MMR.Randomizer
             //cycle through all things
             foreach (var dependency in currentTargetObject.DependsOnItems)
             {
-                if (!currentItem.IsTemporary() && target == Item.MaskBlast && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
+                if (!currentItem.IsTemporary(_randomized.Settings) && target == Item.MaskBlast && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
                 {
                     // Permanent items ignore Kafei Letter and Pendant on Blast Mask check.
                     continue;
@@ -715,6 +770,12 @@ namespace MMR.Randomizer
                 if (dependency.IsFake()
                     || ItemList[dependency].NewLocation.HasValue)
                 {
+                    if (!_timeTravelPlaced && _timeTravelPath.Contains(dependency) && ItemList[dependency].NewLocation.HasValue)
+                    {
+                        Debug.WriteLine($"{dependency} has already been placed and must be avoided as a requirement during time travel logic.");
+                        return Dependence.Dependent;
+                    }
+
                     var location = ItemList[dependency].NewLocation ?? dependency;
 
                     if (dependencyPath.Contains(location))
@@ -860,7 +921,7 @@ namespace MMR.Randomizer
             var targetItemObject = ItemList[target];
             if (target == Item.MaskBlast)
             {
-                if (!currentItem.IsTemporary())
+                if (!currentItem.IsTemporary(_randomized.Settings))
                 {
                     targetItemObject.DependsOnItems?.Remove(Item.TradeItemKafeiLetter);
                     targetItemObject.DependsOnItems?.Remove(Item.TradeItemPendant);
@@ -877,6 +938,7 @@ namespace MMR.Randomizer
                 {
                     dependencyObject.CannotRequireItems.Add(currentItem);
                 }
+
                 if (dependency.IsFake() || dependencyObject.NewLocation.HasValue)
                 {
                     var location = dependencyObject.NewLocation ?? dependency;
@@ -888,7 +950,7 @@ namespace MMR.Randomizer
                         CheckConditionals(currentItem, location, childPath);
                     }
                 }
-                else if (ItemList[currentItem].TimeNeeded != 0 && dependency.IsTemporary() && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary()))
+                else if (ItemList[currentItem].TimeNeeded != 0 && (!_timeTravelPlaced || (dependency.IsTemporary(_randomized.Settings) && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary(_randomized.Settings)))))
                 {
                     if (dependencyObject.TimeNeeded == 0)
                     {
@@ -928,7 +990,7 @@ namespace MMR.Randomizer
                 return true;
             }
 
-            if (_settings.CustomJunkLocations.Contains(target) && !ItemUtils.IsJunk(currentItem))
+            if ((_settings.CustomJunkLocations.Contains(target) || target == Item.UpgradeRoyalWallet) && !ItemUtils.IsJunk(currentItem))
             {
                 return false;
             }
@@ -946,11 +1008,11 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            if (currentItem.IsTemporary())
+            if (!_timeTravelPlaced || currentItem.IsTemporary(_randomized.Settings))
             {
-                if (target.Region() == Region.TheMoon)
+                if ((target.Region() == Region.TheMoon || target.Region() == Region.ClockTowerRoof) && currentItem.ItemCategory() != ItemCategory.TimeTravel)
                 {
-                    Debug.WriteLine($"{currentItem} is temporary and cannot be placed on the moon.");
+                    Debug.WriteLine($"{currentItem} is temporary and cannot be placed on the moon or clock tower roof.");
                     return false;
                 }
 
@@ -977,12 +1039,97 @@ namespace MMR.Randomizer
             RemoveConditionals(currentItem);
             ConditionsChecked = new List<Item>();
             CheckConditionals(currentItem, target, dependencyPath);
+
+            if (currentItem == Item.SongTime && (target.Region() != Region.TheMoon || target.Region() != Region.ClockTowerRoof))
+            {
+                foreach (var itemObject in ItemList.Where(io => (io.Item.Region() == Region.TheMoon || io.Item.Region() == Region.ClockTowerRoof)))
+                {
+                    itemObject.DependsOnItems.Add(Item.SongTime);
+                }
+            }
+
             return true;
         }
 
-        private void PlaceItem(Item currentItem, List<Item> targets, bool lockRegion = false)
+        private void UpdateTimeNeeded(ItemObject source, ItemObject target)
+        {
+            if (!_timeTravelPlaced && source.TimeSetup != 0)
+            {
+                if (target.TimeNeeded == 0)
+                {
+                    target.TimeNeeded = source.TimeSetup;
+                }
+                else
+                {
+                    target.TimeNeeded &= source.TimeSetup;
+                }
+            }
+
+        }
+
+        private void PlaceRequirements(Item currentItem, List<Item> targets)
+        {
+            if (!ItemUtils.IsJunk(currentItem))
+            {
+                _timeTravelPath.Push(currentItem);
+
+                var currentItemObject = ItemList[currentItem];
+                var location = ItemList[currentItemObject.NewLocation.Value];
+                var placed = new List<Item>();
+                foreach (var requiredItem in location.DependsOnItems.AllowModification().Where(item => item.IsSameType(currentItem)))
+                {
+                    UpdateTimeNeeded(location, ItemList[requiredItem]);
+
+                    PlaceItem(requiredItem, targets);
+                }
+                var conditional = _timeTravelChosenConditionals.FirstOrDefault(location.Conditionals.Contains);
+                if (conditional == null)
+                {
+                    conditional = location.Conditionals.RandomOrDefault(Random);
+                    _timeTravelChosenConditionals.Add(conditional);
+                }
+                if (conditional != null)
+                {
+                    foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
+                    {
+                        UpdateTimeNeeded(location, ItemList[item]);
+
+                        PlaceItem(item, targets);
+                    }
+                }
+
+                _timeTravelPath.Pop();
+            }
+        }
+
+        private void PlaceItem(Item currentItem, List<Item> targets, Func<Item, Item, bool> restriction = null)
         {
             var currentItemObject = ItemList[currentItem];
+            if (currentItem.IsFake())
+            {
+                foreach (var requiredItem in currentItemObject.DependsOnItems.AllowModification().Where(item => item.IsSameType(currentItem)))
+                {
+                    UpdateTimeNeeded(currentItemObject, ItemList[requiredItem]);
+
+                    PlaceItem(requiredItem, targets);
+                }
+                var conditional = _timeTravelChosenConditionals.FirstOrDefault(currentItemObject.Conditionals.Contains);
+                if (conditional == null)
+                {
+                    conditional = currentItemObject.Conditionals.RandomOrDefault(Random);
+                    _timeTravelChosenConditionals.Add(conditional);
+                }
+                if (conditional != null)
+                {
+                    foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
+                    {
+                        UpdateTimeNeeded(currentItemObject, ItemList[item]);
+
+                        PlaceItem(item, targets);
+                    }
+                }
+                return;
+            }
             if (currentItemObject.NewLocation.HasValue)
             {
                 return;
@@ -995,9 +1142,14 @@ namespace MMR.Randomizer
                 availableItems.Remove(Item.SongHealing);
             }
 
-            if (lockRegion)
+            if (restriction != null)
             {
-                availableItems.RemoveAll(location => location.Region() != currentItem.Region());
+                availableItems.RemoveAll(location => !restriction(currentItem, location));
+            }
+
+            if (!_settings.AddSongs)
+            {
+                availableItems.RemoveAll(location => location.IsSong() != currentItem.IsSong());
             }
 
             currentItem = currentItemObject.Item;
@@ -1020,7 +1172,8 @@ namespace MMR.Randomizer
                     Debug.WriteLine($"----Placed {currentItem.Name()} at {targetLocation.Location()}----");
 
                     targets.Remove(targetLocation);
-                    return;
+
+                    break;
                 }
                 else
                 {
@@ -1028,11 +1181,24 @@ namespace MMR.Randomizer
                     availableItems.Remove(targetLocation);
                 }
             }
+
+            if (!_timeTravelPlaced)
+            {
+                PlaceRequirements(currentItem, targets);
+            }
         }
 
         private void SetupItems()
         {
             SetupCustomItems();
+
+            if (_settings.ProgressiveUpgrades)
+            {
+                _settings.CustomStartingItemList = _settings.CustomStartingItemList
+                    .GroupBy(item => ItemUtils.ForbiddenStartTogether.FirstOrDefault(fst => fst.Contains(item)))
+                    .SelectMany(g => g.Key == null || g.Key.Contains(Item.StartingShield) ? g.ToList() : g.Key.Take(g.Count()))
+                    .ToList();
+            }
 
             foreach (var item in _settings.CustomStartingItemList)
             {
@@ -1068,6 +1234,166 @@ namespace MMR.Randomizer
             }
         }
 
+        private void RandomizePrices()
+        {
+            Func<ushort> RandomPrice = _settings.PriceMode.HasFlag(PriceMode.AccountForRoyalWallet) && _settings.CustomItemList.Contains(Item.UpgradeRoyalWallet)
+                ? () => (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 8.5) * 999, 1, 999)
+                : () => (ushort)Math.Clamp(1 + Random.BetaVariate(1.5, 4.0) * 500, 1, 500);
+
+            _randomized.MessageCosts = new List<ushort?>();
+            // TODO if costs randomized
+            for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
+            {
+                var messageCost = MessageCost.MessageCosts[i];
+                if (!_settings.PriceMode.HasFlag(messageCost.Category))
+                {
+                    _randomized.MessageCosts.Add(null);
+                    continue;
+                }
+                var cost = RandomPrice();
+
+                // this relies on puchase 2 appearing in the list directly after purchase 1
+                if (messageCost.Name == "Business Scrub Purchase 2")
+                {
+                    var purchase1Cost = _randomized.MessageCosts[i - 1] ?? 150;
+                    while (cost == purchase1Cost)
+                    {
+                        cost = RandomPrice();
+                    }
+                }
+
+                _randomized.MessageCosts.Add(cost);
+            }
+
+            if (_settings.LogicMode != LogicMode.NoLogic)
+            {
+                var wallets200 = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 3
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeAdultWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
+
+                if (wallets200 == null)
+                {
+                    wallets200 = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        Conditionals = new List<List<Item>>
+                        {
+                            new List<Item> { Item.UpgradeAdultWallet },
+                            new List<Item> { Item.UpgradeGiantWallet },
+                            new List<Item> { Item.UpgradeRoyalWallet },
+                        },
+                    };
+                    ItemList.Add(wallets200);
+                }
+
+                var wallets500 = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeGiantWallet }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.UpgradeRoyalWallet })));
+
+                if (wallets500 == null)
+                {
+                    wallets500 = new ItemObject
+                    {
+                        ID = ItemList.Count,
+                        TimeAvailable = 63,
+                        Conditionals = new List<List<Item>>
+                        {
+                            new List<Item> { Item.UpgradeGiantWallet },
+                            new List<Item> { Item.UpgradeRoyalWallet },
+                        },
+                    };
+                    ItemList.Add(wallets500);
+                }
+
+                var affectedLocations = new Dictionary<Item, short>();
+                for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
+                {
+                    var messageCost = MessageCost.MessageCosts[i];
+                    var cost = _randomized.MessageCosts[i];
+                    if (!cost.HasValue)
+                    {
+                        continue;
+                    }
+
+                    foreach (var location in messageCost.LocationsAffected)
+                    {
+                        var affectedCost = affectedLocations.GetValueOrDefault(location, short.MaxValue);
+                        if (cost < affectedCost)
+                        {
+                            ItemList[location].DependsOnItems.Remove(wallets200.Item);
+                            ItemList[location].DependsOnItems.Remove(wallets500.Item);
+                            ItemList[location].DependsOnItems.Remove(Item.UpgradeRoyalWallet);
+                            if (cost > 500)
+                            {
+                                ItemList[location].DependsOnItems.Add(Item.UpgradeRoyalWallet);
+                            }
+                            else if (cost > 200)
+                            {
+                                ItemList[location].DependsOnItems.Add(wallets500.Item);
+                            }
+                            else if (cost > 99)
+                            {
+                                ItemList[location].DependsOnItems.Add(wallets200.Item);
+                            }
+                        }
+                    }
+                }
+
+                for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
+                {
+                    var messageCost = MessageCost.MessageCosts[i];
+                    var cost = _randomized.MessageCosts[i];
+                    if (!cost.HasValue)
+                    {
+                        continue;
+                    }
+
+                    Item walletRequired;
+                    if (cost > 200)
+                    {
+                        walletRequired = Item.UpgradeGiantWallet;
+                    }
+                    else if (cost > 99)
+                    {
+                        walletRequired = wallets200.Item;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+
+                    foreach (var item in messageCost.ItemsAffected)
+                    {
+                        foreach (var io in ItemList)
+                        {
+                            if (io.DependsOnItems.Contains(item))
+                            {
+                                io.DependsOnItems.Add(walletRequired);
+                            }
+
+                            foreach (var conditionalItems in io.Conditionals)
+                            {
+                                if (conditionalItems.Contains(item))
+                                {
+                                    conditionalItems.Add(walletRequired);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         private void ReplaceRecoveryHeartsWithJunk()
         {
             var allUsableJunk = ItemUtils.JunkItems.Where(item => item.IsRepeatable()).ToList();
@@ -1085,13 +1411,44 @@ namespace MMR.Randomizer
             }
         }
 
+        private void RemoveFreeRequirements()
+        {
+            var freeItems = _settings.CustomStartingItemList
+                .Union(ItemList.Where(io => io.NewLocation.HasValue && ItemUtils.IsStartingLocation(io.NewLocation.Value)).Select(io => io.Item))
+                .ToList();
+
+            bool updated;
+            do
+            {
+                updated = false;
+                foreach (var itemObject in ItemList.Where(io => io.Item.IsFake() && !freeItems.Contains(io.Item)))
+                {
+                    if ((itemObject.DependsOnItems?.All(id => freeItems.Contains(id)) != false)
+                        && (itemObject.Conditionals?.Any(c => c.All(id => freeItems.Contains(id))) != false)
+                        && (itemObject.DependsOnItems != null || itemObject.Conditionals != null))
+                    {
+                        freeItems.Add(itemObject.Item);
+                        updated = true;
+                    }
+                }
+            } while (updated);
+
+            foreach (var itemObject in ItemList)
+            {
+                itemObject.DependsOnItems.RemoveAll(freeItems.Contains);
+
+                if (itemObject.Conditionals.Any(c => c.All(freeItems.Contains)))
+                {
+                    itemObject.Conditionals.Clear();
+                }
+            }
+        }
+         
+        private bool _timeTravelPlaced = true;
+        private Stack<Item> _timeTravelPath = new Stack<Item>();
+        private List<List<Item>> _timeTravelChosenConditionals = new List<List<Item>>();
         private void RandomizeItems()
         {
-            if (!_settings.AddSongs)
-            {
-                ShuffleSongs();
-            }
-
             var itemPool = new List<Item>();
 
             AddAllItems(itemPool);
@@ -1099,6 +1456,22 @@ namespace MMR.Randomizer
             PlaceRestrictedDungeonItems(itemPool);
 
             PlaceFreeItems(itemPool);
+
+            RemoveFreeRequirements();
+
+            _timeTravelPlaced = false;
+            _timeTravelPath.Clear();
+            _timeTravelChosenConditionals.Clear();
+
+            PlaceItem(Item.SongTime, itemPool);
+            PlaceItem(Item.OtherTimeTravel, itemPool);
+
+            _timeTravelPlaced = true;
+            _timeTravelPath.Clear();
+            _timeTravelChosenConditionals.Clear();
+
+            PlaceOcarinaAndSongOfTime(itemPool);
+            PlaceBossRemains(itemPool);
             PlaceQuestItems(itemPool);
             PlaceTradeItems(itemPool);
             PlaceDungeonItems(itemPool);
@@ -1294,11 +1667,16 @@ namespace MMR.Randomizer
 
         private void PlaceRestrictedDungeonItems(List<Item> itemPool)
         {
+            bool LockRegion(Item item, Item location)
+            {
+                return item.Region() == location.Region();
+            }
+
             if (_randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon))
             {
                 foreach (var item in ItemUtils.SmallKeys())
                 {
-                    PlaceItem(item, itemPool, true);
+                    PlaceItem(item, itemPool, LockRegion);
                 }
             }
 
@@ -1306,7 +1684,7 @@ namespace MMR.Randomizer
             {
                 foreach (var item in ItemUtils.BossKeys())
                 {
-                    PlaceItem(item, itemPool, true);
+                    PlaceItem(item, itemPool, LockRegion);
                 }
             }
 
@@ -1314,7 +1692,23 @@ namespace MMR.Randomizer
             {
                 foreach (var item in ItemUtils.DungeonStrayFairies())
                 {
-                    PlaceItem(item, itemPool, true);
+                    PlaceItem(item, itemPool, LockRegion);
+                }
+            }
+
+            if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
+            {
+                PlaceItem(Item.RemainsOdolwa, itemPool, (item, location) => location == Item.FairySpinAttack);
+                PlaceItem(Item.RemainsGoht, itemPool, (item, location) => location == Item.FairyDoubleMagic);
+                PlaceItem(Item.RemainsGyorg, itemPool, (item, location) => location == Item.FairyDoubleDefense);
+                PlaceItem(Item.RemainsTwinmold, itemPool, (item, location) => location == Item.ItemFairySword);
+            }
+
+            if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinDungeon))
+            {
+                foreach (var item in ItemUtils.BossRemains())
+                {
+                    PlaceItem(item, itemPool, LockRegion);
                 }
             }
         }
@@ -1335,9 +1729,11 @@ namespace MMR.Randomizer
         /// </summary>
         private void PlaceSongs(List<Item> itemPool)
         {
-            for (var i = Item.SongHealing; i <= Item.SongOath; i++)
+            var songs = Enumerable.Range((int)Item.SongHealing, Item.SongOath - Item.SongHealing + 1).Cast<Item>();
+
+            foreach (var song in songs.OrderBy(s => _randomized.Settings.CustomStartingItemList.Contains(s)))
             {
-                PlaceItem(i, itemPool);
+                PlaceItem(song, itemPool);
             }
         }
 
@@ -1357,7 +1753,7 @@ namespace MMR.Randomizer
         /// </summary>
         private void PlaceUpgrades(List<Item> itemPool)
         {
-            for (var i = Item.UpgradeRazorSword; i <= Item.UpgradeGiantWallet; i++)
+            for (var i = Item.UpgradeRazorSword; i <= Item.UpgradeRoyalWallet; i++)
             {
                 PlaceItem(i, itemPool);
             }
@@ -1389,10 +1785,15 @@ namespace MMR.Randomizer
                 Item.StartingHeartContainer2,
             };
             var availableStartingItems = (_settings.StartingItemMode switch {
-                    StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary() && item != Item.ItemPowderKeg),
+                    StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary(_randomized.Settings) && item != Item.ItemPowderKeg),
                     StartingItemMode.AllowTemporaryItems => ItemUtils.StartingItems(),
                     _ => ItemUtils.AllRupees(),
                 })
+                .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item))
+                .Cast<Item?>()
+                .ToList();
+            var availableSongs = ItemUtils.StartingItems()
+                .Where(item => item.IsSong())
                 .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item))
                 .Cast<Item?>()
                 .ToList();
@@ -1401,7 +1802,7 @@ namespace MMR.Randomizer
                 var placedItem = ItemList.FirstOrDefault(item => item.NewLocation == location)?.Item;
                 if (placedItem == null)
                 {
-                    placedItem = availableStartingItems.RandomOrDefault(Random);
+                    placedItem = (!_settings.AddSongs && location.IsSong() ? availableSongs : availableStartingItems).RandomOrDefault(Random);
                     if (placedItem == null)
                     {
                         throw new Exception("Failed to replace a starting item. Not enough items that can be started with are randomized or too many Extra Starting Items are selected.");
@@ -1427,6 +1828,20 @@ namespace MMR.Randomizer
         private void AddAllItems(List<Item> itemPool)
         {
             itemPool.AddRange(ItemUtils.AllLocations().Where(location => !ItemList.Any(io => io.NewLocation == location)));
+        }
+
+        private void PlaceOcarinaAndSongOfTime(List<Item> itemPool)
+        {
+            PlaceItem(Item.SongTime, itemPool);
+            PlaceItem(Item.ItemOcarina, itemPool);
+        }
+
+        private void PlaceBossRemains(List<Item> itemPool)
+        {
+            for (var i = Item.RemainsOdolwa; i <= Item.RemainsTwinmold; i++)
+            {
+                PlaceItem(i, itemPool);
+            }
         }
 
         /// <summary>
@@ -1576,13 +1991,13 @@ namespace MMR.Randomizer
                 item.Mimic = mimic;
 
                 var newLocation = item.NewLocation.Value;
-                if (newLocation.IsVisible() || newLocation.IsShop() || newLocation.IsPurchaseable())
+                if (newLocation.IsVisible() || newLocation.IsPurchaseable())
                 {
                     // Store name override for logging in HTML tracker.
                     item.NameOverride = $"{Item.IceTrap.Name()} ({mimic.Item.Name()})";
 
                     // If ice trap quirks enabled and placed as a shop item, use a fake shop item name.
-                    if (_settings.IceTrapQuirks && (newLocation.IsShop() || newLocation.IsPurchaseable()))
+                    if (_settings.IceTrapQuirks && newLocation.IsPurchaseable())
                     {
                         item.Mimic.FakeName = FakeNameUtils.CreateFakeName(item.Mimic.Item.Name(), random);
                     }
@@ -1678,6 +2093,8 @@ namespace MMR.Randomizer
                     }
                 }
 
+                progressReporter.ReportProgress(32, "Calculating item importance...");
+
                 var logicForRequiredItems = _settings.LogicMode == LogicMode.Casual && _settings.GossipHintStyle == GossipHintStyle.Competitive
                     ? _randomized.Logic.Select(il =>
                     {
@@ -1690,21 +2107,37 @@ namespace MMR.Randomizer
                     }).ToList()
                     : _randomized.Logic;
 
-                _randomized.ImportantItems = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic)?.Important.Where(item => !item.IsFake()).ToList().AsReadOnly();
-                if (_randomized.ImportantItems == null)
+                var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic);
+                var importantLocations = logicPaths?.Important.Where(item => item.Region().HasValue).Distinct().ToHashSet();
+                var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
+                if (importantLocations == null)
                 {
                     throw new RandomizationException("Moon Access is unobtainable.");
                 }
-                var itemsRequiredForMoonAccess = new List<Item>();
-                foreach (var item in _randomized.ImportantItems)
+                var locationsRequiredForMoonAccess = new List<Item>();
+                foreach (var location in importantLocations.AllowModification())
                 {
-                    var checkPaths = LogicUtils.GetImportantItems(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: item);
+                    if (!ItemUtils.CanBeRequired(ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item))
+                    {
+                        continue;
+                    }
+                    var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: location);
                     if (checkPaths == null)
                     {
-                        itemsRequiredForMoonAccess.Add(item);
+                        locationsRequiredForMoonAccess.Add(location);
+                    }
+                    else
+                    {
+                        foreach (var checkedLocation in checkPaths.Important.Distinct().Where(item => item.Region().HasValue))
+                        {
+                            importantLocations.Add(checkedLocation);
+                        }
+                        importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
                     }
                 }
-                _randomized.ItemsRequiredForMoonAccess = itemsRequiredForMoonAccess.AsReadOnly();
+                _randomized.ImportantLocations = importantLocations.ToList().AsReadOnly();
+                _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
+                _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.AsReadOnly();
 
                 if (_settings.GossipHintStyle != GossipHintStyle.Default)
                 {

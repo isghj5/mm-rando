@@ -5,7 +5,6 @@
 #include <z64.h>
 
 bool Icetrap_Give(ActorPlayer* player, GlobalContext* ctxt);
-bool Icetrap_IsPending(void);
-void Icetrap_PushPending(void);
+void Icetrap_PushPending(u8 type);
 
 #endif // ICETRAP_H

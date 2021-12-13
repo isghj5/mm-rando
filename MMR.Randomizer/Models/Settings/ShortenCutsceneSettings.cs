@@ -10,6 +10,8 @@
             | ShortenCutsceneGeneral.HungryGoron
             | ShortenCutsceneGeneral.TatlInterrupts
             | ShortenCutsceneGeneral.FasterBankText
+            | ShortenCutsceneGeneral.GoronVillageOwl
+            | ShortenCutsceneGeneral.AutomaticCredits
             | ShortenCutsceneGeneral.EverythingElse
             ;
 
@@ -17,9 +19,7 @@
             ShortenCutsceneBossIntro.Odolwa
             | ShortenCutsceneBossIntro.Goht
             | ShortenCutsceneBossIntro.Gyorg
-            | ShortenCutsceneBossIntro.Twinmold
             | ShortenCutsceneBossIntro.Majora
-            | ShortenCutsceneBossIntro.Wart
             | ShortenCutsceneBossIntro.IgosDuIkana
             | ShortenCutsceneBossIntro.Gomess;
     }

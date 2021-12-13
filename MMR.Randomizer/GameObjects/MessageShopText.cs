@@ -4,25 +4,25 @@ namespace MMR.Randomizer.GameObjects
 {
     public enum MessageShopText
     {
-        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapTown, 5, Item.ItemTingleMapWoodfall, 40)]
+        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapTown, Item.ItemTingleMapWoodfall)]
         Town = 0x1D11,
 
-        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapWoodfall, 20, Item.ItemTingleMapSnowhead, 40)]
+        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapWoodfall, Item.ItemTingleMapSnowhead)]
         Swamp = 0x1D12,
 
-        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapSnowhead, 20, Item.ItemTingleMapRanch, 40)]
+        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapSnowhead, Item.ItemTingleMapRanch)]
         Mountain = 0x1D13,
 
-        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapRanch, 20, Item.ItemTingleMapGreatBay, 40)]
+        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapRanch, Item.ItemTingleMapGreatBay)]
         Ranch = 0x1D14,
 
-        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapGreatBay, 20, Item.ItemTingleMapStoneTower, 40)]
+        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapGreatBay, Item.ItemTingleMapStoneTower)]
         Ocean = 0x1D15,
 
-        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapStoneTower, 20, Item.ItemTingleMapTown, 40)]
+        [MessageShop(MessageShopStyle.Tingle, Item.ItemTingleMapStoneTower, Item.ItemTingleMapTown)]
         Canyon = 0x1D16,
 
-        [MessageShop(MessageShopStyle.MilkBar, Item.ShopItemMilkBarMilk, 20, Item.ShopItemMilkBarChateau, 200)]
+        [MessageShop(MessageShopStyle.MilkBar, Item.ShopItemMilkBarMilk, Item.ShopItemMilkBarChateau)]
         MilkBar = 0x2B0B,
     }
 
@@ -36,13 +36,11 @@ namespace MMR.Randomizer.GameObjects
     {
         public MessageShopStyle MessageShopStyle { get; }
         public Item[] Items { get; }
-        public int[] Prices { get; }
 
-        public MessageShopAttribute(MessageShopStyle messageShopStyle, Item item1, int price1, Item item2, int price2)
+        public MessageShopAttribute(MessageShopStyle messageShopStyle, Item item1, Item item2)
         {
             MessageShopStyle = messageShopStyle;
             Items = new Item[] { item1, item2 };
-            Prices = new int[] { price1, price2 };
         }
     }
 }

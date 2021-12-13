@@ -14,9 +14,9 @@ namespace MMR.UI.Forms
 {
     public partial class ToggleTricksForm : Form
     {
-        public List<int> Result { get; private set; }
+        public List<string> Result { get; private set; }
 
-        public ToggleTricksForm(LogicMode logicMode, string userLogicFilename, IEnumerable<int> tricksEnabled)
+        public ToggleTricksForm(LogicMode logicMode, string userLogicFilename, IEnumerable<string> tricksEnabled)
         {
             InitializeComponent();
             Result = tricksEnabled.ToList();
@@ -31,7 +31,7 @@ namespace MMR.UI.Forms
             {
                 var cTrick = new CheckBox();
                 cTrick.Tag = itemObject;
-                cTrick.Checked = tricksEnabled.Contains(itemObject.ID);
+                cTrick.Checked = tricksEnabled.Contains(itemObject.Name);
                 cTrick.Text = itemObject.Name;
                 TooltipBuilder.SetTooltip(cTrick, itemObject.TrickTooltip);
                 cTrick.Location = new Point(9, y);
@@ -48,11 +48,11 @@ namespace MMR.UI.Forms
             var itemObject = (ItemObject)checkbox.Tag;
             if (checkbox.Checked)
             {
-                Result.Add(itemObject.ID);
+                Result.Add(itemObject.Name);
             }
             else
             {
-                Result.Remove(itemObject.ID);
+                Result.Remove(itemObject.Name);
             }
         }
 

@@ -31,18 +31,18 @@ typedef struct {
 
 // Related to collision?
 typedef struct {
-    /* 0x00 */ ActorDamageChart* damageChart;
+    /* 0x00 */ ActorDamageChart* damageTable;
     /* 0x04 */ Vec3f displacement;
-    /* 0x10 */ s16 unk10;
-    /* 0x12 */ s16 unk12;
-    /* 0x14 */ s16 unk14;
+    /* 0x10 */ s16 cylRadius;
+    /* 0x12 */ s16 cylHeight;
+    /* 0x14 */ s16 cylYShift;
     /* 0x16 */ u8 mass;
-    /* 0x17 */ u8 health;
+    /* 0x17 */ s8 health;
     /* 0x18 */ u8 damage;
     /* 0x19 */ u8 damageEffect;
-    /* 0x1A */ u8 impactEffect;
-    /* 0x1B */ UNK_TYPE1 pad1B[0x1];
-} ActorA0; // size = 0x1C
+    /* 0x1A */ u8 atHitEffect;
+    /* 0x1B */ u8 acHitEffect;
+} CollisionCheckInfo; // size = 0x1C
 
 // typedef void(*ActorShadowDrawFunc)(struct Actor* actor, struct LightMapper* mapper, struct GlobalContext* ctxt);
 
@@ -52,7 +52,11 @@ typedef struct {
     /* 0x0C */ void* shadowDrawFunc;
     /* 0x10 */ f32 scale;
     /* 0x14 */ u8 alphaScale; // 255 means always draw full opacity if visible
-} ActorShape; // size = 0x18
+    /* 0x15 */ u8 feetFloorFlags; // Set if the actor's foot is clipped under the floor. & 1 is right foot, & 2 is left
+    /* 0x16 */ UNK_TYPE1 pad16;
+    /* 0x17 */ UNK_TYPE1 pad17; // Used by MMR for storing MaxHealth
+    /* 0x18 */ Vec3f feetPos[2]; // Update by using `Actor_SetFeetPos` in PostLimbDraw
+} ActorShape; // size = 0x30
 
 typedef struct {
     /* 0x00 */ s16 id;
@@ -121,10 +125,8 @@ typedef struct Actor {
     /* 0x094 */ f32 sqrdDistanceFromLink;
     /* 0x098 */ f32 xzDistanceFromLink;
     /* 0x09C */ f32 yDistanceFromLink;
-    /* 0x0A0 */ ActorA0 unkA0;
+    /* 0x0A0 */ CollisionCheckInfo colChkInfo;
     /* 0x0BC */ ActorShape shape;
-    /* 0x0D4 */ Vec3f unkD4;
-    /* 0x0E0 */ Vec3f unkE0;
     /* 0x0EC */ Vec3f projectedPos;
     /* 0x0F8 */ f32 unkF8;
     /* 0x0FC */ f32 unkFC;
@@ -206,7 +208,9 @@ typedef struct {
     /* 0x153 */ u8 mask;
     /* 0x154 */ u8 maskC; // C button index (starting at 1) of current/recently worn mask.
     /* 0x155 */ u8 previousMask;
-    /* 0x156 */ UNK_TYPE1 pad156[0xF2];
+    /* 0x156 */ UNK_TYPE1 pad156[0xEB];
+    /* 0x241 */ u8 unk241;
+    /* 0x242 */ UNK_TYPE1 pad242[0x6];
     /* 0x248 */ PlayerAnimation currentAnimation;
     /* 0x24C */ UNK_TYPE1 pad24C[0x100];
     /* 0x34C */ Actor* heldActor;
@@ -222,7 +226,7 @@ typedef struct {
     /* 0x3CC */ s16 unk3CC;
     /* 0x3CE */ s8 unk3CE;
     /* 0x3CF */ UNK_TYPE1 pad3CF[0x361];
-    /* 0x730 */ Actor* unk730;
+    /* 0x730 */ Actor* target;
     /* 0x734 */ UNK_TYPE1 pad734[0x334];
     /* 0xA68 */ f32 *tableA68; // Transformation-dependant f32 array, [11] used for distance to begin swimming.
     /* 0xA6C */ PlayerStateFlags stateFlags;
@@ -231,7 +235,10 @@ typedef struct {
     /* 0xA84 */ UNK_TYPE1 padA84[0x4];
     /* 0xA88 */ Actor* unkA88;
     /* 0xA8C */ f32 unkA8C;
-    /* 0xA90 */ UNK_TYPE1 padA90[0x40];
+    /* 0xA90 */ Actor* ocarinaCutsceneActor;
+    /* 0xA94 */ UNK_TYPE1 padA94[0x11];
+    /* 0xAA5 */ u8 unkAA5;
+    /* 0xAA6 */ UNK_TYPE1 padAA6[0x2A];
     /* 0xAD0 */ f32 linearVelocity;
     /* 0xAD4 */ u16 movementAngle;
     /* 0xAD6 */ UNK_TYPE1 padAD6[0x5];
@@ -253,7 +260,9 @@ typedef struct {
     /* 0xB72 */ u16 floorType; // Determines sound effect used while walking.
     /* 0xB74 */ UNK_TYPE1 padB74[0x28];
     /* 0xB9C */ Vec3f unkB9C;
-    /* 0xBA8 */ UNK_TYPE1 padBA8[0x1D0];
+    /* 0xBA8 */ UNK_TYPE1 padBA8[0x1B4];
+    /* 0xD5C */ s8 invincibilityFrames;
+    /* 0xD5D */ UNK_TYPE1 padD5D[0x1B];
 } ActorPlayer; // size = 0xD78
 
 typedef enum {

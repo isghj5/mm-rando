@@ -5,6 +5,7 @@ using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Attributes.Entrance;
 using System.Collections.Generic;
 using System.Linq;
+using MMR.Randomizer.Models.Settings;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -47,7 +48,7 @@ namespace MMR.Randomizer.Extensions
                 {
                     return "Magic Power Upgrade";
                 }
-                if (item == Item.UpgradeAdultWallet || item == Item.UpgradeGiantWallet)
+                if (item == Item.UpgradeAdultWallet || item == Item.UpgradeGiantWallet || item == Item.UpgradeRoyalWallet)
                 {
                     return "Wallet Upgrade";
                 }
@@ -71,6 +72,11 @@ namespace MMR.Randomizer.Extensions
         public static Region? Region(this Item item)
         {
             return item.GetAttribute<RegionAttribute>()?.Region;
+        }
+
+        public static Item? MainLocation(this Item item)
+        {
+            return item.GetAttribute<MainLocationAttribute>()?.Location;
         }
 
         public static string Entrance(this Item item)
@@ -98,6 +104,11 @@ namespace MMR.Randomizer.Extensions
             return item.HasAttribute<RepeatableAttribute>();
         }
 
+        public static bool IsReturnable(this Item item, GameplaySettings settings)
+        {
+            return item.GetAttribute<ReturnableAttribute>()?.Condition(settings) ?? false;
+        }
+
         public static bool IsRupeeRepeatable(this Item item)
         {
             return item.HasAttribute<RupeeRepeatableAttribute>();
@@ -108,9 +119,9 @@ namespace MMR.Randomizer.Extensions
             return item.HasAttribute<DowngradableAttribute>();
         }
 
-        public static bool IsTemporary(this Item item)
+        public static bool IsTemporary(this Item item, GameplaySettings settings)
         {
-            return item.HasAttribute<TemporaryAttribute>();
+            return item.GetAttribute<TemporaryAttribute>()?.Condition(settings) ?? false;
         }
 
         public static ItemCategory? ItemCategory(this Item item)
@@ -149,14 +160,9 @@ namespace MMR.Randomizer.Extensions
             return item.HasAttribute<OverwritableAttribute>();
         }
 
-        public static bool IsShop(this Item item)
-        {
-            return item.HasAttribute<ShopRoomAttribute>();
-        }
-
         public static bool IsSong(this Item item)
         {
-            return (Item.SongHealing <= item && item <= Item.SongOath);
+            return (Item.SongTime <= item && item <= Item.SongOath);
         }
 
         public static ChestTypeAttribute.ChestType ChestType(this Item item)
@@ -195,6 +201,17 @@ namespace MMR.Randomizer.Extensions
         public static string ExclusiveItemMessage(this Item item)
         {
             return item.GetAttribute<ExclusiveItemMessageAttribute>().Message;
+        }
+
+        public static bool IsBottleCatchContent(this Item item)
+        {
+            return item >= Item.BottleCatchFairy
+                   && item <= Item.BottleCatchMushroom;
+        }
+
+        public static bool IsSameType(this Item item, Item other)
+        {
+            return item.IsBottleCatchContent() == other.IsBottleCatchContent();
         }
     }
 }

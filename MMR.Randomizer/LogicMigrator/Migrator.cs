@@ -2,118 +2,184 @@
 using System.Collections.Generic;
 using System.Linq;
 using MMR.Common.Extensions;
+using MMR.Common.Utils;
 
 namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 19;
+        public const int CurrentVersion = 11;
 
         public static string ApplyMigrations(string logic)
         {
-            var lines = logic.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
-
-            if (GetVersion(lines) < 0)
+            JsonFormatLogic logicObject;
+            try
             {
-                AddVersionNumber(lines);
+                logicObject = JsonSerializer.Deserialize<JsonFormatLogic>(logic);
+            }
+            catch (System.Text.Json.JsonException)
+            {
+                var lines = logic.Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None).ToList();
+
+                if (GetVersion(lines) < 0)
+                {
+                    AddVersionNumber(lines);
+                }
+
+                if (GetVersion(lines) < 1)
+                {
+                    AddItemNames(lines);
+                }
+
+                if (GetVersion(lines) < 2)
+                {
+                    AddMoonItems(lines);
+                }
+
+                if (GetVersion(lines) < 3)
+                {
+                    AddRequirementsForSongOath(lines);
+                }
+
+                if (GetVersion(lines) < 4)
+                {
+                    AddSongOfHealing(lines);
+                }
+
+                if (GetVersion(lines) < 5)
+                {
+                    AddIkanaScrubGoldRupee(lines);
+                }
+
+                if (GetVersion(lines) < 6)
+                {
+                    AddPreClocktownChestLinkTrialChestsAndStartingItems(lines);
+                }
+
+                if (GetVersion(lines) < 7)
+                {
+                    AddGreatFairies(lines);
+                }
+
+                if (GetVersion(lines) < 8)
+                {
+                    AddMagicRequirements(lines);
+                }
+
+                if (GetVersion(lines) < 9)
+                {
+                    AddCows(lines);
+                }
+
+                if (GetVersion(lines) < 10)
+                {
+                    AddSkulltulaTokens(lines);
+                }
+
+                if (GetVersion(lines) < 11)
+                {
+                    AddStrayFairies(lines);
+                }
+
+                if (GetVersion(lines) < 12)
+                {
+                    AddMundaneRewards(lines);
+                }
+
+                if (GetVersion(lines) < 13)
+                {
+                    RemoveGormanBrosRaceDayThree(lines);
+                }
+
+                if (GetVersion(lines) < 14)
+                {
+                    AddTricks(lines);
+                }
+
+                if (GetVersion(lines) < 15)
+                {
+                    AddGossipStones(lines);
+                }
+
+                if (GetVersion(lines) < 16)
+                {
+                    AddRupeesAndFixedDrops(lines);
+                }
+
+                if (GetVersion(lines) < 17)
+                {
+                    AddRupeesAndFixedDrops2(lines);
+                }
+
+                if (GetVersion(lines) < 18)
+                {
+                    AddRupeesAndFixedDrops3(lines);
+                }
+
+                if (GetVersion(lines) < 19)
+                {
+                    AddRupeesAndFixedDrops4(lines);
+                }
+
+                logicObject = ConvertToJson(lines);
             }
 
-            if (GetVersion(lines) < 1)
+            if (logicObject.Version < 1)
             {
-                AddItemNames(lines);
+                throw new FormatException("Unexpected logic version number.");
             }
 
-            if (GetVersion(lines) < 2)
+            if (logicObject.Version < 2)
             {
-                AddMoonItems(lines);
+                AddBossRemains(logicObject);
             }
 
-            if (GetVersion(lines) < 3)
+            if (logicObject.Version < 3)
             {
-                AddRequirementsForSongOath(lines);
+                AddOcarinaAndSongOfTime(logicObject);
             }
 
-            if (GetVersion(lines) < 4)
+            if (logicObject.Version < 4)
             {
-                AddSongOfHealing(lines);
+                AddMultiLocations(logicObject);
             }
 
-            if (GetVersion(lines) < 5)
+            if (logicObject.Version < 5)
             {
-                AddIkanaScrubGoldRupee(lines);
+                AddMultiLocationGoronShop(logicObject);
             }
 
-            if (GetVersion(lines) < 6)
+            if (logicObject.Version < 6)
             {
-                AddPreClocktownChestLinkTrialChestsAndStartingItems(lines);
+                AddOtherMagicBean(logicObject);
             }
 
-            if (GetVersion(lines) < 7)
+            if (logicObject.Version < 7)
             {
-                AddGreatFairies(lines);
+                AddMultiLocationBusinessScrubs(logicObject);
             }
 
-            if (GetVersion(lines) < 8)
+            if (logicObject.Version < 8)
             {
-                AddMagicRequirements(lines);
+                AddOtherTimeTravel(logicObject);
             }
 
-            if (GetVersion(lines) < 9)
+            if (logicObject.Version < 9)
             {
-                AddCows(lines);
+                AddBeansAndDekuPlayground(logicObject);
             }
 
-            if (GetVersion(lines) < 10)
+            if (logicObject.Version < 10)
             {
-                AddSkulltulaTokens(lines);
+                AddRoyalWallet(logicObject);
             }
 
-            if (GetVersion(lines) < 11)
+            if (logicObject.Version < 11)
             {
-                AddStrayFairies(lines);
+                AddMultiLocationClockTownFairy(logicObject);
             }
 
-            if (GetVersion(lines) < 12)
-            {
-                AddMundaneRewards(lines);
-            }
-
-            if (GetVersion(lines) < 13)
-            {
-                RemoveGormanBrosRaceDayThree(lines);
-            }
-
-            if (GetVersion(lines) < 14)
-            {
-                AddTricks(lines);
-            }
-
-            if (GetVersion(lines) < 15)
-            {
-                AddGossipStones(lines);
-            }
-
-            if (GetVersion(lines) < 16)
-            {
-                AddRupeesAndFixedDrops(lines);
-            }
-
-            if (GetVersion(lines) < 17)
-            {
-                AddRupeesAndFixedDrops2(lines);
-            }
-
-            if (GetVersion(lines) < 18)
-            {
-                AddRupeesAndFixedDrops3(lines);
-            }
-
-            if (GetVersion(lines) < 19)
-            {
-                AddRupeesAndFixedDrops4(lines);
-            }
-
-            return string.Join("\r\n", lines);
+            return JsonSerializer.Serialize(logicObject);
         }
 
         public static int GetVersion(List<string> lines)
@@ -2402,12 +2468,1440 @@ namespace MMR.Randomizer.LogicMigrator
             }
         }
 
+        private static JsonFormatLogic ConvertToJson(List<string> lines)
+        {
+            var itemNames = new List<string>
+            {
+                "MaskDeku",
+                "ItemBow",
+                "ItemFireArrow",
+                "ItemIceArrow",
+                "ItemLightArrow",
+                "ItemBombBag",
+                "ItemMagicBean",
+                "ItemPowderKeg",
+                "ItemPictobox",
+                "ItemLens",
+                "ItemHookshot",
+                "FairyMagic",
+                "FairySpinAttack",
+                "FairyDoubleMagic",
+                "FairyDoubleDefense",
+                "ItemFairySword",
+                "ItemBottleWitch",
+                "ItemBottleAliens",
+                "ItemBottleGoronRace",
+                "ItemBottleBeavers",
+                "ItemBottleDampe",
+                "ItemBottleMadameAroma",
+                "ItemNotebook",
+                "UpgradeRazorSword",
+                "UpgradeGildedSword",
+                "UpgradeMirrorShield",
+                "UpgradeBigQuiver",
+                "UpgradeBiggestQuiver",
+                "UpgradeBigBombBag",
+                "UpgradeBiggestBombBag",
+                "UpgradeAdultWallet",
+                "UpgradeGiantWallet",
+                "TradeItemMoonTear",
+                "TradeItemLandDeed",
+                "TradeItemSwampDeed",
+                "TradeItemMountainDeed",
+                "TradeItemOceanDeed",
+                "TradeItemRoomKey",
+                "TradeItemKafeiLetter",
+                "TradeItemPendant",
+                "TradeItemMamaLetter",
+                "HeartPieceNotebookMayor",
+                "HeartPieceNotebookPostman",
+                "HeartPieceNotebookRosa",
+                "HeartPieceNotebookHand",
+                "HeartPieceNotebookGran1",
+                "HeartPieceNotebookGran2",
+                "HeartPieceKeatonQuiz",
+                "HeartPieceDekuPlayground",
+                "HeartPieceTownArchery",
+                "HeartPieceHoneyAndDarling",
+                "HeartPieceSwordsmanSchool",
+                "HeartPiecePostBox",
+                "HeartPieceTerminaGossipStones",
+                "HeartPieceTerminaBusinessScrub",
+                "HeartPieceSwampArchery",
+                "HeartPiecePictobox",
+                "HeartPieceBoatArchery",
+                "HeartPieceChoir",
+                "HeartPieceBeaverRace",
+                "HeartPieceSeaHorse",
+                "HeartPieceFishermanGame",
+                "HeartPieceEvan",
+                "HeartPieceDogRace",
+                "HeartPiecePoeHut",
+                "HeartPieceTreasureChestGame",
+                "HeartPiecePeahat",
+                "HeartPieceDodong",
+                "HeartPieceWoodFallChest",
+                "HeartPieceTwinIslandsChest",
+                "HeartPieceOceanSpiderHouse",
+                "HeartPieceKnuckle",
+                "MaskPostmanHat",
+                "MaskAllNight",
+                "MaskBlast",
+                "MaskStone",
+                "MaskGreatFairy",
+                "MaskKeaton",
+                "MaskBremen",
+                "MaskBunnyHood",
+                "MaskDonGero",
+                "MaskScents",
+                "MaskRomani",
+                "MaskCircusLeader",
+                "MaskKafei",
+                "MaskCouple",
+                "MaskTruth",
+                "MaskKamaro",
+                "MaskGibdo",
+                "MaskGaro",
+                "MaskCaptainHat",
+                "MaskGiant",
+                "MaskGoron",
+                "MaskZora",
+                "SongHealing",
+                "SongSoaring",
+                "SongEpona",
+                "SongStorms",
+                "SongSonata",
+                "SongLullaby",
+                "SongNewWaveBossaNova",
+                "SongElegy",
+                "SongOath",
+                "AreaSouthAccess",
+                "AreaWoodFallTempleAccess",
+                "AreaWoodFallTempleClear",
+                "AreaNorthAccess",
+                "AreaSnowheadTempleAccess",
+                "AreaSnowheadTempleClear",
+                "OtherEpona",
+                "AreaWestAccess",
+                "AreaPiratesFortressAccess",
+                "AreaGreatBayTempleAccess",
+                "AreaGreatBayTempleClear",
+                "AreaEastAccess",
+                "AreaIkanaCanyonAccess",
+                "AreaStoneTowerTempleAccess",
+                "AreaInvertedStoneTowerTempleAccess",
+                "AreaStoneTowerClear",
+                "OtherExplosive",
+                "OtherArrow",
+                "AreaWoodfallNew",
+                "AreaSnowheadNew",
+                "AreaGreatBayNew",
+                "AreaLANew",
+                "AreaInvertedStoneTowerNew",
+                "ItemWoodfallMap",
+                "ItemWoodfallCompass",
+                "ItemWoodfallBossKey",
+                "ItemWoodfallKey1",
+                "ItemSnowheadMap",
+                "ItemSnowheadCompass",
+                "ItemSnowheadBossKey",
+                "ItemSnowheadKey1",
+                "ItemSnowheadKey2",
+                "ItemSnowheadKey3",
+                "ItemGreatBayMap",
+                "ItemGreatBayCompass",
+                "ItemGreatBayBossKey",
+                "ItemGreatBayKey1",
+                "ItemStoneTowerMap",
+                "ItemStoneTowerCompass",
+                "ItemStoneTowerBossKey",
+                "ItemStoneTowerKey1",
+                "ItemStoneTowerKey2",
+                "ItemStoneTowerKey3",
+                "ItemStoneTowerKey4",
+                "ShopItemTradingPostRedPotion",
+                "ShopItemTradingPostGreenPotion",
+                "ShopItemTradingPostShield",
+                "ShopItemTradingPostFairy",
+                "ShopItemTradingPostStick",
+                "ShopItemTradingPostArrow30",
+                "ShopItemTradingPostNut10",
+                "ShopItemTradingPostArrow50",
+                "ShopItemWitchBluePotion",
+                "ShopItemWitchRedPotion",
+                "ShopItemWitchGreenPotion",
+                "ShopItemBombsBomb10",
+                "ShopItemBombsBombchu10",
+                "ShopItemGoronBomb10",
+                "ShopItemGoronArrow10",
+                "ShopItemGoronRedPotion",
+                "ShopItemZoraShield",
+                "ShopItemZoraArrow10",
+                "ShopItemZoraRedPotion",
+                "BottleCatchFairy",
+                "BottleCatchPrincess",
+                "BottleCatchFish",
+                "BottleCatchBug",
+                "BottleCatchPoe",
+                "BottleCatchBigPoe",
+                "BottleCatchSpringWater",
+                "BottleCatchHotSpringWater",
+                "BottleCatchEgg",
+                "BottleCatchMushroom",
+                "ChestLensCaveRedRupee",
+                "ChestLensCavePurpleRupee",
+                "ChestBeanGrottoRedRupee",
+                "ChestHotSpringGrottoRedRupee",
+                "ChestBadBatsGrottoPurpleRupee",
+                "ChestIkanaSecretShrineGrotto",
+                "ChestPiratesFortressRedRupee1",
+                "ChestPiratesFortressRedRupee2",
+                "ChestInsidePiratesFortressTankRedRupee",
+                "ChestInsidePiratesFortressGuardSilverRupee",
+                "ChestInsidePiratesFortressHeartPieceRoomRedRupee",
+                "ChestInsidePiratesFortressHeartPieceRoomBlueRupee",
+                "ChestInsidePiratesFortressMazeRedRupee",
+                "ChestPinacleRockRedRupee1",
+                "ChestPinacleRockRedRupee2",
+                "ChestBomberHideoutSilverRupee",
+                "ChestTerminaGrottoBombchu",
+                "ChestTerminaGrottoRedRupee",
+                "ChestTerminaUnderwaterRedRupee",
+                "ChestTerminaGrassRedRupee",
+                "ChestTerminaStumpRedRupee",
+                "ChestGreatBayCoastGrotto",
+                "ChestGreatBayCapeLedge1",
+                "ChestGreatBayCapeLedge2",
+                "ChestGreatBayCapeGrotto",
+                "ChestGreatBayCapeUnderwater",
+                "ChestPiratesFortressEntranceRedRupee1",
+                "ChestPiratesFortressEntranceRedRupee2",
+                "ChestPiratesFortressEntranceRedRupee3",
+                "ChestToSwampGrotto",
+                "ChestDogRacePurpleRupee",
+                "ChestGraveyardGrotto",
+                "ChestSwampGrotto",
+                "ChestWoodfallBlueRupee",
+                "ChestWoodfallRedRupee",
+                "ChestWellRightPurpleRupee",
+                "ChestWellLeftPurpleRupee",
+                "ChestMountainVillage",
+                "ChestMountainVillageGrottoRedRupee",
+                "ChestToIkanaRedRupee",
+                "ChestToIkanaGrotto",
+                "ChestInvertedStoneTowerSilverRupee",
+                "ChestInvertedStoneTowerBombchu10",
+                "ChestInvertedStoneTowerBean",
+                "ChestToSnowheadGrotto",
+                "ChestToGoronVillageRedRupee",
+                "ChestSecretShrineHeartPiece",
+                "ChestSecretShrineDinoGrotto",
+                "ChestSecretShrineWizzGrotto",
+                "ChestSecretShrineWartGrotto",
+                "ChestSecretShrineGaroGrotto",
+                "ChestInnStaffRoom",
+                "ChestInnGuestRoom",
+                "ChestWoodsGrotto",
+                "ChestEastClockTownSilverRupee",
+                "ChestSouthClockTownRedRupee",
+                "ChestSouthClockTownPurpleRupee",
+                "HeartPieceBank",
+                "HeartPieceSouthClockTown",
+                "HeartPieceNorthClockTown",
+                "HeartPieceToSwamp",
+                "HeartPieceSwampScrub",
+                "HeartPieceDekuPalace",
+                "HeartPieceGoronVillageScrub",
+                "HeartPieceZoraGrotto",
+                "HeartPieceLabFish",
+                "HeartPieceGreatBayCapeLikeLike",
+                "HeartPiecePiratesFortress",
+                "HeartPieceZoraHallScrub",
+                "HeartPieceToSnowhead",
+                "HeartPieceGreatBayCoast",
+                "HeartPieceIkana",
+                "HeartPieceCastle",
+                "HeartContainerWoodfall",
+                "HeartContainerSnowhead",
+                "HeartContainerGreatBay",
+                "HeartContainerStoneTower",
+                "ItemTingleMapTown",
+                "ItemTingleMapWoodfall",
+                "ItemTingleMapSnowhead",
+                "ItemTingleMapRanch",
+                "ItemTingleMapGreatBay",
+                "ItemTingleMapStoneTower",
+                "ChestToGoronRaceGrotto",
+                "IkanaScrubGoldRupee",
+                "OtherOneMask",
+                "OtherTwoMasks",
+                "OtherThreeMasks",
+                "OtherFourMasks",
+                "AreaMoonAccess",
+                "HeartPieceDekuTrial",
+                "HeartPieceGoronTrial",
+                "HeartPieceZoraTrial",
+                "HeartPieceLinkTrial",
+                "MaskFierceDeity",
+                "ChestLinkTrialArrow30",
+                "ChestLinkTrialBombchu10",
+                "ChestPreClocktownDekuNut",
+                "StartingSword",
+                "StartingShield",
+                "StartingHeartContainer1",
+                "StartingHeartContainer2",
+                "ItemRanchBarnMainCowMilk",
+                "ItemRanchBarnOtherCowMilk1",
+                "ItemRanchBarnOtherCowMilk2",
+                "ItemWellCowMilk",
+                "ItemTerminaGrottoCowMilk1",
+                "ItemTerminaGrottoCowMilk2",
+                "ItemCoastGrottoCowMilk1",
+                "ItemCoastGrottoCowMilk2",
+                "CollectibleSwampSpiderToken1",
+                "CollectibleSwampSpiderToken2",
+                "CollectibleSwampSpiderToken3",
+                "CollectibleSwampSpiderToken4",
+                "CollectibleSwampSpiderToken5",
+                "CollectibleSwampSpiderToken6",
+                "CollectibleSwampSpiderToken7",
+                "CollectibleSwampSpiderToken8",
+                "CollectibleSwampSpiderToken9",
+                "CollectibleSwampSpiderToken10",
+                "CollectibleSwampSpiderToken11",
+                "CollectibleSwampSpiderToken12",
+                "CollectibleSwampSpiderToken13",
+                "CollectibleSwampSpiderToken14",
+                "CollectibleSwampSpiderToken15",
+                "CollectibleSwampSpiderToken16",
+                "CollectibleSwampSpiderToken17",
+                "CollectibleSwampSpiderToken18",
+                "CollectibleSwampSpiderToken19",
+                "CollectibleSwampSpiderToken20",
+                "CollectibleSwampSpiderToken21",
+                "CollectibleSwampSpiderToken22",
+                "CollectibleSwampSpiderToken23",
+                "CollectibleSwampSpiderToken24",
+                "CollectibleSwampSpiderToken25",
+                "CollectibleSwampSpiderToken26",
+                "CollectibleSwampSpiderToken27",
+                "CollectibleSwampSpiderToken28",
+                "CollectibleSwampSpiderToken29",
+                "CollectibleSwampSpiderToken30",
+                "CollectibleOceanSpiderToken1",
+                "CollectibleOceanSpiderToken2",
+                "CollectibleOceanSpiderToken3",
+                "CollectibleOceanSpiderToken4",
+                "CollectibleOceanSpiderToken5",
+                "CollectibleOceanSpiderToken6",
+                "CollectibleOceanSpiderToken7",
+                "CollectibleOceanSpiderToken8",
+                "CollectibleOceanSpiderToken9",
+                "CollectibleOceanSpiderToken10",
+                "CollectibleOceanSpiderToken11",
+                "CollectibleOceanSpiderToken12",
+                "CollectibleOceanSpiderToken13",
+                "CollectibleOceanSpiderToken14",
+                "CollectibleOceanSpiderToken15",
+                "CollectibleOceanSpiderToken16",
+                "CollectibleOceanSpiderToken17",
+                "CollectibleOceanSpiderToken18",
+                "CollectibleOceanSpiderToken19",
+                "CollectibleOceanSpiderToken20",
+                "CollectibleOceanSpiderToken21",
+                "CollectibleOceanSpiderToken22",
+                "CollectibleOceanSpiderToken23",
+                "CollectibleOceanSpiderToken24",
+                "CollectibleOceanSpiderToken25",
+                "CollectibleOceanSpiderToken26",
+                "CollectibleOceanSpiderToken27",
+                "CollectibleOceanSpiderToken28",
+                "CollectibleOceanSpiderToken29",
+                "CollectibleOceanSpiderToken30",
+                "CollectibleStrayFairyClockTown",
+                "CollectibleStrayFairyWoodfall1",
+                "CollectibleStrayFairyWoodfall2",
+                "CollectibleStrayFairyWoodfall3",
+                "CollectibleStrayFairyWoodfall4",
+                "CollectibleStrayFairyWoodfall5",
+                "CollectibleStrayFairyWoodfall6",
+                "CollectibleStrayFairyWoodfall7",
+                "CollectibleStrayFairyWoodfall8",
+                "CollectibleStrayFairyWoodfall9",
+                "CollectibleStrayFairyWoodfall10",
+                "CollectibleStrayFairyWoodfall11",
+                "CollectibleStrayFairyWoodfall12",
+                "CollectibleStrayFairyWoodfall13",
+                "CollectibleStrayFairyWoodfall14",
+                "CollectibleStrayFairyWoodfall15",
+                "CollectibleStrayFairySnowhead1",
+                "CollectibleStrayFairySnowhead2",
+                "CollectibleStrayFairySnowhead3",
+                "CollectibleStrayFairySnowhead4",
+                "CollectibleStrayFairySnowhead5",
+                "CollectibleStrayFairySnowhead6",
+                "CollectibleStrayFairySnowhead7",
+                "CollectibleStrayFairySnowhead8",
+                "CollectibleStrayFairySnowhead9",
+                "CollectibleStrayFairySnowhead10",
+                "CollectibleStrayFairySnowhead11",
+                "CollectibleStrayFairySnowhead12",
+                "CollectibleStrayFairySnowhead13",
+                "CollectibleStrayFairySnowhead14",
+                "CollectibleStrayFairySnowhead15",
+                "CollectibleStrayFairyGreatBay1",
+                "CollectibleStrayFairyGreatBay2",
+                "CollectibleStrayFairyGreatBay3",
+                "CollectibleStrayFairyGreatBay4",
+                "CollectibleStrayFairyGreatBay5",
+                "CollectibleStrayFairyGreatBay6",
+                "CollectibleStrayFairyGreatBay7",
+                "CollectibleStrayFairyGreatBay8",
+                "CollectibleStrayFairyGreatBay9",
+                "CollectibleStrayFairyGreatBay10",
+                "CollectibleStrayFairyGreatBay11",
+                "CollectibleStrayFairyGreatBay12",
+                "CollectibleStrayFairyGreatBay13",
+                "CollectibleStrayFairyGreatBay14",
+                "CollectibleStrayFairyGreatBay15",
+                "CollectibleStrayFairyStoneTower1",
+                "CollectibleStrayFairyStoneTower2",
+                "CollectibleStrayFairyStoneTower3",
+                "CollectibleStrayFairyStoneTower4",
+                "CollectibleStrayFairyStoneTower5",
+                "CollectibleStrayFairyStoneTower6",
+                "CollectibleStrayFairyStoneTower7",
+                "CollectibleStrayFairyStoneTower8",
+                "CollectibleStrayFairyStoneTower9",
+                "CollectibleStrayFairyStoneTower10",
+                "CollectibleStrayFairyStoneTower11",
+                "CollectibleStrayFairyStoneTower12",
+                "CollectibleStrayFairyStoneTower13",
+                "CollectibleStrayFairyStoneTower14",
+                "CollectibleStrayFairyStoneTower15",
+                "MundaneItemLotteryPurpleRupee",
+                "MundaneItemBankBlueRupee",
+                "ShopItemMilkBarChateau",
+                "ShopItemMilkBarMilk",
+                "MundaneItemDekuPlaygroundPurpleRupee",
+                "MundaneItemHoneyAndDarlingPurpleRupee",
+                "MundaneItemKotakeMushroomSaleRedRupee",
+                "MundaneItemPictographContestBlueRupee",
+                "MundaneItemPictographContestRedRupee",
+                "ShopItemBusinessScrubMagicBean",
+                "ShopItemBusinessScrubGreenPotion",
+                "ShopItemBusinessScrubBluePotion",
+                "MundaneItemZoraStageLightsBlueRupee",
+                "ShopItemGormanBrosMilk",
+                "MundaneItemOceanSpiderHouseDay2PurpleRupee",
+                "MundaneItemOceanSpiderHouseDay3RedRupee",
+                "MundaneItemLuluBadPictographBlueRupee",
+                "MundaneItemLuluGoodPictographRedRupee",
+                "MundaneItemTreasureChestGamePurpleRupee",
+                "MundaneItemTreasureChestGameRedRupee",
+                "MundaneItemTreasureChestGameDekuNuts",
+                "MundaneItemCuriosityShopBlueRupee",
+                "MundaneItemCuriosityShopRedRupee",
+                "MundaneItemCuriosityShopPurpleRupee",
+                "MundaneItemCuriosityShopGoldRupee",
+                "MundaneItemSeahorse",
+                "CollectableAncientCastleOfIkanaCastleExteriorGrass1",
+                "CollectableAncientCastleOfIkanaCastleExteriorGrass2",
+                "CollectableBeneathTheGraveyardMainAreaPot1",
+                "CollectableBeneathTheGraveyardInvisibleRoomPot1",
+                "CollectableBeneathTheGraveyardBadBatRoomPot1",
+                "CollectableCuccoShackWoodenCrateLarge1",
+                "CollectableDampesHouseBasementPot1",
+                "CollectableDampesHouseBasementPot2",
+                "CollectableDampesHouseBasementPot3",
+                "CollectableDampesHouseBasementPot4",
+                "CollectableGoronVillageWinterSmallSnowball1",
+                "CollectableGoronVillageWinterSmallSnowball2",
+                "CollectableGreatBayCoastPot1",
+                "CollectableGreatBayCoastPot2",
+                "CollectableGreatBayCoastPot3",
+                "CollectableGreatBayCoastPot4",
+                "CollectableGreatBayTempleBlueChuchuValveRoomBarrel1",
+                "CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot1",
+                "CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot2",
+                "CollectableIgosDuIkanaSLairPreBossRoomPot1",
+                "CollectableIgosDuIkanaSLairPreBossRoomPot2",
+                "CollectableIkanaGraveyardIkanaGraveyardLowerGrass1",
+                "CollectableOceansideSpiderHouseEntrancePot1",
+                "CollectableOceansideSpiderHouseEntrancePot2",
+                "CollectablePiratesFortressInteriorWaterCurrentRoomPot1",
+                "CollectablePiratesFortressInterior100RupeeEggRoomPot1",
+                "CollectablePiratesFortressInteriorBarrelRoomEggPot1",
+                "CollectablePiratesFortressInteriorTelescopeRoomPot1",
+                "CollectableSecretShrineMainRoomPot1",
+                "CollectableSecretShrineMainRoomPot2",
+                "CollectableSnowheadTempleIceBlockRoomSmallSnowball1",
+                "CollectableSnowheadTempleIceBlockRoomSmallSnowball2",
+                "CollectableStoneTowerPot1",
+                "CollectableStoneTowerPot2",
+                "CollectableGreatBayCoastPot5",
+                "CollectableGreatBayTempleSeesawRoomPot1",
+                "CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1",
+                "CollectableIkanaCanyonMainAreaGrass1",
+                "CollectableMilkRoadGrass1",
+                "CollectableMountainVillageSpringSmallSnowball1",
+                "CollectableMountainVillageWinterSmallSnowball1",
+                "CollectablePiratesFortressInteriorTwinBarrelEggRoomPot1",
+                "CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartPot1",
+                "CollectableRomaniRanchWoodenCrateLarge1",
+                "CollectableSnowheadSmallSnowball1",
+                "CollectableStoneTowerPot3",
+                "CollectableZoraCapePot1",
+                "CollectableAstralObservatoryObservatoryBombersHideoutPot1",
+                "CollectableAstralObservatoryObservatoryBombersHideoutPot2",
+                "CollectableDekuPalaceWestInnerGardenItem1",
+                "CollectableDekuPalaceEastInnerGardenItem1",
+                "CollectableDekuPalaceEastInnerGardenItem2",
+                "CollectableDekuPalaceWestInnerGardenItem2",
+                "CollectableDekuPalaceWestInnerGardenItem3",
+                "CollectableDoggyRacetrackPot1",
+                "CollectableDoggyRacetrackPot2",
+                "CollectableDoggyRacetrackPot3",
+                "CollectableDoggyRacetrackPot4",
+                "CollectableGoronVillageWinterLargeSnowball1",
+                "CollectableGoronVillageWinterLargeSnowball2",
+                "CollectableGoronVillageWinterLargeSnowball3",
+                "CollectableGreatBayCoastPot6",
+                "CollectableGreatBayCoastPot7",
+                "CollectableGreatBayCoastPot8",
+                "CollectableGreatBayTempleWaterControlRoomItem1",
+                "CollectableGreatBayTempleWaterControlRoomItem2",
+                "CollectableGrottosOceanHeartPieceGrottoBeehive1",
+                "CollectableLaundryPoolWoodenCrateSmall1",
+                "CollectableMountainVillageWinterLargeSnowball1",
+                "CollectableMountainVillageWinterLargeSnowball2",
+                "CollectablePathToGoronVillageWinterItem1",
+                "CollectablePathToGoronVillageWinterItem2",
+                "CollectablePathToGoronVillageWinterItem3",
+                "CollectablePathToGoronVillageWinterItem4",
+                "CollectablePiratesFortressInteriorBarrelRoomEggPot2",
+                "CollectablePiratesFortressInteriorTelescopeRoomItem1",
+                "CollectablePiratesFortressInteriorTelescopeRoomItem2",
+                "CollectablePiratesFortressInteriorTelescopeRoomItem3",
+                "CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem1",
+                "CollectableRanchHouseBarnBarnItem1",
+                "CollectableRanchHouseBarnBarnItem2",
+                "CollectableSnowheadTempleIceBlockRoomSmallSnowball3",
+                "CollectableSnowheadTempleIceBlockRoomSmallSnowball4",
+                "CollectableSnowheadTempleIceBlockRoomSmallSnowball5",
+                "CollectableSnowheadTempleMapRoomWoodenCrateLarge1",
+                "CollectableSnowheadTempleMapRoomWoodenCrateLarge2",
+                "CollectableSnowheadTempleMapRoomWoodenCrateLarge3",
+                "CollectableSnowheadTempleMapRoomWoodenCrateLarge4",
+                "CollectableSnowheadTempleMapRoomWoodenCrateLarge5",
+                "CollectableSnowheadTempleMainRoomPot1",
+                "CollectableSnowheadTempleMainRoomPot2",
+                "CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot1",
+                "CollectableSouthernSwampPoisonedCentralSwampItem1",
+                "CollectableSouthernSwampPoisonedCentralSwampItem2",
+                "CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot1",
+                "CollectableStoneTowerTempleLavaRoomItem1",
+                "CollectableStoneTowerTempleLavaRoomItem2",
+                "CollectableStoneTowerTempleRoomAfterLightArrowsItem1",
+                "CollectableStoneTowerTempleRoomAfterLightArrowsItem2",
+                "CollectableStoneTowerTempleRoomAfterLightArrowsItem3",
+                "CollectableStoneTowerTempleRoomAfterLightArrowsItem4",
+                "CollectableStoneTowerTempleRoomAfterLightArrowsItem5",
+                "CollectableStoneTowerTempleRoomAfterLightArrowsItem6",
+                "CollectableStoneTowerTempleRoomAfterLightArrowsItem7",
+                "CollectableStoneTowerTempleRoomAfterLightArrowsItem8",
+                "CollectableStoneTowerTempleInvertedEyegoreRoomItem1",
+                "CollectableStoneTowerTempleInvertedPreBossRoomItem1",
+                "CollectableStoneTowerTempleInvertedPreBossRoomItem2",
+                "CollectableStoneTowerTempleInvertedPreBossRoomItem3",
+                "CollectableStoneTowerTempleInvertedPreBossRoomItem4",
+                "CollectableStoneTowerTempleInvertedPreBossRoomItem5",
+                "CollectableStoneTowerTempleInvertedPreBossRoomItem6",
+                "CollectableStoneTowerTempleInvertedPreBossRoomItem7",
+                "CollectableStoneTowerTempleInvertedPreBossRoomItem8",
+                "CollectableStoneTowerTempleInvertedPreBossRoomItem9",
+                "CollectableStoneTowerTempleInvertedPreBossRoomItem10",
+                "CollectableStoneTowerTempleInvertedPreBossRoomItem11",
+                "CollectableSwordsmanSSchoolPot1",
+                "CollectableSwordsmanSSchoolPot2",
+                "CollectableSwordsmanSSchoolPot3",
+                "CollectableSwordsmanSSchoolPot4",
+                "CollectableSwordsmanSSchoolPot5",
+                "CollectableWoodfallItem1",
+                "CollectableWoodfallTempleEntranceRoomBeehive1",
+                "CollectableWoodfallTempleGekkoRoomPot1",
+                "CollectableWoodfallTempleGekkoRoomPot2",
+                "CollectableWoodfallTempleGekkoRoomPot3",
+                "CollectableWoodfallTempleGekkoRoomPot4",
+                "CollectableWoodfallTemplePreBossRoomItem1",
+                "CollectableWoodfallTemplePreBossRoomItem2",
+                "CollectableWoodfallTemplePreBossRoomItem3",
+                "CollectableWoodfallTemplePreBossRoomItem4",
+                "CollectableBeneathTheWellBugAndBombRoomPot1",
+                "CollectableBeneathTheWellBugAndBombRoomPot2",
+                "CollectableBeneathTheWellBugAndBombRoomPot3",
+                "CollectableBeneathTheWellBugAndBombRoomPot4",
+                "CollectableBeneathTheWellBugAndBombRoomPot5",
+                "CollectableGoronVillageWinterSmallSnowball3",
+                "CollectableGoronVillageWinterSmallSnowball4",
+                "CollectableGreatBayCoastPot9",
+                "CollectableGreatBayTempleBlueChuchuValveRoomBarrel2",
+                "CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2",
+                "CollectableIkanaCanyonMainAreaGrass2",
+                "CollectableMountainVillageSpringSmallSnowball2",
+                "CollectableMountainVillageWinterSmallSnowball2",
+                "CollectableSnowheadSmallSnowball2",
+                "CollectableStoneTowerPot4",
+                "CollectableStoneTowerInvertedStoneTowerFlippedPot1",
+                "CollectableZoraCapePot2",
+                "CollectableAncientCastleOfIkana1FWestStaircasePot1",
+                "CollectableGoronVillageWinterSmallSnowball5",
+                "CollectableGoronVillageWinterSmallSnowball6",
+                "CollectablePiratesFortressInteriorTelescopeRoomPot2",
+                "CollectableWoodfallPot1",
+                "CollectableGoronShrineGoronKidSRoomPot1",
+                "CollectableGoronShrineGoronKidSRoomPot2",
+                "CollectableGoronShrineMainRoomPot1",
+                "CollectableGoronShrineMainRoomPot2",
+                "CollectableGoronShrineMainRoomPot3",
+                "CollectableGoronVillageWinterSmallSnowball7",
+                "CollectableGoronVillageWinterSmallSnowball8",
+                "CollectableSouthernSwampClearCentralSwampGrass1",
+                "CollectableSouthernSwampPoisonedCentralSwampGrass1",
+                "CollectableWoodfallPot2",
+                "CollectableDampesHouseBasementPot5",
+                "CollectableDampesHouseBasementPot6",
+                "CollectableDampesHouseBasementPot7",
+                "CollectableDekuPalaceEastInnerGardenItem3",
+                "CollectableDekuPalaceEastInnerGardenItem4",
+                "CollectableDekuPalaceEastInnerGardenItem5",
+                "CollectableDekuPalaceEastInnerGardenItem6",
+                "CollectableDekuPalaceEastInnerGardenItem7",
+                "CollectableDekuPalaceEastInnerGardenItem8",
+                "CollectableDekuPalaceWestInnerGardenItem4",
+                "CollectableDekuPalaceWestInnerGardenItem5",
+                "CollectableDekuPalaceWestInnerGardenItem6",
+                "CollectableDekuPalaceWestInnerGardenItem7",
+                "CollectableDekuPalaceWestInnerGardenItem8",
+                "CollectableDekuPalaceWestInnerGardenItem9",
+                "CollectableDekuPalaceWestInnerGardenItem10",
+                "CollectableDekuShrineGiantRoomFloor1Item1",
+                "CollectableDekuShrineGiantRoomFloor1Item2",
+                "CollectableDekuShrineGiantRoomFloor1Item3",
+                "CollectableDekuShrineGiantRoomFloor1Item4",
+                "CollectableDekuShrineGiantRoomFloor1Item5",
+                "CollectableDekuShrineGiantRoomFloor1Item6",
+                "CollectableDekuShrineWaterRoomWithPlatformsItem1",
+                "CollectableDekuShrineWaterRoomWithPlatformsItem2",
+                "CollectableDekuShrineWaterRoomWithPlatformsItem3",
+                "CollectableDekuShrineWaterRoomWithPlatformsItem4",
+                "CollectableDekuShrineWaterRoomWithPlatformsItem5",
+                "CollectableDekuShrineWaterRoomWithPlatformsItem6",
+                "CollectableDekuShrineRoomBeforeFlameWallsItem1",
+                "CollectableDekuShrineRoomBeforeFlameWallsItem2",
+                "CollectableDekuShrineRoomBeforeFlameWallsItem3",
+                "CollectableDekuShrineRoomBeforeFlameWallsItem4",
+                "CollectableDekuShrineRoomBeforeFlameWallsItem5",
+                "CollectableDekuShrineRoomBeforeFlameWallsItem6",
+                "CollectableDekuShrineDekuButlerSRoomItem1",
+                "CollectableDekuShrineDekuButlerSRoomItem2",
+                "CollectableDekuShrineDekuButlerSRoomItem3",
+                "CollectableDekuShrineDekuButlerSRoomItem4",
+                "CollectableDekuShrineDekuButlerSRoomItem5",
+                "CollectableDekuShrineDekuButlerSRoomItem6",
+                "CollectableDekuShrineDekuButlerSRoomItem7",
+                "CollectableDekuShrineDekuButlerSRoomItem8",
+                "CollectableDekuShrineDekuButlerSRoomItem9",
+                "CollectableDekuShrineDekuButlerSRoomItem10",
+                "CollectableDekuShrineGreyBoulderRoomPot1",
+                "CollectableEastClockTownWoodenCrateSmall1",
+                "CollectableGreatBayTempleWaterControlRoomItem3",
+                "CollectableGreatBayTempleWaterControlRoomItem4",
+                "CollectableIkanaGraveyardIkanaGraveyardLowerGrass2",
+                "CollectableMagicHagsPotionShopItem1",
+                "CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem2",
+                "CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem3",
+                "CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem4",
+                "CollectablePiratesFortressInteriorCellRoomWithPieceOfHeartItem5",
+                "CollectableSecretShrineEntranceRoomItem1",
+                "CollectableSecretShrineEntranceRoomItem2",
+                "CollectableSecretShrineEntranceRoomItem3",
+                "CollectableSecretShrineEntranceRoomItem4",
+                "CollectableSecretShrineEntranceRoomItem5",
+                "CollectableSecretShrineEntranceRoomItem6",
+                "CollectableSecretShrineEntranceRoomItem7",
+                "CollectableSecretShrineEntranceRoomItem8",
+                "CollectableSecretShrineEntranceRoomItem9",
+                "CollectableSecretShrineEntranceRoomItem10",
+                "CollectableSecretShrineEntranceRoomItem11",
+                "CollectableSecretShrineEntranceRoomItem12",
+                "CollectableSecretShrineEntranceRoomItem13",
+                "CollectableSecretShrineEntranceRoomItem14",
+                "CollectableSecretShrineEntranceRoomItem15",
+                "CollectableSecretShrineEntranceRoomItem16",
+                "CollectableSecretShrineEntranceRoomItem17",
+                "CollectableSouthernSwampClearMagicHagsPotionShopExteriorPot2",
+                "CollectableSouthernSwampPoisonedMagicHagsPotionShopExteriorPot2",
+                "CollectableStoneTowerTempleLavaRoomItem3",
+                "CollectableStoneTowerTempleLavaRoomItem4",
+                "CollectableStoneTowerTempleLavaRoomItem5",
+                "CollectableStoneTowerTempleInvertedEyegoreRoomItem2",
+                "CollectableClockTowerRooftopPot1",
+                "CollectableClockTowerRooftopPot2",
+                "CollectableClockTowerRooftopPot3",
+                "CollectableClockTowerRooftopPot4",
+                "CollectableGoronRacetrackPot1",
+                "CollectableGoronRacetrackPot2",
+                "CollectableGoronRacetrackPot3",
+                "CollectableGoronRacetrackPot4",
+                "CollectableGoronRacetrackPot5",
+                "CollectableGoronRacetrackPot6",
+                "CollectableGoronRacetrackPot7",
+                "CollectableGoronRacetrackPot8",
+                "CollectableGoronRacetrackPot9",
+                "CollectableGoronRacetrackPot10",
+                "CollectableGoronRacetrackPot11",
+                "CollectableGoronRacetrackPot12",
+                "CollectableGoronRacetrackPot13",
+                "CollectableGoronRacetrackPot14",
+                "CollectableGoronRacetrackPot15",
+                "CollectableGoronRacetrackPot16",
+                "CollectableGoronRacetrackPot17",
+                "CollectableGoronRacetrackPot18",
+                "CollectableGoronRacetrackPot19",
+                "CollectableGoronRacetrackPot20",
+                "CollectableGoronRacetrackPot21",
+                "CollectableGoronRacetrackPot22",
+                "CollectableGoronRacetrackPot23",
+                "CollectableGoronRacetrackPot24",
+                "CollectableGoronRacetrackPot25",
+                "CollectableGoronRacetrackPot26",
+                "CollectableGoronRacetrackPot27",
+                "CollectableGoronShrineGoronKidSRoomPot3",
+                "CollectableGoronShrineMainRoomPot4",
+                "CollectableGoronShrineMainRoomPot5",
+                "CollectableGoronShrineMainRoomPot6",
+                "CollectableGreatBayCoastPot10",
+                "CollectableGreatBayTempleBlueChuchuValveRoomWoodenCrateLarge1",
+                "CollectableIgosDuIkanaSLairIgosDuIkanaSRoomPot3",
+                "CollectableIkanaCanyonMainAreaGrass3",
+                "CollectableMilkRoadGrass2",
+                "CollectableMountainVillageSpringSmallSnowball3",
+                "CollectableMountainVillageWinterSmallSnowball3",
+                "CollectableMountainVillageWinterSmallSnowball4",
+                "CollectableMountainVillageWinterSmallSnowball5",
+                "CollectableSnowheadSmallSnowball3",
+                "CollectableStoneTowerPot5",
+                "CollectableStoneTowerInvertedStoneTowerFlippedPot2",
+                "CollectableTheMoonLinkTrialEntrancePot1",
+                "CollectableTheMoonLinkTrialEntrancePot2",
+                "CollectableTheMoonLinkTrialEntrancePot3",
+                "CollectableTheMoonLinkTrialEntrancePot4",
+                "CollectableZoraCapePot3",
+                "CollectableDampesHouseBasementPot8",
+                "CollectablePiratesFortressItem1",
+                "CollectablePiratesFortressItem2",
+                "CollectablePiratesFortressItem3",
+                "CollectableDekuShrineGiantRoomFloor1Item7",
+                "CollectableDekuShrineGiantRoomFloor1Item8",
+                "CollectableGreatBayTempleWaterControlRoomItem5",
+                "CollectableGreatBayTempleCompassBossKeyRoomItem1",
+                "CollectableGreatBayTempleCompassBossKeyRoomItem2",
+                "CollectableGreatBayTempleTopmostRoomWithGreenValveItem1",
+                "CollectableGreatBayTempleTopmostRoomWithGreenValveItem2",
+                "CollectableLaundryPoolItem1",
+                "CollectableLaundryPoolItem2",
+                "CollectableLaundryPoolItem3",
+                "CollectableMountainVillageWinterMountainVillageSpringItem1",
+                "CollectableSnowheadTempleIceBlockRoomItem1",
+                "CollectableSnowheadTempleIceBlockRoomItem2",
+                "CollectableSnowheadTempleIceBlockRoomItem3",
+                "CollectableSouthernSwampPoisonedCentralSwampBeehive1",
+                "CollectableStoneTowerTempleLavaRoomItem6",
+                "CollectableStoneTowerTempleEyegoreRoomItem1",
+                "CollectableStoneTowerTempleMirrorRoomWoodenCrateLarge1",
+                "CollectableStoneTowerTempleMirrorRoomWoodenCrateLarge2",
+                "CollectableStoneTowerTempleEyegoreRoomItem2",
+                "CollectableStoneTowerTempleInvertedEyegoreRoomItem3",
+                "CollectableStoneTowerTempleInvertedAirRoomItem1",
+                "CollectableStoneTowerTempleInvertedAirRoomItem2",
+                "CollectableTerminaFieldItem1",
+                "CollectableWoodfallTemplePreBossRoomItem5",
+                "CollectableWoodfallTemplePreBossRoomItem6",
+                "CollectableAncientCastleOfIkanaCastleExteriorGrass3",
+                "CollectableAncientCastleOfIkanaCastleExteriorGrass4",
+                "CollectableAncientCastleOfIkanaFireCeilingRoomPot1",
+                "CollectableAncientCastleOfIkanaHoleRoomPot1",
+                "CollectableAncientCastleOfIkanaHoleRoomPot2",
+                "CollectableAstralObservatorySewerPot1",
+                "CollectableAstralObservatorySewerPot2",
+                "CollectableAstralObservatoryObservatoryBombersHideoutPot3",
+                "CollectableBeneathTheGraveyardMainAreaPot2",
+                "CollectableDekuPalaceEastInnerGardenPot1",
+                "CollectableDekuPalaceEastInnerGardenPot2",
+                "CollectableGoronRacetrackPot28",
+                "CollectableGoronRacetrackPot29",
+                "CollectableGoronRacetrackPot30",
+                "CollectableGoronShrineMainRoomPot7",
+                "CollectableGoronShrineMainRoomPot8",
+                "CollectableGoronVillageWinterLargeSnowball4",
+                "CollectableGoronVillageWinterLargeSnowball5",
+                "CollectableGoronVillageWinterLargeSnowball6",
+                "CollectableGoronVillageWinterSmallSnowball9",
+                "CollectableGoronVillageWinterSmallSnowball10",
+                "CollectableIgosDuIkanaSLairPreBossRoomPot3",
+                "CollectableIkanaGraveyardIkanaGraveyardLowerGrass3",
+                "CollectableMountainVillageWinterSmallSnowball6",
+                "CollectableMountainVillageWinterSmallSnowball7",
+                "CollectableMountainVillageWinterLargeSnowball3",
+                "CollectableMountainVillageWinterLargeSnowball4",
+                "CollectableOceansideSpiderHouseMainRoomPot1",
+                "CollectableOceansideSpiderHouseEntrancePot3",
+                "CollectableOceansideSpiderHouseMainRoomPot2",
+                "CollectableOceansideSpiderHouseStorageRoomPot1",
+                "CollectablePathToGoronVillageWinterLargeSnowball1",
+                "CollectablePathToGoronVillageWinterLargeSnowball2",
+                "CollectablePathToGoronVillageWinterLargeSnowball3",
+                "CollectablePathToGoronVillageWinterLargeSnowball4",
+                "CollectablePathToGoronVillageWinterLargeSnowball5",
+                "CollectablePathToGoronVillageWinterLargeSnowball6",
+                "CollectablePathToGoronVillageWinterLargeSnowball7",
+                "CollectablePathToGoronVillageWinterLargeSnowball8",
+                "CollectablePathToGoronVillageWinterLargeSnowball9",
+                "CollectablePathToGoronVillageWinterLargeSnowball10",
+                "CollectablePathToGoronVillageWinterLargeSnowball11",
+                "CollectablePathToGoronVillageWinterLargeSnowball12",
+                "CollectablePathToGoronVillageWinterLargeSnowball13",
+                "CollectablePathToGoronVillageWinterLargeSnowball14",
+                "CollectablePathToGoronVillageWinterSmallSnowball1",
+                "CollectablePathToGoronVillageWinterSmallSnowball2",
+                "CollectablePathToGoronVillageWinterSmallSnowball3",
+                "CollectablePathToMountainVillageSmallSnowball1",
+                "CollectablePathToSnowheadLargeSnowball1",
+                "CollectablePathToSnowheadLargeSnowball2",
+                "CollectablePathToSnowheadLargeSnowball3",
+                "CollectablePathToSnowheadLargeSnowball4",
+                "CollectablePinnacleRockPot1",
+                "CollectablePinnacleRockPot2",
+                "CollectablePinnacleRockPot3",
+                "CollectablePinnacleRockPot4",
+                "CollectableSecretShrineMainRoomPot3",
+                "CollectableSecretShrineMainRoomPot4",
+                "CollectableSnowheadLargeSnowball1",
+                "CollectableSnowheadLargeSnowball2",
+                "CollectableSnowheadLargeSnowball3",
+                "CollectableSnowheadLargeSnowball4",
+                "CollectableSnowheadLargeSnowball5",
+                "CollectableSnowheadLargeSnowball6",
+                "CollectableStoneTowerPot6",
+                "CollectableStoneTowerPot7",
+                "CollectableStoneTowerPot8",
+                "CollectableStoneTowerPot9",
+                "CollectableStoneTowerPot10",
+                "CollectableZoraCapePot4",
+                "CollectableRomaniRanchInvisibleItem1",
+                "CollectableRomaniRanchInvisibleItem2",
+                "CollectableRomaniRanchInvisibleItem3",
+                "CollectableRomaniRanchInvisibleItem4",
+                "CollectableRomaniRanchInvisibleItem5",
+                "CollectableRomaniRanchInvisibleItem6",
+                "CollectableTerminaFieldInvisibleItem1",
+                "CollectableTerminaFieldInvisibleItem2",
+                "CollectableTerminaFieldInvisibleItem3",
+                "CollectableTerminaFieldInvisibleItem4",
+                "CollectableTerminaFieldInvisibleItem5",
+                "CollectableTerminaFieldInvisibleItem6",
+                "CollectableTerminaFieldInvisibleItem7",
+                "CollectableTerminaFieldInvisibleItem8",
+                "CollectableTerminaFieldInvisibleItem9",
+                "CollectableTerminaFieldInvisibleItem10",
+                "CollectableTerminaFieldInvisibleItem11",
+                "CollectableSwampSpiderHouseInvisibleItem1",
+                "CollectableSwampSpiderHouseInvisibleItem2",
+                "CollectableSwampSpiderHouseInvisibleItem3",
+                "CollectableSwampSpiderHouseInvisibleItem4",
+                "CollectableSwampSpiderHouseInvisibleItem5",
+                "CollectableTerminaFieldTreeItem1",
+                "CollectableTerminaFieldPillarItem1",
+                "CollectableTerminaFieldTelescopeGuay1",
+                "CollectableSwordsmanSchoolGong1",
+                "CollectableBeanGrottoSoftSoil1",
+                "CollectableDekuPalaceSoftSoil1",
+                "CollectableDoggyRacetrackSoftSoil1",
+                "CollectableGreatBayCoastSoftSoil1",
+                "CollectableRomaniRanchSoftSoil1",
+                "CollectableRomaniRanchSoftSoil2",
+                "CollectableSecretShrineSoftSoil1",
+                "CollectableStoneTowerSoftSoil1",
+                "CollectableStoneTowerSoftSoil2",
+                "CollectableSwampSpiderHouseSoftSoil1",
+                "CollectableSwampSpiderHouseSoftSoil2",
+                "CollectableTerminaFieldSoftSoil1",
+                "CollectableTerminaFieldSoftSoil2",
+                "CollectableTerminaFieldSoftSoil3",
+                "CollectableTerminaFieldSoftSoil4",
+                "CollectableTerminaFieldGuay1",
+                "CollectableTerminaFieldGuay2",
+                "CollectableTerminaFieldGuay3",
+                "CollectableTerminaFieldGuay4",
+                "CollectableTerminaFieldGuay5",
+                "CollectableTerminaFieldGuay6",
+                "CollectableTerminaFieldGuay7",
+                "CollectableTerminaFieldGuay8",
+                "CollectableTerminaFieldGuay9",
+                "CollectableTerminaFieldGuay10",
+                "CollectableTerminaFieldGuay11",
+                "CollectableTerminaFieldGuay12",
+                "CollectableTerminaFieldGuay13",
+                "CollectableTerminaFieldGuay14",
+                "CollectableTerminaFieldGuay15",
+                "CollectableTerminaFieldGuay16",
+                "CollectableTerminaFieldGuay17",
+                "CollectableTerminaFieldGuay18",
+                "CollectableTerminaFieldGuay19",
+                "CollectableTerminaFieldGuay20",
+                "CollectableTerminaFieldGuay21",
+                "CollectableTerminaFieldGuay22",
+                "CollectableTerminaFieldGuay23",
+                "CollectableDekuPalaceRupeeCluster1",
+                "CollectableDekuPalaceRupeeCluster2",
+                "CollectableDekuPalaceRupeeCluster3",
+                "CollectableDekuPalaceRupeeCluster4",
+                "CollectableDekuPalaceRupeeCluster5",
+                "CollectableDekuPalaceRupeeCluster6",
+                "CollectableDekuPalaceRupeeCluster7",
+                "CollectableBeneathTheGraveyardRupeeCluster1",
+                "CollectableBeneathTheGraveyardRupeeCluster2",
+                "CollectableBeneathTheGraveyardRupeeCluster3",
+                "CollectableBeneathTheGraveyardRupeeCluster4",
+                "CollectableBeneathTheGraveyardRupeeCluster5",
+                "CollectableBeneathTheGraveyardRupeeCluster6",
+                "CollectableBeneathTheGraveyardRupeeCluster7",
+                "CollectableTerminaFieldSongWall1",
+                "CollectableTerminaFieldSongWall2",
+                "CollectableTerminaFieldSongWall3",
+                "CollectableTerminaFieldSongWall4",
+                "CollectableTerminaFieldSongWall5",
+                "CollectableTerminaFieldSongWall6",
+                "CollectableTerminaFieldSongWall7",
+                "CollectableTerminaFieldSongWall8",
+                "CollectableTerminaFieldSongWall9",
+                "CollectableTerminaFieldSongWall10",
+                "CollectableTerminaFieldSongWall11",
+                "CollectableTerminaFieldSongWall12",
+                "CollectableTerminaFieldSongWall13",
+                "CollectableTerminaFieldSongWall14",
+                "CollectableTerminaFieldSongWall15",
+                "CollectableDekuPlaygroundItem1",
+                "CollectableDekuPlaygroundItem2",
+                "CollectableDekuPlaygroundItem3",
+                "CollectableDekuPlaygroundItem4",
+                "CollectableDekuPlaygroundItem5",
+                "CollectableDekuPlaygroundItem6",
+                "CollectableDekuPlaygroundItem7",
+                "CollectableDekuPlaygroundItem8",
+                "CollectableDekuPlaygroundItem9",
+                "CollectableDekuPlaygroundItem10",
+                "CollectableDekuPlaygroundItem11",
+                "CollectableDekuPlaygroundItem12",
+                "CollectableDekuPlaygroundItem13",
+                "CollectableDekuPlaygroundItem14",
+                "CollectableDekuPlaygroundItem15",
+                "CollectableDekuPlaygroundItem16",
+                "CollectableDekuPlaygroundItem17",
+                "CollectableDekuPlaygroundItem18",
+                "CollectablePiratesFortressHitTag1",
+                "CollectablePiratesFortressHitTag2",
+                "CollectablePiratesFortressHitTag3",
+                "CollectablePiratesFortressHitTag4",
+                "CollectablePiratesFortressHitTag5",
+                "CollectablePiratesFortressHitTag6",
+                "CollectablePiratesFortressInteriorHookshotRoomHitTag1",
+                "CollectablePiratesFortressInteriorHookshotRoomHitTag2",
+                "CollectablePiratesFortressInteriorHookshotRoomHitTag3",
+                "CollectableSwampSpiderHouseHitTag1",
+                "CollectableSwampSpiderHouseHitTag2",
+                "CollectableSwampSpiderHouseHitTag3",
+                "CollectableSwampSpiderHouseHitTag4",
+                "CollectableSwampSpiderHouseHitTag5",
+                "CollectableSwampSpiderHouseHitTag6",
+                "CollectableSwampSpiderHouseHitTag7",
+                "CollectableSwampSpiderHouseHitTag8",
+                "CollectableSwampSpiderHouseHitTag9",
+                "CollectableSwampSpiderHouseHitTag10",
+                "CollectableSwampSpiderHouseHitTag11",
+                "CollectableSwampSpiderHouseHitTag12",
+                "CollectableOceansideSpiderHouseHitTag1",
+                "CollectableOceansideSpiderHouseHitTag2",
+                "CollectableOceansideSpiderHouseHitTag3",
+                "CollectableOceansideSpiderHouseHitTag4",
+                "CollectableOceansideSpiderHouseHitTag5",
+                "CollectableOceansideSpiderHouseHitTag6",
+                "CollectableOceansideSpiderHouseHitTag7",
+                "CollectableOceansideSpiderHouseHitTag8",
+                "CollectableOceansideSpiderHouseHitTag9",
+                "CollectableTerminaFieldHitTag1",
+                "CollectableTerminaFieldHitTag2",
+                "CollectableTerminaFieldHitTag3",
+                "CollectableTerminaFieldHitTag4",
+                "CollectableTerminaFieldHitTag5",
+                "CollectableTerminaFieldHitTag6",
+                "CollectableTerminaFieldHitTag7",
+                "CollectableTerminaFieldHitTag8",
+                "CollectableTerminaFieldHitTag9",
+                "CollectableCuccoShackHitTag1",
+                "CollectableCuccoShackHitTag2",
+                "CollectableCuccoShackHitTag3",
+                "CollectableCuccoShackHitTag4",
+                "CollectableCuccoShackHitTag5",
+                "CollectableCuccoShackHitTag6",
+                "CollectableIkanaGraveyardHitTag1",
+                "CollectableIkanaGraveyardHitTag2",
+                "CollectableIkanaGraveyardHitTag3",
+                "CollectableIkanaGraveyardHitTag4",
+                "CollectableIkanaGraveyardHitTag5",
+                "CollectableIkanaGraveyardHitTag6",
+                "CollectableIkanaGraveyardHitTag7",
+                "CollectableIkanaGraveyardHitTag8",
+                "CollectableIkanaGraveyardHitTag9",
+                "CollectableIkanaGraveyardHitTag10",
+                "CollectableIkanaGraveyardHitTag11",
+                "CollectableIkanaGraveyardHitTag12",
+                "CollectableStockPotInnHitTag1",
+                "CollectableStockPotInnHitTag2",
+                "CollectableStockPotInnHitTag3",
+                "CollectableEastClockTownHitTag1",
+                "CollectableEastClockTownHitTag2",
+                "CollectableEastClockTownHitTag3",
+                "CollectableEastClockTownHitTag4",
+                "CollectableEastClockTownHitTag5",
+                "CollectableEastClockTownHitTag6",
+                "CollectableEastClockTownHitTag7",
+                "CollectableEastClockTownHitTag8",
+                "CollectableEastClockTownHitTag9",
+                "CollectableSouthClockTownHitTag1",
+                "CollectableSouthClockTownHitTag2",
+                "CollectableSouthClockTownHitTag3",
+                "CollectableTerminaFieldEnemy1",
+                "CollectablePiratesFortressInteriorHookshotRoomPot1",
+                "CollectablePiratesFortressInteriorHookshotRoomPot2",
+                "CollectableTerminaFieldRock1",
+                "CollectableTerminaFieldRock2",
+                "CollectableIkanaGraveyardIkanaGraveyardUpperRock1",
+                "CollectableIkanaGraveyardIkanaGraveyardUpperRock2",
+                "CollectableIkanaGraveyardIkanaGraveyardUpperRock3",
+                "CollectableTerminaFieldRock3",
+                "CollectableTerminaFieldRock4",
+                "CollectableTerminaFieldRock5",
+                "CollectableTerminaFieldRock6",
+                "CollectableTerminaFieldRock7",
+                "CollectableIkanaGraveyardIkanaGraveyardUpperRock4",
+                "CollectableIkanaGraveyardIkanaGraveyardUpperRock5",
+                "CollectableTerminaFieldRock8",
+                "CollectableTerminaFieldRock9",
+                "CollectableMilkRoadKeatonGrass1",
+                "CollectableMilkRoadKeatonGrass2",
+                "CollectableMilkRoadKeatonGrass3",
+                "CollectableMilkRoadKeatonGrass4",
+                "CollectableMilkRoadKeatonGrass5",
+                "CollectableMilkRoadKeatonGrass6",
+                "CollectableMilkRoadKeatonGrass7",
+                "CollectableMilkRoadKeatonGrass8",
+                "CollectableMilkRoadKeatonGrass9",
+                "CollectableNorthClockTownKeatonGrass1",
+                "CollectableNorthClockTownKeatonGrass2",
+                "CollectableNorthClockTownKeatonGrass3",
+                "CollectableNorthClockTownKeatonGrass4",
+                "CollectableNorthClockTownKeatonGrass5",
+                "CollectableNorthClockTownKeatonGrass6",
+                "CollectableNorthClockTownKeatonGrass7",
+                "CollectableNorthClockTownKeatonGrass8",
+                "CollectableNorthClockTownKeatonGrass9",
+                "CollectableMountainVillageSpringKeatonGrass1",
+                "CollectableMountainVillageSpringKeatonGrass2",
+                "CollectableMountainVillageSpringKeatonGrass3",
+                "CollectableMountainVillageSpringKeatonGrass4",
+                "CollectableMountainVillageSpringKeatonGrass5",
+                "CollectableMountainVillageSpringKeatonGrass6",
+                "CollectableMountainVillageSpringKeatonGrass7",
+                "CollectableMountainVillageSpringKeatonGrass8",
+                "CollectableMountainVillageSpringKeatonGrass9",
+                "CollectableOceansideSpiderHouseMaskRoomPot1",
+                "CollectableOceansideSpiderHouseMaskRoomPot2",
+                "CollectableIkanaCanyonMainAreaGrass4",
+                "CollectableIkanaCanyonMainAreaGrass5",
+                "CollectableIkanaCanyonMainAreaGrass6",
+                "CollectablePathToSnowheadSmallSnowball1",
+                "CollectablePathToSnowheadSmallSnowball2",
+                "CollectablePathToSnowheadSmallSnowball3",
+                "CollectablePathToSnowheadSmallSnowball4",
+                "CollectablePathToMountainVillageSmallSnowball2",
+                "CollectablePathToMountainVillageSmallSnowball3",
+                "CollectablePathToMountainVillageSmallSnowball4",
+                "CollectableZoraCapeJarGame1",
+                "CollectableIkanaGraveyardDay2Bats1",
+                "CollectableCuccoShackPottedPlant1",
+                "GossipTerminaSouth",
+                "GossipSwampPotionShop",
+                "GossipMountainSpringPath",
+                "GossipMountainPath",
+                "GossipOceanZoraGame",
+                "GossipCanyonRoad",
+                "GossipCanyonDock",
+                "GossipCanyonSpiritHouse",
+                "GossipTerminaMilk",
+                "GossipTerminaWest",
+                "GossipTerminaNorth",
+                "GossipTerminaEast",
+                "GossipRanchTree",
+                "GossipRanchBarn",
+                "GossipMilkRoad",
+                "GossipOceanFortress",
+                "GossipSwampRoad",
+                "GossipTerminaObservatory",
+                "GossipRanchCuccoShack",
+                "GossipRanchRacetrack",
+                "GossipRanchEntrance",
+                "GossipCanyonRavine",
+                "GossipMountainSpringFrog",
+                "GossipSwampSpiderHouse",
+                "GossipTerminaGossipLarge",
+                "GossipTerminaGossipGuitar",
+                "GossipTerminaGossipPipes",
+                "GossipTerminaGossipDrums",
+            };
+
+            var itemNameIndex = 0;
+            foreach (var line in lines)
+            {
+                if (line.StartsWith("- "))
+                {
+                    if (itemNameIndex >= itemNames.Count)
+                    {
+                        var itemName = line.Substring(2);
+                        itemNames.Add(itemName);
+                    }
+                    itemNameIndex++;
+                }
+            }
+
+            var items = new List<JsonFormatLogicItem>();
+
+            int i = 0;
+            while (true)
+            {
+                if (i >= lines.Count)
+                {
+                    break;
+                }
+                if (lines[i].StartsWith("#"))
+                {
+                    i++;
+                    continue;
+                }
+                if (lines[i].Contains("-"))
+                {
+                    i++;
+                    continue;
+                }
+                else
+                {
+                    var item = new JsonFormatLogicItem();
+                    item.RequiredItems = new List<string>();
+                    if (lines[i] != "")
+                    {
+                        foreach (var j in lines[i].Split(','))
+                        {
+                            item.RequiredItems.Add(itemNames[Convert.ToInt32(j)]);
+                        }
+                    }
+                    item.ConditionalItems = new List<List<string>>();
+                    if (lines[i + 1] != "")
+                    {
+                        foreach (var j in lines[i + 1].Split(';'))
+                        {
+                            var conditionals = new List<string>();
+                            foreach (var k in j.Split(','))
+                            {
+                                conditionals.Add(itemNames[Convert.ToInt32(k)]);
+                            }
+                            item.ConditionalItems.Add(conditionals);
+                        }
+                    }
+                    item.TimeNeeded = (TimeOfDay)Convert.ToInt32(lines[i + 2]);
+                    item.TimeAvailable = (TimeOfDay)Convert.ToInt32(lines[i + 3]);
+                    var trickInfo = lines[i + 4].Split(new char[] { ';' }, 2);
+                    item.IsTrick = trickInfo.Length > 1;
+                    item.TrickTooltip = item.IsTrick ? trickInfo[1] : null;
+                    if (string.IsNullOrWhiteSpace(item.TrickTooltip))
+                    {
+                        item.TrickTooltip = null;
+                    }
+                    item.Id = itemNames[items.Count];
+                    items.Add(item);
+                    i += 5;
+                }
+            }
+
+            //items.Remove("AreaWoodfallNew");
+            //items.Remove("AreaSnowheadNew");
+            //items.Remove("AreaGreatBayNew");
+            //items.Remove("AreaLANew");
+            //items.Remove("AreaInvertedStoneTowerNew");
+
+            return new JsonFormatLogic
+            {
+                Version = 1,
+                Logic = items,
+            };
+        }
+
+        private static void AddBossRemains(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1068;
+            var itemNames = new string[]
+            {
+                "RemainsOdolwa",
+                "RemainsGoht",
+                "RemainsGyorg",
+                "RemainsTwinmold",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 2;
+        }
+
+        private static void AddOcarinaAndSongOfTime(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 94;
+            var itemNames = new string[]
+            {
+                "ItemOcarina",
+                "SongTime",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 3;
+        }
+
+        private static void AddMultiLocations(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1075;
+            var itemNames = new string[]
+            {
+                "ItemTingleMapTownInTown",
+                "ItemTingleMapTownInCanyon",
+                "ItemTingleMapWoodfallInSwamp",
+                "ItemTingleMapWoodfallInTown",
+                "ItemTingleMapSnowheadInMountain",
+                "ItemTingleMapSnowheadInSwamp",
+                "ItemTingleMapRanchInRanch",
+                "ItemTingleMapRanchInMountain",
+                "ItemTingleMapGreatBayInOcean",
+                "ItemTingleMapGreatBayInRanch",
+                "ItemTingleMapStoneTowerInCanyon",
+                "ItemTingleMapStoneTowerInOcean",
+                "HeartPiecePostBoxInSCT",
+                "HeartPiecePostBoxInNCT",
+                "HeartPiecePostBoxInECT",
+                "HeartPieceKeatonQuizInNCT",
+                "HeartPieceKeatonQuizInMilkRoad",
+                "HeartPieceKeatonQuizInMountainVillage",
+                "SongOathInWFT",
+                "SongOathInSHT",
+                "SongOathInGBT",
+                "SongOathInISTT",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 4;
+        }
+
+        private static void AddMultiLocationGoronShop(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1097;
+            var itemNames = new string[]
+            {
+                "ShopItemGoronBomb10InWinter",
+                "ShopItemGoronBomb10InSpring",
+                "ShopItemGoronArrow10InWinter",
+                "ShopItemGoronArrow10InSpring",
+                "ShopItemGoronRedPotionInWinter",
+                "ShopItemGoronRedPotionInSpring",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 5;
+        }
+
+        private static void AddOtherMagicBean(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 123;
+            var itemNames = new string[]
+            {
+                "OtherMagicBean",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 6;
+        }
+
+        private static void AddMultiLocationBusinessScrubs(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1104;
+            var itemNames = new string[]
+            {
+                "ShopItemBusinessScrubMagicBeanInSwamp",
+                "ShopItemBusinessScrubMagicBeanInTown",
+                "UpgradeBiggestBombBagInMountain",
+                "UpgradeBiggestBombBagInSwamp",
+                "ShopItemBusinessScrubGreenPotionInOcean",
+                "ShopItemBusinessScrubGreenPotionInMountain",
+                "ShopItemBusinessScrubBluePotionInCanyon",
+                "ShopItemBusinessScrubBluePotionInOcean",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 7;
+        }
+
+        private static void AddOtherTimeTravel(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 124;
+            var itemNames = new string[]
+            {
+                "OtherTimeTravel",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 8;
+        }
+
+        private static void AddBeansAndDekuPlayground(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 124;
+            var itemNames = new string[]
+            {
+                "OtherLimitlessBeans",
+                "OtherPlayDekuPlayground",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 9;
+        }
+
+        private static void AddRoyalWallet(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 32;
+            var itemNames = new string[]
+            {
+                "UpgradeRoyalWallet",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 10;
+        }
+
+        private static void AddMultiLocationClockTownFairy(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1116;
+            var itemNames = new string[]
+            {
+                "CollectibleStrayFairyClockTownInLaundryPool",
+                "CollectibleStrayFairyClockTownInECT",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 11;
+        }
+
         private class MigrationItem
         {
             public int ID;
             public List<List<int>> Conditionals = new List<List<int>>();
             public List<int> DependsOnItems = new List<int>();
             public int TimeNeeded = 0;
+        }
+
+        private class JsonFormatLogic
+        {
+            public int Version { get; set; }
+            public List<JsonFormatLogicItem> Logic { get; set; }
+        }
+
+        private class JsonFormatLogicItem
+        {
+            public string Id { get; set; }
+            public List<string> RequiredItems { get; set; }
+            public List<List<string>> ConditionalItems { get; set; }
+            public TimeOfDay TimeNeeded { get; set; }
+            public TimeOfDay TimeAvailable { get; set; }
+            public TimeOfDay TimeSetup { get; set; }
+            public bool IsTrick { get; set; }
+            public string TrickTooltip { get; set; }
+        }
+
+        [Flags]
+        private enum TimeOfDay
+        {
+            None = 0,
+            Day1 = 1,
+            Night1 = 2,
+            Day2 = 4,
+            Night2 = 8,
+            Day3 = 16,
+            Night3 = 32,
+            Any = 63,
         }
     }
 }

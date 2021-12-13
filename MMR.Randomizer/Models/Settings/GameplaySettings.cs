@@ -1,12 +1,9 @@
-﻿using MMR.Randomizer.Asm;
+﻿using MMR.Common.Utils;
+using MMR.Randomizer.Asm;
 using MMR.Randomizer.GameObjects;
-using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text.Encodings.Web;
-using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace MMR.Randomizer.Models.Settings
@@ -141,6 +138,45 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.ProgressiveUpgrades = value; }
         }
 
+        public bool TargetHealthBar
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.TargetHealth; }
+            set { this.AsmOptions.MiscConfig.Flags.TargetHealth = value; }
+        }
+
+        public bool ClimbMostSurfaces
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.ClimbAnything; }
+            set { this.AsmOptions.MiscConfig.Flags.ClimbAnything = value; }
+        }
+
+        /// <summary>
+        /// Whether or not to enable spawning scarecrow without Scarecrow's Song.
+        /// </summary>
+        public bool FreeScarecrow
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.FreeScarecrow; }
+            set { this.AsmOptions.MiscConfig.Flags.FreeScarecrow = value; }
+        }
+
+        public bool FillWallet
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.FillWallet; }
+            set { this.AsmOptions.MiscConfig.Flags.FillWallet = value; }
+        }
+
+        public AutoInvertState AutoInvert
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.AutoInvert; }
+            set { this.AsmOptions.MiscConfig.Flags.AutoInvert = value; }
+        }
+
+        public bool DoubleArcheryRewards
+        {
+            get { return this.AsmOptions.MiscConfig.Speedups.DoubleArcheryRewards; }
+            set { this.AsmOptions.MiscConfig.Speedups.DoubleArcheryRewards = value; }
+        }
+
         #endregion
 
         #region Random Elements
@@ -150,7 +186,19 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public LogicMode LogicMode { get; set; }
 
-        public List<int> EnabledTricks { get; set; } = new List<int>();
+        public List<string> EnabledTricks { get; set; } = new List<string>
+        {
+            "Exit Ocean Spider House without Goron",
+            "Lensless Chests",
+            "Lensless Walking",
+            "Lensless Walls/Ceilings",
+            "Pinnacle Rock without Seahorse",
+            "Poisoned Water as Zora",
+            "Quest Item Extra Storage",
+            "Scarecrow's Song",
+            "Take Damage",
+            "WFT 2nd Floor Skip",
+        };
 
         /// <summary>
         /// Add songs to the randomization pool
@@ -172,11 +220,15 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public StartingItemMode StartingItemMode { get; set; }
 
-        public SmallKeyMode SmallKeyMode { get; set; }
+        public SmallKeyMode SmallKeyMode { get; set; } = SmallKeyMode.DoorsOpen;
 
         public BossKeyMode BossKeyMode { get; set; }
 
         public StrayFairyMode StrayFairyMode { get; set; }
+
+        public BossRemainsMode BossRemainsMode { get; set; }
+
+        public PriceMode PriceMode { get; set; }
 
 
         /// <summary>
@@ -192,7 +244,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom item list string
         /// </summary>
-        public string CustomItemListString { get; set; }
+        public string CustomItemListString { get; set; } = "--------------------40c-80000000----21ffff-ffffffff-ffffffff-f0000000-7bbeeffa-7fffffff-e6f1fffe-ffffffff";
 
         /// <summary>
         ///  Custom starting item list selections
@@ -203,7 +255,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom starting item list string
         /// </summary>
-        public string CustomStartingItemListString { get; set; }
+        public string CustomStartingItemListString { get; set; } = "1fbfc-5800000-";
 
         /// <summary>
         /// List of locations that must be randomized to junk
@@ -214,7 +266,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         ///  Custom junk location string
         /// </summary>
-        public string CustomJunkLocationsString { get; set; }
+        public string CustomJunkLocationsString { get; set; } = "-------------------------200000-----400000--f000";
 
         /// <summary>
         /// Defines number of ice traps.
@@ -287,6 +339,8 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool DeathMoonCrash { get; set; }
 
+        public bool HookshotAnySurface { get; set; }
+
         #endregion
 
         #region Comfort / Cosmetics
@@ -309,17 +363,17 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Method to write the gossip stone hints.
         /// </summary>
-        public GossipHintStyle GossipHintStyle { get; set; }
+        public GossipHintStyle GossipHintStyle { get; set; } = GossipHintStyle.Competitive;
 
         /// <summary>
         /// FrEe HiNtS FoR WeEnIeS
         /// </summary>
-        public bool FreeHints { get; set; }
+        public bool FreeHints { get; set; } = true;
 
         /// <summary>
         /// Clear hints
         /// </summary>
-        public bool ClearHints { get; set; }
+        public bool ClearHints { get; set; } = true;
 
         /// <summary>
         /// Prevent downgrades
@@ -329,7 +383,7 @@ namespace MMR.Randomizer.Models.Settings
         /// <summary>
         /// Updates chest appearance to match contents
         /// </summary>
-        public bool UpdateChests { get; set; } = true;
+        public bool UpdateChests { get; set; }
 
         /// <summary>
         /// Change epona B button behavior to prevent player losing sword if they don't have a bow.
@@ -340,6 +394,8 @@ namespace MMR.Randomizer.Models.Settings
         /// Enables Pictobox prompt text to display the picture subject depending on flags.
         /// </summary>
         public bool EnablePictoboxSubject { get; set; } = true;
+
+        public bool LenientGoronSpikes { get; set; }
 
         #endregion
 
@@ -376,21 +432,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public override string ToString()
         {
-            return JsonSerializer.Serialize(this, _jsonSerializerOptions);
+            return JsonSerializer.Serialize(this);
         }
-
-        private readonly static JsonSerializerOptions _jsonSerializerOptions = new JsonSerializerOptions
-        {
-            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-            IgnoreReadOnlyFields = true,
-            IgnoreReadOnlyProperties = true,
-            DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
-            Converters =
-            {
-                new JsonColorConverter(),
-                new JsonStringEnumConverter(),
-            }
-        };
 
         public string Validate()
         {

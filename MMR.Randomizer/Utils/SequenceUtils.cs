@@ -10,6 +10,9 @@ using System.IO.Compression;
 using System.Security.Cryptography;
 using Newtonsoft.Json;
 using MMR.Randomizer.Models.Settings;
+using MMR.Randomizer.Models;
+using MMR.Common.Utils;
+using MMR.Randomizer.Asm;
 
 namespace MMR.Randomizer.Utils
 {
@@ -36,7 +39,14 @@ namespace MMR.Randomizer.Utils
 
         public static int MAX_BGM_BUDGET            = 0x3800; // vanilla: 0x3800
         public static int MAX_COMBAT_BUDGET         = 0x3800; // unk
-        public static int MAX_TYPE1_MUSIC_BUDGET    = 0x4100; // vanilla: 0x4100
+        public static int MAX_TYPE2_MUSIC_BUDGET    = 0x6000; // vanilla: 0x4100
+
+        public static void ResetBudget()
+        {
+            MAX_BGM_BUDGET          = 0x3800;
+            MAX_COMBAT_BUDGET       = 0x3800;
+            MAX_TYPE2_MUSIC_BUDGET  = 0x6000;
+        }
 
         public static void ReadSequenceInfo()
         {
@@ -117,7 +127,7 @@ namespace MMR.Randomizer.Utils
                         {
                             targetSlot.Replaces = Convert.ToInt32(lines[i + 3], 16);
                             sourceSequence.MM_seq = Convert.ToInt32(lines[i + 3], 16);
-                            if (lines[i + 4] == "no-recycle")
+                            if (i + 4 < lines.Length && lines[i + 4] == "no-recycle")
                             {
                                 //Debug.WriteLine("Player does not want to reuse song: " + sourceSequence.Name);
                                 sourceSequence.Name = "drop";
@@ -178,12 +188,17 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        private static int RoundTo16(int value)
+        {
+            return (value + 0xF) & ~0xF;
+        }
+
         public static int GetSequenceSize(SequenceInfo seq)
         {
             // if it was loading at the MMRS read time, the zseq is already loading in memory
             if (seq.SequenceBinaryList != null && seq.SequenceBinaryList.Count > 0)
             {
-                return seq.SequenceBinaryList[0].SequenceBinary.Length;
+                return RoundTo16(seq.SequenceBinaryList[0].SequenceBinary.Length);
             }
             else if (seq.Name.StartsWith("mm-")) // vanilla mm, look up from audioseq index table
             {
@@ -194,7 +209,7 @@ namespace MMR.Randomizer.Utils
 
                 int entryaddr = audioseqIndexTableOffset + (seq.Replaces * 16);
                 var size = (int) ReadWriteUtils.Arr_ReadU32(codeFile.Data, entryaddr + 4);
-                return size;
+                return RoundTo16(size);
             }
             else // not already loaded, we have to search for the file and look it up
             {
@@ -204,7 +219,7 @@ namespace MMR.Randomizer.Utils
                     using (var reader = new BinaryReader(File.OpenRead(seq.Filename)))
                     {
                         data = new byte[(int)reader.BaseStream.Length];
-                        return data.Length;
+                        return RoundTo16(data.Length);
                     }
                 }
             }
@@ -378,6 +393,25 @@ namespace MMR.Randomizer.Utils
                                 usedBanks++;
                             }//if requires bank
 
+                            // read form mask file
+                            var formMaskFileEntry = zip.GetEntry(filename + ".formmask");
+                            if (formMaskFileEntry != null)
+                            {
+                                using var reader = new StreamReader(formMaskFileEntry.Open(), Encoding.Default);
+                                var formMaskJson = reader.ReadToEnd();
+                                try
+                                {
+                                    // playState is configured in the file as "play in these states", but in the code it's "mute in these states"
+                                    // so we need to reverse it
+                                    var playState = Common.Utils.JsonSerializer.Deserialize<SequencePlayState[]>(formMaskJson);
+                                    zSeq.FormMask = playState.Cast<byte>().ToArray();
+                                }
+                                catch (Exception e)
+                                {
+                                    throw new Exception($"Sequence formmask file is invalid - {e.Message}", e);
+                                }
+                            }
+
                             // multiple seq possible, add depending on if first or not
                             if (currentSong.SequenceBinaryList == null)
                             {
@@ -486,7 +520,7 @@ namespace MMR.Randomizer.Utils
 
 
         // gets passed RomData.SequenceList in Builder.cs::WriteAudioSeq
-        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList)
+        public static void RebuildAudioSeq(List<SequenceInfo> sequenceList, int? sequenceMaskFileIndex)
         {
             // spoiler log output DEBUG
             StringBuilder log = new StringBuilder();
@@ -675,9 +709,26 @@ namespace MMR.Randomizer.Utils
                     j = sequenceList.FindIndex(u => u.Replaces == i);
                 }
 
+                byte[] formMask = null;
+
                 if (j != -1)
                 {
                     RomData.MMFileList[f].Data[paddr] = (byte)sequenceList[j].Instrument;
+
+                    if (sequenceMaskFileIndex.HasValue)
+                    {
+                        formMask = sequenceList[j].SequenceBinaryList?.FirstOrDefault()?.FormMask;
+                    }
+                }
+
+                if (sequenceMaskFileIndex.HasValue)
+                {
+                    if (formMask == null)
+                    {
+                        formMask = Enumerable.Repeat<byte>(0xFF, 16).ToArray();
+                    }
+                    Array.Resize(ref formMask, MusicConfig.SEQUENCE_DATA_SIZE);
+                    ReadWriteUtils.Arr_Insert(formMask, 0, MusicConfig.SEQUENCE_DATA_SIZE, RomData.MMFileList[sequenceMaskFileIndex.Value].Data, i * MusicConfig.SEQUENCE_DATA_SIZE);
                 }
 
             }
@@ -729,7 +780,7 @@ namespace MMR.Randomizer.Utils
                 // randomize instrument sets last second, so the early banks don't get ravaged based on order
                 if (testSeq.SequenceBinaryList.Count > 1)
                 {
-                    testSeq.SequenceBinaryList.OrderBy(x => rng.Next()).ToList();
+                    testSeq.SequenceBinaryList = testSeq.SequenceBinaryList.OrderBy(x => rng.Next()).ToList();
                 }
 
                 testSeq.ClearUnavailableBanks(); // clear the sequence list of {bank/sequence} we cannot use
@@ -905,14 +956,14 @@ namespace MMR.Randomizer.Utils
             if (songtestSequence.Type.Contains(5) || songtestSequence.Type.Contains(0x1A))
             {
                 MAX_COMBAT_BUDGET = songtestSize;
-                MAX_BGM_BUDGET = MAX_TYPE1_MUSIC_BUDGET - MAX_COMBAT_BUDGET;
+                MAX_BGM_BUDGET = MAX_TYPE2_MUSIC_BUDGET - MAX_COMBAT_BUDGET;
             }
             // else if not fanfare
             else if (!(songtestSequence.Type.Contains(8) || songtestSequence.Type.Contains(9)
                         || songtestSequence.Type.Contains(0x10) || songtestSequence.Type.Contains(0x16)))
             {
                 MAX_BGM_BUDGET = songtestSize;
-                MAX_COMBAT_BUDGET = MAX_TYPE1_MUSIC_BUDGET - MAX_BGM_BUDGET;
+                MAX_COMBAT_BUDGET = MAX_TYPE2_MUSIC_BUDGET - MAX_BGM_BUDGET;
             }
 
             ConvertSequenceSlotToPointer(0x76, 0x18);  // titlescreen
@@ -1010,9 +1061,9 @@ namespace MMR.Randomizer.Utils
                     continue; // song unacceptable, continue
                 }
 
+                var maxSize = targetSlot.Replaces == 0x1A ? MAX_COMBAT_BUDGET : MAX_BGM_BUDGET;
                 var seqSize = GetSequenceSize(testSeq);
-                if ( (seqSize > MAX_COMBAT_BUDGET &&    testSeq.Type.Contains(0x1A) )
-                    || (seqSize > MAX_BGM_BUDGET && (testSeq.Type.Contains(0x0) || testSeq.Type.Contains(0x2))) )
+                if (seqSize > maxSize)
                 {
                     continue; // too big
                 }
@@ -1032,6 +1083,7 @@ namespace MMR.Randomizer.Utils
                     && testSeq.Type.Count > targetSlot.Type.Count
                     && rng.Next(30) == 0
                     && targetSlot.Type[0] <= 16
+                    && testSeq.Type[0] <= 16
                     && (testSeq.Type[0] & 8) == (targetSlot.Type[0] & 8)
                     && testSeq.Type.Contains(0x10) == targetSlot.Type.Contains(0x10)
                     && !testSeq.Type.Contains(0x16))
@@ -1043,13 +1095,13 @@ namespace MMR.Randomizer.Utils
             return false; // ran out of songs to try
         }
 
-        public static void CheckBGMCombatMusicBudget(List<SequenceInfo> unassignedSequences, Random rng, StringBuilder log)
+        public static void CheckBGMCombatMusicBudget(List<SequenceInfo> unassignedSequences, CombatMusic disabledCombatMusic, Random rng, StringBuilder log)
         {
             /// in any scene, BGM and Combat music share the same buffer, loading to the other side,
             /// if their sum is greater than the size of the buffer they clip into each other when one loads, this kills one, usually bgm
 
             var combatSequences     = RomData.SequenceList.FindAll(u => u.Type.Contains(5));
-            var BGMSlots            = RomData.TargetSequences.FindAll(u => u.Type.Contains(0) || u.Type.Contains(2));
+            var BGMSlots            = RomData.TargetSequences.FindAll(u => u.Type.Contains(0) || u.Type.Contains(2) || u.MM_seq == 0x12); // 0x12 is deku palace, which has an enemy
             var usedBGMSequences    = new List<SequenceInfo>();
             foreach (var slot in BGMSlots)
             {
@@ -1068,10 +1120,18 @@ namespace MMR.Randomizer.Utils
             {
                 combatVsBGMCoinToss = true; // "COMBAT" manually selected because of combat songtest
                 usedCombatSequence = RomData.SequenceList.Find(u => u.Replaces == 0x18 && u.Name != "mm-fileselect");
-            }else if (RomData.SequenceList.Find(u => u.Name.Contains("songtest")) != null)
+            }
+            else if (RomData.SequenceList.Find(u => u.Name.Contains("songtest")) != null)
             {
                 combatVsBGMCoinToss = false; // "BGM" manually selected because of non-combat songtest
             }
+
+            if (disabledCombatMusic == CombatMusic.All)
+            {
+                combatVsBGMCoinToss = false; // "BGM" manually selected because combat music is disabled.
+            }
+
+            var combatSize = GetSequenceSize(usedCombatSequence);
 
             string coinResult = (combatVsBGMCoinToss ? ("COMBAT") : ("BGM"));
             log.AppendLine($" SECOND PASS: Scanning for oversized BGM or combat cointoss: ({coinResult})");
@@ -1083,8 +1143,8 @@ namespace MMR.Randomizer.Utils
                     return;
                 }
                 // get new BGM budget from combat file
-                var newBGMBudget = MAX_BGM_BUDGET = MAX_TYPE1_MUSIC_BUDGET - GetSequenceSize(usedCombatSequence);
-                log.AppendLine($" new BGM budget: {MAX_BGM_BUDGET.ToString("X")}, from combat size: {GetSequenceSize(usedCombatSequence).ToString("X")}");
+                var newBGMBudget = MAX_BGM_BUDGET = MAX_TYPE2_MUSIC_BUDGET - combatSize;
+                log.AppendLine($" new BGM budget: {MAX_BGM_BUDGET.ToString("X")}, from combat size: {combatSize.ToString("X")}");
 
                 // per BGM sequence
                 foreach (var seq in usedBGMSequences)
@@ -1109,18 +1169,13 @@ namespace MMR.Randomizer.Utils
             else // BGM chosen
             {
                 // get new combat budget by comparing to largest BGM
-                int largestBGMSize = 0;
-                foreach (var bgmSeq in usedBGMSequences)
-                {
-                    var seqSize = GetSequenceSize(bgmSeq);
-                    largestBGMSize = (seqSize > largestBGMSize) ? (seqSize) : (largestBGMSize);
-                }
+                var largestBGMSize = usedBGMSequences.Max(s => (int?)GetSequenceSize(s)) ?? 0;
                 log.AppendLine($" new Combat budget: {MAX_COMBAT_BUDGET.ToString("X")} from bgm size: {largestBGMSize.ToString("X")}");
 
                 // per BGM sequence
-                var combatSize = GetSequenceSize(usedCombatSequence);
-                var newCombatBudget = MAX_COMBAT_BUDGET = MAX_TYPE1_MUSIC_BUDGET - largestBGMSize;
-                if (combatSize > newCombatBudget) { 
+                var newCombatBudget = MAX_COMBAT_BUDGET = MAX_TYPE2_MUSIC_BUDGET - largestBGMSize;
+                if (combatSize > newCombatBudget)
+                { 
                     var seqName = usedCombatSequence.Name;
                     log.AppendLine($"Combat sequence {seqName} was too big to match your BGM music, replacing ... ");
                     var combatSlot = RomData.TargetSequences.Find(u => u.Name == "mm-combat");

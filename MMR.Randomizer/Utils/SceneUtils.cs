@@ -388,7 +388,8 @@ namespace MMR.Randomizer.Utils
                 GameObjects.Scene.WestClockTown,
                 GameObjects.Scene.NorthClockTown,
                 GameObjects.Scene.SouthClockTown,
-                GameObjects.Scene.LaundryPool
+                GameObjects.Scene.LaundryPool,
+                GameObjects.Scene.Woodfall,
             }.ToList();
 
             foreach (var SceneEnum in TargetSceneEnums)

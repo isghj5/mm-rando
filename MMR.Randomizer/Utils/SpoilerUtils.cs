@@ -16,8 +16,20 @@ namespace MMR.Randomizer.Utils
         public static void CreateSpoilerLog(RandomizedResult randomized, GameplaySettings settings, OutputSettings outputSettings)
         {
             var itemList = randomized.ItemList
-                .Where(io => !io.Item.IsFake() && io.NewLocation.HasValue && io.IsRandomized)
-                .Select(u => new SpoilerItem(u, ItemUtils.IsRequired(u.Item, randomized), ItemUtils.IsImportant(u.Item, randomized), settings.ProgressiveUpgrades));
+                .Where(io => (io.IsRandomized && io.NewLocation.Value.Region().HasValue) || (io.Item.MainLocation().HasValue && randomized.ItemList[io.Item.MainLocation().Value].IsRandomized))
+                .Select(io => new {
+                    ItemObject = io.Item.MainLocation().HasValue ? randomized.ItemList.Find(x => x.NewLocation == io.Item.MainLocation().Value) : io,
+                    LocationForImportance = io.NewLocation ?? io.Item,
+                    Region = io.IsRandomized ? io.NewLocation.Value.Region().Value : io.Item.Region().Value,
+                })
+                .Select(u => new SpoilerItem(
+                    u.ItemObject,
+                    u.Region,
+                    ItemUtils.IsRequired(u.ItemObject.Item, u.LocationForImportance, randomized),
+                    ItemUtils.IsImportant(u.ItemObject.Item, u.LocationForImportance, randomized),
+                    randomized.ImportantSongLocations.Contains(u.LocationForImportance),
+                    settings.ProgressiveUpgrades
+                ));
 
             randomized.Logic.ForEach((il) =>
             {
@@ -78,6 +90,37 @@ namespace MMR.Randomizer.Utils
                     }
                     return plainTextRegex.Replace(message.Replace("\x11", " "), "");
                 }),
+                MessageCosts = randomized.MessageCosts.Select((mc, i) =>
+                {
+                    if (!mc.HasValue)
+                    {
+                        return ((string, ushort)?) null;
+                    }
+                    var messageCost = MessageCost.MessageCosts[i];
+
+                    var name = messageCost.Name;
+                    if (string.IsNullOrWhiteSpace(name))
+                    {
+                        if (messageCost.LocationsAffected.Count > 0)
+                        {
+                            var location = messageCost.LocationsAffected[0];
+                            var mainLocation = location.MainLocation();
+                            if (mainLocation.HasValue)
+                            {
+                                name = $"{mainLocation.Value.Location()} ({location.ToString().Replace(mainLocation.Value.ToString(), "")})";
+                            }
+                            else
+                            {
+                                name = location.Location();
+                            }
+                        }
+                        else
+                        {
+                            name = $"Message Cost [{i}]";
+                        }
+                    }
+                    return (name, mc.Value);
+                }).Where(mc => mc != null).Select(mc => mc.Value).ToList(),
             };
 
             if (outputSettings.GenerateHTMLLog)
@@ -121,7 +164,17 @@ namespace MMR.Randomizer.Utils
                 log.AppendLine($" {region.Key.Name()}");
                 foreach (var item in region.OrderBy(item => item.NewLocationName))
                 {
-                    log.AppendLine($"{item.NewLocationName,-50} -> {item.Name}" + (item.IsImportant ? "*" : "") + (item.IsRequired ? "*" : ""));
+                    log.AppendLine($"{item.NewLocationName,-50} -> {item.Name}" + (item.IsImportant ? "*" : "") + (item.IsRequired ? "*" : item.IsImportantSong ? "^" : ""));
+                }
+            }
+
+            if (spoiler.MessageCosts.Count > 0)
+            {
+                log.AppendLine();
+                log.AppendLine($" {"Name", -50}    Cost");
+                foreach (var (name, cost) in spoiler.MessageCosts)
+                {
+                    log.AppendLine($"{name,-50} -> {cost}");
                 }
             }
 

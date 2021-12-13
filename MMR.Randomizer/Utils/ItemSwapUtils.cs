@@ -1,4 +1,5 @@
 using MMR.Common.Extensions;
+using MMR.Randomizer.Asm;
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Constants;
 using MMR.Randomizer.Extensions;
@@ -104,7 +105,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static void WriteNewItem(ItemObject itemObject, List<MessageEntry> newMessages, GameplaySettings settings, ChestTypeAttribute.ChestType? overrideChestType)
+        public static void WriteNewItem(ItemObject itemObject, List<MessageEntry> newMessages, GameplaySettings settings, ChestTypeAttribute.ChestType? overrideChestType, MessageTable messageTable, ExtendedObjects extendedObjects)
         {
             var item = itemObject.Item;
             var location = itemObject.NewLocation.Value;
@@ -143,6 +144,11 @@ namespace MMR.Randomizer.Utils
                 newItem = RomData.GetItemList[item.GetItemIndex().Value];
             }
 
+            // Attempt to resolve extended object Id, which should affect "Exclusive Items" as well.
+            var objectId = extendedObjects.ResolveObjectId(newItem);
+            if (objectId.HasValue)
+                newItem.Object = objectId.Value;
+
             var data = new byte[]
             {
                 newItem.ItemGained,
@@ -166,6 +172,11 @@ namespace MMR.Randomizer.Utils
             {
                 isRepeatable = false;
             }
+            if (item.IsReturnable(settings))
+            {
+                isRepeatable = false;
+                settings.AsmOptions.MMRConfig.ItemsToReturnIds.Add(getItemIndex);
+            }
             if (!isRepeatable)
             {
                 SceneUtils.UpdateSceneFlagMask(getItemIndex);
@@ -178,66 +189,40 @@ namespace MMR.Randomizer.Utils
 
             if (settings.UpdateShopAppearance)
             {
-                UpdateShop(itemObject, newMessages);
+                UpdateShop(itemObject, newMessages, messageTable);
             }
 
-            if (location != item)
+            if (itemObject.IsRandomized)
             {
-                if (location == Item.StartingSword)
+                var hackContentAttributes = location.GetAttributes<HackContentAttribute>();
+                if (location == item)
                 {
-                    ResourceUtils.ApplyHack(Resources.mods.fix_sword_song_of_time);
+                    hackContentAttributes = hackContentAttributes.Where(h => !h.ApplyOnlyIfItemIsDifferent);
                 }
-
-                if (location == Item.MundaneItemSeahorse)
+                foreach (var hackContent in hackContentAttributes.Select(h => h.HackContent))
                 {
-                    ResourceUtils.ApplyHack(Resources.mods.fix_fisherman);
-                }
-
-                if (location == Item.MaskFierceDeity)
-                {
-                    ResourceUtils.ApplyHack(Resources.mods.fix_fd_mask_reset);
+                    ResourceUtils.ApplyHack(hackContent);
                 }
             }
         }
 
-        private static void UpdateShop(ItemObject itemObject, List<MessageEntry> newMessages)
+        private static void UpdateShop(ItemObject itemObject, List<MessageEntry> newMessages, MessageTable messageTable)
         {
             var location = itemObject.NewLocation.Value;
-            GetItemEntry newItem;
-            if (itemObject.Mimic != null)
-            {
-                newItem = RomData.GetItemList[itemObject.Mimic.Item.GetItemIndex().Value];
-            }
-            else if (itemObject.Item.IsExclusiveItem())
-            {
-                newItem = itemObject.Item.ExclusiveItemEntry();
-            }
-            else
-            {
-                newItem = RomData.GetItemList[itemObject.Item.GetItemIndex().Value];
-            }
-
-            var shopRooms = location.GetAttributes<ShopRoomAttribute>();
-            foreach (var shopRoom in shopRooms)
-            {
-                ReadWriteUtils.WriteToROM(shopRoom.RoomObjectAddress, (ushort)newItem.Object);
-            }
 
             var shopInventories = location.GetAttributes<ShopInventoryAttribute>();
             foreach (var shopInventory in shopInventories)
             {
-                ReadWriteUtils.WriteToROM(shopInventory.ShopItemAddress, (ushort)newItem.Object);
-                var index = newItem.Index > 0x7F ? (byte)(0xFF - newItem.Index) : (byte)(newItem.Index - 1);
-                ReadWriteUtils.WriteToROM(shopInventory.ShopItemAddress + 0x03, index);
-
                 var messageId = ReadWriteUtils.ReadU16(shopInventory.ShopItemAddress + 0x0A);
+                var oldMessage = messageTable.GetMessage((ushort)(messageId + 1));
+                var cost = ReadWriteUtils.Arr_ReadU16(oldMessage.Header, 5);
                 newMessages.Add(new MessageEntryBuilder()
                     .Id(messageId)
                     .Message(it =>
                     {
                         it.Red(() =>
                         {
-                            it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text("20 Rupees").NewLine();
+                            it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text(cost.ToString()).Text(" Rupees").NewLine();
                         })
                         .RuntimeWrap(() =>
                         {
@@ -253,7 +238,7 @@ namespace MMR.Randomizer.Utils
                     .Id((ushort)(messageId + 1))
                     .Message(it =>
                     {
-                        it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text("20 Rupees").NewLine()
+                        it.RuntimeItemName(itemObject.DisplayName(), location).Text(": ").Text(cost.ToString()).Text(" Rupees").NewLine()
                         .Text(" ").NewLine()
                         .StartGreenText()
                         .TwoChoices()

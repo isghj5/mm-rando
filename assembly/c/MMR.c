@@ -21,6 +21,7 @@ struct MMRConfig MMR_CONFIG = {
         .magicLarge = 0x12E,
         .walletAdult = 0x08,
         .walletGiant = 0x09,
+        .walletRoyal = 0x44D,
         .bombBagSmall = 0x1B,
         .bombBagBig = 0x1C,
         .bombBagBiggest = 0x1D,
@@ -130,11 +131,13 @@ u16 MMR_CheckProgressiveUpgrades(u16 giIndex) {
         }
         return MMR_CONFIG.locations.magicLarge;
     }
-    if (giIndex == MMR_CONFIG.locations.walletAdult || giIndex == MMR_CONFIG.locations.walletGiant) {
+    if (giIndex == MMR_CONFIG.locations.walletAdult || giIndex == MMR_CONFIG.locations.walletGiant || giIndex == MMR_CONFIG.locations.walletRoyal) {
         if (gSaveContext.perm.inv.upgrades.wallet == 0) {
             return MMR_CONFIG.locations.walletAdult;
+        } else if (gSaveContext.perm.inv.upgrades.wallet == 1) {
+            return MMR_CONFIG.locations.walletGiant;
         }
-        return MMR_CONFIG.locations.walletGiant;
+        return MMR_CONFIG.locations.walletRoyal;
     }
     if (giIndex == MMR_CONFIG.locations.bombBagSmall || giIndex == MMR_CONFIG.locations.bombBagBig || giIndex == MMR_CONFIG.locations.bombBagBiggest) {
         if (gSaveContext.perm.inv.upgrades.bombBag == 0) {
@@ -260,11 +263,12 @@ static u16 gFanfares[5] = { 0x0922, 0x0924, 0x0037, 0x0039, 0x0052 };
 
 #define ITEM_QUEUE_LENGTH 4
 static u16 itemQueue[ITEM_QUEUE_LENGTH] = { 0, 0, 0, 0 };
+static s16 forceProcessIndex = -1;
 
 void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex) {
     giIndex = MMR_GetNewGiIndex(ctxt, NULL, giIndex, true);
     GetItemEntry* entry = MMR_GetGiEntry(giIndex);
-    z2_memcpy((void*)0x800B35F0, entry, 8); // copy entry to 0x800B35F0 otherwise hacky stuff i wrote ages ago won't work.
+    *MMR_GetItemEntryContext = *entry;
     z2_ShowMessage(ctxt, entry->message, 0);
     u8 soundType = entry->type & 0x0F;
     if (soundType == 0) {
@@ -277,8 +281,13 @@ void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex) {
 
 u16 MMR_GetProcessingItemGiIndex(GlobalContext* ctxt) {
     ActorPlayer* player = GET_PLAYER(ctxt);
-    if (player && (player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP_2)) {
-        return itemQueue[0];
+    if (player) {
+        if (forceProcessIndex == 0) {
+            player->stateFlags.state1 |= PLAYER_STATE1_TIME_STOP_2;
+        }
+        if (player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP_2) {
+            return itemQueue[0];
+        }
     }
     return 0;
 }
@@ -287,6 +296,7 @@ void MMR_ClearItemQueue() {
     for (u8 i = 0; i < ITEM_QUEUE_LENGTH; i++) {
         itemQueue[i] = 0;
     }
+    forceProcessIndex = -1;
 }
 
 void MMR_ProcessItemQueue(GlobalContext* ctxt) {
@@ -300,6 +310,9 @@ void MMR_ProcessItemQueue(GlobalContext* ctxt) {
             for (u8 i = 0; i < ITEM_QUEUE_LENGTH - 1; i++) {
                 itemQueue[i] = itemQueue[i + 1];
             }
+            if (forceProcessIndex >= 0) {
+                forceProcessIndex--;
+            }
             if (!itemQueue[0]) {
                 ActorPlayer* player = GET_PLAYER(ctxt);
                 player->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_2;
@@ -309,19 +322,22 @@ void MMR_ProcessItemQueue(GlobalContext* ctxt) {
 }
 
 u32 MMR_GetMinorItemSfxId(u8 item) {
-    if (item >= 0x84 && item <= 0x8A) {
+    if (item >= ITEM_GREEN_RUPEE && item <= ITEM_GOLD_RUPEE) {
         return 0x4803; // Rupee
     }
-    if (item == 0x83) {
+    if (item == ITEM_HEART) {
         return 0x480B; // Recovery Heart
     }
-    if (item >= 0x8B && item <= 0x9A) {
+    if (item >= ITEM_BOMB && item <= ITEM_MAGIC_BEAN && z2_IsItemKnown(item) != 0xFF) {
         return 0x4824;
     }
-    if (item >= 0x6 && item <= 0x9) {
+    if (item >= ITEM_PICKUP_DEKU_STICKS_5 && item <= ITEM_PICKUP_ARROWS_50 && z2_IsItemKnown(item) != 0xFF) {
         return 0x4824;
     }
-    if (item == 0x79 || item == 0x7A || item == CUSTOM_ITEM_CRIMSON_RUPEE) {
+    if (item >= ITEM_PICKUP_BOMBCHU_20 && item <= ITEM_PICKUP_BOMBCHU_5 && z2_IsItemKnown(ITEM_BOMBCHU) != 0xFF) {
+        return 0x4824;
+    }
+    if (item == ITEM_MAGIC_JAR || item == ITEM_MAGIC_JAR_LARGE || item == CUSTOM_ITEM_CRIMSON_RUPEE) {
         return 0x4824;
     }
     if (item == CUSTOM_ITEM_ICE_TRAP) {
@@ -370,17 +386,29 @@ bool MMR_GiveItemIfMinor(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
     return false;
 }
 
+void MMR_QueueItem(u16 giIndex, bool forceProcess) {
+    for (u8 i = 0; i < ITEM_QUEUE_LENGTH; i++) {
+        if (itemQueue[i] == 0) {
+            itemQueue[i] = giIndex;
+            if (forceProcess) {
+                forceProcessIndex = i;
+            }
+            break;
+        }
+    }
+}
+
 bool MMR_GiveItem(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
     bool result = MMR_GiveItemIfMinor(ctxt, actor, giIndex);
     if (!result) {
-        for (u8 i = 0; i < ITEM_QUEUE_LENGTH; i++) {
-            if (itemQueue[i] == 0) {
-                itemQueue[i] = giIndex;
-                break;
-            }
-        }
+        MMR_QueueItem(giIndex, false);
     }
     return result;
+}
+
+bool MMR_IsRecoveryHeart(u16 giIndex) {
+    // Check that resolved get-item index does not evaluate to recovery heart (0xA).
+    return MMR_GetNewGiIndex(NULL, NULL, giIndex, false) == 0xA;
 }
 
 void MMR_Init(void) {
