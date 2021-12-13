@@ -2660,6 +2660,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1B5)]
         // dont know what the differences are
         [WallVariants(0x1932, 0x3FFF)] // dont know what the differences are
+        [GroundVariants(0x1932, 0x3FFF)]
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
         Dexihand = 0x1D1,// ???'s water logged brother
 

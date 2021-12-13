@@ -217,24 +217,28 @@ namespace MMR.Randomizer.Models.Rom
         {
             // with mixed types, typing could be messy, keep it hidden here
             // EG. like like can spawn on the sand (land), but also on the bottom of GBC (water floor)
+            // so we need to know what type the actor we are replacing is, and check if any otherActor variants can replace it
 
             if (this.AllVariants == null || otherActor.AllVariants == null)
             {
                 throw new Exception("Compare Variants: broken actor variants listoflist");
             }
 
+            // randomly select a type, check if they have matching types
+
             var listOfVariantTypes = Enum.GetValues(typeof(ActorType)).Cast<ActorType>().ToList();
             listOfVariantTypes.Remove(ActorType.Unset);
             listOfVariantTypes = listOfVariantTypes.OrderBy(u => rng.Next()).ToList(); // random sort in case it has multiple types
-            foreach (var randomVariant in listOfVariantTypes)
+            foreach (var randomVariantType in listOfVariantTypes)
             {
-                List<int> ourVariants = this.AllVariants[(int)randomVariant - 1].ToList();
-                List<int> theirVariants = otherActor.AllVariants[(int)randomVariant - 1].ToList();
+                List<int> ourVariants = this.AllVariants[(int)randomVariantType - 1].ToList();
+                List<int> theirVariants = otherActor.AllVariants[(int)randomVariantType - 1].ToList();
 
-                // large chance of pathing enemies allowing ground or flying
-                //if (randomVariant == ActorType.Pathing && ourVariants != null && otherAttr == null && rng.Next(100) < 80)
-                if (randomVariant == ActorType.Pathing && ourVariants.Count > 0 && theirVariants.Count == 0 && rng.Next(100) < 80)
+                // large chance of pathing enemies allowing ground or flying replacements
+                if (randomVariantType == ActorType.Pathing
+                    && ourVariants.Contains(oldActorVariant) && theirVariants.Count == 0 && rng.Next(100) < 80)
                 {
+                    // todo could make this random
                     theirVariants = otherActor.AllVariants[(int) ActorType.Flying];
                     if (theirVariants.Count == 0)
                     {
@@ -242,9 +246,10 @@ namespace MMR.Randomizer.Models.Rom
                     }
                 }
 
-                // small chance of ground enemies allowing flying
-                //if (randomVariant == ActorType.Ground && ourAttr != null && otherAttr == null && rng.Next(100) < 30)
-                if (randomVariant == ActorType.Ground && ourVariants.Count > 0 && theirVariants.Count == 0 && rng.Next(100) < 30)
+                // small chance of ground enemies allowing flying replacements
+                //if (randomVariantType == ActorType.Ground && ourAttr != null && otherAttr == null && rng.Next(100) < 30)
+                if (randomVariantType == ActorType.Ground
+                    && ourVariants.Contains(oldActorVariant) && theirVariants.Count == 0 && rng.Next(100) < 30)
                 {
                     theirVariants = otherActor.AllVariants[(int) ActorType.Flying];
                 }
