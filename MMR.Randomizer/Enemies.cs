@@ -1690,7 +1690,6 @@ namespace MMR.Randomizer
                         });
                         continue;
                     }// */
-                    //
                     if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
@@ -1715,7 +1714,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.En_Ani.ObjectIndex()
+                            NewV = GameObjects.Actor.GibdoPicture.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1895,10 +1894,20 @@ namespace MMR.Randomizer
             #if DEBUG
             if (scene.SceneEnum == GameObjects.Scene.PathToSnowhead) // force specific actor/variant for debugging
             {
-                
-                //chosenReplacementEnemies[0].ActorID = (int)GameObjects.Actor.CircleOfFire;
-                //chosenReplacementEnemies[0].ActorEnum = GameObjects.Actor.CircleOfFire;
-                chosenReplacementEnemies[0].ChangeActor(GameObjects.Actor.Demo_Kankyo, 0);
+                chosenReplacementEnemies[0].ChangeActor(GameObjects.Actor.Demo_Kankyo, vars: 0);
+
+                /*
+                chosenReplacementEnemies[3].ActorID = (int)GameObjects.Actor.CircleOfFire;
+                chosenReplacementEnemies[3].ActorEnum = GameObjects.Actor.CircleOfFire;
+                chosenReplacementEnemies[3].Variants[0] = 0x3F5F;
+                chosenReplacementEnemies[7].ActorID = (int) GameObjects.Actor.CircleOfFire;
+                chosenReplacementEnemies[7].ActorEnum = GameObjects.Actor.CircleOfFire;
+                chosenReplacementEnemies[7].Variants[0] = 0x3F5F;
+                chosenReplacementEnemies[1].ActorID = (int)GameObjects.Actor.Demo_Kankyo;
+                chosenReplacementEnemies[1].ActorEnum = GameObjects.Actor.Demo_Kankyo;
+                chosenReplacementEnemies[1].Variants[0] = 0;
+                */
+
             }
             /////////////////////////////
             #endif
@@ -2300,7 +2309,7 @@ namespace MMR.Randomizer
                 // unused actors or objects:
                 GameObjects.Actor.Obj_Toudai.FileListIndex(),
                 GameObjects.Actor.Obj_Ocarinalift.FileListIndex(),
-                GameObjects.Actor.Bg_F40_Swlift.FileListIndex(),
+                GameObjects.Actor.UnusedStoneTowerPlatform.FileListIndex(),
                 GameObjects.Actor.En_Boj_01.FileListIndex(),  // empty actors with nothing in them
                 GameObjects.Actor.En_Boj_02.FileListIndex(),
                 GameObjects.Actor.En_Boj_03.FileListIndex(),
