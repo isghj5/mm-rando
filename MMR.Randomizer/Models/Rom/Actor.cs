@@ -11,7 +11,7 @@ using System;
 
 namespace MMR.Randomizer.Models.Rom
 {
-    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorID.ToString(\"X3\")}]")]
+    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorID}]")]
     public class Actor
     {
         // this is instance data, per actor, per scene.
@@ -65,38 +65,38 @@ namespace MMR.Randomizer.Models.Rom
         {
             // converted from enum, used for building replacement candidate actors
 
-            Name = actor.ToString();
-            ActorID = (int)actor;
-            ActorEnum = actor;
-            ObjectID = actor.ObjectIndex();
-            ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex());
-            Rotation = new vec16();
+            this.Name = actor.ToString();
+            this.ActorID = (int)actor;
+            this.ActorEnum = actor;
+            this.ObjectID = actor.ObjectIndex();
+            this.ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex());
+            this.Rotation = new vec16();
 
-            SceneExclude = actor.ScenesRandomizationExcluded();
-            BlockedScenes = actor.BlockedScenes();
-            AllVariants = BuildVariantList(actor);
-            Variants = AllVariants.SelectMany(u => u).ToList(); // might as well start with all
-            RespawningVariants = actor.RespawningVariants();
+            this.SceneExclude = actor.ScenesRandomizationExcluded();
+            this.BlockedScenes = actor.BlockedScenes();
+            this.AllVariants = BuildVariantList(actor);
+            this.Variants = AllVariants.SelectMany(u => u).ToList(); // might as well start with all
+            this.RespawningVariants = actor.RespawningVariants();
         }
 
         public Actor(InjectedActor injected, string name)
         {
-            // create actor from injected actor
+            // create actor from injected actor, for brand new actors
 
-            InjectedActor = injected;
-            Name = OldName = name;
-            ActorID = injected.actorID;
-            ObjectID = injected.objID;
+            this.Name = this.OldName = name;
+            this.ActorID = injected.actorID;
+            this.ObjectID = injected.objID;
             // for now injected actors can only be of type ground
-            Variants = injected.groundVariants;
-            AllVariants = new List<List<int>>()
+            this.AllVariants = new List<List<int>>()
             {
                 new List<int>(),
-                Variants,
+                injected.groundVariants,
                 new List<int>(),
                 new List<int>(),
                 new List<int>(),
             };
+            this.Variants = injected.groundVariants;
+            this.InjectedActor = injected;
         }
 
 

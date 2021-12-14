@@ -821,6 +821,7 @@ namespace MMR.Randomizer.GameObjects
         Eff_Dust = 0x7B, // Eff_Dust
 
         [FileID(117)]
+        [ActorInstanceSize(0x16C)]
         [ObjectListIndex(0001)]
         HorseJumpingFence = 0x7C, // Bg_Umajump
 

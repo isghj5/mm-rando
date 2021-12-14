@@ -287,6 +287,8 @@ namespace MMR.Randomizer
             var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
             // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb pppppppp iiiiiiii nnnnnnnn ???? cc ??
             // A should be the start of vram address, i is init vars location in vram, take diff to get offset in overlay file
+            //var initloc = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 20);
+            //var vramloc = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8);
             return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 20)
                        - ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8));
         }
@@ -383,6 +385,9 @@ namespace MMR.Randomizer
 
         public static void LowerEnemiesResourceLoad()
         {
+            /// some enemies are really hard on the CPU/RSP, we can change some of them to behave nicer with flags
+            /// this might be placebo, and not have a major effect on us at all
+
             var actorList = VanillaEnemyList.Where(u => u.ActorInitOffset() > 0).ToList();
             var dinofos = GameObjects.Actor.Dinofos;
 
@@ -393,7 +398,6 @@ namespace MMR.Randomizer
             actorList.Remove(GameObjects.Actor.Demo_Kankyo);
             actorList.Remove(GameObjects.Actor.Eyegore);
 
-            /// some enemies are really hard on the CPU/RSP, we can change some of them to behave nicer with flags
             foreach (var enemy in actorList)
             {
                 /// bit flags 4-6 according to crookedpoe: Always Run update, Always Draw, Never Cull
@@ -1677,7 +1681,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.ArmosStatue.ObjectIndex()
+                            NewV = GameObjects.Actor.ButlersSon.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -2073,23 +2077,20 @@ namespace MMR.Randomizer
 
                             InjectedActors.Add(injectedActor);
 
-                            var injectedActorSearch = ReplacementCandidateList.Find(u => u.ActorID == injectedActor.actorID);
-                            if (injectedActorSearch != null) // previous actor
+                            // behavior now differs between replacement actors and brand new
+                            var replacementActorSearch = ReplacementCandidateList.Find(u => u.ActorID == injectedActor.actorID);
+                            if (replacementActorSearch != null) // previous actor
                             {
-                                injectedActorSearch.InjectedActor = injectedActor;
+                                replacementActorSearch.InjectedActor = injectedActor;
                             }
                             else
-                            { 
-                                injectedActorSearch = new Actor(injectedActor, filename);
-                                ReplacementCandidateList.Add(injectedActorSearch);
+                            {
+                                replacementActorSearch = new Actor(injectedActor, filename);
+                                ReplacementCandidateList.Add(replacementActorSearch);
                             }
 
-                            // can we inject new attributes?
-                            var gameobject = (GameObjects.Actor) injectedActor.actorID;
-                            //GroundVariantsAttribute newGroundVariants = new GroundVariantsAttribute(0);
-                            //gameobject.add//; gameobject.SetAttribute<GroundVariantsAttribute>();
-
-                            // is the actor replacing an old actor or new?
+                            // this is separate from the above because this lets us modify files not found in ReplacementCandidateList
+                            // like demo_kankyo, which is a free actor and not a regular candidate
                             var newFID = (int)injectedActor.fileID;
                             if (newFID == 0)
                             {
@@ -2197,6 +2198,7 @@ namespace MMR.Randomizer
         {
             // todo: check if enemizer is set, return if not
 
+            // this is called from romutils.cs right before we build the rom
             /// if overlays have grown, we need to modify their overlay table to use the right values for the new files
             /// every time you move an overlay you need to relocate the vram addresses, so instead of shifting all of them
             ///  we just move the new larger files to the end and leave a hole behind for now
@@ -2336,7 +2338,7 @@ namespace MMR.Randomizer
 
             foreach (var injectedActor in InjectedActors.FindAll(u => u.actorID == 0))
             {
-                // brand new actors, not replacement
+                /// brand new actors, not replacement
                 if (injectedActor.buildVramStart == 0)
                 {
                     throw new Exception("new actor missing starting vram:\n " + injectedActor.filename);
@@ -2372,10 +2374,6 @@ namespace MMR.Randomizer
             {
                 seedrng = random;
                 DateTime enemizerStartTime = DateTime.Now;
-
-                // these are: cutscene map, town and swamp shooting gallery, 
-                // sakons hideout, and giants chamber (shabom), milkbar
-                //int[] SceneSkip = new int[] { 0x08, 0x20, 0x24, 0x4F, 0x69, 0x15 };
 
                 // for dingus that want moonwarp, re-enable dekupalace
                 var SceneSkip = new GameObjects.Scene[] { GameObjects.Scene.GreatBayCutscene,
