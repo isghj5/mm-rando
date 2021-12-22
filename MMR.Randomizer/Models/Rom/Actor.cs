@@ -75,7 +75,9 @@ namespace MMR.Randomizer.Models.Rom
             this.SceneExclude = actor.ScenesRandomizationExcluded();
             this.BlockedScenes = actor.BlockedScenes();
             this.AllVariants = BuildVariantList(actor);
-            this.Variants = AllVariants.SelectMany(u => u).ToList(); // might as well start with all
+            this.Variants = AllVariants.SelectMany(u => u).ToList();
+            this.VariantsWithRoomMax = actor.GetAttributes<VariantsWithRoomMax>().ToList();
+            this.OnlyOnePerRoom = actor.GetAttribute<OnlyOneActorPerRoom>();
             this.RespawningVariants = actor.RespawningVariants();
         }
 
@@ -96,9 +98,10 @@ namespace MMR.Randomizer.Models.Rom
                 new List<int>(),
             };
             this.Variants = injected.groundVariants;
+            this.VariantsWithRoomMax = injected.limitedVariants;
+            this.OnlyOnePerRoom = injected.onlyOnePerRoom;
             this.InjectedActor = injected;
         }
-
 
         public static List<List<int>> BuildVariantList(GameObjects.Actor actor)
         {
@@ -154,6 +157,8 @@ namespace MMR.Randomizer.Models.Rom
             newActor.AllVariants = newVariantsList;
 
             newActor.Variants = newActor.AllVariants.SelectMany(u => u).ToList(); // might as well start with all
+            newActor.OnlyOnePerRoom = this.OnlyOnePerRoom;
+            newActor.VariantsWithRoomMax = this.VariantsWithRoomMax;
 
             if (this.RespawningVariants != null)
             {
@@ -319,14 +324,14 @@ namespace MMR.Randomizer.Models.Rom
             return 4;
         }
 
-        public static int VariantMaxCountPerRoom(Actor actor, int queryVariant)
+        public int VariantMaxCountPerRoom(int queryVariant)
         {
-            if (actor.OnlyOnePerRoom != null)
+            if (this.OnlyOnePerRoom != null)
             {
                 return 1;
             }
 
-            var limitedVariants = actor.VariantsWithRoomMax;
+            var limitedVariants = this.VariantsWithRoomMax;
             if (limitedVariants != null)
             {
                 foreach (var variant in limitedVariants)
@@ -340,6 +345,11 @@ namespace MMR.Randomizer.Models.Rom
 
             return -1; // no restriction
         }
+
+        /* public bool OnlyOnePerRoom()
+        {
+            return (this.OnlyOnePerRoom != null);
+        }*/
 
         public bool NoPlacableVariants()
         {
@@ -360,7 +370,7 @@ namespace MMR.Randomizer.Models.Rom
             {
                 for (int i = 0; i < variantList.Count(); i++)
                 {
-                    var max = VariantMaxCountPerRoom(this, i);
+                    var max = this.VariantMaxCountPerRoom(i);
                     // if -1, no max. if 1 or greater, does not quality as zero
                     if (max != 0)
                     {
