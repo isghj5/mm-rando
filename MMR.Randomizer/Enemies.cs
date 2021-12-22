@@ -47,6 +47,8 @@ namespace MMR.Randomizer
         public uint initVarsLocation = 0;
 
         public List<int> groundVariants;
+        public List<VariantsWithRoomMax> limitedVariants = new List<VariantsWithRoomMax>();
+        public OnlyOneActorPerRoom onlyOnePerRoom;
         public List<int> respawningVariants;
         // variants with max
         public UnkillableAllVariantsAttribute unkillableAttr = null;
@@ -63,12 +65,14 @@ namespace MMR.Randomizer
 
         private static List<GameObjects.Actor> VanillaEnemyList { get; set; }
         private static List<Actor> ReplacementCandidateList { get; set; }
+        private static List<Actor> FreeCandidateList { get; set; }
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
         private static Random seedrng;
 
         public static void PrepareEnemyLists()
         {
+
             // list of slots to use
             VanillaEnemyList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                             .Where(u => u.ObjectIndex() > 3
@@ -89,6 +93,12 @@ namespace MMR.Randomizer
             {
                 ReplacementCandidateList.Add(new Actor(actor));
             }
+
+            var freeCandidates = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+                                .Where(u => u.ObjectIndex() <= 3 && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized())))
+                                .ToList();
+            // because this list needs to be re-evaluated per scene, start smaller here once
+            FreeCandidateList = freeCandidates.Select(u => new Actor(u)).ToList();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)] // TODO do this anywhere a function call gets used 50+ times
@@ -344,6 +354,7 @@ namespace MMR.Randomizer
             return GetFIDFromVROM(GetOvlActorVROMStart(actorID));
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static int MergeRotationAndFlags(int rotation, int flags)
         {
             /// in a map's actor list: actors spawn rotation is merged with their flags,
@@ -354,6 +365,7 @@ namespace MMR.Randomizer
             return ((rotation & 0x1FF) << 7) | (flags & 0x7F);
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void FlattenPitchRoll(Actor actor)
         {
             actor.Rotation.x = (short)MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.x);
@@ -1143,7 +1155,8 @@ namespace MMR.Randomizer
             var sceneIsDungeon = scene.HasDungeonObject();
             var sceneIsField = scene.HasFieldObject();
             // todo: replace enum.IsEnemyRandomized
-            var sceneFreeActors = ReplacementCandidateList.Where(u => (u.ObjectID == 1
+            //var sceneFreeActors = ReplacementCandidateList.Where(u => (u.ObjectID == 1
+            var sceneFreeActors = FreeCandidateList.Where(u => (u.ObjectID == 1
                                                     || (sceneIsField && u.ObjectID == (int)Scene.SceneSpecialObject.FieldKeep)
                                                     || (sceneIsDungeon && u.ObjectID == (int)Scene.SceneSpecialObject.DungeonKeep))
                                                  && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum) )).ToList();
@@ -1153,13 +1166,13 @@ namespace MMR.Randomizer
             return sceneFreeActors;
         }
 
-        public static void TrimExtraActors(GameObjects.Actor actorType, List<Actor> roomEnemies, List<Actor> roomFreeActors,
+        public static void TrimExtraActors(Actor actorType, List<Actor> roomEnemies, List<Actor> roomFreeActors,
                                            bool roomIsClearPuzzleRoom, Random rng, int variant = -1, int randomRate = 0x50)
         {
             /// actors with maximum counts have their extras trimmed off, replaced with free or empty actors
 
             List<Actor> roomEnemiesWithVariant;
-            if (actorType.OnlyOnePerRoom())
+            if (actorType.OnlyOnePerRoom != null)
             {
                 roomEnemiesWithVariant = roomEnemies;
             }
@@ -1188,13 +1201,15 @@ namespace MMR.Randomizer
                         removed++;
                     }
                 }
+
                 // remove random enemies until max for variant is reached
                 for (int i = removed; i < max && i < roomEnemiesWithVariant.Count; ++i)
                 {
                     roomEnemiesWithVariant.Remove(roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)]);
                 }
+
                 // if the actor being trimmed is a free actor, remove from possible replacements
-                var search = roomFreeActors.Find(u => u.ActorEnum == actorType);
+                var search = roomFreeActors.Find(u => u.ActorID == actorType.ActorID);
                 if (search != null)
                 {
                     roomFreeActors.Remove(search);
@@ -1253,7 +1268,7 @@ namespace MMR.Randomizer
                             foreach (var variant in testEnemyCompatibleVariants)
                             {
                                 // if the varient limit has not been reached
-                                var variantMax = Actor.VariantMaxCountPerRoom(testEnemy, variant);
+                                var variantMax = testEnemy.VariantMaxCountPerRoom(variant);
                                 var variantCount = enemiesInRoom.Count(u => u.OldVariant == variant);
                                 if (variantCount < variantMax)
                                 {
@@ -1595,7 +1610,7 @@ namespace MMR.Randomizer
             int loopsCount = 0;
             int freeEnemyRate = 75; // starting value, as attempts increase this shrinks which lowers budget
             int oldObjectSize = sceneObjects.Select(x => ObjUtils.GetObjSize(x)).Sum();
-            var previousyAssignedCandidate = new List<GameObjects.Actor>();
+            var previousyAssignedCandidate = new List<Actor>(); // actor ID
             var chosenReplacementEnemies = new List<Actor>();
             var sceneFreeActors = GetSceneFreeActors(scene, log);
 
@@ -1739,9 +1754,10 @@ namespace MMR.Randomizer
                 if (newObjectSize > sceneObjectLimit)
                 {
                     continue; // reset start over
+                    // todo: this is inaccurate, we need to actually do object calculations at this point
                 }
 
-                // this used to be outside of the loop, but now we need to keep track of actor size with "free" actors
+                // for each object, attempt to change actors 
                 for (int objCount = 0; objCount < chosenReplacementObjects.Count; objCount++)
                 {
                     var temporaryMatchEnemyList = new List<Actor>();
@@ -1792,30 +1808,31 @@ namespace MMR.Randomizer
                         oldEnemy.ChangeActor(testActor, vars: testActor.Variants[rng.Next(testActor.Variants.Count)]);
 
                         temporaryMatchEnemyList.Add(oldEnemy);
-                        if (!previousyAssignedCandidate.Contains((GameObjects.Actor)oldEnemy.ActorID))
+                        var testSearch = previousyAssignedCandidate.Find(u => u.ActorID == oldEnemy.ActorID);
+                        if (testSearch == null)
                         {
-                            previousyAssignedCandidate.Add((GameObjects.Actor)oldEnemy.ActorID);
+                            previousyAssignedCandidate.Add(testActor);
                         }
                     } // end foreach actor in object attempt change
 
                     // enemies can have max per room variants, if these show up we should cull the extra over the max
-                    var restrictedEnemies = previousyAssignedCandidate.FindAll(u => u.HasVariantsWithRoomLimits() || u.OnlyOnePerRoom());
+                    List<Actor> restrictedEnemies = previousyAssignedCandidate.FindAll(u => u.HasVariantsWithRoomLimits() || u.OnlyOnePerRoom != null);
                     foreach (var problemEnemy in restrictedEnemies)
                     {
                         // we need to split enemies per room
                         for (int roomIndex = 0; roomIndex < scene.Maps.Count; ++roomIndex)
                         {
-                            var roomEnemies = temporaryMatchEnemyList.FindAll(u => u.Room == roomIndex && u.ActorEnum == problemEnemy);
+                            var roomEnemies = temporaryMatchEnemyList.FindAll(u => u.Room == roomIndex && u.ActorID == problemEnemy.ActorID);
                             var roomIsClearPuzzleRoom = scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
                             var roomFreeActors = sceneFreeActors.ToList();
 
-                            if (problemEnemy.OnlyOnePerRoom())
+                            if (problemEnemy.OnlyOnePerRoom != null)
                             {
                                 TrimExtraActors(problemEnemy, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, rng, randomRate: freeEnemyRate);
                             }
                             else
                             {
-                                var limitedVariants = problemEnemy.AllVariants().FindAll(u => problemEnemy.VariantMaxCountPerRoom(u) >= 0);
+                                var limitedVariants = problemEnemy.Variants.FindAll(u => problemEnemy.VariantMaxCountPerRoom(u) >= 0);
                                 foreach (var variant in limitedVariants)
                                 {
                                     TrimExtraActors(problemEnemy, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, rng, variant: variant, randomRate: freeEnemyRate);
@@ -1916,6 +1933,11 @@ namespace MMR.Randomizer
                     newInjectedActor.unkillableAttr = new UnkillableAllVariantsAttribute();
                     continue;
                 }
+                if (command == "only_one_per_room")
+                {
+                    newInjectedActor.onlyOnePerRoom = new OnlyOneActorPerRoom();
+                    continue;
+                }
 
                 string valueStr = asignmentSplit[1].Trim();
 
@@ -1927,8 +1949,13 @@ namespace MMR.Randomizer
                     newInjectedActor.groundVariants = newGroundVariantsShort;
                     continue;
                 }
-                if (command == "variants_with_max")
+                if (command == "variant_with_max")
                 {
+                    var newLimitedVariant = valueStr.Split(",").ToList();
+                    int max = Convert.ToInt32(newLimitedVariant[1].Trim(), 10);
+                    int variant = Convert.ToInt32(newLimitedVariant[0].Trim(), 16);
+
+                    newInjectedActor.limitedVariants.Add(new VariantsWithRoomMax(max, variant));
                     continue;
                 }
 
@@ -2661,10 +2688,10 @@ namespace MMR.Randomizer
 
             for (int map = 0; map < oldMapList.Count; ++map) // per map
             {
-                var newDTotal = newMapList[map].day.OverlayRamSize + newMapList[map].day.ActorInstanceSum + newMapList[map].day.ObjectRamSize;
-                var oldDTotal = oldMapList[map].day.OverlayRamSize + oldMapList[map].day.ActorInstanceSum + oldMapList[map].day.ObjectRamSize;
-                var newNTotal = newMapList[map].night.OverlayRamSize + newMapList[map].night.ActorInstanceSum + newMapList[map].night.ObjectRamSize;
-                var oldNTotal = oldMapList[map].night.OverlayRamSize + oldMapList[map].night.ActorInstanceSum + oldMapList[map].night.ObjectRamSize;
+                var newDTotal = newMapList[map].day.OverlayRamSize + newMapList[map].day.ActorInstanceSum;
+                var oldDTotal = oldMapList[map].day.OverlayRamSize + oldMapList[map].day.ActorInstanceSum;
+                var newNTotal = newMapList[map].night.OverlayRamSize + newMapList[map].night.ActorInstanceSum;
+                var oldNTotal = oldMapList[map].night.OverlayRamSize + oldMapList[map].night.ActorInstanceSum;
 
                 if (newDTotal - oldDTotal + newNTotal - oldNTotal == 0) continue; // map was untouched, dont print
 
@@ -2672,13 +2699,14 @@ namespace MMR.Randomizer
 
                 PrintCombineRatioNewOld("  day:    overlay ", newMapList[map].day.OverlayRamSize,   oldMapList[map].day.OverlayRamSize);
                 PrintCombineRatioNewOld("  day:    struct  ", newMapList[map].day.ActorInstanceSum, oldMapList[map].day.ActorInstanceSum);
-                PrintCombineRatioNewOld("  day:    object  ", newMapList[map].day.ObjectRamSize, oldMapList[map].day.ObjectRamSize);
                 PrintCombineRatioNewOld("  day:    total  =", newDTotal, oldDTotal);
+                PrintCombineRatioNewOld("  day:    object  ", newMapList[map].day.ObjectRamSize, oldMapList[map].day.ObjectRamSize);
+
 
                 PrintCombineRatioNewOld("  night:  overlay ", newMapList[map].night.OverlayRamSize,   oldMapList[map].night.OverlayRamSize);
                 PrintCombineRatioNewOld("  night:  struct  ", newMapList[map].night.ActorInstanceSum, oldMapList[map].night.ActorInstanceSum);
-                PrintCombineRatioNewOld("  night:  object  ", newMapList[map].night.ObjectRamSize,    oldMapList[map].night.ObjectRamSize);
                 PrintCombineRatioNewOld("  night:  total  =", newNTotal, oldNTotal);
+                PrintCombineRatioNewOld("  night:  object  ", newMapList[map].night.ObjectRamSize, oldMapList[map].night.ObjectRamSize);
 
             }
         }
