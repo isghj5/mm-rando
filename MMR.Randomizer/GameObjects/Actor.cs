@@ -1659,8 +1659,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         En_Boj_04 = 0x121, // En_Boj_04
 
-
-        // broken actor, needs two objects such a pain
+        // broken actor, needs two objects (animation is in another object) such a pain
         //[ActorizerEnabled]
         [FileID(262)]
         [ObjectListIndex(0xDA)] // 1
@@ -1676,7 +1675,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(263)]
         [ObjectListIndex(0xDF)] // 1
         // 7E is a range, unkown, looks like a path since it comes with a ==7E check
-        [GroundVariants(0)]
+        [PathingTypeVarsPlacement(mask:0x7F, shift:0)]
+        [PathingVariants(0x0)]
+        //[GroundVariants(0)] // todo check if 0x7F is a thing
         // Pathing Variants todo
         [UnkillableAllVariants]
         BabaIsUnused = 0x123, // En_Bba_01

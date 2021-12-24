@@ -1696,7 +1696,7 @@ namespace MMR.Randomizer
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.ButlersSon.ObjectIndex()
+                            NewV = GameObjects.Actor.TreasureChest.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1709,21 +1709,21 @@ namespace MMR.Randomizer
                         });
                         continue;
                     }// */
-                    if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.RoadToSouthernSwamp.FileID() && sceneObjects[objCount] == GameObjects.Actor.ChuChu.ObjectIndex())
+                    {
+                        chosenReplacementObjects.Add(new ValueSwap()
+                        {
+                            OldV = sceneObjects[objCount],
+                            NewV = GameObjects.Actor.TreasureChest.ObjectIndex()
+                        });
+                        continue;
+                    } // */
+                   if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
                             NewV = GameObjects.Actor.Bumper.ObjectIndex()
-                        });
-                        continue;
-                    } // */
-                   /* if (scene.File == GameObjects.Scene.SouthClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.GateSoldier.ObjectIndex())
-                    {
-                        chosenReplacementObjects.Add(new ValueSwap()
-                        {
-                            OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.FriendlyCucco.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1943,8 +1943,8 @@ namespace MMR.Randomizer
                 WriteOutput("Old Enemy actor:["
                     + chosenReplacementEnemies[i].OldName
                     + "] was replaced by new enemy: ["
-                    + chosenReplacementEnemies[i].Name + "]["
-                    + chosenReplacementEnemies[i].Variants[0].ToString("X4") + "]");
+                    + chosenReplacementEnemies[i].Variants[0].ToString("X4")  + "]["
+                    + chosenReplacementEnemies[i].Name + "]");
             }
 
             // realign all scene companion actors
