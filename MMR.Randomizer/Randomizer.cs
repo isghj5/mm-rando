@@ -1315,7 +1315,7 @@ namespace MMR.Randomizer
                     ItemList.Add(wallets500);
                 }
 
-                var affectedLocations = new Dictionary<Item, short>();
+                var affectedLocations = new Dictionary<Item, ushort>();
                 for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
                 {
                     var messageCost = MessageCost.MessageCosts[i];
@@ -1327,9 +1327,10 @@ namespace MMR.Randomizer
 
                     foreach (var location in messageCost.LocationsAffected)
                     {
-                        var affectedCost = affectedLocations.GetValueOrDefault(location, short.MaxValue);
+                        var affectedCost = affectedLocations.GetValueOrDefault(location, ushort.MaxValue); 
                         if (cost < affectedCost)
                         {
+                            affectedLocations[location] = cost.Value;
                             ItemList[location].DependsOnItems.Remove(wallets200.Item);
                             ItemList[location].DependsOnItems.Remove(wallets500.Item);
                             ItemList[location].DependsOnItems.Remove(Item.UpgradeRoyalWallet);
