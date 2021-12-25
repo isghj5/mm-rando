@@ -3901,7 +3901,6 @@ namespace MMR.Randomizer.LogicMigrator
             Night2 = 8,
             Day3 = 16,
             Night3 = 32,
-            Any = 63,
         }
     }
 }
