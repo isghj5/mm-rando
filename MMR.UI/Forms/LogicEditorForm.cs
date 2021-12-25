@@ -583,6 +583,7 @@ namespace MMR.UI.Forms
                 _logic.Logic[n].IsTrick = _itemsById[itemId].IsTrick;
                 _logic.Logic[n].TimeAvailable = _itemsById[itemId].TimeAvailable;
                 _logic.Logic[n].TimeNeeded = _itemsById[itemId].TimeNeeded;
+                _logic.Logic[n].TimeSetup = _itemsById[itemId].TimeSetup;
                 _logic.Logic[n].TrickTooltip = _itemsById[itemId].TrickTooltip;
 
                 SetIndex(n);
