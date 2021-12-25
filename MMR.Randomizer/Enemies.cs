@@ -2062,6 +2062,8 @@ namespace MMR.Randomizer
             // ideas for extras: notes to tell rando where sound effects are to be replaced
             // function pointers to interconnect the code
 
+            if (!Directory.Exists(directory)) return;
+
             InjectedActors.Clear();
 
             foreach (string filePath in Directory.GetFiles(directory, "*.mmra"))
