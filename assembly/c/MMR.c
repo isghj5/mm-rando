@@ -285,7 +285,7 @@ u16 MMR_GetProcessingItemGiIndex(GlobalContext* ctxt) {
         if (forceProcessIndex == 0) {
             player->stateFlags.state1 |= PLAYER_STATE1_TIME_STOP_2;
         }
-        if (player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP_2) {
+        if (player->stateFlags.state1 & (PLAYER_STATE1_GROTTO_IN | PLAYER_STATE1_TIME_STOP_2)) {
             return itemQueue[0];
         }
     }
