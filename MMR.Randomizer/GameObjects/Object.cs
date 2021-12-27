@@ -308,7 +308,8 @@ namespace MMR.Randomizer.GameObjects
         Empty_7B = 0x7B,
 
         [FileID(713)]
-        Object_7C = 0x7C,
+        // 0xE4F0 size
+        Epona = 0x7C,
 
         Empty_7D = 0x7D,
 

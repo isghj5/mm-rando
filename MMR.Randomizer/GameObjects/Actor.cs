@@ -2301,6 +2301,7 @@ namespace MMR.Randomizer.GameObjects
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
         [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.LostWoods)]
         LostWoodsCutsceneObjects = 0x190, // Dm_Opstage
 
         // requires like 3 objects wtf

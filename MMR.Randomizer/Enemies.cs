@@ -101,7 +101,7 @@ namespace MMR.Randomizer
             FreeCandidateList = freeCandidates.Select(u => new Actor(u)).ToList();
         }
 
-        [MethodImpl(MethodImplOptions.AggressiveInlining)] // TODO do this anywhere a function call gets used 50+ times
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ReplacementListContains(GameObjects.Actor actor)
         {
             return ReplacementCandidateList.Find(u => u.ActorEnum == actor) != null;
@@ -698,6 +698,7 @@ namespace MMR.Randomizer
         {
             /// debugging, checking if ram sizes are correct
 
+            /*
             for (var i = 1; i < 0x2B2; ++i)
             {
                 var actor = (GameObjects.Actor) i;
@@ -2531,22 +2532,31 @@ namespace MMR.Randomizer
             ActorInstanceSum = actorList.Select(u => u.ActorID).Select(x => Enemies.GetOvlInstanceRamSize(x)).Sum();
             // untested for accuracy, actors without correct objects might be inccorectly sized
             objectSizes = objList.Select(x => ObjUtils.GetObjSize(x)).ToArray();
+            this.ObjectRamSize = objList.Select(x => ObjUtils.GetObjSize(x)).Sum();
 
+
+            CalculateDefaultObjectUse(s);
+        }
+
+        public void CalculateDefaultObjectUse(Scene s)
+        {
             // now that we know the hard object bank limits, we need ALL data
             // in addition to the scene objects, we need the objects that are always loaded
-            ObjectRamSize = objList.Select(x => ObjUtils.GetObjSize(x)).Sum();
-            ObjectRamSize += 0x925E0; // gameplay_keep
-            ObjectRamSize += 0x1E250; // the biggest link form object (child)
+            this.ObjectRamSize += 0x925E0; // gameplay_keep
+            this.ObjectRamSize += 0x1E250; // the biggest link form object (child)
             // scenes can have special scene objects, which arent included in actor objects
             if (s.SpecialObject == Scene.SceneSpecialObject.FieldKeep)
             {
-                ObjectRamSize += 0x9290;
+                this.ObjectRamSize += 0x9290; // field keep object
+                /// I still dont know why epona sometimes spawns before the objects from scene are loaded, assumption its field
+                this.ObjectRamSize += 0xE4F0; // epona
             }
             else if (s.SpecialObject == Scene.SceneSpecialObject.DungeonKeep)
             {
-                ObjectRamSize += 0x23280;
+                this.ObjectRamSize += 0x23280;
             }
         }
+
     }
 
     class MapEnemiesCollection
