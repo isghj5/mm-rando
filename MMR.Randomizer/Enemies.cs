@@ -1071,6 +1071,19 @@ namespace MMR.Randomizer
             }
         }
 
+        public static void FixSilverIshi()
+        {
+            /// in MM the silver boulders that are pickupable by goron are ishi in field_keep object
+            /// however, these boulders always check the scene flags and set the flags when destroyed, so you cannot respawn them
+            /// considering nothing in vanilla needs these, and because
+            /// I'm worried about setting flags for something else, lets remove that
+
+            var ishiFid = GameObjects.Actor.Rock.FileListIndex();
+            RomUtils.CheckCompressed(ishiFid);
+            var ishiData = RomData.MMFileList[ishiFid].Data;
+            ReadWriteUtils.Arr_WriteU32(ishiData, Dest: 0x12CC, val: 0x00000000); // JAL (Actor_SetSwitchFlag) -> NOP
+        }
+
         #endregion
 
         public static void SetupGrottoActor(Actor enemy, int newVariant)

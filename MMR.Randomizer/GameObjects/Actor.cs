@@ -1111,11 +1111,13 @@ namespace MMR.Randomizer.GameObjects
         // it actually uses one of two objects: gameplay_field or object_ishi, which is only in SSHouse
         //6a does not load
         // params from m2c:
-        // & 1 is something different with the collider
         // 3 >> & 1 uses object_ishi instead of gameplay_field
         // 9 >> 7F is switch flags
         // sooo what is 0x1FE?
-        [GroundVariants(0x1F2)] // get bugs if pickup, best version
+        // 1 is silver boulder, pick-upable by darmani (FE is the highest scene flag I can set, which might be always )
+        // 0x1F2 you get bugs if you pick it up, best version
+        [GroundVariants(0x1F2, 0xFE01)]
+        [VariantsWithRoomMax(max:1, variant:0xFE01)]
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         [EnemizerScenesExcluded(Scene.TerminaField)] // dont replace them in TF
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
