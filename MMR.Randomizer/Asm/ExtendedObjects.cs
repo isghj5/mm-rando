@@ -19,6 +19,7 @@ namespace MMR.Randomizer.Asm
         public short? Skulltula;
         public short? MusicNotes;
         public short? Rupees;
+        public short? Milk;
     }
 
     /// <summary>
@@ -51,12 +52,24 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         /// <param name="entry"></param>
         /// <returns>Object Id if resolved.</returns>
-        public short? ResolveObjectId(GetItemEntry entry)
+        public (short objectId, byte graphicId)? ResolveGraphics(GetItemEntry entry)
         {
             // Royal Wallet.
-            if (entry.ItemGained == 0xA4 && entry.Object == 0xA8)
+            if (entry.ItemGained == 0xA4 && entry.Object == 0xA8 && Indexes.RoyalWallet.HasValue)
             {
-                return Indexes.RoyalWallet;
+                return (Indexes.RoyalWallet.Value, 0x22);
+            }
+
+            // Milk Refill
+            if (entry.ItemGained == 0xA0 && entry.Object == 0xB6 && Indexes.Milk.HasValue)
+            {
+                return (Indexes.Milk.Value, 0x31);
+            }
+
+            // Chateau Refill
+            if (entry.ItemGained == 0x9F && entry.Object == 0x227 && Indexes.Milk.HasValue)
+            {
+                return (Indexes.Milk.Value, 0x32);
             }
 
             return null;
@@ -127,6 +140,10 @@ namespace MMR.Randomizer.Asm
             // Add Rupees
             this.Offsets.Add(AddRupees());
             this.Indexes.Rupees = AdvanceIndex();
+
+            // Add Milk
+            this.Offsets.Add(AddMilk());
+            this.Indexes.Milk = AdvanceIndex();
 
             // Add Skulltula Tokens
             if (skulltulas)
@@ -414,6 +431,44 @@ namespace MMR.Randomizer.Asm
             //WriteByte(data, 0x4B4 + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Env
             //WriteByte(data, 0x4AC + 0xC0 + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Primary
             //WriteByte(data, 0x4B4 + 0xC0 + 0x20 * 5, 0xFF, 0xFF, 0xFF); // Gold Env
+
+            return this.Bundle.Append(data);
+        }
+
+        #endregion
+
+        #region Milk
+
+        (uint, uint) AddMilk()
+        {
+            var data = CloneExistingData(752);
+
+            // Jar
+            WriteByte(data, 0x1270 + 0xC, 0xFF, 0xFF, 0xFF); // Green Primary
+            WriteByte(data, 0x1270 + 0x14, 0x64, 0x64, 0x64); // Green Env
+
+            // Liquid
+            WriteByte(data, 0x12D0 + 0xC, 0xFF, 0xFF, 0xFF); // Green Primary 2
+            WriteByte(data, 0x12D0 + 0x14, 0xFF, 0xFF, 0xFF); // Green Env 2
+
+            // Pattern
+            WriteByte(data, 0x1330 + 0xC, 0, 0x20, 0xFF); // Green Primary 3
+            WriteByte(data, 0x1330 + 0x14, 0, 0x20, 0xFF); // Green Env 3
+
+            // Jar
+            WriteByte(data, 0x1270 + 0x20 * 1 + 0xC, 0xFF, 0xFF, 0xFF); // Red Primary
+            WriteByte(data, 0x1270 + 0x20 * 1 + 0x14, 0x64, 0x64, 0x64); // Red Env
+
+            // Liquid
+            WriteByte(data, 0x12D0 + 0x20 * 1 + 0xC, 0xFF, 0xFF, 0xFF); // Red Primary 2
+            WriteByte(data, 0x12D0 + 0x20 * 1 + 0x14, 0xFF, 0xFF, 0xFF); // Red Env 2
+
+            // Pattern
+            WriteByte(data, 0x1330 + 0x58 * 1 + 0xC, 0x6E, 0x46, 0x00); // Red Primary 3
+            WriteByte(data, 0x1330 + 0x58 * 1 + 0x14, 0x69, 0x0, 0x50); // Red Env 3
+
+            // ENDDL before drawing spoon. Affects green, red and blue variants.
+            WriteByte(data, 0x1698, 0xDF);
 
             return this.Bundle.Append(data);
         }
