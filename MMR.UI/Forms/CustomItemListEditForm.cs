@@ -20,6 +20,7 @@ namespace MMR.UI.Forms
         public string ExternalLabel { get; private set; }
         public List<Item> ItemList { get; private set; } = new List<Item>();
         public string ItemListString { get; private set; }
+        public Func<Item, string> _labelSelector { get; private set; }
 
         public CustomItemListEditForm(IEnumerable<Item> baseItemList, Func<Item, string> labelSelector, string invalidErrorMessage)
         {
@@ -29,13 +30,20 @@ namespace MMR.UI.Forms
             BaseItemList = baseItemList.ToList();
             _itemGroupCount = (int)Math.Ceiling(BaseItemList.Count / 32.0);
 
-            foreach (var item in BaseItemList)
-            {
-                lStartingItems.Items.Add(labelSelector(item));
-            }
+            _labelSelector = labelSelector;
+            PrintToListView();
 
             UpdateString(ItemList);
             ExternalLabel = $"{ItemList.Count}/{BaseItemList.Count} items randomized";
+        }
+
+        private void PrintToListView()
+        {
+            foreach (var item in BaseItemList)
+            {
+                if (!_labelSelector(item).ToLower().Contains(tSearchString.Text.ToLower())) { continue; }
+                lStartingItems.Items.Add(new ListViewItem { Text = _labelSelector(item), Tag = item, Checked = ItemList.Contains(item) });
+            }
         }
 
         private void StartingItemEditForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -100,7 +108,7 @@ namespace MMR.UI.Forms
                 }
                 foreach (ListViewItem l in lStartingItems.Items)
                 {
-                    if (ItemList.Contains(BaseItemList[l.Index]))
+                    if (ItemList.Contains((Item)l.Tag))
                     {
                         l.Checked = true;
                     }
@@ -139,13 +147,21 @@ namespace MMR.UI.Forms
             updating = true;
             if (e.Item.Checked)
             {
-                ItemList.Add(BaseItemList[e.Item.Index]);
+                ItemList.Add((Item)e.Item.Tag);
             }
             else
             {
-                ItemList.Remove(BaseItemList[e.Item.Index]);
+                ItemList.Remove((Item)e.Item.Tag);
             }
             UpdateString(ItemList);
+            updating = false;
+        }
+
+        private void tSearchString_TextChanged(object sender, EventArgs e)
+        {
+            updating = true;
+            lStartingItems.Items.Clear();
+            PrintToListView();
             updating = false;
         }
     }
