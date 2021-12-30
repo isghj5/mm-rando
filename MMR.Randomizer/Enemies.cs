@@ -1626,7 +1626,7 @@ namespace MMR.Randomizer
 
                 // if we've tried 25 seeds and no results, re-shuffle the candidate lists, maybe the rng was bad
                 loopsCount++;
-                if (loopsCount % 25 == 0)
+                if (loopsCount % 5 == 0)
                 {
                     // reinit actorCandidatesLists because this RNG is bad
                     GenerateActorCandidates();
@@ -2549,7 +2549,10 @@ namespace MMR.Randomizer
             {
                 this.ObjectRamSize += 0x9290; // field keep object
                 /// I still dont know why epona sometimes spawns before the objects from scene are loaded, assumption its field
-                this.ObjectRamSize += 0xE4F0; // epona
+                if (s.SceneEnum != GameObjects.Scene.IkanaCanyon)
+                {
+                    this.ObjectRamSize += 0xE4F0; // epona
+                }
             }
             else if (s.SpecialObject == Scene.SceneSpecialObject.DungeonKeep)
             {
@@ -2674,7 +2677,7 @@ namespace MMR.Randomizer
 
             for (int map = 0; map < oldMapList.Count; ++map)
             {
-                if (oldMapList[map].day.ObjectRamSize > sceneObjectLimit || oldMapList[map].night.ObjectRamSize > sceneObjectLimit)
+                if (newMapList[map].day.ObjectRamSize > sceneObjectLimit || newMapList[map].night.ObjectRamSize > sceneObjectLimit)
                 {
                     return false;
                 }
