@@ -374,8 +374,9 @@ namespace MMR.Randomizer
 
         #region Static Enemizer Changes and Fixes
 
-        private static void EnemizerFixes()
+        private static void EnemizerEarlyFixes()
         {
+            // changes before randomization
             FixSpecificLikeLikeTypes();
             EnableDampeHouseWallMaster();
             EnableTwinIslandsSpringSkullfish();
@@ -394,6 +395,12 @@ namespace MMR.Randomizer
             RemoveSTTUnusedPoe();
 
             Shinanigans();
+        }
+
+        public static void EnemizerLateFixes()
+        {
+            // changes after randomization
+            FixDekuPalaceReceptionGuards();
         }
 
         public static void LowerEnemiesResourceLoad()
@@ -1031,6 +1038,26 @@ namespace MMR.Randomizer
             tfScene.Maps[0].Actors[29].ChangeActor(GameObjects.Actor.Empty);
             tfScene.Maps[0].Objects[21] = GameObjects.Actor.Empty.ObjectIndex();
             //var map = tfScene.Maps[0];
+        }
+
+        private static void FixDekuPalaceReceptionGuards()
+        {
+            /// if we randomize the patrolling guards in deku palace:
+            /// we end up removing the object the front guards require to spawn
+            /// however there is a (as far as I can tell) unused object in this scene we can swap
+            /// object_dns which is the object used by the dancing deku guards in the king's chamber
+            /// nothing seems to use their object in the regular palace scene, no idea why the object is there
+
+            var frontGuardOID = GameObjects.Actor.DekuPatrolGuard.ObjectIndex();
+            var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
+
+            if (!dekuPalaceScene.Maps[0].Objects.Contains(frontGuardOID))
+            {
+                // scene has already been written at this point, need to romhack it, faster than re-writing the whole scene file
+                var dekuPalaceRoom1FID = GameObjects.Scene.DekuPalace.FileID() + 1;
+                var dekuPalaceRoom1File = RomData.MMFileList[dekuPalaceRoom1FID].Data;
+                ReadWriteUtils.Arr_WriteU16(dekuPalaceRoom1File, Dest: 0x4E, (ushort)frontGuardOID);
+            }
         }
 
         private static void AllowGuruGuruOutside()
@@ -2364,10 +2391,9 @@ namespace MMR.Randomizer
                 SceneUtils.GetMaps();
                 SceneUtils.GetMapHeaders();
                 SceneUtils.GetActors();
-                EnemizerFixes();
+                EnemizerEarlyFixes();
                 ScanForMMRA("actors");
                 InjectNewActors();
-
 
                 var newSceneList = RomData.SceneList;
                 newSceneList.RemoveAll(u => SceneSkip.Contains(u.SceneEnum) );
@@ -2393,6 +2419,7 @@ namespace MMR.Randomizer
                 });
                 //}
 
+                EnemizerLateFixes();
                 LowerEnemiesResourceLoad();
 
                 using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
