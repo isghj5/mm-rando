@@ -1265,6 +1265,37 @@ namespace MMR.Randomizer
             }
         }
 
+        public static void TrimObjectList(List<ValueSwap> chosenReplacementObjects, Scene s, StringBuilder log)
+        {
+            /// for each object being replaced, search for others in the list and turn them into the smallest objects
+
+            // cant think of a better method right now than O(n^2) but none of these lists should be n > 15 anyway
+
+            List<int> replacedObjects = new List<int>();
+            for (int m = 0; m < s.Maps.Count; ++m)
+            {
+                var map = s.Maps[m];
+                for (int i = 0; i < chosenReplacementObjects.Count; ++i)
+                {
+                    for (int j = i + 1; j < map.Objects.Count; ++j)
+                    {
+                        if (chosenReplacementObjects[i].NewV == map.Objects[j])
+                        {
+                            replacedObjects.Add(chosenReplacementObjects[i].NewV);
+                            // old list has a new value, remove new value
+                            chosenReplacementObjects[i].NewV = SMALLEST_OBJ;
+                        }
+                    }
+                }
+            }
+            if (replacedObjects.Count > 0)
+            {
+                var objectAsHexString = replacedObjects.Select(u => u.ToString("X3"));
+                log.AppendLine($"Duplicate Objects: [{String.Join(", ", objectAsHexString)}]");
+            }
+        }
+
+
         public static void EmptyOrFreeActor(Actor targetActor, Random rng, List<Actor> currentRoomActorList,
                                             List<Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false, int randomRate = 0x50)
         {
@@ -1392,7 +1423,7 @@ namespace MMR.Randomizer
             }
         }
 
-        private static void CullActors(Scene scene, List<ValueSwap> objList, int loopCount)
+        private static void CullOptionalActors(Scene scene, List<ValueSwap> objList, int loopCount)
         {
             // issue: sometimes some of the big scenes get stuck in a weird spot where they can't find any actor combos that fit
             // one day I will figure out this bug, for now, attempt to remove some actors/objects to make it fit
@@ -1792,11 +1823,13 @@ namespace MMR.Randomizer
                 } // end for object shuffle
 
                 // reset early if obviously too large
-                /* if (newObjectSize > sceneObjectLimit)
+                /* thisSceneActors.SetNewActors(scene, chosenReplacementObjects);
+                if ( ! thisSceneActors.isObjectSizeAcceptable())
                 {
-                    continue; // reset start over
-                    // todo: this is inaccurate, we need to actually do object calculations at this point
-                }// */
+                    // at this point objects are as small as possible, if too big, we should reset now
+                    // before the slow free actor section
+                    continue;
+                } // */
 
                 // for each object, attempt to change actors 
                 for (int objCount = 0; objCount < chosenReplacementObjects.Count; objCount++)
@@ -1856,6 +1889,8 @@ namespace MMR.Randomizer
                         }
                     } // end foreach actor in object attempt change
 
+
+
                     // enemies can have max per room variants, if these show up we should cull the extra over the max
                     List<Actor> restrictedEnemies = previousyAssignedCandidate.FindAll(u => u.HasVariantsWithRoomLimits() || u.OnlyOnePerRoom != null);
                     foreach (var problemEnemy in restrictedEnemies)
@@ -1880,30 +1915,36 @@ namespace MMR.Randomizer
                                 }
                             }
                         }
-                    } // end for reduce restricted enemies
+                    } // end for trim restricted actors
 
                     // add temp list back to chosenRepalcementEnemies
                     chosenReplacementEnemies.AddRange(temporaryMatchEnemyList);
                     previousyAssignedCandidate.Clear();
-                } // end for free actors per object
+                } // end for actors per object
 
                 // todo we need a list of actors that are NOT randomized, left alone, they still exist, and we can ignore new duplicates
 
-                // recalculate actor load
-                // make sure this is using the same calc as oldSize
-                //int newActorSize = sceneEnemies.Select(u => u.ActorID).Select(x => GetOvlRamSize(x)).Sum();
+                // enemizer is not smart enough if the new chosen objects are copies, and the game allows objects to load twice
+                // for now, remove them here after actors are chosen to reduce object size
+                StringBuilder objectReplacementLog = new StringBuilder();
+                TrimObjectList(chosenReplacementObjects, scene, objectReplacementLog);
+
                 if (loopsCount >= 100)
                 {
-                    CullActors(scene, chosenReplacementObjects, loopsCount);
+                    // if we are taking a really long time to find replacements, remove a couple optional actors/objects
+                    CullOptionalActors(scene, chosenReplacementObjects, loopsCount);
                 }
+
+                // set objects and actors for isSizeAcceptable to use, and our debugging output
                 thisSceneActors.SetNewActors(scene, chosenReplacementObjects);
               
                 if (thisSceneActors.isSizeAcceptable())
                 {
+                    log.Append(objectReplacementLog);
                     thisSceneActors.PrintCombineRatioNewOldz(log);
                     break; // done, break look
                 }
-                // else: reset loop and try again
+                // else: not small enough; reset loop and try again
 
             } // end while searching for compatible object/actors
 
@@ -2642,9 +2683,10 @@ namespace MMR.Randomizer
         public void SetNewActors(Scene s, List<ValueSwap> newObjChanges)
         {
             newMapList = new List<MapEnemiesCollection>();
-            for (int i = 0; i < s.Maps.Count; ++i)
+            // I like foreach better but its waaaay slower
+            for (int m = 0; m < s.Maps.Count; ++m)
             {
-                var map = s.Maps[i];
+                var map = s.Maps[m];
 
                 var newObjList = map.Objects.ToList(); // copy
                 // probably a way to search for this with a lambda, can't think of it right now
@@ -2667,7 +2709,7 @@ namespace MMR.Randomizer
         {
             // is the overall size for all maps of night and day equal
 
-            var objectTest = CheckObjectRequirements();
+            var objectTest = isObjectSizeAcceptable();
             if (objectTest == false)
             {
                 return false;
@@ -2713,7 +2755,7 @@ namespace MMR.Randomizer
             return true;
         }
 
-        public bool CheckObjectRequirements()
+        public bool isObjectSizeAcceptable()
         {
             // separated so I can call it twice to avoid extra work if its obviously too big too early
 
