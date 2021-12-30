@@ -1049,8 +1049,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(150)]
         [ObjectListIndex(0x248)]
+        // FF is milkbar, 00 is walking through the reception area
+        // 3 exists in granny's room in the inn, for title sequence.. so you can hear him walking toward the door???
+        // 3 is also present in east clock town
         [GroundVariants(3, 0xFF, 0)]
-        [OnlyOneActorPerRoom]
+        // behavior too complicated, disable placement anywhere
+        [VariantsWithRoomMax(max:0, variant: 3, 0xFF, 0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.MilkBar)]
         Gorman = 0xA4, // En_Gm
