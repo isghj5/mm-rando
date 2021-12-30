@@ -209,6 +209,37 @@ namespace MMR.Randomizer.Utils
             return Objects;
         }
 
+        public static int GetSceneObjectBankSize(GameObjects.Scene scene)
+        {
+            // in MM scenes have static object allocation on the heap, hard coded
+            // these values are ripped from mm decomp:
+            // https://github.com/zeldaret/mm/blob/master/include/z64object.h#L4-L7
+            // https://github.com/zeldaret/mm/blob/master/src/code/z_scene.c#L32-L41
+
+            const int OBJECT_SPACE_SIZE_DEFAULT         = 1413120;
+            const int OBJECT_SPACE_SIZE_CLOCK_TOWN      = 1566720;
+            const int OBJECT_SPACE_SIZE_MILK_BAR        = 1617920;
+            const int OBJECT_SPACE_SIZE_TERMINA_FIELD   = 1505280; // 0x16F800
+
+            if (scene == GameObjects.Scene.SouthClockTown || scene == GameObjects.Scene.EastClockTown ||
+                scene == GameObjects.Scene.NorthClockTown || scene == GameObjects.Scene.WestClockTown)
+            {
+                return OBJECT_SPACE_SIZE_CLOCK_TOWN;
+            }
+            else if (scene == GameObjects.Scene.MilkBar)
+            {
+                return OBJECT_SPACE_SIZE_MILK_BAR;
+            }
+            else if (scene == GameObjects.Scene.TerminaField)
+            {
+                return OBJECT_SPACE_SIZE_TERMINA_FIELD;
+            }
+            else
+            {
+                return OBJECT_SPACE_SIZE_DEFAULT;
+            }
+        }
+
         private static void WriteMapActors(byte[] Map, int Addr, List<Actor> Actors)
         {
             for (int i = 0; i < Actors.Count; i++)
