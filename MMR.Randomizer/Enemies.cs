@@ -1779,11 +1779,11 @@ namespace MMR.Randomizer
                 } // end for object shuffle
 
                 // reset early if obviously too large
-                if (newObjectSize > sceneObjectLimit)
+                /* if (newObjectSize > sceneObjectLimit)
                 {
                     continue; // reset start over
                     // todo: this is inaccurate, we need to actually do object calculations at this point
-                }
+                } // */
 
                 // for each object, attempt to change actors 
                 for (int objCount = 0; objCount < chosenReplacementObjects.Count; objCount++)

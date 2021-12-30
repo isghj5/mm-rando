@@ -63,11 +63,10 @@ namespace MMR.Randomizer.GameObjects
         // 0xF000 is type, 0x001F are chest flags, 0x0FE would be the item then
         // gomess is 0x27BE, which does not spawn util you kill him, so obviously the top byte is NOT that simple in MM, snowhead is 27BE
         // dont use CM as reference, rando changes how the chests work for item rando to work
-        /* [GroundVariants( 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
+        [GroundVariants( 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
             0x0AFB, 0x099C)] // two free, the rest are gold invisible
-        */
-        [GroundVariants(0x001F)] // testing
+        //[GroundVariants(0x001F)] // testing
         [VariantsWithRoomMax( max:1, variant: 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
             0x561E, 0x5C79,0x5991, 0x5B58, 0x5A1E,
             0x0AFB, 0x099C)] // brown, harder to see in perpheral vision, not invisible
@@ -927,8 +926,9 @@ namespace MMR.Randomizer.GameObjects
         // ice block room has 0x64 and 0x96, 0xFF in goron block puzzle room
         // smithy uses size 0x78, 0x10 is smol
         [GroundVariants(0xFF10, 0xFF20, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
-        [VariantsWithRoomMax(max: 1, variant: 0xFFFF)]
-        [VariantsWithRoomMax(max: 2, variant: 0xFFC8, 0xFF96, 0xFF78)]
+        // all restricted because they add colliders which limits our BGcheck options for other things
+        [VariantsWithRoomMax(max: 1, variant: 0xFF10, 0xFF20, 0xFF64, 0xFF78, 0xFF96, 0xFFC8, 0xFFFF)]
+        //[VariantsWithRoomMax(max: 1, variant: 0xFFC8, 0xFF96, 0xFF78)]
         [UnkillableAllVariants] // not enemy actor group
         RegularIceBlock = 0x8E, // Obj_Ice_Poly
 
@@ -1994,7 +1994,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x26C)]
         GiantsChamberColumn = 0x161, // Dm_Statue
 
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // temp disabled fighting collider issues
         [FileID(320)]
         [ActorInstanceSize(0x2AC)] // 1AC, raised to reduce chance of getting
         [ObjectListIndex(0x1)]
@@ -3555,8 +3555,9 @@ namespace MMR.Randomizer.GameObjects
         // road to ikana is 1007
         // 0xF000, and 0x7F is switchflag, so zero is all we get
         [GroundVariants(0)]
-        [VariantsWithRoomMax(max:3, variant:0)]
+        [VariantsWithRoomMax(max:1, variant:0)]
         [UnkillableAllVariants]
+        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast)]
         [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.RoadToIkana)] // do not remove original
         IkanaCanyonHookshotStump = 0x25E, // Obj_HsStump
 
