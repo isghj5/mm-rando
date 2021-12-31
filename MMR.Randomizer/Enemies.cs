@@ -46,12 +46,12 @@ namespace MMR.Randomizer
         // init vars are located somewhere in .data, we want to know where exactly because its hard coded in overlay table
         public uint initVarsLocation = 0;
 
-        public List<int> groundVariants;
-        public List<VariantsWithRoomMax> limitedVariants = new List<VariantsWithRoomMax>();
-        public OnlyOneActorPerRoom onlyOnePerRoom;
-        public List<int> respawningVariants;
+        public List<int> groundVariants = new List<int>();
+        public List<int> respawningVariants = new List<int>();
         // variants with max
+        public List<VariantsWithRoomMax> limitedVariants = new List<VariantsWithRoomMax>();
         public UnkillableAllVariantsAttribute unkillableAttr = null;
+        public OnlyOneActorPerRoom onlyOnePerRoom = null;
 
         // should only be stored here if new actor
         public byte[] overlayBin;
@@ -1661,7 +1661,6 @@ namespace MMR.Randomizer
                     var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == sceneObjects[i]);
                     var newReducedList = Actor.CopyActorList(sceneAcceptableEnemies);
                     var newCandiateList = GetMatchPool(originalEnemiesPerObject[i], rng, scene, newReducedList, objectHasFairyDroppingEnemy).ToList();
-                    //var newCandiateList = GetMatchPool(originalEnemiesPerObject[i], rng, scene, sceneAcceptableEnemies, objectHasFairyDroppingEnemy).ToList();
                     var candidateTest = newCandiateList.Find(u => u.Variants.Count == 0);
                     if (candidateTest != null)
                     {
@@ -1741,12 +1740,12 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.TreasureChest.ObjectIndex()
+                            NewV = GameObjects.Actor.FriendlyCucco.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1889,8 +1888,6 @@ namespace MMR.Randomizer
                         }
                     } // end foreach actor in object attempt change
 
-
-
                     // enemies can have max per room variants, if these show up we should cull the extra over the max
                     List<Actor> restrictedEnemies = previousyAssignedCandidate.FindAll(u => u.HasVariantsWithRoomLimits() || u.OnlyOnePerRoom != null);
                     foreach (var problemEnemy in restrictedEnemies)
@@ -1942,7 +1939,7 @@ namespace MMR.Randomizer
                 {
                     log.Append(objectReplacementLog);
                     thisSceneActors.PrintCombineRatioNewOldz(log);
-                    break; // done, break look
+                    break; // done, break loop
                 }
                 // else: not small enough; reset loop and try again
 
@@ -2091,7 +2088,8 @@ namespace MMR.Randomizer
             // ideas for extras: notes to tell rando where sound effects are to be replaced
             // function pointers to interconnect the code
 
-            if (!Directory.Exists(directory)) return;
+            if ( ! Directory.Exists(directory))
+                return;
 
             InjectedActors.Clear();
 
@@ -2139,7 +2137,7 @@ namespace MMR.Randomizer
                             var replacementActorSearch = ReplacementCandidateList.Find(u => u.ActorID == injectedActor.actorID);
                             if (replacementActorSearch != null) // previous actor
                             {
-                                replacementActorSearch.InjectedActor = injectedActor;
+                                replacementActorSearch.UpdateActor(injectedActor);
                             }
                             else
                             {
@@ -2162,12 +2160,16 @@ namespace MMR.Randomizer
                                 RomData.MMFileList[newFID].WasEdited = true;
                             }
                         } // foreach bin entry
+
                     }// zip as file end
                 } // try end
                 catch (Exception e)
                 {
                     throw new Exception($"Error attempting to read archive: {filePath} -- \n" + e);
                 }
+
+
+
             } // for each mmra end
         }
 

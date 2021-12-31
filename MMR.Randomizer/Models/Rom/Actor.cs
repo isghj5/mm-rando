@@ -53,10 +53,10 @@ namespace MMR.Randomizer.Models.Rom
 
         public InjectedActor InjectedActor;
         public OnlyOneActorPerRoom OnlyOnePerRoom;
-        public List<GameObjects.Scene> BlockedScenes = null;
-        public List<int> RespawningVariants = null;
-        public List<int> UnplaceableVariants = null;
-        public List<VariantsWithRoomMax> VariantsWithRoomMax;
+        public List<GameObjects.Scene> BlockedScenes = new List<GameObjects.Scene>();
+        public List<int> RespawningVariants = new List<int>();
+        public List<int> UnplaceableVariants = new List<int>();
+        public List<VariantsWithRoomMax> VariantsWithRoomMax = new List<VariantsWithRoomMax>();
         public List<List<int>> AllVariants = null;
 
         public Actor() { } // default, used when building from scene/room read
@@ -319,11 +319,6 @@ namespace MMR.Randomizer.Models.Rom
             return killableVariants;
         }
 
-        public int GetRandomVariant(Random rng)
-        {
-            return 4;
-        }
-
         public int VariantMaxCountPerRoom(int queryVariant)
         {
             if (this.OnlyOnePerRoom != null)
@@ -345,11 +340,6 @@ namespace MMR.Randomizer.Models.Rom
 
             return -1; // no restriction
         }
-
-        /* public bool OnlyOnePerRoom()
-        {
-            return (this.OnlyOnePerRoom != null);
-        }*/
 
         public bool NoPlacableVariants()
         {
@@ -390,6 +380,31 @@ namespace MMR.Randomizer.Models.Rom
         {
             // 10 time flags, day and night for days 0 through 4, split in the flags section of the rotation shorts
             return ((this.Rotation.x & 0x3) << 7) | (this.Rotation.z & 0x7F);
+        }
+
+        public void UpdateActor(InjectedActor injectedActor)
+        {
+            this.InjectedActor = injectedActor;
+
+            this.OnlyOnePerRoom = injectedActor.onlyOnePerRoom;
+
+            // should we add or replace variants? for now we add
+            this.Variants.AddRange(injectedActor.groundVariants);
+            if (this.RespawningVariants == null)
+            {
+                this.RespawningVariants = new List<int>();
+            }
+            this.RespawningVariants.AddRange(injectedActor.respawningVariants);
+
+
+            this.VariantsWithRoomMax.AddRange(injectedActor.limitedVariants);
+            this.AllVariants[1].AddRange(injectedActor.groundVariants);
+
+            // we want a list of all 
+            /*if (injectedActor.unkillableAttr)
+            {
+                this.UnkillableVariants = Variants
+            }*/
         }
     }
 }
