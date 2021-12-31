@@ -393,6 +393,7 @@ namespace MMR.Randomizer
             FixSeth2();
             AllowGuruGuruOutside();
             RemoveSTTUnusedPoe();
+            FixSilverIshi();
 
             Shinanigans();
         }
