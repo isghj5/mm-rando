@@ -2016,7 +2016,11 @@ namespace MMR.Randomizer
                         importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
                     }
                 }
-                _randomized.ImportantLocations = importantLocations.ToList().AsReadOnly();
+                // TODO one day maybe check if song of time is actually required
+                var songOfTimeLocation = ItemList[Item.SongTime].NewLocation.Value;
+                importantLocations.Add(songOfTimeLocation);
+                var songOfTimePaths = LogicUtils.GetImportantLocations(ItemList, _settings, songOfTimeLocation, _randomized.Logic);
+                _randomized.ImportantLocations = importantLocations.Union(songOfTimePaths.Important).Distinct().ToList().AsReadOnly();
                 _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
                 _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.AsReadOnly();
 
