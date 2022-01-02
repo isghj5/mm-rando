@@ -437,9 +437,9 @@ namespace MMR.Randomizer
 
             var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
             terminafieldScene.Maps[0].Actors[144].Position.y = -245; // fixes the eeno that is way too high above ground
-            terminafieldScene.Maps[0].Actors[16].Position.y = -209; // fixes the eeno that is way too high above ground
-            terminafieldScene.Maps[0].Actors[17].Position.y = -185; // fixes the eeno that is too high above ground (bombchu explode)
-            terminafieldScene.Maps[0].Actors[60].Position.y = -60;  // fixes the blue bubble that is too high
+            terminafieldScene.Maps[0].Actors[16].Position.y  = -209; // fixes the eeno that is way too high above ground
+            terminafieldScene.Maps[0].Actors[17].Position.y  = -185; // fixes the eeno that is too high above ground (bombchu explode)
+            terminafieldScene.Maps[0].Actors[60].Position.y  = -60;  // fixes the blue bubble that is too high
             terminafieldScene.Maps[0].Actors[107].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[110].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[121].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
@@ -1573,10 +1573,12 @@ namespace MMR.Randomizer
         {
             // spoiler log already written by this point, for now making a brand new one instead of appending
             StringBuilder log = new StringBuilder();
-            void WriteOutput(string str)
+            void WriteOutput(string str, StringBuilder altLog = null)
             {
-                //Debug.WriteLine(str);
-                log.AppendLine(str);
+                if (altLog != null)
+                    altLog.AppendLine(str);
+                else
+                    log.AppendLine(str);
             }
             void FlushLog()
             {
@@ -1691,9 +1693,14 @@ namespace MMR.Randomizer
 
             WriteOutput(" time to separate map/time actors: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
+            var bogoLog = new StringBuilder();
+            DateTime bogoStartTime = DateTime.Now;
             while (true)
             {
                 /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
+
+                bogoLog.Clear();
+                bogoStartTime = DateTime.Now;
 
                 // if we've tried 25 seeds and no results, re-shuffle the candidate lists, maybe the rng was bad
                 loopsCount++;
@@ -1701,6 +1708,7 @@ namespace MMR.Randomizer
                 {
                     // reinit actorCandidatesLists because this RNG is bad
                     GenerateActorCandidates();
+                    WriteOutput(" re-generate candidates time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
                 }
 
                 if (actorCandidatesLists[0].Count == 0)
@@ -1741,12 +1749,12 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.FriendlyCucco.ObjectIndex()
+                            NewV = GameObjects.Actor.TreasureChest.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1759,12 +1767,12 @@ namespace MMR.Randomizer
                         });
                         continue;
                     }// */
-                    /*if (scene.File == GameObjects.Scene.RoadToSouthernSwamp.FileID() && sceneObjects[objCount] == GameObjects.Actor.ChuChu.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.RoadToSouthernSwamp.FileID() && sceneObjects[objCount] == GameObjects.Actor.ChuChu.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.TreasureChest.ObjectIndex()
+                            NewV = GameObjects.Actor.ClayPot.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1822,6 +1830,8 @@ namespace MMR.Randomizer
                     });
                 } // end for object shuffle
 
+                WriteOutput(" objects pick time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+
                 // reset early if obviously too large
                 /* thisSceneActors.SetNewActors(scene, chosenReplacementObjects);
                 if ( ! thisSceneActors.isObjectSizeAcceptable())
@@ -1857,6 +1867,9 @@ namespace MMR.Randomizer
                         }
                     }
 
+                    WriteOutput("  companions time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+
+
                     foreach (var oldEnemy in originalEnemiesPerObject[objCount].ToList())
                     {
                         Actor testActor;
@@ -1889,6 +1902,9 @@ namespace MMR.Randomizer
                         }
                     } // end foreach actor in object attempt change
 
+                    WriteOutput("  match time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+
+
                     // enemies can have max per room variants, if these show up we should cull the extra over the max
                     List<Actor> restrictedEnemies = previousyAssignedCandidate.FindAll(u => u.HasVariantsWithRoomLimits() || u.OnlyOnePerRoom != null);
                     foreach (var problemEnemy in restrictedEnemies)
@@ -1915,6 +1931,9 @@ namespace MMR.Randomizer
                         }
                     } // end for trim restricted actors
 
+                    WriteOutput("  trim/free time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+
+
                     // add temp list back to chosenRepalcementEnemies
                     chosenReplacementEnemies.AddRange(temporaryMatchEnemyList);
                     previousyAssignedCandidate.Clear();
@@ -1927,18 +1946,27 @@ namespace MMR.Randomizer
                 StringBuilder objectReplacementLog = new StringBuilder();
                 TrimObjectList(chosenReplacementObjects, scene, objectReplacementLog);
 
+                WriteOutput(" object trim time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+
                 if (loopsCount >= 100)
                 {
                     // if we are taking a really long time to find replacements, remove a couple optional actors/objects
                     CullOptionalActors(scene, chosenReplacementObjects, loopsCount);
+                    WriteOutput(" cull optionals: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+
                 }
 
                 // set objects and actors for isSizeAcceptable to use, and our debugging output
                 thisSceneActors.SetNewActors(scene, chosenReplacementObjects);
-              
+
+                WriteOutput(" set for size check: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+
                 if (thisSceneActors.isSizeAcceptable())
                 {
+                    WriteOutput(" after issizeacceptable: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+
                     log.Append(objectReplacementLog);
+                    log.Append(bogoLog);
                     thisSceneActors.PrintCombineRatioNewOldz(log);
                     break; // done, break loop
                 }
@@ -2484,7 +2512,7 @@ namespace MMR.Randomizer
                 using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
                     sw.WriteLine(""); // spacer from last flush
-                    sw.Write("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms");
+                    sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
                     sw.Write("Enemizer version: Isghj's Enemizer Test 25.0\n");
                 }
             }
@@ -2653,13 +2681,13 @@ namespace MMR.Randomizer
         public BaseEnemiesCollection day = null;
         public BaseEnemiesCollection night = null;
 
-        public MapEnemiesCollection(List<Actor> actorList, List<int> objList, Scene s)
+        public MapEnemiesCollection(List<Actor> actorList, List<int> objList, Scene scene)
         {
             // split enemies into day and night, init two types
             int dayFlagMask = 0x2AA; // nigth is just shifted to the right by one
 
-            day = new BaseEnemiesCollection(actorList.FindAll(u => (u.GetTimeFlags() & dayFlagMask) > 0), objList, s);
-            night = new BaseEnemiesCollection(actorList.FindAll(u => (u.GetTimeFlags() & (dayFlagMask >> 1)) > 0), objList, s);
+            day = new BaseEnemiesCollection(actorList.FindAll(u => (u.GetTimeFlags() & dayFlagMask) > 0), objList, scene);
+            night = new BaseEnemiesCollection(actorList.FindAll(u => (u.GetTimeFlags() & (dayFlagMask >> 1)) > 0), objList, scene);
         }
     }
 
@@ -2683,13 +2711,15 @@ namespace MMR.Randomizer
             }
         }
 
-        public void SetNewActors(Scene s, List<ValueSwap> newObjChanges)
+        public void SetNewActors(Scene scene, List<ValueSwap> newObjChanges)
         {
+            // this is the slowest part of our bogo sort, we need to try speeding it up
+
             newMapList = new List<MapEnemiesCollection>();
             // I like foreach better but its waaaay slower
-            for (int m = 0; m < s.Maps.Count; ++m)
+            for (int m = 0; m < scene.Maps.Count; ++m)
             {
-                var map = s.Maps[m];
+                var map = scene.Maps[m];
 
                 var newObjList = map.Objects.ToList(); // copy
                 // probably a way to search for this with a lambda, can't think of it right now
@@ -2704,7 +2734,7 @@ namespace MMR.Randomizer
                     }
                 }
 
-                newMapList.Add(new MapEnemiesCollection(map.Actors, newObjList, s));
+                newMapList.Add(new MapEnemiesCollection(map.Actors, newObjList, scene));
             }
         }
 

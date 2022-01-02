@@ -1493,6 +1493,7 @@ namespace MMR.Randomizer.GameObjects
 
         EmptyFB = 0xFB,
 
+        // todo randomize just so palace has more actors
         [FileID(233)]
         [ObjectListIndex(0x2)]
         BronzeBoulder = 0xFC, // Obj_Hamishi
@@ -1804,7 +1805,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(282)]
         [ObjectListIndex(0x165)]
         [UnkillableAllVariants]
-        PottedPlant = 0x13E,
+        PottedPlant = 0x13E, // Obj_Flowerpot
 
         [FileID(283)]
         [ObjectListIndex(0x166)]
@@ -1896,7 +1897,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall, Scene.LaundryPool,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower)] // big blocking
-        StockpotBell = 0x14E,
+        StockpotBell = 0x14E, // Obj_Bell
 
         [FileID(301)]
         [ObjectListIndex(0x5)]
@@ -2717,7 +2718,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x75)]
         [GroundVariants(0x1E9, 0x1F4, 0x208, 0x214, 0x224, 0x236, 0x247, 0x253, 0x262, 0x275, 0x283, 0x291, 0x2A0)]
         [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.IkanaCanyon)]
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows down player too much in a race setting
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Grottos)] // slows down player too much in a race setting
         GibdoWell = 0x1DA,
 
         [FileID(436)]
