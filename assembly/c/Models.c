@@ -837,6 +837,10 @@ void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
     // Perform underlying draw.
     DrawFromGiTable(actor, ctxt, 25.0, 0x4C);
 
+    // Restore setup DList to that which Skull Kid's actor expects.
+    ctxt->state.gfxCtx->polyOpa.p = z2_Gfx_CallSetupDL(ctxt->state.gfxCtx->polyOpa.p, 0x19);
+    ctxt->state.gfxCtx->polyXlu.p = z2_Gfx_CallSetupDL(ctxt->state.gfxCtx->polyXlu.p, 0x19);
+
     // Find Skull Kid object data and restore segmented addresses.
     SceneObject* obj = FindObject(ctxt, OBJECT_STK);
     if (obj != NULL) {
