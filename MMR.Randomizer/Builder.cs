@@ -3024,6 +3024,23 @@ namespace MMR.Randomizer
             //   the conditional branches detecting if you haven't hit the right buttons, leaving function
             var bootFile = RomData.MMFileList[1].Data;
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x2BBC, 0x1000000C);
+
+            // the H after each hex value for registers annoys me deeply, it makes it harder to read
+            // can change every 0x48 to 0x20 to turn them into spaces instead, should be nicer to read
+            // starts RAM 80098648, on rom it starts on 0x19640, within boot file its 0x185E0
+            void SwapH(int start, int end)
+            {
+                for (int i = start; i < end; ++i)
+                {
+                    if (bootFile[i] == 0x48) // 'H'
+                    {
+                        bootFile[i] = 0x20;  // ' '
+                    }
+                }
+            }
+            SwapH(0x185E0, 0x18720); // general registers
+            SwapH(0x18720, 0x188D0); // floating points
+
         }
 
         private void WriteStartupStrings()
