@@ -30,6 +30,7 @@ namespace MMR.Randomizer
         // these are indexes of objects
         public int OldV;
         public int NewV;
+        public int Index;
     }
 
     [System.Diagnostics.DebuggerDisplay("0x{actorID.ToString(\"X3\")}:{fileID}")]
@@ -513,7 +514,7 @@ namespace MMR.Randomizer
                 // move next to mayors building
                 // bug this is not next to mayor building for some reason, next to inn
                 var gorman = eastclocktownScene.Maps[0].Actors[4];
-                gorman.Position = new vec16(1026, 205, -1947);
+                gorman.Position = new vec16(1026, 200, -1947);
             }
         }
 
@@ -633,7 +634,7 @@ namespace MMR.Randomizer
             RomUtils.CheckCompressed(GameObjects.Scene.TwinIslands.FileID());
             var twinislandsSceneData = RomData.MMFileList[GameObjects.Scene.TwinIslands.FileID()].Data;
             twinislandsSceneData[0xD6] = 0xAE;
-            twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall wtf
+            twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall 
 
 
             // demo_kankyo, can we just turn on its always update flag
@@ -1749,12 +1750,12 @@ namespace MMR.Randomizer
                     ///////// debugging: force an object (enemy) /////////
                     //////////////////////////////////////////////////////  
                     #if DEBUG
-                    /*if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.TreasureChest.ObjectIndex()
+                            NewV = GameObjects.Actor.En_Ani.ObjectIndex()
                         }); 
                         continue;
                     } // */
@@ -1767,12 +1768,12 @@ namespace MMR.Randomizer
                         });
                         continue;
                     }// */
-                    if (scene.File == GameObjects.Scene.RoadToSouthernSwamp.FileID() && sceneObjects[objCount] == GameObjects.Actor.ChuChu.ObjectIndex())
+                    if (scene.File == GameObjects.Scene.EastClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.Gorman.ObjectIndex())
                     {
                         chosenReplacementObjects.Add(new ValueSwap()
                         {
                             OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.ClayPot.ObjectIndex()
+                            NewV = GameObjects.Actor.RealBombchu.ObjectIndex()
                         });
                         continue;
                     } // */
@@ -1805,7 +1806,7 @@ namespace MMR.Randomizer
                     }
                     if (reducedCandidateList.Count == 0) // rarely, there are no available objects left
                     {
-                        newObjectSize += 0x1000000; // should always error in the object size section
+                        newObjectSize += 2^30; // should always error in the object size section
                         continue; // this enemy was starved by previous options, force error and try again
                     }
 
@@ -2117,8 +2118,7 @@ namespace MMR.Randomizer
             // ideas for extras: notes to tell rando where sound effects are to be replaced
             // function pointers to interconnect the code
 
-            if ( ! Directory.Exists(directory))
-                return;
+            if ( ! Directory.Exists(directory)) return;
 
             InjectedActors.Clear();
 
@@ -2772,13 +2772,10 @@ namespace MMR.Randomizer
             //var dayObjDiff  = oldCollection.ObjectRamSize    - newCollection.ObjectRamSize;
 
             // if the new size is smaller than the old size we should be dandy, if not...
-            //if (dayOvlDiff + dayInstDiff + dayObjDiff <= -0x100)  // now that we have enemy deletion, lets drop this from 0x300 to zero
-            if (dayOvlDiff + dayInstDiff <= -0x100)  // now that we have enemy deletion, lets drop this from 0x300 to zero
+            if (dayOvlDiff + dayInstDiff <= -0x100)
             {
-                // lets assume a general headroom that not all scenes used, smaller scenes should get more variety
-                // 0x90000 was safe, but maybe too small, the three biggest scenes are all 0xC0000 or bigger (0x100000)
-                // ^^^ this is old, back when I thought objects shared that heap
-                if (newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x90000) // need to find new safe values
+                // SCT is 0x4FF90
+                if (newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x4FFFF) // need to find new safe values
                 {
                     return false;
                 }

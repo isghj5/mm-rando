@@ -3044,7 +3044,7 @@ namespace MMR.Randomizer.GameObjects
         // FE03 is in SCT, he stares up at the moon, except doesn't know where the moon is, can face the wrong way
         // FE01 doesn't want to spawn, hmm, 02 is swamp spiderhouse, likely doesn't want to spawn either until house is cleared
         [GroundVariants(0xFE03)]
-        [OnlyOneActorPerRoom]
+        [VariantsWithRoomMax(max:3, variant:0xFE03)]
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
