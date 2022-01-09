@@ -3039,7 +3039,10 @@ namespace MMR.Randomizer
                 }
             }
             SwapH(0x185E0, 0x18720); // general registers
-            SwapH(0x18720, 0x188D0); // floating points
+            SwapH(0x18760, 0x188D0); // floating points
+
+            // not sure what it does, but VPS can be abled by noping a single line, better than a thousand question marks
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x31D8, 0x00000000); // replace branch with nop
 
         }
 
