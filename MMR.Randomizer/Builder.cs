@@ -3038,12 +3038,27 @@ namespace MMR.Randomizer
                     }
                 }
             }
+            // stop printing hex values as lower case, damn 90's japan
+            void SwapX(int start, int end)
+            {
+                for (int i = start; i < end; ++i)
+                {
+                    if (bootFile[i] == 0x78) // 'x'
+                    {
+                        bootFile[i] = 0x58;  // 'X'
+                    }
+                }
+            }
+
             SwapH(0x185E0, 0x18720); // general registers
             SwapH(0x18760, 0x188D0); // floating points
+            SwapX(0x181E0, 0x18230); // dma section
+            SwapX(0x18470, 0x18B04); // the rest of hex values
 
-            // not sure what it does, but VPS can be abled by noping a single line, better than a thousand question marks
+            // show V-PC for overlays to help find vram address in actors, useful
+            // yes I know it shows this page _later_, but a lot of users will only wait for the first one, no reason to have
+            // stupid question marks instead
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x31D8, 0x00000000); // replace branch with nop
-
         }
 
         private void WriteStartupStrings()
