@@ -25,12 +25,14 @@ using System.Runtime.CompilerServices;
 
 namespace MMR.Randomizer
 {
+    [System.Diagnostics.DebuggerDisplay("{OldV} -> {NewV}")]
+
     public class ValueSwap
     {
         // these are indexes of objects
         public int OldV;
         public int NewV;
-        public int Index;
+        public int ChosenV; // Copy of NewV, first pass result, but we might change NewV to something else if duplicate
     }
 
     [System.Diagnostics.DebuggerDisplay("0x{actorID.ToString(\"X3\")}:{fileID}")]
@@ -1267,34 +1269,55 @@ namespace MMR.Randomizer
             }
         }
 
-        public static void TrimObjectList(List<ValueSwap> chosenReplacementObjects, Scene s, StringBuilder log)
+        public static void TrimObjectList(List<ValueSwap> chosenReplacementObjects, SceneActorsCollection sceneActors, StringBuilder log)
         {
             /// for each object being replaced, search for others in the list and turn them into the smallest objects
 
-            // cant think of a better method right now than O(n^2) but none of these lists should be n > 15 anyway
+            // cant think of a better method right now than O(n^2) but none of these lists should be n > 30 anyway
 
             List<int> replacedObjects = new List<int>();
-            for (int m = 0; m < s.Maps.Count; ++m)
+            for (int m = 0; m < sceneActors.Scene.Maps.Count; ++m)
             {
-                var map = s.Maps[m];
-                for (int i = 0; i < chosenReplacementObjects.Count; ++i)
+                var map = sceneActors.Scene.Maps[m];
+                var objList = map.Objects.ToList(); // copy the old list
+
+                // update list
+                for (int i = 0; i < objList.Count; ++i)
                 {
-                    for (int j = i + 1; j < map.Objects.Count; ++j)
+                    var objSearch = chosenReplacementObjects.Find(u => u.OldV == objList[i]);
+                    if (objSearch != null)
                     {
-                        if (chosenReplacementObjects[i].NewV == map.Objects[j])
-                        {
-                            replacedObjects.Add(chosenReplacementObjects[i].NewV);
-                            // old list has a new value, remove new value
-                            chosenReplacementObjects[i].NewV = SMALLEST_OBJ;
-                        }
+                        objList[i] = objSearch.ChosenV;
                     }
                 }
-            }
+
+                // check list for duplicates
+                for (int i = 0; i < chosenReplacementObjects.Count; i++)
+                {
+                    var objSearch = objList.FindAll(u => u == chosenReplacementObjects[i].ChosenV);
+                    if (objSearch != null && objSearch.Count > 1)
+                    {
+                        replacedObjects.Add(chosenReplacementObjects[i].ChosenV);
+                        chosenReplacementObjects[i].NewV = SMALLEST_OBJ;
+                    }
+                }
+
+            }// */
             if (replacedObjects.Count > 0)
             {
                 var objectAsHexString = replacedObjects.Select(u => u.ToString("X3"));
                 log.AppendLine($"Duplicate Objects: [{String.Join(", ", objectAsHexString)}]");
             }
+
+            /* for (int j = i + 1; j < map.Objects.Count; ++j)
+            {
+                if (chosenReplacementObjects[i].NewV == map.Objects[j])
+                {
+                    replacedObjects.Add(chosenReplacementObjects[i].NewV);
+                    // old list has a new value, remove new value
+                    chosenReplacementObjects[i].NewV = SMALLEST_OBJ;
+                }
+            }//*/
         }
 
 
@@ -1744,58 +1767,33 @@ namespace MMR.Randomizer
                 chosenReplacementObjects = new List<ValueSwap>();
                 int newObjectSize = 0;
                 var newActorList = new List<int>();
+                StringBuilder objectReplacementLog = new StringBuilder();
+
                 for (int objCount = 0; objCount < sceneObjects.Count; objCount++)
                 {
                     //////////////////////////////////////////////////////
                     ///////// debugging: force an object (enemy) /////////
-                    //////////////////////////////////////////////////////  
+                    //////////////////////////////////////////////////////
                     #if DEBUG
-                    if (scene.File == GameObjects.Scene.TerminaField.FileID() && sceneObjects[objCount] == GameObjects.Actor.Leever.ObjectIndex())
-                    {
-                        chosenReplacementObjects.Add(new ValueSwap()
-                        {
-                            OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.En_Ani.ObjectIndex()
-                        }); 
-                        continue;
-                    } // */
-                    /*if (scene.File == GameObjects.Scene.DekuPalace.FileID() && sceneObjects[objCount] == GameObjects.Actor.DekuPatrolGuard.ObjectIndex())
-                    {
-                        chosenReplacementObjects.Add(new ValueSwap()
-                        {
-                            OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Romani1.ObjectIndex()
-                        });
-                        continue;
-                    }// */
-                    if (scene.File == GameObjects.Scene.EastClockTown.FileID() && sceneObjects[objCount] == GameObjects.Actor.Gorman.ObjectIndex())
-                    {
-                        chosenReplacementObjects.Add(new ValueSwap()
-                        {
-                            OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.RealBombchu.ObjectIndex()
-                        });
-                        continue;
-                    } // */
-                    /*if (scene.File == GameObjects.Scene.ClockTowerInterior.FileID() && sceneObjects[objCount] == GameObjects.Actor.HappyMaskSalesman.ObjectIndex())
-                    {
-                        chosenReplacementObjects.Add(new ValueSwap()
-                        {
-                            OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.Bumper.ObjectIndex()
-                        });
-                        continue;
-                    } // */
 
-                    /* if (scene.File == GameObjects.Scene.StockPotInn.FileID() && sceneObjects[objCount] == GameObjects.Actor.Clock.ObjectIndex())
+                    bool TestHardSetObject(GameObjects.Scene targetScene, GameObjects.Actor target, GameObjects.Actor replacement)
                     {
-                        chosenReplacementObjects.Add(new ValueSwap()
+                        if (scene.File == targetScene.FileID() && sceneObjects[objCount] == target.ObjectIndex())
                         {
-                            OldV = sceneObjects[objCount],
-                            NewV = GameObjects.Actor.GibdoPicture.ObjectIndex()
-                        });
-                        continue;
-                    } // */
+                            chosenReplacementObjects.Add(new ValueSwap()
+                            {
+                                OldV = sceneObjects[objCount],
+                                NewV = replacement.ObjectIndex(),
+                                ChosenV = replacement.ObjectIndex()
+                            });
+                            return true;
+                        }
+                        return false;
+                    }
+                    bool result;
+                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.TreasureChest)) continue;
+
+                    //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif
 
                     var reducedCandidateList = actorCandidatesLists[objCount].ToList();
@@ -1827,6 +1825,7 @@ namespace MMR.Randomizer
                     chosenReplacementObjects.Add( new ValueSwap() 
                     { 
                         OldV = sceneObjects[objCount],
+                        ChosenV = randomEnemy.ObjectID,
                         NewV = randomEnemy.ObjectID
                     });
                 } // end for object shuffle
@@ -1842,11 +1841,16 @@ namespace MMR.Randomizer
                     continue;
                 } // */
 
+                // enemizer is not smart enough if the new chosen objects are copies, and the game allows objects to load twice
+                // for now, remove them here after actors are chosen to reduce object size
+                TrimObjectList(chosenReplacementObjects, thisSceneActors, objectReplacementLog);
+                WriteOutput(" object trim time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+
                 // for each object, attempt to change actors 
                 for (int objCount = 0; objCount < chosenReplacementObjects.Count; objCount++)
                 {
                     var temporaryMatchEnemyList = new List<Actor>();
-                    List<Actor> subMatches = actorCandidatesLists[objCount].FindAll(u => u.ObjectID == chosenReplacementObjects[objCount].NewV);
+                    List<Actor> subMatches = actorCandidatesLists[objCount].FindAll(u => u.ObjectID == chosenReplacementObjects[objCount].ChosenV);
 
                     // for actors that have companions, add them now
                     foreach (var actor in subMatches.ToList())
@@ -1869,7 +1873,6 @@ namespace MMR.Randomizer
                     }
 
                     WriteOutput("  companions time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
-
 
                     foreach (var oldEnemy in originalEnemiesPerObject[objCount].ToList())
                     {
@@ -1942,12 +1945,6 @@ namespace MMR.Randomizer
 
                 // todo we need a list of actors that are NOT randomized, left alone, they still exist, and we can ignore new duplicates
 
-                // enemizer is not smart enough if the new chosen objects are copies, and the game allows objects to load twice
-                // for now, remove them here after actors are chosen to reduce object size
-                StringBuilder objectReplacementLog = new StringBuilder();
-                TrimObjectList(chosenReplacementObjects, scene, objectReplacementLog);
-
-                WriteOutput(" object trim time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
 
                 if (loopsCount >= 100)
                 {
@@ -2626,7 +2623,7 @@ namespace MMR.Randomizer
 
     }
 
-    class BaseEnemiesCollection
+    public class BaseEnemiesCollection
     {
         // sum of overlay code per actortype in this collection
         public int OverlayRamSize;
@@ -2676,7 +2673,7 @@ namespace MMR.Randomizer
 
     }
 
-    class MapEnemiesCollection
+    public class MapEnemiesCollection
     {
         public BaseEnemiesCollection day = null;
         public BaseEnemiesCollection night = null;
@@ -2691,50 +2688,59 @@ namespace MMR.Randomizer
         }
     }
 
-    class SceneActorsCollection
+    public class SceneActorsCollection
     {
         // per scene: per old and new: per room : per night and day: an object size, an actor inst size, and a actor code size
         // for each scene we need to check all of them, this is getting complicated
 
         public List<MapEnemiesCollection> oldMapList;
         public List<MapEnemiesCollection> newMapList;
+        public Scene Scene;
         public int sceneObjectLimit;
 
-        public SceneActorsCollection(Scene s)
+
+        public SceneActorsCollection(Scene scene)
         {
-            oldMapList = new List<MapEnemiesCollection>();
-            sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(s.SceneEnum);
-            for (int i = 0; i < s.Maps.Count; ++i)
+            this.Scene = scene;
+            this.oldMapList = new List<MapEnemiesCollection>();
+            this.sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum);
+            for (int i = 0; i < scene.Maps.Count; ++i)
             {
-                var map = s.Maps[i];
-                oldMapList.Add(new MapEnemiesCollection(map.Actors, map.Objects, s));
+                var map = scene.Maps[i];
+                this.oldMapList.Add(new MapEnemiesCollection(map.Actors, map.Objects, scene));
             }
         }
 
+        // init for new replacements
         public void SetNewActors(Scene scene, List<ValueSwap> newObjChanges)
         {
             // this is the slowest part of our bogo sort, we need to try speeding it up
 
-            newMapList = new List<MapEnemiesCollection>();
+            this.newMapList = new List<MapEnemiesCollection>();
             // I like foreach better but its waaaay slower
             for (int m = 0; m < scene.Maps.Count; ++m)
             {
                 var map = scene.Maps[m];
 
-                var newObjList = map.Objects.ToList(); // copy
-                // probably a way to search for this with a lambda, can't think of it right now
-                for (int v = 0; v < newObjChanges.Count; ++v)
+                if (newObjChanges == null)
                 {
-                    for (int o = 0; o < newObjList.Count; ++o)
+                    throw new Exception("SetNewActors: empty object list");
+                }
+                {
+                    var newObjList = map.Objects.ToList(); // copy
+                    // probably a way to search for this with a lambda, can't think of it right now
+                    for (int v = 0; v < newObjChanges.Count; ++v)
                     {
-                        if (newObjChanges[v].OldV == newObjList[o])
+                        for (int o = 0; o < newObjList.Count; ++o)
                         {
-                            newObjList[o] = newObjChanges[v].NewV;
+                            if (newObjChanges[v].OldV == newObjList[o])
+                            {
+                                newObjList[o] = newObjChanges[v].NewV;
+                            }
                         }
                     }
+                    this.newMapList.Add(new MapEnemiesCollection(map.Actors, newObjList, scene));
                 }
-
-                newMapList.Add(new MapEnemiesCollection(map.Actors, newObjList, scene));
             }
         }
 
@@ -2765,7 +2771,7 @@ namespace MMR.Randomizer
             return true; // all of them passed size test
         }
 
-        private bool CompareRamRequirements(BaseEnemiesCollection oldCollection, BaseEnemiesCollection newCollection)
+        public bool CompareRamRequirements(BaseEnemiesCollection oldCollection, BaseEnemiesCollection newCollection)
         {
             var dayOvlDiff  = oldCollection.OverlayRamSize   - newCollection.OverlayRamSize;
             var dayInstDiff = oldCollection.ActorInstanceSum - newCollection.ActorInstanceSum;
@@ -2797,6 +2803,14 @@ namespace MMR.Randomizer
                 }
             }
             return true;
+        }
+
+        public List<int> GetUpdateObjectList(ValueSwap newChosenObjects )
+        {
+            //var newObjectList = this.Scene.Maps.
+            // change it, return it
+
+            return null;
         }
 
         // print to log function
@@ -2834,9 +2848,7 @@ namespace MMR.Randomizer
                 PrintCombineRatioNewOld("  night:  struct  ", newMapList[map].night.ActorInstanceSum, oldMapList[map].night.ActorInstanceSum);
                 PrintCombineRatioNewOld("  night:  total  =", newNTotal, oldNTotal);
                 PrintCombineRatioNewOld("  night:  object  ", newMapList[map].night.ObjectRamSize, oldMapList[map].night.ObjectRamSize);
-
             }
-        }
-    }
-
+        } // end PrintCombineRatioNewOldz
+    } // end SceneActorsCollection
 }
