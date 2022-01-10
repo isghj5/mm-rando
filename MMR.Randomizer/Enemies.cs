@@ -1191,7 +1191,7 @@ namespace MMR.Randomizer
             }
         }
 
-        public static List<Actor> GetSceneFreeActors(Scene scene, StringBuilder log)
+        public static List<Actor> GetSceneFreeActors(Scene scene)
         {
             /// some actors don't require unique objects, they can use objects that are generally loaded, we can use these almost anywhere
             ///  any actor that is object type 1 (gameplay_keep) is free to use anywhere
@@ -1209,6 +1209,22 @@ namespace MMR.Randomizer
             // TODO: search all untouched objects and add those actors too
 
             return sceneFreeActors;
+        }
+
+        public static List<Actor> GetRoomFreeActors(Scene scene, List<int> objectList, List<Actor> sceneFreeActors = null)
+        {
+            if (sceneFreeActors == null)
+            {
+                sceneFreeActors = GetSceneEnemyActors(scene);
+            }
+
+            var roomFreeActors = ReplacementCandidateList.Where(u => u.ObjectID >= 3
+                                     && objectList.Contains(u.ObjectID)
+                                     && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))
+                                     ).ToList();
+
+            
+            return sceneFreeActors.Union(roomFreeActors).ToList();
         }
 
         public static void TrimExtraActors(Actor actorType, List<Actor> roomEnemies, List<Actor> roomFreeActors,
@@ -1269,13 +1285,14 @@ namespace MMR.Randomizer
             }
         }
 
-        public static void TrimObjectList(List<ValueSwap> chosenReplacementObjects, SceneActorsCollection sceneActors, StringBuilder log)
+        public static List<List<int>> TrimObjectList(List<ValueSwap> chosenReplacementObjects, SceneActorsCollection sceneActors, StringBuilder log)
         {
             /// for each object being replaced, search for others in the list and turn them into the smallest objects
 
             // cant think of a better method right now than O(n^2) but none of these lists should be n > 30 anyway
 
             List<int> replacedObjects = new List<int>();
+            var objectsPerMap = new List<List<int>>() ;
             for (int m = 0; m < sceneActors.Scene.Maps.Count; ++m)
             {
                 var map = sceneActors.Scene.Maps[m];
@@ -1299,25 +1316,21 @@ namespace MMR.Randomizer
                     {
                         replacedObjects.Add(chosenReplacementObjects[i].ChosenV);
                         chosenReplacementObjects[i].NewV = SMALLEST_OBJ;
+                        int index = objList.FindIndex(u => u == chosenReplacementObjects[i].ChosenV);
+                        objList[index] = SMALLEST_OBJ;
                     }
                 }
 
-            }// */
+                objectsPerMap.Add(objList);
+
+            }
             if (replacedObjects.Count > 0)
             {
                 var objectAsHexString = replacedObjects.Select(u => u.ToString("X3"));
                 log.AppendLine($"Duplicate Objects: [{String.Join(", ", objectAsHexString)}]");
             }
 
-            /* for (int j = i + 1; j < map.Objects.Count; ++j)
-            {
-                if (chosenReplacementObjects[i].NewV == map.Objects[j])
-                {
-                    replacedObjects.Add(chosenReplacementObjects[i].NewV);
-                    // old list has a new value, remove new value
-                    chosenReplacementObjects[i].NewV = SMALLEST_OBJ;
-                }
-            }//*/
+            return objectsPerMap;
         }
 
 
@@ -1710,7 +1723,7 @@ namespace MMR.Randomizer
             int oldObjectSize = sceneObjects.Select(x => ObjUtils.GetObjSize(x)).Sum();
             var previousyAssignedCandidate = new List<Actor>(); // actor ID
             var chosenReplacementEnemies = new List<Actor>();
-            var sceneFreeActors = GetSceneFreeActors(scene, log);
+            var sceneFreeActors = GetSceneFreeActors(scene);
 
             // keeping track of ram space usage is getting ugly, try some OO to clean it up
             SceneActorsCollection thisSceneActors = new SceneActorsCollection(scene);
@@ -1843,7 +1856,7 @@ namespace MMR.Randomizer
 
                 // enemizer is not smart enough if the new chosen objects are copies, and the game allows objects to load twice
                 // for now, remove them here after actors are chosen to reduce object size
-                TrimObjectList(chosenReplacementObjects, thisSceneActors, objectReplacementLog);
+                var currentObjectsPerMap =  TrimObjectList(chosenReplacementObjects, thisSceneActors, objectReplacementLog);
                 WriteOutput(" object trim time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
 
                 // for each object, attempt to change actors 
@@ -1910,26 +1923,29 @@ namespace MMR.Randomizer
 
 
                     // enemies can have max per room variants, if these show up we should cull the extra over the max
-                    List<Actor> restrictedEnemies = previousyAssignedCandidate.FindAll(u => u.HasVariantsWithRoomLimits() || u.OnlyOnePerRoom != null);
-                    foreach (var problemEnemy in restrictedEnemies)
+                    var restrictedActors = previousyAssignedCandidate.FindAll(u => u.HasVariantsWithRoomLimits() || u.OnlyOnePerRoom != null);
+                    for (int i = 0; i < restrictedActors.Count; ++i)
                     {
+                        var problemActor = restrictedActors[i];
+
                         // we need to split enemies per room
                         for (int roomIndex = 0; roomIndex < scene.Maps.Count; ++roomIndex)
                         {
-                            var roomEnemies = temporaryMatchEnemyList.FindAll(u => u.Room == roomIndex && u.ActorID == problemEnemy.ActorID);
+                            var roomActors = temporaryMatchEnemyList.FindAll(u => u.Room == roomIndex && u.ActorID == problemActor.ActorID);
                             var roomIsClearPuzzleRoom = scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
-                            var roomFreeActors = sceneFreeActors.ToList();
+                            //var roomFreeActors = sceneFreeActors.ToList(); // works but too small
+                            var roomFreeActors = GetRoomFreeActors(scene, currentObjectsPerMap[roomIndex], sceneFreeActors);
 
-                            if (problemEnemy.OnlyOnePerRoom != null)
+                            if (problemActor.OnlyOnePerRoom != null)
                             {
-                                TrimExtraActors(problemEnemy, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, rng, randomRate: freeEnemyRate);
+                                TrimExtraActors(problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom, rng, randomRate: freeEnemyRate);
                             }
                             else
                             {
-                                var limitedVariants = problemEnemy.Variants.FindAll(u => problemEnemy.VariantMaxCountPerRoom(u) >= 0);
+                                var limitedVariants = problemActor.Variants.FindAll(u => problemActor.VariantMaxCountPerRoom(u) >= 0);
                                 foreach (var variant in limitedVariants)
                                 {
-                                    TrimExtraActors(problemEnemy, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, rng, variant: variant, randomRate: freeEnemyRate);
+                                    TrimExtraActors(problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom, rng, variant: variant, randomRate: freeEnemyRate);
                                 }
                             }
                         }
