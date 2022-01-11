@@ -263,10 +263,10 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        private static void UpdateMap(Map M)
+        private static void UpdateMap(Map map)
         {
-            WriteMapActors(RomData.MMFileList[M.File].Data, M.ActorAddr, M.Actors);
-            WriteMapObjects(RomData.MMFileList[M.File].Data, M.ObjAddr, M.Objects);
+            WriteMapActors(RomData.MMFileList[map.File].Data, map.ActorAddr, map.Actors);
+            WriteMapObjects(RomData.MMFileList[map.File].Data, map.ObjAddr, map.Objects);
         }
 
         public static void UpdateScene(Scene scene)

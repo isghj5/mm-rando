@@ -101,7 +101,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(48)]
         [ObjectListIndex(0x9)]
         //[GroundVariants(1)] //issue: used for replacement, puts ground enemies in air
-        [FlyingVariants(1)] 
+        [FlyingVariants(1)]
+        [GroundVariants(0x81)] // todo limit?
         WallMaster = 0xA, // En_Wallmas
 
         [EnemizerEnabled]

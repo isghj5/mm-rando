@@ -1285,7 +1285,7 @@ namespace MMR.Randomizer
             }
         }
 
-        public static List<List<int>> TrimObjectList(List<ValueSwap> chosenReplacementObjects, SceneActorsCollection sceneActors, StringBuilder log)
+        public static List<List<int>> TrimObjectList(List<ValueSwap> chosenReplacementObjects, SceneActorsCollection sceneActors, StringBuilder log, List<List<Actor>> actorsPerObject)
         {
             /// for each object being replaced, search for others in the list and turn them into the smallest objects
 
@@ -1296,28 +1296,37 @@ namespace MMR.Randomizer
             for (int m = 0; m < sceneActors.Scene.Maps.Count; ++m)
             {
                 var map = sceneActors.Scene.Maps[m];
-                var objList = map.Objects.ToList(); // copy the old list
+                var objList = map.Objects.ToList(); // copy the old list, were modifying
 
-                // update list
-                for (int i = 0; i < objList.Count; ++i)
+                // if our actors exist in this map
+
+                for (int swapIndex = 0; swapIndex < chosenReplacementObjects.Count; swapIndex++)
                 {
-                    var objSearch = chosenReplacementObjects.Find(u => u.OldV == objList[i]);
-                    if (objSearch != null)
+                    var swap = chosenReplacementObjects[swapIndex];
+                    var actorsForThisObj = actorsPerObject[swapIndex];
+                    var actorsInThisRoom = actorsForThisObj.FindAll(u => u.Room == m);
+                    if (actorsInThisRoom.Count == 0)
+                        continue; // nothing to trim, leave here before we decide to trim for the wrong reason
+
+                    // if there is already a new value we wish to change, duplicate detected
+                    var replacementSearch = objList.FindIndex(u => u == swap.ChosenV);
+                    if (replacementSearch != -1) // found duplicate
                     {
-                        objList[i] = objSearch.ChosenV;
+                        // possible: actor used to be here, but was randoed, and our new actor has the same object
+                        var replacedDupSearch = chosenReplacementObjects.FindIndex(u => u.OldV == swap.ChosenV);
+                        if (replacedDupSearch == -1) // object is NOT in our mix, is vanilla
+                        {
+                            replacedObjects.Add(swap.NewV);
+                            swap.NewV = SMALLEST_OBJ; // swap with empty, or later above use as free object
+                        }
                     }
-                }
-
-                // check list for duplicates
-                for (int i = 0; i < chosenReplacementObjects.Count; i++)
-                {
-                    var objSearch = objList.FindAll(u => u == chosenReplacementObjects[i].ChosenV);
-                    if (objSearch != null && objSearch.Count > 1)
+                    else // no duplicate, replace
                     {
-                        replacedObjects.Add(chosenReplacementObjects[i].ChosenV);
-                        chosenReplacementObjects[i].NewV = SMALLEST_OBJ;
-                        int index = objList.FindIndex(u => u == chosenReplacementObjects[i].ChosenV);
-                        objList[index] = SMALLEST_OBJ;
+                        var objectSearch = objList.FindIndex(u => u == swap.OldV);
+                        if (objectSearch != -1) // not all rooms will have the object
+                        {
+                            objList[objectSearch] = swap.NewV;
+                        }
                     }
                 }
 
@@ -1804,7 +1813,8 @@ namespace MMR.Randomizer
                         return false;
                     }
                     bool result;
-                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.TreasureChest)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.OceanSpiderHouse, GameObjects.Actor.Bo, GameObjects.Actor.Seth1)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.Seth1)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif
@@ -1856,7 +1866,8 @@ namespace MMR.Randomizer
 
                 // enemizer is not smart enough if the new chosen objects are copies, and the game allows objects to load twice
                 // for now, remove them here after actors are chosen to reduce object size
-                var currentObjectsPerMap =  TrimObjectList(chosenReplacementObjects, thisSceneActors, objectReplacementLog);
+                // originalEnemiesPerObject
+                var currentObjectsPerMap =  TrimObjectList(chosenReplacementObjects, thisSceneActors, objectReplacementLog, originalEnemiesPerObject);
                 WriteOutput(" object trim time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
 
                 // for each object, attempt to change actors 
@@ -2526,7 +2537,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 28.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 28.1\n");
                 }
             }
             catch (Exception e)

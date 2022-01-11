@@ -11,6 +11,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1160)]
         [SceneInternalId(0x12)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Toto,
+            Actor.Dexihand)] // hand can stop you talking to mother
         MayorsResidence = 0x00,
 
         [FileID(1143)]
