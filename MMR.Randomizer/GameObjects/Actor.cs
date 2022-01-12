@@ -1695,8 +1695,15 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xDE)]
         Shikashi = 0x124, // En_Bji_01
 
+        [ActorizerEnabled]
         [FileID(265)]
         [ObjectListIndex(0x158)]
+        // 0xFF == 0 or 1 is different case
+        // 0x7F >> 8 is flags
+        [WallVariants(0x7E01, 0x7D01, 0x7C01)]
+        //[GroundVariants(0x7E00, 0x7D00, 0x7C00)] // work but too low mostly hidden by ground
+        [VariantsWithRoomMax(max:1, 0x7E01, 0x7D01, 0x7C01)]
+        [UnkillableAllVariants]
         SpiderWeb = 0x125, // Bg_Spdweb
 
         Empty126 = 0x126,
@@ -2055,8 +2062,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(326)]
         [ObjectListIndex(0x40)] // 1? nah it uses something else
         // 2 is smaller scrub that surrounds link
-        [GroundVariants(2,6)]
-        [VariantsWithRoomMax(max:1, variant:6)]
+        // & 3 are separate params, but wont spawn? weird
+        [GroundVariants(0x2,0x6)]
+        [VariantsWithRoomMax(max:1, variant:0x6, 0x2)]
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)]
         [UnkillableAllVariants]
         HallucinationScrub = 0x169, // En_Dnk

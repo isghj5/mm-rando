@@ -1813,8 +1813,8 @@ namespace MMR.Randomizer
                         return false;
                     }
                     bool result;
-                    if (TestHardSetObject(GameObjects.Scene.OceanSpiderHouse, GameObjects.Actor.Bo, GameObjects.Actor.Seth1)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.Seth1)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.HallucinationScrub)) continue;
+                    //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.SpiderWeb)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif
