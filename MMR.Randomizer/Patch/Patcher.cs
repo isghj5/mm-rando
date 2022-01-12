@@ -170,8 +170,7 @@ namespace MMR.Randomizer.Patch
                     var file = RomData.MMFileList[fileIndex];
 
                     // Check whether file should be included in the patch.
-                    if (file.Data == null || fileIndex >= originalMMFiles.Count || originalMMFiles[fileIndex].Data == null
-                        || (file.IsCompressed && !file.WasEdited))
+                    if (file.Data == null || (file.IsCompressed && !file.WasEdited))
                     {
                         continue;
                     }

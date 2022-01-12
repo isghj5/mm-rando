@@ -1814,7 +1814,7 @@ namespace MMR.Randomizer
                     }
                     bool result;
                     if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.HallucinationScrub)) continue;
-                    //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.SpiderWeb)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.FriendlyCucco)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif
@@ -2537,7 +2537,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 28.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 28.2\n");
                 }
             }
             catch (Exception e)
@@ -2784,12 +2784,12 @@ namespace MMR.Randomizer
             for (int map = 0; map < oldMapList.Count; ++map) // per map
             {
                 // pos diff is smaller
-                var sizeTest = CompareRamRequirements(oldMapList[map].day, newMapList[map].day);
+                var sizeTest = CompareRamRequirements(this.Scene, oldMapList[map].day, newMapList[map].day);
                 if (sizeTest == false) {
                     return false;
                 }
 
-                sizeTest = CompareRamRequirements(oldMapList[map].night, newMapList[map].night);
+                sizeTest = CompareRamRequirements(this.Scene, oldMapList[map].night, newMapList[map].night);
                 if (sizeTest == false) {
                     return false;
                 }
@@ -2798,7 +2798,7 @@ namespace MMR.Randomizer
             return true; // all of them passed size test
         }
 
-        public bool CompareRamRequirements(BaseEnemiesCollection oldCollection, BaseEnemiesCollection newCollection)
+        public bool CompareRamRequirements(Scene scene, BaseEnemiesCollection oldCollection, BaseEnemiesCollection newCollection)
         {
             var dayOvlDiff  = oldCollection.OverlayRamSize   - newCollection.OverlayRamSize;
             var dayInstDiff = oldCollection.ActorInstanceSum - newCollection.ActorInstanceSum;
@@ -2812,9 +2812,13 @@ namespace MMR.Randomizer
                 {
                     return false;
                 }
+                // I can't rule out halucination scrubs are or are not the issue, their skeleton->action is broken, that sounds like corrupted heap
+                if (scene.SceneEnum == GameObjects.Scene.DekuPalace && newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x22000) // need to find new safe values
+                {
+                    return false;
+                }
             }
 
-            // todo should consider swapping this logic around to "return true else false" for easier reading
             return true;
         }
 
