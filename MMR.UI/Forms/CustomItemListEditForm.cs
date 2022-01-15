@@ -16,11 +16,11 @@ namespace MMR.UI.Forms
         private bool updating = false;
         private readonly int _itemGroupCount;
         private readonly string _invalidErrorMessage;
+        private readonly Func<Item, string> _labelSelector;
 
         public string ExternalLabel { get; private set; }
         public List<Item> ItemList { get; private set; } = new List<Item>();
         public string ItemListString { get; private set; }
-        public Func<Item, string> _labelSelector { get; private set; }
 
         public CustomItemListEditForm(IEnumerable<Item> baseItemList, Func<Item, string> labelSelector, string invalidErrorMessage)
         {
@@ -157,12 +157,15 @@ namespace MMR.UI.Forms
             updating = false;
         }
 
-        private void tSearchString_TextChanged(object sender, EventArgs e)
+        private void tSearchString_KeyDown(object sender, KeyEventArgs e)
         {
-            updating = true;
-            lStartingItems.Items.Clear();
-            PrintToListView();
-            updating = false;
+            if (e.KeyData == Keys.Enter)
+            {
+                updating = true;
+                lStartingItems.Items.Clear();
+                PrintToListView();
+                updating = false;
+            }
         }
     }
 }

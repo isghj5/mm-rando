@@ -86,7 +86,7 @@
             this.tSearchString.Name = "tSearchString";
             this.tSearchString.Size = new System.Drawing.Size(1317, 23);
             this.tSearchString.TabIndex = 2;
-            this.tSearchString.TextChanged += new System.EventHandler(this.tSearchString_TextChanged);
+            this.tSearchString.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tSearchString_KeyDown);
             // 
             // JunkLocationEditForm
             // 
