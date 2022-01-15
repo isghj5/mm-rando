@@ -2977,6 +2977,32 @@ namespace MMR.Randomizer
             //   the conditional branches detecting if you haven't hit the right buttons, leaving function
             var bootFile = RomData.MMFileList[1].Data;
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x2BBC, 0x1000000C);
+
+            void SwapBytes(int start, int end, byte searchByte, byte replaceByte)
+            {
+                for (int i = start; i < end; ++i)
+                {
+                    if (bootFile[i] == searchByte)
+                    {
+                        bootFile[i]  = replaceByte;
+                    }
+                }
+            }
+
+            // the H after each hex value for registers (H for base 16 'hex' ?) is hard for me to read
+            // starts RAM 80098648, on rom it starts on 0x19640, within boot file its 0x185E0
+            SwapBytes(0x185E0, 0x18720, (byte) 'H', (byte) ' '); // general registers
+            SwapBytes(0x18760, 0x188D0, (byte) 'H', (byte) ' '); // floating point registers
+
+            // convert lower case hex values to upper case (eg 8000abcd to 8000ABCD)
+            // they used c printf string substitution, so just change %x to %X (8 byte wide though, "%08x")
+            SwapBytes(0x181E0, 0x18230, (byte) 'x', (byte) 'X'); // dma section
+            SwapBytes(0x18470, 0x18B04, (byte) 'x', (byte) 'X'); // the rest of hex values for the whole debug crasher
+
+            // show V-PC for overlays to help find vram address in actors, useful
+            // yes I know it shows this page _later_, but a lot of users will only wait for the first one,
+            // no reason to have stupid question marks instead
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x31D8, 0x00000000); // replace branch with nop
         }
 
         private void WriteStartupStrings()
