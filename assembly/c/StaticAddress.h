@@ -10,7 +10,7 @@
 typedef struct {
     u32 magic;
     u32 version;
-    ExternalEffectsConfig *externalEffectsConfig;
+    ExternalEffectsConfig* externalEffectsConfig;
     struct QuestItemStorage* questItemStorage;
 } StaticAddressConfig;
 
