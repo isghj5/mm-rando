@@ -1813,8 +1813,8 @@ namespace MMR.Randomizer
                         return false;
                     }
                     bool result;
-                    if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.DekuPatrolGuard, GameObjects.Actor.HallucinationScrub)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.FriendlyCucco)) continue;
+                    //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Bg_Breakwall)) continue;
+                    //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Bg_Breakwall)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif
@@ -2826,9 +2826,24 @@ namespace MMR.Randomizer
         {
             // separated so I can call it twice to avoid extra work if its obviously too big too early
 
+            // for most scenes so far this is working fine no issues
             for (int map = 0; map < oldMapList.Count; ++map)
             {
-                if (newMapList[map].day.ObjectRamSize > sceneObjectLimit || newMapList[map].night.ObjectRamSize > sceneObjectLimit)
+                // special case: these scenes have a smaller pool than it is supposed to have, no idea why
+                if (this.Scene.SceneEnum == GameObjects.Scene.StoneTowerTemple ||
+                    this.Scene.SceneEnum == GameObjects.Scene.InvertedStoneTower ||
+                    this.Scene.SceneEnum == GameObjects.Scene.StoneTowerTemple)
+                {
+                    //conservative: just limit to previous vanilla size
+                    if (newMapList[map].day.ObjectRamSize > oldMapList[map].day.ObjectRamSize
+                        || newMapList[map].night.ObjectRamSize > oldMapList[map].night.ObjectRamSize)
+                    {
+                        return false;
+                    }                   
+
+                }
+                // for most scenes, using the static allocation works fine
+                else if (newMapList[map].day.ObjectRamSize > sceneObjectLimit || newMapList[map].night.ObjectRamSize > sceneObjectLimit)
                 {
                     return false;
                 }

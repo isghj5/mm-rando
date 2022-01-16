@@ -13,6 +13,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x12)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Toto,
             Actor.Dexihand)] // hand can stop you talking to mother
+        [EnemizerSceneEnemyReplacementBlock(Actor.Secretary,
+            Actor.LikeLike)] // big one can block you from reaching mother, cycle 0 check
         MayorsResidence = 0x00,
 
         [FileID(1143)]
@@ -284,8 +286,10 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1347)]
         [SceneInternalId(0x40)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.BadBat, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
-            Actor.Bo)]
+        // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
+        // mirror blocks climbing
+        [EnemizerSceneEnemyReplacementBlock(Actor.BadBat,
+            Actor.Bo, Actor.StoneTowerMirror)]
         RoadToSouthernSwamp = 0x3D,
 
         [FileID(1349)]

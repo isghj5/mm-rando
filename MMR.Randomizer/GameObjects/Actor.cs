@@ -100,9 +100,14 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1B30)]
         [FileID(48)]
         [ObjectListIndex(0x9)]
+        // 0xFF00 is switch flags, booo
         //[GroundVariants(1)] //issue: used for replacement, puts ground enemies in air
         [FlyingVariants(1)]
+        // 81 is trapped in ice, floats back up to the ceiling after melting
         [GroundVariants(0x81)] // todo limit?
+        [VariantsWithRoomMax(max:2, variant:0x81)]
+        [RespawningVariants(variant:0x81)] // if they fly away after melt they might not come down, so not killable
+        //[EnemizerScenesPlacementBlock(Scene.TerminaField)] // temporary, melting them can unmelt the north ice block, but why
         WallMaster = 0xA, // En_Wallmas
 
         [EnemizerEnabled]
@@ -389,8 +394,22 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         En_M_Thunder = 0x35, // En_M_Thunder
 
+        // so this is aparently many weird actors???
+        // uh oh, this one might be the biggest reason yet to have multiple object actors
+        //[ActorizerEnabled]
         [FileID(77)]
-        [ObjectListIndex(0x1)]
+        // another cursed multi-object actor
+        // I wanted the mailman bag on the wall for wall variants, but their position is deep into the shower/closet, bad for placment
+        // good candidate for new actor
+        //[ObjectListIndex(0x208)]
+        //[WallVariants(0x204)] // 0x204 is the hanging mailman backpack
+        //[ObjectListIndex(0x217)] // works but a big lame, no sound, no effects, just a wall of animating texture 
+        //[GroundVariants(0x6)] // storm around GBT
+        [ObjectListIndex(0x195)] 
+        [GroundVariants(0x8)] // pot of boiling water for monkey
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.PostOffice)]
         Bg_Breakwall = 0x36, // Bg_Breakwall
 
         Empty37 = 0x37,
@@ -401,6 +420,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0)] // the 101 and above are for warp TO bosses
         [VariantsWithRoomMax(max: 1, variant:0x0)]
         [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.DekuTrial, Scene.GoronTrial, Scene.LinkTrial, Scene.ZoraTrial)]
         WarpDoor = 0x38, // Door_Warp1
 
         [ActorizerEnabled]
@@ -3855,7 +3875,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x129)]
         [GroundVariants(5)]
         [UnkillableAllVariants]
-        Secretary = 0x290, // En_Recepgirl
+        Secretary = 0x290, // En_Recepgirl, Receptionist
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2E30)]
