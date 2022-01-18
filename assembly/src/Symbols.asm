@@ -51,6 +51,7 @@
 .definelabel z2_actor_spawn_1, 0x800BAC60
 .definelabel z2_actor_spawn_2, 0x800BAE14
 .definelabel z2_ActorRemove, 0x800BB498
+.definelabel z2_Actor_ChangeAnimation, 0x800BDC5C
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
 .definelabel z2_BaseDrawGiModel, 0x800EE320
 .definelabel z2_ActorCutscene_ClearWaiting, 0x800F1648

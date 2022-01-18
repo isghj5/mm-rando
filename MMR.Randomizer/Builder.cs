@@ -389,6 +389,44 @@ namespace MMR.Randomizer
         }
 
         /// <summary>
+        /// Write text for bank post-reward when giving another reward afterwards.
+        /// </summary>
+        /// <param name="table"><see cref="MessageTable"/> to update.</param>
+        private void WriteBankPostRewardText(MessageTable table)
+        {
+            // Copy of message 0x47A without EndFinalTextBox (0xBF).
+            table.UpdateMessages(new MessageEntryBuilder()
+                .Id(0x1B67)
+                .Header(it =>
+                {
+                    it.Standard2().Y(0).Icon(0xFE);
+                })
+                .Message(it =>
+                {
+                    it
+                    .Text("See! Doesn't it hold more than").NewLine()
+                    .Text("your old one? Fill it up and bring").NewLine()
+                    .Text("it all in to deposit!").DisableTextSkip2();
+                })
+                .Build()
+            );
+
+            // Copy of message 0x47B without EndFinalTextBox (0xBF).
+            table.UpdateMessages(new MessageEntryBuilder()
+                .Id(0x1B77)
+                .Header(it =>
+                {
+                    it.Standard2().Y(0).Icon(0xFE);
+                })
+                .Message(it =>
+                {
+                    it.Text("That's what they call interest!").DisableTextSkip2();
+                })
+                .Build()
+            );
+        }
+
+        /// <summary>
         /// Write text for pictograph prompt.
         /// </summary>
         /// <param name="table"><see cref="MessageTable"/> to update.</param>
@@ -3230,6 +3268,7 @@ namespace MMR.Randomizer
                 }
 
                 WriteArcheryDoubleRewardText(_messageTable);
+                WriteBankPostRewardText(_messageTable);
                 WriteRoyalWalletText(_messageTable);
 
                 progressReporter.ReportProgress(61, "Writing quick text...");

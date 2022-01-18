@@ -1712,6 +1712,24 @@ typedef struct {
     /* 0x286 */ UNK_TYPE1 pad286[0x2];
 } ActorEnSyatekiMan; // size = 0x288
 
+// En_Ginko_Man actor (Bank Teller).
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ SkelAnime skelAnime;
+    /* 0x188 */ void* actionFunc;
+    /* 0x18C */ Vec3s jointTable[0x10];
+    /* 0x1EC */ Vec3s morphTable[0x10];
+    /* 0x24C */ Vec3s limb15Rot;
+    /* 0x252 */ Vec3s limb8Rot;
+    /* 0x258 */ s16 curTextId;
+    /* 0x25A */ s16 serviceFee;
+    /* 0x25C */ s16 choiceDepositWithdrawl;
+    /* 0x25E */ s16 isNewAccount;
+    /* 0x260 */ s16 isStampChecked;
+    /* 0x262 */ s16 previousBankValue;
+    /* 0x264 */ s16 animTimer;
+} ActorEnGinkoMan; // size = 0x268
+
 /// =============================================================
 /// Actor Cutscene
 /// =============================================================
