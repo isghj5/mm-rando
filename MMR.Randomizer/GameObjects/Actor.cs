@@ -310,14 +310,17 @@ namespace MMR.Randomizer.GameObjects
 
         Empty25 = 0x25,
 
-        //[ActorizerEnabled]
-        // FILE MISSING
-        // issues: listing all the vars for all signs is going to be hell
-        [ObjectListIndex(0xFC)] // the spreadsheet thinks this is free but I dont think so, think its a multi-object like tsubo
-        //[GroundVariants()]
+        [ActorizerEnabled]
+        // FILE MISSING (always loaded)
+        //[ObjectListIndex(0xFC)] // the spreadsheet thinks this is free but I dont think so, think its a multi-object like tsubo
+        [ObjectListIndex(0x1)] // this might actually be free, what the hell
         [ActorInstanceSize(0x1A8)]
+        // 0xFF00 is text ID space
+        [GroundVariants(0x400A, 0x420A, 0x2C09, 0x2D0A, 0x2409, 0x2909, // great bay
+            0x350A, 0x370A, 0x390A,
+            0x3B0A, 0x080A, 0x0D0A, 0x360A)]
         [UnkillableAllVariants]
-        Sign = 0x26, // En_A_Obj
+        PointedSign = 0x26, // En_A_Obj
 
         [FileID(68)]
         [ObjectListIndex(0x1)]
@@ -858,11 +861,12 @@ namespace MMR.Randomizer.GameObjects
         Arrow_Light = 0x7F, // Arrow_Light
 
         [FileID(121)]
-        [ObjectListIndex(0001)]
+        [ObjectListIndex(1)]
         Item_Etcetera = 0x80, // Item_Etcetera
 
+        //[ActorizerEnabledFreeOnly] // not sure this works with object 1, will test later
         [FileID(125)]
-        [ObjectListIndex(0001)]
+        [ObjectListIndex(1)] 
         SmallCrate = 0x81, // Obj_Kibako
 
         // MULTIPLE OBJECT ACTOR
@@ -893,7 +897,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(127)]
         [ObjectListIndex(0xD8)]
         [GroundVariants(0xFF03, 0xFF02, 0xFF01)]
-        [VariantsWithRoomMax(max:4, 0xFF03, 0xFF02, 0xFF01)]
+        [VariantsWithRoomMax(max:2, 0xFF03, 0xFF02, 0xFF01)]
         IronKnuckle = 0x84, // En_Ik
 
         Empty85 = 0x85,
@@ -962,20 +966,23 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // Slowing enemies
         Freezard = 0x8F, // En_Fz
 
+        // damn it, another multi-object actor
         [EnemizerEnabled]
         [ActorInstanceSize(0x19C)]
         [FileID(135)]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
+        //[ObjectListIndex(0xF8)] // 
         // 1 creates a grass circle in termina field, 0 is grotto grass single
         // 642B is a smaller cuttable grass from the ground in secret shrine
         [GroundVariants(0, 1)]
-        [UnkillableAllVariants] // not enemy actor group
+        [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.Grottos)] // dont remove from peahat grotto
         GrassBush = 0x90, // En_Kusa
 
+        // bad idea to move because beans have paths
         [FileID(136)]
         [ObjectListIndex(0xEE)]
-        SoftSoalAndBeans = 0x91, // Obj_Bean
+        SoftSoilAndBeans = 0x91, // Obj_Bean
 
         [ActorizerEnabled]
         [FileID(137)]
@@ -1038,7 +1045,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.CuccoShack)]
         CuccoChick = 0x9D,
 
-        // ? todo findout
+        // some weird calls chest actor wraparound
         [FileID(145)]
         [ObjectListIndex(0001)]
         Item_Inbox = 0x9E, // Item_Inbox
@@ -1086,7 +1093,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.Grottos)]
-        BeanSeller = 0xA5,
+        BeanSeller = 0xA5, // En_Ms
 
         [FileID(152)]
         [ObjectListIndex(0xF5)]
@@ -1097,9 +1104,22 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x17F)]
         SwampBoat = 0xA7, // Bg_Ingate
 
-        // todo make a huuuuge list of ground params for this one
+        // I'm not testing every single value, only taking vanilla for now
+        [ActorizerEnabledFreeOnly] // should not replace, just place
         [FileID(154)]
         [ObjectListIndex(0xFC)]
+        [GroundVariants(0x5, 0x13, 0x14, 0x15, 0x19, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F, 0x20, // north
+           0x17, 0x18, 0x4, // spring village
+           0x3D, 0x11, 0x2, // , NCT, ranch
+           0x3C, // termina field
+           0x21, 0x22, 0x23, 0x25, 0x26, 0x27, 0x28, 0x12, 0x2A, 0x2B, // great ocean
+           0x7, 0x9, 0xB, 0xC, 0xE, 0x2A, 0x38, 0x3A, // swamp
+           0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34 // ikana
+            )]
+        [VariantsWithRoomMax(max:1, variant: 0x5, 0x13, 0x14, 0x15, 0x19, 0x1B, 0x1C, 0x1D, 0x1E, 0x1F,
+            0x20, 0x17, 0x18, 0x4, 0x3D, 0x11, 0x2, 0x3C, 0x21, 0x22, 0x23, 0x25, 0x26, 0x27, 0x28,
+            0x12, 0x2A, 0x2B, 0x7, 0x9, 0xB, 0xC, 0xE, 0x2A, 0x38, 0x3A, 0x2E, 0x2F, 0x30, 0x31, 0x32, 0x33, 0x34)]
+        [UnkillableAllVariants]
         SquareSign = 0xA8, // En_Kanban
 
         EmptyA9 = 0xA9,
@@ -1164,7 +1184,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.StoneTower, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, Scene.SecretShrine)]
         SunSwitch = 0xB2, // Obj_Lightswitch
 
-        [EnemizerEnabled]
+        [ActorizerEnabled]
         [FileID(161)]
         [ObjectListIndex(0x1)] // gamplaykeep obj 1
         // 801, opening scene grass, 0x1FXX are ranch and TF
@@ -1814,7 +1834,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerEnabled] // todo: try randomizing
         [FileID(278)]
         [ObjectListIndex(0x161)]
-        Raft = 0x13A,// carniverous raft, woodfall
+        Raft = 0x13A, // En_Raf carniverous raft, woodfall temple
 
         [FileID(279)]
         [ObjectListIndex(0x162)]
@@ -1828,10 +1848,15 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x164)]
         Bg_Numa_Hana = 0x13D, // Bg_Numa_Hana
 
-
-        //[ActorizerEnabled] // weirdly huge actor, and boring
+        [ActorizerEnabledFreeOnly] // big object, collector flag, boring actor
+        //[ActorizerEnabled]
         [FileID(282)]
         [ObjectListIndex(0x165)]
+        // 0xXX is the item to drop, 0x7X00 is collecable flag
+        // thankfully if collectable flag is 00 it gets ignored and you can re-collect over and over again
+        // A is hearts or green rup if full health
+        // following that: blue rup, red, three hearts, small magic, flexible,
+        [GroundVariants(0x0A, 0x02, 0x04, 0x0B, 0x0E, 0x10, 0x13, 0x15, 0x16, 0x1E)]
         [UnkillableAllVariants]
         PottedPlant = 0x13E, // Obj_Flowerpot
 
@@ -1867,7 +1892,6 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         Elf_Msg3 = 0x146, // Elf_Msg3
 
-
         [ActorizerEnabled] // cannot talk to them BUT YOU CAN KILL THEM :D
         [FileID(293)]
         [ObjectListIndex(0xBC)]
@@ -1880,23 +1904,26 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x169)]
         Dm_Ravine = 0x148, // Dm_Ravine
 
-        //[EnemizerEnabled] // crash, also object is huge so never gets put places anyway
+        // unused actor, in OOT was Saria but in MM uses skullkid object, code does nothing
         [FileID(295)]
-        [ObjectListIndex(0x192)] // cutscene object shared with zelda and skullkid, so BIG
-        [GroundVariants(0)]
-        [UnkillableAllVariants]
-        Dm_Sa = 0x149, // Dm_Sa // might be saria but because crash unk
+        [ObjectListIndex(0x192)]
+        Dm_Sa = 0x149, // Dm_Sa
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2D30)]
         [ActorInstanceSize(0x208)]
         [FileID(296)]
         [ObjectListIndex(0x16A)]
-        [GroundVariants(0x0C01,0x1402,0xFF03,0xFF01,0xFF00,0x0A01,0x0202,0x801,0xFF02)]
+        // 0xXX00 is respawn time, 0xFF gets turned into 0, which is the shortest value
+        // 0xX is type, 0 is empty water, 1 is magic, 2 is arrows, 3 is hearts,
+        // if you use 0x5 it shows green chuchu with blue tatl hint, but the texture is corrupt and flashes
+        [GroundVariants(0x0C01,0x1402,0xFF03,0xFF01,0xFF00,0x0A01,0x0202,0x801,0xFF02, 0x0103, 0x0203)]
+        //[GroundVariants(0x0005)]
         [EnemizerScenesExcluded(Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)] // necessary to climb
         [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)] // crash transitioning witch shop room
-        // termina field, ff00 gbt waterchu, the rest are assumed respawn until proven otherwise
-        [RespawningVariants(0xFF03,0xFF01,0xFF00,   0x0C01,0x1402,0x0A01,0x0202,0x801,0xFF02)]
+        // all variants respawn until proven otherwise
+        //[RespawningVariants(0xFF03,0xFF01,0xFF00, 0xFF03, 0x0A01,   0x0C01,0x1402,0x0202,0x801,0xFF02)]
+        [RespawningAllVariants]
         ChuChu = 0x14A, // En_Slime
 
         [EnemizerEnabled]
@@ -2710,9 +2737,12 @@ namespace MMR.Randomizer.GameObjects
         [FileID(428)]
         [ObjectListIndex(0x1)]
         Bg_Danpei_Movebg = 0x1D3, // Bg_Danpei_Movebg
-        
+
+        [ActorizerEnabledFreeOnly]
         [FileID(429)]
         [ObjectListIndex(0x1B7)]
+        [GroundVariants(0x0100)]
+        [UnkillableAllVariants]
         SnowCoveredTrees = 0x1D4, // En_Snowwd
 
         // I suspect since he has so few vars that he will be hard coded, and req decomp to fix
@@ -3073,7 +3103,7 @@ namespace MMR.Randomizer.GameObjects
         // FE03 is in SCT, he stares up at the moon, except doesn't know where the moon is, can face the wrong way
         // FE01 doesn't want to spawn, hmm, 02 is swamp spiderhouse, likely doesn't want to spawn either until house is cleared
         [GroundVariants(0xFE03)]
-        [VariantsWithRoomMax(max:3, variant:0xFE03)]
+        [VariantsWithRoomMax(max:0, variant:0xFE03)] // temp disable, as double object actor is broken
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
@@ -3395,9 +3425,11 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         MushroomCloud = 0x23B, // Obj_Kinoko
 
-        // todo
+        [ActorizerEnabledFreeOnly]
         [FileID(531)]
         [ObjectListIndex(0x218)]
+        [GroundVariants(0x8000, 0x0)]
+        [UnkillableAllVariants]
         PalmTree = 0x23C, // Obj_Yasi
  
         [EnemizerEnabled]
@@ -3748,15 +3780,16 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [FileID(592)]
-        [ObjectListIndex(0x26A)] // the spreadsheet says he is obj 1 but that is a mistake, his code is stupid
+        [ObjectListIndex(0x26A)] // double object actor
         // uhhh code has no params, where did FE01 come from?
         [GroundVariants(0x0)]
-        [VariantsWithRoomMax(max:4, variant:0x0)]
+        [VariantsWithRoomMax(max:0, variant:0x0)] // temp disable as double object actors are borken
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.TerminaField)]
         // This is the seth you see in the telescope on grottos, same animation as cured skultula man in kak
         Seth2 = 0x279, // En_Sth2
 
+        // hard coded to be early morning only
         [FileID(593)]
         [ObjectListIndex(0x24A)]
         Kamaro = 0x27A, // En_Yb
@@ -3925,7 +3958,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [UnkillableAllVariants]
         [CompanionActor(Flame, 0x7FE)] // blue flames
-        AnjuWeddingDress = 0x299,
+        AnjuWeddingDress = 0x299, // En_And
 
         [FileID(625)]
         [ObjectListIndex(0x1)]

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace MMR.Randomizer.Attributes.Actor
 {
@@ -24,8 +22,13 @@ namespace MMR.Randomizer.Attributes.Actor
     {
         public ActorizerEnabledAttribute() : base() { }
     };
+    class ActorizerEnabledFreeOnlyAttribute : ActorChangeEnableAttribute
+    {
+        public ActorizerEnabledFreeOnlyAttribute() : base() { }
+    };
     class EnemizerEnabledAttribute : ActorChangeEnableAttribute
     {
         public EnemizerEnabledAttribute() : base() { }
     };
+
 }

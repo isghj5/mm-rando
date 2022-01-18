@@ -69,6 +69,7 @@ namespace MMR.Randomizer
         private static List<GameObjects.Actor> VanillaEnemyList { get; set; }
         private static List<Actor> ReplacementCandidateList { get; set; }
         private static List<Actor> FreeCandidateList { get; set; }
+        private static List<Actor> FreeOnlyCandidateList { get; set; } // not worthy by themselves, only if object was already selected
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
         private static Random seedrng;
@@ -98,10 +99,20 @@ namespace MMR.Randomizer
             }
 
             var freeCandidates = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                                .Where(u => u.ObjectIndex() <= 3 && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized())))
+                                .Where(u => u.ObjectIndex() <= 3
+                                && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized() )))
                                 .ToList();
+
+
             // because this list needs to be re-evaluated per scene, start smaller here once
             FreeCandidateList = freeCandidates.Select(u => new Actor(u)).ToList();
+
+            var freeOnlyCandidates = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
+                    .Where(u => ACTORSENABLED && u.IsActorFreeOnly())
+                    .ToList();
+
+            // because this list needs to be re-evaluated per scene, start smaller here once
+            FreeOnlyCandidateList = freeOnlyCandidates.Select(u => new Actor(u)).ToList();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -1215,7 +1226,7 @@ namespace MMR.Randomizer
         {
             if (sceneFreeActors == null)
             {
-                sceneFreeActors = GetSceneEnemyActors(scene);
+                sceneFreeActors = GetSceneEnemyActors(scene); // should never get this far
             }
 
             var roomFreeActors = ReplacementCandidateList.Where(u => u.ObjectID >= 3
@@ -1223,8 +1234,11 @@ namespace MMR.Randomizer
                                      && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))
                                      ).ToList();
 
-            
-            return sceneFreeActors.Union(roomFreeActors).ToList();
+            var freeOnlyActors = FreeOnlyCandidateList.Where(u => objectList.Contains(u.ObjectID)
+                                     && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))
+                                     ).ToList();
+
+            return sceneFreeActors.Union(roomFreeActors).Union(freeOnlyActors).ToList();
         }
 
         public static void TrimExtraActors(Actor actorType, List<Actor> roomEnemies, List<Actor> roomFreeActors,
@@ -1814,7 +1828,7 @@ namespace MMR.Randomizer
                     }
                     bool result;
                     //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Bg_Breakwall)) continue;
-                    //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Bg_Breakwall)) continue;
+                    //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.ClayPot)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif
@@ -2537,7 +2551,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 28.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 29.0\n");
                 }
             }
             catch (Exception e)

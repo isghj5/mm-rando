@@ -31,6 +31,12 @@ namespace MMR.Randomizer.Extensions
             return actor.GetAttribute<ActorizerEnabledAttribute>()?.Enabled ?? false;
         }
 
+        public static bool IsActorFreeOnly(this Actor actor)
+        {
+            return actor.GetAttribute<ActorizerEnabledFreeOnlyAttribute>()?.Enabled ?? false;
+        }
+
+
         public static List<int> UnkillableVariants(this Actor actor)
         {
             if (actor.GetAttribute<UnkillableAllVariantsAttribute>() != null) // all are unkillable
