@@ -15,20 +15,20 @@ namespace MMR.UI.Forms
     public partial class ToggleTricksForm : Form
     {
         public List<string> Result { get; private set; }
-        public LogicFile lines { get; private set; }
+        public LogicFile LogicFile { get; private set; }
 
         public ToggleTricksForm(LogicMode logicMode, string userLogicFilename, IEnumerable<string> tricksEnabled)
         {
             InitializeComponent();
             Result = tricksEnabled.ToList();
-            lines = LogicUtils.ReadRulesetFromResources(logicMode, userLogicFilename);
+            LogicFile = LogicUtils.ReadRulesetFromResources(logicMode, userLogicFilename);
             Write_Tricks();
         }
 
         private void Write_Tricks()
         {
             pTricks.Controls.Clear();
-            var itemList = LogicUtils.PopulateItemListFromLogicData(lines);
+            var itemList = LogicUtils.PopulateItemListFromLogicData(LogicFile);
 
             var y = 9;
             var deltaY = 23;
