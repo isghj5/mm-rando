@@ -49,6 +49,7 @@
 0x800BAC60,z2_actor_spawn_1
 0x800BAE14,z2_actor_spawn_2
 0x800BB498,z2_ActorRemove
+0x800BDC5C,z2_Actor_ChangeAnimation
 0x800C99D4,z2_GetFloorPhysicsType
 0x800EE320,z2_BaseDrawGiModel
 0x800F1648,z2_ActorCutscene_ClearWaiting

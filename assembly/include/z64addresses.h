@@ -112,6 +112,7 @@ extern void z2_ActorRemove(ActorContext* actorCtxt, Actor* actor, GlobalContext*
 extern void z2_ActorUnload(Actor* actor);
 extern void z2_SetActorSize(Actor *actor, f32 size);
 extern void z2_SetShape(ActorShape* shape, f32 yDisplacement, void* shadowDrawFunc, f32 scale);
+extern void z2_Actor_ChangeAnimation(SkelAnime* skelAnime, ActorAnimationEntry* animation, s32 index);
 
 // Function Prototypes (Actor Cutscene).
 extern void z2_ActorCutscene_ClearWaiting(void);
