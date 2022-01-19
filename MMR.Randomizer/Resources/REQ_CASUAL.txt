@@ -55328,16 +55328,83 @@
       "IsTrick": false
     },
     {
-      "Id": "WFT 2nd Floor Skip",
+      "Id": "Quest Item Extra Storage",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Allows Toilet Hand using Room Key and Letter to Mama.",
+      "TrickCategory": "Setting"
+    },
+    {
+      "Id": "Close Cows",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Use with the Close Cows comfort option.",
+      "TrickCategory": "Setting"
+    },
+    {
+      "Id": "Dog Race Luck",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Removes Mask of Truth as requirement for Dog Race.",
+      "TrickCategory": "Setting"
+    },
+    {
+      "Id": "Faster Bank",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Makes Bank 2 require nothing, and Bank 3 require any wallet.",
+      "TrickCategory": "Setting"
+    },
+    {
+      "Id": "Fierce Deity's Mask Anywhere",
       "RequiredItems": [
-        "ItemHookshot"
+        "MaskFierceDeity"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Hookshot to the torch in the main room."
+      "TrickTooltip": "Use with the Allow Fierce Deity's Mask Anywhere gimmick.",
+      "TrickCategory": "Setting"
+    },
+    {
+      "Id": "Deku Stick Fighting",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Removes sword as requirement for fighting.",
+      "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Take Damage",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "You might have to take damage.",
+      "TrickCategory": "Easy"
     },
     {
       "Id": "Scarecrow's Song",
@@ -55349,7 +55416,54 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Using Scarecrow's Song where not normally required."
+      "TrickTooltip": "Using Scarecrow's Song where not normally required.",
+      "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Lensless Chests",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Open invisible chests without the Lens of Truth.",
+      "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Hit switches through walls",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Hit switches through walls using explosives.",
+      "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Long Jump",
+      "RequiredItems": [
+        "OtherExplosive"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Drop a bomb behind you then use the recoil to jump a long distance.",
+      "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Exit Ocean Spider House without Goron",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Backwalk up the slope to exit.",
+      "TrickCategory": "Easy"
     },
     {
       "Id": "Run Through Poisoned Water",
@@ -55359,77 +55473,32 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Enter poisoned swamp by walking as Zora, or FD if it is enabled."
+      "TrickTooltip": "Enter poisoned swamp by walking as Zora, or FD if it is enabled.",
+      "TrickCategory": "Easy"
     },
     {
-      "Id": "Deku Guard Skip",
+      "Id": "Poisoned Water as Goron",
+      "RequiredItems": [
+        "MaskGoron"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Enter poisoned swamp by rolling as Goron. You aren't guaranteed to have enough health to make it.",
+      "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Swim to Zora Hall as Human",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Backflip over the deku guards from the fence."
-    },
-    {
-      "Id": "Lensless Jumping",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Jump along invisible platforms without Lens of Truth."
-    },
-    {
-      "Id": "Bomber Guard Skip",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Backflip over the Bomber Hideout Guard."
-    },
-    {
-      "Id": "Postman without Bunny Hood",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Get exactly 10 seconds without using the Bunny Hood."
-    },
-    {
-      "Id": "Quest Item Extra Storage",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Allows Toilet Hand using Room Key and Letter to Mama."
-    },
-    {
-      "Id": "Dog Race Luck",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Removes Mask of Truth as requirement for Dog Race."
-    },
-    {
-      "Id": "Deku Stick Fighting",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Removes sword as requirement for fighting."
+      "TrickTooltip": "You can avoid being damaged by the fish by swimming sideways.",
+      "TrickCategory": "Easy"
     },
     {
       "Id": "Brute Force OSH Code",
@@ -55439,7 +55508,30 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Removes Captain's Hat as requirement for Ocean Spider House mask code."
+      "TrickTooltip": "Removes Captain's Hat as requirement for Ocean Spider House mask code.",
+      "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Climb Stone Tower with One Transformation",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Play Elegy while on a block to ride the block up.",
+      "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Lensless Jumping",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Jump along invisible platforms without Lens of Truth.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Lensless Walking",
@@ -55449,7 +55541,43 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Lens of Truth will not be required to walk on invisible walkways."
+      "TrickTooltip": "Lens of Truth will not be required to walk on invisible walkways.",
+      "TrickCategory": "Moderate"
+    },
+    {
+      "Id": "Bomber Guard Skip",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Backflip over the Bomber Hideout Guard.",
+      "TrickCategory": "Moderate"
+    },
+    {
+      "Id": "Deku Guard Skip",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Backflip over the deku guards from the fence.",
+      "TrickCategory": "Moderate"
+    },
+    {
+      "Id": "WFT 2nd Floor Skip",
+      "RequiredItems": [
+        "ItemHookshot"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Hookshot to the torch in the main room.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Kill Deku Shrine Big Octo",
@@ -55466,40 +55594,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Allows killing the Big Octo with arrows or Zora, instead of requiring clearing Woodfall Temple."
-    },
-    {
-      "Id": "Stun Keeta with Bombs",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Use a bomb to stun Captain Keeta before he moves away."
-    },
-    {
-      "Id": "ISTT Hookshot to Eyegore",
-      "RequiredItems": [
-        "ItemHookshot",
-        "Use Light Arrow"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Shoot the Eyegore with Light Arrows from below, then hookshot to the chest."
-    },
-    {
-      "Id": "STT Updrafts without Deku Mask",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Ride the ISTT updrafts up one level, and cross the STT updrafts without Deku Mask."
+      "TrickTooltip": "Allows killing the Big Octo with arrows or Zora, instead of requiring clearing Woodfall Temple.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Deku Palace Bean Skip",
@@ -55509,7 +55605,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Backflip onto the gate, then jump to the fence."
+      "TrickTooltip": "Backflip onto the gate, then jump to the fence.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Ikana Castle Falling Ceiling Skip",
@@ -55526,19 +55623,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Get on top of the falling ceiling with a sidehop and a jump slash, then ride the ceiling up to the switch with a well timed arrow."
-    },
-    {
-      "Id": "Path to Snowhead without Magic",
-      "RequiredItems": [
-        "MaskGoron"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Roll along the sides of the gaps."
+      "TrickTooltip": "Get on top of the falling ceiling with a sidehop and a jump slash, then ride the ceiling up to the switch with a well timed arrow.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Goron Bomb Jump",
@@ -55550,7 +55636,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Drop a bomb, pound as Goron, uncurl midair."
+      "TrickTooltip": "Drop a bomb, pound as Goron, uncurl midair.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "GBT Fireless",
@@ -55560,7 +55647,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Navigate through the seesaw room without Fire Arrows."
+      "TrickTooltip": "Navigate through the seesaw room without Fire Arrows.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Ikana Graveyard Access",
@@ -55588,29 +55676,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Hookshot to the first stump from a precise position."
-    },
-    {
-      "Id": "Climb Stone Tower with One Transformation",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Play Elegy while on a block to ride the block up."
-    },
-    {
-      "Id": "Shoot Twinmold",
-      "RequiredItems": [
-        "OtherArrow"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Shoot Twinmold's tail with arrows instead of fighting with Giant's Mask."
+      "TrickTooltip": "Hookshot to the first stump from a precise position.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Fight Twinmold",
@@ -55759,70 +55826,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Jump from the bridge to the right side of the ice block. And jump to the 3rd locked door."
-    },
-    {
-      "Id": "SHT Pillar Skip",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Shoot or bomb the snowballs, then jump down."
-    },
-    {
-      "Id": "GBT Iceless Boss Key",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Jump to the Boss Key chest without an ice platform."
-    },
-    {
-      "Id": "ISTT Early Boss Key",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Any Sword"
-        ],
-        [
-          "Deku Stick Fighting"
-        ],
-        [
-          "MaskZora"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Drop down from the Dexihand either as Deku or with a sidehop and jump slash."
-    },
-    {
-      "Id": "Swim to Zora Hall as Human",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "You can avoid being damaged by the fish by swimming sideways."
-    },
-    {
-      "Id": "Lensless Climbing",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Climb the Mountain Village invisible ladder without Lens of Truth."
+      "TrickTooltip": "Jump from the bridge to the right side of the ice block. And jump to the 3rd locked door.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Pinnacle Rock without Seahorse",
@@ -55832,7 +55837,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Learn the path and enter Pinnacle Rock without the Seahorse."
+      "TrickTooltip": "Learn the path and enter Pinnacle Rock without the Seahorse.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Pinnacle Rock Access",
@@ -55861,7 +55867,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Jump from the Hookshot room to the back entrance of the Guard room. Or roll over the roof as Goron."
+      "TrickTooltip": "Jump from the Hookshot room to the back entrance of the Guard room. Or roll over the roof as Goron.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Jump Slash through One Sided Geometry",
@@ -55871,7 +55878,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Get the South Clock Town chest and the Doggy Racetrack Roof chest by jump slashing."
+      "TrickTooltip": "Get the South Clock Town chest and the Doggy Racetrack Roof chest by jump slashing.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Avoid Swamp Tree Bat",
@@ -55881,7 +55889,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Kill the other bats, then climb around the final bat with precision."
+      "TrickTooltip": "Kill the other bats, then climb around the final bat with precision.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Goron Pound onto Ledges",
@@ -55893,7 +55902,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Use Goron Pound to get on the Swamp Tourist House roof, the ledge in Lulu's room, and the straw roof in SCT."
+      "TrickTooltip": "Use Goron Pound to get on the Swamp Tourist House roof, the ledge in Lulu's room, and the straw roof in SCT.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Zora Hall Scrub Ledge Climb",
@@ -55903,19 +55913,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Climb onto the ledge in Lulu's room by navigating the furniture."
-    },
-    {
-      "Id": "Long Jump",
-      "RequiredItems": [
-        "OtherExplosive"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Drop a bomb behind you then use the recoil to jump a long distance."
+      "TrickTooltip": "Climb onto the ledge in Lulu's room by navigating the furniture.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Jump Slash Town Tingle",
@@ -55925,7 +55924,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Jump from the North Clock Town tree and pop Tingle's balloon with a sword."
+      "TrickTooltip": "Jump from the North Clock Town tree and pop Tingle's balloon with a sword.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Bowless Aliens",
@@ -55937,7 +55937,160 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Pause and unpause until 5:15. Logic expects Sun's Song."
+      "TrickTooltip": "Pause and unpause until 5:15. Logic expects Sun's Song.",
+      "TrickCategory": "Moderate"
+    },
+    {
+      "Id": "Lensless Walls/Ceilings",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Walk and shoot through false walls without Lens of Truth.",
+      "TrickCategory": "Moderate"
+    },
+    {
+      "Id": "Termina Stump with No Items",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Slowly walk up the seam of the stump.",
+      "TrickCategory": "Moderate"
+    },
+    {
+      "Id": "ISTT Hookshot to Eyegore",
+      "RequiredItems": [
+        "ItemHookshot",
+        "Use Light Arrow"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Shoot the Eyegore with Light Arrows from below, then hookshot to the chest.",
+      "TrickCategory": "Moderate"
+    },
+    {
+      "Id": "Postman without Bunny Hood",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Get exactly 10 seconds without using the Bunny Hood.",
+      "TrickCategory": "Hard"
+    },
+    {
+      "Id": "Stun Keeta with Bombs",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Use a bomb to stun Captain Keeta before he moves away.",
+      "TrickCategory": "Hard"
+    },
+    {
+      "Id": "STT Updrafts without Deku Mask",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Ride the ISTT updrafts up one level, and cross the STT updrafts without Deku Mask.",
+      "TrickCategory": "Hard"
+    },
+    {
+      "Id": "Path to Snowhead without Magic",
+      "RequiredItems": [
+        "MaskGoron"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Roll along the sides of the gaps.",
+      "TrickCategory": "Hard"
+    },
+    {
+      "Id": "Shoot Twinmold",
+      "RequiredItems": [
+        "OtherArrow"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Shoot Twinmold's tail with arrows instead of fighting with Giant's Mask.",
+      "TrickCategory": "Hard"
+    },
+    {
+      "Id": "SHT Pillar Skip",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Shoot or bomb the snowballs, then jump down.",
+      "TrickCategory": "Hard"
+    },
+    {
+      "Id": "GBT Iceless Boss Key",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Jump to the Boss Key chest without an ice platform.",
+      "TrickCategory": "Hard"
+    },
+    {
+      "Id": "ISTT Early Boss Key",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "Any Sword"
+        ],
+        [
+          "Deku Stick Fighting"
+        ],
+        [
+          "MaskZora"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Drop down from the Dexihand either as Deku or with a sidehop and jump slash.",
+      "TrickCategory": "Hard"
+    },
+    {
+      "Id": "Lensless Climbing",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Climb the Mountain Village invisible ladder without Lens of Truth.",
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Guess Bomber Code",
@@ -55947,17 +56100,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "120 combinations."
-    },
-    {
-      "Id": "Exit Ocean Spider House without Goron",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Backwalk up the slope to exit."
+      "TrickTooltip": "120 combinations.",
+      "TrickCategory": "Very Hard"
     },
     {
       "Id": "Exit Ocean Spider House",
@@ -55974,16 +56118,6 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false
-    },
-    {
-      "Id": "Lensless Walls/Ceilings",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Walk and shoot through false walls without Lens of Truth."
     },
     {
       "Id": "Night Inn Access",
@@ -56016,36 +56150,6 @@
       "IsTrick": false
     },
     {
-      "Id": "Lensless Chests",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Open invisible chests without the Lens of Truth."
-    },
-    {
-      "Id": "Termina Stump with No Items",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Slowly walk up the seam of the stump."
-    },
-    {
-      "Id": "Bio Baba Hive Luck",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Hope the item lands on a lilypad."
-    },
-    {
       "Id": "Gainer",
       "RequiredItems": [],
       "ConditionalItems": [],
@@ -56053,17 +56157,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Backflip away from a wall, then re-target the wall 1 frame later."
-    },
-    {
-      "Id": "Close Cows",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Use with the Close Cows comfort option."
+      "TrickTooltip": "Backflip away from a wall, then re-target the wall 1 frame later.",
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Milk Multiple Cows",
@@ -56073,7 +56168,19 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Play Epona's Song multiple times in a row for a group of cows before any respond. Then they will all give you their item."
+      "TrickTooltip": "Play Epona's Song multiple times in a row for a group of cows before any respond. Then they will all give you their item.",
+      "TrickCategory": "Hard"
+    },
+    {
+      "Id": "Bio Baba Hive Luck",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Hope the item lands on a lilypad.",
+      "TrickCategory": "Very Hard"
     },
     {
       "Id": "Ocean Skulltulas without Fire Arrows",
@@ -56083,7 +56190,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "At the entrance, simply hit the skulltula from a precise position. In the storage room, get on the boat, slash the skulltula, then jump slash to get the token."
+      "TrickTooltip": "At the entrance, simply hit the skulltula from a precise position. In the storage room, get on the boat, slash the skulltula, then jump slash to get the token.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Pass through false walls",
@@ -56110,7 +56218,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Jump to the two fairies in the SHT bridge room."
+      "TrickTooltip": "Jump to the two fairies in the SHT bridge room.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Jump along invisible platforms",
@@ -56153,7 +56262,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Reverse the water flow without Ice Arrows by using a Long Jump and a Gainer. Pass through the waterwheel room with a precise jump out of the water."
+      "TrickTooltip": "Reverse the water flow without Ice Arrows by using a Long Jump and a Gainer. Pass through the waterwheel room with a precise jump out of the water.",
+      "TrickCategory": "Hard"
     },
     {
       "Id": "GBT Reverse Water Direction",
@@ -56231,26 +56341,6 @@
       "IsTrick": false
     },
     {
-      "Id": "Take Damage",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "You might have to take damage."
-    },
-    {
-      "Id": "Hit switches through walls",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Hit switches through walls using explosives."
-    },
-    {
       "Id": "Clever Ice Platforms",
       "RequiredItems": [
         "Use Ice Arrow"
@@ -56260,7 +56350,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Use ice platforms to your advantage in less obvious places, including shooting the underwater sun switch in STT or for the GBT Boss Key."
+      "TrickTooltip": "Use ice platforms to your advantage in less obvious places, including shooting the underwater sun switch in STT or for the GBT Boss Key.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Fighting",
@@ -56297,19 +56388,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Jump to the Inn balcony as Zora."
-    },
-    {
-      "Id": "Poisoned Water as Goron",
-      "RequiredItems": [
-        "MaskGoron"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Enter poisoned swamp by rolling as Goron. You aren't guaranteed to have enough health to make it."
+      "TrickTooltip": "Jump to the Inn balcony as Zora.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Lullaby Skip",
@@ -56322,7 +56402,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Roll up past the ramp with Goron Spikes. Then use C-Up on enemies to not be blown off."
+      "TrickTooltip": "Roll up past the ramp with Goron Spikes. Then use C-Up on enemies to not be blown off.",
+      "TrickCategory": "Very Hard"
     },
     {
       "Id": "Any Shield",
@@ -56354,7 +56435,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "In the Ocean Spider House storage room, jump onto the boat and clip through the ceiling."
+      "TrickTooltip": "In the Ocean Spider House storage room, jump onto the boat and clip through the ceiling.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Any Healing Potion",
@@ -56441,17 +56523,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Drop a bomb near 3 of the jars, then use Blast Mask to break the remaining 2 jars at the same time."
-    },
-    {
-      "Id": "Faster Bank",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Makes Bank 2 require nothing, and Bank 3 require any wallet."
+      "TrickTooltip": "Drop a bomb near 3 of the jars, then use Blast Mask to break the remaining 2 jars at the same time.",
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Keaton Grass Small Spin",
@@ -56461,7 +56534,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Hit all 9 keaton bushes with a small sword and small spin attack."
+      "TrickTooltip": "Hit all 9 keaton bushes with a small sword and small spin attack.",
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Access Odolwa",
@@ -56596,7 +56670,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Shoot Goht with Arrows."
+      "TrickTooltip": "Shoot Goht with Arrows.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Play Song of Time",
@@ -56866,7 +56941,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Skip the first yellow turnkey with a precise Goron roll."
+      "TrickTooltip": "Skip the first yellow turnkey with a precise Goron roll.",
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Powder Kegs as Explosives",
@@ -56878,7 +56954,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Use Powder Kegs in place of other explosives."
+      "TrickTooltip": "Use Powder Kegs in place of other explosives.",
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Recoil Flip",
@@ -56902,7 +56979,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Cross gaps by shielding an explosion during a backflip."
+      "TrickTooltip": "Cross gaps by shielding an explosion during a backflip.",
+      "TrickCategory": "Hard"
     },
     {
       "Id": "SHT Icicle Room Access",
@@ -57009,18 +57087,6 @@
       "IsTrick": false
     },
     {
-      "Id": "Fierce Deity's Mask Anywhere",
-      "RequiredItems": [
-        "MaskFierceDeity"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Use with the Allow Fierce Deity's Mask Anywhere gimmick."
-    },
-    {
       "Id": "STT Lightless Boss Key",
       "RequiredItems": [],
       "ConditionalItems": [],
@@ -57028,7 +57094,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Kill Gomess without Light Arrows by waiting for an opening when Gomess uses a special attack."
+      "TrickTooltip": "Kill Gomess without Light Arrows by waiting for an opening when Gomess uses a special attack.",
+      "TrickCategory": "Hard"
     },
     {
       "Id": "STT Water Tunnel as Human",
@@ -57038,7 +57105,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Swim through the underwater tunnel with a precise roll jump dive inside. Hold A for the deepest possible dive."
+      "TrickTooltip": "Swim through the underwater tunnel with a precise roll jump dive inside. Hold A for the deepest possible dive.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "STT Garo Master Access",
@@ -57219,7 +57287,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Use 10 packs of Bombchu for destroying beehives, Stray Fairy bubbles, and crystal switches in STT."
+      "TrickTooltip": "Use 10 packs of Bombchu for destroying beehives, Stray Fairy bubbles, and crystal switches in STT.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Two Magic Beans",
@@ -57273,7 +57342,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Leap across gaps only possible with the Allow Fierce Deity's Mask Anywhere gimmick enabled."
+      "TrickTooltip": "Leap across gaps only possible with the Allow Fierce Deity's Mask Anywhere gimmick enabled.",
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "FD Difficult Jumps",
@@ -57285,7 +57355,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Perform the most difficult jumps, only possible with the Allow Fierce Deity's Mask Anywhere gimmick enabled."
+      "TrickTooltip": "Perform the most difficult jumps, only possible with the Allow Fierce Deity's Mask Anywhere gimmick enabled.",
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Defeat WFT Gekko",
@@ -57566,7 +57637,8 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Get on top of the railing from inside the bridge with a side hop and a jump slash."
+      "TrickTooltip": "Get on top of the railing from inside the bridge with a side hop and a jump slash.",
+      "TrickCategory": "Moderate"
     }
   ]
 }
