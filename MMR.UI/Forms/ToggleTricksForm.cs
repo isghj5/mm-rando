@@ -33,31 +33,27 @@ namespace MMR.UI.Forms
             var y = 9;
             var deltaY = 23;
             var tricks = itemList.Where(io => io.IsTrick);
-            var OrderedTricks = tricks;
+            var categories = tricks.Select(io => string.IsNullOrWhiteSpace(io.TrickCategory) ? "Misc" : io.TrickCategory).Distinct().ToList();
 
-            if (tricks.Any(io => !string.IsNullOrWhiteSpace(io.TrickCategory)))
+            if (categories.Count > 1)
             {
-                foreach (var i in OrderedTricks)
+                foreach (var i in tricks)
                 {
-                    i.TrickCategory = string.IsNullOrWhiteSpace(i.TrickCategory) ? "MISC" : i.TrickCategory.ToUpper();
+                    i.TrickCategory = string.IsNullOrWhiteSpace(i.TrickCategory) ? "Misc" : i.TrickCategory;
                 }
-                OrderedTricks = OrderedTricks.OrderBy(io => io.TrickCategory == "MISC").ThenBy(io => io.TrickCategory).ThenBy(io => io.Name);
+                tricks = tricks.OrderBy(io => categories.IndexOf(io.TrickCategory));
 
             }
-            else
-            {
-                OrderedTricks = OrderedTricks.OrderBy(io => io.Name);
-            }
 
-            string CurrentCategory = "";
-            foreach (var itemObject in OrderedTricks)
+            string currentCategory = string.Empty;
+            foreach (var itemObject in tricks)
             {
                 if (!itemObject.Name.ToLower().Contains(txtSearch.Text.ToLower())) { continue; }
-                if (itemObject.TrickCategory != null && CurrentCategory != itemObject.TrickCategory)
+                if (itemObject.TrickCategory != null && currentCategory != itemObject.TrickCategory)
                 {
-                    CurrentCategory = itemObject.TrickCategory;
+                    currentCategory = itemObject.TrickCategory;
                     Label CategoryLabel = new Label();
-                    CategoryLabel.Text = CurrentCategory + ":";
+                    CategoryLabel.Text = currentCategory + ":";
                     CategoryLabel.Location = new Point(5, y + 3);
                     CategoryLabel.Size = new Size(pTricks.Width - 50, deltaY);
                     pTricks.Controls.Add(CategoryLabel);
