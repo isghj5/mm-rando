@@ -830,6 +830,11 @@ void Models_DrawOcarina(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable
 }
 
 void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
+    if (!MISC_CONFIG.flags.freestanding) {
+        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x0601CAD0);
+        return;
+    }
+
     // Store backup of previous 0xDA (Mtx) instruction (for Skull Kid's hand) and overwrite it.
     // Is this safe? Probably not. :)
     Gfx backup = *(ctxt->state.gfxCtx->polyOpa.p-- - 1);

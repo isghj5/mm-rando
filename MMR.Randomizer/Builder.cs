@@ -1441,11 +1441,14 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.enemy_max_health);
             }
 
-            if (!_randomized.Settings.CustomStartingItemList.Contains(Item.ItemOcarina) || !_randomized.Settings.CustomStartingItemList.Contains(Item.SongTime)
-                || _randomized.Settings.CustomItemList.Contains(Item.ItemOcarina) || _randomized.Settings.CustomItemList.Contains(Item.SongTime))
+            if (_randomized.Settings.LogicMode != LogicMode.Vanilla)
             {
-                hacks.Add(Resources.mods.fix_ocarina_checks);
-                hacks.Add(Resources.mods.fix_song_of_time);
+                if (!_randomized.Settings.CustomStartingItemList.Contains(Item.ItemOcarina) || !_randomized.Settings.CustomStartingItemList.Contains(Item.SongTime)
+                    || _randomized.Settings.CustomItemList.Contains(Item.ItemOcarina) || _randomized.Settings.CustomItemList.Contains(Item.SongTime))
+                {
+                    hacks.Add(Resources.mods.fix_ocarina_checks);
+                    hacks.Add(Resources.mods.fix_song_of_time);
+                }
             }
 
             foreach (var hack in hacks)
