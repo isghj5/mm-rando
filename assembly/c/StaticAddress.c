@@ -1,11 +1,16 @@
-#include "SaveFile.h"
 #include "StaticAddress.h"
 
 StaticAddressConfig gStaticAddressConfig = {
     .magic = STATIC_ADDRESS_CONFIG_MAGIC,
     .version = 0,
     .externalEffectsConfig = &gExternalEffects,
-    .questItemStorage = &SAVE_FILE_CONFIG.questStorage,
+    .dpadConfig = &DPAD_CONFIG,
+    .hudColorConfig = &HUD_COLOR_CONFIG,
+    .miscConfig = &MISC_CONFIG,
+    .mmrConfig = &MMR_CONFIG,
+    .musicConfig = &MUSIC_CONFIG,
+    .saveFileConfig = &SAVE_FILE_CONFIG,
+    .worldColorConfig = &WORLD_COLOR_CONFIG,
 };
 
 /**
