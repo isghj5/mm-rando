@@ -716,6 +716,22 @@ namespace MMR.Randomizer
             //PrintActorValues();
         }
 
+        public static void DisableAllLocationRestrictions()
+        {
+            // experimental, we can eliminate player restrictions in areas
+            //var restrictionTableVRAMStart = 0x801BF6C0; // 0xC55C00 -> DC4 // offset: 119C00
+            var tableOffset = 0x119C00;
+            var codeFile = RomData.MMFileList[31].Data;
+            while (tableOffset < 0x119DC4)
+            {
+                // 0 offset is the scene value (why though)
+                codeFile[tableOffset + 1] = 0x00;
+                codeFile[tableOffset + 2] = 0x00;
+                codeFile[tableOffset + 3] = 0x00;
+                tableOffset += 4;
+            }
+        }
+
         private static void PrintActorValues()
         {
             /// debugging, checking if ram sizes are correct
@@ -1828,7 +1844,7 @@ namespace MMR.Randomizer
                     }
                     bool result;
                     //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Bg_Breakwall)) continue;
-                    //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.ClayPot)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.TreasureChest)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif
@@ -2330,7 +2346,8 @@ namespace MMR.Randomizer
             /// every time you move an overlay you need to relocate the vram addresses, so instead of shifting all of them
             ///  we just move the new larger files to the end and leave a hole behind for now
 
-            const uint theEndOfTakenVRAM = 0x80C27000; // 0x80C260A0 <- actual
+            //const uint theEndOfTakenVRAM = 0x80C27000; // 0x80C260A0 <- actual
+            const uint theEndOfTakenVRAM = 0x80F00000; // changed NOTHING
             const int  theEndOfTakenVROM = 0x03100000; // 0x02EE7XXX <- actual
 
             int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
@@ -2546,6 +2563,10 @@ namespace MMR.Randomizer
 
                 EnemizerLateFixes();
                 LowerEnemiesResourceLoad();
+                if (ACTORSENABLED)
+                {
+                    DisableAllLocationRestrictions();  //experimental
+                }
 
                 using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
