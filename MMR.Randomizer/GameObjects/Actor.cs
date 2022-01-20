@@ -171,8 +171,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled] // now that they are testy, lets count them as enemies
         [FileID(54)]
         [ObjectListIndex(0xF)]
-        [GroundVariants(0x0)]
-        [VariantsWithRoomMax(max: 10, variant:0xFFFF)]
+        [GroundVariants(0x0, 0xFFFF)] // FFFF is in ranch barn
+        [VariantsWithRoomMax(max: 6, variant:0xFFFF, 0x0)]
         [UnkillableAllVariants]
         // I would like a flying variant, but they seem to drop like a rock instead of float down
         //[EnemizerScenesExcluded(0x15, Scene.AstralObservatory, 0x35, 0x42, 0x10)]
