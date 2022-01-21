@@ -1315,7 +1315,7 @@ namespace MMR.Randomizer
                     ItemList.Add(wallets500);
                 }
 
-                var affectedLocations = new Dictionary<Item, short>();
+                var affectedLocations = new Dictionary<Item, ushort>();
                 for (var i = 0; i < MessageCost.MessageCosts.Length; i++)
                 {
                     var messageCost = MessageCost.MessageCosts[i];
@@ -1327,9 +1327,10 @@ namespace MMR.Randomizer
 
                     foreach (var location in messageCost.LocationsAffected)
                     {
-                        var affectedCost = affectedLocations.GetValueOrDefault(location, short.MaxValue);
+                        var affectedCost = affectedLocations.GetValueOrDefault(location, ushort.MaxValue); 
                         if (cost < affectedCost)
                         {
+                            affectedLocations[location] = cost.Value;
                             ItemList[location].DependsOnItems.Remove(wallets200.Item);
                             ItemList[location].DependsOnItems.Remove(wallets500.Item);
                             ItemList[location].DependsOnItems.Remove(Item.UpgradeRoyalWallet);
@@ -2135,7 +2136,11 @@ namespace MMR.Randomizer
                         importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
                     }
                 }
-                _randomized.ImportantLocations = importantLocations.ToList().AsReadOnly();
+                // TODO one day maybe check if song of time is actually required
+                var songOfTimeLocation = ItemList[Item.SongTime].NewLocation.Value;
+                importantLocations.Add(songOfTimeLocation);
+                var songOfTimePaths = LogicUtils.GetImportantLocations(ItemList, _settings, songOfTimeLocation, _randomized.Logic);
+                _randomized.ImportantLocations = importantLocations.Union(songOfTimePaths.Important).Distinct().ToList().AsReadOnly();
                 _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
                 _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.AsReadOnly();
 

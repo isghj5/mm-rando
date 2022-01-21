@@ -72,6 +72,11 @@ namespace MMR.Randomizer.Asm
         public bool DoubleArcheryRewards { get; set; }
 
         /// <summary>
+        /// Whether or not to grant multiple bank deposit rewards for each threshold passed.
+        /// </summary>
+        public bool BankMultiRewards { get; set; } = true;
+
+        /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
@@ -85,6 +90,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.DonGero ? (uint)1 : 0) << 27;
             flags |= (this.FastBankRupees ? (uint)1 : 0) << 26;
             flags |= (this.DoubleArcheryRewards ? (uint)1 : 0) << 25;
+            flags |= (this.BankMultiRewards ? (uint)1 : 0) << 24;
             return flags;
         }
     }

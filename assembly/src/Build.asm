@@ -48,6 +48,7 @@
 .include "FileSelect.Patch.asm"
 .include "FloorPhysics.Patch.asm"
 .include "Game.Patch.asm"
+.include "GinkoMan.Patch.asm"
 .include "HitTag.Patch.asm"
 .include "HudColors.Patch.asm"
 .include "Input.Patch.asm"

@@ -3220,7 +3220,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleStrayFairyStoneTower5,
 
         [Visible]
-        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Boss Warp"), Region(Region.StoneTowerTemple)]
+        [ItemName("Stone Tower Stray Fairy"), LocationName("Stone Tower Entrance Sun Switch"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Collect 15 and return them to the Fairy Fountain in Stone Tower.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x020E2000 + 0x162, ChestAttribute.AppearanceType.AppearsSwitch, 0x02156000 + 0xFA)]
@@ -3984,7 +3984,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
         [ShopText("Ammo for your bow.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x1F8), ItemPool(ItemCategory.Arrows, LocationCategory.SmallSnowballs), CollectableIndex(0x2E21)]
+        [GetItemIndex(0x1F8), ItemPool(ItemCategory.Arrows, LocationCategory.SmallSnowballs), CollectableIndex(0x2E21), CollectableIndex(0x3920)]
         CollectableSnowheadSmallSnowball1,
 
 
@@ -4994,7 +4994,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("explosives")]
         [ShopText("Explosives. You need a Bomb Bag to carry them.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x25D), ItemPool(ItemCategory.Bombs, LocationCategory.SmallSnowballs), CollectableIndex(0x2E20)]
+        [GetItemIndex(0x25D), ItemPool(ItemCategory.Bombs, LocationCategory.SmallSnowballs), CollectableIndex(0x2E20), CollectableIndex(0x3929)]
         CollectableSnowheadSmallSnowball2,
 
 
@@ -6394,7 +6394,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a large amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x2E9), ItemPool(ItemCategory.MagicJars, LocationCategory.SmallSnowballs), CollectableIndex(0x2E23)]
+        [GetItemIndex(0x2E9), ItemPool(ItemCategory.MagicJars, LocationCategory.SmallSnowballs), CollectableIndex(0x2E23), CollectableIndex(0x3922)]
         CollectableSnowheadSmallSnowball3,
 
 
@@ -7384,7 +7384,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x34C), ItemPool(ItemCategory.MagicJars, LocationCategory.LargeSnowballs), CollectableIndex(0x2E26)]
+        [GetItemIndex(0x34C), ItemPool(ItemCategory.MagicJars, LocationCategory.LargeSnowballs), CollectableIndex(0x2E26), CollectableIndex(0x3925)]
         CollectableSnowheadLargeSnowball3,
 
 
@@ -7404,7 +7404,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x34E), ItemPool(ItemCategory.MagicJars, LocationCategory.LargeSnowballs), CollectableIndex(0x2E28)]
+        [GetItemIndex(0x34E), ItemPool(ItemCategory.MagicJars, LocationCategory.LargeSnowballs), CollectableIndex(0x2E28), CollectableIndex(0x3927)]
         CollectableSnowheadLargeSnowball5,
 
 
@@ -7414,7 +7414,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a mountain-top snowball"), GossipItemHint("a magic refill")]
         [ShopText("Replenishes a small amount of your magic power.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x34F), ItemPool(ItemCategory.MagicJars, LocationCategory.LargeSnowballs), CollectableIndex(0x2E29)]
+        [GetItemIndex(0x34F), ItemPool(ItemCategory.MagicJars, LocationCategory.LargeSnowballs), CollectableIndex(0x2E29), CollectableIndex(0x3928)]
         CollectableSnowheadLargeSnowball6,
 
 

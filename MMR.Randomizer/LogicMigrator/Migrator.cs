@@ -3889,6 +3889,7 @@ namespace MMR.Randomizer.LogicMigrator
             public TimeOfDay TimeSetup { get; set; }
             public bool IsTrick { get; set; }
             public string TrickTooltip { get; set; }
+            public string TrickCategory { get; set; }
         }
 
         [Flags]
@@ -3901,7 +3902,6 @@ namespace MMR.Randomizer.LogicMigrator
             Night2 = 8,
             Day3 = 16,
             Night3 = 32,
-            Any = 63,
         }
     }
 }
