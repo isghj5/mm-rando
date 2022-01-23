@@ -483,6 +483,7 @@ enum PlayerState1 {
     PLAYER_STATE1_HOLD        = 0x00000800, // Hold above head.
     PLAYER_STATE1_GET_ITEM    = 0x00000400, // Hold new item over head.
     PLAYER_STATE1_TIME_STOP_2 = 0x00000200, // Time is stopped (does not affect Tatl, HUD animations).
+    PLAYER_STATE1_GIANT_MASK  = 0x00000100, // Equipping Giant's Mask
     PLAYER_STATE1_DEAD        = 0x00000080, // Dead.
     PLAYER_STATE1_MOVE_SCENE  = 0x00000020, // When walking in a cutscene? Used during Postman's minigame.
     PLAYER_STATE1_BARRIER     = 0x00000010, // Zora electric barrier.

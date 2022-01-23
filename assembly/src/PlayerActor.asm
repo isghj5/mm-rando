@@ -124,3 +124,82 @@ Player_GetCollisionType_Hook:
     lw      ra, 0x0010 (sp)
     jr      ra
     addiu   sp, sp, 0x14
+
+Player_HandleFormSpeed_Hook:
+    addiu   sp, sp, -0x20
+    sw      ra, 0x001C (sp)
+    sw      a0, 0x0020 (sp)
+    sw      a1, 0x0024 (sp)
+    sw      a2, 0x0028 (sp)
+    sw      a3, 0x002C (sp)
+
+    jal     Player_HandleFormSpeed
+    nop
+
+    lw      a0, 0x0020 (sp)
+    lw      a1, 0x0024 (sp)
+    lw      a2, 0x0028 (sp)
+    lw      a3, 0x002C (sp)
+    lw      ra, 0x001C (sp)
+    jr      ra
+    addiu   sp, sp, 0x20
+
+Player_GetWallCollisionHeight_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0018 (sp)
+
+    jal     Player_GetWallCollisionHeight
+    or      a0, s0, r0
+
+    mfc1    a2, f0
+
+    lw      s0, 0x0018 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
+Player_GetDiveDepth_Hook:
+    addiu   sp, sp, -0x24
+    sw      ra, 0x0020 (sp)
+    swc1    f16, 0x001C (sp)
+    swc1    f14, 0x0018 (sp)
+    swc1    f2, 0x0014 (sp)
+    sw      a0, 0x0024 (sp)
+
+    jal     Player_GetDiveDepth
+    nop
+
+    lw      a0, 0x0024 (sp)
+    lwc1    f2, 0x0014 (sp)
+    lwc1    f14, 0x0018 (sp)
+    lwc1    f16, 0x001C (sp)
+
+    c.lt.s  f0, f14
+
+    lw      ra, 0x0020 (sp)
+    jr      ra
+    addiu   sp, sp, 0x24
+
+Player_GetLedgeClimbFactor_Hook:
+    addiu   sp, sp, -0x24
+    sw      ra, 0x0020 (sp)
+    sw      v0, 0x0018 (sp)
+    swc1    f0, 0x0014 (sp)
+    swc1    f2, 0x001C (sp)
+
+    jal     Player_GetLedgeClimbFactor
+    nop
+
+    mfc1    at, f0
+
+    lw      v0, 0x0018 (sp)
+
+    ; Displaced code
+    lwc1    f8, 0x0018 (v0)
+
+    lwc1    f2, 0x001C (sp)
+    lwc1    f0, 0x0014 (sp)
+    lw      ra, 0x0020 (sp)
+    jr      ra
+    addiu   sp, sp, 0x24

@@ -203,6 +203,44 @@ typedef enum {
     HELD_ITEM_BOTTLE = 0x15,
 } PlayerHeldItem;
 
+//80719238 human
+typedef struct {
+    /* 0x00 */ f32 unk_00; // ceiling collision height
+    /* 0x04 */ f32 unk_04; // initial shape scale // probably dont need to multiply
+    /* 0x08 */ f32 unk_08; // draw offset for some reason?
+    /* 0x0C */ f32 unk_0C; // ledge grab height
+    /* 0x10 */ f32 unk_10; // ledge climb distance out of water from swimming
+    /* 0x14 */ f32 unk_14; // ledge climb distance out of water from standing
+    /* 0x18 */ f32 unk_18; // ? related to climbing while in water ?
+    /* 0x1C */ f32 unk_1C; // ledge jump height
+    /* 0x20 */ f32 unk_20;
+    /* 0x24 */ f32 unk_24; // distance to floor when surfacing
+    /* 0x28 */ f32 unk_28; // water floating height
+    /* 0x2C */ f32 unk_2C; // water collision height
+    /* 0x30 */ f32 unk_30; // distance to re-surface?
+    /* 0x34 */ f32 unk_34; // drop off grab ledge height
+    /* 0x38 */ f32 unk_38; // terrain collision distance
+    /* 0x3C */ f32 unk_3C; // ? related to climbing
+    /* 0x40 */ f32 unk_40; // ? related to climbing
+    /* 0x44 */ Vec3s unk_44;
+    /* 0x4A */ Vec3s unk_4A[4];
+    /* 0x62 */ Vec3s unk_62[4];
+    /* 0x7A */ Vec3s unk_7A[4];
+    /* 0x92 */ u16 unk_92;
+    /* 0x94 */ u16 unk_94;
+    /* 0x98 */ f32 unk_98;
+    /* 0x9C */ f32 unk_9C;
+    /* 0xA0 */ LinkAnimetionEntry* unk_A0;
+    /* 0xA4 */ LinkAnimetionEntry* unk_A4;
+    /* 0xA8 */ LinkAnimetionEntry* unk_A8;
+    /* 0xAC */ LinkAnimetionEntry* unk_AC;
+    /* 0xB0 */ LinkAnimetionEntry* unk_B0;
+    /* 0xB4 */ LinkAnimetionEntry* unk_B4[4];
+    /* 0xC4 */ LinkAnimetionEntry* unk_C4[2];
+    /* 0xCC */ LinkAnimetionEntry* unk_CC[2];
+    /* 0xD4 */ LinkAnimetionEntry* unk_D4[2];
+} PlayerFormProperties; // size = 0xDC
+
 typedef struct {
     /* 0x000 */ Actor base;
     /* 0x144 */ u8 pad144[0x2];
@@ -238,7 +276,7 @@ typedef struct {
     /* 0x3CF */ UNK_TYPE1 pad3CF[0x361];
     /* 0x730 */ Actor* target;
     /* 0x734 */ UNK_TYPE1 pad734[0x334];
-    /* 0xA68 */ f32 *tableA68; // Transformation-dependant f32 array, [11] used for distance to begin swimming.
+    /* 0xA68 */ PlayerFormProperties* formProperties; // Transformation-dependant f32 array, [11] used for distance to begin swimming.
     /* 0xA6C */ PlayerStateFlags stateFlags;
     /* 0xA78 */ UNK_TYPE1 padA78[0x8];
     /* 0xA80 */ Actor* unkA80;
@@ -263,10 +301,13 @@ typedef struct {
     /* 0xAEA */ UNK_TYPE1 padAEA[0x3E];
     /* 0xB28 */ s16 unkB28;
     /* 0xB2A */ UNK_TYPE1 padB2A[0x36];
+    // B50 max speed?
+    // B54 // vertical distance to ledge?
     /* 0xB60 */ u16 blastMaskTimer;
     /* 0xB62 */ UNK_TYPE1 padB62[0x5];
     /* 0xB67 */ u8 dekuHopCounter;
-    /* 0xB68 */ UNK_TYPE1 padB68[0xA];
+    /* 0xB68 */ s16 unkB68;
+    /* 0xB6A */ UNK_TYPE1 padB6A[0x8];
     /* 0xB72 */ u16 floorType; // Determines sound effect used while walking.
     /* 0xB74 */ UNK_TYPE1 padB74[0x28];
     /* 0xB9C */ Vec3f unkB9C;

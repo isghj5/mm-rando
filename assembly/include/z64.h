@@ -19,6 +19,7 @@
 #include <z64math.h>
 #include <z64object.h>
 #include <z64scene.h>
+#include <regs.h>
 
 #define SCREEN_WIDTH 320
 #define SCREEN_HEIGHT 240
@@ -1498,6 +1499,18 @@ typedef struct {
     /* 0x58DE */ UNK_TYPE1 pad58DE[0x12];
     /* 0x58F0 */ ColorRGB16 heartDdRgb;
 } SaveContext; // size = 0x58F6
+
+// Game Info aka. Static Context
+// Data normally accessed through REG macros (see regs.h)
+typedef struct {
+    /* 0x00 */ u8  unk_00; // regPage;?   // 1 is first page
+    /* 0x01 */ u8  unk_01; // regGroup;?  // "register" group (R, RS, RO, RP etc.)
+    /* 0x02 */ u8  unk_02; // regCur;?    // selected register within page
+    /* 0x03 */ u8  unk_03; // dpadLast;?
+    /* 0x04 */ u32 unk_04; // repeat;?
+    /* 0x08 */ UNK_TYPE1 pad_08[0xC];
+    /* 0x14 */ s16 data[REG_GROUPS * REG_PER_GROUP]; // 0xAE0 entries
+} GameInfo; // size = 0x15D4
 
 /// =============================================================
 /// Other Actors

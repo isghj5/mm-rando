@@ -9,6 +9,7 @@
 #include "Reloc.h"
 #include "Misc.h"
 #include "enums.h"
+#include "GiantMask.h"
 
 bool Player_BeforeDamageProcess(ActorPlayer* player, GlobalContext* ctxt) {
     return Icetrap_Give(player, ctxt);
@@ -20,6 +21,7 @@ void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
     ArrowCycle_Handle(player, ctxt);
     ArrowMagic_Handle(player, ctxt);
     DekuHop_Handle(player, ctxt);
+    GiantMask_Handle(player, ctxt);
 }
 
 bool Player_CanReceiveItem(GlobalContext* ctxt) {
@@ -68,7 +70,7 @@ void Player_Unpause(GlobalContext* ctxt) {
  **/
 static void HandleEnterWater(ActorPlayer* player, GlobalContext* ctxt) {
     // Check water distance to determine if in water.
-    if (player->tableA68[11] < player->base.waterSurfaceDist) {
+    if (player->formProperties->unk_2C < player->base.waterSurfaceDist) {
         // If swim flag not set, perform effects (sound + visual) for entering water.
         if ((player->stateFlags.state1 & PLAYER_STATE1_SWIM) == 0) {
             z2_PerformEnterWaterEffects(ctxt, player);
@@ -83,7 +85,7 @@ static void HandleEnterWater(ActorPlayer* player, GlobalContext* ctxt) {
  **/
 static bool InWater(ActorPlayer* player) {
     return ((player->stateFlags.state1 & PLAYER_STATE1_SWIM) != 0 ||
-            (player->tableA68[11] < player->base.waterSurfaceDist));
+            (player->formProperties->unk_2C < player->base.waterSurfaceDist));
 }
 
 /**
@@ -161,4 +163,45 @@ u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collis
     lastClimbFrame = currentClimbFrame;
 
     return collisionType;
+}
+
+void Player_HandleFormSpeed(GlobalContext* ctxt, ActorPlayer* player, f32* speed) {
+    // Displaced code:
+    if (player->form == PLAYER_FORM_FIERCE_DEITY) {
+        *speed = *speed * 1.5;
+    }
+    // End displaced code
+
+    *speed = *speed * GiantMask_GetScaleModifier() * 100.0;
+}
+
+f32 Player_GetWallCollisionHeight(ActorPlayer* player) {
+    // Displaced code:
+    f32 result = 26.8f;
+    // End displaced code
+
+    result *= GiantMask_GetScaleModifier() * 100.0f;
+
+    return result;
+}
+
+f32 Player_GetDiveDepth() {
+    // Displaced code:
+    f32 result = 100.0f;
+    // End displaced code
+
+    result *= GiantMask_GetScaleModifier() * 100.0f;
+
+    return result;
+}
+
+// 806F25A8
+f32 Player_GetLedgeClimbFactor() {
+    // Displaced code:
+    f32 result = 41.0f;
+    // End displaced code
+
+    result *= GiantMask_GetScaleModifier() * 100.0f;
+
+    return result;
 }

@@ -633,6 +633,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] giant_mask_anywhere {
+            get {
+                object obj = ResourceManager.GetObject("giant_mask_anywhere", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] hookshot_any_surface {
             get {
                 object obj = ResourceManager.GetObject("hookshot_any_surface", resourceCulture);

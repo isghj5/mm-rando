@@ -51,6 +51,8 @@
 0x800BB498,z2_ActorRemove
 0x800BDC5C,z2_Actor_ChangeAnimation
 0x800C99D4,z2_GetFloorPhysicsType
+0x800EA0D4,z2_800EA0D4
+0x800EA0EC,z2_800EA0EC
 0x800EE320,z2_BaseDrawGiModel
 0x800F1648,z2_ActorCutscene_ClearWaiting
 0x800F1678,z2_ActorCutscene_ClearNextCutscenes
@@ -74,6 +76,8 @@
 0x800FED84,z2_Math_Sins
 0x800FF2F8,z2_HandleInputVelocity
 0x800FF92C,z2_Math_Vec3f_DistXZ
+0x800FFDF8,Math_ApproachF
+0x800FFE68,Math_ApproachZeroF
 0x8010069C,z2_WriteHeartColors
 0x8010CFBC,z2_8010CFBC
 0x8010D480,z2_8010D480
@@ -110,7 +114,14 @@
 0x80147624,z2_80147624
 0x801518B0,z2_ShowMessage
 0x80152498,z2_GetMessageState
+0x80160C00,ShrinkWindow_SetLetterboxTarget
+0x8016566C,z2_8016566C
+0x80165690,z2_80165690
 0x801693D4,z2_load_scene
+0x801694DC,z2_801694DC
+0x80169590,z2_80169590
+0x8016981C,z2_8016981C
+0x80169AFC,z2_80169AFC
 0x80169CBC,z2_check_scene_pairs
 0x80169D40,z2_store_scene_flags
 0x80178DAC,z2_LoadFileFromArchive

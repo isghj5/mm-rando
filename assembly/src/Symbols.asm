@@ -53,6 +53,8 @@
 .definelabel z2_ActorRemove, 0x800BB498
 .definelabel z2_Actor_ChangeAnimation, 0x800BDC5C
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
+.definelabel z2_800EA0D4, 0x800EA0D4
+.definelabel z2_800EA0EC, 0x800EA0EC
 .definelabel z2_BaseDrawGiModel, 0x800EE320
 .definelabel z2_ActorCutscene_ClearWaiting, 0x800F1648
 .definelabel z2_ActorCutscene_ClearNextCutscenes, 0x800F1678
@@ -76,6 +78,8 @@
 .definelabel z2_Math_Sins, 0x800FED84
 .definelabel z2_HandleInputVelocity, 0x800FF2F8
 .definelabel z2_Math_Vec3f_DistXZ, 0x800FF92C
+.definelabel Math_ApproachF, 0x800FFDF8
+.definelabel Math_ApproachZeroF, 0x800FFE68
 .definelabel z2_WriteHeartColors, 0x8010069C
 .definelabel z2_8010CFBC, 0x8010CFBC
 .definelabel z2_8010D480, 0x8010D480
@@ -112,7 +116,14 @@
 .definelabel z2_80147624, 0x80147624
 .definelabel z2_ShowMessage, 0x801518B0
 .definelabel z2_GetMessageState, 0x80152498
+.definelabel ShrinkWindow_SetLetterboxTarget, 0x80160C00
+.definelabel z2_8016566C, 0x8016566C
+.definelabel z2_80165690, 0x80165690
 .definelabel z2_load_scene, 0x801693D4
+.definelabel z2_801694DC, 0x801694DC
+.definelabel z2_80169590, 0x80169590
+.definelabel z2_8016981C, 0x8016981C
+.definelabel z2_80169AFC, 0x80169AFC
 .definelabel z2_check_scene_pairs, 0x80169CBC
 .definelabel z2_store_scene_flags, 0x80169D40
 .definelabel z2_LoadFileFromArchive, 0x80178DAC

@@ -17,6 +17,7 @@
 #define ObjectTableAddr                  0x801C2740
 #define SongNotesAddr                    0x801CFC98
 #define SaveContextAddr                  0x801EF670
+#define GameInfoAddr                     0x801F3F60
 #define GameArenaAddr                    0x801F5100
 #define SegmentTableAddr                 0x801F8180
 #define StaticContextAddr                0x803824D0
@@ -26,6 +27,7 @@
 // Data.
 #define gActorOverlayTable               ((ActorOverlay*)            ActorOverlayTableAddr)
 #define gSaveContext                     (*(SaveContext*)            SaveContextAddr)
+#define gGameInfo                        (*(GameInfo**)              GameInfoAddr)
 #define gItemUpgradeCapacity             (*(ItemUpgradeCapacity*)    ItemUpgradeCapacityAddr)
 #define dmadata                          ((DmaEntry*)                DmaEntryTableAddr)
 #define gGlobalContext                   (*(GlobalContext*)          GlobalContextAddr)
@@ -178,6 +180,8 @@ extern void z2_UpdateButtonsState(u32 state);
 // Function Prototypes (Math).
 extern f32 z2_Math_Sins(s16 angle);
 extern f32 z2_Math_Vec3f_DistXZ(Vec3f* p1, Vec3f* p2);
+extern f32 Math_ApproachF(f32* a0, f32 a1, f32 a2, f32 a3);
+extern f32 Math_ApproachZeroF(f32* a0, f32 a1, f32 a2);
 
 // Function Prototypes (Objects).
 extern s8 z2_GetObjectIndex(const SceneContext* ctxt, u16 objectId);
@@ -211,6 +215,15 @@ extern s32 z2_800B84D0(Actor* actor, GlobalContext* ctxt); // Actor_IsTalking
 extern s32 z2_800B85E0(Actor* actor, GlobalContext* ctxt, f32 uParm3, s32 uParm4);
 extern int z2_801242DC(GlobalContext* ctxt);
 extern u32 z2_80147624(GlobalContext* ctxt);
+extern void z2_8016566C(s16 unkA0);
+extern void z2_800EA0D4(GlobalContext* ctxt, CutsceneContext* csCtx);
+extern void z2_800EA0EC(GlobalContext* ctxt, CutsceneContext* csCtx);
+extern void ShrinkWindow_SetLetterboxTarget(s16 unkA0);
+extern s16 z2_80165690();
+extern s16 z2_801694DC(GlobalContext* ctxt);
+extern void z2_80169590(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
+extern void z2_8016981C(GlobalContext* ctxt, s16 unkA1, Vec3f* unkA2, Vec3f* unkA3, Vec3f* unkA4);
+extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 
 // Relocatable Functions (kaleido_scope).
 #define z2_PauseDrawItemIcon_VRAM        0x80821AD4

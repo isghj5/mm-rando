@@ -135,3 +135,81 @@
 ;   lw      a2, 0x2B0C (v0) ; relocated
 .org 0x8083D8D0
     .dh 0x8C46
+
+;==================================================================================================
+; Handle Giant Mask speed
+;==================================================================================================
+
+.headersize G_PLAYER_ACTOR_DELTA
+
+; Replaces:
+;   LBU	T2, 0x014B (A1)
+;   LUI	AT, 0x3FC0
+;   BNEZ	T2, 0x80832E08
+;   NOP
+;   LWC1	F6, 0x0000 (A2)
+;   MTC1	AT, F8
+;   NOP
+;   MUL.S	F10, F6, F8
+;   SWC1	F10, 0x0000 (A2)
+.org 0x80832DE4
+    jal     Player_HandleFormSpeed_Hook
+    nop
+    mtc1    r0, f16
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
+;==================================================================================================
+; Handle Giant Mask wall collision
+;==================================================================================================
+
+.headersize G_PLAYER_ACTOR_DELTA
+
+; Replaces:
+;   LUI	    A2, 0x41D6
+;   MFC1	A3, F0
+;   ORI	    A2, A2, 0x6667
+.org 0x80843360
+    jal     Player_GetWallCollisionHeight_Hook
+    nop
+    lw      a3, 0x00BC (sp)
+
+;==================================================================================================
+; Handle Giant Mask swim depth
+;==================================================================================================
+
+; Replaces:
+;   ADDIU   SP, SP, -0x08
+.org 0x808475B8
+    addiu   sp, sp, -0x0C
+
+; Replaces
+;   LUI	    AT, 0x42C8
+;   MTC1	AT, F6
+;   NOP
+;   C.LT.S  F6, F14
+.org 0x80847768
+    sw      ra, 0x0008 (sp)
+    jal     Player_GetDiveDepth_Hook
+    nop
+    lw      ra, 0x0008 (sp)
+
+; Replaces:
+;   ADDIU   SP, SP, 0x08
+.org 0x808477CC
+    addiu   sp, sp, 0x0C
+
+;==================================================================================================
+; Handle Giant Mask ledge climb
+;==================================================================================================
+
+; Replaces:
+;   LUI	    AT, 0x4224
+;   LWC1	F8, 0x0018 (V0)
+.org 0x80835118
+    jal     Player_GetLedgeClimbFactor_Hook
+    nop
