@@ -5,8 +5,8 @@
 .headersize G_CODE_DELTA
 
 .org 0x800B6FC8
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
 
     jal     Camera_PlayerGetExtraHeight
     nop
@@ -16,8 +16,8 @@
     nop
     nop
 
-    lw      ra, 0x0010 (sp)
-    addiu   sp, sp, 0x14
+    lw      ra, 0x0014 (sp)
+    addiu   sp, sp, 0x18
 
 ; Replaces:
 ;   LW	    T6, 0x004C (SP)

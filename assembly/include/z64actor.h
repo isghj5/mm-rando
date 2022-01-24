@@ -243,7 +243,8 @@ typedef struct {
 
 typedef struct {
     /* 0x000 */ Actor base;
-    /* 0x144 */ u8 pad144[0x2];
+    /* 0x144 */ s8 currentShield;
+    /* 0x145 */ s8 currentBoots;
     /* 0x146 */ u8 itemButton;
     /* 0x147 */ s8 itemActionParam;
     /* 0x148 */ u8 unk148;

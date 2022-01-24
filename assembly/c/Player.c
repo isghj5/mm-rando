@@ -172,7 +172,7 @@ void Player_HandleFormSpeed(GlobalContext* ctxt, ActorPlayer* player, f32* speed
     }
     // End displaced code
 
-    *speed = *speed * GiantMask_GetScaleModifier() * 100.0;
+    *speed = *speed * GiantMask_GetScaleModifier();
 }
 
 f32 Player_GetWallCollisionHeight(ActorPlayer* player) {
@@ -180,7 +180,7 @@ f32 Player_GetWallCollisionHeight(ActorPlayer* player) {
     f32 result = 26.8f;
     // End displaced code
 
-    result *= GiantMask_GetScaleModifier() * 100.0f;
+    result *= GiantMask_GetScaleModifier();
 
     return result;
 }
@@ -190,7 +190,7 @@ f32 Player_GetDiveDepth() {
     f32 result = 100.0f;
     // End displaced code
 
-    result *= GiantMask_GetScaleModifier() * 100.0f;
+    result *= GiantMask_GetScaleModifier();
 
     return result;
 }
@@ -198,10 +198,70 @@ f32 Player_GetDiveDepth() {
 // 806F25A8
 f32 Player_GetLedgeClimbFactor() {
     // Displaced code:
+    f32 result = 59.0f;
+    // End displaced code
+
+    result *= GiantMask_GetScaleModifier();
+
+    return result;
+}
+
+// 806F25C0
+f32 Player_GetLedgeClimbFactor2() {
+    // Displaced code:
     f32 result = 41.0f;
     // End displaced code
 
-    result *= GiantMask_GetScaleModifier() * 100.0f;
+    result *= GiantMask_GetScaleModifier();
+
+    return result;
+}
+
+// 806F2600
+f32 Player_GetInvertedLedgeClimbFactor() {
+    return 100.0f / GiantMask_GetScaleModifier();
+}
+
+// 806F275C
+f32 Player_GetLedgeJumpSpeed() {
+    // Displaced code:
+    f32 result = 5.5f;
+    // End displaced code
+
+    result *= GiantMask_GetScaleModifier();
+
+    return result;
+}
+
+f32 Player_GetJumpHeightModifier(GlobalContext* ctxt, ActorPlayer* player) {
+    f32 result = GiantMask_GetScaleModifier();
+
+    // Displaced code:
+    if (player->currentBoots == 2) {
+        result *= 0.5f;
+    }
+    // End displaced code
+
+    return result;
+}
+
+void Player_ModifyJumpVelocity(ActorPlayer* player) {
+    player->linearVelocity *= GiantMask_GetScaleModifier();
+}
+
+void Player_GetMidAirAcceleration(f32* increment, f32* decrement) {
+    const f32 modifier = GiantMask_GetScaleModifier();
+    *increment *= modifier;
+    *decrement *= modifier;
+}
+
+// 807099F4
+f32 Player_GetLedgeGrabDistance() {
+    // Displaced code:
+    f32 result = 150.0f;
+    // End displaced code
+
+    result *= GiantMask_GetScaleModifier();
 
     return result;
 }

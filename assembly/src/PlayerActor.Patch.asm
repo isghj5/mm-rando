@@ -185,7 +185,7 @@
 ; Replaces:
 ;   ADDIU   SP, SP, -0x08
 .org 0x808475B8
-    addiu   sp, sp, -0x0C
+    addiu   sp, sp, -0x10
 
 ; Replaces
 ;   LUI	    AT, 0x42C8
@@ -193,18 +193,19 @@
 ;   NOP
 ;   C.LT.S  F6, F14
 .org 0x80847768
-    sw      ra, 0x0008 (sp)
+    sw      ra, 0x000C (sp)
     jal     Player_GetDiveDepth_Hook
     nop
-    lw      ra, 0x0008 (sp)
+    lw      ra, 0x000C (sp)
 
 ; Replaces:
 ;   ADDIU   SP, SP, 0x08
 .org 0x808477CC
-    addiu   sp, sp, 0x0C
+    addiu   sp, sp, 0x10
 
 ;==================================================================================================
 ; Handle Giant Mask ledge climb
+; RAM + 0x142B70
 ;==================================================================================================
 
 ; Replaces:
@@ -213,3 +214,72 @@
 .org 0x80835118
     jal     Player_GetLedgeClimbFactor_Hook
     nop
+
+; Replaces:
+;   LUI	    AT, 0x426C
+;   MTC1	AT, F10
+.org 0x80835130
+    jal     Player_GetLedgeClimbFactor2_Hook
+    nop
+
+; Replaces:
+;   LUI     AT, 0x42C8
+;   MTC1    AT, F16
+.org 0x80835170
+    jal     Player_GetInvertedLedgeClimbFactor_Hook
+    nop
+
+; Replaces:
+;   LUI	    AT, 0x40B0
+;   MTC1    AT, F8
+.org 0x808352CC
+    jal     Player_GetLedgeJumpSpeed_Hook
+    nop
+
+; Replaces:
+;   LB      T6, 0x0145 (S0)
+;   ADDIU   V0, R0, 0x0002
+;   OR      A1, S0, R0
+;   BNE     V0, T6, 0x806F6D58
+;   SLL     T7, S1, 2
+;   LUI     AT, 0x3F00
+;   MTC1    AT, F4
+;   NOP
+;   MUL.S   F0, F0, F4
+;   NOP
+.org 0x808398A0
+    sw      v1, 0x0028 (sp)
+    jal     Player_ModifyJumpHeight_Hook
+    or      a1, s0, r0
+    sll     t7, s1, 2
+    lw      v1, 0x0028 (sp)
+    nop
+    nop
+    nop
+    nop
+    nop
+
+; Replaces:
+;   LW      T2, 0x0A70 (S0)
+;   LUI     AT, 0x0008
+;   OR      A0, S0, R0
+.org 0x80839934
+    jal     Player_ModifyJumpVelocity_Hook
+    or      a0, s0, r0
+    lui     at, 0x0008
+
+; Replaces:
+;   ADDIU	T9, R0, 0x00C8
+;   SW	    T9, 0x0018 (SP)
+;   LH	    A2, 0x0042 (SP)
+;   LUI	    A3, 0x3F80
+ .org 0x8084C374
+    jal     Player_GetMidAirAcceleration_Hook
+    nop
+    sw      t9, 0x0018 (sp)
+    lh      a2, 0x0042 (sp)
+
+; Replaces:
+;   MTC1    AT, F12
+.org 0x8084C564
+    jal     Player_GetLedgeGrabDistance_Hook

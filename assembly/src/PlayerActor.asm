@@ -203,3 +203,125 @@ Player_GetLedgeClimbFactor_Hook:
     lw      ra, 0x0020 (sp)
     jr      ra
     addiu   sp, sp, 0x24
+
+Player_GetLedgeClimbFactor2_Hook:
+    addiu   sp, sp, -0x24
+    sw      ra, 0x0020 (sp)
+    sw      v0, 0x0018 (sp)
+    swc1    f0, 0x0014 (sp)
+    swc1    f2, 0x001C (sp)
+
+    jal     Player_GetLedgeClimbFactor2
+    nop
+
+    mov.s   f10, f0
+
+    lwc1    f2, 0x001C (sp)
+    lwc1    f0, 0x0014 (sp)
+    lw      v0, 0x0018 (sp)
+    lw      ra, 0x0020 (sp)
+    jr      ra
+    addiu   sp, sp, 0x24
+
+Player_GetInvertedLedgeClimbFactor_Hook:
+    addiu   sp, sp, -0x20
+    sw      ra, 0x001C (sp)
+    swc1    f2, 0x0018 (sp)
+    swc1    f0, 0x0014 (sp)
+
+    jal     Player_GetInvertedLedgeClimbFactor
+    nop
+
+    mov.s   f16, f0
+
+    lwc1    f0, 0x0014 (sp)
+    lwc1    f2, 0x0018 (sp)
+    lw      ra, 0x001C (sp)
+    jr      ra
+    addiu   sp, sp, 0x20
+
+Player_GetLedgeJumpSpeed_Hook:
+    addiu   sp, sp, -0x20
+    sw      ra, 0x001C (sp)
+    swc1    f4, 0x0018 (sp)
+    swc1    f6, 0x0014 (sp)
+
+    jal     Player_GetLedgeJumpSpeed
+    nop
+
+    mov.s   f8, f0
+
+    lwc1    f6, 0x0014 (sp)
+    lwc1    f4, 0x0018 (sp)
+    lw      ra, 0x001C (sp)
+    jr      ra
+    addiu   sp, sp, 0x20
+
+Player_ModifyJumpHeight_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+
+    jal     Player_GetJumpHeightModifier
+    swc1    f0, 0x0010 (sp)
+
+    lwc1    f4, 0x0010 (sp)
+    mul.s   f0, f4, f0
+
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
+Player_ModifyJumpVelocity_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+
+    jal     Player_ModifyJumpVelocity
+    sw      v0, 0x0010 (sp)
+
+    ; Displaced code:
+    lw      t2, 0x0A70 (s0)
+
+    lw      v0, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
+Player_GetMidAirAcceleration_Hook:
+    addiu   sp, sp, -0x20
+    sw      ra, 0x001C (sp)
+    sw      a0, 0x0020 (sp)
+    sw      a1, 0x0024 (sp)
+    swc1    f10, 0x0018 (sp)
+    swc1    f8, 0x0014 (sp)
+
+    addiu   a0, sp, 0x0014
+
+    jal     Player_GetMidAirAcceleration
+    addiu   a1, sp, 0x0018
+
+    ; Displaced code:
+    addiu   t9, r0, 0x00C8
+    lui     a3, 0x3F80
+
+    lwc1    f8, 0x0014 (sp)
+    lwc1    f10, 0x0018 (sp)
+    lw      a1, 0x0024 (sp)
+    lw      a0, 0x0020 (sp)
+    lw      ra, 0x001C (sp)
+    jr      ra
+    addiu   sp, sp, 0x20
+
+Player_GetLedgeGrabDistance_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    swc1    f0, 0x0010 (sp)
+
+    jal     Player_GetLedgeGrabDistance
+    nop
+
+    mov.s   f12, f0
+
+    lwc1    f0, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18

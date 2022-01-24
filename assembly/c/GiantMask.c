@@ -1,71 +1,5 @@
 #include "GiantMask.h"
 
-// static PlayerFormProperties giantFormProperties = {
-//     .unk_00 = 400.0,
-//     .unk_04 = 60.0,
-//     .unk_08 = 0.647095,
-//     .unk_0C = 710.0,
-//     .unk_10 = 50.0,
-//     .unk_14 = 49.0,
-//     .unk_18 = 39.0,
-//     .unk_1C = 270.0,
-//     .unk_20 = 19.0,
-//     .unk_24 = 22.0,
-//     .unk_28 = 32.400002,
-//     .unk_2C = 320.0,
-//     .unk_30 = 48.0,
-//     .unk_34 = 452.941010,
-//     .unk_38 = 140.0,
-//     .unk_3C = 12.0,
-//     .unk_40 = 55.0,
-//     .unk_44 = { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//     .unk_4A = {
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//     },
-//     .unk_62 = {
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//     },
-//     .unk_7A = {
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//         { .x = 0xFFE8, .y = 0x0DED, .z = 0x036C },
-//     },
-//     .unk_92 = 0x20,
-//     .unk_94 = 0,
-//     .unk_98 = 22.0,
-//     .unk_9C = 29.434299,
-//     .unk_A0 = (LinkAnimetionEntry*)0x0400D128,
-//     .unk_A4 = (LinkAnimetionEntry*)0x0400D170,
-//     .unk_A8 = (LinkAnimetionEntry*)0x0400D1B8,
-//     .unk_AC = (LinkAnimetionEntry*)0x0400D1F8,
-//     .unk_B0 = (LinkAnimetionEntry*)0x0400D200,
-//     .unk_B4 = {
-//         (LinkAnimetionEntry*)0x0400D208,
-//         (LinkAnimetionEntry*)0x0400D210,
-//         (LinkAnimetionEntry*)0x0400DAB0,
-//         (LinkAnimetionEntry*)0x0400DAB8,
-//     },
-//     .unk_C4 = {
-//         (LinkAnimetionEntry*)0x0400DA90,
-//         (LinkAnimetionEntry*)0x0400DA98,
-//     },
-//     .unk_CC = {
-//         (LinkAnimetionEntry*)0x0400D1D8,
-//         (LinkAnimetionEntry*)0x0400D1E0,
-//     },
-//     .unk_D4 = {
-//         (LinkAnimetionEntry*)0x0400D1F0,
-//         (LinkAnimetionEntry*)0x0400D1E8,
-//     },
-// };
-
 static void GiantMask_FormProperties_Grow(PlayerFormProperties* formProperties) {
     formProperties->unk_00 *= 10.0;
     formProperties->unk_0C *= 10.0;
@@ -81,9 +15,6 @@ static void GiantMask_FormProperties_Grow(PlayerFormProperties* formProperties) 
     formProperties->unk_38 *= 10.0;
     formProperties->unk_3C *= 10.0;
     formProperties->unk_40 *= 10.0;
-    // REG(38) = 0x20;
-    // REG(39) = 0x20;
-    // REG(45) *= 10;
 }
 
 static void GiantMask_FormProperties_Shrink(PlayerFormProperties* formProperties) {
@@ -101,9 +32,14 @@ static void GiantMask_FormProperties_Shrink(PlayerFormProperties* formProperties
     formProperties->unk_38 *= 0.1;
     formProperties->unk_3C *= 0.1;
     formProperties->unk_40 *= 0.1;
-    // REG(38) /= 10;
-    // REG(39) /= 10;
-    // REG(45) /= 10;
+}
+
+static void GiantMask_Reg_Grow() {
+    REG(38) = 0x20; // animation speed
+    REG(39) = 0x20; // animation speed
+    REG(45) *= 8;   // running speed
+    REG(68) *= 10;  // gravity
+    IREG(67) *= 10; // jump strength // read at 806F48EC
 }
 
 static void func_809DA1D0(GlobalContext* globalCtx, u8 arg1, u8 arg2, u8 arg3, u8 arg4) {
@@ -295,9 +231,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
         case 21:
             unk_1D18 = 0;
             if (gSaveContext.perm.mask == 0x14) {
-                REG(38) = 0x20;
-                REG(39) = 0x20;
-                REG(45) *= 8;
+                GiantMask_Reg_Grow();
             }
             break;
     }
@@ -307,9 +241,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             GiantMask_FormProperties_Grow(player->formProperties);
         }
         if (REG(38) != 0x20) {
-            REG(38) = 0x20;
-            REG(39) = 0x20;
-            REG(45) *= 8;
+            GiantMask_Reg_Grow();
         }
     }
     if (unk_1D70 <= 0.05 && player->formProperties->unk_00 >= 200.0) {
@@ -391,7 +323,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
 }
 
 f32 GiantMask_GetScaleModifier() {
-    return unk_1D70;
+    return unk_1D70 * 100.0f;
 }
 
 f32 GiantMask_GetFloorHeightCheckDelta(GlobalContext* globalCtx, Actor* actor, Vec3f* pos, s32 flags) {
@@ -400,7 +332,7 @@ f32 GiantMask_GetFloorHeightCheckDelta(GlobalContext* globalCtx, Actor* actor, V
     // End displaced code
 
     if (actor->id == ACTOR_PLAYER) {
-        result *= GiantMask_GetScaleModifier() * 100.0f;
+        result *= GiantMask_GetScaleModifier();
     }
     return result;
 }
@@ -411,7 +343,7 @@ f32 GiantMask_GetLedgeWalkOffHeight(Actor* actor) {
     // End displaced code
 
     if (actor->id == ACTOR_PLAYER) {
-        result *= GiantMask_GetScaleModifier() * 100.0f;
+        result *= GiantMask_GetScaleModifier();
     }
 
     return result;

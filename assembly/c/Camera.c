@@ -44,5 +44,5 @@ f32 Camera_PlayerGetExtraHeight(ActorPlayer* player) {
     //     result += 440.0;
     // }
 
-    return (result * GiantMask_GetScaleModifier() * 100.0f) - result;
+    return (result * GiantMask_GetScaleModifier()) - result;
 }
