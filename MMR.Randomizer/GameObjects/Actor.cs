@@ -1723,10 +1723,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(263)]
         [ObjectListIndex(0xDF)] // 1
         // 7E is a range, unkown, looks like a path since it comes with a ==7E check
-        [PathingTypeVarsPlacement(mask:0x7F, shift:0)]
+        [PathingTypeVarsPlacement(mask:0x7E, shift:9)]
         [PathingVariants(0x0)]
-        //[GroundVariants(0)] // todo check if 0x7F is a thing
+        [GroundVariants(0x7E00)] // todo check if 0x7F is a thing
         // Pathing Variants todo
+        [VariantsWithRoomMax(max: 3, variant:0x7E00)] // lag, probably from the realtime shadow generation
         [UnkillableAllVariants]
         BabaIsUnused = 0x123, // En_Bba_01
 
@@ -2571,7 +2572,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // hes really rare because his ram requirements are huge
         [FileID(401)]
         [ObjectListIndex(0x1A3)]
-        [GroundVariants(0)] // 0 is clocktower
+        // there are other params forthis actor, todo explor
+        [GroundVariants(0, 0x2)] // 0 is clocktower, 2 is wiped out
+        [VariantsWithRoomMax(max:1, variant:0x2)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         HappyMaskSalesman = 0x1B5, // En_Osn
@@ -3958,6 +3961,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [UnkillableAllVariants]
         [CompanionActor(Flame, 0x7FE)] // blue flames
+        [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GoronRacetrack)]
         AnjuWeddingDress = 0x299, // En_And
 
         [FileID(625)]
