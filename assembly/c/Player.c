@@ -165,6 +165,7 @@ u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collis
     return collisionType;
 }
 
+static const f32 giantSpeedModifier = 7.0f / 11.0f;
 void Player_HandleFormSpeed(GlobalContext* ctxt, ActorPlayer* player, f32* speed) {
     // Displaced code:
     if (player->form == PLAYER_FORM_FIERCE_DEITY) {
@@ -172,7 +173,11 @@ void Player_HandleFormSpeed(GlobalContext* ctxt, ActorPlayer* player, f32* speed
     }
     // End displaced code
 
-    *speed = *speed * GiantMask_GetScaleModifier();
+    *speed *= GiantMask_GetScaleModifier();
+
+    if (player->mask == 0x14) {
+        *speed *= giantSpeedModifier;
+    }
 }
 
 f32 Player_GetWallCollisionHeight(ActorPlayer* player) {
@@ -264,4 +269,12 @@ f32 Player_GetLedgeGrabDistance() {
     result *= GiantMask_GetScaleModifier();
 
     return result;
+}
+
+bool Player_UseItem_CheckCeiling(CollisionContext* colCtx, f32* outY, Vec3f* pos, f32 checkHeight, BgPolygon** outPoly, s32* inItemIdOutBgId, ActorPlayer* player) {
+    s32 itemId = *inItemIdOutBgId;
+    if (itemId == ITEM_GIANT_MASK) {
+        checkHeight *= GiantMask_GetNextScaleFactor();
+    }
+    return z2_BgCheck_EntityCheckCeiling(colCtx, outY, pos, checkHeight, outPoly, inItemIdOutBgId, &player->base);
 }

@@ -52,6 +52,7 @@
 .definelabel z2_actor_spawn_2, 0x800BAE14
 .definelabel z2_ActorRemove, 0x800BB498
 .definelabel z2_Actor_ChangeAnimation, 0x800BDC5C
+.definelabel z2_BgCheck_EntityCheckCeiling, 0x800C4F84
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
 .definelabel z2_800EA0D4, 0x800EA0D4
 .definelabel z2_800EA0EC, 0x800EA0EC

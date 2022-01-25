@@ -34,12 +34,18 @@ static void GiantMask_FormProperties_Shrink(PlayerFormProperties* formProperties
     formProperties->unk_40 *= 0.1;
 }
 
-static void GiantMask_Reg_Grow() {
-    REG(38) = 0x20; // animation speed
-    REG(39) = 0x20; // animation speed
-    REG(45) *= 8;   // running speed
+static void GiantMask_Reg_Grow(bool fromGiantTransformation) {
+    REG(30) = 0x40; // sidewalk animation speed
+    REG(32) = 0x40; // sidewalk animation speed
+    REG(38) = 0x20; // walk animation speed
+    REG(39) = 0x20; // walk animation speed
+    REG(45) *= 10;  // running speed
     REG(68) *= 10;  // gravity
     IREG(67) *= 10; // jump strength // read at 806F48EC
+
+    if (!fromGiantTransformation) {
+        REG(45) *= 7.0f / 11.0f;   // running speed
+    }
 }
 
 static void func_809DA1D0(GlobalContext* globalCtx, u8 arg1, u8 arg2, u8 arg3, u8 arg4) {
@@ -76,7 +82,7 @@ static void func_809DA24C(GlobalContext* globalCtx) {
 /* 0x1D64 */ f32 unk_1D64;
 /* 0x1D68 */ f32 unk_1D68;
 /* 0x1D6C */ f32 unk_1D6C;
-/* 0x1D70 */ f32 unk_1D70 = 0.00999999977648f;
+/* 0x1D70 */ f32 unk_1D70 = 0.01f;
 /* 0x1D74 */ f32 unk_1D74;
 /* 0x1D78 */ u8 unk_1D78;
 /* 0x1D7A */ s16 unk_1D7A;
@@ -84,9 +90,9 @@ static void func_809DA24C(GlobalContext* globalCtx) {
 /* 0x1D7E */ s16 unk_1D7E;
 static u8 D_809E0420;
 static u8 D_809E0421;
-static u8 D_809E0422;
+static bool isGiant;
 static u8 D_809E0430;
-static f32 D_809DF5B0 = 1.0f;
+static f32 nextScaleFactor = 10.0f;
 
 void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     s16 i;
@@ -109,7 +115,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
                 unk_1D14 = 0;
                 unk_1D5C = 0.0f;
                 unk_1D58 = 0.0f;
-                if (D_809E0422 == 0) {
+                if (!isGiant) {
                     unk_1D18 = 1;
                     unk_1D68 = 10.0f;
                     unk_1D64 = 60.0f;
@@ -231,7 +237,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
         case 21:
             unk_1D18 = 0;
             if (gSaveContext.perm.mask == 0x14) {
-                GiantMask_Reg_Grow();
+                GiantMask_Reg_Grow(true);
             }
             break;
     }
@@ -241,7 +247,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             GiantMask_FormProperties_Grow(player->formProperties);
         }
         if (REG(38) != 0x20) {
-            GiantMask_Reg_Grow();
+            GiantMask_Reg_Grow(false);
         }
     }
     if (unk_1D70 <= 0.05 && player->formProperties->unk_00 >= 200.0) {
@@ -255,11 +261,11 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     }
 
     if (sp57) {
-        D_809E0422 = 1 - D_809E0422;
-        if (D_809E0422 == 0) {
-            D_809DF5B0 = 1.0f;
+        isGiant = !isGiant;
+        if (!isGiant) {
+            nextScaleFactor = 10.0f;
         } else {
-            D_809DF5B0 = 0.1f;
+            nextScaleFactor = 0.1f;
         }
     }
 
@@ -326,6 +332,10 @@ f32 GiantMask_GetScaleModifier() {
     return unk_1D70 * 100.0f;
 }
 
+f32 GiantMask_GetNextScaleFactor() {
+    return nextScaleFactor;
+}
+
 f32 GiantMask_GetFloorHeightCheckDelta(GlobalContext* globalCtx, Actor* actor, Vec3f* pos, s32 flags) {
     // Displaced code:
     f32 result = (flags & 0x800) ? 10.0f : 50.0f;
@@ -364,3 +374,12 @@ E9738CDE 595A
 // DONE TODO hook 800B7698 (checks walking up ledges) // 43FA0000
 // DONE TODO hook 800B7764 (check floor distance when jumping off ledge) // C2DC0000
 // DONE TODO hook 80704BF8 (hardcoded distance to surface? 100.0)
+
+// TODO
+// ceiling transformation height
+// sidehop/backflip momentum
+// climbing out of water?
+// dive distance
+// fall height damage // function at 806F43A0
+// spin attack radius
+// big octo softlock

@@ -143,15 +143,15 @@
 .headersize G_PLAYER_ACTOR_DELTA
 
 ; Replaces:
-;   LBU	T2, 0x014B (A1)
-;   LUI	AT, 0x3FC0
-;   BNEZ	T2, 0x80832E08
+;   LBU     T2, 0x014B (A1)
+;   LUI     AT, 0x3FC0
+;   BNEZ    T2, 0x80832E08
 ;   NOP
-;   LWC1	F6, 0x0000 (A2)
-;   MTC1	AT, F8
+;   LWC1    F6, 0x0000 (A2)
+;   MTC1    AT, F8
 ;   NOP
-;   MUL.S	F10, F6, F8
-;   SWC1	F10, 0x0000 (A2)
+;   MUL.S   F10, F6, F8
+;   SWC1    F10, 0x0000 (A2)
 .org 0x80832DE4
     jal     Player_HandleFormSpeed_Hook
     nop
@@ -170,9 +170,9 @@
 .headersize G_PLAYER_ACTOR_DELTA
 
 ; Replaces:
-;   LUI	    A2, 0x41D6
-;   MFC1	A3, F0
-;   ORI	    A2, A2, 0x6667
+;   LUI     A2, 0x41D6
+;   MFC1    A3, F0
+;   ORI     A2, A2, 0x6667
 .org 0x80843360
     jal     Player_GetWallCollisionHeight_Hook
     nop
@@ -185,23 +185,55 @@
 ; Replaces:
 ;   ADDIU   SP, SP, -0x08
 .org 0x808475B8
-    addiu   sp, sp, -0x10
+    addiu   sp, sp, -0x18
+
+; Replaces:
+;   SWC1    F8, 0x0004 (SP)
+.org 0x80847674
+    swc1    f8, 0x0010 (sp)
+
+; Replaces:
+;   SWC1    F4, 0x0004 (SP)
+.org 0x808476B8
+    swc1    f4, 0x0010 (sp)
+
+; Replaces:
+;   SWC1    F6, 0x0004 (SP)
+.org 0x808476E8
+    swc1    f6, 0x0010 (sp)
 
 ; Replaces
-;   LUI	    AT, 0x42C8
-;   MTC1	AT, F6
+;   SWC1    F4, 0x0004 (SP)
+;   LUI     AT, 0x42C8
+;   MTC1    AT, F6
 ;   NOP
 ;   C.LT.S  F6, F14
-.org 0x80847768
-    sw      ra, 0x000C (sp)
+.org 0x80847764
+    swc1    f4, 0x0010 (sp)
+    sw      ra, 0x0014 (sp)
     jal     Player_GetDiveDepth_Hook
     nop
-    lw      ra, 0x000C (sp)
+    lw      ra, 0x0014 (sp)
+
+; Replaces:
+;   LWC1    F8, 0x0004 (SP)
+.org 0x80847780
+    lwc1    f8, 0x0010 (sp)
+
+; Replaces:
+;   LWC1    F8, 0x0004 (SP)
+.org 0x80847794
+    lwc1    f8, 0x0010 (sp)
+
+; Replaces:
+;   LWC1    F8, 0x0004 (SP)
+.org 0x808477A4
+    lwc1    f8, 0x0010 (sp)
 
 ; Replaces:
 ;   ADDIU   SP, SP, 0x08
 .org 0x808477CC
-    addiu   sp, sp, 0x10
+    addiu   sp, sp, 0x18
 
 ;==================================================================================================
 ; Handle Giant Mask ledge climb
@@ -209,15 +241,15 @@
 ;==================================================================================================
 
 ; Replaces:
-;   LUI	    AT, 0x4224
-;   LWC1	F8, 0x0018 (V0)
+;   LUI     AT, 0x4224
+;   LWC1    F8, 0x0018 (V0)
 .org 0x80835118
     jal     Player_GetLedgeClimbFactor_Hook
     nop
 
 ; Replaces:
-;   LUI	    AT, 0x426C
-;   MTC1	AT, F10
+;   LUI     AT, 0x426C
+;   MTC1    AT, F10
 .org 0x80835130
     jal     Player_GetLedgeClimbFactor2_Hook
     nop
@@ -230,7 +262,7 @@
     nop
 
 ; Replaces:
-;   LUI	    AT, 0x40B0
+;   LUI     AT, 0x40B0
 ;   MTC1    AT, F8
 .org 0x808352CC
     jal     Player_GetLedgeJumpSpeed_Hook
@@ -269,10 +301,10 @@
     lui     at, 0x0008
 
 ; Replaces:
-;   ADDIU	T9, R0, 0x00C8
-;   SW	    T9, 0x0018 (SP)
-;   LH	    A2, 0x0042 (SP)
-;   LUI	    A3, 0x3F80
+;   ADDIU   T9, R0, 0x00C8
+;   SW      T9, 0x0018 (SP)
+;   LH      A2, 0x0042 (SP)
+;   LUI     A3, 0x3F80
  .org 0x8084C374
     jal     Player_GetMidAirAcceleration_Hook
     nop
@@ -283,3 +315,12 @@
 ;   MTC1    AT, F12
 .org 0x8084C564
     jal     Player_GetLedgeGrabDistance_Hook
+
+;==================================================================================================
+; Handle Giant Mask transformation height check
+;==================================================================================================
+
+; Replaces:
+;   JAL     0x800C4F84
+.org 0x80831B80
+    jal     Player_UseItem_CheckCeiling_Hook

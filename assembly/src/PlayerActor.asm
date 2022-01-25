@@ -325,3 +325,9 @@ Player_GetLedgeGrabDistance_Hook:
     lw      ra, 0x0014 (sp)
     jr      ra
     addiu   sp, sp, 0x18
+
+Player_UseItem_CheckCeiling_Hook:
+    lw      t5, 0x0014 (sp)
+    lw      t6, 0x0070 (sp)
+    j       Player_UseItem_CheckCeiling
+    sw      t6, 0x0000 (t5)

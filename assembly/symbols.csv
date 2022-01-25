@@ -50,6 +50,7 @@
 0x800BAE14,z2_actor_spawn_2
 0x800BB498,z2_ActorRemove
 0x800BDC5C,z2_Actor_ChangeAnimation
+0x800C4F84,z2_BgCheck_EntityCheckCeiling
 0x800C99D4,z2_GetFloorPhysicsType
 0x800EA0D4,z2_800EA0D4
 0x800EA0EC,z2_800EA0EC
