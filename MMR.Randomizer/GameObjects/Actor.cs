@@ -1169,8 +1169,11 @@ namespace MMR.Randomizer.GameObjects
             variant: 0x3F5F)]
         Rock = 0xB0, // En_Ishi
 
+        //[ActorizerEnabled] // works but a bit lame
         [FileID(159)]
         [ObjectListIndex(0x1BA)]
+        [GroundVariants(0)]
+        [UnkillableAllVariants]
         OrangeGraveyardFlower = 0xB1, // Obj_Hana
 
         [ActorizerEnabled]
@@ -1601,9 +1604,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2A7C)]
         [FileID(241)]
         [ObjectListIndex(0x14E)]
-        [FlyingVariants(0,2,3)]
+        [FlyingVariants(0, 2, 3)]
+        //[GroundVariants(1)] // works not sure what it does
         [VariantsWithRoomMax(max: 2, 0,2,3)]
-        DragonFly = 0x109, //En_Grasshopper
+        DragonFly = 0x109, // En_Grasshopper
 
         Empty10A = 0x10A,
 
@@ -1740,7 +1744,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(265)]
         [ObjectListIndex(0x158)]
         // 0xFF == 0 or 1 is different case
-        // 0x7F >> 8 is flags
+        // 0x7F00 >> 8 is flags
         [WallVariants(0x7E01, 0x7D01, 0x7C01)]
         //[GroundVariants(0x7E00, 0x7D00, 0x7C00)] // work but too low mostly hidden by ground
         [VariantsWithRoomMax(max:1, 0x7E01, 0x7D01, 0x7C01)]

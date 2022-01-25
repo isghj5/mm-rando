@@ -152,11 +152,12 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x21)]
         // 11 dinofos room, 6/12 wizrobe
         [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9)] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
-        [EnemizerSceneEnemyReplacementBlock(Actor.RedBubble, // spawns in hot lava, keep wood enemies out
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RedBubble, // spawns in hot lava, keep wood enemies out
             Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos, Actor.Dinofos, Actor.Snapper)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.Freezard,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Freezard,
             Actor.PoeSisters, // weird behavior, if the killing blow of meg at long range can stop chests from spawning
             Actor.CircleOfFire, // if it gets placed on the one on top of a chest the player is screwed
+            Actor.DragonFly, // if you kill it at long range or such that its dying body falls to first floor it wont count
             Actor.Wolfos)] // wolfos: ice wolfos can push the regular actual dog backwards through the wall
         [FairyDroppingEnemies(11, 2, 3)] // dinofos 
         SnowheadTemple = 0x1E,

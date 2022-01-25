@@ -497,6 +497,9 @@ namespace MMR.Randomizer
             var grottosScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Grottos.FileID());
             grottosScene.Maps[13].Actors[1].Variants[0] = 1; // change the grass in peahat grotto to drop items like TF grass
 
+            var linkTrialScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LinkTrial.FileID());
+            linkTrialScene.Maps[1].Actors[0].Position.y = 1; // up high dinofos spawn, red bubble would spawn in the air, lower to ground
+
             if (ACTORSENABLED)
             {
                 // in order to randomize dog, without adding that dog back in because it can crash, we need to change the vars on the dog we want changed
@@ -1844,7 +1847,7 @@ namespace MMR.Randomizer
                     }
                     bool result;
                     //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Bg_Breakwall)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BabaIsUnused)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif
