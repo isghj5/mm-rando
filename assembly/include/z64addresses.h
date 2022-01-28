@@ -68,7 +68,7 @@ extern void z2_UpdateButtonUsability(GlobalContext* ctxt);
 extern void z2_WriteHeartColors(GlobalContext* ctxt);
 extern void z2_RemoveItem(u32 item, u8 slot);
 extern void z2_ToggleSfxDampen(int enable);
-extern void z2_HandleInputVelocity(f32* linearVelocity, f32 inputVelocity, f32 increaseBy, f32 decreaseBy);
+extern s32 z2_Math_AsymStepToF(f32* pValue, f32 target, f32 incrStep, f32 decrStep);
 extern bool z2_SetGetItemLongrange(Actor* actor, GlobalContext* ctxt, u16 giIndex);
 extern void z2_UpdatePictoFlags(GlobalContext* ctxt);
 extern void z2_8012C654(GraphicsContext* gfxCtx);
@@ -181,6 +181,7 @@ extern void z2_UpdateButtonsState(u32 state);
 // Function Prototypes (Math).
 extern f32 z2_Math_Sins(s16 angle);
 extern f32 z2_Math_Vec3f_DistXZ(Vec3f* p1, Vec3f* p2);
+extern f32 z2_Math_SmoothStepToF(f32* pValue, f32 target, f32 fraction, f32 step, f32 minStep);
 extern f32 Math_ApproachF(f32* a0, f32 a1, f32 a2, f32 a3);
 extern f32 Math_ApproachZeroF(f32* a0, f32 a1, f32 a2);
 
@@ -217,6 +218,7 @@ extern s32 z2_800B85E0(Actor* actor, GlobalContext* ctxt, f32 uParm3, s32 uParm4
 extern int z2_801242DC(GlobalContext* ctxt);
 extern u32 z2_80147624(GlobalContext* ctxt);
 extern void z2_8016566C(s16 unkA0);
+extern void z2_Collider_UpdateCylinder(Actor* actor, ColCylinder* collider);
 extern void z2_800EA0D4(GlobalContext* ctxt, CutsceneContext* csCtx);
 extern void z2_800EA0EC(GlobalContext* ctxt, CutsceneContext* csCtx);
 extern void ShrinkWindow_SetLetterboxTarget(s16 unkA0);

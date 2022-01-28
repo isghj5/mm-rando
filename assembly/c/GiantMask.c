@@ -35,16 +35,20 @@ static void GiantMask_FormProperties_Shrink(PlayerFormProperties* formProperties
 }
 
 static void GiantMask_Reg_Grow(bool fromGiantTransformation) {
+    REG(19) *= 10;  // run acceleration // deceleration needs hook 806F9FE8
+    //REG(27);        // turning circle
     REG(30) = 0x40; // sidewalk animation speed
     REG(32) = 0x40; // sidewalk animation speed
     REG(38) = 0x20; // walk animation speed
     REG(39) = 0x20; // walk animation speed
+    REG(43) *= 10;  // idle deceleration
     REG(45) *= 10;  // running speed
     REG(68) *= 10;  // gravity
     IREG(67) *= 10; // jump strength // read at 806F48EC
 
     if (!fromGiantTransformation) {
-        REG(45) *= 7.0f / 11.0f;   // running speed
+        REG(19) *= 0.5;             // running acceleration
+        REG(45) *= 7.0f / 11.0f;    // running speed
     }
 }
 
@@ -236,13 +240,13 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             break;
         case 21:
             unk_1D18 = 0;
-            if (gSaveContext.perm.mask == 0x14) {
-                GiantMask_Reg_Grow(true);
+            if (isGiant) {
+                GiantMask_Reg_Grow(player->mask == 0x14);
             }
             break;
     }
 
-    if (unk_1D70 > 0.05) { // bit hacky, but we'll see
+    if (isGiant) {
         if (player->formProperties->unk_00 < 200.0) {
             GiantMask_FormProperties_Grow(player->formProperties);
         }
@@ -250,7 +254,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             GiantMask_Reg_Grow(false);
         }
     }
-    if (unk_1D70 <= 0.05 && player->formProperties->unk_00 >= 200.0) {
+    if (!isGiant && player->formProperties->unk_00 >= 200.0) {
         GiantMask_FormProperties_Shrink(player->formProperties);
     }
 
@@ -332,6 +336,10 @@ f32 GiantMask_GetScaleModifier() {
     return unk_1D70 * 100.0f;
 }
 
+f32 GiantMask_GetSimpleScaleModifier() {
+    return isGiant ? 10.0f : 1.0f;
+}
+
 f32 GiantMask_GetNextScaleFactor() {
     return nextScaleFactor;
 }
@@ -342,7 +350,7 @@ f32 GiantMask_GetFloorHeightCheckDelta(GlobalContext* globalCtx, Actor* actor, V
     // End displaced code
 
     if (actor->id == ACTOR_PLAYER) {
-        result *= GiantMask_GetScaleModifier();
+        result *= GiantMask_GetSimpleScaleModifier();
     }
     return result;
 }
@@ -353,10 +361,40 @@ f32 GiantMask_GetLedgeWalkOffHeight(Actor* actor) {
     // End displaced code
 
     if (actor->id == ACTOR_PLAYER) {
-        result *= GiantMask_GetScaleModifier();
+        result *= GiantMask_GetSimpleScaleModifier();
     }
 
     return result;
+}
+
+f32 GiantMask_GetBigOctoSpitVelocity() {
+    // Displaced code:
+    f32 result = 10.0f;
+    // End displaced code
+
+    if (isGiant) {
+        result *= 2.0f;
+    }
+
+    return result;
+}
+
+f32 GiantMask_Math_SmoothStepToF(f32* pValue, f32 target, f32 fraction, f32 step, f32 minStep) {
+    const f32 modifier = GiantMask_GetSimpleScaleModifier();
+
+    target *= modifier;
+    step *= modifier;
+    minStep *= modifier;
+
+    return z2_Math_SmoothStepToF(pValue, target, fraction, step, minStep);
+}
+
+void GiantMask_AdjustSpinAttackHeight(Actor* actor, ColCylinder* collider) {
+    collider->params.height *= GiantMask_GetSimpleScaleModifier();
+
+    // Displaced code:
+    z2_Collider_UpdateCylinder(actor, collider);
+    // End displaced code
 }
 
 /*
@@ -365,21 +403,7 @@ E9738CE0 595A
 E9738CDE 595A
 */
 
-// 806FF248 form changing
-
-// TODO hook 806FF120 (unequip giant mask between scenes) to keep it on if scale is 0.1. maybe also grow form properties then
-// DONE TODO set 80382530 to 0x0020 0x0020 for walk animation cycle, and set 8038253E to 0xDAC for max speed // REG(38), REG(39), REG(45)
-// DONE TODO hook 806F027C (max speed calculation)
-// DONE TODO hook 807007F0 (checks wall collision height) // 4384C000
-// DONE TODO hook 800B7698 (checks walking up ledges) // 43FA0000
-// DONE TODO hook 800B7764 (check floor distance when jumping off ledge) // C2DC0000
-// DONE TODO hook 80704BF8 (hardcoded distance to surface? 100.0)
+// 80382530 REG
 
 // TODO
-// ceiling transformation height
-// sidehop/backflip momentum
-// climbing out of water?
-// dive distance
 // fall height damage // function at 806F43A0
-// spin attack radius
-// big octo softlock

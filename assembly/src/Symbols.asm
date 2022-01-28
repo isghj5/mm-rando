@@ -54,6 +54,7 @@
 .definelabel z2_Actor_ChangeAnimation, 0x800BDC5C
 .definelabel z2_BgCheck_EntityCheckCeiling, 0x800C4F84
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
+.definelabel z2_Collider_UpdateCylinder, 0x800E7DF8
 .definelabel z2_800EA0D4, 0x800EA0D4
 .definelabel z2_800EA0EC, 0x800EA0EC
 .definelabel z2_BaseDrawGiModel, 0x800EE320
@@ -77,8 +78,9 @@
 .definelabel z2_Kanfont_LoadAsciiChar, 0x800F4F54
 .definelabel z2_memcpy, 0x800FEC90
 .definelabel z2_Math_Sins, 0x800FED84
-.definelabel z2_HandleInputVelocity, 0x800FF2F8
+.definelabel z2_Math_AsymStepToF, 0x800FF2F8
 .definelabel z2_Math_Vec3f_DistXZ, 0x800FF92C
+.definelabel z2_Math_SmoothStepToF, 0x800FFCD8
 .definelabel Math_ApproachF, 0x800FFDF8
 .definelabel Math_ApproachZeroF, 0x800FFE68
 .definelabel z2_WriteHeartColors, 0x8010069C

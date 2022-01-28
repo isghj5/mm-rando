@@ -6,6 +6,7 @@
 #include <unk.h>
 #include <z64math.h>
 #include <z64animation.h>
+#include <z64collision_check.h>
 
 struct Actor;
 struct BgPolygon;
@@ -274,7 +275,9 @@ typedef struct {
     /* 0x395 */ UNK_TYPE1 pad395[0x37];
     /* 0x3CC */ s16 unk3CC;
     /* 0x3CE */ s8 unk3CE;
-    /* 0x3CF */ UNK_TYPE1 pad3CF[0x361];
+    /* 0x3CF */ UNK_TYPE1 pad3CF[0x149];
+    /* 0x518 */ ColCylinder collisionCylinder;
+    /* 0x564 */ UNK_TYPE1 pad564[0x1CC];
     /* 0x730 */ Actor* target;
     /* 0x734 */ UNK_TYPE1 pad734[0x334];
     /* 0xA68 */ PlayerFormProperties* formProperties; // Transformation-dependant f32 array, [11] used for distance to begin swimming.

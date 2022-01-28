@@ -241,6 +241,38 @@
 ;==================================================================================================
 
 ; Replaces:
+;   LBU     T1, 0x014B (S0)
+;   LUI     AT, 0x4248
+;   BNEZL   T1, 0x80834EC4
+;   MTC1    AT, F0
+;   LUI     AT, 0x42A0
+;   MTC1    AT, F0
+;   B       0x80834ECC
+;   LWC1    F8, 0x008C (S0)
+;   MTC1    AT, F0
+;   NOP
+.org 0x80834EA0
+    jal     Player_GetWaterSurfaceDistanceClimbHeight
+    or      a0, s0, r0
+    lw      v1, 0x005C (sp)
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
+; Replaces:
+;   LW      T0, 0x0A68 (S0)
+;   LUI     AT, 0x4270
+;   MTC1    AT, F18
+.org 0x808350D8
+    jal     Player_GetLedgeClimbFactorFromSwim_Hook
+    nop
+    lw      t0, 0x0A68 (s0)
+
+; Replaces:
 ;   LUI     AT, 0x4224
 ;   LWC1    F8, 0x0018 (V0)
 .org 0x80835118
@@ -267,6 +299,15 @@
 .org 0x808352CC
     jal     Player_GetLedgeJumpSpeed_Hook
     nop
+
+; Replaces:
+;   LUI     AT, 0x4090
+;   MTC1    AT, F4
+;   LUI     A3, 0x4040
+.org 0x808397D0
+    jal     Player_GetMidAirJumpSlashHeight_Hook
+    nop
+    MFC1    A3, F0
 
 ; Replaces:
 ;   LB      T6, 0x0145 (S0)
@@ -301,6 +342,66 @@
     lui     at, 0x0008
 
 ; Replaces:
+;   LW      A0, 0x0034 (SP)
+;   BEQ     T9, AT, 0x80839C88
+;   LUI     AT, 0x40A0
+;   MTC1    AT, F0
+.org 0x80839C5C
+    beq     t9, at, 0x80839C88
+    lw      a0, 0x0034 (sp)
+    jal     Player_GetJumpSlashHeight_Hook
+    nop
+
+; Replaces:
+;   LUI     AT, 0xC1A0
+;   MTC1    AT, F4
+.org 0x8083BF6C
+    jal     Player_GetNewMinVelocityY
+    nop
+
+; Replaces:
+;   SWC1    F4, 0x0078 (S0)
+.org 0x8083BF7C
+    swc1    f0, 0x0078 (s0)
+
+; Replaces:
+;   LUI     AT, 0x3FC0
+;   MTC1    AT, F16
+;   MTC1    T6, F4
+;   MTC1    A1, F12
+;   SWC1    F16, 0x0010 (SP)
+;   CVT.S.W F6, F4
+;   LH      T7, 0x004A (V0)
+;   SW      T7, 0x0014 (SP)
+;   DIV.S   F10, F6, F8
+;   MFC1    A3, F10
+.org 0x8083CB84
+    mtc1    t6, f4
+    mtc1    a1, f12
+    cvt.s.w f6, f4
+    lh      t7, 0x004A (v0)
+    sw      t7, 0x0014 (sp)
+    div.s   f10, f6, f8
+    mfc1    a3, f10
+    jal     Player_GetRunDeceleration_Hook
+    nop
+    swc1    f0, 0x0010 (sp)
+
+; Backwalk
+
+; Replaces:
+;   JAL     0x800FF2F8
+.org 0x8084A708
+    jal     Player_HandleInputVelocity
+
+; Sidewalk
+
+; Replaces:
+;   JAL     0x800FF2F8
+.org 0x8084AAF8
+    jal     Player_HandleInputVelocity
+
+; Replaces:
 ;   ADDIU   T9, R0, 0x00C8
 ;   SW      T9, 0x0018 (SP)
 ;   LH      A2, 0x0042 (SP)
@@ -316,6 +417,38 @@
 .org 0x8084C564
     jal     Player_GetLedgeGrabDistance_Hook
 
+; Replaces:
+;   ADDIU   A1, S0, 0x0240
+;   JAL     0x801360E0
+.org 0x8084CBBC
+    or      a1, s0, r0
+    jal     Player_AfterJumpSlashGravity_Hook
+
+; Replaces:
+;   LUI     AT, 0x3FC0
+;   MTC1    AT, F14
+.org 0x8084CEC0
+    jal     Player_GetSpinChargeWalkSpeedFactor_Hook
+    nop
+
+; Replaces:
+;   MTC1    AT, F14
+;   NOP
+.org 0x8084D248
+    jal     Player_GetSpinChargeWalkSpeedFactor_Hook
+    nop
+
+; Replaces:
+;   LUI     AT, 0xC000
+;   MTC1    AT, F10
+;   NOP
+;   SWC1    F10, 0x0068 (S0)
+.org 0x808517CC
+    nop
+    jal     Player_GetDiveSpeed
+    nop
+    swc1    f0, 0x0068 (s0)
+
 ;==================================================================================================
 ; Handle Giant Mask transformation height check
 ;==================================================================================================
@@ -324,3 +457,8 @@
 ;   JAL     0x800C4F84
 .org 0x80831B80
     jal     Player_UseItem_CheckCeiling_Hook
+
+; Replaces:
+;   JR      RA
+.org 0x8082F0DC
+    j       Player_AfterUpdateCollisionCylinder

@@ -181,6 +181,22 @@ Player_GetDiveDepth_Hook:
     jr      ra
     addiu   sp, sp, 0x24
 
+Player_GetLedgeClimbFactorFromSwim_Hook:
+    addiu   sp, sp, -0x20
+    sw      ra, 0x001C (sp)
+    swc1    f0, 0x0018 (sp)
+
+    jal     Player_GetLedgeClimbFactorFromSwim
+    swc1    f2, 0x0014 (sp)
+
+    mov.s   f18, f0
+
+    lwc1    f2, 0x0014 (sp)
+    lwc1    f0, 0x0018 (sp)
+    lw      ra, 0x001C (sp)
+    jr      ra
+    addiu   sp, sp, 0x20
+
 Player_GetLedgeClimbFactor_Hook:
     addiu   sp, sp, -0x24
     sw      ra, 0x0020 (sp)
@@ -257,6 +273,25 @@ Player_GetLedgeJumpSpeed_Hook:
     jr      ra
     addiu   sp, sp, 0x20
 
+Player_GetMidAirJumpSlashHeight_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0018 (sp)
+    sw      a1, 0x001C (sp)
+    sw      a2, 0x0020 (sp)
+
+    jal     Player_GetMidAirJumpSlashHeight
+    addiu   a0, sp, 0x0010
+
+    lwc1    f4, 0x0010 (sp)
+
+    lw      a2, 0x0020 (sp)
+    lw      a1, 0x001C (sp)
+    lw      a0, 0x0018 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
 Player_ModifyJumpHeight_Hook:
     addiu   sp, sp, -0x18
     sw      ra, 0x0014 (sp)
@@ -282,6 +317,36 @@ Player_ModifyJumpVelocity_Hook:
     lw      t2, 0x0A70 (s0)
 
     lw      v0, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
+Player_GetJumpSlashHeight_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+
+    jal     Player_GetJumpSlashHeight
+    sw      a0, 0x0018 (sp)
+
+    lw      a0, 0x0018 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
+Player_GetRunDeceleration_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0018 (sp)
+    sw      a1, 0x001C (sp)
+    sw      a2, 0x0020 (sp)
+
+    jal     Player_GetRunDeceleration
+    sw      a3, 0x0024 (sp)
+
+    lw      a3, 0x0024 (sp)
+    lw      a2, 0x0020 (sp)
+    lw      a1, 0x001C (sp)
+    lw      a0, 0x0018 (sp)
     lw      ra, 0x0014 (sp)
     jr      ra
     addiu   sp, sp, 0x18
@@ -325,6 +390,39 @@ Player_GetLedgeGrabDistance_Hook:
     lw      ra, 0x0014 (sp)
     jr      ra
     addiu   sp, sp, 0x18
+
+Player_AfterJumpSlashGravity_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0018 (sp)
+
+    jal     Player_AfterJumpSlashGravity
+    sw      a1, 0x001C (sp)
+
+    lw      a0, 0x0018 (sp)
+    lw      a1, 0x001C (sp)
+    jal     0x801360E0
+    addiu   a1, a1, 0x0240
+
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
+Player_GetSpinChargeWalkSpeedFactor_Hook:
+    addiu   sp, sp, -0x20
+    sw      ra, 0x001C (sp)
+    swc1    f0, 0x0018 (sp)
+
+    jal     Player_GetSpinChargeWalkSpeedFactor
+    sw      v1, 0x0014 (sp)
+
+    mov.s   f14, f0
+
+    lw      v1, 0x0014 (sp)
+    lwc1    f0, 0x0018 (sp)
+    lw      ra, 0x001C (sp)
+    jr      ra
+    addiu   sp, sp, 0x20
 
 Player_UseItem_CheckCeiling_Hook:
     lw      t5, 0x0014 (sp)

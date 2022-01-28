@@ -54,3 +54,32 @@
 .org 0x800B7764
     nop
     jal     GiantMask_GetLedgeWalkOffHeight_Hook
+
+;==================================================================================================
+; Adjust big octo spit velocity
+;==================================================================================================
+
+.headersize G_EN_BIGOKUTA_DELTA
+
+; Replaces:
+;   LUI     AT, 0x4120
+;   MTC1    AT, F2
+.org 0x80AC2AE8
+    jal     GiantMask_GetBigOctoSpitVelocity_Hook
+    nop
+
+;==================================================================================================
+; Adjust spin attack size
+;==================================================================================================
+
+.headersize G_EN_M_THUNDER_DELTA
+
+; Replaces:
+;   JAL     0x800FFCD8
+.org 0x808B5FDC
+    jal     GiantMask_Math_SmoothStepToF
+
+; Replaces:
+;   JAL     0x800E7DF8
+.org 0x808B601C
+    jal     GiantMask_AdjustSpinAttackHeight

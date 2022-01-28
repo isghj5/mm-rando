@@ -173,7 +173,7 @@ void Player_HandleFormSpeed(GlobalContext* ctxt, ActorPlayer* player, f32* speed
     }
     // End displaced code
 
-    *speed *= GiantMask_GetScaleModifier();
+    *speed *= GiantMask_GetSimpleScaleModifier();
 
     if (player->mask == 0x14) {
         *speed *= giantSpeedModifier;
@@ -185,7 +185,7 @@ f32 Player_GetWallCollisionHeight(ActorPlayer* player) {
     f32 result = 26.8f;
     // End displaced code
 
-    result *= GiantMask_GetScaleModifier();
+    result *= GiantMask_GetSimpleScaleModifier();
 
     return result;
 }
@@ -195,7 +195,32 @@ f32 Player_GetDiveDepth() {
     f32 result = 100.0f;
     // End displaced code
 
-    result *= GiantMask_GetScaleModifier();
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
+f32 Player_GetWaterSurfaceDistanceClimbHeight(ActorPlayer* player) {
+    // Displaced code:
+    f32 result;
+    if (player->form == PLAYER_FORM_FIERCE_DEITY) {
+        result = 80.0f;
+    } else {
+        result = 50.0f;
+    }
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
+f32 Player_GetLedgeClimbFactorFromSwim() {
+    // Displaced code:
+    f32 result = 60.0f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
 
     return result;
 }
@@ -206,7 +231,7 @@ f32 Player_GetLedgeClimbFactor() {
     f32 result = 59.0f;
     // End displaced code
 
-    result *= GiantMask_GetScaleModifier();
+    result *= GiantMask_GetSimpleScaleModifier();
 
     return result;
 }
@@ -217,14 +242,14 @@ f32 Player_GetLedgeClimbFactor2() {
     f32 result = 41.0f;
     // End displaced code
 
-    result *= GiantMask_GetScaleModifier();
+    result *= GiantMask_GetSimpleScaleModifier();
 
     return result;
 }
 
 // 806F2600
 f32 Player_GetInvertedLedgeClimbFactor() {
-    return 100.0f / GiantMask_GetScaleModifier();
+    return 100.0f / GiantMask_GetSimpleScaleModifier();
 }
 
 // 806F275C
@@ -233,13 +258,26 @@ f32 Player_GetLedgeJumpSpeed() {
     f32 result = 5.5f;
     // End displaced code
 
-    result *= GiantMask_GetScaleModifier();
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
+f32 Player_GetMidAirJumpSlashHeight(f32* outAlternateHeight) {
+    // Displaced code:
+    f32 result = 3.0f;
+    *outAlternateHeight = 4.5f;
+    // End displaced code
+
+    f32 modifier = GiantMask_GetSimpleScaleModifier();
+    result *= modifier;
+    *outAlternateHeight *= modifier;
 
     return result;
 }
 
 f32 Player_GetJumpHeightModifier(GlobalContext* ctxt, ActorPlayer* player) {
-    f32 result = GiantMask_GetScaleModifier();
+    f32 result = GiantMask_GetSimpleScaleModifier();
 
     // Displaced code:
     if (player->currentBoots == 2) {
@@ -251,11 +289,58 @@ f32 Player_GetJumpHeightModifier(GlobalContext* ctxt, ActorPlayer* player) {
 }
 
 void Player_ModifyJumpVelocity(ActorPlayer* player) {
-    player->linearVelocity *= GiantMask_GetScaleModifier();
+    player->linearVelocity *= GiantMask_GetSimpleScaleModifier();
+}
+
+f32 Player_GetJumpSlashHeight() {
+    // Displaced code:
+    f32 result = 5.0f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
+f32 Player_GetNewMinVelocityY() {
+    // Displaced code:
+    f32 result = -20.0f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
+f32 Player_GetRunDeceleration() {
+    // Displaced code:
+    f32 result = 1.5f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
+f32 Player_GetBackwalkAcceleration() {
+    // Displaced code:
+    f32 result = 1.5f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
+s32 Player_HandleInputVelocity(f32* pValue, f32 target, f32 incrStep, f32 decrStep) {
+    const f32 modifier = GiantMask_GetSimpleScaleModifier();
+    incrStep *= modifier;
+    decrStep *= modifier;
+    return z2_Math_AsymStepToF(pValue, target, incrStep, decrStep);
 }
 
 void Player_GetMidAirAcceleration(f32* increment, f32* decrement) {
-    const f32 modifier = GiantMask_GetScaleModifier();
+    const f32 modifier = GiantMask_GetSimpleScaleModifier();
     *increment *= modifier;
     *decrement *= modifier;
 }
@@ -266,7 +351,31 @@ f32 Player_GetLedgeGrabDistance() {
     f32 result = 150.0f;
     // End displaced code
 
-    result *= GiantMask_GetScaleModifier();
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
+void Player_AfterJumpSlashGravity(GlobalContext* ctxt, ActorPlayer* player) {
+    player->base.gravity *= GiantMask_GetSimpleScaleModifier();
+}
+
+f32 Player_GetSpinChargeWalkSpeedFactor() {
+    // Displaced code:
+    f32 result = 1.5f;
+    // End displaced code
+
+    result *= (1.0f / GiantMask_GetSimpleScaleModifier());
+
+    return result;
+}
+
+f32 Player_GetDiveSpeed() {
+    // Displaced code:
+    f32 result = -2.0f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
 
     return result;
 }
@@ -277,4 +386,8 @@ bool Player_UseItem_CheckCeiling(CollisionContext* colCtx, f32* outY, Vec3f* pos
         checkHeight *= GiantMask_GetNextScaleFactor();
     }
     return z2_BgCheck_EntityCheckCeiling(colCtx, outY, pos, checkHeight, outPoly, inItemIdOutBgId, &player->base);
+}
+
+void Player_AfterUpdateCollisionCylinder(ActorPlayer* player) {
+    player->collisionCylinder.params.radius *= GiantMask_GetSimpleScaleModifier();
 }

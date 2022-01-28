@@ -52,6 +52,7 @@
 0x800BDC5C,z2_Actor_ChangeAnimation
 0x800C4F84,z2_BgCheck_EntityCheckCeiling
 0x800C99D4,z2_GetFloorPhysicsType
+0x800E7DF8,z2_Collider_UpdateCylinder
 0x800EA0D4,z2_800EA0D4
 0x800EA0EC,z2_800EA0EC
 0x800EE320,z2_BaseDrawGiModel
@@ -75,8 +76,9 @@
 0x800F4F54,z2_Kanfont_LoadAsciiChar
 0x800FEC90,z2_memcpy
 0x800FED84,z2_Math_Sins
-0x800FF2F8,z2_HandleInputVelocity
+0x800FF2F8,z2_Math_AsymStepToF
 0x800FF92C,z2_Math_Vec3f_DistXZ
+0x800FFCD8,z2_Math_SmoothStepToF
 0x800FFDF8,Math_ApproachF
 0x800FFE68,Math_ApproachZeroF
 0x8010069C,z2_WriteHeartColors
