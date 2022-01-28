@@ -146,6 +146,7 @@ namespace MMR.Randomizer
                     var matchingEnemy = VanillaEnemyList.Find(u => (int)u == mapActor.ActorID);
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.AllVariants();
+                        //var listOfAcceptableVariants = matchingEnemy.vVariants;
                         if (!matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)
                             && listOfAcceptableVariants.Contains(mapActor.OldVariant))
                         {
@@ -451,42 +452,42 @@ namespace MMR.Randomizer
 
             var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
             terminafieldScene.Maps[0].Actors[144].Position.y = -245; // fixes the eeno that is way too high above ground
-            terminafieldScene.Maps[0].Actors[16].Position.y  = -209; // fixes the eeno that is way too high above ground
-            terminafieldScene.Maps[0].Actors[17].Position.y  = -185; // fixes the eeno that is too high above ground (bombchu explode)
-            terminafieldScene.Maps[0].Actors[60].Position.y  = -60;  // fixes the blue bubble that is too high
+            terminafieldScene.Maps[0].Actors[ 16].Position.y = -209; // fixes the eeno that is way too high above ground
+            terminafieldScene.Maps[0].Actors[ 17].Position.y = -185; // fixes the eeno that is too high above ground (bombchu explode)
+            terminafieldScene.Maps[0].Actors[ 60].Position.y =  -60; // fixes the blue bubble that is too high
             terminafieldScene.Maps[0].Actors[107].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[110].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[121].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[153].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
 
-            // have to fix the two wolfos spawn in twin islands that spawn off scew, 
-            //   redead falls through the floor otherwise
+            // the two wolfos spawn in twin islands spawn off scew, 
+            //   redead falls through the floor when you approach them with this skew
             var twinislandsRoom0FID = GameObjects.Scene.TwinIslands.FileID() + 1;
             RomUtils.CheckCompressed(twinislandsRoom0FID);
             var twinislandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslands.FileID());
             FlattenPitchRoll(twinislandsScene.Maps[0].Actors[26]);
             FlattenPitchRoll(twinislandsScene.Maps[0].Actors[27]);
 
-            // move the bombchu in the first stonetowertemple room 
+            // in STT, move the bombchu in the first room 
             //   backward several feet from the chest, so replacement cannot block the chest
             var stonetowertempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.StoneTowerTemple.FileID());
             stonetowertempleScene.Maps[0].Actors[3].Position.z = -630;
             // biobaba in the right room spawns under the bridge, if octarock it pops up through the tile, move to the side of the bridge
             stonetowertempleScene.Maps[3].Actors[19].Position.x = 1530;
 
-            // the dinofos spawn is near the roof in woodfall, lower
-            // TODO: do secret shrine too maybe
+            // in WFT, the dinofos spawn is near the roof, lower
+            // TODO: do secret shrine too maybe if we randomize
             var woodfalltempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
             woodfalltempleScene.Maps[7].Actors[0].Position.y = -1208;
 
-            /// the storage room bo spawns in the air in front of the mirror, 
-            /// but as a land enemy it should be placed on the ground for its replacements
+            // in OSH, the storage room bo spawns in the air in front of the mirror, 
+            //  but as a land enemy it should be placed on the ground for its replacements
             var oceanspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.OceanSpiderHouse.FileID());
             var storageroomBo = oceanspiderhouseScene.Maps[5].Actors[2];
             // lower to the floor 
             storageroomBo.Position = new vec16(-726, -118, -1651);
 
-            // the bombchus in GBT are in bad spots to be replaced by something unpassable,
+            // in GBT, the bombchus on the pipes are in bad spots to be replaced by something unpassable,
             // but most people dont notice where their original spawn even is so move them
             var greatbaytempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayTemple.FileID());
             // the bombchu along the green pipe in the double seesaw room needs to be moved in case its an unmovable enemy
@@ -494,18 +495,14 @@ namespace MMR.Randomizer
             // the bombchu along the red pipe in the pre-wart room needs the same kind of moving
             greatbaytempleScene.Maps[6].Actors[7].Position = new vec16(-1840, -570, -870);
 
-            var grottosScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Grottos.FileID());
-            grottosScene.Maps[13].Actors[1].Variants[0] = 1; // change the grass in peahat grotto to drop items like TF grass
-
             var linkTrialScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LinkTrial.FileID());
             linkTrialScene.Maps[1].Actors[0].Position.y = 1; // up high dinofos spawn, red bubble would spawn in the air, lower to ground
 
             if (ACTORSENABLED)
             {
                 // in order to randomize dog, without adding that dog back in because it can crash, we need to change the vars on the dog we want changed
-                //  should add a "randomize but do not-reuse vars" attribute to get around this, but there just aren't enough uses right this second
-                var swampspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
-                swampspiderhouseScene.Maps[0].Actors[2].Variants[0] = 0x3FF;
+                //var swampspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
+                //swampspiderhouseScene.Maps[0].Actors[2].Variants[0] = 0x3FF;
 
                 var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
                 var torchRotation = dekuPalaceScene.Maps[2].Actors[26].Rotation.z;
@@ -580,6 +577,9 @@ namespace MMR.Randomizer
 
         private static void Shinanigans()
         {
+            var grottosScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Grottos.FileID());
+            grottosScene.Maps[13].Actors[1].Variants[0] = 1; // change the grass in peahat grotto to drop items like TF grass
+
             if (ACTORSENABLED)
             {
 
@@ -593,7 +593,7 @@ namespace MMR.Randomizer
                 // it was two torches, turn the other into a secret grotto, at least for now
                 var randomGrotto = new List<ushort> { 0x6033, 0x603B, 0x6018, 0x605C, 0x8000, 0xA000, 0x7000, 0xC000, 0xE000, 0xF000, 0xD000 };
                 var hiddenGrottos = new List<ushort> { 0x6233, 0x623B, 0x6218, 0x625C, 0x8200, 0xA200, 0x7200, 0xC200, 0xE200, 0xF200, 0xD200 };
-                laundryPoolScene.Maps[0].Actors[1].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)]);
+                laundryPoolScene.Maps[0].Actors[1].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)], modifyOld: true);
                 laundryPoolScene.Maps[0].Actors[1].Rotation = new vec16(0x7f, 0x7f, 0x7f);
                 laundryPoolScene.Maps[0].Actors[1].Position = new vec16(-1502, 35, 555); // old: new vec16(-1872, -120, 229);
 
@@ -605,13 +605,13 @@ namespace MMR.Randomizer
 
                 // now that darmani ghost is gone, lets re=use the actor for secret grotto
                 winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)] & 0xFCFF);
-                //winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: 0x4000);
+                //winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: 0x4000, modifyOld:true);
                 winterVillage.Maps[0].Actors[2].Position = new vec16(504, 365, 800);
 
                 var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
                 var elf6grotto = terminafieldScene.Maps[0].Actors[2];
                 elf6grotto.Position = new vec16(-5539, -275, -701);
-                elf6grotto.ChangeActor(GameObjects.Actor.GrottoHole, vars: hiddenGrottos[seedrng.Next(hiddenGrottos.Count)]);
+                elf6grotto.ChangeActor(GameObjects.Actor.GrottoHole, vars: hiddenGrottos[seedrng.Next(hiddenGrottos.Count)], modifyOld: true);
 
                 // one of the torches in palace is facing into the wall, actors replacing it also face the same way, bad
                 // one of these is not required and does nothing
@@ -653,16 +653,6 @@ namespace MMR.Randomizer
             twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall 
 
 
-            // demo_kankyo, can we just turn on its always update flag
-            /*
-            RomUtils.CheckCompressed(GameObjects.Actor.Demo_Kankyo.FileListIndex());
-            var demoKankyoData = RomData.MMFileList[GameObjects.Actor.Demo_Kankyo.FileListIndex()].Data;
-            var flagsOffset = GameObjects.Actor.Demo_Kankyo.ActorInitOffset() + 0x2;
-            demoKankyoData[flagsOffset] |= 0xFF;
-            */
-
-
-
             // test if we can make it dark at night everywhere?
             // dark room just enables point lights, is that it for inside?
             //foreach (var s in RomData.SceneList)
@@ -689,33 +679,6 @@ namespace MMR.Randomizer
                 }
             } //  */
 
-            /*
-            var greatBayCoast = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
-            greatBayCoast.Maps[1].Actors[8].ActorID = 0;
-            greatBayCoast.Maps[1].Actors[8].ChangeActor(GameObjects.Actor.GrottoHole, vars:0x5000);
-            //greatBayCoast.Maps[1].Actors[8].Position = new vec16(-3433, -242, 4646);
-            greatBayCoast.Maps[1].Actors[8].Position = new vec16(-3433, 10, 4646);
-            greatBayCoast.Maps[1].Actors[8].Rotation = new vec16(0x7f, 0x7f, 0x7f);
-            */
-
-            //RomUtils.CheckCompressed(1320);
-            //ReadWriteUtils.Arr_WriteU16(RomData.MMFileList[1320].Data, (0x4 * 0x16) + (22 * 16) + 10, (ushort) MergeRotationAndFlags(new Random().Next(5) * 0x6 * 12, 0x8 | 0x4));
-
-
-            // test bonk spider
-
-            /*
-            var testScene = GameObjects.Scene.TwinIslands;
-            var grottoRoom0FID = testScene.FileID() + 1;
-            RomUtils.CheckCompressed(grottoRoom0FID);
-            var grottoSceneIndex = RomData.SceneList.FindIndex(u => u.File == testScene.FileID());
-            var grottoSceneActorAddr = RomData.SceneList[grottoSceneIndex].Maps[0].ActorAddr;
-            int actorNumber = 1;
-            SetHeight(grottoRoom0FID, grottoSceneActorAddr, actorIndex: actorNumber, height: 140);
-            SetX(grottoRoom0FID, grottoSceneActorAddr, actorIndex: actorNumber, -583);
-            SetZ(grottoRoom0FID, grottoSceneActorAddr, actorIndex: actorNumber, -20);
-            SetVariant(testScene, roomIndex: 0, actorNumber, 0x7200); */
-
             //PrintActorValues();
         }
 
@@ -737,8 +700,6 @@ namespace MMR.Randomizer
 
         private static void PrintActorValues()
         {
-            /// debugging, checking if ram sizes are correct
-
             /*
             for (var i = 1; i < 0x2B2; ++i)
             {
@@ -844,7 +805,7 @@ namespace MMR.Randomizer
             // because this room is already borderline lag fest, turn one into a lillypad
             // actor 7 is the furthest back in the cave, unreachable
             var newLilyPad = southernswampScene.Maps[0].Actors[6];
-            newLilyPad.ChangeActor(GameObjects.Actor.Lilypad, vars: 0);
+            newLilyPad.ChangeActor(GameObjects.Actor.Lilypad, vars: 0, modifyOld: true);
             newLilyPad.Position = new vec16(561, 0, 790); // placement: toward back wall behind tourist center
 
             var movedToTree = southernswampScene.Maps[0].Actors[4];
@@ -903,7 +864,7 @@ namespace MMR.Randomizer
             // coast: tidepool likelike is water
             coastScene.Maps[0].Actors[20].Variants[0] = 2;
 
-            // cleared coast likeliks
+            // cleared coast likelikes
             coastScene.Maps[1].Actors[43].Variants[0] = 2;
             coastScene.Maps[1].Actors[44].Variants[0] = 2;
             coastScene.Maps[1].Actors[46].Variants[0] = 2;
@@ -918,34 +879,35 @@ namespace MMR.Randomizer
             var wallmaster = dampehouseScene.Maps[0].Actors[0];
             // move to center of the main room,
             wallmaster.Position.z = 0x40;
-            //and straighten because for some reason its really off scew, probably using rotation as parameters
+            // previous encounter actor used rotation as parameters, flatten rotation now for replacement
             FlattenPitchRoll(wallmaster);
             // change actor to wallmaster proper for enemizer detection
-            wallmaster.ChangeActor(newActorType: GameObjects.Actor.WallMaster, vars: 0x1);
+            wallmaster.ChangeActor(newActorType: GameObjects.Actor.WallMaster, vars: 0x1, modifyOld: true);
         }
 
         private static void EnableTwinIslandsSpringSkullfish()
         {
-            /// the skullfish in twinislands spring are an encounter actor, not actual skullfish
+            /// the skullfish in twinislands spring are an encounter actor, not regular skullfish actors
             ///  we have to switch them to regular skullfish for enemizer shuffle to find and replace them
-            /// also we move them out of the cave in case its a water surface enemy
+            /// also we move them out of the cave in case its a water surface enemy, and to spread them out
+            ///  default they are all stacked on top of the cave chest 
 
             var twinislandsspringScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslandsSpring.FileID());
             var encounter1 = twinislandsspringScene.Maps[0].Actors[21];
-            encounter1.ChangeActor(GameObjects.Actor.SkullFish, vars: 0);
-            FlattenPitchRoll(encounter1); // flatten weird encounter rotation
+            encounter1.ChangeActor(GameObjects.Actor.SkullFish, vars: 0, modifyOld: true);
+            FlattenPitchRoll(encounter1); // flatten encounter rotation (rotation parameters
             // move to just outside cave (east)
             encounter1.Position = new vec16(-317, 0, -881);
 
             var encounter2 = twinislandsspringScene.Maps[0].Actors[27];
-            encounter2.ChangeActor(GameObjects.Actor.SkullFish, vars: 0);
-            FlattenPitchRoll(encounter2); // flatten weird encounter rotation
+            encounter2.ChangeActor(GameObjects.Actor.SkullFish, vars: 0, modifyOld: true);
+            FlattenPitchRoll(encounter2); // flatten encounter rotation (rotation parameters
             // move to just outside cave (west)
             encounter2.Position = new vec16(-200, 0, -890);
 
             var encounter3 = twinislandsspringScene.Maps[0].Actors[28];
-            encounter3.ChangeActor(GameObjects.Actor.SkullFish, vars: 0);
-            FlattenPitchRoll(encounter3); // flatten weird encounter rotation
+            encounter3.ChangeActor(GameObjects.Actor.SkullFish, vars: 0, modifyOld: true);
+            FlattenPitchRoll(encounter3); // flatten encounter rotation (rotation parameters
             // move to near chest on the south side
             encounter3.Position = new vec16(300, 0, 700);
         }
@@ -975,7 +937,7 @@ namespace MMR.Randomizer
             var coastScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
             coastScene.Maps[0].Actors[17].Position.z = 3033; // edge the guay over the land just a bit
 
-            // not sure if this will even work, will he get blown away? would it not be better to let him fall away into the abyss?
+            // to prevent him from falling to abyss
             var snowheadKeese = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Snowhead.FileID()).Maps[0].Actors[0];
             snowheadKeese.Position.x = -758;
         }
@@ -995,9 +957,12 @@ namespace MMR.Randomizer
 
         private static void EnablePoFusenAnywhere()
         {
-            /// the flying poe baloon romani uses to play her game doesn't spawn unless it has an explosion fuse timer
-            ///  or it detects romani actor in the scene, so it can count baloon pops
-            /// but the code that blocks the baloon if neither of these are true is nop-able, and the rest of the code is fine without romani
+            /// the flying poe baloon romani uses to play her game doesn't spawn unless
+            ///  1) it has an explosion fuse timer OR
+            ///  2) it detects romani actor in the scene, so it can count baloon pops
+            /// but the code that blocks the baloon if neither of these are true is nop-able,
+            ///   and the rest of the code is designed to work without issue in this case
+
             if (!ReplacementListContains(GameObjects.Actor.PoeBalloon))
             {
                 return;
@@ -1006,7 +971,7 @@ namespace MMR.Randomizer
             var enPoFusenFID = GameObjects.Actor.PoeBalloon.FileListIndex();
             RomUtils.CheckCompressed(enPoFusenFID);
 
-            // nops the MarkForDeath function call, should stop them from de-spawning
+            // nops the MarkForDeath function call, stops them from de-spawning
             ReadWriteUtils.Arr_WriteU32(RomData.MMFileList[enPoFusenFID].Data, Dest: 0xF4, val: 0x00000000);
 
             // because they can now show up in weird places, they need to be poppable more ways
@@ -1026,10 +991,12 @@ namespace MMR.Randomizer
         {
             /// chickens take too many hits before they get mad, let's shrink this
             /// niw health is rand(0-9.9) + 10.0 (10-20 hits), lets replace with 0-2 + 1
+
             RomUtils.CheckCompressed(GameObjects.Actor.FriendlyCucco.FileListIndex());
             var niwData = RomData.MMFileList[GameObjects.Actor.FriendlyCucco.FileListIndex()].Data;
-            ReadWriteUtils.Arr_WriteU32(niwData, 0x24A8, 0x40000000); // 9.9 -> 2 in f32 (in rodata, loaded into init)
-            ReadWriteUtils.Arr_WriteU16(niwData, 0x156, 0x3f80); // 10 -> 1 in f32(first short only as literal) (in init)
+            // both of these changes made in EnNiw_Init
+            ReadWriteUtils.Arr_WriteU32(niwData, 0x24A8, 0x40000000); // 9.9 -> 2 in f32 (in rodata)
+            ReadWriteUtils.Arr_WriteU16(niwData, 0x156,  0x3F80); // 10 -> 1 in f32 (first short only as literal hardcoded)
         }
 
         public static void FixThornTraps()
@@ -1048,7 +1015,8 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU32(thornData, 0x378, 0x00000000);
         }
 
-        public static void FixSeth2(){
+        public static void FixSeth2()
+        {
             /// seth 2, the guy waving his arms in the termina field telescope, like oot spiderhouse
             /// his init code checks for a value, and does not spawn if the value is different than expected
             if (!ReplacementListContains(GameObjects.Actor.Seth2))
@@ -1081,6 +1049,10 @@ namespace MMR.Randomizer
             /// however there is a (as far as I can tell) unused object in this scene we can swap
             /// object_dns which is the object used by the dancing deku guards in the king's chamber
             /// nothing seems to use their object in the regular palace scene, no idea why the object is there
+            if (!ReplacementListContains(GameObjects.Actor.DekuPatrolGuard))
+            {
+                return;
+            }
 
             var frontGuardOID = GameObjects.Actor.DekuPatrolGuard.ObjectIndex();
             var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
@@ -1847,7 +1819,7 @@ namespace MMR.Randomizer
                     }
                     bool result;
                     //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Bg_Breakwall)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GossipStone)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif
@@ -2575,7 +2547,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 29.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 30.0\n");
                 }
             }
             catch (Exception e)

@@ -3,7 +3,7 @@ using MMR.Randomizer.Attributes.Actor;
 
 namespace MMR.Randomizer.GameObjects
 {
-    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
+    [System.Diagnostics.DebuggerDisplay("{this.ToString()}")]
     public enum Actor
     {
         /// the main enumator value is the vanilla actor list ID
@@ -1379,29 +1379,27 @@ namespace MMR.Randomizer.GameObjects
         [FileID(215)]
         [ObjectListIndex(0x132)]
         // 3FF is SCT dog, 0x22BF is spiderhouse dog, makes no sense if use mask
-        // 0xD9F is old ranch dog WORKS, racetrack dogs unknown, spawned by the game
-        // in mamuyan: (phi_s0 << 5) | (arg0->unk1C & 0x7E00) unk1C seems static
+        // both frolicing dogs(EnDg) and racing dogs spawned by mamuyan
         // from mamuyan code we know the colors are 1-E shifted right by 5
         // colors: (white, brown, dark grey, bluedog, gold)
         // 0x001F params are unknown, they aren't checked in init
-        // D9F crashes in road to southernswamp turned into 19F
-        //[GroundVariants(0xFC20)] // testing max path is no path // does not spawn, sad
         [GroundVariants(0x20, 0x40, 0x60, 0x80, 0x120,
-            0x3FF, 0x19F, 0x02BF)]
-        [PathingVariants(0x19F, 0xD9F, 0x3FF, 0x22BF,
+            0x03FF, 0x019F, 0x02BF)]
+        [PathingVariants(0x019F, 0x0D9F, 0x03FF, 0x22BF,
             0x20, 0x40, 0x60, 0x80, 0x120)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift:10)]
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max:2, 0x3FF, 0x19F, 0x02BF, 0x20, 0x40, 0x60, 0x80, 0x120)] // this many dogs is enough honestly
+        [VariantsWithRoomMax(max:1, variant: 0x20, 0x40, 0x60, 0x80, 0x120,
+            0x22BF, 0x03FF, 0x019F, 0x02BF, 0xD9F)] // this many dogs is enough honestly
         [EnemizerScenesExcluded(Scene.RanchBuildings, Scene.RomaniRanch, Scene.SouthClockTown)]//, Scene.SwampSpiderHouse)]
         // dog safe areas: TF, roadtoSS, SS, SSC, deku palace, sspiderhouse
         // path to mountain village
-        // now that I know what the path vars is, any area with at least one path per room should be safe
+        // now that I know what the path vars is, any area with at least one path per room should be safe for index:0 dogs
         // these used to be banned, but we should be able to use them now:
-        //DekuShrine RoadToIkana GoronVillage
+        // DekuShrine RoadToIkana GoronVillage
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior, // cursed if put on hms
             Scene.Woodfall, // they fall off into the water and quietly swim, lame?
-            Scene.MountainVillageSpring, Scene.RanchBuildings)]
+            Scene.MountainVillageSpring, Scene.RanchBuildings)] // crash because not enough paths
         Dog = 0xE2, // En_Dg
 
         [FileID(216)]
@@ -1441,10 +1439,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x3E40)]
         [FileID(222)]
         [ObjectListIndex(0x141)]
-        //01 is winter coat, 0x800 is with ice block
+        // params: 0x1 is winter coat, 0x800 is with ice block
         // ice block versions are limited because they are complicated collision and really long draw distance
         [GroundVariants(0xFF01, 0xFF81, 0xFF00, 0xFF80)]
-        [VariantsWithRoomMax(max: 2, variant: 0xFF81)]
+        [VariantsWithRoomMax(max: 1, variant: 0xFF81)]
         [VariantsWithRoomMax(max: 1, variant: 0xFF80)]
         Wolfos = 0xEC, // En_Wf
 
@@ -1452,12 +1450,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2D60)]
         [FileID(223)]
         [ObjectListIndex(0x142)]
-        // 0x0042 is swinging from tree, looks stupid if spawns in the ground, 22 is sitting on the edge of a bookcase, looks weird on the ground
-        [GroundVariants(0x0032)]
+        // 0x0042 is swinging from tree, looks stupid if spawns in the ground,
+        // 0x0022 is sitting on the edge of a bookcase, looks weird on the ground
+        [GroundVariants(0x0032)] // 0x32: sitting around the fire
         [CompanionActor(Flame, variant: 0x7F4)] // they like fire in this game
         [EnemizerScenesExcluded(Scene.IkanaGraveyard, Scene.OceanSpiderHouse)]
-        //[UnkillableVariants(0x32)] the ones that circle the tombs, but dont respawn if placed anywhere else it seems, ignore
-        Stalchild = 0xED,
+        Stalchild = 0xED, // En_Skb
 
         EmptyEE = 0xEE,
 
@@ -1465,15 +1463,28 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x28F0)]
         [FileID(224)]
         [ObjectListIndex(0x143)]
-        // all moon mask hints, which are free but since they are mask hints they are often worthless
-        [GroundVariants(0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62)]
-        [WallVariants(0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62)]
+        //params: 0x0FE0 is switch flags (?) 0xF000 is sizetype, 0x001F is dialogue to use (params + 0x20D3 to get textId)
+        // first row: all moon mask hints, which are free but since they are mask hints they are often worthless (0x1000 someetimes added)
+        // second row: overworld variants: center, south north west east order
+        [GroundVariants(0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62,
+            0x3BEE, 0x3BE8, 0x3BC9, 0x3BAA, 0x3B80, 0x3B6B, 0x3B51, 0x3BB4, 0x3BCC, 0x3BED, 0x3BF0, 0x3BF3, 0x3BF2, // center
+            0x3BF0, 0x3C01, 0x3BD7, // south
+            0x3BE3, 0x3BF6, 0x3BF6, 0x3716, 0x3BC2, 0x3722, // north
+            0x38CF, 0x3BE4, // west
+            0x3425, 0x3946, 0x3967, 0xFF, 0x3986, 0x3995, 0x3955)] // east
+        [WallVariants(0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62,
+            0xEE, 0xE8, 0xC9, 0xAA, 0x80, 0x6B, 0x51, 0xB4, 0xCC, 0xED, 0xF0, 0xF3, 0xF2,
+            0xF0, 0x01, 0xD7,
+            0xE3, 0xF6, 0xF6, 0x16, 0xC2, 0x22,
+            0xCF, 0xE4,
+            0x25, 0x46, 0x67, 0xFF, 0x86, 0x95, 0x55)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.MilkRoad,
-            Scene.RomaniRanch, Scene.IkanaCanyon, Scene.LinkTrial)]
-        [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // crash
-        GossipStone = 0xEF,
+        //[EnemizerScenesExcluded(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.MilkRoad,
+        //    Scene.RomaniRanch, Scene.IkanaCanyon, Scene.LinkTrial)] // don't replace the originals as we might need for hints
+        [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // crash (reason unk)
+        GossipStone = 0xEF, // En_Gs
 
+        // todo: add as companion to anything that makes sense if really free
         [FileID(225)]
         [ObjectListIndex(0x1)]
         VariousWorldSounds2 = 0xF0, // Obj_Sound
@@ -1483,8 +1494,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(226)]
         [ObjectListIndex(0x6)]
         [FlyingVariants(0, 1)]
-        [RespawningVariants(0, 1)] // weirdly, all versions of regular guay are respawning
-        [VariantsWithRoomMax(max: 8, variant: 0, 1)]
+        [RespawningAllVariants]
+        [VariantsWithRoomMax(max: 7, variant: 0, 1)]
         Guay = 0xF1,
 
         EmptyF2 = 0xF2,

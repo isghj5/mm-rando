@@ -188,19 +188,26 @@ namespace MMR.Randomizer.Models.Rom
             return actorList;
         }
 
-        public void ChangeActor(GameObjects.Actor newActorType, int vars = -1)
+        public void ChangeActor(GameObjects.Actor newActorType, int vars = -1, bool modifyOld = false)
         {
             /// this is for actor slots, changing the actor for re-writing the slot
 
-            ActorEnum   = newActorType;
-            Name        = newActorType.ToString();
-            ActorID     = (int)newActorType;
-            ObjectID    = newActorType.ObjectIndex();
+            this.ActorEnum   = newActorType;
+            this.Name        = newActorType.ToString();
+            this.ActorID     = (int)newActorType;
+            this.ObjectID    = newActorType.ObjectIndex();
             if (vars != -1)
             {
                 Variants[0] = vars;
             }
-        } // */
+
+            if (modifyOld)
+            {
+                this.OldVariant = vars;
+                this.OldActorEnum = newActorType;
+                this.OldName = newActorType.ToString();
+            }
+        }
 
         public void ChangeActor(Actor otherActor, int vars)
         {
