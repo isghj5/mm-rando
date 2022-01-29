@@ -3713,8 +3713,12 @@ namespace MMR.Randomizer.GameObjects
         En_Tanron6 = 0x269, // En_Tanron6
 
         // doubt we can use him since he likely has a path, unless I move him over next to a wall and have him digging randomly
+        [ActorizerEnabled]
         [FileID(577)]
         [ObjectListIndex(0xF1)]
+        [GroundVariants(0x201, 0x9FFF)]
+        // restrict if not
+        [UnkillableAllVariants]
         MilkroadCarpenter = 0x26A, // En_Daiku2
 
         [ActorizerEnabled]
