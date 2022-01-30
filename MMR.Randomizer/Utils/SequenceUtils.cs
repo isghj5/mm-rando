@@ -23,7 +23,10 @@ namespace MMR.Randomizer.Utils
         // 72:wagonride, 0E:boatcruise, 29:zelda, 2D:giants, 
         // 2E:guruguru, 7B:maskreveal(gaints summon cutscene), 73:keaton, 70:calling giants
         // 7D is reunion, 0x50 is sword school
-        public static List<int> lowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04, 0x42, 0x27, 0x31, 0x45, 0x72, 0x0E, 0x29, 0x2D, 0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50 };
+        public static List<int> lowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04,
+                                                                   0x42, 0x27, 0x31, 0x45,
+                                                                   0x72, 0x0E, 0x29, 0x2D,
+                                                                   0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50 };
 
         public static int MAX_BGM_BUDGET            = 0x3800; // vanilla: 0x3800
         public static int MAX_COMBAT_BUDGET         = 0x3800; // unk
@@ -460,8 +463,7 @@ namespace MMR.Randomizer.Utils
 
             if (shortenedCutscenes)
             {
-                // these cutcscene songs are never heard if shorten cutscenes is enabled, just pointerize it
-                ConvertSequenceSlotToPointer(0x04, 0x45); // point skullkid's theme, during skullkid's backstory cutscene, at kaepora
+                // these cutscene songs are never heard if shorten cutscenes is enabled, just pointerize it
                 ConvertSequenceSlotToPointer(0x72, 0x45); // point wagonride at kaeopora 
                 ConvertSequenceSlotToPointer(0x2D, 0x3A); // point giants world (oath get cutscene) at observatory
                 ConvertSequenceSlotToPointer(0x70, 0x0B); // point call the giants( cutscene confronting skullkid) at healed
@@ -470,6 +472,14 @@ namespace MMR.Randomizer.Utils
                 ConvertSequenceSlotToPointer(0x0B, 0x05); // point healing cutscene at clocktower
             }
 
+            bool shortenedSkullkidCutscene = false; // todo: how to detect ocarina is shuffled
+
+            if (shortenedSkullkidCutscene)
+            {
+                ConvertSequenceSlotToPointer(0x04, 0x1A); // point skullkid's theme, during skullkid's backstory cutscene, at combat
+            }
+
+            // if our replacement pool is small (MM only and low variety) pointerize a few more
             if (RomData.TargetSequences.Count + 30 > RomData.SequenceList.Count)
             {
                 ConvertSequenceSlotToPointer(0x76, 0x15); // point titlescreen at clocktownday1
