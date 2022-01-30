@@ -459,7 +459,7 @@ namespace MMR.Randomizer.Utils
             // checking if not 94 instead if 00 because 94 is vanilla and 00 is replacement
             //  thinking ahead, it's possible the adjusted value will change one day, but vanilla is static
             // if the file's data is null, nothing in that file was changed and therefore it is vanilla.
-            bool shortenedCutscenes = RomData.MMFileList[1472].Data != null && RomData.MMFileList[1472].Data[0xD48 + 3] != 0x94;
+            bool shortenedCutscenes = RomData.MMFileList[1472].Data[0xD48 + 3] != 0x94;
 
             if (shortenedCutscenes)
             {
@@ -472,9 +472,19 @@ namespace MMR.Randomizer.Utils
                 ConvertSequenceSlotToPointer(0x0B, 0x05); // point healing cutscene at clocktower
             }
 
-            bool shortenedSkullkidCutscene = false; // todo: how to detect ocarina is shuffled
+            // if ocarina is NOT randomized, pointerize skullkid's seq since it gets used nowhere
+            // ocarina rando applies patch:fix_ocarina_checks, use a change applied by this fix to detect
+            // ============================================================================
+            // File: 0x00B3C000, Address: 0x00BC66A0, Offset: 0x0008A6A0, Patch: 0x000000A8
+            // Name: code
+            // ============================================================================
+            // Replaces:
+            //   .dh    0x14F9  F9
+            // .org 0x80130160    ->
+            //   .dh    0x1000       00
+            bool ocarinaNotRandomized = RomData.MMFileList[31].Data[0x8A6A0 + 1] == 0xF9;
 
-            if (shortenedSkullkidCutscene)
+            if (ocarinaNotRandomized)
             {
                 ConvertSequenceSlotToPointer(0x04, 0x1A); // point skullkid's theme, during skullkid's backstory cutscene, at combat
             }
