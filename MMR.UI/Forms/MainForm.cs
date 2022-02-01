@@ -109,6 +109,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cHookshotAnySurface, "Hookshot can hook to any surface.");
             TooltipBuilder.SetTooltip(cClimbMostSurfaces, "Link can climb most surfaces.");
             TooltipBuilder.SetTooltip(cIceTrapQuirks, "Ice traps will behave slightly differently from other items in certain situations.");
+            TooltipBuilder.SetTooltip(cGiantMaskAnywhere, "Allows the Giant's Mask to be used anywhere with a high enough (or no) ceiling.");
 
             // Comforts/cosmetics
             TooltipBuilder.SetTooltip(cQText, "Enable quick text. Dialogs are fast-forwarded to choices/end of dialog.");
@@ -1057,6 +1058,7 @@ namespace MMR.UI.Forms
             cFasterLabFish.Checked = _configuration.GameplaySettings.SpeedupLabFish;
             cFasterBank.Checked = _configuration.GameplaySettings.SpeedupBank;
             cDoubleArcheryRewards.Checked = _configuration.GameplaySettings.DoubleArcheryRewards;
+            cGiantMaskAnywhere.Checked = _configuration.GameplaySettings.GiantMaskAnywhere;
 
             cDMult.SelectedIndex = (int)_configuration.GameplaySettings.DamageMode;
             cDType.SelectedIndex = (int)_configuration.GameplaySettings.DamageEffect;
@@ -2139,6 +2141,11 @@ namespace MMR.UI.Forms
         private void cAutoInvert_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.AutoInvert = (AutoInvertState)cAutoInvert.SelectedIndex);
+        }
+
+        private void cGiantMaskAnywhere_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.GiantMaskAnywhere = cGiantMaskAnywhere.Checked);
         }
     }
 }

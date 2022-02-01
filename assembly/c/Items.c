@@ -4,6 +4,7 @@
 #include "QuestItems.h"
 #include "Misc.h"
 #include "MMR.h"
+#include "GiantMask.h"
 
 /**
  * Helper function used to process receiving a custom item.
@@ -98,4 +99,16 @@ void Items_AfterReceive(GlobalContext* ctxt, u8 item) {
 void Items_AfterRemoval(s16 item, s16 slot) {
     // Handle removal of quest item.
     QuestItems_AfterRemoval((u8)item, (u8)slot);
+}
+
+bool Items_ShouldCheckItemUsabilityWhileSwimming(GlobalContext* ctxt, u8 item) {
+    ActorPlayer* player = GET_PLAYER(ctxt);
+    bool isGiant = GiantMask_IsGiant();
+    if (item == ITEM_ZORA_MASK && (!isGiant || player->mask != 0x14)) {
+        return false;
+    }
+    if (item == ITEM_GIANT_MASK && isGiant && player->form == PLAYER_FORM_HUMAN && MISC_CONFIG.flags.giantMaskAnywhere) {
+        return false;
+    }
+    return true;
 }

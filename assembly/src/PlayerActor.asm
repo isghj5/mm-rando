@@ -429,3 +429,19 @@ Player_UseItem_CheckCeiling_Hook:
     lw      t6, 0x0070 (sp)
     j       Player_UseItem_CheckCeiling
     sw      t6, 0x0000 (t5)
+
+Player_ShouldCheckItemUsabilityWhileSwimming_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+
+    jal     Player_ShouldCheckItemUsabilityWhileSwimming
+    sw      a2, 0x0020 (sp)
+
+    ; Displaced code:
+    lb      t1, 0x0145 (s0)
+    slti    at, t1, 0x0005
+
+    lw      a2, 0x0020 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18

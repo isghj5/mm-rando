@@ -171,6 +171,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.AutoInvert = value; }
         }
 
+        public bool GiantMaskAnywhere
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.GiantMaskAnywhere; }
+            set { this.AsmOptions.MiscConfig.Flags.GiantMaskAnywhere = value; }
+        }
+
         public bool DoubleArcheryRewards
         {
             get { return this.AsmOptions.MiscConfig.Speedups.DoubleArcheryRewards; }

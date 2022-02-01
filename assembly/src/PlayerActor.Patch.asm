@@ -462,3 +462,45 @@
 ;   JR      RA
 .org 0x8082F0DC
     j       Player_AfterUpdateCollisionCylinder
+
+;==================================================================================================
+; Handle on-load mask check
+;==================================================================================================
+
+; Replaces:
+;   LBU     V0, 0xF674 (V0)
+;   ADDIU   AT, R0, 0x0014
+;   BNE     V0, AT, 0x80841C98
+;   LUI     AT, 0x801F
+;   SB      R0, 0xF674 (AT)
+;   OR      V0, R0, R0
+.org 0x80841C80
+    jal     Player_GetMaskOnLoad
+    or      a0, s0, r0
+    nop
+    nop
+    nop
+    nop
+
+;==================================================================================================
+; Handle item use while swimming check
+;==================================================================================================
+
+; Replaces:
+;   ADDIU   AT, R0, 0x0050
+;   SLL     T0, T9, 4
+;   BGEZL   T0, 0x80831A5C
+;   XORI    A2, A2, 0x0001
+;   BEQL    S1, AT, 0x80831A5C
+;   XORI    A2, A2, 0x0001
+;   LB      T1, 0x0145 (S0)
+;   SLTI    AT, T1, 0x0005
+.org 0x80831A24
+    sll     t0, t9, 4
+    bgezl   t0, 0x80831A5C
+    xori    a2, a2, 0x0001
+    or      a0, s0, r0
+    jal     Player_ShouldCheckItemUsabilityWhileSwimming_Hook
+    or      a1, s1, r0
+    beqzl   v0, 0x80831A5C
+    xori    a2, a2, 0x0001

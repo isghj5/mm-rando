@@ -391,3 +391,33 @@ bool Player_UseItem_CheckCeiling(CollisionContext* colCtx, f32* outY, Vec3f* pos
 void Player_AfterUpdateCollisionCylinder(ActorPlayer* player) {
     player->collisionCylinder.params.radius *= GiantMask_GetSimpleScaleModifier();
 }
+
+u8 Player_GetMaskOnLoad(ActorPlayer* player) {
+    u8 result = gSaveContext.perm.mask;
+    if (result == 0x14) {
+        if (MISC_CONFIG.flags.giantMaskAnywhere) {
+            gSaveContext.extra.magicConsumeState = 0x0C;
+        } else {
+            gSaveContext.perm.mask = 0;
+            result = 0;
+        }
+    } else if (MISC_CONFIG.flags.giantMaskAnywhere) {
+        GiantMask_Reset();
+    }
+    return result;
+}
+
+bool Player_ShouldCheckItemUsabilityWhileSwimming(ActorPlayer* player, u8 item) {
+    bool isGiant = GiantMask_IsGiant();
+
+    // Zora Mask is 0x50 for some reason
+    if (item == 0x50 && (!isGiant || player->mask != 0x14)) {
+        return false;
+    }
+
+    // Giant's Mask is 0x4D for some reason
+    if (item == 0x4D && isGiant && player->form == PLAYER_FORM_HUMAN && MISC_CONFIG.flags.giantMaskAnywhere) {
+        return false;
+    }
+    return true;
+}

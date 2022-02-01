@@ -1124,7 +1124,7 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyHack(Resources.mods.fierce_deity_anywhere);
             }
 
-            //if (_randomized.Settings.AllowGiantMaskAnywhere)
+            if (_randomized.Settings.GiantMaskAnywhere)
             {
                 ResourceUtils.ApplyHack(Resources.mods.giant_mask_anywhere);
             }
