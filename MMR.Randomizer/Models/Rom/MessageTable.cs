@@ -238,6 +238,7 @@ namespace MMR.Randomizer.Models.Rom
             // Update message data file.
             var file = RomData.MMFileList[MessageDataFile];
             file.Data = dataBytes;
+            file.End = file.Addr + file.Data.Length;
         }
 
         /// <summary>

@@ -664,6 +664,7 @@ namespace MMR.Randomizer.Utils
             ResourceUtils.ApplyHack(Resources.mods.reloc_audio);
             RelocateSeq(index);
             RomData.MMFileList[4].Data = new byte[0];
+            RomData.MMFileList[4].Addr = RomData.MMFileList[4].End;
             RomData.MMFileList[4].Cmp_Addr = -1;
             RomData.MMFileList[4].Cmp_End = -1;
 
@@ -1405,7 +1406,9 @@ namespace MMR.Randomizer.Utils
             }
 
             // write new audiobank back to file
-            RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.Audiobank)].Data = audiobankData;
+            var audiobankFile = RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.Audiobank)];
+            audiobankFile.Data = audiobankData;
+            audiobankFile.End = audiobankFile.Addr + audiobankFile.Data.Length;
         }
     }
 }
