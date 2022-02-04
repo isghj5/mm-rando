@@ -458,9 +458,28 @@
 .org 0x80831B80
     jal     Player_UseItem_CheckCeiling_Hook
 
+;==================================================================================================
+; Handle Giant Mask collision cylinder
+;==================================================================================================
+
 ; Replaces:
 ;   JR      RA
 .org 0x8082F0DC
+    j       Player_AfterUpdateCollisionCylinder
+
+; Replaces:
+;   JR      RA
+.org 0x8082F128
+    j       Player_AfterUpdateCollisionCylinder
+
+; Replaces:
+;   JR      RA
+.org 0x8082F14C
+    j       Player_AfterUpdateCollisionCylinder
+
+; Replaces:
+;   JR      RA
+.org 0x8082F15C
     j       Player_AfterUpdateCollisionCylinder
 
 ;==================================================================================================
