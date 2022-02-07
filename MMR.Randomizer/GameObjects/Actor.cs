@@ -117,7 +117,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(1, 0)]
         [VariantsWithRoomMax(max: 1, variant: 1)]
         [VariantsWithRoomMax(max: 2, variant: 0)] // 3 is enough, it can lag rooms as is
-        [CompanionActor(Flame, variant: 0x7F4)] // they're teething
+        [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)] // they're teething
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Dodongo = 0xB, // En_Dodongo
 
@@ -433,7 +433,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x289 gold pirate torches
         // 0x287F east clocktown
         [GroundVariants(0x1180, 0x289, 0x287F, 0x207F)]
-        [CompanionActor(MothSwarm, variant: 1, 2, 3, 4, 7)]
+        [CompanionActor(MothSwarm, ourVariant: -1, variant: 1, 2, 3, 4, 7)] // todo select specific variants that are lit
         [UnkillableAllVariants]
         [AlignedCompanionActor(MothSwarm, CompanionAlignment.Above, ourVariant: -1,
            variant: 1, 2, 3, 4, 7)] // they're free, and they are moths, makes sense
@@ -452,7 +452,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x40)]
         [GroundVariants(0xFF02, 0xFF00, 0xFF01)]
         [UnkillableVariants(0xFF01)]
-        [CompanionActor(DekuFlower, variant: 0x7F, 0x17F)] // do you think they make them or trade like hermitcrabs?
+        [CompanionActor(DekuFlower, ourVariant: -1, variant: 0x7F, 0x17F)] // do you think they make them or trade like hermitcrabs?
         [EnemizerScenesExcluded(Scene.Woodfall)]//, Scene.DekuPalace)]
         MadShrub = 0x3B, // En_Dekunuts
 
@@ -462,7 +462,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(82)]
         [ObjectListIndex(0x51)]
         [GroundVariants(0)]
-        [CompanionActor(Flame, variant: 0x7F4)]
+        [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)]
         [AlignedCompanionActor(Flame, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x7F4)] // I'll just put this over with the rest of the fire
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // visible waiting below the bridges
@@ -478,7 +478,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x51)]
         [FlyingVariants(0xFFFF)]
         [VariantsWithRoomMax(max: 8, variant: 0xFFFF)]
-        [CompanionActor(Flame, 0x7FE)] // blue flames
+        [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         [UnkillableAllVariants] // respawning
         BlueBubble = 0x3E, // En_Bb
 
@@ -1453,7 +1453,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x0042 is swinging from tree, looks stupid if spawns in the ground,
         // 0x0022 is sitting on the edge of a bookcase, looks weird on the ground
         [GroundVariants(0x0032)] // 0x32: sitting around the fire
-        [CompanionActor(Flame, variant: 0x7F4)] // they like fire in this game
+        [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)] // they like fire in this game
         [EnemizerScenesExcluded(Scene.IkanaGraveyard, Scene.OceanSpiderHouse)]
         Stalchild = 0xED, // En_Skb
 
@@ -1729,7 +1729,7 @@ namespace MMR.Randomizer.GameObjects
         // needs anime object and cne object, pain
         [GroundVariants(0x7E00)]
         [PathingVariants(0x0)]
-        [PathingTypeVarsPlacement(mask: 0x3F, shift: 9)]
+        [PathingTypeVarsPlacement(mask: 0x7E00, shift: 9)]
         [UnkillableAllVariants]
         BetaVampireGirl = 0x122, // En_Cne_01
 
@@ -1737,8 +1737,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(263)]
         [ObjectListIndex(0xDF)] // 1
-        // 7E is a range, unkown, looks like a path since it comes with a ==7E check
-        [PathingTypeVarsPlacement(mask:0x7E, shift:9)]
+        // params: 0x007E is path range, 0x7E is max
+        [PathingTypeVarsPlacement(mask:0x7E00, shift:9)]
         [PathingVariants(0x0)]
         [GroundVariants(0x7E00)] // todo check if 0x7F is a thing
         // Pathing Variants todo
@@ -1746,7 +1746,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         BabaIsUnused = 0x123, // En_Bba_01
 
-        // wont spawn if you place him outside of his office, needs modification
+        // wont spawn if you place him outside of his observatory, needs modification
         [FileID(264)]
         [ObjectListIndex(0xDE)]
         Shikashi = 0x124, // En_Bji_01
@@ -2102,7 +2102,7 @@ namespace MMR.Randomizer.GameObjects
             0x2800, 0x3200, 0xC200, 0xFA00)] // these four dont respawn, but they are invisbile until you are right on top of them, then they materialize, so hidden
         [VariantsWithRoomMax(max: 2, variant: 0x9605, 0x3205, 0x6405, 0x8C05, 0xFA01, 0xFA00)]
         [VariantsWithRoomMax(max: 1, variant: 0xFF00, 0x6404, 0x7804, 0x7800, 0x2800, 0x3200, 0xFF01, 0xFF05, 0xC200)]
-        [CompanionActor(ClayPot, variant: 0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
+        [CompanionActor(ClayPot, ourVariant: -1, variant: 0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
         Bo = 0x164, //boe, small ball of snow or soot
 
         [FileID(323)]
@@ -2111,6 +2111,7 @@ namespace MMR.Randomizer.GameObjects
         
         Empty166 = 0x166,
 
+        //??
         [FileID(324)]
         [ObjectListIndex(0x189)]
         [UnkillableAllVariants]
@@ -2128,13 +2129,15 @@ namespace MMR.Randomizer.GameObjects
         // & 3 are separate params, but wont spawn? weird
         [GroundVariants(0x2,0x6)]
         [VariantsWithRoomMax(max:1, variant:0x6, 0x2)]
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear)]
+        // crash on transition to witches area in swamp and secretary room in mayor's residence
+        // Update crashes trying to update the skeleton, null pointer, reason unknown
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear, Scene.MayorsResidence)]
         [UnkillableAllVariants]
         HallucinationScrub = 0x169, // En_Dnk
         
         [FileID(327)]
         [ObjectListIndex(0x18B)]
-        En_Dnq = 0x16A, // En_Dnq
+        DekuKing = 0x16A, // En_Dnq
         
         Empty16B = 0x16B,
         [FileID(328)]
@@ -2162,7 +2165,7 @@ namespace MMR.Randomizer.GameObjects
             0x0032,0x0005,0x0014)] // untesed, assumed respawning because I'm lazy for now
         [VariantsWithRoomMax(max: 5, variant: 0x8C, 0x28, 0x3C, 0x46, 0x32, 0x1, 0x5, 0x14)]
         [VariantsWithRoomMax(max: 1, variant: 0x8014, 0x8028, 0x8023, 0x0032, 0x0005, 0x0014)]
-        [CompanionActor(ClayPot, variant: 0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
+        [CompanionActor(ClayPot, ourVariant: -1, variant: 0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
         RealBombchu = 0x16F,
 
         [FileID(332)]
@@ -2188,7 +2191,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(290)]
         [ObjectListIndex(0x184)]
-        GBTWatersheelsandPushblocks = 0x174, // Bg_Dblue_Movebg
+        GBTWaterwheelsandPushblocks = 0x174, // Bg_Dblue_Movebg
 
         // great fairy beam
         [FileID(335)]
@@ -2224,6 +2227,7 @@ namespace MMR.Randomizer.GameObjects
         PirateTelescope = 0x178, // En_Warp_Uzu
 
         // flying ice platforms leading to lens cave
+        // bad choice for putting in the world because they are default invisible, player wont even see them
         [FileID(339)]
         [ObjectListIndex(0x187)]
         FlyingIcePlatform = 0x179, // Obj_Driftice
@@ -2257,7 +2261,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(343)]
         [ObjectListIndex(0x107)]
-        [GroundVariants(0)]
+        [GroundVariants(0)] // no params
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.PostOffice)]
@@ -2624,7 +2628,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(406)]
         [ObjectListIndex(0x1A6)]
         [GroundVariants(0x0)]
-        [CompanionActor(DekuFlower, variant: 0x7F)]
+        [CompanionActor(DekuFlower, ourVariant: -1, variant: 0x7F)]
         [EnemizerScenesExcluded(Scene.WoodfallTemple)] // req for gekko miniboss, do not touch until fix
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         Snapper = 0x1BA, // En_Kame
@@ -2878,6 +2882,11 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x300, 0x200, 0x100, 0)]
         [RespawningVariants(0x0)] // meg does NOT respawn but her death doesnt always trigger kills rooms, not sure why
         [VariantsWithRoomMax(max: 1, variant: 0, 0x100, 0x200, 0x300)] // only one per
+        [CompanionActor(Flame, ourVariant: 0x000, variant: 0xD)]      // meg gets purple flames // NOT DONE
+        [CompanionActor(Flame, ourVariant: 0x100, variant: 0x4, 0x5)] // jo gets red flames
+        [CompanionActor(Flame, ourVariant: 0x200, variant: 0x7FE)]    // beth gets blue flames
+        [CompanionActor(Flame, ourVariant: 0x300, variant: 0x3)]      // amy gets green flames
+
         // no scene exclusion necessary, get spawned by the poe sisters minigame but they aren't actors in the scene to be randomized
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         PoeSisters = 0x1E8, // En_Po_Sisters
@@ -2943,7 +2952,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(458)]
         [ObjectListIndex(0x1CB)]
         [GroundVariants(0,1,2,3)]
-        [CompanionActor(LetterToPostman, variant: 0)]
+        [CompanionActor(LetterToPostman, ourVariant: -1, variant: 0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.WestClockTown, Scene.SouthClockTown, Scene.NorthClockTown, Scene.EastClockTown)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
@@ -2957,7 +2966,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x00FF)]
         // FF is in the game, in OOT 02 was a composer brother, but in MM 0-6 are the same as FF
         [GroundVariants(0x00FF)]
-        [CompanionActor(Flame, 0x7FE)] // blue flames
+        [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple)]
         Poe = 0x1F3, // En_Poh
 
@@ -3088,7 +3097,7 @@ namespace MMR.Randomizer.GameObjects
         //[OnlyOneActorPerRoom]
         [VariantsWithRoomMax(max:2, variant:1)]
         [UnkillableAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
-        [CompanionActor(Flame, 0x7FE)] // blue flames
+        [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         [EnemizerScenesPlacementBlock( Scene.TerminaField, // suspected weird un-reproducable crashes always seems to happen when they are around
             Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208, // En_Bigpo
@@ -3728,7 +3737,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max:0, variant:0)] // hard coded only spawn final night
         [EnemizerScenesExcluded(Scene.MayorsResidence)]
-        Mutoh = 0x26B,
+        Mutoh = 0x26B, // En_Muto
 
         // todo 
         [FileID(579)]
@@ -3788,7 +3797,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(589)]
         [ObjectListIndex(0x1E5)]
         //ObjectListIndex(0x1D5)]
-        LinkTheGoro = 0x276,
+        LinkTheGoro = 0x276, // En_Ig
 
         [FileID(590)]
         [ObjectListIndex(0xA1)]
@@ -3940,7 +3949,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0)] // zero seems safe, does not steal sword or anything, 1 does not spawn
         [OnlyOneActorPerRoom]
         [EnemizerScenesExcluded(Scene.TerminaField)] // do not remove original, esp with rupeeland coming soon
-        Takkuri = 0x291,
+        Takkuri = 0x291, // En_Theifbird
 
         //todo
         [FileID(617)]
@@ -3956,7 +3965,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x26E)]
         [WallVariants(0x2)]
         [UnkillableAllVariants]
-        Windows = 0x294,
+        Windows = 0x294, // Obj_Yado
 
         [FileID(620)]
         [ObjectListIndex(0x26F)]
@@ -3979,7 +3988,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x15)]
         [GroundVariants(0)]
         [UnkillableAllVariants]
-        [CompanionActor(Flame, 0x7FE)] // blue flames
+        [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GoronRacetrack)]
         AnjuWeddingDress = 0x299, // En_And
 
@@ -4018,7 +4027,7 @@ namespace MMR.Randomizer.GameObjects
         // 0 does not spawn, might need another object
         [GroundVariants(0)]
         [UnkillableAllVariants]
-        DressMannequin = 0x2A1,
+        DressMannequin = 0x2A1, // En_Drs
 
         //todo
         [FileID(633)]
@@ -4037,7 +4046,7 @@ namespace MMR.Randomizer.GameObjects
         // they are all sitting down though, so boring for now until we add actor moving for ledge sitting
         [FileID(636)]
         [ObjectListIndex(0x142)]
-        StalchildHintGiver = 0x2A5,
+        StalchildHintGiver = 0x2A5, // En_Hint_Skb
 
         // ??
         [FileID(637)]
@@ -4049,7 +4058,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x2A7)] // for some reason my obj size lookup code thinks this is HUGE
         [FlyingVariants(0xF)] // these might be pathing actors
         [UnkillableAllVariants]
-        MoonBirdsBrown = 0x2A7,
+        MoonBirdsBrown = 0x2A7, // En_Bh
 
         [FileID(639)]
         [ObjectListIndex(0x247)]
@@ -4080,7 +4089,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(645)]
         [ObjectListIndex(0x1)]
         SpawnsItemFromSoil = 0x2AE, // Obj_Swprize
-        
+
+        // todo add as companion actor to a rich actor?
         //[ActorizerEnabled]
         [FileID(646)]
         [GroundVariants(0)] // todo search
@@ -4092,6 +4102,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x281)]
         EndingStumpAndLighting = 0x2B0, // Obj_Ending
 
+        // todo attempt randomization
         [FileID(648)]
         [ObjectListIndex(0x12C)]
         CreditsBombShopMan = 0x2B1, // En_Rsn
