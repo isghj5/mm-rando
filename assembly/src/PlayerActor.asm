@@ -148,12 +148,14 @@ Player_GetWallCollisionHeight_Hook:
     addiu   sp, sp, -0x18
     sw      ra, 0x0014 (sp)
     sw      a0, 0x0018 (sp)
+    swc1    f2, 0x0010 (sp)
 
     jal     Player_GetWallCollisionHeight
     or      a0, s0, r0
 
     mfc1    a2, f0
 
+    lwc1    f2, 0x0010 (sp)
     lw      s0, 0x0018 (sp)
     lw      ra, 0x0014 (sp)
     jr      ra
