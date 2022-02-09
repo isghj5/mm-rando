@@ -2,21 +2,21 @@
 
 Scarecrow_CheckSongFlag_Hook:
     ; Check Scarecrow's Song flag, check Free Scarecrow bit, and return the OR result.
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
-    sw      a0, 0x0014 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0018 (sp)
     jal     Scarecrow_CheckSongFlag
-    sw      a1, 0x0018 (sp)
+    sw      a1, 0x001C (sp)
 
-    lw      a1, 0x0018 (sp)
-    lw      a0, 0x0014 (sp)
-    lw      ra, 0x0010 (sp)
+    lw      a1, 0x001C (sp)
+    lw      a0, 0x0018 (sp)
+    lw      ra, 0x0014 (sp)
 
     ; Displaced code
     lwc1    f4, 0x0098 (a0)
 
     jr      ra
-    addiu   sp, sp, 0x14
+    addiu   sp, sp, 0x18
 
 Scarecrow_ShouldActivate_Hook:
     addiu   sp, sp, -0x28
