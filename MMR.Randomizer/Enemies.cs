@@ -1225,6 +1225,7 @@ namespace MMR.Randomizer
                                      && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))
                                      ).ToList();
 
+            // some actors should never take up an object, but if the object is already there we can put them places
             var freeOnlyActors = FreeOnlyCandidateList.Where(u => objectList.Contains(u.ObjectID)
                                      && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))
                                      ).ToList();
@@ -1268,7 +1269,7 @@ namespace MMR.Randomizer
                     }
                 }
 
-                // remove random enemies until max for variant is reached
+                // (spared) remove random enemies until max for variant is reached
                 for (int i = removed; i < max && i < roomEnemiesWithVariant.Count; ++i)
                 {
                     roomEnemiesWithVariant.Remove(roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)]);
@@ -1281,7 +1282,7 @@ namespace MMR.Randomizer
                     roomFreeActors.Remove(search);
                 }
 
-                // kill the rest of variant X since max is reached
+                // remove the rest of variant X since max is reached
                 foreach (var enemy in roomEnemiesWithVariant)
                 {
                     var enemyIndex = roomEnemies.IndexOf(enemy);
@@ -1348,13 +1349,55 @@ namespace MMR.Randomizer
         }
 
 
+        // this is getting kinda big, need to split into smaller functions
         public static void EmptyOrFreeActor(Actor targetActor, Random rng, List<Actor> currentRoomActorList,
                                             List<Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false, int randomRate = 0x50)
         {
-            /// returns an actor that is either an empty actor or a free actor that can be placed here beacuse it doesn't require a new unique object
+            /// changes the targetActor to one that is either
+            /// A) empty actor or B) free actor
+            ///    where free actor: actor that does not require a unique object, can be placed in the current place without new object
 
-            // roll dice: either get a free actor, or empty
-            if (rng.Next(100) < randomRate) // for now a static chance
+            // todo add companions here as a seperate thing
+            //foreach (var actor in subMatches.ToList())
+            var companionAttrs = targetActor.ActorEnum.GetAttributes<CompanionActorAttribute>();
+            if (companionAttrs != null) {
+
+                if (rng.Next(100) < 50) // for now static TODO set companion rates per companion
+                {
+                    // build list of companion variants
+                    var companionList = new List<Actor>();
+                    foreach (var companion in companionAttrs)
+                    {
+                        // (we care about variants) && (does not match our required variants)
+                        if (companion.OurVariant != -1            )
+                        {
+                            // check if required variants match
+                            //var listOfChosenVariants = 
+                            //|| ! companion.CompanionVariant.Contains(actor.Variants[0]))
+
+                            continue; // for now, always choose
+                        }
+
+                        var companionObject = companion.Companion.ObjectIndex();
+                        // if object is free or we have access to it
+                        if (companionObject == 1 || companionObject == targetActor.ObjectID) // || chosenReplacementObjects.Contains(currentObjectsPerMap))    // todo: add object search across other actors chosen
+                        {
+                            var newCompanion = new Actor(companion.Companion);
+                            newCompanion.Variants = companion.CompanionVariant;
+                            newCompanion.IsCompanion = true;
+                            companionList.Add(newCompanion);
+                        }
+                    }
+
+                    // randomly select variant from whole list
+                    if (companionList.Count > 0)
+                    {
+                        return; // success, leave early
+                    }
+                }
+            }
+
+            if (rng.Next(100) < randomRate) // roll dice: empty or free actor
             {
                 // pick random replacement by selecting random start of array and traversing sequentially until we find a match
                 int randomStart = rng.Next(acceptableFreeActors.Count);
@@ -1363,13 +1406,14 @@ namespace MMR.Randomizer
                     // check the old enemy for available co-actors,
                     // remove if those already exist in the list at max size
 
-                    int listIndex = (randomStart + matchAttempt) % acceptableFreeActors.Count;
+                    int listIndex = (randomStart + matchAttempt) % acceptableFreeActors.Count; // convert from random start
                     var testEnemy = acceptableFreeActors[listIndex];
                     var testEnemyCompatibleVariants = targetActor.CompatibleVariants(testEnemy, targetActor.OldVariant, rng);
                     if (testEnemyCompatibleVariants == null)
                     {
                         continue;  // no type compatibility, skip
                     }
+
                     var respawningVariants = testEnemy.RespawningVariants;
                     if ((targetActor.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
                     {
@@ -1377,7 +1421,7 @@ namespace MMR.Randomizer
                     }
                     if (testEnemyCompatibleVariants.Count == 0)
                     {
-                        continue;  // cannot use respawning enemies here, skip
+                        continue;  // all were removed because they respawn, skip
                     }
 
                     var enemyHasMaximums = testEnemy.HasVariantsWithRoomLimits();
@@ -1424,8 +1468,10 @@ namespace MMR.Randomizer
                         return;
                     }
                 }
-            }
-            //else: empty actor
+
+                // if we didn't find a candidate, fallthrough to empty actor
+
+            }//else: empty actor
 
             targetActor.ChangeActor(GameObjects.Actor.Empty, vars: 0);
         }
@@ -1433,7 +1479,7 @@ namespace MMR.Randomizer
         public static void MoveAlignedCompanionActors(List<Actor> changedEnemies, Random rng, StringBuilder log)
         {
             /// companion actors can sometimes be alligned, to increase immersion
-            /// example: putting hidden grottos inside of a stone circle
+            /// example: putting hidden grottos inside of a stone circle, or butterflies over bushes
 
             var actorsWithCompanions = changedEnemies.FindAll(u => ((GameObjects.Actor)u.ActorID).HasOptionalCompanions())
                                                      .OrderBy(x => rng.Next()).ToList();
@@ -1449,13 +1495,14 @@ namespace MMR.Randomizer
                     // todo detection of ourVars too
                     // scan for companions that can be moved
                     // for now, assume all previously used companions must be left untouched, no shuffling
-                    var eligibleCompanions = changedEnemies.FindAll(u => u.ActorID == (int)actorEnum        // correct actor
+                    var eligibleCompanions = changedEnemies.FindAll(u => u.ActorID == (int) actorEnum        // correct actor
                                                             && u.previouslyMovedCompanion == false          // not already used
-                                                            && companion.Variants.Contains(u.Variants[0])); // correct variant
+                                                            && companion.CompanionVariant.Contains(u.Variants[0])); // correct variant
 
                     if (eligibleCompanions != null && eligibleCompanions.Count > 0)
-                    {
+                    { 
                         var randomCompanion = eligibleCompanions[rng.Next(eligibleCompanions.Count)];
+ 
                         // first move on top, then adjust
                         randomCompanion.Position.x = mainActor.Position.x;
                         randomCompanion.Position.y = (short)(actorsWithCompanions[i].Position.y + companion.RelativePosition.y);
@@ -1818,9 +1865,9 @@ namespace MMR.Randomizer
                         return false;
                     }
                     bool result;
+                    if (TestHardSetObject(GameObjects.Scene.MayorsResidence, GameObjects.Actor.Secretary, GameObjects.Actor.HallucinationScrub)) continue;
                     //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Bg_Breakwall)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.MilkroadCarpenter)) continue;
-
+                    //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.MilkroadCarpenter)) continue;
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif
 
@@ -1882,24 +1929,35 @@ namespace MMR.Randomizer
                     List<Actor> subMatches = actorCandidatesLists[objCount].FindAll(u => u.ObjectID == chosenReplacementObjects[objCount].ChosenV);
 
                     // for actors that have companions, add them now
-                    foreach (var actor in subMatches.ToList())
+                    // disabled to test replacement later instead
+                    /* foreach (var actor in subMatches.ToList())
                     {
                         var companionAttrs = actor.ActorEnum.GetAttributes<CompanionActorAttribute>();
                         if (companionAttrs != null)
                         {
                             foreach (var companion in companionAttrs)
                             {
-                                var cObj = companion.Companion.ObjectIndex();
-                                if (cObj == 1 || cObj == actor.ObjectID)    // todo: add object search across other actors chosen
+                                // (we care about variants) && (does not match our required variants)
+                                if (companion.OurVariant != -1)
+                                {
+                                    // check if required variants match
+                                    //var listOfChosenVariants = 
+                                    //|| ! companion.CompanionVariant.Contains(actor.Variants[0]))
+                                    
+                                    continue;
+                                }
+
+                                var companionObject = companion.Companion.ObjectIndex();
+                                if (companionObject == 1 || companionObject == actor.ObjectID )//|| chosenReplacementObjects.Contains(currentObjectsPerMap))    // todo: add object search across other actors chosen
                                 {
                                     var newCompanion = new Actor(companion.Companion);
-                                    newCompanion.Variants = companion.Variants;
+                                    newCompanion.Variants = companion.CompanionVariant;
                                     newCompanion.IsCompanion = true;
                                     subMatches.Add(newCompanion);
                                 }
                             }
                         }
-                    }
+                    } // */
 
                     WriteOutput("  companions time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
 

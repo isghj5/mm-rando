@@ -14,9 +14,12 @@ namespace MMR.Randomizer.Attributes.Actor
     public class CompanionActorAttribute : Attribute
     {
         public GameObjects.Actor Companion { get; private set; }
-        public List<int> Variants { get; private set; }
+        public List<int> CompanionVariant { get; private set; }
 
-        public CompanionActorAttribute(GameObjects.Actor companion, int variant, params int[] additionalVariants)
+        public int OurVariant { get; private set; }
+
+
+        public CompanionActorAttribute(GameObjects.Actor companion, int ourVariant, int variant, params int[] additionalVariants)
         {
             Companion = companion;
             var v = new List<int> { variant };
@@ -24,7 +27,9 @@ namespace MMR.Randomizer.Attributes.Actor
             {
                 v.AddRange(additionalVariants);
             }
-            Variants = v;
+            CompanionVariant = v;
+
+            OurVariant = ourVariant;
         }
     }
 
@@ -57,15 +62,14 @@ namespace MMR.Randomizer.Attributes.Actor
     {
 
         public vec16 RelativePosition { get; private set; }
-        public int ourVariant { get; private set; }
 
         public AlignedCompanionActorAttribute(GameObjects.Actor companion, CompanionAlignment relativePosition, int ourVariant,
             int variant = -1, params int[] additionalVariants):
-              base(companion, variant, additionalVariants)
+              base(companion, ourVariant = -1, variant, additionalVariants)
         {
             if (relativePosition == CompanionAlignment.OnTop)
             {
-                RelativePosition = new vec16(); //0,0,0
+                RelativePosition = new vec16(); // 0,0,0
             }
             else if (relativePosition == CompanionAlignment.Above)
             {
