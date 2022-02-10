@@ -1,4 +1,5 @@
 #include "GiantMask.h"
+#include "Misc.h"
 
 static void GiantMask_FormProperties_Grow(PlayerFormProperties* formProperties) {
     formProperties->unk_00 *= 10.0;
@@ -89,7 +90,13 @@ static void GiantMask_DisableTransformationFlash(GlobalContext* globalCtx) {
 static bool _isGiant;
 static f32 _nextScaleFactor = 10.0f;
 
+static bool _shouldReset = false;
+
 void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
+    if (!MISC_CONFIG.flags.giantMaskAnywhere) {
+        return;
+    }
+
     if (globalCtx->sceneNum == 0x36) {
         return;
     }
@@ -390,10 +397,17 @@ bool GiantMask_IsGiant() {
     return _isGiant;
 }
 
-void GiantMask_Reset() {
-    _scale = 0.01f;
-    _isGiant = false;
-    _nextScaleFactor = 10.0f;
+void GiantMask_MarkReset() {
+    _shouldReset = true;
+}
+
+void GiantMask_TryReset() {
+    if (_shouldReset) {
+        _scale = 0.01f;
+        _isGiant = false;
+        _nextScaleFactor = 10.0f;
+        _shouldReset = false;
+    }
 }
 
 /*

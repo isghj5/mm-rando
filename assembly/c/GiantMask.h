@@ -9,6 +9,7 @@ f32 GiantMask_GetScaleModifier();
 f32 GiantMask_GetSimpleScaleModifier();
 f32 GiantMask_GetNextScaleFactor();
 bool GiantMask_IsGiant();
-void GiantMask_Reset();
+void GiantMask_MarkReset();
+void GiantMask_TryReset();
 
 #endif // GIANT_MASK_H

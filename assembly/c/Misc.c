@@ -1,6 +1,7 @@
 #include <stdbool.h>
 #include <z64.h>
 #include "Misc.h"
+#include "GiantMask.h"
 
 struct MiscConfig MISC_CONFIG = {
     .magic = MISC_CONFIG_MAGIC,
@@ -175,6 +176,12 @@ bool Misc_CritWiggleCheck(Camera* camera, s16 health) {
 
 bool Misc_GetVanillaLayout(void) {
     return MISC_CONFIG.internal.vanillaLayout;
+}
+
+void Misc_AfterDeath(GlobalContext* ctxt) {
+    if (MISC_CONFIG.flags.giantMaskAnywhere) {
+        GiantMask_MarkReset();
+    }
 }
 
 void Misc_Init(void) {

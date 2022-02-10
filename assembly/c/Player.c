@@ -402,7 +402,7 @@ u8 Player_GetMaskOnLoad(ActorPlayer* player) {
             result = 0;
         }
     } else if (MISC_CONFIG.flags.giantMaskAnywhere) {
-        GiantMask_Reset();
+        GiantMask_TryReset();
     }
     return result;
 }
