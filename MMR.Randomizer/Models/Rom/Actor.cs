@@ -11,7 +11,7 @@ using System;
 
 namespace MMR.Randomizer.Models.Rom
 {
-    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorID}]")]
+    [System.Diagnostics.DebuggerDisplay("[{ActorEnum.ToString()}][{ActorID}]")]
     public class Actor
     {
         // this is instance data, per actor, per scene.

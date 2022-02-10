@@ -16,15 +16,18 @@ namespace MMR.Randomizer.Attributes.Actor
         public GameObjects.Actor Companion { get; private set; }
         public List<int> Variants { get; private set; }
 
-        public CompanionActorAttribute(GameObjects.Actor companion, int variant, params int[] additionalVariants)
+        public int OurVariant { get; private set; }
+
+        public CompanionActorAttribute(GameObjects.Actor companion, int ourVariant, int variant, params int[] additionalVariants)
         {
-            Companion = companion;
+            this.Companion = companion;
             var v = new List<int> { variant };
             if (additionalVariants.Length > 0)
             {
                 v.AddRange(additionalVariants);
             }
-            Variants = v;
+            this.Variants = v;
+            this.OurVariant = ourVariant;
         }
     }
 
@@ -33,11 +36,11 @@ namespace MMR.Randomizer.Attributes.Actor
     ///  example: sleeping scrub from swamp spiderhouse does not spawn with his flower, he needs a flower or he is just floating in the air
     /// </summary>
 
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    /* [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
     class ForcedCompanionActorAttribute : CompanionActorAttribute
     {
         public ForcedCompanionActorAttribute(GameObjects.Actor companion, int variant, params int[] additionalVariants) : base(companion, variant, additionalVariants) { }
-    }
+    } // */
 
     /// <summary>
     /// Some Companions make the most sense when aligned compared to one their companion
@@ -61,7 +64,7 @@ namespace MMR.Randomizer.Attributes.Actor
 
         public AlignedCompanionActorAttribute(GameObjects.Actor companion, CompanionAlignment relativePosition, int ourVariant,
             int variant = -1, params int[] additionalVariants):
-              base(companion, variant, additionalVariants)
+              base(companion, ourVariant, variant, additionalVariants)
         {
             if (relativePosition == CompanionAlignment.OnTop)
             {

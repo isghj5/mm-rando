@@ -515,7 +515,7 @@ namespace MMR.Randomizer
                 nightTorch.Rotation.z |= 0x7F;
 
                 // day torch
-                piratesExteriorScene.Maps[0].Actors[13].ChangeActor(GameObjects.Actor.Empty); // dangeon object so no grotto, empty for now
+                piratesExteriorScene.Maps[0].Actors[13].ChangeActor(GameObjects.Actor.Empty, modifyOld: true); // dangeon object so no grotto, empty for now
                 // todo: 14/16 are also torches, we dont really need both here
 
                 // anju's actor spawns behind the inn door, move her to be visible in sct
@@ -528,6 +528,16 @@ namespace MMR.Randomizer
                 // bug this is not next to mayor building for some reason, next to inn
                 var gorman = eastclocktownScene.Maps[0].Actors[4];
                 gorman.Position = new vec16(1026, 200, -1947);
+
+                // if actors are rando'd then the carpenters proabbly are too
+                var southClockTownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SouthClockTown.FileID());
+                var carpenterSound = southClockTownScene.Maps[0].Actors[49];
+                carpenterSound.ChangeActor(GameObjects.Actor.Carpenter, vars:1, modifyOld: true); // non-pathing type
+                carpenterSound.Position.z = 55; // move forward to muto placement
+                // we can also hear the noises in west/east, those actors should also be removed
+                eastclocktownScene.Maps[0].Actors[63].ChangeActor(GameObjects.Actor.Empty, modifyOld: true); // FREE ACTOR ?
+
+                // should we rando the tower?
             }
         }
 
@@ -604,7 +614,7 @@ namespace MMR.Randomizer
                 winterVillage.Maps[0].Actors[57].Position.y = -15; // floating a bit in the air, lower to ground
 
                 // now that darmani ghost is gone, lets re=use the actor for secret grotto
-                winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)] & 0xFCFF);
+                winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: randomGrotto[seedrng.Next(randomGrotto.Count)] & 0xFCFF, modifyOld: true);
                 //winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: 0x4000, modifyOld:true);
                 winterVillage.Maps[0].Actors[2].Position = new vec16(504, 365, 800);
 
@@ -1818,8 +1828,9 @@ namespace MMR.Randomizer
                         return false;
                     }
                     bool result;
-                    //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.Bg_Breakwall)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.MilkroadCarpenter)) continue;
+                    //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.BombFlower)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.LotteryKiosk)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif

@@ -363,6 +363,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1240)]
         [FileID(72)]
         [ObjectListIndex(0x2A)]
+        // 0 is active bombflower bomb
         [GroundVariants(0xFFFF)]
         [VariantsWithRoomMax(max: 8, variant: 0xFFFF)]
         [UnkillableAllVariants]
@@ -1034,6 +1035,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(1, 2)]
         [PathingVariants(0x603, 0x503)]
         [PathingTypeVarsPlacement(mask:0xFF00, shift:8)]
+        [AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0090)]
         [UnkillableAllVariants]
         Carpenter = 0x9C, // En_Daiku
 
@@ -1484,9 +1486,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // crash (reason unk)
         GossipStone = 0xEF, // En_Gs
 
-        // todo: add as companion to anything that makes sense if really free
+        //[ActorizerEnabled] // best used as a companion instead of being its own actor
         [FileID(225)]
         [ObjectListIndex(0x1)]
+        // params: if top is 01, bottom byte is sequence ID with shop music
+        //[GroundVariants(0x144)] // 144 is directional shop music with filter
+        [GroundVariants(0x90)] // 90 is carpenters hammering away in SCT
+        [UnkillableAllVariants]
+        [OnlyOneActorPerRoom]
         VariousWorldSounds2 = 0xF0, // Obj_Sound
 
         [EnemizerEnabled]
@@ -2642,12 +2649,12 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1A0)]
         HomeAndDarlingWaterLevel = 0x1BC, // Bg_Fu_Mizu
 
-        //[ActorizerEnabled] //wrong one, the one we want is burrowed, but he also does NOT come with a flower, its secondary
+        // wrong one, the one we want is burrowed, but he also does NOT come with a flower, its secondary
         [FileID(409)]
         [ObjectListIndex(0x1E5)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.SouthClockTown, Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.GoronVillage, Scene.GoronVillageSpring, Scene.ZoraHallRooms, Scene.IkanaCanyon)]
-        BuisinessScrub = 0x1BD,
+        FlyingBuisinessScrub = 0x1BD, // En_Sellnuts
 
         [FileID(410)]
         [ObjectListIndex(0x1A7)]
@@ -2667,6 +2674,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)]
+        [AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0146)] // treasure chest shop music
         [EnemizerScenesPlacementBlock(Scene.SouthClockTown)]
         [EnemizerScenesExcluded(Scene.TreasureChestShop)]
         BombchuGirl = 0x1C1, // En_Takaraya
@@ -3073,7 +3081,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(477)]
         [ObjectListIndex(0x1ED)]
-        DeepPython = 0x206, //En_Dragon
+        DeepPython = 0x206, // En_Dragon
 
         //[ActorizerEnabled] // spawns but invisible, can hit it but cannot see it in TF
         // hmm, sword school special object is dungeon_keep
@@ -3102,15 +3110,14 @@ namespace MMR.Randomizer.GameObjects
             Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208, // En_Bigpo
 
+        // this is the "door" sign that you cut to find him final night, this is NOT the kanban he puts out saying hes gone away
         [ActorizerEnabled]
         [FileID(480)]
         [ObjectListIndex(0x1EE)]
-        // thought I could fake a var 1  but it actually does something????
         [WallVariants(0)]
         //[GroundVariants(0)] // vanilla, low to the ground
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.SwordsmansSchool)] // object is also used for gong, messes with rupee rando
-        // should we randomize the orgiginal?
         SwordsmanSign = 0x209, // Obj_Kendo_Kanban
 
         //[ActorizerEnabled] // only the head not the whole cow, lame
@@ -3437,8 +3444,12 @@ namespace MMR.Randomizer.GameObjects
         [FileID(528)]
         [ObjectListIndex(0x263)]
         [WallVariants(0xFF)]
+        [GroundVariants(0xFF)]
+        [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.LotteryShop)]
+        // not working??
+        [AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0144)] // lottery music
         LotteryKiosk = 0x239, // En_Kujiya
 
         [FileID(529)]
@@ -3721,7 +3732,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(2)]
         En_Tanron6 = 0x269, // En_Tanron6
 
-        // doubt we can use him since he likely has a path, unless I move him over next to a wall and have him digging randomly
+        // TODO: make this version a companion instead, so we have fewer of these guys placed everywhere
         [ActorizerEnabled]
         [FileID(577)]
         [ObjectListIndex(0xF1)]
@@ -3784,9 +3795,17 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x203)]
         PunchableStoneTowerPillars = 0x273, // Bg_Ikana_Dharma
 
-        // without flower under him I bet he looks stupid
+        // TODO get placement shifting working so hes not always in the ground
+        [ActorizerEnabled]
         [FileID(587)]
         [ObjectListIndex(0x1E5)]
+        // 0xFC08, 0x1000 are clear swamp
+        [GroundVariants(0xFC08, 0x1000, 0xFC04, 0xFC07, 0x1001, 0x0402, 0xFC06, 0x0001, 0x1800, 0x1003)]
+        [OnlyOneActorPerRoom]
+        //[VariantsWithRoomMax(max: 1, variant: )]
+        [UnkillableAllVariants]
+        [AlignedCompanionActor(DekuFlower, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x017F)] // treasure chest shop music
+        [EnemizerScenesExcluded(Scene.SouthernSwamp, Scene.SouthernSwampClear, Scene.SouthClockTown, Scene.GoronVillage, Scene.GoronVillageSpring, Scene.ZoraHallRooms, Scene.IkanaCanyon)]
         BuisnessScrub = 0x274, // En_AkinDonuts
 
         [FileID(588)]
@@ -3846,7 +3865,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(596)]
         [ObjectListIndex(0x24F)]
         MysteryHand = 0x27D, // En_Bjt
-        
+
+        // cannot be rando'd without breaking bomber kids
         [FileID(597)]
         [ObjectListIndex(0x110)]
         JimTheBomber = 0x27E, // En_Bomjima
@@ -3854,7 +3874,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(598)]
         [ObjectListIndex(0x110)]
         BombersYouChase = 0x27F, // En_Bomjimb
-        
+
+        // cannot be randoed without taking the object all bombers use, which breaks the rest
         [FileID(599)]
         [ObjectListIndex(0x110)]
         BombersBlueHat = 0x280, // En_Bombers
@@ -3874,6 +3895,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1B1)]
         Obj_Moon_Stone = 0x283, // Obj_Moon_Stone
 
+        // the talking points around his basement, giving hints about gibdo
         [FileID(603)]
         [ObjectListIndex(0x1)]
         PamelaHouseFatherInteractions = 0x284, // Obj_Mu_Pict
@@ -3958,7 +3980,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(618)]
         [ObjectListIndex(0x80)]
-        FishingGameLight = 0x293, // Obj_Jgame_Light
+        FishingGameTorch = 0x293, // Obj_Jgame_Light
 
         [ActorizerEnabled]
         [FileID(619)]
