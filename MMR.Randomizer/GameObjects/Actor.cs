@@ -2849,17 +2849,18 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1C2)]
         // FFFF is extra?
         // 600 is night one, 702 is night 2, 801, is night 3
-        // ffff crashes in TF
+        // params: 0xFF00 is switch flags, 0xFF is text ID (hard coded)
+        // 0x3 is talk point for captain keeta's sign, just the point though his sign is part of the ground mesh
         // only one 0x600 can exist without crashing
         //[GroundVariants(0xFFFF, 0x600, 0x702, 0x801)]
-        [GroundVariants(0xFFFF, 0x600, 0x702, 0x801)]
+        [GroundVariants(0xFF00, 0xFF02, 0xFF01)]
         //[VariantsWithRoomMax(max:1, 0xFFFF, 0x600, 0x702, 0x801)]
         [OnlyOneActorPerRoom] // issue: three on redead in stonetower is crash, but not two, not worth issue
-        [UnkillableAllVariants]
+        [UnkillableAllVariants] // actually I'm not sure, it has health
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, // blocking enemies
             Scene.SouthernSwamp)] // 75% chance of crash, reason unk
-        IkanaGravestone = 0x1E3,
+        IkanaGravestone = 0x1E3, // Obj_Hakaisi
 
         [FileID(445)]
         [ObjectListIndex(0x1C7)]
