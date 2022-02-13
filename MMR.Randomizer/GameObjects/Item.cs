@@ -1788,6 +1788,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xF2), ItemPool(ItemCategory.RedRupees, LocationCategory.Chests)]
         ChestToGoronVillageRedRupee,
 
+        // TODO rename to match HeartPiece item enum naming style (HeartPieceSecretShrineChest ?)
         [StartingItem(0xC5CE70, 0x10, true)]
         [ItemName("Piece of Heart"), LocationName("Secret Shrine Final Chest"), Region(Region.SecretShrine)]
         [GossipLocationHint("a secret place"), GossipItemHint("a segment of health")]
