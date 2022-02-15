@@ -409,6 +409,7 @@ namespace MMR.Randomizer
             AllowGuruGuruOutside();
             RemoveSTTUnusedPoe();
             FixSilverIshi();
+            FixBabaAndDragonflyShadows();
 
             Shinanigans();
         }
@@ -1129,6 +1130,27 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU32(ishiData, Dest: 0x12CC, val: 0x00000000); // JAL (Actor_SetSwitchFlag) -> NOP
         }
 
+        public static void FixBabaAndDragonflyShadows()
+        {
+            /// En_Bba_01 is an unused actor who appears to be the grandma from the bomb proprieters shop
+            /// however she uses an expensive and barely used shadow draw function that makes a custom shadow to match her body shape
+            /// we need to remove it since its totally broken, its the primary reason dragon flies lag so much
+            // also should make dragonfly better so do that too, since 99% of the time we cant see its shadow as its at y=0 (bug?)
+
+            var babaFid = GameObjects.Actor.BabaIsUnused.FileListIndex();
+            RomUtils.CheckCompressed(babaFid);
+            var babaData = RomData.MMFileList[babaFid].Data;
+            // the end of the draw function must be skipped, so we branch past all of it to the end of the function
+            ReadWriteUtils.Arr_WriteU32(babaData, Dest: 0xB34, val: 0x10000024); // <irrelevant code> -> Jump to 0xBC8 (beginning of register re-load)
+
+
+            var dragonflyFid = GameObjects.Actor.DragonFly.FileListIndex();
+            RomUtils.CheckCompressed(dragonflyFid);
+            var dragonflyData = RomData.MMFileList[dragonflyFid].Data;
+            // similar to baba, we see a loop followed by a finishing function, we want to skip both in the main draw function
+            ReadWriteUtils.Arr_WriteU32(dragonflyData, Dest: 0x2498, val: 0x10000018); // <irrelevant code> -> Jump to 24E4
+        }
+
         #endregion
 
         public static void SetupGrottoActor(Actor enemy, int newVariant)
@@ -1829,7 +1851,7 @@ namespace MMR.Randomizer
                     }
                     bool result;
                     //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.BombFlower)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.LotteryKiosk)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
                     if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);

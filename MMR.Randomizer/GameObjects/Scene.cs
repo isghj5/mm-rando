@@ -103,6 +103,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x18)]
         [FairyDroppingEnemies(1, 3)] // eygore 
         [FairyDroppingEnemies(1, 1)] // wizrobe
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.DeathArmos,
+            Actor.PatrollingPirate)] // casual, causes a need for stone mask to procede through the temple
         InvertedStoneTowerTemple = 0x15,
 
         [FileID(1203)]
