@@ -177,7 +177,10 @@ namespace MMR.Randomizer.Utils
         public static byte[] BuildROM()
         {
             // if injecting new actors, we need to update the actor overlay table overlayEntry
-            Enemies.UpdateActorOverlayTable();
+            //if (Settings.RandomizeEnemies) // right... settings files are always local for some reason..
+            {
+                Enemies.UpdateActorOverlayTable();
+            }
 
             // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
             var previousThreadPriority = Thread.CurrentThread.Priority;

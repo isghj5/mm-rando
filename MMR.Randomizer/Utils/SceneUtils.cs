@@ -216,9 +216,9 @@ namespace MMR.Randomizer.Utils
             // https://github.com/zeldaret/mm/blob/master/include/z64object.h#L4-L7
             // https://github.com/zeldaret/mm/blob/master/src/code/z_scene.c#L32-L41
 
-            const int OBJECT_SPACE_SIZE_DEFAULT         = 1413120;
-            const int OBJECT_SPACE_SIZE_CLOCK_TOWN      = 1566720;
-            const int OBJECT_SPACE_SIZE_MILK_BAR        = 1617920;
+            const int OBJECT_SPACE_SIZE_DEFAULT         = 1413120; // 0x159000
+            const int OBJECT_SPACE_SIZE_CLOCK_TOWN      = 1566720; // 0x17E800
+            const int OBJECT_SPACE_SIZE_MILK_BAR        = 1617920; // 0x18B000
             const int OBJECT_SPACE_SIZE_TERMINA_FIELD   = 1505280; // 0x16F800
 
             if (scene == GameObjects.Scene.SouthClockTown || scene == GameObjects.Scene.EastClockTown ||
