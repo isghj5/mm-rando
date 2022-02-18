@@ -1482,9 +1482,13 @@ namespace MMR.Randomizer
         {
             /// companion actors can sometimes be alligned, to increase immersion
             /// example: putting hidden grottos inside of a stone circle
+            /// example2: putting butterflies over bushes
 
             var actorsWithCompanions = changedEnemies.FindAll(u => ((GameObjects.Actor)u.ActorID).HasOptionalCompanions())
-                                                     .OrderBy(x => rng.Next()).ToList();
+                                                     .OrderBy(x => rng.Next()) // randomize list
+                                                     .ToList();
+
+            if (actorsWithCompanions.Count <= 2) return;
 
             for (int i = 0; i < actorsWithCompanions.Count; ++i)
             {
@@ -1868,19 +1872,8 @@ namespace MMR.Randomizer
                     }
                     bool result;
                     //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.BombFlower)) continue;
-                    //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
                     //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Bo, GameObjects.Actor.Stalchild)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.SkullFish, GameObjects.Actor.LikeLike)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Beamos, GameObjects.Actor.LotteryKiosk)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.DragonFly, GameObjects.Actor.Bo)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.RealBombchu, GameObjects.Actor.Armos)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Armos, GameObjects.Actor.MadShrub)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Nejiron, GameObjects.Actor.Hiploop)) continue;
-
-                    if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.SwimmingZora)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Guay, GameObjects.Actor.Poe)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.StoneTowerTemple, GameObjects.Actor.Hiploop, GameObjects.Actor.Leever)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
                     #endif
@@ -1947,6 +1940,10 @@ namespace MMR.Randomizer
                         var companionAttrs = actor.ActorEnum.GetAttributes<CompanionActorAttribute>();
                         if (companionAttrs != null)
                         {
+                            // if 4 or fewer, no companions, not enough regular actors anyway
+                            // reminder: these are companions that fully mix into the actor list
+                            if (originalEnemiesPerObject[objCount].Count <= 3) continue;
+
                             foreach (var companion in companionAttrs)
                             {
                                 var cObj = companion.Companion.ObjectIndex();
@@ -1967,6 +1964,8 @@ namespace MMR.Randomizer
                     {
                         Actor testActor;
 
+                        var actorsPerRoomCount = originalEnemiesPerObject[objCount].FindAll(u => u.Room == oldEnemy.Room).Count();
+
                         // this isn't really a loop, 99% of the time it matches on the first loop
                         // leaving this for now because its faster than shuffling the list even if it looks stupid
                         // eventually: replace with .Single().Where(conditions)
@@ -1977,9 +1976,11 @@ namespace MMR.Randomizer
                             //  //&& oldEnemy.Stationary == subMatches[testActor].Stationary)
                             testActor = subMatches[rng.Next(subMatches.Count)];
 
-                            if (oldEnemy.MustNotRespawn && testActor.IsCompanion)
+                            if (testActor.IsCompanion && (oldEnemy.MustNotRespawn || actorsPerRoomCount <= 2))
                             {
-                                continue; // most companions currently are not killable, skip
+                                // so far all companions are unkillable, so we cannot put them in these rooms
+                                // also if the room has no space for companions, dont use them here
+                                continue;
                             }
 
                             break;
