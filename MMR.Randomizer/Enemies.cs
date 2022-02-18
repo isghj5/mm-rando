@@ -1870,7 +1870,6 @@ namespace MMR.Randomizer
                         }
                         return false;
                     }
-                    bool result;
                     //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.BombFlower)) continue;
                     if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
                     //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
@@ -2606,11 +2605,12 @@ namespace MMR.Randomizer
                     DisableAllLocationRestrictions();  //experimental
                 }
 
+                // write the final time and version last
                 using (StreamWriter sw = new StreamWriter(settings.OutputROMFilename + "_EnemizerLog.txt", append: true))
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 30.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 31.0\n");
                 }
             }
             catch (Exception e)
