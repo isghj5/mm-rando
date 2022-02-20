@@ -1169,6 +1169,11 @@ namespace MMR.Randomizer
             if (_randomized.Settings.AllowFierceDeityAnywhere)
             {
                 ResourceUtils.ApplyHack(Resources.mods.fierce_deity_anywhere);
+
+                // test if FD sword spin attack makes sense
+                RomUtils.CheckCompressed(38);
+                var playerFile = RomData.MMFileList[38].Data;
+                ReadWriteUtils.Arr_WriteU32(playerFile, 0x5880, 0x00000000); // branch on player->transoformation == FD -> NOP
             }
 
             if (_randomized.Settings.ByoAmmo)
