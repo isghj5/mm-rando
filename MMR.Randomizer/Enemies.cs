@@ -678,34 +678,6 @@ namespace MMR.Randomizer
             twinislandsSceneData[0xD6] = 0xAE;
             twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall 
 
-
-
-            // test if we can make it dark at night everywhere?
-            // dark room just enables point lights, is that it for inside?
-            //foreach (var s in RomData.SceneList)
-
-            // testing: change the environment var for tf object_kankyo
-            //var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
-            //terminafieldScene.Maps[0].Actors[0].ChangeActor(GameObjects.Actor.Weather, vars: 3);
-
-            // test: clear away all weather tag actors and see what that changes
-            //this did NOTHING?? what
-            /* foreach (var s in RomData.SceneList)
-            {
-                foreach (var m in s.Maps)
-                {
-                    foreach (var a in m.Actors)
-                    {
-                        if (a.ActorEnum == GameObjects.Actor.WeatherTag)
-                        {
-                            //a.ChangeActor(GameObjects.Actor.Empty);
-                            a.Variants[0] = 0x1D04;
-                            Debug.WriteLine($"Weather tag found in scene:{s.SceneEnum.ToString()}");
-                        }
-                    }
-                }
-            } //  */
-
             //PrintActorValues();
         }
 
@@ -1917,7 +1889,7 @@ namespace MMR.Randomizer
                         return false;
                     }
                     //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.BombFlower)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.En_Stream)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
                     if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
                     //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
 

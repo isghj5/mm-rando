@@ -3098,20 +3098,18 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(479)]
         [ObjectListIndex(0x1F1)]
-        // think 0102 is the dig spots for dampe
-        // 1 and FF00 both exist
-        // 1 has a spawn flag that stops respawning once you kill one
-        //  because of this, it's possible to kill one in TF, then need to kill one in a clear enemy puzzle room and it doesnt spawn
-        //[FlyingVariants(0xFF00)] // 1 is a possible type? well: ff00
-        [GroundVariants(1)] // looking at the code, FF should always spawn, and 2 is a special case, but what about the rest? crashes tho
-        //[GroundVariants(0x1)] // looking at the code, FF should always spawn, and 2 is a special case, but what about the rest?
+        // params: 0xFF00 is switch flags, if switch flag is exactly 0xFF then switch flags are ignored
+        //    0xFF is type, where 0 is well, 1 is suppmoned in dampe house, 2/3/4 are dampe fire subtypes
+        // we should be able to use 0xFF00... but rando changes something that makes dampe po spawn instant and well po has a cutscene
+        [FlyingVariants(0xFF01)]
+        [GroundVariants(0xFF01)]
         [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
         //[OnlyOneActorPerRoom]
-        [VariantsWithRoomMax(max:2, variant:1)]
-        [UnkillableAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
-        [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
-        [EnemizerScenesPlacementBlock( Scene.TerminaField, // suspected weird un-reproducable crashes always seems to happen when they are around
-            Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
+        [VariantsWithRoomMax(max:2, variant:0xFF01, 0xFF00)]
+        //[UnkillableAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
+        [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames for ghast
+        //[EnemizerScenesPlacementBlock( Scene.TerminaField, // suspected weird un-reproducable crashes always seems to happen when they are around
+        //    Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         BigPoe = 0x208, // En_Bigpo
 
         // this is the "door" sign that you cut to find him final night, this is NOT the kanban he puts out saying hes gone away

@@ -37,7 +37,8 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms(1, 2, 4)]
         [SceneInternalId(0x0C)]
         [EnemizerSceneEnemyReplacementBlock(Actor.IronKnuckle,
-            Actor.Hiploop)] // hiploop dies if he touches water? happens in day 2 iron knuckle
+            Actor.Hiploop, // hiploop dies if he touches water? happens in day 2 iron knuckle
+            Actor.GibdoWell)] // bit mean to go that far to find a gibdo you have to kill, could be softlock too if no soaring/sot
         BeneathGraveyard = 0x05,
 
         [FileID(1137)]
