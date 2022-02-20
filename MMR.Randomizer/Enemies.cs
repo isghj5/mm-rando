@@ -514,12 +514,9 @@ namespace MMR.Randomizer
             var linkTrialScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LinkTrial.FileID());
             linkTrialScene.Maps[1].Actors[0].Position.y = 1; // up high dinofos spawn, red bubble would spawn in the air, lower to ground
 
+
             if (ACTORSENABLED)
             {
-                // in order to randomize dog, without adding that dog back in because it can crash, we need to change the vars on the dog we want changed
-                //var swampspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
-                //swampspiderhouseScene.Maps[0].Actors[2].Variants[0] = 0x3FF;
-
                 var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
                 var torchRotation = dekuPalaceScene.Maps[2].Actors[26].Rotation.z;
                 torchRotation = (short)MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
@@ -649,6 +646,7 @@ namespace MMR.Randomizer
             }
 
             // testing why zrotation can be so broken for grottos
+            /* 
             var testScene = GameObjects.Scene.TerminaField;
             var grottoSceneIndex = RomData.SceneList.FindIndex(u => u.File == testScene.FileID());
             var grottoSceneActorAddr = RomData.SceneList[grottoSceneIndex].Maps[0].ActorAddr;
@@ -661,6 +659,7 @@ namespace MMR.Randomizer
             RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Variants[0] = 0x8200; // hidden jgrotto
 
             RomData.SceneList[grottoSceneIndex].Maps[0].Actors[actorNumber].Rotation.z = 0x0200; // ignored if top nibble is set to > 0
+            // */
 
             // I like secrets
             var twinislandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslands.FileID());
@@ -1341,51 +1340,52 @@ namespace MMR.Randomizer
         {
             /// for each object being replaced, search for others in the list and turn them into the smallest objects
 
-            // cant think of a better method right now than O(n^2) but none of these lists should be n > 30 anyway
+            // since this will be our final object listing, or at least pass one
 
             List<int> replacedObjects = new List<int>();
             var objectsPerMap = new List<List<int>>() ;
+
             for (int m = 0; m < sceneActors.Scene.Maps.Count; ++m)
             {
                 var map = sceneActors.Scene.Maps[m];
                 var objList = map.Objects.ToList(); // copy the old list, were modifying
 
-                // if our actors exist in this map
-
+                // first pass: generate a list of all objects per map, and replace objects as we go from the swaps
                 for (int swapIndex = 0; swapIndex < chosenReplacementObjects.Count; swapIndex++)
                 {
                     var swap = chosenReplacementObjects[swapIndex];
-                    //var actorsForThisObj = actorsPerObject[swapIndex];
-                    //var actorsInThisRoom = actorsForThisObj.FindAll(u => u.Room == m);
-                    //if (actorsInThisRoom.Count == 0) // testing removal
-                    //    continue; // nothing to trim, leave here before we decide to trim for the wrong reason
-
-                    // if there is already a new value we wish to change, duplicate detected
-                    var replacementSearch = objList.FindIndex(u => u == swap.ChosenV);
-                    if (replacementSearch != -1) // found duplicate
+                    var searchIndex = map.Objects.FindIndex(u => u == swap.OldV); // search original list so we dont catch the previous changes
+                    if (searchIndex != -1) // not all rooms will have the object
                     {
-                        // possible: actor used to be here, but was randoed, and our new actor has the same object
-                        var replacedDupSearch = chosenReplacementObjects.FindIndex(u => u.OldV == swap.ChosenV);
-                        if (replacedDupSearch == -1) // object is NOT in our mix, is vanilla, we can therefor delete old object
-                        {
-                            replacedObjects.Add(swap.NewV);
-                            swap.NewV = SMALLEST_OBJ; // swap with empty, or later above use as free object
-                            objList[replacementSearch] = SMALLEST_OBJ;
-                        }
+                        objList[searchIndex] = swap.NewV;
                     }
-                    else // no duplicate, replace
+                }
+
+                // find all objects that have duplicates
+                var uniqueObjects = objList.Distinct().ToList();
+
+                // if they are the same size, no duplicates, keep going to next map
+                if (objList.Count() != uniqueObjects.Count())
+                {
+                    // couldnt find a simple way to get a list of duplicates, so instead starting with list of unique values
+
+                    // second pass: remove all duplicates
+                    //foreach (var unique in uniqueObjects.ToList())
+                    for(int u = 0; u < uniqueObjects.Count(); u++)
                     {
-                        var objectSearch = objList.FindIndex(u => u == swap.OldV);
-                        if (objectSearch != -1) // not all rooms will have the object
+                        var uniqueObj = uniqueObjects[u];
+                        if (objList.Count(u => u == uniqueObj) > 1) // more than one exists, remove
                         {
-                            objList[objectSearch] = swap.NewV;
+                            // just remove first one, not sure if there is an advantage of changing one over the other
+                            var firstIndex = objList.FindIndex(u => u == uniqueObj);
+                            objList[firstIndex] = SMALLEST_OBJ;
                         }
                     }
                 }
 
                 objectsPerMap.Add(objList);
-
             }
+
             if (replacedObjects.Count > 0)
             {
                 var objectAsHexString = replacedObjects.Select(u => u.ToString("X3"));
@@ -2557,7 +2557,8 @@ namespace MMR.Randomizer
                 DateTime enemizerStartTime = DateTime.Now;
 
                 // for dingus that want moonwarp, re-enable dekupalace
-                var SceneSkip = new GameObjects.Scene[] { GameObjects.Scene.GreatBayCutscene,
+                var SceneSkip = new GameObjects.Scene[] {
+                    GameObjects.Scene.GreatBayCutscene,
                     GameObjects.Scene.SwampShootingGallery,
                     GameObjects.Scene.TownShootingGallery,
                     GameObjects.Scene.GiantsChamber,
@@ -2571,7 +2572,7 @@ namespace MMR.Randomizer
                 SceneUtils.GetMapHeaders();
                 SceneUtils.GetActors();
                 EnemizerEarlyFixes();
-                ScanForMMRA("actors");
+                ScanForMMRA(directory: "actors");
                 InjectNewActors();
 
                 var newSceneList = RomData.SceneList;
@@ -2976,18 +2977,10 @@ namespace MMR.Randomizer
                 }
                 var size = newMapList[map].day.objectSizes.Sum().ToString("X");
                 var allSize = newMapList[map].day.ObjectRamSize.ToString("X");
-                log.AppendLine($"  day   object sizes: [ {hexString}]");
+                log.AppendLine($" object sizes: [ {hexString}]");
                 log.AppendLine($"    sum: [0x{size}] allsize: [0x{allSize}]");
+                log.AppendLine($" ------------------------------------------------- ");
 
-                hexString = "";
-                for (int i = 0; i < newMapList[map].day.objectSizes.Length; i++)
-                {
-                    hexString += "0x" + newMapList[map].day.objectSizes[i].ToString("X") + " ";
-                }
-                size = newMapList[map].night.objectSizes.Sum().ToString("X");
-                allSize = newMapList[map].night.ObjectRamSize.ToString("X");
-                log.AppendLine($"  night object sizes: [ {hexString}]");
-                log.AppendLine($"    sum: [0x{size}] allsize: [0x{allSize}]");
             }
         } // end PrintCombineRatioNewOldz
     } // end SceneActorsCollection
