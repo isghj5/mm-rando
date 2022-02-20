@@ -425,6 +425,7 @@ namespace MMR.Randomizer
             RemoveSTTUnusedPoe();
             FixSilverIshi();
             FixBabaAndDragonflyShadows();
+            AddGrottoVariety();
 
             Shinanigans();
         }
@@ -676,6 +677,7 @@ namespace MMR.Randomizer
             var twinislandsSceneData = RomData.MMFileList[GameObjects.Scene.TwinIslands.FileID()].Data;
             twinislandsSceneData[0xD6] = 0xAE;
             twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall 
+
 
 
             // test if we can make it dark at night everywhere?
@@ -1163,6 +1165,50 @@ namespace MMR.Randomizer
             var dragonflyData = RomData.MMFileList[dragonflyFid].Data;
             // similar to baba, we see a loop followed by a finishing function, we want to skip both in the main draw function
             ReadWriteUtils.Arr_WriteU32(dragonflyData, Dest: 0x2498, val: 0x10000018); // <irrelevant code> -> Jump to 24E4
+        }
+
+        private static void AddGrottoVariety()
+        {
+            /// turns out the grottos have unused objects, some of them can be swapped
+            ///   without affecting the original enemy placement, and gives us some variety
+
+            var grottosScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Grottos.FileID());
+
+            // dodongo grotto has a blue icecycle object, switch to BO so we can get bo actors from jp grotto
+            var dodongoGrottoObjectList = grottosScene.Maps[7].Objects;
+            dodongoGrottoObjectList[2] = GameObjects.Actor.Bo.ObjectIndex();
+
+            // peahat grotto has a deku baba object, switch to BO so we can get bo actors from jp grotto
+            var peahatGrottoObjecList = grottosScene.Maps[13].Objects;
+            peahatGrottoObjecList[2] = GameObjects.Actor.Bo.ObjectIndex();
+            // there is a worthless mushroom here, lets make TWO peahats :]
+            var newPeahat = grottosScene.Maps[13].Actors[3];
+            newPeahat.ChangeActor(GameObjects.Actor.Peahat, vars: 0, modifyOld: true);
+            newPeahat.Position = new vec16(5010, -20, 600); // move over near peahat one
+
+            // straight jp grotto has only one object, padding of scene data means there is space for an object right behind it that we can use
+            //  we can use the second object to give this area a chest by taking one of the useless mushrooms and changing it
+            // expand object list to have both of our new objects, change dekubaba to dodongo to increase likelyhood of killable
+            grottosScene.Maps[6].Objects = new List<int> { GameObjects.Actor.Peahat.ObjectIndex(),
+                                                           GameObjects.Actor.TreasureChest.ObjectIndex() };
+            // change dekubaba to dodongo so its killable to get the new chest
+            grottosScene.Maps[6].Actors[2].ChangeActor(GameObjects.Actor.Peahat, vars: 0, modifyOld: true);
+            // we have to tell the room to load the extra object though
+            var straightJPGrottoRoomFile = RomData.MMFileList[GameObjects.Scene.Grottos.FileID() + 7];
+            straightJPGrottoRoomFile.Data[0x29] = 0x2; // setting object header object count from 1 to 2
+
+            var newChestActor = grottosScene.Maps[6].Actors[7];
+            // chest params: should be invisible until you kill the enemy, should not collide with any other chest flags in the scene, item: dont know
+            // flag 1D, type 7, item 6D (unknown)
+            newChestActor.ChangeActor(GameObjects.Actor.TreasureChest, 0x26ED, modifyOld: true);
+            newChestActor.Position = new vec16(-230, 0, 1130); // move into the grass area
+            newChestActor.Rotation.y = (short)MergeRotationAndFlags(90, grottosScene.Maps[6].Actors[7].Rotation.y); // rotate to face the center
+            // turn the other useless mushroom into another buterfly for ambiance
+            grottosScene.Maps[6].Actors[8].ChangeActor(GameObjects.Actor.Butterfly, 0x5324, modifyOld: true);
+            grottosScene.Maps[6].Actors[8].Position.y = 58; // dont want spawning in the ground, we want flying around
+
+            // biobaba grotto has a worthless dekubaba object, lets swap it for the ice block object so we can freeze the water
+            grottosScene.Maps[11].Objects[3] = 0x1E7; // iceflowe
         }
 
         #endregion
@@ -1871,6 +1917,7 @@ namespace MMR.Randomizer
                         return false;
                     }
                     //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.BombFlower)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.En_Stream)) continue;
                     if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
                     //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
 

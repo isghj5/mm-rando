@@ -68,7 +68,7 @@ namespace MMR.Randomizer.GameObjects
             0x0AFB, 0x099C)] // two free, the rest are gold invisible
         //[GroundVariants(0x001F)] // testing
         [VariantsWithRoomMax( max:1, variant: 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
-            0x561E, 0x5C79,0x5991, 0x5B58, 0x5A1E,
+            0x561E, 0x5C79, 0x5991, 0x5B58, 0x5A1E,
             0x0AFB, 0x099C)] // brown, harder to see in perpheral vision, not invisible
         [UnkillableAllVariants]
         //[AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
@@ -1213,8 +1213,11 @@ namespace MMR.Randomizer.GameObjects
         EmptyB7 = 0xB7,
 
         // unused water vortex from water temple
+        [ActorizerEnabled]
         [FileID(163)]
+        [WaterVariants(0)]
         [ObjectListIndex(0x106)]
+        [UnkillableAllVariants]
         En_Stream = 0xB8, // En_Stream
 
         //[ActorizerEnabled] // behavior is weird, hard to randomly place anywhere
