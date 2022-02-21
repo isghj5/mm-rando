@@ -36,7 +36,8 @@ namespace MMR.Randomizer.Utils
                 if (il.ItemId >= 0)
                 {
                     var io = randomized.ItemList[il.ItemId];
-                    il.IsFakeItem = (io.Item.IsFake() && io.Item.Entrance() == null) || !io.IsRandomized;
+                    il.IsFakeItem = !io.IsRandomized || (io.Item.IsFake() && io.Item.Entrance() == null);
+                    il.IsItemRemoved = io.ItemOverride.HasValue;
                 }
             });
 
