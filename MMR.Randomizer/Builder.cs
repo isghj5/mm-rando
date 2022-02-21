@@ -1276,8 +1276,7 @@ namespace MMR.Randomizer
 
             var shuffledSoundEffects = new Dictionary<SoundEffect, SoundEffect>();
 
-            var replacableSounds = SoundEffects.Replacable();
-            foreach (var sound in replacableSounds)
+            foreach (var sound in SoundEffects.All())
             {
                 var soundPool = SoundEffects.FilterByTags(sound.ReplacableByTags());
 
@@ -1294,16 +1293,12 @@ namespace MMR.Randomizer
                 var oldSound = sounds.Key;
                 var newSound = sounds.Value;
 
-                if (oldSound.IsReplacableInMessage())
-                {
-                    oldSound.ReplaceInMessageWith(newSound, messageTable);
-                }
-                else
-                {
-                    oldSound.ReplaceWith(newSound);
-                }
+                oldSound.TryReplaceWith(newSound);
+
                 Debug.WriteLine($"Writing SFX {newSound} --> {oldSound}");
             }
+
+            messageTable.ApplyRandomSoundEffects(shuffledSoundEffects);
 
             MessageTable.WriteDefault(messageTable, false);
         }
@@ -1326,14 +1321,14 @@ namespace MMR.Randomizer
             }
             else if ((int) _cosmeticSettings.LowHealthSFX > (int) LowHealthSFX.Random)
             {
-                SoundEffect.LowHealthBeep.ReplaceWith( (SoundEffect) _cosmeticSettings.LowHealthSFX);
+                SoundEffect.LowHealthBeep.TryReplaceWith( (SoundEffect) _cosmeticSettings.LowHealthSFX);
             }
             else if(_cosmeticSettings.LowHealthSFX == LowHealthSFX.Random)
             {
                 var soundPool = SoundEffects.FilterByTags(SoundEffect.LowHealthBeep.ReplacableByTags());
                 if (soundPool.Count > 0)
                 {
-                    SoundEffect.LowHealthBeep.ReplaceWith(soundPool.Random(random));
+                    SoundEffect.LowHealthBeep.TryReplaceWith(soundPool.Random(random));
                 }
             }
         }
