@@ -210,12 +210,11 @@ namespace MMR.Randomizer.Utils
         public static void PrepareJunkItems(List<ItemObject> itemList)
         {
             JunkItems = itemList.Where(io => io.Item != Item.CollectableIkanaGraveyardDay2Bats1
+                                          && io.Item.IsRepeatable()
                                           && io.Item.GetAttribute<ChestTypeAttribute>()?.Type == ChestTypeAttribute.ChestType.SmallWooden
                                           && !itemList.Any(other => (other.DependsOnItems?.Contains(io.Item) ?? false)
                                                                  || (other.Conditionals?.Any(c => c.Contains(io.Item)) ?? false))
                                       ).Select(io => io.Item).ToList();
-
-            JunkItems.RemoveAll(u => !u.IsRepeatable()); // Removes HeartPieces, Map and Compasses from the junk list
         }
 
         public static bool IsJunk(Item item)
