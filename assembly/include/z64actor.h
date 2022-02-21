@@ -303,6 +303,7 @@ typedef struct {
     /* 0xAE7 */ u8 animTimer; // Some animation timer? Relevant to: transformation masks.
     /* 0xAE8 */ u16 frozenTimer;
     /* 0xAEA */ UNK_TYPE1 padAEA[0x3E];
+    // B08 goron roll max speed?
     /* 0xB28 */ s16 unkB28;
     /* 0xB2A */ UNK_TYPE1 padB2A[0x36];
     // B50 max speed?
