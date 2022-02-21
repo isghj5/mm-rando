@@ -286,13 +286,9 @@ namespace MMR.Randomizer
             }
 
             // if we didn't pre-save it, we need to extract it
-            var ovlFID = ((GameObjects.Actor)actorOvlTblIndex).FileListIndex();
-            if (ovlFID == -1) // we dont know its fid, I forgot to write prewrite it
-            {
-                ovlFID = GetFID(actorOvlTblIndex); // attempt to get it from the DMA table
-                if (ovlFID == -1) { 
-                    return 0xABCD; // conservative estimate
-                }
+            var ovlFID = GetFID(actorOvlTblIndex); // attempt to get it from the DMA table
+            if (ovlFID == -1) { 
+                return 0xABCD; // conservative estimate
             }
 
             var offset = GetOvlActorInit(actorOvlTblIndex);
@@ -350,25 +346,6 @@ namespace MMR.Randomizer
             return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 0));
         }
 
-        public static int GetFIDFromVROM(int actorStart)
-        {
-            // assuming the actor overlay table vrom addresses can match DMA table: search through the DMA table
-            var fileID = 2;
-            var dmaData = RomData.MMFileList[fileID].Data;
-
-            for (int i = 0; i < 1550; ++i)
-            {
-                // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb <- DMA table entry
-                // x and y should be start and end VROM addresses of each file
-                var dmaStartingAddr = ReadWriteUtils.Arr_ReadU32(dmaData, 16 * i); // x
-                if (dmaStartingAddr == actorStart) {
-                    return i;
-                }
-            }
-
-            return -1;
-        }
-
         // todo: now that we know this works, switch over a bunch of code to it
         public static int GetFID(int actorID)
         {
@@ -381,7 +358,7 @@ namespace MMR.Randomizer
             // if we want to know the file ID of an actor, we need to look up the VROM addr from the overlay table
             // and match against a file in DMA, because nintendo removed the FID from the overlay table
             // all actors should have their FID coded in the enum now, this is depreciated but left as backup
-            return GetFIDFromVROM(GetOvlActorVROMStart(actorID));
+            return RomUtils.GetFIDFromVROM(GetOvlActorVROMStart(actorID));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

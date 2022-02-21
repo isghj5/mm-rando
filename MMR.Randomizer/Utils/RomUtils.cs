@@ -61,6 +61,52 @@ namespace MMR.Randomizer.Utils
                 file => RAddr >= file.Addr && RAddr < file.End);
         }
 
+        public static int GetFIDFromVROM(int actorStartVROM, int startID = 3, int endID = 1550)
+        {
+            /// search for File ID from VROM address in DMA table
+            /// WARNING: this assumes you are searching vanilla files only, which are default sorted by VROM
+
+            var dmaFID = 2;
+            var dmaData = RomData.MMFileList[dmaFID].Data;
+
+            int Linear(int start)
+            {
+                for (int i = start; i < 1550; ++i)
+                {
+                    // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb <- DMA table entry
+                    // x and y should be start and end VROM addresses of each file
+                    var dmaStartingAddr = ReadWriteUtils.Arr_ReadU32(dmaData, 16 * i);
+                    if (dmaStartingAddr == actorStartVROM)
+                    {
+                        return i;
+                    }
+                }
+
+                throw new Exception($"GetFIDFromVROM: could not find the file at VROM start addr:\n" +
+                                    $"    [0x{actorStartVROM.ToString("X")}]");
+                //return -1;
+            }
+
+            var size = endID - startID;
+            if (size < 15) // if dma range < 15 (12.1 at 8 layers deep): search the rest of the way with linear
+            {
+                return Linear(startID);
+            }
+            else // else: recursive down to smaller size
+            {
+                int middle = (int)(size / 2.0) + startID;
+                var middleAddr = ReadWriteUtils.Arr_ReadU32(dmaData, 16 * middle);
+                if (actorStartVROM >= middleAddr)
+                {
+                    return GetFIDFromVROM(actorStartVROM, middle, endID);
+                }
+                else
+                {
+                    return GetFIDFromVROM(actorStartVROM, startID, middle - 1);
+                }
+            }
+        }
+
         public static void CheckCompressed(int fileIndex, List<MMFile> mmFileList = null)
         {
             if (mmFileList == null)
