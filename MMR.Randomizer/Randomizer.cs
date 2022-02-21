@@ -985,14 +985,14 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            if (_settings.LogicMode == LogicMode.NoLogic)
-            {
-                return true;
-            }
-
             if ((_settings.CustomJunkLocations.Contains(target) || target == Item.UpgradeRoyalWallet) && !ItemUtils.IsJunk(currentItem))
             {
                 return false;
+            }
+
+            if (_settings.LogicMode == LogicMode.NoLogic)
+            {
+                return true;
             }
 
             if (ForbiddenPlacedAt.ContainsKey(currentItem)

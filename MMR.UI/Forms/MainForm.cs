@@ -1592,8 +1592,8 @@ namespace MMR.UI.Forms
             cHTMLLog.Enabled = !vanillaMode;
             cGossipHints.Enabled = !vanillaMode;
             cStartingItems.Enabled = !vanillaMode;
-            tJunkLocationsList.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
-            bJunkLocationsEditor.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
+            tJunkLocationsList.Enabled = !vanillaMode;
+            bJunkLocationsEditor.Enabled = !vanillaMode;
             bToggleTricks.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
             cIceTraps.Enabled = !vanillaMode;
             cIceTrapsAppearance.Enabled = !vanillaMode;
