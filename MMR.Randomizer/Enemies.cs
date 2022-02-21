@@ -100,7 +100,7 @@ namespace MMR.Randomizer
 
             var freeCandidates = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                                 .Where(u => u.ObjectIndex() <= 3
-                                && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized() )))
+                                && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized())))
                                 .ToList();
 
 
@@ -121,6 +121,7 @@ namespace MMR.Randomizer
             return ReplacementCandidateList.Find(u => u.ActorEnum == actor) != null;
         }
 
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ReplacementListRemove(List<Actor> replaceList, GameObjects.Actor actor)
         {
             // might be an easier one liner but this could get used a lot
@@ -243,141 +244,7 @@ namespace MMR.Randomizer
             return returnActorTypes;
         }
 
-        public static int GetOvlCodeRamSize(int actorOvlTblIndex)
-        {
-            /// this is the size of overlay (actor) code in ram
-            /// to get it, we can just diff the
 
-            if (actorOvlTblIndex == (int)GameObjects.Actor.Empty || actorOvlTblIndex == 0)
-            {
-                return 0;
-            }
-
-            /// actor overlay size already exists in the actor overlay table, just look it up from the index
-            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
-            RomUtils.CheckCompressed(actorOvlTblFID);
-            // the overlay table exists inside of another file, we need the offset to the table
-            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
-            var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
-            // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb pppppppp iiiiiiii nnnnnnnn ???? cc ??
-            // A and B should be start and end of vram address, which is what we want as we want the ram size
-            return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 12)
-                       - ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8));
-        } 
-
-        public static int GetOvlInstanceRamSize(int actorOvlTblIndex)
-        {
-            /// this is the size of the actor's struct instance in ram
-            if (actorOvlTblIndex == -1) return 0; // GameObjects.Actor.Empty;
-
-            // to get this, we either need to save it or read it from the overlay's init vars
-            var attr = ((GameObjects.Actor)actorOvlTblIndex).GetAttribute<ActorInstanceSizeAttribute>();
-            if (attr != null)
-            {
-                return attr.Size;
-            }
-
-            // if its an injected actor, we get from the actor not the vanilla rom
-            InjectedActor injectedActor = InjectedActors.Find(u => u.actorID == actorOvlTblIndex);
-            if (injectedActor != null && injectedActor.overlayBin != null) {
-                // E/F are the actor's instance size
-                // no check compressed: user has to submit uncompressed actor binary
-                return ReadWriteUtils.Arr_ReadU16(injectedActor.overlayBin, (int)injectedActor.initVarsLocation + 0xE);
-            }
-
-            // if we didn't pre-save it, we need to extract it
-            var ovlFID = GetFID(actorOvlTblIndex); // attempt to get it from the DMA table
-            if (ovlFID == -1) { 
-                return 0xABCD; // conservative estimate
-            }
-
-            var offset = GetOvlActorInit(actorOvlTblIndex);
-            if (offset <= 0)
-            {
-                return 0x1001;
-            }
-            RomUtils.CheckCompressed(ovlFID);
-            var ovlData = RomData.MMFileList[ovlFID].Data;
-            return ReadWriteUtils.Arr_ReadU16(ovlData, offset + 0xE); // E/F are the actor's instance size
-
-        }
-
-        public static int GetOvlActorInit(int actorOvlTblIndex)
-        {
-            /// this is the offset location of the actor's init variables
-
-            /// even though the overlay table says it has the init vars location, it doesn't get populated until after 
-
-            // we have some of them hardcoded, if that exists return that instead because scanning files sucks
-            var actor = (GameObjects.Actor)actorOvlTblIndex;
-            var actorAttr = actor.GetAttribute<ActorInitVarOffsetAttribute>();
-            if (actorAttr != null)
-            {
-                return actorAttr.Offset;
-            }
-
-            // just look it up in the actor overlay table, initvars - vram start is the offset
-            var actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
-            // dont need to check for compression, code has been un-compressed for ages
-            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
-            var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
-            // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb pppppppp iiiiiiii nnnnnnnn ???? cc ??
-            // A should be the start of vram address, i is init vars location in vram, take diff to get offset in overlay file
-            //var initloc = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 20);
-            //var vramloc = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8);
-            return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 20)
-                       - ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 8));
-        }
-
-        public static int GetOvlActorVROMStart(int actorOvlTblIndex)
-        {
-            /// we might want to look up the file vrom address for an actor so we can find its FID
-            /// dont look at me like that, it's nintendo's fault the retail cart doesn't have this in the overlay table, they removed it
-
-            /// actor's vrom addr exists in the overlay table so the code can load the file
-            int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
-            RomUtils.CheckCompressed(actorOvlTblFID);
-
-            // the overlay table exists inside of another file, we need the offset to the table
-            int actorOvlTblOffset = Constants.Addresses.ActorOverlayTable - RomData.MMFileList[actorOvlTblFID].Addr;
-            var actorOvlTblData = RomData.MMFileList[actorOvlTblFID].Data;
-            // xxxxxxxx yyyyyyyy aaaaaaaa bbbbbbbb pppppppp iiiiiiii nnnnnnnn ???? cc ??
-            // x should be our vrom address start
-            return (int)(ReadWriteUtils.Arr_ReadU32(actorOvlTblData, actorOvlTblOffset + (actorOvlTblIndex * 32) + 0));
-        }
-
-        // todo: now that we know this works, switch over a bunch of code to it
-        public static int GetFID(int actorID)
-        {
-            var fidLookup = ((GameObjects.Actor)actorID).FileListIndex();
-            if (fidLookup != -1)
-            {
-                return fidLookup;
-            }
-
-            // if we want to know the file ID of an actor, we need to look up the VROM addr from the overlay table
-            // and match against a file in DMA, because nintendo removed the FID from the overlay table
-            // all actors should have their FID coded in the enum now, this is depreciated but left as backup
-            return RomUtils.GetFIDFromVROM(GetOvlActorVROMStart(actorID));
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int MergeRotationAndFlags(int rotation, int flags)
-        {
-            /// in a map's actor list: actors spawn rotation is merged with their flags,
-            ///   so that the 7 most right bits are flags
-            /// bits: XXXX XXXX XFFF FFFF where X is rotation, F is flags
-            /// where rotation is 1 = 1 degree, 360 is 0x168, so it does use all 9 bits
-            ///  looks to me like rotation increases in a counter-clockwise direction
-            return ((rotation & 0x1FF) << 7) | (flags & 0x7F);
-        }
-
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static void FlattenPitchRoll(Actor actor)
-        {
-            actor.Rotation.x = (short)MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.x);
-            actor.Rotation.z = (short)MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.z);
-        }
 
         #region Static Enemizer Changes and Fixes
 
@@ -413,42 +280,18 @@ namespace MMR.Randomizer
             FixDekuPalaceReceptionGuards();
         }
 
-        public static void LowerEnemiesResourceLoad()
-        {
-            /// some enemies are really hard on the CPU/RSP, we can change some of them to behave nicer with flags
-            /// this might be placebo, and not have a major effect on us at all
-
-            var actorList = VanillaEnemyList.Where(u => u.ActorInitOffset() > 0).ToList();
-            var dinofos = GameObjects.Actor.Dinofos;
-
-            // separated because for some reason this can cause cutscene dinofos to delay and even softlock
-            RomUtils.CheckCompressed(dinofos.FileListIndex());
-            RomData.MMFileList[dinofos.FileListIndex()].Data[dinofos.ActorInitOffset() + 7] &= 0xBF;// 4 flag is the issue
-            actorList.Remove(dinofos);
-            actorList.Remove(GameObjects.Actor.Demo_Kankyo);
-            actorList.Remove(GameObjects.Actor.Eyegore);
-
-            foreach (var enemy in actorList)
-            {
-                /// bit flags 4-6 according to crookedpoe: Always Run update, Always Draw, Never Cull
-                var fid = GetFID((int)enemy);
-                RomUtils.CheckCompressed(fid);
-                RomData.MMFileList[fid].Data[enemy.ActorInitOffset() + 7] &= 0x8F;
-            }
-        }
-
         public static void FixSpawnLocations()
         {
             /// in Enemizer some spawn locations are noticably buggy
-            ///   example: one of the eeno in north termina field is too high, 
+            ///   example: one of the eeno in north termina field is too high above the ground, 
             ///    we never notice because it falls to the ground before we can get there normally
             ///    but if its a stationary enemy, like a dekubaba, it hovers in the air
 
             var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
             terminafieldScene.Maps[0].Actors[144].Position.y = -245; // fixes the eeno that is way too high above ground
-            terminafieldScene.Maps[0].Actors[ 16].Position.y = -209; // fixes the eeno that is way too high above ground
-            terminafieldScene.Maps[0].Actors[ 17].Position.y = -185; // fixes the eeno that is too high above ground (bombchu explode)
-            terminafieldScene.Maps[0].Actors[ 60].Position.y =  -60; // fixes the blue bubble that is too high
+            terminafieldScene.Maps[0].Actors[16].Position.y = -209; // fixes the eeno that is way too high above ground
+            terminafieldScene.Maps[0].Actors[17].Position.y = -185; // fixes the eeno that is too high above ground (bombchu explode)
+            terminafieldScene.Maps[0].Actors[60].Position.y = -60; // fixes the blue bubble that is too high
             terminafieldScene.Maps[0].Actors[107].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[110].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[121].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
@@ -459,8 +302,8 @@ namespace MMR.Randomizer
             var twinislandsRoom0FID = GameObjects.Scene.TwinIslands.FileID() + 1;
             RomUtils.CheckCompressed(twinislandsRoom0FID);
             var twinislandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslands.FileID());
-            FlattenPitchRoll(twinislandsScene.Maps[0].Actors[26]);
-            FlattenPitchRoll(twinislandsScene.Maps[0].Actors[27]);
+            ActorUtils.FlattenPitchRoll(twinislandsScene.Maps[0].Actors[26]);
+            ActorUtils.FlattenPitchRoll(twinislandsScene.Maps[0].Actors[27]);
 
             // in STT, move the bombchu in the first room 
             //   backward several feet from the chest, so replacement cannot block the chest
@@ -492,12 +335,11 @@ namespace MMR.Randomizer
             var linkTrialScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LinkTrial.FileID());
             linkTrialScene.Maps[1].Actors[0].Position.y = 1; // up high dinofos spawn, red bubble would spawn in the air, lower to ground
 
-
             if (ACTORSENABLED)
             {
                 var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
                 var torchRotation = dekuPalaceScene.Maps[2].Actors[26].Rotation.z;
-                torchRotation = (short)MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
+                torchRotation = (short)ActorUtils.MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
 
                 // change the torch in pirates fort exterior to all day, remove second one, or free 
                 var piratesExteriorScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.PiratesFortressExterior.FileID());
@@ -513,7 +355,7 @@ namespace MMR.Randomizer
                 var eastclocktownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.EastClockTown.FileID());
                 var anju = eastclocktownScene.Maps[0].Actors[0];
                 anju.Position = new vec16(-101, 5, 180);
-                //anju.Rotation.y = (short)MergeRotationAndFlags(rotation: 270, flags: anju.Rotation.y); // rotate to away from us
+                //anju.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 270, flags: anju.Rotation.y); // rotate to away from us
 
                 // move next to mayors building
                 // bug this is not next to mayor building for some reason, next to inn
@@ -523,7 +365,7 @@ namespace MMR.Randomizer
                 // if actors are rando'd then the carpenters proabbly are too
                 var southClockTownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SouthClockTown.FileID());
                 var carpenterSound = southClockTownScene.Maps[0].Actors[49];
-                carpenterSound.ChangeActor(GameObjects.Actor.Carpenter, vars:1, modifyOld: true); // non-pathing type
+                carpenterSound.ChangeActor(GameObjects.Actor.Carpenter, vars: 1, modifyOld: true); // non-pathing type
                 carpenterSound.Position.z = 55; // move forward to muto placement
                 // we can also hear the noises in west/east, those actors should also be removed
                 eastclocktownScene.Maps[0].Actors[63].ChangeActor(GameObjects.Actor.Empty, modifyOld: true); // FREE ACTOR ?
@@ -532,49 +374,7 @@ namespace MMR.Randomizer
             }
         }
 
-        /* private static void RecreateFishing()
-        {
 
-            /// fishing testing
-
-            // to place in spring, we remove some  other actors and objects to get fishing working, as its huge
-
-            var springTwinIslandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslandsSpring.FileID());
-            var springTwinIsleMap = springTwinIslandsScene.Maps[0];
-            // wolfos
-            //springTwinIsleMap.Actors[0].ChangeActor(GameObjects.Actor.Empty); // woflos one, we want him to become fisherman
-            springTwinIsleMap.Actors[0].Position = new vec16(199, 100, 809); // move fisherman to spot in the lake -50
-            springTwinIsleMap.Actors[0].Rotation.y = (short) MergeRotationAndFlags(-270, 0x7F);
-            springTwinIsleMap.Actors[0].ChangeActor(GameObjects.Actor.OOTFishing, 0x200); // 0xFFFF is the whole thing
-            springTwinIsleMap.Objects[9] = GameObjects.Actor.OOTFishing.ObjectIndex();
-
-            springTwinIsleMap.Actors[1].ChangeActor(GameObjects.Actor.Empty); // worthless one
-            springTwinIsleMap.Actors[1].OldActorEnum = GameObjects.Actor.OOTFishing;
-
-            // tektite
-            springTwinIsleMap.Actors[2].ChangeActor(GameObjects.Actor.Empty); // one whole tek
-            springTwinIsleMap.Objects[1] = GameObjects.Actor.Empty.ObjectIndex();
-
-            // goron son
-            springTwinIsleMap.Actors[20].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Objects[6] = GameObjects.Actor.Empty.ObjectIndex();
-
-            // guay
-            springTwinIsleMap.Actors[5].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Actors[6].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Objects[7] = GameObjects.Actor.Empty.ObjectIndex();
-            // keese // why is there a keese object here?
-            springTwinIsleMap.Objects[0] = 0x1AB; // either empty or we could try to spawn the proprietor
-            // skullfish encounter
-            springTwinIsleMap.Actors[21].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Actors[27].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Actors[28].ChangeActor(GameObjects.Actor.Empty);
-            springTwinIsleMap.Objects[8] = GameObjects.Actor.Empty.ObjectIndex();
-
-            // nothing left for enemizer to do so it wont write the scene, we have to do that here
-            SceneUtils.UpdateScene(springTwinIslandsScene);
-
-        } // */
 
         private static void Shinanigans()
         {
@@ -586,10 +386,10 @@ namespace MMR.Randomizer
 
                 //turn around this torch, because if its bean man hes facing into the wall and it hurts me
                 var laundryPoolScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LaundryPool.FileID());
-                laundryPoolScene.Maps[0].Actors[2].Rotation.y = (short)MergeRotationAndFlags(rotation: 135, flags: 0x7F);
+                laundryPoolScene.Maps[0].Actors[2].Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 135, flags: 0x7F);
                 laundryPoolScene.Maps[0].Actors[2].Rotation.x = 0x7F;
                 laundryPoolScene.Maps[0].Actors[2].Rotation.z = 0x7F;
-                //laundryPoolScene.Maps[0].Actors[1].Rotation.z = (short)MergeRotationAndFlags(rotation: laundryPoolScene.Maps[0].Actors[1].Rotation.z, flags: 0x7F);
+                //laundryPoolScene.Maps[0].Actors[1].Rotation.z = (short)ActorUtils.MergeRotationAndFlags(rotation: laundryPoolScene.Maps[0].Actors[1].Rotation.z, flags: 0x7F);
 
                 // it was two torches, turn the other into a secret grotto, at least for now
                 var randomGrotto = new List<ushort> { 0x6033, 0x603B, 0x6018, 0x605C, 0x8000, 0xA000, 0x7000, 0xC000, 0xE000, 0xF000, 0xD000 };
@@ -617,8 +417,8 @@ namespace MMR.Randomizer
                 // one of the torches in palace is facing into the wall, actors replacing it also face the same way, bad
                 // one of these is not required and does nothing
                 var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
-                dekuPalaceScene.Maps[2].Actors[25].Rotation.y = (short)MergeRotationAndFlags(rotation: 180, flags: 0x7F);
-                dekuPalaceScene.Maps[2].Actors[26].Rotation.y = (short)MergeRotationAndFlags(rotation: 180, flags: dekuPalaceScene.Maps[2].Actors[26].Rotation.y);
+                dekuPalaceScene.Maps[2].Actors[25].Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 180, flags: 0x7F);
+                dekuPalaceScene.Maps[2].Actors[26].Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalaceScene.Maps[2].Actors[26].Rotation.y);
 
                 // RecreateFishing();
             }
@@ -674,70 +474,6 @@ namespace MMR.Randomizer
             }
         }
 
-        private static void PrintActorValues()
-        {
-            /*
-            for (var i = 1; i < 0x2B2; ++i)
-            {
-                var actor = (GameObjects.Actor) i;
-                var actorName = "";// actor.ToActorModel().Name;
-                if (actorName.Contains("Empty")) {
-                    Debug.WriteLine($"[EMPTY]");
-                    continue;
-                }
-
-                // we nee to make sure ram and overlay are the same
-                // read Init offset from overlay table
-                var initVarString = "";
-                var objVarString = "";
-                var actorStructSize = GetOvlInstanceRamSize(i);
-                if (actorStructSize != -1)
-                {
-                    initVarString = " and instance: 0x" + GetOvlInstanceRamSize(i).ToString("X5");
-                }
-                var objectIndex = actor.ObjectIndex();
-                if (objectIndex  > 3)
-                {
-                    objVarString = " and obj: 0x" + ObjUtils.GetObjSize(actor.ObjectIndex()).ToString("X5");
-                }
-                else if (objectIndex <= 3 && objectIndex >= 0)
-                {
-                    objVarString = " using special obj";
-                }
-                else
-                {
-                    throw new Exception("oh no");
-                }
-
-                var filename = actorName.PadLeft(16, ' ');
-                var fid = GetFID(i).ToString("D3");
-                var aid = i.ToString("X3");
-                var codeSize = GetOvlCodeRamSize(i).ToString("X5");
-
-                Debug.WriteLine($"[{filename}] FID:[{fid}] AID:[{aid}] codesize: 0x{codeSize}" + initVarString + objVarString);
-            } // */
-
-            for (int i = 0; i < 0x283; ++i)
-            {
-                //print object id and size
-                Debug.WriteLine(" obj [" + i.ToString("X3") + "] has size: " + ObjUtils.GetObjSize(i).ToString("X5"));
-
-            } // */
-
-            int breakpointherestupid = 0;
-        }
-
-        public static void PrintDataBytes(byte[] data, int location)
-        {
-            Debug.WriteLine("Printing data at: " + location + " hex: " + location.ToString("X2"));
-            Debug.WriteLine(data[location + 0].ToString("X2"));
-            Debug.WriteLine(data[location + 1].ToString("X2") + " < unk ?");
-            Debug.WriteLine(data[location + 2].ToString("X2") + " < ");
-            Debug.WriteLine(data[location + 3].ToString("X2") + " < ");
-            Debug.WriteLine("folowing words: " + location + " hex: " + location.ToString("X2"));
-            Debug.WriteLine(data[location + 4].ToString("X2"));
-        }
-
         private static void FixScarecrowTalk()
         {
             /// scarecrow breaks if you try to teach him a song anywhere where he normally does not exist
@@ -787,13 +523,13 @@ namespace MMR.Randomizer
             var movedToTree = southernswampScene.Maps[0].Actors[4];
             movedToTree.Position = new vec16(2020, 22, 300); // placement: to the right as you approach witches, next to tree
             // rotation normal to wall behind it, turn to the right 90deg
-            movedToTree.Rotation.y = (short)MergeRotationAndFlags(rotation: 270, flags: southernswampScene.Maps[0].Actors[4].Rotation.y);
+            movedToTree.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 270, flags: southernswampScene.Maps[0].Actors[4].Rotation.y);
 
             // witch area babas
             var movedToGrass = southernswampScene.Maps[2].Actors[2];
             movedToGrass.Position = new vec16(2910, 14, -1075); // placement: between the bushes along the wall
             // rotation normal to wall behind it, turn to the left 90deg
-            movedToGrass.Rotation.y = (short)MergeRotationAndFlags(rotation: 90, flags: southernswampScene.Maps[2].Actors[2].Rotation.y);
+            movedToGrass.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 90, flags: southernswampScene.Maps[2].Actors[2].Rotation.y);
 
             var movedToWaterFall = southernswampScene.Maps[2].Actors[3];
             movedToWaterFall.Position = new vec16(4240, -2, -1270); // placement: near waterfall
@@ -812,19 +548,19 @@ namespace MMR.Randomizer
 
             // match rotation with the other tree sitting bat
             movedDownTreeBat.Rotation.y = 90;
-            FlattenPitchRoll(roadtoswampScene.Maps[0].Actors[7]);
+            ActorUtils.FlattenPitchRoll(roadtoswampScene.Maps[0].Actors[7]);
 
             // move corridor bat to the short cliff wall near swamp shooting galery
             var movedToCliffBat = roadtoswampScene.Maps[0].Actors[6];
             movedToCliffBat.Position = new vec16(2432, -40, 2871);
             // match rotation with the other tree sitting bat
-            movedToCliffBat.Rotation.y = (short)MergeRotationAndFlags(rotation: 90, flags: roadtoswampScene.Maps[0].Actors[6].Rotation.y);
+            movedToCliffBat.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 90, flags: roadtoswampScene.Maps[0].Actors[6].Rotation.y);
 
             // because the third bat was moved out of center corridor back, move one of the baba forward, we're basically swapping them
             var movedForwardDekuBaba = roadtoswampScene.Maps[0].Actors[14];
             movedForwardDekuBaba.Position.x = 1990;
             movedForwardDekuBaba.Position.z = 2594;
-            movedForwardDekuBaba.Rotation.y = (short)MergeRotationAndFlags(rotation: 195, flags: roadtoswampScene.Maps[0].Actors[14].Rotation.y);
+            movedForwardDekuBaba.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 195, flags: roadtoswampScene.Maps[0].Actors[14].Rotation.y);
         }
 
         private static void FixSpecificLikeLikeTypes()
@@ -856,7 +592,7 @@ namespace MMR.Randomizer
             // move to center of the main room,
             wallmaster.Position.z = 0x40;
             // previous encounter actor used rotation as parameters, flatten rotation now for replacement
-            FlattenPitchRoll(wallmaster);
+            ActorUtils.FlattenPitchRoll(wallmaster);
             // change actor to wallmaster proper for enemizer detection
             wallmaster.ChangeActor(newActorType: GameObjects.Actor.WallMaster, vars: 0x1, modifyOld: true);
         }
@@ -871,19 +607,19 @@ namespace MMR.Randomizer
             var twinislandsspringScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslandsSpring.FileID());
             var encounter1 = twinislandsspringScene.Maps[0].Actors[21];
             encounter1.ChangeActor(GameObjects.Actor.SkullFish, vars: 0, modifyOld: true);
-            FlattenPitchRoll(encounter1); // flatten encounter rotation (rotation parameters
+            ActorUtils.FlattenPitchRoll(encounter1); // flatten encounter rotation (rotation parameters
             // move to just outside cave (east)
             encounter1.Position = new vec16(-317, 0, -881);
 
             var encounter2 = twinislandsspringScene.Maps[0].Actors[27];
             encounter2.ChangeActor(GameObjects.Actor.SkullFish, vars: 0, modifyOld: true);
-            FlattenPitchRoll(encounter2); // flatten encounter rotation (rotation parameters
+            ActorUtils.FlattenPitchRoll(encounter2); // flatten encounter rotation (rotation parameters
             // move to just outside cave (west)
             encounter2.Position = new vec16(-200, 0, -890);
 
             var encounter3 = twinislandsspringScene.Maps[0].Actors[28];
             encounter3.ChangeActor(GameObjects.Actor.SkullFish, vars: 0, modifyOld: true);
-            FlattenPitchRoll(encounter3); // flatten encounter rotation (rotation parameters
+            ActorUtils.FlattenPitchRoll(encounter3); // flatten encounter rotation (rotation parameters
             // move to near chest on the south side
             encounter3.Position = new vec16(300, 0, 700);
         }
@@ -965,14 +701,19 @@ namespace MMR.Randomizer
 
         public static void ShortenChickenPatience()
         {
-            /// chickens take too many hits before they get mad, let's shrink this
-            /// niw health is rand(0-9.9) + 10.0 (10-20 hits), lets replace with 0-2 + 1
+            /// Cuccos take too many hits before they get mad, let's shrink this
+            /// niw health is `rand(0-9.9) + 10.0` (10-20 hits), lets replace with 0-2 + 1
+
+            if (!ReplacementListContains(GameObjects.Actor.FriendlyCucco))
+            {
+                return;
+            }
 
             RomUtils.CheckCompressed(GameObjects.Actor.FriendlyCucco.FileListIndex());
             var niwData = RomData.MMFileList[GameObjects.Actor.FriendlyCucco.FileListIndex()].Data;
             // both of these changes made in EnNiw_Init
             ReadWriteUtils.Arr_WriteU32(niwData, 0x24A8, 0x40000000); // 9.9 -> 2 in f32 (in rodata)
-            ReadWriteUtils.Arr_WriteU16(niwData, 0x156,  0x3F80); // 10 -> 1 in f32 (first short only as literal hardcoded)
+            ReadWriteUtils.Arr_WriteU16(niwData, 0x156, 0x3F80); // 10 -> 1 in f32 (first short only as literal hardcoded)
         }
 
         public static void FixThornTraps()
@@ -985,7 +726,6 @@ namespace MMR.Randomizer
             var location = 0x3A8;// 234 * 4;
             RomUtils.CheckCompressed(GameObjects.Actor.ThornTrap.FileListIndex());
             var thornData = RomData.MMFileList[GameObjects.Actor.ThornTrap.FileListIndex()].Data;
-            PrintDataBytes(thornData, location);
 
             ReadWriteUtils.Arr_WriteU32(thornData, location, 0x00000000);
             ReadWriteUtils.Arr_WriteU32(thornData, 0x378, 0x00000000);
@@ -1086,8 +826,8 @@ namespace MMR.Randomizer
         {
             /// in MM the silver boulders that are pickupable by goron are ishi in field_keep object
             /// however, these boulders always check the scene flags and set the flags when destroyed, so you cannot respawn them
-            /// considering nothing in vanilla needs these, and because
-            /// I'm worried about setting flags for something else, lets remove that
+            ///   considering nothing in vanilla needs these, and because
+            ///   I'm worried about setting flags for something else, lets remove that
 
             var ishiFid = GameObjects.Actor.Rock.FileListIndex();
             RomUtils.CheckCompressed(ishiFid);
@@ -1100,21 +840,69 @@ namespace MMR.Randomizer
             /// En_Bba_01 is an unused actor who appears to be the grandma from the bomb proprieters shop
             /// however she uses an expensive and barely used shadow draw function that makes a custom shadow to match her body shape
             /// we need to remove it since its totally broken, its the primary reason dragon flies lag so much
-            // also should make dragonfly better so do that too, since 99% of the time we cant see its shadow as its at y=0 (bug?)
-
-            var babaFid = GameObjects.Actor.BabaIsUnused.FileListIndex();
-            RomUtils.CheckCompressed(babaFid);
-            var babaData = RomData.MMFileList[babaFid].Data;
-            // the end of the draw function must be skipped, so we branch past all of it to the end of the function
-            ReadWriteUtils.Arr_WriteU32(babaData, Dest: 0xB34, val: 0x10000024); // <irrelevant code> -> Jump to 0xBC8 (beginning of register re-load)
-
+            /// also should make dragonfly better so do that too, since 99% of the time we cant see its shadow as its at y=0 (bug)
 
             var dragonflyFid = GameObjects.Actor.DragonFly.FileListIndex();
             RomUtils.CheckCompressed(dragonflyFid);
             var dragonflyData = RomData.MMFileList[dragonflyFid].Data;
             // similar to baba, we see a loop followed by a finishing function, we want to skip both in the main draw function
             ReadWriteUtils.Arr_WriteU32(dragonflyData, Dest: 0x2498, val: 0x10000018); // <irrelevant code> -> Jump to 24E4
+
+            if (!ReplacementListContains(GameObjects.Actor.BabaIsUnused))
+            {
+                return;
+            }
+
+            var babaFid = GameObjects.Actor.BabaIsUnused.FileListIndex();
+            RomUtils.CheckCompressed(babaFid);
+            var babaData = RomData.MMFileList[babaFid].Data;
+            // the end of the draw function must be skipped, so we branch past all of it to the end of the function
+            ReadWriteUtils.Arr_WriteU32(babaData, Dest: 0xB34, val: 0x10000024); // <irrelevant code> -> Jump to 0xBC8 (beginning of register re-load)
         }
+
+        /* private static void RecreateFishing()
+        {
+
+            /// fishing testing
+
+            // to place in spring, we remove some  other actors and objects to get fishing working, as its huge
+
+            var springTwinIslandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslandsSpring.FileID());
+            var springTwinIsleMap = springTwinIslandsScene.Maps[0];
+            // wolfos
+            //springTwinIsleMap.Actors[0].ChangeActor(GameObjects.Actor.Empty); // woflos one, we want him to become fisherman
+            springTwinIsleMap.Actors[0].Position = new vec16(199, 100, 809); // move fisherman to spot in the lake -50
+            springTwinIsleMap.Actors[0].Rotation.y = (short) ActorUtils.MergeRotationAndFlags(-270, 0x7F);
+            springTwinIsleMap.Actors[0].ChangeActor(GameObjects.Actor.OOTFishing, 0x200); // 0xFFFF is the whole thing
+            springTwinIsleMap.Objects[9] = GameObjects.Actor.OOTFishing.ObjectIndex();
+
+            springTwinIsleMap.Actors[1].ChangeActor(GameObjects.Actor.Empty); // worthless one
+            springTwinIsleMap.Actors[1].OldActorEnum = GameObjects.Actor.OOTFishing;
+
+            // tektite
+            springTwinIsleMap.Actors[2].ChangeActor(GameObjects.Actor.Empty); // one whole tek
+            springTwinIsleMap.Objects[1] = GameObjects.Actor.Empty.ObjectIndex();
+
+            // goron son
+            springTwinIsleMap.Actors[20].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Objects[6] = GameObjects.Actor.Empty.ObjectIndex();
+
+            // guay
+            springTwinIsleMap.Actors[5].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Actors[6].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Objects[7] = GameObjects.Actor.Empty.ObjectIndex();
+            // keese // why is there a keese object here?
+            springTwinIsleMap.Objects[0] = 0x1AB; // either empty or we could try to spawn the proprietor
+            // skullfish encounter
+            springTwinIsleMap.Actors[21].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Actors[27].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Actors[28].ChangeActor(GameObjects.Actor.Empty);
+            springTwinIsleMap.Objects[8] = GameObjects.Actor.Empty.ObjectIndex();
+
+            // nothing left for enemizer to do so it wont write the scene, we have to do that here
+            SceneUtils.UpdateScene(springTwinIslandsScene);
+
+        } // */
 
         private static void AddGrottoVariety()
         {
@@ -1151,7 +939,7 @@ namespace MMR.Randomizer
             // flag 1D, type 7, item 6D (unknown)
             newChestActor.ChangeActor(GameObjects.Actor.TreasureChest, 0x26ED, modifyOld: true);
             newChestActor.Position = new vec16(-230, 0, 1130); // move into the grass area
-            newChestActor.Rotation.y = (short)MergeRotationAndFlags(90, grottosScene.Maps[6].Actors[7].Rotation.y); // rotate to face the center
+            newChestActor.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(90, grottosScene.Maps[6].Actors[7].Rotation.y); // rotate to face the center
             // turn the other useless mushroom into another buterfly for ambiance
             grottosScene.Maps[6].Actors[8].ChangeActor(GameObjects.Actor.Butterfly, 0x5324, modifyOld: true);
             grottosScene.Maps[6].Actors[8].Position.y = 58; // dont want spawning in the ground, we want flying around
@@ -1173,15 +961,15 @@ namespace MMR.Randomizer
             //if ((newVariant & 0x0400) != 0) // grotto that uses rotation to set value
             {
                 int newIndex = newVariant & 0xF; // in vanilla the array is only 15 long
-                enemy.Rotation.x = (short) MergeRotationAndFlags(rotation: 0, flags: 0x7F);
-                enemy.Rotation.z = (short) MergeRotationAndFlags(rotation: newIndex, flags: 0x7F);//: enemy.Rotation.z);
+                enemy.Rotation.x = (short)ActorUtils.MergeRotationAndFlags(rotation: 0, flags: 0x7F);
+                enemy.Rotation.z = (short)ActorUtils.MergeRotationAndFlags(rotation: newIndex, flags: 0x7F);//: enemy.Rotation.z);
             }
         }
 
         public static void FixPatrollingEnemyVars(List<Actor> chosenReplacementEnemies)
         {
             /// fixes the patrolling enemy paths to make sure it matches the previous actor path
-            
+
             // this also sets actor kickout address index to 0 (if they have one),
             // because they use different systems which are not compatible
 
@@ -1247,7 +1035,7 @@ namespace MMR.Randomizer
             var sceneFreeActors = FreeCandidateList.Where(u => (u.ObjectID == 1
                                                     || (sceneIsField && u.ObjectID == (int)Scene.SceneSpecialObject.FieldKeep)
                                                     || (sceneIsDungeon && u.ObjectID == (int)Scene.SceneSpecialObject.DungeonKeep))
-                                                 && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum) )).ToList();
+                                                 && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))).ToList();
 
             // TODO: search all untouched objects and add those actors too
 
@@ -1338,7 +1126,7 @@ namespace MMR.Randomizer
             // since this will be our final object listing, or at least pass one
 
             List<int> replacedObjects = new List<int>();
-            var objectsPerMap = new List<List<int>>() ;
+            var objectsPerMap = new List<List<int>>();
 
             for (int m = 0; m < sceneActors.Scene.Maps.Count; ++m)
             {
@@ -1366,7 +1154,7 @@ namespace MMR.Randomizer
 
                     // second pass: remove all duplicates
                     //foreach (var unique in uniqueObjects.ToList())
-                    for(int u = 0; u < uniqueObjects.Count(); u++)
+                    for (int u = 0; u < uniqueObjects.Count(); u++)
                     {
                         var uniqueObj = uniqueObjects[u];
                         if (objList.Count(u => u == uniqueObj) > 1) // more than one exists, remove
@@ -1522,11 +1310,34 @@ namespace MMR.Randomizer
             }
         }
 
+        private static void SplitSceneLikeLikesIntoTwoActorObjects(Scene scene, List<int> sceneObjects, List<Actor> sceneEnemies)
+        {
+            /// special case: likelikes need to be split into two objects because ground and water share one object 
+            /// but no other enemies work as dual replacement
+            /// 
+            if ((scene.File == GameObjects.Scene.ZoraCape.FileID() || scene.File == GameObjects.Scene.GreatBayCoast.FileID())
+                && sceneObjects.Contains(GameObjects.Actor.LikeLike.ObjectIndex()))
+            {
+                // add shield object to list of objects we can swap out
+                sceneObjects.Add(GameObjects.Actor.LikeLikeShield.ObjectIndex());
+                // generate a candidate list for the second likelike
+                for (int i = 0; i < sceneEnemies.Count; ++i)
+                {
+                    // update object for all of the second likelikes, so they will use the second object
+                    if (sceneEnemies[i].ActorID == (int)GameObjects.Actor.LikeLike
+                        && GameObjects.Actor.LikeLike.IsGroundVariant(sceneEnemies[i].OldVariant))
+                    {
+                        sceneEnemies[i].ObjectID = GameObjects.Actor.LikeLikeShield.ObjectIndex();
+                    }
+                }
+            }
+        }
+
         private static void CullOptionalActors(Scene scene, List<ValueSwap> objList, int loopCount)
         {
-            // issue: sometimes some of the big scenes get stuck in a weird spot where they can't find any actor combos that fit
-            // one day I will figure out this bug, for now, attempt to remove some actors/objects to make it fit
-            // The actors we remove are all forgotten or forgettable, none of them can be required to beat a seed
+            /// issue: sometimes some of the big scenes get stuck in a weird spot where they can't find any actor combos that fit
+            /// one day I will figure out this bug, for now, attempt to remove some actors/objects to make it fit
+            /// The actors we remove are all forgotten or forgettable, none of them can be required to beat a seed
 
             // medium goron, unused object, size: 0x10
             // alternative: tanron1 is also size 0x10
@@ -1726,6 +1537,7 @@ namespace MMR.Randomizer
                 // generate a candidate list for the second likelike
                 for( int i = 0; i < sceneEnemies.Count; ++i)
                 {
+                    // update object for all of the second likelikes, so they will use the second object
                     if ( sceneEnemies[i].ActorID == (int)GameObjects.Actor.LikeLike
                         && GameObjects.Actor.LikeLike.IsGroundVariant(sceneEnemies[i].OldVariant))
                     {
@@ -1733,6 +1545,9 @@ namespace MMR.Randomizer
                     }
                 }
             }
+
+            SplitSceneLikeLikesIntoTwoActorObjects(scene, sceneObjects, sceneEnemies);
+
             WriteOutput(" time to finish removing unnecessary objects: " + ((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString() + "ms");
 
             // some scenes are blocked from having enemies, do this ONCE before GetMatchPool, which would do it per-enemy
@@ -2284,8 +2099,6 @@ namespace MMR.Randomizer
                     throw new Exception($"Error attempting to read archive: {filePath} -- \n" + e);
                 }
 
-
-
             } // for each mmra end
         }
 
@@ -2617,107 +2430,6 @@ namespace MMR.Randomizer
             }
         }
 
-        #region Combat Music Disable
-
-        public static void DisableCombatMusicOnEnemy(GameObjects.Actor actor)
-        {
-            int actorInitVarRomAddr = actor.GetAttribute<ActorInitVarOffsetAttribute>().Offset;
-            /// each enemy actor has actor init variables, 
-            /// if they have combat music is determined if a flag is set in the seventh byte
-            /// disabling combat music means disabling this bit for most enemies
-            int actorFileID = actor.FileListIndex();
-            RomUtils.CheckCompressed(actorFileID);
-            int actorFlagLocation = (actorInitVarRomAddr + 7);
-            byte flagByte = RomData.MMFileList[actorFileID].Data[actorFlagLocation];
-            RomData.MMFileList[actorFileID].Data[actorFlagLocation] = (byte)(flagByte & 0xFB);
-
-            if (actor == GameObjects.Actor.DekuBabaWithered) // special case: when they regrow music returns
-            {
-                // when they finish regrowing their combat music bit is reset, we need to no-op this to stop it
-                // 	[ori t3,t1,0x0005] which is [35 2B 00 05] becomes [35 2B 00 01] as the 4 bit is combat music, 1 is R-targetable
-                RomData.MMFileList[actorFileID].Data[0x12BF] = 0x01;
-            }
-        }
-
-        public static void DisableEnemyCombatMusic(bool weakEnemiesOnly = false)
-        {
-            /// each enemy has one int flag that contains a single bit that enables combat music
-            /// to get these values I used the starting rom addr of the enemy actor
-            ///  searched the ram for the actor overlay table that has rom and ram per actor,
-            ///  there it lists the actor init var ram and actor ram locations, diff, apply to rom start
-            ///  the combat music flag is part of the seventh byte of the actor init Variants, but our fuction knows this
-
-            // we always disable wizrobe because he's a miniboss, 
-            // but when you enter his room you hear regular combat music for a few frames before his fight really starts
-            // this isn't noticed in vanilla because vanilla combat starts slow
-            DisableCombatMusicOnEnemy(GameObjects.Actor.Wizrobe);
-
-            var weakEnemyList = new GameObjects.Actor[]
-            {
-                GameObjects.Actor.ChuChu,
-                GameObjects.Actor.SkullFish,
-                GameObjects.Actor.DekuBaba,
-                GameObjects.Actor.DekuBabaWithered,
-                GameObjects.Actor.BioDekuBaba,
-                GameObjects.Actor.RealBombchu,
-                GameObjects.Actor.Guay,
-                GameObjects.Actor.Wolfos,
-                GameObjects.Actor.Keese,
-                GameObjects.Actor.Leever,
-                GameObjects.Actor.Bo,
-                GameObjects.Actor.DekuBaba,
-                GameObjects.Actor.Shellblade,
-                GameObjects.Actor.Tektite,
-                GameObjects.Actor.BadBat,
-                GameObjects.Actor.Eeno,
-                GameObjects.Actor.MadShrub,
-                GameObjects.Actor.Nejiron,
-                GameObjects.Actor.Hiploop,
-                GameObjects.Actor.Octarok,
-                GameObjects.Actor.Shabom,
-                GameObjects.Actor.Dexihand,
-                GameObjects.Actor.Freezard,
-                GameObjects.Actor.Armos,
-                GameObjects.Actor.Snapper,
-                GameObjects.Actor.Desbreko,
-                GameObjects.Actor.Poe,
-                GameObjects.Actor.GibdoIkana,
-                GameObjects.Actor.GibdoWell,
-                GameObjects.Actor.RedBubble,
-                GameObjects.Actor.Stalchild
-            }.ToList();
-
-            var annoyingEnemyList = new GameObjects.Actor[]
-            {
-                GameObjects.Actor.BlueBubble,
-                GameObjects.Actor.LikeLike,
-                GameObjects.Actor.Beamos,
-                GameObjects.Actor.DeathArmos,
-                GameObjects.Actor.Dinofos,
-                GameObjects.Actor.DragonFly,
-                GameObjects.Actor.GiantBeee,
-                GameObjects.Actor.WallMaster,
-                GameObjects.Actor.FloorMaster,
-                GameObjects.Actor.Skulltula,
-                GameObjects.Actor.ReDead,
-                GameObjects.Actor.Peahat,
-                GameObjects.Actor.Dodongo,
-                GameObjects.Actor.Takkuri,
-                GameObjects.Actor.Eyegore,
-                GameObjects.Actor.IronKnuckle,
-                //GameObjects.Actor.Garo, // todo looking actor init vars
-                GameObjects.Actor.PoeSisters
-            }.ToList();
-
-            var disableList = weakEnemiesOnly ? weakEnemyList : weakEnemyList.Concat(annoyingEnemyList);
-
-            foreach (var enemy in disableList)
-            {
-                DisableCombatMusicOnEnemy(enemy);
-            }
-        }
-        #endregion
-
     }
 
     public class BaseEnemiesCollection
@@ -2736,8 +2448,9 @@ namespace MMR.Randomizer
         {
             oldActorList = actorList;
             var distinctActors = actorList.Select(u => u).DistinctBy(u => u);
-            OverlayRamSize = distinctActors.Select(x => Enemies.GetOvlCodeRamSize(x.ActorID)).Sum();
-            ActorInstanceSum = actorList.Select(u => u.ActorID).Select(x => Enemies.GetOvlInstanceRamSize(x)).Sum();
+            OverlayRamSize = distinctActors.Select(x => ActorUtils.GetOvlCodeRamSize(x.ActorID)).Sum();
+            ActorInstanceSum = actorList.Select(u => u.ActorID)
+                                        .Select(x => ActorUtils.GetOvlInstanceRamSize(x, Enemies.InjectedActors)).Sum();
             // untested for accuracy, actors without correct objects might be inccorectly sized
             objectSizes = objList.Select(x => ObjUtils.GetObjSize(x)).ToArray();
             //this.ObjectRamSize = objList.Select(x => ObjUtils.GetObjSize(x)).Sum();
