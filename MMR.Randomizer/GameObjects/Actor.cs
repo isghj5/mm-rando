@@ -929,16 +929,13 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         FlameEyeTrap = 0x8C, // En_Honotrap
 
-        // MULTIPLE OBJECT ACTOR
         [EnemizerEnabled]
         [FileID(132)]
         [ActorInitVarOffset(0xC5C)]
         [ObjectListIndex(3)] // dungeon_keep, obj 3
-        // and object 3 is so massive it never gets chosen even if we try to shove it into the object list
-        //[GroundVariants(0x4015)]
-        // 0 works, always empty
-        [GroundVariants(0x115, 0x101, 0x106, 0x10E, 0x10F)] // actually spawns thank god, only in dungeons though, but outside its just an empty space so thats fine
-        [UnkillableAllVariants] // unknown, harder to test since its a free enemy
+        // params: 0x3F is item to drop, 0x7F00 is switch flags to set upon kill (the flying pot does NOT check to stop spawning on flag tho)
+        [GroundVariants(0x15, 0x01, 0x06, 0x0E, 0x0F, 0x00)] // actually spawns thank god, only in dungeons though, but outside its just an empty space so thats fine
+        //[UnkillableAllVariants] // starts as non-enemy, converts to enemy when it attacks, sooo could be killable
         FlyingPot = 0x8D, // En_Tubo_Trap
 
         // iceblock used for frozen enemies and a few locations without an object

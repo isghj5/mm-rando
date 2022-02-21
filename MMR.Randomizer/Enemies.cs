@@ -1685,7 +1685,7 @@ namespace MMR.Randomizer
                     if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
                     //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
 
-                    //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.En_Ani);
+                    //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
                     #endif
 
                     var reducedCandidateList = actorCandidatesLists[objCount].ToList();
@@ -1880,9 +1880,9 @@ namespace MMR.Randomizer
             ///////   DEBUGGING   ///////
             /////////////////////////////
             #if DEBUG
-            if (scene.SceneEnum == GameObjects.Scene.PathToSnowhead) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.AstralObservatory) // force specific actor/variant for debugging
             {
-                chosenReplacementEnemies[0].ChangeActor(GameObjects.Actor.Demo_Kankyo, vars: 0);
+                chosenReplacementEnemies[1].ChangeActor(GameObjects.Actor.FlyingPot, vars: 0x001); // first torc
 
                 /*
                 chosenReplacementEnemies[3].ActorID = (int)GameObjects.Actor.CircleOfFire;
