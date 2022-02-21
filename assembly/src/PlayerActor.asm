@@ -447,3 +447,20 @@ Player_ShouldCheckItemUsabilityWhileSwimming_Hook:
     lw      ra, 0x0014 (sp)
     jr      ra
     addiu   sp, sp, 0x18
+
+Player_ModifyGoronRollMultiplier_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+
+    jal     Player_ModifyGoronRollMultiplier
+    nop
+
+    mov.s   f10, f0
+
+    lw      ra, 0x0014 (sp)
+    addiu   sp, sp, 0x18
+
+    jr      ra
+
+    ; Displaced code:
+    lwc1    f8, 0x00E4 (sp)

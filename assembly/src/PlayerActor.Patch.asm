@@ -401,6 +401,25 @@
 .org 0x8084AAF8
     jal     Player_HandleInputVelocity
 
+; Goron Rolling
+
+; Replaces:
+;   JAL     0x800FF2F8
+.org 0x80857F8C
+    jal     Player_HandleInputVelocity
+
+; Replaces:
+;   JAL     0x800FF2F8
+.org 0x8085847C
+    jal     Player_HandleInputVelocity
+
+; Replaces:
+;   MTC1    AT, F10
+;   LWC1    F8, 0x00E4 (SP)
+.org 0x80857F38
+    jal     Player_ModifyGoronRollMultiplier_Hook
+    or      a0, at, r0
+
 ; Replaces:
 ;   ADDIU   T9, R0, 0x00C8
 ;   SW      T9, 0x0018 (SP)

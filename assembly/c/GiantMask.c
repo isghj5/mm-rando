@@ -336,6 +336,10 @@ f32 GiantMask_GetSimpleScaleModifier() {
     return _isGiant ? 10.0f : 1.0f;
 }
 
+f32 GiantMask_GetSimpleInvertedScaleModifier() {
+    return _isGiant ? 0.1f : 1.0f;
+}
+
 f32 GiantMask_GetNextScaleFactor() {
     return _nextScaleFactor;
 }

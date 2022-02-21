@@ -421,3 +421,7 @@ bool Player_ShouldCheckItemUsabilityWhileSwimming(ActorPlayer* player, u8 item) 
     }
     return true;
 }
+
+f32 Player_ModifyGoronRollMultiplier(f32 multiplier) {
+    return multiplier * GiantMask_GetSimpleInvertedScaleModifier();
+}
