@@ -39,6 +39,11 @@ namespace MMR.Randomizer.Models.Rom
             return actorList;
         }
 
+        public string ToString()
+        {
+            return this.SceneEnum.ToString(); // just to shorten a touch
+        }
+
     }
 
     public class SceneSetup
