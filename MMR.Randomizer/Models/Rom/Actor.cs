@@ -26,6 +26,7 @@ namespace MMR.Randomizer.Models.Rom
         public GameObjects.Actor OldActorEnum; // enumerator with metadata about the actor and actor extensions
         [System.Diagnostics.DebuggerDisplay("{ObjectID.ToString(\"X3\")}")]
         public int ObjectID; // in-game object list index
+        public int OldObjectID; // in-game object list index
         public int ActorIDFlags; // we just want to keep them when re-writing, but I'm not sure they even matter
         public List<int> Variants = new List<int> { 0 };
         public int OldVariant;
@@ -68,7 +69,7 @@ namespace MMR.Randomizer.Models.Rom
             this.Name = actor.ToString();
             this.ActorID = (int)actor;
             this.ActorEnum = actor;
-            this.ObjectID = actor.ObjectIndex();
+            this.ObjectID = this.OldObjectID = actor.ObjectIndex();
             this.ObjectSize = ObjUtils.GetObjSize(actor.ObjectIndex());
             this.Rotation = new vec16();
 
@@ -206,6 +207,7 @@ namespace MMR.Randomizer.Models.Rom
                 this.OldVariant = vars;
                 this.OldActorEnum = newActorType;
                 this.OldName = newActorType.ToString();
+                this.OldObjectID = this.ObjectID;
             }
         }
 

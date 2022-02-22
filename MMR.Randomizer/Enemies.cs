@@ -1330,7 +1330,8 @@ namespace MMR.Randomizer
                     if (thisSceneData.actors[i].ActorID == (int)GameObjects.Actor.LikeLike
                         && GameObjects.Actor.LikeLike.IsGroundVariant(thisSceneData.actors[i].OldVariant))
                     {
-                        thisSceneData.actors[i].ObjectID = GameObjects.Actor.LikeLikeShield.ObjectIndex();
+                        var newLikeLike = thisSceneData.actors[i];
+                        newLikeLike.OldObjectID = newLikeLike.ObjectID = GameObjects.Actor.LikeLikeShield.ObjectIndex();
                     }
                 }
             }
@@ -1584,7 +1585,7 @@ namespace MMR.Randomizer
                 for (int i = 0; i < thisSceneData.objects.Count; i++)
                 {
                     // get a list of all enemies (in this room) that have the same OBJECT as our object that have an actor we also have
-                    thisSceneData.actorsPerObject.Add(thisSceneData.actors.FindAll(u => u.OldActorEnum.ObjectIndex() == thisSceneData.objects[i]));
+                    thisSceneData.actorsPerObject.Add(thisSceneData.actors.FindAll(u => u.OldObjectID == thisSceneData.objects[i]));
                     // get a list of matching actors that can fit in the place of the previous actor
                     var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == thisSceneData.objects[i]);
                     var newReducedList = Actor.CopyActorList(thisSceneData.appectableCandidates);

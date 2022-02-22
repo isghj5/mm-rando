@@ -179,6 +179,7 @@ namespace MMR.Randomizer.Utils
                 a.OldActorEnum = a.ActorEnum;
                 a.OldName = a.ActorEnum.ToString();
                 a.ObjectID = a.ActorEnum.ObjectIndex();
+                a.OldObjectID = a.ObjectID;
                 //a.ObjectSize = ObjUtils.GetObjSize(a.ObjectIndex());
                 a.Position.x = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 2);
                 a.Position.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 4);
