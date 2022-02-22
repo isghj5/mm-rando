@@ -1621,14 +1621,13 @@ namespace MMR.Randomizer
 
             var bogoLog = new StringBuilder();
             DateTime bogoStartTime = DateTime.Now;
-            while (true)
+            while (true) /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
             {
-                /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
-
+                #region loopCounting
                 bogoLog.Clear();
                 bogoStartTime = DateTime.Now;
 
-                // if we've tried 25 seeds and no results, re-shuffle the candidate lists, maybe the rng was bad
+                // if we've tried 5 seeds and no results, re-shuffle the candidate lists, maybe the rng was bad
                 loopsCount++;
                 if (loopsCount % 5 == 0)
                 {
@@ -1658,7 +1657,8 @@ namespace MMR.Randomizer
                 {
                     freeEnemyRate--; 
                 }
-                
+                #endregion
+
                 chosenReplacementEnemies = new List<Actor>();
                 chosenReplacementObjects = new List<ValueSwap>();
                 int newObjectSize = 0;
@@ -1903,7 +1903,7 @@ namespace MMR.Randomizer
             {
                 WriteOutput("Old Enemy actor:["
                     + chosenReplacementEnemies[i].OldName
-                    + "] was replaced by new enemy: ["
+                    + $"] map [{chosenReplacementEnemies[i].Room.ToString("D2")}] was replaced by new enemy: ["
                     + chosenReplacementEnemies[i].Variants[0].ToString("X4")  + "]["
                     + chosenReplacementEnemies[i].Name + "]");
             }
