@@ -347,5 +347,6 @@ namespace MMR.Randomizer.Utils
         }
 
         #endregion
+
     } // end class
 } // end namespace
