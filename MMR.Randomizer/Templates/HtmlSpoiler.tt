@@ -212,7 +212,7 @@
     function loadItems() {
         var saveInput = document.querySelector("#spoilerLogState");
         var segments = saveInput.value.split("-");
-        if (Math.ceil((logic.length - 1) / segmentSize) !== segments.length) {
+        if (Math.ceil(logic.length / segmentSize) !== segments.length) {
             alert("Invalid Spoiler Log state");
             return;
         }

@@ -198,62 +198,62 @@ namespace MMR.Randomizer.Templates
                     "      }).join(\"-\");\r\n        var saveInput = document.querySelector(\"#spoilerLog" +
                     "State\");\r\n        saveInput.value = saveString;\r\n    }\r\n\r\n    function loadItems" +
                     "() {\r\n        var saveInput = document.querySelector(\"#spoilerLogState\");\r\n     " +
-                    "   var segments = saveInput.value.split(\"-\");\r\n        if (Math.ceil((logic.leng" +
-                    "th - 1) / segmentSize) !== segments.length) {\r\n            alert(\"Invalid Spoile" +
-                    "r Log state\");\r\n            return;\r\n        }\r\n        segments = segments.map(" +
-                    "function(segment) {\r\n            return parseInt(segment, 16);\r\n        });\r\n   " +
-                    "     var locationsToCheck = [];\r\n        for (var i = 0; i < segments.length; i+" +
-                    "+) {\r\n            var segment = segments[i];\r\n            for (var j = 0; j < se" +
-                    "gmentSize; j++) {\r\n                var itemIndex = segmentSize * i + j;\r\n       " +
-                    "         if (itemIndex < logic.length) {\r\n                    var mark = ((segme" +
-                    "nt >> j) % 2 == 1);\r\n                    logic[itemIndex].Checked = mark;\r\n     " +
-                    "               var itemRow = document.querySelector(\"tr[data-newlocationid=\'\" + " +
-                    "itemIndex + \"\']\");\r\n                    if (itemRow) {\r\n                        " +
-                    "logic[itemRow.dataset.id].Acquired = mark;\r\n                    } else {\r\n      " +
-                    "                  logic[itemIndex].Acquired = mark;\r\n                    }\r\n    " +
-                    "                if (!includes(locationsToCheck, itemIndex)) {\r\n                 " +
-                    "       locationsToCheck.push(itemIndex);\r\n                    }\r\n               " +
-                    " }\r\n            }\r\n        }\r\n        checkLocations(locationsToCheck);\r\n    }\r\n" +
-                    "\r\n    document.querySelector(\"#spoilerLogState\").addEventListener(\"keypress\", fu" +
-                    "nction(event) {\r\n        if (event.keyCode === 13) {\r\n            loadItems();\r\n" +
-                    "        }\r\n    });\r\n\r\n    function checkLocations(locations) {\r\n        var item" +
-                    "sToCheck = [];\r\n        for (var i = 0; i < locations.length; i++) {\r\n          " +
-                    "  var location = logic[locations[i]];\r\n            location.IsAvailable = \r\n    " +
-                    "            (location.RequiredItemIds === null || location.RequiredItemIds.lengt" +
-                    "h === 0 || all(location.RequiredItemIds, function(id) { return logic[id].Acquire" +
-                    "d || logic[id].IsItemRemoved; }))\r\n                && \r\n                (locatio" +
-                    "n.ConditionalItemIds === null || location.ConditionalItemIds.length === 0 || any" +
-                    "(location.ConditionalItemIds, function(conditionals) { return all(conditionals, " +
-                    "function(id) { return logic[id].Acquired || logic[id].IsItemRemoved; }); }));\r\n " +
-                    "           \r\n            var newLocation = find(logic, function(io) { return io." +
-                    "NewLocationId === locations[i]; });\r\n            if (!newLocation) {\r\n          " +
-                    "      newLocation = location;\r\n            }\r\n            if (!newLocation.Acqui" +
-                    "red && location.IsFakeItem && location.IsAvailable) {\r\n                newLocati" +
-                    "on.Acquired = true;\r\n                itemsToCheck.push(newLocation.ItemId);\r\n   " +
-                    "         }\r\n            if (newLocation.Acquired && location.IsFakeItem && !loca" +
-                    "tion.IsAvailable) {\r\n                newLocation.Acquired = false;\r\n            " +
-                    "    itemsToCheck.push(newLocation.ItemId);\r\n            }\r\n        \r\n           " +
-                    " var locationRows = document.querySelectorAll(\".item-replacements tr[data-newloc" +
-                    "ationid=\'\" + locations[i] + \"\']\");\r\n            for (const locationRow of locati" +
-                    "onRows) {\r\n                locationRow.className = \"\";\r\n                location" +
-                    "Row.classList.add(location.IsAvailable ? \"available\" : \"unavailable\");\r\n        " +
-                    "        var itemName = locationRow.querySelector(\".itemname\");\r\n                " +
-                    "var checkbox = locationRow.querySelector(\"input\");\r\n                checkbox.che" +
-                    "cked = location.Checked;\r\n                if (location.Checked) {\r\n             " +
-                    "       itemName.classList.remove(\"spoiler\");\r\n                } else {\r\n        " +
-                    "            itemName.classList.add(\"spoiler\");\r\n                }\r\n            }" +
-                    "\r\n        \r\n            var itemRows = document.querySelectorAll(\"#item-location" +
-                    "s tr[data-newlocationid=\'\" + locations[i] + \"\']\");\r\n            for (const itemR" +
-                    "ow of itemRows) {\r\n                var itemNames = itemRow.querySelectorAll(\".ne" +
-                    "wlocation\");\r\n                var checkbox = itemRow.querySelector(\"input\");\r\n  " +
-                    "              var item = logic[itemRow.dataset.id];\r\n                checkbox.ch" +
-                    "ecked = item.Acquired;\r\n                for (const itemName of itemNames) {\r\n   " +
-                    "                 if (item.Acquired) {\r\n                        itemName.classLis" +
-                    "t.remove(\"spoiler\");\r\n                    } else {\r\n                        item" +
-                    "Name.classList.add(\"spoiler\");\r\n                    }\r\n                }\r\n      " +
-                    "      }\r\n        }\r\n        if (itemsToCheck.length > 0) {\r\n            checkIte" +
-                    "ms(itemsToCheck);\r\n        } else {\r\n            saveItems();\r\n        }\r\n    }\r" +
-                    "\n\r\n    var logic = ");
+                    "   var segments = saveInput.value.split(\"-\");\r\n        if (Math.ceil(logic.lengt" +
+                    "h / segmentSize) !== segments.length) {\r\n            alert(\"Invalid Spoiler Log " +
+                    "state\");\r\n            return;\r\n        }\r\n        segments = segments.map(functi" +
+                    "on(segment) {\r\n            return parseInt(segment, 16);\r\n        });\r\n        v" +
+                    "ar locationsToCheck = [];\r\n        for (var i = 0; i < segments.length; i++) {\r\n" +
+                    "            var segment = segments[i];\r\n            for (var j = 0; j < segmentS" +
+                    "ize; j++) {\r\n                var itemIndex = segmentSize * i + j;\r\n             " +
+                    "   if (itemIndex < logic.length) {\r\n                    var mark = ((segment >> " +
+                    "j) % 2 == 1);\r\n                    logic[itemIndex].Checked = mark;\r\n           " +
+                    "         var itemRow = document.querySelector(\"tr[data-newlocationid=\'\" + itemIn" +
+                    "dex + \"\']\");\r\n                    if (itemRow) {\r\n                        logic[" +
+                    "itemRow.dataset.id].Acquired = mark;\r\n                    } else {\r\n            " +
+                    "            logic[itemIndex].Acquired = mark;\r\n                    }\r\n          " +
+                    "          if (!includes(locationsToCheck, itemIndex)) {\r\n                       " +
+                    " locationsToCheck.push(itemIndex);\r\n                    }\r\n                }\r\n  " +
+                    "          }\r\n        }\r\n        checkLocations(locationsToCheck);\r\n    }\r\n\r\n    " +
+                    "document.querySelector(\"#spoilerLogState\").addEventListener(\"keypress\", function" +
+                    "(event) {\r\n        if (event.keyCode === 13) {\r\n            loadItems();\r\n      " +
+                    "  }\r\n    });\r\n\r\n    function checkLocations(locations) {\r\n        var itemsToChe" +
+                    "ck = [];\r\n        for (var i = 0; i < locations.length; i++) {\r\n            var " +
+                    "location = logic[locations[i]];\r\n            location.IsAvailable = \r\n          " +
+                    "      (location.RequiredItemIds === null || location.RequiredItemIds.length === " +
+                    "0 || all(location.RequiredItemIds, function(id) { return logic[id].Acquired || l" +
+                    "ogic[id].IsItemRemoved; }))\r\n                && \r\n                (location.Cond" +
+                    "itionalItemIds === null || location.ConditionalItemIds.length === 0 || any(locat" +
+                    "ion.ConditionalItemIds, function(conditionals) { return all(conditionals, functi" +
+                    "on(id) { return logic[id].Acquired || logic[id].IsItemRemoved; }); }));\r\n       " +
+                    "     \r\n            var newLocation = find(logic, function(io) { return io.NewLoc" +
+                    "ationId === locations[i]; });\r\n            if (!newLocation) {\r\n                " +
+                    "newLocation = location;\r\n            }\r\n            if (!newLocation.Acquired &&" +
+                    " location.IsFakeItem && location.IsAvailable) {\r\n                newLocation.Acq" +
+                    "uired = true;\r\n                itemsToCheck.push(newLocation.ItemId);\r\n         " +
+                    "   }\r\n            if (newLocation.Acquired && location.IsFakeItem && !location.I" +
+                    "sAvailable) {\r\n                newLocation.Acquired = false;\r\n                it" +
+                    "emsToCheck.push(newLocation.ItemId);\r\n            }\r\n        \r\n            var l" +
+                    "ocationRows = document.querySelectorAll(\".item-replacements tr[data-newlocationi" +
+                    "d=\'\" + locations[i] + \"\']\");\r\n            for (const locationRow of locationRows" +
+                    ") {\r\n                locationRow.className = \"\";\r\n                locationRow.cl" +
+                    "assList.add(location.IsAvailable ? \"available\" : \"unavailable\");\r\n              " +
+                    "  var itemName = locationRow.querySelector(\".itemname\");\r\n                var ch" +
+                    "eckbox = locationRow.querySelector(\"input\");\r\n                checkbox.checked =" +
+                    " location.Checked;\r\n                if (location.Checked) {\r\n                   " +
+                    " itemName.classList.remove(\"spoiler\");\r\n                } else {\r\n              " +
+                    "      itemName.classList.add(\"spoiler\");\r\n                }\r\n            }\r\n    " +
+                    "    \r\n            var itemRows = document.querySelectorAll(\"#item-locations tr[d" +
+                    "ata-newlocationid=\'\" + locations[i] + \"\']\");\r\n            for (const itemRow of " +
+                    "itemRows) {\r\n                var itemNames = itemRow.querySelectorAll(\".newlocat" +
+                    "ion\");\r\n                var checkbox = itemRow.querySelector(\"input\");\r\n        " +
+                    "        var item = logic[itemRow.dataset.id];\r\n                checkbox.checked " +
+                    "= item.Acquired;\r\n                for (const itemName of itemNames) {\r\n         " +
+                    "           if (item.Acquired) {\r\n                        itemName.classList.remo" +
+                    "ve(\"spoiler\");\r\n                    } else {\r\n                        itemName.c" +
+                    "lassList.add(\"spoiler\");\r\n                    }\r\n                }\r\n            " +
+                    "}\r\n        }\r\n        if (itemsToCheck.length > 0) {\r\n            checkItems(ite" +
+                    "msToCheck);\r\n        } else {\r\n            saveItems();\r\n        }\r\n    }\r\n\r\n   " +
+                    " var logic = ");
             this.Write(this.ToStringHelper.ToStringWithCulture(spoiler.LogicJson));
             this.Write(";\r\n\r\n    for (var i = 0; i < logic.length; i++) {\r\n        var item = logic[i];\r\n" +
                     "        if (item.Acquired) {\r\n            item.Checked = true;\r\n            var " +
