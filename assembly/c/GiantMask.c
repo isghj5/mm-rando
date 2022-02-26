@@ -1,5 +1,7 @@
 #include "GiantMask.h"
 #include "Misc.h"
+#include "macro.h"
+#include "controller.h"
 
 static void GiantMask_FormProperties_Grow(PlayerFormProperties* formProperties) {
     formProperties->unk_00 *= 10.0;
@@ -85,8 +87,8 @@ static void GiantMask_DisableTransformationFlash(GlobalContext* globalCtx) {
 /* 0x1D78 */ static u8 _transformationFlashState;
 /* 0x1D7A */ static s16 _transformationFlashCounter;
 
-// static bool _hasSeenGrowCutscene;
-// static u8 _hasSeenShrinkCutscene;
+static bool _hasSeenGrowCutscene;
+static bool _hasSeenShrinkCutscene;
 static bool _isGiant;
 static f32 _nextScaleFactor = 10.0f;
 
@@ -115,7 +117,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
                 // _unk_1D22 = z2_801694DC(globalCtx);
                 //z2_80169590(globalCtx, 0, 1);
                 //z2_80169590(globalCtx, _unk_1D22, 7);
-                z2_8016566C(150); // motion blur
+                z2_8016566C(150); // enable motion blur
                 _cutsceneCounter = 0;
                 _unk_1D5C = 0.0f;
                 // unk_1D58 = 0.0f;
@@ -132,20 +134,19 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
                     // unk_1D64 = 200.0f;
                     // unk_1D6C = 273.0f;
                     _scale = 0.1f;
-                    sp57 = 1;
                     goto label2;
                 }
             }
             break;
 
         case 1:
-            // if ((_cutsceneCounter < 80U) && _hasSeenGrowCutscene &&
-            //     CHECK_BTN_ANY(CONTROLLER1(globalCtx)->press.button,
-            //                   BTN_A | BTN_B | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT)) {
-            //     _transformationState++;
-            //     _transformationFlashState = 1;
-            //     _cutsceneCounter = 0;
-            // } else {
+            if ((_cutsceneCounter < 80U) && _hasSeenGrowCutscene &&
+                CHECK_BTN_ANY(CONTROLLER1(globalCtx)->pressEdge.buttons.value,
+                              BTN_A | BTN_B | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT)) {
+                _transformationState++;
+                _transformationFlashState = 1;
+                _cutsceneCounter = 0;
+            } else {
             label1:
                 if (_cutsceneCounter >= 50U) {
                     if (_cutsceneCounter == (u32)(BREG(43) + 60)) {
@@ -174,9 +175,9 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
                 }
 
                 sp57 = 1;
-                // _hasSeenGrowCutscene = 1;
+                _hasSeenGrowCutscene = true;
                 goto block_38;
-            // }
+            }
             break;
 
         case 2:
@@ -187,14 +188,14 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             goto block_38;
 
         case 10:
-            // if ((_cutsceneCounter < 30U) && (_hasSeenShrinkCutscene != 0) &&
-            //     CHECK_BTN_ANY(CONTROLLER1(globalCtx)->press.button,
-            //                   BTN_A | BTN_B | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT)) {
-            //     _transformationState++;
-            //     _transformationFlashState = 1;
-            //     _cutsceneCounter = 0;
-            //     break;
-            // }
+            if ((_cutsceneCounter < 30U) && _hasSeenShrinkCutscene &&
+                CHECK_BTN_ANY(CONTROLLER1(globalCtx)->pressEdge.buttons.value,
+                              BTN_A | BTN_B | BTN_CUP | BTN_CDOWN | BTN_CLEFT | BTN_CRIGHT)) {
+                _transformationState++;
+                _transformationFlashState = 1;
+                _cutsceneCounter = 0;
+                break;
+            }
 
         label2:
             if (_cutsceneCounter != 0U) {
@@ -212,7 +213,8 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             }
 
             if (_cutsceneCounter > 50U) {
-                // _hasSeenShrinkCutscene = 1;
+                sp57 = 1;
+                _hasSeenShrinkCutscene = true;
                 goto block_38;
             }
             break;
@@ -221,6 +223,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             if (_cutsceneCounter < 8U) {
                 break;
             }
+            sp57 = 1;
 
         block_38:
         case 20:
@@ -232,7 +235,7 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             //actor.flags |= 1;
             player->stateFlags.state1 &= ~PLAYER_STATE1_GIANT_MASK;
             //_scale = 0.01f;
-            z2_80165690();
+            z2_80165690(); // disable motion blur
             break;
         case 21:
             _transformationState = 0;
@@ -263,8 +266,10 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     if (sp57) {
         _isGiant = !_isGiant;
         if (!_isGiant) {
+            _scale = 0.01f;
             _nextScaleFactor = 10.0f;
         } else {
+            _scale = 0.1f;
             _nextScaleFactor = 0.1f;
         }
     }
