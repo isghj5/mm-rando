@@ -468,6 +468,23 @@
     nop
     swc1    f0, 0x0068 (s0)
 
+; Replaces:
+;   LUI     AT, 0x4248
+;   MTC1    AT, F8
+.org 0x8084F6D8
+    jal     Player_GetClimbDelta_Hook
+    nop
+
+; Replaces:
+;   LUI     A2, 0x41D6
+.org 0x8084F6EC
+    mfc1    a2, f0
+
+; Replaces:
+;   ORI     A2, A2, 0x6667
+.org 0x8084F6F4
+    nop
+
 ;==================================================================================================
 ; Handle Giant Mask transformation height check
 ;==================================================================================================

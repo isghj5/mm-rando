@@ -426,6 +426,22 @@ Player_GetSpinChargeWalkSpeedFactor_Hook:
     jr      ra
     addiu   sp, sp, 0x20
 
+Player_GetClimbDelta_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+
+    jal     Player_GetClimbXZDelta
+    nop
+
+    jal     Player_GetClimbYDelta
+    swc1    f0, 0x0010 (sp)
+
+    lwc1    f8, 0x0010 (sp)
+
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
 Player_UseItem_CheckCeiling_Hook:
     lw      t5, 0x0014 (sp)
     lw      t6, 0x0070 (sp)

@@ -370,6 +370,26 @@ f32 Player_GetSpinChargeWalkSpeedFactor() {
     return result;
 }
 
+f32 Player_GetClimbXZDelta() {
+    // Displaced code:
+    f32 result = 50.0f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
+f32 Player_GetClimbYDelta() {
+    // Displaced code:
+    f32 result = 26.8f;
+    // End displaced code
+
+    result *= GiantMask_GetSimpleScaleModifier();
+
+    return result;
+}
+
 f32 Player_GetDiveSpeed() {
     // Displaced code:
     f32 result = -2.0f;
