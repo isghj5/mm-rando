@@ -1064,7 +1064,82 @@ namespace MMR.Randomizer
             return sceneFreeActors.Union(roomFreeActors).Union(freeOnlyActors).ToList();
         }
 
-        public static void AssignRandomActorReplacements(SceneEnemizerData thisSceneData, int objectIndex, List<Actor> subMatches, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList)
+        public static void ShuffleObjects(SceneEnemizerData thisSceneData)
+        {
+            /// find replacement objects for objects that actors depend on
+
+            thisSceneData.chosenReplacementObjects = new List<ValueSwap>();
+            int newObjectSize = 0;
+            var newActorList = new List<int>();
+
+            for (int objectIndex = 0; objectIndex < thisSceneData.objects.Count; objectIndex++)
+            {
+                #region Object Forcing Debug
+                //////////////////////////////////////////////////////
+                ///////// debugging: force an object (enemy) /////////
+                //////////////////////////////////////////////////////
+                #if DEBUG
+
+                bool TestHardSetObject(GameObjects.Scene targetScene, GameObjects.Actor target, GameObjects.Actor replacement)
+                {
+                    if (thisSceneData.scene.File == targetScene.FileID() && thisSceneData.objects[objectIndex] == target.ObjectIndex())
+                    {
+                        thisSceneData.chosenReplacementObjects.Add(new ValueSwap()
+                        {
+                            OldV = thisSceneData.objects[objectIndex],
+                            NewV = replacement.ObjectIndex(),
+                            ChosenV = replacement.ObjectIndex()
+                        });
+                        return true;
+                    }
+                    return false;
+                }
+                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.BombFlower)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
+
+                //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
+                #endif
+                #endregion
+
+                var reducedCandidateList = thisSceneData.candidatesPerObject[objectIndex].ToList();
+                foreach (var objectSwap in thisSceneData.chosenReplacementObjects)
+                {
+                    // remove previously used objects, remove copies to increase variety
+                    reducedCandidateList.RemoveAll(u => u.ObjectID == objectSwap.NewV);
+                }
+                if (reducedCandidateList.Count == 0) // rarely, there are no available objects left
+                {
+                    newObjectSize += 2 ^ 30; // should always error in the object size section
+                    continue; // this enemy was starved by previous options, force error and try again
+                }
+
+                // get random enemy from the possible random enemy matches
+                Actor randomEnemy = reducedCandidateList[thisSceneData.rng.Next(reducedCandidateList.Count)];
+
+                // keep track of sizes between this new enemy combo and what used to be in this scene
+                if (randomEnemy.ObjectID >= 4) // object 1 is gameplay keep, 3 is dungeon keep
+                {
+                    newObjectSize += randomEnemy.ObjectSize;
+                }
+                if (!newActorList.Contains(randomEnemy.ActorID))
+                {
+                    newActorList.Add(randomEnemy.ActorID);
+                }
+
+                // add random enemy to list
+                thisSceneData.chosenReplacementObjects.Add(new ValueSwap()
+                {
+                    OldV = thisSceneData.objects[objectIndex],
+                    ChosenV = randomEnemy.ObjectID,
+                    NewV = randomEnemy.ObjectID
+                });
+            } // end for for each object
+        }
+
+
+        public static void ShuffleActors(SceneEnemizerData thisSceneData, int objectIndex, List<Actor> subMatches, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList)
         {
             for (int actorIndex = 0; actorIndex < thisSceneData.actorsPerObject[objectIndex].Count(); actorIndex++)
             {
@@ -1102,6 +1177,102 @@ namespace MMR.Randomizer
                 }
             } // end foreach
         } // end function
+
+        public static void GenerateActorCandidates(SceneEnemizerData thisSceneData, List<GameObjects.Actor> fairyDroppingActors)
+        {
+            /// get a matching set of possible replacement objects and enemies that we can use
+
+            thisSceneData.actorsPerObject = new List<List<Actor>>();
+            for (int objectIndex = 0; objectIndex < thisSceneData.objects.Count; objectIndex++)
+            {
+                // get a list of all enemies (in this room) that have the same OBJECT as our object that have an actor we also have
+                thisSceneData.actorsPerObject.Add(thisSceneData.actors.FindAll(u => u.OldObjectID == thisSceneData.objects[objectIndex]));
+                // get a list of matching actors that can fit in the place of the previous actor
+                var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == thisSceneData.objects[objectIndex]);
+                var newReducedList = Actor.CopyActorList(thisSceneData.appectableCandidates);
+                var newCandiateList = GetMatchPool(thisSceneData.actorsPerObject[objectIndex], thisSceneData.rng, thisSceneData.scene, newReducedList, objectHasFairyDroppingEnemy).ToList();
+                var candidateTest = newCandiateList.Find(u => u.Variants.Count == 0);
+                if (candidateTest != null)
+                {
+                    throw new Exception("GenActorCandidatees: zero variants detected");
+                }
+                if (newCandiateList == null || newCandiateList.Count == 0)
+                {
+                    throw new Exception("GenActorCandidatees: no candidates detected");
+                }
+
+                thisSceneData.candidatesPerObject.Add(newCandiateList);
+            }
+        }
+
+        // TODO clean up
+        public static List<Actor> GetMatchPool(List<Actor> oldActors, Random random, Scene scene, List<Actor> reducedCandidateList, bool containsFairyDroppingEnemy)
+        {
+            List<Actor> enemyMatchesPool = new List<Actor>();
+
+            // we cannot currently swap out specific enemies, so if ONE must be killable, all shared enemies must
+            //  eg: one of the dragonflies in woodfall must be killable in the map room, so all in the dungeon must since we cannot isolate
+            bool MustBeKillable = oldActors.Any(u => u.MustNotRespawn);
+
+            // moved up higher, because we can scan once per scene
+            if (containsFairyDroppingEnemy) // scene.SceneEnum.GetSceneFairyDroppingEnemies().Contains((GameObjects.Actor) oldActors[0].Actor))
+            {
+                /// special case: armos does not drop stray fairies, and I dont know why
+                ReplacementListRemove(reducedCandidateList, GameObjects.Actor.Armos);
+                MustBeKillable = true; // we dont want respawning or unkillable enemies here either
+            }
+
+            // this could be per-enemy, but right now its only used where enemies and objects match, so to save cpu cycles do it once per object not per enemy
+            foreach (var enemy in scene.SceneEnum.GetBlockedReplacementActors((GameObjects.Actor)oldActors[0].ActorID))
+            {
+                ReplacementListRemove(reducedCandidateList, enemy);
+            }
+
+
+            // todo does this NEED to be a double loop? does anything change per enemy copy that we should worry about?
+            foreach (var oldEnemy in oldActors) // this is all copies of an enemy in a scene, so all bo or all guay
+            {
+                // the enemy we got from the scene has the specific variant number, the general game object has all
+                foreach (var candidateEnemy in reducedCandidateList)
+                {
+                    var enemy = candidateEnemy.ActorEnum;
+                    var compatibleVariants = oldEnemy.CompatibleVariants(candidateEnemy, oldEnemy.OldVariant, random);
+                    if (compatibleVariants == null || compatibleVariants.Count == 0)
+                    {
+                        continue;
+                    }
+
+                    // TODO here would be a great place to test if the requirements to kill an enemy are met with given items
+
+                    if (!enemyMatchesPool.Any(u => u.ActorID == candidateEnemy.ActorID))
+                    {
+                        var newEnemy = candidateEnemy.CopyActor();
+                        if (MustBeKillable)
+                        {
+                            //newEnemy.Variants = enemy.KillableVariants(compatibleVariants); // reduce to available
+                            newEnemy.Variants = candidateEnemy.KillableVariants(compatibleVariants); // reduce to available
+                            if (newEnemy.Variants.Count == 0)
+                            {
+                                continue; // can't put this enemy here: it has no non-respawning variants
+                            }
+                        }
+                        else
+                        {
+                            newEnemy.Variants = compatibleVariants;
+                        }
+                        enemyMatchesPool.Add(newEnemy);
+
+                        if (newEnemy.Variants.Count == 0)
+                        {
+                            throw new Exception("WTF3"); // weird debug
+                        }
+
+                    }
+                } // for each candidate end
+            } // for each slot end
+
+            return enemyMatchesPool;
+        }
 
         public static void TrimAllActors(SceneEnemizerData thisSceneData, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList, int freeActorRate)
         {
@@ -1516,75 +1687,6 @@ namespace MMR.Randomizer
             }
         }
 
-        // TODO clean up
-        public static List<Actor> GetMatchPool(List<Actor> oldActors, Random random, Scene scene, List<Actor> reducedCandidateList, bool containsFairyDroppingEnemy)
-        {
-            List<Actor> enemyMatchesPool = new List<Actor>();
-
-            // we cannot currently swap out specific enemies, so if ONE must be killable, all shared enemies must
-            //  eg: one of the dragonflies in woodfall must be killable in the map room, so all in the dungeon must since we cannot isolate
-            bool MustBeKillable = oldActors.Any(u => u.MustNotRespawn);
-
-            // moved up higher, because we can scan once per scene
-            if (containsFairyDroppingEnemy) // scene.SceneEnum.GetSceneFairyDroppingEnemies().Contains((GameObjects.Actor) oldActors[0].Actor))
-            {
-                /// special case: armos does not drop stray fairies, and I dont know why
-                ReplacementListRemove(reducedCandidateList, GameObjects.Actor.Armos);
-                MustBeKillable = true; // we dont want respawning or unkillable enemies here either
-            }
-
-            // this could be per-enemy, but right now its only used where enemies and objects match, so to save cpu cycles do it once per object not per enemy
-            foreach(var enemy in scene.SceneEnum.GetBlockedReplacementActors((GameObjects.Actor) oldActors[0].ActorID))
-            {
-                ReplacementListRemove(reducedCandidateList, enemy);
-            }
-
-
-            // todo does this NEED to be a double loop? does anything change per enemy copy that we should worry about?
-            foreach (var oldEnemy in oldActors) // this is all copies of an enemy in a scene, so all bo or all guay
-            {
-                // the enemy we got from the scene has the specific variant number, the general game object has all
-                foreach (var candidateEnemy in reducedCandidateList)
-                {
-                    var enemy = candidateEnemy.ActorEnum;
-                    var compatibleVariants = oldEnemy.CompatibleVariants(candidateEnemy, oldEnemy.OldVariant, random);
-                    if (compatibleVariants == null || compatibleVariants.Count == 0)
-                    {
-                        continue;
-                    }
-                    
-                    // TODO here would be a great place to test if the requirements to kill an enemy are met with given items
-
-                    if ( ! enemyMatchesPool.Any(u => u.ActorID == candidateEnemy.ActorID))
-                    {
-                        var newEnemy = candidateEnemy.CopyActor();
-                        if (MustBeKillable)
-                        {
-                            //newEnemy.Variants = enemy.KillableVariants(compatibleVariants); // reduce to available
-                            newEnemy.Variants = candidateEnemy.KillableVariants(compatibleVariants); // reduce to available
-                            if (newEnemy.Variants.Count == 0)
-                            {
-                                continue; // can't put this enemy here: it has no non-respawning variants
-                            }
-                        }
-                        else
-                        {
-                            newEnemy.Variants = compatibleVariants;
-                        }
-                        enemyMatchesPool.Add(newEnemy);
-
-                        if (newEnemy.Variants.Count == 0)
-                        {
-                            throw new Exception("WTF3"); // weird debug
-                        }
-
-                    }
-                } // for each candidate end
-            } // for each slot end
-
-            return enemyMatchesPool;
-        }
-
 
         public class SceneEnemizerData
         {
@@ -1607,21 +1709,19 @@ namespace MMR.Randomizer
 
             public SceneEnemizerData(Scene scene)
             {
-                startTime = DateTime.Now;
+                this.startTime = DateTime.Now;
                 this.scene = scene;
                 this.log = new StringBuilder();
-            }
-
-            public string GetTimeDiff()
-            {
-                return (DateTime.Now).Subtract(this.startTime).TotalMilliseconds.ToString(); // annoying enough to make a function
             }
         }
 
         public static void SwapSceneEnemies(OutputSettings settings, Scene scene, int seed)
         {
+            /// randomize all enemies/actors in a single scene
+
             SceneEnemizerData thisSceneData = new SceneEnemizerData(scene);
 
+            #region Log Handling functions
             // spoiler log already written by this point, for now making a brand new one instead of appending
             void WriteOutput(string str, StringBuilder altLog = null)
             {
@@ -1641,19 +1741,26 @@ namespace MMR.Randomizer
                 EnemizerLogMutex.ReleaseMutex();
             }
 
+            string GET_TIME(DateTime log)
+            {
+                return ((DateTime.Now).Subtract(log).TotalMilliseconds).ToString();
+            }
+
+            #endregion
+
             thisSceneData.actors = GetSceneEnemyActors(scene);
             if (thisSceneData.actors.Count == 0)
             {
                 return; // if no enemies, no point in continuing
             }
-            WriteOutput("time to get scene enemies: " + thisSceneData.GetTimeDiff() + "ms");
+            WriteOutput("time to get scene enemies: " + GET_TIME(thisSceneData.startTime) + "ms");
 
             thisSceneData.objects = GetSceneEnemyObjects(scene);
             var sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum);
-            WriteOutput(" time to get scene objects: " + thisSceneData.GetTimeDiff() + "ms");
+            WriteOutput(" time to get scene objects: " + GET_TIME(thisSceneData.startTime) + "ms");
 
             WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
-            WriteOutput(" time to find scene name: " + thisSceneData.GetTimeDiff() + "ms");
+            WriteOutput(" time to find scene name: " + GET_TIME(thisSceneData.startTime) + "ms");
 
             // if actor doesn't exist but object does, probably spawned by something else, remove from actors to randomize
             // TODO check for side objects that no longer need to exist and replace with possible alt objects
@@ -1668,7 +1775,7 @@ namespace MMR.Randomizer
 
             SplitSceneLikeLikesIntoTwoActorObjects(thisSceneData);
 
-            WriteOutput(" time to finish removing unnecessary objects: " + thisSceneData.GetTimeDiff() + "ms");
+            WriteOutput(" time to finish removing unnecessary objects: " + GET_TIME(thisSceneData.startTime) + "ms");
 
             // some scenes are blocked from having enemies, do this ONCE before GetMatchPool, which would do it per-enemy
             //var sceneAcceptableEnemies = ReplacementCandidateList.FindAll( u => ! u.ActorEnum.BlockedScenes().Contains(scene.SceneEnum));
@@ -1683,35 +1790,8 @@ namespace MMR.Randomizer
             var fairyDroppingActors = GetSceneFairyDroppingEnemyTypes(thisSceneData);
             // we group enemies with objects because some objects can be reused for multiple enemies, potential minor boost to variety
 
-            // todo move to external function
-            void GenerateActorCandidates(){
-                // get a matching set of possible replacement objects and enemies that we can use
-                // turned into a inline function because we re-do this every N attempts of the bogo loop, and here at the top, so reusing code
-                thisSceneData.actorsPerObject = new List<List<Actor>>();
-                for (int i = 0; i < thisSceneData.objects.Count; i++)
-                {
-                    // get a list of all enemies (in this room) that have the same OBJECT as our object that have an actor we also have
-                    thisSceneData.actorsPerObject.Add(thisSceneData.actors.FindAll(u => u.OldObjectID == thisSceneData.objects[i]));
-                    // get a list of matching actors that can fit in the place of the previous actor
-                    var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == thisSceneData.objects[i]);
-                    var newReducedList = Actor.CopyActorList(thisSceneData.appectableCandidates);
-                    var newCandiateList = GetMatchPool(thisSceneData.actorsPerObject[i], thisSceneData.rng, scene, newReducedList, objectHasFairyDroppingEnemy).ToList();
-                    var candidateTest = newCandiateList.Find(u => u.Variants.Count == 0);
-                    if (candidateTest != null)
-                    {
-                        throw new Exception("GenActorCandidatees: zero variants detected");
-                    }
-                    if (newCandiateList == null || newCandiateList.Count == 0)
-                    {
-                        throw new Exception("GenActorCandidatees: no candidates detected");
-                    }
-
-                    thisSceneData.candidatesPerObject.Add(newCandiateList);
-                }
-            }
-
-            GenerateActorCandidates();
-            WriteOutput(" time to generate candidate list: " + thisSceneData.GetTimeDiff() + "ms");
+            GenerateActorCandidates(thisSceneData, fairyDroppingActors);
+            WriteOutput(" time to generate candidate list: " + GET_TIME(thisSceneData.startTime) + "ms");
 
             int loopsCount = 0;
             int freeEnemyRate = 75; // starting value, as attempts increase this shrinks which lowers budget
@@ -1722,7 +1802,7 @@ namespace MMR.Randomizer
             // keeping track of ram space usage is getting ugly, try some OO to clean it up
             thisSceneData.actorCollection = new ActorsCollection(scene);
 
-            WriteOutput(" time to separate map/time actors: " + thisSceneData.GetTimeDiff() + "ms");
+            WriteOutput(" time to separate map/time actors: " + GET_TIME(thisSceneData.startTime) + "ms");
 
             var bogoLog = new StringBuilder();
             DateTime bogoStartTime = DateTime.Now;
@@ -1737,7 +1817,7 @@ namespace MMR.Randomizer
                 if (loopsCount % 5 == 0)
                 {
                     // reinit actorCandidatesLists because this RNG is bad
-                    GenerateActorCandidates();
+                    GenerateActorCandidates(thisSceneData, fairyDroppingActors);
                     WriteOutput(" re-generate candidates time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
                 }
 
@@ -1764,76 +1844,8 @@ namespace MMR.Randomizer
                 }
                 #endregion
 
-                //chosenReplacementEnemies = new List<Actor>();
-                thisSceneData.chosenReplacementObjects = new List<ValueSwap>();
-                int newObjectSize = 0;
-                var newActorList = new List<int>();
-                StringBuilder objectReplacementLog = new StringBuilder();
-
-                for (int objectIndex = 0; objectIndex < thisSceneData.objects.Count; objectIndex++)
-                {
-                    //////////////////////////////////////////////////////
-                    ///////// debugging: force an object (enemy) /////////
-                    //////////////////////////////////////////////////////
-                    #if DEBUG
-
-                    bool TestHardSetObject(GameObjects.Scene targetScene, GameObjects.Actor target, GameObjects.Actor replacement)
-                    {
-                        if (scene.File == targetScene.FileID() && thisSceneData.objects[objectIndex] == target.ObjectIndex())
-                        {
-                            thisSceneData.chosenReplacementObjects.Add(new ValueSwap()
-                            {
-                                OldV = thisSceneData.objects[objectIndex],
-                                NewV = replacement.ObjectIndex(),
-                                ChosenV = replacement.ObjectIndex()
-                            });
-                            return true;
-                        }
-                        return false;
-                    }
-                    //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.BombFlower)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
-                    //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
-
-                    //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
-                    #endif
-
-                    var reducedCandidateList = thisSceneData.candidatesPerObject[objectIndex].ToList();
-                    foreach (var objectSwap in thisSceneData.chosenReplacementObjects)
-                    {
-                        // remove previously used objects, remove copies to increase variety
-                        reducedCandidateList.RemoveAll(u => u.ObjectID == objectSwap.NewV);
-                    }
-                    if (reducedCandidateList.Count == 0) // rarely, there are no available objects left
-                    {
-                        newObjectSize += 2^30; // should always error in the object size section
-                        continue; // this enemy was starved by previous options, force error and try again
-                    }
-
-                    // get random enemy from the possible random enemy matches
-                    Actor randomEnemy = reducedCandidateList[thisSceneData.rng.Next(reducedCandidateList.Count)];
-
-                    // keep track of sizes between this new enemy combo and what used to be in this scene
-                    if (randomEnemy.ObjectID >= 4) // object 1 is gameplay keep, 3 is dungeon keep
-                    {
-                        newObjectSize += randomEnemy.ObjectSize;
-                    }
-                    if (! newActorList.Contains(randomEnemy.ActorID))
-                    {
-                        newActorList.Add(randomEnemy.ActorID);
-                    }
-
-                    // add random enemy to list
-                    thisSceneData.chosenReplacementObjects.Add( new ValueSwap() 
-                    { 
-                        OldV = thisSceneData.objects[objectIndex],
-                        ChosenV = randomEnemy.ObjectID,
-                        NewV = randomEnemy.ObjectID
-                    });
-                } // end for object shuffle
-
-                WriteOutput(" objects pick time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+                ShuffleObjects(thisSceneData);
+                WriteOutput(" objects pick time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
                 // reset early if obviously too large
                 /* thisactors.SetNewActors(scene, chosenReplacementObjects);
@@ -1847,8 +1859,9 @@ namespace MMR.Randomizer
 
                 // enemizer is not smart enough if the new chosen objects are copies, and the game allows objects to load twice
                 // for now, remove them here after actors are chosen to reduce object size
+                StringBuilder objectReplacementLog = new StringBuilder();
                 TrimObjectList(thisSceneData, objectReplacementLog);
-                WriteOutput(" object trim time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+                WriteOutput(" object trim time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
                 // for each object, attempt to change actors 
                 for (int objectIndex = 0; objectIndex < thisSceneData.chosenReplacementObjects.Count; objectIndex++)
@@ -1860,13 +1873,13 @@ namespace MMR.Randomizer
                     List<Actor> subMatches = thisSceneData.candidatesPerObject[objectIndex].FindAll(u => u.ObjectID == thisSceneData.chosenReplacementObjects[objectIndex].ChosenV);
 
                     AddCompanionsToCandidates(thisSceneData, objectIndex, subMatches);
-                    WriteOutput("  companions adding time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+                    WriteOutput("  companions adding time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
-                    AssignRandomActorReplacements(thisSceneData, objectIndex, subMatches, previousyAssignedCandidate, temporaryMatchEnemyList);
-                    WriteOutput("  match time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+                    ShuffleActors(thisSceneData, objectIndex, subMatches, previousyAssignedCandidate, temporaryMatchEnemyList);
+                    WriteOutput("  match time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
                     TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList, freeEnemyRate);
-                    WriteOutput("  trim/free time: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+                    WriteOutput("  trim/free time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
                     // add temp list back to chosenRepalcementEnemies
                     //chosenReplacementEnemies.AddRange(temporaryMatchEnemyList);
@@ -1879,17 +1892,17 @@ namespace MMR.Randomizer
                 {
                     // if we are taking a really long time to find replacements, remove a couple optional actors/objects
                     CullOptionalActors(scene, thisSceneData.chosenReplacementObjects, loopsCount);
-                    WriteOutput(" cull optionals: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+                    WriteOutput(" cull optionals: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
                 }
 
                 // set objects and actors for isSizeAcceptable to use, and our debugging output
                 thisSceneData.actorCollection.SetNewActors(scene, thisSceneData.chosenReplacementObjects);
 
-                WriteOutput(" set for size check: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+                WriteOutput(" set for size check: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
                 if (thisSceneData.actorCollection.isSizeAcceptable())
                 {
-                    WriteOutput(" after issizeacceptable: " + ((DateTime.Now).Subtract(bogoStartTime).TotalMilliseconds).ToString() + "ms", bogoLog);
+                    WriteOutput(" after issizeacceptable: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
                     thisSceneData.log.Append(objectReplacementLog);
                     thisSceneData.log.Append(bogoLog);
@@ -1923,7 +1936,7 @@ namespace MMR.Randomizer
                 WriteOutput($"Old Enemy actor:[{thisSceneData.actors[i].OldName}] " +
                     $"map [{thisSceneData.actors[i].Room.ToString("D2")}] " +
                     $"was replaced by new enemy: [{thisSceneData.actors[i].Variants[0].ToString("X4")}]" +
-                    $"[{thisSceneData.actors[i].Name}");
+                    $"[{thisSceneData.actors[i].Name}]");
             }
 
             // realign all scene companion actors
@@ -1931,7 +1944,7 @@ namespace MMR.Randomizer
 
             SetSceneEnemyObjects(scene, thisSceneData.chosenReplacementObjectsPerMap);
             SceneUtils.UpdateScene(scene);
-            WriteOutput( " time to complete randomizing scene: " + thisSceneData.GetTimeDiff().ToString() + "ms");
+            WriteOutput( " time to complete randomizing scene: " + GET_TIME(thisSceneData.startTime) + "ms");
             FlushLog();
         }
 
