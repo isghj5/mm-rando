@@ -73,16 +73,16 @@ static void GiantMask_DisableTransformationFlash(GlobalContext* globalCtx) {
 
 /* 0x1D14 */ static u32 _cutsceneCounter;
 /* 0x1D18 */ static s16 _transformationState;
-/* 0x1D22 */ static s16 _unk_1D22;
+/* 0x1D22 */ static s16 _transformationCameraId;
 /* 0x1D24 */ static Vec3f _unk_1D24;
 /* 0x1D30 */ static Vec3f _unk_1D30;
 /* 0x1D3C */ static Vec3f _unk_1D3C;
 /* 0x1D54 */ static f32 _unk_1D54;
-/* 0x1D58 */ static f32 unk_1D58;
+/* 0x1D58 */ static f32 _unk_1D58;
 /* 0x1D5C */ static f32 _unk_1D5C;
-/* 0x1D64 */ static f32 unk_1D64;
-/* 0x1D68 */ static f32 unk_1D68;
-/* 0x1D6C */ static f32 unk_1D6C;
+/* 0x1D64 */ static f32 _unk_1D64;
+/* 0x1D68 */ static f32 _unk_1D68;
+/* 0x1D6C */ static f32 _unk_1D6C;
 /* 0x1D70 */ static f32 _scale = 0.01f;
 /* 0x1D78 */ static u8 _transformationFlashState;
 /* 0x1D7A */ static s16 _transformationFlashCounter;
@@ -114,25 +114,25 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
         case 0:
             if (player->stateFlags.state1 & PLAYER_STATE1_GIANT_MASK) {
                 // z2_800EA0D4(globalCtx, &globalCtx->csCtx);
-                _unk_1D22 = z2_Play_CreateSubCamera(globalCtx);
+                _transformationCameraId = z2_Play_CreateSubCamera(globalCtx);
                 z2_Play_CameraChangeStatus(globalCtx, 0, 1);
-                z2_Play_CameraChangeStatus(globalCtx, _unk_1D22, 7);
+                z2_Play_CameraChangeStatus(globalCtx, _transformationCameraId, 7);
                 z2_8016566C(150); // enable motion blur
                 _cutsceneCounter = 0;
                 _unk_1D5C = 0.0f;
-                unk_1D58 = 0.0f;
+                _unk_1D58 = 0.0f;
                 if (!_isGiant) {
                     _transformationState = 1;
-                    unk_1D68 = 10.0f;
-                    unk_1D64 = 60.0f;
-                    unk_1D6C = 23.0f;
+                    _unk_1D68 = 10.0f;
+                    _unk_1D64 = 60.0f;
+                    _unk_1D6C = 23.0f;
                     _scale = 0.01f;
                     goto label1;
                 } else {
                     _transformationState = 10;
-                    unk_1D68 = 10.0f;
-                    unk_1D64 = 200.0f;
-                    unk_1D6C = 273.0f;
+                    _unk_1D68 = 10.0f;
+                    _unk_1D64 = 200.0f;
+                    _unk_1D6C = 273.0f;
                     _scale = 0.1f;
                     goto label2;
                 }
@@ -152,18 +152,18 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
                     if (_cutsceneCounter == (u32)(BREG(43) + 60)) {
                         z2_PlaySfx(0x9C5); // NA_SE_PL_TRANSFORM_GIANT
                     }
-                    Math_ApproachF(&unk_1D64, 200.0f, 0.1f, _unk_1D5C * 640.0f);
-                    Math_ApproachF(&unk_1D6C, 273.0f, 0.1f, _unk_1D5C * 150.0f);
+                    Math_ApproachF(&_unk_1D64, 200.0f, 0.1f, _unk_1D5C * 640.0f);
+                    Math_ApproachF(&_unk_1D6C, 273.0f, 0.1f, _unk_1D5C * 150.0f);
                     Math_ApproachF(&_scale, 0.1f, 0.2f, _unk_1D5C * 0.1f);
                     Math_ApproachF(&_unk_1D5C, 1.0f, 1.0f, 0.001f);
                 } else {
-                    Math_ApproachF(&unk_1D64, 30.0f, 0.1f, 1.0f);
+                    Math_ApproachF(&_unk_1D64, 30.0f, 0.1f, 1.0f);
                 }
 
                 if (_cutsceneCounter > 50U) {
-                    Math_ApproachZeroF(&unk_1D58, 1.0f, 0.06f);
+                    Math_ApproachZeroF(&_unk_1D58, 1.0f, 0.06f);
                 } else {
-                    Math_ApproachF(&unk_1D58, 0.4f, 1.0f, 0.02f);
+                    Math_ApproachF(&_unk_1D58, 0.4f, 1.0f, 0.02f);
                 }
 
                 if (_cutsceneCounter == 107U) {
@@ -202,8 +202,8 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
                 if (_cutsceneCounter == (u32)(BREG(44) + 10)) {
                     z2_PlaySfx(0x9C6); // NA_SE_PL_TRANSFORM_NORMAL
                 }
-                Math_ApproachF(&unk_1D64, 60.0f, 0.1f, _unk_1D5C * 640.0f);
-                Math_ApproachF(&unk_1D6C, 23.0f, 0.1f, _unk_1D5C * 150.0f);
+                Math_ApproachF(&_unk_1D64, 60.0f, 0.1f, _unk_1D5C * 640.0f);
+                Math_ApproachF(&_unk_1D6C, 23.0f, 0.1f, _unk_1D5C * 150.0f);
                 Math_ApproachF(&_scale, 0.01f, 0.1f, 0.003f);
                 Math_ApproachF(&_unk_1D5C, 2.0f, 1.0f, 0.01f);
             }
@@ -229,8 +229,8 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
         case 20:
             // _transformationState = 0;
             _transformationState = 21;
-            z2_80169AFC(globalCtx, _unk_1D22, 0);
-            _unk_1D22 = 0;
+            z2_80169AFC(globalCtx, _transformationCameraId, 0);
+            _transformationCameraId = 0;
             // z2_800EA0EC(globalCtx, &globalCtx->csCtx);
             //actor.flags |= 1;
             player->stateFlags.state1 &= ~PLAYER_STATE1_GIANT_MASK;
@@ -312,23 +312,22 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
             break;
     }
 
-    // if (_transformationState != 0) {
-    if ((_transformationState != 0) && (_unk_1D22 != 0)) {
+    if ((_transformationState != 0) && (_transformationCameraId != 0)) {
         z2_Matrix_RotateY(player->base.shape.rot.y, 0); // MTXMODE_NEW
-        z2_Matrix_GetStateTranslationAndScaledZ(unk_1D64, &sp58);
+        z2_Matrix_GetStateTranslationAndScaledZ(_unk_1D64, &sp58);
 
         _unk_1D24.x = player->base.currPosRot.pos.x + sp58.x;
-        _unk_1D24.y = player->base.currPosRot.pos.y + sp58.y + unk_1D68;
+        _unk_1D24.y = player->base.currPosRot.pos.y + sp58.y + _unk_1D68;
         _unk_1D24.z = player->base.currPosRot.pos.z + sp58.z;
 
         _unk_1D30.x = player->base.currPosRot.pos.x;
-        _unk_1D30.y = player->base.currPosRot.pos.y + unk_1D6C;
+        _unk_1D30.y = player->base.currPosRot.pos.y + _unk_1D6C;
         _unk_1D30.z = player->base.currPosRot.pos.z;
 
-        _unk_1D54 = z2_Math_Sins(_cutsceneCounter * 1512) * unk_1D58;
+        _unk_1D54 = z2_Math_Sins(_cutsceneCounter * 1512) * _unk_1D58;
         z2_Matrix_InsertZRotation_f(_unk_1D54, 1); // MTXMODE_APPLY
         z2_Matrix_GetStateTranslationAndScaledY(1.0f, &_unk_1D3C);
-        z2_Play_CameraSetAtEyeUp(globalCtx, _unk_1D22, &_unk_1D30, &_unk_1D24, &_unk_1D3C);
+        z2_Play_CameraSetAtEyeUp(globalCtx, _transformationCameraId, &_unk_1D30, &_unk_1D24, &_unk_1D3C);
         ShrinkWindow_SetLetterboxTarget(0x1B);
     }
 }
