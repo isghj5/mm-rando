@@ -123,9 +123,9 @@
 .definelabel z2_8016566C, 0x8016566C
 .definelabel z2_80165690, 0x80165690
 .definelabel z2_load_scene, 0x801693D4
-.definelabel z2_801694DC, 0x801694DC
-.definelabel z2_80169590, 0x80169590
-.definelabel z2_8016981C, 0x8016981C
+.definelabel z2_Play_CreateSubCamera, 0x801694DC
+.definelabel z2_Play_CameraChangeStatus, 0x80169590
+.definelabel z2_Play_CameraSetAtEyeUp, 0x8016981C
 .definelabel z2_80169AFC, 0x80169AFC
 .definelabel z2_check_scene_pairs, 0x80169CBC
 .definelabel z2_store_scene_flags, 0x80169D40
@@ -134,8 +134,13 @@
 .definelabel z2_PushMatrixStackCopy, 0x8018019C
 .definelabel z2_PopMatrixStack, 0x801801CC
 .definelabel z2_GetMatrixStackTop, 0x80180234
+.definelabel z2_Matrix_RotateY, 0x801809AC
+.definelabel z2_Matrix_InsertZRotation_f, 0x80180E90
 .definelabel z2_TransformMatrixStackTop, 0x801812FC
 .definelabel z2_ShiftMatrix, 0x80181A40
+.definelabel z2_Matrix_GetStateTranslationAndScaledX, 0x80181B78
+.definelabel z2_Matrix_GetStateTranslationAndScaledY, 0x80181BC4
+.definelabel z2_Matrix_GetStateTranslationAndScaledZ, 0x80181C10
 .definelabel z2_GetAudioTable, 0x80190294
 .definelabel z2_ToggleSfxDampen, 0x8019C300
 .definelabel z2_PlaySfx, 0x8019F0C8

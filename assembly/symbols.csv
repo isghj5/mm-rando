@@ -121,9 +121,9 @@
 0x8016566C,z2_8016566C
 0x80165690,z2_80165690
 0x801693D4,z2_load_scene
-0x801694DC,z2_801694DC
-0x80169590,z2_80169590
-0x8016981C,z2_8016981C
+0x801694DC,z2_Play_CreateSubCamera
+0x80169590,z2_Play_CameraChangeStatus
+0x8016981C,z2_Play_CameraSetAtEyeUp
 0x80169AFC,z2_80169AFC
 0x80169CBC,z2_check_scene_pairs
 0x80169D40,z2_store_scene_flags
@@ -132,8 +132,13 @@
 0x8018019C,z2_PushMatrixStackCopy
 0x801801CC,z2_PopMatrixStack
 0x80180234,z2_GetMatrixStackTop
+0x801809AC,z2_Matrix_RotateY
+0x80180E90,z2_Matrix_InsertZRotation_f
 0x801812FC,z2_TransformMatrixStackTop
 0x80181A40,z2_ShiftMatrix
+0x80181B78,z2_Matrix_GetStateTranslationAndScaledX
+0x80181BC4,z2_Matrix_GetStateTranslationAndScaledY
+0x80181C10,z2_Matrix_GetStateTranslationAndScaledZ
 0x80190294,z2_GetAudioTable
 0x8019C300,z2_ToggleSfxDampen
 0x8019F0C8,z2_PlaySfx

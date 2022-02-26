@@ -57,8 +57,13 @@ extern u32 z2_GetFloorPhysicsType(void* arg0, void* arg1, u8 arg2);
 extern void z2_PushMatrixStackCopy();
 extern void z2_PopMatrixStack();
 extern f32* z2_GetMatrixStackTop();
+extern void z2_Matrix_RotateY(s16 rotation, s32 appendToState);
+extern void z2_Matrix_InsertZRotation_f(f32 rotation, s32 appendToState);
 extern void z2_TransformMatrixStackTop(Vec3f* pos, Vec3s* rot);
 extern Gfx* z2_ShiftMatrix(GraphicsContext* gfxCtx);
+extern void z2_Matrix_GetStateTranslationAndScaledX(f32 scale, Vec3f* dst);
+extern void z2_Matrix_GetStateTranslationAndScaledY(f32 scale, Vec3f* dst);
+extern void z2_Matrix_GetStateTranslationAndScaledZ(f32 scale, Vec3f* dst);
 extern AudioInfo* z2_GetAudioTable(u8 audioType);
 extern void z2_PlaySfx(u32 id);
 extern void z2_PlaySfxAtActor(Actor* actor, u32 id);
@@ -223,9 +228,9 @@ extern void z2_800EA0D4(GlobalContext* ctxt, CutsceneContext* csCtx);
 extern void z2_800EA0EC(GlobalContext* ctxt, CutsceneContext* csCtx);
 extern void ShrinkWindow_SetLetterboxTarget(s16 unkA0);
 extern s16 z2_80165690();
-extern s16 z2_801694DC(GlobalContext* ctxt);
-extern void z2_80169590(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
-extern void z2_8016981C(GlobalContext* ctxt, s16 unkA1, Vec3f* unkA2, Vec3f* unkA3, Vec3f* unkA4);
+extern s16 z2_Play_CreateSubCamera(GlobalContext* ctxt);
+extern void z2_Play_CameraChangeStatus(GlobalContext* ctxt, s16 camId, s16 status);
+extern void z2_Play_CameraSetAtEyeUp(GlobalContext* ctxt, s16 camId, Vec3f* at, Vec3f* eye, Vec3f* up);
 extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 
 // Relocatable Functions (kaleido_scope).
