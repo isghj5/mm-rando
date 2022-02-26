@@ -1241,6 +1241,7 @@ namespace MMR.Randomizer.GameObjects
         // 0 does nothing just stands there and stares at you
         // 1 is climbing in the tree trying to get rups
         [GroundVariants(0)]
+        [WaterVariants(0)] // more fun
         //[WallVariants(1)] // facing the wrong way and no bonk, so not that interesting
         [VariantsWithRoomMax(max:3, variant:0)]
         [EnemizerScenesPlacementBlock(Scene.RomaniRanch, Scene.Woodfall, Scene.DekuShrine)]
