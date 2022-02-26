@@ -1705,9 +1705,16 @@ namespace MMR.Randomizer
             var availableStartingItems = (_settings.StartingItemMode switch {
                     StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary(_randomized.Settings) && item != Item.ItemPowderKeg),
                     StartingItemMode.AllowTemporaryItems => ItemUtils.StartingItems(),
-                    _ => ItemUtils.AllRupees(),
+                    _ => Enumerable.Empty<Item>(),
                 })
                 .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item))
+                .Cast<Item?>()
+                .ToList();
+            var itemHearts = _settings.CustomStartingItemList
+                .Where(item => !ItemList[item].NewLocation.HasValue && (_settings.AddSongs || !item.IsSong()))
+                .Cast<Item?>()
+                .ToList();
+            var itemJunk = ItemUtils.AllRupees()
                 .Cast<Item?>()
                 .ToList();
             var availableSongs = ItemUtils.StartingItems()
@@ -1715,12 +1722,43 @@ namespace MMR.Randomizer
                 .Where(item => !ItemList[item].NewLocation.HasValue && !ForbiddenStartingItems.Contains(item) && !_settings.CustomStartingItemList.Contains(item))
                 .Cast<Item?>()
                 .ToList();
+            var songHearts = _settings.CustomStartingItemList
+                .Where(item => !ItemList[item].NewLocation.HasValue && !_settings.AddSongs && item.IsSong())
+                .Cast<Item?>()
+                .ToList();
             foreach (var location in freeItemLocations)
             {
                 var placedItem = ItemList.FirstOrDefault(item => item.NewLocation == location)?.Item;
                 if (placedItem == null)
                 {
-                    placedItem = (!_settings.AddSongs && location.IsSong() ? availableSongs : availableStartingItems).RandomOrDefault(Random);
+                    List<Item?> availableItems = null;
+                    if (location.IsSong() && !_settings.AddSongs)
+                    {
+                        if (!_settings.CustomJunkLocations.Contains(location))
+                        {
+                            availableItems = availableSongs;
+                        }
+                        else
+                        {
+                            availableItems = songHearts;
+                        }
+                    }
+                    else
+                    {
+                        if (!_settings.CustomJunkLocations.Contains(location))
+                        {
+                            availableItems = availableStartingItems;
+                        }
+                        if (availableItems == null || availableItems.Count == 0)
+                        {
+                            availableItems = itemHearts;
+                        }
+                        if (availableItems == null || availableItems.Count == 0)
+                        {
+                            availableItems = itemJunk;
+                        }
+                    }
+                    placedItem = availableItems?.RandomOrDefault(Random);
                     if (placedItem == null)
                     {
                         throw new Exception("Failed to replace a starting item. Not enough items that can be started with are randomized or too many Extra Starting Items are selected.");
@@ -1728,7 +1766,7 @@ namespace MMR.Randomizer
                     ItemList[placedItem.Value].NewLocation = location;
                     ItemList[placedItem.Value].IsRandomized = true;
                     itemPool.Remove(location);
-                    availableStartingItems.Remove(placedItem.Value);
+                    availableItems.Remove(placedItem.Value);
                 }
 
 
