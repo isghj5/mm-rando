@@ -278,6 +278,12 @@ namespace MMR.Randomizer
         {
             // changes after randomization
             FixDekuPalaceReceptionGuards();
+
+            // stop chicks from despawning
+            var cuccoChickFID = GameObjects.Actor.CuccoChick.FileListIndex();
+            RomUtils.CheckCompressed(cuccoChickFID);
+            var cuccoChickData =  RomData.MMFileList[cuccoChickFID].Data;
+            ReadWriteUtils.Arr_WriteU32(cuccoChickData, 0x38, 0x00000000); // Actor_MarkforDeath -> NOP
         }
 
         public static void FixSpawnLocations()
@@ -1682,7 +1688,7 @@ namespace MMR.Randomizer
                     }
                     //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.BombFlower)) continue;
                     if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
-                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
+                    if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.CuccoChick)) continue;
                     //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
 
                     //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);

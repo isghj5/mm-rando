@@ -1036,13 +1036,14 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         Carpenter = 0x9C, // En_Daiku
 
-        //[ActorizerEnabled] // does not spawn because code checks for chicken object
+        // tag: lemons
+        [ActorizerEnabled] // does not spawn because code checks for chicken object
         [FileID(144)]
         [ObjectListIndex(0xF2)]
         [GroundVariants(0x0FFF)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.CuccoShack)]
-        CuccoChick = 0x9D,
+        CuccoChick = 0x9D, // En_Nwc
 
         // some weird calls chest actor wraparound
         [FileID(145)]
