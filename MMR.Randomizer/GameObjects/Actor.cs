@@ -1054,7 +1054,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(146)]
         [ObjectListIndex(0xE6)]
-        [GroundVariants(1)]
+        // params: 0xFC00 is paths, 0xF is type?
+        // 1/2/3 are all standing around but with different... hair styles
+        [GroundVariants(1,2,3)]
+        // pathing 0xFC00 >> A
         [UnkillableAllVariants]
         CutscenePirate = 0x9F, // En_Ge1
 
@@ -1603,7 +1606,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x30)]
         // 0x7F is switch flag (what is being switched?)
         // oh no z rotation is a parameter.... and there appear to be at least two based on xz rotation
-        [GroundVariants(0)]
+        // 0x7E parameter is switch flag... for what I have no idea, but it seems we cannot set it without triggering a sfx at least
+        [GroundVariants(0x7E)]
+        [VariantsWithRoomMax(max:4, variant:0x7E)] // 11 overloaded gorman race track
         [UnkillableAllVariants]
         ArmosStatue = 0x105, // Obj_Armos
 
