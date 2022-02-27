@@ -242,6 +242,7 @@ extern void z2_80169AFC(GlobalContext* ctxt, s16 unkA1, s16 unkA2);
 #define z2_PerformEnterWaterEffects_VRAM 0x8083B8D0
 #define z2_PlayerHandleBuoyancy_VRAM     0x808475B4
 #define z2_UseItem_VRAM                  0x80831990
+#define z2_PlayerWaitForGiantMask_VRAM   0x80838A20
 
 // Relocatable Types (file_choose).
 #define FileChooseDataVRAM               0x80813DF0
@@ -255,5 +256,6 @@ typedef void (*z2_LinkInvincibility_Func)(ActorPlayer* player, u8 frames);
 typedef void (*z2_PerformEnterWaterEffects_Func)(GlobalContext* ctxt, ActorPlayer* player);
 typedef void (*z2_PlayerHandleBuoyancy_Func)(ActorPlayer* player);
 typedef void (*z2_UseItem_Func)(GlobalContext* ctxt, ActorPlayer* player, u8 item);
+typedef void (*z2_PlayerWaitForGiantMask_Func)(GlobalContext* ctxt, ActorPlayer* player);
 
 #endif

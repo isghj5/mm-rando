@@ -2,6 +2,7 @@
 #include "Misc.h"
 #include "macro.h"
 #include "controller.h"
+#include "Reloc.h"
 
 static void GiantMask_FormProperties_Grow(PlayerFormProperties* formProperties) {
     formProperties->unk_00 *= 10.0;
@@ -113,6 +114,9 @@ void GiantMask_Handle(ActorPlayer* player, GlobalContext* globalCtx) {
     switch (_transformationState) {
         case 0:
             if (player->stateFlags.state1 & PLAYER_STATE1_GIANT_MASK) {
+                if (!(player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP)) {
+                    z2_PlayerWaitForGiantMask(globalCtx, player);
+                }
                 // z2_800EA0D4(globalCtx, &globalCtx->csCtx);
                 _transformationCameraId = z2_Play_CreateSubCamera(globalCtx);
                 z2_Play_CameraChangeStatus(globalCtx, 0, 1);

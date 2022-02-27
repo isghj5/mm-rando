@@ -18,6 +18,7 @@
 #define z2_PerformEnterWaterEffects Reloc_ResolvePlayerActorFunc(z2_PerformEnterWaterEffects)
 #define z2_PlayerHandleBuoyancy     Reloc_ResolvePlayerActorFunc(z2_PlayerHandleBuoyancy)
 #define z2_UseItem                  Reloc_ResolvePlayerActorFunc(z2_UseItem)
+#define z2_PlayerWaitForGiantMask   Reloc_ResolvePlayerActorFunc(z2_PlayerWaitForGiantMask)
 
 // Relocatable KaleidoScope functions.
 #define z2_PauseDrawItemIcon        Reloc_ResolveKaleidoScopeFunc(z2_PauseDrawItemIcon)
