@@ -283,7 +283,8 @@ namespace MMR.Randomizer
             var cuccoChickFID = GameObjects.Actor.CuccoChick.FileListIndex();
             RomUtils.CheckCompressed(cuccoChickFID);
             var cuccoChickData =  RomData.MMFileList[cuccoChickFID].Data;
-            ReadWriteUtils.Arr_WriteU32(cuccoChickData, 0x38, 0x00000000); // Actor_MarkforDeath -> NOP
+            // we need to branch past both the mark for death and the return (return before actor_update will just break the whole actor)
+            ReadWriteUtils.Arr_WriteU32(cuccoChickData, 0x30, 0x10000005); // BGEZ -> B
         }
 
         public static void FixSpawnLocations()

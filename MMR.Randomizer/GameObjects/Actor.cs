@@ -1037,10 +1037,16 @@ namespace MMR.Randomizer.GameObjects
         Carpenter = 0x9C, // En_Daiku
 
         // tag: lemons
-        [ActorizerEnabled] // does not spawn because code checks for chicken object
+        // multiple issues with placing in the world in actorizer:
+        // they want a second object (Adult chicken) so they can transform during the train
+        // they will dissapear from the overworld after you heal grog, need custom code to fix
+        // when placed in the world if there are more than 10 they just stand still
+        // they dont interact with the breman mask with less than 10 or without grog maybe
+        [ActorizerEnabled]
         [FileID(144)]
         [ObjectListIndex(0xF2)]
         [GroundVariants(0x0FFF)]
+        [VariantsWithRoomMax(max:9, variant:0x0FFF)] // 10 without grog is probably broken
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.CuccoShack)]
         CuccoChick = 0x9D, // En_Nwc
