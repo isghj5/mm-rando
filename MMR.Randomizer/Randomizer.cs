@@ -1503,7 +1503,7 @@ namespace MMR.Randomizer
         /// <param name="itemPool"></param>
         private void PlacePlandoItems(List<Item> itemPool = null)
         {
-            // remember, this is a check pool, not an item pool
+            // remember, this is a check pool, not an item pool (I didn't name it, not changing to avoid conflicts with upstream)
             if (itemPool == null)
             {
                 itemPool = new List<Item>();
@@ -1511,66 +1511,71 @@ namespace MMR.Randomizer
             }
 
             List<PlandoItemCombo> plandoItemCombos = PlandoUtils.ReadAllItemPlandoFiles(itemPool);
-            if (plandoItemCombos != null)
+            if (plandoItemCombos == null)  return; // no plandos found
+
+            foreach (PlandoItemCombo pic in plandoItemCombos)
             {
-                foreach (PlandoItemCombo pic in plandoItemCombos)
+                var itemCombo = PlandoUtils.CleanItemCombo(pic, Random, itemPool, ItemList);
+                if (itemCombo == null) // not possible to fullfill
                 {
-                    var itemCombo = PlandoUtils.CleanItemCombo(pic, Random, itemPool, ItemList);
-                    if (itemCombo == null) // not possible to fullfill
+                    if (pic.SkipIfError) continue;
+
+                    // let's backtrack and find the items that are already assigned
+                    //   and the checks that are already taken and print them
+                    var allItems = ItemList.FindAll(u => pic.ItemList.Contains(u.Item));
+                    var previouslyPlacedItems = allItems.FindAll(u => u.IsRandomized);
+                    string picDebug = "Items that were already assigned:\n";
+                    foreach(var item in previouslyPlacedItems)
                     {
-                        if (pic.SkipIfError)
+                        picDebug += "- [" + item.Item.Name() + "] was placed in check: [" + item.NewLocation.Value.Location() + "]\n";
+                    }
+
+                    var previouslyPlacedChecks = ItemList.FindAll(u => u.IsRandomized && pic.CheckList.Contains(u.NewLocation.Value));
+                    picDebug += "\nChecks that were already assigned:\n";
+                    foreach (var item in previouslyPlacedChecks)
+                    {
+                        picDebug += "- [" + item.NewLocation.Value.Location() + "] was filled with item: [" + item.Item.Name() + "]\n";
+                    }
+
+                    throw new Exception("Error: Plando failed to build with this seed\n combo name: [" + pic.Name + "]\n\n" + picDebug);
+                }
+
+                int drawCount = 0;
+                for(int itemCount = 0; drawCount < itemCombo.ItemDrawCount && itemCount < itemCombo.ItemList.Count; itemCount++)
+                {
+                    /// for all items, attempt to add; count successes
+                    Item item = itemCombo.ItemList[itemCount];
+                    foreach (Item check in itemCombo.CheckList)
+                    {
+                        if (itemCombo.SkipLogic == false && ItemUtils.IsStartingLocation(check) && ForbiddenStartingItems.Contains(item))
                         {
+                            Debug.WriteLine("Cannot place forbidden item in starting location: " + item.Name());
                             continue;
                         }
-                        // let's backtrack and find the items that are already assigned
-                        //   and the checks that are already taken and print them
-                        var allItems = ItemList.FindAll(u => pic.ItemList.Contains(u.Item));
-                        var previouslyPlacedItems = allItems.FindAll(u => u.IsRandomized);
-                        string picDebug = "Items that were already assigned:\n";
-                        foreach(var item in previouslyPlacedItems)
+
+                        if (itemCombo.SkipLogic || CheckMatch(item, check))
                         {
-                            picDebug += "- [" + item.Item.Name() + "] was placed in check: [" + item.NewLocation.Value.Location() + "]\n";
-                        }
-                        var previouslyPlacedChecks = ItemList.FindAll(u => u.IsRandomized && pic.CheckList.Contains(u.NewLocation.Value));
-                        picDebug += "\nChecks that were already assigned:\n";
-                        foreach (var item in previouslyPlacedChecks)
-                        {
-                            picDebug += "- [" + item.NewLocation.Value.Location() + "] was filled with item: [" + item.Item.Name() + "]\n";
-                        }
-                        throw new Exception("Error: Plando failed to build with this seed\n combo name: [" + pic.Name + "]\n\n" + picDebug);
-                    }
+                            ItemList[item].NewLocation = check;
+                            ItemList[item].IsRandomized = true;
 
-                    int drawCount = 0;
-                    for(int itemCount = 0; drawCount < itemCombo.ItemDrawCount && itemCount < itemCombo.ItemList.Count; itemCount++)
-                    {
-                        /// for all items, attempt to add; count successes
-                        Item item = itemCombo.ItemList[itemCount];
-                        foreach (Item check in itemCombo.CheckList)
-                        {
-                            if (itemCombo.SkipLogic && ItemUtils.IsStartingLocation(check) && ForbiddenStartingItems.Contains(item))
-                            {
-                                Debug.WriteLine("Cannot place forbidden item in starting location: " + item.Name());
-                                continue;
-                            }
+                            Debug.WriteLine($"----Plando Placed {item.Name()} at {check.Location()}----");
 
-                            if (itemCombo.SkipLogic || CheckMatch(item, check))
-                            {
-                                ItemList[item].NewLocation = check;
-                                ItemList[item].IsRandomized = true;
-
-                                Debug.WriteLine($"----Plando Placed {item.Name()} at {check.Location()}----");
-
-                                itemPool.Remove(check);
-                                itemCombo.CheckList.Remove(check);
-                                drawCount++;
-                                break;
-                            }
+                            itemPool.Remove(check);
+                            itemCombo.CheckList.Remove(check);
+                            drawCount++;
+                            break;
                         }
                     }
-                    if (drawCount < itemCombo.ItemDrawCount)
-                    {
-                        throw new Exception("Error: Plando could not find enough checks to match this plandos items with this seed: " + itemCombo.Name);
-                    }
+                }
+                if (drawCount < itemCombo.ItemDrawCount)
+                {
+                    var junkChecks = string.Join(", ", itemCombo.CheckList.Where(u => _settings.CustomJunkLocations.Contains(u)));
+                    var remainingItems = string.Join(", ", itemCombo.ItemList.Where(u => ItemList[u].IsRandomized == false));
+
+                    throw new Exception($"Error: Plando could not find enough checks to match this plandos items with this seed:\n [{itemCombo.Name}]\n"
+                        + $"Remaining Unplaced Items:\n [{remainingItems}]\n"
+                        + $"Remaining Unfullfilled Checks:\n [{string.Join(", ", itemCombo.CheckList)}]\n"
+                        + $"Checks in this plando item combo marked as junk:\n [{junkChecks}]");
                 }
             }
         }
