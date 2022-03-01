@@ -132,7 +132,7 @@ namespace MMR.Randomizer
             }
         }
 
-        #region ReadWrite SceneData
+        #region Read and Write Scene Actors and Objects
 
         public static List<Actor> GetSceneEnemyActors(Scene scene)
         {
@@ -1025,44 +1025,7 @@ namespace MMR.Randomizer
             }
         }
 
-        public static List<Actor> GetSceneFreeActors(Scene scene)
-        {
-            /// some actors don't require unique objects, they can use objects that are generally loaded, we can use these almost anywhere
-            ///  any actor that is object type 1 (gameplay_keep) is free to use anywhere
-            ///  scenes can have a special object loaded by themselves, this is either dangeon_keep or field_keep, or none
-
-            var sceneIsDungeon = scene.HasDungeonObject();
-            var sceneIsField = scene.HasFieldObject();
-            // todo: replace enum.IsEnemyRandomized
-            //var sceneFreeActors = ReplacementCandidateList.Where(u => (u.ObjectID == 1
-            var sceneFreeActors = FreeCandidateList.Where(u => (u.ObjectID == 1
-                                                    || (sceneIsField && u.ObjectID == (int)Scene.SceneSpecialObject.FieldKeep)
-                                                    || (sceneIsDungeon && u.ObjectID == (int)Scene.SceneSpecialObject.DungeonKeep))
-                                                 && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))).ToList();
-
-            // TODO: search all untouched objects and add those actors too
-
-            return sceneFreeActors;
-        }
-
-        public static List<Actor> GetRoomFreeActors(Scene scene, List<int> objectList, List<Actor> sceneFreeActors = null)
-        {
-            if (sceneFreeActors == null)
-            {
-                sceneFreeActors = GetSceneEnemyActors(scene); // should never get this far
-            }
-
-            var roomFreeActors = ReplacementCandidateList.Where(u => u.ObjectID >= 3
-                                     && objectList.Contains(u.ObjectID)
-                                     && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))
-                                     ).ToList();
-
-            var freeOnlyActors = FreeOnlyCandidateList.Where(u => objectList.Contains(u.ObjectID)
-                                     && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))
-                                     ).ToList();
-
-            return sceneFreeActors.Union(roomFreeActors).Union(freeOnlyActors).ToList();
-        }
+        
 
         public static void ShuffleObjects(SceneEnemizerData thisSceneData)
         {
@@ -1138,7 +1101,6 @@ namespace MMR.Randomizer
             } // end for for each object
         }
 
-
         public static void ShuffleActors(SceneEnemizerData thisSceneData, int objectIndex, List<Actor> subMatches, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList)
         {
             for (int actorIndex = 0; actorIndex < thisSceneData.actorsPerObject[objectIndex].Count(); actorIndex++)
@@ -1189,8 +1151,8 @@ namespace MMR.Randomizer
                 thisSceneData.actorsPerObject.Add(thisSceneData.actors.FindAll(u => u.OldObjectID == thisSceneData.objects[objectIndex]));
                 // get a list of matching actors that can fit in the place of the previous actor
                 var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == thisSceneData.objects[objectIndex]);
-                var newReducedList = Actor.CopyActorList(thisSceneData.appectableCandidates);
-                var newCandiateList = GetMatchPool(thisSceneData.actorsPerObject[objectIndex], thisSceneData.rng, thisSceneData.scene, newReducedList, objectHasFairyDroppingEnemy).ToList();
+                //var newCandiateList = GetMatchPool(thisSceneData, objectHasFairyDroppingEnemy).ToList(); // why the extra convert?
+                var newCandiateList = GetMatchPool(thisSceneData, objectHasFairyDroppingEnemy);
                 var candidateTest = newCandiateList.Find(u => u.Variants.Count == 0);
                 if (candidateTest != null)
                 {
@@ -1206,8 +1168,10 @@ namespace MMR.Randomizer
         }
 
         // TODO clean up
-        public static List<Actor> GetMatchPool(List<Actor> oldActors, Random random, Scene scene, List<Actor> reducedCandidateList, bool containsFairyDroppingEnemy)
+        public static List<Actor> GetMatchPool(SceneEnemizerData thisSceneData, bool containsFairyDroppingEnemy)
         {
+            var reducedCandidateList = Actor.CopyActorList(thisSceneData.appectableCandidates);
+            var oldActors = thisSceneData.actors;
             List<Actor> enemyMatchesPool = new List<Actor>();
 
             // we cannot currently swap out specific enemies, so if ONE must be killable, all shared enemies must
@@ -1223,7 +1187,7 @@ namespace MMR.Randomizer
             }
 
             // this could be per-enemy, but right now its only used where enemies and objects match, so to save cpu cycles do it once per object not per enemy
-            foreach (var enemy in scene.SceneEnum.GetBlockedReplacementActors((GameObjects.Actor)oldActors[0].ActorID))
+            foreach (var enemy in thisSceneData.scene.SceneEnum.GetBlockedReplacementActors((GameObjects.Actor)oldActors[0].ActorID))
             {
                 ReplacementListRemove(reducedCandidateList, enemy);
             }
@@ -1236,7 +1200,7 @@ namespace MMR.Randomizer
                 foreach (var candidateEnemy in reducedCandidateList)
                 {
                     var enemy = candidateEnemy.ActorEnum;
-                    var compatibleVariants = oldEnemy.CompatibleVariants(candidateEnemy, oldEnemy.OldVariant, random);
+                    var compatibleVariants = oldEnemy.CompatibleVariants(candidateEnemy, oldEnemy.OldVariant, thisSceneData.rng);
                     if (compatibleVariants == null || compatibleVariants.Count == 0)
                     {
                         continue;
@@ -1292,26 +1256,24 @@ namespace MMR.Randomizer
 
                     if (problemActor.OnlyOnePerRoom != null)
                     {
-                        TrimExtraActors(problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom, thisSceneData.rng, randomRate: freeActorRate);
+                        TrimSpecificActor(problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom, thisSceneData.rng, randomRate: freeActorRate);
                     }
                     else
                     {
                         var limitedVariants = problemActor.Variants.FindAll(u => problemActor.VariantMaxCountPerRoom(u) >= 0);
                         foreach (var variant in limitedVariants)
                         {
-                            TrimExtraActors(problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom, thisSceneData.rng, variant: variant, randomRate: freeActorRate);
+                            TrimSpecificActor(problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom, thisSceneData.rng, variant: variant, randomRate: freeActorRate);
                         }
                     }
                 }
             } // end for trim restricted actors
-
         }
 
-        // todo rename now that we have an above function with a similar name
-        public static void TrimExtraActors(Actor actorType, List<Actor> roomEnemies, List<Actor> roomFreeActors,
+        public static void TrimSpecificActor(Actor actorType, List<Actor> roomEnemies, List<Actor> roomFreeActors,
                                            bool roomIsClearPuzzleRoom, Random rng, int variant = -1, int randomRate = 0x50)
         {
-            /// actors with maximum counts have their extras trimmed off, replaced with free or empty actors
+            /// actors with maximum counts have their extras trimmed off, replaced with free or empty actors, depending on randomRate
 
             List<Actor> roomEnemiesWithVariant;
             if (actorType.OnlyOnePerRoom != null)
@@ -1426,6 +1388,44 @@ namespace MMR.Randomizer
             return objectsPerMap;
         }
 
+        public static List<Actor> GetSceneFreeActors(Scene scene)
+        {
+            /// some actors don't require unique objects, they can use objects that are generally loaded, we can use these almost anywhere
+            ///  any actor that is object type 1 (gameplay_keep) is free to use anywhere
+            ///  scenes can have a special object loaded by themselves, this is either dangeon_keep or field_keep, or none
+
+            var sceneIsDungeon = scene.HasDungeonObject();
+            var sceneIsField = scene.HasFieldObject();
+            // todo: replace enum.IsEnemyRandomized
+            //var sceneFreeActors = ReplacementCandidateList.Where(u => (u.ObjectID == 1
+            var sceneFreeActors = FreeCandidateList.Where(u => (u.ObjectID == 1
+                                                    || (sceneIsField && u.ObjectID == (int)Scene.SceneSpecialObject.FieldKeep)
+                                                    || (sceneIsDungeon && u.ObjectID == (int)Scene.SceneSpecialObject.DungeonKeep))
+                                                 && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))).ToList();
+
+            // TODO: search all untouched objects and add those actors too
+
+            return sceneFreeActors;
+        }
+
+        public static List<Actor> GetRoomFreeActors(Scene scene, List<int> objectList, List<Actor> sceneFreeActors = null)
+        {
+            if (sceneFreeActors == null)
+            {
+                sceneFreeActors = GetSceneEnemyActors(scene); // should never get this far
+            }
+
+            var roomFreeActors = ReplacementCandidateList.Where(u => u.ObjectID >= 3
+                                     && objectList.Contains(u.ObjectID)
+                                     && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))
+                                     ).ToList();
+
+            var freeOnlyActors = FreeOnlyCandidateList.Where(u => objectList.Contains(u.ObjectID)
+                                     && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))
+                                     ).ToList();
+
+            return sceneFreeActors.Union(roomFreeActors).Union(freeOnlyActors).ToList();
+        }
 
         public static void EmptyOrFreeActor(Actor targetActor, Random rng, List<Actor> currentRoomActorList,
                                             List<Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false, int randomRate = 0x50)
@@ -1886,6 +1886,7 @@ namespace MMR.Randomizer
                     previousyAssignedCandidate.Clear();
                 } // end for actors per object
 
+                // todo after all object enemies placed, do another TrimAllActors Pass to catch free actors being added above max
                 // todo we need a list of actors that are NOT randomized, left alone, they still exist, and we can ignore new duplicates
 
                 if (loopsCount >= 100)
@@ -1947,6 +1948,8 @@ namespace MMR.Randomizer
             WriteOutput( " time to complete randomizing scene: " + GET_TIME(thisSceneData.startTime) + "ms");
             FlushLog();
         }
+
+        #region Actor Injection
 
         public static InjectedActor ParseMMRAMeta(string metaFile)
         {
@@ -2219,7 +2222,7 @@ namespace MMR.Randomizer
             ///  we just move the new larger files to the end and leave a hole behind for now
 
             //const uint theEndOfTakenVRAM = 0x80C27000; // 0x80C260A0 <- actual
-            const uint theEndOfTakenVRAM = 0x80F00000; // changed NOTHING
+            const uint theEndOfTakenVRAM = 0x80CA0000; // changed NOTHING
             const int  theEndOfTakenVROM = 0x03100000; // 0x02EE7XXX <- actual
 
             int actorOvlTblFID = RomUtils.GetFileIndexForWriting(Constants.Addresses.ActorOverlayTable);
@@ -2303,18 +2306,15 @@ namespace MMR.Randomizer
 
                 previousLastVRAMEnd = newVRAMEnd + (newVRAMEnd % 0x10); // not sure if dma padding matters here
                 RomData.MMFileList[fileID] = file;
-            }// end for overlay in overlaylist
-        }
+            }// end Foreach overlay in overlaylist
+        } // end UpdateOverlayTable
 
         public static void InjectNewActors()
         {
             /// this might get merged back in with scan, and/or the pieces get moved back here
             /// we need to build an Actor from our injected actor, and finish injected actor conversions
 
-            if (InjectedActors.Count == 0)
-            {
-                return;
-            }
+            if (InjectedActors.Count == 0)  return;
 
             var freeOverlaySlots = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                         .Where(u => u.ToString().Contains("Empty")).ToList();
@@ -2383,6 +2383,8 @@ namespace MMR.Randomizer
 
             } // end for each injected actor
         }
+
+        #endregion
 
         public static void ShuffleEnemies(OutputSettings settings, Random random)
         {
