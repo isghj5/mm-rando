@@ -516,15 +516,18 @@ namespace MMR.Randomizer
             /// bad bat can randomize as a wall enemy or flying enemy, 
             ///   so move all flying ones to places where they can fit in as wall enemies or fly off
 
+            // the bat at the top of the tree is in the way (takes off flies around)
+            // move them to the further wall as a wall/flying enemy
             var roadtoswampScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.RoadToSouthernSwamp.FileID());
-            // move tree top bat down the tree vines
             var movedDownTreeBat = roadtoswampScene.Maps[0].Actors[7];
-            //movedDownTreeBat.Position = new vec16(-420, -40, 2059); // placement: lower along the tree like the other bat
             movedDownTreeBat.Position = new vec16(927, -29, 2542); // placement: along the south east corner
+            // match rotation with the wall
+            movedDownTreeBat.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 225, flags: movedDownTreeBat.Rotation.y); ;
+            ActorUtils.FlattenPitchRoll(movedDownTreeBat);
 
-            // match rotation with the other tree sitting bat
-            movedDownTreeBat.Rotation.y = 90;
-            ActorUtils.FlattenPitchRoll(roadtoswampScene.Maps[0].Actors[7]);
+            // the bad bad on the tree is just far enough from the tree to cause a bombchu explosion, move closer
+            var movedCloserToTreeBat = roadtoswampScene.Maps[0].Actors[8];
+            movedCloserToTreeBat.Position.x = 422;
 
             // move corridor bat to the short cliff wall near swamp shooting galery
             var movedToCliffBat = roadtoswampScene.Maps[0].Actors[6];
@@ -1057,8 +1060,8 @@ namespace MMR.Randomizer
                     }
                     return false;
                 }
-                //if (TestHardSetObject(GameObjects.Scene.StockPotInn, GameObjects.Actor.Clock, GameObjects.Actor.BombFlower)) continue;
-                if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
+                if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.BadBat, GameObjects.Actor.Cow)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
                 if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
 
