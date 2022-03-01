@@ -315,7 +315,7 @@ namespace MMR.Randomizer
             {
                 var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
                 var torchRotation = dekuPalaceScene.Maps[2].Actors[26].Rotation.z;
-                torchRotation = (short)ActorUtils.MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
+                torchRotation = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
 
                 // change the torch in pirates fort exterior to all day, remove second one, or free 
                 var piratesExteriorScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.PiratesFortressExterior.FileID());
@@ -331,7 +331,7 @@ namespace MMR.Randomizer
                 var eastclocktownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.EastClockTown.FileID());
                 var anju = eastclocktownScene.Maps[0].Actors[0];
                 anju.Position = new vec16(-101, 5, 180);
-                //anju.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 270, flags: anju.Rotation.y); // rotate to away from us
+                //anju.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: anju.Rotation.y); // rotate to away from us
 
                 // move next to mayors building
                 // bug this is not next to mayor building for some reason, next to inn
@@ -362,10 +362,10 @@ namespace MMR.Randomizer
 
                 //turn around this torch, because if its bean man hes facing into the wall and it hurts me
                 var laundryPoolScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LaundryPool.FileID());
-                laundryPoolScene.Maps[0].Actors[2].Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 135, flags: 0x7F);
+                laundryPoolScene.Maps[0].Actors[2].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, flags: 0x7F);
                 laundryPoolScene.Maps[0].Actors[2].Rotation.x = 0x7F;
                 laundryPoolScene.Maps[0].Actors[2].Rotation.z = 0x7F;
-                //laundryPoolScene.Maps[0].Actors[1].Rotation.z = (short)ActorUtils.MergeRotationAndFlags(rotation: laundryPoolScene.Maps[0].Actors[1].Rotation.z, flags: 0x7F);
+                //laundryPoolScene.Maps[0].Actors[1].Rotation.z = ActorUtils.MergeRotationAndFlags(rotation: laundryPoolScene.Maps[0].Actors[1].Rotation.z, flags: 0x7F);
 
                 // it was two torches, turn the other into a secret grotto, at least for now
                 var randomGrotto = new List<ushort> { 0x6033, 0x603B, 0x6018, 0x605C, 0x8000, 0xA000, 0x7000, 0xC000, 0xE000, 0xF000, 0xD000 };
@@ -393,8 +393,8 @@ namespace MMR.Randomizer
                 // one of the torches in palace is facing into the wall, actors replacing it also face the same way, bad
                 // one of these is not required and does nothing
                 var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
-                dekuPalaceScene.Maps[2].Actors[25].Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 180, flags: 0x7F);
-                dekuPalaceScene.Maps[2].Actors[26].Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalaceScene.Maps[2].Actors[26].Rotation.y);
+                dekuPalaceScene.Maps[2].Actors[25].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: 0x7F);
+                dekuPalaceScene.Maps[2].Actors[26].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalaceScene.Maps[2].Actors[26].Rotation.y);
 
                 // RecreateFishing();
             }
@@ -499,13 +499,13 @@ namespace MMR.Randomizer
             var movedToTree = southernswampScene.Maps[0].Actors[4];
             movedToTree.Position = new vec16(2020, 22, 300); // placement: to the right as you approach witches, next to tree
             // rotation normal to wall behind it, turn to the right 90deg
-            movedToTree.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 270, flags: southernswampScene.Maps[0].Actors[4].Rotation.y);
+            movedToTree.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: southernswampScene.Maps[0].Actors[4].Rotation.y);
 
             // witch area babas
             var movedToGrass = southernswampScene.Maps[2].Actors[2];
             movedToGrass.Position = new vec16(2910, 14, -1075); // placement: between the bushes along the wall
             // rotation normal to wall behind it, turn to the left 90deg
-            movedToGrass.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 90, flags: southernswampScene.Maps[2].Actors[2].Rotation.y);
+            movedToGrass.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 90, flags: southernswampScene.Maps[2].Actors[2].Rotation.y);
 
             var movedToWaterFall = southernswampScene.Maps[2].Actors[3];
             movedToWaterFall.Position = new vec16(4240, -2, -1270); // placement: near waterfall
@@ -522,7 +522,7 @@ namespace MMR.Randomizer
             var movedDownTreeBat = roadtoswampScene.Maps[0].Actors[7];
             movedDownTreeBat.Position = new vec16(927, -29, 2542); // placement: along the south east corner
             // match rotation with the wall
-            movedDownTreeBat.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 225, flags: movedDownTreeBat.Rotation.y); ;
+            movedDownTreeBat.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 225, flags: movedDownTreeBat.Rotation.y); ;
             ActorUtils.FlattenPitchRoll(movedDownTreeBat);
 
             // the bad bad on the tree is just far enough from the tree to cause a bombchu explosion, move closer
@@ -533,13 +533,13 @@ namespace MMR.Randomizer
             var movedToCliffBat = roadtoswampScene.Maps[0].Actors[6];
             movedToCliffBat.Position = new vec16(2432, -40, 2871);
             // match rotation with the other tree sitting bat
-            movedToCliffBat.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 90, flags: roadtoswampScene.Maps[0].Actors[6].Rotation.y);
+            movedToCliffBat.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 90, flags: roadtoswampScene.Maps[0].Actors[6].Rotation.y);
 
             // because the third bat was moved out of center corridor back, move one of the baba forward, we're basically swapping them
             var movedForwardDekuBaba = roadtoswampScene.Maps[0].Actors[14];
             movedForwardDekuBaba.Position.x = 1990;
             movedForwardDekuBaba.Position.z = 2594;
-            movedForwardDekuBaba.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(rotation: 195, flags: roadtoswampScene.Maps[0].Actors[14].Rotation.y);
+            movedForwardDekuBaba.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 195, flags: roadtoswampScene.Maps[0].Actors[14].Rotation.y);
         }
 
         private static void FixSpecificLikeLikeTypes()
@@ -918,7 +918,7 @@ namespace MMR.Randomizer
             // flag 1D, type 7, item 6D (unknown)
             newChestActor.ChangeActor(GameObjects.Actor.TreasureChest, 0x26ED, modifyOld: true);
             newChestActor.Position = new vec16(-230, 0, 1130); // move into the grass area
-            newChestActor.Rotation.y = (short)ActorUtils.MergeRotationAndFlags(90, grottosScene.Maps[6].Actors[7].Rotation.y); // rotate to face the center
+            newChestActor.Rotation.y = ActorUtils.MergeRotationAndFlags(90, grottosScene.Maps[6].Actors[7].Rotation.y); // rotate to face the center
             // turn the other useless mushroom into another buterfly for ambiance
             grottosScene.Maps[6].Actors[8].ChangeActor(GameObjects.Actor.Butterfly, 0x5324, modifyOld: true);
             grottosScene.Maps[6].Actors[8].Position.y = 58; // dont want spawning in the ground, we want flying around
@@ -955,7 +955,6 @@ namespace MMR.Randomizer
             return returnActorTypes;
         }
 
-
         public static void SetupGrottoActor(Actor enemy, int newVariant)
         {
             /// grottos can get their address index from an array, where the index can be their Z rotation
@@ -967,8 +966,8 @@ namespace MMR.Randomizer
             //if ((newVariant & 0x0400) != 0) // grotto that uses rotation to set value
             {
                 int newIndex = newVariant & 0xF; // in vanilla the array is only 15 long
-                enemy.Rotation.x = (short)ActorUtils.MergeRotationAndFlags(rotation: 0, flags: 0x7F);
-                enemy.Rotation.z = (short)ActorUtils.MergeRotationAndFlags(rotation: newIndex, flags: 0x7F);//: enemy.Rotation.z);
+                enemy.Rotation.x = ActorUtils.MergeRotationAndFlags(rotation: 0, flags: 0x7F);
+                enemy.Rotation.z = ActorUtils.MergeRotationAndFlags(rotation: newIndex, flags: 0x7F);//: enemy.Rotation.z);
             }
         }
 
@@ -1027,8 +1026,6 @@ namespace MMR.Randomizer
                 }
             }
         }
-
-        
 
         public static void ShuffleObjects(SceneEnemizerData thisSceneData)
         {
@@ -1240,6 +1237,8 @@ namespace MMR.Randomizer
 
             return enemyMatchesPool;
         }
+
+        #region Trim and Free actors
 
         public static void TrimAllActors(SceneEnemizerData thisSceneData, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList, int freeActorRate)
         {
@@ -1588,6 +1587,8 @@ namespace MMR.Randomizer
                 }
             }
         }
+
+        #region
 
         private static void SplitSceneLikeLikesIntoTwoActorObjects(SceneEnemizerData thisSceneData)
         {

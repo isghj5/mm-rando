@@ -158,14 +158,14 @@ namespace MMR.Randomizer.Utils
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int MergeRotationAndFlags(int rotation, int flags)
+        public static short MergeRotationAndFlags(int rotation, int flags)
         {
             /// in a map's actor list: actors spawn rotation is merged with their flags,
             ///   so that the 7 most right bits are flags
             /// bits: XXXX XXXX XFFF FFFF where X is rotation, F is flags
             /// where rotation is 1 = 1 degree, 360 is 0x168, so it does use all 9 bits
             ///  looks to me like rotation increases in a counter-clockwise direction
-            return ((rotation & 0x1FF) << 7) | (flags & 0x7F);
+            return (short) (((rotation & 0x1FF) << 7) | (flags & 0x7F));
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
