@@ -3,7 +3,7 @@ using MMR.Randomizer.Attributes.Actor;
 
 namespace MMR.Randomizer.GameObjects
 {
-    [System.Diagnostics.DebuggerDisplay("{this.ToString()}")]
+    [System.Diagnostics.DebuggerDisplay("{this}")]
     public enum Actor
     {
         /// the main enumator value is the vanilla actor list ID
@@ -494,10 +494,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1A0)]
         [FileID(86)]
         [ObjectListIndex(0x61)]
-        // bush: 0xFF0B
-        // small tree: 0xFF02
-        // big tree: 0xFF00
-        // tree with shop man in it: 
+        // bush: 0xFF0B, small tree: 0xFF02
+        // big tree: 0xFF00, big tree with shop man in it: 0x0A1A
         [GroundVariants(0xFF0B, 0xFF02, 0xFF00, 0xFF01, 0xFF1A, 0x0A1A)]
         [VariantsWithRoomMax(max: 0, variant: 0xFF0D)]// 0xFF0D crashes TF do not use 0D is from the cucco shack
         [VariantsWithRoomMax(max: 1, variant: 0xA1A)]// has the shop keeper
@@ -633,7 +631,7 @@ namespace MMR.Randomizer.GameObjects
             0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F,
             0xFF3F, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x11F)]
         [EnemizerScenesExcluded(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse)] // dont remove old spiders, the new ones might not be gettable
-        GoldSkullTula = 0x50, // En_Sw "Skullwalltulla"
+        GoldSkulltula = 0x50, // En_Sw "Skullwalltulla"
 
         //[ActorizerEnabled] // wont snow with obj 1 or 0x1D8 might need weathertag
         [ObjectListIndex(1)] // gameplay_keep 1
@@ -1251,6 +1249,7 @@ namespace MMR.Randomizer.GameObjects
         // 0 does nothing just stands there and stares at you
         // 1 is climbing in the tree trying to get rups
         [GroundVariants(0)]
+        [WaterVariants(0)] // more fun
         //[WallVariants(1)] // facing the wrong way and no bonk, so not that interesting
         [VariantsWithRoomMax(max:3, variant:0)]
         [EnemizerScenesPlacementBlock(Scene.RomaniRanch, Scene.Woodfall, Scene.DekuShrine)]
@@ -3341,6 +3340,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15, 0xFC00)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [EnemizerScenesExcluded(Scene.ZoraHall, Scene.ZoraCape)]
+        //[EnemizerScenesExcluded(Scene.ZoraCape)] // TODO
         [UnkillableAllVariants]
         RegularZora = 0x228, // En_Zot
 

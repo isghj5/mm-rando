@@ -179,6 +179,7 @@ namespace MMR.Randomizer.Utils
                 a.OldActorEnum = a.ActorEnum;
                 a.OldName = a.ActorEnum.ToString();
                 a.ObjectID = a.ActorEnum.ObjectIndex();
+                a.OldObjectID = a.ObjectID;
                 //a.ObjectSize = ObjUtils.GetObjSize(a.ObjectIndex());
                 a.Position.x = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 2);
                 a.Position.y = (short)ReadWriteUtils.Arr_ReadU16(Map, Addr + (i * 16) + 4);
@@ -367,6 +368,8 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        #region Night Music
+
         public static void ReenableNightBGMSingle(int SceneFileID, byte NewMusicByte = 0x13)
         {
             // search for the bgm music header in the scene headers and replace the night sfx with a value that plays day BGM
@@ -447,5 +450,7 @@ namespace MMR.Randomizer.Utils
             // null function call to Audio_QueueSeqCmd -> NOP
             ReadWriteUtils.Arr_WriteU32(sakonData, 0x3A0C, 0x00000000);
         }
+
+        #endregion
     }
 }
