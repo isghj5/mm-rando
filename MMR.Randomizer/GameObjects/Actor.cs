@@ -494,10 +494,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1A0)]
         [FileID(86)]
         [ObjectListIndex(0x61)]
-        // bush: 0xFF0B
-        // small tree: 0xFF02
-        // big tree: 0xFF00
-        // tree with shop man in it: 0x0A1A
+        // bush: 0xFF0B, small tree: 0xFF02
+        // big tree: 0xFF00, big tree with shop man in it: 0x0A1A
         [GroundVariants(0xFF0B, 0xFF02, 0xFF00, 0xFF01, 0xFF1A, 0x0A1A)]
         [VariantsWithRoomMax(max: 0, variant: 0xFF0D)]// 0xFF0D crashes TF do not use 0D is from the cucco shack
         [VariantsWithRoomMax(max: 1, variant: 0xA1A)]// has the shop keeper
@@ -3335,6 +3333,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15, 0xFC00)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [EnemizerScenesExcluded(Scene.ZoraHall, Scene.ZoraCape)]
+        //[EnemizerScenesExcluded(Scene.ZoraCape)] // TODO
         [UnkillableAllVariants]
         RegularZora = 0x228, // En_Zot
 
