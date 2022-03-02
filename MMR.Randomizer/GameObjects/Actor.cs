@@ -3,7 +3,7 @@ using MMR.Randomizer.Attributes.Actor;
 
 namespace MMR.Randomizer.GameObjects
 {
-    [System.Diagnostics.DebuggerDisplay("{this.ToString()}")]
+    [System.Diagnostics.DebuggerDisplay("{this}")]
     public enum Actor
     {
         /// the main enumator value is the vanilla actor list ID
@@ -497,7 +497,7 @@ namespace MMR.Randomizer.GameObjects
         // bush: 0xFF0B
         // small tree: 0xFF02
         // big tree: 0xFF00
-        // tree with shop man in it: 
+        // tree with shop man in it: 0x0A1A
         [GroundVariants(0xFF0B, 0xFF02, 0xFF00, 0xFF01, 0xFF1A, 0x0A1A)]
         [VariantsWithRoomMax(max: 0, variant: 0xFF0D)]// 0xFF0D crashes TF do not use 0D is from the cucco shack
         [VariantsWithRoomMax(max: 1, variant: 0xA1A)]// has the shop keeper

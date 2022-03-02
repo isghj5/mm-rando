@@ -191,12 +191,14 @@ namespace MMR.Randomizer.Models.Rom
 
         public void ChangeActor(GameObjects.Actor newActorType, int vars = -1, bool modifyOld = false)
         {
-            /// this is for actor slots, changing the actor for re-writing the slot
+            /// this is used to fix slots for actor/enemizer before randomization
+            ///   ergo: to tweak what we read from the ROM so randomization works how it's intended later
 
             this.ActorEnum   = newActorType;
             this.Name        = newActorType.ToString();
             this.ActorID     = (int)newActorType;
             this.ObjectID    = newActorType.ObjectIndex();
+
             if (vars != -1)
             {
                 Variants[0] = vars;
@@ -204,34 +206,37 @@ namespace MMR.Randomizer.Models.Rom
 
             if (modifyOld)
             {
-                this.OldVariant = vars;
-                this.OldActorEnum = newActorType;
-                this.OldName = newActorType.ToString();
-                this.OldObjectID = this.ObjectID;
+                this.OldVariant     = vars;
+                this.OldActorEnum   = newActorType;
+                this.OldName        = newActorType.ToString();
+                this.OldObjectID    = this.ObjectID;
             }
         }
 
-        public void ChangeActor(Actor otherActor, int vars)
+        public void ChangeActor(Actor otherActor, int vars = -1)
         {
-            /// this is for actor slots, changing the actor for re-writing the slot
+            /// this is used by actor/enemizer during normal randomization
+            ///   ergo: Randomizing one actor into another, and Trimming an actor if too many
 
-            ActorEnum = otherActor.ActorEnum;
-            Name = otherActor.Name;
-            ActorID = otherActor.ActorID;
-            ObjectID = otherActor.ObjectID;
-            InjectedActor = otherActor.InjectedActor;
+            this.ActorEnum      = otherActor.ActorEnum;
+            this.Name           = otherActor.Name;
+            this.ActorID        = otherActor.ActorID;
+            this.ObjectID       = otherActor.ObjectID;
+
             if (vars != -1)
             {
                 Variants[0] = vars;
             }
+
+            this.InjectedActor = otherActor.InjectedActor;
         }
 
         // todo remove oldActorVariant no longer used
-        public List<int> CompatibleVariants(Actor otherActor, int oldActorVariant, Random rng)
+        public List<int> CompatibleVariants(Actor otherActor, Random rng)
         {
-            // with mixed types, typing could be messy, keep it hidden here
-            // EG. like like can spawn on the sand (land), but also on the bottom of GBC (water floor)
-            // so we need to know what type the actor we are replacing is, and check if any otherActor variants can replace it
+            /// with mixed types, typing could be messy, keep it hidden here
+            /// EG. like like can spawn on the sand (land), but also on the bottom of GBC (water floor)
+            /// so we need to know what type the actor we are replacing is, and check if any otherActor variants can replace it
 
             if (this.AllVariants == null || otherActor.AllVariants == null)
             {
@@ -242,33 +247,37 @@ namespace MMR.Randomizer.Models.Rom
 
             var listOfVariantTypes = Enum.GetValues(typeof(ActorType)).Cast<ActorType>().ToList();
             listOfVariantTypes.Remove(ActorType.Unset);
-            listOfVariantTypes = listOfVariantTypes.OrderBy(u => rng.Next()).ToList(); // random sort in case it has multiple types
+            // we randomize the type list because some actors have multiple, if we didnt randomize it would always default to first sequential type
+            listOfVariantTypes = listOfVariantTypes.OrderBy(u => rng.Next()).ToList();
+
+            // TODO attempt to make multiple-type compatible variant list return instead of just one
+
+            // sequentially traverse random types
             foreach (var randomVariantType in listOfVariantTypes)
             {
-                List<int> ourVariants = this.AllVariants[(int)randomVariantType - 1].ToList();
+                // pull the variants for our random type
+                List<int> ourVariants   = this.AllVariants[(int)randomVariantType - 1].ToList();
                 List<int> theirVariants = otherActor.AllVariants[(int)randomVariantType - 1].ToList();
 
                 // large chance of pathing enemies allowing ground or flying replacements
                 if (randomVariantType == ActorType.Pathing
-                    && ourVariants.Contains(oldActorVariant) && theirVariants.Count == 0 && rng.Next(100) < 80)
+                    && ourVariants.Contains(this.OldVariant) && theirVariants.Count == 0 && rng.Next(100) < 80)
                 {
-                    // todo could make this random
-                    theirVariants = otherActor.AllVariants[(int) ActorType.Flying -1];
+                    // TODO could make this random
+                    theirVariants = otherActor.AllVariants[(int) ActorType.Flying - 1];
                     if (theirVariants.Count == 0)
                     {
-                        theirVariants = otherActor.AllVariants[(int) ActorType.Ground -1];
+                        theirVariants = otherActor.AllVariants[(int) ActorType.Ground - 1];
                     }
                 }
 
                 // small chance of ground enemies allowing flying replacements
-                //if (randomVariantType == ActorType.Ground && ourAttr != null && otherAttr == null && rng.Next(100) < 30)
                 if (randomVariantType == ActorType.Ground
-                    && ourVariants.Contains(oldActorVariant) && theirVariants.Count == 0 && rng.Next(100) < 30)
+                    && ourVariants.Contains(this.OldVariant) && theirVariants.Count == 0 && rng.Next(100) < 30)
                 {
-                    theirVariants = otherActor.AllVariants[(int) ActorType.Flying -1];
+                    theirVariants = otherActor.AllVariants[(int) ActorType.Flying - 1];
                 }
 
-                //if ((ourAttr != null && otherAttr != null) // both have same type
                 if (ourVariants.Count > 0 && theirVariants.Count > 0) // both have same type
                 {
                     var compatibleVariants = theirVariants;
@@ -279,21 +288,22 @@ namespace MMR.Randomizer.Models.Rom
                     {
                         compatibleVariants = compatibleVariants.FindAll(u => !zeroPlacementVarieties.Contains(u));
                     }
+
                     // our old actor variant was this type
-                    if (compatibleVariants.Count > 0 && ourVariants.Count > 0
-                        && ourVariants.Contains(this.OldVariant)) // old actor had to actually be this attribute
+                    if (compatibleVariants.Count > 0 && ourVariants.Count > 0 && ourVariants.Contains(this.OldVariant))
                     {
-                        return compatibleVariants;
+                        return compatibleVariants; // return with first compatible variants, not all
                     }
                 }
             }
-            return null;
+
+            return null; // none found
         }
 
         // todo remove this as it should be built at enum->actor time
         public List<int> UnkillableVariants()
         {
-            // todo finish converting this from enum to actor base type
+            // TODO finish converting this from enum to actor base type
 
             var actor = this.ActorEnum;
             if (actor != GameObjects.Actor.NULL)

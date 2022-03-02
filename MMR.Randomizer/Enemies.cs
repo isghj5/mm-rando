@@ -984,46 +984,48 @@ namespace MMR.Randomizer
                 Actor actor = chosenReplacementEnemies[i];
                 var newType = actor.ActorEnum.GetType(actor.Variants[0]);
 
-                if (actor.Type == GameObjects.ActorType.Pathing // set on scene actor load
-                  && newType == GameObjects.ActorType.Pathing)  // pulled from replacement vars
+                if (!(actor.Type == GameObjects.ActorType.Pathing // set on scene actor load
+                  && newType == GameObjects.ActorType.Pathing))  // pulled from replacement vars
                 {
-                    var oldPathBehaviorAttr = actor.OldActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
-                    var newdoldPathBehaviorAttr = actor.ActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
-                    if (oldPathBehaviorAttr == null || newdoldPathBehaviorAttr == null)
-                    {
-                        continue; // this enemy doesn't need it
-                    }
-
-                    // need to get the path value from the old variant
-                    var oldVariant = actor.OldVariant;
-                    var oldPathShifted = (oldVariant & (oldPathBehaviorAttr.Mask)) >> oldPathBehaviorAttr.Shift;
-
-                    // clear the old path from this vars
-                    var newVarsWithoutPath = actor.Variants[0] & ~newdoldPathBehaviorAttr.Mask;
-
-                    // in addition, enemies with kickout addresses need their vars changed too
-                    // ... so it turns out they dont use the same indexing system
-                    // fornow, pass ZERO to both actors (use the main exit)
-                    // it should give us a basic entrance to work with that wont crash anywhere where pathing enemies can exist
-                    var newKickoutAttr = actor.ActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
-                    if (newKickoutAttr != null) // new actor has kick out address, need to read the old one
-                    {
-                        int kickoutMask; // separate for debuging
-                        int kickoutAddr = 0; // safest bet, there should always be at least one exit address per scene
-
-                        // erase the kick location from the old vars
-                        kickoutMask = newKickoutAttr.Mask << newKickoutAttr.Shift;
-                        newVarsWithoutPath &= ~(kickoutMask);
-                        // replace with new address
-                        newVarsWithoutPath |= (kickoutAddr << newKickoutAttr.Shift);
-                    }
-
-                    // shift the path into the new location
-                    var newPath = oldPathShifted << newdoldPathBehaviorAttr.Shift;
-
-                    // set variant from cleaned old variant ored against the new path
-                    actor.Variants[0] = newVarsWithoutPath | newPath;
+                    continue; // not pathing situation, do not update pathing values
                 }
+
+                var oldPathBehaviorAttr = actor.OldActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
+                var newdoldPathBehaviorAttr = actor.ActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
+                if (oldPathBehaviorAttr == null || newdoldPathBehaviorAttr == null)
+                {
+                    continue; // this actor doesn't need it
+                }
+
+                // need to get the path value from the old variant
+                var oldVariant = actor.OldVariant;
+                var oldPathShifted = (oldVariant & (oldPathBehaviorAttr.Mask)) >> oldPathBehaviorAttr.Shift;
+
+                // clear the old path from this vars
+                var newVarsWithoutPath = actor.Variants[0] & ~newdoldPathBehaviorAttr.Mask;
+
+                // in addition, enemies with kickout addresses need their vars changed too
+                // ... so it turns out they dont use the same indexing system
+                // fornow, pass ZERO to both actors (use the main exit)
+                // it should give us a basic entrance to work with that wont crash anywhere where pathing enemies can exist
+                var newKickoutAttr = actor.ActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
+                if (newKickoutAttr != null) // new actor has kick out address, need to read the old one
+                {
+                    int kickoutMask; // separate for debuging
+                    int kickoutAddr = 0; // safest bet, there should always be at least one exit address per scene
+
+                    // erase the kick location from the old vars
+                    kickoutMask = newKickoutAttr.Mask << newKickoutAttr.Shift;
+                    newVarsWithoutPath &= ~(kickoutMask);
+                    // replace with new address
+                    newVarsWithoutPath |= (kickoutAddr << newKickoutAttr.Shift);
+                }
+
+                // shift the path into the new location
+                var newPath = oldPathShifted << newdoldPathBehaviorAttr.Shift;
+
+                // set variant from cleaned old variant ored against the new path
+                actor.Variants[0] = newVarsWithoutPath | newPath;
             }
         }
 
@@ -1057,9 +1059,9 @@ namespace MMR.Randomizer
                     }
                     return false;
                 }
-                if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.BadBat, GameObjects.Actor.Cow)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.BadBat, GameObjects.Actor.Cow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
@@ -1167,7 +1169,6 @@ namespace MMR.Randomizer
             }
         }
 
-        // TODO clean up
         public static List<Actor> GetMatchPool(SceneEnemizerData thisSceneData, bool containsFairyDroppingEnemy)
         {
             var reducedCandidateList = Actor.CopyActorList(thisSceneData.appectableCandidates);
@@ -1178,42 +1179,43 @@ namespace MMR.Randomizer
             //  eg: one of the dragonflies in woodfall must be killable in the map room, so all in the dungeon must since we cannot isolate
             bool MustBeKillable = oldActors.Any(u => u.MustNotRespawn);
 
-            // moved up higher, because we can scan once per scene
-            if (containsFairyDroppingEnemy) // scene.SceneEnum.GetSceneFairyDroppingEnemies().Contains((GameObjects.Actor) oldActors[0].Actor))
+            if (containsFairyDroppingEnemy)
             {
+                MustBeKillable = true; // we dont want respawning or unkillable enemies here
                 /// special case: armos does not drop stray fairies, and I dont know why
                 ReplacementListRemove(reducedCandidateList, GameObjects.Actor.Armos);
-                MustBeKillable = true; // we dont want respawning or unkillable enemies here either
             }
 
-            // this could be per-enemy, but right now its only used where enemies and objects match, so to save cpu cycles do it once per object not per enemy
-            foreach (var enemy in thisSceneData.scene.SceneEnum.GetBlockedReplacementActors((GameObjects.Actor)oldActors[0].ActorID))
+            // this could be per-enemy, but right now its only used where enemies and objects match,
+            // so to save cpu cycles do it once per object not per enemy
+            //foreach (var enemy in thisSceneData.scene.SceneEnum.GetBlockedReplacementActors((GameObjects.Actor)oldActors[0].ActorID))
+            foreach (var enemy in thisSceneData.scene.SceneEnum.GetBlockedReplacementActors(oldActors[0].OldActorEnum))
             {
                 ReplacementListRemove(reducedCandidateList, enemy);
             }
 
-
             // todo does this NEED to be a double loop? does anything change per enemy copy that we should worry about?
-            foreach (var oldEnemy in oldActors) // this is all copies of an enemy in a scene, so all bo or all guay
+            for (var oldActorIndex = 0; oldActorIndex < oldActors.Count; oldActorIndex++) // this is all copies of an enemy in a scene, so all bo or all guay
             {
+                var oldActor = oldActors[oldActorIndex];
+
                 // the enemy we got from the scene has the specific variant number, the general game object has all
                 foreach (var candidateEnemy in reducedCandidateList)
                 {
-                    var enemy = candidateEnemy.ActorEnum;
-                    var compatibleVariants = oldEnemy.CompatibleVariants(candidateEnemy, oldEnemy.OldVariant, thisSceneData.rng);
-                    if (compatibleVariants == null || compatibleVariants.Count == 0)
-                    {
-                        continue;
-                    }
+                    //var enemy = candidateEnemy.ActorEnum;
+                    var compatibleVariants = oldActor.CompatibleVariants(candidateEnemy, thisSceneData.rng);
 
-                    // TODO here would be a great place to test if the requirements to kill an enemy are met with given items
+                    if (compatibleVariants == null || compatibleVariants.Count == 0) continue;
 
+                    // if current test actor not already in the new pool
+                    //   TODO why would we get duplicates this late? shouldnt the candidates be unique list?
                     if (!enemyMatchesPool.Any(u => u.ActorID == candidateEnemy.ActorID))
                     {
                         var newEnemy = candidateEnemy.CopyActor();
+
+                        // reduce varieties to meet killable requirements
                         if (MustBeKillable)
                         {
-                            //newEnemy.Variants = enemy.KillableVariants(compatibleVariants); // reduce to available
                             newEnemy.Variants = candidateEnemy.KillableVariants(compatibleVariants); // reduce to available
                             if (newEnemy.Variants.Count == 0)
                             {
@@ -1224,13 +1226,8 @@ namespace MMR.Randomizer
                         {
                             newEnemy.Variants = compatibleVariants;
                         }
+
                         enemyMatchesPool.Add(newEnemy);
-
-                        if (newEnemy.Variants.Count == 0)
-                        {
-                            throw new Exception("WTF3"); // weird debug
-                        }
-
                     }
                 } // for each candidate end
             } // for each slot end
@@ -1429,7 +1426,7 @@ namespace MMR.Randomizer
             return sceneFreeActors.Union(roomFreeActors).Union(freeOnlyActors).ToList();
         }
 
-        public static void EmptyOrFreeActor(Actor targetActor, Random rng, List<Actor> currentRoomActorList,
+        public static void EmptyOrFreeActor(Actor oldActor, Random rng, List<Actor> currentRoomActorList,
                                             List<Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false, int randomRate = 0x50)
         {
             /// returns an actor that is either an empty actor or a free actor that can be placed here beacuse it doesn't require a new unique object
@@ -1441,25 +1438,22 @@ namespace MMR.Randomizer
                 int randomStart = rng.Next(acceptableFreeActors.Count);
                 for (int matchAttempt = 0; matchAttempt < acceptableFreeActors.Count; ++matchAttempt)
                 {
-                    // check the old enemy for available co-actors,
-                    // remove if those already exist in the list at max size
+                    /// check the old enemy for available co-actors,
+                    /// remove if those already exist in the list at max size
 
                     int listIndex = (randomStart + matchAttempt) % acceptableFreeActors.Count;
                     var testEnemy = acceptableFreeActors[listIndex];
-                    var testEnemyCompatibleVariants = targetActor.CompatibleVariants(testEnemy, targetActor.OldVariant, rng);
-                    if (testEnemyCompatibleVariants == null)
-                    {
-                        continue;  // no type compatibility, skip
-                    }
+
+                    var testEnemyCompatibleVariants = oldActor.CompatibleVariants(testEnemy, rng);
+                    if (testEnemyCompatibleVariants == null) continue;  // no type compatibility, skip
+
                     var respawningVariants = testEnemy.RespawningVariants;
-                    if ((targetActor.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
+                    if ((oldActor.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
                     {
                         testEnemyCompatibleVariants.RemoveAll(u => respawningVariants.Contains(u));
                     }
-                    if (testEnemyCompatibleVariants.Count == 0)
-                    {
-                        continue;  // cannot use respawning enemies here, skip
-                    }
+
+                    if (testEnemyCompatibleVariants.Count == 0) continue;  // cannot use respawning enemies here, skip
 
                     var enemyHasMaximums = testEnemy.HasVariantsWithRoomLimits();
                     var acceptableVariants = new List<int>();
@@ -1496,19 +1490,19 @@ namespace MMR.Randomizer
                         int randomVariant = acceptableVariants[rng.Next(acceptableVariants.Count)];
                         if (testEnemy.ActorEnum == GameObjects.Actor.GrottoHole)
                         {
-                            SetupGrottoActor(targetActor, randomVariant);
+                            SetupGrottoActor(oldActor, randomVariant);
                         }
                         else
                         {
-                            targetActor.ChangeActor(testEnemy, vars: randomVariant);
+                            oldActor.ChangeActor(testEnemy, vars: randomVariant);
                         }
                         return;
                     }
                 }
             }
-            //else: empty actor
+            //else (and fallthrough): empty actor 
 
-            targetActor.ChangeActor(GameObjects.Actor.Empty, vars: 0);
+            oldActor.ChangeActor(GameObjects.Actor.Empty);
         }
 
         public static void AddCompanionsToCandidates(SceneEnemizerData thisSceneData, int objectIndex, List<Actor> candidates)
@@ -1588,7 +1582,7 @@ namespace MMR.Randomizer
             }
         }
 
-        #region
+        #endregion
 
         private static void SplitSceneLikeLikesIntoTwoActorObjects(SceneEnemizerData thisSceneData)
         {
@@ -1690,7 +1684,6 @@ namespace MMR.Randomizer
                 );
             }
         }
-
 
         public class SceneEnemizerData
         {
