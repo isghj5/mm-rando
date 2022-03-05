@@ -1885,9 +1885,9 @@ namespace MMR.UI.Forms
                     using (StreamReader Req = new StreamReader(File.OpenRead(logicFilePath)))
                     {
                         _configuration.GameplaySettings.Logic = Req.ReadToEnd();
-                        if (_configuration.GameplaySettings.Logic.StartsWith("{"))
+                        var logicConfiguration = Configuration.FromJson(_configuration.GameplaySettings.Logic);
+                        if (logicConfiguration.GameplaySettings != null)
                         {
-                            var logicConfiguration = Configuration.FromJson(_configuration.GameplaySettings.Logic);
                             _configuration.GameplaySettings.Logic = logicConfiguration.GameplaySettings.Logic;
                         }
                     }
