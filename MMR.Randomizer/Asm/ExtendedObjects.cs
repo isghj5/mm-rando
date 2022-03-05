@@ -72,6 +72,12 @@ namespace MMR.Randomizer.Asm
                 return (Indexes.Milk.Value, 0x32);
             }
 
+            // set DrawItem function for Spin Attack
+            if (entry.ItemGained == 0xA6 && entry.Object == 0x148)
+            {
+                return (0x148, 0x4B);
+            }
+
             return null;
 
             // TODO: Move behavior for resolving others into here.
@@ -144,6 +150,9 @@ namespace MMR.Randomizer.Asm
             // Add Milk
             this.Offsets.Add(AddMilk());
             this.Indexes.Milk = AdvanceIndex();
+
+            // Include Spin Attack Energy model into Kokiri Sword
+            ObjUtils.InsertObj(Resources.models.gi_spinattack, 0x148);
 
             // Add Skulltula Tokens
             if (skulltulas)
