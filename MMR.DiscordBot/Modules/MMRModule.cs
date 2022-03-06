@@ -10,7 +10,6 @@ using System.Collections.Generic;
 namespace MMR.DiscordBot.Modules
 {
     [Group("mmr")]
-    [RequireOwner]
     public class MMRModule : BaseMMRModule
     {
         public MMRModule(MMRService mmrService) : base(mmrService)

@@ -58,6 +58,7 @@ namespace MMR.DiscordBot.Modules
                 else
                 {
                     commands.Add("seed (<settingName>)?", "Generate a seed. Optionally provide a setting name.");
+                    commands.Add("mystery <categoryName>", "Generate a seed using a random setting from the <categoryName> mystery category.");
                 }
                 commands.Add("spoiler", "Retrieve the spoiler log for your last generated seed.");
             }
@@ -73,6 +74,14 @@ namespace MMR.DiscordBot.Modules
                 }
                 commands.Add("list-settings", "List the names of available settings.");
                 commands.Add("get-settings <settingName>", "Get a setting file.");
+
+                if (socketGuildUser.Roles.Any(sr => allowedRoleIds.Contains(sr.Id)))
+                {
+                    commands.Add("add-mystery <categoryName>", "Upload a settings file and add it to the <categoryName> category.");
+                    commands.Add("remove-mystery <categoryName> <settingName>", "Remove <settingName> from the <categoryName> mystery category.");
+                }
+                commands.Add("list-mystery (<categoryName>)?", "List the names of available mystery categories, or list the settings within a mystery category.");
+                commands.Add("get-mystery <categoryName> <settingName>", "Get the <settingName> setting from the <categoryName> mystery category.");
             }
 
             AddHelp(commands);

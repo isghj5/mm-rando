@@ -6,7 +6,6 @@ namespace MMR.DiscordBot.Modules
 {
     [Group("mmrbeta")]
     [MMRReady(typeof(MMRBetaService))]
-    [RequireOwner]
     public class MMRBetaModule : BaseMMRModule
     {
         public MMRBetaModule(MMRBetaService mmrService) : base(mmrService)
