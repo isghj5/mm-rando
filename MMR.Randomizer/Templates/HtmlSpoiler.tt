@@ -212,7 +212,7 @@
     function loadItems() {
         var saveInput = document.querySelector("#spoilerLogState");
         var segments = saveInput.value.split("-");
-        if (Math.ceil((logic.length - 1) / segmentSize) !== segments.length) {
+        if (Math.ceil(logic.length / segmentSize) !== segments.length) {
             alert("Invalid Spoiler Log state");
             return;
         }
@@ -253,9 +253,9 @@
         for (var i = 0; i < locations.length; i++) {
             var location = logic[locations[i]];
             location.IsAvailable = 
-                (location.RequiredItemIds === null || location.RequiredItemIds.length === 0 || all(location.RequiredItemIds, function(id) { return logic[id].Acquired; }))
+                (location.RequiredItemIds === null || location.RequiredItemIds.length === 0 || all(location.RequiredItemIds, function(id) { return logic[id].Acquired || logic[id].IsItemRemoved; }))
                 && 
-                (location.ConditionalItemIds === null || location.ConditionalItemIds.length === 0 || any(location.ConditionalItemIds, function(conditionals) { return all(conditionals, function(id) { return logic[id].Acquired; }); }));
+                (location.ConditionalItemIds === null || location.ConditionalItemIds.length === 0 || any(location.ConditionalItemIds, function(conditionals) { return all(conditionals, function(id) { return logic[id].Acquired || logic[id].IsItemRemoved; }); }));
             
             var newLocation = find(logic, function(io) { return io.NewLocationId === locations[i]; });
             if (!newLocation) {

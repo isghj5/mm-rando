@@ -1592,8 +1592,8 @@ namespace MMR.UI.Forms
             cHTMLLog.Enabled = !vanillaMode;
             cGossipHints.Enabled = !vanillaMode;
             cStartingItems.Enabled = !vanillaMode;
-            tJunkLocationsList.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
-            bJunkLocationsEditor.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
+            tJunkLocationsList.Enabled = !vanillaMode;
+            bJunkLocationsEditor.Enabled = !vanillaMode;
             bToggleTricks.Enabled = !vanillaMode && _configuration.GameplaySettings.LogicMode != LogicMode.NoLogic;
             cIceTraps.Enabled = !vanillaMode;
             cIceTrapsAppearance.Enabled = !vanillaMode;
@@ -1885,9 +1885,9 @@ namespace MMR.UI.Forms
                     using (StreamReader Req = new StreamReader(File.OpenRead(logicFilePath)))
                     {
                         _configuration.GameplaySettings.Logic = Req.ReadToEnd();
-                        if (_configuration.GameplaySettings.Logic.StartsWith("{"))
+                        var logicConfiguration = Configuration.FromJson(_configuration.GameplaySettings.Logic);
+                        if (logicConfiguration.GameplaySettings != null)
                         {
-                            var logicConfiguration = Configuration.FromJson(_configuration.GameplaySettings.Logic);
                             _configuration.GameplaySettings.Logic = logicConfiguration.GameplaySettings.Logic;
                         }
                     }

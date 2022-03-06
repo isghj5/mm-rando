@@ -98,21 +98,21 @@ Player_ShouldPreventRestoringSwimState_Hook:
     addiu   sp, sp, 0x20
 
 DekuHop_GetSpeedModifier_Hook:
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
 
     jal     DekuHop_GetSpeedModifier
     nop
 
     mov.s   f4, f0
 
-    lw      ra, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
     jr      ra
-    addiu   sp, sp, 0x14
+    addiu   sp, sp, 0x18
 
 Player_GetCollisionType_Hook:
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
 
     jal     Player_GetCollisionType
     nop
@@ -121,6 +121,6 @@ Player_GetCollisionType_Hook:
     or      t0, r0, r0
     andi    t1, v0, 0x0008
 
-    lw      ra, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
     jr      ra
-    addiu   sp, sp, 0x14
+    addiu   sp, sp, 0x18

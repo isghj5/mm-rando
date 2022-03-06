@@ -1,4 +1,5 @@
-﻿using MMR.Randomizer.Models.Rom;
+﻿using MMR.Common.Extensions;
+using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Utils;
 using System;
 using System.Linq;
@@ -20,24 +21,6 @@ namespace MMR.Randomizer.Models.SoundEffects
         }
 
         /// <summary>
-        /// <para>Checks if current soundeffect has been tagged with Tag.Replacable</para> 
-        /// 
-        /// </summary>
-        public static bool IsReplacable(this SoundEffect sound)
-        {
-            return sound.GetAttribute<ReplacableAttribute>() != null || sound.GetAttribute<ReplacableInMessageAttribute>() != null;
-        }
-
-        /// <summary>
-        /// <para>Checks if current soundeffect has ReplacableInMessage Attribute</para> 
-        /// 
-        /// </summary>
-        public static bool IsReplacableInMessage(this SoundEffect sound)
-        {
-            return sound.GetAttribute<ReplacableInMessageAttribute>() != null;
-        }
-
-        /// <summary>
         /// Checks if current sound is tagged with provided tag
         /// </summary>
         /// <returns></returns>
@@ -52,23 +35,24 @@ namespace MMR.Randomizer.Models.SoundEffects
         /// <returns></returns>
         public static SoundEffectTag[] ReplacableByTags(this SoundEffect sound)
         {
-            var tags = sound.GetAttribute<ReplacableByTagsAttribute>()?.Tags?.ToArray();
-            return tags ?? Enum.GetValues(typeof(SoundEffectTag)).Cast<SoundEffectTag>().ToArray();
+            return sound.GetAttribute<ReplacableByTagsAttribute>()?.Tags?.ToArray()
+                ?? sound.GetAttribute<TagsAttribute>()?.Tags?.ToArray()
+                ?? Enum.GetValues(typeof(SoundEffectTag)).Cast<SoundEffectTag>().ToArray();
         }
 
         /// <summary>
         /// <para>Replaces current sound effect with a new one</para>
-        /// 
-        /// Throws InvalidOperationException if current sound cannot be replaced
         /// </summary>
-        public static void ReplaceWith(this SoundEffect source, SoundEffect newSound)
+        /// <returns>True if the sound was replaced, false otherwise.</returns>
+        public static bool TryReplaceWith(this SoundEffect source, SoundEffect newSound)
         {
-            if (!source.IsReplacable())
+            var replacableAttribute = source.GetAttribute<ReplacableAttribute>();
+
+            if (replacableAttribute == null)
             {
-                throw new Exception($"Sound effect {source} is not replacable!");
+                return false;
             }
 
-            var replacableAttribute = source.GetAttribute<ReplacableAttribute>();
             var addresses = replacableAttribute.Addresses;
 
             var newValue = (ushort)newSound;
@@ -87,45 +71,8 @@ namespace MMR.Randomizer.Models.SoundEffects
             {
                 ReadWriteUtils.WriteToROM(address, newValue);
             }
-        }
 
-        /// <summary>
-        /// <para>Replaces current sound effect in a message with a new one</para>
-        /// 
-        /// Throws InvalidOperationException if current sound cannot be replaced
-        /// </summary>
-        public static void ReplaceInMessageWith(this SoundEffect source, SoundEffect newSound, MessageTable messageTable)
-        {
-            if (!source.IsReplacableInMessage())
-            {
-                throw new Exception($"Sound effect {source} is not replacable!");
-            }
-
-            var replacableAttribute = source.GetAttribute<ReplacableInMessageAttribute>();
-
-            foreach (var messageId in replacableAttribute.MessageIds)
-            {
-                var message = messageTable.GetMessage(messageId);
-
-                var oldSoundId = replacableAttribute.SoundId;
-                var oldSoundEffect = (ushort)(oldSoundId & 0x0E00);
-                var oldSoundBytes = new string(new char[] { Convert.ToChar((oldSoundId & 0xFF00) >> 8), Convert.ToChar(oldSoundId & 0xFF) });
-                var oldSoundLocation = message.Message.IndexOf(oldSoundBytes);
-
-                if (oldSoundLocation < 0)
-                {
-                    throw new Exception($"Sound effect {source} has invalid sound replacement setup!");
-                }
-
-                var newSoundId = (uint)newSound;
-                var newSoundBytes = new string(new char[] {
-                    Convert.ToChar(((newSoundId | oldSoundEffect) & 0xFF00) >> 8),
-                    Convert.ToChar(newSoundId & 0xFF)
-                });
-
-                var newMessage = message.Message.Replace(oldSoundBytes, newSoundBytes);
-                message.Message = newMessage;
-            }
+            return true;
         }
     }
 }

@@ -719,7 +719,6 @@ namespace MMR.Randomizer.Models.SoundEffects
         [ReplacableByTags(Short)]
         TatlEnemyAlert = 0x6043,
 
-        [ReplacableInMessage(0x6845, 4650, 5218, 6144, 6145, 6146, 6147, 6148, 6149, 6150, 6164, 6166, 6176, 6280, 6281, 6286, 8400, 10479, 10480, 10606, 10609, 10611)]
         [Tags(Short, LowHpBeep)]
         [ReplacableByTags(Short)]
         TatlMessage = 0x6045,
@@ -977,7 +976,6 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Long)]
         MayorSlowHmmm = 0x6158,
 
-        [ReplacableInMessage(0x6959, 10540, 10541, 10543, 10547, 10573, 10574)]
         [Tags(Long, LowHpBeep)]
         [ReplacableByTags(Long)]
         GuruGuruLalala = 0x6159,
@@ -1007,7 +1005,6 @@ namespace MMR.Randomizer.Models.SoundEffects
         [Tags(Short, LowHpBeep)]
         ViscenAhQuestion = 0x616E, // the guard in the meeting "have you not noticed the giant moon???"
 
-        [ReplacableInMessage(0x696F, 10100, 10101, 10107, 10111, 10114, 10123, 10141, 10149, 10155, 10427, 10429, 10431, 10589)]
         [Tags(Short, LowHpBeep)]
         [ReplacableByTags(Short)]
         PostmanGreetingYah = 0x616F,

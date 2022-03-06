@@ -122,6 +122,7 @@ void Savedata_AfterLoad(GlobalContext* ctxt, Camera* camera, SaveContext* file, 
     u32 offset = SaveFile_GetFlashSectionOffset(owlSave);
     const u8* src = buffer + offset;
     SaveFile_Read(src);
+    file->perm.unk24.magicLevel = 0;
     file->extra.magicMeterSize = 0;
     file->extra.magicAmountTarget = 0;
     if (!owlSave) {

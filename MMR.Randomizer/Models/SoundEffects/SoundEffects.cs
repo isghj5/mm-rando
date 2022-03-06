@@ -16,11 +16,6 @@ namespace MMR.Randomizer.Models.SoundEffects
                .ToList();
         }
 
-        public static List<SoundEffect> Replacable()
-        {
-            return All().Where(sound => sound.IsReplacable()).ToList();
-        }
-
         /// <summary>
         /// Filter sounds by any number of tags
         /// </summary>

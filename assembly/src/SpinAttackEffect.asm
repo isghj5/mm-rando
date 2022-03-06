@@ -1,12 +1,12 @@
 SpinAttack_ShouldSpinMainRun_Hook:
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
-    sw      a1, 0x0018 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a1, 0x001C (sp)
 
     jal     SpinAttack_ShouldSpinMainRun
     nop
 
-    lw     a1, 0x0018 (sp)
+    lw     a1, 0x001C (sp)
 
     ; Displaced code:
     lw      t7, 0x1CCC (a1)
@@ -14,6 +14,6 @@ SpinAttack_ShouldSpinMainRun_Hook:
     addiu   a1, r0, 0x0000
 
 @@caller_return:
-    lw      ra, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
     jr      ra
-    addiu   sp, sp, 0x14
+    addiu   sp, sp, 0x18

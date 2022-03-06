@@ -33,9 +33,13 @@ namespace MMR.Randomizer.Utils
                 {
                     var logic = Req.ReadToEnd();
 
-                    return LogicFile.FromJson(logic);
+                    var logicConfiguration = Configuration.FromJson(logic);
+                    if (logicConfiguration.GameplaySettings != null)
+                    {
+                        logic = logicConfiguration.GameplaySettings.Logic;
+                    }
 
-                    // TODO handle logic within settings file
+                    return LogicFile.FromJson(logic);
                 }
             }
 

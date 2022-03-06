@@ -193,7 +193,7 @@ namespace MMR.Randomizer.Models.Settings
             "Lensless Walking",
             "Lensless Walls/Ceilings",
             "Pinnacle Rock without Seahorse",
-            "Poisoned Water as Zora",
+            "Run Through Poisoned Water",
             "Quest Item Extra Storage",
             "Scarecrow's Song",
             "Take Damage",

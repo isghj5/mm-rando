@@ -281,8 +281,8 @@ Models_DrawItem00_Hook:
     addiu   sp, sp, 0x20
 
 Models_Item00_SetActorSize_Hook:
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
 
     jal     Models_Item00_SetActorSize
     nop
@@ -302,9 +302,9 @@ Models_Item00_SetActorSize_Hook:
     lw      t7, 0xBDF4 (at)
 
 @@caller_return:
-    lw      ra, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
     jr      ra
-    addiu   sp, sp, 0x14
+    addiu   sp, sp, 0x18
 
 Models_DrawScopecoin_Hook:
     addiu   sp, sp, -0x20
@@ -339,15 +339,15 @@ Models_DrawScRuppe_Hook:
 Models_RotateScRuppe_Hook:
     or      a0, s0, r0
     lw      a1, 0x001C (sp)
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
 
     jal     Models_RotateScRuppe
     nop
 
-    lw      ra, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
     jr      ra
-    addiu   sp, sp, 0x14
+    addiu   sp, sp, 0x18
 
 Models_DrawDekuScrubPlaygroundRupee_Hook:
     addiu   sp, sp, -0x20
