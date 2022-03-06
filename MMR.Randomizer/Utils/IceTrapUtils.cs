@@ -25,8 +25,7 @@ namespace MMR.Randomizer.Utils
                 && x.NewLocation != null
                 && ItemUtils.IsJunk(x.Item)
                 && !x.Item.IsFake()
-                && !ItemUtils.IsStartingLocation(x.NewLocation.Value)
-                && (x.Item == GameObjects.Item.RecoveryHeart || !x.Item.Name().Contains("Heart"));
+                && !ItemUtils.IsStartingLocation(x.NewLocation.Value);
             }).ToArray();
         }
 
