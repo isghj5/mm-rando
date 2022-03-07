@@ -222,7 +222,6 @@ namespace MMR.Randomizer
 
         #endregion
 
-        #region Static Enemizer Changes and Fixes
 
         private static void EnemizerEarlyFixes()
         {
@@ -246,22 +245,20 @@ namespace MMR.Randomizer
             FixSilverIshi();
             FixBabaAndDragonflyShadows();
             AddGrottoVariety();
+            FixCuccoChicks();
+            FixWoodfallTempleGekkoMiniboss();
 
             Shinanigans();
         }
 
         public static void EnemizerLateFixes()
         {
-            // changes after randomization
+            // changes after randomization, actors objects already written
             FixDekuPalaceReceptionGuards();
 
-            // stop chicks from despawning
-            var cuccoChickFID = GameObjects.Actor.CuccoChick.FileListIndex();
-            RomUtils.CheckCompressed(cuccoChickFID);
-            var cuccoChickData =  RomData.MMFileList[cuccoChickFID].Data;
-            // we need to branch past both the mark for death and the return (return before actor_update will just break the whole actor)
-            ReadWriteUtils.Arr_WriteU32(cuccoChickData, 0x30, 0x10000005); // BGEZ -> B
         }
+
+        #region Static Enemizer Changes and Fixes
 
         public static void FixSpawnLocations()
         {
@@ -744,6 +741,16 @@ namespace MMR.Randomizer
             //var map = tfScene.Maps[0];
         }
 
+        public static void FixCuccoChicks()
+        {
+            // stop chicks from despawning if there is no object_niw (adult cucco) object
+            var cuccoChickFID = GameObjects.Actor.CuccoChick.FileListIndex();
+            RomUtils.CheckCompressed(cuccoChickFID);
+            var cuccoChickData = RomData.MMFileList[cuccoChickFID].Data;
+            // we need to branch past both the mark for death and the return (return before actor_update will just break the whole actor)
+            ReadWriteUtils.Arr_WriteU32(cuccoChickData, 0x30, 0x10000005); // BGEZ -> B (branch always)
+        }
+
         private static void FixDekuPalaceReceptionGuards()
         {
             /// if we randomize the patrolling guards in deku palace:
@@ -766,6 +773,22 @@ namespace MMR.Randomizer
                 var dekuPalaceRoom1File = RomData.MMFileList[dekuPalaceRoom1FID].Data;
                 ReadWriteUtils.Arr_WriteU16(dekuPalaceRoom1File, Dest: 0x4E, (ushort)frontGuardOID);
             }
+        }
+
+        public static void FixWoodfallTempleGekkoMiniboss()
+        {
+            /// we cannot randomize the snapper in woodfall temple without breaking the gekko miniboss
+            /// beacuse he spawns a special snapper in this fight and he will de-spawn if he detects the object is missing
+            /// add a second snapper object to the room so there is still one there
+
+            var woodfallScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
+            var gekkoRoom = woodfallScene.Maps[8];
+            // we cannot remove the woodflower object used by the giant flower, it breaks the door, so probably used by the door for textures
+            gekkoRoom.Objects[2] = 0x1A6; // previously: boss blue warp, now snapper
+            // since we're changing objects and that will reload the whole list both ways anyway, might as well shrink it to reduce chances of overflow
+            gekkoRoom.Objects[14] = SMALLEST_OBJ; // previously: bo
+            gekkoRoom.Objects[15] = SMALLEST_OBJ; // previously: dragonfly
+            gekkoRoom.Objects[16] = SMALLEST_OBJ; // previously: skulltula
         }
 
         private static void AllowGuruGuruOutside()
@@ -1840,7 +1863,7 @@ namespace MMR.Randomizer
                             WriteOutput("  Enemytype candidate: " + match.Name + " with vars: " + match.Variants[0].ToString("X2"));
                         }
                     }
-                    thisSceneData.ActorCollection.PrintCombineRatioNewOldz(thisSceneData.Log);
+                    thisSceneData.ActorCollection.PrintAllMapRamObjectOutput(thisSceneData.Log);
                     FlushLog();
                     throw new Exception(error);
                 }
@@ -1913,7 +1936,7 @@ namespace MMR.Randomizer
 
                     thisSceneData.Log.Append(objectReplacementLog);
                     thisSceneData.Log.Append(bogoLog);
-                    thisSceneData.ActorCollection.PrintCombineRatioNewOldz(thisSceneData.Log);
+                    thisSceneData.ActorCollection.PrintAllMapRamObjectOutput(thisSceneData.Log);
                     break; // done, break loop
                 }
                 // else: not small enough; reset loop and try again
@@ -2473,6 +2496,7 @@ namespace MMR.Randomizer
         // sum of all enemy instances struct ram requirements
         public int ActorInstanceSum;
         // sum of object size
+        public List<int> ObjectList;
         public int ObjectRamSize;
         public int[] objectSizes; //debug
         // list of enemies that were used to make this
@@ -2486,33 +2510,38 @@ namespace MMR.Randomizer
             ActorInstanceSum = actorList.Select(u => u.ActorID)
                                         .Select(x => ActorUtils.GetOvlInstanceRamSize(x, Enemies.InjectedActors)).Sum();
             // untested for accuracy, actors without correct objects might be inccorectly sized
-            objectSizes = objList.Select(x => ObjUtils.GetObjSize(x)).ToArray();
+            this.ObjectList = objList;
+            this.objectSizes = objList.Select(x => ObjUtils.GetObjSize(x)).ToArray();
             //this.ObjectRamSize = objList.Select(x => ObjUtils.GetObjSize(x)).Sum();
             this.ObjectRamSize = objectSizes.Sum();
 
-
-            CalculateDefaultObjectUse(s);
+            this.CalculateDefaultObjectUse(s);
         }
 
         public void CalculateDefaultObjectUse(Scene s)
         {
             // now that we know the hard object bank limits, we need ALL data
             // in addition to the scene objects, we need the objects that are always loaded
+            this.ObjectList.Append(1);
             this.ObjectRamSize += 0x925E0; // gameplay_keep
+            this.ObjectList.Append(0x11);
             this.ObjectRamSize += 0x1E250; // the biggest link form object (child)
             // scenes can have special scene objects, which arent included in actor objects
             if (s.SpecialObject == Scene.SceneSpecialObject.FieldKeep)
             {
                 this.ObjectRamSize += 0x9290; // field keep object
+                this.ObjectList.Append(0x2);
                 /// I still dont know why epona sometimes spawns before the objects from scene are loaded, assumption its field
                 if (s.SceneEnum != GameObjects.Scene.IkanaCanyon)
                 {
                     this.ObjectRamSize += 0xE4F0; // epona
+                    this.ObjectList.Append(0x7D);
                 }
             }
             else if (s.SpecialObject == Scene.SceneSpecialObject.DungeonKeep)
             {
                 this.ObjectRamSize += 0x23280;
+                this.ObjectList.Append(0x3);
             }
         }
 
@@ -2620,7 +2649,6 @@ namespace MMR.Randomizer
         {
             var dayOvlDiff  = oldCollection.OverlayRamSize   - newCollection.OverlayRamSize;
             var dayInstDiff = oldCollection.ActorInstanceSum - newCollection.ActorInstanceSum;
-            //var dayObjDiff  = oldCollection.ObjectRamSize    - newCollection.ObjectRamSize;
 
             // if the new size is smaller than the old size we should be dandy, if not...
             if (dayOvlDiff + dayInstDiff <= -0x100)
@@ -2631,7 +2659,7 @@ namespace MMR.Randomizer
                     return false;
                 }
                 // I can't rule out halucination scrubs are or are not the issue, their skeleton->action is broken, that sounds like corrupted heap
-                if (scene.SceneEnum == GameObjects.Scene.DekuPalace && newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x22000) // need to find new safe values
+                if (scene.SceneEnum == GameObjects.Scene.DekuPalace && (newCollection.OverlayRamSize + newCollection.ActorInstanceSum > 0x22000)) // need to find new safe values
                 {
                     return false;
                 }
@@ -2640,30 +2668,37 @@ namespace MMR.Randomizer
             return true;
         }
 
-        public bool isObjectSizeAcceptable()
+        public bool isObjectSizeAcceptable(List<int> objects = null)
         {
-            // separated so I can call it twice to avoid extra work if its obviously too big too early
+            /// checks if the object load of the current object list will blow out the object space
 
             for (int map = 0; map < oldMapList.Count; ++map)
             {
-                if (newMapList[map].day.ObjectRamSize > sceneObjectLimit || newMapList[map].night.ObjectRamSize > sceneObjectLimit)
+                /* if (newMapList[map].day.ObjectRamSize > sceneObjectLimit || newMapList[map].night.ObjectRamSize > sceneObjectLimit)
                 {
                     return false;
+                }// */
+                //var oldObjectSize = this.oldMapList[map].day.ObjectList.Sum();//this.ObjectList.Sum();
+                int newObjectSize;
+                if (objects != null)
+                {
+                    newObjectSize = objects.Sum();
+                }
+                else
+                {
+                    newObjectSize = this.newMapList[map].day.ObjectList.Sum();
+                }
+
+                if (newObjectSize > sceneObjectLimit)
+                {
+                     return false;
                 }
             }
             return true;
         }
 
-        public List<int> GetUpdateObjectList(ValueSwap newChosenObjects )
-        {
-            //var newObjectList = this.Scene.Maps.
-            // change it, return it
-
-            return null;
-        }
-
         // print to log function
-        public void PrintCombineRatioNewOldz(StringBuilder log)
+        public void PrintAllMapRamObjectOutput(StringBuilder log)
         {
             void PrintCombineRatioNewOld(string text, int newv, int oldv){
                 log.AppendLine(text + " ratio: [" + ((float) newv / (float) oldv).ToString("F4")
@@ -2683,7 +2718,8 @@ namespace MMR.Randomizer
                 var newNTotal = newMapList[map].night.OverlayRamSize + newMapList[map].night.ActorInstanceSum;
                 var oldNTotal = oldMapList[map].night.OverlayRamSize + oldMapList[map].night.ActorInstanceSum;
 
-                if (newDTotal - oldDTotal + newNTotal - oldNTotal == 0) continue; // map was untouched, dont print
+                // PRINT EVERYTHING
+                //if (newDTotal - oldDTotal + newNTotal - oldNTotal == 0) continue; // map was untouched, dont print
 
                 log.AppendLine(" ======( Map " + map.ToString("X2") + " )======");
 
@@ -2710,6 +2746,6 @@ namespace MMR.Randomizer
                 log.AppendLine($" ------------------------------------------------- ");
 
             }
-        } // end PrintCombineRatioNewOldz
+        } // end PrintAllMapRamObjectOutput
     } // end actorsCollection
 }

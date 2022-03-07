@@ -2647,7 +2647,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1A6)]
         [GroundVariants(0x0)]
         [CompanionActor(DekuFlower, ourVariant: -1, variant: 0x7F)]
-        [EnemizerScenesExcluded(Scene.WoodfallTemple)] // req for gekko miniboss, do not touch until fix
+        //[EnemizerScenesExcluded(Scene.WoodfallTemple)] // req for gekko miniboss, do not touch until fix
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         Snapper = 0x1BA, // En_Kame
 
