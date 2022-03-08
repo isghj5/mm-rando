@@ -194,6 +194,9 @@ namespace MMR.Randomizer.Models.Rom
                 var textId = ReadWriteUtils.ReadU16(addr);
                 var offset = ReadWriteUtils.ReadU32(addr + 4) & 0xFFFFFF;
 
+                var nextOffset = ReadWriteUtils.ReadU32(addr + 0xC) & 0xFFFFFF;
+                var size = nextOffset > 0 ? nextOffset - offset - 11 : 5; // "end!\xBF"
+                
                 // Check if terminator record.
                 if (textId == 0xFFFF)
                 {
@@ -202,7 +205,7 @@ namespace MMR.Randomizer.Models.Rom
 
                 // Read MessageEntry from data file.
                 var dataFile = RomData.MMFileList[fileIndex];
-                var entry = MessageEntry.FromBytes(textId, dataFile.Data, (int)offset);
+                var entry = MessageEntry.FromBytes(textId, dataFile.Data, (int)offset, (int)size);
 
                 entries.Add(textId, entry);
             }
