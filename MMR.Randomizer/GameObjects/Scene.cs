@@ -12,9 +12,11 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1160)]
         [SceneInternalId(0x12)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Toto,
-            Actor.Dexihand)] // hand can stop you talking to mother
+            Actor.Dexihand, Actor.LikeLike)] // hand can stop you talking to mother
         [EnemizerSceneEnemyReplacementBlock(Actor.Secretary,
             Actor.LikeLike)] // big one can block you from reaching mother, cycle 0 check
+        [EnemizerSceneEnemyReplacementBlock(Actor.Gorman,
+            Actor.LikeLike)] // likelike can grab and spit you before you can face it
         MayorsResidence = 0x00,
 
         [FileID(1143)]
