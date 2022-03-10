@@ -1030,7 +1030,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(1, 2)]
         [PathingVariants(0x603, 0x503)]
         [PathingTypeVarsPlacement(mask:0xFF00, shift:8)]
-        [AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0090)]
+        //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0090)]
         [UnkillableAllVariants]
         Carpenter = 0x9C, // En_Daiku
 
@@ -2685,7 +2685,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)]
-        [AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0146)] // treasure chest shop music
+        //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0146)] // treasure chest shop music
         [EnemizerScenesPlacementBlock(Scene.SouthClockTown)]
         [EnemizerScenesExcluded(Scene.TreasureChestShop)]
         BombchuGirl = 0x1C1, // En_Takaraya
@@ -3451,7 +3451,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         Tijo = 0x238, // En_Zod // drummer zora band member
 
-        [ActorizerEnabled]
+        //[ActorizerEnabled]
         [FileID(528)]
         [ObjectListIndex(0x263)]
         [WallVariants(0xFF)]
@@ -3460,7 +3460,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.LotteryShop)]
         // not working??
-        [AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0144)] // lottery music
+        //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0144)] // lottery music
         LotteryKiosk = 0x239, // En_Kujiya
 
         [FileID(529)]
