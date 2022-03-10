@@ -1715,6 +1715,7 @@ namespace MMR.Randomizer
                 .Cast<Item?>()
                 .ToList();
             var itemJunk = ItemUtils.AllRupees()
+                .Where(item => !ItemList[item].NewLocation.HasValue)
                 .Cast<Item?>()
                 .ToList();
             var availableSongs = ItemUtils.StartingItems()
