@@ -656,8 +656,7 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [ActorInstanceSize(0x194)]
-        [ObjectListIndex(2)] // overworld_keep, obj 2
-        //[ObjectListIndex(0x34)] // testing
+        [ObjectListIndex(2)] // field_keep, obj 2
         [FileID(99)]
         // FF/299 is HSG, 233 is path to snowhead, 3B is mountain village spring grot 3D is swamp grotto, , 5C is mystery woods
         // 96 is goron rock grotto, 218/2B8? is graveyard grotto, 3E is road to swamp
@@ -691,8 +690,6 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)] // FIRE AND DARKNESS
         [EnemizerScenesExcluded(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead)]
-        // as its obj is 2, shouldn't be available in dungeons, maybe not indoors either
-        [EnemizerScenesPlacementBlock(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         GrottoHole = 0x55, // Door_Ana
 
         Empty56 = 0x56,
@@ -1492,6 +1489,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.MilkRoad,
         //    Scene.RomaniRanch, Scene.IkanaCanyon, Scene.LinkTrial)] // don't replace the originals as we might need for hints
+        [EnemizerScenesExcluded(Scene.LinkTrial)] // supposidly, you can play storms on the gossip stone to open the door instead of bombchu
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // crash (reason unk)
         GossipStone = 0xEF, // En_Gs
 
