@@ -2686,10 +2686,10 @@ namespace MMR.Randomizer
                 }
                 else
                 {
-                    newObjectSize = this.newMapList[map].day.ObjectList.Sum();
+                    newObjectSize = this.newMapList[map].day.ObjectRamSize;
                 }
 
-                if (newObjectSize > sceneObjectLimit)
+                if (newObjectSize > this.sceneObjectLimit)
                 {
                      return false;
                 }
