@@ -26,7 +26,6 @@ using System.Runtime.CompilerServices;
 namespace MMR.Randomizer
 {
     [System.Diagnostics.DebuggerDisplay("{OldV} -> {NewV}")]
-
     public class ValueSwap
     {
         // these are indexes of objects
@@ -247,6 +246,7 @@ namespace MMR.Randomizer
             AddGrottoVariety();
             FixCuccoChicks();
             FixWoodfallTempleGekkoMiniboss();
+            FixStreamSfxVolume();
 
             Shinanigans();
         }
@@ -457,10 +457,7 @@ namespace MMR.Randomizer
         private static void FixScarecrowTalk()
         {
             /// scarecrow breaks if you try to teach him a song anywhere where he normally does not exist
-            if (!ReplacementListContains(GameObjects.Actor.Scarecrow))
-            {
-                return;
-            }
+            if (!ReplacementListContains(GameObjects.Actor.Scarecrow)) return;
 
             var scarecrowFID = GameObjects.Actor.Scarecrow.FileListIndex();
             RomUtils.CheckCompressed(scarecrowFID);
@@ -611,10 +608,7 @@ namespace MMR.Randomizer
         {
             /// if tingle can be randomized, he can end up on any flying enemy in scenes that don't already have a tingle
             /// some of these scenes would drop him into water or off the cliff where he cannot be reached
-            if (!ReplacementListContains(GameObjects.Actor.Tingle))
-            {
-                return;
-            }
+            if (!ReplacementListContains(GameObjects.Actor.Tingle)) return;
 
             var woodfallexteriorScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Woodfall.FileID());
             var firstDragonfly = woodfallexteriorScene.Maps[0].Actors[4];
@@ -658,10 +652,7 @@ namespace MMR.Randomizer
             /// but the code that blocks the baloon if neither of these are true is nop-able,
             ///   and the rest of the code is designed to work without issue in this case
 
-            if (!ReplacementListContains(GameObjects.Actor.PoeBalloon))
-            {
-                return;
-            }
+            if (!ReplacementListContains(GameObjects.Actor.PoeBalloon)) return;
 
             var enPoFusenFID = GameObjects.Actor.PoeBalloon.FileListIndex();
             RomUtils.CheckCompressed(enPoFusenFID);
@@ -687,10 +678,7 @@ namespace MMR.Randomizer
             /// Cuccos take too many hits before they get mad, let's shrink this
             /// niw health is `rand(0-9.9) + 10.0` (10-20 hits), lets replace with 0-2 + 1
 
-            if (!ReplacementListContains(GameObjects.Actor.FriendlyCucco))
-            {
-                return;
-            }
+            if (!ReplacementListContains(GameObjects.Actor.FriendlyCucco)) return;
 
             RomUtils.CheckCompressed(GameObjects.Actor.FriendlyCucco.FileListIndex());
             var niwData = RomData.MMFileList[GameObjects.Actor.FriendlyCucco.FileListIndex()].Data;
@@ -718,10 +706,7 @@ namespace MMR.Randomizer
         {
             /// seth 2, the guy waving his arms in the termina field telescope, like oot spiderhouse
             /// his init code checks for a value, and does not spawn if the value is different than expected
-            if (!ReplacementListContains(GameObjects.Actor.Seth2))
-            {
-                return;
-            }
+            if (!ReplacementListContains(GameObjects.Actor.Seth2)) return;
 
             var sethFid = GameObjects.Actor.Seth2.FileListIndex();
             RomUtils.CheckCompressed(sethFid);
@@ -758,10 +743,7 @@ namespace MMR.Randomizer
             /// however there is a (as far as I can tell) unused object in this scene we can swap
             /// object_dns which is the object used by the dancing deku guards in the king's chamber
             /// nothing seems to use their object in the regular palace scene, no idea why the object is there
-            if (!ReplacementListContains(GameObjects.Actor.DekuPatrolGuard))
-            {
-                return;
-            }
+            if (!ReplacementListContains(GameObjects.Actor.DekuPatrolGuard)) return;
 
             var frontGuardOID = GameObjects.Actor.DekuPatrolGuard.ObjectIndex();
             var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
@@ -790,6 +772,25 @@ namespace MMR.Randomizer
             gekkoRoom.Objects[15] = SMALLEST_OBJ; // previously: dragonfly
             gekkoRoom.Objects[16] = SMALLEST_OBJ; // previously: skulltula
         }
+
+        public static void FixStreamSfxVolume()
+        {
+            /// EnStream is an unused actor leftover from OOT
+            ///  it is the swirling water vortexes that if you swim into you will void out in OOT: Water Temple
+            /// However this actor has a flaw: it calls a function to play a swirling water sfx
+            /// but it uses the wrong function to play the sfx, it plays the same volume from any distance which is really annoying
+            /// so here we change it back to the default sfx function almost all actors use to fix it
+            /// we are lucky that the old and new function takes the same parameters,
+            /// decomp tells me there are no other changes needed to swap them
+
+            if (!ReplacementListContains(GameObjects.Actor.En_Stream)) return;
+
+            var streamFid = GameObjects.Actor.En_Stream.FileListIndex();
+            RomUtils.CheckCompressed(streamFid);
+            var streamData = RomData.MMFileList[streamFid].Data;
+            ReadWriteUtils.Arr_WriteU32(streamData, 0x39C, 0x0C02E3B2); // jal func_800B8FE8() -> Actor_PlaySfxAtPos()
+        }
+
 
         private static void AllowGuruGuruOutside()
         {
