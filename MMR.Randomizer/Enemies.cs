@@ -190,22 +190,6 @@ namespace MMR.Randomizer
             return objList;
         }
 
-        // depreciated if the following works
-        public static void SetSceneEnemyObjects(Scene scene, List<ValueSwap> newObjects)
-        {
-            foreach (var sceneMap in scene.Maps)
-            {
-                for (int sceneObjIndex = 0; sceneObjIndex < sceneMap.Objects.Count; sceneObjIndex++)
-                {
-                    var valueSwapObject = newObjects.Find(u => u.OldV == sceneMap.Objects[sceneObjIndex]);
-                    if (valueSwapObject != null)
-                    {
-                        sceneMap.Objects[sceneObjIndex] = valueSwapObject.NewV;
-                    }
-                }
-            }
-        }
-
         public static void SetSceneEnemyObjects(Scene scene, List<List<int>> newObjectsPerMap)
         {
             for (var map = 0; map < scene.Maps.Count; map++)// sceneMap in scene.Maps)
@@ -247,6 +231,7 @@ namespace MMR.Randomizer
             FixCuccoChicks();
             FixWoodfallTempleGekkoMiniboss();
             FixStreamSfxVolume();
+            RepositionClockTownActors();
 
             Shinanigans();
         }
@@ -331,29 +316,9 @@ namespace MMR.Randomizer
                 piratesExteriorScene.Maps[0].Actors[13].ChangeActor(GameObjects.Actor.Empty, modifyOld: true); // dangeon object so no grotto, empty for now
                 // todo: 14/16 are also torches, we dont really need both here
 
-                // anju's actor spawns behind the inn door, move her to be visible in sct
-                var eastclocktownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.EastClockTown.FileID());
-                var anju = eastclocktownScene.Maps[0].Actors[0];
-                anju.Position = new vec16(-101, 5, 180);
-                //anju.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: anju.Rotation.y); // rotate to away from us
 
-                // move next to mayors building
-                // bug this is not next to mayor building for some reason, next to inn
-                var gorman = eastclocktownScene.Maps[0].Actors[4];
-                gorman.Position = new vec16(1026, 200, -1947);
-
-                // if actors are rando'd then the carpenters proabbly are too
-                var southClockTownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SouthClockTown.FileID());
-                var carpenterSound = southClockTownScene.Maps[0].Actors[49];
-                carpenterSound.ChangeActor(GameObjects.Actor.Carpenter, vars: 1, modifyOld: true); // non-pathing type
-                carpenterSound.Position.z = 55; // move forward to muto placement
-                // we can also hear the noises in west/east, those actors should also be removed
-                eastclocktownScene.Maps[0].Actors[63].ChangeActor(GameObjects.Actor.Empty, modifyOld: true); // FREE ACTOR ?
-
-                // should we rando the tower?
             }
         }
-
 
 
         private static void Shinanigans()
@@ -789,6 +754,53 @@ namespace MMR.Randomizer
             RomUtils.CheckCompressed(streamFid);
             var streamData = RomData.MMFileList[streamFid].Data;
             ReadWriteUtils.Arr_WriteU32(streamData, 0x39C, 0x0C02E3B2); // jal func_800B8FE8() -> Actor_PlaySfxAtPos()
+        }
+
+        public static void RepositionClockTownActors()
+        {
+            /// if actors are rando'd then the carpenters probably are too, remove their sounds
+
+            var southClockTownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SouthClockTown.FileID());
+            var carpenterSound = southClockTownScene.Maps[0].Actors[49];
+            carpenterSound.ChangeActor(GameObjects.Actor.Carpenter, vars: 1, modifyOld: true); // non-pathing type
+            // move to standing in front of the sign
+            carpenterSound.Position.x = -423;
+            carpenterSound.Position.z = -174; // move forward to muto placement
+            // rotation toward the sign
+            carpenterSound.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: carpenterSound.Rotation.y);
+            // set time flags so that only shows on night 1 and day 4 (rotation was already x:0,z:0)
+            carpenterSound.Rotation.x = 0x6; // all day 0
+            carpenterSound.Rotation.z = 0x3 | 0x4 | 0x40; // all day 4, night 3, night 1
+
+            // we can also hear the noises in west/east, those actors should also be removed
+            var eastClockTownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.EastClockTown.FileID());
+            var carpenterSound2 = eastClockTownScene.Maps[0].Actors[63];
+
+            // change into a cremia actor, his object is here wasted and unused, we could rando it
+            carpenterSound2.ChangeActor(GameObjects.Actor.Cremia, vars: 0, modifyOld: true);
+            carpenterSound2.Position = new vec16(1329, 102, -429);
+            carpenterSound2.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 90, flags: carpenterSound2.Rotation.y);
+            // set time flags so that only shows on night 1 and day 4 (rotation was already x:0,z:0)
+            carpenterSound2.Rotation.x = 0x6; // all day 0
+            carpenterSound2.Rotation.z = 0x3 | 0x10; // all day 4, night 2
+
+            // however, while the cremia object and actor exist in setup 3, they do not in setup 1
+            // thankfully there is a free space in the object list because odd count, one free space because of padding
+            eastClockTownScene.Maps[0].Objects.Add(GameObjects.Actor.Cremia.ObjectIndex());
+            var ECTData = RomData.MMFileList[eastClockTownScene.File + 1];
+            ECTData.Data[0x31] = 0x1A; // increase objectlist number, how many it loads, by one
+
+            // should we rando the tower?
+
+            // anju's actor spawns behind the inn door, move her to be visible in sct
+            var anju = eastClockTownScene.Maps[0].Actors[0];
+            anju.Position = new vec16(153, 3, 246);
+            anju.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: anju.Rotation.y); // rotate to away from us
+
+            // move next to mayors building
+            // bug this is not next to mayor building for some reason, next to inn
+            var gorman = eastClockTownScene.Maps[0].Actors[4];
+            gorman.Position = new vec16(1026, 200, -1947);
         }
 
 

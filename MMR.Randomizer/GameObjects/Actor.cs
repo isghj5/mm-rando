@@ -2056,6 +2056,7 @@ namespace MMR.Randomizer.GameObjects
         BadBat = 0x15B, // En_Bat
 
         // can hold many different types of graves or stones containing.. nothing bit broke
+        // has BG crashed in east clock town before
         //[ActorizerEnabled] // this works fine but shows up waay too often
         // there are actaually 3 others, but they are three separate objects, so hard to program
         [FileID(314)]
@@ -3067,9 +3068,16 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
         GoronKid = 0x201, // En_Gk
 
+        [ActorizerEnabled]
         [FileID(474)]
         [ActorInstanceSize(0x3C8)]
         [ObjectListIndex(0xE2)]
+        [PathingVariants(0x8001)] // really a pathing variant (walking through east/south to go see the laundry pool
+        [PathingTypeVarsPlacement(mask: 0xFF, shift:0)]
+        [VariantsWithRoomMax(max:0, variant:0x8001)] // too hard coded to do anything with
+        // dont remove from laundrypool, its the only way to see link mask in the wild, and its a trip
+        [EnemizerScenesExcluded(Scene.LaundryPool, Scene.StockPotInn)]
+        [UnkillableAllVariants]
         Anju = 0x202, // En_An
 
         Empty203 = 0x203,
@@ -3272,9 +3280,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xB7)]
         RomaniTalkingToCremia = 0x21F, // En_Ma_Yts
 
-        // todo 
+        // todo
+        [ActorizerEnabled]
         [FileID(503)]
         [ObjectListIndex(0xA7)]
+        [GroundVariants(0, 0x00FF)] // standing around day 1 is type 0, bottom 0xFF is unknown, not used in code?
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
         Cremia = 0x220, // En_Ma_Yto
         
         [FileID(504)]
