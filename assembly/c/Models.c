@@ -831,7 +831,7 @@ void Models_DrawOcarina(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable
 
 void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
     if (!MISC_CONFIG.flags.freestanding) {
-        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x0601CAD0);
+        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x0600CAD0);
         return;
     }
 
