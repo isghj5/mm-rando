@@ -1261,7 +1261,7 @@ namespace MMR.Randomizer
         private void WriteFreeHints()
         {
             int address = 0x00E0A810 + 0x378;
-            byte val = 0x00;
+            uint val = 0x00;
             ReadWriteUtils.WriteToROM(address, val);
         }
 
