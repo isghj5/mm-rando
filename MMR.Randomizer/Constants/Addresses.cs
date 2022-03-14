@@ -13,5 +13,7 @@
         public const int AudiobankTable     = 0xC776D0; // audiobank index (c0 + 0x10)
         public const int Audiobank          = 0x020700;
         // TODO add audiobank and soundbank pointers
+
+        public const int CodeFile           = 0xB3C000; // "Code" is the name of the file
     }
 }

@@ -730,66 +730,14 @@ namespace MMR.Randomizer
             }
         }
 
-        private void WriteNutsAndSticks()
+        private void WriteNutsAndSticksDrops()
         {
-            /// adds deku sticks and deku nuts as additional drops to the drop tables, very useful in enemizer
-            /// when an actor drops an item, they roll a 16 side die, sometimes hardcode overrides in special cases (fairy)
-            ///   all of the slots replaced here with sticks and nuts were empty in vanilla
-            /// image guide from mzxrules of the drop tables in vanilla
-            /// https://pbs.twimg.com/media/Dct7fa6X4AEeYpv?format=jpg&name=large 
+            DropTableUtils.WriteNutsAndSticksDrops(_randomized);
+        }
 
-            if (_randomized.Settings.NutandStickDrops == NutAndStickDrops.Default)
-            {
-                return;
-            }
-
-            const byte DEKUNUT   = 0x0C;
-            const byte DEKUSTICK = 0x0D;
-            int  bushCount = (int)_randomized.Settings.NutandStickDrops;
-            byte nutCount = _randomized.Settings.NutandStickDrops == NutAndStickDrops.Light ? (byte) 0x1 : (byte)bushCount;
-            byte stickCount = (byte)Math.Max((int)_randomized.Settings.NutandStickDrops - 2, 1);
-            int  droptableFileID = RomUtils.GetFileIndexForWriting(0xC444B8);
-            RomUtils.CheckCompressed(droptableFileID);
-
-            void AddDropToDropTable(byte dropType, int replacementSlot = 0xC444B8, byte amount = 0)
-            {                
-                // each replacementSlot is a single 1/16 slot for random item drop
-                int offset = replacementSlot - RomData.MMFileList[droptableFileID].Addr;
-                RomData.MMFileList[droptableFileID].Data[offset] = dropType;
-                // how many items are dropped is the table that follows, aligns exactly with 0x110
-                RomData.MMFileList[droptableFileID].Data[offset + 0x110] = amount;
-            }
-
-            // termina field bushes 1/16 drop table entry
-            AddDropToDropTable(DEKUNUT, 0xC444B7, nutCount);
-            AddDropToDropTable(DEKUSTICK, 0xC444BF, stickCount);
-            if (bushCount >= 2) // medium and higher
-            {
-                // another slot in the TF grass drop table
-                AddDropToDropTable(DEKUNUT, 0xC444B8, nutCount);
-                AddDropToDropTable(DEKUSTICK, 0xC444C0, stickCount);
-            }
-            if (bushCount >= 3) // extra and higher
-            {
-                // another slot in the TF grass drop table
-                AddDropToDropTable(DEKUNUT, 0xC444BC, nutCount);
-                AddDropToDropTable(DEKUSTICK, 0xC444C1, stickCount);
-                // if extra and higher, add some to non termina field droplists
-                AddDropToDropTable(DEKUNUT, 0xC444CB, nutCount);   // stalchild and south swamp
-                AddDropToDropTable(DEKUSTICK, 0xC444CC, stickCount);
-                AddDropToDropTable(DEKUNUT, 0xC44574, nutCount);   // lens of truth grass
-                AddDropToDropTable(DEKUSTICK, 0xC44575, stickCount);
-            }
-            if (bushCount >= 4) // mayhem
-            {
-                // nuts and sticks in weird drop tables too for mayhem
-                AddDropToDropTable(DEKUNUT, 0xC444F8, nutCount);   // graveyard rocks
-                AddDropToDropTable(DEKUSTICK, 0xC444F9, stickCount);
-                AddDropToDropTable(DEKUNUT, 0xC444D6, nutCount);   // snow trees and snow rocks
-                AddDropToDropTable(DEKUSTICK, 0xC444D7, stickCount);
-                AddDropToDropTable(DEKUNUT, 0xC445BA, nutCount);   // field mice
-                AddDropToDropTable(DEKUSTICK, 0xC445BB, stickCount);
-            }
+        public void WriteBombchuDrops()
+        {
+            DropTableUtils.WriteNutsAndSticksDrops(_randomized);
         }
 
         private void WriteQuickText()
@@ -3342,8 +3290,9 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(71, "Writing ASM patch...");
                 WriteAsmPatch(asm);
 
-                WriteNutsAndSticks();
-                
+                DropTableUtils.WriteNutsAndSticksDrops(_randomized);
+                DropTableUtils.WriteBombchuDrops(_randomized);
+
                 progressReporter.ReportProgress(72, outputSettings.GeneratePatch ? "Generating patch..." : "Computing hash...");
                 hash = outputSettings.GeneratePatch switch
                 {
