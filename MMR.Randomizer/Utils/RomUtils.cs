@@ -282,6 +282,7 @@ namespace MMR.Randomizer.Utils
 
         public static void ReadFileTable(BinaryReader ROM)
         {
+            int ReadCount = 0;
             RomData.MMFileList = new List<MMFile>();
             ROM.BaseStream.Seek(FILE_TABLE, SeekOrigin.Begin);
             while (true)
@@ -299,6 +300,11 @@ namespace MMR.Randomizer.Utils
                     break;
                 }
                 RomData.MMFileList.Add(Current_File);
+                ReadCount ++;
+                if (ReadCount == 1539)
+                {
+                    break;
+                }
             }
             ExtractAll(ROM);
         }

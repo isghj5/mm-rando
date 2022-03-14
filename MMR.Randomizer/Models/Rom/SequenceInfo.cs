@@ -31,5 +31,19 @@ namespace MMR.Randomizer.Models.Rom
                                                                   || (u.InstrumentSet.Hash != 0
                                                                   && u.InstrumentSet.Hash == RomData.InstrumentSetList[u.InstrumentSet.BankSlot].Hash)));
         }
+
+        public bool UsesModifiedBanks()
+        {
+            var yoink = this.SequenceBinaryList.FindAll(u => RomData.InstrumentSetList[u.InstrumentSet.BankSlot].Modified != 0);
+
+            if (yoink.Count != 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+
     }
 }

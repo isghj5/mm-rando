@@ -71,6 +71,7 @@ namespace MMR.Randomizer
             WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + unassigned.Count + " available songs:");
 
             SequenceUtils.ResetBudget();
+            SequenceUtils.ResetFreeBankIndex();
 
             // songtest filename token allows music makers and users to force a song into a MMR seed for recording/testing
             SequenceUtils.CheckSongTest(unassigned, log);
@@ -341,6 +342,10 @@ namespace MMR.Randomizer
             }
 
             WriteCrashDebuggerShow();
+
+            // Dolphin/WiiVC audiothread shutdown workaround
+            ReadWriteUtils.WriteU16ToROM(0xB3C000 + 0x0CD320, 0x1000);
+
         }
 
         /// <summary>
@@ -3050,7 +3055,8 @@ namespace MMR.Randomizer
                 //ResourceUtils.ApplyHack(ModsDir + "postman-testing");
                 return;
             }
-            RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", string.Empty);
+            RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", $"-AudBank");
+            //RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", string.Empty);
         }
 
         public void OutputHashIcons(IEnumerable<byte> iconFileIndices, string filename)
@@ -3368,6 +3374,7 @@ namespace MMR.Randomizer
             WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
             progressReporter.ReportProgress(73, "Writing music...");
+            SequenceUtils.MoveAudioBankTableToFile();
             WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
             WriteMuteMusic();
             WriteEnemyCombatMusicMute();

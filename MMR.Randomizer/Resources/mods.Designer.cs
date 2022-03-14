@@ -19,7 +19,7 @@ namespace MMR.Randomizer.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class mods {
@@ -206,6 +206,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] dm_4 {
             get {
                 object obj = ResourceManager.GetObject("dm_4", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] dummyinstsets {
+            get {
+                object obj = ResourceManager.GetObject("dummyinstsets", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -673,6 +683,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] instrumentset_patch {
+            get {
+                object obj = ResourceManager.GetObject("instrumentset_patch", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] key_boss_open {
             get {
                 object obj = ResourceManager.GetObject("key_boss_open", resourceCulture);
@@ -713,6 +733,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] loadnewaudiotable {
+            get {
+                object obj = ResourceManager.GetObject("loadnewaudiotable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] logo_text {
             get {
                 object obj = ResourceManager.GetObject("logo_text", resourceCulture);
@@ -726,6 +756,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] misc_changes {
             get {
                 object obj = ResourceManager.GetObject("misc_changes", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] moveaudiostatebytes {
+            get {
+                object obj = ResourceManager.GetObject("moveaudiostatebytes", resourceCulture);
                 return ((byte[])(obj));
             }
         }
