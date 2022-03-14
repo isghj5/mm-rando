@@ -2522,10 +2522,8 @@ namespace MMR.Randomizer
             OverlayRamSize = distinctActors.Select(x => ActorUtils.GetOvlCodeRamSize(x.ActorID)).Sum();
             ActorInstanceSum = actorList.Select(u => u.ActorID)
                                         .Select(x => ActorUtils.GetOvlInstanceRamSize(x, Enemies.InjectedActors)).Sum();
-            // untested for accuracy, actors without correct objects might be inccorectly sized
             this.ObjectList = objList;
             this.objectSizes = objList.Select(x => ObjUtils.GetObjSize(x)).ToArray();
-            //this.ObjectRamSize = objList.Select(x => ObjUtils.GetObjSize(x)).Sum();
             this.ObjectRamSize = objectSizes.Sum();
 
             this.CalculateDefaultObjectUse(s);

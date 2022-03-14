@@ -94,7 +94,9 @@ namespace MMR.Randomizer.Utils
         public static int GetOvlInstanceRamSize(int actorOvlTblIndex, List<InjectedActor> injectedActors)
         {
             /// this is the size of the actor's struct instance in ram
-            if (actorOvlTblIndex == -1) return 0; // GameObjects.Actor.Empty;
+
+            // if the actor is invalid or PLAYER (id = 0, we call it NULL) (player is always loaded in special memory ignore) 
+            if (actorOvlTblIndex == -1 || actorOvlTblIndex == (int) GameObjects.Actor.NULL) return 0;
 
             // to get this, we either need to save it or read it from the overlay's init vars
             var attr = ((GameObjects.Actor)actorOvlTblIndex).GetAttribute<ActorInstanceSizeAttribute>();
