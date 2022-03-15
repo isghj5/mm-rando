@@ -847,7 +847,7 @@ namespace MMR.Randomizer.Utils
                 if (BanksUsed == true)
                 {
                     testSeq.SequenceBinaryList[0].InstrumentSet.BankSlot = CurrentFreeBank;
-                    CurrentFreeBank = +1;
+                    CurrentFreeBank = ++CurrentFreeBank;
                 }
 
                 // some slots are rarely heard in-game, dont waste a custom instrument set on them, check if this slot is one of them
@@ -1133,7 +1133,7 @@ namespace MMR.Randomizer.Utils
 
                     if (CurrentFreeBank == NextFreeBank)
                     {
-                        NextFreeBank = +1;
+                        NextFreeBank = ++NextFreeBank;
                     }
 
                     return true;
