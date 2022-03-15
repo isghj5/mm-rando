@@ -19,7 +19,7 @@ namespace MMR.Randomizer.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class models {
@@ -166,6 +166,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] gi_link_mask {
             get {
                 object obj = ResourceManager.GetObject("gi_link_mask", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] gi_spinattack {
+            get {
+                object obj = ResourceManager.GetObject("gi_spinattack", resourceCulture);
                 return ((byte[])(obj));
             }
         }
