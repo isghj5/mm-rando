@@ -613,7 +613,7 @@ namespace MMR.Randomizer
                 return Dependence.Dependent;
             }
 
-            if (currentItemObject.TimeNeeded == 0 && ItemUtils.IsJunk(currentItem))
+            if (currentItemObject.TimeNeeded == 0 && ItemUtils.IsLogicallyJunk(currentItem))
             {
                 return Dependence.NotDependent;
             }
@@ -1018,7 +1018,7 @@ namespace MMR.Randomizer
 
                 // This is to prevent business scrub relocation logic from potentially causing unbeatable seeds.
                 // TODO fix this in a nicer way.
-                if (target == Item.HeartPieceNotebookHand && !ItemUtils.IsJunk(currentItem))
+                if (target == Item.HeartPieceNotebookHand && !ItemUtils.IsLogicallyJunk(currentItem))
                 {
                     Debug.WriteLine($"{currentItem} is temporary and cannot be placed on {target}.");
                     return false;
@@ -1069,7 +1069,7 @@ namespace MMR.Randomizer
 
         private void PlaceRequirements(Item currentItem, List<Item> targets)
         {
-            if (!ItemUtils.IsJunk(currentItem))
+            if (!ItemUtils.IsLogicallyJunk(currentItem))
             {
                 _timeTravelPath.Push(currentItem);
 
@@ -1497,7 +1497,7 @@ namespace MMR.Randomizer
         /// </summary>
         private void PlaceRemainingItems(List<Item> itemPool)
         {
-            foreach (var item in ItemUtils.AllLocations().OrderBy(ItemUtils.IsJunk))
+            foreach (var item in ItemUtils.AllLocations().OrderBy(ItemUtils.IsLogicallyJunk))
             {
                 if (ItemList[item].NewLocation == null)
                 {

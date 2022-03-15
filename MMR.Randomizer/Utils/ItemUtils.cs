@@ -206,20 +206,30 @@ namespace MMR.Randomizer.Utils
                 .SelectMany(item => item.GetAttribute<GetBottleItemIndicesAttribute>().Indices);
         }
 
-        public static List<Item> JunkItems { get; private set; }
+        public static ReadOnlyCollection<Item> JunkItems { get; private set; }
+        public static ReadOnlyCollection<Item> LogicallyJunkItems { get; private set; }
         public static void PrepareJunkItems(List<ItemObject> itemList)
         {
+            LogicallyJunkItems = itemList
+                .Where(io => !itemList.Any(other => (other.DependsOnItems?.Contains(io.Item) ?? false) || (other.Conditionals?.Any(c => c.Contains(io.Item)) ?? false)))
+                .Select(io => io.Item)
+                .ToList()
+                .AsReadOnly();
             JunkItems = itemList.Where(io => io.Item != Item.CollectableIkanaGraveyardDay2Bats1
                                           && io.Item.IsRepeatable()
                                           && io.Item.GetAttribute<ChestTypeAttribute>()?.Type == ChestTypeAttribute.ChestType.SmallWooden
-                                          && !itemList.Any(other => (other.DependsOnItems?.Contains(io.Item) ?? false)
-                                                                 || (other.Conditionals?.Any(c => c.Contains(io.Item)) ?? false))
-                                      ).Select(io => io.Item).ToList();
+                                          && LogicallyJunkItems.Contains(io.Item)
+                                      ).Select(io => io.Item).ToList().AsReadOnly();
         }
 
         public static bool IsJunk(Item item)
         {
             return item == Item.RecoveryHeart || item == Item.IceTrap || JunkItems.Contains(item);
+        }
+
+        public static bool IsLogicallyJunk(Item item)
+        {
+            return item == Item.RecoveryHeart || item == Item.IceTrap || LogicallyJunkItems.Contains(item);
         }
 
         public static bool CanBeRequired(Item item)
