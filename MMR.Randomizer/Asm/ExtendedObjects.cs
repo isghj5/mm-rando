@@ -21,6 +21,7 @@ namespace MMR.Randomizer.Asm
         public short? Rupees;
         public short? Milk;
         public short? BossKeys;
+        public short? SmallKeys;
     }
 
     /// <summary>
@@ -77,6 +78,12 @@ namespace MMR.Randomizer.Asm
             {
                 var index = entry.Type >> 4;
                 return ((short)(Indexes.BossKeys.Value + index), entry.Index);
+            }
+
+            if (entry.ItemGained == 0x78 && entry.Object == 0x86 && Indexes.SmallKeys.HasValue)
+            {
+                var index = entry.Type >> 4;
+                return ((short)(Indexes.SmallKeys.Value + index), entry.Index);
             }
 
             return null;
@@ -155,6 +162,10 @@ namespace MMR.Randomizer.Asm
             // Add Boss Keys
             AddBossKeys();
             this.Indexes.BossKeys = AdvanceIndex(4);
+
+            // Add Small Keys
+            AddSmallKeys();
+            this.Indexes.SmallKeys = AdvanceIndex(4);
 
             // Add Skulltula Tokens
             if (skulltulas)
@@ -504,6 +515,28 @@ namespace MMR.Randomizer.Asm
             this.Offsets.Add(AddBossKey(Color.FromArgb(0x00, 0xFF, 0x32), Color.FromArgb(0xAA, 0xFF, 0xAA))); // Snowhead
             this.Offsets.Add(AddBossKey(Color.FromArgb(0x00, 0x64, 0xFF), Color.FromArgb(0xAA, 0xFF, 0xFF))); // Great Bay
             this.Offsets.Add(AddBossKey(Color.FromArgb(0xFF, 0xFF, 0x00), Color.FromArgb(0xFF, 0xFF, 0xAA))); // Stone Tower
+        }
+
+        #endregion
+
+        #region Small Keys
+
+        (uint, uint) AddSmallKey(Color prim, Color env)
+        {
+            var data = CloneExistingData(716);
+
+            WriteByte(data, 0x81C, prim.ToBytesRGB());
+            WriteByte(data, 0x824, env.ToBytesRGB());
+
+            return this.Bundle.Append(data);
+        }
+
+        void AddSmallKeys()
+        {
+            this.Offsets.Add(AddSmallKey(Color.FromArgb(0xFF, 0xAA, 0xFF), Color.FromArgb(0x73, 0x00, 0x73))); // Woodfall
+            this.Offsets.Add(AddSmallKey(Color.FromArgb(0xAA, 0xFF, 0xAA), Color.FromArgb(0x00, 0x73, 0x00))); // Snowhead
+            this.Offsets.Add(AddSmallKey(Color.FromArgb(0xAA, 0xFF, 0xFF), Color.FromArgb(0x00, 0x73, 0x73))); // Great Bay
+            this.Offsets.Add(AddSmallKey(Color.FromArgb(0xFF, 0xFF, 0x00), Color.FromArgb(0x73, 0x73, 0x00))); // Stone Tower
         }
 
         #endregion
