@@ -35,7 +35,6 @@ namespace MMR.Randomizer.Utils
         public static int New_AudioBankTable = 0; // for mmfilelist
         public static int NewInstrumentSetAddress; // for bgm shuffle functions to work on
         public static int CurrentFreeBank = 0x29;
-        public static int NextFreeBank = 0x2A;
 
 
         public static void ResetBudget()
@@ -817,7 +816,6 @@ namespace MMR.Randomizer.Utils
         public static void ResetFreeBankIndex()
         {
             CurrentFreeBank = 0x29;
-            NextFreeBank = 0x2A;
         }
 
 
@@ -842,13 +840,12 @@ namespace MMR.Randomizer.Utils
                 //    return false;
                 //}
 
-                var BanksUsed = testSeq.UsesModifiedBanks();
-
-                if (BanksUsed == true)
+                var testBanks = testSeq.CheckAvailableBanks();
+                if (testBanks == false) // all custom banks have been claimed
                 {
                     testSeq.SequenceBinaryList[0].InstrumentSet.BankSlot = CurrentFreeBank;
-                    CurrentFreeBank = ++CurrentFreeBank;
                 }
+
 
                 // some slots are rarely heard in-game, dont waste a custom instrument set on them, check if this slot is one of them
                 //if (IsBlockedByLowUse(testSeq, targetSlot, log))
@@ -974,6 +971,10 @@ namespace MMR.Randomizer.Utils
             // if the song has a custom instrument set, lock the sequence, update inst set value, debug output
             if (replacementSequence.SequenceBinaryList != null && replacementSequence.SequenceBinaryList[0] != null && replacementSequence.SequenceBinaryList[0].InstrumentSet != null)
             {
+                if (replacementSequence.SequenceBinaryList[0].InstrumentSet.BankSlot == CurrentFreeBank)
+                {
+                    CurrentFreeBank++;
+                }
                 replacementSequence.Instrument = replacementSequence.SequenceBinaryList[0].InstrumentSet.BankSlot; // update to the one we want to use
                 if (RomData.InstrumentSetList[replacementSequence.Instrument].Modified > 0)
                 {
@@ -1130,12 +1131,6 @@ namespace MMR.Randomizer.Utils
                 if (testSeq.Type.Intersect(targetSlot.Type).Any())
                 {
                     AssignSequenceSlot(targetSlot, testSeq, unassignedSequences, "", log);
-
-                    if (CurrentFreeBank == NextFreeBank)
-                    {
-                        NextFreeBank = ++NextFreeBank;
-                    }
-
                     return true;
                 }
 
@@ -1449,8 +1444,8 @@ namespace MMR.Randomizer.Utils
             var audiobankData = new byte[0];
 
             // for each bank, concat onto the new bank byte object, update the table to match the new instrument sets
-            // NextFreeBank is used so not all unused dummy audiobanks get written to rom
-            for (int audiobankIndex = 0; audiobankIndex <= NextFreeBank; ++audiobankIndex)
+            // CurrentFreeBank is used so not all unused dummy audiobanks get written to rom
+            for (int audiobankIndex = 0; audiobankIndex <= CurrentFreeBank; ++audiobankIndex)
             {
                 var currentBank = InstrumentSetList[audiobankIndex];
                 audiobankData = audiobankData.Concat(currentBank.BankBinary).ToArray();

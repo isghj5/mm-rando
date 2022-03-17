@@ -32,18 +32,19 @@ namespace MMR.Randomizer.Models.Rom
                                                                   && u.InstrumentSet.Hash == RomData.InstrumentSetList[u.InstrumentSet.BankSlot].Hash)));
         }
 
-        public bool UsesModifiedBanks()
+        public bool CheckAvailableBanks()
         {
-            var yoink = this.SequenceBinaryList.FindAll(u => RomData.InstrumentSetList[u.InstrumentSet.BankSlot].Modified != 0);
-
-            if (yoink.Count != 0)
+            // get list of banks that: their slot has not been modified, or their bank is already used by another song and can be reused
+            var banks = this.SequenceBinaryList.FindAll(u => u.InstrumentSet == null
+                                                                  || (RomData.InstrumentSetList[u.InstrumentSet.BankSlot].Modified == 0
+                                                                  || (u.InstrumentSet.Hash != 0
+                                                                  && u.InstrumentSet.Hash == RomData.InstrumentSetList[u.InstrumentSet.BankSlot].Hash)));
+            if (banks.Count == 0)
             {
-                return true;
+                return false;
             }
-
-            return false;
+            return true;
         }
-
 
     }
 }
