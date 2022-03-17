@@ -1,5 +1,5 @@
 {
-  "Version": 11,
+  "Version": 12,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -54981,6 +54981,233 @@
     {
       "Id": "GossipTerminaGossipDrums",
       "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonLower1",
+      "RequiredItems": [
+        "AreaEastAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonLower2",
+      "RequiredItems": [
+        "AreaEastAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroWithIgosDefeated",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Ikana King Access",
+        "Use Fire Arrow",
+        "UpgradeMirrorShield",
+        "Fighting",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper1",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper2",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper3",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper4",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper1WithStorms",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Play Song of Storms",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper2WithStorms",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Play Song of Storms",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper3WithStorms",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Play Song of Storms",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper4WithStorms",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Play Song of Storms",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCastleLower1",
+      "RequiredItems": [
+        "Ikana Castle Access",
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCastleLower2",
+      "RequiredItems": [
+        "Ikana Castle Access",
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCastleLower3",
+      "RequiredItems": [
+        "Ikana Castle Access",
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCastleUpper",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Ikana Castle Access",
+        "Use Fire Arrow",
+        "Jump along invisible platforms",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "Ikana Castle Falling Ceiling Skip",
+          "Take Damage",
+          "Goron Bomb Jump",
+          "Any Bomb Bag"
+        ],
+        [
+          "Ikana Castle Falling Ceiling Skip",
+          "Take Damage",
+          "Goron Bomb Jump",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "Ikana Castle Falling Ceiling Skip",
+          "FD Difficult Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroMaster",
+      "RequiredItems": [
+        "AreaStoneTowerTempleAccess",
+        "STT Garo Master Access"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",

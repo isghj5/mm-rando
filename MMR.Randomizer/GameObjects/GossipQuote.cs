@@ -4,6 +4,100 @@ namespace MMR.Randomizer.GameObjects
 {
     public enum GossipQuote
     {
+        // To cross the valley of Ikana, aim at the river beasts with the arrowhead that freezes.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemIceArrow)]
+        [GossipStone(Item.HintGaroCanyonLower1)]
+        GaroCanyonLower1 = 0x139A,
+
+        // The soul of the composer named Flat resets in Ikana Graveyard. I have heard his brother, Sharp is here in Ikana.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongStorms)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.SongStorms)]
+        [GossipStone(Item.HintGaroCanyonLower2)]
+        GaroCanyonLower2 = 0x139B,
+
+        // That which was acquired in Ikana Castle shall open the way to Stone Tower. That is all I know.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongElegy)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.SongElegy)]
+        [GossipStone(Item.HintGaroWithIgosDefeated)]
+        GaroWithIgosDefeated = 0x139C,
+
+        // Atop the hill here in Ikana, no human presence is felt, except that of the parent and child living in the house with the waterwheel.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskGibdo)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.MaskGibdo)]
+        [GossipStone(Item.HintGaroCanyonUpper1)]
+        GaroCanyonUpper1 = 0x139D,
+
+        // Every two minutes on every day, the girl who lives in the music box house goes to the dried well to check on something.
+        // But as long as the spirits are wandering outside her house, she dares not leave her home.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongStorms)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.SongStorms)]
+        [GossipStone(Item.HintGaroCanyonUpper2)]
+        GaroCanyonUpper2 = 0x139E,
+
+        // To revive the dried-up river on Ikana hill, you must go to the spring water cave.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongStorms)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.SongStorms)]
+        [GossipStone(Item.HintGaroCanyonUpper3)]
+        GaroCanyonUpper3 = 0x139F,
+
+        // If one tries to enter the spring water cave without knowing the song buried in a grave, that poor visitor shall meet with disaster.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongStorms)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.SongStorms)]
+        [GossipStone(Item.HintGaroCanyonUpper4)]
+        GaroCanyonUpper4 = 0x13A0,
+
+        // To save the cursed human, his soul must be  healed.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongHealing)]
+        [GossipStone(Item.HintGaroCanyonUpper1WithStorms)]
+        GaroCanyonUpper1WithStorms = 0x13A1,
+
+        // The well atop the hill and the well at Ikana Castle's inner garden are one.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.UpgradeMirrorShield)]
+        [GossipStone(Item.HintGaroCanyonUpper2WithStorms)]
+        GaroCanyonUpper2WithStorms = 0x13A2,
+
+        // As the Gibdos in Ikana's well have regrets and long to savor items from this world, they continue to wander about.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestWellLeftPurpleRupee)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestWellRightPurpleRupee)]
+        [GossipStone(Item.HintGaroCanyonUpper3WithStorms)]
+        GaroCanyonUpper3WithStorms = 0x13A3,
+
+        // Most of that which the Gibdos regret can be found inside the well itself.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestWellLeftPurpleRupee)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Location, Item.ChestWellRightPurpleRupee)]
+        [GossipStone(Item.HintGaroCanyonUpper4WithStorms)]
+        GaroCanyonUpper4WithStorms = 0x13A4,
+
+        // The ReDeads in Ikana were once members of the castle's dancing troupe...
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskCaptainHat)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskGibdo)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.MaskBremen)]
+        [GossipStone(Item.HintGaroCastleLower1)]
+        GaroCastleLower1 = 0x13A5,
+
+        // A hole can be opened in the ceiling of a particular room in Ikana Castle.
+        // But it cannot be broken without an explosive with incredible might.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemPowderKeg)]
+        [GossipStone(Item.HintGaroCastleLower2)]
+        GaroCastleLower2 = 0x13A6,
+
+        // In entering Ikana Castle, there is another secret route apart from the well entrance.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.UpgradeMirrorShield)]
+        [GossipStone(Item.HintGaroCastleLower3)]
+        GaroCastleLower3 = 0x13A7,
+
+        // To counter the rage of the King of Ikana Castle, burn away that which disrupts the light and shine the sacred rays on the King.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemFireArrow)]
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.UpgradeMirrorShield)]
+        [GossipStone(Item.HintGaroCastleUpper)]
+        GaroCastleUpper = 0x13A8,
+
+        // If you shoot that which releases the sacred golden light into the blood-stained, red emblem outside the temple...
+        // it shall rearrange things, in which the earth is born in the heavens and the moon is born on the earth.
+        [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemLightArrow)]
+        [GossipStone(Item.HintGaroMaster)]
+        GaroMaster = 0x13AA,
+
         //It seems the crows that fly near the town walls are fond of musical instruments...
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.IkanaScrubGoldRupee)] // or random? or silver rupees?
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.SongSonata)]

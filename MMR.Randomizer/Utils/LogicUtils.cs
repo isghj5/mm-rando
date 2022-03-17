@@ -119,8 +119,7 @@ namespace MMR.Randomizer.Utils
 
         public static Dictionary<GossipQuote, ReadOnlyCollection<Item>> GetGossipStoneRequirements(ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
         {
-            return Enum.GetValues(typeof(GossipQuote))
-                .Cast<GossipQuote>()
+            return Enum.GetValues<GossipQuote>()
                 .Where(gq => gq.HasAttribute<GossipStoneAttribute>())
                 .ToDictionary(gq => gq, gq => GetGossipStoneRequirement(gq, itemList, logic, settings));
         }

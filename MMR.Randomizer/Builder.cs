@@ -1486,6 +1486,11 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (_randomized.Settings.AddGaroHints)
+            {
+                hacks.Add(Resources.mods.garo_hints);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);

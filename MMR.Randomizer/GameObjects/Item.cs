@@ -10091,6 +10091,23 @@ namespace MMR.Randomizer.GameObjects
         GossipTerminaGossipPipes,
         GossipTerminaGossipDrums,
 
+        HintGaroCanyonLower1,
+        HintGaroCanyonLower2,
+        HintGaroWithIgosDefeated,
+        HintGaroCanyonUpper1,
+        HintGaroCanyonUpper2,
+        HintGaroCanyonUpper3,
+        HintGaroCanyonUpper4,
+        HintGaroCanyonUpper1WithStorms,
+        HintGaroCanyonUpper2WithStorms,
+        HintGaroCanyonUpper3WithStorms,
+        HintGaroCanyonUpper4WithStorms,
+        HintGaroCastleLower1,
+        HintGaroCastleLower2,
+        HintGaroCastleLower3,
+        HintGaroCastleUpper,
+        HintGaroMaster,
+
         [Repeatable]
         [ItemName("Ice Trap")]
         [GossipItemHint("a cold surprise", "an icy breeze")]
