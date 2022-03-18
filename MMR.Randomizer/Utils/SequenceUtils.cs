@@ -843,9 +843,13 @@ namespace MMR.Randomizer.Utils
                 var testBanks = testSeq.CheckAvailableBanks();
                 if (testBanks == false) // all custom banks have been claimed
                 {
+                    if (CurrentFreeBank > 0x0080)
+                    {
+                        return false; // can't overwrite any more entries
+                    }
+
                     testSeq.SequenceBinaryList[0].InstrumentSet.BankSlot = CurrentFreeBank;
                 }
-
 
                 // some slots are rarely heard in-game, dont waste a custom instrument set on them, check if this slot is one of them
                 //if (IsBlockedByLowUse(testSeq, targetSlot, log))
