@@ -253,8 +253,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xE)]
         [FlyingVariants(0)] // 0 works, but OOT used FFFF
         [GroundVariants(0)] // 0 works, but OOT used FFFF
-        [WaterVariants(0)] // 0 works, but OOT used FFFF
-        //[EnemizerScenesExcluded(0x69)]
+        [WaterVariants(0)]  // 0 works, but OOT used FFFF
         Shabom = 0x1D,// the flying bubbles from Jabu Jabu, exist only in giants cutscenes
 
         // this is a regular dungeon door in stonetower
@@ -496,9 +495,17 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x61)]
         // bush: 0xFF0B, small tree: 0xFF02
         // big tree: 0xFF00, big tree with shop man in it: 0x0A1A
-        [GroundVariants(0xFF0B, 0xFF02, 0xFF00, 0xFF01, 0xFF1A, 0x0A1A)]
-        [VariantsWithRoomMax(max: 0, variant: 0xFF0D)]// 0xFF0D crashes TF do not use 0D is from the cucco shack
-        [VariantsWithRoomMax(max: 1, variant: 0xA1A)]// has the shop keeper
+        // 17,18 are leaf particles
+        [GroundVariants(  0xFF00, 0xFF01, 0xFF02, 0xFF0B, // normal vanilla varieties
+            0x0A1A, 0xFF1A, // spawns with EnAni in the tree (if the object exists)
+            0xA, // really big ugly tree from OOT adult kakariko?
+            0xF, // even bigger bush, was this EVER used? even in OOT?
+            0x11, 0x12, // "Black" bushes, both big and small
+            0x7)] // yellow tree, fall colors? dying?
+
+        [VariantsWithRoomMax(max: 0, variant: 0xFF0D)] // 0xFF0D crashes TF do not use (is from the cucco shack)
+        [VariantsWithRoomMax(max: 1, variant: 0xA1A, 0xFF1A)] // has EnAni, more than one is odd
+        [VariantsWithRoomMax(max: 1, variant: 0xA)] // UGLY
         //[GroundVariants(0xFF01, 0xFF1A)] //testing
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.TerminaField, Scene.TwinIslandsSpring)] // need to keep in termina field for rupee rando
