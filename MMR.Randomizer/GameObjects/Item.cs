@@ -11,7 +11,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE41, 0x32)]
         [ItemName("Deku Mask"), LocationName("Starting Item"), Region(Region.Misc)]
         [GossipLocationHint("a new file", "a quest's inception"), GossipItemHint("a woodland spirit")]
-        [ShopText("Wear it to assume Deku form.")]
+        [ShopText("Wear it to assume Deku form.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x78), ItemPool(ItemCategory.Masks, LocationCategory.StartingItems)]
         MaskDeku,
@@ -22,7 +22,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE6F, 0x01)]
         [ItemName("Hero's Bow"), LocationName("Hero's Bow Chest"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("a projectile", "a ranged weapon")]
-        [ShopText("Use it to shoot arrows.")]
+        [ShopText("Use it to shoot arrows.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold), Chest(0x02223000 + 0xAA, ChestAttribute.AppearanceType.AppearsClear)]
         [GetItemIndex(0x22), ItemPool(ItemCategory.MainInventory, LocationCategory.BossFights)]
         ItemBow,
@@ -30,7 +30,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE26, 0x02)]
         [ItemName("Fire Arrow"), LocationName("Fire Arrow Chest"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("the power of fire", "a magical item")]
-        [ShopText("Arm your bow with arrows that burst into flame.")]
+        [ShopText("Arm your bow with arrows that burst into flame.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold), Chest(0x02336000 + 0xCA, ChestAttribute.AppearanceType.AppearsClear)]
         [GetItemIndex(0x25), ItemPool(ItemCategory.MainInventory, LocationCategory.BossFights)]
         ItemFireArrow,
@@ -38,7 +38,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE27, 0x03)]
         [ItemName("Ice Arrow"), LocationName("Ice Arrow Chest"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("the power of ice", "a magical item")]
-        [ShopText("Arm your bow with arrows that freeze.")]
+        [ShopText("Arm your bow with arrows that freeze.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold), Chest(0x0292F000 + 0x11E, ChestAttribute.AppearanceType.AppearsClear)]
         [GetItemIndex(0x26), ItemPool(ItemCategory.MainInventory, LocationCategory.BossFights)]
         ItemIceArrow,
@@ -46,7 +46,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE28, 0x04)]
         [ItemName("Light Arrow"), LocationName("Light Arrow Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("the power of light", "a magical item")]
-        [ShopText("Arm your bow with arrows infused with sacred light.")]
+        [ShopText("Arm your bow with arrows infused with sacred light.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold), Chest(0x0212B000 + 0xB2, ChestAttribute.AppearanceType.AppearsSwitch, 0x02192000 + 0x8E)]
         [GetItemIndex(0x27), ItemPool(ItemCategory.MainInventory, LocationCategory.BossFights)]
         ItemLightArrow,
@@ -83,7 +83,7 @@ namespace MMR.Randomizer.GameObjects
         ItemPowderKeg,
 
         [StartingItem(0xC5CE31, 0x0D)]
-        [ItemName("Pictobox"), LocationName("Koume"), Region(Region.SouthernSwamp)]
+        [ItemName("Pictograph Box"), LocationName("Koume"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a witch"), GossipItemHint("a light recorder", "a capture device")]
         [ShopText("Use it to snap pictographs.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -93,7 +93,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE32, 0x0E)]
         [ItemName("Lens of Truth"), LocationName("Lens of Truth Chest"), Region(Region.GoronVillage)]
         [GossipLocationHint("a lonely peak"), GossipItemHint("eyeglasses", "the truth", "focused vision")]
-        [ShopText("Uses magic to see what the naked eye cannot.")]
+        [ShopText("Uses magic to see what the naked eye cannot.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold), Chest(0x02EB8000 + 0x9A, ChestAttribute.AppearanceType.Normal)]
         [GetItemIndex(0x42), ItemPool(ItemCategory.MainInventory, LocationCategory.Chests)]
         ItemLens,
@@ -154,7 +154,7 @@ namespace MMR.Randomizer.GameObjects
 
         [StartingItemId(0x11)]
         [Repeatable, Temporary, Overwritable] // specially handled to turn into Red Potion on subsequent times
-        [ItemName("Bottle with Red Potion"), LocationName("Kotake"), Region(Region.SouthernSwamp)]
+        [ItemName("Bottle of Red Potion"), LocationName("Kotake"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("the sleeping witch"), GossipItemHint("a vessel of health", "bottled fortitude")]
         [ShopText("Replenishes your life energy.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -163,7 +163,7 @@ namespace MMR.Randomizer.GameObjects
 
         [StartingItemId(0x18)]
         [Repeatable, Temporary, Overwritable] // specially handled to turn into Milk on subsequent times
-        [ItemName("Bottle with Milk"), LocationName("Aliens Defense"), Region(Region.RomaniRanch)]
+        [ItemName("Milk Bottle"), LocationName("Aliens Defense"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch girl", "a good deed"), GossipItemHint("a dairy product", "the produce of cows")]
         [GossipCombineOrder(0), GossipCombine(MaskRomani, "Ranch Sisters Defense")]
         [ShopText("Recover five hearts with one drink. Contains two helpings.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
@@ -174,7 +174,7 @@ namespace MMR.Randomizer.GameObjects
         [RupeeRepeatable]
         [StartingItemId(0x22)]
         [Repeatable, Temporary, Overwritable] // specially handled to turn into Gold Dust on subsequent times
-        [ItemName("Bottle with Gold Dust"), LocationName("Goron Race"), Region(Region.TwinIslands)]
+        [ItemName("Bottle of Gold Dust"), LocationName("Goron Race"), Region(Region.TwinIslands)]
         [GossipLocationHint("a sporting event"), GossipItemHint("a gleaming powder"), GossipCompetitiveHint(-2)]
         [ShopText("It's very high quality.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -200,7 +200,7 @@ namespace MMR.Randomizer.GameObjects
 
         [StartingItemId(0x25)]
         [Repeatable, Temporary, Overwritable] // specially handled to turn into Chateau Romani on subsequent times
-        [ItemName("Bottle with Chateau Romani"), LocationName("Madame Aroma in Bar"), Region(Region.EastClockTown)]
+        [ItemName("Bottle of Chateau Romani"), LocationName("Madame Aroma in Bar"), Region(Region.EastClockTown)]
         [GossipLocationHint("an important lady"), GossipItemHint("a dairy product", "an adult beverage")]
         [ShopText("Drink it to get lasting stamina for your magic power.\u0009\u0001\u0000\u0000 Comes with an Empty Bottle.\u0009\u0002")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -748,7 +748,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE46, 0x48)]
         [ItemName("Mask of Scents"), LocationName("Butler"), Region(Region.DekuPalace)]
         [GossipLocationHint("a servant of royalty", "the royal servant"), GossipItemHint("heightened senses", "a pig's mask"), GossipCompetitiveHint(-1)]
-        [ShopText("Wear it to heighten your sense of smell.", isDefinite: true)]
+        [ShopText("Wear it to heighten your sense of smell.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x8E), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards)]
         MaskScents,
@@ -781,7 +781,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE4B, 0x3F)]
         [ItemName("Couple's Mask"), LocationName("Anju and Kafei"), Region(Region.StockPotInn)]
         [GossipLocationHint("a reunion", "a lovers' reunion"), GossipItemHint("a sign of love", "the mark of a couple"), GossipCompetitiveHint(3)]
-        [ShopText("When you wear it, you can soften people's hearts.")]
+        [ShopText("When you wear it, you can soften people's hearts.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x85), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards)]
         MaskCouple,
@@ -806,7 +806,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE4F, 0x41)]
         [ItemName("Gibdo Mask"), LocationName("Pamela's Father"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a healed spirit", "a lost father"), GossipItemHint("a mask of monsters")]
-        [ShopText("Even a real Gibdo will mistake you for its own kind.")]
+        [ShopText("Even a real Gibdo will mistake you for its own kind.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x87), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards)]
         MaskGibdo,
@@ -815,7 +815,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE50, 0x3B)]
         [ItemName("Garo's Mask"), LocationName("Gorman Bros Race"), Region(Region.MilkRoad)]
         [GossipLocationHint("a sporting event"), GossipItemHint("the mask of spies")]
-        [ShopText("This mask can summon the hidden Garo ninjas.")]
+        [ShopText("This mask can summon the hidden Garo ninjas.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x81), ItemPool(ItemCategory.Masks, LocationCategory.Minigames)]
         MaskGaro,
@@ -831,7 +831,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE52, 0x49)]
         [ItemName("Giant's Mask"), LocationName("Giant's Mask Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a growth spurt")]
-        [ShopText("If you wear it in a certain room, you'll grow into a giant.")]
+        [ShopText("If you wear it in a certain room, you'll grow into a giant.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold), Chest(0x020F1000 + 0x1C2, ChestAttribute.AppearanceType.AppearsSwitch, 0x02164000 + 0x19E)]
         [GetItemIndex(0x7D), ItemPool(ItemCategory.Masks, LocationCategory.Chests)]
         MaskGiant,
@@ -840,7 +840,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE47, 0x33)]
         [ItemName("Goron Mask"), LocationName("Darmani"), Region(Region.MountainVillage)]
         [GossipLocationHint("a healed spirit", "the lost champion"), GossipItemHint("a mountain spirit")]
-        [ShopText("Wear it to assume Goron form.")]
+        [ShopText("Wear it to assume Goron form.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x79), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards)]
         MaskGoron,
@@ -849,7 +849,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE4D, 0x34)]
         [ItemName("Zora Mask"), LocationName("Mikau"), Region(Region.GreatBayCoast)]
         [GossipLocationHint("a healed spirit", "a fallen guitarist"), GossipItemHint("an ocean spirit")]
-        [ShopText("Wear it to assume Zora form.")]
+        [ShopText("Wear it to assume Zora form.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x7A), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards)]
         MaskZora,
@@ -859,7 +859,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE24, 0x00)]
         [ItemName("Ocarina of Time"), LocationName("Skull Kid"), Region(Region.ClockTowerRoof)]
         [GossipLocationHint("a stolen possession"), GossipItemHint("a musical instrument")]
-        [ShopText("This musical instrument is filled with memories of Princess Zelda.")]
+        [ShopText("This musical instrument is filled with memories of Princess Zelda.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x4C), ItemPool(ItemCategory.TimeTravel, LocationCategory.BossFights)]
         ItemOcarina,
@@ -999,7 +999,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE74, 0x04)]
         [ItemName("Woodfall Map"), LocationName("Woodfall Map Chest"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("a navigation aid", "a paper guide")]
-        [ShopText("The Dungeon Map for Woodfall Temple.")]
+        [ShopText("The Dungeon Map for Woodfall Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), Chest(0x0221F000 + 0x12A, ChestAttribute.AppearanceType.AppearsClear)]
         [GetItemIndex(0x3E), ItemPool(ItemCategory.Navigation, LocationCategory.Chests)]
         ItemWoodfallMap,
@@ -1007,7 +1007,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE74, 0x02)]
         [ItemName("Woodfall Compass"), LocationName("Woodfall Compass Chest"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("a navigation aid", "a magnetic needle")]
-        [ShopText("The Compass for Woodfall Temple.")]
+        [ShopText("The Compass for Woodfall Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), Chest(0x02215000 + 0xFA, ChestAttribute.AppearanceType.AppearsClear)]
         [GetItemIndex(0x3F), ItemPool(ItemCategory.Navigation, LocationCategory.Chests)]
         ItemWoodfallCompass,
@@ -1015,7 +1015,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)SmallKeyMode.KeepThroughTime, false)]
         [ItemName("Woodfall Boss Key"), LocationName("Woodfall Boss Key Chest"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("an important key", "entry to evil's lair")]
-        [ShopText("The key for the boss room in Woodfall Temple.")]
+        [ShopText("The key for the boss room in Woodfall Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.BossKey), Chest(0x02227000 + 0x11A, ChestAttribute.AppearanceType.Normal)]
         [GetItemIndex(0x3D), ItemPool(ItemCategory.DungeonKeys, LocationCategory.BossFights)]
         ItemWoodfallBossKey,
@@ -1031,7 +1031,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE75, 0x04)]
         [ItemName("Snowhead Map"), LocationName("Snowhead Map Chest"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("a navigation aid", "a paper guide")]
-        [ShopText("The Dungeon Map for Snowhead Temple.")]
+        [ShopText("The Dungeon Map for Snowhead Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), Chest(0x02346000 + 0x13A, ChestAttribute.AppearanceType.Normal)]
         [GetItemIndex(0x54), ItemPool(ItemCategory.Navigation, LocationCategory.Chests)]
         ItemSnowheadMap,
@@ -1039,7 +1039,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE75, 0x02)]
         [ItemName("Snowhead Compass"), LocationName("Snowhead Compass Chest"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("a navigation aid", "a magnetic needle")]
-        [ShopText("The Compass for Snowhead Temple.")]
+        [ShopText("The Compass for Snowhead Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), Chest(0x022F2000 + 0x1BA, ChestAttribute.AppearanceType.Normal)]
         [GetItemIndex(0x57), ItemPool(ItemCategory.Navigation, LocationCategory.Chests)]
         ItemSnowheadCompass,
@@ -1047,7 +1047,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)SmallKeyMode.KeepThroughTime, false)]
         [ItemName("Snowhead Boss Key"), LocationName("Snowhead Boss Key Chest"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("an important key", "entry to evil's lair")]
-        [ShopText("The key for the boss room in Snowhead Temple.")]
+        [ShopText("The key for the boss room in Snowhead Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.BossKey), Chest(0x0230C000 + 0x57A, ChestAttribute.AppearanceType.Normal)]
         [GetItemIndex(0x4E), ItemPool(ItemCategory.DungeonKeys, LocationCategory.BossFights)]
         ItemSnowheadBossKey,
@@ -1079,7 +1079,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE76, 0x04)]
         [ItemName("Great Bay Map"), LocationName("Great Bay Map Chest"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("a navigation aid", "a paper guide")]
-        [ShopText("The Dungeon Map for Great Bay Temple.")]
+        [ShopText("The Dungeon Map for Great Bay Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), Chest(0x02905000 + 0x19A, ChestAttribute.AppearanceType.Normal)]
         [GetItemIndex(0x55), ItemPool(ItemCategory.Navigation, LocationCategory.Chests)]
         ItemGreatBayMap,
@@ -1087,7 +1087,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE76, 0x02)]
         [ItemName("Great Bay Compass"), LocationName("Great Bay Compass Chest"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("a navigation aid", "a magnetic needle")]
-        [ShopText("The Compass for Great Bay Temple.")]
+        [ShopText("The Compass for Great Bay Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), Chest(0x02914000 + 0x21A, ChestAttribute.AppearanceType.Normal)]
         [GetItemIndex(0x58), ItemPool(ItemCategory.Navigation, LocationCategory.Chests)]
         ItemGreatBayCompass,
@@ -1095,7 +1095,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)SmallKeyMode.KeepThroughTime, false)]
         [ItemName("Great Bay Boss Key"), LocationName("Great Bay Boss Key Chest"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("an important key", "entry to evil's lair")]
-        [ShopText("The key for the boss room in Great Bay Temple.")]
+        [ShopText("The key for the boss room in Great Bay Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.BossKey), Chest(0x02914000 + 0x1FA, ChestAttribute.AppearanceType.Normal)]
         [GetItemIndex(0x4F), ItemPool(ItemCategory.DungeonKeys, LocationCategory.BossFights)]
         ItemGreatBayBossKey,
@@ -1111,7 +1111,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE77, 0x04)]
         [ItemName("Stone Tower Map"), LocationName("Stone Tower Map Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a navigation aid", "a paper guide")]
-        [ShopText("The Dungeon Map for Stone Tower Temple.")]
+        [ShopText("The Dungeon Map for Stone Tower Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), Chest(0x0210F000 + 0x222, ChestAttribute.AppearanceType.Normal, 0x02182000 + 0x21E)]
         [GetItemIndex(0x56), ItemPool(ItemCategory.Navigation, LocationCategory.Chests)]
         ItemStoneTowerMap,
@@ -1119,7 +1119,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC5CE77, 0x02)]
         [ItemName("Stone Tower Compass"), LocationName("Stone Tower Compass Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("a navigation aid", "a magnetic needle")]
-        [ShopText("The Compass for Stone Tower Temple.")]
+        [ShopText("The Compass for Stone Tower Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden), Chest(0x02104000 + 0x292, ChestAttribute.AppearanceType.Normal, 0x02177000 + 0x2DE)]
         [GetItemIndex(0x6C), ItemPool(ItemCategory.Navigation, LocationCategory.Chests)]
         ItemStoneTowerCompass,
@@ -1127,7 +1127,7 @@ namespace MMR.Randomizer.GameObjects
         [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)SmallKeyMode.KeepThroughTime, false)]
         [ItemName("Stone Tower Boss Key"), LocationName("Stone Tower Boss Key Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("an important key", "entry to evil's lair")]
-        [ShopText("The key for the boss room in Stone Tower Temple.")]
+        [ShopText("The key for the boss room in Stone Tower Temple.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.BossKey), Chest(0x02130000 + 0x82, ChestAttribute.AppearanceType.Normal, 0x02198000 + 0xCE)]
         [GetItemIndex(0x53), ItemPool(ItemCategory.DungeonKeys, LocationCategory.BossFights)]
         ItemStoneTowerBossKey,
