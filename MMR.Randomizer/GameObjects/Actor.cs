@@ -3870,9 +3870,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(594)]
         // 0xA00 is lobby pacing
         // params: 8000 is a talking flag, 0x7E00 >> 9 is pathing, 0x7E00 is non-pathing though, the one value
-        [GroundVariants(0x7E01, 0x8000, 0xFE01, 0x7E02, 0xFE02, 0x7E02)]
+        [GroundVariants(0x7E01, 0xFE00, 0xFE01, 0x7E02, 0xFE02, 0x7E02)]
         [PathingVariants(0xA00, 0x7E01, 0x8000, 0xFE01, 0x7E02)]
-        [PathingTypeVarsPlacement(0x7E00, 9)]
+        [PathingTypeVarsPlacement(mask: 0x7E00, shift:9)]
         //[OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.WestClockTown)]
