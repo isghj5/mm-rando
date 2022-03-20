@@ -3055,7 +3055,7 @@ namespace MMR.Randomizer
                 //ResourceUtils.ApplyHack(ModsDir + "postman-testing");
                 return;
             }
-            RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", $"-AudBankv2");
+            RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", $"-AudBankv3");
             //RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", string.Empty);
         }
 
