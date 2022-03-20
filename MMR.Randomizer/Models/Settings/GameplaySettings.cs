@@ -177,6 +177,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Speedups.DoubleArcheryRewards = value; }
         }
 
+        public bool HiddenRupeesSparkle
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.HiddenRupeesSparkle; }
+            set { this.AsmOptions.MiscConfig.Flags.HiddenRupeesSparkle = value; }
+        }
+
         #endregion
 
         #region Random Elements

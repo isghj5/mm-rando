@@ -101,6 +101,8 @@ namespace MMR.UI.Forms
             this.cIceTrapsAppearance = new System.Windows.Forms.ComboBox();
             this.cIceTrapQuirks = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cAutoInvert = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.cClockSpeed = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cHideClock = new System.Windows.Forms.CheckBox();
@@ -122,6 +124,7 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cInvisSparkle = new System.Windows.Forms.CheckBox();
             this.cFillWallet = new System.Windows.Forms.CheckBox();
             this.cTargetHealth = new System.Windows.Forms.CheckBox();
             this.cLenientGoronSpikes = new System.Windows.Forms.CheckBox();
@@ -203,8 +206,6 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cAutoInvert = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1085,6 +1086,31 @@ namespace MMR.UI.Forms
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Clock";
             // 
+            // cAutoInvert
+            // 
+            this.cAutoInvert.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cAutoInvert.FormattingEnabled = true;
+            this.cAutoInvert.Items.AddRange(new object[] {
+            "Never",
+            "First Cycle",
+            "Always"});
+            this.cAutoInvert.Location = new System.Drawing.Point(7, 82);
+            this.cAutoInvert.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cAutoInvert.Name = "cAutoInvert";
+            this.cAutoInvert.Size = new System.Drawing.Size(164, 23);
+            this.cAutoInvert.TabIndex = 18;
+            this.cAutoInvert.SelectedIndexChanged += new System.EventHandler(this.cAutoInvert_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 66);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(68, 15);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Auto-invert";
+            // 
             // cClockSpeed
             // 
             this.cClockSpeed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1324,7 +1350,7 @@ namespace MMR.UI.Forms
             this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox8.Size = new System.Drawing.Size(495, 89);
+            this.groupBox8.Size = new System.Drawing.Size(154, 89);
             this.groupBox8.TabIndex = 35;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Cosmetic Customization";
@@ -1359,6 +1385,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cInvisSparkle);
             this.groupBox7.Controls.Add(this.cFillWallet);
             this.groupBox7.Controls.Add(this.cTargetHealth);
             this.groupBox7.Controls.Add(this.cLenientGoronSpikes);
@@ -1379,10 +1406,22 @@ namespace MMR.UI.Forms
             this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox7.Size = new System.Drawing.Size(334, 243);
+            this.groupBox7.Size = new System.Drawing.Size(334, 339);
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
+            // 
+            // cInvisSparkle
+            // 
+            this.cInvisSparkle.AutoSize = true;
+            this.cInvisSparkle.Location = new System.Drawing.Point(10, 233);
+            this.cInvisSparkle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cInvisSparkle.Name = "cInvisSparkle";
+            this.cInvisSparkle.Size = new System.Drawing.Size(147, 19);
+            this.cInvisSparkle.TabIndex = 42;
+            this.cInvisSparkle.Text = "Hidden Rupees Sparkle";
+            this.cInvisSparkle.UseVisualStyleBackColor = true;
+            this.cInvisSparkle.CheckedChanged += new System.EventHandler(this.cInvisSparkle_CheckedChanged);
             // 
             // cFillWallet
             // 
@@ -2297,31 +2336,6 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cAutoInvert
-            // 
-            this.cAutoInvert.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cAutoInvert.FormattingEnabled = true;
-            this.cAutoInvert.Items.AddRange(new object[] {
-            "Never",
-            "First Cycle",
-            "Always"});
-            this.cAutoInvert.Location = new System.Drawing.Point(7, 82);
-            this.cAutoInvert.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cAutoInvert.Name = "cAutoInvert";
-            this.cAutoInvert.Size = new System.Drawing.Size(164, 23);
-            this.cAutoInvert.TabIndex = 18;
-            this.cAutoInvert.SelectedIndexChanged += new System.EventHandler(this.cAutoInvert_SelectedIndexChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 66);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 15);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "Auto-invert";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2577,6 +2591,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFillWallet;
         private System.Windows.Forms.ComboBox cAutoInvert;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox cInvisSparkle;
     }
 }
 

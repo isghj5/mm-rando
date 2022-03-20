@@ -146,6 +146,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cTargetHealth, "Targeting an enemy shows their health bar.");
             TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
             TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
+            TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
         }
 
         /// <summary>
@@ -1140,6 +1141,7 @@ namespace MMR.UI.Forms
             cTargetHealth.Checked = _configuration.GameplaySettings.TargetHealthBar;
             cFreeScarecrow.Checked = _configuration.GameplaySettings.FreeScarecrow;
             cFillWallet.Checked = _configuration.GameplaySettings.FillWallet;
+            cInvisSparkle.Checked = _configuration.GameplaySettings.HiddenRupeesSparkle;
 
             // HUD config options
             var heartItems = ColorSelectionManager.Hearts.GetItems();
@@ -1691,6 +1693,7 @@ namespace MMR.UI.Forms
             cTargetHealth.Enabled = v;
             cFreeScarecrow.Enabled = v;
             cFillWallet.Enabled = v;
+            cInvisSparkle.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
@@ -2139,6 +2142,11 @@ namespace MMR.UI.Forms
         private void cAutoInvert_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.AutoInvert = (AutoInvertState)cAutoInvert.SelectedIndex);
+        }
+
+        private void cInvisSparkle_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.HiddenRupeesSparkle = cInvisSparkle.Checked);
         }
     }
 }
