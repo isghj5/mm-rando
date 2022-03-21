@@ -469,6 +469,14 @@ void Models_WriteBossRemainsObjectSegment(GlobalContext* ctxt, u32 graphicIdMinu
     }
 }
 
+s16 Models_GetBossRemainRotation(Actor* actor, GlobalContext* ctxt) {
+    s32 frameCount = ctxt->sceneFrameCount;
+    if (MISC_CONFIG.flags.freestanding && ShouldRotateBackwards(ctxt, Rupee_GetDrawGiIndex(actor))) {
+        frameCount = -frameCount;
+    }
+    return (s16)(frameCount*1000);
+}
+
 /**
  * Hook function for drawing Boss Remain actors as their new item.
  **/
