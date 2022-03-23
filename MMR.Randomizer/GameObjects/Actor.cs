@@ -60,7 +60,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0xC)]
         // these three are from inverted stone tower, however when placed in TF, 2/3 were invisible chests
         // type: 0x7 seems to be enemy clear, also type 1, 0x5 is woodentype, 0xC is switch activated
-        // 0xF000 is type, 0x001F are chest flags, 0x0FE would be the item then
+        // 0xF000 is type, 0x001F are chest flags, 0x0FE0 would be the item then
         // gomess is 0x27BE, which does not spawn util you kill him, so obviously the top byte is NOT that simple in MM, snowhead is 27BE
         // dont use CM as reference, rando changes how the chests work for item rando to work
         [GroundVariants( 0x57BE, 0x59DD, 0x56BF, 0x5FDE, 0x5579,
@@ -420,6 +420,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x3E)]
         [FileID(78)]
+        // params: type is 0xFF, address offset for type 0 is 0xFF00
         [GroundVariants(0x0)] // the 101 and above are for warp TO bosses
         [VariantsWithRoomMax(max: 1, variant:0x0)]
         [UnkillableAllVariants]
@@ -1696,11 +1697,13 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // assumption: need mirror shield
         SkeleKnight = 0x115, // En_Knight
 
+        [ActorizerEnabled]
         [FileID(251)]
-        // in actor obj set to 1, so might be multiple types
-        [ObjectListIndex(0x3E)]
-        //[GroundVariants(0x83C1)]
-        [GroundVariants(0x3C1)]
+        [ObjectListIndex(3)] // 3 if you want the visible one, from Goron Trial
+        // params: 0x8000 is invisbile (deku playground exit)
+        // 0x03C0 is unknown, it must be set to max for it to work, non-x just shows a tatl spot and does nothing else
+        // 0x3F is scene exit list index
+        [GroundVariants(0x3C0)] // zero index, always safe
         [EnemizerScenesExcluded(Scene.GoronTrial)]
         [UnkillableAllVariants]
         WarpToTrialEntrance = 0x116, // En_Warp_tag
