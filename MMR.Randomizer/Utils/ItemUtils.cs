@@ -170,6 +170,15 @@ namespace MMR.Randomizer.Utils
             return _allLocations ?? (_allLocations = Enum.GetValues<Item>().Where(item => item.Location() != null).ToList());
         }
 
+        private static Dictionary<ClassicCategory, List<Item>> _itemsByClassicCategory;
+        public static Dictionary<ClassicCategory, List<Item>> ItemsByClassicCategory()
+        {
+            return _itemsByClassicCategory ?? (_itemsByClassicCategory = AllLocations()
+                .GroupBy(item => item.ClassicCategory())
+                .Where(g => g.Key.HasValue)
+                .ToDictionary(kvp => kvp.Key.Value, kvp => kvp.ToList()));
+        }
+
         private static Dictionary<ItemCategory, List<Item>> _itemsByItemCategory;
         public static Dictionary<ItemCategory, List<Item>> ItemsByItemCategory()
         {

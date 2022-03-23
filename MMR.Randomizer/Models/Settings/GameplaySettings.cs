@@ -247,6 +247,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public List<LocationCategory> LocationCategoriesRandomized { get; set; }
 
+        public List<ClassicCategory> ClassicCategoriesRandomized { get; set; }
+
         /// <summary>
         ///  Custom item list string
         /// </summary>

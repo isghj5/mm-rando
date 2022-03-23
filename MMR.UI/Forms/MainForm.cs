@@ -269,6 +269,40 @@ namespace MMR.UI.Forms
 
         private void InitializeItemPoolSettings()
         {
+            var itemsByClassicCategory = ItemUtils.ItemsByClassicCategory();
+            var classicCategoryX = 0;
+            var classicCategoryY = 0; // 140?
+            var classicCategoryWidth = 190;
+            foreach (var classicCategory in Enum.GetValues<ClassicCategory>())
+            {
+                if (classicCategory <= 0)
+                {
+                    continue;
+                }
+
+                var checkbox = new InvertIndeterminateCheckBox();
+                var items = itemsByClassicCategory[classicCategory];
+                checkbox.Tag = items;
+                checkbox.Text = $"{addSpacesRegex.Replace(classicCategory.ToString(), " $1")}: +{items.Count}";
+                var description = classicCategory.GetAttribute<DescriptionAttribute>()?.Description;
+                if (description != null)
+                {
+                    TooltipBuilder.SetTooltip(checkbox, description);
+                }
+                checkbox.Location = new Point(classicCategoryX, classicCategoryY);
+                checkbox.Width = classicCategoryWidth;
+                checkbox.Height = 26;
+                checkbox.CheckStateChanged += cItemCategory2_CheckStateChanged;
+                pClassicItemPool.Controls.Add(checkbox);
+
+                classicCategoryX += classicCategoryWidth;
+                if (classicCategoryX + classicCategoryWidth > pClassicItemPool.Width)
+                {
+                    classicCategoryX = 0;
+                    classicCategoryY += 26;
+                }
+            }
+
             var itemsByItemCategory = ItemUtils.ItemsByItemCategory();
 
             var itemsByLocationCategory = ItemUtils.ItemsByLocationCategory();
@@ -276,16 +310,16 @@ namespace MMR.UI.Forms
             tableItemPool.RowCount = Enum.GetValues<ItemCategory>().Count() - 2;
             tableItemPool.ColumnCount = Enum.GetValues<LocationCategory>().Count() - 1;
 
-            var locationCategoriesX = 141;
+            var locationCategoriesX = 134;
 
             var locationCategoryLabel = new LocationCategoryLabel();
             locationCategoryLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            locationCategoryLabel.Location = new Point(locationCategoriesX + 24, 30);
+            locationCategoryLabel.Location = new Point(locationCategoriesX + 24, 0);
             locationCategoryLabel.Width = 610;
             locationCategoryLabel.Height = 105;
             locationCategoryLabel.Lines = Enum.GetValues<LocationCategory>().Where(c => c > 0).Select(c => $"{addSpacesRegex.Replace(c.ToString(), " $1")}: +{itemsByLocationCategory[c].Count}").ToList();
 
-            tabItemPool.Controls.Add(locationCategoryLabel);
+            pLocationCategories.Controls.Add(locationCategoryLabel);
 
             foreach (var locationCategory in Enum.GetValues<LocationCategory>())
             {
@@ -302,12 +336,12 @@ namespace MMR.UI.Forms
                 {
                     TooltipBuilder.SetTooltip(checkbox, description);
                 }
-                checkbox.Location = new Point(locationCategoriesX, 140);
+                checkbox.Location = new Point(locationCategoriesX, 110);
                 checkbox.Width = 17;
                 checkbox.Height = 17;
                 checkbox.CheckStateChanged += cItemCategory2_CheckStateChanged;
                 tableItemPool.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 25));
-                tabItemPool.Controls.Add(checkbox);
+                pLocationCategories.Controls.Add(checkbox);
 
                 locationCategoriesX += 26;
             }
@@ -417,8 +451,9 @@ namespace MMR.UI.Forms
             {
                 // todo keep checkboxes cached
                 var checkboxes = new List<CheckBox>();
-                checkboxes.AddRange(tabItemPool.Controls.OfType<CheckBox>().ToList());
+                checkboxes.AddRange(pLocationCategories.Controls.OfType<CheckBox>().ToList());
                 checkboxes.AddRange(tableItemPool.Controls.OfType<CheckBox>().ToList());
+                checkboxes.AddRange(pClassicItemPool.Controls.OfType<CheckBox>().ToList());
 
                 foreach (var otherCheckbox in checkboxes)
                 {
@@ -1953,7 +1988,7 @@ namespace MMR.UI.Forms
                 }
             }
 
-            if (_configuration.GameplaySettings.ItemCategoriesRandomized != null || _configuration.GameplaySettings.LocationCategoriesRandomized != null)
+            if (_configuration.GameplaySettings.ItemCategoriesRandomized != null || _configuration.GameplaySettings.LocationCategoriesRandomized != null || _configuration.GameplaySettings.ClassicCategoriesRandomized != null)
             {
                 var items = new List<Item>();
                 if (_configuration.GameplaySettings.ItemCategoriesRandomized != null)
@@ -1965,6 +2000,11 @@ namespace MMR.UI.Forms
                 {
                     items.AddRange(ItemUtils.ItemsByLocationCategory().Where(kvp => _configuration.GameplaySettings.LocationCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
                     _configuration.GameplaySettings.LocationCategoriesRandomized = null;
+                }
+                if (_configuration.GameplaySettings.ClassicCategoriesRandomized != null)
+                {
+                    items.AddRange(ItemUtils.ItemsByClassicCategory().Where(kvp => _configuration.GameplaySettings.ClassicCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
+                    _configuration.GameplaySettings.ClassicCategoriesRandomized = null;
                 }
                 _configuration.GameplaySettings.CustomItemList.Clear();
                 foreach (var item in items)
@@ -2147,6 +2187,13 @@ namespace MMR.UI.Forms
         private void cInvisSparkle_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.HiddenRupeesSparkle = cInvisSparkle.Checked);
+        }
+
+        private void cItemPoolAdvanced_CheckedChanged(object sender, EventArgs e)
+        {
+            pLocationCategories.Visible = cItemPoolAdvanced.Checked;
+            tableItemPool.Visible = cItemPoolAdvanced.Checked;
+            pClassicItemPool.Visible = !cItemPoolAdvanced.Checked;
         }
     }
 }

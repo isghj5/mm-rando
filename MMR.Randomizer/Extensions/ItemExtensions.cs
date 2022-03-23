@@ -124,6 +124,11 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<TemporaryAttribute>()?.Condition(settings) ?? false;
         }
 
+        public static ClassicCategory? ClassicCategory(this Item item)
+        {
+            return item.GetAttribute<ItemPoolAttribute>()?.ClassicCategory;
+        }
+
         public static ItemCategory? ItemCategory(this Item item)
         {
             return item.GetAttribute<ItemPoolAttribute>()?.ItemCategory;

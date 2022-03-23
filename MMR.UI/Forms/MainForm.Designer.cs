@@ -65,10 +65,13 @@ namespace MMR.UI.Forms
             this.lCustomStartingItemAmount = new System.Windows.Forms.Label();
             this.bStartingItemEditor = new System.Windows.Forms.Button();
             this.tabItemPool = new System.Windows.Forms.TabPage();
+            this.cItemPoolAdvanced = new System.Windows.Forms.CheckBox();
+            this.pClassicItemPool = new System.Windows.Forms.Panel();
             this.lItemPoolText = new System.Windows.Forms.Label();
             this.bItemPoolEdit = new System.Windows.Forms.Button();
             this.tItemPool = new System.Windows.Forms.TextBox();
             this.tableItemPool = new System.Windows.Forms.TableLayoutPanel();
+            this.pLocationCategories = new System.Windows.Forms.Panel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.cFreeScarecrow = new System.Windows.Forms.CheckBox();
@@ -577,25 +580,46 @@ namespace MMR.UI.Forms
             // 
             // tabItemPool
             // 
+            this.tabItemPool.Controls.Add(this.cItemPoolAdvanced);
+            this.tabItemPool.Controls.Add(this.pClassicItemPool);
             this.tabItemPool.Controls.Add(this.lItemPoolText);
             this.tabItemPool.Controls.Add(this.bItemPoolEdit);
             this.tabItemPool.Controls.Add(this.tItemPool);
             this.tabItemPool.Controls.Add(this.tableItemPool);
+            this.tabItemPool.Controls.Add(this.pLocationCategories);
             this.tabItemPool.Location = new System.Drawing.Point(4, 24);
             this.tabItemPool.Name = "tabItemPool";
             this.tabItemPool.Size = new System.Drawing.Size(780, 361);
             this.tabItemPool.TabIndex = 6;
-            this.tabItemPool.Text = "Item Pool";
+            this.tabItemPool.Text = "Item Randomization";
             this.tabItemPool.UseVisualStyleBackColor = true;
+            // 
+            // cItemPoolAdvanced
+            // 
+            this.cItemPoolAdvanced.AutoSize = true;
+            this.cItemPoolAdvanced.Location = new System.Drawing.Point(7, 52);
+            this.cItemPoolAdvanced.Name = "cItemPoolAdvanced";
+            this.cItemPoolAdvanced.Size = new System.Drawing.Size(107, 19);
+            this.cItemPoolAdvanced.TabIndex = 27;
+            this.cItemPoolAdvanced.Text = "Advanced View";
+            this.cItemPoolAdvanced.UseVisualStyleBackColor = true;
+            this.cItemPoolAdvanced.CheckedChanged += new System.EventHandler(this.cItemPoolAdvanced_CheckedChanged);
+            // 
+            // pClassicItemPool
+            // 
+            this.pClassicItemPool.Location = new System.Drawing.Point(7, 77);
+            this.pClassicItemPool.Name = "pClassicItemPool";
+            this.pClassicItemPool.Size = new System.Drawing.Size(765, 281);
+            this.pClassicItemPool.TabIndex = 26;
             // 
             // lItemPoolText
             // 
             this.lItemPoolText.AutoSize = true;
             this.lItemPoolText.Location = new System.Drawing.Point(7, 34);
             this.lItemPoolText.Name = "lItemPoolText";
-            this.lItemPoolText.Size = new System.Drawing.Size(102, 15);
+            this.lItemPoolText.Size = new System.Drawing.Size(122, 15);
             this.lItemPoolText.TabIndex = 25;
-            this.lItemPoolText.Text = "0/0 items selected";
+            this.lItemPoolText.Text = "0/0 items randomized";
             // 
             // bItemPoolEdit
             // 
@@ -627,6 +651,15 @@ namespace MMR.UI.Forms
             this.tableItemPool.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.tableItemPool.Size = new System.Drawing.Size(774, 198);
             this.tableItemPool.TabIndex = 22;
+            this.tableItemPool.Visible = false;
+            // 
+            // pLocationCategories
+            // 
+            this.pLocationCategories.Location = new System.Drawing.Point(7, 30);
+            this.pLocationCategories.Name = "pLocationCategories";
+            this.pLocationCategories.Size = new System.Drawing.Size(770, 129);
+            this.pLocationCategories.TabIndex = 28;
+            this.pLocationCategories.Visible = false;
             // 
             // tabGimmicks
             // 
@@ -2592,6 +2625,9 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.ComboBox cAutoInvert;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.CheckBox cInvisSparkle;
+        private System.Windows.Forms.Panel pClassicItemPool;
+        private System.Windows.Forms.CheckBox cItemPoolAdvanced;
+        private System.Windows.Forms.Panel pLocationCategories;
     }
 }
 
