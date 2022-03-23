@@ -1205,6 +1205,8 @@ namespace MMR.Randomizer.GameObjects
         // 801, opening scene grass, 0x1FXX are ranch and TF
         // 0402 is ikana graveyard rock circle
         [GroundVariants(0x801, 0x1F02, 0x1F00, 0x0402)]
+        [AlignedCompanionActor(Shiro, CompanionAlignment.OnTop, ourVariant: -1,
+            variant: 0)] // shiro likes his rock friends
         [AlignedCompanionActor(Bugs, CompanionAlignment.Above, ourVariant: -1,
             variant: 0x2324, 0x4324)] // butterflies over the bushes
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: 0402,
@@ -1257,7 +1259,8 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0)] // more fun
         //[WallVariants(1)] // facing the wrong way and no bonk, so not that interesting
         [VariantsWithRoomMax(max:3, variant:0)]
-        [EnemizerScenesPlacementBlock(Scene.RomaniRanch, Scene.Woodfall, Scene.DekuShrine)]
+        //[EnemizerScenesPlacementBlock(Scene.RomaniRanch, Scene.Woodfall, Scene.DekuShrine)] // standing variant has really large collider
+        [EnemizerScenesPlacementBlock(Scene.TerminaField)] // now that we can recycle objects, this scene will always have too many of him, its obnoxious
         [UnkillableAllVariants]
         En_Ani = 0xBD, // En_Ani
 
@@ -1654,9 +1657,19 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x2)]
         Obj_Grass_Carry = 0x10C, // Obj_Grass_Carry
 
+        // this is random grass patch, instead of center surrounded with circle
+        [ActorizerEnabled]
         [FileID(244)]
         [ObjectListIndex(0x2)]
-        Obj_Grass_Unit = 0x10D, // Obj_Grass_Unit
+        // params: 0x1F00 is drop table index, and 0x0001 is shape, 0 is octagon, 1 is loose shuffled
+        // all the regular drop tables that can be attached to grass
+        [GroundVariants(0x0, 0x1, 0x100, 0x101,  0x600, 0x601, 0x800, 0x801, 0xA00, 0xA01, 0xB00, 0xB01, 0xC00, 0xC01,
+            0x400, 0x401, // ikana rocks, seems reasonable
+            0xF00, 0xF01, // tektite, weirdly this is the nost variable of all the drop tables
+            0x901, // chance of lots of money, as this is the drop table for money enemies
+            0x300, 0x301)] // this drop table is unused according to mzxrules, but looks balanced
+        [UnkillableAllVariants]
+        NaturalPatchOfGrass = 0x10D, // Obj_Grass_Unit
 
         Empty10E = 0x10E, // Empty10E
         Empty10F = 0x10F, // Empty10F
