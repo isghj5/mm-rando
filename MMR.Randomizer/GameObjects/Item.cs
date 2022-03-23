@@ -5325,7 +5325,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a royal garden", "the home of scrubs"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [GetItemIndex(0x27E), ItemPool(ItemCategory.GreenRupees, LocationCategory.Freestanding, ClassicCategory.GlitchesRequired), CollectableIndex(0x158C)]
+        [GetItemIndex(0x27E), ItemPool(ItemCategory.GreenRupees, LocationCategory.Freestanding, ClassicCategory.FreestandingRupees), CollectableIndex(0x158C)]
         CollectableDekuPalaceWestInnerGardenItem9,
 
 
