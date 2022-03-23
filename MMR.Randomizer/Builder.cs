@@ -1486,7 +1486,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_randomized.Settings.AddGaroHints)
+            if (_randomized.Settings.GaroHintStyle != GossipHintStyle.Default)
             {
                 hacks.Add(Resources.mods.garo_hints);
             }

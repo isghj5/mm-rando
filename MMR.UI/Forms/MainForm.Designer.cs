@@ -209,6 +209,11 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
+            this.gGaroHints = new System.Windows.Forms.GroupBox();
+            this.lGaroHints = new System.Windows.Forms.Label();
+            this.cGaroHint = new System.Windows.Forms.ComboBox();
+            this.cMixGaroWithGossip = new System.Windows.Forms.CheckBox();
+            this.cClearGaroHints = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -239,6 +244,7 @@ namespace MMR.UI.Forms
             this.ttOutput.SuspendLayout();
             this.tpOutputSettings.SuspendLayout();
             this.tpPatchSettings.SuspendLayout();
+            this.gGaroHints.SuspendLayout();
             this.SuspendLayout();
             // 
             // bopen
@@ -1202,6 +1208,7 @@ namespace MMR.UI.Forms
             // 
             // tabComfort
             // 
+            this.tabComfort.Controls.Add(this.gGaroHints);
             this.tabComfort.Controls.Add(this.gSpeedUps);
             this.tabComfort.Controls.Add(this.gHints);
             this.tabComfort.Controls.Add(this.groupBox8);
@@ -1227,7 +1234,7 @@ namespace MMR.UI.Forms
             this.gSpeedUps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gSpeedUps.Name = "gSpeedUps";
             this.gSpeedUps.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gSpeedUps.Size = new System.Drawing.Size(421, 243);
+            this.gSpeedUps.Size = new System.Drawing.Size(421, 148);
             this.gSpeedUps.TabIndex = 37;
             this.gSpeedUps.TabStop = false;
             this.gSpeedUps.Text = "Speed Ups";
@@ -1310,7 +1317,7 @@ namespace MMR.UI.Forms
             this.gHints.Controls.Add(this.cGossipHints);
             this.gHints.Controls.Add(this.cFreeHints);
             this.gHints.Controls.Add(this.cClearHints);
-            this.gHints.Location = new System.Drawing.Point(7, 257);
+            this.gHints.Location = new System.Drawing.Point(7, 162);
             this.gHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gHints.Name = "gHints";
             this.gHints.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
@@ -1327,9 +1334,9 @@ namespace MMR.UI.Forms
             this.lGossip.Location = new System.Drawing.Point(12, 24);
             this.lGossip.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lGossip.Name = "lGossip";
-            this.lGossip.Size = new System.Drawing.Size(94, 15);
+            this.lGossip.Size = new System.Drawing.Size(95, 15);
             this.lGossip.TabIndex = 20;
-            this.lGossip.Text = "Hint distribution";
+            this.lGossip.Text = "Hint Distribution";
             // 
             // cGossipHints
             // 
@@ -2369,6 +2376,77 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
+            // gGaroHints
+            // 
+            this.gGaroHints.Controls.Add(this.lGaroHints);
+            this.gGaroHints.Controls.Add(this.cGaroHint);
+            this.gGaroHints.Controls.Add(this.cMixGaroWithGossip);
+            this.gGaroHints.Controls.Add(this.cClearGaroHints);
+            this.gGaroHints.Location = new System.Drawing.Point(7, 257);
+            this.gGaroHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGaroHints.Name = "gGaroHints";
+            this.gGaroHints.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGaroHints.Size = new System.Drawing.Size(260, 89);
+            this.gGaroHints.TabIndex = 38;
+            this.gGaroHints.TabStop = false;
+            this.gGaroHints.Text = "Garo Hints";
+            // 
+            // lGaroHints
+            // 
+            this.lGaroHints.AutoSize = true;
+            this.lGaroHints.BackColor = System.Drawing.Color.Transparent;
+            this.lGaroHints.ForeColor = System.Drawing.Color.Black;
+            this.lGaroHints.Location = new System.Drawing.Point(13, 24);
+            this.lGaroHints.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lGaroHints.Name = "lGaroHints";
+            this.lGaroHints.Size = new System.Drawing.Size(95, 15);
+            this.lGaroHints.TabIndex = 20;
+            this.lGaroHints.Text = "Hint Distribution";
+            // 
+            // cGaroHint
+            // 
+            this.cGaroHint.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cGaroHint.FormattingEnabled = true;
+            this.cGaroHint.Items.AddRange(new object[] {
+            "Default",
+            "Random",
+            "Relevant",
+            "Competitive"});
+            this.cGaroHint.Location = new System.Drawing.Point(15, 39);
+            this.cGaroHint.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cGaroHint.Name = "cGaroHint";
+            this.cGaroHint.Size = new System.Drawing.Size(134, 23);
+            this.cGaroHint.TabIndex = 19;
+            this.cGaroHint.SelectedIndexChanged += new System.EventHandler(this.cGaroHint_SelectedIndexChanged);
+            // 
+            // cMixGaroWithGossip
+            // 
+            this.cMixGaroWithGossip.AutoSize = true;
+            this.cMixGaroWithGossip.BackColor = System.Drawing.Color.Transparent;
+            this.cMixGaroWithGossip.ForeColor = System.Drawing.Color.Black;
+            this.cMixGaroWithGossip.Location = new System.Drawing.Point(15, 64);
+            this.cMixGaroWithGossip.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMixGaroWithGossip.Name = "cMixGaroWithGossip";
+            this.cMixGaroWithGossip.Size = new System.Drawing.Size(115, 19);
+            this.cMixGaroWithGossip.TabIndex = 15;
+            this.cMixGaroWithGossip.Text = "Mix with Gossips";
+            this.cMixGaroWithGossip.UseVisualStyleBackColor = false;
+            this.cMixGaroWithGossip.CheckedChanged += new System.EventHandler(this.cMixGaroWithGossip_CheckedChanged);
+            // 
+            // cClearGaroHints
+            // 
+            this.cClearGaroHints.AutoSize = true;
+            this.cClearGaroHints.BackColor = System.Drawing.Color.Transparent;
+            this.cClearGaroHints.ForeColor = System.Drawing.Color.Black;
+            this.cClearGaroHints.Location = new System.Drawing.Point(159, 20);
+            this.cClearGaroHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cClearGaroHints.Name = "cClearGaroHints";
+            this.cClearGaroHints.Size = new System.Drawing.Size(82, 19);
+            this.cClearGaroHints.TabIndex = 16;
+            this.cClearGaroHints.Text = "Clear hints";
+            this.cClearGaroHints.UseVisualStyleBackColor = false;
+            this.cClearGaroHints.CheckedChanged += new System.EventHandler(this.cClearGaroHints_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2446,6 +2524,8 @@ namespace MMR.UI.Forms
             this.tpOutputSettings.PerformLayout();
             this.tpPatchSettings.ResumeLayout(false);
             this.tpPatchSettings.PerformLayout();
+            this.gGaroHints.ResumeLayout(false);
+            this.gGaroHints.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2628,6 +2708,11 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Panel pClassicItemPool;
         private System.Windows.Forms.CheckBox cItemPoolAdvanced;
         private System.Windows.Forms.Panel pLocationCategories;
+        private System.Windows.Forms.GroupBox gGaroHints;
+        private System.Windows.Forms.Label lGaroHints;
+        private System.Windows.Forms.ComboBox cGaroHint;
+        private System.Windows.Forms.CheckBox cMixGaroWithGossip;
+        private System.Windows.Forms.CheckBox cClearGaroHints;
     }
 }
 

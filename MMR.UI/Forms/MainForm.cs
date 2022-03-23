@@ -115,7 +115,9 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cSFX, "Randomize sound effects that are played throughout the game.");
             TooltipBuilder.SetTooltip(cMusic, "Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music. Causes softlock on Frog Choir HP.");
             TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
+            TooltipBuilder.SetTooltip(cMixGaroWithGossip, "Garo hints distribution and gossip hint distribution will be mixed together.");
             TooltipBuilder.SetTooltip(cClearHints, "Gossip stone hints will give clear item and location names.");
+            TooltipBuilder.SetTooltip(cClearGaroHints, "Garo hints will give clear item and location names.");
             TooltipBuilder.SetTooltip(cNoDowngrades, "Downgrading items will be prevented.");
             TooltipBuilder.SetTooltip(cShopAppearance, "Shops models and text will be updated to match the item they give.");
             TooltipBuilder.SetTooltip(cUpdateChests, "Chest appearance will be updated to match the item they contain.");
@@ -125,7 +127,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cDisableCritWiggle, "Disable crit wiggle movement modification when 1 heart of health or less.");
             TooltipBuilder.SetTooltip(cLink, "Select a character model to replace Link's default model.");
             TooltipBuilder.SetTooltip(cTatl, "Select a color scheme to replace Tatl's default color scheme.");
-            TooltipBuilder.SetTooltip(cGossipHints, "Select a Gossip Stone hint style\n\n - Default: Vanilla Gossip Stone hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, 2 hints about locations with important items, 3 hints about locations with no important items.");
+            TooltipBuilder.SetTooltip(cGossipHints, "Select a Gossip Stone hint style\n\n - Default: Vanilla Gossip Stone hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, and hints regarding importance or non-importance of regions");
+            TooltipBuilder.SetTooltip(cGaroHint, "Select a Garo hint style\n\n - Default: Vanilla Garo hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, and hints regarding importance or non-importance of regions.");
             TooltipBuilder.SetTooltip(cSkipBeaver, "Modify Beavers to not have to race the younger beaver.");
             TooltipBuilder.SetTooltip(cGoodDampeRNG, "Change Dampe ghost flames to always have two on the ground floor and one up the ladder.");
             TooltipBuilder.SetTooltip(cGoodDogRaceRNG, "Make Gold Dog always win if you have the Mask of Truth.");
@@ -1073,7 +1076,9 @@ namespace MMR.UI.Forms
             }
             cQText.Checked = _configuration.GameplaySettings.QuickTextEnabled;
             cFreeHints.Checked = _configuration.GameplaySettings.FreeHints;
+            cMixGaroWithGossip.Checked = _configuration.GameplaySettings.MixGossipAndGaroHints;
             cClearHints.Checked = _configuration.GameplaySettings.ClearHints;
+            cClearGaroHints.Checked = _configuration.GameplaySettings.ClearGaroHints;
             cHideClock.Checked = _configuration.GameplaySettings.HideClock;
             cSunsSong.Checked = _configuration.GameplaySettings.EnableSunsSong;
             cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
@@ -1104,6 +1109,7 @@ namespace MMR.UI.Forms
             cNutAndStickDrops.SelectedIndex = (int)_configuration.GameplaySettings.NutandStickDrops;
             cFloors.SelectedIndex = (int)_configuration.GameplaySettings.FloorType;
             cGossipHints.SelectedIndex = (int)_configuration.GameplaySettings.GossipHintStyle;
+            cGaroHint.SelectedIndex = (int)_configuration.GameplaySettings.GaroHintStyle;
             cBlastCooldown.SelectedIndex = (int)_configuration.GameplaySettings.BlastMaskCooldown;
             cIceTraps.SelectedIndex = (int)_configuration.GameplaySettings.IceTraps;
             cIceTrapsAppearance.SelectedIndex = (int)_configuration.GameplaySettings.IceTrapAppearance;
@@ -1299,9 +1305,19 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.FreeHints = cFreeHints.Checked);
         }
 
+        private void cMixGaroWithGossip_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.MixGossipAndGaroHints = cMixGaroWithGossip.Checked);
+        }
+
         private void cClearHints_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.ClearHints = cClearHints.Checked);
+        }
+
+        private void cClearGaroHints_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.ClearGaroHints = cClearGaroHints.Checked);
         }
 
         private void cNoDowngrades_CheckedChanged(object sender, EventArgs e)
@@ -1511,6 +1527,11 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.GossipHintStyle = (GossipHintStyle)cGossipHints.SelectedIndex);
         }
 
+        private void cGaroHint_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.GaroHintStyle = (GossipHintStyle)cGaroHint.SelectedIndex);
+        }
+
 
         private void cBlastCooldown_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1628,6 +1649,7 @@ namespace MMR.UI.Forms
             cSpoiler.Enabled = !vanillaMode;
             cHTMLLog.Enabled = !vanillaMode;
             cGossipHints.Enabled = !vanillaMode;
+            cGaroHint.Enabled = !vanillaMode;
             cStartingItems.Enabled = !vanillaMode;
             tJunkLocationsList.Enabled = !vanillaMode;
             bJunkLocationsEditor.Enabled = !vanillaMode;
@@ -1655,6 +1677,17 @@ namespace MMR.UI.Forms
             {
                 cClearHints.Enabled = true;
             }
+
+            if (_configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Default || _configuration.GameplaySettings.LogicMode == LogicMode.Vanilla)
+            {
+                cClearGaroHints.Enabled = false;
+            }
+            else
+            {
+                cClearGaroHints.Enabled = true;
+            }
+
+            cMixGaroWithGossip.Enabled = _configuration.GameplaySettings.GaroHintStyle == _configuration.GameplaySettings.GossipHintStyle && _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
         }
 
         /// <summary>
@@ -1707,6 +1740,9 @@ namespace MMR.UI.Forms
             cGossipHints.Enabled = v;
             cFreeHints.Enabled = v;
             cClearHints.Enabled = v;
+            cGaroHint.Enabled = v;
+            cClearGaroHints.Enabled = v;
+            cMixGaroWithGossip.Enabled = v;
 
             cTargettingStyle.Enabled = v;
             cInstantPictobox.Enabled = v;

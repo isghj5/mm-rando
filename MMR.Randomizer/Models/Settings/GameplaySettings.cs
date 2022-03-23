@@ -373,7 +373,9 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public GossipHintStyle GossipHintStyle { get; set; } = GossipHintStyle.Competitive;
 
-        public bool AddGaroHints { get; set; }
+        public GossipHintStyle GaroHintStyle { get; set; }
+
+        public bool MixGossipAndGaroHints { get; set; }
 
         /// <summary>
         /// FrEe HiNtS FoR WeEnIeS
@@ -385,13 +387,21 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool ClearHints { get; set; } = true;
 
+        public bool ClearGaroHints { get; set; }
+
         public bool HintsIndicateImportance { get; set; }
 
-        public int? OverrideNumberOfRequiredHints { get; set; }
+        public int? OverrideNumberOfRequiredGossipHints { get; set; }
 
-        public int? OverrideNumberOfNonRequiredHints { get; set; }
+        public int? OverrideNumberOfNonRequiredGossipHints { get; set; }
 
-        public int? OverrideMaxNumberOfClockTownHints { get; set; }
+        public int? OverrideMaxNumberOfClockTownGossipHints { get; set; }
+
+        public int? OverrideNumberOfRequiredGaroHints { get; set; }
+
+        public int? OverrideNumberOfNonRequiredGaroHints { get; set; }
+
+        public int? OverrideMaxNumberOfClockTownGaroHints { get; set; }
 
         /// <summary>
         /// Prevent downgrades

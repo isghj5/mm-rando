@@ -19,9 +19,12 @@ namespace MMR.Randomizer.Utils
                 2, 0, 0xFE, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF
         });
 
-        public static List<MessageEntry> MakeGossipQuotes(RandomizedResult randomizedResult)
+        public static List<MessageEntry> MakeGossipQuotes(
+            IEnumerable<GossipQuote> gossipQuotes, GossipHintStyle hintStyle, RandomizedResult randomizedResult,
+            int numberOfRequiredHints, int numberOfNonRequiredHints, int maxNumberOfClockTownHints,
+            List<Region> hintedRegions, List<ItemObject> hintedItems)
         {
-            if (randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Default)
+            if (hintStyle == GossipHintStyle.Default)
                 return new List<MessageEntry>();
 
             var random = new Random(randomizedResult.Seed);
@@ -44,7 +47,7 @@ namespace MMR.Randomizer.Utils
 
                 var item = io.Item.MainLocation().HasValue ? randomizedResult.ItemList.Find(x => x.NewLocation == io.Item.MainLocation().Value) : io;
 
-                if (randomizedResult.Settings.ClearHints && !io.Item.MainLocation().HasValue)
+                if (!io.Item.MainLocation().HasValue)
                 {
                     // skip free items
                     if (ItemUtils.IsStartingLocation(io.NewLocation.Value))
@@ -60,15 +63,7 @@ namespace MMR.Randomizer.Utils
 
                 randomizedItems.Add(item);
 
-                if (randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Random)
-                {
-                    if (ItemUtils.IsJunk(item.Item) && (randomizedResult.Settings.ClearHints || random.Next(8) != 0))
-                    {
-                        continue;
-                    }
-                }
-
-                if (randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Competitive)
+                if (hintStyle == GossipHintStyle.Competitive)
                 {
                     var preventRegions = new List<Region> { Region.TheMoon, Region.BottleCatch, Region.Misc };
                     var locationForImportance = io.Item.MainLocation().HasValue ? io.Item : io.NewLocation.Value;
@@ -86,6 +81,11 @@ namespace MMR.Randomizer.Utils
 
                     var competitiveHintInfo = item.NewLocation.Value.GetAttribute<GossipCompetitiveHintAttribute>();
                     if (competitiveHintInfo == null)
+                    {
+                        continue;
+                    }
+
+                    if (hintedItems.Contains(item))
                     {
                         continue;
                     }
@@ -108,17 +108,17 @@ namespace MMR.Randomizer.Utils
 
             var unusedItems = hintableItems.ToList();
             var itemsToCombineWith = new List<ItemObject>();
-            var competitiveHints = new List<(string message, List<GossipQuote> allowedGossipQuotes)>();
+            var competitiveHints = new List<(string message, string clearMessage, List<GossipQuote> allowedGossipQuotes)>();
 
-            if (randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Competitive)
+            if (hintStyle == GossipHintStyle.Competitive)
             {
-                var gossipStoneRequirements = LogicUtils.GetGossipStoneRequirements(randomizedResult.ItemList, randomizedResult.Logic, randomizedResult.Settings);
+                var gossipStoneRequirements = LogicUtils.GetGossipStoneRequirements(gossipQuotes, randomizedResult.ItemList, randomizedResult.Logic, randomizedResult.Settings);
 
-                var totalUniqueGossipHints = Enum.GetValues<GossipQuote>().Count(gq => !gq.IsMoonGossipStone() && (!gq.IsGaroHint() || randomizedResult.Settings.AddGaroHints)) / 2;
+                var totalUniqueGossipHints = gossipQuotes.Count() / 2;
 
-                var numberOfRequiredHints = randomizedResult.Settings.OverrideNumberOfRequiredHints ?? (randomizedResult.Settings.AddSongs ? 4 : 3);
-                var numberOfNonRequiredHints = randomizedResult.Settings.OverrideNumberOfNonRequiredHints ?? 3;
-                var maxNumberOfClockTownHints = randomizedResult.Settings.OverrideMaxNumberOfClockTownHints ?? 2;
+                //var numberOfRequiredHints = randomizedResult.Settings.OverrideNumberOfRequiredHints ?? (randomizedResult.Settings.AddSongs ? 4 : 3);
+                //var numberOfNonRequiredHints = randomizedResult.Settings.OverrideNumberOfNonRequiredHints ?? 3;
+                //var maxNumberOfClockTownHints = randomizedResult.Settings.OverrideMaxNumberOfClockTownHints ?? 2;
 
                 var numberOfLocationHints = totalUniqueGossipHints - numberOfRequiredHints - numberOfNonRequiredHints;
                 unusedItems = hintableItems.GroupBy(io => io.NewLocation.Value.GetAttribute<GossipCompetitiveHintAttribute>().Priority)
@@ -139,10 +139,10 @@ namespace MMR.Randomizer.Utils
 
                 foreach (var unusedItem in unusedItems)
                 {
-                    (var messageText, var combined) = BuildItemHint(
+                    (var messageText, var clearMessageText, var combined) = BuildItemHint(
                         unusedItem,
                         randomizedResult,
-                        false,
+                        hintStyle,
                         false,
                         itemsToCombineWith,
                         hintableItems,
@@ -153,7 +153,9 @@ namespace MMR.Randomizer.Utils
                         .Select(io => gossipStoneRequirements.Where(kvp => !kvp.Value.Contains(io.NewLocation.Value)).Select(kvp => kvp.Key))
                         .Aggregate((list1, list2) => list1.Intersect(list2))
                         .ToList();
-                    competitiveHints.Add((messageText, allowedGossipQuotes));
+                    competitiveHints.Add((messageText, clearMessageText, allowedGossipQuotes));
+
+                    hintedItems.AddRange(combined);
                 }
 
                 var importantRegionCounts = new Dictionary<Region, List<(ItemObject io, Item locationForImportance)>>();
@@ -162,6 +164,10 @@ namespace MMR.Randomizer.Utils
                 var clockTownRegionCounts = new Dictionary<Region, List<(ItemObject, Item)>>();
                 foreach (var kvp in itemsInRegions)
                 {
+                    if (hintedRegions.Contains(kvp.Key))
+                    {
+                        continue;
+                    }
                     var requiredItems = kvp.Value.Where(io => ItemUtils.IsRequired(io.io.Item, io.locationForImportance, randomizedResult) && !unusedItems.Contains(io.io) && !itemsToCombineWith.Contains(io.io)).ToList();
                     var importantItems = kvp.Value.Where(io => ItemUtils.IsImportant(io.io.Item, io.locationForImportance, randomizedResult)).ToList();
 
@@ -212,8 +218,8 @@ namespace MMR.Randomizer.Utils
                             .Select(io => gossipStoneRequirements.Where(kvp => !kvp.Value.Contains(io.locationForImportance)).Select(kvp => kvp.Key))
                             .Aggregate((list1, list2) => list1.Intersect(list2))
                             .ToList();
-                        competitiveHints.Add((BuildRegionHint(chosen, RegionHintType.SomeRequired, random), allowedGossipQuotes));
-                        competitiveHints.Add((BuildRegionHint(chosen, RegionHintType.SomeRequired, random), allowedGossipQuotes));
+                        competitiveHints.Add((BuildRegionHint(chosen, RegionHintType.SomeRequired, random), null, allowedGossipQuotes));
+                        competitiveHints.Add((BuildRegionHint(chosen, RegionHintType.SomeRequired, random), null, allowedGossipQuotes));
                         if (clockTownRegionCounts.Remove(chosen.Key))
                         {
                             chosenClockTownRegions++;
@@ -222,6 +228,8 @@ namespace MMR.Randomizer.Utils
                         {
                             importantRegionCounts.Remove(chosen.Key);
                         }
+
+                        hintedRegions.Add(chosen.Key);
                     }
                 }
 
@@ -243,8 +251,10 @@ namespace MMR.Randomizer.Utils
                             regionHintType = RegionHintType.NoneRequired;
                         }
 
-                        competitiveHints.Add((BuildRegionHint(chosen, regionHintType, random), new List<GossipQuote>()));
-                        competitiveHints.Add((BuildRegionHint(chosen, regionHintType, random), new List<GossipQuote>()));
+                        competitiveHints.Add((BuildRegionHint(chosen, regionHintType, random), null, new List<GossipQuote>()));
+                        competitiveHints.Add((BuildRegionHint(chosen, regionHintType, random), null, new List<GossipQuote>()));
+
+                        hintedRegions.Add(chosen.Key);
                     }
                 }
 
@@ -281,7 +291,8 @@ namespace MMR.Randomizer.Utils
                     .First();
 
                 var gossipQuote = competitiveHint.allowedGossipQuotes.Random(random);
-                addHint(gossipQuote, competitiveHint.message);
+                var clearHintsEnabled = gossipQuote.IsGaroHint() ? randomizedResult.Settings.ClearGaroHints : randomizedResult.Settings.ClearHints;
+                addHint(gossipQuote, clearHintsEnabled && competitiveHint.clearMessage != null ? competitiveHint.clearMessage : competitiveHint.message);
                 competitiveHints.Remove(competitiveHint);
                 foreach (var ch in competitiveHints)
                 {
@@ -289,7 +300,7 @@ namespace MMR.Randomizer.Utils
                 }
             }
 
-            foreach (var gossipQuote in Enum.GetValues<GossipQuote>().OrderBy(gq => random.Next()))
+            foreach (var gossipQuote in gossipQuotes.OrderBy(gq => random.Next()))
             {
                 if (finalHints.Any(me => me.Id == (ushort)gossipQuote))
                 {
@@ -298,10 +309,11 @@ namespace MMR.Randomizer.Utils
 
                 string messageText = null;
                 var isMoonGossipStone = gossipQuote.IsMoonGossipStone();
-                if (!isMoonGossipStone && competitiveHints.Any())
+                var clearHintsEnabled = gossipQuote.IsGaroHint() ? randomizedResult.Settings.ClearGaroHints : randomizedResult.Settings.ClearHints;
+                if (competitiveHints.Any())
                 {
                     var competitiveHint = competitiveHints.Random(random);
-                    messageText = competitiveHint.message;
+                    messageText = clearHintsEnabled && competitiveHint.clearMessage != null ? competitiveHint.clearMessage : competitiveHint.message;
                     competitiveHints.Remove(competitiveHint);
                 }
 
@@ -312,13 +324,13 @@ namespace MMR.Randomizer.Utils
                     var forceClear = false;
                     while (item == null)
                     {
-                        if (restrictionAttributes.Any() && (isMoonGossipStone || randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Relevant))
+                        if (restrictionAttributes.Any() && hintStyle == GossipHintStyle.Relevant)
                         {
                             var chosen = restrictionAttributes.Random(random);
                             var candidateItem = chosen.Type == GossipRestrictAttribute.RestrictionType.Item
                                 ? randomizedResult.ItemList.Single(io => io.ID == (int)chosen.Item)
                                 : randomizedResult.ItemList.Single(io => io.NewLocation == chosen.Item);
-                            if (isMoonGossipStone || unusedItems.Contains(candidateItem))
+                            if (unusedItems.Contains(candidateItem))
                             {
                                 item = candidateItem;
                                 forceClear = chosen.ForceClear;
@@ -330,7 +342,7 @@ namespace MMR.Randomizer.Utils
                         }
                         else if (unusedItems.Any())
                         {
-                            if (randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Competitive)
+                            if (hintStyle == GossipHintStyle.Competitive)
                             {
                                 item = unusedItems.FirstOrDefault(io => unusedItems.Count(x => x.ID == io.ID) == 1);
                                 if (item == null)
@@ -341,6 +353,10 @@ namespace MMR.Randomizer.Utils
                             else
                             {
                                 item = unusedItems.Random(random);
+                                if (ItemUtils.IsJunk(item.Item) && (clearHintsEnabled || random.Next(8) != 0))
+                                {
+                                    item = null;
+                                }
                             }
                         }
                         else
@@ -356,16 +372,20 @@ namespace MMR.Randomizer.Utils
 
                     if (item != null)
                     {
-                        (var hint, var combined) = BuildItemHint(
+                        (var hint, var clearHint, var combined) = BuildItemHint(
                             item,
                             randomizedResult,
-                            forceClear,
-                            isMoonGossipStone,
+                            hintStyle,
+                            forceClear || clearHintsEnabled,
                             itemsToCombineWith,
                             hintableItems,
                             random
                             );
                         messageText = hint;
+                        if (clearHint != null && clearHintsEnabled)
+                        {
+                            messageText = clearHint;
+                        }
                     }
                 }
 
@@ -380,7 +400,8 @@ namespace MMR.Randomizer.Utils
             return finalHints;
         }
 
-        private static (string, List<ItemObject>) BuildItemHint(ItemObject item, RandomizedResult randomizedResult, bool forceClear, bool isMoonGossipStone, List<ItemObject> itemsToCombineWith, List<ItemObject> hintableItems, Random random)
+        private static (string message, string clearMessage, List<ItemObject> combined) BuildItemHint(ItemObject item, RandomizedResult randomizedResult,
+            GossipHintStyle hintStyle, bool forceClear, List<ItemObject> itemsToCombineWith, List<ItemObject> hintableItems, Random random)
         {
             ushort soundEffectId = 0x690C; // grandma curious
             var itemNames = new List<string>();
@@ -388,93 +409,105 @@ namespace MMR.Randomizer.Utils
             bool hasOrder = item.NewLocation.Value.HasAttribute<GossipCombineOrderAttribute>();
             var combined = new List<ItemObject>();
             combined.Add(item);
-            if (forceClear || randomizedResult.Settings.ClearHints)
+
+            var article = randomizedResult.Settings.ProgressiveUpgrades && item.Item.HasAttribute<ProgressiveAttribute>() ? "a " : GetArticle(item.Item);
+            var color = TextCommands.ColorPink;
+            var importance = "";
+            if (randomizedResult.Settings.HintsIndicateImportance)
             {
-                var article = randomizedResult.Settings.ProgressiveUpgrades && item.Item.HasAttribute<ProgressiveAttribute>() ? "a " : GetArticle(item.Item);
-                var color = TextCommands.ColorPink;
-                var importance = "";
-                if (randomizedResult.Settings.HintsIndicateImportance)
+                var locationForImportance = item.Item.MainLocation().HasValue ? item.Item : item.NewLocation.Value;
+                var isRequired = ItemUtils.IsRequired(item.Item, locationForImportance, randomizedResult);
+                importance = isRequired ? " (required)" : " (not required)";
+                color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
+            }
+            itemNames.Add(article + color + item.Item.ProgressiveUpgradeName(randomizedResult.Settings.ProgressiveUpgrades) + TextCommands.ColorWhite + importance);
+            locationNames.Add(item.NewLocation.Value.Location());
+            if (hintStyle != GossipHintStyle.Relevant)
+            {
+                var gossipCombineAttributes = item.NewLocation.Value.GetAttributes<GossipCombineAttribute>();
+                combined = itemsToCombineWith.Where(io => gossipCombineAttributes.Any(gca => gca.OtherItem == io.NewLocation)).ToList();
+                if (combined.Any())
                 {
-                    var locationForImportance = item.Item.MainLocation().HasValue ? item.Item : item.NewLocation.Value;
-                    var isRequired = ItemUtils.IsRequired(item.Item, locationForImportance, randomizedResult);
-                    importance = isRequired ? " (required)" : " (not required)";
-                    color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
-                }
-                itemNames.Add(article + color + item.Item.ProgressiveUpgradeName(randomizedResult.Settings.ProgressiveUpgrades) + TextCommands.ColorWhite + importance);
-                locationNames.Add(item.NewLocation.Value.Location());
-                if (!isMoonGossipStone)
-                {
-                    var gossipCombineAttributes = item.NewLocation.Value.GetAttributes<GossipCombineAttribute>();
-                    combined = itemsToCombineWith.Where(io => gossipCombineAttributes.Any(gca => gca.OtherItem == io.NewLocation)).ToList();
-                    if (combined.Any())
+                    combined.Add(item);
+                    combined = combined.OrderBy(io => io.NewLocation.Value.GetAttribute<GossipCombineOrderAttribute>()?.Order ?? random.Next()).ToList();
+                    locationNames.Clear();
+                    itemNames.Clear();
+                    var combinedName = gossipCombineAttributes.First().CombinedName;
+                    if (!string.IsNullOrWhiteSpace(combinedName))
                     {
-                        combined.Add(item);
-                        combined = combined.OrderBy(io => io.NewLocation.Value.GetAttribute<GossipCombineOrderAttribute>()?.Order ?? random.Next()).ToList();
-                        locationNames.Clear();
-                        itemNames.Clear();
-                        var combinedName = gossipCombineAttributes.First().CombinedName;
-                        if (!string.IsNullOrWhiteSpace(combinedName))
-                        {
-                            locationNames.Add(combinedName);
-                        }
-                        else
-                        {
-                            locationNames.AddRange(combined.Select(io => io.NewLocation.Value.Location()));
-                        }
-                        itemNames.AddRange(combined.Select(io =>
-                        {
-                            article = randomizedResult.Settings.ProgressiveUpgrades && io.Item.HasAttribute<ProgressiveAttribute>() ? "a " : GetArticle(io.Item);
-                            color = TextCommands.ColorPink;
-                            importance = "";
-                            if (randomizedResult.Settings.HintsIndicateImportance)
-                            {
-                                var locationForImportance = io.Item.MainLocation().HasValue ? io.Item : io.NewLocation.Value;
-                                var isRequired = ItemUtils.IsRequired(io.Item, locationForImportance, randomizedResult);
-                                importance = isRequired ? " (required)" : " (not required)";
-                                color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
-                            }
-                            return article + color + io.Item.ProgressiveUpgradeName(randomizedResult.Settings.ProgressiveUpgrades) + TextCommands.ColorWhite + importance;
-                        }));
+                        locationNames.Add(combinedName);
                     }
                     else
                     {
-                        combined.Add(item);
+                        locationNames.AddRange(combined.Select(io => io.NewLocation.Value.Location()));
                     }
-                }
-            }
-            else
-            {
-                if (item.Mimic != null)
-                {
-                    // If item has a mimic and not using clear hints, always use a fake hint.
-                    soundEffectId = 0x690A; // grandma laugh
-                    itemNames.Add(item.Mimic.Item.ItemHints().Random(random));
-                    locationNames.Add(item.NewLocation.Value.LocationHints().Random(random));
-                }
-                else if (isMoonGossipStone || randomizedResult.Settings.GossipHintStyle == GossipHintStyle.Competitive || random.Next(100) >= 5) // 5% chance of fake/junk hint if it's not a moon gossip stone or competitive style
-                {
-                    itemNames.Add(item.Item.ItemHints().Random(random));
-                    locationNames.Add(item.NewLocation.Value.LocationHints().Random(random));
+                    itemNames.AddRange(combined.Select(io =>
+                    {
+                        article = randomizedResult.Settings.ProgressiveUpgrades && io.Item.HasAttribute<ProgressiveAttribute>() ? "a " : GetArticle(io.Item);
+                        color = TextCommands.ColorPink;
+                        importance = "";
+                        if (randomizedResult.Settings.HintsIndicateImportance)
+                        {
+                            var locationForImportance = io.Item.MainLocation().HasValue ? io.Item : io.NewLocation.Value;
+                            var isRequired = ItemUtils.IsRequired(io.Item, locationForImportance, randomizedResult);
+                            importance = isRequired ? " (required)" : " (not required)";
+                            color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
+                        }
+                        return article + color + io.Item.ProgressiveUpgradeName(randomizedResult.Settings.ProgressiveUpgrades) + TextCommands.ColorWhite + importance;
+                    }));
                 }
                 else
                 {
-                    if (random.Next(2) == 0) // 50% chance for fake hint. otherwise default to junk hint.
-                    {
-                        soundEffectId = 0x690A; // grandma laugh
-                        itemNames.Add(item.Item.ItemHints().Random(random));
-                        locationNames.Add(hintableItems.Random(random).NewLocation.Value.LocationHints().Random(random));
-                    }
-                }
-                if (itemNames.Any())
-                {
-                    itemNames[0] = $"{TextCommands.ColorPink}{itemNames[0]}{TextCommands.ColorWhite}";
+                    combined.Add(item);
                 }
             }
+            string clearMessage = null;
             if (itemNames.Any() && locationNames.Any())
             {
-                return (BuildGossipQuote(soundEffectId, locationNames, itemNames, hasOrder, random), combined);
+                clearMessage = BuildGossipQuote(soundEffectId, locationNames, itemNames, hasOrder, random);
             }
-            return (null, null);
+
+            itemNames.Clear();
+            locationNames.Clear();
+            if (item.Mimic != null)
+            {
+                // If item has a mimic and not using clear hints, always use a fake hint.
+                soundEffectId = 0x690A; // grandma laugh
+                itemNames.Add(item.Mimic.Item.ItemHints().Random(random));
+                locationNames.Add(item.NewLocation.Value.LocationHints().Random(random));
+            }
+            else if (hintStyle != GossipHintStyle.Random || random.Next(100) >= 5) // 5% chance of fake/junk hint if it's not a moon gossip stone or competitive style
+            {
+                itemNames.Add(item.Item.ItemHints().Random(random));
+                locationNames.Add(item.NewLocation.Value.LocationHints().Random(random));
+            }
+            else
+            {
+                if (random.Next(2) == 0) // 50% chance for fake hint. otherwise default to junk hint.
+                {
+                    soundEffectId = 0x690A; // grandma laugh
+                    itemNames.Add(item.Item.ItemHints().Random(random));
+                    locationNames.Add(hintableItems.Random(random).NewLocation.Value.LocationHints().Random(random));
+                }
+            }
+            if (itemNames.Any())
+            {
+                itemNames[0] = $"{TextCommands.ColorPink}{itemNames[0]}{TextCommands.ColorWhite}";
+            }
+
+            string message = null;
+            if (itemNames.Any() && locationNames.Any())
+            {
+                message = BuildGossipQuote(soundEffectId, locationNames, itemNames, hasOrder, random);
+                //return (BuildGossipQuote(soundEffectId, locationNames, itemNames, hasOrder, random), combined);
+            }
+
+            if (message != null || clearMessage != null)
+            {
+                return (message, clearMessage, combined);
+            }
+
+            return (null, null, null);
         }
 
         private enum RegionHintType

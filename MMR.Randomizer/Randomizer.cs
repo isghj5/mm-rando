@@ -5,6 +5,7 @@ using MMR.Randomizer.Extensions;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.LogicMigrator;
 using MMR.Randomizer.Models;
+using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
 using System;
@@ -87,8 +88,69 @@ namespace MMR.Randomizer
 
         private void MakeGossipQuotes()
         {
-            _randomized.GossipQuotes = MessageUtils.MakeGossipQuotes
-                (_randomized);
+            _randomized.GossipQuotes = new List<MessageEntry>();
+            var hintedRegions = new List<Region>();
+            var hintedItems = new List<ItemObject>();
+            if (_settings.GossipHintStyle != GossipHintStyle.Default)
+            {
+                var moonHints = Enum.GetValues<GossipQuote>().Where(gq => gq.IsMoonGossipStone());
+                _randomized.GossipQuotes.AddRange(MessageUtils.MakeGossipQuotes(moonHints, GossipHintStyle.Relevant, _randomized, 0, 0, 0, hintedRegions, hintedItems));
+            }
+
+            var numberOfRequiredGaroHints = _settings.OverrideNumberOfRequiredGaroHints ?? 2;
+            var numberOfNonRequiredGaroHints = _settings.OverrideNumberOfNonRequiredGaroHints ?? 2;
+            var maxNumberOfClockTownGaroHints = _settings.OverrideMaxNumberOfClockTownGaroHints ?? 2;
+
+            var numberOfRequiredGossipHints = _settings.OverrideNumberOfRequiredGossipHints ?? (_settings.AddSongs ? 4 : 3);
+            var numberOfNonRequiredGossipHints = _settings.OverrideNumberOfNonRequiredGossipHints ?? 3;
+            var maxNumberOfClockTownGossipHints = _settings.OverrideMaxNumberOfClockTownGossipHints ?? 2;
+
+            if (_settings.GaroHintStyle != _settings.GossipHintStyle || !_settings.MixGossipAndGaroHints)
+            {
+                if (_settings.GossipHintStyle != GossipHintStyle.Default)
+                {
+                    var gossipHints = Enum.GetValues<GossipQuote>().Where(gq => !gq.IsMoonGossipStone() && !gq.IsGaroHint());
+                    _randomized.GossipQuotes.AddRange(MessageUtils.MakeGossipQuotes(
+                        gossipHints,
+                        _settings.GossipHintStyle,
+                        _randomized,
+                        numberOfRequiredGossipHints,
+                        numberOfNonRequiredGossipHints,
+                        maxNumberOfClockTownGossipHints,
+                        hintedRegions,
+                        hintedItems
+                    ));
+                }
+
+                if (_settings.GaroHintStyle != GossipHintStyle.Default)
+                {
+                    var garoHints = Enum.GetValues<GossipQuote>().Where(gq => gq.IsGaroHint());
+                    _randomized.GossipQuotes.AddRange(MessageUtils.MakeGossipQuotes(
+                        garoHints,
+                        _settings.GaroHintStyle,
+                        _randomized,
+                        numberOfRequiredGaroHints,
+                        numberOfNonRequiredGaroHints,
+                        maxNumberOfClockTownGaroHints,
+                        hintedRegions,
+                        hintedItems
+                    ));
+                }
+            }
+            else if (_settings.GossipHintStyle != GossipHintStyle.Default)
+            {
+                var hints = Enum.GetValues<GossipQuote>().Where(gq => !gq.IsMoonGossipStone());
+                _randomized.GossipQuotes.AddRange(MessageUtils.MakeGossipQuotes(
+                    hints,
+                    _settings.GossipHintStyle,
+                    _randomized,
+                    numberOfRequiredGaroHints + numberOfRequiredGossipHints,
+                    numberOfNonRequiredGaroHints + numberOfNonRequiredGossipHints,
+                    maxNumberOfClockTownGaroHints + maxNumberOfClockTownGossipHints,
+                    hintedRegions,
+                    hintedItems
+                ));
+            }
         }
 
         #endregion
