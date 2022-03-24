@@ -12,8 +12,12 @@ typedef struct MusicState {
     /* 0x00 */ u8 loadedSequenceId;
     /* 0x01 */ u8 currentState;
     /* 0x02 */ u16 forceMute;
-    /* 0x04 */ u8 playMask[0x10];
-    /* 0x14 */ union {
+    /* 0x04 */ u8 hasSequenceMaskFile;
+    /* 0x05 */ u8 fileSelectMusicFormIndex;
+    /* 0x06 */ u8 fileSelectMusicMiscIndex;
+    /* 0x07 */ u8 pad27;
+    /* 0x08 */ u8 playMask[0x10];
+    /* 0x18 */ union {
         struct {
             u8 combat         : 1;
             u8 spikeRolling   : 1;
@@ -26,11 +30,7 @@ typedef struct MusicState {
         };
         u8 value;
     } cumulativeStates;
-    /* 0x15 */ u8 pad15[0xF]; // everdrive rounds down to 0x10s when loading from rom
-    /* 0x24 */ u8 hasSequenceMaskFile;
-    /* 0x25 */ u8 fileSelectMusicFormIndex;
-    /* 0x26 */ u8 fileSelectMusicMiscIndex;
-    /* 0x27 */ u8 pad27;
+    /* 0x19 */ u8 pad15[0xF]; // everdrive rounds down to 0x10s when loading from rom
 } MusicState; // size = 0x28
 
 struct MusicConfig {
