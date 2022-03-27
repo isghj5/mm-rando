@@ -118,6 +118,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cMixGaroWithGossip, "Garo hints distribution and gossip hint distribution will be mixed together.");
             TooltipBuilder.SetTooltip(cClearHints, "Gossip stone hints will give clear item and location names.");
             TooltipBuilder.SetTooltip(cClearGaroHints, "Garo hints will give clear item and location names.");
+            TooltipBuilder.SetTooltip(cHintImportance, "Location hints indicate the importance of the item.");
             TooltipBuilder.SetTooltip(cNoDowngrades, "Downgrading items will be prevented.");
             TooltipBuilder.SetTooltip(cShopAppearance, "Shops models and text will be updated to match the item they give.");
             TooltipBuilder.SetTooltip(cUpdateChests, "Chest appearance will be updated to match the item they contain.");
@@ -1079,6 +1080,7 @@ namespace MMR.UI.Forms
             cMixGaroWithGossip.Checked = _configuration.GameplaySettings.MixGossipAndGaroHints;
             cClearHints.Checked = _configuration.GameplaySettings.ClearHints;
             cClearGaroHints.Checked = _configuration.GameplaySettings.ClearGaroHints;
+            cHintImportance.Checked = _configuration.GameplaySettings.HintsIndicateImportance;
             cHideClock.Checked = _configuration.GameplaySettings.HideClock;
             cSunsSong.Checked = _configuration.GameplaySettings.EnableSunsSong;
             cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
@@ -1318,6 +1320,11 @@ namespace MMR.UI.Forms
         private void cClearGaroHints_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.ClearGaroHints = cClearGaroHints.Checked);
+        }
+
+        private void cHintImportance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.HintsIndicateImportance = cHintImportance.Checked);
         }
 
         private void cNoDowngrades_CheckedChanged(object sender, EventArgs e)
@@ -1688,6 +1695,7 @@ namespace MMR.UI.Forms
             }
 
             cMixGaroWithGossip.Enabled = _configuration.GameplaySettings.GaroHintStyle == _configuration.GameplaySettings.GossipHintStyle && _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
+            cHintImportance.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive || _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
         }
 
         /// <summary>
@@ -1743,6 +1751,7 @@ namespace MMR.UI.Forms
             cGaroHint.Enabled = v;
             cClearGaroHints.Enabled = v;
             cMixGaroWithGossip.Enabled = v;
+            cHintImportance.Enabled = v;
 
             cTargettingStyle.Enabled = v;
             cInstantPictobox.Enabled = v;

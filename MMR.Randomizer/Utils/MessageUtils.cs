@@ -116,10 +116,6 @@ namespace MMR.Randomizer.Utils
 
                 var totalUniqueGossipHints = gossipQuotes.Count() / 2;
 
-                //var numberOfRequiredHints = randomizedResult.Settings.OverrideNumberOfRequiredHints ?? (randomizedResult.Settings.AddSongs ? 4 : 3);
-                //var numberOfNonRequiredHints = randomizedResult.Settings.OverrideNumberOfNonRequiredHints ?? 3;
-                //var maxNumberOfClockTownHints = randomizedResult.Settings.OverrideMaxNumberOfClockTownHints ?? 2;
-
                 var numberOfLocationHints = totalUniqueGossipHints - numberOfRequiredHints - numberOfNonRequiredHints;
                 unusedItems = hintableItems.GroupBy(io => io.NewLocation.Value.GetAttribute<GossipCompetitiveHintAttribute>().Priority)
                                         .OrderByDescending(g => g.Key)
