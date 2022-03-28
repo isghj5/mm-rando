@@ -1,5 +1,3 @@
-### This branch attempts to move the instrument set list to a file outside of code, modifies code to access and use that file, and have the Randomizer use the extra space.
-
 Majora's Mask Randomizer is a Windows application that randomizes item locations, music, and more for Majora's Mask, presenting millions of combinations and new ways to replay the game.
 
 A video tutorial of setting up MMR is found here: https://www.youtube.com/watch?v=D0n829cYzl4
