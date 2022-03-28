@@ -2117,11 +2117,19 @@ namespace MMR.Randomizer
                         importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
                     }
                 }
+
                 // TODO one day maybe check if song of time is actually required
-                var songOfTimeLocation = ItemList[Item.SongTime].NewLocation.Value;
-                importantLocations.Add(songOfTimeLocation);
-                var songOfTimePaths = LogicUtils.GetImportantLocations(ItemList, _settings, songOfTimeLocation, _randomized.Logic);
-                _randomized.ImportantLocations = importantLocations.Union(songOfTimePaths.Important).Distinct().ToList().AsReadOnly();
+                var songOfTime = ItemList[Item.SongTime];
+                var songOfTimeImportantItems = Enumerable.Empty<Item>();
+                if (songOfTime.Item == Item.SongTime)
+                {
+                    var songOfTimeLocation = ItemList[Item.SongTime].NewLocation.Value;
+                    importantLocations.Add(songOfTimeLocation);
+                    var songOfTimePaths = LogicUtils.GetImportantLocations(ItemList, _settings, songOfTimeLocation, _randomized.Logic);
+                    songOfTimeImportantItems = songOfTimePaths.Important;
+                }
+
+                _randomized.ImportantLocations = importantLocations.Union(songOfTimeImportantItems).Distinct().ToList().AsReadOnly();
                 _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
                 _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.AsReadOnly();
 
