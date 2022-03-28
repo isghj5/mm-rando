@@ -788,9 +788,21 @@ namespace MMR.Randomizer.Utils
             var table = ReadWriteUtils.ReadBytes(0xB3C000 + 0x13B6C0, 0x820);
             New_AudioBankTable = RomUtils.AddNewFile(table);
 
+            // instrumentset_patch: modifies audiobank metadata read and writes, instrument/drum/sfx pointer read and writes,
+            // nops a metadata copy function, and sets a fixed size for the audiobank pointer index
             ResourceUtils.ApplyHack(Resources.mods.instrumentset_patch);
+
+            // moveaudiostatebytes: sets where read and writes for sequence and instrumentset states go
+            // in this hack, they're moved from 0x80205008 to end of old instrumentset table in code and given more space
+            // if these don't get moved, new banks at 0x30 and up will overflow into sequence states and can knock out sound
             ResourceUtils.ApplyHack(Resources.mods.moveaudiostatebytes);
+
+            // loadnewaudiotable: where the copy metadata function loop was, sets a jump to code placed at the old instrumentset list
+            // which DMAs new audiobanktable from a file, relocates the addresses in the table, and sets the
+            // instrumentset table pointer to the new file
             ResourceUtils.ApplyHack(Resources.mods.loadnewaudiotable);
+
+            // can't update addresses in an audiobank table that's moved and not loaded yet
             ReadWriteUtils.WriteCodeNOP(0x80190E70);
             ReadWriteUtils.WriteCodeNOP(0x80190E74);
             ReadWriteUtils.WriteCodeNOP(0x80190E78);
@@ -808,8 +820,19 @@ namespace MMR.Randomizer.Utils
             NewInstrumentSetAddress = RomData.MMFileList[f].Addr + 0x10;
 
             ReadWriteUtils.WriteU16ToROM(RomData.MMFileList[f].Addr, 0x0080); // Increase AudioBankTable amount
-            // place dummy audiobanktable metadata into new file, this could've been done better
-            ReadWriteUtils.WriteToROM(NewInstrumentSetAddress + 0x280, Resources.mods.dummyinstsets);
+
+            // insert dummy metadata (kamaro's dance bank duplicates)
+            int dummybankindexOffset = NewInstrumentSetAddress + 0x280;
+            int totaldummybanks = 0x58;
+            ulong dummybankmetadata0 = 0x00021880000000D0;
+            ulong dummybankmetadata1 = 0x020101FF01000000;
+
+            for (int dummybankIndex = 0; dummybankIndex <= totaldummybanks; ++dummybankIndex)
+            {
+                ReadWriteUtils.WriteU64ToROM(dummybankindexOffset, dummybankmetadata0);
+                ReadWriteUtils.WriteU64ToROM(dummybankindexOffset + 0x08, dummybankmetadata1);
+                dummybankindexOffset += 0x10;
+            }
             
         }
 
@@ -1311,7 +1334,7 @@ namespace MMR.Randomizer.Utils
             /// traverse the whole audiobank index and grab details about every bank
             ///  use those details to generate a list from the vanilla game that we can modify as needed
             RomData.InstrumentSetList = new List<InstrumentSetInfo>();
-            // audiobankindex can go up to 0x81 with current extended bank table file
+            // audiobankindex can go up to 0x80 with current extended bank table file
             for (int audiobankIndex = 0; audiobankIndex <= 0x80; ++audiobankIndex)
             {
                 // each bank has one 16 byte sentence of data, first word is address, second is length, last 2 words metadata

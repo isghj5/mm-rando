@@ -71,7 +71,6 @@ namespace MMR.Randomizer
             WriteOutput(" Randomizing " + RomData.TargetSequences.Count + " song slots, with " + unassigned.Count + " available songs:");
 
             SequenceUtils.ResetBudget();
-            SequenceUtils.ResetFreeBankIndex();
 
             // songtest filename token allows music makers and users to force a song into a MMR seed for recording/testing
             SequenceUtils.CheckSongTest(unassigned, log);
@@ -115,6 +114,7 @@ namespace MMR.Randomizer
             RomData.PointerizedSequences = new List<SequenceInfo>();
             SequenceUtils.ReadSequenceInfo();
             SequenceUtils.ReadInstrumentSetList();
+            SequenceUtils.ResetFreeBankIndex();
             if (_cosmeticSettings.Music == Music.Random)
             {
                 SequenceUtils.PointerizeSequenceSlots();
@@ -3055,8 +3055,7 @@ namespace MMR.Randomizer
                 //ResourceUtils.ApplyHack(ModsDir + "postman-testing");
                 return;
             }
-            RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", $"-AudBankv3");
-            //RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", string.Empty);
+            RomUtils.SetStrings(Resources.mods.logo_text, $"v{Randomizer.AssemblyVersion}", string.Empty);
         }
 
         public void OutputHashIcons(IEnumerable<byte> iconFileIndices, string filename)

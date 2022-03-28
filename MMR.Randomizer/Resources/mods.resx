@@ -163,9 +163,6 @@
   <data name="dm_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\dm-4;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="dummyinstsets" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>mods\dummyinstsets;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="enable_sunssong" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\enable-sunssong;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
