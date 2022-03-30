@@ -669,9 +669,9 @@ namespace MMR.Randomizer
                         }
                         else
                         {
-                            if (!_timeTravelPlaced && _timeTravelPath.Contains(d) && ItemList[d].NewLocation.HasValue)
+                            if (!_timeTravelPlaced && _timeTravelPath.Contains(d))
                             {
-                                DependenceChecked[ItemList[d].NewLocation.Value] = Dependence.Dependent;
+                                DependenceChecked[ItemList[d].NewLocation ?? d] = Dependence.Dependent;
                             }
                             d = ItemList[d].NewLocation ?? d;
                             if (dependencyPath.Contains(d))
@@ -770,7 +770,7 @@ namespace MMR.Randomizer
                 if (dependency.IsFake()
                     || ItemList[dependency].NewLocation.HasValue)
                 {
-                    if (!_timeTravelPlaced && _timeTravelPath.Contains(dependency) && ItemList[dependency].NewLocation.HasValue)
+                    if (!_timeTravelPlaced && _timeTravelPath.Contains(dependency))
                     {
                         Debug.WriteLine($"{dependency} has already been placed and must be avoided as a requirement during time travel logic.");
                         return Dependence.Dependent;
@@ -950,7 +950,7 @@ namespace MMR.Randomizer
                         CheckConditionals(currentItem, location, childPath);
                     }
                 }
-                else if (ItemList[currentItem].TimeNeeded != 0 && (!_timeTravelPlaced || (dependency.IsTemporary(_randomized.Settings) && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary(_randomized.Settings)))))
+                else if (ItemList[currentItem].TimeNeeded != 0 && dependency.IsTemporary(_randomized.Settings) && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary(_randomized.Settings)))
                 {
                     if (dependencyObject.TimeNeeded == 0)
                     {
@@ -1051,20 +1051,44 @@ namespace MMR.Randomizer
             return true;
         }
 
-        private void UpdateTimeNeeded(ItemObject source, ItemObject target)
+        private void UpdateTimeNeeded(Item sourceItem, Item targetItem)
         {
-            if (!_timeTravelPlaced && source.TimeSetup != 0)
+            if (!_timeTravelPlaced)
             {
-                if (target.TimeNeeded == 0)
+                var source = ItemList[sourceItem];
+                var target = ItemList[targetItem];
+                var sourceLocation = ItemList[source.NewLocation ?? sourceItem];
+                if (source.TimeNeeded != 0)
                 {
-                    target.TimeNeeded = source.TimeSetup;
+                    if (target.TimeNeeded == 0)
+                    {
+                        target.TimeNeeded = source.TimeNeeded;
+                    }
+                    else
+                    {
+                        target.TimeNeeded &= source.TimeNeeded;
+                        if (target.TimeNeeded == 0)
+                        {
+                            target.TimeNeeded = source.TimeNeeded;
+                        }
+                    }
                 }
-                else
+                if (sourceLocation.TimeSetup != 0)
                 {
-                    target.TimeNeeded &= source.TimeSetup;
+                    if (target.TimeNeeded == 0)
+                    {
+                        target.TimeNeeded = sourceLocation.TimeSetup;
+                    }
+                    else
+                    {
+                        target.TimeNeeded &= sourceLocation.TimeSetup;
+                        if (target.TimeNeeded == 0)
+                        {
+                            target.TimeNeeded = source.TimeSetup;
+                        }
+                    }
                 }
             }
-
         }
 
         private void PlaceRequirements(Item currentItem, List<Item> targets)
@@ -1078,7 +1102,7 @@ namespace MMR.Randomizer
                 var placed = new List<Item>();
                 foreach (var requiredItem in location.DependsOnItems.AllowModification().Where(item => item.IsSameType(currentItem)))
                 {
-                    UpdateTimeNeeded(location, ItemList[requiredItem]);
+                    UpdateTimeNeeded(currentItem, requiredItem);
 
                     PlaceItem(requiredItem, targets);
                 }
@@ -1092,7 +1116,7 @@ namespace MMR.Randomizer
                 {
                     foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
                     {
-                        UpdateTimeNeeded(location, ItemList[item]);
+                        UpdateTimeNeeded(currentItem, item);
 
                         PlaceItem(item, targets);
                     }
@@ -1105,11 +1129,14 @@ namespace MMR.Randomizer
         private void PlaceItem(Item currentItem, List<Item> targets, Func<Item, Item, bool> restriction = null)
         {
             var currentItemObject = ItemList[currentItem];
-            if (currentItem.IsFake())
+            if (!_timeTravelPlaced && currentItem.IsFake())
             {
+                _timeTravelPath.Push(currentItem);
+
+                // TODO need to handle items that are already placed, and scoops
                 foreach (var requiredItem in currentItemObject.DependsOnItems.AllowModification().Where(item => item.IsSameType(currentItem)))
                 {
-                    UpdateTimeNeeded(currentItemObject, ItemList[requiredItem]);
+                    UpdateTimeNeeded(currentItem, requiredItem);
 
                     PlaceItem(requiredItem, targets);
                 }
@@ -1123,11 +1150,14 @@ namespace MMR.Randomizer
                 {
                     foreach (var item in conditional.AllowModification().Where(item => item.IsSameType(currentItem)))
                     {
-                        UpdateTimeNeeded(currentItemObject, ItemList[item]);
+                        UpdateTimeNeeded(currentItem, item);
 
                         PlaceItem(item, targets);
                     }
                 }
+
+                _timeTravelPath.Pop();
+
                 return;
             }
             if (currentItemObject.NewLocation.HasValue)
