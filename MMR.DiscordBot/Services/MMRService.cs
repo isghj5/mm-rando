@@ -178,8 +178,8 @@ namespace MMR.DiscordBot.Services
             int seed;
             try
             {
-                var response = await _httpClient.GetStringAsync("https://www.random.org/integers/?num=1&min=-1000000000&max=1000000000&col=1&base=10&format=plain&rnd=new");
-                seed = int.Parse(response) + 1000000000;
+                var response = await _httpClient.GetStringAsync("https://www.random.org/integers/?num=31&min=0&max=1&col=31&base=2&format=plain&rnd=new");
+                seed = Convert.ToInt32(response.Replace("\t", ""), 2);
             }
             catch (Exception e) when (e is HttpRequestException || e is TaskCanceledException)
             {
