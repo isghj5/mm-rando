@@ -113,11 +113,18 @@ namespace MMR.UI.Forms
             this.tabComfort = new System.Windows.Forms.TabPage();
             this.gHintsGeneral = new System.Windows.Forms.GroupBox();
             this.cHintImportance = new System.Windows.Forms.CheckBox();
-            this.gGaroHints = new System.Windows.Forms.GroupBox();
-            this.lGaroHints = new System.Windows.Forms.Label();
-            this.cGaroHint = new System.Windows.Forms.ComboBox();
             this.cMixGaroWithGossip = new System.Windows.Forms.CheckBox();
+            this.gGaroHints = new System.Windows.Forms.GroupBox();
+            this.cCustomGaroWoth = new System.Windows.Forms.CheckBox();
+            this.nMaxGaroCT = new System.Windows.Forms.NumericUpDown();
+            this.lGaroHints = new System.Windows.Forms.Label();
+            this.nMaxGaroFoolish = new System.Windows.Forms.NumericUpDown();
+            this.cGaroHint = new System.Windows.Forms.ComboBox();
+            this.nMaxGaroWotH = new System.Windows.Forms.NumericUpDown();
             this.cClearGaroHints = new System.Windows.Forms.CheckBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
             this.gSpeedUps = new System.Windows.Forms.GroupBox();
             this.cDoubleArcheryRewards = new System.Windows.Forms.CheckBox();
             this.cFasterBank = new System.Windows.Forms.CheckBox();
@@ -126,6 +133,13 @@ namespace MMR.UI.Forms
             this.cGoodDogRaceRNG = new System.Windows.Forms.CheckBox();
             this.cGoodDampeRNG = new System.Windows.Forms.CheckBox();
             this.gHints = new System.Windows.Forms.GroupBox();
+            this.cCustomGossipWoth = new System.Windows.Forms.CheckBox();
+            this.nMaxGossipCT = new System.Windows.Forms.NumericUpDown();
+            this.nMaxGossipFoolish = new System.Windows.Forms.NumericUpDown();
+            this.nMaxGossipWotH = new System.Windows.Forms.NumericUpDown();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lGossipWothConfig = new System.Windows.Forms.Label();
             this.lGossip = new System.Windows.Forms.Label();
             this.cGossipHints = new System.Windows.Forms.ComboBox();
             this.cFreeHints = new System.Windows.Forms.CheckBox();
@@ -233,8 +247,14 @@ namespace MMR.UI.Forms
             this.tabComfort.SuspendLayout();
             this.gHintsGeneral.SuspendLayout();
             this.gGaroHints.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGaroCT)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGaroFoolish)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGaroWotH)).BeginInit();
             this.gSpeedUps.SuspendLayout();
             this.gHints.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGossipCT)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGossipFoolish)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGossipWotH)).BeginInit();
             this.groupBox8.SuspendLayout();
             this.groupBox7.SuspendLayout();
             this.tabShortenCutscenes.SuspendLayout();
@@ -1229,9 +1249,10 @@ namespace MMR.UI.Forms
             // gHintsGeneral
             // 
             this.gHintsGeneral.Controls.Add(this.cHintImportance);
-            this.gHintsGeneral.Location = new System.Drawing.Point(274, 162);
+            this.gHintsGeneral.Controls.Add(this.cMixGaroWithGossip);
+            this.gHintsGeneral.Location = new System.Drawing.Point(7, 250);
             this.gHintsGeneral.Name = "gHintsGeneral";
-            this.gHintsGeneral.Size = new System.Drawing.Size(154, 89);
+            this.gHintsGeneral.Size = new System.Drawing.Size(206, 96);
             this.gHintsGeneral.TabIndex = 39;
             this.gHintsGeneral.TabStop = false;
             this.gHintsGeneral.Text = "Hints";
@@ -1247,20 +1268,65 @@ namespace MMR.UI.Forms
             this.cHintImportance.UseVisualStyleBackColor = true;
             this.cHintImportance.CheckedChanged += new System.EventHandler(this.cHintImportance_CheckedChanged);
             // 
+            // cMixGaroWithGossip
+            // 
+            this.cMixGaroWithGossip.AutoSize = true;
+            this.cMixGaroWithGossip.BackColor = System.Drawing.Color.Transparent;
+            this.cMixGaroWithGossip.ForeColor = System.Drawing.Color.Black;
+            this.cMixGaroWithGossip.Location = new System.Drawing.Point(11, 45);
+            this.cMixGaroWithGossip.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMixGaroWithGossip.Name = "cMixGaroWithGossip";
+            this.cMixGaroWithGossip.Size = new System.Drawing.Size(166, 19);
+            this.cMixGaroWithGossip.TabIndex = 15;
+            this.cMixGaroWithGossip.Text = "Mix Gossip and Garo Hints";
+            this.cMixGaroWithGossip.UseVisualStyleBackColor = false;
+            this.cMixGaroWithGossip.CheckedChanged += new System.EventHandler(this.cMixGaroWithGossip_CheckedChanged);
+            // 
             // gGaroHints
             // 
+            this.gGaroHints.Controls.Add(this.cCustomGaroWoth);
+            this.gGaroHints.Controls.Add(this.nMaxGaroCT);
             this.gGaroHints.Controls.Add(this.lGaroHints);
+            this.gGaroHints.Controls.Add(this.nMaxGaroFoolish);
             this.gGaroHints.Controls.Add(this.cGaroHint);
-            this.gGaroHints.Controls.Add(this.cMixGaroWithGossip);
+            this.gGaroHints.Controls.Add(this.nMaxGaroWotH);
             this.gGaroHints.Controls.Add(this.cClearGaroHints);
-            this.gGaroHints.Location = new System.Drawing.Point(7, 257);
+            this.gGaroHints.Controls.Add(this.label5);
+            this.gGaroHints.Controls.Add(this.label10);
+            this.gGaroHints.Controls.Add(this.label9);
+            this.gGaroHints.Location = new System.Drawing.Point(221, 122);
             this.gGaroHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gGaroHints.Name = "gGaroHints";
             this.gGaroHints.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGaroHints.Size = new System.Drawing.Size(260, 89);
+            this.gGaroHints.Size = new System.Drawing.Size(207, 120);
             this.gGaroHints.TabIndex = 38;
             this.gGaroHints.TabStop = false;
             this.gGaroHints.Text = "Garo Hints";
+            // 
+            // cCustomGaroWoth
+            // 
+            this.cCustomGaroWoth.AutoSize = true;
+            this.cCustomGaroWoth.Checked = true;
+            this.cCustomGaroWoth.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cCustomGaroWoth.Location = new System.Drawing.Point(15, 88);
+            this.cCustomGaroWoth.Name = "cCustomGaroWoth";
+            this.cCustomGaroWoth.Size = new System.Drawing.Size(15, 14);
+            this.cCustomGaroWoth.TabIndex = 36;
+            this.cCustomGaroWoth.UseVisualStyleBackColor = true;
+            this.cCustomGaroWoth.CheckedChanged += new System.EventHandler(this.cCustomGaroWoth_CheckedChanged);
+            // 
+            // nMaxGaroCT
+            // 
+            this.nMaxGaroCT.Location = new System.Drawing.Point(160, 85);
+            this.nMaxGaroCT.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.nMaxGaroCT.Name = "nMaxGaroCT";
+            this.nMaxGaroCT.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGaroCT.TabIndex = 35;
+            this.nMaxGaroCT.ValueChanged += new System.EventHandler(this.nMaxGaroCT_ValueChanged);
             // 
             // lGaroHints
             // 
@@ -1273,6 +1339,24 @@ namespace MMR.UI.Forms
             this.lGaroHints.Size = new System.Drawing.Size(95, 15);
             this.lGaroHints.TabIndex = 20;
             this.lGaroHints.Text = "Hint Distribution";
+            // 
+            // nMaxGaroFoolish
+            // 
+            this.nMaxGaroFoolish.Location = new System.Drawing.Point(108, 85);
+            this.nMaxGaroFoolish.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.nMaxGaroFoolish.Name = "nMaxGaroFoolish";
+            this.nMaxGaroFoolish.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGaroFoolish.TabIndex = 34;
+            this.nMaxGaroFoolish.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.nMaxGaroFoolish.ValueChanged += new System.EventHandler(this.nMaxGaroFoolish_ValueChanged);
             // 
             // cGaroHint
             // 
@@ -1290,19 +1374,23 @@ namespace MMR.UI.Forms
             this.cGaroHint.TabIndex = 19;
             this.cGaroHint.SelectedIndexChanged += new System.EventHandler(this.cGaroHint_SelectedIndexChanged);
             // 
-            // cMixGaroWithGossip
+            // nMaxGaroWotH
             // 
-            this.cMixGaroWithGossip.AutoSize = true;
-            this.cMixGaroWithGossip.BackColor = System.Drawing.Color.Transparent;
-            this.cMixGaroWithGossip.ForeColor = System.Drawing.Color.Black;
-            this.cMixGaroWithGossip.Location = new System.Drawing.Point(117, 20);
-            this.cMixGaroWithGossip.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cMixGaroWithGossip.Name = "cMixGaroWithGossip";
-            this.cMixGaroWithGossip.Size = new System.Drawing.Size(115, 19);
-            this.cMixGaroWithGossip.TabIndex = 15;
-            this.cMixGaroWithGossip.Text = "Mix with Gossips";
-            this.cMixGaroWithGossip.UseVisualStyleBackColor = false;
-            this.cMixGaroWithGossip.CheckedChanged += new System.EventHandler(this.cMixGaroWithGossip_CheckedChanged);
+            this.nMaxGaroWotH.Location = new System.Drawing.Point(58, 85);
+            this.nMaxGaroWotH.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.nMaxGaroWotH.Name = "nMaxGaroWotH";
+            this.nMaxGaroWotH.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGaroWotH.TabIndex = 33;
+            this.nMaxGaroWotH.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.nMaxGaroWotH.ValueChanged += new System.EventHandler(this.nMaxGaroWotH_ValueChanged);
             // 
             // cClearGaroHints
             // 
@@ -1318,6 +1406,33 @@ namespace MMR.UI.Forms
             this.cClearGaroHints.UseVisualStyleBackColor = false;
             this.cClearGaroHints.CheckedChanged += new System.EventHandler(this.cClearGaroHints_CheckedChanged);
             // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(145, 87);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(12, 15);
+            this.label5.TabIndex = 32;
+            this.label5.Text = "/";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(58, 70);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(141, 15);
+            this.label10.TabIndex = 30;
+            this.label10.Text = "WotH  / Foolish / Max CT";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(95, 87);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(12, 15);
+            this.label9.TabIndex = 31;
+            this.label9.Text = "/";
+            // 
             // gSpeedUps
             // 
             this.gSpeedUps.Controls.Add(this.cDoubleArcheryRewards);
@@ -1330,7 +1445,7 @@ namespace MMR.UI.Forms
             this.gSpeedUps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gSpeedUps.Name = "gSpeedUps";
             this.gSpeedUps.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gSpeedUps.Size = new System.Drawing.Size(421, 148);
+            this.gSpeedUps.Size = new System.Drawing.Size(421, 109);
             this.gSpeedUps.TabIndex = 37;
             this.gSpeedUps.TabStop = false;
             this.gSpeedUps.Text = "Speed Ups";
@@ -1409,18 +1524,125 @@ namespace MMR.UI.Forms
             // 
             // gHints
             // 
+            this.gHints.Controls.Add(this.cCustomGossipWoth);
+            this.gHints.Controls.Add(this.nMaxGossipCT);
+            this.gHints.Controls.Add(this.nMaxGossipFoolish);
+            this.gHints.Controls.Add(this.nMaxGossipWotH);
+            this.gHints.Controls.Add(this.label8);
+            this.gHints.Controls.Add(this.label7);
+            this.gHints.Controls.Add(this.lGossipWothConfig);
             this.gHints.Controls.Add(this.lGossip);
             this.gHints.Controls.Add(this.cGossipHints);
             this.gHints.Controls.Add(this.cFreeHints);
             this.gHints.Controls.Add(this.cClearHints);
-            this.gHints.Location = new System.Drawing.Point(7, 162);
+            this.gHints.Location = new System.Drawing.Point(7, 122);
             this.gHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.gHints.Name = "gHints";
             this.gHints.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gHints.Size = new System.Drawing.Size(260, 89);
+            this.gHints.Size = new System.Drawing.Size(206, 120);
             this.gHints.TabIndex = 36;
             this.gHints.TabStop = false;
             this.gHints.Text = "Gossip Stone Hints";
+            // 
+            // cCustomGossipWoth
+            // 
+            this.cCustomGossipWoth.AutoSize = true;
+            this.cCustomGossipWoth.Checked = true;
+            this.cCustomGossipWoth.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.cCustomGossipWoth.Location = new System.Drawing.Point(15, 88);
+            this.cCustomGossipWoth.Name = "cCustomGossipWoth";
+            this.cCustomGossipWoth.Size = new System.Drawing.Size(15, 14);
+            this.cCustomGossipWoth.TabIndex = 30;
+            this.cCustomGossipWoth.UseVisualStyleBackColor = true;
+            this.cCustomGossipWoth.CheckedChanged += new System.EventHandler(this.cCustomGossipWoth_CheckedChanged);
+            // 
+            // nMaxGossipCT
+            // 
+            this.nMaxGossipCT.Location = new System.Drawing.Point(153, 85);
+            this.nMaxGossipCT.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.nMaxGossipCT.Name = "nMaxGossipCT";
+            this.nMaxGossipCT.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGossipCT.TabIndex = 29;
+            this.nMaxGossipCT.Value = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.nMaxGossipCT.ValueChanged += new System.EventHandler(this.nMaxGossipCT_ValueChanged);
+            // 
+            // nMaxGossipFoolish
+            // 
+            this.nMaxGossipFoolish.Enabled = false;
+            this.nMaxGossipFoolish.Location = new System.Drawing.Point(101, 85);
+            this.nMaxGossipFoolish.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.nMaxGossipFoolish.Name = "nMaxGossipFoolish";
+            this.nMaxGossipFoolish.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGossipFoolish.TabIndex = 28;
+            this.nMaxGossipFoolish.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.nMaxGossipFoolish.ValueChanged += new System.EventHandler(this.nMaxGossipFoolish_ValueChanged);
+            // 
+            // nMaxGossipWotH
+            // 
+            this.nMaxGossipWotH.Enabled = false;
+            this.nMaxGossipWotH.Location = new System.Drawing.Point(51, 85);
+            this.nMaxGossipWotH.Maximum = new decimal(new int[] {
+            9,
+            0,
+            0,
+            0});
+            this.nMaxGossipWotH.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            -2147483648});
+            this.nMaxGossipWotH.Name = "nMaxGossipWotH";
+            this.nMaxGossipWotH.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGossipWotH.TabIndex = 27;
+            this.nMaxGossipWotH.Value = new decimal(new int[] {
+            3,
+            0,
+            0,
+            0});
+            this.nMaxGossipWotH.ValueChanged += new System.EventHandler(this.nMaxGossipWotH_ValueChanged);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(138, 87);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(12, 15);
+            this.label8.TabIndex = 25;
+            this.label8.Text = "/";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(88, 87);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(12, 15);
+            this.label7.TabIndex = 23;
+            this.label7.Text = "/";
+            // 
+            // lGossipWothConfig
+            // 
+            this.lGossipWothConfig.AutoSize = true;
+            this.lGossipWothConfig.Location = new System.Drawing.Point(51, 70);
+            this.lGossipWothConfig.Name = "lGossipWothConfig";
+            this.lGossipWothConfig.Size = new System.Drawing.Size(143, 15);
+            this.lGossipWothConfig.TabIndex = 21;
+            this.lGossipWothConfig.Text = "WotH* / Foolish / Max CT";
             // 
             // lGossip
             // 
@@ -1482,11 +1704,11 @@ namespace MMR.UI.Forms
             // 
             this.groupBox8.Controls.Add(this.lLink);
             this.groupBox8.Controls.Add(this.cLink);
-            this.groupBox8.Location = new System.Drawing.Point(274, 257);
+            this.groupBox8.Location = new System.Drawing.Point(221, 250);
             this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox8.Name = "groupBox8";
             this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox8.Size = new System.Drawing.Size(154, 89);
+            this.groupBox8.Size = new System.Drawing.Size(207, 96);
             this.groupBox8.TabIndex = 35;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Cosmetic Customization";
@@ -1496,7 +1718,7 @@ namespace MMR.UI.Forms
             this.lLink.AutoSize = true;
             this.lLink.BackColor = System.Drawing.Color.Transparent;
             this.lLink.ForeColor = System.Drawing.Color.Black;
-            this.lLink.Location = new System.Drawing.Point(4, 27);
+            this.lLink.Location = new System.Drawing.Point(4, 23);
             this.lLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lLink.Name = "lLink";
             this.lLink.Size = new System.Drawing.Size(76, 15);
@@ -1512,7 +1734,7 @@ namespace MMR.UI.Forms
             "Link (OoT)",
             "Adult Link (Risky!)",
             "Kafei"});
-            this.cLink.Location = new System.Drawing.Point(7, 42);
+            this.cLink.Location = new System.Drawing.Point(7, 38);
             this.cLink.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cLink.Name = "cLink";
             this.cLink.Size = new System.Drawing.Size(129, 23);
@@ -2526,10 +2748,16 @@ namespace MMR.UI.Forms
             this.gHintsGeneral.PerformLayout();
             this.gGaroHints.ResumeLayout(false);
             this.gGaroHints.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGaroCT)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGaroFoolish)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGaroWotH)).EndInit();
             this.gSpeedUps.ResumeLayout(false);
             this.gSpeedUps.PerformLayout();
             this.gHints.ResumeLayout(false);
             this.gHints.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGossipCT)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGossipFoolish)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nMaxGossipWotH)).EndInit();
             this.groupBox8.ResumeLayout(false);
             this.groupBox8.PerformLayout();
             this.groupBox7.ResumeLayout(false);
@@ -2742,6 +2970,20 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cClearGaroHints;
         private System.Windows.Forms.GroupBox gHintsGeneral;
         private System.Windows.Forms.CheckBox cHintImportance;
+        private System.Windows.Forms.NumericUpDown nMaxGossipWotH;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lGossipWothConfig;
+        private System.Windows.Forms.NumericUpDown nMaxGaroCT;
+        private System.Windows.Forms.NumericUpDown nMaxGaroFoolish;
+        private System.Windows.Forms.NumericUpDown nMaxGaroWotH;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.NumericUpDown nMaxGossipCT;
+        private System.Windows.Forms.NumericUpDown nMaxGossipFoolish;
+        private System.Windows.Forms.CheckBox cCustomGaroWoth;
+        private System.Windows.Forms.CheckBox cCustomGossipWoth;
     }
 }
 

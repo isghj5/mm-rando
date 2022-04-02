@@ -151,6 +151,13 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
             TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
             TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
+
+            TooltipBuilder.SetTooltip(nMaxGossipWotH, "Set the number of Way of the Hero hints that will appear on Gossip Stones.");
+            TooltipBuilder.SetTooltip(nMaxGossipFoolish, "Set the number of Foolish hints that will appear on Gossip Stones.");
+            TooltipBuilder.SetTooltip(nMaxGossipCT, "Set the maximum number of Way of the Hero / Foolish hints on Gossip Stones that can be for a Clock Town region (including Laundry Pool).");
+            TooltipBuilder.SetTooltip(nMaxGaroWotH, "Set the number of Way of the Hero hints that will appear on Garos.");
+            TooltipBuilder.SetTooltip(nMaxGaroFoolish, "Set the number of Foolish hints that will appear on Garos.");
+            TooltipBuilder.SetTooltip(nMaxGaroCT, "Set the maximum number of Way of the Hero / Foolish hints on Garos that can be for a Clock Town region (including Laundry Pool).");
         }
 
         /// <summary>
@@ -1186,6 +1193,22 @@ namespace MMR.UI.Forms
             cFillWallet.Checked = _configuration.GameplaySettings.FillWallet;
             cInvisSparkle.Checked = _configuration.GameplaySettings.HiddenRupeesSparkle;
 
+            nMaxGossipWotH.Value = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints ?? 3;
+            nMaxGossipFoolish.Value = _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints ?? 3;
+            nMaxGossipCT.Value = _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints?? 2;
+
+            nMaxGaroWotH.Value = _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints ?? 2;
+            nMaxGaroFoolish.Value = _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints ?? 2;
+            nMaxGaroCT.Value = _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints ?? 0;
+
+            cCustomGossipWoth.Checked = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints.HasValue
+                || _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints.HasValue
+                || _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints.HasValue;
+
+            cCustomGaroWoth.Checked = _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints.HasValue
+                || _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints.HasValue
+                || _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints.HasValue;
+
             // HUD config options
             var heartItems = ColorSelectionManager.Hearts.GetItems();
             var heartSelection = heartItems.FirstOrDefault(csi => csi.Name == _configuration.CosmeticSettings.HeartsSelection);
@@ -1693,6 +1716,16 @@ namespace MMR.UI.Forms
             {
                 cClearGaroHints.Enabled = true;
             }
+
+            cCustomGossipWoth.Enabled = _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
+            nMaxGossipWotH.Enabled = cCustomGossipWoth.Checked && cCustomGossipWoth.Enabled;
+            nMaxGossipFoolish.Enabled = nMaxGossipWotH.Enabled;
+            nMaxGossipCT.Enabled = nMaxGossipWotH.Enabled;
+
+            cCustomGaroWoth.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
+            nMaxGaroWotH.Enabled = cCustomGaroWoth.Checked && cCustomGaroWoth.Enabled;
+            nMaxGaroFoolish.Enabled = nMaxGaroWotH.Enabled;
+            nMaxGaroCT.Enabled = nMaxGaroWotH.Enabled;
 
             cMixGaroWithGossip.Enabled = _configuration.GameplaySettings.GaroHintStyle == _configuration.GameplaySettings.GossipHintStyle && _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
             cHintImportance.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive || _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
@@ -2239,6 +2272,82 @@ namespace MMR.UI.Forms
             pLocationCategories.Visible = cItemPoolAdvanced.Checked;
             tableItemPool.Visible = cItemPoolAdvanced.Checked;
             pClassicItemPool.Visible = !cItemPoolAdvanced.Checked;
+        }
+
+        private void nMaxGossipWotH_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints = (int)nMaxGossipWotH.Value);
+        }
+
+        private void nMaxGossipFoolish_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints = (int)nMaxGossipFoolish.Value);
+        }
+
+        private void nMaxGossipCT_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints = (int)nMaxGossipCT.Value);
+        }
+
+        private void nMaxGaroWotH_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints = (int)nMaxGaroWotH.Value);
+        }
+
+        private void nMaxGaroFoolish_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints = (int)nMaxGaroFoolish.Value);
+        }
+
+        private void nMaxGaroCT_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints = (int)nMaxGaroCT.Value);
+        }
+
+        private void cCustomGossipWoth_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cCustomGossipWoth.Checked)
+            {
+                nMaxGossipWotH.Controls[1].Text = nMaxGossipWotH.Value + "";
+                nMaxGossipFoolish.Controls[1].Text = nMaxGossipFoolish.Value + "";
+                nMaxGossipCT.Controls[1].Text = nMaxGossipCT.Value + "";
+                _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints = (int)nMaxGossipWotH.Value;
+                _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints = (int)nMaxGossipFoolish.Value;
+                _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints = (int)nMaxGossipCT.Value;
+            }
+            else
+            {
+                _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints = null;
+                _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints = null;
+                _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints = null;
+                nMaxGossipWotH.Controls[1].Text = string.Empty;
+                nMaxGossipFoolish.Controls[1].Text = string.Empty;
+                nMaxGossipCT.Controls[1].Text = string.Empty;
+            }
+            UpdateSingleSetting(null);
+        }
+
+        private void cCustomGaroWoth_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cCustomGaroWoth.Checked)
+            {
+                nMaxGaroWotH.Controls[1].Text = nMaxGaroWotH.Value + "";
+                nMaxGaroFoolish.Controls[1].Text = nMaxGaroFoolish.Value + "";
+                nMaxGaroCT.Controls[1].Text = nMaxGaroCT.Value + "";
+                _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints = (int)nMaxGaroWotH.Value;
+                _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints = (int)nMaxGaroFoolish.Value;
+                _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints = (int)nMaxGaroCT.Value;
+            }
+            else
+            {
+                _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints = null;
+                _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints = null;
+                _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints = null;
+                nMaxGaroWotH.Controls[1].Text = string.Empty;
+                nMaxGaroFoolish.Controls[1].Text = string.Empty;
+                nMaxGaroCT.Controls[1].Text = string.Empty;
+            }
+            UpdateSingleSetting(null);
         }
     }
 }
