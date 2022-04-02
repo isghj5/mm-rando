@@ -3463,7 +3463,14 @@
         "AreaWoodFallTempleClear",
         "Any Bottle"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Any Sword"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
