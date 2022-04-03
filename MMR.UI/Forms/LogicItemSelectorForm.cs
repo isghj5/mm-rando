@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using static MMR.UI.Forms.LogicEditorForm;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models;
 
 namespace MMR.UI.Forms
 {
-    public partial class ItemSelectorForm : Form
+    public partial class LogicItemSelectorForm : Form
     {
         public List<string> ReturnItems;
 
@@ -18,7 +17,7 @@ namespace MMR.UI.Forms
         private LogicFile _logic;
         private bool _showLocationNames;
 
-        public ItemSelectorForm(LogicFile logic, bool checkboxes)
+        public LogicItemSelectorForm(LogicFile logic, bool checkboxes)
         {
             _logic = logic;
             InitializeComponent();
