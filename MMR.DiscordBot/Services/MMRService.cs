@@ -87,7 +87,7 @@ namespace MMR.DiscordBot.Services
         public string GetMysteryPath(ulong guildId, string categoryName, bool createIfNotExists)
         {
             var guildRoot = GetMysteryRoot(guildId);
-            var categoryRoot = Path.Combine(guildRoot, categoryName);
+            var categoryRoot = Path.Combine(guildRoot, FileUtils.MakeFilenameValid(categoryName));
             if (createIfNotExists && !Directory.Exists(categoryRoot))
             {
                 Directory.CreateDirectory(categoryRoot);
@@ -179,7 +179,7 @@ namespace MMR.DiscordBot.Services
             try
             {
                 var response = await _httpClient.GetStringAsync("https://www.random.org/integers/?num=31&min=0&max=1&col=31&base=2&format=plain&rnd=new");
-                seed = Convert.ToInt32(response.Replace("\t", ""), 2);
+                seed = Convert.ToInt32(response.Replace("\t", "").Trim(), 2);
             }
             catch (Exception e) when (e is HttpRequestException || e is TaskCanceledException)
             {

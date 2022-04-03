@@ -12,6 +12,7 @@ using MMR.Common.Extensions;
 using System.Net;
 using System.Collections.Generic;
 using System.Threading;
+using MMR.Common.Utils;
 
 namespace MMR.DiscordBot.Modules
 {
@@ -136,14 +137,16 @@ namespace MMR.DiscordBot.Modules
             }).Start();
         }
 
-        private async Task VerifySeedFrequency()
+        private async Task<bool> VerifySeedFrequency()
         {
             var lastSeedRequest = (await UserSeedRepository.GetById(Context.User.Id))?.LastSeedRequest;
             if (lastSeedRequest.HasValue && (DateTime.UtcNow - lastSeedRequest.Value).TotalHours < 6)
             {
                 await ReplyAsync("You may only request a seed once every 6 hours.");
-                return;
+                return false;
             }
+
+            return true;
         }
 
         private async Task GenerateSeed(string settingPath)
@@ -185,7 +188,10 @@ namespace MMR.DiscordBot.Modules
                 await TournamentSeed();
                 return;
             }
-            await VerifySeedFrequency();
+            if (!await VerifySeedFrequency())
+            {
+                return;
+            }
             string settingPath = null;
             if (!string.IsNullOrWhiteSpace(settingName))
             {
@@ -402,7 +408,7 @@ namespace MMR.DiscordBot.Modules
             var settingName = argument[1];
 
             var mysteryPath = _mmrService.GetMysteryPath(Context.Guild.Id, categoryName, false);
-            var settingPath = Path.Combine(mysteryPath, settingName);
+            var settingPath = Path.Combine(mysteryPath, $"{FileUtils.MakeFilenameValid(settingName)}.json");
             if (!File.Exists(settingPath))
             {
                 await ReplyAsync("Setting does not exist.");
@@ -450,7 +456,7 @@ namespace MMR.DiscordBot.Modules
             var settingName = argument[1];
 
             var mysteryPath = _mmrService.GetMysteryPath(Context.Guild.Id, categoryName, false);
-            var settingPath = Path.Combine(mysteryPath, settingName);
+            var settingPath = Path.Combine(mysteryPath, $"{FileUtils.MakeFilenameValid(settingName)}.json");
 
             if (!File.Exists(settingPath))
             {
@@ -464,7 +470,10 @@ namespace MMR.DiscordBot.Modules
         [Command("mystery")]
         public async Task MysterySeed([Remainder] string categoryName)
         {
-            await VerifySeedFrequency();
+            if (!await VerifySeedFrequency())
+            {
+                return;
+            }
             var mysteryPath = _mmrService.GetMysteryPath(Context.Guild.Id, categoryName, false);
             if (!Directory.Exists(mysteryPath))
             {
