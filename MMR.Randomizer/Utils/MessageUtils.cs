@@ -79,24 +79,34 @@ namespace MMR.Randomizer.Utils
                         itemsInRegions[itemRegion.Value].Add((item, locationForImportance));
                     }
 
-                    var competitiveHintInfo = item.NewLocation.Value.GetAttribute<GossipCompetitiveHintAttribute>();
-                    if (competitiveHintInfo == null)
-                    {
-                        continue;
-                    }
-
                     if (hintedItems.Contains(item))
                     {
                         continue;
                     }
 
-                    if (randomizedResult.Settings.CustomJunkLocations.Contains(io.NewLocation.Value))
+                    if (randomizedResult.Settings.OverrideHintPriorities != null)
                     {
-                        randomizedItems.Remove(item);
-                        continue;
+                        if (!randomizedResult.Settings.OverrideHintPriorities.Any(items => items.Contains(item.NewLocation.Value)))
+                        {
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        var competitiveHintInfo = item.NewLocation.Value.GetAttribute<GossipCompetitiveHintAttribute>();
+                        if (competitiveHintInfo == null)
+                        {
+                            continue;
+                        }
+
+                        if (competitiveHintInfo.Condition != null && !competitiveHintInfo.Condition(randomizedResult.Settings))
+                        {
+                            randomizedItems.Remove(item);
+                            continue;
+                        }
                     }
 
-                    if (competitiveHintInfo.Condition != null && !competitiveHintInfo.Condition(randomizedResult.Settings))
+                    if (randomizedResult.Settings.CustomJunkLocations.Contains(io.NewLocation.Value))
                     {
                         randomizedItems.Remove(item);
                         continue;
@@ -117,7 +127,12 @@ namespace MMR.Randomizer.Utils
                 var totalUniqueGossipHints = gossipQuotes.Count() / 2;
 
                 var numberOfLocationHints = totalUniqueGossipHints - numberOfRequiredHints - numberOfNonRequiredHints;
-                unusedItems = hintableItems.GroupBy(io => io.NewLocation.Value.GetAttribute<GossipCompetitiveHintAttribute>().Priority)
+
+                Func<ItemObject, int> getPriority = randomizedResult.Settings.OverrideHintPriorities != null
+                    ? (io) => -randomizedResult.Settings.OverrideHintPriorities.FindIndex(locations => locations.Contains(io.NewLocation.Value))
+                    : (io) => io.NewLocation.Value.GetAttribute<GossipCompetitiveHintAttribute>().Priority;
+
+                unusedItems = hintableItems.GroupBy(getPriority)
                                         .OrderByDescending(g => g.Key)
                                         .Select(g => g.OrderBy(_ => random.Next()).AsEnumerable())
                                         .Aggregate(Enumerable.Empty<ItemObject>(), (g1, g2) => g1.Concat(g2))

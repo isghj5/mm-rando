@@ -1729,6 +1729,7 @@ namespace MMR.UI.Forms
 
             cMixGaroWithGossip.Enabled = _configuration.GameplaySettings.GaroHintStyle == _configuration.GameplaySettings.GossipHintStyle && _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
             cHintImportance.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive || _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
+            bCustomizeHintPriorities.Enabled = cHintImportance.Enabled;
         }
 
         /// <summary>
@@ -2348,6 +2349,23 @@ namespace MMR.UI.Forms
                 nMaxGaroCT.Controls[1].Text = string.Empty;
             }
             UpdateSingleSetting(null);
+        }
+
+        private void bCustomizeHintPriorities_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dialog = new CustomizeHintPrioritiesForm(_configuration.GameplaySettings.OverrideHintPriorities);
+                var result = dialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    _configuration.GameplaySettings.OverrideHintPriorities = dialog.Result;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

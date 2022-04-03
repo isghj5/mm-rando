@@ -112,6 +112,7 @@ namespace MMR.UI.Forms
             this.label4 = new System.Windows.Forms.Label();
             this.tabComfort = new System.Windows.Forms.TabPage();
             this.gHintsGeneral = new System.Windows.Forms.GroupBox();
+            this.bCustomizeHintPriorities = new System.Windows.Forms.Button();
             this.cHintImportance = new System.Windows.Forms.CheckBox();
             this.cMixGaroWithGossip = new System.Windows.Forms.CheckBox();
             this.gGaroHints = new System.Windows.Forms.GroupBox();
@@ -1248,6 +1249,7 @@ namespace MMR.UI.Forms
             // 
             // gHintsGeneral
             // 
+            this.gHintsGeneral.Controls.Add(this.bCustomizeHintPriorities);
             this.gHintsGeneral.Controls.Add(this.cHintImportance);
             this.gHintsGeneral.Controls.Add(this.cMixGaroWithGossip);
             this.gHintsGeneral.Location = new System.Drawing.Point(7, 250);
@@ -1256,6 +1258,16 @@ namespace MMR.UI.Forms
             this.gHintsGeneral.TabIndex = 39;
             this.gHintsGeneral.TabStop = false;
             this.gHintsGeneral.Text = "Hints";
+            // 
+            // bCustomizeHintPriorities
+            // 
+            this.bCustomizeHintPriorities.Location = new System.Drawing.Point(10, 67);
+            this.bCustomizeHintPriorities.Name = "bCustomizeHintPriorities";
+            this.bCustomizeHintPriorities.Size = new System.Drawing.Size(184, 23);
+            this.bCustomizeHintPriorities.TabIndex = 16;
+            this.bCustomizeHintPriorities.Text = "Customize Hint Priorities";
+            this.bCustomizeHintPriorities.UseVisualStyleBackColor = true;
+            this.bCustomizeHintPriorities.Click += new System.EventHandler(this.bCustomizeHintPriorities_Click);
             // 
             // cHintImportance
             // 
@@ -2984,6 +2996,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.NumericUpDown nMaxGossipFoolish;
         private System.Windows.Forms.CheckBox cCustomGaroWoth;
         private System.Windows.Forms.CheckBox cCustomGossipWoth;
+        private System.Windows.Forms.Button bCustomizeHintPriorities;
     }
 }
 

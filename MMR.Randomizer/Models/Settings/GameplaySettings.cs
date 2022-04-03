@@ -403,6 +403,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public int? OverrideMaxNumberOfClockTownGaroHints { get; set; }
 
+        public List<List<Item>> OverrideHintPriorities { get; set; }
+
         /// <summary>
         /// Prevent downgrades
         /// </summary>
