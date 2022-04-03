@@ -115,7 +115,10 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cSFX, "Randomize sound effects that are played throughout the game.");
             TooltipBuilder.SetTooltip(cMusic, "Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music. Causes softlock on Frog Choir HP.");
             TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
+            TooltipBuilder.SetTooltip(cMixGaroWithGossip, "Garo hints distribution and gossip hint distribution will be mixed together.");
             TooltipBuilder.SetTooltip(cClearHints, "Gossip stone hints will give clear item and location names.");
+            TooltipBuilder.SetTooltip(cClearGaroHints, "Garo hints will give clear item and location names.");
+            TooltipBuilder.SetTooltip(cHintImportance, "Location hints indicate the importance of the item.");
             TooltipBuilder.SetTooltip(cNoDowngrades, "Downgrading items will be prevented.");
             TooltipBuilder.SetTooltip(cShopAppearance, "Shops models and text will be updated to match the item they give.");
             TooltipBuilder.SetTooltip(cUpdateChests, "Chest appearance will be updated to match the item they contain.");
@@ -125,7 +128,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cDisableCritWiggle, "Disable crit wiggle movement modification when 1 heart of health or less.");
             TooltipBuilder.SetTooltip(cLink, "Select a character model to replace Link's default model.");
             TooltipBuilder.SetTooltip(cTatl, "Select a color scheme to replace Tatl's default color scheme.");
-            TooltipBuilder.SetTooltip(cGossipHints, "Select a Gossip Stone hint style\n\n - Default: Vanilla Gossip Stone hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, 2 hints about locations with important items, 3 hints about locations with no important items.");
+            TooltipBuilder.SetTooltip(cGossipHints, "Select a Gossip Stone hint style\n\n - Default: Vanilla Gossip Stone hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, and hints regarding importance or non-importance of regions");
+            TooltipBuilder.SetTooltip(cGaroHint, "Select a Garo hint style\n\n - Default: Vanilla Garo hints.\n - Random: Hints will contain locations of random items.\n - Relevant: Hints will contain locations of items loosely related to the vanilla hint or the area.\n - Competitive: Guaranteed hints about time-consuming checks, and hints regarding importance or non-importance of regions.");
             TooltipBuilder.SetTooltip(cSkipBeaver, "Modify Beavers to not have to race the younger beaver.");
             TooltipBuilder.SetTooltip(cGoodDampeRNG, "Change Dampe ghost flames to always have two on the ground floor and one up the ladder.");
             TooltipBuilder.SetTooltip(cGoodDogRaceRNG, "Make Gold Dog always win if you have the Mask of Truth.");
@@ -146,6 +150,14 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cTargetHealth, "Targeting an enemy shows their health bar.");
             TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
             TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
+            TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
+
+            TooltipBuilder.SetTooltip(nMaxGossipWotH, "Set the number of Way of the Hero hints that will appear on Gossip Stones.");
+            TooltipBuilder.SetTooltip(nMaxGossipFoolish, "Set the number of Foolish hints that will appear on Gossip Stones.");
+            TooltipBuilder.SetTooltip(nMaxGossipCT, "Set the maximum number of Way of the Hero / Foolish hints on Gossip Stones that can be for a Clock Town region (including Laundry Pool).");
+            TooltipBuilder.SetTooltip(nMaxGaroWotH, "Set the number of Way of the Hero hints that will appear on Garos.");
+            TooltipBuilder.SetTooltip(nMaxGaroFoolish, "Set the number of Foolish hints that will appear on Garos.");
+            TooltipBuilder.SetTooltip(nMaxGaroCT, "Set the maximum number of Way of the Hero / Foolish hints on Garos that can be for a Clock Town region (including Laundry Pool).");
         }
 
         /// <summary>
@@ -268,6 +280,40 @@ namespace MMR.UI.Forms
 
         private void InitializeItemPoolSettings()
         {
+            var itemsByClassicCategory = ItemUtils.ItemsByClassicCategory();
+            var classicCategoryX = 0;
+            var classicCategoryY = 0; // 140?
+            var classicCategoryWidth = 190;
+            foreach (var classicCategory in Enum.GetValues<ClassicCategory>())
+            {
+                if (classicCategory <= 0)
+                {
+                    continue;
+                }
+
+                var checkbox = new InvertIndeterminateCheckBox();
+                var items = itemsByClassicCategory[classicCategory];
+                checkbox.Tag = items;
+                checkbox.Text = $"{addSpacesRegex.Replace(classicCategory.ToString(), " $1")}: +{items.Count}";
+                var description = classicCategory.GetAttribute<DescriptionAttribute>()?.Description;
+                if (description != null)
+                {
+                    TooltipBuilder.SetTooltip(checkbox, description);
+                }
+                checkbox.Location = new Point(classicCategoryX, classicCategoryY);
+                checkbox.Width = classicCategoryWidth;
+                checkbox.Height = 26;
+                checkbox.CheckStateChanged += cItemCategory2_CheckStateChanged;
+                pClassicItemPool.Controls.Add(checkbox);
+
+                classicCategoryX += classicCategoryWidth;
+                if (classicCategoryX + classicCategoryWidth > pClassicItemPool.Width)
+                {
+                    classicCategoryX = 0;
+                    classicCategoryY += 26;
+                }
+            }
+
             var itemsByItemCategory = ItemUtils.ItemsByItemCategory();
 
             var itemsByLocationCategory = ItemUtils.ItemsByLocationCategory();
@@ -275,16 +321,16 @@ namespace MMR.UI.Forms
             tableItemPool.RowCount = Enum.GetValues<ItemCategory>().Count() - 2;
             tableItemPool.ColumnCount = Enum.GetValues<LocationCategory>().Count() - 1;
 
-            var locationCategoriesX = 141;
+            var locationCategoriesX = 134;
 
             var locationCategoryLabel = new LocationCategoryLabel();
             locationCategoryLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
-            locationCategoryLabel.Location = new Point(locationCategoriesX + 24, 30);
+            locationCategoryLabel.Location = new Point(locationCategoriesX + 24, 0);
             locationCategoryLabel.Width = 610;
             locationCategoryLabel.Height = 105;
             locationCategoryLabel.Lines = Enum.GetValues<LocationCategory>().Where(c => c > 0).Select(c => $"{addSpacesRegex.Replace(c.ToString(), " $1")}: +{itemsByLocationCategory[c].Count}").ToList();
 
-            tabItemPool.Controls.Add(locationCategoryLabel);
+            pLocationCategories.Controls.Add(locationCategoryLabel);
 
             foreach (var locationCategory in Enum.GetValues<LocationCategory>())
             {
@@ -301,12 +347,12 @@ namespace MMR.UI.Forms
                 {
                     TooltipBuilder.SetTooltip(checkbox, description);
                 }
-                checkbox.Location = new Point(locationCategoriesX, 140);
+                checkbox.Location = new Point(locationCategoriesX, 110);
                 checkbox.Width = 17;
                 checkbox.Height = 17;
                 checkbox.CheckStateChanged += cItemCategory2_CheckStateChanged;
                 tableItemPool.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 25));
-                tabItemPool.Controls.Add(checkbox);
+                pLocationCategories.Controls.Add(checkbox);
 
                 locationCategoriesX += 26;
             }
@@ -416,8 +462,9 @@ namespace MMR.UI.Forms
             {
                 // todo keep checkboxes cached
                 var checkboxes = new List<CheckBox>();
-                checkboxes.AddRange(tabItemPool.Controls.OfType<CheckBox>().ToList());
+                checkboxes.AddRange(pLocationCategories.Controls.OfType<CheckBox>().ToList());
                 checkboxes.AddRange(tableItemPool.Controls.OfType<CheckBox>().ToList());
+                checkboxes.AddRange(pClassicItemPool.Controls.OfType<CheckBox>().ToList());
 
                 foreach (var otherCheckbox in checkboxes)
                 {
@@ -1037,7 +1084,10 @@ namespace MMR.UI.Forms
             }
             cQText.Checked = _configuration.GameplaySettings.QuickTextEnabled;
             cFreeHints.Checked = _configuration.GameplaySettings.FreeHints;
+            cMixGaroWithGossip.Checked = _configuration.GameplaySettings.MixGossipAndGaroHints;
             cClearHints.Checked = _configuration.GameplaySettings.ClearHints;
+            cClearGaroHints.Checked = _configuration.GameplaySettings.ClearGaroHints;
+            cHintImportance.Checked = _configuration.GameplaySettings.HintsIndicateImportance;
             cHideClock.Checked = _configuration.GameplaySettings.HideClock;
             cSunsSong.Checked = _configuration.GameplaySettings.EnableSunsSong;
             cFDAnywhere.Checked = _configuration.GameplaySettings.AllowFierceDeityAnywhere;
@@ -1068,6 +1118,7 @@ namespace MMR.UI.Forms
             cNutAndStickDrops.SelectedIndex = (int)_configuration.GameplaySettings.NutandStickDrops;
             cFloors.SelectedIndex = (int)_configuration.GameplaySettings.FloorType;
             cGossipHints.SelectedIndex = (int)_configuration.GameplaySettings.GossipHintStyle;
+            cGaroHint.SelectedIndex = (int)_configuration.GameplaySettings.GaroHintStyle;
             cBlastCooldown.SelectedIndex = (int)_configuration.GameplaySettings.BlastMaskCooldown;
             cIceTraps.SelectedIndex = (int)_configuration.GameplaySettings.IceTraps;
             cIceTrapsAppearance.SelectedIndex = (int)_configuration.GameplaySettings.IceTrapAppearance;
@@ -1140,6 +1191,23 @@ namespace MMR.UI.Forms
             cTargetHealth.Checked = _configuration.GameplaySettings.TargetHealthBar;
             cFreeScarecrow.Checked = _configuration.GameplaySettings.FreeScarecrow;
             cFillWallet.Checked = _configuration.GameplaySettings.FillWallet;
+            cInvisSparkle.Checked = _configuration.GameplaySettings.HiddenRupeesSparkle;
+
+            nMaxGossipWotH.Value = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints ?? 3;
+            nMaxGossipFoolish.Value = _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints ?? 3;
+            nMaxGossipCT.Value = _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints?? 2;
+
+            nMaxGaroWotH.Value = _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints ?? 2;
+            nMaxGaroFoolish.Value = _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints ?? 2;
+            nMaxGaroCT.Value = _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints ?? 0;
+
+            cCustomGossipWoth.Checked = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints.HasValue
+                || _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints.HasValue
+                || _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints.HasValue;
+
+            cCustomGaroWoth.Checked = _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints.HasValue
+                || _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints.HasValue
+                || _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints.HasValue;
 
             // HUD config options
             var heartItems = ColorSelectionManager.Hearts.GetItems();
@@ -1262,9 +1330,24 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.FreeHints = cFreeHints.Checked);
         }
 
+        private void cMixGaroWithGossip_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.MixGossipAndGaroHints = cMixGaroWithGossip.Checked);
+        }
+
         private void cClearHints_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.ClearHints = cClearHints.Checked);
+        }
+
+        private void cClearGaroHints_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.ClearGaroHints = cClearGaroHints.Checked);
+        }
+
+        private void cHintImportance_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.HintsIndicateImportance = cHintImportance.Checked);
         }
 
         private void cNoDowngrades_CheckedChanged(object sender, EventArgs e)
@@ -1474,6 +1557,11 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.GossipHintStyle = (GossipHintStyle)cGossipHints.SelectedIndex);
         }
 
+        private void cGaroHint_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.GaroHintStyle = (GossipHintStyle)cGaroHint.SelectedIndex);
+        }
+
 
         private void cBlastCooldown_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -1591,6 +1679,7 @@ namespace MMR.UI.Forms
             cSpoiler.Enabled = !vanillaMode;
             cHTMLLog.Enabled = !vanillaMode;
             cGossipHints.Enabled = !vanillaMode;
+            cGaroHint.Enabled = !vanillaMode;
             cStartingItems.Enabled = !vanillaMode;
             tJunkLocationsList.Enabled = !vanillaMode;
             bJunkLocationsEditor.Enabled = !vanillaMode;
@@ -1618,6 +1707,29 @@ namespace MMR.UI.Forms
             {
                 cClearHints.Enabled = true;
             }
+
+            if (_configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Default || _configuration.GameplaySettings.LogicMode == LogicMode.Vanilla)
+            {
+                cClearGaroHints.Enabled = false;
+            }
+            else
+            {
+                cClearGaroHints.Enabled = true;
+            }
+
+            cCustomGossipWoth.Enabled = _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
+            nMaxGossipWotH.Enabled = cCustomGossipWoth.Checked && cCustomGossipWoth.Enabled;
+            nMaxGossipFoolish.Enabled = nMaxGossipWotH.Enabled;
+            nMaxGossipCT.Enabled = nMaxGossipWotH.Enabled;
+
+            cCustomGaroWoth.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
+            nMaxGaroWotH.Enabled = cCustomGaroWoth.Checked && cCustomGaroWoth.Enabled;
+            nMaxGaroFoolish.Enabled = nMaxGaroWotH.Enabled;
+            nMaxGaroCT.Enabled = nMaxGaroWotH.Enabled;
+
+            cMixGaroWithGossip.Enabled = _configuration.GameplaySettings.GaroHintStyle == _configuration.GameplaySettings.GossipHintStyle && _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
+            cHintImportance.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive || _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
+            bCustomizeHintPriorities.Enabled = cHintImportance.Enabled;
         }
 
         /// <summary>
@@ -1670,6 +1782,10 @@ namespace MMR.UI.Forms
             cGossipHints.Enabled = v;
             cFreeHints.Enabled = v;
             cClearHints.Enabled = v;
+            cGaroHint.Enabled = v;
+            cClearGaroHints.Enabled = v;
+            cMixGaroWithGossip.Enabled = v;
+            cHintImportance.Enabled = v;
 
             cTargettingStyle.Enabled = v;
             cInstantPictobox.Enabled = v;
@@ -1691,6 +1807,7 @@ namespace MMR.UI.Forms
             cTargetHealth.Enabled = v;
             cFreeScarecrow.Enabled = v;
             cFillWallet.Enabled = v;
+            cInvisSparkle.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
@@ -1950,7 +2067,7 @@ namespace MMR.UI.Forms
                 }
             }
 
-            if (_configuration.GameplaySettings.ItemCategoriesRandomized != null || _configuration.GameplaySettings.LocationCategoriesRandomized != null)
+            if (_configuration.GameplaySettings.ItemCategoriesRandomized != null || _configuration.GameplaySettings.LocationCategoriesRandomized != null || _configuration.GameplaySettings.ClassicCategoriesRandomized != null)
             {
                 var items = new List<Item>();
                 if (_configuration.GameplaySettings.ItemCategoriesRandomized != null)
@@ -1962,6 +2079,11 @@ namespace MMR.UI.Forms
                 {
                     items.AddRange(ItemUtils.ItemsByLocationCategory().Where(kvp => _configuration.GameplaySettings.LocationCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
                     _configuration.GameplaySettings.LocationCategoriesRandomized = null;
+                }
+                if (_configuration.GameplaySettings.ClassicCategoriesRandomized != null)
+                {
+                    items.AddRange(ItemUtils.ItemsByClassicCategory().Where(kvp => _configuration.GameplaySettings.ClassicCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
+                    _configuration.GameplaySettings.ClassicCategoriesRandomized = null;
                 }
                 _configuration.GameplaySettings.CustomItemList.Clear();
                 foreach (var item in items)
@@ -2139,6 +2261,111 @@ namespace MMR.UI.Forms
         private void cAutoInvert_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.AutoInvert = (AutoInvertState)cAutoInvert.SelectedIndex);
+        }
+
+        private void cInvisSparkle_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.HiddenRupeesSparkle = cInvisSparkle.Checked);
+        }
+
+        private void cItemPoolAdvanced_CheckedChanged(object sender, EventArgs e)
+        {
+            pLocationCategories.Visible = cItemPoolAdvanced.Checked;
+            tableItemPool.Visible = cItemPoolAdvanced.Checked;
+            pClassicItemPool.Visible = !cItemPoolAdvanced.Checked;
+        }
+
+        private void nMaxGossipWotH_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints = (int)nMaxGossipWotH.Value);
+        }
+
+        private void nMaxGossipFoolish_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints = (int)nMaxGossipFoolish.Value);
+        }
+
+        private void nMaxGossipCT_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints = (int)nMaxGossipCT.Value);
+        }
+
+        private void nMaxGaroWotH_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints = (int)nMaxGaroWotH.Value);
+        }
+
+        private void nMaxGaroFoolish_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints = (int)nMaxGaroFoolish.Value);
+        }
+
+        private void nMaxGaroCT_ValueChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints = (int)nMaxGaroCT.Value);
+        }
+
+        private void cCustomGossipWoth_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cCustomGossipWoth.Checked)
+            {
+                nMaxGossipWotH.Controls[1].Text = nMaxGossipWotH.Value + "";
+                nMaxGossipFoolish.Controls[1].Text = nMaxGossipFoolish.Value + "";
+                nMaxGossipCT.Controls[1].Text = nMaxGossipCT.Value + "";
+                _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints = (int)nMaxGossipWotH.Value;
+                _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints = (int)nMaxGossipFoolish.Value;
+                _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints = (int)nMaxGossipCT.Value;
+            }
+            else
+            {
+                _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints = null;
+                _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints = null;
+                _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGossipHints = null;
+                nMaxGossipWotH.Controls[1].Text = string.Empty;
+                nMaxGossipFoolish.Controls[1].Text = string.Empty;
+                nMaxGossipCT.Controls[1].Text = string.Empty;
+            }
+            UpdateSingleSetting(null);
+        }
+
+        private void cCustomGaroWoth_CheckedChanged(object sender, EventArgs e)
+        {
+            if (cCustomGaroWoth.Checked)
+            {
+                nMaxGaroWotH.Controls[1].Text = nMaxGaroWotH.Value + "";
+                nMaxGaroFoolish.Controls[1].Text = nMaxGaroFoolish.Value + "";
+                nMaxGaroCT.Controls[1].Text = nMaxGaroCT.Value + "";
+                _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints = (int)nMaxGaroWotH.Value;
+                _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints = (int)nMaxGaroFoolish.Value;
+                _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints = (int)nMaxGaroCT.Value;
+            }
+            else
+            {
+                _configuration.GameplaySettings.OverrideNumberOfRequiredGaroHints = null;
+                _configuration.GameplaySettings.OverrideNumberOfNonRequiredGaroHints = null;
+                _configuration.GameplaySettings.OverrideMaxNumberOfClockTownGaroHints = null;
+                nMaxGaroWotH.Controls[1].Text = string.Empty;
+                nMaxGaroFoolish.Controls[1].Text = string.Empty;
+                nMaxGaroCT.Controls[1].Text = string.Empty;
+            }
+            UpdateSingleSetting(null);
+        }
+
+        private void bCustomizeHintPriorities_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var dialog = new CustomizeHintPrioritiesForm(_configuration.GameplaySettings.OverrideHintPriorities);
+                var result = dialog.ShowDialog();
+                if (result == DialogResult.OK)
+                {
+                    _configuration.GameplaySettings.OverrideHintPriorities = dialog.Result;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

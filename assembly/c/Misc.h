@@ -50,7 +50,8 @@ typedef struct {
     u32 freeScarecrow       : 1;
     u32 fillWallet          : 1;
     u32 autoInvert          : 2;
-    u32                     : 7;
+    u32 hiddenRupeesSparkle : 1;
+    u32                     : 6;
 } MiscFlags;
 
 typedef union {

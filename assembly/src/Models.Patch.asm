@@ -120,6 +120,38 @@
 
 .headersize G_DM_HINA_DELTA
 
+; Overwrite rotation calculation
+; Replaces:
+;   LUI     A1, 0x0002
+;   ADDU    A1, A1, S1
+;   LW      A1, 0x8840 (A1)
+;   OR      A0, R0, R0
+;   OR      A2, R0, R0
+;   ADDU    AT, A1, R0
+;   SLL     A1, A1, 5
+;   SUBU    A1, A1, AT
+;   SLL     A1, A1, 2
+;   ADDU    A1, A1, AT
+;   SLL     A1, A1, 3
+;   SLL     A1, A1, 16
+;   SRA     A1, A1, 16
+.org 0x80A1FCA8
+.area 0x34
+    or      a0, s0, r0
+    jal     Models_GetBossRemainRotation
+    or      a1, s1, r0
+    or      a0, r0, r0
+    or      a1, v0, r0
+    or      a2, r0, r0
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+.endarea
+
 ; Overwrite draw function call for Odolwa's Remains.
 ; Replaces:
 ;   jal     0x800EE320

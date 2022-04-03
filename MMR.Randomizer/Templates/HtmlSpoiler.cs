@@ -26,55 +26,25 @@ namespace MMR.Randomizer.Templates
         /// </summary>
         public virtual string TransformText()
         {
-            this.Write(@"<html>
-<head>
-<style>
-    body.dark-mode {
-      background-color: #111;
-      color: #ccc;
-    }
-    body.dark-mode a {
-      color: #111;
-    }
-    body.dark-mode button {
-      background-color: #ddd;
-      color: #111;
-    }
-
-    body.light-mode {
-      background-color: #eee;
-      color: #111;
-    }
-    body.light-mode a {
-      color: #111;
-    }
-    body.light-mode button {
-      background-color: #111;
-      color: #ccc;
-    }
-
-    th{ text-align:left }
-    .region { text-align: center; font-weight: bold; }
-    [data-content]:before { content: attr(data-content); }
-
-    .dark-mode .spoiler{ background-color:#ccc }
-    .dark-mode .spoiler:active { background-color: #111;  }
-    .dark-mode .show-highlight .unavailable .newlocation { background-color: #500705; }
-    .dark-mode .show-highlight .acquired .newlocation { background-color: #69591f; }
-    .dark-mode .show-highlight .available .newlocation { background-color: #313776; }
-
-    .light-mode .spoiler{ background-color:#111 }
-    .light-mode .spoiler:active { background-color: #ccc;  }
-    .light-mode .show-highlight .unavailable .newlocation { background-color: #FF9999; }
-    .light-mode .show-highlight .acquired .newlocation { background-color: #99FF99; }
-    .light-mode .show-highlight .available .newlocation { background-color: #9999FF; }
-
-
-    #spoilerLogState { width: 560px; }
-</style>
-</head>
-<body class=""light-mode"">
-<label><b>Version: </b></label><span>");
+            this.Write("<!DOCTYPE html>\r\n<html>\r\n<head>\r\n<style>\r\n    body.dark-mode {\r\n      background-" +
+                    "color: #111;\r\n      color: #ccc;\r\n    }\r\n    body.dark-mode a {\r\n      color: #1" +
+                    "11;\r\n    }\r\n    body.dark-mode button {\r\n      background-color: #ddd;\r\n      co" +
+                    "lor: #111;\r\n    }\r\n\r\n    body.light-mode {\r\n      background-color: #eee;\r\n     " +
+                    " color: #111;\r\n    }\r\n    body.light-mode a {\r\n      color: #111;\r\n    }\r\n    bo" +
+                    "dy.light-mode button {\r\n      background-color: #111;\r\n      color: #ccc;\r\n    }" +
+                    "\r\n\r\n    th{ text-align:left }\r\n    .region { text-align: center; font-weight: bo" +
+                    "ld; }\r\n    [data-content]:before { content: attr(data-content); }\r\n\r\n    .dark-m" +
+                    "ode .spoiler{ background-color:#ccc }\r\n    .dark-mode .spoiler:active { backgrou" +
+                    "nd-color: #111;  }\r\n    .dark-mode .show-highlight .unavailable .newlocation { b" +
+                    "ackground-color: #500705; }\r\n    .dark-mode .show-highlight .acquired .newlocati" +
+                    "on { background-color: #69591f; }\r\n    .dark-mode .show-highlight .available .ne" +
+                    "wlocation { background-color: #313776; }\r\n\r\n    .light-mode .spoiler{ background" +
+                    "-color:#111 }\r\n    .light-mode .spoiler:active { background-color: #ccc;  }\r\n   " +
+                    " .light-mode .show-highlight .unavailable .newlocation { background-color: #FF99" +
+                    "99; }\r\n    .light-mode .show-highlight .acquired .newlocation { background-color" +
+                    ": #99FF99; }\r\n    .light-mode .show-highlight .available .newlocation { backgrou" +
+                    "nd-color: #9999FF; }\r\n\r\n\r\n    #spoilerLogState { width: 560px; }\r\n</style>\r\n</he" +
+                    "ad>\r\n<body class=\"light-mode\">\r\n<label><b>Version: </b></label><span>");
             this.Write(this.ToStringHelper.ToStringWithCulture(spoiler.Version));
             this.Write("</span><br/>\r\n<label><b>Settings: </b></label><code style=\"word-break: break-all;" +
                     "\">");

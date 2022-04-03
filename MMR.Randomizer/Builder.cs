@@ -1266,7 +1266,7 @@ namespace MMR.Randomizer
         private void WriteFreeHints()
         {
             int address = 0x00E0A810 + 0x378;
-            byte val = 0x00;
+            uint val = 0x00;
             ReadWriteUtils.WriteToROM(address, val);
         }
 
@@ -1489,6 +1489,11 @@ namespace MMR.Randomizer
                     hacks.Add(Resources.mods.fix_ocarina_checks);
                     hacks.Add(Resources.mods.fix_song_of_time);
                 }
+            }
+
+            if (_randomized.Settings.GaroHintStyle != GossipHintStyle.Default)
+            {
+                hacks.Add(Resources.mods.garo_hints);
             }
 
             foreach (var hack in hacks)

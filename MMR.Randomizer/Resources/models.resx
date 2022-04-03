@@ -151,6 +151,9 @@
   <data name="gi_link_mask" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>models\gi-link-mask;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="gi_spinattack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>models\gi-spinattack;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="kafei" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>models\kafei;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

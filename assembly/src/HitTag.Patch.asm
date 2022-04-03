@@ -12,3 +12,8 @@
     lw      a1, 0x0014 (sp)
     jal     HitTag_RupeeSpawn
     or      a2, s0, r0
+
+; Replaces:
+;   .dw     0x00000000
+.org 0x80BE21EC
+    .dw     HitTag_Draw

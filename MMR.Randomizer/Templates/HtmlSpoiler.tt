@@ -4,6 +4,7 @@
 <#@ import namespace="System.Text" #>
 <#@ import namespace="System.Collections.Generic" #>
 <#@ import namespace="MMR.Randomizer.Extensions" #>
+<!DOCTYPE html>
 <html>
 <head>
 <style>

@@ -3,7 +3,7 @@
 
 #include <z64.h>
 
-#define EXT_OBJECT_COUNT 16
+#define EXT_OBJECT_COUNT 32
 
 ObjectFileTableEntry* ExtendedObjects_Get(s16 index);
 

@@ -117,10 +117,9 @@ namespace MMR.Randomizer.Utils
             return itemList;
         }
 
-        public static Dictionary<GossipQuote, ReadOnlyCollection<Item>> GetGossipStoneRequirements(ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
+        public static Dictionary<GossipQuote, ReadOnlyCollection<Item>> GetGossipStoneRequirements(IEnumerable<GossipQuote> gossipQuotes, ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
         {
-            return Enum.GetValues(typeof(GossipQuote))
-                .Cast<GossipQuote>()
+            return gossipQuotes
                 .Where(gq => gq.HasAttribute<GossipStoneAttribute>())
                 .ToDictionary(gq => gq, gq => GetGossipStoneRequirement(gq, itemList, logic, settings));
         }
@@ -278,13 +277,13 @@ namespace MMR.Randomizer.Utils
                 for (var i = 0; i < logicPaths.Count; i++)
                 {
                     var currentLogicPath = logicPaths[i];
-                    var currentLogicImportant = currentLogicPath.Important.Except(important);
+                    var currentLogicImportant = currentLogicPath.Important.Except(important).Where(item => !item.IsFake());
                     for (var j = 0; j < logicPaths.Count; j++)
                     {
                         if (i != j && !shouldRemove.Contains(i) && !shouldRemove.Contains(j))
                         {
                             var otherLogicPath = logicPaths[j];
-                            var otherLogicImportant = otherLogicPath.Important.Except(important);
+                            var otherLogicImportant = otherLogicPath.Important.Except(important).Where(item => !item.IsFake());
                             if (!currentLogicImportant.Except(otherLogicImportant).Any() && otherLogicImportant.Except(currentLogicImportant).Any())
                             {
                                 shouldRemove.Add(j);
