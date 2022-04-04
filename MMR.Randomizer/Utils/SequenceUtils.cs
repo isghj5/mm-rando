@@ -810,7 +810,7 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteCodeNOP(0x80190E80);
 
             // To do: make this dynamic with payload length, at some point. maybe.
-            ReadWriteUtils.WriteU32ToROM(0xC776C0, 0x807343D0); //RAM address to move audiobanktable into
+            ReadWriteUtils.WriteU32ToROM(0xC776C0, 0x80734730); //RAM address to move audiobanktable into
 
             int f = RomUtils.GetFileIndexForWriting(New_AudioBankTable);
             var fileData = RomData.MMFileList[f].Addr;
