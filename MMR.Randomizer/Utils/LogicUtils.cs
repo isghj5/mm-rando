@@ -137,9 +137,13 @@ namespace MMR.Randomizer.Utils
             public ReadOnlyCollection<Item> ImportantSongLocations { get; set; }
         }
 
-        public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, params Item[] exclude)
+        public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, Dictionary<Item, ItemObject> itemsByLocation = null, params Item[] exclude)
         {
-            var itemObject = itemList.Find(io => io.NewLocation == location) ?? itemList[location];
+            if (itemsByLocation == null)
+            {
+                itemsByLocation = itemList.ToDictionary(io => io.NewLocation ?? io.Item);
+            }
+            var itemObject = itemsByLocation[location];
             if (settings.CustomStartingItemList.Contains(itemObject.Item))
             {
                 return new LogicPaths();
@@ -154,13 +158,13 @@ namespace MMR.Randomizer.Utils
             }
             if (exclude.Contains(location))
             {
-                if (settings.AddSongs || !ItemUtils.IsSong(location) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i) && !ItemUtils.IsSong(i)))
+                if (settings.AddSongs || !ItemUtils.IsSong(location) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !ItemUtils.IsSong(i)))
                 {
                     return null;
                 }
             }
             var importantSongLocations = new List<Item>();
-            if (!settings.AddSongs && ItemUtils.IsSong(location) && logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i)))
+            if (!settings.AddSongs && ItemUtils.IsSong(location) && logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item)))
             {
                 importantSongLocations.Add(location);
             }
@@ -194,7 +198,7 @@ namespace MMR.Randomizer.Utils
 
                     var requiredLocation = itemList[requiredItemId].NewLocation ?? requiredItemId;
 
-                    var childPaths = GetImportantLocations(itemList, settings, requiredLocation, itemLogic, logicPath.ToList(), checkedLocations, exclude);
+                    var childPaths = GetImportantLocations(itemList, settings, requiredLocation, itemLogic, logicPath.ToList(), checkedLocations, itemsByLocation, exclude);
                     if (childPaths == null)
                     {
                         return null;
@@ -233,7 +237,7 @@ namespace MMR.Randomizer.Utils
 
                         var conditionalLocation = itemList[conditionalItemId].NewLocation ?? conditionalItemId;
 
-                        var childPaths = GetImportantLocations(itemList, settings, conditionalLocation, itemLogic, logicPath.ToList(), checkedLocations, exclude);
+                        var childPaths = GetImportantLocations(itemList, settings, conditionalLocation, itemLogic, logicPath.ToList(), checkedLocations, itemsByLocation, exclude);
                         if (childPaths == null)
                         {
                             conditionalRequired = null;
