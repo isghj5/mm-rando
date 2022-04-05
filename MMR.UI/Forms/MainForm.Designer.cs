@@ -1614,11 +1614,6 @@ namespace MMR.UI.Forms
             0,
             0,
             0});
-            this.nMaxGossipWotH.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
             this.nMaxGossipWotH.Name = "nMaxGossipWotH";
             this.nMaxGossipWotH.Size = new System.Drawing.Size(31, 23);
             this.nMaxGossipWotH.TabIndex = 27;
@@ -1652,9 +1647,10 @@ namespace MMR.UI.Forms
             this.lGossipWothConfig.AutoSize = true;
             this.lGossipWothConfig.Location = new System.Drawing.Point(51, 70);
             this.lGossipWothConfig.Name = "lGossipWothConfig";
-            this.lGossipWothConfig.Size = new System.Drawing.Size(143, 15);
+            this.lGossipWothConfig.Size = new System.Drawing.Size(141, 15);
             this.lGossipWothConfig.TabIndex = 21;
-            this.lGossipWothConfig.Text = "WotH* / Foolish / Max CT";
+            this.lGossipWothConfig.Text = "WotH  / Foolish / Max CT";
+            this.lGossipWothConfig.Click += new System.EventHandler(this.lGossipWothConfig_Click);
             // 
             // lGossip
             // 
