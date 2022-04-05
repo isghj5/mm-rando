@@ -96,7 +96,7 @@ namespace MMR.Randomizer.GameObjects
         // it shall rearrange things, in which the earth is born in the heavens and the moon is born on the earth.
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.ItemLightArrow)]
         [GossipStone(Item.HintGaroMaster)]
-        GaroMaster = 0x13AA,
+        GaroMaster = 0x13AF,
 
         //It seems the crows that fly near the town walls are fond of musical instruments...
         [GossipRestrict(GossipRestrictAttribute.RestrictionType.Item, Item.IkanaScrubGoldRupee)] // or random? or silver rupees?
