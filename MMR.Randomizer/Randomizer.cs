@@ -1589,7 +1589,7 @@ namespace MMR.Randomizer
         /// </summary>
         private void PlaceRemainingItems(List<Item> itemPool)
         {
-            foreach (var item in ItemUtils.AllLocations().OrderBy(ItemUtils.IsLogicallyJunk))
+            foreach (var item in ItemUtils.AllLocations().OrderBy(ItemUtils.IsJunk))
             {
                 if (ItemList[item].NewLocation == null)
                 {
