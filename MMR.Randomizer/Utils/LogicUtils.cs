@@ -144,10 +144,6 @@ namespace MMR.Randomizer.Utils
                 itemsByLocation = itemList.ToDictionary(io => io.NewLocation ?? io.Item);
             }
             var itemObject = itemsByLocation[location];
-            if (settings.CustomStartingItemList.Contains(itemObject.Item))
-            {
-                return new LogicPaths();
-            }
             if (logicPath == null)
             {
                 logicPath = new List<Item>();
@@ -179,10 +175,7 @@ namespace MMR.Randomizer.Utils
                 {
                     return null;
                 }
-                if (!exclude.Intersect(checkedLocations[location].Required).Any())
-                {
-                    return checkedLocations[location];
-                }
+                return checkedLocations[location];
             }
             var locationLogic = itemLogic[(int)location];
             var required = new List<Item>();
