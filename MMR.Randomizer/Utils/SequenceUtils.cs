@@ -864,7 +864,11 @@ namespace MMR.Randomizer.Utils
                 //}
 
                 var testBanks = testSeq.CheckAvailableBanks();
-                if (testBanks == false) // all custom banks have been claimed
+                if (testBanks == true) 
+                {
+                    testSeq.ClearUnavailableBanks(); // remove any already claimed bank sequences
+                }
+                else // all custom banks have been claimed
                 {
                     if (CurrentFreeBank > 0x0080)
                     {
