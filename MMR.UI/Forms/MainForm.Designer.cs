@@ -1650,7 +1650,6 @@ namespace MMR.UI.Forms
             this.lGossipWothConfig.Size = new System.Drawing.Size(141, 15);
             this.lGossipWothConfig.TabIndex = 21;
             this.lGossipWothConfig.Text = "WotH  / Foolish / Max CT";
-            this.lGossipWothConfig.Click += new System.EventHandler(this.lGossipWothConfig_Click);
             // 
             // lGossip
             // 
