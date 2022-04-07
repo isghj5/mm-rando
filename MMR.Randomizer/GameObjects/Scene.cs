@@ -159,6 +159,8 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9)] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RedBubble, // spawns in hot lava, keep wood enemies out
             Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos, Actor.Dinofos, Actor.Snapper)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo, // spawns in hot lava, keep wood enemies out
+            Actor.IceBlock, Actor.Bombiwa, Actor.IkanaCanyonHookshotStump, Actor.Rock)] // could block the fairy bubble
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Freezard,
             Actor.PoeSisters, // weird behavior, if the killing blow of meg at long range can stop chests from spawning
             Actor.CircleOfFire, // if it gets placed on the one on top of a chest the player is screwed
