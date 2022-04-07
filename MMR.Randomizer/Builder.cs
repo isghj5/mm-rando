@@ -66,7 +66,7 @@ namespace MMR.Randomizer
             //   then all the variety can be dried up for the later slots
             // the biggest example is MM-only, many songs are action/boss but the boss slots are later
             //  as a result boss music is often used up early placed into early action slots
-            // if we don't randomize remaining, then we only get upper alphabetical, same every seed
+            // if we don't randomize unassigned, then we only get upper alphabetical, same every seed
             List<SequenceInfo> unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
             unassigned = unassigned.OrderBy(x => random.Next()).ToList();                           // random ordered songs
             RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
@@ -82,7 +82,7 @@ namespace MMR.Randomizer
             foreach (var targetSlot in RomData.TargetSequences)
             {
                 // scan all songs for a replacement that fits in this slot
-                bool foundValidReplacement = SequenceUtils.SearchForValidSongReplacement(unassigned, targetSlot, random, log);
+                bool foundValidReplacement = SequenceUtils.SearchForValidSongReplacement(_cosmeticSettings, unassigned, targetSlot, random, log);
 
                 if (foundValidReplacement == false) // no available songs fit in this slot category
                 {
@@ -92,7 +92,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            SequenceUtils.CheckBGMCombatMusicBudget(unassigned, _cosmeticSettings.DisableCombatMusic, random, log);
+            SequenceUtils.CheckBGMCombatMusicBudget(_cosmeticSettings, unassigned, random, log);
 
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
 

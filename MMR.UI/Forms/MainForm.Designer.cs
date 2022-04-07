@@ -101,6 +101,8 @@ namespace MMR.UI.Forms
             this.cIceTrapsAppearance = new System.Windows.Forms.ComboBox();
             this.cIceTrapQuirks = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cAutoInvert = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.cClockSpeed = new System.Windows.Forms.ComboBox();
             this.label6 = new System.Windows.Forms.Label();
             this.cHideClock = new System.Windows.Forms.CheckBox();
@@ -147,6 +149,8 @@ namespace MMR.UI.Forms
             this.lTatl = new System.Windows.Forms.Label();
             this.cTargettingStyle = new System.Windows.Forms.CheckBox();
             this.gCosmeticMusicSound = new System.Windows.Forms.GroupBox();
+            this.lLuckRoll = new System.Windows.Forms.Label();
+            this.tLuckRollPercentage = new System.Windows.Forms.TextBox();
             this.lMusic = new System.Windows.Forms.Label();
             this.cMusic = new System.Windows.Forms.ComboBox();
             this.cSFX = new System.Windows.Forms.CheckBox();
@@ -203,8 +207,6 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cAutoInvert = new System.Windows.Forms.ComboBox();
-            this.label3 = new System.Windows.Forms.Label();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1085,6 +1087,31 @@ namespace MMR.UI.Forms
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Clock";
             // 
+            // cAutoInvert
+            // 
+            this.cAutoInvert.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cAutoInvert.FormattingEnabled = true;
+            this.cAutoInvert.Items.AddRange(new object[] {
+            "Never",
+            "First Cycle",
+            "Always"});
+            this.cAutoInvert.Location = new System.Drawing.Point(7, 82);
+            this.cAutoInvert.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cAutoInvert.Name = "cAutoInvert";
+            this.cAutoInvert.Size = new System.Drawing.Size(164, 23);
+            this.cAutoInvert.TabIndex = 18;
+            this.cAutoInvert.SelectedIndexChanged += new System.EventHandler(this.cAutoInvert_SelectedIndexChanged);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(4, 66);
+            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(68, 15);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "Auto-invert";
+            // 
             // cClockSpeed
             // 
             this.cClockSpeed.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -1695,6 +1722,8 @@ namespace MMR.UI.Forms
             // 
             // gCosmeticMusicSound
             // 
+            this.gCosmeticMusicSound.Controls.Add(this.lLuckRoll);
+            this.gCosmeticMusicSound.Controls.Add(this.tLuckRollPercentage);
             this.gCosmeticMusicSound.Controls.Add(this.lMusic);
             this.gCosmeticMusicSound.Controls.Add(this.cMusic);
             this.gCosmeticMusicSound.Controls.Add(this.cSFX);
@@ -1710,6 +1739,30 @@ namespace MMR.UI.Forms
             this.gCosmeticMusicSound.TabIndex = 46;
             this.gCosmeticMusicSound.TabStop = false;
             this.gCosmeticMusicSound.Text = "Music / Sound";
+            // 
+            // lLuckRoll
+            // 
+            this.lLuckRoll.AutoSize = true;
+            this.lLuckRoll.BackColor = System.Drawing.Color.Transparent;
+            this.lLuckRoll.ForeColor = System.Drawing.Color.Black;
+            this.lLuckRoll.Location = new System.Drawing.Point(171, 99);
+            this.lLuckRoll.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lLuckRoll.Name = "lLuckRoll";
+            this.lLuckRoll.Size = new System.Drawing.Size(98, 15);
+            this.lLuckRoll.TabIndex = 47;
+            this.lLuckRoll.Text = "Luck Roll Chance";
+            // 
+            // tLuckRollPercentage
+            // 
+            this.tLuckRollPercentage.Location = new System.Drawing.Point(171, 114);
+            this.tLuckRollPercentage.MaxLength = 10;
+            this.tLuckRollPercentage.Name = "tLuckRollPercentage";
+            this.tLuckRollPercentage.Size = new System.Drawing.Size(100, 23);
+            this.tLuckRollPercentage.TabIndex = 46;
+            this.tLuckRollPercentage.Text = "13%";
+            this.tLuckRollPercentage.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.tLuckRollPercentage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tLuckRoll_KeyDown);
+            this.tLuckRollPercentage.Leave += new System.EventHandler(this.tLuckRoll_Leave);
             // 
             // lMusic
             // 
@@ -2297,31 +2350,6 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cAutoInvert
-            // 
-            this.cAutoInvert.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cAutoInvert.FormattingEnabled = true;
-            this.cAutoInvert.Items.AddRange(new object[] {
-            "Never",
-            "First Cycle",
-            "Always"});
-            this.cAutoInvert.Location = new System.Drawing.Point(7, 82);
-            this.cAutoInvert.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cAutoInvert.Name = "cAutoInvert";
-            this.cAutoInvert.Size = new System.Drawing.Size(164, 23);
-            this.cAutoInvert.TabIndex = 18;
-            this.cAutoInvert.SelectedIndexChanged += new System.EventHandler(this.cAutoInvert_SelectedIndexChanged);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 66);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 15);
-            this.label3.TabIndex = 19;
-            this.label3.Text = "Auto-invert";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2577,6 +2605,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFillWallet;
         private System.Windows.Forms.ComboBox cAutoInvert;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lLuckRoll;
+        private System.Windows.Forms.TextBox tLuckRollPercentage;
     }
 }
 
