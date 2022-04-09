@@ -182,6 +182,11 @@ namespace MMR.Randomizer.Utils
             var important = new List<Item>();
             if (locationLogic.RequiredItemIds != null && locationLogic.RequiredItemIds.Any())
             {
+                if (locationLogic.RequiredItemIds.Contains((int)Item.AreaMoonAccess))
+                {
+                    return null;
+                }
+
                 foreach (var requiredItemId in locationLogic.RequiredItemIds.Cast<Item>())
                 {
                     if (itemList[requiredItemId].Item != requiredItemId)
@@ -218,6 +223,11 @@ namespace MMR.Randomizer.Utils
                 var logicPaths = new List<LogicPaths>();
                 foreach (var conditions in locationLogic.ConditionalItemIds)
                 {
+                    if (conditions.Contains((int)Item.AreaMoonAccess))
+                    {
+                        continue;
+                    }
+
                     var conditionalRequired = new List<Item>();
                     var conditionalImportant = new List<Item>();
                     var conditionalImportantSongLocations = new List<Item>();
