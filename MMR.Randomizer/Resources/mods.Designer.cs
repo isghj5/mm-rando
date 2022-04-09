@@ -623,6 +623,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] free_garo_hints {
+            get {
+                object obj = ResourceManager.GetObject("free_garo_hints", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] garo_hints {
             get {
                 object obj = ResourceManager.GetObject("garo_hints", resourceCulture);

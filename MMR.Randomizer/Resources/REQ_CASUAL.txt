@@ -54678,7 +54678,9 @@
     },
     {
       "Id": "GossipTerminaSouth",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54687,7 +54689,9 @@
     },
     {
       "Id": "GossipSwampPotionShop",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54697,6 +54701,7 @@
     {
       "Id": "GossipMountainSpringPath",
       "RequiredItems": [
+        "MaskTruth",
         "AreaSnowheadTempleClear"
       ],
       "ConditionalItems": [
@@ -54714,7 +54719,9 @@
     },
     {
       "Id": "GossipMountainPath",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [
         [
           "OtherArrow"
@@ -54732,6 +54739,7 @@
     {
       "Id": "GossipOceanZoraGame",
       "RequiredItems": [
+        "MaskTruth",
         "AreaWestAccess"
       ],
       "ConditionalItems": [],
@@ -54743,6 +54751,7 @@
     {
       "Id": "GossipCanyonRoad",
       "RequiredItems": [
+        "MaskTruth",
         "Ikana Graveyard Access"
       ],
       "ConditionalItems": [],
@@ -54754,6 +54763,7 @@
     {
       "Id": "GossipCanyonDock",
       "RequiredItems": [
+        "MaskTruth",
         "AreaEastAccess"
       ],
       "ConditionalItems": [],
@@ -54765,6 +54775,7 @@
     {
       "Id": "GossipCanyonSpiritHouse",
       "RequiredItems": [
+        "MaskTruth",
         "AreaIkanaCanyonAccess"
       ],
       "ConditionalItems": [],
@@ -54775,7 +54786,9 @@
     },
     {
       "Id": "GossipTerminaMilk",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54784,7 +54797,9 @@
     },
     {
       "Id": "GossipTerminaWest",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54793,7 +54808,9 @@
     },
     {
       "Id": "GossipTerminaNorth",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54802,7 +54819,9 @@
     },
     {
       "Id": "GossipTerminaEast",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54811,7 +54830,9 @@
     },
     {
       "Id": "GossipRanchTree",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54820,7 +54841,9 @@
     },
     {
       "Id": "GossipRanchBarn",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54829,7 +54852,9 @@
     },
     {
       "Id": "GossipMilkRoad",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54839,6 +54864,7 @@
     {
       "Id": "GossipOceanFortress",
       "RequiredItems": [
+        "MaskTruth",
         "AreaWestAccess"
       ],
       "ConditionalItems": [],
@@ -54849,7 +54875,9 @@
     },
     {
       "Id": "GossipSwampRoad",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54858,7 +54886,9 @@
     },
     {
       "Id": "GossipTerminaObservatory",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [
         [
           "MaskDeku"
@@ -54891,7 +54921,9 @@
     },
     {
       "Id": "GossipRanchCuccoShack",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54900,7 +54932,9 @@
     },
     {
       "Id": "GossipRanchRacetrack",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54909,7 +54943,9 @@
     },
     {
       "Id": "GossipRanchEntrance",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54919,6 +54955,7 @@
     {
       "Id": "GossipCanyonRavine",
       "RequiredItems": [
+        "MaskTruth",
         "AreaEastAccess"
       ],
       "ConditionalItems": [
@@ -54939,6 +54976,7 @@
     {
       "Id": "GossipMountainSpringFrog",
       "RequiredItems": [
+        "MaskTruth",
         "AreaSnowheadTempleClear"
       ],
       "ConditionalItems": [],
@@ -54950,6 +54988,7 @@
     {
       "Id": "GossipSwampSpiderHouse",
       "RequiredItems": [
+        "MaskTruth",
         "AreaSwampSpiderAccess"
       ],
       "ConditionalItems": [],
@@ -54960,7 +54999,9 @@
     },
     {
       "Id": "GossipTerminaGossipLarge",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54969,7 +55010,9 @@
     },
     {
       "Id": "GossipTerminaGossipGuitar",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54978,7 +55021,9 @@
     },
     {
       "Id": "GossipTerminaGossipPipes",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54987,7 +55032,9 @@
     },
     {
       "Id": "GossipTerminaGossipDrums",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",

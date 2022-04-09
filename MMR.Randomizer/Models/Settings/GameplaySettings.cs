@@ -382,6 +382,8 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool FreeHints { get; set; } = true;
 
+        public bool FreeGaroHints { get; set; }
+
         /// <summary>
         /// Clear hints
         /// </summary>

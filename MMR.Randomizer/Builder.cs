@@ -2924,6 +2924,26 @@ namespace MMR.Randomizer
                 WriteFreeHints();
             }
 
+            if (_randomized.Settings.FreeGaroHints)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.free_garo_hints);
+
+                messageTable.UpdateMessages(new MessageEntryBuilder()
+                    .Id(0x24E)
+                    .Message(it =>
+                    {
+                        it.LightBlue(() =>
+                        {
+                            it.Text("I can't see it, but I sense there's").NewLine()
+                            .Text("a thirst for blood looming all").NewLine()
+                            .Text("around us...");
+                        })
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
             if (_randomized.Settings.GossipHintStyle != GossipHintStyle.Default)
             {
                 messageTable.UpdateMessages(_randomized.GossipQuotes);

@@ -231,6 +231,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
+            this.cFreeGaroHints = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1296,6 +1297,7 @@ namespace MMR.UI.Forms
             // 
             // gGaroHints
             // 
+            this.gGaroHints.Controls.Add(this.cFreeGaroHints);
             this.gGaroHints.Controls.Add(this.cCustomGaroWoth);
             this.gGaroHints.Controls.Add(this.nMaxGaroCT);
             this.gGaroHints.Controls.Add(this.lGaroHints);
@@ -2701,6 +2703,20 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
+            // cFreeGaroHints
+            // 
+            this.cFreeGaroHints.AutoSize = true;
+            this.cFreeGaroHints.BackColor = System.Drawing.Color.Transparent;
+            this.cFreeGaroHints.ForeColor = System.Drawing.Color.Black;
+            this.cFreeGaroHints.Location = new System.Drawing.Point(117, 20);
+            this.cFreeGaroHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFreeGaroHints.Name = "cFreeGaroHints";
+            this.cFreeGaroHints.Size = new System.Drawing.Size(77, 19);
+            this.cFreeGaroHints.TabIndex = 37;
+            this.cFreeGaroHints.Text = "Free hints";
+            this.cFreeGaroHints.UseVisualStyleBackColor = false;
+            this.cFreeGaroHints.CheckedChanged += new System.EventHandler(this.cFreeGaroHints_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -2992,6 +3008,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cCustomGaroWoth;
         private System.Windows.Forms.CheckBox cCustomGossipWoth;
         private System.Windows.Forms.Button bCustomizeHintPriorities;
+        private System.Windows.Forms.CheckBox cFreeGaroHints;
     }
 }
 

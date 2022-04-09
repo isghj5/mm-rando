@@ -209,6 +209,22 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (_settings.FreeHints)
+            {
+                for (var item = Item.GossipTerminaSouth; item <= Item.GossipTerminaGossipDrums; item++)
+                {
+                    ItemList[item].DependsOnItems.Remove(Item.MaskTruth);
+                }
+            }
+
+            if (_settings.FreeGaroHints)
+            {
+                for (var item = Item.HintGaroCanyonLower1; item <= Item.HintGaroCastleUpper; item++)
+                {
+                    ItemList[item].DependsOnItems.Remove(Item.MaskGaro);
+                }
+            }
+
             if (_settings.CustomItemList.Contains(Item.ShopItemBusinessScrubMagicBean))
             {
                 ItemList[Item.ShopItemBusinessScrubMagicBeanInSwamp].DependsOnItems.Remove(Item.OtherMagicBean);
