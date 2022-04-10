@@ -547,7 +547,7 @@ namespace MMR.Randomizer.Utils
                 _ => throw new ArgumentException("Invalid argument.", nameof(regionHintType))
             };
 
-            return $"\x1E{sfx}{start} {color}{locationMessage}{TextCommands.ColorWhite} {mid} {itemMessage}...\xBF".Wrap(35, "\x11");
+            return $"\x1E{sfx}{start} {color}{locationMessage}{TextCommands.ColorWhite} {mid} {itemMessage}...\xBF".Wrap(35, "\x11", "\x10");
 
             //var mid = "has";
             //return $"\x1E{sfx}{start} {TextCommands.ColorRed}{locationMessage}{TextCommands.ColorWhite} {mid} {color}{NumberToWords(numberOfImportantItems)} important item{(numberOfImportantItems == 1 ? "" : "s")}{TextCommands.ColorWhite}...\xBF".Wrap(35, "\x11");
@@ -560,7 +560,7 @@ namespace MMR.Randomizer.Utils
 
             string sfx = $"{(char)((soundEffectId >> 8) & 0xFF)}{(char)(soundEffectId & 0xFF)}";
 
-            return $"\x1E{sfx}{start} {string.Join(" and ", locationMessages.Select(locationName => $"\x01{locationName}\x00"))} {mid} {string.Join(hasOrder ? " then " : " and ", itemMessages)}...\xBF".Wrap(35, "\x11");
+            return $"\x1E{sfx}{start} {string.Join(" and ", locationMessages.Select(locationName => $"\x01{locationName}\x00"))} {mid} {string.Join(hasOrder ? " then " : " and ", itemMessages)}...\xBF".Wrap(35, "\x11", "\x10");
         }
 
         public static string GetArticle(Item item, string indefiniteArticle = null)
