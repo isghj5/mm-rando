@@ -32,6 +32,11 @@ namespace MMR.Randomizer.Utils
         public static int MAX_COMBAT_BUDGET         = 0x3800; // unk
         public static int MAX_TYPE2_MUSIC_BUDGET    = 0x6000; // vanilla: 0x4100
 
+        public static int New_AudioBankTable = 0; // for mmfilelist
+        public static int NewInstrumentSetAddress; // for bgm shuffle functions to work on
+        public static int CurrentFreeBank = 0x29;
+
+
         public static void ResetBudget()
         {
             MAX_BGM_BUDGET          = 0x3800;
@@ -777,6 +782,67 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteToROM(0x00C2739C, new byte[] { 0x3C, 0x08, 0x80, 0x0A, 0x8D, 0x05, (byte)(offset >> 8), (byte)(offset & 0xFF) });
         }
 
+        public static void MoveAudioBankTableToFile()
+        {
+            // grab original audiobanktable out of code, plus extra for modifying
+            var table = ReadWriteUtils.ReadBytes(0xB3C000 + 0x13B6C0, 0x820);
+            New_AudioBankTable = RomUtils.AddNewFile(table);
+
+            // instrumentset_patch: modifies audiobank metadata read and writes, instrument/drum/sfx pointer read and writes,
+            // nops a metadata copy function, and sets a fixed size for the audiobank pointer index
+            ResourceUtils.ApplyHack(Resources.mods.instrumentset_patch);
+
+            // moveaudiostatebytes: sets where read and writes for sequence and instrumentset states go
+            // in this hack, they're moved from 0x80205008 to end of old instrumentset table in code and given more space
+            // if these don't get moved, new banks at 0x30 and up will overflow into sequence states and can knock out sound
+            ResourceUtils.ApplyHack(Resources.mods.moveaudiostatebytes);
+
+            // loadnewaudiotable: where the copy metadata function loop was, sets a jump to code placed at the old instrumentset list
+            // which DMAs new audiobanktable from a file, relocates the addresses in the table, and sets the
+            // instrumentset table pointer to the new file
+            ResourceUtils.ApplyHack(Resources.mods.loadnewaudiotable);
+
+            // can't update addresses in an audiobank table that's moved and not loaded yet
+            ReadWriteUtils.WriteCodeNOP(0x80190E70);
+            ReadWriteUtils.WriteCodeNOP(0x80190E74);
+            ReadWriteUtils.WriteCodeNOP(0x80190E78);
+            ReadWriteUtils.WriteCodeNOP(0x80190E7C);
+            ReadWriteUtils.WriteCodeNOP(0x80190E80);
+
+            var symbols = Symbols.Load();
+            var tableAddr = 0x80720000 + (symbols.PayloadEnd - symbols.PayloadStart); //payload ram address + length
+            ReadWriteUtils.WriteU32ToROM(0xC776C0, tableAddr); //RAM address to move audiobanktable into
+
+            int f = RomUtils.GetFileIndexForWriting(New_AudioBankTable);
+            var fileData = RomData.MMFileList[f].Addr;
+            ReadWriteUtils.WriteToROM(0xC776C4, (uint)fileData ); //VROM address of new audiobanktable
+            ReadWriteUtils.WriteU32ToROM(0xC776C8, 0x00000820); //file length
+
+            NewInstrumentSetAddress = RomData.MMFileList[f].Addr + 0x10;
+
+            ReadWriteUtils.WriteU16ToROM(RomData.MMFileList[f].Addr, 0x0080); // Increase AudioBankTable amount
+
+            // insert dummy metadata (kamaro's dance bank duplicates)
+            int dummybankindexOffset = NewInstrumentSetAddress + 0x280;
+            int totaldummybanks = 0x58;
+            ulong dummybankmetadata0 = 0x00021880000000D0;
+            ulong dummybankmetadata1 = 0x020101FF01000000;
+
+            for (int dummybankIndex = 0; dummybankIndex <= totaldummybanks; ++dummybankIndex)
+            {
+                ReadWriteUtils.WriteU64ToROM(dummybankindexOffset, dummybankmetadata0);
+                ReadWriteUtils.WriteU64ToROM(dummybankindexOffset + 0x08, dummybankmetadata1);
+                dummybankindexOffset += 0x10;
+            }
+            
+        }
+
+        public static void ResetFreeBankIndex()
+        {
+            CurrentFreeBank = 0x29;
+        }
+
+
         public static bool TestIfAvailableBanks(SequenceInfo testSeq, SequenceInfo targetSlot, StringBuilder log, Random rng, List<SequenceInfo> unassignedSequences)
         {
             /// test if the testSeq can be used with available instrument set slots
@@ -790,20 +856,34 @@ namespace MMR.Randomizer.Utils
                     testSeq.SequenceBinaryList = testSeq.SequenceBinaryList.OrderBy(x => rng.Next()).ToList();
                 }
 
-                testSeq.ClearUnavailableBanks(); // clear the sequence list of {bank/sequence} we cannot use
+                //testSeq.ClearUnavailableBanks(); // clear the sequence list of {bank/sequence} we cannot use
+                //if (testSeq.SequenceBinaryList.Count == 0) // all removed, song is dead.
+                //{
+                //    log.AppendLine($"{ testSeq.Name,-50}  cannot be used because it requires custom audiobank(s) already claimed ");
+                //    unassignedSequences.Remove(testSeq);
+                //    return false;
+                //}
 
-                if (testSeq.SequenceBinaryList.Count == 0) // all removed, song is dead.
+                var testBanks = testSeq.CheckAvailableBanks();
+                if (testBanks == true) 
                 {
-                    log.AppendLine($"{ testSeq.Name,-50}  cannot be used because it requires custom audiobank(s) already claimed ");
-                    unassignedSequences.Remove(testSeq);
-                    return false;
+                    testSeq.ClearUnavailableBanks(); // remove any already claimed bank sequences
+                }
+                else // all custom banks have been claimed
+                {
+                    if (CurrentFreeBank > 0x0080)
+                    {
+                        return false; // can't overwrite any more entries
+                    }
+
+                    testSeq.SequenceBinaryList[0].InstrumentSet.BankSlot = CurrentFreeBank;
                 }
 
                 // some slots are rarely heard in-game, dont waste a custom instrument set on them, check if this slot is one of them
-                if (IsBlockedByLowUse(testSeq, targetSlot, log))
-                {
-                    return false;
-                }
+                //if (IsBlockedByLowUse(testSeq, targetSlot, log))
+                //{
+                //    return false;
+                //}
             }
             return true; // sequences with banks, or without needing banks, available
         }
@@ -923,6 +1003,10 @@ namespace MMR.Randomizer.Utils
             // if the song has a custom instrument set, lock the sequence, update inst set value, debug output
             if (replacementSequence.SequenceBinaryList != null && replacementSequence.SequenceBinaryList[0] != null && replacementSequence.SequenceBinaryList[0].InstrumentSet != null)
             {
+                if (replacementSequence.SequenceBinaryList[0].InstrumentSet.BankSlot == CurrentFreeBank)
+                {
+                    CurrentFreeBank++;
+                }
                 replacementSequence.Instrument = replacementSequence.SequenceBinaryList[0].InstrumentSet.BankSlot; // update to the one we want to use
                 if (RomData.InstrumentSetList[replacementSequence.Instrument].Modified > 0)
                 {
@@ -1255,10 +1339,11 @@ namespace MMR.Randomizer.Utils
             /// traverse the whole audiobank index and grab details about every bank
             ///  use those details to generate a list from the vanilla game that we can modify as needed
             RomData.InstrumentSetList = new List<InstrumentSetInfo>();
-            for (int audiobankIndex = 0; audiobankIndex <= 0x28; ++audiobankIndex)
+            // audiobankindex can go up to 0x80 with current extended bank table file
+            for (int audiobankIndex = 0; audiobankIndex <= 0x80; ++audiobankIndex)
             {
                 // each bank has one 16 byte sentence of data, first word is address, second is length, last 2 words metadata
-                int audiobankIndexAddr = Addresses.AudiobankTable + (audiobankIndex * 0x10);
+                int audiobankIndexAddr = NewInstrumentSetAddress + (audiobankIndex * 0x10);
                 int audiobankBankOffset = (ReadWriteUtils.ReadU16(audiobankIndexAddr) << 16) + ReadWriteUtils.ReadU16(audiobankIndexAddr + 2);
                 int bankLength = (ReadWriteUtils.ReadU16(audiobankIndexAddr + 4) << 16) + ReadWriteUtils.ReadU16(audiobankIndexAddr + 6);
 
@@ -1383,15 +1468,16 @@ namespace MMR.Randomizer.Utils
         public static void RebuildAudioBank(List<InstrumentSetInfo> InstrumentSetList)
         {
             // get index for the old audiobank, we're putting it back in the same spot but letting it expand into audioseq's spot, which was moved to the end
-            int fid = RomUtils.GetFileIndexForWriting(Addresses.AudiobankTable);
+            int fid = RomUtils.GetFileIndexForWriting(NewInstrumentSetAddress);
             // the DMA table doesn't point directly to the indextable on the rom, its part of a larger yaz0 file, we have to use an offset to get the address in the file
-            int audiobankIndexOffset = Addresses.AudiobankTable - RomData.MMFileList[RomUtils.GetFileIndexForWriting(Addresses.AudiobankTable)].Addr;
+            int audiobankIndexOffset = NewInstrumentSetAddress - RomData.MMFileList[RomUtils.GetFileIndexForWriting(NewInstrumentSetAddress)].Addr;
 
             int audiobankBankOffset = 0;
             var audiobankData = new byte[0];
 
             // for each bank, concat onto the new bank byte object, update the table to match the new instrument sets
-            for (int audiobankIndex = 0; audiobankIndex <= 0x28; ++audiobankIndex)
+            // CurrentFreeBank is used so not all unused dummy audiobanks get written to rom
+            for (int audiobankIndex = 0; audiobankIndex <= CurrentFreeBank; ++audiobankIndex)
             {
                 var currentBank = InstrumentSetList[audiobankIndex];
                 audiobankData = audiobankData.Concat(currentBank.BankBinary).ToArray();

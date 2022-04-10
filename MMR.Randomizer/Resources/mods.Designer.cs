@@ -693,6 +693,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] instrumentset_patch {
+            get {
+                object obj = ResourceManager.GetObject("instrumentset_patch", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] key_boss_open {
             get {
                 object obj = ResourceManager.GetObject("key_boss_open", resourceCulture);
@@ -733,6 +743,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] loadnewaudiotable {
+            get {
+                object obj = ResourceManager.GetObject("loadnewaudiotable", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] logo_text {
             get {
                 object obj = ResourceManager.GetObject("logo_text", resourceCulture);
@@ -746,6 +766,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] misc_changes {
             get {
                 object obj = ResourceManager.GetObject("misc_changes", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] moveaudiostatebytes {
+            get {
+                object obj = ResourceManager.GetObject("moveaudiostatebytes", resourceCulture);
                 return ((byte[])(obj));
             }
         }

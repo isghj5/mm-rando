@@ -114,6 +114,7 @@ namespace MMR.Randomizer
             RomData.PointerizedSequences = new List<SequenceInfo>();
             SequenceUtils.ReadSequenceInfo();
             SequenceUtils.ReadInstrumentSetList();
+            SequenceUtils.ResetFreeBankIndex();
             if (_cosmeticSettings.Music == Music.Random)
             {
                 SequenceUtils.PointerizeSequenceSlots();
@@ -341,6 +342,10 @@ namespace MMR.Randomizer
             }
 
             WriteCrashDebuggerShow();
+
+            // Dolphin/WiiVC audiothread shutdown workaround
+            ReadWriteUtils.WriteU16ToROM(0xB3C000 + 0x0CD320, 0x1000);
+
         }
 
         /// <summary>
@@ -3393,6 +3398,7 @@ namespace MMR.Randomizer
             WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
             progressReporter.ReportProgress(73, "Writing music...");
+            SequenceUtils.MoveAudioBankTableToFile();
             WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
             WriteMuteMusic();
             WriteEnemyCombatMusicMute();
