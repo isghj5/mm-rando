@@ -114,6 +114,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cQText, "Enable quick text. Dialogs are fast-forwarded to choices/end of dialog.");
             TooltipBuilder.SetTooltip(cSFX, "Randomize sound effects that are played throughout the game.");
             TooltipBuilder.SetTooltip(cMusic, "Select a music option\n\n - Default: Vanilla background music.\n - Random: Randomized background music.\n - None: No background music. Causes softlock on Frog Choir HP.");
+            TooltipBuilder.SetTooltip(lLuckRoll, "Music Rando comes with a chance to accept a song from outside of its categories.\n - This controls the percentage chance of a Luck Roll allowing out-of-category music placement\n - This is per specific slot+song check\n - Only songs with their first category being a general category (0-16) are Luck Rollable.");
+            TooltipBuilder.SetTooltip(tLuckRollPercentage, "Music Rando comes with a chance to accept a song from outside of its categories.\n - This controls the percentage chance of a Luck Roll allowing out-of-category music placement\n - This is per specific slot+song check\n - Only songs with their first category being a general category (0-16) are Luck Rollable.");
             TooltipBuilder.SetTooltip(cFreeHints, "Enable reading gossip stone hints without requiring the Mask of Truth.");
             TooltipBuilder.SetTooltip(cFreeGaroHints, "Enable fighting Garos by speaking to Tatl instead of wearing the Garo's Mask.");
             TooltipBuilder.SetTooltip(cMixGaroWithGossip, "Garo hints distribution and gossip hint distribution will be mixed together.");
@@ -1033,6 +1035,36 @@ namespace MMR.UI.Forms
             _isUpdating = false;
         }
 
+        private void tLuckRoll_Update()
+        {
+            try
+            {
+                string rollAsText = tLuckRollPercentage.Text.Trim().Trim('%'); // remove % if there is one
+                double roll = Convert.ToDouble(rollAsText);
+                roll = (roll < 0) ? (0) : (roll > 100.0 ? (100.0) : roll); // clamp to 0-100
+                tLuckRollPercentage.Text = roll.ToString() + "%";
+                _configuration.CosmeticSettings.MusicLuckRollChance = roll;
+            }
+            catch
+            {
+                tLuckRollPercentage.Text = "13%";
+                //MessageBox.Show("Invalid luck roll: must be between 0 and 100 percent.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            };
+        }
+
+        private void tLuckRoll_Leave(object sender, EventArgs e)
+        {
+            tLuckRoll_Update();
+        }
+
+        private void tLuckRoll_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Enter)
+            {
+                tLuckRoll_Update();
+                this.ActiveControl = null; // remove focus on the textbox
+            }
+        }
 
         private void UpdateCheckboxes()
         {
@@ -2139,6 +2171,8 @@ namespace MMR.UI.Forms
             UpdateCheckboxes();
             ToggleCheckBoxes();
             tROMName.Text = _configuration.OutputSettings.InputROMFilename;
+            tLuckRollPercentage.Text = _configuration.CosmeticSettings.MusicLuckRollChance + "%";
+
         }
 
         private void SaveSettingsToolStripMenuItem_Click(object sender, EventArgs e)

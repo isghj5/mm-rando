@@ -1135,7 +1135,7 @@ namespace MMR.Randomizer.Utils
             }
         }
 
-        public static bool SearchForValidSongReplacement(List<SequenceInfo> unassignedSequences, SequenceInfo targetSlot, Random rng, StringBuilder log)
+        public static bool SearchForValidSongReplacement(CosmeticSettings cosmeticSettings, List<SequenceInfo> unassignedSequences, SequenceInfo targetSlot, Random rng, StringBuilder log)
         {
             // we could replace this with a findall(compatible types) but then we lose the small chance of random category music
             foreach (var testSeq in unassignedSequences.ToList())
@@ -1172,7 +1172,7 @@ namespace MMR.Randomizer.Utils
                 // (testSeq.Type.Count > targetSlot.Type.Count) DBs code, maybe thought to be safer?
                 else if (unassignedSequences.Count > 30
                     && testSeq.Type.Count > targetSlot.Type.Count
-                    && rng.Next(30) == 0
+                    && cosmeticSettings.MusicLuckRollChance > 0 && (rng.NextDouble() * 100.0) <= cosmeticSettings.MusicLuckRollChance
                     && targetSlot.Type[0] <= 0x16
                     && testSeq.Type[0] <= 0x16
                     && (testSeq.Type[0] & 8) == (targetSlot.Type[0] & 8)
@@ -1186,7 +1186,7 @@ namespace MMR.Randomizer.Utils
             return false; // ran out of songs to try
         }
 
-        public static void CheckBGMCombatMusicBudget(List<SequenceInfo> unassignedSequences, CombatMusic disabledCombatMusic, Random rng, StringBuilder log)
+        public static void CheckBGMCombatMusicBudget(CosmeticSettings cosmeticSettings, List<SequenceInfo> unassignedSequences, Random rng, StringBuilder log)
         {
             /// in any scene, BGM and Combat music share the same buffer, loading to the other side,
             /// if their sum is greater than the size of the buffer they clip into each other when one loads, this kills one, usually bgm
@@ -1217,7 +1217,7 @@ namespace MMR.Randomizer.Utils
                 combatVsBGMCoinToss = false; // "BGM" manually selected because of non-combat songtest
             }
 
-            if (disabledCombatMusic == CombatMusic.All)
+            if (cosmeticSettings.DisableCombatMusic == CombatMusic.All)
             {
                 combatVsBGMCoinToss = false; // "BGM" manually selected because combat music is disabled.
             }
@@ -1247,7 +1247,7 @@ namespace MMR.Randomizer.Utils
                         log.AppendLine($"BGM sequence {seqName} was too big to match your combat music, replacing ... ");
                         var bgmSlot = RomData.TargetSequences.Find(u => u.Replaces == seq.Replaces);
                         seq.Replaces = -1; // cancel using this song
-                        bool status = SearchForValidSongReplacement(unassignedSequences, bgmSlot, rng, log);
+                        bool status = SearchForValidSongReplacement(cosmeticSettings, unassignedSequences, bgmSlot, rng, log);
                         if (status == false)
                         {
                             throw new Exception("Music Budget Error: this seed cannot find acceptable music for this combat slot\n" +
@@ -1271,7 +1271,7 @@ namespace MMR.Randomizer.Utils
                     log.AppendLine($"Combat sequence {seqName} was too big to match your BGM music, replacing ... ");
                     var combatSlot = RomData.TargetSequences.Find(u => u.Name == "mm-combat");
                     usedCombatSequence.Replaces = -1; // cancel using this song
-                    bool status = SearchForValidSongReplacement(unassignedSequences, combatSlot, rng, log);
+                    bool status = SearchForValidSongReplacement(cosmeticSettings, unassignedSequences, combatSlot, rng, log);
                     if (status == false)
                     {
                         throw new Exception("Music Budget Error: this seed cannot find acceptable music for this combat slot\n" +
