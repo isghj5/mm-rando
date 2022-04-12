@@ -923,13 +923,13 @@ namespace MMR.Randomizer.Utils
             // first attempt: just merge BGM and fanfare into super categories and attempt to find replacement
             // the first category of the type is the MAIN type, the rest are secondary
             SequenceInfo replacementSong = null;
-            if (targetSlot.Type[0] <= 7 || targetSlot.Type[0] == 16)  // bgm or cutscene
+            if (targetSlot.Type[0] <= 7 || targetSlot.Type[0] == 0x16)  // bgm or cutscene
             {
-                replacementSong = unassignedSequences.Find(u => u.Type[0] <= 7 || u.Type[0] == 16 && u.SequenceBinaryList == null);
+                replacementSong = unassignedSequences.Find(u => u.Type[0] <= 7 || u.Type[0] == 0x16);
             }
             else //if (targetSlot.Type[0] <= 8) // fanfares
             {
-                replacementSong = unassignedSequences.Find(u => u.Type[0] >= 8 && u.SequenceBinaryList == null);
+                replacementSong = unassignedSequences.Find(u => u.Type[0] >= 8 && u.Type[0] < 0x10);
             }
 
             if (replacementSong != null)
@@ -1173,8 +1173,8 @@ namespace MMR.Randomizer.Utils
                 else if (unassignedSequences.Count > 30
                     && testSeq.Type.Count > targetSlot.Type.Count
                     && rng.Next(30) == 0
-                    && targetSlot.Type[0] <= 16
-                    && testSeq.Type[0] <= 16
+                    && targetSlot.Type[0] <= 0x16
+                    && testSeq.Type[0] <= 0x16
                     && (testSeq.Type[0] & 8) == (targetSlot.Type[0] & 8)
                     && testSeq.Type.Contains(0x10) == targetSlot.Type.Contains(0x10)
                     && !testSeq.Type.Contains(0x16))
