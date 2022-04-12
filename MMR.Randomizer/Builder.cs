@@ -64,7 +64,7 @@ namespace MMR.Randomizer
             //   then all the variety can be dried up for the later slots
             // the biggest example is MM-only, many songs are action/boss but the boss slots are later
             //  as a result boss music is often used up early placed into early action slots
-            // if we don't randomize remaining, then we only get upper alphabetical, same every seed
+            // if we don't randomize unassigned, then we only get upper alphabetical, same every seed
             List<SequenceInfo> unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
             unassigned = unassigned.OrderBy(x => random.Next()).ToList();                           // random ordered songs
             RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
@@ -80,7 +80,7 @@ namespace MMR.Randomizer
             foreach (var targetSlot in RomData.TargetSequences)
             {
                 // scan all songs for a replacement that fits in this slot
-                bool foundValidReplacement = SequenceUtils.SearchForValidSongReplacement(unassigned, targetSlot, random, log);
+                bool foundValidReplacement = SequenceUtils.SearchForValidSongReplacement(_cosmeticSettings, unassigned, targetSlot, random, log);
 
                 if (foundValidReplacement == false) // no available songs fit in this slot category
                 {
@@ -90,7 +90,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            SequenceUtils.CheckBGMCombatMusicBudget(unassigned, _cosmeticSettings.DisableCombatMusic, random, log);
+            SequenceUtils.CheckBGMCombatMusicBudget(_cosmeticSettings, unassigned, random, log);
 
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
 
@@ -114,6 +114,7 @@ namespace MMR.Randomizer
             RomData.PointerizedSequences = new List<SequenceInfo>();
             SequenceUtils.ReadSequenceInfo();
             SequenceUtils.ReadInstrumentSetList();
+            SequenceUtils.ResetFreeBankIndex();
             if (_cosmeticSettings.Music == Music.Random)
             {
                 SequenceUtils.PointerizeSequenceSlots();
@@ -122,7 +123,6 @@ namespace MMR.Randomizer
             }
 
             ResourceUtils.ApplyHack(Resources.mods.fix_music);
-            ResourceUtils.ApplyHack(Resources.mods.inst24_swap_guitar);
             SequenceUtils.RebuildAudioSeq(RomData.SequenceList, _cosmeticSettings.AsmOptions.MusicConfig.SequenceMaskFileIndex);
             SequenceUtils.WriteNewSoundSamples(RomData.InstrumentSetList);
             SequenceUtils.RebuildAudioBank(RomData.InstrumentSetList);
@@ -341,6 +341,10 @@ namespace MMR.Randomizer
             }
 
             WriteCrashDebuggerShow();
+
+            // Dolphin/WiiVC audiothread shutdown workaround
+            ReadWriteUtils.WriteU16ToROM(0xB3C000 + 0x0CD320, 0x1000);
+
         }
 
         /// <summary>
@@ -1266,7 +1270,7 @@ namespace MMR.Randomizer
         private void WriteFreeHints()
         {
             int address = 0x00E0A810 + 0x378;
-            byte val = 0x00;
+            uint val = 0x00;
             ReadWriteUtils.WriteToROM(address, val);
         }
 
@@ -1489,6 +1493,11 @@ namespace MMR.Randomizer
                     hacks.Add(Resources.mods.fix_ocarina_checks);
                     hacks.Add(Resources.mods.fix_song_of_time);
                 }
+            }
+
+            if (_randomized.Settings.GaroHintStyle != GossipHintStyle.Default)
+            {
+                hacks.Add(Resources.mods.garo_hints);
             }
 
             foreach (var hack in hacks)
@@ -2924,6 +2933,26 @@ namespace MMR.Randomizer
                 WriteFreeHints();
             }
 
+            if (_randomized.Settings.FreeGaroHints)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.free_garo_hints);
+
+                messageTable.UpdateMessages(new MessageEntryBuilder()
+                    .Id(0x24E)
+                    .Message(it =>
+                    {
+                        it.LightBlue(() =>
+                        {
+                            it.Text("I can't see it, but I sense there's").NewLine()
+                            .Text("a thirst for blood looming all").NewLine()
+                            .Text("around us...");
+                        })
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
             if (_randomized.Settings.GossipHintStyle != GossipHintStyle.Default)
             {
                 messageTable.UpdateMessages(_randomized.GossipQuotes);
@@ -3373,6 +3402,7 @@ namespace MMR.Randomizer
             WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
             progressReporter.ReportProgress(73, "Writing music...");
+            SequenceUtils.MoveAudioBankTableToFile();
             WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
             WriteMuteMusic();
             WriteEnemyCombatMusicMute();

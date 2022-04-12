@@ -117,10 +117,9 @@ namespace MMR.Randomizer.Utils
             return itemList;
         }
 
-        public static Dictionary<GossipQuote, ReadOnlyCollection<Item>> GetGossipStoneRequirements(ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
+        public static Dictionary<GossipQuote, ReadOnlyCollection<Item>> GetGossipStoneRequirements(IEnumerable<GossipQuote> gossipQuotes, ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
         {
-            return Enum.GetValues(typeof(GossipQuote))
-                .Cast<GossipQuote>()
+            return gossipQuotes
                 .Where(gq => gq.HasAttribute<GossipStoneAttribute>())
                 .ToDictionary(gq => gq, gq => GetGossipStoneRequirement(gq, itemList, logic, settings));
         }
@@ -138,13 +137,13 @@ namespace MMR.Randomizer.Utils
             public ReadOnlyCollection<Item> ImportantSongLocations { get; set; }
         }
 
-        public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, params Item[] exclude)
+        public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, Dictionary<Item, ItemObject> itemsByLocation = null, params Item[] exclude)
         {
-            var itemObject = itemList.Find(io => io.NewLocation == location) ?? itemList[location];
-            if (settings.CustomStartingItemList.Contains(itemObject.Item))
+            if (itemsByLocation == null)
             {
-                return new LogicPaths();
+                itemsByLocation = itemList.ToDictionary(io => io.NewLocation ?? io.Item);
             }
+            var itemObject = itemsByLocation[location];
             if (logicPath == null)
             {
                 logicPath = new List<Item>();
@@ -155,13 +154,13 @@ namespace MMR.Randomizer.Utils
             }
             if (exclude.Contains(location))
             {
-                if (settings.AddSongs || !ItemUtils.IsSong(location) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i) && !ItemUtils.IsSong(i)))
+                if (settings.AddSongs || !ItemUtils.IsSong(location) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !ItemUtils.IsSong(i)))
                 {
                     return null;
                 }
             }
             var importantSongLocations = new List<Item>();
-            if (!settings.AddSongs && ItemUtils.IsSong(location) && logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, i)))
+            if (!settings.AddSongs && ItemUtils.IsSong(location) && logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item)))
             {
                 importantSongLocations.Add(location);
             }
@@ -176,16 +175,18 @@ namespace MMR.Randomizer.Utils
                 {
                     return null;
                 }
-                if (!exclude.Intersect(checkedLocations[location].Required).Any())
-                {
-                    return checkedLocations[location];
-                }
+                return checkedLocations[location];
             }
             var locationLogic = itemLogic[(int)location];
             var required = new List<Item>();
             var important = new List<Item>();
             if (locationLogic.RequiredItemIds != null && locationLogic.RequiredItemIds.Any())
             {
+                if (locationLogic.RequiredItemIds.Contains((int)Item.AreaMoonAccess))
+                {
+                    return null;
+                }
+
                 foreach (var requiredItemId in locationLogic.RequiredItemIds.Cast<Item>())
                 {
                     if (itemList[requiredItemId].Item != requiredItemId)
@@ -195,7 +196,7 @@ namespace MMR.Randomizer.Utils
 
                     var requiredLocation = itemList[requiredItemId].NewLocation ?? requiredItemId;
 
-                    var childPaths = GetImportantLocations(itemList, settings, requiredLocation, itemLogic, logicPath.ToList(), checkedLocations, exclude);
+                    var childPaths = GetImportantLocations(itemList, settings, requiredLocation, itemLogic, logicPath.ToList(), checkedLocations, itemsByLocation, exclude);
                     if (childPaths == null)
                     {
                         return null;
@@ -222,6 +223,11 @@ namespace MMR.Randomizer.Utils
                 var logicPaths = new List<LogicPaths>();
                 foreach (var conditions in locationLogic.ConditionalItemIds)
                 {
+                    if (conditions.Contains((int)Item.AreaMoonAccess))
+                    {
+                        continue;
+                    }
+
                     var conditionalRequired = new List<Item>();
                     var conditionalImportant = new List<Item>();
                     var conditionalImportantSongLocations = new List<Item>();
@@ -234,7 +240,7 @@ namespace MMR.Randomizer.Utils
 
                         var conditionalLocation = itemList[conditionalItemId].NewLocation ?? conditionalItemId;
 
-                        var childPaths = GetImportantLocations(itemList, settings, conditionalLocation, itemLogic, logicPath.ToList(), checkedLocations, exclude);
+                        var childPaths = GetImportantLocations(itemList, settings, conditionalLocation, itemLogic, logicPath.ToList(), checkedLocations, itemsByLocation, exclude);
                         if (childPaths == null)
                         {
                             conditionalRequired = null;
@@ -278,13 +284,13 @@ namespace MMR.Randomizer.Utils
                 for (var i = 0; i < logicPaths.Count; i++)
                 {
                     var currentLogicPath = logicPaths[i];
-                    var currentLogicImportant = currentLogicPath.Important.Except(important);
+                    var currentLogicImportant = currentLogicPath.Important.Except(important).Where(item => !item.IsFake());
                     for (var j = 0; j < logicPaths.Count; j++)
                     {
                         if (i != j && !shouldRemove.Contains(i) && !shouldRemove.Contains(j))
                         {
                             var otherLogicPath = logicPaths[j];
-                            var otherLogicImportant = otherLogicPath.Important.Except(important);
+                            var otherLogicImportant = otherLogicPath.Important.Except(important).Where(item => !item.IsFake());
                             if (!currentLogicImportant.Except(otherLogicImportant).Any() && otherLogicImportant.Except(currentLogicImportant).Any())
                             {
                                 shouldRemove.Add(j);

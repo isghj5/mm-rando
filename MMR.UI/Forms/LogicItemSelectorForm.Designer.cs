@@ -1,6 +1,6 @@
 ﻿namespace MMR.UI.Forms
 {
-    partial class ItemSelectorForm
+    partial class LogicItemSelectorForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ItemSelectorForm));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LogicItemSelectorForm));
             this.lItems = new System.Windows.Forms.ListView();
             this.columnHeader1 = new System.Windows.Forms.ColumnHeader();
             this.tLayout = new System.Windows.Forms.TableLayoutPanel();
@@ -98,6 +98,7 @@
             this.textBoxFilter.Name = "textBoxFilter";
             this.textBoxFilter.Size = new System.Drawing.Size(1254, 23);
             this.textBoxFilter.TabIndex = 3;
+            this.textBoxFilter.TextChanged += new System.EventHandler(this.textBoxFilter_TextChanged);
             this.textBoxFilter.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxFilter_KeyDown);
             // 
             // ItemSelectorForm

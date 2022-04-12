@@ -500,7 +500,7 @@ namespace MMR.Randomizer.Models.Rom
         {
             var wrappedMessageBuilder = new MessageEntryBuilder.MessageBuilder();
             action(wrappedMessageBuilder);
-            var message = wrappedMessageBuilder.Build().Wrap(35, "\u0011");
+            var message = wrappedMessageBuilder.Build().Wrap(35, "\u0011", "\u0010");
             return @this.Text(message);
         }
 
@@ -512,7 +512,7 @@ namespace MMR.Randomizer.Models.Rom
         /// <returns></returns>
         public static MessageEntryBuilder.MessageBuilder CompileTimeWrap(this MessageEntryBuilder.MessageBuilder @this, string text)
         {
-            return @this.Text(text.Wrap(35, "\u0011"));
+            return @this.Text(text.Wrap(35, "\u0011", "\u0010"));
         }
 
         /// <summary>

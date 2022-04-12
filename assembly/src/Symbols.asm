@@ -9,6 +9,7 @@
 .definelabel z2_Yaz0_LoadAndDecompressFile, 0x80081178
 .definelabel z2_RngInt, 0x80086FA0
 .definelabel z2_RngSetSeed, 0x80086FD0
+.definelabel z2_Rand_ZeroOne, 0x80086FDC
 .definelabel z2_strlen, 0x8008F1E0
 .definelabel z2_BaseDrawCollectable, 0x800A7128
 .definelabel z2_DrawRupee, 0x800A72AC
@@ -17,6 +18,7 @@
 .definelabel z2_fixed_drop_spawn, 0x800A7730
 .definelabel z2_rupee_drop_spawn, 0x800A7AD4
 .definelabel z2_random_drop_spawn, 0x800A7D28
+.definelabel z2_EffectSsKiraKira_SpawnSmall, 0x800B16B8
 .definelabel z2_SetShape, 0x800B3BA4
 .definelabel z2_get_generic_flag, 0x800B5BB0
 .definelabel z2_set_generic_flag, 0x800B5BF4

@@ -114,6 +114,9 @@ extern void z2_object_spawn();
 extern void z2_load_objects();
 extern void z2_load_scene();
 
+extern void z2_EffectSsKiraKira_SpawnSmall(GlobalContext* globalCtx, Vec3f* pos, Vec3f* velocity, Vec3f* accel,
+                                 ColorRGBA8* primColor, ColorRGBA8* envColor);
+
 // Function Prototypes (Actors).
 extern void z2_ActorProc(Actor* actor, GlobalContext* ctxt);
 extern void z2_ActorRemove(ActorContext* actorCtxt, Actor* actor, GlobalContext* ctxt);
@@ -204,6 +207,7 @@ extern size_t z2_strlen(const unsigned char* s);
 // Function Prototypes (RNG).
 extern u32 z2_RngInt(void);
 extern void z2_RngSetSeed(u32 seed);
+extern f32 z2_Rand_ZeroOne(void);
 
 // Function Prototypes (Rooms).
 extern void z2_LoadRoom(GlobalContext* ctxt, RoomContext* roomCtxt, u8 roomId);

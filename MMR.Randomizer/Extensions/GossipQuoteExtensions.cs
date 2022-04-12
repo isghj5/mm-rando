@@ -8,5 +8,10 @@ namespace MMR.Randomizer.Extensions
         {
             return gossipQuote.ToString().StartsWith("Moon");
         }
+
+        public static bool IsGaroHint(this GossipQuote gossipQuote)
+        {
+            return gossipQuote.ToString().StartsWith("Garo");
+        }
     }
 }

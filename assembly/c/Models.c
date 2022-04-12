@@ -469,6 +469,14 @@ void Models_WriteBossRemainsObjectSegment(GlobalContext* ctxt, u32 graphicIdMinu
     }
 }
 
+s16 Models_GetBossRemainRotation(Actor* actor, GlobalContext* ctxt) {
+    s32 frameCount = ctxt->sceneFrameCount;
+    if (MISC_CONFIG.flags.freestanding && ShouldRotateBackwards(ctxt, Rupee_GetDrawGiIndex(actor))) {
+        frameCount = -frameCount;
+    }
+    return (s16)(frameCount*1000);
+}
+
 /**
  * Hook function for drawing Boss Remain actors as their new item.
  **/
@@ -831,7 +839,7 @@ void Models_DrawOcarina(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable
 
 void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
     if (!MISC_CONFIG.flags.freestanding) {
-        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x0601CAD0);
+        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x0600CAD0);
         return;
     }
 

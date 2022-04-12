@@ -1,5 +1,5 @@
 {
-  "Version": 11,
+  "Version": 12,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -3463,7 +3463,14 @@
         "AreaWoodFallTempleClear",
         "Any Bottle"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Any Sword"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54671,7 +54678,9 @@
     },
     {
       "Id": "GossipTerminaSouth",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54680,7 +54689,9 @@
     },
     {
       "Id": "GossipSwampPotionShop",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54690,6 +54701,7 @@
     {
       "Id": "GossipMountainSpringPath",
       "RequiredItems": [
+        "MaskTruth",
         "AreaSnowheadTempleClear"
       ],
       "ConditionalItems": [
@@ -54707,7 +54719,9 @@
     },
     {
       "Id": "GossipMountainPath",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [
         [
           "OtherArrow"
@@ -54725,6 +54739,7 @@
     {
       "Id": "GossipOceanZoraGame",
       "RequiredItems": [
+        "MaskTruth",
         "AreaWestAccess"
       ],
       "ConditionalItems": [],
@@ -54736,6 +54751,7 @@
     {
       "Id": "GossipCanyonRoad",
       "RequiredItems": [
+        "MaskTruth",
         "Ikana Graveyard Access"
       ],
       "ConditionalItems": [],
@@ -54747,6 +54763,7 @@
     {
       "Id": "GossipCanyonDock",
       "RequiredItems": [
+        "MaskTruth",
         "AreaEastAccess"
       ],
       "ConditionalItems": [],
@@ -54758,6 +54775,7 @@
     {
       "Id": "GossipCanyonSpiritHouse",
       "RequiredItems": [
+        "MaskTruth",
         "AreaIkanaCanyonAccess"
       ],
       "ConditionalItems": [],
@@ -54768,7 +54786,9 @@
     },
     {
       "Id": "GossipTerminaMilk",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54777,7 +54797,9 @@
     },
     {
       "Id": "GossipTerminaWest",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54786,7 +54808,9 @@
     },
     {
       "Id": "GossipTerminaNorth",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54795,7 +54819,9 @@
     },
     {
       "Id": "GossipTerminaEast",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54804,7 +54830,9 @@
     },
     {
       "Id": "GossipRanchTree",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54813,7 +54841,9 @@
     },
     {
       "Id": "GossipRanchBarn",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54822,7 +54852,9 @@
     },
     {
       "Id": "GossipMilkRoad",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54832,6 +54864,7 @@
     {
       "Id": "GossipOceanFortress",
       "RequiredItems": [
+        "MaskTruth",
         "AreaWestAccess"
       ],
       "ConditionalItems": [],
@@ -54842,7 +54875,9 @@
     },
     {
       "Id": "GossipSwampRoad",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54851,7 +54886,9 @@
     },
     {
       "Id": "GossipTerminaObservatory",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [
         [
           "MaskDeku"
@@ -54884,7 +54921,9 @@
     },
     {
       "Id": "GossipRanchCuccoShack",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54893,7 +54932,9 @@
     },
     {
       "Id": "GossipRanchRacetrack",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54902,7 +54943,9 @@
     },
     {
       "Id": "GossipRanchEntrance",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54912,6 +54955,7 @@
     {
       "Id": "GossipCanyonRavine",
       "RequiredItems": [
+        "MaskTruth",
         "AreaEastAccess"
       ],
       "ConditionalItems": [
@@ -54932,6 +54976,7 @@
     {
       "Id": "GossipMountainSpringFrog",
       "RequiredItems": [
+        "MaskTruth",
         "AreaSnowheadTempleClear"
       ],
       "ConditionalItems": [],
@@ -54943,6 +54988,7 @@
     {
       "Id": "GossipSwampSpiderHouse",
       "RequiredItems": [
+        "MaskTruth",
         "AreaSwampSpiderAccess"
       ],
       "ConditionalItems": [],
@@ -54953,7 +54999,9 @@
     },
     {
       "Id": "GossipTerminaGossipLarge",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54962,7 +55010,9 @@
     },
     {
       "Id": "GossipTerminaGossipGuitar",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54971,7 +55021,9 @@
     },
     {
       "Id": "GossipTerminaGossipPipes",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -54980,7 +55032,236 @@
     },
     {
       "Id": "GossipTerminaGossipDrums",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskTruth"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonLower1",
+      "RequiredItems": [
+        "AreaEastAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonLower2",
+      "RequiredItems": [
+        "AreaEastAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroWithIgosDefeated",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Ikana King Access",
+        "Use Fire Arrow",
+        "UpgradeMirrorShield",
+        "Fighting",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper1",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper2",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper3",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper4",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper1WithStorms",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Play Song of Storms",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper2WithStorms",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Play Song of Storms",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper3WithStorms",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Play Song of Storms",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCanyonUpper4WithStorms",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Play Song of Storms",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCastleLower1",
+      "RequiredItems": [
+        "Ikana Castle Access",
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCastleLower2",
+      "RequiredItems": [
+        "Ikana Castle Access",
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCastleLower3",
+      "RequiredItems": [
+        "Ikana Castle Access",
+        "AreaIkanaCanyonAccess",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroCastleUpper",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "Ikana Castle Access",
+        "Use Fire Arrow",
+        "Jump along invisible platforms",
+        "MaskGaro"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "Ikana Castle Falling Ceiling Skip",
+          "Take Damage",
+          "Goron Bomb Jump",
+          "Any Bomb Bag"
+        ],
+        [
+          "Ikana Castle Falling Ceiling Skip",
+          "Take Damage",
+          "Goron Bomb Jump",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "Ikana Castle Falling Ceiling Skip",
+          "FD Difficult Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "HintGaroMaster",
+      "RequiredItems": [
+        "AreaStoneTowerTempleAccess",
+        "STT Garo Master Access"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",

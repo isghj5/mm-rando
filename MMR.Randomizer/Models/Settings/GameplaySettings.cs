@@ -183,6 +183,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Speedups.DoubleArcheryRewards = value; }
         }
 
+        public bool HiddenRupeesSparkle
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.HiddenRupeesSparkle; }
+            set { this.AsmOptions.MiscConfig.Flags.HiddenRupeesSparkle = value; }
+        }
+
         #endregion
 
         #region Random Elements
@@ -246,6 +252,8 @@ namespace MMR.Randomizer.Models.Settings
         public List<ItemCategory> ItemCategoriesRandomized { get; set; }
 
         public List<LocationCategory> LocationCategoriesRandomized { get; set; }
+
+        public List<ClassicCategory> ClassicCategoriesRandomized { get; set; }
 
         /// <summary>
         ///  Custom item list string
@@ -371,15 +379,39 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public GossipHintStyle GossipHintStyle { get; set; } = GossipHintStyle.Competitive;
 
+        public GossipHintStyle GaroHintStyle { get; set; }
+
+        public bool MixGossipAndGaroHints { get; set; }
+
         /// <summary>
         /// FrEe HiNtS FoR WeEnIeS
         /// </summary>
         public bool FreeHints { get; set; } = true;
 
+        public bool FreeGaroHints { get; set; }
+
         /// <summary>
         /// Clear hints
         /// </summary>
         public bool ClearHints { get; set; } = true;
+
+        public bool ClearGaroHints { get; set; }
+
+        public bool HintsIndicateImportance { get; set; }
+
+        public int? OverrideNumberOfRequiredGossipHints { get; set; }
+
+        public int? OverrideNumberOfNonRequiredGossipHints { get; set; }
+
+        public int? OverrideMaxNumberOfClockTownGossipHints { get; set; }
+
+        public int? OverrideNumberOfRequiredGaroHints { get; set; }
+
+        public int? OverrideNumberOfNonRequiredGaroHints { get; set; }
+
+        public int? OverrideMaxNumberOfClockTownGaroHints { get; set; }
+
+        public List<List<Item>> OverrideHintPriorities { get; set; }
 
         /// <summary>
         /// Prevent downgrades

@@ -219,6 +219,11 @@ namespace MMR.Randomizer.Asm
         public AutoInvertState AutoInvert { get; set; }
 
         /// <summary>
+        /// Whether or not hit tags and invisible rupees should sparkle.
+        /// </summary>
+        public bool HiddenRupeesSparkle { get; set; }
+
+        /// <summary>
         /// Whether or to enable logic needed for Giant Mask Anywhere to work.
         /// </summary>
         public bool GiantMaskAnywhere { get; set; }
@@ -257,7 +262,8 @@ namespace MMR.Randomizer.Asm
             this.FreeScarecrow = ((flags >> 10) & 1) == 1;
             this.FillWallet = ((flags >> 9) & 1) == 1;
             this.AutoInvert = (AutoInvertState)((flags >> 7) & 3);
-            this.GiantMaskAnywhere = ((flags >> 6) & 1) == 1;
+            this.HiddenRupeesSparkle = ((flags >> 6) & 1) == 1;
+            this.GiantMaskAnywhere = ((flags >> 5) & 1) == 1;
         }
 
         /// <summary>
@@ -289,7 +295,8 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FreeScarecrow ? (uint)1 : 0) << 10;
             flags |= (this.FillWallet ? (uint)1 : 0) << 9;
             flags |= (((uint)this.AutoInvert) & 3) << 7;
-            flags |= (this.GiantMaskAnywhere ? (uint)1 : 0) << 6;
+            flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 6;
+            flags |= (this.GiantMaskAnywhere ? (uint)1 : 0) << 5;
             return flags;
         }
     }

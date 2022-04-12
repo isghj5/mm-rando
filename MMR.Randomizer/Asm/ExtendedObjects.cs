@@ -20,6 +20,8 @@ namespace MMR.Randomizer.Asm
         public short? MusicNotes;
         public short? Rupees;
         public short? Milk;
+        public short? BossKeys;
+        public short? SmallKeys;
     }
 
     /// <summary>
@@ -70,6 +72,24 @@ namespace MMR.Randomizer.Asm
             if (entry.ItemGained == 0x9F && entry.Object == 0x227 && Indexes.Milk.HasValue)
             {
                 return (Indexes.Milk.Value, 0x32);
+            }
+
+            if (entry.ItemGained == 0x74 && entry.Object == 0x92 && Indexes.BossKeys.HasValue)
+            {
+                var index = entry.Type >> 4;
+                return ((short)(Indexes.BossKeys.Value + index), entry.Index);
+            }
+
+            if (entry.ItemGained == 0x78 && entry.Object == 0x86 && Indexes.SmallKeys.HasValue)
+            {
+                var index = entry.Type >> 4;
+                return ((short)(Indexes.SmallKeys.Value + index), entry.Index);
+            }
+
+            // set DrawItem function for Spin Attack
+            if (entry.ItemGained == 0xA6 && entry.Object == 0x148)
+            {
+                return (0x148, 0x4B);
             }
 
             return null;
@@ -144,6 +164,17 @@ namespace MMR.Randomizer.Asm
             // Add Milk
             this.Offsets.Add(AddMilk());
             this.Indexes.Milk = AdvanceIndex();
+
+            // Add Boss Keys
+            AddBossKeys();
+            this.Indexes.BossKeys = AdvanceIndex(4);
+
+            // Add Small Keys
+            AddSmallKeys();
+            this.Indexes.SmallKeys = AdvanceIndex(4);
+
+            // Include Spin Attack Energy model into Kokiri Sword
+            ObjUtils.InsertObj(Resources.models.gi_spinattack, 0x148);
 
             // Add Skulltula Tokens
             if (skulltulas)
@@ -471,6 +502,50 @@ namespace MMR.Randomizer.Asm
             WriteByte(data, 0x1698, 0xDF);
 
             return this.Bundle.Append(data);
+        }
+
+        #endregion
+
+        #region Boss Keys
+
+        (uint, uint) AddBossKey(Color env, Color prim)
+        {
+            var data = CloneExistingData(724);
+
+            WriteByte(data, 0xF24, prim.ToBytesRGB());
+            WriteByte(data, 0xF2C, env.ToBytesRGB());
+
+            return this.Bundle.Append(data);
+        }
+
+        void AddBossKeys()
+        {
+            this.Offsets.Add(AddBossKey(Color.FromArgb(0xFF, 0x00, 0x64), Color.FromArgb(0xFF, 0xAA, 0xFF))); // Woodfall
+            this.Offsets.Add(AddBossKey(Color.FromArgb(0x00, 0xFF, 0x32), Color.FromArgb(0xAA, 0xFF, 0xAA))); // Snowhead
+            this.Offsets.Add(AddBossKey(Color.FromArgb(0x00, 0x64, 0xFF), Color.FromArgb(0xAA, 0xFF, 0xFF))); // Great Bay
+            this.Offsets.Add(AddBossKey(Color.FromArgb(0xFF, 0xFF, 0x00), Color.FromArgb(0xFF, 0xFF, 0xAA))); // Stone Tower
+        }
+
+        #endregion
+
+        #region Small Keys
+
+        (uint, uint) AddSmallKey(Color prim, Color env)
+        {
+            var data = CloneExistingData(716);
+
+            WriteByte(data, 0x81C, prim.ToBytesRGB());
+            WriteByte(data, 0x824, env.ToBytesRGB());
+
+            return this.Bundle.Append(data);
+        }
+
+        void AddSmallKeys()
+        {
+            this.Offsets.Add(AddSmallKey(Color.FromArgb(0xFF, 0xAA, 0xFF), Color.FromArgb(0x73, 0x00, 0x73))); // Woodfall
+            this.Offsets.Add(AddSmallKey(Color.FromArgb(0xAA, 0xFF, 0xAA), Color.FromArgb(0x00, 0x73, 0x00))); // Snowhead
+            this.Offsets.Add(AddSmallKey(Color.FromArgb(0xAA, 0xFF, 0xFF), Color.FromArgb(0x00, 0x73, 0x73))); // Great Bay
+            this.Offsets.Add(AddSmallKey(Color.FromArgb(0xFF, 0xFF, 0x00), Color.FromArgb(0x73, 0x73, 0x00))); // Stone Tower
         }
 
         #endregion

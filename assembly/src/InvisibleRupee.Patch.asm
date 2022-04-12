@@ -14,3 +14,8 @@
     nop
     b       0x80C259B8
     lh      a1, 0x0190 (s0)
+
+; Replaces:
+;   .dw     0x00000000
+.org 0x80C25B4C
+    .dw     InvisibleRupee_Draw
