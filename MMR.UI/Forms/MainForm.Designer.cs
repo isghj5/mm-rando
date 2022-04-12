@@ -176,7 +176,7 @@ namespace MMR.UI.Forms
             this.cTargettingStyle = new System.Windows.Forms.CheckBox();
             this.gCosmeticMusicSound = new System.Windows.Forms.GroupBox();
             this.lLuckRoll = new System.Windows.Forms.Label();
-            this.tLuckRollPercentage = new System.Windows.Forms.TextBox();
+            this.tLuckRollPercentage = new System.Windows.Forms.NumericUpDown();
             this.lMusic = new System.Windows.Forms.Label();
             this.cMusic = new System.Windows.Forms.ComboBox();
             this.cSFX = new System.Windows.Forms.CheckBox();
@@ -265,6 +265,7 @@ namespace MMR.UI.Forms
             this.tabCosmetics.SuspendLayout();
             this.gCosmeticOther.SuspendLayout();
             this.gCosmeticMusicSound.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tLuckRollPercentage)).BeginInit();
             this.cHUDGroupBox.SuspendLayout();
             this.cHUDTableLayoutPanel.SuspendLayout();
             this.gGameOutput.SuspendLayout();
@@ -2126,24 +2127,27 @@ namespace MMR.UI.Forms
             this.lLuckRoll.AutoSize = true;
             this.lLuckRoll.BackColor = System.Drawing.Color.Transparent;
             this.lLuckRoll.ForeColor = System.Drawing.Color.Black;
-            this.lLuckRoll.Location = new System.Drawing.Point(171, 99);
+            this.lLuckRoll.Location = new System.Drawing.Point(154, 99);
             this.lLuckRoll.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lLuckRoll.Name = "lLuckRoll";
-            this.lLuckRoll.Size = new System.Drawing.Size(98, 15);
+            this.lLuckRoll.Size = new System.Drawing.Size(119, 15);
             this.lLuckRoll.TabIndex = 47;
-            this.lLuckRoll.Text = "Luck Roll Chance";
+            this.lLuckRoll.Text = "Luck Roll Chance (%)";
             // 
             // tLuckRollPercentage
             // 
-            this.tLuckRollPercentage.Location = new System.Drawing.Point(171, 114);
-            this.tLuckRollPercentage.MaxLength = 10;
+            this.tLuckRollPercentage.DecimalPlaces = 2;
+            this.tLuckRollPercentage.Location = new System.Drawing.Point(154, 114);
             this.tLuckRollPercentage.Name = "tLuckRollPercentage";
-            this.tLuckRollPercentage.Size = new System.Drawing.Size(100, 23);
+            this.tLuckRollPercentage.Size = new System.Drawing.Size(117, 23);
             this.tLuckRollPercentage.TabIndex = 46;
-            this.tLuckRollPercentage.Text = "13%";
             this.tLuckRollPercentage.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.tLuckRollPercentage.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tLuckRoll_KeyDown);
-            this.tLuckRollPercentage.Leave += new System.EventHandler(this.tLuckRoll_Leave);
+            this.tLuckRollPercentage.Value = new decimal(new int[] {
+            333,
+            0,
+            0,
+            131072});
+            this.tLuckRollPercentage.ValueChanged += new System.EventHandler(this.tLuckRollPercentage_ValueChanged);
             // 
             // lMusic
             // 
@@ -2168,7 +2172,7 @@ namespace MMR.UI.Forms
             this.cMusic.Location = new System.Drawing.Point(7, 114);
             this.cMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cMusic.Name = "cMusic";
-            this.cMusic.Size = new System.Drawing.Size(156, 23);
+            this.cMusic.Size = new System.Drawing.Size(140, 23);
             this.cMusic.TabIndex = 42;
             this.cMusic.SelectedIndexChanged += new System.EventHandler(this.cMusic_SelectedIndexChanged);
             // 
@@ -2819,6 +2823,7 @@ namespace MMR.UI.Forms
             this.gCosmeticOther.PerformLayout();
             this.gCosmeticMusicSound.ResumeLayout(false);
             this.gCosmeticMusicSound.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tLuckRollPercentage)).EndInit();
             this.cHUDGroupBox.ResumeLayout(false);
             this.cHUDGroupBox.PerformLayout();
             this.cHUDTableLayoutPanel.ResumeLayout(false);
@@ -3038,7 +3043,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Button bCustomizeHintPriorities;
         private System.Windows.Forms.CheckBox cFreeGaroHints;
         private System.Windows.Forms.Label lLuckRoll;
-        private System.Windows.Forms.TextBox tLuckRollPercentage;
+        private System.Windows.Forms.NumericUpDown tLuckRollPercentage;
     }
 }
 

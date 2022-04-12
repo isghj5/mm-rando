@@ -1172,7 +1172,7 @@ namespace MMR.Randomizer.Utils
                 // (testSeq.Type.Count > targetSlot.Type.Count) DBs code, maybe thought to be safer?
                 else if (unassignedSequences.Count > 30
                     && testSeq.Type.Count > targetSlot.Type.Count
-                    && cosmeticSettings.MusicLuckRollChance > 0 && (rng.NextDouble() * 100.0) <= cosmeticSettings.MusicLuckRollChance
+                    && cosmeticSettings.MusicLuckRollChance > 0 && (decimal)(rng.NextDouble() * 100.0) < cosmeticSettings.MusicLuckRollChance
                     && targetSlot.Type[0] <= 0x16
                     && testSeq.Type[0] <= 0x16
                     && (testSeq.Type[0] & 8) == (targetSlot.Type[0] & 8)

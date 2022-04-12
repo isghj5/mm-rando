@@ -1035,35 +1035,9 @@ namespace MMR.UI.Forms
             _isUpdating = false;
         }
 
-        private void tLuckRoll_Update()
+        private void tLuckRollPercentage_ValueChanged(object sender, EventArgs e)
         {
-            try
-            {
-                string rollAsText = tLuckRollPercentage.Text.Trim().Trim('%'); // remove % if there is one
-                double roll = Convert.ToDouble(rollAsText);
-                roll = (roll < 0) ? (0) : (roll > 100.0 ? (100.0) : roll); // clamp to 0-100
-                tLuckRollPercentage.Text = roll.ToString() + "%";
-                _configuration.CosmeticSettings.MusicLuckRollChance = roll;
-            }
-            catch
-            {
-                tLuckRollPercentage.Text = "13%";
-                //MessageBox.Show("Invalid luck roll: must be between 0 and 100 percent.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            };
-        }
-
-        private void tLuckRoll_Leave(object sender, EventArgs e)
-        {
-            tLuckRoll_Update();
-        }
-
-        private void tLuckRoll_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Return || e.KeyCode == Keys.Enter)
-            {
-                tLuckRoll_Update();
-                this.ActiveControl = null; // remove focus on the textbox
-            }
+            _configuration.CosmeticSettings.MusicLuckRollChance = tLuckRollPercentage.Value;
         }
 
         private void UpdateCheckboxes()
@@ -1769,6 +1743,8 @@ namespace MMR.UI.Forms
             cMixGaroWithGossip.Enabled = _configuration.GameplaySettings.GaroHintStyle == _configuration.GameplaySettings.GossipHintStyle && _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive;
             cHintImportance.Enabled = _configuration.GameplaySettings.GaroHintStyle == GossipHintStyle.Competitive || _configuration.GameplaySettings.GossipHintStyle == GossipHintStyle.Competitive;
             bCustomizeHintPriorities.Enabled = cHintImportance.Enabled;
+
+            tLuckRollPercentage.Enabled = _configuration.CosmeticSettings.Music == Music.Random;
         }
 
         /// <summary>
@@ -2171,7 +2147,7 @@ namespace MMR.UI.Forms
             UpdateCheckboxes();
             ToggleCheckBoxes();
             tROMName.Text = _configuration.OutputSettings.InputROMFilename;
-            tLuckRollPercentage.Text = _configuration.CosmeticSettings.MusicLuckRollChance + "%";
+            tLuckRollPercentage.Value = _configuration.CosmeticSettings.MusicLuckRollChance;
 
         }
 
