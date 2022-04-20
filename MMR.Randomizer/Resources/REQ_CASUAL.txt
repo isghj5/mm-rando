@@ -492,6 +492,10 @@
         [
           "Fierce Deity's Mask Anywhere",
           "Jump Slash Take Downs"
+        ],
+        [
+          "Any Bomb Bag",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -1406,48 +1410,18 @@
     {
       "Id": "HeartPieceKnuckle",
       "RequiredItems": [
+        "Ikana Graveyard Access",
         "MaskCaptainHat",
         "OtherExplosive",
-        "Ikana Graveyard Access"
+        "Kill Iron Knuckle"
       ],
       "ConditionalItems": [
         [
           "ItemLens",
-          "Magic Meter",
-          "Any Sword"
+          "Magic Meter"
         ],
         [
-          "ItemLens",
-          "Magic Meter",
-          "MaskGoron"
-        ],
-        [
-          "ItemLens",
-          "Magic Meter",
-          "Fierce Deity's Mask Anywhere"
-        ],
-        [
-          "ItemLens",
-          "Magic Meter",
-          "OtherArrow",
-          "Any Bomb Bag"
-        ],
-        [
-          "Lensless Walking",
-          "Any Sword"
-        ],
-        [
-          "Lensless Walking",
-          "MaskGoron"
-        ],
-        [
-          "Lensless Walking",
-          "Fierce Deity's Mask Anywhere"
-        ],
-        [
-          "Lensless Walking",
-          "OtherArrow",
-          "Any Bomb Bag"
+          "Lensless Walking"
         ]
       ],
       "TimeNeeded": "None",
@@ -1770,6 +1744,9 @@
         ],
         [
           "Fierce Deity's Mask Anywhere"
+        ],
+        [
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -1943,24 +1920,11 @@
     {
       "Id": "SongStorms",
       "RequiredItems": [
+        "Ikana Graveyard Access",
         "MaskCaptainHat",
-        "Ikana Graveyard Access"
+        "Kill Iron Knuckle"
       ],
-      "ConditionalItems": [
-        [
-          "Any Sword"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere"
-        ],
-        [
-          "Any Bomb Bag",
-          "OtherArrow"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "Night1",
       "TimeSetup": "Day1, Night1",
@@ -3039,6 +3003,11 @@
         [
           "FD Jumps",
           "Play Song of Soaring"
+        ],
+        [
+          "STT Elegy Maze",
+          "UpgradeMirrorShield",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -3157,6 +3126,11 @@
         [
           "FD Jumps",
           "Gainer"
+        ],
+        [
+          "STT Elegy Maze",
+          "UpgradeMirrorShield",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -3559,6 +3533,10 @@
           "OtherLimitlessBeans",
           "Fierce Deity's Mask Anywhere",
           "Jump Slash Take Downs"
+        ],
+        [
+          "OtherLimitlessBeans",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -5019,7 +4997,25 @@
           "Take Damage",
           "Goron Bomb Jump",
           "Powder Kegs as Explosives",
-          "ItemPowderKeg"
+          "ItemPowderKeg",
+          "Use Light Arrow"
+        ],
+        [
+          "Ikana Castle Falling Ceiling Skip",
+          "Take Damage",
+          "Goron Bomb Jump",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "UpgradeMirrorShield"
+        ],
+        [
+          "Ikana Castle Falling Ceiling Skip",
+          "Take Damage",
+          "Goron Bomb Jump",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "MaskZora",
+          "Gainer"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
@@ -40906,10 +40902,16 @@
       "Id": "HeartPieceDekuTrial",
       "RequiredItems": [
         "AreaMoonAccess",
-        "MaskDeku",
         "OtherOneMask"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -40919,11 +40921,27 @@
       "Id": "HeartPieceGoronTrial",
       "RequiredItems": [
         "AreaMoonAccess",
-        "MaskGoron",
-        "OtherTwoMasks",
-        "Magic Meter"
+        "OtherTwoMasks"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "Magic Meter"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -40933,10 +40951,21 @@
       "Id": "HeartPieceZoraTrial",
       "RequiredItems": [
         "AreaMoonAccess",
-        "MaskZora",
         "OtherThreeMasks"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "MaskGoron",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Play Song of Time",
+          "Fewer Item Requirements"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -40953,19 +40982,22 @@
           "OtherArrow",
           "ItemHookshot",
           "Any Bomb Bag",
-          "ShopItemBombsBombchu10"
+          "Any Bombchu Pack"
         ],
         [
           "OtherArrow",
-          "ItemHookshot",
+          "Fierce Deity's Mask Anywhere",
           "Any Bomb Bag",
-          "ChestInvertedStoneTowerBombchu10"
+          "Any Bombchu Pack"
         ],
         [
-          "OtherArrow",
+          "Kill Iron Knuckle",
           "ItemHookshot",
-          "Any Bomb Bag",
-          "ChestLinkTrialBombchu10"
+          "Play Song of Storms"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Play Song of Storms"
         ],
         [
           "Fierce Deity's Mask Anywhere",
@@ -40984,73 +41016,13 @@
       "Id": "MaskFierceDeity",
       "RequiredItems": [
         "AreaMoonAccess",
-        "MaskDeku",
-        "MaskGoron",
-        "MaskZora",
-        "MaskPostmanHat",
-        "MaskAllNight",
-        "MaskBlast",
-        "MaskStone",
-        "MaskGreatFairy",
-        "MaskKeaton",
-        "MaskBremen",
-        "MaskBunnyHood",
-        "MaskDonGero",
-        "MaskScents",
-        "MaskRomani",
-        "MaskCircusLeader",
-        "MaskKafei",
-        "MaskCouple",
-        "MaskTruth",
-        "MaskKamaro",
-        "MaskGibdo",
-        "MaskGaro",
-        "MaskCaptainHat",
-        "MaskGiant",
-        "Use Fire Arrow",
-        "Any Bomb Bag"
+        "Complete Deku Trial",
+        "Complete Goron Trial",
+        "Complete Zora Trial",
+        "Complete Link Trial",
+        "All Masks"
       ],
-      "ConditionalItems": [
-        [
-          "ItemHookshot",
-          "ShopItemBombsBombchu10"
-        ],
-        [
-          "ItemHookshot",
-          "ChestInvertedStoneTowerBombchu10"
-        ],
-        [
-          "ItemHookshot",
-          "ChestLinkTrialBombchu10"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere",
-          "Gainer",
-          "ShopItemBombsBombchu10"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere",
-          "Gainer",
-          "ChestInvertedStoneTowerBombchu10"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere",
-          "Gainer",
-          "ChestLinkTrialBombchu10"
-        ],
-        [
-          "FD Jumps",
-          "ShopItemBombsBombchu10"
-        ],
-        [
-          "FD Jumps",
-          "ChestInvertedStoneTowerBombchu10"
-        ],
-        [
-          "FD Jumps",
-          "ChestLinkTrialBombchu10"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -41084,21 +41056,12 @@
       "Id": "ChestLinkTrialBombchu10",
       "RequiredItems": [
         "AreaMoonAccess",
-        "OtherFourMasks"
+        "OtherFourMasks",
+        "Kill Iron Knuckle"
       ],
       "ConditionalItems": [
         [
-          "ItemHookshot",
-          "Any Sword"
-        ],
-        [
-          "ItemHookshot",
-          "MaskGoron"
-        ],
-        [
-          "ItemHookshot",
-          "OtherArrow",
-          "Any Bomb Bag"
+          "ItemHookshot"
         ],
         [
           "Fierce Deity's Mask Anywhere"
@@ -41750,10 +41713,20 @@
     {
       "Id": "CollectibleOceanSpiderToken2",
       "RequiredItems": [
-        "Ocean Skulltulas",
-        "ItemHookshot"
+        "Ocean Skulltulas"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Zora Boomerang Through Walls"
+        ],
+        [
+          "MaskZora",
+          "Fewer Item Requirements"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -41769,7 +41742,11 @@
           "ItemHookshot"
         ],
         [
-          "MaskZora"
+          "Zora Boomerang Through Walls"
+        ],
+        [
+          "MaskZora",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -41867,10 +41844,15 @@
       ],
       "ConditionalItems": [
         [
-          "Ocean Skulltulas without Fire Arrows"
+          "Use Fire Arrow"
         ],
         [
-          "Use Fire Arrow"
+          "Ocean Skulltulas without Fire Arrows",
+          "Any Sword"
+        ],
+        [
+          "Ocean Skulltulas without Fire Arrows",
+          "Deku Stick Fighting"
         ]
       ],
       "TimeNeeded": "None",
@@ -41923,6 +41905,10 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "Fewer Item Requirements",
+          "MaskGoron"
         ]
       ],
       "TimeNeeded": "None",
@@ -41943,6 +41929,9 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -41953,10 +41942,20 @@
     {
       "Id": "CollectibleOceanSpiderToken14",
       "RequiredItems": [
-        "Ocean Skulltulas",
-        "ItemHookshot"
+        "Ocean Skulltulas"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Zora Boomerang Through Walls"
+        ],
+        [
+          "MaskZora",
+          "Fewer Item Requirements"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -42036,6 +42035,10 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "OtherArrow",
+          "MaskGoron"
         ]
       ],
       "TimeNeeded": "None",
@@ -42048,7 +42051,17 @@
       "RequiredItems": [
         "Ocean Skulltulas"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "OtherArrow"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -42120,6 +42133,18 @@
         ],
         [
           "OSH Storage Room Clip"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "FD Jumps"
+        ],
+        [
+          "MaskZora",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -42160,6 +42185,9 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -42178,6 +42206,9 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -42295,9 +42326,15 @@
           "OtherArrow"
         ],
         [
-          "ItemHookshot",
+          "WFT Past Locked Door",
           "MaskGreatFairy",
-          "ItemWoodfallKey1"
+          "Long Ranged Weapon"
+        ],
+        [
+          "WFT Past Locked Door",
+          "MaskGreatFairy",
+          "OtherExplosive",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -42513,6 +42550,7 @@
         "Enter Snowhead Temple",
         "Pass through false walls",
         "SHT Iced Stairwell",
+        "SHT Jump to 3rd Locked Door",
         "MaskGreatFairy"
       ],
       "ConditionalItems": [
@@ -42629,7 +42667,8 @@
       "ConditionalItems": [
         [
           "Use Fire Arrow",
-          "1 Snowhead Key"
+          "1 Snowhead Key",
+          "SHT Jump to 3rd Locked Door"
         ],
         [
           "SHT 4F"
@@ -42740,7 +42779,8 @@
       "ConditionalItems": [
         [
           "Use Fire Arrow",
-          "1 Snowhead Key"
+          "1 Snowhead Key",
+          "SHT Jump to 3rd Locked Door"
         ],
         [
           "SHT 4F"
@@ -42863,6 +42903,13 @@
           "Take Damage",
           "Goron Bomb Jump",
           "SHT Bridge Room"
+        ],
+        [
+          "1 Snowhead Key",
+          "Long Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
         ]
       ],
       "TimeNeeded": "None",
@@ -46111,10 +46158,14 @@
       ],
       "ConditionalItems": [
         [
-          "STT Masked Hiploop"
+          "STT Thin Bridge Exit"
         ],
         [
-          "STT Thin Bridge Exit"
+          "MaskZora",
+          "Gainer"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46130,10 +46181,14 @@
       ],
       "ConditionalItems": [
         [
-          "STT Masked Hiploop"
+          "STT Thin Bridge Exit"
         ],
         [
-          "STT Thin Bridge Exit"
+          "MaskZora",
+          "Gainer"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46149,10 +46204,14 @@
       ],
       "ConditionalItems": [
         [
-          "STT Masked Hiploop"
+          "STT Thin Bridge Exit"
         ],
         [
-          "STT Thin Bridge Exit"
+          "MaskZora",
+          "Gainer"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46168,10 +46227,14 @@
       ],
       "ConditionalItems": [
         [
-          "STT Masked Hiploop"
+          "STT Thin Bridge Exit"
         ],
         [
-          "STT Thin Bridge Exit"
+          "MaskZora",
+          "Gainer"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46187,10 +46250,14 @@
       ],
       "ConditionalItems": [
         [
-          "STT Masked Hiploop"
+          "STT Thin Bridge Exit"
         ],
         [
-          "STT Thin Bridge Exit"
+          "MaskZora",
+          "Gainer"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46206,10 +46273,14 @@
       ],
       "ConditionalItems": [
         [
-          "STT Masked Hiploop"
+          "STT Thin Bridge Exit"
         ],
         [
-          "STT Thin Bridge Exit"
+          "MaskZora",
+          "Gainer"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46225,10 +46296,14 @@
       ],
       "ConditionalItems": [
         [
-          "STT Masked Hiploop"
+          "STT Thin Bridge Exit"
         ],
         [
-          "STT Thin Bridge Exit"
+          "MaskZora",
+          "Gainer"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46244,10 +46319,14 @@
       ],
       "ConditionalItems": [
         [
-          "STT Masked Hiploop"
+          "STT Thin Bridge Exit"
         ],
         [
-          "STT Thin Bridge Exit"
+          "MaskZora",
+          "Gainer"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -46271,10 +46350,17 @@
       "Id": "CollectableStoneTowerTempleInvertedPreBossRoomItem1",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ISTT Eyegore Access",
-        "ItemHookshot"
+        "ISTT Eyegore Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Fewer Item Requirements",
+          "MaskGoron"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46284,10 +46370,17 @@
       "Id": "CollectableStoneTowerTempleInvertedPreBossRoomItem2",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ISTT Eyegore Access",
-        "ItemHookshot"
+        "ISTT Eyegore Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Fewer Item Requirements",
+          "MaskGoron"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46297,10 +46390,16 @@
       "Id": "CollectableStoneTowerTempleInvertedPreBossRoomItem3",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ISTT Eyegore Access",
-        "ItemHookshot"
+        "ISTT Eyegore Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Zora Boomerang Through Walls"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46310,10 +46409,16 @@
       "Id": "CollectableStoneTowerTempleInvertedPreBossRoomItem4",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ISTT Eyegore Access",
-        "ItemHookshot"
+        "ISTT Eyegore Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Zora Boomerang Through Walls"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46323,10 +46428,16 @@
       "Id": "CollectableStoneTowerTempleInvertedPreBossRoomItem5",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ISTT Eyegore Access",
-        "ItemHookshot"
+        "ISTT Eyegore Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Zora Boomerang Through Walls"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46336,11 +46447,18 @@
       "Id": "CollectableStoneTowerTempleInvertedPreBossRoomItem6",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ISTT Eyegore Access",
-        "ItemHookshot",
-        "MaskZora"
+        "ISTT Eyegore Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot",
+          "MaskZora"
+        ],
+        [
+          "Fewer Item Requirements",
+          "MaskGoron"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46350,11 +46468,18 @@
       "Id": "CollectableStoneTowerTempleInvertedPreBossRoomItem7",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ISTT Eyegore Access",
-        "ItemHookshot",
-        "MaskZora"
+        "ISTT Eyegore Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot",
+          "MaskZora"
+        ],
+        [
+          "Fewer Item Requirements",
+          "MaskGoron"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46364,11 +46489,18 @@
       "Id": "CollectableStoneTowerTempleInvertedPreBossRoomItem8",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ISTT Eyegore Access",
-        "ItemHookshot",
-        "MaskZora"
+        "ISTT Eyegore Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot",
+          "MaskZora"
+        ],
+        [
+          "Fewer Item Requirements",
+          "MaskGoron"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46378,11 +46510,18 @@
       "Id": "CollectableStoneTowerTempleInvertedPreBossRoomItem9",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ISTT Eyegore Access",
-        "ItemHookshot",
-        "MaskZora"
+        "ISTT Eyegore Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot",
+          "MaskZora"
+        ],
+        [
+          "Fewer Item Requirements",
+          "MaskGoron"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46392,10 +46531,17 @@
       "Id": "CollectableStoneTowerTempleInvertedPreBossRoomItem10",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ISTT Eyegore Access",
-        "ItemHookshot"
+        "ISTT Eyegore Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Fewer Item Requirements",
+          "MaskGoron"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46405,10 +46551,17 @@
       "Id": "CollectableStoneTowerTempleInvertedPreBossRoomItem11",
       "RequiredItems": [
         "AreaInvertedStoneTowerTempleAccess",
-        "ISTT Eyegore Access",
-        "ItemHookshot"
+        "ISTT Eyegore Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Fewer Item Requirements",
+          "MaskGoron"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46993,10 +47146,16 @@
     {
       "Id": "CollectableWoodfallPot1",
       "RequiredItems": [
-        "AreaSouthAccess",
-        "Woodfall Platforming"
+        "AreaSouthAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47102,10 +47261,16 @@
     {
       "Id": "CollectableWoodfallPot2",
       "RequiredItems": [
-        "AreaSouthAccess",
-        "Woodfall Platforming"
+        "AreaSouthAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49628,6 +49793,10 @@
         ],
         [
           "MaskZora"
+        ],
+        [
+          "ItemHookshot",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -50613,6 +50782,27 @@
         [
           "ItemHookshot",
           "Scarecrow's Song"
+        ],
+        [
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag",
+          "MaskZora"
+        ],
+        [
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag",
+          "Fierce Deity's Mask Anywhere"
+        ],
+        [
+          "Clever Bombchu Usage",
+          "MaskZora",
+          "Fewer Item Requirements"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -51121,11 +51311,20 @@
     },
     {
       "Id": "CollectableTerminaFieldInvisibleItem9",
-      "RequiredItems": [
-        "MaskGoron",
-        "Magic Meter"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "Magic Meter"
+        ],
+        [
+          "MaskZora",
+          "Fewer Item Requirements"
+        ],
+        [
+          "FD Jumps"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -51417,6 +51616,9 @@
         ],
         [
           "OtherExplosive"
+        ],
+        [
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -52369,8 +52571,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground Rupee Displacement",
-          "Ocarina of Time or a Transformation Mask"
+          "Deku Playground Rupee Displacement"
         ],
         [
           "FD Difficult Jumps"
@@ -52389,8 +52590,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground Rupee Displacement",
-          "Ocarina of Time or a Transformation Mask"
+          "Deku Playground Rupee Displacement"
         ],
         [
           "FD Difficult Jumps"
@@ -52409,8 +52609,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground Rupee Displacement",
-          "Ocarina of Time or a Transformation Mask"
+          "Deku Playground Rupee Displacement"
         ],
         [
           "FD Difficult Jumps"
@@ -52429,8 +52628,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground Rupee Displacement",
-          "Ocarina of Time or a Transformation Mask"
+          "Deku Playground Rupee Displacement"
         ],
         [
           "FD Difficult Jumps"
@@ -52449,8 +52647,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground Rupee Displacement",
-          "Ocarina of Time or a Transformation Mask"
+          "Deku Playground Rupee Displacement"
         ],
         [
           "FD Difficult Jumps"
@@ -52469,8 +52666,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground Rupee Displacement",
-          "Ocarina of Time or a Transformation Mask"
+          "Deku Playground Rupee Displacement"
         ],
         [
           "FD Difficult Jumps"
@@ -52595,8 +52791,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground Rupee Displacement",
-          "Ocarina of Time or a Transformation Mask"
+          "Deku Playground Rupee Displacement"
         ],
         [
           "FD Difficult Jumps"
@@ -52615,8 +52810,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground Rupee Displacement",
-          "Ocarina of Time or a Transformation Mask"
+          "Deku Playground Rupee Displacement"
         ],
         [
           "FD Difficult Jumps"
@@ -52667,8 +52861,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground Rupee Displacement",
-          "Ocarina of Time or a Transformation Mask"
+          "Deku Playground Rupee Displacement"
         ],
         [
           "FD Difficult Jumps"
@@ -52687,8 +52880,7 @@
           "OtherPlayDekuPlayground"
         ],
         [
-          "Deku Playground Rupee Displacement",
-          "Ocarina of Time or a Transformation Mask"
+          "Deku Playground Rupee Displacement"
         ],
         [
           "FD Difficult Jumps"
@@ -55293,7 +55485,25 @@
           "TradeItemOceanDeed"
         ],
         [
-          "FD Jumps"
+          "Fierce Deity's Mask Anywhere",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Long Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Harder Long Jumps",
+          "Take Damage"
+        ],
+        [
+          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -55553,20 +55763,7 @@
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
-          "Take Damage",
-          "Goron Bomb Jump",
-          "Any Bomb Bag"
-        ],
-        [
-          "Ikana Castle Falling Ceiling Skip",
-          "Take Damage",
-          "Goron Bomb Jump",
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg"
-        ],
-        [
-          "Ikana Castle Falling Ceiling Skip",
-          "FD Difficult Jumps"
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -56738,10 +56935,13 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
+          "MaskGoron"
+        ],
+        [
           "Exit Ocean Spider House without Goron"
         ],
         [
-          "MaskGoron"
+          "Fierce Deity's Mask Anywhere"
         ]
       ],
       "TimeNeeded": "None",
@@ -57852,19 +58052,10 @@
     {
       "Id": "Clever Bombchu Usage",
       "RequiredItems": [
-        "Any Bomb Bag"
+        "Any Bomb Bag",
+        "Any Bombchu Pack"
       ],
-      "ConditionalItems": [
-        [
-          "ShopItemBombsBombchu10"
-        ],
-        [
-          "ChestInvertedStoneTowerBombchu10"
-        ],
-        [
-          "ChestLinkTrialBombchu10"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -57993,22 +58184,6 @@
           "FD Jumps",
           "OtherArrow",
           "MaskGoron"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "Woodfall Platforming",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -58970,39 +59145,16 @@
     },
     {
       "Id": "Deku Playground Rupee Displacement",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "Deku Playground Cheating"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Make the Rupees in Deku Playground fall by repeatedly using transformation masks or the Ocarina.",
+      "TrickTooltip": "Make the Rupees in Deku Playground fall by repeatedly using transformation masks, trade items, or the Ocarina of Time.",
       "TrickCategory": "Easy"
-    },
-    {
-      "Id": "Ocarina of Time or a Transformation Mask",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "ItemOcarina"
-        ],
-        [
-          "MaskDeku"
-        ],
-        [
-          "MaskGoron"
-        ],
-        [
-          "MaskZora"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere"
-        ]
-      ],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": false
     },
     {
       "Id": "Keg Trial Access",
@@ -59044,6 +59196,9 @@
         ],
         [
           "Fierce Deity's Mask Anywhere"
+        ],
+        [
+          "SHT Zora Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -59158,6 +59313,16 @@
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Long Jump",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -59222,7 +59387,9 @@
     },
     {
       "Id": "SHT 3F to 2F Jump",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "SHT Jump to 3rd Locked Door"
+      ],
       "ConditionalItems": [
         [
           "MaskGoron",
@@ -59650,6 +59817,262 @@
         ],
         [
           "Jump along invisible platforms"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SHT Jump to 3rd Locked Door",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskGoron"
+        ],
+        [
+          "SHT Zora Jumps"
+        ],
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Long Jump",
+          "Take Damage"
+        ],
+        [
+          "Recoil Flip"
+        ],
+        [
+          "Fewer Item Requirements"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Any Bombchu Pack",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "ShopItemBombsBombchu10"
+        ],
+        [
+          "ChestInvertedStoneTowerBombchu10"
+        ],
+        [
+          "ChestLinkTrialBombchu10"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Kill Iron Knuckle",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Any Sword"
+        ],
+        [
+          "Any Bomb Bag",
+          "OtherArrow"
+        ],
+        [
+          "MaskGoron"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
+        ],
+        [
+          "Any Bomb Bag",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Use Light Arrow",
+          "Any Green Potion"
+        ],
+        [
+          "Use Light Arrow",
+          "ItemBottleMadameAroma"
+        ],
+        [
+          "Use Light Arrow",
+          "ShopItemMilkBarChateau",
+          "Any Bottle"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "All Masks",
+      "RequiredItems": [
+        "MaskPostmanHat",
+        "MaskAllNight",
+        "MaskBlast",
+        "MaskStone",
+        "MaskGreatFairy",
+        "MaskKeaton",
+        "MaskBremen",
+        "MaskBunnyHood",
+        "MaskDonGero",
+        "MaskScents",
+        "MaskRomani",
+        "MaskCircusLeader",
+        "MaskKafei",
+        "MaskCouple",
+        "MaskTruth",
+        "MaskKamaro",
+        "MaskGibdo",
+        "MaskGaro",
+        "MaskCaptainHat",
+        "MaskGiant"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Complete Deku Trial",
+      "RequiredItems": [
+        "MaskDeku"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Complete Goron Trial",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskGoron",
+          "Magic Meter"
+        ],
+        [
+          "FD Difficult Jumps",
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Complete Zora Trial",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "Fewer Item Requirements"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Complete Link Trial",
+      "RequiredItems": [
+        "Kill Iron Knuckle"
+      ],
+      "ConditionalItems": [
+        [
+          "Use Fire Arrow",
+          "ItemHookshot",
+          "Any Bomb Bag",
+          "Any Bombchu Pack"
+        ],
+        [
+          "Use Fire Arrow",
+          "FD Jumps",
+          "Any Bomb Bag",
+          "Any Bombchu Pack"
+        ],
+        [
+          "Use Fire Arrow",
+          "Fierce Deity's Mask Anywhere",
+          "Gainer",
+          "Any Bomb Bag",
+          "Any Bombchu Pack"
+        ],
+        [
+          "Play Song of Storms",
+          "ItemHookshot"
+        ],
+        [
+          "Play Song of Storms",
+          "Fierce Deity's Mask Anywhere"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Deku Playground Cheating",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "ItemOcarina"
+        ],
+        [
+          "MaskDeku"
+        ],
+        [
+          "MaskGoron"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
+        ],
+        [
+          "TradeItemMoonTear"
+        ],
+        [
+          "TradeItemLandDeed"
+        ],
+        [
+          "TradeItemSwampDeed"
+        ],
+        [
+          "TradeItemMountainDeed"
+        ],
+        [
+          "TradeItemOceanDeed"
+        ],
+        [
+          "TradeItemRoomKey"
+        ],
+        [
+          "TradeItemMamaLetter"
+        ],
+        [
+          "TradeItemKafeiLetter"
+        ],
+        [
+          "TradeItemPendant"
         ]
       ],
       "TimeNeeded": "None",
