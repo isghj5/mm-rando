@@ -3596,6 +3596,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom] // if two of them are near to each other, and player appears near his nearby music can break
         //[EnemizerScenesExcluded(0x15, 0x70, 0x61)]
         [EnemizerScenesExcluded(Scene.StockPotInn, Scene.LaundryPool, Scene.MilkBar)] // think him being in milkbar is a credits thing
+        [EnemizerScenesPlacementBlock(Scene.MountainVillageSpring)] // his music can break Frog Choir
         GuruGuru = 0x248, // En_GuruGuru
 
         [FileID(544)]

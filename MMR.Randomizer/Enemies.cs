@@ -405,7 +405,7 @@ namespace MMR.Randomizer
 
         public static void DisableAllLocationRestrictions()
         {
-            // experimental, we can eliminate player restrictions in areas
+            /// player item restrictions is a unique list in the code file (for some reason)
             //var restrictionTableVRAMStart = 0x801BF6C0; // 0xC55C00 -> DC4 // offset: 119C00
             var tableOffset = 0x119C00;
             var codeFile = RomData.MMFileList[31].Data;
