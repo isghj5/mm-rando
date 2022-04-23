@@ -249,9 +249,9 @@ namespace MMR.Randomizer.Utils
                 && item != Item.IceTrap;
         }
 
-        public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult)
+        public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult, bool anythingCanBeRequired = false)
         {
-            return CanBeRequired(item) && randomizedResult.LocationsRequiredForMoonAccess.Contains(locationForImportance);
+            return (anythingCanBeRequired || CanBeRequired(item)) && randomizedResult.LocationsRequiredForMoonAccess.Contains(locationForImportance);
         }
 
         public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)

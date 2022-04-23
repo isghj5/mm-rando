@@ -2030,10 +2030,9 @@ namespace MMR.UI.Forms
                     GameplaySettings = _configuration.GameplaySettings,
                 };
             }
-            using (var settingsFile = new StreamWriter(File.Open(path, FileMode.Create)))
-            {
-                settingsFile.Write(configurationToSave.ToString());
-            }
+            var fileInfo = new FileInfo(path);
+            fileInfo.Directory.Create();
+            File.WriteAllText(fileInfo.FullName, configurationToSave.ToString());
             if (logicFilePath != null)
             {
                 _configuration.GameplaySettings.UserLogicFileName = logicFilePath;
