@@ -1235,9 +1235,6 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "Dog Race Luck"
-        ],
-        [
           "MaskTruth"
         ]
       ],
@@ -56156,17 +56153,6 @@
       "TrickCategory": "Setting"
     },
     {
-      "Id": "Dog Race Luck",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Removes Mask of Truth as requirement for Dog Race.",
-      "TrickCategory": "Very Hard"
-    },
-    {
       "Id": "Faster Bank",
       "RequiredItems": [],
       "ConditionalItems": [],
@@ -60259,6 +60245,17 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false
+    },
+    {
+      "Id": "Dog Race Luck",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Removes Mask of Truth as a requirement for Dog Race.",
+      "TrickCategory": "Very Hard"
     }
   ]
 }
