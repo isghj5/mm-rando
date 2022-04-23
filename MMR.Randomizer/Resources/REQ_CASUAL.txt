@@ -1236,6 +1236,9 @@
       "ConditionalItems": [
         [
           "MaskTruth"
+        ],
+        [
+          "Dog Race Luck"
         ]
       ],
       "TimeNeeded": "None",
@@ -60224,9 +60227,6 @@
           "Kill Twinmold"
         ],
         [
-          "ISTT 2nd Locked Door"
-        ],
-        [
           "ISTT Eyegore Bridge to Maze",
           "ItemHookshot"
         ],
@@ -60239,6 +60239,9 @@
           "ISTT Eyegore Bridge to Maze",
           "Recoil Flip",
           "MaskBlast"
+        ],
+        [
+          "1 Stone Tower Key"
         ]
       ],
       "TimeNeeded": "None",
