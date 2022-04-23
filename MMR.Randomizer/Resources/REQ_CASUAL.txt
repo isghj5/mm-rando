@@ -97,21 +97,11 @@
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
         "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving",
         "ItemGreatBayKey1"
       ],
-      "ConditionalItems": [
-        [
-          "MaskZora"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -195,6 +185,11 @@
         ],
         [
           "Lensless Jumping"
+        ],
+        [
+          "Death Warp",
+          "Take Damage",
+          "OtherExplosive"
         ]
       ],
       "TimeNeeded": "None",
@@ -1140,7 +1135,9 @@
         "AreaGreatBayTempleAccess",
         "Exit Great Bay Temple",
         "Defeat WFT Gekko",
-        "Use Ice Arrow"
+        "Use Ice Arrow",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
@@ -1170,22 +1167,11 @@
           "Take Damage"
         ],
         [
-          "MaskZora",
+          "GBT Reverse Water Direction",
+          "Use Fire Arrow"
+        ],
+        [
           "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -2833,32 +2819,22 @@
       "Id": "ItemGreatBayMap",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
           "ItemHookshot"
         ],
         [
-          "MaskZora",
           "Use Ice Arrow"
         ],
         [
-          "MaskZora",
           "GBT Iceless"
         ],
         [
-          "MaskZora",
           "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -2870,25 +2846,19 @@
       "Id": "ItemGreatBayCompass",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
           "MaskZora"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
           "FD Jumps"
         ],
         [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
+          "GBT Reverse Water Direction"
         ]
       ],
       "TimeNeeded": "None",
@@ -2900,13 +2870,11 @@
       "Id": "ItemGreatBayBossKey",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
-        [
-          "MaskZora",
-          "GBT Iceless Boss Key"
-        ],
         [
           "MaskZora",
           "Use Fire Arrow",
@@ -2935,22 +2903,15 @@
           "Clever Ice Platforms"
         ],
         [
-          "MaskZora",
+          "GBT Reverse Water Direction",
+          "Use Fire Arrow",
+          "Use Ice Arrow"
+        ],
+        [
+          "GBT Iceless Boss Key"
+        ],
+        [
           "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -2997,12 +2958,36 @@
           "Play Song of Soaring"
         ],
         [
+          "Recoil Flip",
+          "Death Warp",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Recoil Flip",
+          "Death Warp",
+          "Take Damage",
+          "MaskBlast"
+        ],
+        [
           "FD Jumps",
           "Gainer"
         ],
         [
           "FD Jumps",
           "Play Song of Soaring"
+        ],
+        [
+          "FD Jumps",
+          "Death Warp",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "FD Jumps",
+          "Death Warp",
+          "Take Damage",
+          "MaskBlast"
         ],
         [
           "STT Elegy Maze",
@@ -3045,7 +3030,8 @@
     {
       "Id": "ItemStoneTowerBossKey",
       "RequiredItems": [
-        "AreaInvertedStoneTowerTempleAccess"
+        "AreaInvertedStoneTowerTempleAccess",
+        "STT BK Retrieval"
       ],
       "ConditionalItems": [
         [
@@ -3116,12 +3102,30 @@
         ],
         [
           "Recoil Flip",
+          "Death Warp",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Recoil Flip",
+          "Death Warp",
+          "Take Damage",
+          "MaskBlast"
+        ],
+        [
+          "Recoil Flip",
           "Fierce Deity's Mask Anywhere",
           "Gainer"
         ],
         [
           "FD Jumps",
           "Play Song of Soaring"
+        ],
+        [
+          "FD Jumps",
+          "Death Warp",
+          "Take Damage",
+          "OtherExplosive"
         ],
         [
           "FD Jumps",
@@ -3709,6 +3713,12 @@
         [
           "Lensless Jumping",
           "Lensless Chests"
+        ],
+        [
+          "Death Warp",
+          "Take Damage",
+          "OtherExplosive",
+          "Lensless Chests"
         ]
       ],
       "TimeNeeded": "None",
@@ -3728,6 +3738,10 @@
         ],
         [
           "Jump along invisible platforms"
+        ],
+        [
+          "Death Warp",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -4260,18 +4274,26 @@
           "Poisoned Water as Goron",
           "Take Damage",
           "Big Octo Skip",
-          "Long Jump"
+          "Long Jump",
+          "Dungeon Entrance Return"
         ],
         [
           "Poisoned Water as Goron",
           "Take Damage",
           "Big Octo Skip",
-          "Recoil Flip"
+          "Recoil Flip",
+          "Dungeon Entrance Return"
         ],
         [
           "Big Octo Skip",
           "Take Damage",
-          "FD Jumps"
+          "FD Jumps",
+          "Dungeon Entrance Return"
+        ],
+        [
+          "Big Octo Skip",
+          "Take Damage",
+          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -42266,14 +42288,15 @@
           "MaskDeku"
         ],
         [
-          "MaskGreatFairy"
+          "MaskGreatFairy",
+          "OtherArrow"
         ],
         [
-          "FD Difficult Jumps",
-          "Long Jump",
-          "Take Damage",
-          "Any Bomb Bag",
-          "Clever Ice Platforms"
+          "MaskZora",
+          "Fewer Item Requirements"
+        ],
+        [
+          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -42417,6 +42440,14 @@
           "Take Damage"
         ],
         [
+          "ItemHookshot",
+          "Take Damage",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Recoil Flip"
+        ],
+        [
           "FD Jumps"
         ]
       ],
@@ -42437,6 +42468,9 @@
         [
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "FD Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -42472,10 +42506,17 @@
       "Id": "CollectibleStrayFairyWoodfall14",
       "RequiredItems": [
         "AreaWoodFallTempleAccess",
-        "WFT Past Locked Door",
-        "Short Ranged Weapon"
+        "WFT Past Locked Door"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "OtherExplosive",
+          "Fewer Item Requirements"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -43148,32 +43189,16 @@
       "Id": "CollectibleStrayFairyGreatBay2",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Reverse Water Direction"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "GBT Reverse Water Direction"
+          "MaskZora"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve",
-          "Clever Bombchu Usage",
-          "MaskGreatFairy"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "FD Jumps",
-          "Clever Bombchu Usage",
-          "MaskGreatFairy"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps",
-          "Clever Bombchu Usage",
-          "MaskGreatFairy"
+          "MaskGreatFairy",
+          "Clever Bombchu Usage"
         ]
       ],
       "TimeNeeded": "None",
@@ -43216,32 +43241,23 @@
       "Id": "CollectibleStrayFairyGreatBay4",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Reverse Water Direction"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "GBT Reverse Water Direction",
           "Use Ice Arrow"
         ],
         [
-          "MaskZora",
-          "GBT Reverse Water Direction",
-          "MaskGreatFairy"
+          "GBT Iceless"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve"
+          "MaskGreatFairy",
+          "Long Ranged Weapon"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
+          "MaskGreatFairy",
+          "Clever Bombchu Usage"
         ]
       ],
       "TimeNeeded": "None",
@@ -43253,45 +43269,25 @@
       "Id": "CollectibleStrayFairyGreatBay5",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
+          "GBT Reverse Water Direction",
+          "GBT Reverse Water Loop",
           "Use Ice Arrow",
           "ItemHookshot"
         ],
         [
-          "MaskZora",
           "GBT Reverse Water Direction",
+          "GBT Reverse Water Loop",
           "Long Jump",
           "Take Damage"
         ],
         [
-          "MaskZora",
           "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve",
-          "ItemHookshot"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve",
-          "Long Jump",
-          "Take Damage"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -43303,15 +43299,11 @@
       "Id": "CollectibleStrayFairyGreatBay6",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
+        "GBT Yellow Valve",
         "ItemHookshot"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "Use Ice Arrow"
-        ],
-        [
-          "GBT Goron Waterwheel",
           "Use Ice Arrow"
         ],
         [
@@ -43327,55 +43319,42 @@
       "Id": "CollectibleStrayFairyGreatBay7",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
           "GBT Reverse Water Direction",
-          "Use Fire Arrow"
+          "Use Fire Arrow",
+          "MaskZora"
         ],
         [
-          "MaskZora",
           "GBT Reverse Water Direction",
-          "GBT Fireless"
-        ],
-        [
-          "MaskZora",
-          "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve",
+          "Use Fire Arrow",
           "Goron Bomb Jump",
           "Take Damage",
           "Any Bomb Bag"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve",
+          "GBT Reverse Water Direction",
+          "Use Fire Arrow",
           "Goron Bomb Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
           "ItemPowderKeg"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve",
-          "Long Jump",
-          "Take Damage"
+          "GBT Reverse Water Direction",
+          "Use Fire Arrow",
+          "Fierce Deity's Mask Anywhere"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
+          "GBT Reverse Water Direction",
+          "GBT Fireless"
+        ],
+        [
           "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -43387,36 +43366,23 @@
       "Id": "CollectibleStrayFairyGreatBay8",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
           "GBT Reverse Water Direction",
+          "GBT Reverse Water Loop",
           "ItemHookshot"
         ],
         [
-          "MaskZora",
           "GBT Reverse Water Direction",
+          "GBT Reverse Water Loop",
           "Recoil Flip"
         ],
         [
-          "MaskZora",
           "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -43440,25 +43406,19 @@
       "Id": "CollectibleStrayFairyGreatBay10",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
           "MaskZora"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
           "FD Jumps"
         ],
         [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
+          "GBT Reverse Water Direction"
         ]
       ],
       "TimeNeeded": "None",
@@ -43470,36 +43430,30 @@
       "Id": "CollectibleStrayFairyGreatBay11",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "GBT Reverse Water Direction"
+          "GBT Reverse Water Direction",
+          "GBT Reverse Water Loop",
+          "MaskZora"
         ],
         [
-          "MaskZora",
-          "FD Jumps"
+          "GBT Reverse Water Direction",
+          "GBT Reverse Water Loop",
+          "MaskGreatFairy",
+          "Clever Bombchu Usage"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve",
-          "Clever Bombchu Usage",
-          "MaskGreatFairy"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
           "FD Jumps",
-          "Clever Bombchu Usage",
-          "MaskGreatFairy"
+          "MaskZora"
         ],
         [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps",
-          "Clever Bombchu Usage",
-          "MaskGreatFairy"
+          "FD Jumps",
+          "MaskGreatFairy",
+          "Clever Bombchu Usage"
         ]
       ],
       "TimeNeeded": "None",
@@ -43511,21 +43465,16 @@
       "Id": "CollectibleStrayFairyGreatBay12",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve"
       ],
       "ConditionalItems": [
         [
           "MaskZora"
         ],
         [
-          "GBT Goron Waterwheel",
-          "OtherArrow",
-          "MaskGreatFairy"
-        ],
-        [
-          "FD Difficult Jumps",
-          "OtherArrow",
-          "MaskGreatFairy"
+          "MaskGreatFairy",
+          "OtherArrow"
         ]
       ],
       "TimeNeeded": "None",
@@ -43537,19 +43486,10 @@
       "Id": "CollectibleStrayFairyGreatBay13",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve"
       ],
-      "ConditionalItems": [
-        [
-          "MaskZora"
-        ],
-        [
-          "GBT Goron Waterwheel"
-        ],
-        [
-          "FD Difficult Jumps"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -43559,25 +43499,19 @@
       "Id": "CollectibleStrayFairyGreatBay14",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
           "MaskZora"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
           "FD Jumps"
         ],
         [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
+          "GBT Reverse Water Direction"
         ]
       ],
       "TimeNeeded": "None",
@@ -43589,21 +43523,11 @@
       "Id": "CollectibleStrayFairyGreatBay15",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
-      "ConditionalItems": [
-        [
-          "MaskZora"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -44753,30 +44677,24 @@
       "Id": "CollectableGreatBayTempleBlueChuchuValveRoomBarrel1",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "Use Ice Arrow"
+          "Use Ice Arrow",
+          "MaskZora"
         ],
         [
-          "MaskZora",
-          "GBT Iceless"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
+          "Use Ice Arrow",
           "Play Song of Soaring"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "FD Jumps"
+          "GBT Iceless"
         ],
         [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
+          "FD Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -44790,7 +44708,17 @@
         "AreaIkanaCanyonAccess",
         "Ikana King Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Use Fire Arrow",
+          "UpgradeMirrorShield",
+          "Fighting"
+        ],
+        [
+          "Death Warp",
+          "Take Damage"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -44802,7 +44730,17 @@
         "AreaIkanaCanyonAccess",
         "Ikana King Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Use Fire Arrow",
+          "UpgradeMirrorShield",
+          "Fighting"
+        ],
+        [
+          "Death Warp",
+          "Take Damage"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -45043,30 +44981,17 @@
       "Id": "CollectableGreatBayTempleSeesawRoomPot1",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "GBT Reverse Water Direction"
+          "GBT Reverse Water Direction",
+          "GBT Reverse Water Loop"
         ],
         [
-          "MaskZora",
           "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "FD Jumps"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -45078,15 +45003,11 @@
       "Id": "CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel1",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "Use Ice Arrow"
-        ],
-        [
-          "GBT Goron Waterwheel",
           "Use Ice Arrow"
         ],
         [
@@ -46924,30 +46845,24 @@
       "Id": "CollectableGreatBayTempleBlueChuchuValveRoomBarrel2",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "Use Ice Arrow"
+          "Use Ice Arrow",
+          "MaskZora"
         ],
         [
-          "MaskZora",
-          "GBT Iceless"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
+          "Use Ice Arrow",
           "Play Song of Soaring"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "FD Jumps"
+          "GBT Iceless"
         ],
         [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
+          "FD Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -46959,15 +46874,11 @@
       "Id": "CollectableGreatBayTempleTopmostRoomWithGreenValveBarrel2",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "Use Ice Arrow"
-        ],
-        [
-          "GBT Goron Waterwheel",
           "Use Ice Arrow"
         ],
         [
@@ -49234,30 +49145,24 @@
       "Id": "CollectableGreatBayTempleBlueChuchuValveRoomWoodenCrateLarge1",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
-        "Exit Great Bay Temple"
+        "Exit Great Bay Temple",
+        "GBT Yellow Valve",
+        "GBT Diving"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "Use Ice Arrow"
+          "Use Ice Arrow",
+          "MaskZora"
         ],
         [
-          "MaskZora",
-          "GBT Iceless"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
+          "Use Ice Arrow",
           "Play Song of Soaring"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "FD Jumps"
+          "GBT Iceless"
         ],
         [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps"
+          "FD Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -49271,7 +49176,17 @@
         "AreaIkanaCanyonAccess",
         "Ikana King Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Use Fire Arrow",
+          "UpgradeMirrorShield",
+          "Fighting"
+        ],
+        [
+          "Death Warp",
+          "Take Damage"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49634,15 +49549,11 @@
       "Id": "CollectableGreatBayTempleTopmostRoomWithGreenValveItem1",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
+        "GBT Yellow Valve",
         "ItemHookshot"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "Use Ice Arrow"
-        ],
-        [
-          "GBT Goron Waterwheel",
           "Use Ice Arrow"
         ],
         [
@@ -49658,15 +49569,11 @@
       "Id": "CollectableGreatBayTempleTopmostRoomWithGreenValveItem2",
       "RequiredItems": [
         "AreaGreatBayTempleAccess",
+        "GBT Yellow Valve",
         "ItemHookshot"
       ],
       "ConditionalItems": [
         [
-          "MaskZora",
-          "Use Ice Arrow"
-        ],
-        [
-          "GBT Goron Waterwheel",
           "Use Ice Arrow"
         ],
         [
@@ -56009,7 +55916,8 @@
           "Goron Bomb Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
-          "ItemPowderKeg"
+          "ItemPowderKeg",
+          "Dungeon Entrance Return"
         ]
       ],
       "TimeNeeded": "None",
@@ -56256,7 +56164,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Removes Mask of Truth as requirement for Dog Race.",
-      "TrickCategory": "Setting"
+      "TrickCategory": "Very Hard"
     },
     {
       "Id": "Faster Bank",
@@ -56539,7 +56447,9 @@
     },
     {
       "Id": "GBT Fireless",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskZora"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -56602,7 +56512,8 @@
     {
       "Id": "ISTT Eyegore Access",
       "RequiredItems": [
-        "AreaInvertedStoneTowerTempleAccess"
+        "AreaInvertedStoneTowerTempleAccess",
+        "ISTT Return from Eyegore Bridge"
       ],
       "ConditionalItems": [
         [
@@ -56875,7 +56786,9 @@
     },
     {
       "Id": "GBT Iceless Boss Key",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskZora"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -56942,6 +56855,10 @@
         ],
         [
           "Fierce Deity's Mask Anywhere"
+        ],
+        [
+          "Death Warp",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -57092,7 +57009,9 @@
     },
     {
       "Id": "GBT Iceless",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "MaskZora"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
@@ -57103,40 +57022,14 @@
     },
     {
       "Id": "GBT Reverse Water Direction",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "Use Ice Arrow",
-          "ItemHookshot"
-        ],
-        [
-          "Use Ice Arrow",
-          "Recoil Flip"
-        ],
-        [
-          "GBT Iceless",
-          "GBT First Red Turnkey",
-          "GBT Second Red Turnkey",
-          "ItemHookshot"
-        ],
-        [
-          "GBT Iceless",
-          "GBT First Red Turnkey",
-          "GBT Second Red Turnkey",
-          "Recoil Flip"
-        ],
-        [
-          "FD Jumps",
-          "ItemHookshot"
-        ],
-        [
-          "FD Jumps",
-          "Recoil Flip"
-        ],
-        [
-          "FD Difficult Jumps"
-        ]
+      "RequiredItems": [
+        "GBT Diving",
+        "GBT Yellow Valve",
+        "GBT Red Valve",
+        "GBT Red Pump",
+        "GBT Red Turnkey"
       ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -57349,31 +57242,57 @@
           "RemainsOdolwa"
         ],
         [
-          "OtherArrow",
           "ItemWoodfallBossKey",
+          "Use Fire Arrow",
+          "ItemHookshot"
+        ],
+        [
+          "ItemWoodfallBossKey",
+          "OtherArrow",
           "WFT 2nd Floor Skip",
           "Take Damage"
         ],
         [
-          "OtherArrow",
           "ItemWoodfallBossKey",
+          "OtherArrow",
           "MaskDeku"
         ],
         [
-          "OtherArrow",
           "ItemWoodfallBossKey",
+          "OtherArrow",
           "FD Difficult Jumps",
           "Long Jump",
           "Take Damage",
           "Any Bomb Bag"
         ],
         [
-          "OtherArrow",
           "ItemWoodfallBossKey",
+          "OtherArrow",
+          "FD Difficult Jumps",
+          "Long Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "ItemWoodfallBossKey",
+          "OtherArrow",
           "FD Difficult Jumps",
           "Harder Long Jumps",
-          "Take Damage",
-          "MaskBlast"
+          "Take Damage"
+        ],
+        [
+          "ItemWoodfallBossKey",
+          "WFT Bow Skip",
+          "WFT 2nd Floor Access",
+          "MaskDeku",
+          "Take Damage"
+        ],
+        [
+          "ItemWoodfallBossKey",
+          "WFT Bow Skip",
+          "WFT 2nd Floor Skip",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -57411,55 +57330,21 @@
           "RemainsGyorg"
         ],
         [
-          "MaskZora",
-          "Use Fire Arrow",
-          "Use Ice Arrow",
-          "ItemHookshot",
-          "ItemGreatBayBossKey"
-        ],
-        [
-          "MaskZora",
-          "GBT Fireless",
-          "Use Ice Arrow",
-          "ItemHookshot",
-          "ItemGreatBayBossKey"
-        ],
-        [
-          "MaskZora",
-          "Use Fire Arrow",
-          "Use Ice Arrow",
-          "Recoil Flip",
-          "ItemGreatBayBossKey"
-        ],
-        [
-          "MaskZora",
-          "GBT Fireless",
-          "Use Ice Arrow",
-          "Recoil Flip",
-          "ItemGreatBayBossKey"
-        ],
-        [
-          "MaskZora",
+          "ItemGreatBayBossKey",
           "GBT Reverse Water Direction",
-          "FD Jumps",
-          "ItemGreatBayBossKey"
+          "Use Ice Arrow",
+          "Use Fire Arrow"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "GBT Red Valve",
-          "ItemGreatBayBossKey"
+          "ItemGreatBayBossKey",
+          "GBT Reverse Water Direction",
+          "Use Ice Arrow",
+          "GBT Fireless"
         ],
         [
-          "GBT Cutscene Diving",
-          "GBT Goron Waterwheel",
-          "FD Jumps",
-          "ItemGreatBayBossKey"
-        ],
-        [
-          "GBT Cutscene Diving",
-          "FD Difficult Jumps",
-          "ItemGreatBayBossKey"
+          "ItemGreatBayBossKey",
+          "GBT Reverse Water Direction",
+          "FD Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -57899,7 +57784,8 @@
     {
       "Id": "STT Garo Master Access",
       "RequiredItems": [
-        "STT Mirror Puzzle Access"
+        "STT Mirror Puzzle Access",
+        "STT LA Chest Retrieval"
       ],
       "ConditionalItems": [
         [
@@ -58098,6 +57984,20 @@
         [
           "Access Gyorg",
           "Kill Gyorg"
+        ],
+        [
+          "GBT Hookless Exit",
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "GBT Hookless Exit",
+          "FD Difficult Jumps"
+        ],
+        [
+          "GBT Hookless Exit",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -58266,23 +58166,29 @@
     },
     {
       "Id": "WFT Pre-Boss Room Access",
-      "RequiredItems": [
-        "OtherArrow"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [
         [
+          "Use Fire Arrow",
+          "ItemHookshot"
+        ],
+        [
+          "OtherArrow",
           "MaskDeku"
         ],
         [
-          "ItemHookshot",
-          "Use Fire Arrow"
-        ],
-        [
+          "OtherArrow",
           "WFT 2nd Floor Skip",
           "Take Damage"
         ],
         [
+          "OtherArrow",
           "FD Jumps"
+        ],
+        [
+          "WFT Bow Skip",
+          "WFT 2nd Floor Access",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -58594,18 +58500,31 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "Harder Long Jumps",
-          "Take Damage"
-        ],
-        [
-          "FD Difficult Jumps"
-        ],
-        [
           "Use Light Arrow",
           "MaskDeku",
           "MaskGoron",
           "ItemHookshot",
           "2 Stone Tower Keys"
+        ],
+        [
+          "Harder Long Jumps",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Harder Long Jumps",
+          "Take Damage",
+          "MaskBlast"
+        ],
+        [
+          "Harder Long Jumps",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "Dungeon Entrance Return"
+        ],
+        [
+          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -58618,6 +58537,7 @@
       "RequiredItems": [
         "ISTT Lightless",
         "ISTT Cross Poe Gap",
+        "ISTT Dungeon Entrance Return",
         "1 Stone Tower Key"
       ],
       "ConditionalItems": [
@@ -58654,6 +58574,7 @@
     {
       "Id": "ISTT Eyegore Bridge to Dexihand",
       "RequiredItems": [
+        "ISTT Dungeon Entrance Return",
         "ItemHookshot"
       ],
       "ConditionalItems": [
@@ -58720,6 +58641,7 @@
       "Id": "STT Elegy Maze",
       "RequiredItems": [
         "Play Elegy of Emptiness",
+        "STT Dungeon Entrance Return",
         "MaskGoron"
       ],
       "ConditionalItems": [
@@ -58881,10 +58803,32 @@
           "MaskDeku"
         ],
         [
-          "ItemHookshot"
+          "ItemHookshot",
+          "Play Song of Soaring"
         ],
         [
-          "Recoil Flip"
+          "ItemHookshot",
+          "STT Updrafts without Deku Mask",
+          "Use Light Arrow"
+        ],
+        [
+          "ItemHookshot",
+          "Death Warp",
+          "Take Damage"
+        ],
+        [
+          "Recoil Flip",
+          "Play Song of Soaring"
+        ],
+        [
+          "Recoil Flip",
+          "STT Updrafts without Deku Mask",
+          "Use Light Arrow"
+        ],
+        [
+          "Recoil Flip",
+          "Death Warp",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -58939,6 +58883,16 @@
         ],
         [
           "Play Song of Soaring"
+        ],
+        [
+          "Death Warp",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Death Warp",
+          "Take Damage",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -59478,7 +59432,17 @@
           "Goron Bomb Jump",
           "Long Jump",
           "Take Damage",
-          "OtherArrow"
+          "OtherArrow",
+          "Dungeon Entrance Return"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "Goron Bomb Jump",
+          "Long Jump",
+          "Take Damage",
+          "OtherArrow",
+          "SHT Fireless"
         ]
       ],
       "TimeNeeded": "None",
@@ -59676,34 +59640,30 @@
       "TrickCategory": "Hard"
     },
     {
-      "Id": "GBT Red Valve",
+      "Id": "GBT Red Turnkey",
       "RequiredItems": [],
       "ConditionalItems": [
         [
+          "ItemHookshot"
+        ],
+        [
+          "Recoil Flip"
+        ],
+        [
           "FD Difficult Jumps"
-        ],
-        [
-          "ItemHookshot",
-          "Play Song of Soaring"
-        ],
-        [
-          "Recoil Flip",
-          "Play Song of Soaring"
         ],
         [
           "Clever Ice Platforms",
           "Goron Bomb Jump",
           "Take Damage",
-          "Any Bomb Bag",
-          "Play Song of Soaring"
+          "Any Bomb Bag"
         ],
         [
           "Clever Ice Platforms",
           "Goron Bomb Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "Play Song of Soaring"
+          "ItemPowderKeg"
         ]
       ],
       "TimeNeeded": "None",
@@ -59736,23 +59696,33 @@
       "TrickCategory": "Hard"
     },
     {
-      "Id": "GBT First Red Turnkey",
+      "Id": "GBT Red Valve",
       "RequiredItems": [],
       "ConditionalItems": [
         [
-          "Use Ice Arrow"
+          "Use Ice Arrow",
+          "MaskZora"
         ],
         [
-          "MaskZora",
+          "Use Ice Arrow",
+          "Dungeon Entrance Return"
+        ],
+        [
+          "GBT Iceless",
           "Gainer"
         ],
         [
+          "GBT Iceless",
           "Fierce Deity's Mask Anywhere"
         ],
         [
+          "GBT Iceless",
           "Goron Bomb Jump",
           "Take Damage",
           "Any Bomb Bag"
+        ],
+        [
+          "FD Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -59761,7 +59731,7 @@
       "IsTrick": false
     },
     {
-      "Id": "GBT Second Red Turnkey",
+      "Id": "GBT Red Pump",
       "RequiredItems": [],
       "ConditionalItems": [
         [
@@ -60073,6 +60043,216 @@
         ],
         [
           "TradeItemPendant"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "GBT Yellow Valve",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "GBT Goron Waterwheel"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "GBT Diving",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "GBT Cutscene Diving"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "GBT Reverse Water Loop",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Use Fire Arrow"
+        ],
+        [
+          "GBT Fireless"
+        ],
+        [
+          "Dungeon Entrance Return"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "GBT Hookless Exit",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Leave Great Bay Temple without Hookshot by carefully negotiating with the turtle's geometry. All methods of doing this require other tricks enabled.",
+      "TrickCategory": "Hard"
+    },
+    {
+      "Id": "WFT Bow Skip",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Open the barred doors leading to the pre-boss room of Woodfall Temple with a lit Deku Stick.",
+      "TrickCategory": "Hard"
+    },
+    {
+      "Id": "Death Warp",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Game over intentionally to return to the beginning of a dungeon, grotto, or building.",
+      "TrickCategory": "Easy"
+    },
+    {
+      "Id": "Dungeon Entrance Return",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Play Song of Soaring"
+        ],
+        [
+          "Death Warp",
+          "Take Damage"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ISTT Dungeon Entrance Return",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Dungeon Entrance Return"
+        ],
+        [
+          "ISTT Early Boss Key",
+          "ISTT Cross Under Eyegore Bridge"
+        ],
+        [
+          "Recoil Flip",
+          "ISTT Eyegore Bridge to Maze"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "STT BK Retrieval",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Dungeon Entrance Return"
+        ],
+        [
+          "ISTT Cross Under Eyegore Bridge"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "STT Dungeon Entrance Return",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Dungeon Entrance Return"
+        ],
+        [
+          "1 Stone Tower Key",
+          "STT Water Tunnel",
+          "UpgradeMirrorShield"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "STT LA Chest Retrieval",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Dungeon Entrance Return"
+        ],
+        [
+          "STT Masked Hiploop"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "ISTT Return from Eyegore Bridge",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Dungeon Entrance Return"
+        ],
+        [
+          "ItemHookshot",
+          "ItemStoneTowerBossKey",
+          "Kill Twinmold"
+        ],
+        [
+          "ISTT 2nd Locked Door"
+        ],
+        [
+          "ISTT Eyegore Bridge to Maze",
+          "ItemHookshot"
+        ],
+        [
+          "ISTT Eyegore Bridge to Maze",
+          "Recoil Flip",
+          "Any Bomb Bag"
+        ],
+        [
+          "ISTT Eyegore Bridge to Maze",
+          "Recoil Flip",
+          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
