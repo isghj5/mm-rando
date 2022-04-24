@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using static MMR.UI.Forms.LogicEditorForm;
 using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Extensions;
 using MMR.Randomizer.Models;
@@ -11,90 +10,60 @@ namespace MMR.UI.Forms
 {
     public partial class ItemSelectorForm : Form
     {
-        public List<string> ReturnItems;
+        public List<Item> ReturnItems;
 
-        private IEnumerable<string> _filteredItems;
-        private List<string> _selectedItems;
-        private LogicFile _logic;
+        private IEnumerable<Item> _baseItemList;
+
         private bool _showLocationNames;
 
-        public ItemSelectorForm(LogicFile logic, bool checkboxes)
+        public ItemSelectorForm(IEnumerable<Item> baseItemList, IEnumerable<Item> selectedItems, bool checkboxes = true, bool showLocationNames = true)
         {
-            _logic = logic;
             InitializeComponent();
-            SetHighlightedItems(null);
-            SetSelectedItems(null);
+            _baseItemList = baseItemList;
+            _showLocationNames = showLocationNames;
+            ReturnItems = selectedItems.ToList();
             UpdateItems();
             this.ActiveControl = textBoxFilter;
             lItems.CheckBoxes = checkboxes;
         }
 
-        public void SetLogicFile(LogicFile logic)
-        {
-            _logic = logic;
-        }
-
-        public void SetSelectedItems(List<string> selectedItems)
-        {
-            _selectedItems = selectedItems ?? new List<string>();
-        }
-
-        public void SetHighlightedItems(List<string> highlightedItems)
-        {
-            _filteredItems = highlightedItems ?? _logic.Logic.Select(item => item.Id);
-        }
-
-        public void SetShowLocationNames(bool val)
-        {
-            _showLocationNames = val;
-        }
-
-        public void UpdateItems()
+        public void UpdateItems(string filter = null)
         {
             lItems.Clear();
-            foreach (var filteredItem in _filteredItems)
+            var items = _baseItemList;
+            if (!string.IsNullOrWhiteSpace(filter))
             {
-                var label = GetLabel(filteredItem);
+                items = items.Where(item => GetLabel(item).ToLower().Contains(filter));
+            }
+            foreach (var item in items)
+            {
+                var label = GetLabel(item);
                 var listViewItem = new ListViewItem(label);
-                listViewItem.Tag = filteredItem;
-                listViewItem.Checked = _selectedItems?.Contains(filteredItem) ?? false;
+                listViewItem.Tag = item;
+                listViewItem.Checked = ReturnItems.Contains(item);
                 lItems.Items.Add(listViewItem);
             }
         }
 
         private void bDone_Click(object sender, EventArgs e)
         {
-            ReturnItems = _selectedItems.ToList();
             DialogResult = DialogResult.OK;
             Close();
         }
 
-        private string GetLabel(string itemId)
+        private string GetLabel(Item item)
         {
-            if (Enum.TryParse(itemId, out Item item))
-            {
-                return (_showLocationNames ? item.Location() : item.Name()) ?? itemId;
-            }
-            else
-            {
-                return itemId;
-            }
-        }
-
-        private void textBoxFilter_TextChanged(object sender, EventArgs e)
-        {
-            //var filter = textBoxFilter.Text.ToLower();
-            //_filteredItems = _logic.Logic.Where(item => GetLabel(item.Id).ToLower().Contains(filter)).Select(item => item.Id).ToList();
-            //UpdateItems();
+            return (_showLocationNames ? item.Location() : item.Name()) ?? item.ToString();
         }
 
         private void lItems_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            if (lItems.CheckBoxes || lItems.SelectedIndices.Count == 0)
+            if (lItems.CheckBoxes || lItems.SelectedItems.Count == 0)
             {
                 return;
             }
-            ReturnItems = new List<string> { _filteredItems.ToList()[lItems.SelectedIndices.Cast<int>().First()] };
+            ;
+            ReturnItems = new List<Item> { (Item)lItems.SelectedItems[0].Tag };
             DialogResult = DialogResult.OK;
             Close();
         }
@@ -103,11 +72,11 @@ namespace MMR.UI.Forms
         {
             if (e.Item.Checked)
             {
-                _selectedItems.Add((string)e.Item.Tag);
+                ReturnItems.Add((Item)e.Item.Tag);
             }
             else
             {
-                _selectedItems.Remove((string)e.Item.Tag);
+                ReturnItems.Remove((Item)e.Item.Tag);
             }
         }
 
@@ -116,8 +85,8 @@ namespace MMR.UI.Forms
             if (e.KeyData == Keys.Enter)
             {
                 var filter = textBoxFilter.Text.ToLower();
-                _filteredItems = _logic.Logic.Where(item => GetLabel(item.Id).ToLower().Contains(filter)).Select(item => item.Id).ToList();
-                UpdateItems();
+                //_filteredItems = _logic.Logic.Where(item => GetLabel(item.Id).ToLower().Contains(filter)).Select(item => item.Id).ToList();
+                UpdateItems(filter);
             }
         }
     }

@@ -37,10 +37,10 @@
 ; nt_reg[86]..week
 ; _eve
 .org 0x801DC7D8
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
     jal     MMR_QueueItem
     nop
-    lw      ra, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
     jr      ra
-    addiu   sp, sp, 0x14
+    addiu   sp, sp, 0x18

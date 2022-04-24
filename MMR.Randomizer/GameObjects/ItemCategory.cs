@@ -193,4 +193,73 @@ namespace MMR.Randomizer.GameObjects
         [Description("Randomize items that require glitches to collect.")]
         GlitchesRequired,
     }
+
+    public enum ClassicCategory
+    {
+        Fake = -1,
+        None,
+
+        [Description("Randomize the base set of items.")]
+        BaseItemPool,
+
+        [Description("Randomize the Song of Soaring.")]
+        SongOfSoaring,
+
+        [Description("Enable keys, boss keys, maps and compasses being placed in the randomization pool.")]
+        DungeonItems,
+
+        [Description("Enable shop items being placed in the randomization pool.")]
+        ShopItems,
+
+        [Description("Enable captured bottle contents being randomized.")]
+        CaughtBottleContents,
+
+        [Description("Enable randomization of cow milk.")]
+        CowMilk,
+
+        [Description("Enable moon items being placed in the randomization pool.\n\nIncludes the four Moon Trial Heart Pieces, Fierce Deity's Mask and the two Link Trial chests.")]
+        MoonItems,
+
+        [Description("Enable great fairy rewards being placed in the randomization pool.\n\nIncludes Magic Power, Great Spin Attack, Extended Magic Power, Double Defense, Great Fairy's Sword and Great Fairy's Mask.")]
+        GreatFairyRewards,
+
+        [Description("Enable randomization of mundane rewards. See Help > Manual (F1) > Shuffles for details.")]
+        MundaneRewards,
+
+        [Description("Enable randomization of golden skulltula tokens. Tokens will not reset to 0 after Song of Time.")]
+        SkulltulaTokens,
+
+        [Description("Enable randomization of stray fairies. Stray fairies will not reset to 0 after Song of Time.")]
+        StrayFairies,
+
+        [Description("Enable randomization of starting Sword, Shield, and two Heart Containers.")]
+        CrazyStartingItems,
+
+        [Description("Enable miscellaneous items being placed in the randomization pool.\n\nAmong the miscellaneous items are:\nFreestanding heartpieces, overworld chests, (hidden) grotto chests, Tingle's maps and bank heartpiece.")]
+        EverythingElse,
+
+        [Description("Enable randomization of locations that require glitches, such as the pre-clocktown deku nut chest and the out of bounds deku palace rupee.")]
+        GlitchesRequired,
+
+        [Description("Randomize freestanding rupees.")]
+        FreestandingRupees,
+
+        [Description("Randomize fixed minor item drops.")]
+        FixedMinorItemDrops,
+
+        [Description("Randomize invisible rupees and hit tags.")]
+        HiddenRupees,
+
+        [Description("Randomize items from soft soil.")]
+        SoftSoil,
+
+        [Description("Randomize the boss remains.")]
+        BossRemains,
+
+        [Description("Add the Royal Wallet (999 capacity) to the item pool.")]
+        RoyalWallet,
+
+        [Description("Randomize the Ocarina of Time and the Song of Time.")]
+        OcarinaAndSongOfTime,
+    }
 }

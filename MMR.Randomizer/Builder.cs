@@ -32,7 +32,6 @@ namespace MMR.Randomizer
     {
         private RandomizedResult _randomized;
         private CosmeticSettings _cosmeticSettings;
-        private MessageTable _messageTable;
         private ExtendedObjects _extendedObjects;
         private List<MessageEntry> _extraMessages;
         private Dictionary<int, ItemGraphic> _graphicOverrides;
@@ -41,7 +40,6 @@ namespace MMR.Randomizer
         {
             _randomized = randomized;
             _cosmeticSettings = cosmeticSettings;
-            _messageTable = null;
             _extendedObjects = null;
             _extraMessages = new List<MessageEntry>();
             _graphicOverrides = new Dictionary<int, ItemGraphic>();
@@ -65,7 +63,7 @@ namespace MMR.Randomizer
             //   then all the variety can be dried up for the later slots
             // the biggest example is MM-only, many songs are action/boss but the boss slots are later
             //  as a result boss music is often used up early placed into early action slots
-            // if we don't randomize remaining, then we only get upper alphabetical, same every seed
+            // if we don't randomize unassigned, then we only get upper alphabetical, same every seed
             List<SequenceInfo> unassigned = RomData.SequenceList.FindAll(u => u.Replaces == -1);
             unassigned = unassigned.OrderBy(x => random.Next()).ToList();                           // random ordered songs
             RomData.TargetSequences = RomData.TargetSequences.OrderBy(x => random.Next()).ToList(); // random ordered slots
@@ -96,7 +94,7 @@ namespace MMR.Randomizer
             foreach (var targetSlot in RomData.TargetSequences)
             {
                 // scan all songs for a replacement that fits in this slot
-                bool foundValidReplacement = SequenceUtils.SearchForValidSongReplacement(unassigned, targetSlot, random, log);
+                bool foundValidReplacement = SequenceUtils.SearchForValidSongReplacement(_cosmeticSettings, unassigned, targetSlot, random, log);
 
                 if (foundValidReplacement == false) // no available songs fit in this slot category
                 {
@@ -106,7 +104,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            SequenceUtils.CheckBGMCombatMusicBudget(unassigned, _cosmeticSettings.DisableCombatMusic, random, log);
+            SequenceUtils.CheckBGMCombatMusicBudget(_cosmeticSettings, unassigned, random, log);
 
             RomData.SequenceList.RemoveAll(u => u.Replaces == -1); // this still gets used in SequenceUtils.cs::RebuildAudioSeq
 
@@ -130,6 +128,7 @@ namespace MMR.Randomizer
             RomData.PointerizedSequences = new List<SequenceInfo>();
             SequenceUtils.ReadSequenceInfo();
             SequenceUtils.ReadInstrumentSetList();
+            SequenceUtils.ResetFreeBankIndex();
             if (_cosmeticSettings.Music == Music.Random)
             {
                 SequenceUtils.PointerizeSequenceSlots();
@@ -138,7 +137,6 @@ namespace MMR.Randomizer
             }
 
             ResourceUtils.ApplyHack(Resources.mods.fix_music);
-            ResourceUtils.ApplyHack(Resources.mods.inst24_swap_guitar);
             SequenceUtils.RebuildAudioSeq(RomData.SequenceList, _cosmeticSettings.AsmOptions.MusicConfig.SequenceMaskFileIndex);
             SequenceUtils.WriteNewSoundSamples(RomData.InstrumentSetList);
             SequenceUtils.RebuildAudioBank(RomData.InstrumentSetList);
@@ -389,6 +387,10 @@ namespace MMR.Randomizer
             }
 
             WriteCrashDebuggerShow();
+
+            // Dolphin/WiiVC audiothread shutdown workaround
+            ReadWriteUtils.WriteU16ToROM(0xB3C000 + 0x0CD320, 0x1000);
+
         }
 
         /// <summary>
@@ -529,9 +531,9 @@ namespace MMR.Randomizer
             );
         }
 
-        private void WriteMiscText()
+        private void WriteMiscText(MessageTable messageTable)
         {
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3108)
                 .Message(it =>
                 {
@@ -542,7 +544,7 @@ namespace MMR.Randomizer
                 })
                 .Build()
             );
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3130)
                 .Message(it =>
                 {
@@ -556,7 +558,7 @@ namespace MMR.Randomizer
                 })
                 .Build()
             );
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3131)
                 .Message(it =>
                 {
@@ -574,7 +576,7 @@ namespace MMR.Randomizer
                 })
                 .Build()
             );
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3133)
                 .Message(it =>
                 {
@@ -589,7 +591,7 @@ namespace MMR.Randomizer
                 })
                 .Build()
             );
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3134)
                 .Message(it =>
                 {
@@ -602,7 +604,7 @@ namespace MMR.Randomizer
                 })
                 .Build()
             );
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3140)
                 .Message(it =>
                 {
@@ -617,7 +619,7 @@ namespace MMR.Randomizer
                 })
                 .Build()
             );
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3141)
                 .Message(it =>
                 {
@@ -629,7 +631,7 @@ namespace MMR.Randomizer
                 })
                 .Build()
             );
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3142)
                 .Message(it =>
                 {
@@ -647,7 +649,7 @@ namespace MMR.Randomizer
                 })
                 .Build()
             );
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3147)
                 .Message(it =>
                 {
@@ -668,7 +670,7 @@ namespace MMR.Randomizer
                 })
                 .Build()
             );
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3150)
                 .Message(it =>
                 {
@@ -680,7 +682,7 @@ namespace MMR.Randomizer
                 })
                 .Build()
             );
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3153)
                 .Message(it =>
                 {
@@ -691,7 +693,7 @@ namespace MMR.Randomizer
                 })
                 .Build()
             );
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(3155)
                 .Message(it =>
                 {
@@ -846,7 +848,7 @@ namespace MMR.Randomizer
             }
         }
 
-        private void WriteCutscenes()
+        private void WriteCutscenes(MessageTable messageTable)
         {
             foreach (var shortenCutsceneGroup in _randomized.Settings.ShortenCutsceneSettings
                 .GetType()
@@ -875,7 +877,7 @@ namespace MMR.Randomizer
             {
                 for (ushort i = 0x1F5F; i <= 0x1F75; i++)
                 {
-                    var message = _messageTable.GetMessage(i);
+                    var message = messageTable.GetMessage(i);
                     if (!message.Message.Contains('\x1C'))
                     {
                         if (message.Message.Contains('\x13'))
@@ -1010,12 +1012,12 @@ namespace MMR.Randomizer
             }
         }
 
-        private void WriteSpeedUps()
+        private void WriteSpeedUps(MessageTable messageTable)
         {
             if (_randomized.Settings.SpeedupBeavers)
             {
                 ResourceUtils.ApplyHack(Resources.mods.speedup_beavers);
-                _messageTable.UpdateMessages(new MessageEntryBuilder()
+                messageTable.UpdateMessages(new MessageEntryBuilder()
                     .Id(0x10D6)
                     .Message(it =>
                     {
@@ -1035,7 +1037,7 @@ namespace MMR.Randomizer
                     })
                     .Build()
                 );
-                _messageTable.UpdateMessages(new MessageEntryBuilder()
+                messageTable.UpdateMessages(new MessageEntryBuilder()
                     .Id(0x10FA)
                     .Message(it =>
                     {
@@ -1046,7 +1048,7 @@ namespace MMR.Randomizer
                     })
                     .Build()
                 );
-                _messageTable.UpdateMessages(new MessageEntryBuilder()
+                messageTable.UpdateMessages(new MessageEntryBuilder()
                     .Id(0x1107)
                     .Message(it =>
                     {
@@ -1081,7 +1083,7 @@ namespace MMR.Randomizer
             if (_randomized.Settings.SpeedupBank)
             {
                 ResourceUtils.ApplyHack(Resources.mods.speedup_bank);
-                _messageTable.UpdateMessages(new MessageEntryBuilder()
+                messageTable.UpdateMessages(new MessageEntryBuilder()
                     .Id(0x45C)
                     .Message(it =>
                     {
@@ -1098,7 +1100,7 @@ namespace MMR.Randomizer
                     })
                     .Build()
                 );
-                _messageTable.UpdateMessages(new MessageEntryBuilder()
+                messageTable.UpdateMessages(new MessageEntryBuilder()
                     .Id(0x45D)
                     .Message(it =>
                     {
@@ -1120,7 +1122,7 @@ namespace MMR.Randomizer
             }
         }
 
-        private void WriteGimmicks()
+        private void WriteGimmicks(MessageTable messageTable)
         {
             int damageMultiplier = (int)_randomized.Settings.DamageMode;
             if (damageMultiplier > 0)
@@ -1163,7 +1165,7 @@ namespace MMR.Randomizer
 
             if (_randomized.Settings.EnableSunsSong)
             {
-                WriteSunsSong();
+                WriteSunsSong(messageTable);
             }
 
             if (_randomized.Settings.AllowFierceDeityAnywhere)
@@ -1197,9 +1199,9 @@ namespace MMR.Randomizer
             }
         }
 
-        private void WriteSunsSong()
+        private void WriteSunsSong(MessageTable messageTable)
         {
-            _messageTable.UpdateMessages(new MessageEntryBuilder()
+            messageTable.UpdateMessages(new MessageEntryBuilder()
                 .Id(0x1B7D)
                 .Header(it =>
                 {
@@ -1315,7 +1317,7 @@ namespace MMR.Randomizer
         private void WriteFreeHints()
         {
             int address = 0x00E0A810 + 0x378;
-            byte val = 0x00;
+            uint val = 0x00;
             ReadWriteUtils.WriteToROM(address, val);
         }
 
@@ -1326,10 +1328,11 @@ namespace MMR.Randomizer
                 return;
             }
 
+            var messageTable = MessageTable.ReadDefault();
+
             var shuffledSoundEffects = new Dictionary<SoundEffect, SoundEffect>();
 
-            var replacableSounds = SoundEffects.Replacable();
-            foreach (var sound in replacableSounds)
+            foreach (var sound in SoundEffects.All())
             {
                 var soundPool = SoundEffects.FilterByTags(sound.ReplacableByTags());
 
@@ -1346,16 +1349,14 @@ namespace MMR.Randomizer
                 var oldSound = sounds.Key;
                 var newSound = sounds.Value;
 
-                if (oldSound.IsReplacableInMessage())
-                {
-                    oldSound.ReplaceInMessageWith(newSound, _messageTable);
-                }
-                else
-                {
-                    oldSound.ReplaceWith(newSound);
-                }
+                oldSound.TryReplaceWith(newSound);
+
                 Debug.WriteLine($"Writing SFX {newSound} --> {oldSound}");
             }
+
+            messageTable.ApplyRandomSoundEffects(shuffledSoundEffects);
+
+            MessageTable.WriteDefault(messageTable, false);
         }
 
         private void WriteLowHealthSound(Random random)
@@ -1376,14 +1377,14 @@ namespace MMR.Randomizer
             }
             else if ((int) _cosmeticSettings.LowHealthSFX > (int) LowHealthSFX.Random)
             {
-                SoundEffect.LowHealthBeep.ReplaceWith( (SoundEffect) _cosmeticSettings.LowHealthSFX);
+                SoundEffect.LowHealthBeep.TryReplaceWith( (SoundEffect) _cosmeticSettings.LowHealthSFX);
             }
             else if(_cosmeticSettings.LowHealthSFX == LowHealthSFX.Random)
             {
                 var soundPool = SoundEffects.FilterByTags(SoundEffect.LowHealthBeep.ReplacableByTags());
                 if (soundPool.Count > 0)
                 {
-                    SoundEffect.LowHealthBeep.ReplaceWith(soundPool.Random(random));
+                    SoundEffect.LowHealthBeep.TryReplaceWith(soundPool.Random(random));
                 }
             }
         }
@@ -1541,13 +1542,18 @@ namespace MMR.Randomizer
                 }
             }
 
+            if (_randomized.Settings.GaroHintStyle != GossipHintStyle.Default)
+            {
+                hacks.Add(Resources.mods.garo_hints);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);
             }
         }
 
-        private void WriteItems()
+        private void WriteItems(MessageTable messageTable)
         {
             var freeItems = new List<Item>();
             if (_randomized.Settings.LogicMode == LogicMode.Vanilla)
@@ -1627,11 +1633,11 @@ namespace MMR.Randomizer
                 else
                 {
                     ChestTypeAttribute.ChestType? overrideChestType = null;
-                    if ((item.Item.Name().Contains("Bombchu") || item.Item.Name().Contains("Shield")) && _randomized.Logic.Any(il => il.RequiredItemIds?.Contains(item.ID) == true || il.ConditionalItemIds?.Any(c => c.Contains(item.ID)) == true))
+                    if ((item.Item.Name().Contains("Bombchu") || item.Item.Name().Contains("Shield")) && _randomized.Logic.Any(il => il.RequiredItemIds?.Contains((int)item.Item) == true || il.ConditionalItemIds?.Any(c => c.Contains((int)item.Item)) == true))
                     {
                         overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
                     }
-                    ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType, _messageTable, _extendedObjects);
+                    ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType, messageTable, _extendedObjects);
                 }
             }
 
@@ -1668,7 +1674,7 @@ namespace MMR.Randomizer
                     var item1 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[0]);
                     var item2 = _randomized.ItemList.First(io => io.NewLocation == messageShop.Items[1]);
                     var messageId = (ushort)messageShopText;
-                    var messageHeader = _messageTable.GetMessage(messageId).Header;
+                    var messageHeader = messageTable.GetMessage(messageId).Header;
                     var cost1 = ReadWriteUtils.Arr_ReadU16(messageHeader, 5);
                     var cost2 = ReadWriteUtils.Arr_ReadU16(messageHeader, 7);
 
@@ -2915,7 +2921,7 @@ namespace MMR.Randomizer
                 }
                 foreach (var (messageId, costIndex) in messageCost.MessageIds)
                 {
-                    var oldMessage = _messageTable.GetMessage(messageId);
+                    var oldMessage = messageTable.GetMessage(messageId);
                     var newMessage = newMessages.FirstOrDefault(me => me.Id == messageId);
                     if (newMessage == null)
                     {
@@ -2957,12 +2963,12 @@ namespace MMR.Randomizer
                 }
             }
 
-            _messageTable.UpdateMessages(newMessages);
+            messageTable.UpdateMessages(newMessages);
 
             ResourceUtils.ApplyHack(Resources.mods.fix_shop_curiosity_bigbombbag);
         }
 
-        private void WriteGossipQuotes()
+        private void WriteGossipQuotes(MessageTable messageTable)
         {
             if (_randomized.Settings.LogicMode == LogicMode.Vanilla)
             {
@@ -2974,9 +2980,29 @@ namespace MMR.Randomizer
                 WriteFreeHints();
             }
 
+            if (_randomized.Settings.FreeGaroHints)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.free_garo_hints);
+
+                messageTable.UpdateMessages(new MessageEntryBuilder()
+                    .Id(0x24E)
+                    .Message(it =>
+                    {
+                        it.LightBlue(() =>
+                        {
+                            it.Text("I can't see it, but I sense there's").NewLine()
+                            .Text("a thirst for blood looming all").NewLine()
+                            .Text("around us...");
+                        })
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+            }
+
             if (_randomized.Settings.GossipHintStyle != GossipHintStyle.Default)
             {
-                _messageTable.UpdateMessages(_randomized.GossipQuotes);
+                messageTable.UpdateMessages(_randomized.GossipQuotes);
             }
         }
 
@@ -3295,7 +3321,6 @@ namespace MMR.Randomizer
             using (BinaryReader OldROM = new BinaryReader(File.OpenRead(outputSettings.InputROMFilename)))
             {
                 RomUtils.ReadFileTable(OldROM);
-                _messageTable = MessageTable.ReadDefault();
             }
 
             var originalMMFileList = RomData.MMFileList.Select(file => file.Clone()).ToList();
@@ -3315,6 +3340,8 @@ namespace MMR.Randomizer
             }
             else
             {
+                var messageTable = MessageTable.ReadDefault();
+
                 progressReporter.ReportProgress(55, "Writing player model...");
                 WritePlayerModel();
 
@@ -3324,7 +3351,7 @@ namespace MMR.Randomizer
                     ResourceUtils.ApplyHack(Resources.mods.title_screen);
                     WriteTitleScreen();
                     ResourceUtils.ApplyHack(Resources.mods.misc_changes);
-                    WriteMiscText();
+                    WriteMiscText(messageTable);
                     ResourceUtils.ApplyHack(Resources.mods.cm_cs);
                     ResourceUtils.ApplyHack(Resources.mods.fix_song_of_healing);
                     WriteFileSelect();
@@ -3337,7 +3364,7 @@ namespace MMR.Randomizer
                 // TODO: Move this to a helper function?
                 if (_randomized.Settings.EnablePictoboxSubject)
                 {
-                    WritePictographPromptText(_messageTable);
+                    WritePictographPromptText(messageTable);
 
                     // NOP call to update pictobox flags after message prompt.
                     ReadWriteUtils.WriteCodeNOP(0x801127D0);
@@ -3345,39 +3372,39 @@ namespace MMR.Randomizer
 
                 if (_randomized.Settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText))
                 {
-                    WriteBankPromptText(_messageTable);
+                    WriteBankPromptText(messageTable);
                 }
 
-                WriteArcheryDoubleRewardText(_messageTable);
-                WriteBankPostRewardText(_messageTable);
-                WriteRoyalWalletText(_messageTable);
+                WriteArcheryDoubleRewardText(messageTable);
+                WriteBankPostRewardText(messageTable);
+                WriteRoyalWalletText(messageTable);
 
                 progressReporter.ReportProgress(61, "Writing quick text...");
                 WriteQuickText();
 
                 progressReporter.ReportProgress(62, "Writing cutscenes...");
-                WriteCutscenes();
+                WriteCutscenes(messageTable);
 
                 progressReporter.ReportProgress(63, "Writing dungeons...");
                 WriteDungeons();
 
                 progressReporter.ReportProgress(64, "Writing gimmicks...");
-                WriteGimmicks();
+                WriteGimmicks(messageTable);
 
                 progressReporter.ReportProgress(65, "Writing speedups...");
-                WriteSpeedUps();
+                WriteSpeedUps(messageTable);
 
                 progressReporter.ReportProgress(66, "Writing enemies...");
                 WriteEnemies(outputSettings);
 
                 progressReporter.ReportProgress(67, "Writing items...");
-                WriteItems();
+                WriteItems(messageTable);
                 WriteMiscHacks();
 
                 progressReporter.ReportProgress(68, "Writing messages...");
-                WriteGossipQuotes();
+                WriteGossipQuotes(messageTable);
 
-                MessageTable.WriteDefault(_messageTable, _randomized.Settings.QuickTextEnabled);
+                MessageTable.WriteDefault(messageTable, _randomized.Settings.QuickTextEnabled);
 
                 progressReporter.ReportProgress(69, "Writing startup...");
                 WriteStartupStrings();
@@ -3423,6 +3450,7 @@ namespace MMR.Randomizer
             WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
             progressReporter.ReportProgress(73, "Writing music...");
+            SequenceUtils.MoveAudioBankTableToFile();
             WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
             WriteMuteMusic();
             WriteEnemyCombatMusicMute();

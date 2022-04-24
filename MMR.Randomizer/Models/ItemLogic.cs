@@ -27,6 +27,9 @@ namespace MMR.Randomizer.Models
         [DataMember]
         public bool IsFakeItem;
 
+        [DataMember]
+        public bool IsItemRemoved;
+
         public ItemLogic(ItemLogic copyFrom)
         {
             ItemId = copyFrom.ItemId;
@@ -35,6 +38,7 @@ namespace MMR.Randomizer.Models
             ConditionalItemIds = copyFrom.ConditionalItemIds?.Select(c => c.ToList()).ToList();
             Acquired = copyFrom.Acquired;
             IsFakeItem = copyFrom.IsFakeItem;
+            IsItemRemoved = copyFrom.IsItemRemoved;
         }
 
         public ItemLogic(ItemObject itemObject)
@@ -43,7 +47,8 @@ namespace MMR.Randomizer.Models
             NewLocationId = (int?)itemObject.NewLocation;
             RequiredItemIds = itemObject.DependsOnItems?.Cast<int>().ToList();
             ConditionalItemIds = itemObject.Conditionals?.Select(c => c.Cast<int>().ToList()).ToList();
-            IsFakeItem = itemObject.Item.IsFake() && (itemObject.Item.Entrance() == null || !itemObject.IsRandomized);
+            IsFakeItem = !itemObject.IsRandomized || (itemObject.Item.IsFake() && itemObject.Item.Entrance() == null);
+            IsItemRemoved = itemObject.ItemOverride.HasValue;
 
             // Remove fake requirements
             switch (itemObject.Item)

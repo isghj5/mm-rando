@@ -72,7 +72,10 @@ namespace MMR.DiscordBot.Services
                 return;
 
             // the command failed, let's notify the user that something happened.
-            await context.Channel.SendMessageAsync($"{result.ErrorReason}");
+
+            await context.Channel.SendMessageAsync("An error occurred.");
+            // TODO log error
+            // await context.Channel.SendMessageAsync($"{result.ErrorReason}");
         }
     }
 }

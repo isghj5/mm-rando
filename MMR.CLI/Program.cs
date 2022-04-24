@@ -57,6 +57,7 @@ namespace MMR.CLI
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.LogicMode));
                 Console.WriteLine(GetArrayValueDescription(nameof(GameplaySettings.ItemCategoriesRandomized), Enum.GetValues<ItemCategory>().Where(c => c > 0).Select(c => c.ToString())));
                 Console.WriteLine(GetArrayValueDescription(nameof(GameplaySettings.LocationCategoriesRandomized), Enum.GetValues<LocationCategory>().Where(c => c > 0).Select(c => c.ToString())));
+                Console.WriteLine(GetArrayValueDescription(nameof(GameplaySettings.ClassicCategoriesRandomized), Enum.GetValues<ClassicCategory>().Where(c => c > 0).Select(c => c.ToString())));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.DamageMode));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.DamageEffect));
                 Console.WriteLine(GetEnumSettingDescription(cfg => cfg.GameplaySettings.MovementMode));
@@ -120,7 +121,7 @@ namespace MMR.CLI
                 Console.WriteLine($"Loaded GameplaySettings from \"{settingsPath}\".");
             }
 
-            if (configuration.GameplaySettings.ItemCategoriesRandomized != null || configuration.GameplaySettings.LocationCategoriesRandomized != null)
+            if (configuration.GameplaySettings.ItemCategoriesRandomized != null || configuration.GameplaySettings.LocationCategoriesRandomized != null || configuration.GameplaySettings.ClassicCategoriesRandomized != null)
             {
                 var items = new List<Item>();
                 if (configuration.GameplaySettings.ItemCategoriesRandomized != null)
@@ -132,6 +133,11 @@ namespace MMR.CLI
                 {
                     items.AddRange(ItemUtils.ItemsByLocationCategory().Where(kvp => configuration.GameplaySettings.LocationCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
                     configuration.GameplaySettings.LocationCategoriesRandomized = null;
+                }
+                if (configuration.GameplaySettings.ClassicCategoriesRandomized != null)
+                {
+                    items.AddRange(ItemUtils.ItemsByClassicCategory().Where(kvp => configuration.GameplaySettings.ClassicCategoriesRandomized.Contains(kvp.Key)).SelectMany(kvp => kvp.Value));
+                    configuration.GameplaySettings.ClassicCategoriesRandomized = null;
                 }
                 configuration.GameplaySettings.CustomItemList.Clear();
                 foreach (var item in items)
@@ -184,11 +190,7 @@ namespace MMR.CLI
             }
             var directory = Path.GetDirectoryName(configuration.OutputSettings.OutputROMFilename);
             var filename = Path.GetFileName(configuration.OutputSettings.OutputROMFilename);
-            if (!Directory.Exists(directory))
-            {
-                Console.WriteLine($"Directory not found '{directory}'");
-                return -1;
-            }
+            Directory.CreateDirectory(directory);
             if (string.IsNullOrWhiteSpace(filename))
             {
                 filename = FileUtils.MakeFilenameValid($"MMR-{typeof(Randomizer.Randomizer).Assembly.GetName().Version}-{DateTime.UtcNow:o}") + ".z64";
@@ -237,7 +239,12 @@ namespace MMR.CLI
                 }
                 else
                 {
-                    Console.WriteLine("Generation complete!");
+                    Console.WriteLine($"Generation complete! Output to: {directory}");
+                    if (Environment.UserInteractive)
+                    {
+                        Console.Write("Press any key to continue . . .");
+                        Console.ReadKey(true);
+                    }
                 }
                 return result == null ? 0 : -1;
             }
@@ -364,10 +371,9 @@ namespace MMR.CLI
             //        GameplaySettings = configuration.GameplaySettings,
             //    };
             //}
-            using (var settingsFile = new StreamWriter(File.Open(path, FileMode.Create)))
-            {
-                settingsFile.Write(configuration.ToString());
-            }
+            var fileInfo = new FileInfo(path);
+            fileInfo.Directory.Create();
+            File.WriteAllText(fileInfo.FullName, configuration.ToString());
             //if (logicFilePath != null)
             //{
             //    configuration.GameplaySettings.UserLogicFileName = logicFilePath;

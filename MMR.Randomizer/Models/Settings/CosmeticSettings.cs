@@ -70,6 +70,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public CombatMusic DisableCombatMusic { get; set; }
 
+        public decimal MusicLuckRollChance { get; set; } = 3.33m;
+
         public Dictionary<TransformationForm, bool> UseEnergyColors { get; set; } = new Dictionary<TransformationForm, bool>()
         {
             { TransformationForm.Human, false },

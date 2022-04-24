@@ -1,20 +1,20 @@
 Item00_Constructor_Hook:
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
-    sw      a0, 0x0014 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0018 (sp)
     jal     Item00_Constructor
-    sw      a1, 0x0018 (sp)
+    sw      a1, 0x001C (sp)
 
     ; Displaced code
     lh      t4, 0x001C (s0)
     addiu   at, r0, 0x0015
 
-    lw      a1, 0x0018 (sp)
-    lw      a0, 0x0014 (sp)
-    lw      ra, 0x0010 (sp)
+    lw      a1, 0x001C (sp)
+    lw      a0, 0x0018 (sp)
+    lw      ra, 0x0014 (sp)
 
     jr      ra
-    addiu   sp, sp, 0x14
+    addiu   sp, sp, 0x18
 
 Item00_GiveItem_Hook:
     addiu   sp, sp, -0x20
@@ -50,25 +50,25 @@ Item00_GiveItem_Hook:
     addiu   sp, sp, 0x20
 
 Item00_BeforeBeingPickedUp_Hook:
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
 
     jal     Item00_BeforeBeingPickedUp
-    sw      a1, 0x0018 (sp)
+    sw      a1, 0x001C (sp)
 
-    lw      a1, 0x0018 (sp)
+    lw      a1, 0x001C (sp)
 
     ; Displaced code
     lw      t6, 0x1CCC (a1)
     or      a0, s0, r0
 
-    lw      ra, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
     jr      ra
-    addiu   sp, sp, 0x14
+    addiu   sp, sp, 0x18
 
 Item00_GetDespawnDelayAmount_Hook:
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
 
     jal     Item00_GetDespawnDelayAmount
     or      a0, s0, r0
@@ -77,6 +77,6 @@ Item00_GetDespawnDelayAmount_Hook:
     or      t1, v0, r0
     addiu   t2, r0, 0x0023
 
-    lw      ra, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
     jr      ra
-    addiu   sp, sp, 0x0014
+    addiu   sp, sp, 0x0018

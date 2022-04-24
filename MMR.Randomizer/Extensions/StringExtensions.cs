@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MMR.Common.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -7,7 +8,7 @@ namespace MMR.Randomizer.Extensions
 {
     public static class StringExtensions
     {
-        public static string WrapLine(this string str, int width, string newline)
+        public static IEnumerable<string> WrapLine(this string str, int width)
         {
             var words = str.Split(' ');
             var lines = new List<string>();
@@ -26,18 +27,18 @@ namespace MMR.Randomizer.Extensions
                 currentLength += length + 1;
             }
             lines.Add(string.Join(" ", currentLine));
-            return string.Join(newline, lines);
+            return lines;
         }
         
-        public static string Wrap(this string str, int width, string newline)
+        public static string Wrap(this string str, int width, string newline, string endTextBox)
         {
             var newLines = new List<string>();
             var lines = str.Split(new string[] { newline }, StringSplitOptions.RemoveEmptyEntries);
             foreach (var line in lines)
             {
-                newLines.Add(line.WrapLine(width, newline));
+                newLines.AddRange(line.WrapLine(width));
             }
-            return string.Join(newline, newLines);
+            return string.Join(endTextBox, newLines.Chunk(4).Select(chunk => string.Join(newline, chunk)));
         }
 
         private static readonly ReadOnlyCollection<int> specialCharacters = new ReadOnlyCollection<int>(new int[]

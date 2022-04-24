@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 11;
+        public const int CurrentVersion = 12;
 
         public static string ApplyMigrations(string logic)
         {
@@ -177,6 +177,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 11)
             {
                 AddMultiLocationClockTownFairy(logicObject);
+            }
+
+            if (logicObject.Version < 12)
+            {
+                AddGaroHints(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3863,6 +3868,38 @@ namespace MMR.Randomizer.LogicMigrator
                 ConditionalItems = new List<List<string>>(),
             }));
             logicObject.Version = 11;
+        }
+
+        private static void AddGaroHints(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1146;
+            var itemNames = new string[]
+            {
+                "HintGaroCanyonLower1",
+                "HintGaroCanyonLower2",
+                "HintGaroWithIgosDefeated",
+                "HintGaroCanyonUpper1",
+                "HintGaroCanyonUpper2",
+                "HintGaroCanyonUpper3",
+                "HintGaroCanyonUpper4",
+                "HintGaroCanyonUpper1WithStorms",
+                "HintGaroCanyonUpper2WithStorms",
+                "HintGaroCanyonUpper3WithStorms",
+                "HintGaroCanyonUpper4WithStorms",
+                "HintGaroCastleLower1",
+                "HintGaroCastleLower2",
+                "HintGaroCastleLower3",
+                "HintGaroCastleUpper",
+                "HintGaroMaster",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 12;
         }
 
         private class MigrationItem

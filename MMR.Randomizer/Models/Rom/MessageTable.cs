@@ -1,7 +1,9 @@
-﻿using MMR.Randomizer.Utils;
+﻿using MMR.Randomizer.Models.SoundEffects;
+using MMR.Randomizer.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace MMR.Randomizer.Models.Rom
@@ -67,6 +69,34 @@ namespace MMR.Randomizer.Models.Rom
             foreach (var entry in this.Messages.Values)
             {
                 entry.Message = regex.Replace(entry.Message, "");
+            }
+        }
+
+        public void ApplyRandomSoundEffects(Dictionary<SoundEffect, SoundEffect> replacements)
+        {
+            var regex = new Regex("(?<!(?:\x1B|\x1C|\x1D|\x1E|\x1F).?)\x1E(..)", RegexOptions.Singleline);
+            foreach (var entry in this.Messages.Values)
+            {
+                var match = regex.Match(entry.Message);
+                if (match.Success)
+                {
+                    foreach (Capture capture in match.Groups[1].Captures)
+                    {
+                        var chars = capture.Value.Select(c => (byte)c).ToArray();
+                        var oldSoundId = ReadWriteUtils.Arr_ReadU16(chars, 0);
+                        var oldSoundEffectNo = (ushort)(oldSoundId & 0x0800);
+                        var oldSoundEffect = (SoundEffect)(oldSoundId & ~0x0800);
+                        var replacement = replacements.GetValueOrDefault(oldSoundEffect);
+                        if (replacement != default)
+                        {
+                            var newSoundId = (ushort)((ushort)replacement | oldSoundEffectNo);
+                            var stringBuilder = new StringBuilder(entry.Message);
+                            stringBuilder[capture.Index] = (char)((newSoundId & 0xFF00) >> 8);
+                            stringBuilder[capture.Index + 1] = (char)(newSoundId & 0xFF);
+                            entry.Message = stringBuilder.ToString();
+                        }
+                    }
+                }
             }
         }
 
@@ -164,6 +194,9 @@ namespace MMR.Randomizer.Models.Rom
                 var textId = ReadWriteUtils.ReadU16(addr);
                 var offset = ReadWriteUtils.ReadU32(addr + 4) & 0xFFFFFF;
 
+                var nextOffset = ReadWriteUtils.ReadU32(addr + 0xC) & 0xFFFFFF;
+                var size = nextOffset > 0 ? nextOffset - offset - 11 : 5; // "end!\xBF"
+                
                 // Check if terminator record.
                 if (textId == 0xFFFF)
                 {
@@ -172,7 +205,7 @@ namespace MMR.Randomizer.Models.Rom
 
                 // Read MessageEntry from data file.
                 var dataFile = RomData.MMFileList[fileIndex];
-                var entry = MessageEntry.FromBytes(textId, dataFile.Data, (int)offset);
+                var entry = MessageEntry.FromBytes(textId, dataFile.Data, (int)offset, (int)size);
 
                 entries.Add(textId, entry);
             }
@@ -238,6 +271,7 @@ namespace MMR.Randomizer.Models.Rom
             // Update message data file.
             var file = RomData.MMFileList[MessageDataFile];
             file.Data = dataBytes;
+            file.End = file.Addr + file.Data.Length;
         }
 
         /// <summary>

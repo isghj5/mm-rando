@@ -43,6 +43,11 @@ namespace MMR.Randomizer.Utils
             app5.Close();
         }
 
+        private static void DeleteApp5(string VCDir)
+        {
+            File.Delete(Path.Combine(VCDir, "00000005.app"));
+        }
+
         private static byte[] AddVCHeader(byte[] ROM)
         {
             byte[] Header = new byte[] { 0x08, 0x00, 0x00, 0x00 };
@@ -61,7 +66,11 @@ namespace MMR.Randomizer.Utils
                 WorkingDirectory = VCDir,
                 UseShellExecute = true,
             };
-            Process.Start(p);
+            var proc = Process.Start(p);
+
+            proc.WaitForExit();
+
+            DeleteApp5(VCDir);
         }
 
         /// <summary>

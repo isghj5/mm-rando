@@ -286,6 +286,12 @@
   <data name="floor_4" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\floor-4;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="free_garo_hints" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\free-garo-hints.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="garo_hints" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\garo-hints.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="gi_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\gi-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -295,11 +301,11 @@
   <data name="init_file" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\init-file;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
-  <data name="inst24_swap_guitar" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>mods\inst24-swap-guitar;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="instant_pictobox" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\instant-pictobox;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="instrumentset_patch" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\instrumentset-patch;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="key_boss_open" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\key-boss-open;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
@@ -313,11 +319,17 @@
   <data name="lenient_goron_spikes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\lenient-goron-spikes.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="loadnewaudiotable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\loadnewaudiotable;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="logo_text" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\logo-text;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="misc_changes" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\misc-changes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="moveaudiostatebytes" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\moveaudiostatebytes;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="movement_1" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\movement-1;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

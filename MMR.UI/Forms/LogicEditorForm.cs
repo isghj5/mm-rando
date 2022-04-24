@@ -24,8 +24,8 @@ namespace MMR.UI.Forms
         private LogicFile _logic;
         private Dictionary<string, JsonFormatLogicItem> _itemsById;
 
-        private readonly ItemSelectorForm _singleItemSelectorForm;
-        private readonly ItemSelectorForm _multiItemSelectorForm;
+        private readonly LogicItemSelectorForm _singleItemSelectorForm;
+        private readonly LogicItemSelectorForm _multiItemSelectorForm;
 
         public LogicEditorForm()
         {
@@ -35,8 +35,8 @@ namespace MMR.UI.Forms
             nItem.Minimum = 0;
             nItem.Maximum = _logic.Logic.Count - 1;
             nItem.Value = 0;
-            _singleItemSelectorForm = new ItemSelectorForm(_logic, false);
-            _multiItemSelectorForm = new ItemSelectorForm(_logic, true);
+            _singleItemSelectorForm = new LogicItemSelectorForm(_logic, false);
+            _multiItemSelectorForm = new LogicItemSelectorForm(_logic, true);
         }
 
         private void FillDependence(int n)

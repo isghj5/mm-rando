@@ -10,20 +10,20 @@ Music_AfterChannelInit_Hook:
     addiu   sp, sp, 0x28
 
 Music_SetLoadingSequenceId_Hook:
-    addiu   sp, sp, -0x14
-    sw      ra, 0x0010 (sp)
-    sw      a0, 0x0014 (sp)
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0018 (sp)
 
     jal     Music_SetLoadingSequenceId
     nop
 
     ; Displaced code
-    lw      t0, 0x0014 (sp)
+    lw      t0, 0x0018 (sp)
     lw      v0, 0x2860 (s3)
 
-    lw      ra, 0x0010 (sp)
+    lw      ra, 0x0014 (sp)
     jr      ra
-    addiu   sp, sp, 0x14
+    addiu   sp, sp, 0x18
 
 Music_LoadSequence_Hook:
     addiu   sp, sp, -0x18

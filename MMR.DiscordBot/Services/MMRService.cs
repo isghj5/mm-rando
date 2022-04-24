@@ -69,6 +69,32 @@ namespace MMR.DiscordBot.Services
             return Path.Combine(guildRoot, $"{FileUtils.MakeFilenameValid(settingName)}.json");
         }
 
+        public string GetMysteryRoot(ulong guildId)
+        {
+            var mysteryRoot = Path.Combine(_cliPath, "mystery-settings");
+            if (!Directory.Exists(mysteryRoot))
+            {
+                Directory.CreateDirectory(mysteryRoot);
+            }
+            var guildRoot = Path.Combine(mysteryRoot, $"{guildId}");
+            if (!Directory.Exists(guildRoot))
+            {
+                Directory.CreateDirectory(guildRoot);
+            }
+            return guildRoot;
+        }
+
+        public string GetMysteryPath(ulong guildId, string categoryName, bool createIfNotExists)
+        {
+            var guildRoot = GetMysteryRoot(guildId);
+            var categoryRoot = Path.Combine(guildRoot, FileUtils.MakeFilenameValid(categoryName));
+            if (createIfNotExists && !Directory.Exists(categoryRoot))
+            {
+                Directory.CreateDirectory(categoryRoot);
+            }
+            return categoryRoot;
+        }
+
         public IEnumerable<string> GetSettingsPaths(ulong guildId)
         {
             var settingsRoot = Path.Combine(_cliPath, "settings");
@@ -152,8 +178,8 @@ namespace MMR.DiscordBot.Services
             int seed;
             try
             {
-                var response = await _httpClient.GetStringAsync("https://www.random.org/integers/?num=1&min=-1000000000&max=1000000000&col=1&base=10&format=plain&rnd=new");
-                seed = int.Parse(response) + 1000000000;
+                var response = await _httpClient.GetStringAsync("https://www.random.org/integers/?num=31&min=0&max=1&col=31&base=2&format=plain&rnd=new");
+                seed = Convert.ToInt32(response.Replace("\t", "").Trim(), 2);
             }
             catch (Exception e) when (e is HttpRequestException || e is TaskCanceledException)
             {

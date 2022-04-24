@@ -170,6 +170,15 @@ namespace MMR.Randomizer.Utils
             return _allLocations ?? (_allLocations = Enum.GetValues<Item>().Where(item => item.Location() != null).ToList());
         }
 
+        private static Dictionary<ClassicCategory, List<Item>> _itemsByClassicCategory;
+        public static Dictionary<ClassicCategory, List<Item>> ItemsByClassicCategory()
+        {
+            return _itemsByClassicCategory ?? (_itemsByClassicCategory = AllLocations()
+                .GroupBy(item => item.ClassicCategory())
+                .Where(g => g.Key.HasValue)
+                .ToDictionary(kvp => kvp.Key.Value, kvp => kvp.ToList()));
+        }
+
         private static Dictionary<ItemCategory, List<Item>> _itemsByItemCategory;
         public static Dictionary<ItemCategory, List<Item>> ItemsByItemCategory()
         {
@@ -206,21 +215,30 @@ namespace MMR.Randomizer.Utils
                 .SelectMany(item => item.GetAttribute<GetBottleItemIndicesAttribute>().Indices);
         }
 
-        public static List<Item> JunkItems { get; private set; }
+        public static ReadOnlyCollection<Item> JunkItems { get; private set; }
+        public static ReadOnlyCollection<Item> LogicallyJunkItems { get; private set; }
         public static void PrepareJunkItems(List<ItemObject> itemList)
         {
+            LogicallyJunkItems = itemList
+                .Where(io => !itemList.Any(other => (other.DependsOnItems?.Contains(io.Item) ?? false) || (other.Conditionals?.Any(c => c.Contains(io.Item)) ?? false)))
+                .Select(io => io.Item)
+                .ToList()
+                .AsReadOnly();
             JunkItems = itemList.Where(io => io.Item != Item.CollectableIkanaGraveyardDay2Bats1
+                                          && io.Item.IsRepeatable()
                                           && io.Item.GetAttribute<ChestTypeAttribute>()?.Type == ChestTypeAttribute.ChestType.SmallWooden
-                                          && !itemList.Any(other => (other.DependsOnItems?.Contains(io.Item) ?? false)
-                                                                 || (other.Conditionals?.Any(c => c.Contains(io.Item)) ?? false))
-                                      ).Select(io => io.Item).ToList();
-
-            JunkItems.RemoveAll(u => !u.IsRepeatable()); // Removes HeartPieces, Map and Compasses from the junk list
+                                          && LogicallyJunkItems.Contains(io.Item)
+                                      ).Select(io => io.Item).ToList().AsReadOnly();
         }
 
         public static bool IsJunk(Item item)
         {
             return item == Item.RecoveryHeart || item == Item.IceTrap || JunkItems.Contains(item);
+        }
+
+        public static bool IsLogicallyJunk(Item item)
+        {
+            return item == Item.RecoveryHeart || item == Item.IceTrap || LogicallyJunkItems.Contains(item);
         }
 
         public static bool CanBeRequired(Item item)
@@ -231,9 +249,9 @@ namespace MMR.Randomizer.Utils
                 && item != Item.IceTrap;
         }
 
-        public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult)
+        public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult, bool anythingCanBeRequired = false)
         {
-            return CanBeRequired(item) && randomizedResult.LocationsRequiredForMoonAccess.Contains(locationForImportance);
+            return (anythingCanBeRequired || CanBeRequired(item)) && randomizedResult.LocationsRequiredForMoonAccess.Contains(locationForImportance);
         }
 
         public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)
