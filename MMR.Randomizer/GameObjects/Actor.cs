@@ -230,7 +230,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)]
         [VariantsWithRoomMax(max: 2, variant: 0)]
         [EnemizerScenesExcluded(Scene.SecretShrine)] // issue: spawn is too high, needs to be lowered
-        [EnemizerScenesPlacementBlock(Scene.BeneathGraveyard, Scene.DekuShrine)] // crash in graveyard
+        [EnemizerScenesPlacementBlock(Scene.BeneathGraveyard, Scene.DekuShrine, Scene.ClockTowerInterior)] // crash in graveyard
         Dinofos = 0x19,
 
         [FileID(59)]
@@ -624,7 +624,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3080)]
         [FileID(96)]
-        [ObjectListIndex(0x20)] // uh, this might not be a valid object either
+        [ObjectListIndex(0x20)]
         // swamphouse: 0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F
         // ocean spiderhouse: 0xFF3F, 0x1B, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x223, 0x11F,
         // some spiders crash, probably because it follows a path, 223, 113, 1B, 909
@@ -2528,7 +2528,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(379)]
         [ObjectListIndex(0xB7)] // 100 and FF00
         [PathingVariants(0xFF00)] // all vanilla are 0xB7
-        [PathingTypeVarsPlacement(mask:0xFF00, shift:8)]
+        [PathingTypeVarsPlacement(mask:0xFF00, shift:8)] //zzz
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.RomaniRanch, Scene.RanchBuildings)]
         Romani1 = 0x1A4, // En_Ma4
@@ -2649,6 +2649,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(403)]
         [ObjectListIndex(0x18F)]
+        // nothing in the other params other than path, the starting animation and stuff are all hardcoded to entrance
         [PathingVariants(0x2400, 0x2000)]
         [PathingTypeVarsPlacement(mask:0xFC00, shift: 10)]
         [UnkillableAllVariants]

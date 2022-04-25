@@ -2490,7 +2490,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 33.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 33.1\n");
                 }
             }
             catch (Exception e)
@@ -2614,13 +2614,14 @@ namespace MMR.Randomizer
                 {
                     var newObjList = map.Objects.ToList(); // copy
                     // probably a way to search for this with a lambda, can't think of it right now
-                    for (int v = 0; v < newObjChanges.Count; ++v)
+                    for (int valueSwap = 0; valueSwap < newObjChanges.Count; ++valueSwap)
                     {
                         for (int o = 0; o < newObjList.Count; ++o)
                         {
-                            if (newObjChanges[v].OldV == newObjList[o])
+                            // if old object matches out value swap, swap
+                            if (map.Objects[o] == newObjChanges[valueSwap].OldV)
                             {
-                                newObjList[o] = newObjChanges[v].NewV;
+                                newObjList[o] = newObjChanges[valueSwap].NewV;
                             }
                         }
                     }
