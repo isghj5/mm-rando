@@ -117,9 +117,9 @@ namespace MMR.Randomizer.GameObjects
         FairyMagic,
         
         [StartingItemId(0xA6)]
-        [ItemName("Spin Attack"), LocationName("Woodfall Great Fairy"), Region(Region.Woodfall)]
+        [ItemName("Spin Attack Mastery"), LocationName("Woodfall Great Fairy"), Region(Region.Woodfall)]
         [GossipLocationHint("a magical being"), GossipItemHint("a magic attack"), GossipCompetitiveHint(4, ItemCategory.StrayFairies, false, nameof(GameplaySettings.StrayFairyMode), (int)StrayFairyMode.ChestsOnly, false)]
-        [ShopText("Increases the power of your spin attack.", isDefinite: true)]
+        [ShopText("Increases the power of your spin attack.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x12D), ItemPool(ItemCategory.MagicPowers, LocationCategory.NpcRewards, ClassicCategory.GreatFairyRewards)]
         FairySpinAttack,
