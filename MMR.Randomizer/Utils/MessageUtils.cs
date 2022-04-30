@@ -250,7 +250,7 @@ namespace MMR.Randomizer.Utils
                     regionCounts = regionCounts.Concat(songOnlyRegionCounts);
                     if (regionCounts.Any())
                     {
-                        var chosen = regionCounts.ToList().Random(random);
+                        var chosen = regionCounts.ToList().Random(random, kvp => itemsInRegions[kvp.Key].Count);
                         RegionHintType regionHintType;
                         if (songOnlyRegionCounts.Remove(chosen.Key))
                         {

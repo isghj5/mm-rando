@@ -15,13 +15,13 @@ namespace MMR.Common.Extensions
         }
 
         // todo move to RandomExtensions
-        public static T RandomOrDefault<T>(this IList<T> list, Random random)
+        public static T RandomOrDefault<T>(this IList<T> list, Random random, Func<T, double> weight = null)
         {
-            return list.Any() ? list[random.Next(list.Count)] : default(T);
+            return list.Any() ? list.Random(random, weight) : default(T);
         }
 
         // todo move to RandomExtensions
-        public static T Random<T>(this IList<T> list, Random random)
+        public static T Random<T>(this IList<T> list, Random random, Func<T, double> weight = null)
         {
             if (!list.Any())
             {
@@ -31,7 +31,25 @@ namespace MMR.Common.Extensions
             {
                 return list[0];
             }
-            return list[random.Next(list.Count)];
+            if (weight == null)
+            {
+                return list[random.Next(list.Count)];
+            }
+
+            var totalWeight = list.Sum(weight);
+            var selectedWeight = random.NextDouble() * totalWeight;
+            double currentWeight = 0;
+            
+            foreach (var item in list)
+            {
+                currentWeight += weight(item);
+                if (currentWeight > selectedWeight)
+                {
+                    return item;
+                }
+            }
+
+            throw new Exception("Failed to select from weighted random list. This shouldn't happen.");
         }
 
         // todo move to RandomExtensions
