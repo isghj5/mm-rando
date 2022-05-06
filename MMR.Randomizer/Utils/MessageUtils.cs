@@ -250,7 +250,7 @@ namespace MMR.Randomizer.Utils
                     regionCounts = regionCounts.Concat(songOnlyRegionCounts);
                     if (regionCounts.Any())
                     {
-                        var chosen = regionCounts.ToList().Random(random);
+                        var chosen = regionCounts.ToList().Random(random, kvp => itemsInRegions[kvp.Key].Count);
                         RegionHintType regionHintType;
                         if (songOnlyRegionCounts.Remove(chosen.Key))
                         {
@@ -427,7 +427,7 @@ namespace MMR.Randomizer.Utils
             if (randomizedResult.Settings.HintsIndicateImportance)
             {
                 var locationForImportance = item.Item.MainLocation().HasValue ? item.Item : item.NewLocation.Value;
-                var isRequired = ItemUtils.IsRequired(item.Item, locationForImportance, randomizedResult);
+                var isRequired = ItemUtils.IsRequired(item.Item, locationForImportance, randomizedResult, true);
                 importance = isRequired ? " (required)" : " (not required)";
                 color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
             }
@@ -460,7 +460,7 @@ namespace MMR.Randomizer.Utils
                         if (randomizedResult.Settings.HintsIndicateImportance)
                         {
                             var locationForImportance = io.Item.MainLocation().HasValue ? io.Item : io.NewLocation.Value;
-                            var isRequired = ItemUtils.IsRequired(io.Item, locationForImportance, randomizedResult);
+                            var isRequired = ItemUtils.IsRequired(io.Item, locationForImportance, randomizedResult, true);
                             importance = isRequired ? " (required)" : " (not required)";
                             color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
                         }

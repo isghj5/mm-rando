@@ -71,13 +71,16 @@ u8* MMR_GiFlag(u16 giIndex) {
     if (giIndex >= 0x360) {
         address += 4;
     }
-    if (giIndex >= 0x380) { // skip scene 7 (Grottos)
-        address += 0x14;
+    if (giIndex >= 0x380) { // skip scene 7 (Grottos) and scene 8 (Cutscene Map)
+        address += 0x28;
     }
     if (giIndex >= 0x3E0) {
         address += 4;
     }
-    // TODO maybe skip Cutscene Map?
+    if (giIndex >= 0x400) { // skip scenes 0xA through 0xD (Magic Hag's Potion Shop, Majora's Lair, Beneath the Graveyard, Curiosity Shop)
+        address += 0x50;
+    }
+    // if (giIndex >= 0x460) { address += 4; } // next threshold is giIndex 0x460
     address += (giIndex >> 3);
     return address;
 }

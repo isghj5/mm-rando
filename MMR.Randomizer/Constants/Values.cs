@@ -11,8 +11,6 @@ namespace MMR.Randomizer.Constants
         public static string MusicDirectory = Path.Combine(MainDirectory, "music");
         public static string VCDirectory = Path.Combine(MainDirectory, "vc");
 
-        public const byte VanillaClockSpeed = 3;
-
         public static readonly uint[,] TatlColours = new uint[,] { // normal, npc, check, enemy, boss
             { 0xffffe6ff, 0xdca05000, 0x9696ffff, 0x9696ff00, 0x00ff00ff, 0x00ff0000, 0xffff00ff, 0xc89b0000, 0xffff00ff, 0xc89b0000 },
             { 0x200020ff, 0x80000000, 0x001080ff, 0x0080ff00, 0x104000ff, 0x80ff0000, 0x800000ff, 0x20002000, 0x800000ff, 0xff800000 },

@@ -313,7 +313,7 @@ namespace MMR.Randomizer.Utils
                 Important = important.Union(required).Distinct().ToList().AsReadOnly(),
                 ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly()
             };
-            if (!location.IsFake())
+            if (location.Region().HasValue)
             {
                 checkedLocations[location] = result;
             }
