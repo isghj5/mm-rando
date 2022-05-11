@@ -37,6 +37,7 @@ struct MessageExtensionState {
 
     ItemInfo walletAdult;
     ItemInfo walletGiant;
+    ItemInfo royalGiant;
 
     ItemInfo bombBagSmall;
     ItemInfo bombBagBig;
@@ -255,6 +256,20 @@ static struct MessageExtensionState gMessageExtensionState = {
         .amount = amountSingular,
         .verb = verbSingular,
     },
+    .royalGiant = {
+        .name = {
+            .value = "Royal Wallet",
+            .length = 12,
+        },
+        .description = {
+            .value = "This can hold up to a maximum of 999 rupees.",
+            .length = 44,
+        },
+        .article = articleIndefinite,
+        .pronoun = pronounSingular,
+        .amount = amountSingular,
+        .verb = verbSingular,
+    },
 
     .bombBagSmall = {
         .name = {
@@ -448,6 +463,8 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
                         item = gMessageExtensionState.walletAdult;
                     } else if (newGiIndex == MMR_CONFIG.locations.walletGiant) {
                         item = gMessageExtensionState.walletGiant;
+                    } else if (newGiIndex == MMR_CONFIG.locations.royalGiant) {
+                        item = gMessageExtensionState.royalGiant;
                     } else if (newGiIndex == MMR_CONFIG.locations.bombBagSmall) {
                         item = gMessageExtensionState.bombBagSmall;
                     } else if (newGiIndex == MMR_CONFIG.locations.bombBagBig) {
