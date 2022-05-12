@@ -175,17 +175,13 @@ namespace MMR.Randomizer.Utils
                 var clockTownRegionCounts = new Dictionary<Region, List<(ItemObject, Item)>>();
                 foreach (var kvp in itemsInRegions)
                 {
-                    if (hintedRegions.Contains(kvp.Key))
-                    {
-                        continue;
-                    }
                     var requiredItems = kvp.Value.Where(io => ItemUtils.IsRequired(io.io.Item, io.locationForImportance, randomizedResult) && !unusedItems.Contains(io.io) && !itemsToCombineWith.Contains(io.io)).ToList();
                     var importantItems = kvp.Value.Where(io => ItemUtils.IsImportant(io.io.Item, io.locationForImportance, randomizedResult)).ToList();
 
                     Dictionary<Region, List<(ItemObject, Item)>> dict;
                     if (requiredItems.Count == 0 && importantItems.Count > 0)
                     {
-                        if (!randomizedResult.Settings.AddSongs && importantItems.All(io => ItemUtils.IsSong(io.io.Item) && !randomizedResult.ImportantSongLocations.Contains(io.locationForImportance)))
+                        if (!randomizedResult.Settings.AddSongs && importantItems.All(io => ItemUtils.IsSong(io.io.Item)))
                         {
                             dict = songOnlyRegionCounts;
                         }
@@ -208,6 +204,37 @@ namespace MMR.Randomizer.Utils
                     }
                     
                     dict[kvp.Key] = requiredItems;
+
+                    if (!randomizedResult.Settings.AddSongs && requiredItems.Count > 0 && requiredItems.All(io => ItemUtils.IsSong(io.io.Item)) && importantItems.All(io => ItemUtils.IsSong(io.io.Item)))
+                    {
+                        songOnlyRegionCounts[kvp.Key] = requiredItems;
+                    }
+                }
+
+                for (var i = 0; i < numberOfNonRequiredHints; i++)
+                {
+                    var regionCounts = nonImportantRegionCounts.AsEnumerable();
+                    regionCounts = regionCounts.Concat(songOnlyRegionCounts);
+                    regionCounts = regionCounts.Where(kvp => !hintedRegions.Contains(kvp.Key));
+                    if (regionCounts.Any())
+                    {
+                        var chosen = regionCounts.ToList().Random(random, kvp => itemsInRegions[kvp.Key].Count);
+                        RegionHintType regionHintType;
+                        if (songOnlyRegionCounts.Remove(chosen.Key))
+                        {
+                            regionHintType = RegionHintType.OnlyImportantSong;
+                        }
+                        else
+                        {
+                            nonImportantRegionCounts.Remove(chosen.Key);
+                            regionHintType = RegionHintType.NoneRequired;
+                        }
+
+                        competitiveHints.Add((BuildRegionHint(chosen, regionHintType, random), null, new List<GossipQuote>()));
+                        competitiveHints.Add((BuildRegionHint(chosen, regionHintType, random), null, new List<GossipQuote>()));
+
+                        hintedRegions.Add(chosen.Key);
+                    }
                 }
 
                 var chosenClockTownRegions = 0;
@@ -222,6 +249,7 @@ namespace MMR.Randomizer.Utils
                     {
                         regionCounts = regionCounts.Concat(clockTownRegionCounts);
                     }
+                    regionCounts = regionCounts.Where(kvp => !hintedRegions.Contains(kvp.Key));
                     if (regionCounts.Any())
                     {
                         var chosen = regionCounts.ToList().Random(random);
@@ -239,31 +267,6 @@ namespace MMR.Randomizer.Utils
                         {
                             importantRegionCounts.Remove(chosen.Key);
                         }
-
-                        hintedRegions.Add(chosen.Key);
-                    }
-                }
-
-                for (var i = 0; i < numberOfNonRequiredHints; i++)
-                {
-                    var regionCounts = nonImportantRegionCounts.AsEnumerable();
-                    regionCounts = regionCounts.Concat(songOnlyRegionCounts);
-                    if (regionCounts.Any())
-                    {
-                        var chosen = regionCounts.ToList().Random(random, kvp => itemsInRegions[kvp.Key].Count);
-                        RegionHintType regionHintType;
-                        if (songOnlyRegionCounts.Remove(chosen.Key))
-                        {
-                            regionHintType = RegionHintType.OnlyImportantSong;
-                        }
-                        else
-                        {
-                            nonImportantRegionCounts.Remove(chosen.Key);
-                            regionHintType = RegionHintType.NoneRequired;
-                        }
-
-                        competitiveHints.Add((BuildRegionHint(chosen, regionHintType, random), null, new List<GossipQuote>()));
-                        competitiveHints.Add((BuildRegionHint(chosen, regionHintType, random), null, new List<GossipQuote>()));
 
                         hintedRegions.Add(chosen.Key);
                     }
