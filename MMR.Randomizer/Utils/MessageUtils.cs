@@ -467,7 +467,10 @@ namespace MMR.Randomizer.Utils
                         {
                             var locationForImportance = io.Item.MainLocation().HasValue ? io.Item : io.NewLocation.Value;
                             var isRequired = ItemUtils.IsRequired(io.Item, locationForImportance, randomizedResult, true);
-                            importance = isRequired ? " (required)" : " (not required)";
+                            if (!ItemUtils.IsLogicallyJunk(io.Item))
+                            {
+                                importance = isRequired ? " (required)" : " (not required)";
+                            }
                             color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
                         }
                         return article + color + io.Item.ProgressiveUpgradeName(randomizedResult.Settings.ProgressiveUpgrades) + TextCommands.ColorWhite + importance;
