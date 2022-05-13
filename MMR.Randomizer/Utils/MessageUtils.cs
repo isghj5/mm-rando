@@ -161,7 +161,7 @@ namespace MMR.Randomizer.Utils
                         );
 
                     var allowedGossipQuotes = combined
-                        .Select(io => gossipStoneRequirements.Where(kvp => !kvp.Value.Contains(io.NewLocation.Value)).Select(kvp => kvp.Key))
+                        .Select(io => gossipStoneRequirements.Where(kvp => kvp.Value?.Contains(io.NewLocation.Value) == false).Select(kvp => kvp.Key))
                         .Aggregate((list1, list2) => list1.Intersect(list2))
                         .ToList();
                     competitiveHints.Add((messageText, clearMessageText, allowedGossipQuotes));
@@ -254,7 +254,7 @@ namespace MMR.Randomizer.Utils
                     {
                         var chosen = regionCounts.ToList().Random(random);
                         var allowedGossipQuotes = chosen.Value
-                            .Select(io => gossipStoneRequirements.Where(kvp => !kvp.Value.Contains(io.locationForImportance)).Select(kvp => kvp.Key))
+                            .Select(io => gossipStoneRequirements.Where(kvp => kvp.Value?.Contains(io.locationForImportance) == false).Select(kvp => kvp.Key))
                             .Aggregate((list1, list2) => list1.Intersect(list2))
                             .ToList();
                         competitiveHints.Add((BuildRegionHint(chosen, RegionHintType.SomeRequired, random), null, allowedGossipQuotes));

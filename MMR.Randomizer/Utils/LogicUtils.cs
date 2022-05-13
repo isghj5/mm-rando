@@ -127,7 +127,7 @@ namespace MMR.Randomizer.Utils
         public static ReadOnlyCollection<Item> GetGossipStoneRequirement(GossipQuote gossipQuote, ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
         {
             var gossipStoneItem = gossipQuote.GetAttribute<GossipStoneAttribute>().Item;
-            return GetImportantLocations(itemList, settings, gossipStoneItem, logic).Required;
+            return GetImportantLocations(itemList, settings, gossipStoneItem, logic)?.Required;
         }
 
         public class LogicPaths
