@@ -1,17 +1,19 @@
 ﻿using MMR.Randomizer.GameObjects;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MMR.Randomizer.Attributes
 {
-    [AttributeUsage(AttributeTargets.Field, AllowMultiple = true)]
+    [AttributeUsage(AttributeTargets.Field)]
     public class GossipCombineAttribute : Attribute
     {
-        public Item OtherItem { get; }
+        public IEnumerable<Item> OtherItems { get; }
         public string CombinedName { get; }
 
-        public GossipCombineAttribute(Item otherItem, string combinedName = null)
+        public GossipCombineAttribute(string combinedName, Item otherItem, params Item[] additionalItems)
         {
-            OtherItem = otherItem;
+            OtherItems = additionalItems.Append(otherItem);
             CombinedName = combinedName;
         }
     }

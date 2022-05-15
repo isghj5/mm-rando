@@ -2372,11 +2372,12 @@ namespace MMR.UI.Forms
         {
             try
             {
-                var dialog = new CustomizeHintPrioritiesForm(_configuration.GameplaySettings.OverrideHintPriorities);
+                var dialog = new CustomizeHintPrioritiesForm(_configuration.GameplaySettings.OverrideHintPriorities, _configuration.GameplaySettings.OverrideImportanceIndicatorTiers);
                 var result = dialog.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     _configuration.GameplaySettings.OverrideHintPriorities = dialog.Result;
+                    _configuration.GameplaySettings.OverrideImportanceIndicatorTiers = dialog.ResultTiersIndicateImportance;
                 }
             }
             catch (Exception ex)
