@@ -130,7 +130,7 @@ namespace MMR.Randomizer.Utils
 
                 Func<ItemObject, int> getPriority = randomizedResult.Settings.OverrideHintPriorities != null
                     ? (io) => randomizedResult.Settings.OverrideHintPriorities.FindIndex(locations => locations.Contains(io.NewLocation.Value))
-                    : (io) => io.NewLocation.Value.GetAttribute<GossipCompetitiveHintAttribute>().Priority;
+                    : (io) => -io.NewLocation.Value.GetAttribute<GossipCompetitiveHintAttribute>().Priority;
 
                 unusedItems = hintableItems.GroupBy(io => io.NewLocation.Value.GetAttribute<GossipCombineAttribute>()?.CombinedName ?? io.NewLocation.Value.ToString())
                                         .Select(g => g.OrderBy(getPriority).First())
