@@ -145,8 +145,8 @@ namespace MMR.Randomizer.Utils
 
                 unusedItems.AddRange(unusedItems);
 
-                Func<ItemObject, bool> shouldIndicatePriority = randomizedResult.Settings.OverrideHintPriorities != null
-                    ? io => randomizedResult.Settings.OverrideImportanceIndicatorTiers?.Contains(getPriority(io)) == true
+                Func<ItemObject, bool> shouldIndicatePriority = randomizedResult.Settings.OverrideHintPriorities != null && randomizedResult.Settings.OverrideImportanceIndicatorTiers != null
+                    ? io => randomizedResult.Settings.OverrideImportanceIndicatorTiers.Contains(getPriority(io))
                     : io => true;
 
                 foreach (var unusedItem in unusedItems)
