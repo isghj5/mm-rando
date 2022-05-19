@@ -19,11 +19,14 @@ namespace MMR.Randomizer.Utils
         public static void UpdateSceneFlagMask(int num)
         {
             int offset = num >> 3;
-            if (num >= 0x380) // skip scene 7 (Grottos)
+            if (num >= 0x380) // skip scene 7 (Grottos) and scene 8 (Cutscene Map)
             {
-                offset += 0x10;
+                offset += 0x20;
             }
-            // TODO maybe skip Cutscene Map?
+            if (num >= 0x400) // skip scenes 0xA through 0xD (Magic Hag's Potion Shop, Majora's Lair, Beneath the Graveyard, Curiosity Shop)
+            {
+                offset += 0x40;
+            }
             int mod = offset % 16;
             if (mod < 4)
             {
