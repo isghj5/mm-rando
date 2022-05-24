@@ -77,7 +77,7 @@ extern Gfx* z2_8010D480(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, 
 extern void z2_get_generic_flag();
 extern void z2_set_generic_flag();
 extern void z2_remove_generic_flag(GlobalContext* ctxt, s8 flag);
-extern void z2_get_chest_flag();
+extern bool z2_get_chest_flag(GlobalContext* ctxt, s8 flag);
 extern void z2_set_chest_flag();
 extern void z2_set_all_chest_flags();
 extern void z2_get_all_chest_flags();

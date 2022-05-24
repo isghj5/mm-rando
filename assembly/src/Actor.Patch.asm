@@ -24,3 +24,8 @@
 ;   JALR    RA, T9
 .org 0x800B9510
     jal     Actor_Init
+
+; Replaced:
+;   JALR    RA, T9
+.org 0x800B9744
+    jal     Actor_Update

@@ -6,7 +6,7 @@
 // TODO maybe find a better way to force an item to spawn.
 bool forceSpawn = false;
 
-ActorEnItem00* SoftSoilPrize_ItemSpawn(GlobalContext* ctxt, Actor* actor, u16 type) {
+u16 SoftSoilPrize_GetGiIndex(GlobalContext* ctxt, Actor* actor) {
     u16 giIndex = 0;
     if (!MISC_CONFIG.internal.vanillaLayout) {
         u8 flag = actor->params & 0x7F;
@@ -59,15 +59,22 @@ ActorEnItem00* SoftSoilPrize_ItemSpawn(GlobalContext* ctxt, Actor* actor, u16 ty
                 giIndex = 0x36F;
                 break;
         }
-        if (giIndex > 0) {
-            // TODO move somewhere common
-            GetItemEntry* entry = MMR_GetGiEntry(giIndex);
-            if (entry->message != 0) {
-                // is randomized
-                forceSpawn = true;
-            }
+    }
+    return giIndex;
+}
+
+ActorEnItem00* SoftSoilPrize_ItemSpawn(GlobalContext* ctxt, Actor* actor, u16 type) {
+    u16 giIndex = SoftSoilPrize_GetGiIndex(ctxt, actor);
+
+    if (giIndex > 0) {
+        // TODO move somewhere common
+        GetItemEntry* entry = MMR_GetGiEntry(giIndex);
+        if (entry->message != 0) {
+            // is randomized
+            forceSpawn = true;
         }
     }
+
     ActorEnItem00* item = z2_fixed_drop_spawn(ctxt, &actor->currPosRot.pos, type);
     forceSpawn = false;
     if (item == NULL) {
