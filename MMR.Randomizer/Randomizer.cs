@@ -2176,8 +2176,13 @@ namespace MMR.Randomizer
                 var locationsRequiredForMoonAccess = new List<Item>();
                 foreach (var location in importantLocations.ToList())
                 {
-                    if (!ItemUtils.CanBeRequired(ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item))
+                    var item = ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item;
+                    if (!ItemUtils.CanBeRequired(item))
                     {
+                        if (logicPaths.Required.Contains(location))
+                        {
+                            locationsRequiredForMoonAccess.Add(location);
+                        }
                         continue;
                     }
                     var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: location);
