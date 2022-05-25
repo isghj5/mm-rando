@@ -186,7 +186,7 @@ void GreatFairyMask_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
         case ACTOR_EN_DT: // Mayor
             CheckGiIndexAndSetShimmerFlag(ctxt, 0x03);
             break;
-        case ACTOR_EN_PM: // Postman
+        case ACTOR_EN_PM:; // Postman
             u8 postmanIsDrawn = *(((u8*)actor)+0x258);
             if (postmanIsDrawn) {
                 CheckGiIndexAndSetShimmerFlag(ctxt, 0xCE);
@@ -453,11 +453,11 @@ void GreatFairyMask_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             CheckGiIndexAndSetShimmerFlag(ctxt, actor->params);
             break;
         case ACTOR_EN_SI: // Skulltula Token
-            ProcessGoldenSkulltulaFlag(ctxt, ((actor->params & 0x3FC) >> 2) & 0xFF);
+            ProcessGoldenSkulltulaFlag(ctxt, (actor->params & 0xFC) >> 2);
             break;
         case ACTOR_EN_SW: // Skullwalltula
             if (actor->params & 3) { // Golden Skulltula
-                ProcessGoldenSkulltulaFlag(ctxt, ((actor->params & 0x3FC) >> 2) & 0xFF);
+                ProcessGoldenSkulltulaFlag(ctxt, (actor->params & 0xFC) >> 2);
             }
             break;
         case ACTOR_OBJ_TSUBO: // Pot
