@@ -12,7 +12,7 @@
 
 static void ProcessActorGiIndex(Actor* actor, GlobalContext* ctxt, u16 giIndex) {
     s8 skulltulaSoundTimer = *SkulltulaSoundTimerPtr(actor);
-    if (skulltulaSoundTimer < 0 || ((ctxt->actorCtx.unk5 & 0x8) && (skulltulaSoundTimer > 1))) {
+    if ((ctxt->actorCtx.unk5 & 0x8) && (skulltulaSoundTimer > 1)) {
         return;
     }
 
@@ -26,7 +26,7 @@ static void ProcessActorGiIndex(Actor* actor, GlobalContext* ctxt, u16 giIndex) 
         ctxt->actorCtx.unk5 |= 0x8;
     }
 
-    if (item == ITEM_SKULLTULA_SPIRIT) {
+    if (item == ITEM_SKULLTULA_SPIRIT && skulltulaSoundTimer >= 0) {
         if (skulltulaSoundTimer == 1) {
             z2_PlaySfxAtActor(actor, 0x39DA);
             if (z2_Rand_ZeroOne() < 0.1f) {
@@ -43,7 +43,26 @@ static void ProcessActorGiIndex(Actor* actor, GlobalContext* ctxt, u16 giIndex) 
 
 static void ProcessGoldenSkulltulaFlag(Actor* actor, GlobalContext* ctxt, u16 skulltulaFlag) {
     u16 enSwBaseGiIndex = ctxt->sceneNum == SCENE_KINSTA1 ? 0x13A : 0x158;
+    *SkulltulaSoundTimerPtr(actor) = -2;
     ProcessActorGiIndex(actor, ctxt, enSwBaseGiIndex + skulltulaFlag);
+}
+
+/**
+ * Check if a Stray Fairy actor gives an item
+ **/
+static bool StrayFairyGivesItem(Actor* actor, GlobalContext* ctxt) {
+    u16 flag = actor->params & 0xF;
+
+    // Check if a Stray Fairy is in a Great Fairy fountain:
+    // 1 is used for Stray Fairies in the Great Fairy fountain.
+    // 8 is used for animating Stray Fairies when being given to the fountain.
+    // Optionally check Great Fairy fountain scene: 0x26
+    return (flag != 1) && (flag != 8);
+}
+
+static void ProcessStrayFairyFlag(Actor* actor, GlobalContext* ctxt, u16 strayFairyFlag) {
+    u16 curDungeonOffset = *(u16*)0x801F3F38;
+    ProcessActorGiIndex(actor, ctxt, 0x16D + (curDungeonOffset * 0x14) + strayFairyFlag);
 }
 
 void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
@@ -60,7 +79,7 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
         *SkulltulaSoundTimerPtr(actor) = skulltulaSoundTimer - 1;
     }
 
-    if (skulltulaSoundTimer < 0) {
+    if (skulltulaSoundTimer == -1) {
         return;
     }
 
@@ -72,8 +91,13 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
     switch (actor->id) {
         case ACTOR_EN_BOX:; // Treasure Chest
             ActorEnBox* box = (ActorEnBox*)actor;
-            if (!z2_get_chest_flag(ctxt, box->base.params & 0x1F)) {
-                ProcessActorGiIndex(actor, ctxt, box->giIndex);
+            u16 boxFlag = box->base.params & 0x1F;
+            if (!z2_get_chest_flag(ctxt, boxFlag)) {
+                if (box->giIndex == 0x11) { // Stray Fairy
+                    ProcessStrayFairyFlag(actor, ctxt, boxFlag);
+                } else {
+                    ProcessActorGiIndex(actor, ctxt, box->giIndex);
+                }
             }
             break;
         case ACTOR_EN_GIRLA:; // Shop Inventory Data
@@ -92,6 +116,20 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
         // TODO case ACTOR_EN_DNH: // Boat Cruise Target Spot if koume healed
             ProcessActorGiIndex(actor, ctxt, 0x43); // Pictograph Box
             ProcessActorGiIndex(actor, ctxt, 0xA8); // Boat Archery
+            break;
+        case ACTOR_EN_ELFORG: // Stray Fairy
+            if (StrayFairyGivesItem(actor, ctxt)) {
+                if ((actor->params & 0xF) == 3) {
+                    // Clock Town stray fairy
+                    ProcessActorGiIndex(actor, ctxt, 0x3B);
+                } else {
+                    // Dungeon stray fairies
+                    ProcessStrayFairyFlag(actor, ctxt, ((actor->params & 0xFE00) >> 9) & 0x1F);
+                }
+            }
+            break;
+        case ACTOR_EN_ELFBUB: // Stray Fairy Bubble
+            ProcessStrayFairyFlag(actor, ctxt, ((actor->params & 0xFE00) >> 9) & 0x1F);
             break;
         case ACTOR_EN_ELFGRP: // Stray Fairy Group
             ProcessActorGiIndex(actor, ctxt, 0x12C + (actor->params & 0xF));
@@ -234,7 +272,7 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             ProcessActorGiIndex(actor, ctxt, 0x2F);
             break;
         case ACTOR_EN_KUSA2: // Keaton Grass
-            if (!actor->params & 1) { // Not grass, but the grouping
+            if (!(actor->params & 1)) { // Not grass, but the grouping
                 if (actor->params != 0x7F00) {
                     ProcessActorGiIndex(actor, ctxt, 0x30); // Keaton Quiz
                     for (u16 kusa2Count = 0; kusa2Count < 9; kusa2Count++) {
@@ -423,13 +461,19 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             }
             break;
         case ACTOR_OBJ_COMB: // beehive
-            if (actor->params & 0x3F == 0xC) { // Piece of Heart
-                ProcessActorGiIndex(actor, ctxt, 0x111);
-            } else if (actor->params & 0x8000) { // Golden Skulltula
+            if (actor->params & 0x8000) { // Golden Skulltula
                 ProcessGoldenSkulltulaFlag(actor, ctxt, actor->params & 0x1F);
+            } else if (actor->params & 0x80) { // Bees
+                // Ignore
+            } else if (actor->params & 0x3F == 0xC) { // Piece of Heart
+                ProcessActorGiIndex(actor, ctxt, 0x111);
             } else {
                 u16 objCombFlag = (actor->params >> 8) & 0x7F;
-                ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(objCombFlag));
+                if (actor->params & 0x3F == 0x11) { // Stray Fairy
+                    ProcessStrayFairyFlag(actor, ctxt, objCombFlag);
+                } else {
+                    ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(objCombFlag));
+                }
             }
             break;
         case ACTOR_EN_FISH2: // Marine Research Lab Fish
@@ -497,7 +541,11 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
                 ProcessGoldenSkulltulaFlag(actor, ctxt, actor->params & 0x1F);
             } else {
                 u16 tsuboFlag = actor->params >> 9 & 0x7F;
-                ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(tsuboFlag));
+                if (actor->params & 0x3F == 0x11) { // Stray Fairy
+                    ProcessStrayFairyFlag(actor, ctxt, tsuboFlag);
+                } else {
+                    ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(tsuboFlag));
+                }
             }
             break;
         case ACTOR_OBJ_MAKEKINSUTA: // Soft Soil with Golden Skulltula
@@ -508,7 +556,11 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
                 ProcessGoldenSkulltulaFlag(actor, ctxt, actor->params & 0x1F);
             } else {
                 u16 kibako2Flag = actor->params >> 8 & 0x7F;
-                ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(kibako2Flag));
+                if (actor->params & 0x3F == 0x11) { // Stray Fairy
+                    ProcessStrayFairyFlag(actor, ctxt, kibako2Flag);
+                } else {
+                    ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(kibako2Flag));
+                }
             }
             break;
         case ACTOR_BG_KIN2_PICTURE: // Skullkid Picture
@@ -549,7 +601,11 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
         case ACTOR_OBJ_KIBAKO:; // Small Crate
         case ACTOR_OBJ_FLOWERPOT:; // Flower Pot
             u16 collectibleFlag = (actor->params >> 8) & 0x7F;
-            ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(collectibleFlag));
+            if (actor->params & 0x3F == 0x11) { // Stray Fairy
+                ProcessStrayFairyFlag(actor, ctxt, collectibleFlag);
+            } else {
+                ProcessActorGiIndex(actor, ctxt, Item00_CollectableFlagToGiIndex(collectibleFlag));
+            }
             break;
         case ACTOR_EN_INVISIBLE_RUPPE:; // Invisible Rupee
             u16 invisibleRupeeFlag = actor->params >> 2;
