@@ -415,6 +415,7 @@ enum ItemValue {
 
     // 0x6D (Misc Equipment?)
     ITEM_BOMBER_NOTEBOOK,
+    ITEM_SKULLTULA_SPIRIT,
     ITEM_MAGIC_JAR = 0x79,
     ITEM_MAGIC_JAR_LARGE,
     ITEM_HEART_PIECE,

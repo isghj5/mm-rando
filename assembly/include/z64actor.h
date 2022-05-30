@@ -54,7 +54,7 @@ typedef struct {
     /* 0x10 */ f32 scale;
     /* 0x14 */ u8 alphaScale; // 255 means always draw full opacity if visible
     /* 0x15 */ u8 feetFloorFlags; // Set if the actor's foot is clipped under the floor. & 1 is right foot, & 2 is left
-    /* 0x16 */ UNK_TYPE1 pad16;
+    /* 0x16 */ UNK_TYPE1 pad16; // Used by MMR for skulltula sound timer
     /* 0x17 */ UNK_TYPE1 pad17; // Used by MMR for storing MaxHealth
     /* 0x18 */ Vec3f feetPos[2]; // Update by using `Actor_SetFeetPos` in PostLimbDraw
 } ActorShape; // size = 0x30

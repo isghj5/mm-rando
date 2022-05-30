@@ -2,7 +2,7 @@
 #include "ActorExt.h"
 #include "Models.h"
 #include "TargetHealth.h"
-#include "GreatFairyMask.h"
+#include "ItemDetector.h"
 
 /**
  * Hook function called after an actor's deconstructor function has been called.
@@ -25,5 +25,5 @@ Actor* Actor_Spawn(GlobalContext* ctxt, u8 id, Vec3f pos, Vec3s rot, u16 params)
 
 void Actor_Update(Actor* actor, GlobalContext* ctxt) {
     actor->update(actor, ctxt);
-    GreatFairyMask_AfterActorUpdate(actor, ctxt);
+    ItemDetector_AfterActorUpdate(actor, ctxt);
 }

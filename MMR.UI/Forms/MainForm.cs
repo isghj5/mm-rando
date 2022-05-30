@@ -154,6 +154,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
             TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
             TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
+            TooltipBuilder.SetTooltip(cFairyMaskShimmer, "Nearby stray fairies, even randomized ones, will cause the Great Fairy Mask to shimmer.");
+            TooltipBuilder.SetTooltip(cSkulltulaTokenSounds, "Nearby skulltula tokens, even randomized ones, will emit a spider crawling sound.");
 
             TooltipBuilder.SetTooltip(nMaxGossipWotH, "Set the number of Way of the Hero hints that will appear on Gossip Stones.");
             TooltipBuilder.SetTooltip(nMaxGossipFoolish, "Set the number of Foolish hints that will appear on Gossip Stones.");
@@ -1200,6 +1202,8 @@ namespace MMR.UI.Forms
             cFreeScarecrow.Checked = _configuration.GameplaySettings.FreeScarecrow;
             cFillWallet.Checked = _configuration.GameplaySettings.FillWallet;
             cInvisSparkle.Checked = _configuration.GameplaySettings.HiddenRupeesSparkle;
+            cFairyMaskShimmer.Checked = _configuration.GameplaySettings.FairyMaskShimmer;
+            cSkulltulaTokenSounds.Checked = _configuration.GameplaySettings.SkulltulaTokenSounds;
 
             nMaxGossipWotH.Value = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints ?? 3;
             nMaxGossipFoolish.Value = _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints ?? 3;
@@ -1824,6 +1828,8 @@ namespace MMR.UI.Forms
             cFreeScarecrow.Enabled = v;
             cFillWallet.Enabled = v;
             cInvisSparkle.Enabled = v;
+            cFairyMaskShimmer.Enabled = v;
+            cSkulltulaTokenSounds.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
@@ -2283,6 +2289,16 @@ namespace MMR.UI.Forms
         private void cInvisSparkle_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.HiddenRupeesSparkle = cInvisSparkle.Checked);
+        }
+
+        private void cFairyMaskShimmer_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.FairyMaskShimmer = cFairyMaskShimmer.Checked);
+        }
+
+        private void cSkulltulaTokenSounds_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.SkulltulaTokenSounds = cSkulltulaTokenSounds.Checked);
         }
 
         private void cItemPoolAdvanced_CheckedChanged(object sender, EventArgs e)

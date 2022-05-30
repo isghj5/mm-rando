@@ -234,6 +234,8 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
+            this.cFairyMaskShimmer = new System.Windows.Forms.CheckBox();
+            this.cSkulltulaTokenSounds = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1769,6 +1771,8 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cSkulltulaTokenSounds);
+            this.groupBox7.Controls.Add(this.cFairyMaskShimmer);
             this.groupBox7.Controls.Add(this.cInvisSparkle);
             this.groupBox7.Controls.Add(this.cFillWallet);
             this.groupBox7.Controls.Add(this.cTargetHealth);
@@ -2749,6 +2753,30 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
+            // cFairyMaskShimmer
+            // 
+            this.cFairyMaskShimmer.AutoSize = true;
+            this.cFairyMaskShimmer.Location = new System.Drawing.Point(10, 259);
+            this.cFairyMaskShimmer.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFairyMaskShimmer.Name = "cFairyMaskShimmer";
+            this.cFairyMaskShimmer.Size = new System.Drawing.Size(125, 19);
+            this.cFairyMaskShimmer.TabIndex = 43;
+            this.cFairyMaskShimmer.Text = "Detect Stray Fairies";
+            this.cFairyMaskShimmer.UseVisualStyleBackColor = true;
+            this.cFairyMaskShimmer.CheckedChanged += new System.EventHandler(this.cFairyMaskShimmer_CheckedChanged);
+            // 
+            // cSkulltulaTokenSounds
+            // 
+            this.cSkulltulaTokenSounds.AutoSize = true;
+            this.cSkulltulaTokenSounds.Location = new System.Drawing.Point(10, 285);
+            this.cSkulltulaTokenSounds.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSkulltulaTokenSounds.Name = "cSkulltulaTokenSounds";
+            this.cSkulltulaTokenSounds.Size = new System.Drawing.Size(147, 19);
+            this.cSkulltulaTokenSounds.TabIndex = 44;
+            this.cSkulltulaTokenSounds.Text = "Detect Skulltula Tokens";
+            this.cSkulltulaTokenSounds.UseVisualStyleBackColor = true;
+            this.cSkulltulaTokenSounds.CheckedChanged += new System.EventHandler(this.cSkulltulaTokenSounds_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3044,6 +3072,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFreeGaroHints;
         private System.Windows.Forms.Label lLuckRoll;
         private System.Windows.Forms.NumericUpDown tLuckRollPercentage;
+        private System.Windows.Forms.CheckBox cSkulltulaTokenSounds;
+        private System.Windows.Forms.CheckBox cFairyMaskShimmer;
     }
 }
 

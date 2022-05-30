@@ -223,6 +223,10 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool HiddenRupeesSparkle { get; set; }
 
+        public bool FairyMaskShimmer { get; set; }
+
+        public bool SkulltulaTokenSounds { get; set; }
+
         public MiscFlags()
         {
         }
@@ -258,6 +262,8 @@ namespace MMR.Randomizer.Asm
             this.FillWallet = ((flags >> 9) & 1) == 1;
             this.AutoInvert = (AutoInvertState)((flags >> 7) & 3);
             this.HiddenRupeesSparkle = ((flags >> 6) & 1) == 1;
+            this.FairyMaskShimmer = ((flags >> 5) & 1) == 1;
+            this.SkulltulaTokenSounds = ((flags >> 4) & 1) == 1;
         }
 
         /// <summary>
@@ -290,6 +296,8 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FillWallet ? (uint)1 : 0) << 9;
             flags |= (((uint)this.AutoInvert) & 3) << 7;
             flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 6;
+            flags |= (this.FairyMaskShimmer ? (uint)1 : 0) << 5;
+            flags |= (this.SkulltulaTokenSounds ? (uint)1 : 0) << 4;
             return flags;
         }
     }

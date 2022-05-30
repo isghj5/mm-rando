@@ -51,7 +51,9 @@ typedef struct {
     u32 fillWallet          : 1;
     u32 autoInvert          : 2;
     u32 hiddenRupeesSparkle : 1;
-    u32                     : 6;
+    u32 fairyMaskShimmer    : 1;
+    u32 skullTokenSounds    : 1;
+    u32                     : 4;
 } MiscFlags;
 
 typedef union {

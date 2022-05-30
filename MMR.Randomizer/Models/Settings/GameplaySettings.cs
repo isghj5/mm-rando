@@ -183,6 +183,18 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.HiddenRupeesSparkle = value; }
         }
 
+        public bool FairyMaskShimmer
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.FairyMaskShimmer; }
+            set { this.AsmOptions.MiscConfig.Flags.FairyMaskShimmer = value; }
+        }
+
+        public bool SkulltulaTokenSounds
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.SkulltulaTokenSounds; }
+            set { this.AsmOptions.MiscConfig.Flags.SkulltulaTokenSounds = value; }
+        }
+
         #endregion
 
         #region Random Elements
