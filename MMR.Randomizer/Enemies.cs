@@ -1701,19 +1701,6 @@ namespace MMR.Randomizer
                 );
             }
 
-            // Ikanacanyon: in rando nobody bothers with garo ghosts
-            if (scene.SceneEnum == GameObjects.Scene.IkanaCanyon)
-            {
-                objList.Add(
-                    new ValueSwap()
-                    {
-                        OldV = 0x155, // Garo master
-                        NewV = SMALLEST_OBJ
-                    }
-                );
-                // for now dont remove the encounters as players expect the tatl notification
-            }
-
             // termina field: there is a single pot on a pilllar to the east with a fairy
             if (scene.SceneEnum == GameObjects.Scene.TerminaField)
             {
@@ -1931,12 +1918,14 @@ namespace MMR.Randomizer
                 // todo after all object enemies placed, do another TrimAllActors Pass to catch free actors being added above max
                 // todo we need a list of actors that are NOT randomized, left alone, they still exist, and we can ignore new duplicates
 
-                if (loopsCount >= 100)
-                {
+                // this no longer works after object re-write, can just lead to rando thinking it has more objects than it does
+                // for now, disable this and test without. I dont think it is needed anymore, now that we shuffle the available candidiates every x cycles
+                //if (loopsCount >= 100)
+                //{
                     // if we are taking a really long time to find replacements, remove a couple optional actors/objects
-                    CullOptionalActors(scene, thisSceneData.ChosenReplacementObjects, loopsCount);
-                    WriteOutput(" cull optionals: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
-                }
+                    //CullOptionalActors(scene, thisSceneData.ChosenReplacementObjects, loopsCount);
+                    //WriteOutput(" cull optionals: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
+                //}
 
                 // set objects and actors for isSizeAcceptable to use, and our debugging output
                 thisSceneData.ActorCollection.SetNewActors(scene, thisSceneData.ChosenReplacementObjects);

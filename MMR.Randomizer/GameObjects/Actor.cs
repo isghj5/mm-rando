@@ -1107,8 +1107,13 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.Grottos)]
         BeanSeller = 0xA5, // En_Ms
 
+        //[ActorizerEnabled]
         [FileID(152)]
         [ObjectListIndex(0xF5)]
+        [GroundVariants(0xFE01)] // vanilla, his actor doesnt use these though, might be garbage or might be used by some other actor
+        [VariantsWithRoomMax(max:1, variant:0xFE01)]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.CuccoShack)]
         Grog = 0xA6, // En_Hs
 
         // hmm
