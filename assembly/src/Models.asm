@@ -363,3 +363,19 @@ Models_DrawDekuScrubPlaygroundRupee_Hook:
     lw      ra, 0x0010 (sp)
     jr      ra
     addiu   sp, sp, 0x20
+
+Models_DrawKeatonMask_Hook:
+    addiu   sp, sp, -0x10
+	sw      ra, 0x0004 (sp)
+	or      a0, s1, r0
+	jal     Models_DrawKeatonMask
+	or      a1, s0, r0
+	
+	lw      ra, 0x0004 (sp)
+	addiu   sp, sp, 0x10
+	
+	lb      t4, 0x05dc (s0) ;; displaced code
+	jr      ra
+	lw      t5, 0x0060 (sp) ;; displaced code
+
+

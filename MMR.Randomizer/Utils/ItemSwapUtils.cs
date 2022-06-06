@@ -18,6 +18,8 @@ namespace MMR.Randomizer.Utils
         static int GET_ITEM_TABLE = 0;
         public static ushort COLLECTABLE_TABLE_FILE_INDEX { get; private set; } = 0;
 
+        public static byte NpcKafeiDrawMask { get; set; } = 0x05;
+
         public static void ReplaceGetItemTable()
         {
             ResourceUtils.ApplyHack(Resources.mods.replace_gi_table);
@@ -142,6 +144,13 @@ namespace MMR.Randomizer.Utils
             {
                 newItem = RomData.GetItemList[item.GetItemIndex().Value];
             }
+
+            // catch the Keaton Mask check and set config values
+            if (getItemIndex == 0x80)
+            {
+                UpdateKeatonMaskConfig(itemObject, newItem, item);
+            }
+
 
             // Attempt to resolve extended object Id, which should affect "Exclusive Items" as well.
             var graphics = extendedObjects.ResolveGraphics(newItem);
@@ -318,6 +327,68 @@ namespace MMR.Randomizer.Utils
                     ReadWriteUtils.WriteToROM(address, grottoVariable);
                 }
             }
+        }
+
+        private static void UpdateKeatonMaskConfig(ItemObject itemObject, GetItemEntry newItem, Item item)
+        {
+            ushort itemGet;
+            int kafeimaskID;
+
+            if (newItem.ItemGained == 0xB0) //it's a trap, get what it's supposed to mimic
+            {
+                var itemGetMimic = itemObject.Mimic.Item;
+                if (itemGetMimic.ItemCategory() == ItemCategory.Masks)
+                {
+                    var mimicvalue = itemGetMimic.GetAttribute<StartingItemAttribute>();
+                    itemGet = mimicvalue.Value;
+                }
+                else
+                {
+                    itemGet = 0x00;
+                }
+            }
+            else
+            {
+                if (item.ItemCategory() == ItemCategory.Masks)
+                {
+                    itemGet = newItem.ItemGained;
+                }
+                else
+                {
+                    itemGet = 0x00;
+                }
+            }
+
+
+            if (itemGet >= 0x36 && itemGet <= 0x49) //non-transform mask itemGained ids map to playermaskID in same order, just offset
+            {
+                kafeimaskID = itemGet - 0x35;
+            }
+            else if (itemGet >= 0x32) //transform masks are in a different order
+            {
+                if (itemGet == 0x32) //deku
+                {
+                    kafeimaskID = 0x18;
+                }
+                else if (itemGet == 0x33) //goron
+                {
+                    kafeimaskID = 0x16;
+                }
+                else if (itemGet == 0x34) //zora
+                {
+                    kafeimaskID = 0x17;
+                }
+                else //fierce deity
+                {
+                    kafeimaskID = 0x15;
+                }
+            }
+            else //it's not a mask, a value of 0 will tell the asm/c hooks to draw a getItem
+            {
+                kafeimaskID = 0x00;
+            }
+
+            NpcKafeiDrawMask = (byte)kafeimaskID;
         }
 
     }

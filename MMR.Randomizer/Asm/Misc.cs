@@ -335,6 +335,25 @@ namespace MMR.Randomizer.Asm
         }
     }
 
+    public class MiscBytes
+    {
+        public byte NpcKafeiReplaceMask { get; set; }
+
+        /// <summary>
+        /// Convert to a <see cref="uint"/> integer.
+        /// </summary>
+        /// <returns>Integer</returns>
+
+        public uint ToInt()
+        {
+            uint flags = 0;
+            flags |= (uint)NpcKafeiReplaceMask << 24;
+            return flags;
+        }
+
+
+    }
+
     /// <summary>
     /// Miscellaneous configuration structure.
     /// </summary>
@@ -346,6 +365,7 @@ namespace MMR.Randomizer.Asm
         public uint InternalFlags;
         public uint Speedups;
         public uint Shorts;
+        public uint MMRBytes;
 
         /// <summary>
         /// Convert to bytes.
@@ -373,6 +393,7 @@ namespace MMR.Randomizer.Asm
                 {
                     writer.WriteUInt32(this.Speedups);
                     writer.WriteUInt32(this.Shorts);
+                    writer.WriteUInt32(this.MMRBytes);
                 }
 
                 return memStream.ToArray();
@@ -407,18 +428,21 @@ namespace MMR.Randomizer.Asm
 
         public MiscShorts Shorts { get; set; }
 
+        public MiscBytes MMRBytes { get; set; }
+
         public MiscConfig()
-            : this(new byte[0], new MiscFlags(), new InternalFlags(), new MiscSpeedups(), new MiscShorts())
+            : this(new byte[0], new MiscFlags(), new InternalFlags(), new MiscSpeedups(), new MiscShorts(), new MiscBytes())
         {
         }
 
-        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags, MiscSpeedups speedups, MiscShorts shorts)
+        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags, MiscSpeedups speedups, MiscShorts shorts, MiscBytes mmrbytes)
         {
             this.Hash = hash;
             this.Flags = flags;
             this.InternalFlags = internalFlags;
             this.Speedups = speedups;
             this.Shorts = shorts;
+            this.MMRBytes = mmrbytes;
         }
 
         /// <summary>
@@ -443,6 +467,7 @@ namespace MMR.Randomizer.Asm
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;
             this.Shorts.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
+            this.MMRBytes.NpcKafeiReplaceMask = ItemSwapUtils.NpcKafeiDrawMask;
         }
 
         /// <summary>
@@ -462,6 +487,7 @@ namespace MMR.Randomizer.Asm
                 InternalFlags = this.InternalFlags.ToInt(),
                 Speedups = this.Speedups.ToInt(),
                 Shorts = this.Shorts.ToInt(),
+                MMRBytes = this.MMRBytes.ToInt(),
             };
         }
     }

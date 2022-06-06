@@ -567,3 +567,18 @@
     nop
     nop
     nop
+
+;==================================================================================================
+; Freestanding Models (Keaton Mask)
+;==================================================================================================
+
+.headersize G_EN_TEST3_DELTA
+
+; Replaces:
+;   lb      t4, 0x0d5c (s0)
+;   lw      t5, 0x0060 (sp)
+.org 0x80A414DC ;after limb functions
+    jal Models_DrawKeatonMask_Hook
+	nop
+	
+	

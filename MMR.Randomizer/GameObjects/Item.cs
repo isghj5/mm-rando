@@ -714,6 +714,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x131), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.GreatFairyRewards)]
         MaskGreatFairy,
 
+        [Visible]
         [StartingItem(0xC5CE42, 0x3A)]
         [ItemName("Keaton Mask"), LocationName("Curiosity Shop Man #1"), Region(Region.LaundryPool)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a popular mask", "a fox's mask")]

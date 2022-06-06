@@ -72,6 +72,15 @@ extern void z2_8012C654(GraphicsContext* gfxCtx);
 extern Gfx* z2_8010CFBC(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a);
 extern Gfx* z2_8010D480(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a, u16 arg14, u16 arg15);
 
+extern void z2_80128640(GlobalContext* ctxt, ActorPlayer* actor);
+extern void z2_PlayerBunnyHoodLimbs(GlobalContext* ctxt);
+extern void z2_PlayerGormanTears(GlobalContext* ctxt, ActorPlayer* player);
+extern void z2_PlayerBlastMaskAnim(GlobalContext* ctxt, ActorPlayer* player);
+extern void z2_PlayerGreatFairyLimbs(GlobalContext* ctxt, ActorPlayer* player);
+extern void z2_CopyFromMatrixStackTop(z_Matrix* mtx);
+extern void z2_CopyToMatrixStackTop(z_Matrix* mtx);
+
+
 // Function Prototypes (Scene Flags).
 // TODO parameters
 extern void z2_get_generic_flag();

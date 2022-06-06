@@ -84,6 +84,11 @@ typedef struct {
     u16 bankWithdrawFee;
 } MiscShorts;
 
+typedef struct {
+    u8 npcKafeiReplaceMask;
+	u8 pad[3];
+} MiscBytes;
+
 struct MiscConfig {
     /* 0x00 */ u32 magic;
     /* 0x04 */ u32 version;
@@ -92,7 +97,8 @@ struct MiscConfig {
     /* 0x1C */ MiscInternal internal;
     /* 0x20 */ MiscSpeedups speedups;
     /* 0x24 */ MiscShorts shorts;
-}; // size = 0x28
+	/* 0x28 */ MiscBytes MMRbytes;
+}; // size = 0x2C
 
 extern struct MiscConfig MISC_CONFIG;
 
