@@ -234,8 +234,8 @@ typedef struct {
     /* 0x242 */ UNK_TYPE1 pad242[0x6];
     /* 0x248 */ PlayerAnimation currentAnimation;
     /* 0x24C */ UNK_TYPE1 pad24C[0xC];
-	/* 0x258 */ f32 animationCurrentFrame;
-	/* 0x25C */ UNK_TYPE1 pad25C[0xF0];
+    /* 0x258 */ f32 animationCurrentFrame;
+    /* 0x25C */ UNK_TYPE1 pad25C[0xF0];
     /* 0x34C */ Actor* heldActor;
     /* 0x350 */ UNK_TYPE1 pad350[0x18];
     /* 0x368 */ Vec3f unk368;
@@ -284,9 +284,9 @@ typedef struct {
     /* 0xB74 */ UNK_TYPE1 padB74[0x28];
     /* 0xB9C */ Vec3f unkB9C;
     /* 0xBA8 */ UNK_TYPE1 padBA8[0x11C];
-	/* 0xCC4 */ z_Matrix attachmentMtx0; //not sure what uses this
-	/* 0xD04 */ z_Matrix attachmentMtx1; //used by mirror shield lightray actor
-	/* 0xD44 */ UNK_TYPE1 padD44[0x18];
+    /* 0xCC4 */ z_Matrix attachmentMtx0; //not sure what uses this
+    /* 0xD04 */ z_Matrix attachmentMtx1; //used by mirror shield lightray actor
+    /* 0xD44 */ UNK_TYPE1 padD44[0x18];
     /* 0xD5C */ s8 invincibilityFrames;
     /* 0xD5D */ UNK_TYPE1 padD5D[0x1B];
 } ActorPlayer; // size = 0xD78

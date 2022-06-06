@@ -10,9 +10,10 @@
 ;   sb      t4, 0x0155 (s0)
 .org 0x80A3EF28
     jal     NpcKafei_IsMaskActive_Hook
-	sb t4, 0x0155(s0)
+    sb      t4, 0x0155(s0)
 
 
+; a1 - actor, a0 - ctxt, a2 - pointer to mask DLs
 ; Replaces:
 ;   lw      t2, 0x00a0 (sp)
 ;   lui     t4, 0xde00
@@ -24,23 +25,22 @@
 ;   sw      t3, 0x02b0 (a0)
 ;   sw      t5, 0x0004 (v1)
 ;   sw      t4, 0x0000 (v1)
-;; a1 - actor, 0xa0(sp) - ctxt, lw t0 0x38(sp) needed after
-.org 0x80A41178 ;head
+.org 0x80A41178
     lui     a2, 0x801C
-	lw      a0, 0x00a0 (sp)
-    jal NpcKafei_CheckHead
-	ori     a2, a2, 0x0B20
-	lw      t0, 0x0038 (sp)
-	lw      a3, 0x00b4 (sp)
-	nop
-	nop
-	nop
-	nop
+    lw      a0, 0x00a0 (sp)
+    jal     NpcKafei_CheckHead
+    ori     a2, a2, 0x0B20
+    lw      t0, 0x0038 (sp)
+    lw      a3, 0x00b4 (sp)
+    nop
+    nop
+    nop
+    nop
 
-;Replaces:
+; a0 - ctxt, a1, actor
+; Replaces:
 ;   jal     0x80128640
 ;   or      a1, a3, r0
-;a0 - ctxt, a1, actor
-.org 0x80A40F9C ;hand
-    jal NpcKafei_CheckHand
-	or a1, a3, r0
+.org 0x80A40F9C
+    jal     NpcKafei_CheckHand
+    or      a1, a3, r0

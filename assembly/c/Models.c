@@ -867,17 +867,17 @@ void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
 }
 
 void Models_DrawKeatonMask(GlobalContext* ctxt, ActorPlayer* actor) {
-	if (MISC_CONFIG.flags.freestanding) {
-		if (actor->mask == 0x05) {
-			if (MISC_CONFIG.MMRbytes.npcKafeiReplaceMask == 0) {
-				//hooks in kafei should have made this matrix
-				z2_PushMatrixStackCopy();
-				z2_CopyToMatrixStackTop(&actor->attachmentMtx1);
-				DrawFromGiTable(&actor->base, ctxt, 25.0, 0x80);
-				z2_PopMatrixStack();
-			}
-		}
-	}
+    if (MISC_CONFIG.flags.freestanding) {
+        if (actor->mask == 0x05) {
+            if (MISC_CONFIG.MMRbytes.npcKafeiReplaceMask == 0) {
+                // hooks in kafei should have made this matrix
+                z2_PushMatrixStackCopy();
+                z2_CopyToMatrixStackTop(&actor->attachmentMtx1);
+                DrawFromGiTable(&actor->base, ctxt, 25.0, 0x80);
+                z2_PopMatrixStack();
+            }
+        }
+    }
 }
 
 void Models_AfterActorDtor(Actor* actor) {

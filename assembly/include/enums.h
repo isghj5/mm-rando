@@ -495,7 +495,7 @@ enum PlayerState2 {
     PLAYER_STATE2_IDLE        = 0x10000000, // Idle animation.
     PLAYER_STATE2_OCARINA     = 0x08000000, // Using ocarina? Maybe more.
     PLAYER_STATE2_KAMARO      = 0x02000000, // Kamaro mask dance.
-	PLAYER_STATE2_MASKHAND    = 0x01000000, // Mask drawn in hand during form change.
+    PLAYER_STATE2_MASKHAND    = 0x01000000, // Mask drawn in hand during form change.
     PLAYER_STATE2_CAN_DOWN    = 0x00400000, // Can get down from Epona.
     PLAYER_STATE2_TATL_BUTTON = 0x00200000, // Tatl C up button prompt.
     PLAYER_STATE2_TATL_OUT    = 0x00100000, // When tatl is out.

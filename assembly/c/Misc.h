@@ -86,7 +86,7 @@ typedef struct {
 
 typedef struct {
     u8 npcKafeiReplaceMask;
-	u8 pad[3];
+    u8 pad[3];
 } MiscBytes;
 
 struct MiscConfig {
@@ -97,7 +97,7 @@ struct MiscConfig {
     /* 0x1C */ MiscInternal internal;
     /* 0x20 */ MiscSpeedups speedups;
     /* 0x24 */ MiscShorts shorts;
-	/* 0x28 */ MiscBytes MMRbytes;
+    /* 0x28 */ MiscBytes MMRbytes;
 }; // size = 0x2C
 
 extern struct MiscConfig MISC_CONFIG;
