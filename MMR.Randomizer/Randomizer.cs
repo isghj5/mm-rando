@@ -682,7 +682,8 @@ namespace MMR.Randomizer
 
         private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath)
         {
-            Debug.WriteLine($"CheckDependence({currentItem}, {target})");
+            var targetName = target.Location() ?? ItemList[target].Name;
+            Debug.WriteLine($"CheckDependence({currentItem.Name()}, {targetName}[{target}])");
             var currentItemObject = ItemList[currentItem];
             var currentTargetObject = ItemList[target];
 
@@ -701,7 +702,7 @@ namespace MMR.Randomizer
             {
                 if ((currentItemObject.TimeNeeded & currentTargetObject.TimeAvailable) == 0)
                 {
-                    Debug.WriteLine($"{currentItem} is needed at {currentItemObject.TimeNeeded} but {target} is only available at {currentTargetObject.TimeAvailable}");
+                    Debug.WriteLine($"{currentItem} is needed at {currentItemObject.TimeNeeded} but {targetName} is only available at {currentTargetObject.TimeAvailable}");
                     return Dependence.Dependent;
                 }
             }
@@ -710,7 +711,7 @@ namespace MMR.Randomizer
             {
                 if (currentTargetObject.Conditionals.All(u => u.Contains(currentItem)))
                 {
-                    Debug.WriteLine($"All conditionals of {target} contains {currentItem}");
+                    Debug.WriteLine($"All conditionals of {targetName} contains {currentItem}");
                     return Dependence.Dependent;
                 }
 
@@ -718,7 +719,7 @@ namespace MMR.Randomizer
                 {
                     if (currentTargetObject.Conditionals.All(u => u.Contains(cannotRequireItem) || u.Contains(currentItem)))
                     {
-                        Debug.WriteLine($"All conditionals of {target} cannot be required by {currentItem}");
+                        Debug.WriteLine($"All conditionals of {targetName} cannot be required by {currentItem}");
                         return Dependence.Dependent;
                     }
                 }
@@ -798,7 +799,7 @@ namespace MMR.Randomizer
                     {
                         return Dependence.Circular(circularDependencies.ToArray());
                     }
-                    Debug.WriteLine($"All conditionals of {target} failed dependency check for {currentItem}.");
+                    Debug.WriteLine($"All conditionals of {targetName} failed dependency check for {currentItem}.");
                     return Dependence.Dependent;
                 }
                 else
@@ -822,7 +823,7 @@ namespace MMR.Randomizer
             {
                 if (currentTargetObject.DependsOnItems.Contains(cannotRequireItem))
                 {
-                    Debug.WriteLine($"Dependence {cannotRequireItem} of {target} cannot be required by {currentItem}");
+                    Debug.WriteLine($"{currentItem} cannot require dependence {cannotRequireItem} of {targetName}.");
                     return Dependence.Dependent;
                 }
             }
@@ -841,7 +842,7 @@ namespace MMR.Randomizer
                 }
                 if (dependency == currentItem)
                 {
-                    Debug.WriteLine($"{target} has direct dependence on {currentItem}");
+                    Debug.WriteLine($"{targetName} has direct dependence on {currentItem}");
                     return Dependence.Dependent;
                 }
 
@@ -855,6 +856,8 @@ namespace MMR.Randomizer
                     }
 
                     var location = ItemList[dependency].NewLocation ?? dependency;
+
+                    var locationName = location.Location() ?? ItemList[location].Name;
 
                     if (dependencyPath.Contains(location))
                     {
@@ -873,7 +876,7 @@ namespace MMR.Randomizer
                         {
                             DependenceChecked[location] = Dependence.Dependent;
                         }
-                        Debug.WriteLine($"{currentItem} is dependent on {location}");
+                        Debug.WriteLine($"{currentItem} is dependent on {locationName} ({location})");
                         return DependenceChecked[location];
                     }
                 }
