@@ -107,24 +107,34 @@ namespace MMR.Randomizer.Utils
 
             // if its an injected actor, we get from the actor not the vanilla rom
             InjectedActor injectedActor = injectedActors.Find(u => u.actorID == actorOvlTblIndex);
-            if (injectedActor != null && injectedActor.overlayBin != null)
+            if (injectedActor != null )
             {
                 // E/F are the actor's instance size
                 // no check compressed: user has to submit uncompressed actor binary
-                return ReadWriteUtils.Arr_ReadU16(injectedActor.overlayBin, (int)injectedActor.initVarsLocation + 0xE);
+                if (injectedActor.overlayBin != null) // new actor: read from binary
+                {
+                    return ReadWriteUtils.Arr_ReadU16(injectedActor.overlayBin, (int)injectedActor.initVarsLocation + 0xE);
+                }
+                else // old actor replaced: we already overwrote the old binary, but use new data offsets
+                {
+                    return ReadWriteUtils.Arr_ReadU16(RomData.MMFileList[injectedActor.fileID].Data, (int)injectedActor.initVarsLocation + 0xE);
+                }
             }
 
             // if we didn't pre-save it, we need to extract it
-            var ovlFID = ActorUtils.GetFID(actorOvlTblIndex); // attempt to get it from the DMA table
+
+            // if injected actor that WASNT brand new, get fid from injected directly,
+            //   else: regular actor, get from filetable
+            var ovlFID = (injectedActor != null) ? (injectedActor.fileID) : (ActorUtils.GetFID(actorOvlTblIndex));
             if (ovlFID == -1)
             {
-                return 0xABCD; // conservative estimate
+                return 0xABCD; // conservative estimate because we couldnt find
             }
 
-            var offset = GetOvlActorInit(actorOvlTblIndex);
+            var offset = (injectedActor != null) ? (injectedActor.fileID) : GetOvlActorInit(actorOvlTblIndex);
             if (offset <= 0)
             {
-                return 0x1001;
+                throw new System.Exception($"Could not find ramsize offset for actor: {actorOvlTblIndex.ToString("X")}");
             }
             RomUtils.CheckCompressed(ovlFID);
             var ovlData = RomData.MMFileList[ovlFID].Data;
