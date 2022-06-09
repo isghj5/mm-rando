@@ -581,3 +581,38 @@
 .org 0x80A414DC
     jal     Models_DrawKeatonMask_Hook
     nop
+
+;==================================================================================================
+; Freestanding Models (Don Gero's Mask)
+;==================================================================================================
+
+.headersize G_EN_GEG_DELTA
+
+; Replaces:
+;   lw      t7, 0x0048 (sp)
+;   jal     0x8012C28C
+;   lw      a0, 0x0000 (t7)
+;   lw      t8, 0x0048 (sp)
+;   lui     t0, 0xDE00
+;   lw      a0, 0x0000 (t8)
+;   lw      v1, 0x02B0 (a0)
+;   lui     t1, 0x0600
+;   addiu   t1, t1, 0x4DB0
+;   addiu   t9, v1, 0x0008
+;   sw      t9, 0x02B0 (a0)
+;   sw      t1, 0x0004 (v1)
+;   sw      t0, 0x0000 (v1)
+.org 0x80BB38F4
+    lw      a0, 0x0048 (sp)
+    jal     Models_DrawDonGeroMask
+    or      a1, s0, r0
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop

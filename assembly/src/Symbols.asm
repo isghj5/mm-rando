@@ -103,6 +103,7 @@
 .definelabel z2_80128640, 0x80128640
 .definelabel z2_8012BC50, 0x8012BC50
 .definelabel z2_Gfx_CallSetupDL, 0x8012BF78
+.definelabel z2_8012C28C, 0x8012C28C
 .definelabel z2_CallSetupDList, 0x8012C2DC
 .definelabel z2_8012C654, 0x8012C654
 .definelabel z2_LoadRoom, 0x8012E96C

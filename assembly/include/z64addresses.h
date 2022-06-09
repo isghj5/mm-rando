@@ -79,6 +79,7 @@ extern void z2_PlayerBlastMaskAnim(GlobalContext* ctxt, ActorPlayer* player);
 extern void z2_PlayerGreatFairyLimbs(GlobalContext* ctxt, ActorPlayer* player);
 extern void z2_CopyFromMatrixStackTop(z_Matrix* mtx);
 extern void z2_CopyToMatrixStackTop(z_Matrix* mtx);
+extern void z2_8012C28C(GraphicsContext* gfxCtxt);
 
 
 // Function Prototypes (Scene Flags).

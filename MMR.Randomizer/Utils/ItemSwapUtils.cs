@@ -19,7 +19,7 @@ namespace MMR.Randomizer.Utils
         public static ushort COLLECTABLE_TABLE_FILE_INDEX { get; private set; } = 0;
 
         public static byte NpcKafeiDrawMask { get; set; } = 0x05;
-
+        public static bool DonGeroGoronDrawMask { get; set; } = true;
         public static void ReplaceGetItemTable()
         {
             ResourceUtils.ApplyHack(Resources.mods.replace_gi_table);
@@ -149,6 +149,11 @@ namespace MMR.Randomizer.Utils
             if (getItemIndex == 0x80)
             {
                 UpdateKeatonMaskConfig(itemObject, newItem, item);
+            }
+            // catch the Don Gero Mask check and set draw flag value
+            if (getItemIndex == 0x88)
+            {
+                UpdateDonGeroMaskConfig(itemObject, newItem, item);
             }
 
 
@@ -389,6 +394,34 @@ namespace MMR.Randomizer.Utils
             }
 
             NpcKafeiDrawMask = (byte)kafeimaskID;
+        }
+
+        private static void UpdateDonGeroMaskConfig(ItemObject itemObject, GetItemEntry newItem, Item item)
+        {
+            if (newItem.ItemGained == 0xB0)
+            {
+                string itemMimicName = itemObject.Mimic.Item.GetAttribute<ItemNameAttribute>()?.Name;
+                if (itemMimicName == "Don Gero's Mask")
+                {
+                    DonGeroGoronDrawMask = true;
+                }
+                else
+                {
+                    DonGeroGoronDrawMask = false;
+                }
+            }
+            else
+            {
+                string newItemName = item.GetAttribute<ItemNameAttribute>()?.Name;
+                if (newItemName == "Don Gero's Mask")
+                {
+                    DonGeroGoronDrawMask = true;
+                }
+                else
+                {
+                    DonGeroGoronDrawMask = false;
+                }
+            }
         }
 
     }

@@ -223,6 +223,11 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool HiddenRupeesSparkle { get; set; }
 
+        /// <summary>
+        /// A flag for a getItem draw hook, for whether to draw the hungry goron's Don Gero Mask, or a getItem.
+        /// </summary>
+        public bool DrawDonGeroMask { get; set; }
+
         public MiscFlags()
         {
         }
@@ -258,6 +263,7 @@ namespace MMR.Randomizer.Asm
             this.FillWallet = ((flags >> 9) & 1) == 1;
             this.AutoInvert = (AutoInvertState)((flags >> 7) & 3);
             this.HiddenRupeesSparkle = ((flags >> 6) & 1) == 1;
+            this.DrawDonGeroMask = ((flags >> 5) & 1) == 1;
         }
 
         /// <summary>
@@ -290,6 +296,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FillWallet ? (uint)1 : 0) << 9;
             flags |= (((uint)this.AutoInvert) & 3) << 7;
             flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 6;
+            flags |= (this.DrawDonGeroMask ? (uint)1 : 0) << 5;
             return flags;
         }
     }
@@ -463,6 +470,8 @@ namespace MMR.Randomizer.Asm
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;
 
             this.Flags.FairyChests = settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly);
+
+            this.Flags.DrawDonGeroMask = ItemSwapUtils.DonGeroGoronDrawMask;
 
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;

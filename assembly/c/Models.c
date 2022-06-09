@@ -880,6 +880,29 @@ void Models_DrawKeatonMask(GlobalContext* ctxt, ActorPlayer* actor) {
     }
 }
 
+void Models_DrawDonGeroMask(GlobalContext* ctxt, Actor* actor) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawDonGeroMask) {
+        z2_PushMatrixStackCopy();
+
+        Vec3f pos;
+        pos.x = 1536;
+        pos.y = 512;
+        pos.z = 0;
+
+        Vec3s rot;
+        rot.x = 0x1800;
+        rot.y = 0xc000;
+        rot.z = 0x8000;
+
+        z2_TransformMatrixStackTop(&pos, &rot);
+        DrawFromGiTable(actor, ctxt, 32.0, 0x88);
+        z2_PopMatrixStack();
+    } else {
+        z2_8012C28C(ctxt->state.gfxCtx);
+        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x06004DB0);
+    }
+}
+
 void Models_AfterActorDtor(Actor* actor) {
     if (MISC_CONFIG.flags.freestanding) {
         if (actor->id == ACTOR_EN_ELFORG) {
