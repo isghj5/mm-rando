@@ -200,7 +200,7 @@ namespace MMR.Randomizer.Utils
                 settings.AsmOptions.MMRConfig.RupeeRepeatableLocations.Add(getItemIndex);
             }
 
-            var isRepeatable = item.IsRepeatable() || (!settings.PreventDowngrades && item.IsDowngradable());
+            var isRepeatable = item.IsRepeatable(settings) || (!settings.PreventDowngrades && item.IsDowngradable());
             if (settings.ProgressiveUpgrades && item.HasAttribute<ProgressiveAttribute>())
             {
                 isRepeatable = false;
