@@ -127,7 +127,7 @@ namespace MMR.Randomizer.Utils
         public static ReadOnlyCollection<Item> GetGossipStoneRequirement(GossipQuote gossipQuote, ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
         {
             var gossipStoneItem = gossipQuote.GetAttribute<GossipStoneAttribute>().Item;
-            return GetImportantLocations(itemList, settings, gossipStoneItem, logic).Required;
+            return GetImportantLocations(itemList, settings, gossipStoneItem, logic)?.Required;
         }
 
         public class LogicPaths
@@ -313,7 +313,7 @@ namespace MMR.Randomizer.Utils
                 Important = important.Union(required).Distinct().ToList().AsReadOnly(),
                 ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly()
             };
-            if (!location.IsFake())
+            if (location.Region().HasValue)
             {
                 checkedLocations[location] = result;
             }

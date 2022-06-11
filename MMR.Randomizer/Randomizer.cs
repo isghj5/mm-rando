@@ -2209,8 +2209,8 @@ namespace MMR.Randomizer
                     updated = false;
                     foreach (var itemLogic in _randomized.Logic.Where(il => ((Item)il.ItemId).IsFake() && !freeItemIds.Contains(il.ItemId)))
                     {
-                        if ((itemLogic.RequiredItemIds?.All(id => freeItemIds.Contains(id)) != false)
-                            && (itemLogic.ConditionalItemIds?.Any(c => c.All(id => freeItemIds.Contains(id))) != false)
+                        if ((itemLogic.RequiredItemIds?.All(freeItemIds.Contains) != false)
+                            && (itemLogic.ConditionalItemIds?.Any(c => c.All(freeItemIds.Contains)) != false)
                             && (itemLogic.RequiredItemIds != null || itemLogic.ConditionalItemIds != null))
                         {
                             freeItemIds.Add(itemLogic.ItemId);
@@ -2248,8 +2248,39 @@ namespace MMR.Randomizer
 
                 progressReporter.ReportProgress(32, "Calculating item importance...");
 
+                var logicForImportance = _randomized.Logic.Select(il => new ItemLogic(il)).ToList();
+                freeItemIds.Clear();
+                do
+                {
+                    updated = false;
+                    foreach (var itemLogic in logicForImportance.Where(il => !freeItemIds.Contains(il.ItemId)))
+                    {
+                        var item = (Item)itemLogic.ItemId;
+                        var isFake = item.IsFake() && !item.Region().HasValue;
+                        if (isFake && (!ItemList[itemLogic.ItemId].IsTrick || _settings.EnabledTricks.Contains(ItemList[itemLogic.ItemId].Name)) && !itemLogic.RequiredItemIds.Any() && !itemLogic.ConditionalItemIds.Any())
+                        {
+                            freeItemIds.Add(itemLogic.ItemId);
+                            updated = true;
+                            continue;
+                        }
+
+                        if ((itemLogic.RequiredItemIds?.All(freeItemIds.Contains) != false)
+                            && (itemLogic.ConditionalItemIds?.Any(c => c.All(freeItemIds.Contains)) != false))
+                        {
+                            itemLogic.RequiredItemIds.Clear();
+                            itemLogic.ConditionalItemIds.Clear();
+                            if (isFake)
+                            {
+                                freeItemIds.Add(itemLogic.ItemId);
+                                updated = true;
+                            }
+                        }
+                    }
+                }
+                while (updated);
+
                 var logicForRequiredItems = _settings.LogicMode == LogicMode.Casual && _settings.GossipHintStyle == GossipHintStyle.Competitive
-                    ? _randomized.Logic.Select(il =>
+                    ? logicForImportance.Select(il =>
                     {
                         var itemLogic = new ItemLogic(il);
 
@@ -2258,9 +2289,9 @@ namespace MMR.Randomizer
 
                         return itemLogic;
                     }).ToList()
-                    : _randomized.Logic;
+                    : logicForImportance;
 
-                var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, _randomized.Logic);
+                var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForImportance);
                 var importantLocations = logicPaths?.Important.Where(item => item.Region().HasValue).Distinct().ToHashSet();
                 var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
                 if (importantLocations == null)
@@ -2268,7 +2299,7 @@ namespace MMR.Randomizer
                     throw new RandomizationException("Moon Access is unobtainable.");
                 }
                 var locationsRequiredForMoonAccess = new List<Item>();
-                foreach (var location in importantLocations.AllowModification())
+                foreach (var location in importantLocations.ToList())
                 {
                     if (!ItemUtils.CanBeRequired(ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item))
                     {
@@ -2296,7 +2327,7 @@ namespace MMR.Randomizer
                 {
                     var songOfTimeLocation = ItemList[Item.SongTime].NewLocation.Value;
                     importantLocations.Add(songOfTimeLocation);
-                    var songOfTimePaths = LogicUtils.GetImportantLocations(ItemList, _settings, songOfTimeLocation, _randomized.Logic);
+                    var songOfTimePaths = LogicUtils.GetImportantLocations(ItemList, _settings, songOfTimeLocation, logicForImportance);
                     songOfTimeImportantItems = songOfTimePaths.Important;
                 }
 

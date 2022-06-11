@@ -407,6 +407,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public List<List<Item>> OverrideHintPriorities { get; set; }
 
+        public HashSet<int> OverrideImportanceIndicatorTiers { get; set; }
+
         /// <summary>
         /// Prevent downgrades
         /// </summary>

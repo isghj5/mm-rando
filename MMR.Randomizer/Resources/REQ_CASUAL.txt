@@ -1251,7 +1251,32 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "MaskZora"
+        ],
+        [
+          "Fighting",
+          "Long Ranged Weapon"
+        ],
+        [
+          "Any Bomb Bag",
+          "Fewer Item Requirements"
+        ],
+        [
+          "MaskBlast",
+          "Any Shield",
+          "Fewer Item Requirements"
+        ],
+        [
+          "MaskBlast",
+          "Take Damage",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -1564,18 +1589,9 @@
     {
       "Id": "MaskScents",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -2199,7 +2215,8 @@
         ],
         [
           "FD Jumps",
-          "Out of Bounds"
+          "Out of Bounds",
+          "Play Song of Soaring"
         ]
       ],
       "TimeNeeded": "None",
@@ -4386,17 +4403,27 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "MaskGibdo",
-        "BottleCatchSpringWater",
         "BottleCatchBug",
         "Any Blue Potion"
       ],
       "ConditionalItems": [
         [
+          "BottleCatchSpringWater",
+          "ItemLens",
+          "Magic Meter"
+        ],
+        [
+          "BottleCatchSpringWater",
           "Lensless Chests"
         ],
         [
+          "BottleCatchHotSpringWater",
           "ItemLens",
           "Magic Meter"
+        ],
+        [
+          "BottleCatchHotSpringWater",
+          "Lensless Chests"
         ]
       ],
       "TimeNeeded": "None",
@@ -41015,11 +41042,11 @@
         [
           "Kill Iron Knuckle",
           "ItemHookshot",
-          "Play Song of Storms"
+          "Link Trial Gossip Stones"
         ],
         [
           "Fierce Deity's Mask Anywhere",
-          "Play Song of Storms"
+          "Link Trial Gossip Stones"
         ],
         [
           "Fierce Deity's Mask Anywhere",
@@ -43950,6 +43977,11 @@
           "Zora Boomerang Through Walls"
         ],
         [
+          "Hit Switches Through Walls",
+          "Deku Stick Fighting",
+          "Fewer Item Requirements"
+        ],
+        [
           "Clever Bombchu Usage"
         ]
       ],
@@ -46743,10 +46775,16 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "MaskGibdo",
-        "BottleCatchSpringWater",
         "Any Blue Potion"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46757,10 +46795,16 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "MaskGibdo",
-        "BottleCatchSpringWater",
         "Any Blue Potion"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46771,10 +46815,16 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "MaskGibdo",
-        "BottleCatchSpringWater",
         "Any Blue Potion"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46785,10 +46835,16 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "MaskGibdo",
-        "BottleCatchSpringWater",
         "Any Blue Potion"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46799,10 +46855,16 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "MaskGibdo",
-        "BottleCatchSpringWater",
         "Any Blue Potion"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "BottleCatchSpringWater"
+        ],
+        [
+          "BottleCatchHotSpringWater"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47465,18 +47527,9 @@
     {
       "Id": "CollectableDekuShrineGiantRoomFloor1Item1",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47485,18 +47538,9 @@
     {
       "Id": "CollectableDekuShrineGiantRoomFloor1Item2",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47505,18 +47549,9 @@
     {
       "Id": "CollectableDekuShrineGiantRoomFloor1Item3",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47525,18 +47560,9 @@
     {
       "Id": "CollectableDekuShrineGiantRoomFloor1Item4",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47545,18 +47571,9 @@
     {
       "Id": "CollectableDekuShrineGiantRoomFloor1Item5",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47565,18 +47582,9 @@
     {
       "Id": "CollectableDekuShrineGiantRoomFloor1Item6",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47585,18 +47593,9 @@
     {
       "Id": "CollectableDekuShrineWaterRoomWithPlatformsItem1",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47605,18 +47604,9 @@
     {
       "Id": "CollectableDekuShrineWaterRoomWithPlatformsItem2",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47625,18 +47615,9 @@
     {
       "Id": "CollectableDekuShrineWaterRoomWithPlatformsItem3",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47645,18 +47626,9 @@
     {
       "Id": "CollectableDekuShrineWaterRoomWithPlatformsItem4",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47665,18 +47637,9 @@
     {
       "Id": "CollectableDekuShrineWaterRoomWithPlatformsItem5",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47685,18 +47648,9 @@
     {
       "Id": "CollectableDekuShrineWaterRoomWithPlatformsItem6",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47705,18 +47659,9 @@
     {
       "Id": "CollectableDekuShrineRoomBeforeFlameWallsItem1",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47725,18 +47670,9 @@
     {
       "Id": "CollectableDekuShrineRoomBeforeFlameWallsItem2",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47745,18 +47681,9 @@
     {
       "Id": "CollectableDekuShrineRoomBeforeFlameWallsItem3",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47765,18 +47692,9 @@
     {
       "Id": "CollectableDekuShrineRoomBeforeFlameWallsItem4",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47785,18 +47703,9 @@
     {
       "Id": "CollectableDekuShrineRoomBeforeFlameWallsItem5",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47805,18 +47714,9 @@
     {
       "Id": "CollectableDekuShrineRoomBeforeFlameWallsItem6",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47825,18 +47725,9 @@
     {
       "Id": "CollectableDekuShrineDekuButlerSRoomItem1",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47845,18 +47736,9 @@
     {
       "Id": "CollectableDekuShrineDekuButlerSRoomItem2",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47865,18 +47747,9 @@
     {
       "Id": "CollectableDekuShrineDekuButlerSRoomItem3",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47885,18 +47758,9 @@
     {
       "Id": "CollectableDekuShrineDekuButlerSRoomItem4",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47905,18 +47769,9 @@
     {
       "Id": "CollectableDekuShrineDekuButlerSRoomItem5",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47925,18 +47780,9 @@
     {
       "Id": "CollectableDekuShrineDekuButlerSRoomItem6",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47945,18 +47791,9 @@
     {
       "Id": "CollectableDekuShrineDekuButlerSRoomItem7",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47965,18 +47802,9 @@
     {
       "Id": "CollectableDekuShrineDekuButlerSRoomItem8",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47985,18 +47813,9 @@
     {
       "Id": "CollectableDekuShrineDekuButlerSRoomItem9",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48005,18 +47824,9 @@
     {
       "Id": "CollectableDekuShrineDekuButlerSRoomItem10",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -48025,18 +47835,9 @@
     {
       "Id": "CollectableDekuShrineGreyBoulderRoomPot1",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49470,18 +49271,9 @@
     {
       "Id": "CollectableDekuShrineGiantRoomFloor1Item7",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49490,18 +49282,9 @@
     {
       "Id": "CollectableDekuShrineGiantRoomFloor1Item8",
       "RequiredItems": [
-        "BottleCatchPrincess",
-        "AreaSouthAccess",
-        "MaskDeku"
+        "Butler Race"
       ],
-      "ConditionalItems": [
-        [
-          "Kill Deku Shrine Big Octo"
-        ],
-        [
-          "AreaWoodFallTempleClear"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -56424,19 +56207,12 @@
     {
       "Id": "Kill Deku Shrine Big Octo",
       "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "OtherArrow"
-        ],
-        [
-          "MaskZora"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Allows killing the Big Octo with arrows or Zora, instead of requiring clearing Woodfall Temple.",
+      "TrickTooltip": "Kill the Big Octo blocking the Deku Shrine before clearing Woodfall Temple with the Bow, Hookshot, or Zora Mask.",
       "TrickCategory": "Moderate"
     },
     {
@@ -57602,6 +57378,14 @@
           "OtherArrow",
           "Take Damage",
           "Fewer Item Requirements"
+        ],
+        [
+          "Any Sword",
+          "Fewer Item Requirements"
+        ],
+        [
+          "MaskGoron",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -57635,15 +57419,20 @@
       "RequiredItems": [],
       "ConditionalItems": [
         [
+          "MaskZora",
+          "Magic Meter"
+        ],
+        [
+          "MaskZora",
+          "Fewer Item Requirements"
+        ],
+        [
           "MaskFierceDeity",
           "Magic Meter"
         ],
         [
-          "MaskZora",
-          "Magic Meter"
-        ],
-        [
-          "MaskZora",
+          "MaskFierceDeity",
+          "OtherArrow",
           "Fewer Item Requirements"
         ]
       ],
@@ -59093,6 +58882,10 @@
           "Zora Boomerang Through Walls"
         ],
         [
+          "Hit Switches Through Walls",
+          "Deku Stick Fighting"
+        ],
+        [
           "Clever Ice Platforms",
           "FD Jumps"
         ],
@@ -59672,7 +59465,7 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Freeze and unfreeze the water blocking the green valve room to dive to the deeper parts of the temple without Zora Mask.",
+      "TrickTooltip": "Freeze and unfreeze the water blocking the green pump room to dive to the deeper parts of the temple without Zora Mask.",
       "TrickCategory": "Hard"
     },
     {
@@ -60021,11 +59814,11 @@
           "Any Bombchu Pack"
         ],
         [
-          "Play Song of Storms",
+          "Link Trial Gossip Stones",
           "ItemHookshot"
         ],
         [
-          "Play Song of Storms",
+          "Link Trial Gossip Stones",
           "Fierce Deity's Mask Anywhere"
         ]
       ],
@@ -60306,6 +60099,66 @@
       "IsTrick": true,
       "TrickTooltip": "Removes Mask of Truth as a requirement for Dog Race.",
       "TrickCategory": "Very Hard"
+    },
+    {
+      "Id": "Link Trial Gossip Stones",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Play Song of Healing"
+        ],
+        [
+          "Play Epona's Song"
+        ],
+        [
+          "Play Song of Storms"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Butler Race",
+      "RequiredItems": [
+        "BottleCatchPrincess",
+        "MaskDeku"
+      ],
+      "ConditionalItems": [
+        [
+          "AreaWoodFallTempleClear"
+        ],
+        [
+          "Kill Deku Shrine Big Octo",
+          "OtherArrow",
+          "Take Damage"
+        ],
+        [
+          "Kill Deku Shrine Big Octo",
+          "OtherArrow",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Kill Deku Shrine Big Octo",
+          "MaskZora",
+          "Take Damage"
+        ],
+        [
+          "Kill Deku Shrine Big Octo",
+          "MaskZora",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Kill Deku Shrine Big Octo",
+          "ItemHookshot",
+          "Take Damage"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
     }
   ]
 }
