@@ -228,6 +228,12 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool DrawDonGeroMask { get; set; }
 
+        /// <summary>
+        /// A flag for a getItem draw hook, for whether to draw the postman's in-model hat, or a getItem.
+        /// </summary>
+        ///
+        public bool DrawPostmanHat { get; set; }
+
         public MiscFlags()
         {
         }
@@ -264,6 +270,7 @@ namespace MMR.Randomizer.Asm
             this.AutoInvert = (AutoInvertState)((flags >> 7) & 3);
             this.HiddenRupeesSparkle = ((flags >> 6) & 1) == 1;
             this.DrawDonGeroMask = ((flags >> 5) & 1) == 1;
+            this.DrawPostmanHat = ((flags >> 4) & 1) == 1;
         }
 
         /// <summary>
@@ -297,6 +304,7 @@ namespace MMR.Randomizer.Asm
             flags |= (((uint)this.AutoInvert) & 3) << 7;
             flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 6;
             flags |= (this.DrawDonGeroMask ? (uint)1 : 0) << 5;
+            flags |= (this.DrawPostmanHat ? (uint)1 : 0) << 4;
             return flags;
         }
     }
@@ -472,6 +480,7 @@ namespace MMR.Randomizer.Asm
             this.Flags.FairyChests = settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly);
 
             this.Flags.DrawDonGeroMask = ItemSwapUtils.DonGeroGoronDrawMask;
+            this.Flags.DrawPostmanHat = ItemSwapUtils.PostmanDrawHat;
 
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;

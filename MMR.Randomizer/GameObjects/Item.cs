@@ -672,6 +672,7 @@ namespace MMR.Randomizer.GameObjects
         HeartPieceKnuckle,
 
         //mask
+        [Visible]
         [StartingItem(0xC5CE3C, 0x3E)]
         [ItemName("Postman's Hat"), LocationName("Postman's Freedom Reward"), Region(Region.EastClockTown)]
         [GossipLocationHint("a special delivery", "one last job"), GossipItemHint("a hard worker's hat")]

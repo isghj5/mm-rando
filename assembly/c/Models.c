@@ -903,6 +903,32 @@ void Models_DrawDonGeroMask(GlobalContext* ctxt, Actor* actor) {
     }
 }
 
+void Models_DrawPostmanHat(Actor* actor, DispBuf* buf, GlobalContext* ctxt) {
+    // The skeleton function used doesn't update the polyOpa buffer pointer until
+    // it's entirely done, so we're updating it here. This -should- be okay, the hook
+    // is at the end of the postman's limbs and draw functions.
+    ctxt->state.gfxCtx->polyOpa.p = buf->p;
+
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawPostmanHat) {
+        Vec3f pos;
+        pos.x = 1024;
+        pos.y = 192;
+        pos.z = -512;
+
+        Vec3s rot;
+        rot.x = 0xF000;
+        rot.y = 0x8000;
+        rot.z = 0xc000;
+
+        z2_TransformMatrixStackTop(&pos, &rot);
+        DrawFromGiTable(actor, ctxt, 25.0, 0x84);
+    } else {
+        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x060085C8);
+    }
+    // update the stack-stored polyOpa pointer so the draw function finishes properly
+    buf->p = ctxt->state.gfxCtx->polyOpa.p;
+}
+
 void Models_AfterActorDtor(Actor* actor) {
     if (MISC_CONFIG.flags.freestanding) {
         if (actor->id == ACTOR_EN_ELFORG) {

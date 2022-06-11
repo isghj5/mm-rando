@@ -20,6 +20,8 @@ namespace MMR.Randomizer.Utils
 
         public static byte NpcKafeiDrawMask { get; set; } = 0x05;
         public static bool DonGeroGoronDrawMask { get; set; } = true;
+        public static bool PostmanDrawHat { get; set; } = true;
+
         public static void ReplaceGetItemTable()
         {
             ResourceUtils.ApplyHack(Resources.mods.replace_gi_table);
@@ -154,6 +156,11 @@ namespace MMR.Randomizer.Utils
             if (getItemIndex == 0x88)
             {
                 UpdateDonGeroMaskConfig(itemObject, newItem, item);
+            }
+            // catch the Postman's Hat check and set draw flag value
+            if (getItemIndex == 0x84)
+            {
+                UpdatePostmanHatConfig(itemObject, newItem, item);
             }
 
 
@@ -420,6 +427,34 @@ namespace MMR.Randomizer.Utils
                 else
                 {
                     DonGeroGoronDrawMask = false;
+                }
+            }
+        }
+
+        private static void UpdatePostmanHatConfig(ItemObject itemObject, GetItemEntry newItem, Item item)
+        {
+            if (newItem.ItemGained == 0xB0)
+            {
+                string itemMimicName = itemObject.Mimic.Item.GetAttribute<ItemNameAttribute>()?.Name;
+                if (itemMimicName == "Postman's Hat")
+                {
+                    PostmanDrawHat = true;
+                }
+                else
+                {
+                    PostmanDrawHat = false;
+                }
+            }
+            else
+            {
+                string newItemName = item.GetAttribute<ItemNameAttribute>()?.Name;
+                if (newItemName == "Postman's Hat")
+                {
+                    PostmanDrawHat = true;
+                }
+                else
+                {
+                    PostmanDrawHat = false;
                 }
             }
         }

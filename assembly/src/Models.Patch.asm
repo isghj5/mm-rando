@@ -616,3 +616,26 @@
     nop
     nop
     nop
+
+;==================================================================================================
+; Freestanding Models (Postman's Hat)
+;==================================================================================================
+
+.headersize G_EN_PM_DELTA
+
+; Replaces:
+;   lw      v0, 0x0000 (a1)
+;   lui     t5, 0x0601
+;   addiu   t5, t5, 0x85C8
+;   addiu   t3, v0, 0x0008
+;   sw      t3, 0x0000 (a1)
+;   sw      t5, 0x0004 (v0)
+;   sw      t4, 0x0000 (v0)
+.org 0x80AF8920
+    addiu   a1, a1, 0xFFF8
+    lui     a2, 0x803E
+    jal     Models_DrawPostmanHat
+    ori     a2, a2, 0x6B20
+    nop
+    nop
+    nop

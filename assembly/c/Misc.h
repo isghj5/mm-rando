@@ -52,7 +52,8 @@ typedef struct {
     u32 autoInvert          : 2;
     u32 hiddenRupeesSparkle : 1;
     u32 drawDonGeroMask     : 1;
-    u32                     : 5;
+    u32 drawPostmanHat      : 1;
+    u32                     : 4;
 } MiscFlags;
 
 typedef union {
