@@ -220,6 +220,35 @@ namespace MMR.Randomizer.Utils
             }
         }
 
+        public static void CompressMMFiles()
+        {
+            /// Re-Compressing the files back into a compressed rom is the most expensive job during seed creation.
+            /// To speed up, we compress files in parallel with a sorted list to reduce idle threads at the end.
+
+            var startTime = DateTime.Now;
+
+            // sorting the list with .Where().ToList() => OrderByDescending().ToList only takes (~ 0.400 miliseconds) on Isghj's computer
+            var sortedCompressibleFiles = RomData.MMFileList.Where(file => file.IsCompressed && file.WasEdited).ToList();
+            sortedCompressibleFiles = sortedCompressibleFiles.OrderByDescending(file => file.Data.Length).ToList();
+
+            // Debug.WriteLine($" sort the list with Sort() : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
+
+            // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
+            var previousThreadPriority = Thread.CurrentThread.Priority;
+            Thread.CurrentThread.Priority = ThreadPriority.Lowest;
+            // yaz0 encode all of the files for the rom
+            Parallel.ForEach(sortedCompressibleFiles.AsParallel().AsOrdered(), file =>
+            {
+                //var yazTime = DateTime.Now;
+                file.Data = Yaz.EncodeAndCopy(file.Data);
+                //Debug.WriteLine($" size: [{file.Data.Length}] time to complete compression : [{(DateTime.Now).Subtract(yazTime).TotalMilliseconds} (ms)]");
+            });
+            // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
+            Thread.CurrentThread.Priority = previousThreadPriority;
+
+            Debug.WriteLine($" compress all files time : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
+        }
+
         public static byte[] BuildROM()
         {
             // if injecting new actors, we need to update the actor overlay table overlayEntry
@@ -228,18 +257,7 @@ namespace MMR.Randomizer.Utils
                 Enemies.UpdateActorOverlayTable();
             }
 
-            // lower priority so that the rando can't lock a badly scheduled CPU by using 100%
-            var previousThreadPriority = Thread.CurrentThread.Priority;
-            Thread.CurrentThread.Priority = ThreadPriority.Lowest;
-            // yaz0 encode all of the files for the rom
-            Parallel.ForEach(RomData.MMFileList, file =>
-            {
-                if (file.IsCompressed && file.WasEdited){
-                    file.Data = Yaz.EncodeAndCopy(file.Data);
-                }
-            });
-            // this thread is borrowed, we don't want it to always be the lowest priority, return to previous state
-            Thread.CurrentThread.Priority = previousThreadPriority;
+            CompressMMFiles();
 
             //UpdateCompressedDMAAddresses(); // wait we dont need to separate anymore
 
