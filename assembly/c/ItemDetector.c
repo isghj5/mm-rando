@@ -483,10 +483,13 @@ void ItemDetector_AfterActorUpdate(Actor* actor, GlobalContext* ctxt) {
             switch (ctxt->sceneNum) {
                 case 0x1F:
                     ProcessActorGiIndex(actor, ctxt, 0x11A);
+                    break;
                 case 0x44:
                     ProcessActorGiIndex(actor, ctxt, 0x11B);
+                    break;
                 case 0x5F:
                     ProcessActorGiIndex(actor, ctxt, 0x11C);
+                    break;
                 case 0x36:
                     ProcessActorGiIndex(actor, ctxt, 0x11D);
                     break;
