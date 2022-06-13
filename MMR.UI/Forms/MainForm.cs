@@ -81,6 +81,7 @@ namespace MMR.UI.Forms
             // Main Settings
             TooltipBuilder.SetTooltip(cMode, "Select mode of logic:\n - Casual: The randomization logic ensures that the game can be beaten casually.\n - Using glitches: The randomization logic allows for placement of items that are only obtainable using known glitches.\n - Vanilla Layout: All items are left vanilla.\n - User logic: Upload your own custom logic to be used in the randomization.\n - No logic: Completely random, no guarantee the game is beatable.");
 
+            TooltipBuilder.SetTooltip(cBespokeItemPlacementOrder, "When enabled, items will be placed in a specific order designed to widen the variety in the generated seeds. When disabled, items will be placed in the default order.");
             TooltipBuilder.SetTooltip(cMixSongs, "Enable songs being placed among items in the randomization pool.");
             TooltipBuilder.SetTooltip(cProgressiveUpgrades, "Enable swords, wallets, magic, bomb bags and quivers to be found in the intended order.");
             TooltipBuilder.SetTooltip(cDEnt, "Enable randomization of dungeon entrances. \n\nStone Tower Temple is always vanilla, but Inverted Stone Tower Temple is randomized.");
@@ -1061,6 +1062,7 @@ namespace MMR.UI.Forms
             cVC.Checked = _configuration.OutputSettings.OutputVC;
             cPatch.Checked = _configuration.OutputSettings.GeneratePatch;
 
+            cBespokeItemPlacementOrder.Checked = _configuration.GameplaySettings.BespokeItemPlacementOrder;
             cMixSongs.Checked = _configuration.GameplaySettings.AddSongs;
             cProgressiveUpgrades.Checked = _configuration.GameplaySettings.ProgressiveUpgrades;
             cDEnt.Checked = _configuration.GameplaySettings.RandomizeDungeonEntrances;
@@ -1573,6 +1575,11 @@ namespace MMR.UI.Forms
             });
         }
 
+        private void cBespokeItemPlacementOrder_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.BespokeItemPlacementOrder = cBespokeItemPlacementOrder.Checked);
+        }
+
         private void cClockSpeed_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.ClockSpeed = (ClockSpeed)cClockSpeed.SelectedIndex);
@@ -1692,6 +1699,7 @@ namespace MMR.UI.Forms
         {
             var vanillaMode = _configuration.GameplaySettings.LogicMode == LogicMode.Vanilla;
             cMixSongs.Enabled = !vanillaMode;
+            cBespokeItemPlacementOrder.Enabled = !vanillaMode;
             cProgressiveUpgrades.Enabled = !vanillaMode;
             foreach (Control control in tabItemPool.Controls)
             {
@@ -1795,6 +1803,7 @@ namespace MMR.UI.Forms
             cMixSongs.Enabled = v;
             cProgressiveUpgrades.Enabled = v;
             cEnemy.Enabled = v;
+            cBespokeItemPlacementOrder.Enabled = v;
 
             //bHumanTunic.Enabled = v;
             tFormCosmetics.Enabled = v;

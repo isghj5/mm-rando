@@ -1587,6 +1587,12 @@ namespace MMR.Randomizer
 
             PlaceOcarinaAndSongOfTime(itemPool);
             PlaceBossRemains(itemPool);
+
+            if (_settings.BespokeItemPlacementOrder)
+            {
+                PlaceBespokeItems(itemPool);
+            }
+
             PlaceQuestItems(itemPool);
             PlaceTradeItems(itemPool);
             PlaceDungeonItems(itemPool);
@@ -1604,6 +1610,119 @@ namespace MMR.Randomizer
             PlaceRemainingItems(itemPool);
 
             _randomized.ItemList = ItemList;
+        }
+
+        private void PlaceBespokeItems(List<Item> itemPool)
+        {
+            var itemOrder = new List<Item>();
+
+            itemOrder.Add(Item.UpgradeBiggestBombBag);
+            itemOrder.Add(Item.UpgradeBigBombBag);
+            itemOrder.Add(Item.UpgradeBiggestQuiver);
+            itemOrder.Add(Item.UpgradeBigQuiver);
+
+            if (_settings.PriceMode == PriceMode.None)
+            {
+                itemOrder.Add(Item.UpgradeRoyalWallet);
+                itemOrder.Add(Item.UpgradeGiantWallet);
+                itemOrder.Add(Item.UpgradeAdultWallet);
+            }
+
+            itemOrder.Add(Item.ItemHookshot);
+            itemOrder.Add(Item.ItemBow);
+            itemOrder.Add(Item.MaskZora);
+            itemOrder.Add(Item.ItemLightArrow);
+            itemOrder.Add(Item.ItemIceArrow);
+
+            if (!_settings.AddSongs)
+            {
+                itemOrder.Add(Item.SongSonata);
+                itemOrder.Add(Item.SongLullaby);
+                itemOrder.Add(Item.SongEpona);
+                itemOrder.Add(Item.SongSoaring);
+                itemOrder.Add(Item.SongHealing);
+                itemOrder.Add(Item.SongNewWaveBossaNova);
+                itemOrder.Add(Item.SongElegy);
+                itemOrder.Add(Item.SongStorms);
+                itemOrder.Add(Item.SongOath);
+            }
+
+            itemOrder.Add(Item.ItemBombBag);
+            itemOrder.Add(Item.MaskBlast);
+            itemOrder.Add(Item.ItemFireArrow);
+            itemOrder.Add(Item.MaskDeku);
+            itemOrder.Add(Item.MaskGoron);
+            itemOrder.Add(Item.ItemPictobox);
+            itemOrder.Add(Item.ItemLens);
+            itemOrder.Add(Item.ItemPowderKeg);
+            itemOrder.Add(Item.MaskCaptainHat);
+            itemOrder.Add(Item.UpgradeMirrorShield);
+            itemOrder.Add(Item.FairyDoubleMagic);
+            itemOrder.Add(Item.FairyMagic);
+            itemOrder.Add(Item.MaskFierceDeity);
+            itemOrder.Add(Item.MaskGiant);
+            itemOrder.Add(Item.MaskGibdo);
+            itemOrder.Add(Item.MaskGaro);
+
+            if (_settings.PriceMode != PriceMode.None)
+            {
+                itemOrder.Add(Item.UpgradeRoyalWallet);
+                itemOrder.Add(Item.UpgradeGiantWallet);
+                itemOrder.Add(Item.UpgradeAdultWallet);
+            }
+
+            if (_settings.AddSongs)
+            {
+                itemOrder.Add(Item.SongEpona);
+                itemOrder.Add(Item.SongSonata);
+                itemOrder.Add(Item.SongLullaby);
+                itemOrder.Add(Item.SongNewWaveBossaNova);
+                itemOrder.Add(Item.SongElegy);
+                itemOrder.Add(Item.SongHealing);
+                itemOrder.Add(Item.SongOath);
+                itemOrder.Add(Item.SongSoaring);
+            }
+
+            for (var i = Item.MaskPostmanHat; i <= Item.MaskKamaro; i++)
+            {
+                itemOrder.Add(i);
+            }
+            for (var i = Item.TradeItemRoomKey; i <= Item.TradeItemMamaLetter; i++)
+            {
+                itemOrder.Add(i);
+            }
+            for (var i = Item.TradeItemMoonTear; i <= Item.TradeItemOceanDeed; i++)
+            {
+                itemOrder.Add(i);
+            }
+
+            itemOrder.Add(Item.ItemFairySword);
+            itemOrder.Add(Item.FairySpinAttack);
+            itemOrder.Add(Item.FairyDoubleDefense);
+            itemOrder.Add(Item.UpgradeGildedSword);
+            itemOrder.Add(Item.UpgradeRazorSword);
+            itemOrder.Add(Item.StartingSword);
+
+            itemOrder.Add(Item.ItemBottleAliens);
+            itemOrder.Add(Item.ItemBottleWitch);
+            itemOrder.Add(Item.ItemBottleGoronRace);
+            itemOrder.Add(Item.ItemBottleMadameAroma);
+            itemOrder.Add(Item.ItemBottleBeavers);
+            itemOrder.Add(Item.ItemBottleDampe);
+
+            if (_settings.AddSongs)
+            {
+                itemOrder.Add(Item.SongStorms);
+            }
+
+            itemOrder.Add(Item.ItemMagicBean);
+            itemOrder.Add(Item.ChestInvertedStoneTowerBean);
+            itemOrder.Add(Item.ShopItemBusinessScrubMagicBean);
+
+            foreach (var item in itemOrder)
+            {
+                PlaceItem(item, itemPool);
+            }
         }
 
         /// <summary>
