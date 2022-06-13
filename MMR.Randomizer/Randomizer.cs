@@ -1704,9 +1704,17 @@ namespace MMR.Randomizer
                 return item.Region() == location.Region();
             }
 
-            if (_randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon))
+            if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
             {
-                foreach (var item in ItemUtils.SmallKeys())
+                PlaceItem(Item.RemainsOdolwa, itemPool, (item, location) => location == Item.FairySpinAttack);
+                PlaceItem(Item.RemainsGoht, itemPool, (item, location) => location == Item.FairyDoubleMagic);
+                PlaceItem(Item.RemainsGyorg, itemPool, (item, location) => location == Item.FairyDoubleDefense);
+                PlaceItem(Item.RemainsTwinmold, itemPool, (item, location) => location == Item.ItemFairySword);
+            }
+
+            if (_randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinDungeon))
+            {
+                foreach (var item in ItemUtils.DungeonStrayFairies())
                 {
                     PlaceItem(item, itemPool, LockRegion);
                 }
@@ -1720,20 +1728,12 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinDungeon))
+            if (_randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon))
             {
-                foreach (var item in ItemUtils.DungeonStrayFairies())
+                foreach (var item in ItemUtils.SmallKeys())
                 {
                     PlaceItem(item, itemPool, LockRegion);
                 }
-            }
-
-            if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
-            {
-                PlaceItem(Item.RemainsOdolwa, itemPool, (item, location) => location == Item.FairySpinAttack);
-                PlaceItem(Item.RemainsGoht, itemPool, (item, location) => location == Item.FairyDoubleMagic);
-                PlaceItem(Item.RemainsGyorg, itemPool, (item, location) => location == Item.FairyDoubleDefense);
-                PlaceItem(Item.RemainsTwinmold, itemPool, (item, location) => location == Item.ItemFairySword);
             }
 
             if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinDungeon))
