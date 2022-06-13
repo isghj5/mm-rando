@@ -192,7 +192,7 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public LogicMode LogicMode { get; set; }
 
-        public bool BespokeItemPlacementOrder { get; set; }
+        public bool BespokeItemPlacementOrder { get; set; } = true;
 
         public List<string> EnabledTricks { get; set; } = new List<string>
         {
