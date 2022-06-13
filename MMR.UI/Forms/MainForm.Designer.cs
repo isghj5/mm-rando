@@ -234,6 +234,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
+            this.bSkip = new System.Windows.Forms.Button();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -2749,12 +2750,24 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
+            // bSkip
+            // 
+            this.bSkip.Location = new System.Drawing.Point(704, 591);
+            this.bSkip.Name = "bSkip";
+            this.bSkip.Size = new System.Drawing.Size(75, 23);
+            this.bSkip.TabIndex = 17;
+            this.bSkip.Text = "Skip";
+            this.bSkip.UseVisualStyleBackColor = true;
+            this.bSkip.Visible = false;
+            this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(792, 627);
+            this.Controls.Add(this.bSkip);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.bopen);
             this.Controls.Add(this.tROMName);
@@ -3044,6 +3057,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFreeGaroHints;
         private System.Windows.Forms.Label lLuckRoll;
         private System.Windows.Forms.NumericUpDown tLuckRollPercentage;
+        private System.Windows.Forms.Button bSkip;
     }
 }
 

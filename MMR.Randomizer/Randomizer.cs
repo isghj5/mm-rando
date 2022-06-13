@@ -9,6 +9,7 @@ using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -16,6 +17,8 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MMR.Randomizer
 {
@@ -2178,31 +2181,46 @@ namespace MMR.Randomizer
                     throw new RandomizationException("Moon Access is unobtainable.");
                 }
                 _randomized.CheckedImportanceLocations = checkedLocations;
-                var locationsRequiredForMoonAccess = new List<Item>();
-                foreach (var location in importantLocations.ToList())
+                var locationsRequiredForMoonAccess = new ConcurrentDictionary<Item, bool>(logicPaths.Required.ToDictionary(item => item, item => true));
+
+                // dont see a way to convert hashset to ConcurrentDictionary and then back, so mutex it is
+                Mutex importantLocationsMutex = new Mutex();
+                Mutex importantSongLocationsMutex = new Mutex();
+                var cts = new CancellationTokenSource();
+                var po = new ParallelOptions();
+                po.CancellationToken = cts.Token;
+                progressReporter.ReportProgress(32, "Verifying item importance...", cts);
+                try
                 {
-                    var item = ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item;
-                    if (!ItemUtils.CanBeRequired(item))
+                    Parallel.ForEach(importantLocations, po, (location, state) =>
                     {
-                        if (logicPaths.Required.Contains(location))
+                        var item = ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item;
+                        if (!ItemUtils.CanBeRequired(item))
                         {
-                            locationsRequiredForMoonAccess.Add(location);
+                            return;
                         }
-                        continue;
-                    }
-                    var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: location);
-                    if (checkPaths == null)
-                    {
-                        locationsRequiredForMoonAccess.Add(location);
-                    }
-                    else
-                    {
-                        foreach (var checkedLocation in checkPaths.Important.Distinct().Where(item => item.Region().HasValue))
+                        var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, cts: cts, exclude: location);
+                        if (checkPaths != null)
                         {
-                            importantLocations.Add(checkedLocation);
+                            locationsRequiredForMoonAccess.Remove(location, out bool _);
+                            importantLocationsMutex.WaitOne();
+                            importantLocations.UnionWith(checkPaths.Important.Distinct().Where(item => item.Region().HasValue));
+                            importantLocationsMutex.ReleaseMutex();
+
+                            importantSongLocationsMutex.WaitOne();
+                            importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
+                            importantSongLocationsMutex.ReleaseMutex();
                         }
-                        importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
                     }
+                    );
+                }
+                catch (OperationCanceledException)
+                {
+
+                }
+                finally
+                {
+                    cts.Dispose();
                 }
 
                 // TODO one day maybe check if song of time is actually required
@@ -2210,6 +2228,8 @@ namespace MMR.Randomizer
                 var songOfTimeImportantItems = Enumerable.Empty<Item>();
                 if (songOfTime.Item == Item.SongTime)
                 {
+                    progressReporter.ReportProgress(32, "Calculating song of time importance...");
+
                     var songOfTimeLocation = ItemList[Item.SongTime].NewLocation.Value;
                     importantLocations.Add(songOfTimeLocation);
                     var songOfTimePaths = LogicUtils.GetImportantLocations(ItemList, _settings, songOfTimeLocation, logicForImportance);
@@ -2218,7 +2238,7 @@ namespace MMR.Randomizer
 
                 _randomized.ImportantLocations = importantLocations.Union(songOfTimeImportantItems).Distinct().ToList().AsReadOnly();
                 _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
-                _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.AsReadOnly();
+                _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.Keys.ToList().AsReadOnly();
 
                 if (_settings.GossipHintStyle != GossipHintStyle.Default)
                 {

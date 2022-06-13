@@ -20,6 +20,7 @@ using MMR.Randomizer.Extensions;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using MMR.Randomizer.Constants;
+using System.Threading;
 
 namespace MMR.UI.Forms
 {
@@ -821,11 +822,23 @@ namespace MMR.UI.Forms
             bgWorker.ProgressChanged += new ProgressChangedEventHandler(bgWorker_ProgressChanged);
         }
 
+        private void bSkip_Click(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var cancellationTokenSource = (CancellationTokenSource)button.Tag;
+            if (cancellationTokenSource != null)
+            {
+                cancellationTokenSource.Cancel();
+            }
+        }
+
         private void bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             pProgress.Value = e.ProgressPercentage;
-            var message = (string)e.UserState;
-            lStatus.Text = message;
+            var state = (BackgroundWorkerProgressState)e.UserState;
+            lStatus.Text = state.Message;
+            bSkip.Visible = state.CTSItemImportance != null;
+            bSkip.Tag = state.CTSItemImportance;
         }
 
         private void bgWorker_WorkerCompleted(object sender, RunWorkerCompletedEventArgs e)

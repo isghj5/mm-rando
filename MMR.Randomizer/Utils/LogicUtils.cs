@@ -12,6 +12,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MMR.Randomizer.Utils
 {
@@ -137,8 +139,9 @@ namespace MMR.Randomizer.Utils
             public ReadOnlyCollection<Item> ImportantSongLocations { get; set; }
         }
 
-        public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, Dictionary<Item, ItemObject> itemsByLocation = null, params Item[] exclude)
+        public static LogicPaths GetImportantLocations(ItemList itemList, GameplaySettings settings, Item location, List<ItemLogic> itemLogic, List<Item> logicPath = null, Dictionary<Item, LogicPaths> checkedLocations = null, Dictionary<Item, ItemObject> itemsByLocation = null, CancellationTokenSource cts = null, params Item[] exclude)
         {
+            cts?.Token.ThrowIfCancellationRequested();
             if (itemsByLocation == null)
             {
                 itemsByLocation = itemList.ToDictionary(io => io.NewLocation ?? io.Item);
@@ -196,13 +199,16 @@ namespace MMR.Randomizer.Utils
 
                     var requiredLocation = itemList[requiredItemId].NewLocation ?? requiredItemId;
 
-                    var childPaths = GetImportantLocations(itemList, settings, requiredLocation, itemLogic, logicPath.ToList(), checkedLocations, itemsByLocation, exclude);
+                    var childPaths = GetImportantLocations(itemList, settings, requiredLocation, itemLogic, logicPath.ToList(), checkedLocations, itemsByLocation, cts, exclude);
                     if (childPaths == null)
                     {
                         return null;
                     }
 
-                    required.Add(requiredLocation);
+                    if (settings.AddSongs || !ItemUtils.IsSong(requiredLocation) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !ItemUtils.IsSong(i)))
+                    {
+                        required.Add(requiredLocation);
+                    }
                     important.Add(requiredLocation);
                     if (childPaths.Required != null)
                     {
@@ -240,7 +246,7 @@ namespace MMR.Randomizer.Utils
 
                         var conditionalLocation = itemList[conditionalItemId].NewLocation ?? conditionalItemId;
 
-                        var childPaths = GetImportantLocations(itemList, settings, conditionalLocation, itemLogic, logicPath.ToList(), checkedLocations, itemsByLocation, exclude);
+                        var childPaths = GetImportantLocations(itemList, settings, conditionalLocation, itemLogic, logicPath.ToList(), checkedLocations, itemsByLocation, cts, exclude);
                         if (childPaths == null)
                         {
                             conditionalRequired = null;
@@ -248,7 +254,10 @@ namespace MMR.Randomizer.Utils
                             break;
                         }
 
-                        conditionalRequired.Add(conditionalLocation);
+                        if (settings.AddSongs || !ItemUtils.IsSong(conditionalLocation) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !ItemUtils.IsSong(i)))
+                        {
+                            conditionalRequired.Add(conditionalLocation);
+                        }
                         conditionalImportant.Add(conditionalLocation);
                         if (childPaths.Required != null)
                         {
@@ -280,27 +289,30 @@ namespace MMR.Randomizer.Utils
                 }
 
                 // Hopefully this makes item importance a little smarter.
-                var shouldRemove = new List<int>();
-                for (var i = 0; i < logicPaths.Count; i++)
+                if (logicPaths.Count > 1)
                 {
-                    var currentLogicPath = logicPaths[i];
-                    var currentLogicImportant = currentLogicPath.Important.Except(important).Where(item => !item.IsFake());
-                    for (var j = 0; j < logicPaths.Count; j++)
+                    var shouldRemove = new List<int>();
+                    for (var i = 0; i < logicPaths.Count; i++)
                     {
-                        if (i != j && !shouldRemove.Contains(i) && !shouldRemove.Contains(j))
+                        var currentLogicPath = logicPaths[i];
+                        var currentLogicImportant = currentLogicPath.Important.Except(important).Where(item => !item.IsFake());
+                        for (var j = 0; j < logicPaths.Count; j++)
                         {
-                            var otherLogicPath = logicPaths[j];
-                            var otherLogicImportant = otherLogicPath.Important.Except(important).Where(item => !item.IsFake());
-                            if (!currentLogicImportant.Except(otherLogicImportant).Any() && otherLogicImportant.Except(currentLogicImportant).Any())
+                            if (i != j && !shouldRemove.Contains(i) && !shouldRemove.Contains(j))
                             {
-                                shouldRemove.Add(j);
+                                var otherLogicPath = logicPaths[j];
+                                var otherLogicImportant = otherLogicPath.Important.Except(important).Where(item => !item.IsFake());
+                                if (!currentLogicImportant.Except(otherLogicImportant).Any() && otherLogicImportant.Except(currentLogicImportant).Any())
+                                {
+                                    shouldRemove.Add(j);
+                                }
                             }
                         }
                     }
-                }
-                foreach (var index in shouldRemove.OrderByDescending(x => x))
-                {
-                    logicPaths.RemoveAt(index);
+                    foreach (var index in shouldRemove.OrderByDescending(x => x))
+                    {
+                        logicPaths.RemoveAt(index);
+                    }
                 }
 
                 required.AddRange(logicPaths.Select(lp => lp.Required.AsEnumerable()).Aggregate((a, b) => a.Intersect(b)));
