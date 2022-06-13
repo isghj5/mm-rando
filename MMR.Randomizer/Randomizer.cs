@@ -1816,6 +1816,10 @@ namespace MMR.Randomizer
                 Item.StartingHeartContainer1,
                 Item.StartingHeartContainer2,
             };
+            if (!_settings.AddSongs)
+            {
+                freeItemLocations.Remove(Item.SongHealing);
+            }
             var availableStartingItems = (_settings.StartingItemMode switch {
                     StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary(_randomized.Settings) && item != Item.ItemPowderKeg),
                     StartingItemMode.AllowTemporaryItems => ItemUtils.StartingItems(),
