@@ -205,7 +205,7 @@ namespace MMR.Randomizer.Utils
                         return null;
                     }
 
-                    if (settings.AddSongs || !ItemUtils.IsSong(requiredLocation) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !ItemUtils.IsSong(i)))
+                    if (logicPath[0] != Item.AreaMoonAccess || settings.AddSongs || !ItemUtils.IsSong(requiredLocation) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !ItemUtils.IsSong(i)))
                     {
                         required.Add(requiredLocation);
                     }
@@ -254,7 +254,7 @@ namespace MMR.Randomizer.Utils
                             break;
                         }
 
-                        if (settings.AddSongs || !ItemUtils.IsSong(conditionalLocation) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !ItemUtils.IsSong(i)))
+                        if (logicPath[0] != Item.AreaMoonAccess || settings.AddSongs || !ItemUtils.IsSong(conditionalLocation) || logicPath.Any(i => !i.IsFake() && itemList[i].IsRandomized && !ItemUtils.IsRegionRestricted(settings, itemsByLocation[i].Item) && !ItemUtils.IsSong(i)))
                         {
                             conditionalRequired.Add(conditionalLocation);
                         }
