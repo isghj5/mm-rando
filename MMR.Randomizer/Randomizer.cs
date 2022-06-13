@@ -1719,6 +1719,8 @@ namespace MMR.Randomizer
             itemOrder.Add(Item.ChestInvertedStoneTowerBean);
             itemOrder.Add(Item.ShopItemBusinessScrubMagicBean);
 
+            itemOrder.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
+
             foreach (var item in itemOrder)
             {
                 PlaceItem(item, itemPool);
