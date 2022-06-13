@@ -2169,13 +2169,15 @@ namespace MMR.Randomizer
                     }).ToList()
                     : logicForImportance;
 
-                var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForImportance);
+                var checkedLocations = new Dictionary<Item, LogicUtils.LogicPaths>();
+                var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForImportance, checkedLocations: checkedLocations);
                 var importantLocations = logicPaths?.Important.Where(item => item.Region().HasValue).Distinct().ToHashSet();
                 var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
                 if (importantLocations == null)
                 {
                     throw new RandomizationException("Moon Access is unobtainable.");
                 }
+                _randomized.CheckedImportanceLocations = checkedLocations;
                 var locationsRequiredForMoonAccess = new List<Item>();
                 foreach (var location in importantLocations.ToList())
                 {

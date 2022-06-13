@@ -117,17 +117,17 @@ namespace MMR.Randomizer.Utils
             return itemList;
         }
 
-        public static Dictionary<GossipQuote, ReadOnlyCollection<Item>> GetGossipStoneRequirements(IEnumerable<GossipQuote> gossipQuotes, ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
+        public static Dictionary<GossipQuote, ReadOnlyCollection<Item>> GetGossipStoneRequirements(IEnumerable<GossipQuote> gossipQuotes, ItemList itemList, List<ItemLogic> logic, GameplaySettings settings, Dictionary<Item, LogicPaths> checkedLocations)
         {
             return gossipQuotes
                 .Where(gq => gq.HasAttribute<GossipStoneAttribute>())
-                .ToDictionary(gq => gq, gq => GetGossipStoneRequirement(gq, itemList, logic, settings));
+                .ToDictionary(gq => gq, gq => GetGossipStoneRequirement(gq, itemList, logic, settings, checkedLocations));
         }
 
-        public static ReadOnlyCollection<Item> GetGossipStoneRequirement(GossipQuote gossipQuote, ItemList itemList, List<ItemLogic> logic, GameplaySettings settings)
+        public static ReadOnlyCollection<Item> GetGossipStoneRequirement(GossipQuote gossipQuote, ItemList itemList, List<ItemLogic> logic, GameplaySettings settings, Dictionary<Item, LogicPaths> checkedLocations)
         {
             var gossipStoneItem = gossipQuote.GetAttribute<GossipStoneAttribute>().Item;
-            return GetImportantLocations(itemList, settings, gossipStoneItem, logic)?.Required;
+            return GetImportantLocations(itemList, settings, gossipStoneItem, logic, checkedLocations: checkedLocations)?.Required;
         }
 
         public class LogicPaths
