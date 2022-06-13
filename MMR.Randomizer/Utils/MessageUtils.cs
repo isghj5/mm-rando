@@ -122,7 +122,7 @@ namespace MMR.Randomizer.Utils
 
             if (hintStyle == GossipHintStyle.Competitive)
             {
-                var gossipStoneRequirements = LogicUtils.GetGossipStoneRequirements(gossipQuotes, randomizedResult.ItemList, randomizedResult.Logic, randomizedResult.Settings);
+                var gossipStoneRequirements = LogicUtils.GetGossipStoneRequirements(gossipQuotes, randomizedResult.ItemList, randomizedResult.Logic, randomizedResult.Settings, randomizedResult.CheckedImportanceLocations);
 
                 var totalUniqueGossipHints = gossipQuotes.Count() / 2;
 
