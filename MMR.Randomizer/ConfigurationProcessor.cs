@@ -4,6 +4,7 @@ using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Patch;
 using MMR.Randomizer.Utils;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading;
 
@@ -50,6 +51,7 @@ namespace MMR.Randomizer
                         + "If you did not extract the whole randomizer, you must extract the vc folder. If this is a beta release, copy the vc folder from the main release.";
                 }
 
+                var startTime = DateTime.Now;
                 var builder = new Builder(randomized, configuration.CosmeticSettings);
 
                 try
@@ -73,6 +75,8 @@ namespace MMR.Randomizer
                     string nl = Environment.NewLine;
                     return $"Error building ROM: {ex.Message}{nl}{nl}Please contact the development team and provide them more information";
                 }
+
+                Debug.WriteLine($" seed build time : [{((DateTime.Now).Subtract(startTime).TotalMilliseconds).ToString()} (ms)]");
             }
 
             //settings.InputPatchFilename = null;
