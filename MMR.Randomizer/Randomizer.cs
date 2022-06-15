@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace MMR.Randomizer
@@ -684,7 +685,8 @@ namespace MMR.Randomizer
 
         private Dependence CheckDependence(Item currentItem, Item target, List<Item> dependencyPath)
         {
-            Debug.WriteLine($"CheckDependence({currentItem}, {target})");
+            var targetName = target.Location() ?? ItemList[target].Name;
+            Debug.WriteLine($"CheckDependence({currentItem.Name()}, {targetName}[{target}])");
             var currentItemObject = ItemList[currentItem];
             var currentTargetObject = ItemList[target];
 
@@ -703,7 +705,7 @@ namespace MMR.Randomizer
             {
                 if ((currentItemObject.TimeNeeded & currentTargetObject.TimeAvailable) == 0)
                 {
-                    Debug.WriteLine($"{currentItem} is needed at {currentItemObject.TimeNeeded} but {target} is only available at {currentTargetObject.TimeAvailable}");
+                    Debug.WriteLine($"{currentItem} is needed at {currentItemObject.TimeNeeded} but {targetName} is only available at {currentTargetObject.TimeAvailable}");
                     return Dependence.Dependent;
                 }
             }
@@ -712,7 +714,7 @@ namespace MMR.Randomizer
             {
                 if (currentTargetObject.Conditionals.All(u => u.Contains(currentItem)))
                 {
-                    Debug.WriteLine($"All conditionals of {target} contains {currentItem}");
+                    Debug.WriteLine($"All conditionals of {targetName} contains {currentItem}");
                     return Dependence.Dependent;
                 }
 
@@ -720,7 +722,7 @@ namespace MMR.Randomizer
                 {
                     if (currentTargetObject.Conditionals.All(u => u.Contains(cannotRequireItem) || u.Contains(currentItem)))
                     {
-                        Debug.WriteLine($"All conditionals of {target} cannot be required by {currentItem}");
+                        Debug.WriteLine($"All conditionals of {targetName} cannot be required by {currentItem}");
                         return Dependence.Dependent;
                     }
                 }
@@ -800,7 +802,7 @@ namespace MMR.Randomizer
                     {
                         return Dependence.Circular(circularDependencies.ToArray());
                     }
-                    Debug.WriteLine($"All conditionals of {target} failed dependency check for {currentItem}.");
+                    Debug.WriteLine($"All conditionals of {targetName} failed dependency check for {currentItem}.");
                     return Dependence.Dependent;
                 }
                 else
@@ -824,7 +826,7 @@ namespace MMR.Randomizer
             {
                 if (currentTargetObject.DependsOnItems.Contains(cannotRequireItem))
                 {
-                    Debug.WriteLine($"Dependence {cannotRequireItem} of {target} cannot be required by {currentItem}");
+                    Debug.WriteLine($"{currentItem} cannot require dependence {cannotRequireItem} of {targetName}.");
                     return Dependence.Dependent;
                 }
             }
@@ -843,7 +845,7 @@ namespace MMR.Randomizer
                 }
                 if (dependency == currentItem)
                 {
-                    Debug.WriteLine($"{target} has direct dependence on {currentItem}");
+                    Debug.WriteLine($"{targetName} has direct dependence on {currentItem}");
                     return Dependence.Dependent;
                 }
 
@@ -857,6 +859,8 @@ namespace MMR.Randomizer
                     }
 
                     var location = ItemList[dependency].NewLocation ?? dependency;
+
+                    var locationName = location.Location() ?? ItemList[location].Name;
 
                     if (dependencyPath.Contains(location))
                     {
@@ -875,7 +879,7 @@ namespace MMR.Randomizer
                         {
                             DependenceChecked[location] = Dependence.Dependent;
                         }
-                        Debug.WriteLine($"{currentItem} is dependent on {location}");
+                        Debug.WriteLine($"{currentItem} is dependent on {locationName} ({location})");
                         return DependenceChecked[location];
                     }
                 }
@@ -1583,6 +1587,12 @@ namespace MMR.Randomizer
 
             PlaceOcarinaAndSongOfTime(itemPool);
             PlaceBossRemains(itemPool);
+
+            if (_settings.BespokeItemPlacementOrder)
+            {
+                PlaceBespokeItems(itemPool);
+            }
+
             PlaceQuestItems(itemPool);
             PlaceTradeItems(itemPool);
             PlaceDungeonItems(itemPool);
@@ -1600,6 +1610,121 @@ namespace MMR.Randomizer
             PlaceRemainingItems(itemPool);
 
             _randomized.ItemList = ItemList;
+        }
+
+        private void PlaceBespokeItems(List<Item> itemPool)
+        {
+            var itemOrder = new List<Item>();
+
+            itemOrder.Add(Item.UpgradeBiggestBombBag);
+            itemOrder.Add(Item.UpgradeBigBombBag);
+            itemOrder.Add(Item.UpgradeBiggestQuiver);
+            itemOrder.Add(Item.UpgradeBigQuiver);
+
+            if (_settings.PriceMode == PriceMode.None)
+            {
+                itemOrder.Add(Item.UpgradeRoyalWallet);
+                itemOrder.Add(Item.UpgradeGiantWallet);
+                itemOrder.Add(Item.UpgradeAdultWallet);
+            }
+
+            itemOrder.Add(Item.ItemHookshot);
+            itemOrder.Add(Item.ItemBow);
+            itemOrder.Add(Item.MaskZora);
+            itemOrder.Add(Item.ItemLightArrow);
+            itemOrder.Add(Item.ItemIceArrow);
+
+            if (!_settings.AddSongs)
+            {
+                itemOrder.Add(Item.SongSonata);
+                itemOrder.Add(Item.SongLullaby);
+                itemOrder.Add(Item.SongEpona);
+                itemOrder.Add(Item.SongSoaring);
+                itemOrder.Add(Item.SongHealing);
+                itemOrder.Add(Item.SongNewWaveBossaNova);
+                itemOrder.Add(Item.SongElegy);
+                itemOrder.Add(Item.SongStorms);
+                itemOrder.Add(Item.SongOath);
+            }
+
+            itemOrder.Add(Item.ItemBombBag);
+            itemOrder.Add(Item.MaskBlast);
+            itemOrder.Add(Item.ItemFireArrow);
+            itemOrder.Add(Item.MaskDeku);
+            itemOrder.Add(Item.MaskGoron);
+            itemOrder.Add(Item.ItemPictobox);
+            itemOrder.Add(Item.ItemLens);
+            itemOrder.Add(Item.ItemPowderKeg);
+            itemOrder.Add(Item.MaskCaptainHat);
+            itemOrder.Add(Item.UpgradeMirrorShield);
+            itemOrder.Add(Item.FairyDoubleMagic);
+            itemOrder.Add(Item.FairyMagic);
+            itemOrder.Add(Item.MaskFierceDeity);
+            itemOrder.Add(Item.MaskGiant);
+            itemOrder.Add(Item.MaskGibdo);
+            itemOrder.Add(Item.MaskGaro);
+
+            if (_settings.PriceMode != PriceMode.None)
+            {
+                itemOrder.Add(Item.UpgradeRoyalWallet);
+                itemOrder.Add(Item.UpgradeGiantWallet);
+                itemOrder.Add(Item.UpgradeAdultWallet);
+            }
+
+            if (_settings.AddSongs)
+            {
+                itemOrder.Add(Item.SongEpona);
+                itemOrder.Add(Item.SongSonata);
+                itemOrder.Add(Item.SongLullaby);
+                itemOrder.Add(Item.SongNewWaveBossaNova);
+                itemOrder.Add(Item.SongElegy);
+                itemOrder.Add(Item.SongHealing);
+                itemOrder.Add(Item.SongOath);
+                itemOrder.Add(Item.SongSoaring);
+            }
+
+            for (var i = Item.MaskPostmanHat; i <= Item.MaskKamaro; i++)
+            {
+                itemOrder.Add(i);
+            }
+            for (var i = Item.TradeItemRoomKey; i <= Item.TradeItemMamaLetter; i++)
+            {
+                itemOrder.Add(i);
+            }
+            for (var i = Item.TradeItemMoonTear; i <= Item.TradeItemOceanDeed; i++)
+            {
+                itemOrder.Add(i);
+            }
+
+            itemOrder.Add(Item.ItemFairySword);
+            itemOrder.Add(Item.FairySpinAttack);
+            itemOrder.Add(Item.FairyDoubleDefense);
+            itemOrder.Add(Item.UpgradeGildedSword);
+            itemOrder.Add(Item.UpgradeRazorSword);
+            itemOrder.Add(Item.StartingSword);
+
+            itemOrder.Add(Item.ItemBottleAliens);
+            itemOrder.Add(Item.ItemBottleWitch);
+            itemOrder.Add(Item.ItemBottleGoronRace);
+            itemOrder.Add(Item.ItemBottleMadameAroma);
+            itemOrder.Add(Item.ItemBottleBeavers);
+            itemOrder.Add(Item.ItemBottleDampe);
+
+            if (_settings.AddSongs)
+            {
+                itemOrder.Add(Item.SongStorms);
+            }
+
+            itemOrder.Add(Item.ItemMagicBean);
+            itemOrder.Add(Item.ChestInvertedStoneTowerBean);
+            itemOrder.Add(Item.ShopItemBusinessScrubMagicBean);
+
+            itemOrder.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
+
+            foreach (var item in itemOrder)
+            {
+                PlaceItem(item, itemPool);
+            }
         }
 
         /// <summary>
@@ -1788,9 +1913,17 @@ namespace MMR.Randomizer
                 return item.Region() == location.Region();
             }
 
-            if (_randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon))
+            if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
             {
-                foreach (var item in ItemUtils.SmallKeys())
+                PlaceItem(Item.RemainsOdolwa, itemPool, (item, location) => location == Item.FairySpinAttack);
+                PlaceItem(Item.RemainsGoht, itemPool, (item, location) => location == Item.FairyDoubleMagic);
+                PlaceItem(Item.RemainsGyorg, itemPool, (item, location) => location == Item.FairyDoubleDefense);
+                PlaceItem(Item.RemainsTwinmold, itemPool, (item, location) => location == Item.ItemFairySword);
+            }
+
+            if (_randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinDungeon))
+            {
+                foreach (var item in ItemUtils.DungeonStrayFairies())
                 {
                     PlaceItem(item, itemPool, LockRegion);
                 }
@@ -1804,20 +1937,12 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinDungeon))
+            if (_randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon))
             {
-                foreach (var item in ItemUtils.DungeonStrayFairies())
+                foreach (var item in ItemUtils.SmallKeys())
                 {
                     PlaceItem(item, itemPool, LockRegion);
                 }
-            }
-
-            if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
-            {
-                PlaceItem(Item.RemainsOdolwa, itemPool, (item, location) => location == Item.FairySpinAttack);
-                PlaceItem(Item.RemainsGoht, itemPool, (item, location) => location == Item.FairyDoubleMagic);
-                PlaceItem(Item.RemainsGyorg, itemPool, (item, location) => location == Item.FairyDoubleDefense);
-                PlaceItem(Item.RemainsTwinmold, itemPool, (item, location) => location == Item.ItemFairySword);
             }
 
             if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinDungeon))
@@ -1900,6 +2025,10 @@ namespace MMR.Randomizer
                 Item.StartingHeartContainer1,
                 Item.StartingHeartContainer2,
             };
+            if (!_settings.AddSongs)
+            {
+                freeItemLocations.Remove(Item.SongHealing);
+            }
             var availableStartingItems = (_settings.StartingItemMode switch {
                     StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary(_randomized.Settings) && item != Item.ItemPowderKeg),
                     StartingItemMode.AllowTemporaryItems => ItemUtils.StartingItems(),
@@ -2296,53 +2425,65 @@ namespace MMR.Randomizer
                     }).ToList()
                     : logicForImportance;
 
-                Debug.WriteLine($" importance2 all files time : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
 
-                var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForImportance);
+                var checkedLocations = new Dictionary<Item, LogicUtils.LogicPaths>();
+                var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForImportance, checkedLocations: checkedLocations);
                 var importantLocations = logicPaths?.Important.Where(item => item.Region().HasValue).Distinct().ToHashSet();
                 var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
                 if (importantLocations == null)
                 {
                     throw new RandomizationException("Moon Access is unobtainable.");
                 }
-                var locationsRequiredForMoonAccess = new ConcurrentBag<Item>();
-
-                Debug.WriteLine($" importance2.1 all files time : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
+                _randomized.CheckedImportanceLocations = checkedLocations;
+                var locationsRequiredForMoonAccess = new ConcurrentDictionary<Item, bool>(logicPaths.Required.ToDictionary(item => item, item => true));
 
                 // dont see a way to convert hashset to ConcurrentDictionary and then back, so mutex it is
-                System.Threading.Mutex importantLocationsMutex = new System.Threading.Mutex();
-                System.Threading.Mutex importantSongLocationsMutex = new System.Threading.Mutex();
-                Parallel.ForEach(importantLocations.ToList(), location =>
+                Mutex importantLocationsMutex = new Mutex();
+                Mutex importantSongLocationsMutex = new Mutex();
+                var cts = new CancellationTokenSource();
+                var po = new ParallelOptions();
+                po.CancellationToken = cts.Token;
+                progressReporter.ReportProgress(32, "Verifying item importance...", cts);
+                try
                 {
-                    if (!ItemUtils.CanBeRequired(ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item))
+                    Parallel.ForEach(importantLocations.ToList(), po, (location, state) =>
                     {
-                        return; // instead of continue in a parallel loop we return
-                    }
+                        var item = ItemList.First(io => io.NewLocation == (location.MainLocation() ?? location)).Item;
+                        if (!ItemUtils.CanBeRequired(item))
+                        {
+                            return;
+                        }
+                        var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, cts: cts, exclude: location);
+                        if (checkPaths != null)
+                        {
+                            locationsRequiredForMoonAccess.Remove(location, out bool _);
+                            importantLocationsMutex.WaitOne();
+                            importantLocations.UnionWith(checkPaths.Important.Distinct().Where(item => item.Region().HasValue));
+                            importantLocationsMutex.ReleaseMutex();
 
-                    var checkPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForRequiredItems, exclude: location);
-                    if (checkPaths == null)
-                    {
-                        locationsRequiredForMoonAccess.Add(location);
+                            importantSongLocationsMutex.WaitOne();
+                            importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
+                            importantSongLocationsMutex.ReleaseMutex();
+                        }
                     }
-                    else
-                    {
-                        importantLocationsMutex.WaitOne();
-                        importantLocations.UnionWith(checkPaths.Important.Distinct().Where(item => item.Region().HasValue));
-                        importantLocationsMutex.ReleaseMutex();
+                    );
+                }
+                catch (OperationCanceledException)
+                {
 
-                        importantSongLocationsMutex.WaitOne();
-                        importantSongLocations.AddRange(checkPaths.ImportantSongLocations);
-                        importantSongLocationsMutex.ReleaseMutex();
-                    }
-                });
-
-                Debug.WriteLine($" importance3 all files time : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
+                }
+                finally
+                {
+                    cts.Dispose();
+                }
 
                 // TODO one day maybe check if song of time is actually required
                 var songOfTime = ItemList[Item.SongTime];
                 var songOfTimeImportantItems = Enumerable.Empty<Item>();
                 if (songOfTime.Item == Item.SongTime)
                 {
+                    progressReporter.ReportProgress(32, "Calculating song of time importance...");
+
                     var songOfTimeLocation = ItemList[Item.SongTime].NewLocation.Value;
                     importantLocations.Add(songOfTimeLocation);
                     var songOfTimePaths = LogicUtils.GetImportantLocations(ItemList, _settings, songOfTimeLocation, logicForImportance);
@@ -2351,8 +2492,7 @@ namespace MMR.Randomizer
 
                 _randomized.ImportantLocations = importantLocations.Union(songOfTimeImportantItems).Distinct().ToList().AsReadOnly();
                 _randomized.ImportantSongLocations = importantSongLocations.Distinct().ToList().AsReadOnly();
-                _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.ToList().AsReadOnly();
-                Debug.WriteLine($" importance4 all files time : [{(DateTime.Now).Subtract(startTime).TotalMilliseconds} (ms)]");
+                _randomized.LocationsRequiredForMoonAccess = locationsRequiredForMoonAccess.Keys.ToList().AsReadOnly();
 
                 if (_settings.GossipHintStyle != GossipHintStyle.Default)
                 {

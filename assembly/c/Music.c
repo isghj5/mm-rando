@@ -43,7 +43,7 @@ static u8 CalculateCurrentState() {
         if (player->stateFlags.state1 & PLAYER_STATE1_EPONA) {
             state = musicState.cumulativeStates.epona ? state | 0x10 : 0x10;
         }
-        if (player->stateFlags.state1 & PLAYER_STATE1_SWIM) {
+        if (player->stateFlags.state1 & PLAYER_STATE1_SWIM || player->stateFlags.state3 & PLAYER_STATE3_ZORA_SWIM) {
             state = musicState.cumulativeStates.swimming ? state | 0x20 : 0x20;
         }
         if (player->stateFlags.state3 & PLAYER_STATE3_GORON_SPIKE) {
