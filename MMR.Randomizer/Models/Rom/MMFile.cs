@@ -2,7 +2,7 @@
 
 namespace MMR.Randomizer.Models.Rom
 {
-    [System.Diagnostics.DebuggerDisplay("{Addr}")]
+    [System.Diagnostics.DebuggerDisplay("Addr{Addr.ToString(\"X\")}Len{Data.Length}")]
     public class MMFile
     {
         public int Addr;
