@@ -3787,7 +3787,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(577)]
         [ObjectListIndex(0xF1)]
-        [GroundVariants(0x201, 0x9FFF)]
+        // params: 0x7F is switch flags
+        // params: 0x8000 is day 3 version
+        // params: 0x1f80 is path
+        [PathingTypeVarsPlacement(mask: 0x1F80, shift: 7)]
+        // while this guy stands around and you dont think of him as a pathing actor, bombs make him "flee", path is used
+        [PathingVariants(0x201, 0x9FFF)] 
         // restrict if not
         [UnkillableAllVariants]
         MilkroadCarpenter = 0x26A, // En_Daiku2
