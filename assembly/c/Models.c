@@ -929,6 +929,58 @@ void Models_DrawPostmanHat(Actor* actor, DispBuf* buf, GlobalContext* ctxt) {
     buf->p = ctxt->state.gfxCtx->polyOpa.p;
 }
 
+bool Models_SetEnSshMatrix(GlobalContext* ctxt, ActorEnSsh* actor) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawMaskOfTruth) {
+        Vec3f pos;
+        Vec3s rot;
+
+        pos.x = 256;
+        pos.y = -384;
+        pos.z = 64;
+
+        rot.x = 0x5000;
+        rot.y = 0xD000;
+        rot.z = 0x0000;
+        z2_TransformMatrixStackTop(&pos, &rot);
+        z2_CopyFromMatrixStackTop(&actor->mtx0);
+        return false;
+    } else {
+        return true; // draw internal mask of truth
+    }
+}
+
+void Models_DrawEnSshMaskOfTruth(GlobalContext* ctxt, ActorEnSsh* actor) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawMaskOfTruth) {
+        z2_CopyToMatrixStackTop(&actor->mtx0);
+        DrawFromGiTable(&actor->base, ctxt, 12.0, 0x8A);
+    }
+}
+
+u16 Models_DrawEnSthMaskOfTruth(GlobalContext* ctxt, ActorEnSth* actor) {
+    if (actor->maskFlag & 0x0001) {
+        if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawMaskOfTruth) {
+            Vec3f pos;
+            Vec3s rot;
+
+            pos.x = 512;
+            pos.y = 768;
+            pos.z = 0;
+
+            rot.x = 0x0000;
+            rot.y = 0xC000;
+            rot.z = 0xC000;
+
+            z2_TransformMatrixStackTop(&pos, &rot);
+            DrawFromGiTable(&actor->base, ctxt, 25.0, 0x8A);
+            return 0x0000;
+        } else {
+            return 0x0001;
+        }
+    } else {
+        return 0x0000;
+    }
+}
+
 void Models_AfterActorDtor(Actor* actor) {
     if (MISC_CONFIG.flags.freestanding) {
         if (actor->id == ACTOR_EN_ELFORG) {

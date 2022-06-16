@@ -377,3 +377,13 @@ Models_DrawKeatonMask_Hook:
     lb      t4, 0x05dc (s0) ;; displaced code
     jr      ra
     lw      t5, 0x0060 (sp) ;; displaced code
+
+Models_DrawEnSshMaskOfTruth_Hook:
+    addiu   sp, sp, -0x10
+    sw      ra, 0x0004 (sp)
+    jal     Models_DrawEnSshMaskOfTruth
+    nop
+    lw      ra, 0x0004 (sp)
+    addiu   sp, sp, 0x10
+    jr      ra
+    lw      s0, 0x0020 (sp)

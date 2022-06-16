@@ -21,6 +21,7 @@ namespace MMR.Randomizer.Utils
         public static byte NpcKafeiDrawMask { get; set; } = 0x05;
         public static bool DonGeroGoronDrawMask { get; set; } = true;
         public static bool PostmanDrawHat { get; set; } = true;
+        public static bool DrawMaskOfTruth { get; set; } = true;
 
         public static void ReplaceGetItemTable()
         {
@@ -161,6 +162,11 @@ namespace MMR.Randomizer.Utils
             if (getItemIndex == 0x84)
             {
                 UpdatePostmanHatConfig(itemObject, newItem, item);
+            }
+            // catch the Mask of Truth Check and set draw flag value
+            if (getItemIndex == 0x8A)
+            {
+                UpdateMaskOfTruthConfig(itemObject, newItem, item);
             }
 
 
@@ -455,6 +461,34 @@ namespace MMR.Randomizer.Utils
                 else
                 {
                     PostmanDrawHat = false;
+                }
+            }
+        }
+
+        private static void UpdateMaskOfTruthConfig(ItemObject itemObject, GetItemEntry newItem, Item item)
+        {
+            if (newItem.ItemGained == 0xB0)
+            {
+                string itemMimicName = itemObject.Mimic.Item.GetAttribute<ItemNameAttribute>()?.Name;
+                if (itemMimicName == "Mask of Truth")
+                {
+                    DrawMaskOfTruth = true;
+                }
+                else
+                {
+                    DrawMaskOfTruth = false;
+                }
+            }
+            else
+            {
+                string newItemName = item.GetAttribute<ItemNameAttribute>()?.Name;
+                if (newItemName == "Mask of Truth")
+                {
+                    DrawMaskOfTruth = true;
+                }
+                else
+                {
+                    DrawMaskOfTruth = false;
                 }
             }
         }

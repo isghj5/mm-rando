@@ -53,7 +53,8 @@ typedef struct {
     u32 hiddenRupeesSparkle : 1;
     u32 drawDonGeroMask     : 1;
     u32 drawPostmanHat      : 1;
-    u32                     : 4;
+    u32 drawMaskOfTruth     : 1;
+    u32                     : 3;
 } MiscFlags;
 
 typedef union {

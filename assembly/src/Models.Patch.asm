@@ -639,3 +639,67 @@
     nop
     nop
     nop
+
+;==================================================================================================
+; Freestanding Models (Mask of Truth)
+;==================================================================================================
+
+.headersize G_EN_SSH_DELTA ;; Cursed Skulltula Guy
+
+; Set up a matrix for an end of draw function getItem
+; Replaces:
+;   lw      t6, 0x0028 (sp)
+;   lhu     t7, 0x05C2 (t6)
+;   lui     t0, 0xDE00
+;   andi    t8, t7, 0x0020
+;   beqzl   t8, 0x80975F20
+.org 0x80975EE0
+    or      a1, s0, r0
+    jal     Models_SetEnSshMatrix
+    nop
+    lui     t0, 0xDE00
+    beqzl   v0, 0x80975F1C
+
+; Draw a getItem
+; Replaces
+;   lw      ra, 0x0024 (sp)
+;   lw      s0, 0x0020 (sp)
+;   addiu   sp, sp, 0x0038
+;   jr      ra
+;   nop
+.org 0x80975FFC
+    jal     Models_DrawEnSshMaskOfTruth_Hook
+    or      a1, s0, r0
+    lw      ra, 0x0024 (sp)
+    jr      ra
+    addiu   sp, sp, 0x0038
+
+.headersize G_EN_STH_DELTA ;;Healed Skulltula Guy
+
+; Replaces:
+;   lhu     t3, 0x029C (v0)
+;   lui     at, 0x0001
+;   lw      t0, 0x0000 (v1)
+;   andi    t4, t3, 0x0001
+;   beqz    t4, 0x80B6848C
+;   ori     at, at, 0x7D88
+;   lbu     a1, 0x029F (v0)
+;   sw      t0, 0x0020 (sp)
+;   jal     0x8012F668
+;   addu    a0, v1, at
+;   beqz    v0, 0x80B6848C
+;   lw      t0, 0x0020 (sp)
+.org 0x80B68388
+    or      a0, s1, r0
+    jal     Models_DrawEnSthMaskOfTruth
+    or      a1, s0, r0
+    lui     at, 0x0001
+    beqz    v0, 0x80B6848C
+    ori     at, at, 0x7D88
+    lbu     a1, 0x029F (s0)
+    lw      t0, 0x0000 (s1)
+
+.org 0x80B683AC
+    addu    a0, s1, at
+    beqz    v0, 0x80B6848C
+    sw      t0, 0x0020 (sp)

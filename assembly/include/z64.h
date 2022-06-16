@@ -1730,6 +1730,20 @@ typedef struct {
     /* 0x264 */ s16 animTimer;
 } ActorEnGinkoMan; // size = 0x268
 
+// En_Ssh actor (Cursed Swamp Skulltula Guy)
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0x404];
+    /* 0x548 */ z_Matrix mtx0; // unknown space, repurposing for a matrix
+} ActorEnSsh; // size = 0x5CC?
+
+// En_Sth actor (Ocean Skulltula House Guy + Healed Swamp Skulltula Guy)
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0x158];
+    /* 0x29C */ u16 maskFlag;
+} ActorEnSth; // size = 0x2A4?
+
 /// =============================================================
 /// Actor Cutscene
 /// =============================================================
