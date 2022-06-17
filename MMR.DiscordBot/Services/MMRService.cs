@@ -16,6 +16,7 @@ namespace MMR.DiscordBot.Services
         protected string _cliPath;
         private readonly HttpClient _httpClient;
         private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+        private readonly ThreadQueue _threadQueue = new ThreadQueue();
         private readonly Random _random = new Random();
 
         public MMRService()
@@ -111,38 +112,47 @@ namespace MMR.DiscordBot.Services
             return Directory.EnumerateFiles(guildRoot);
         }
 
-        public async Task<(string patchPath, string hashIconPath, string spoilerLogPath, string version)> GenerateSeed(DateTime now, string settingsPath)
+        public async Task<(string patchPath, string hashIconPath, string spoilerLogPath, string version)> GenerateSeed(DateTime now, string settingsPath, Func<int, Task> notifyOfPosition)
         {
-            await Task.Delay(1);
-            var (filename, patchPath, hashIconPath, spoilerLogPath, version) = GetSeedPaths(now, null);
-            var attempts = 1; // TODO increase number of attempts and alter seed each attempt
-            while (attempts > 0)
+            await _threadQueue.WaitAsync(notifyOfPosition);
+            //await Task.Delay(1);
+            await notifyOfPosition(-1);
+            try
             {
-                try
+                var (filename, patchPath, hashIconPath, spoilerLogPath, version) = GetSeedPaths(now, null);
+                var attempts = 1; // TODO increase number of attempts and alter seed each attempt
+                while (attempts > 0)
                 {
-                    var success = await GenerateSeed(filename, settingsPath);
-                    if (success)
+                    try
                     {
-                        if (File.Exists(patchPath) && File.Exists(hashIconPath))
+                        var success = await GenerateSeed(filename, settingsPath);
+                        if (success)
                         {
-                            return (patchPath, hashIconPath, spoilerLogPath, version);
-                        }
-                        else
-                        {
-                            success = false;
+                            if (File.Exists(patchPath) && File.Exists(hashIconPath))
+                            {
+                                return (patchPath, hashIconPath, spoilerLogPath, version);
+                            }
+                            else
+                            {
+                                success = false;
+                            }
                         }
                     }
-                }
-                catch
-                {
-                    if (attempts == 1)
+                    catch
                     {
-                        throw;
+                        if (attempts == 1)
+                        {
+                            throw;
+                        }
                     }
+                    attempts--;
                 }
-                attempts--;
+                throw new Exception("Failed to generate seed after 5 attempts.");
             }
-            throw new Exception("Failed to generate seed after 5 attempts.");
+            finally
+            {
+                await _threadQueue.ReleaseAsync();
+            }
         }
 
         private async Task<bool> GenerateSeed(string filename, string settingsPath)
@@ -174,7 +184,6 @@ namespace MMR.DiscordBot.Services
 
         private async Task<int> GetSeed()
         {
-            await _semaphore.WaitAsync();
             int seed;
             try
             {
@@ -185,11 +194,51 @@ namespace MMR.DiscordBot.Services
             {
                 seed = _random.Next();
             }
-            finally
-            {
-                _semaphore.Release();
-            }
             return seed;
+        }
+    }
+
+    public class ThreadQueue
+    {
+        private List<SemaphoreSlim> semaphores = new List<SemaphoreSlim>();
+        SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
+
+        public async Task WaitAsync(Func<int, Task> notifyOfPosition)
+        {
+            await _semaphore.WaitAsync();
+            for (var i = semaphores.Count - 1; i >= 0; i--)
+            {
+                if (semaphores[i].CurrentCount > 0)
+                {
+                    semaphores.RemoveAt(i);
+                }
+                else
+                {
+                    await notifyOfPosition(i);
+                    if (i == semaphores.Count - 1)
+                    {
+                        var newSemaphore = new SemaphoreSlim(0, 1);
+                        semaphores.Add(newSemaphore);
+                    }
+                    var mySemaphore = semaphores[i + 1];
+                    _semaphore.Release();
+                    await semaphores[i].WaitAsync();
+                    await _semaphore.WaitAsync();
+                    mySemaphore.Release();
+                }
+            }
+            if (semaphores.Count == 0)
+            {
+                semaphores.Add(new SemaphoreSlim(0, 1));
+            }
+            _semaphore.Release();
+        }
+
+        public async Task ReleaseAsync()
+        {
+            await _semaphore.WaitAsync();
+            semaphores[0].Release();
+            _semaphore.Release();
         }
     }
 }

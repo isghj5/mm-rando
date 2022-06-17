@@ -130,7 +130,17 @@ namespace MMR.DiscordBot.Modules
             {
                 try
                 {
-                    var (patchPath, hashIconPath, spoilerLogPath, _) = await _mmrService.GenerateSeed(DateTime.UtcNow, null);
+                    var (patchPath, hashIconPath, spoilerLogPath, _) = await _mmrService.GenerateSeed(DateTime.UtcNow, null, async (i) =>
+                    {
+                        if (i < 0)
+                        {
+                            await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "Generating seed...");
+                        }
+                        else
+                        {
+                            await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = $"You are number {i + 1} in the queue.");
+                        }
+                    });
                     if (File.Exists(patchPath) && File.Exists(hashIconPath) && File.Exists(spoilerLogPath))
                     {
                         foreach (var user in mentionedUsers)
@@ -184,7 +194,17 @@ namespace MMR.DiscordBot.Modules
             {
                 try
                 {
-                    var (patchPath, hashIconPath, spoilerLogPath, version) = await _mmrService.GenerateSeed(now, settingPath);
+                    var (patchPath, hashIconPath, spoilerLogPath, version) = await _mmrService.GenerateSeed(now, settingPath, async (i) =>
+                    {
+                        if (i < 0)
+                        {
+                            await ModifyNoTagAsync(messageResult, mp => mp.Content = "Generating seed...");
+                        }
+                        else
+                        {
+                            await ModifyNoTagAsync(messageResult, mp => mp.Content = $"You are number {i + 1} in the queue.");
+                        }
+                    });
                     var filesToSend = new List<FileAttachment>
                     {
                         new FileAttachment(patchPath),
