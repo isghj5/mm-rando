@@ -38,6 +38,27 @@ namespace MMR.DiscordBot.Modules
 
         }
 
+        private async Task<IUserMessage> ReplyNoTagAsync(string message)
+        {
+            var messageReference = new MessageReference(Context.Message.Id, Context.Channel.Id, Context.Guild.Id);
+            return await ReplyAsync(message, allowedMentions: AllowedMentions.None, messageReference: messageReference);
+        }
+
+        private async Task ModifyNoTagAsync(IUserMessage message, Action<MessageProperties> func)
+        {
+            await message.ModifyAsync(mp =>
+            {
+                func(mp);
+                mp.AllowedMentions = AllowedMentions.None;
+            });
+        }
+
+        public async Task<Discord.Rest.RestUserMessage> ReplySendFileAsync(string filepath)
+        {
+            var messageReference = new MessageReference(Context.Message.Id, Context.Channel.Id, Context.Guild.Id);
+            return await Context.Channel.SendFileAsync(filepath, allowedMentions: AllowedMentions.None, messageReference: messageReference);
+        }
+
         [Command("help")]
         public async Task Help()
         {
@@ -87,7 +108,7 @@ namespace MMR.DiscordBot.Modules
 
             AddHelp(commands);
 
-            await ReplyAsync("List of commands: (all commands begin with \"!mmr\")\n" + string.Join('\n', commands.Select(kvp => $"`{kvp.Key}` - {kvp.Value}")));
+            await ReplyNoTagAsync("List of commands: (all commands begin with \"!mmr\")\n" + string.Join('\n', commands.Select(kvp => $"`{kvp.Key}` - {kvp.Value}")));
         }
 
         private async Task TournamentSeed()
@@ -96,15 +117,15 @@ namespace MMR.DiscordBot.Modules
             var mentionedUsers = Context.Message.MentionedUsers.DistinctBy(u => u.Id);
             if (mentionedUsers.Any(u => u.Id == Context.User.Id))
             {
-                await ReplyAsync("Cannot generate a seed for yourself.");
+                await ReplyNoTagAsync("Cannot generate a seed for yourself.");
                 return;
             }
             if (mentionedUsers.Count() < 2)
             {
-                await ReplyAsync("Must mention at least two users.");
+                await ReplyNoTagAsync("Must mention at least two users.");
                 return;
             }
-            var tournamentSeedReply = await ReplyAsync("Generating seed...");
+            var tournamentSeedReply = await ReplyNoTagAsync("Generating seed...");
             new Thread(async () =>
             {
                 try
@@ -122,7 +143,7 @@ namespace MMR.DiscordBot.Modules
                         File.Delete(spoilerLogPath);
                         File.Delete(patchPath);
                         File.Delete(hashIconPath);
-                        await tournamentSeedReply.ModifyAsync(mp => mp.Content = "Success.");
+                        await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "Success.");
                     }
                     else
                     {
@@ -132,7 +153,7 @@ namespace MMR.DiscordBot.Modules
                 catch (Exception e)
                 {
                     // TODO log exception.
-                    await tournamentSeedReply.ModifyAsync(mp => mp.Content = "An error occured.");
+                    await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "An error occured.");
                 }
             }).Start();
         }
@@ -142,7 +163,7 @@ namespace MMR.DiscordBot.Modules
             var lastSeedRequest = (await UserSeedRepository.GetById(Context.User.Id))?.LastSeedRequest;
             if (lastSeedRequest.HasValue && (DateTime.UtcNow - lastSeedRequest.Value).TotalHours < 6)
             {
-                await ReplyAsync("You may only request a seed once every 6 hours.");
+                await ReplyNoTagAsync("You may only request a seed once every 6 hours.");
                 return false;
             }
 
@@ -158,24 +179,31 @@ namespace MMR.DiscordBot.Modules
                 LastSeedRequest = now
             };
             await UserSeedRepository.Save(userSeedEntity);
-            var messageResult = await ReplyAsync("Generating seed...");
+            var messageResult = await ReplyNoTagAsync("Generating seed...");
             new Thread(async () =>
             {
                 try
                 {
                     var (patchPath, hashIconPath, spoilerLogPath, version) = await _mmrService.GenerateSeed(now, settingPath);
-                    await Context.Channel.SendFileAsync(patchPath);
-                    await Context.Channel.SendFileAsync(hashIconPath);
+                    var filesToSend = new List<FileAttachment>
+                    {
+                        new FileAttachment(patchPath),
+                        new FileAttachment(hashIconPath)
+                    };
+                    await ModifyNoTagAsync(messageResult, mp =>
+                    {
+                        mp.Content = "";
+                        mp.Attachments = filesToSend;
+                    });
                     File.Delete(patchPath);
                     File.Delete(hashIconPath);
-                    await messageResult.DeleteAsync();
                     userSeedEntity.Version = version;
                     await UserSeedRepository.Save(userSeedEntity);
                 }
                 catch
                 {
                     await UserSeedRepository.DeleteById(Context.User.Id);
-                    await messageResult.ModifyAsync(mp => mp.Content = "An error occured.");
+                    await ModifyNoTagAsync(messageResult, mp => mp.Content = "An error occured.");
                 }
             }).Start();
         }
@@ -198,7 +226,7 @@ namespace MMR.DiscordBot.Modules
                 settingPath = _mmrService.GetSettingsPath(Context.Guild.Id, settingName);
                 if (!File.Exists(settingPath))
                 {
-                    await ReplyAsync("Setting not found.");
+                    await ReplyNoTagAsync("Setting not found.");
                     return;
                 }
             }
@@ -217,18 +245,18 @@ namespace MMR.DiscordBot.Modules
             var userSeedEntity = await UserSeedRepository.GetById(Context.User.Id);
             if (userSeedEntity == null)
             {
-                await ReplyAsync("You haven't generated any seeds recently.");
+                await ReplyNoTagAsync("You haven't generated any seeds recently.");
                 return;
             }
             var (_, _, _, spoilerLogPath, _) = _mmrService.GetSeedPaths(userSeedEntity.LastSeedRequest, userSeedEntity.Version ?? "1.13.0.13");
             if (File.Exists(spoilerLogPath))
             {
-                var result = await Context.Channel.SendFileAsync(spoilerLogPath);
+                await ReplySendFileAsync(spoilerLogPath);
                 File.Delete(spoilerLogPath);
             }
             else
             {
-                await ReplyAsync("Spoiler log not found.");
+                await ReplyNoTagAsync("Spoiler log not found.");
             }
         }
 
@@ -241,27 +269,27 @@ namespace MMR.DiscordBot.Modules
             var socketGuildUser = Context.User as SocketGuildUser;
             if (!socketGuildUser.Roles.Any(sr => allowedRoleIds.Contains(sr.Id)))
             {
-                await ReplyAsync("You don't have permission.");
+                await ReplyNoTagAsync("You don't have permission.");
                 return;
             }
             //await ReplyAsync("Allowed");
 
             if (Context.Message.Attachments.Count != 1)
             {
-                await ReplyAsync("Must attach one settings json file.");
+                await ReplyNoTagAsync("Must attach one settings json file.");
                 return;
             }
 
             var settingsFile = Context.Message.Attachments.Single();
             if (settingsFile.Size > 10000) // kinda arbitrary
             {
-                await ReplyAsync("File is too large.");
+                await ReplyNoTagAsync("File is too large.");
                 return;
             }
 
             if (Path.GetExtension(settingsFile.Filename) != ".json")
             {
-                await ReplyAsync("File must be a json file.");
+                await ReplyNoTagAsync("File must be a json file.");
                 return;
             }
 
@@ -277,7 +305,7 @@ namespace MMR.DiscordBot.Modules
                 await client.DownloadFileTaskAsync(new Uri(settingsFile.Url), settingsPath);
             }
 
-            await ReplyAsync($"{(replacing ? "Replaced" : "Added")} settings.");
+            await ReplyNoTagAsync($"{(replacing ? "Replaced" : "Added")} settings.");
         }
 
         [Command("remove-settings")]
@@ -289,7 +317,7 @@ namespace MMR.DiscordBot.Modules
             var socketGuildUser = Context.User as SocketGuildUser;
             if (!socketGuildUser.Roles.Any(sr => allowedRoleIds.Contains(sr.Id)))
             {
-                await ReplyAsync("You don't have permission.");
+                await ReplyNoTagAsync("You don't have permission.");
                 return;
             }
             //await ReplyAsync("Allowed");
@@ -297,13 +325,13 @@ namespace MMR.DiscordBot.Modules
             var settingsPath = _mmrService.GetSettingsPath(Context.Guild.Id, settingName);
             if (!File.Exists(settingsPath))
             {
-                await ReplyAsync("Setting does not exist.");
+                await ReplyNoTagAsync("Setting does not exist.");
                 return;
             }
 
             File.Delete(settingsPath);
 
-            await ReplyAsync("Deleted settings.");
+            await ReplyNoTagAsync("Deleted settings.");
         }
 
         [Command("list-settings")]
@@ -314,11 +342,11 @@ namespace MMR.DiscordBot.Modules
 
             if (!settingsPaths.Any())
             {
-                await ReplyAsync("No settings found.");
+                await ReplyNoTagAsync("No settings found.");
                 return;
             }
 
-            await ReplyAsync("List of settings:\n" + string.Join('\n', settingsPaths.Select(p => Path.GetFileNameWithoutExtension(p))));
+            await ReplyNoTagAsync("List of settings:\n" + string.Join('\n', settingsPaths.Select(p => Path.GetFileNameWithoutExtension(p))));
         }
 
         [Command("get-settings")]
@@ -328,11 +356,11 @@ namespace MMR.DiscordBot.Modules
             var settingsPath = _mmrService.GetSettingsPath(Context.Guild.Id, settingName);
             if (!File.Exists(settingsPath))
             {
-                await ReplyAsync("Setting does not exist.");
+                await ReplyNoTagAsync("Setting does not exist.");
                 return;
             }
 
-            await Context.Channel.SendFileAsync(settingsPath);
+            await ReplySendFileAsync(settingsPath);
         }
 
         [Command("add-mystery")]
@@ -344,27 +372,27 @@ namespace MMR.DiscordBot.Modules
             var socketGuildUser = Context.User as SocketGuildUser;
             if (!socketGuildUser.Roles.Any(sr => allowedRoleIds.Contains(sr.Id)))
             {
-                await ReplyAsync("You don't have permission.");
+                await ReplyNoTagAsync("You don't have permission.");
                 return;
             }
             //await ReplyAsync("Allowed");
 
             if (Context.Message.Attachments.Count != 1)
             {
-                await ReplyAsync("Must attach one settings json file.");
+                await ReplyNoTagAsync("Must attach one settings json file.");
                 return;
             }
 
             var settingsFile = Context.Message.Attachments.Single();
             if (settingsFile.Size > 10000) // kinda arbitrary
             {
-                await ReplyAsync("File is too large.");
+                await ReplyNoTagAsync("File is too large.");
                 return;
             }
 
             if (Path.GetExtension(settingsFile.Filename) != ".json")
             {
-                await ReplyAsync("File must be a json file.");
+                await ReplyNoTagAsync("File must be a json file.");
                 return;
             }
 
@@ -381,7 +409,7 @@ namespace MMR.DiscordBot.Modules
                 await client.DownloadFileTaskAsync(new Uri(settingsFile.Url), settingPath);
             }
 
-            await ReplyAsync($"{(replacing ? "Replaced" : "Added")} mystery setting.");
+            await ReplyNoTagAsync($"{(replacing ? "Replaced" : "Added")} mystery setting.");
         }
 
         [Command("remove-mystery")]
@@ -393,14 +421,14 @@ namespace MMR.DiscordBot.Modules
             var socketGuildUser = Context.User as SocketGuildUser;
             if (!socketGuildUser.Roles.Any(sr => allowedRoleIds.Contains(sr.Id)))
             {
-                await ReplyAsync("You don't have permission.");
+                await ReplyNoTagAsync("You don't have permission.");
                 return;
             }
             //await ReplyAsync("Allowed");
 
             if (argument.Length != 2)
             {
-                await ReplyAsync("Invalid parameter count.");
+                await ReplyNoTagAsync("Invalid parameter count.");
                 return;
             }
 
@@ -411,13 +439,13 @@ namespace MMR.DiscordBot.Modules
             var settingPath = Path.Combine(mysteryPath, $"{FileUtils.MakeFilenameValid(settingName)}.json");
             if (!File.Exists(settingPath))
             {
-                await ReplyAsync("Setting does not exist.");
+                await ReplyNoTagAsync("Setting does not exist.");
                 return;
             }
 
             File.Delete(settingPath);
 
-            await ReplyAsync("Deleted mystery setting.");
+            await ReplyNoTagAsync("Deleted mystery setting.");
         }
 
         [Command("list-mystery")]
@@ -427,7 +455,7 @@ namespace MMR.DiscordBot.Modules
             var mysteryRoot = categoryName == null ? _mmrService.GetMysteryRoot(Context.Guild.Id) : _mmrService.GetMysteryPath(Context.Guild.Id, categoryName, false);
             if (!Directory.Exists(mysteryRoot))
             {
-                await ReplyAsync("No settings found.");
+                await ReplyNoTagAsync("No settings found.");
                 return;
             }
 
@@ -435,11 +463,11 @@ namespace MMR.DiscordBot.Modules
 
             if (!settingsPaths.Any())
             {
-                await ReplyAsync("No settings found.");
+                await ReplyNoTagAsync("No settings found.");
                 return;
             }
 
-            await ReplyAsync("List of settings:\n" + string.Join('\n', settingsPaths.Select(p => Path.GetFileNameWithoutExtension(p))));
+            await ReplyNoTagAsync("List of settings:\n" + string.Join('\n', settingsPaths.Select(p => Path.GetFileNameWithoutExtension(p))));
         }
 
         [Command("get-mystery")]
@@ -448,7 +476,7 @@ namespace MMR.DiscordBot.Modules
         {
             if (argument.Length != 2)
             {
-                await ReplyAsync("Invalid parameter count.");
+                await ReplyNoTagAsync("Invalid parameter count.");
                 return;
             }
 
@@ -460,11 +488,11 @@ namespace MMR.DiscordBot.Modules
 
             if (!File.Exists(settingPath))
             {
-                await ReplyAsync("Setting does not exist.");
+                await ReplyNoTagAsync("Setting does not exist.");
                 return;
             }
 
-            await Context.Channel.SendFileAsync(settingPath);
+            await ReplySendFileAsync(settingPath);
         }
 
         [Command("mystery")]
@@ -477,7 +505,7 @@ namespace MMR.DiscordBot.Modules
             var mysteryPath = _mmrService.GetMysteryPath(Context.Guild.Id, categoryName, false);
             if (!Directory.Exists(mysteryPath))
             {
-                await ReplyAsync("Mystery category not found.");
+                await ReplyNoTagAsync("Mystery category not found.");
                 return;
             }
 
@@ -485,7 +513,7 @@ namespace MMR.DiscordBot.Modules
             var settingPath = settingFiles.RandomOrDefault(new Random());
             if (settingPath == default)
             {
-                await ReplyAsync("Mystery category not found.");
+                await ReplyNoTagAsync("Mystery category not found.");
                 return;
             }
             await GenerateSeed(settingPath);
