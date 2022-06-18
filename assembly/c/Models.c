@@ -981,6 +981,35 @@ u16 Models_DrawEnSthMaskOfTruth(GlobalContext* ctxt, ActorEnSth* actor) {
     }
 }
 
+void Models_SetEnInHead(u32 *buf) {
+    if (!MISC_CONFIG.flags.freestanding || MISC_CONFIG.flags.drawGaroMask) {
+        u32 dl = 0x0601C528;
+        *buf = dl; // draw garo's mask
+    }
+}
+
+void Models_DrawGaroMask(GlobalContext* ctxt, ActorEnIn* actor) {
+    if (actor->modelFlag & 4) {
+        if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawGaroMask) {
+            z2_CopyToMatrixStackTop(&actor->mtx0);
+
+            Vec3f pos;
+            Vec3s rot;
+
+            pos.x = 1280;
+            pos.y = 967;
+            pos.z = 0;
+
+            rot.x = 0xC000;
+            rot.y = 0xC000;
+            rot.z = 0x0000;
+
+            z2_TransformMatrixStackTop(&pos, &rot);
+            DrawFromGiTable(&actor->base, ctxt, 25.0, 0x81);
+        }
+    }
+}
+
 void Models_AfterActorDtor(Actor* actor) {
     if (MISC_CONFIG.flags.freestanding) {
         if (actor->id == ACTOR_EN_ELFORG) {

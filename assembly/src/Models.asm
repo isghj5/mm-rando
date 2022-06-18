@@ -387,3 +387,13 @@ Models_DrawEnSshMaskOfTruth_Hook:
     addiu   sp, sp, 0x10
     jr      ra
     lw      s0, 0x0020 (sp)
+
+Models_SetEnInMatrix_Hook:
+    addiu   sp, sp, -0x10
+    sw      ra, 0x0004 (sp)
+    jal     z2_CopyFromMatrixStackTop
+    nop
+    lw      ra, 0x0004 (sp)
+    addiu   sp, sp, 0x10
+    jr      ra
+    or      a0, a3, r0

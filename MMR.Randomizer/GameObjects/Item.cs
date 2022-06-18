@@ -818,6 +818,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x87), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskGibdo,
 
+        [Visible]
         [RupeeRepeatable]
         [StartingItem(0xC5CE50, 0x3B)]
         [ItemName("Garo's Mask"), LocationName("Gorman Bros Race"), Region(Region.MilkRoad)]

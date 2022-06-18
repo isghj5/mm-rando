@@ -1744,6 +1744,15 @@ typedef struct {
     /* 0x29C */ u16 maskFlag;
 } ActorEnSth; // size = 0x2A4?
 
+// En_In actor (Gorman Brothers)
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0x28C];
+    /* 0x3D0 */ z_Matrix mtx0; // unknown space, repurposing for a matrix
+    /* 0x410 */ UNK_TYPE1 pad410[0x9C];
+    /* 0x4AC */ u32 modelFlag;
+} ActorEnIn; // size = 0x4CC
+
 /// =============================================================
 /// Actor Cutscene
 /// =============================================================

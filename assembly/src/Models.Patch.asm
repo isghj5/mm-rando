@@ -703,3 +703,46 @@
     addu    a0, s1, at
     beqz    v0, 0x80B6848C
     sw      t0, 0x0020 (sp)
+
+;==================================================================================================
+; Freestanding Models (Garos Mask)
+;==================================================================================================
+
+.headersize G_EN_IN_DELTA
+
+; Toggle head mesh
+; Replaces:
+;   lui     t6, 0x0602
+;   addiu   t6, t6, 0xC528
+;   sw      t6, 0x0000 (a2)
+.org 0x808F654C
+    lui     t6, 0x0602
+    jal     Models_SetEnInHead
+    or      a0, a2, r0
+
+; Set a matrix
+; Replaces:
+;   lw      s0, 0x0070 (sp)
+;   or      a0, a3, r0
+;   sw      a2, 0x0064 (sp)
+;   addiu   a1, s0, 0x04B4
+.org 0x808F6868
+    jal     Models_SetEnInMatrix_Hook
+    addiu   a0, s0, 0x03D0
+
+; Replaces
+;   lw      ra, 0x0024 (sp)
+;   addiu   sp, sp, 0x30
+;   jr      ra
+;   nop
+;   nop
+;   nop
+;   nop
+.org 0x808F6A24
+    or      a0, s1, r0
+    jal     Models_DrawGaroMask
+    or      a1, s0, r0
+    lw      ra, 0x0024 (sp)
+    addiu   sp, sp, 0x30
+    jr      ra
+    nop

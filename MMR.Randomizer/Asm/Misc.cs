@@ -240,6 +240,12 @@ namespace MMR.Randomizer.Asm
         ///
         public bool DrawMaskOfTruth { get; set; }
 
+        /// <summary>
+        /// A flag for a getItem draw hook, for whether to draw the Gorman Brothers' Garo's Mask, or a getItem.
+        /// </summary>
+        ///
+        public bool DrawGaroMask { get; set; }
+
         public MiscFlags()
         {
         }
@@ -278,6 +284,7 @@ namespace MMR.Randomizer.Asm
             this.DrawDonGeroMask = ((flags >> 5) & 1) == 1;
             this.DrawPostmanHat = ((flags >> 4) & 1) == 1;
             this.DrawPostmanHat = ((flags >> 3) & 1) == 1;
+            this.DrawGaroMask = ((flags >> 2) & 1) == 1;
         }
 
         /// <summary>
@@ -313,6 +320,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.DrawDonGeroMask ? (uint)1 : 0) << 5;
             flags |= (this.DrawPostmanHat ? (uint)1 : 0) << 4;
             flags |= (this.DrawMaskOfTruth ? (uint)1 : 0) << 3;
+            flags |= (this.DrawGaroMask ? (uint)1 : 0) << 2;
             return flags;
         }
     }
@@ -490,6 +498,7 @@ namespace MMR.Randomizer.Asm
             this.Flags.DrawDonGeroMask = ItemSwapUtils.DonGeroGoronDrawMask;
             this.Flags.DrawPostmanHat = ItemSwapUtils.PostmanDrawHat;
             this.Flags.DrawMaskOfTruth = ItemSwapUtils.DrawMaskOfTruth;
+            this.Flags.DrawGaroMask = ItemSwapUtils.DrawGaroMask;
 
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;
