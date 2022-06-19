@@ -495,15 +495,15 @@ namespace MMR.Randomizer.Asm
 
             this.Flags.FairyChests = settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly);
 
-            this.Flags.DrawDonGeroMask = ItemSwapUtils.DonGeroGoronDrawMask;
-            this.Flags.DrawPostmanHat = ItemSwapUtils.PostmanDrawHat;
-            this.Flags.DrawMaskOfTruth = ItemSwapUtils.DrawMaskOfTruth;
-            this.Flags.DrawGaroMask = ItemSwapUtils.DrawGaroMask;
+            this.Flags.DrawDonGeroMask = MaskConfigUtils.DonGeroGoronDrawMask;
+            this.Flags.DrawPostmanHat = MaskConfigUtils.PostmanDrawHat;
+            this.Flags.DrawMaskOfTruth = MaskConfigUtils.DrawMaskOfTruth;
+            this.Flags.DrawGaroMask = MaskConfigUtils.DrawGaroMask;
 
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;
             this.Shorts.CollectableTableFileIndex = ItemSwapUtils.COLLECTABLE_TABLE_FILE_INDEX;
-            this.MMRBytes.NpcKafeiReplaceMask = ItemSwapUtils.NpcKafeiDrawMask;
+            this.MMRBytes.NpcKafeiReplaceMask = MaskConfigUtils.NpcKafeiDrawMask;
         }
 
         /// <summary>
