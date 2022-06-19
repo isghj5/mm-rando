@@ -15,7 +15,6 @@ namespace MMR.DiscordBot.Services
         private const string MMR_CLI = "MMR_CLI";
         protected string _cliPath;
         private readonly HttpClient _httpClient;
-        private readonly SemaphoreSlim _semaphore = new SemaphoreSlim(1, 1);
         private readonly ThreadQueue _threadQueue = new ThreadQueue();
         private readonly Random _random = new Random();
 
