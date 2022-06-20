@@ -232,6 +232,8 @@ namespace MMR.Randomizer
             FixWoodfallTempleGekkoMiniboss();
             FixStreamSfxVolume();
             RepositionClockTownActors();
+            ExpandGoronShineObjects();
+            RandomlySwapOutZoraBandMember();
 
             Shinanigans();
         }
@@ -405,6 +407,8 @@ namespace MMR.Randomizer
 
         public static void DisableAllLocationRestrictions()
         {
+            // TODO fix: dont allow soaring on clocktower, dont allow hookshot in dojo
+
             /// player item restrictions is a unique list in the code file (for some reason)
             //var restrictionTableVRAMStart = 0x801BF6C0; // 0xC55C00 -> DC4 // offset: 119C00
             var tableOffset = 0x119C00;
@@ -604,6 +608,7 @@ namespace MMR.Randomizer
             /// however, only the 3 lower bits of this nibble are used, the code ANDS with 7
             /// why? the fourth bit isn't ever used by any grotto, and looking at the code shows it is never used
             /// so here, we set the ANDI 7 to F instead, allowing us extended access to the entrance array
+            /// TODO and by 0xF800 and shift less to get more range, requires re-writting all
             var grotholeFID = GameObjects.Actor.GrottoHole.FileListIndex();
             RomUtils.CheckCompressed(grotholeFID);
             RomData.MMFileList[grotholeFID].Data[0x2FF] = 0xF; // ANDI 0x7 -> ANDI 0xF
@@ -626,6 +631,7 @@ namespace MMR.Randomizer
             ReadWriteUtils.Arr_WriteU32(RomData.MMFileList[enPoFusenFID].Data, Dest: 0xF4, val: 0x00000000);
 
             // because they can now show up in weird places, they need to be poppable more ways
+            // I mean.. its a baloon, it should have always been really easy to pop
             RomData.MMFileList[enPoFusenFID].Data[0xB5D] = 0xF1; // stick
             RomData.MMFileList[enPoFusenFID].Data[0xB5F] = 0xF1; // bombs
             RomData.MMFileList[enPoFusenFID].Data[0xB60] = 0xF1; // zora fins
@@ -693,6 +699,9 @@ namespace MMR.Randomizer
 
         public static void FixCuccoChicks()
         {
+            /// this now gets overwritten by a rewritten cucco chick actor,
+            /// this is left over in case the player does not have that actor
+
             // stop chicks from despawning if there is no object_niw (adult cucco) object
             var cuccoChickFID = GameObjects.Actor.CuccoChick.FileListIndex();
             RomUtils.CheckCompressed(cuccoChickFID);
@@ -732,7 +741,9 @@ namespace MMR.Randomizer
             var gekkoRoom = woodfallScene.Maps[8];
             // we cannot remove the woodflower object used by the giant flower, it breaks the door, so probably used by the door for textures
             gekkoRoom.Objects[2] = 0x1A6; // previously: boss blue warp, now snapper
-            // since we're changing objects and that will reload the whole list both ways anyway, might as well shrink it to reduce chances of overflow
+
+            // since we're changing objects and that will reload the whole list both ways anyway,
+            //   might as well shrink it to reduce chances of overflow
             gekkoRoom.Objects[14] = SMALLEST_OBJ; // previously: bo
             gekkoRoom.Objects[15] = SMALLEST_OBJ; // previously: dragonfly
             gekkoRoom.Objects[16] = SMALLEST_OBJ; // previously: skulltula
@@ -741,12 +752,12 @@ namespace MMR.Randomizer
         public static void FixStreamSfxVolume()
         {
             /// EnStream is an unused actor leftover from OOT
-            ///  it is the swirling water vortexes that if you swim into you will void out in OOT: Water Temple
+            ///   it is the swirling water vortexes that if you swim into you will void out in OOT: Water Temple
             /// However this actor has a flaw: it calls a function to play a swirling water sfx
-            /// but it uses the wrong function to play the sfx, it plays the same volume from any distance which is really annoying
+            ///   but it uses the wrong function to play the sfx, it plays the same volume from any distance which is really annoying
             /// so here we change it back to the default sfx function almost all actors use to fix it
-            /// we are lucky that the old and new function takes the same parameters,
-            /// decomp tells me there are no other changes needed to swap them
+            /// we are lucky that the old and new function takes the same parameters, so we can change just the jal
+            ///   decomp tells me there are no other changes needed to swap them
 
             if (!ReplacementListContains(GameObjects.Actor.En_Stream)) return;
 
@@ -758,11 +769,11 @@ namespace MMR.Randomizer
 
         public static void RepositionClockTownActors()
         {
-            /// if actors are rando'd then the carpenters probably are too, remove their sounds
-
+            // if actors are rando'd then the carpenters probably are too, remove their sounds
             var southClockTownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SouthClockTown.FileID());
             var carpenterSound = southClockTownScene.Maps[0].Actors[49];
             carpenterSound.ChangeActor(GameObjects.Actor.Carpenter, vars: 1, modifyOld: true); // non-pathing type
+
             // move to standing in front of the sign
             carpenterSound.Position.x = -423;
             carpenterSound.Position.z = -174; // move forward to muto placement
@@ -798,7 +809,7 @@ namespace MMR.Randomizer
             anju.Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 270, flags: anju.Rotation.y); // rotate to away from us
 
             // move next to mayors building
-            // bug this is not next to mayor building for some reason, next to inn
+            // TODO bug this is not next to mayor building for some reason, next to inn
             var gorman = eastClockTownScene.Maps[0].Actors[4];
             gorman.Position = new vec16(1026, 200, -1947);
         }
@@ -808,10 +819,7 @@ namespace MMR.Randomizer
         {
             /// guruguru's actor spawns or kills itself based on time flags, ignoring that the spawn points themselves have timeflags
             /// if we want guruguru to be placed in the world without being restricted to day/night only (which is lame) we have to stop this
-            if (!ReplacementListContains(GameObjects.Actor.GuruGuru))
-            {
-                return;
-            }
+            if (!ReplacementListContains(GameObjects.Actor.GuruGuru)) return;
 
             var guruFid = GameObjects.Actor.GuruGuru.FileListIndex();
             RomUtils.CheckCompressed(guruFid);
@@ -847,7 +855,7 @@ namespace MMR.Randomizer
         public static void FixSilverIshi()
         {
             /// in MM the silver boulders that are pickupable by goron are ishi in field_keep object
-            /// however, these boulders always check the scene flags and set the flags when destroyed, so you cannot respawn them
+            /// however, these boulders always check the scene SwitchFlags and set the flags when destroyed, so you cannot respawn them
             ///   considering nothing in vanilla needs these, and because
             ///   I'm worried about setting flags for something else, lets remove that
 
@@ -870,10 +878,7 @@ namespace MMR.Randomizer
             // similar to baba, we see a loop followed by a finishing function, we want to skip both in the main draw function
             ReadWriteUtils.Arr_WriteU32(dragonflyData, Dest: 0x2498, val: 0x10000018); // <irrelevant code> -> Jump to 24E4
 
-            if (!ReplacementListContains(GameObjects.Actor.BabaIsUnused))
-            {
-                return;
-            }
+            if (!ReplacementListContains(GameObjects.Actor.BabaIsUnused)) return;
 
             var babaFid = GameObjects.Actor.BabaIsUnused.FileListIndex();
             RomUtils.CheckCompressed(babaFid);
@@ -969,6 +974,54 @@ namespace MMR.Randomizer
             // biobaba grotto has a worthless dekubaba object, lets swap it for the ice block object so we can freeze the water
             grottosScene.Maps[11].Objects[3] = 0x1E7; // iceflowe
         }
+
+        public static void ExpandGoronShineObjects()
+        {
+            /// we cannot randomize any goron in the shrine because they all use the same object
+            ///   and for some reason it crashes if there isnt one there at all, unknown reason
+            /// except both rooms use the same 5 objects, and object list is padded to word length
+            ///   so there is a space object space in the list we can use
+            if (!ReplacementListContains(GameObjects.Actor.GoronSGoro)) return;
+
+            var goronShrine = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GoronShrine.FileID());
+            goronShrine.Maps[0].Objects = new List<int> {
+                GameObjects.Actor.GoronSGoro.ObjectIndex(),
+                GameObjects.Actor.GoronKid.ObjectIndex(),
+                GameObjects.Actor.FishingGameTorch.ObjectIndex(),
+                GameObjects.Actor.GoronShrineChandelier.ObjectIndex(),
+                GameObjects.Actor.ClayPot.ObjectIndex(),
+                GameObjects.Actor.SmithyGoronAndGo.ObjectIndex() // add a second Generic Goron
+            };
+            goronShrine.Maps[1].Objects = goronShrine.Maps[0].Objects.ToList(); // think this needs a copy or its a pointer to the same list
+
+            // room file header 0xB describes object list offset in the file, but also describes size to load into memory, need to increase to 6
+            var goronShrineRoom0Data = RomData.MMFileList[GameObjects.Scene.GoronShrine.FileID() + 1].Data; // 1320
+            var goronShrineRoom1Data = RomData.MMFileList[GameObjects.Scene.GoronShrine.FileID() + 2].Data;
+            goronShrineRoom0Data[0x31] = 6;
+            goronShrineRoom1Data[0x31] = 6;
+        }
+
+        public static void RandomlySwapOutZoraBandMember()
+        {
+            /// almost all zora in zora hall use the same object, so we cant swap any out without hitting them all
+            /// except, all band member objects are present all the time even though they only show up outside for the concert
+            /// so randomly choose one to turn into a duplicate zora object, so we can change one and leave the other for door zora
+            ///   since most rando players dont care about the concert anyway, and wouldnt even notice one member missing
+            if (!ReplacementListContains(GameObjects.Actor.RegularZora)) return;
+
+            // 2:japas, 3:evan, 5:tijo, can't remove lulu or the concert is completely broken? meh
+            var replacableBandObj = new int[] { 2, 3, 5, 4 };
+            var randomObjListIndex = replacableBandObj[seedrng.Next(replacableBandObj.Length)];
+            var zoraHallScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.ZoraHall.FileID());
+            zoraHallScene.Maps[0].Objects[randomObjListIndex] = GameObjects.Actor.RegularZora.ObjectIndex();
+
+            // because of this change, the whole string of watchers are all active before the dungeon too,
+            //   move some down below so its not so crouded
+            zoraHallScene.Maps[0].Actors[29].Position = new vec16(376, 2, 676); // down by the water
+            zoraHallScene.Maps[0].Actors[27].Position = new vec16(-448, 2, -408); // behind the water fall near lulu
+            zoraHallScene.Maps[0].Actors[28].Position = new vec16(-1002, 179, 1089); // near front door
+        }
+
 
         #endregion
 
@@ -2366,8 +2419,10 @@ namespace MMR.Randomizer
                 GameObjects.Actor.En_Boj_03.FileListIndex(),
                 GameObjects.Actor.En_Boj_04.FileListIndex(),
                 GameObjects.Actor.En_Boj_05.FileListIndex(),
-                GameObjects.Actor.En_Stream.FileListIndex(), // is this really unused?
+                //GameObjects.Actor.En_Stream.FileListIndex(), // is this really unused? we now use it in actorizer
                 GameObjects.Actor.SariaSongOcarinaEffects.FileListIndex(), // should be lower down as we might need to use it later
+                806, // OoT potion shop man (the first object, not the updated one they used in their unused actor)
+                692, // OoT Child zelda (the first object, not the updated one they used in their 3 minute cutscene actor)
             };
 
             int GetUnusedFileID(InjectedActor injActor)
@@ -2481,7 +2536,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 33.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 34.0\n");
                 }
             }
             catch (Exception e)

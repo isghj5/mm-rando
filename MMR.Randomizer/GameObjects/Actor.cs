@@ -1318,7 +1318,7 @@ namespace MMR.Randomizer.GameObjects
         // versions: 1200, 1B00, 2800 shows up a lot, 2D00 stonetower, 3200 zora cape
         // trading post version is 1
         // wish I could spawn the ones that dance so they are always dancing when the player gets there
-        [GroundVariants(1)]
+        [GroundVariants(1, 0x2800)]
         [VariantsWithRoomMax(max: 5, variant: 1)]
         [UnkillableAllVariants]
         // crash: if you teach song to him in TF the ice block cutscene triggers
@@ -1878,16 +1878,20 @@ namespace MMR.Randomizer.GameObjects
         Empty136 = 0x136,
         Empty137 = 0x137,
 
-        //[ActorizerEnabled] // field of effect is so HUG
+        [ActorizerEnabled]
         [FileID(277)]
         [ObjectListIndex(0xA1)]
         [ActorInstanceSize(0xB78)]
-        // 8 is smithy goron, 0x7F84, 0x7F
-        [GroundVariants(0x8, 0x7FE2)]
-        [EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)]
+        // 8 is smithy goron; blocked because he is too big
+        // 7F85: standing outside of shop (complaining about noise)
+        //[GroundVariants(0x8, 0x7FE2)]
+        [GroundVariants(0x7FE2, 0x7F85, 0x7F86, 0x7F87)]
+        [VariantsWithRoomMax(max:1,
+            0x7FE2, 0x7F85, 0x7F86, 0x7F87)]
+        [EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x3F5F)]
-        GenericGoron = 0x138, // En_Go
+        SmithyGoronAndGo = 0x138, // En_Go
 
         Empty139 = 0x139,
 
@@ -2010,7 +2014,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 3, variant:0)]
         //[EnemizerScenesExcluded(Scene.EastClockTown)]
         [UnkillableAllVariants]
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall, Scene.LaundryPool,
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall, Scene.LaundryPool, Scene.PiratesFortress,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower)] // big blocking
         StockpotBell = 0x14E, // Obj_Bell
 
@@ -3371,15 +3375,15 @@ namespace MMR.Randomizer.GameObjects
         // 0x12 is missing, checks for a flag makes snese
         // 0x13/14/15 is jamming at the jazz session cutscene
         // 0x140A is near the entrance
-        [WaterVariants(0xFC00, 0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15)] // no reason we cant talk to them underwater I dont think
-        [GroundVariants(0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15)]
-        //[GroundVariants(0xFC0B)] // testing dialogue without pathing
+        // removed 0xFC07 because I cannot right now stop them being placed and randoed at the same time (creeper)
+        [WaterVariants(0xFC00, 0xFC08,  0xFC06, 0xFC13, 0xFC14, 0xFC15)] // no reason we cant talk to them underwater I dont think
+        [GroundVariants(0xFC06, 0xFC08, 0xFC0C, 0xFC0D, 0xFC0E, 0xFC0F, 0xFC10, 0xFC11, 0xFC13, 0xFC14, 0xFC15)]
+        // TODO finish making these both underwater and above water where possible
         [PathingVariants(0x140A, 0xFC05, 0x2, 0x3, 0x4)]
         [VariantsWithRoomMax(max: 1, variant: 0x140A, 0xFC05, 0x2, 0x3, 0x4)]
         [VariantsWithRoomMax(max: 1, variant: 0xFC08, 0xFC07, 0xFC06, 0xFC13, 0xFC14, 0xFC15, 0xFC00)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
-        [EnemizerScenesExcluded(Scene.ZoraHall, Scene.ZoraCape)]
-        //[EnemizerScenesExcluded(Scene.ZoraCape)] // TODO
+        [EnemizerScenesExcluded(Scene.ZoraCape)]//, Scene.ZoraHall)]
         [UnkillableAllVariants]
         RegularZora = 0x228, // En_Zot
 
@@ -3555,13 +3559,16 @@ namespace MMR.Randomizer.GameObjects
         [FileID(537)]        
         [ObjectListIndex(0xA1)]
         // 9 is the one that sells you kegs
-        [GroundVariants(9, 0x1E0, 1, 8)]
-        [VariantsWithRoomMax( max: 1, 9, 0x1E0, 1)]
+        // 1 and 1E0 just stand around talking
+        // assumption 0xF is talking ID
+        [GroundVariants(0x1E0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
+        [VariantsWithRoomMax( max: 1,
+            0x1E0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.BombShop, Scene.GoronShrine)]
+        [EnemizerScenesExcluded(Scene.BombShop)]//, Scene.GoronShrine)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
-        Goron = 0x242, // En_S_Goro
+        GoronSGoro = 0x242, // En_S_Goro
 
         //[ActorizerEnabled] // does not spawn, time varibles? second required object?
         [FileID(538)]
@@ -3729,7 +3736,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(567)]
         [ObjectListIndex(0xD0)]
-        [WaterVariants(0,1)]
+        [WaterVariants(0,1)] // TODO are thhre more?
         [UnkillableAllVariants]
         SwimmingZora = 0x260, // En_Zow
 

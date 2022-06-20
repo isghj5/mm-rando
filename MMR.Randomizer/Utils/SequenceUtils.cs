@@ -35,10 +35,10 @@ namespace MMR.Randomizer.Utils
         // 72:wagonride, 0E:boatcruise, 29:zelda, 2D:giants, 
         // 2E:guruguru, 7B:maskreveal(gaints summon cutscene), 73:keaton, 70:calling giants
         // 7D is reunion, 0x50 is sword school
-        public static List<int> lowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04,
-                                                                   0x42, 0x27, 0x31, 0x45,
-                                                                   0x72, 0x0E, 0x29, 0x2D,
-                                                                   0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50 };
+        //public static List<int> lowUseMusicSlots = new List<int> { 0x0F, 0x05, 0x7C, 0x04,
+        //                                                           0x42, 0x27, 0x31, 0x45,
+        //                                                           0x72, 0x0E, 0x29, 0x2D,
+        //                                                           0x2E, 0x7B, 0x73, 0x70, 0x7D, 0x50 };
 
         public static int MAX_BGM_BUDGET            = 0x3800; // vanilla: 0x3800
         public static int MAX_COMBAT_BUDGET         = 0x3800; // unk
@@ -463,7 +463,7 @@ namespace MMR.Randomizer.Utils
             // this "fills" those slots, now we have fewer slots to fill with remaining music (77 fills 73)
             //  so pointerized slots play the same music, and don't waste a song
             //  but if the player does find this music in-game, it still plays sufficiently random music
-            ConvertSequenceSlotToPointer(0x29, 0x0B); // point zelda(SOTime get cs) at healed
+            //ConvertSequenceSlotToPointer(0x29, 0x0B); // point zelda(SOTime get cs) at healed
 
             // with shortened cutscenes, we pointerize more slots that the player would not hear
             // if using a patch, _randomized is not set, lookup a shortened cutscene byte instead
@@ -902,7 +902,8 @@ namespace MMR.Randomizer.Utils
             return true; // sequences with banks, or without needing banks, available
         }
 
-        public static bool IsBlockedByLowUse(SequenceInfo testSeq, SequenceInfo targetSlot, StringBuilder log)
+        // depreciated with expanded banks
+        /*public static bool IsBlockedByLowUse(SequenceInfo testSeq, SequenceInfo targetSlot, StringBuilder log)
         {
             /// if the slot we are checking is a rarely used slot, and this song requires a custom instrument
             ///  skip so we don't waste precious instrument set slots on rarely heard music
@@ -928,7 +929,7 @@ namespace MMR.Randomizer.Utils
             }
 
             return false;
-        }
+        }// */
 
         public static void TryBackupSongPlacement(SequenceInfo targetSlot, StringBuilder log, List<SequenceInfo> unassignedSequences, OutputSettings settings)
         {
