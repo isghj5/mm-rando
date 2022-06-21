@@ -1502,10 +1502,23 @@ namespace MMR.Randomizer.GameObjects
             0xE3, 0xF6, 0xF6, 0x16, 0xC2, 0x22,
             0xCF, 0xE4,
             0x25, 0x46, 0x67, 0xFF, 0x86, 0x95, 0x55)]
+        // might need to come up with a version of this where we just say "each version can show up only once" without being explicit
+        [VariantsWithRoomMax(max:1, 0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62,
+            0xEE, 0xE8, 0xC9, 0xAA, 0x80, 0x6B, 0x51, 0xB4, 0xCC, 0xED, 0xF0, 0xF3, 0xF2,
+            0xF0, 0x01, 0xD7,
+            0xE3, 0xF6, 0xF6, 0x16, 0xC2, 0x22,
+            0xCF, 0xE4,
+            0x25, 0x46, 0x67, 0xFF, 0x86, 0x95, 0x55,
+            0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62,
+            0x3BEE, 0x3BE8, 0x3BC9, 0x3BAA, 0x3B80, 0x3B6B, 0x3B51, 0x3BB4, 0x3BCC, 0x3BED, 0x3BF0, 0x3BF3, 0x3BF2, // center
+            0x3BF0, 0x3C01, 0x3BD7, // south
+            0x3BE3, 0x3BF6, 0x3BF6, 0x3716, 0x3BC2, 0x3722, // north
+            0x38CF, 0x3BE4, // west
+            0x3425, 0x3946, 0x3967, 0xFF, 0x3986, 0x3995, 0x3955)]
         [UnkillableAllVariants]
-        //[EnemizerScenesExcluded(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.MilkRoad,
-        //    Scene.RomaniRanch, Scene.IkanaCanyon, Scene.LinkTrial)] // don't replace the originals as we might need for hints
-        [EnemizerScenesExcluded(Scene.LinkTrial)] // supposidly, you can play storms on the gossip stone to open the door instead of bombchu
+        [EnemizerScenesExcluded(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.MilkRoad,
+            Scene.RomaniRanch, Scene.IkanaCanyon, Scene.LinkTrial)] // don't replace the originals as we might need for hints
+        //[EnemizerScenesExcluded(Scene.LinkTrial)] // supposidly, you can play storms on the gossip stone to open the door instead of bombchu
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // crash (reason unk)
         GossipStone = 0xEF, // En_Gs
 
@@ -1726,7 +1739,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         WarpToTrialEntrance = 0x116, // En_Warp_tag
 
-	    // dog race owner
+      // dog race owner
         [FileID(252)]
         [ObjectListIndex(0xD7)]
         MammauYan = 0x117, // En_Aob_01
