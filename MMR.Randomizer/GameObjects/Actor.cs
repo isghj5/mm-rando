@@ -158,7 +158,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(53)]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
-        // 4 is group of fairies out of a fountain, 7 is large healing fairy, 9 is yellow fairy (unused)
+// TODO find more, there are a lot of params here
+        // 4 is group of fairies out of a fountain, 6 is spawned by 4
+        // 7 is large healing fairy, 9 is yellow fairy that sets 1000 (unused) A is also yellow, does not set 1000
         // 4 has been removed because its unlikely to make sense for the location, and if its in TF it might contribute hard to TFG
         [GroundVariants(2, 7, 9)]
         [FlyingVariants(2, 7, 9)]
@@ -1977,6 +1979,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // animated kill but not enemy category
         ImposterFrog = 0x147, // En_Fg  // unused beta frog
 
+        // not even sure if its used, empty draw function, almost no code
         [FileID(294)]
         [ObjectListIndex(0x169)]
         Dm_Ravine = 0x148, // Dm_Ravine
@@ -2436,18 +2439,19 @@ namespace MMR.Randomizer.GameObjects
         SnowHeadCentralPillar = 0x18F, // Bg_Hakugin_Post
 
         // these are trees and the ground as part of the opening cutscene
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // disabled because we have a custom replacement with actual collider and tree bonk
         [FileID(360)]
         [ObjectListIndex(0x169)]
         // 0xFF is type, zero is the floor, the other three are trees
         // 0xFF00 is... unknown passed to another function
         // 0102 exists, 0202, 0103, FF00
-        [GroundVariants(1,2,3)]
+        //[GroundVariants(1,2,3)]
+        //[GroundVariants(0x1,2,3)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.LostWoods)]
-        LostWoodsCutsceneObjects = 0x190, // Dm_Opstage
+        LostWoodsCutsceneTrees = 0x190, // Dm_Opstage
 
         // requires like 3 objects wtf
         //0x192 0x1BE,0x277);
