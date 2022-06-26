@@ -897,23 +897,6 @@ namespace MMR.Randomizer
                 int z = conditionRemove[2];
                 ItemList[x].Conditionals[y] = null;
             }
-            
-            foreach (var targetRemovals in ConditionRemoves.Select(cr => ItemList[cr[0]]))
-            {
-                foreach (var conditionals in targetRemovals.Conditionals)
-                {
-                    if (conditionals != null)
-                    {
-                        foreach (var d in conditionals)
-                        {
-                            if (!ItemList[d].CannotRequireItems.Contains(currentItem))
-                            {
-                                ItemList[d].CannotRequireItems.Add(currentItem);
-                            }
-                        }
-                    }
-                }
-            }
 
             foreach (var itemObject in ItemList)
             {
