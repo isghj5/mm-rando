@@ -251,14 +251,14 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsRequired(Item item, Item locationForImportance, RandomizedResult randomizedResult, bool anythingCanBeRequired = false)
         {
-            return (anythingCanBeRequired || CanBeRequired(item)) && randomizedResult.LocationsRequiredForMoonAccess.Contains(locationForImportance);
+            return (anythingCanBeRequired || CanBeRequired(item)) && randomizedResult.LocationsRequiredForMoonAccess?.Contains(locationForImportance) == true;
         }
 
         public static bool IsImportant(Item item, Item locationForImportance, RandomizedResult randomizedResult)
         {
             return !item.Name().Contains("Heart")
                 && item != Item.IceTrap
-                && randomizedResult.ImportantLocations.Contains(locationForImportance);
+                && randomizedResult.ImportantLocations?.Contains(locationForImportance) == true;
         }
 
         public static readonly ReadOnlyCollection<ReadOnlyCollection<Item>> ForbiddenStartTogether = new List<List<Item>>()
