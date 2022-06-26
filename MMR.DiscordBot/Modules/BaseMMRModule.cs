@@ -13,6 +13,7 @@ using System.Net;
 using System.Collections.Generic;
 using System.Threading;
 using MMR.Common.Utils;
+using System.Diagnostics;
 
 namespace MMR.DiscordBot.Modules
 {
@@ -194,10 +195,12 @@ namespace MMR.DiscordBot.Modules
             {
                 try
                 {
+                    var stopwatch = new Stopwatch();
                     var (patchPath, hashIconPath, spoilerLogPath, version) = await _mmrService.GenerateSeed(now, settingPath, async (i) =>
                     {
                         if (i < 0)
                         {
+                            stopwatch.Start();
                             await ModifyNoTagAsync(messageResult, mp => mp.Content = "Generating seed...");
                         }
                         else
@@ -205,6 +208,7 @@ namespace MMR.DiscordBot.Modules
                             await ModifyNoTagAsync(messageResult, mp => mp.Content = $"You are number {i + 1} in the queue.");
                         }
                     });
+                    stopwatch.Stop();
                     var filesToSend = new List<FileAttachment>
                     {
                         new FileAttachment(patchPath),
@@ -212,7 +216,7 @@ namespace MMR.DiscordBot.Modules
                     };
                     await ModifyNoTagAsync(messageResult, mp =>
                     {
-                        mp.Content = "";
+                        mp.Content = $"Completed in {stopwatch.Elapsed}";
                         mp.Attachments = filesToSend;
                     });
                     File.Delete(patchPath);
