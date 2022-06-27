@@ -194,7 +194,7 @@ namespace MMR.Randomizer.Models.Settings
 
         public bool BespokeItemPlacementOrder { get; set; } = true;
 
-        public List<string> EnabledTricks { get; set; } = new List<string>
+        public HashSet<string> EnabledTricks { get; set; } = new HashSet<string>
         {
             "Exit Ocean Spider House without Goron",
             "Lensless Chests",
