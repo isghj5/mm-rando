@@ -21,7 +21,7 @@ static void UpdateState(struct ArrowMagicState* state, ActorPlayer* player, Glob
         } else if (arrow->params == 7) {
             // Update magic consume cost, prevents Deku Bubble from taking more magic than expected
             // if used while an elemental arrow effect is still active.
-            gSaveContext.extra.magicConsumeCost = 2;
+            gSaveContext.extra.magicConsumeCost = ArrowCycle_GetMagicCost(3);
             // Deku Bubble won't set magic consumption state to 0 later, so apply magic cost manually.
             if (!gSaveContext.perm.weekEventReg.hasInfiniteMagic) {
                 gSaveContext.perm.unk24.currentMagic -= gSaveContext.extra.magicConsumeCost;

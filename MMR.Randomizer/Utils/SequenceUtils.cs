@@ -809,7 +809,7 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteCodeNOP(0x80190E7C);
             ReadWriteUtils.WriteCodeNOP(0x80190E80);
 
-            var symbols = Symbols.Load();
+            var symbols = Symbols.FromROM();
             var tableAddr = 0x80720000 + (symbols.PayloadEnd - symbols.PayloadStart); //payload ram address + length
             ReadWriteUtils.WriteU32ToROM(0xC776C0, tableAddr); //RAM address to move audiobanktable into
 
