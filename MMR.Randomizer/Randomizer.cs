@@ -1597,117 +1597,171 @@ namespace MMR.Randomizer
 
         private void PlaceBespokeItems(List<Item> itemPool)
         {
-            var itemOrder = new List<Item>();
+            var canPlaceSongs = !_settings.AddSongs;
+            void PlaceBespokeItem(Item item)
+            {
+                if (!_settings.CustomStartingItemList.Contains(item) && (!item.IsSong() || canPlaceSongs))
+                {
+                    PlaceItem(item, itemPool);
+                }
+            }
 
-            itemOrder.Add(Item.UpgradeBiggestBombBag);
-            itemOrder.Add(Item.UpgradeBigBombBag);
-            itemOrder.Add(Item.UpgradeBiggestQuiver);
-            itemOrder.Add(Item.UpgradeBigQuiver);
+            void PlaceBespokeItemGroup(params Item[] items)
+            {
+                foreach (var item in items.OrderBy(_ => Random.Next()))
+                {
+                    PlaceBespokeItem(item);
+                }
+            }
+
+            PlaceBespokeItem(Item.UpgradeBiggestBombBag);
+            PlaceBespokeItem(Item.UpgradeBigBombBag);
+            PlaceBespokeItem(Item.UpgradeBiggestQuiver);
+            PlaceBespokeItem(Item.UpgradeBigQuiver);
+
+            PlaceBespokeItemGroup(Enumerable.Range((int)Item.TradeItemRoomKey, 4).Cast<Item>().Append(Item.MaskKafei).ToList().Random(3, Random));
 
             if (_settings.PriceMode == PriceMode.None)
             {
-                itemOrder.Add(Item.UpgradeRoyalWallet);
-                itemOrder.Add(Item.UpgradeGiantWallet);
-                itemOrder.Add(Item.UpgradeAdultWallet);
+                PlaceBespokeItem(Item.UpgradeRoyalWallet);
+                PlaceBespokeItem(Item.UpgradeGiantWallet);
+                PlaceBespokeItem(Item.UpgradeAdultWallet);
             }
 
-            itemOrder.Add(Item.ItemHookshot);
-            itemOrder.Add(Item.ItemBow);
-            itemOrder.Add(Item.MaskZora);
-            itemOrder.Add(Item.ItemLightArrow);
-            itemOrder.Add(Item.ItemIceArrow);
-
-            if (!_settings.AddSongs)
+            var roll = Random.NextDouble();
+            if (roll < 0.6)
             {
-                itemOrder.Add(Item.SongSonata);
-                itemOrder.Add(Item.SongLullaby);
-                itemOrder.Add(Item.SongEpona);
-                itemOrder.Add(Item.SongSoaring);
-                itemOrder.Add(Item.SongHealing);
-                itemOrder.Add(Item.SongNewWaveBossaNova);
-                itemOrder.Add(Item.SongElegy);
-                itemOrder.Add(Item.SongStorms);
-                itemOrder.Add(Item.SongOath);
+                PlaceBespokeItemGroup(Item.ItemHookshot, Item.ItemBow, Item.MaskZora, Item.SongSonata, Item.SongLullaby);
+                PlaceBespokeItem(Item.ItemLightArrow);
+                PlaceBespokeItem(Item.ItemIceArrow);
+                PlaceBespokeItem(Item.SongEpona);
+                PlaceBespokeItem(Item.SongHealing);
+                PlaceBespokeItem(Item.SongSoaring);
+                PlaceBespokeItem(Item.SongNewWaveBossaNova);
+                PlaceBespokeItem(Item.SongElegy);
+                PlaceBespokeItem(Item.SongStorms);
+                PlaceBespokeItem(Item.SongOath);
+                PlaceBespokeItemGroup(Item.ItemFireArrow, Item.MaskDeku, Item.MaskGoron);
+                PlaceBespokeItem(Item.ItemBombBag);
+                PlaceBespokeItem(Item.MaskBlast);
+            }
+            else if (roll < 0.85)
+            {
+                PlaceBespokeItem(Item.MaskGoron);
+                PlaceBespokeItem(Item.ItemHookshot);
+                PlaceBespokeItem(Item.SongSonata);
+                if (ItemList[Item.MaskGoron].NewLocation != Item.MaskGibdo)
+                {
+                    PlaceBespokeItem(Item.SongLullaby);
+                }
+                PlaceBespokeItem(Item.SongEpona);
+                PlaceBespokeItem(Item.SongHealing);
+                PlaceBespokeItem(Item.SongSoaring);
+                PlaceBespokeItem(Item.SongNewWaveBossaNova);
+                PlaceBespokeItem(Item.SongElegy);
+                PlaceBespokeItem(Item.SongStorms);
+                PlaceBespokeItem(Item.SongLullaby);
+                PlaceBespokeItem(Item.SongOath);
+                PlaceBespokeItem(Item.MaskZora);
+                PlaceBespokeItem(Item.ItemBow);
+                PlaceBespokeItem(Item.ItemFireArrow);
+                PlaceBespokeItem(Item.ItemLightArrow);
+                PlaceBespokeItem(Item.ItemIceArrow);
+                PlaceBespokeItem(Item.MaskDeku);
+                PlaceBespokeItem(Item.ItemBombBag);
+                PlaceBespokeItem(Item.MaskBlast);
+            }
+            else
+            {
+                PlaceBespokeItem(Item.MaskDeku);
+                PlaceBespokeItem(Item.SongLullaby);
+                PlaceBespokeItem(Item.ItemHookshot);
+                PlaceBespokeItem(Item.SongSonata);
+                PlaceBespokeItem(Item.SongEpona);
+                PlaceBespokeItem(Item.SongHealing);
+                PlaceBespokeItem(Item.SongSoaring);
+                PlaceBespokeItem(Item.SongNewWaveBossaNova);
+                PlaceBespokeItem(Item.SongElegy);
+                PlaceBespokeItem(Item.SongStorms);
+                PlaceBespokeItem(Item.SongOath);
+                PlaceBespokeItem(Item.MaskZora);
+                PlaceBespokeItem(Item.MaskGoron);
+                PlaceBespokeItem(Item.ItemBow);
+                PlaceBespokeItem(Item.ItemFireArrow);
+                PlaceBespokeItem(Item.ItemLightArrow);
+                PlaceBespokeItem(Item.ItemIceArrow);
+                PlaceBespokeItem(Item.ItemBombBag);
+                PlaceBespokeItem(Item.MaskBlast);
             }
 
-            itemOrder.Add(Item.ItemBombBag);
-            itemOrder.Add(Item.MaskBlast);
-            itemOrder.Add(Item.ItemFireArrow);
-            itemOrder.Add(Item.MaskDeku);
-            itemOrder.Add(Item.MaskGoron);
-            itemOrder.Add(Item.ItemPictobox);
-            itemOrder.Add(Item.ItemLens);
-            itemOrder.Add(Item.ItemPowderKeg);
-            itemOrder.Add(Item.MaskCaptainHat);
-            itemOrder.Add(Item.UpgradeMirrorShield);
-            itemOrder.Add(Item.FairyDoubleMagic);
-            itemOrder.Add(Item.FairyMagic);
-            itemOrder.Add(Item.MaskFierceDeity);
-            itemOrder.Add(Item.MaskGiant);
-            itemOrder.Add(Item.MaskGibdo);
-            itemOrder.Add(Item.MaskGaro);
+            PlaceBespokeItem(Item.ItemPictobox);
+            PlaceBespokeItem(Item.ItemLens);
+            PlaceBespokeItem(Item.ItemPowderKeg);
+            PlaceBespokeItem(Item.MaskCaptainHat);
+            PlaceBespokeItem(Item.UpgradeMirrorShield);
+            PlaceBespokeItem(Item.FairyDoubleMagic);
+            PlaceBespokeItem(Item.FairyMagic);
+            PlaceBespokeItem(Item.MaskFierceDeity);
+            PlaceBespokeItem(Item.MaskGiant);
+            PlaceBespokeItem(Item.MaskGibdo);
+            PlaceBespokeItem(Item.MaskGaro);
 
             if (_settings.PriceMode != PriceMode.None)
             {
-                itemOrder.Add(Item.UpgradeRoyalWallet);
-                itemOrder.Add(Item.UpgradeGiantWallet);
-                itemOrder.Add(Item.UpgradeAdultWallet);
+                PlaceBespokeItem(Item.UpgradeRoyalWallet);
+                PlaceBespokeItem(Item.UpgradeGiantWallet);
+                PlaceBespokeItem(Item.UpgradeAdultWallet);
             }
+
+            canPlaceSongs = true;
 
             if (_settings.AddSongs)
             {
-                itemOrder.Add(Item.SongEpona);
-                itemOrder.Add(Item.SongSonata);
-                itemOrder.Add(Item.SongLullaby);
-                itemOrder.Add(Item.SongNewWaveBossaNova);
-                itemOrder.Add(Item.SongElegy);
-                itemOrder.Add(Item.SongHealing);
-                itemOrder.Add(Item.SongOath);
-                itemOrder.Add(Item.SongSoaring);
+                PlaceBespokeItem(Item.SongEpona);
+                PlaceBespokeItem(Item.SongSonata);
+                PlaceBespokeItem(Item.SongLullaby);
+                PlaceBespokeItem(Item.SongNewWaveBossaNova);
+                PlaceBespokeItem(Item.SongElegy);
+                PlaceBespokeItem(Item.SongHealing);
+                PlaceBespokeItem(Item.SongOath);
+                PlaceBespokeItem(Item.SongSoaring);
             }
 
             for (var i = Item.MaskPostmanHat; i <= Item.MaskKamaro; i++)
             {
-                itemOrder.Add(i);
+                PlaceBespokeItem(i);
             }
             for (var i = Item.TradeItemRoomKey; i <= Item.TradeItemMamaLetter; i++)
             {
-                itemOrder.Add(i);
+                PlaceBespokeItem(i);
             }
             for (var i = Item.TradeItemMoonTear; i <= Item.TradeItemOceanDeed; i++)
             {
-                itemOrder.Add(i);
+                PlaceBespokeItem(i);
             }
 
-            itemOrder.Add(Item.ItemFairySword);
-            itemOrder.Add(Item.FairySpinAttack);
-            itemOrder.Add(Item.FairyDoubleDefense);
-            itemOrder.Add(Item.UpgradeGildedSword);
-            itemOrder.Add(Item.UpgradeRazorSword);
-            itemOrder.Add(Item.StartingSword);
+            PlaceBespokeItem(Item.ItemFairySword);
+            PlaceBespokeItem(Item.FairySpinAttack);
+            PlaceBespokeItem(Item.FairyDoubleDefense);
+            PlaceBespokeItem(Item.UpgradeGildedSword);
+            PlaceBespokeItem(Item.UpgradeRazorSword);
+            PlaceBespokeItem(Item.StartingSword);
 
-            itemOrder.Add(Item.ItemBottleAliens);
-            itemOrder.Add(Item.ItemBottleWitch);
-            itemOrder.Add(Item.ItemBottleGoronRace);
-            itemOrder.Add(Item.ItemBottleMadameAroma);
-            itemOrder.Add(Item.ItemBottleBeavers);
-            itemOrder.Add(Item.ItemBottleDampe);
+            PlaceBespokeItem(Item.ItemBottleAliens);
+            PlaceBespokeItem(Item.ItemBottleWitch);
+            PlaceBespokeItem(Item.ItemBottleGoronRace);
+            PlaceBespokeItem(Item.ItemBottleMadameAroma);
+            PlaceBespokeItem(Item.ItemBottleBeavers);
+            PlaceBespokeItem(Item.ItemBottleDampe);
 
             if (_settings.AddSongs)
             {
-                itemOrder.Add(Item.SongStorms);
+                PlaceBespokeItem(Item.SongStorms);
             }
 
-            itemOrder.Add(Item.ItemMagicBean);
-            itemOrder.Add(Item.ChestInvertedStoneTowerBean);
-            itemOrder.Add(Item.ShopItemBusinessScrubMagicBean);
-
-            itemOrder.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
-
-            foreach (var item in itemOrder)
-            {
-                PlaceItem(item, itemPool);
-            }
+            PlaceBespokeItem(Item.ItemMagicBean);
+            PlaceBespokeItem(Item.ChestInvertedStoneTowerBean);
+            PlaceBespokeItem(Item.ShopItemBusinessScrubMagicBean);
         }
 
         /// <summary>
