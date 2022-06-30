@@ -1156,7 +1156,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.LostWoodsCutsceneTrees)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.ClayPot)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.BadBat, GameObjects.Actor.Cow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
@@ -1610,7 +1610,7 @@ namespace MMR.Randomizer
                 var companionAttrs = actor.ActorEnum.GetAttributes<CompanionActorAttribute>();
                 if (companionAttrs != null)
                 {
-                    // if 4 or fewer, no companions, not enough regular actors anyway
+                    // if 4 or fewer total actors here, no companions, not enough regular actors anyway
                     // reminder: these are companions that fully mix into the actor list
                     if (thisSceneData.ActorsPerObject[objectIndex].Count <= 3) continue;
 
@@ -1625,6 +1625,16 @@ namespace MMR.Randomizer
                             candidates.Add(newCompanion);
                         }
                     }
+                }
+
+                // New TuboTrap is dual object, but its like one of two actors (tsubo) so adding new general code is rough
+                // assume the actor still using object 3 to free placement in dungeons, add to claypot
+                if (actor.ActorEnum == GameObjects.Actor.ClayPot)
+                {
+                    var newCompanion = new Actor(GameObjects.Actor.FlyingPot);
+                    //newCompanion.Variants = companion.Variants;
+                    newCompanion.IsCompanion = true;
+                    candidates.Add(newCompanion);
                 }
             }
         }
