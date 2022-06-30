@@ -1317,15 +1317,16 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x2A0)]
         [ObjectListIndex(0x11D)]
         //0x1200, 0x1B00, 0x2800 spawns from the ground after you play a song
-        // versions: 1200, 1B00, 2800 shows up a lot, 2D00 stonetower, 3200 zora cape
+        // versions: 1200, 1B00, 2800 shows up a lot, 2D00 stonetower, 3200 zora cape, 0x11D is zora cape
         // trading post version is 1
         // wish I could spawn the ones that dance so they are always dancing when the player gets there
-        [GroundVariants(1, 0x2800)]
+        [GroundVariants(1, 0x2800, 0x11D)]
         [VariantsWithRoomMax(max: 5, variant: 1)]
         [UnkillableAllVariants]
         // crash: if you teach song to him in TF the ice block cutscene triggers
         [EnemizerScenesPlacementBlock(Scene.TerminaField)]
-        [EnemizerScenesExcluded(Scene.TradingPost)]//, Scene.AstralObservatory)] // re-disable this if playing Entrando
+        [EnemizerScenesExcluded(Scene.TradingPost, Scene.TwinIslands, Scene.SnowheadTemple, Scene.StoneTower,
+            Scene.PathToSnowhead)]//, Scene.AstralObservatory)] // re-disable this if playing Entrando
         Scarecrow = 0xCA, // En_Kakasi
 
         [FileID(173)]
