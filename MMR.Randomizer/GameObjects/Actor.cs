@@ -866,8 +866,22 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0001)]
         Arrow_Light = 0x7F, // Arrow_Light
 
+        // this actor is fire arrows, bottles, and rupees you can find in the world, ununsed from OoT chest (lens) game
+        // I'm not using vanill anymore, use the mmra
+        // free bottle? if I can make it rare...
+        //    all of these require specific objects, annoying..
+        // I can pick up bottles but they are shuffled getitems, so they are random..
+        // the free standing rupees are untouchable, and require lens, but if you find them its still interesting
+        //  need to fix so you can actually touch them though, as they have no pickup
+        //[ActorizerEnabledFreeOnly]
+        //[ActorizerEnabled]
         [FileID(121)]
-        [ObjectListIndex(1)]
+        //[ObjectListIndex(1)] // multi-object actor uses 1 as its defined object, ignore
+        //[ObjectListIndex(0x9E)] // GI_BOTTLE
+        //[ObjectListIndex(0x13F)] // GI_RUPY
+        //[GroundVariants(0)] // should be bottle, doesnt work without object
+        //[OnlyOneActorPerRoom]
+        //[EnemizerScenesPlacementBlock(Scene.TerminaField)] // it would always get placed in termina field, bad
         Item_Etcetera = 0x80, // Item_Etcetera
 
         //[ActorizerEnabledFreeOnly] // not sure this works with object 1, will test later

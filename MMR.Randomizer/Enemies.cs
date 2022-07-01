@@ -101,7 +101,7 @@ namespace MMR.Randomizer
                                 .Where(u => u.ObjectIndex() <= 3
                                 && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized())))
                                 .ToList();
-
+            
 
             // because this list needs to be re-evaluated per scene, start smaller here once
             FreeCandidateList = freeCandidates.Select(u => new Actor(u)).ToList();
@@ -1156,7 +1156,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.ClayPot)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Item_Etcetera)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.BadBat, GameObjects.Actor.Cow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
@@ -2200,6 +2200,11 @@ namespace MMR.Randomizer
                                 ReplacementCandidateList.Add(replacementActorSearch);
                             }
 
+                            if (injectedActor.objID <= 3)
+                            {
+                                FreeCandidateList.Add(replacementActorSearch);
+                            }
+
                             // this is separate from the above because this lets us modify files not found in ReplacementCandidateList
                             // like demo_kankyo, which is a free actor and not a regular candidate
                             var newFID = (int)injectedActor.fileID;
@@ -2546,7 +2551,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 34.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 34.2\n");
                 }
             }
             catch (Exception e)
