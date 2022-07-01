@@ -27,7 +27,7 @@ namespace MMR.Randomizer.Utils
                     u.Region,
                     ItemUtils.IsRequired(u.ItemObject.Item, u.LocationForImportance, randomized),
                     ItemUtils.IsImportant(u.ItemObject.Item, u.LocationForImportance, randomized),
-                    randomized.ImportantSongLocations.Contains(u.LocationForImportance),
+                    randomized.ImportantSongLocations?.Contains(u.LocationForImportance) == true,
                     settings.ProgressiveUpgrades
                 ));
 

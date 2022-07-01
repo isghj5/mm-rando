@@ -192,7 +192,7 @@
             this.lItem.Location = new System.Drawing.Point(7, 3);
             this.lItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lItem.Name = "lItem";
-            this.lItem.Size = new System.Drawing.Size(434, 1294);
+            this.lItem.Size = new System.Drawing.Size(434, 1752);
             this.lItem.TabIndex = 4;
             this.lItem.Text = resources.GetString("lItem.Text");
             // 
@@ -205,7 +205,7 @@
             this.tShuffles.Name = "tShuffles";
             this.tShuffles.Size = new System.Drawing.Size(468, 315);
             this.tShuffles.TabIndex = 2;
-            this.tShuffles.Text = "Item Pool";
+            this.tShuffles.Text = "Item Randomization";
             this.tShuffles.UseVisualStyleBackColor = true;
             // 
             // lShuffle
@@ -213,7 +213,7 @@
             this.lShuffle.Location = new System.Drawing.Point(7, 3);
             this.lShuffle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lShuffle.Name = "lShuffle";
-            this.lShuffle.Size = new System.Drawing.Size(434, 99);
+            this.lShuffle.Size = new System.Drawing.Size(434, 1898);
             this.lShuffle.TabIndex = 2;
             this.lShuffle.Text = resources.GetString("lShuffle.Text");
             // 
@@ -234,7 +234,7 @@
             this.lGimmick.Location = new System.Drawing.Point(7, 3);
             this.lGimmick.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lGimmick.Name = "lGimmick";
-            this.lGimmick.Size = new System.Drawing.Size(434, 1391);
+            this.lGimmick.Size = new System.Drawing.Size(434, 1526);
             this.lGimmick.TabIndex = 2;
             this.lGimmick.Text = resources.GetString("lGimmick.Text");
             // 
@@ -255,7 +255,7 @@
             this.label1.Location = new System.Drawing.Point(4, 1);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(440, 1528);
+            this.label1.Size = new System.Drawing.Size(440, 2064);
             this.label1.TabIndex = 0;
             this.label1.Text = resources.GetString("label1.Text");
             // 
@@ -299,7 +299,7 @@
             this.lCosmetic.Location = new System.Drawing.Point(7, 3);
             this.lCosmetic.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lCosmetic.Name = "lCosmetic";
-            this.lCosmetic.Size = new System.Drawing.Size(434, 974);
+            this.lCosmetic.Size = new System.Drawing.Size(434, 1165);
             this.lCosmetic.TabIndex = 2;
             this.lCosmetic.Text = resources.GetString("lCosmetic.Text");
             // 

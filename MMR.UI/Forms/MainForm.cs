@@ -22,6 +22,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using MMR.Randomizer.Constants;
 using System.Threading;
+using MMR.UI.Controls;
 
 namespace MMR.UI.Forms
 {
@@ -266,20 +267,6 @@ namespace MMR.UI.Forms
             var value = (int)propertyInfo.GetValue(_configuration.GameplaySettings);
             var newValue = checkBox.Checked ? value | cutsceneFlag : value & ~cutsceneFlag;
             UpdateSingleSetting(() => propertyInfo.SetValue(_configuration.GameplaySettings, newValue));
-        }
-
-        private class InvertIndeterminateCheckBox : CheckBox
-        {
-            protected override void OnClick(EventArgs e)
-            {
-                CheckState = CheckState switch
-                {
-                    CheckState.Checked => CheckState.Unchecked,
-                    CheckState.Unchecked => CheckState.Checked,
-                    CheckState.Indeterminate => CheckState.Checked,
-                    _ => CheckState,
-                };
-            }
         }
 
         private class LocationCategoryLabel : Label
