@@ -293,4 +293,11 @@ void ArrowCycle_Handle(ActorPlayer* player, GlobalContext* ctxt) {
     gArrowCycleState.arrow = arrow;
     gArrowCycleState.frameDelay++;
     gArrowCycleState.magicCost = GetMagicCostByInfo(curInfo);
+
+    // If cycling from normal arrow -> elemental arrow, reserve magic consume state.
+    // This prevents using Lens between now and processing the delay frame, and thus prevents
+    // mutating the magic consume state while Lens is active.
+    if (curInfo->item == ITEM_BOW) {
+        gSaveContext.extra.magicConsumeState = 3;
+    }
 }
