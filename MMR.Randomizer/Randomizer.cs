@@ -1647,7 +1647,7 @@ namespace MMR.Randomizer
             itemList.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
 
             // Just to have less failures placing Epona's for now. There is probably a better way to do this.
-            if (!_settings.AddSongs)
+            if (!_settings.AddSongs && itemList.Contains(Item.SongEpona))
             {
                 PlaceItem(Item.SongEpona, itempool);
                 itemList.Remove(Item.SongEpona);
