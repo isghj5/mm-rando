@@ -1571,7 +1571,11 @@ namespace MMR.Randomizer
             PlaceOcarinaAndSongOfTime(itemPool);
             PlaceBossRemains(itemPool);
 
-            if (_settings.BespokeItemPlacementOrder)
+            if (_settings.ItemPlacement == ItemPlacement.Random)
+            {
+                PlaceRandomItems(itemPool);
+            }
+            else if (_settings.ItemPlacement == ItemPlacement.Bespoke)
             {
                 PlaceBespokeItems(itemPool);
             }
@@ -1594,6 +1598,69 @@ namespace MMR.Randomizer
 
             _randomized.ItemList = ItemList;
         }
+
+        private void PlaceRandomItems(List<Item> itempool)
+        {
+
+            var itemList = new List<Item>();
+
+            for (var i = Item.TradeItemRoomKey; i <= Item.TradeItemMamaLetter; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.TradeItemMoonTear; i <= Item.TradeItemOceanDeed; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.ItemWoodfallMap; i <= Item.ItemStoneTowerKey4; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.StartingSword; i <= Item.StartingHeartContainer2; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.UpgradeRazorSword; i <= Item.UpgradeRoyalWallet; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.SongHealing; i <= Item.SongOath; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.MaskPostmanHat; i <= Item.MaskZora; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.MaskDeku; i <= Item.ItemNotebook; i++)
+            {
+                itemList.Add(i);
+            }
+
+            itemList.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
+
+            // Just to have less failures placing Epona's for now. There is probably a better way to do this.
+            if (!_settings.AddSongs)
+            {
+                PlaceItem(Item.SongEpona, itempool);
+                itemList.Remove(Item.SongEpona);
+            }
+
+            while (itemList.Count != 0)
+            {
+                var item = itemList.Random(Random);
+                PlaceItem(item, itempool);
+                itemList.Remove(item);
+            }
+        }
+
 
         private void PlaceBespokeItems(List<Item> itemPool)
         {

@@ -51,6 +51,8 @@ namespace MMR.UI.Forms
             this.cMixSongs = new System.Windows.Forms.CheckBox();
             this.cEnemy = new System.Windows.Forms.CheckBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.lItemPlacement = new System.Windows.Forms.Label();
+            this.cItemPlacement = new System.Windows.Forms.ComboBox();
             this.bToggleTricks = new System.Windows.Forms.Button();
             this.cMode = new System.Windows.Forms.ComboBox();
             this.bLoadLogic = new System.Windows.Forms.Button();
@@ -235,7 +237,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cBespokeItemPlacementOrder = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -442,7 +443,8 @@ namespace MMR.UI.Forms
             // 
             // groupBox9
             // 
-            this.groupBox9.Controls.Add(this.cBespokeItemPlacementOrder);
+            this.groupBox9.Controls.Add(this.lItemPlacement);
+            this.groupBox9.Controls.Add(this.cItemPlacement);
             this.groupBox9.Controls.Add(this.bToggleTricks);
             this.groupBox9.Controls.Add(this.cMode);
             this.groupBox9.Controls.Add(this.bLoadLogic);
@@ -456,6 +458,31 @@ namespace MMR.UI.Forms
             this.groupBox9.TabIndex = 29;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Generation Settings";
+            // 
+            // lItemPlacement
+            // 
+            this.lItemPlacement.AutoSize = true;
+            this.lItemPlacement.BackColor = System.Drawing.Color.Transparent;
+            this.lItemPlacement.ForeColor = System.Drawing.Color.Black;
+            this.lItemPlacement.Location = new System.Drawing.Point(13, 97);
+            this.lItemPlacement.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lItemPlacement.Name = "lItemPlacement";
+            this.lItemPlacement.Size = new System.Drawing.Size(93, 15);
+            this.lItemPlacement.TabIndex = 21;
+            this.lItemPlacement.Text = "Item Placement:";
+            // 
+            // cItemPlacement
+            // 
+            this.cItemPlacement.FormattingEnabled = true;
+            this.cItemPlacement.Items.AddRange(new object[] {
+            "Random",
+            "Bespoke",
+            "Classic"});
+            this.cItemPlacement.Location = new System.Drawing.Point(113, 89);
+            this.cItemPlacement.Name = "cItemPlacement";
+            this.cItemPlacement.Size = new System.Drawing.Size(121, 23);
+            this.cItemPlacement.TabIndex = 20;
+            this.cItemPlacement.SelectedIndexChanged += new System.EventHandler(this.cItemPlacement_SelectedIndexChanged);
             // 
             // bToggleTricks
             // 
@@ -2763,17 +2790,6 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cBespokeItemPlacementOrder
-            // 
-            this.cBespokeItemPlacementOrder.AutoSize = true;
-            this.cBespokeItemPlacementOrder.Location = new System.Drawing.Point(13, 89);
-            this.cBespokeItemPlacementOrder.Name = "cBespokeItemPlacementOrder";
-            this.cBespokeItemPlacementOrder.Size = new System.Drawing.Size(189, 19);
-            this.cBespokeItemPlacementOrder.TabIndex = 20;
-            this.cBespokeItemPlacementOrder.Text = "Bespoke Item Placement Order";
-            this.cBespokeItemPlacementOrder.UseVisualStyleBackColor = true;
-            this.cBespokeItemPlacementOrder.CheckedChanged += new System.EventHandler(this.cBespokeItemPlacementOrder_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3071,7 +3087,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lLuckRoll;
         private System.Windows.Forms.NumericUpDown tLuckRollPercentage;
         private System.Windows.Forms.Button bSkip;
-        private System.Windows.Forms.CheckBox cBespokeItemPlacementOrder;
+        private System.Windows.Forms.ComboBox cItemPlacement;
+        private System.Windows.Forms.Label lItemPlacement;
     }
 }
 
