@@ -42,9 +42,9 @@
             this.label1.Location = new System.Drawing.Point(15, 15);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(76, 15);
+            this.label1.Size = new System.Drawing.Size(61, 15);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Toggle tricks:";
+            this.label1.Text = "Edit tricks:";
             // 
             // bOK
             // 
@@ -106,7 +106,7 @@
             this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.MaximizeBox = false;
             this.Name = "ToggleTricksForm";
-            this.Text = "Toggle Tricks";
+            this.Text = "Edit Tricks";
             this.ResumeLayout(false);
             this.PerformLayout();
 
