@@ -1599,6 +1599,12 @@ namespace MMR.Randomizer
             _randomized.ItemList = ItemList;
         }
 
+        /// <summary>
+        /// Items are placed in the following order:
+        /// 1. Songs if they are not placed with items. Epona's first, the the rest in a random order in order to minimize failures.
+        /// 2. All items that can effect progression in a random order.
+        /// 3. Everything else is placed by the old algorithm. The order shouldn't matter because they aren't tied to logic.
+        /// </summary>
         private void PlaceRandomItems(List<Item> itemPool)
         {
 
@@ -1644,6 +1650,34 @@ namespace MMR.Randomizer
                 itemList.Add(i);
             }
 
+            for (var i = Item.CollectibleSwampSpiderToken1; i <= Item.CollectibleOceanSpiderToken30; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.CollectibleStrayFairyClockTown; i <= Item.CollectibleStrayFairyStoneTower15; i++)
+            {
+                itemList.Add(i);
+            }
+
+            // Could maybe just add the items that affect logic but unless
+            // there's a bunch of seed rolling failures it's probably not a big deal.
+            // Same goes for trading shop items.
+            for (var i = Item.BottleCatchFairy; i <= Item.BottleCatchMushroom; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.ItemRanchBarnMainCowMilk; i <= Item.ItemCoastGrottoCowMilk2; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.ShopItemTradingPostRedPotion; i <= Item.ShopItemZoraRedPotion; i++)
+            {
+                itemList.Add(i);
+            }
+
             itemList.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
 
             if (!_settings.AddSongs)
@@ -1662,7 +1696,6 @@ namespace MMR.Randomizer
                     itemList.Remove(song);
                 }
 
-                // Doing this to minimize fails. Ideally we fully randomize it and allow multiple attempts until success.
                 if (songs.Contains(Item.SongEpona))
                 {
                     PlaceItem(Item.SongEpona, itemPool);
