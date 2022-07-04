@@ -187,6 +187,62 @@ namespace MMR.Randomizer.Utils
             actor.Rotation.z = (short)MergeRotationAndFlags(rotation: 0, flags: actor.Rotation.z);
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="actor"> the whole actor</param>
+        /// <param name="variant"> specify new or old variant</param>
+        /// <returns> -1 if no switch flags, otherwise the flags</returns>
+        public static short GetActorSwitchFlags(Actor actor, short variant)
+        {
+            if (actor.ActorEnum.GetAttribute<SwitchFlagsPlacementXRotAttribute>() != null)
+            {
+                // get x rotation, return
+                return (short)(actor.Rotation.x >> 7);
+            }
+            if (actor.ActorEnum.GetAttribute<SwitchFlagsPlacementZRotAttribute>() != null)
+            {
+                // get x rotation, return
+                return (short)(actor.Rotation.z >> 7);
+            }
+
+            var flagsAttr = actor.ActorEnum.GetAttribute<SwitchFlagsPlacementAttribute>();
+            if (flagsAttr != null)
+            {
+                return (short)((variant >> flagsAttr.Shift) & flagsAttr.Mask);
+            }
+
+            return -1; // no switch flags
+        }
+
+        
+        public static void SetActorSwitchFlags(Actor actor, short switchFlags)
+        {
+            // the flags are stored as actual rotation
+            if (actor.ActorEnum.GetAttribute<SwitchFlagsPlacementXRotAttribute>() != null)
+            {
+                actor.Rotation.x = (short)MergeRotationAndFlags(switchFlags, flags: actor.Rotation.x);
+            }
+            if (actor.ActorEnum.GetAttribute<SwitchFlagsPlacementZRotAttribute>() != null)
+            {
+                actor.Rotation.z = (short)MergeRotationAndFlags(switchFlags, flags: actor.Rotation.z);
+            }
+
+            var flagsAttr = actor.ActorEnum.GetAttribute<SwitchFlagsPlacementAttribute>();
+            if (flagsAttr != null)
+            {
+                // clear the old switchflags from our newly chosen Variant
+                var deleteMask = flagsAttr.Mask << flagsAttr.Shift;
+                var newVarsWithoutSwitchflags = actor.Variants[0] & ~deleteMask;
+
+                // shift the switchflags into the new location
+                var newSwitchflags = switchFlags << flagsAttr.Shift;
+
+                // set variant from cleaned old variant ORed against the new switchflags
+                actor.Variants[0] = newVarsWithoutSwitchflags | newSwitchflags;
+            }
+        }
+
         #region Debug Printing
 
         public static void PrintDataBytes(byte[] data, int location)

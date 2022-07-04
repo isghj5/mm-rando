@@ -78,6 +78,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.InvertedStoneTower)]
         [EnemizerScenesPlacementBlock(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, 
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
+        [SwitchFlagsPlacementZRot]
         TreasureChest = 0x6, // En_Box
 
         [FileID(45)]
@@ -107,6 +108,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x81)] // todo limit?
         [VariantsWithRoomMax(max:2, variant:0x81)]
         [RespawningVariants(variant:0x81)] // if they fly away after melt they might not come down, so not killable
+        [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         //[EnemizerScenesPlacementBlock(Scene.TerminaField)] // temporary, melting them can unmelt the north ice block, but why
         WallMaster = 0xA, // En_Wallmas
 
@@ -261,6 +263,7 @@ namespace MMR.Randomizer.GameObjects
         // this is a regular dungeon door in stonetower
         [FileID(63)]
         [ObjectListIndex(0x1)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         IkanaCastleDoor = 0x1E, // Door_Shutter
 
         Empty1F = 0x1F,
@@ -307,6 +310,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.OceanSpiderHouse)] // shared object with goldskulltula, cannot change without
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Snowhead, 
             Scene.MountainVillageSpring, Scene.TwinIslandsSpring)] // not a problem, just weird seeing them fly like that
+        [SwitchFlagsPlacement(mask: 0x3F, shift: 0)]
         Skulltula = 0x24, // En_St
 
         Empty25 = 0x25,
@@ -415,6 +419,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.PostOffice)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         Bg_Breakwall = 0x36, // Bg_Breakwall
 
         Empty37 = 0x37,
@@ -442,6 +447,7 @@ namespace MMR.Randomizer.GameObjects
            variant: 1, 2, 3, 4, 7)] // they're free, and they are moths, makes sense
         [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SouthernSwamp, Scene.SouthClockTown, Scene.DekuShrine, Scene.WestClockTown, Scene.SouthernSwampClear,
             Scene.SnowheadTemple, Scene.BeneathGraveyard, Scene.GreatBayCoast, Scene.GreatBayTemple, Scene.OceanSpiderHouse, Scene.BeneathTheWell, Scene.PiratesFortressRooms, Scene.PoeHut)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         Torch = 0x39, // Obj_Syokudai
 
         [FileID(80)]
@@ -600,12 +606,14 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x7F07,0x7F05,0x7F06, 0x7F03, 0x7F04, 0x8005, 0x8006, 0x8007, 0x8003)]
         [VariantsWithRoomMax(max: 3, variant: 0x7F07, 0x7F05, 0x7F06, 0x7F02, 0x8005, 0x8006, 0x8007, 0x7F04)]
         [VariantsWithRoomMax(max: 1, variant: 0x7F03, 0x8003)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.BeneathTheWell)] // gibdo locations, but share the same object so gets detected
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows us down too much
         ReDead = 0x4C, // En_Rd
 
         [FileID(94)]
         [ObjectListIndex(0x5C)]
+        [SwitchFlagsPlacement(mask: 0x7E, shift: 9)]
         StoneTowerGreyStoneElevator = 0x4D, // Bg_F40_Flift
 
         // Has no File
@@ -725,6 +733,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(102)]
         [ObjectListIndex(0x280)]
         [FlyingVariants(1)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [UnkillableAllVariants]
         MajoraBalloonSewer = 0x5F, // En_Encount2
 
@@ -843,6 +852,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(115)]
         [ObjectListIndex(0003)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         PushableBlock = 0x7A, // Obj_Oshihiki
 
         [FileID(116)]
@@ -999,6 +1009,7 @@ namespace MMR.Randomizer.GameObjects
         // bad idea to move because beans have paths
         [FileID(136)]
         [ObjectListIndex(0xEE)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         SoftSoilAndBeans = 0x91, // Obj_Bean
 
         [ActorizerEnabled]
@@ -1012,10 +1023,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants] // not enemy actor group, no fairy no clear room
         [EnemizerScenesExcluded(Scene.TerminaField, Scene.GreatBayCoast, Scene.ZoraCape, Scene.Grottos)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, Scene.DekuShrine)] // blocking enemies
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         Bombiwa = 0x92, // Obj_Bombiwa
 
         [FileID(138)]
         [ObjectListIndex(3)] // bleh, always with the dunegeon object
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         FloorAndEyeSwitches = 0x93, // Obj_Switch
 
         Empty94 = 0x94, // Empty94
@@ -1178,6 +1191,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(157)]
         [ObjectListIndex(0xFD)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         En_Owl = 0xAF, // En_Owl
 
         // MULTIPLE OBJECT ACTOR
@@ -1190,7 +1204,6 @@ namespace MMR.Randomizer.GameObjects
         //6a does not load
         // params from m2c:
         // 3 >> & 1 uses object_ishi instead of gameplay_field
-        // 9 >> 7F is switch flags
         // sooo what is 0x1FE?
         // 1 is silver boulder, pick-upable by darmani (FE is the highest scene flag I can set, which might be always )
         // 0x1F2 you get bugs if you pick it up, best version
@@ -1200,6 +1213,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.TerminaField)] // dont replace them in TF
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x3F5F)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         Rock = 0xB0, // En_Ishi
 
         //[ActorizerEnabled] // works but a bit lame
@@ -1216,6 +1230,7 @@ namespace MMR.Randomizer.GameObjects
         // we're NOT going to be includeing the flipping switches, in part because they are invisble and you wouldn't know they are there anyway
         // (they use the scene wall as their shape/texture)
         [WallVariants(0xB00, 0x1200, 0x1130)]
+        [SwitchFlagsPlacement(mask:0x7F, shift:8)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.StoneTower, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, Scene.SecretShrine)]
         SunSwitch = 0xB2, // Obj_Lightswitch
@@ -1343,8 +1358,11 @@ namespace MMR.Randomizer.GameObjects
             Scene.PathToSnowhead)]//, Scene.AstralObservatory)] // re-disable this if playing Entrando
         Scarecrow = 0xCA, // En_Kakasi
 
+        // think these control the push blocks in the sewer zora push puzzle
+        // 0x85, 0x107
         [FileID(173)]
         [ObjectListIndex(0x1)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)] // this actor can have switch flags on zrotation, but not used in vanilla
         PushableBlockSwitchFlagsHandler = 0xCB, // Obj_Makeoshihiki
 
         [FileID(174)]
@@ -1372,6 +1390,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(177)]
         [ObjectListIndex(0x1)]
+        [SwitchFlagsPlacement(mask:0x7F, shift:9)]
         Obj_Roomtimer = 0xD3, // Obj_Roomtimer
 
         [FileID(178)]
@@ -1611,6 +1630,7 @@ namespace MMR.Randomizer.GameObjects
         // todo randomize just so palace has more actors
         [FileID(233)]
         [ObjectListIndex(0x2)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         BronzeBoulder = 0xFC, // Obj_Hamishi
 
         //[ActorizerEnabled] // overloads something, crashes in almost all cases
@@ -1638,6 +1658,7 @@ namespace MMR.Randomizer.GameObjects
         // ... puzzle block? like what?
         [FileID(237)]
         [ObjectListIndex(0x1)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         PuzzleBlock = 0x102, // Obj_Pzlblock
 
         //[ActorizerEnabled] // doesnt spawn without 2 node path, if you remove the code to allow for more:crash
@@ -1659,6 +1680,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x7E)]
         [VariantsWithRoomMax(max:4, variant:0x7E)] // 11 overloaded gorman race track
         [UnkillableAllVariants]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         ArmosStatue = 0x105, // Obj_Armos
 
         [ActorizerEnabled]
@@ -1756,7 +1778,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         WarpToTrialEntrance = 0x116, // En_Warp_tag
 
-      // dog race owner
+       // dog race owner
         [FileID(252)]
         [ObjectListIndex(0xD7)]
         MammauYan = 0x117, // En_Aob_01
@@ -1834,6 +1856,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x7E00, 0x7D00, 0x7C00)] // work but too low mostly hidden by ground
         [VariantsWithRoomMax(max:1, 0x7E01, 0x7D01, 0x7C01)]
         [UnkillableAllVariants]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         SpiderWeb = 0x125, // Bg_Spdweb
 
         Empty126 = 0x126,
@@ -1928,6 +1951,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerEnabled] // todo: try randomizing
         [FileID(278)]
         [ObjectListIndex(0x161)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         Raft = 0x13A, // En_Raf carniverous raft, woodfall temple
 
         [FileID(279)]
@@ -1936,6 +1960,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(280)]
         [ObjectListIndex(0x163)]
+        [SwitchFlagsPlacementXRot]
         Obj_Raillift = 0x13C, // Obj_Raillift
 
         [FileID(281)]
@@ -1954,10 +1979,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         PottedPlant = 0x13E, // Obj_Flowerpot
 
+        // probably follows paths like the spike traps
         [FileID(283)]
         [ObjectListIndex(0x166)]
         Obj_Spinyroll = 0x13F, // Obj_Spinyroll
 
+        // "boss mask cutscene objects"
         [FileID(284)]
         [ObjectListIndex(0x1CC)]
         Dm_Hina = 0x140, // Dm_Hina
@@ -2071,6 +2098,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(305)]
         [ObjectListIndex(0x1)]
+        [SwitchFlagsPlacement(mask:0x7F, shift: 0x9)]
         GreatFairyPieceSwarm = 0x153, // En_Elfgrp
 
         // todo test this one
@@ -2164,10 +2192,13 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:1, variant: 0x3F5F)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall)] // hiploop only, bad spot for a fire
         [UnkillableAllVariants]
+        // possible second switch at 0x3F8
+        [SwitchFlagsPlacement(mask: 0x7F, shift:0)]
         CircleOfFire = 0x162, // Obj_Fireshield // tag: FireRing
 
         [FileID(321)]
         [ObjectListIndex(0x179)]
+        [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         Bg_Ladder = 0x163, // Bg_Ladder
 
         [EnemizerEnabled]
@@ -2222,10 +2253,12 @@ namespace MMR.Randomizer.GameObjects
         Empty16B = 0x16B,
         [FileID(328)]
         [ObjectListIndex(0x17E)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         TerminaFieldSpikedFence = 0x16C, // Bg_Keikoku_Saku
         
         [FileID(329)]
         [ObjectListIndex(0x12A)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         BigBoulder = 0x16D, // Obj_Hugebombiwa
 
         // empty actor, does nothing
@@ -2271,6 +2304,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(290)]
         [ObjectListIndex(0x184)]
+        // the most convoluted switch flags in the world
         GBTWaterwheelsandPushblocks = 0x174, // Bg_Dblue_Movebg
 
         // great fairy beam
@@ -2360,6 +2394,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x2000)]
         // good candidate for aligned front companions, to his son
         [UnkillableAllVariants]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 3)] // 0x3F8
         Butler = 0x17F, // En_Dno
 
         [EnemizerEnabled] // biggest issue: they dont really attack, this isn't the version that spawns over and over
@@ -2451,6 +2486,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(359)]
         [ObjectListIndex(0x190)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         SnowHeadCentralPillar = 0x18F, // Bg_Hakugin_Post
 
         // these are trees and the ground as part of the opening cutscene
@@ -2613,6 +2649,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(392)]
         [ObjectListIndex(0x1)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         En_Time_Tag = 0x1AB, // En_Time_Tag
         
         [FileID(393)]
@@ -2638,6 +2675,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(397)]
         [ObjectListIndex(0x1)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         StrayFairy = 0x1B0, // En_Elforg
 
         //[ActorizerEnabled] // don't give actual items, sadly, just jape you into thinking they are items
@@ -2798,6 +2836,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] //busted
         [FileID(420)]
         [ObjectListIndex(0x1AF)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 4)]
         Dampe = 0x1CA, // En_Tk
 
         Empty1CB = 0x1CB,
@@ -2891,6 +2930,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(437)]
         [ObjectListIndex(0xEF)]
+        [SwitchFlagsPlacement(mask: 0x3F, shift: 0)]
         Obj_Snowball = 0x1DC, // Obj_Snowball
         
         [FileID(438)]
@@ -2899,6 +2939,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(439)]
         [ObjectListIndex(0x144)]
+        [SwitchFlagsPlacement(mask: 0xFF, shift: 3)] // 0x7F8
         SpiritHouseOwner = 0x1DE, // En_Gb2
 
         // unused monkey instrument prompt
@@ -2917,6 +2958,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(443)]
         [ObjectListIndex(0x1C1)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         DinnerPlateProp = 0x1E2, // Obj_Dhouse
 
         [ActorizerEnabled]
@@ -2935,6 +2977,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)]
         [EnemizerScenesPlacementBlock(Scene.Woodfall, // blocking enemies
             Scene.SouthernSwamp)] // 75% chance of crash, reason unk
+        [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         IkanaGravestone = 0x1E3, // Obj_Hakaisi
 
         [FileID(445)]
@@ -2993,6 +3036,7 @@ namespace MMR.Randomizer.GameObjects
         // ??
         [FileID(452)]
         [ObjectListIndex(0x1)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         Obj_Dowsing = 0x1EC, // Obj_Dowsing
 
         // wind in ISTT and water current in PFInterior
@@ -3056,6 +3100,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(460)]
         [ObjectListIndex(0x1CD)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         Obj_Spidertent = 0x1F4, // Obj_Spidertent
 
         [ActorizerEnabled]
@@ -3067,6 +3112,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0x0, 0x1000, 0x1200, 0x1300, 0x1500, 0x1700)]
         [VariantsWithRoomMax(max:1, variant: 0x0, 0x1000, 0x1200, 0x1300, 0x1500, 0x1700)]
         [UnkillableAllVariants]
+        [SwitchFlagsPlacement(mask:0x7F, shift:9)]
         ZoraEgg = 0x1F5, // En_Zoraegg
 
         [FileID(462)]
@@ -3115,6 +3161,7 @@ namespace MMR.Randomizer.GameObjects
         //todo
         [FileID(471)]
         [ObjectListIndex(0x1D6)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         GaboraBlacksmith = 0x1FF, // En_Kgy
         
         // the wackest actor that controls the whole alien invasion event, and a lot of stuff at ranch
@@ -3131,6 +3178,7 @@ namespace MMR.Randomizer.GameObjects
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
+        [SwitchFlagsPlacement(mask: 0x3F, shift: 8)]
         GoronKid = 0x201, // En_Gk
 
         [ActorizerEnabled]
@@ -3160,6 +3208,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(476)]
         [ObjectListIndex(0x1EC)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 3)] // 0x3F8
         Seahorse = 0x205, // En_Ot
 
         [FileID(477)]
@@ -3189,6 +3238,7 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames for ghast
         //[EnemizerScenesPlacementBlock( Scene.TerminaField, // suspected weird un-reproducable crashes always seems to happen when they are around
         //    Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
+        [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         BigPoe = 0x208, // En_Bigpo
 
         // this is the "door" sign that you cut to find him final night, this is NOT the kanban he puts out saying hes gone away
@@ -3260,6 +3310,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(489)]
         [ObjectListIndex(0x142)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         StalChildrenCircle = 0x212, // En_Rail_Skb
 
         [ActorizerEnabled]
@@ -3309,11 +3360,15 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(497)]
         [ObjectListIndex(0x203)]
+        // double because fuck you, gonna have to do it manually
+        //[SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
+        //[SwitchFlagsPlacement(mask: 0xFE, shift: 0)]
         StoneTowerFlippingRoom = 0x21A, // Bg_Ikana_Rotaryroom
 
         // todo
         [FileID(498)]
         [ObjectListIndex(0x184)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         GBTSeaSaw = 0x21B, // Bg_Dblue_Balance
         
         [FileID(499)]
@@ -3442,6 +3497,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(517)]
         [ObjectListIndex(0x23D)]
+        // special additive switch flag, bleh..
         PFSwitchActivatedGeyser = 0x22E, // Obj_Hunsui
 
         // ?
@@ -3478,6 +3534,7 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.CuriosityShop)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         PeekHole = 0x233, // Obj_Nozoki
 
         [ActorizerEnabled]
@@ -3547,6 +3604,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(1)]
         [GroundVariants(0x7F)]
         [UnkillableAllVariants]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         MushroomCloud = 0x23B, // Obj_Kinoko
 
         [ActorizerEnabledFreeOnly]
@@ -3620,10 +3678,12 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(540)]
         [ObjectListIndex(0x5C)]
+        [SwitchFlagsPlacement(mask: 0xFE, shift: 9)]
         StoneTowerBlock = 0x245, // Bg_F40_Block
         
         [FileID(541)]
         [ObjectListIndex(0x222)]
+        [SwitchFlagsPlacement(mask: 0xFE, shift: 9)]
         ElegyStatueSwitch = 0x246, // Bg_F40_Switch
         
         [FileID(542)]
@@ -3708,10 +3768,12 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(556)]
         [ObjectListIndex(0x203)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         STTBombableFloor = 0x255, // Bg_Ikana_Bombwall
         
         [FileID(557)]
         [ObjectListIndex(0x203)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         STTLargeLightRay = 0x256, // Bg_Ikana_Ray
         
         [FileID(558)]
@@ -3755,6 +3817,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GreatBayCoast)]
         [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.RoadToIkana)] // do not remove original
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         IkanaCanyonHookshotStump = 0x25E, // Obj_HsStump
 
         //[ActorizerEnabled] // doesn't spawn with a flower, looks silly
@@ -3762,6 +3825,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(566)]
         [ObjectListIndex(0x12B)]
         [GroundVariants(0x584)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [UnkillableAllVariants] // I think?
         SleepingScrub = 0x25F, // En_Hidden_Nuts
 
@@ -3794,6 +3858,7 @@ namespace MMR.Randomizer.GameObjects
         // I want to put these everywhere as an empty actor you can hit by accident, but that adds a lot of colliders
         [FileID(572)]
         [ObjectListIndex(0x1)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         HitSpot = 0x265, // En_Hit_Tag
         
         [FileID(573)]
@@ -3888,6 +3953,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(586)]
         [ObjectListIndex(0x203)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         PunchableStoneTowerPillars = 0x273, // Bg_Ikana_Dharma
 
         // TODO get placement shifting working so hes not always in the ground
@@ -4030,6 +4096,7 @@ namespace MMR.Randomizer.GameObjects
         // what? todo
         [FileID(609)]
         [ObjectListIndex(0x260)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         UnderwaterGrave = 0x28A, // Obj_Kzsaku
         
         [FileID(610)]
@@ -4042,10 +4109,12 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(612)]
         [ObjectListIndex(0x267)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         IkanaCastleCheckeredCeiling = 0x28D, // Bg_Astr_Bombwall
         
         [FileID(613)]
         [ObjectListIndex(0x236)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         HotCheckeredCeiling = 0x28E, // Bg_Iknin_Susceil
         
         [FileID(614)]

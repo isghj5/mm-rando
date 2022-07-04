@@ -1067,6 +1067,7 @@ namespace MMR.Randomizer
             }
         }
 
+        // can we move this to actorUtils?
         public static void FixPatrollingEnemyVars(List<Actor> chosenReplacementEnemies)
         {
             /// fixes the patrolling enemy paths to make sure it matches the previous actor path
@@ -1120,7 +1121,7 @@ namespace MMR.Randomizer
                 // shift the path into the new location
                 var newPath = oldPathShifted << newdoldPathBehaviorAttr.Shift;
 
-                // set variant from cleaned old variant ored against the new path
+                // set variant from cleaned old variant ORed against the new path
                 actor.Variants[0] = newVarsWithoutPath | newPath;
             }
         }
@@ -1784,7 +1785,6 @@ namespace MMR.Randomizer
             // more and more of this stuff needs to be passed to each function, if I want to tame the big mess that is SwapSceneEnemies
             // All common data we have/use in randomizing actors in one scene
 
-            // todo finish renaming all of these with Capital
             public Scene Scene;
             public StringBuilder Log;
             public Random RNG;
@@ -2034,6 +2034,50 @@ namespace MMR.Randomizer
                     $"was replaced by new enemy: [{thisSceneData.Actors[i].Variants[0].ToString("X4")}]" +
                     $"[{thisSceneData.Actors[i].Name}]");
             }
+
+            WriteOutput($"VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+
+            List<int> usedSwitchFlags = new List<int>();
+            for (int mapNumber = 0; mapNumber < scene.Maps.Count; ++mapNumber)
+            {
+                WriteOutput($" ++ MAP [{mapNumber}] ++");
+                for (int actorNumber = 0; actorNumber < scene.Maps[mapNumber].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapNumber].Actors)
+                {
+                    var mapActor = scene.Maps[mapNumber].Actors[actorNumber];
+                    var flags = ActorUtils.GetActorSwitchFlags(mapActor, (short)mapActor.OldVariant);
+                    if (flags >= 0)
+                    {
+                        usedSwitchFlags.Append(flags);
+                        WriteOutput($">>>> actor [{actorNumber}][{mapActor.ActorEnum}] has flags: {flags} <<<<");
+                    }
+
+                }
+            }
+
+            // change all new actors with switch flags to some flag not yet used
+            var usableSwitches = new List<int>();
+            usableSwitches.AddRange(Enumerable.Range(1,0x7F));
+            usableSwitches.RemoveAll(u => usedSwitchFlags.Contains(u));
+            usableSwitches.Reverse(); // we want to start at 0x7F and decend, under the assumption that they always used lower values
+
+            for (int i = 0; i < thisSceneData.Actors.Count; i++)
+            {
+                var actor = thisSceneData.Actors[i];
+                var switchFlags = ActorUtils.GetActorSwitchFlags(actor, (short)actor.Variants[0]);
+                if (switchFlags == -1) continue;
+                if (usableSwitches.Contains(switchFlags))
+                {
+                    usableSwitches.Remove(switchFlags);
+                }
+                else // we have switch flag and we have a collision, we need to change it
+                {
+                    var newSwitch = usableSwitches[0];
+                    ActorUtils.SetActorSwitchFlags(actor, (short)newSwitch);
+                    usableSwitches.Remove(newSwitch);
+                    WriteOutput($"++++ actor [{i}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] ++++");
+                }
+            }
+
 
             // realign all scene companion actors
             MoveAlignedCompanionActors(thisSceneData.Actors, thisSceneData.RNG, thisSceneData.Log);
