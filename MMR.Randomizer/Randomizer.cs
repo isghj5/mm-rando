@@ -1599,7 +1599,7 @@ namespace MMR.Randomizer
             _randomized.ItemList = ItemList;
         }
 
-        private void PlaceRandomItems(List<Item> itempool)
+        private void PlaceRandomItems(List<Item> itemPool)
         {
 
             var itemList = new List<Item>();
@@ -1646,17 +1646,41 @@ namespace MMR.Randomizer
 
             itemList.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
 
-            // Just to have less failures placing Epona's for now. There is probably a better way to do this.
-            if (!_settings.AddSongs && itemList.Contains(Item.SongEpona))
+            if (!_settings.AddSongs)
             {
-                PlaceItem(Item.SongEpona, itempool);
-                itemList.Remove(Item.SongEpona);
+                var songs = new List<Item>();
+                foreach (var item in itemList)
+                {
+                    if (item.IsSong())
+                    {
+                        songs.Add(item);
+                    }
+                }
+
+                foreach (var song in songs)
+                {
+                    itemList.Remove(song);
+                }
+
+                // Doing this to minimize fails. Ideally we fully randomize it and allow multiple attempts until success.
+                if (songs.Contains(Item.SongEpona))
+                {
+                    PlaceItem(Item.SongEpona, itemPool);
+                    songs.Remove(Item.SongEpona);
+                }
+
+                while (songs.Count != 0)
+                {
+                    var song = songs.Random(Random);
+                    PlaceItem(song, itemPool);
+                    songs.Remove(song);
+                }
             }
 
             while (itemList.Count != 0)
             {
                 var item = itemList.Random(Random);
-                PlaceItem(item, itempool);
+                PlaceItem(item, itemPool);
                 itemList.Remove(item);
             }
         }
