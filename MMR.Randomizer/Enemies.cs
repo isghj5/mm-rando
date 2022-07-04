@@ -1141,7 +1141,7 @@ namespace MMR.Randomizer
                     var flags = ActorUtils.GetActorSwitchFlags(mapActor, (short)mapActor.OldVariant);
                     if (flags >= 0)
                     {
-                        usedSwitchFlags.Append(flags);
+                        usedSwitchFlags.Add(flags);
                         thisSceneData.Log.AppendLine($"  [{actorNumber}][{mapActor.ActorEnum}] has flags: [{flags}]");
                     }
 
@@ -1150,7 +1150,7 @@ namespace MMR.Randomizer
 
             // change all new actors with switch flags to some flag not yet used
             var usableSwitches = new List<int>();
-            usableSwitches.AddRange(Enumerable.Range(1, 0x7F));
+            usableSwitches.AddRange(Enumerable.Range(1, 0x7E)); // 0x7F is popular
             usableSwitches.RemoveAll(u => usedSwitchFlags.Contains(u));
             usableSwitches.Reverse(); // we want to start at 0x7F and decend, under the assumption that they always used lower values
 
@@ -1188,7 +1188,7 @@ namespace MMR.Randomizer
                     var flags = ActorUtils.GetActorTreasureFlags(mapActor, (short)mapActor.OldVariant);
                     if (flags >= 0)
                     {
-                        usedTreasureFlags.Append(flags);
+                        usedTreasureFlags.Add(flags);
                         thisSceneData.Log.AppendLine($"  [{actorNumber}][{mapActor.ActorEnum}] has flags: [{flags}]");
                     }
 
@@ -1200,9 +1200,17 @@ namespace MMR.Randomizer
             usableTreasureFlags.AddRange(Enumerable.Range(0, 31));
             usableTreasureFlags.RemoveAll(u => usedTreasureFlags.Contains(u));
             usableTreasureFlags.Reverse(); // we want to start at 31 and decend, under the assumption that they always used lower values
+            // because there are significantly fewer treasure flags, if we run out, jut reuse the ones only our new actors are using
+            var copyOfUsable = usableTreasureFlags.ToList();
 
             for (int i = 0; i < thisSceneData.Actors.Count; i++)
             {
+                if (usableTreasureFlags.Count == 0)
+                {
+                    // we ran out, just start over with the ones only our new actors were using
+                    usableTreasureFlags = usableTreasureFlags.ToList();
+                }
+
                 var actor = thisSceneData.Actors[i];
                 var switchFlags = ActorUtils.GetActorTreasureFlags(actor, (short)actor.Variants[0]);
                 if (switchFlags == -1) continue;
@@ -1252,7 +1260,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.TreasureChest)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Item_Etcetera)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.BadBat, GameObjects.Actor.Cow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
@@ -1298,6 +1306,18 @@ namespace MMR.Randomizer
 
         public static void ShuffleActors(SceneEnemizerData thisSceneData, int objectIndex, List<Actor> subMatches, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList)
         {
+            #region Special exception if building debug and this build requires actor that doesnt exist
+            #if DEBUG
+
+            if (subMatches.Count == 0)
+            {
+                throw new Exception(" SubMatches contain no actors for this chosen object.\n" +
+                                    " If you built the debug version, go back to VisualStudio and build \"Release\" instead\n " +
+                                    " Otherwise you probably forgot the actor isn't possible here.");
+            }
+            #endif
+            #endregion
+
             for (int actorIndex = 0; actorIndex < thisSceneData.ActorsPerObject[objectIndex].Count(); actorIndex++)
             {
                 var oldActor = thisSceneData.ActorsPerObject[objectIndex][actorIndex];
