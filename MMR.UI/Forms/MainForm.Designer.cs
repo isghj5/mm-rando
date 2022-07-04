@@ -475,7 +475,7 @@ namespace MMR.UI.Forms
             this.lItemPlacement.AutoSize = true;
             this.lItemPlacement.BackColor = System.Drawing.Color.Transparent;
             this.lItemPlacement.ForeColor = System.Drawing.Color.Black;
-            this.lItemPlacement.Location = new System.Drawing.Point(13, 97);
+            this.lItemPlacement.Location = new System.Drawing.Point(13, 111);
             this.lItemPlacement.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lItemPlacement.Name = "lItemPlacement";
             this.lItemPlacement.Size = new System.Drawing.Size(93, 15);
@@ -489,7 +489,7 @@ namespace MMR.UI.Forms
             "Random",
             "Bespoke",
             "Classic"});
-            this.cItemPlacement.Location = new System.Drawing.Point(113, 89);
+            this.cItemPlacement.Location = new System.Drawing.Point(113, 103);
             this.cItemPlacement.Name = "cItemPlacement";
             this.cItemPlacement.Size = new System.Drawing.Size(121, 23);
             this.cItemPlacement.TabIndex = 20;
