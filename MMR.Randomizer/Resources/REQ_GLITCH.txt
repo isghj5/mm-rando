@@ -57302,17 +57302,6 @@
       "TrickCategory": "Easy"
     },
     {
-      "Id": "Hit Switches Through Walls",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Hit switches through walls using various means.",
-      "TrickCategory": "Easy"
-    },
-    {
       "Id": "Long Jump",
       "RequiredItems": [
         "OtherExplosive"
@@ -57347,7 +57336,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Enter poisoned swamp by rolling as Goron. You aren't guaranteed to have enough health to make it.",
-      "TrickCategory": "Easy"
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Swim to Zora Hall as Human",
@@ -57771,7 +57760,7 @@
       "TrickCategory": "Hard"
     },
     {
-      "Id": "Stun Keeta with Bombs",
+      "Id": "Keeta with Minimal Items",
       "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -59579,7 +59568,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Link can use Hot Spring Water to melt the ice in front of Medigoron's cave with ISG. Zora and Fierce Deity can also do it without ISG.",
-      "TrickCategory": "Moderate"
+      "TrickCategory": "Hard"
     },
     {
       "Id": "STT Lava Room Ledge",
@@ -61898,7 +61887,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Clip into ledges and walls as Zora.",
-      "TrickCategory": "Moderate"
+      "TrickCategory": "Hard"
     },
     {
       "Id": "WFT BK Chest",
@@ -62293,7 +62282,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Carefully walk up the slope and around the ice blocking Path to Mountain Village.",
-      "TrickCategory": "Moderate"
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Recoil Flip Through Ice",
@@ -62428,7 +62417,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Clip through the sun block at the end of Beneath the Well with bombs and Zora Mask or FD Anywhere.",
-      "TrickCategory": "Moderate"
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Zora Hall Doors as Human",
@@ -62452,7 +62441,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Slide off a ledge at high speed by shielding an explosion as Deku.",
-      "TrickCategory": "Moderate"
+      "TrickCategory": "Easy"
     },
     {
       "Id": "Honey and Darling Three Days without Bow",
@@ -62621,7 +62610,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Sidehop into Composer Flat's grave at an angle.",
-      "TrickCategory": "Easy"
+      "TrickCategory": "Moderate"
     },
     {
       "Id": "Flip Stone Tower Without Elegy",
@@ -63488,7 +63477,7 @@
       "TimeSetup": "None",
       "IsTrick": true,
       "TrickTooltip": "Get in grottos underneath boulders in Termina Field during a day/night transition.",
-      "TrickCategory": "Moderate"
+      "TrickCategory": "Hard"
     },
     {
       "Id": "Business Scrub Flower Theft",
