@@ -222,10 +222,12 @@ namespace MMR.Randomizer.Utils
             if (actor.ActorEnum.GetAttribute<SwitchFlagsPlacementXRotAttribute>() != null)
             {
                 actor.Rotation.x = (short)MergeRotationAndFlags(switchFlags, flags: actor.Rotation.x);
+                return;
             }
             if (actor.ActorEnum.GetAttribute<SwitchFlagsPlacementZRotAttribute>() != null)
             {
                 actor.Rotation.z = (short)MergeRotationAndFlags(switchFlags, flags: actor.Rotation.z);
+                return;
             }
 
             var flagsAttr = actor.ActorEnum.GetAttribute<SwitchFlagsPlacementAttribute>();
@@ -241,7 +243,45 @@ namespace MMR.Randomizer.Utils
                 // set variant from cleaned old variant ORed against the new switchflags
                 actor.Variants[0] = newVarsWithoutSwitchflags | newSwitchflags;
             }
+            else
+            {
+                throw new System.Exception("There be no switches here");
+            }
+
         }
+
+        public static short GetActorTreasureFlags(Actor actor, short variant)
+        {
+            var flagsAttr = actor.ActorEnum.GetAttribute<TreasureFlagsPlacementAttribute>();
+            if (flagsAttr != null)
+            {
+                return (short)((variant >> flagsAttr.Shift) & flagsAttr.Mask);
+            }
+
+            return -1; // no treasure flags
+        }
+
+        public static void SetActorTreasureFlags(Actor actor, short treasureFlags)
+        {
+            var flagsAttr = actor.ActorEnum.GetAttribute<TreasureFlagsPlacementAttribute>();
+            if (flagsAttr != null)
+            {
+                // clear the old switchflags from our newly chosen Variant
+                var deleteMask = flagsAttr.Mask << flagsAttr.Shift;
+                var newVarsWithoutSwitchflags = actor.Variants[0] & ~deleteMask;
+
+                // shift the switchflags into the new location
+                var newSwitchflags = treasureFlags << flagsAttr.Shift;
+
+                // set variant from cleaned old variant ORed against the new switchflags
+                actor.Variants[0] = newVarsWithoutSwitchflags | newSwitchflags;
+            }
+            else
+            {
+                throw new System.Exception("There be no treasure here");
+            }
+        }
+
 
         #region Debug Printing
 

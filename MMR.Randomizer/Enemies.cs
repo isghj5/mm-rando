@@ -1173,6 +1173,54 @@ namespace MMR.Randomizer
             }
         }
 
+        public static void FixTreasureFlagVars(SceneEnemizerData thisSceneData)
+        {
+            thisSceneData.Log.AppendLine($"------------------------------------------------- ");
+            thisSceneData.Log.AppendLine($"  Treasure Flags: ");
+
+            List<int> usedTreasureFlags = new List<int>();
+            for (int mapNumber = 0; mapNumber < thisSceneData.Scene.Maps.Count; ++mapNumber)
+            {
+                thisSceneData.Log.AppendLine($" ======( MAP {mapNumber.ToString("X2")} )======");
+                for (int actorNumber = 0; actorNumber < thisSceneData.Scene.Maps[mapNumber].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapNumber].Actors)
+                {
+                    var mapActor = thisSceneData.Scene.Maps[mapNumber].Actors[actorNumber];
+                    var flags = ActorUtils.GetActorTreasureFlags(mapActor, (short)mapActor.OldVariant);
+                    if (flags >= 0)
+                    {
+                        usedTreasureFlags.Append(flags);
+                        thisSceneData.Log.AppendLine($"  [{actorNumber}][{mapActor.ActorEnum}] has flags: [{flags}]");
+                    }
+
+                }
+            }
+
+            // change all new actors with switch flags to some flag not yet used
+            var usableTreasureFlags = new List<int>();
+            usableTreasureFlags.AddRange(Enumerable.Range(0, 31));
+            usableTreasureFlags.RemoveAll(u => usedTreasureFlags.Contains(u));
+            usableTreasureFlags.Reverse(); // we want to start at 31 and decend, under the assumption that they always used lower values
+
+            for (int i = 0; i < thisSceneData.Actors.Count; i++)
+            {
+                var actor = thisSceneData.Actors[i];
+                var switchFlags = ActorUtils.GetActorTreasureFlags(actor, (short)actor.Variants[0]);
+                if (switchFlags == -1) continue;
+                if (usableTreasureFlags.Contains(switchFlags))
+                {
+                    usableTreasureFlags.Remove(switchFlags);
+                }
+                else // we have switch flag and we have a collision, we need to change it
+                {
+                    var newSwitch = usableTreasureFlags[0];
+                    ActorUtils.SetActorTreasureFlags(actor, (short)newSwitch);
+                    usableTreasureFlags.Remove(newSwitch);
+                    thisSceneData.Log.AppendLine($" +++ [{i}][{actor.ActorEnum}] had treasure flags modified to [{newSwitch}] +++");
+                }
+            }
+        }
+
+
         public static void ShuffleObjects(SceneEnemizerData thisSceneData)
         {
             /// find replacement objects for objects that actors depend on
@@ -1204,7 +1252,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Item_Etcetera)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.TreasureChest)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.BadBat, GameObjects.Actor.Cow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
@@ -2083,6 +2131,7 @@ namespace MMR.Randomizer
             }
 
             FixSwitchFlagVars(thisSceneData);
+            FixTreasureFlagVars(thisSceneData);
 
             // realign all scene companion actors
             MoveAlignedCompanionActors(thisSceneData.Actors, thisSceneData.RNG, thisSceneData.Log);

@@ -79,6 +79,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, 
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         [SwitchFlagsPlacementZRot]
+        [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
         TreasureChest = 0x6, // En_Box
 
         [FileID(45)]
@@ -649,6 +650,7 @@ namespace MMR.Randomizer.GameObjects
             0xFF53, 0x55B, 0x637, 0xFF07, 0x113, 0x21B, 0x91F, 0xFF56, 0xFF62, 0xFF76, 0xFF03, 0x909, 0xB0C, 0xC0F,
             0xFF3F, 0x317, 0xFF3B, 0xFF5D, 0xFF61, 0xFF6D, 0x777, 0x57B, 0xFF0B, 0xFF0F, 0x11F)]
         [EnemizerScenesExcluded(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse)] // dont remove old spiders, the new ones might not be gettable
+        [TreasureFlagsPlacement(mask: 0xFF, shift: 2)] // 0x3FC
         GoldSkulltula = 0x50, // En_Sw "Skullwalltulla"
 
         //[ActorizerEnabled] // wont snow with obj 1 or 0x1D8 might need weathertag
@@ -896,7 +898,7 @@ namespace MMR.Randomizer.GameObjects
 
         //[ActorizerEnabledFreeOnly] // not sure this works with object 1, will test later
         [FileID(125)]
-        [ObjectListIndex(1)] 
+        [ObjectListIndex(1)]
         SmallCrate = 0x81, // Obj_Kibako
 
         // MULTIPLE OBJECT ACTOR
@@ -918,6 +920,7 @@ namespace MMR.Randomizer.GameObjects
             0x4110)] // TF pot
         [EnemizerScenesExcluded(Scene.MajorasLair, Scene.RoadToIkana)]
         [UnkillableAllVariants]
+        [TreasureFlagsPlacement(mask: 0x1F, shift: 0)] // 0x3FC
         ClayPot = 0x82, // Obj_Tsubo
 
         Empty83 = 0x83,
@@ -1331,6 +1334,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(170)]
         [ObjectListIndex(0x1)]
+        // switch flags
         Elf_Msg2 = 0xC6, // Elf_Msg2
 
         // ?
@@ -1472,10 +1476,13 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0x81, 0x82, 0x83)]
         [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.Grottos, Scene.SwampSpiderHouse, Scene.SouthernSwamp, Scene.PiratesFortressRooms)]
         [UnkillableAllVariants]
+        [TreasureFlagsPlacement(mask: 0xFF, shift: 2)] // 0x3FC
         HoneyComb = 0xE4, // Obj_Comb
 
         [FileID(218)]
         [ObjectListIndex(0x133)]
+        // not always active, only sometimes:q
+        [TreasureFlagsPlacement(mask: 0xFF, shift: 2)] // 0x3FC
         LargeCrate = 0xE5, // Obj_Kibako2
 
         EmptyE6 = 0xE6, // EmptyE6
@@ -1613,8 +1620,10 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         MuteZora = 0xF8, // En_Zo
 
+        // swamp spiderhouse soil 
         [FileID(231)]
         [ObjectListIndex(0x1)]
+        //[TreasureFlagsPlacement(mask: 0xFF, shift: 2)] // 0x3FC
         Obj_Makekinsuta = 0xF9, // Obj_Makekinsuta
 
         //[ActorizerEnabled] // she kicks you out like guards but without caring about direction/proximity
@@ -1745,6 +1754,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(247)]
         [ObjectListIndex(0x23B)]
         [GroundVariants(0x2243)]
+        // switch flags
         GaroSpawner = 0x112, // En_Encount3
 
         [FileID(248)]
@@ -1796,6 +1806,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(256)]
         [ObjectListIndex(0x1)]
+        // switch flags
         StalchildSpawner = 0x11B, // En_Encount4
         [FileID(257)]
         [ObjectListIndex(0x110)]
@@ -1909,6 +1920,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(274)]
         [ObjectListIndex(0x8)]
+        // switch flags
         GreatFairy = 0x130, // Bg_Dy_Yoseizo
 
         Empty131 = 0x131,
@@ -2011,6 +2023,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(292)]
         [ObjectListIndex(0x1)]
+        // switch flags
         Elf_Msg3 = 0x146, // Elf_Msg3
 
         [ActorizerEnabled] // cannot talk to them BUT YOU CAN KILL THEM :D
@@ -2144,6 +2157,7 @@ namespace MMR.Randomizer.GameObjects
         // one of these is sit on the wall bat from rtss: FF03/01/9F
         [VariantsWithRoomMax(max:1, 0xFF34)] // swarm
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
+        // switch flags
         BadBat = 0x15B, // En_Bat
 
         // can hold many different types of graves or stones containing.. nothing bit broke
@@ -2159,9 +2173,11 @@ namespace MMR.Randomizer.GameObjects
         // might be used for mikau grave, but also beta actors that teach songs...??
         MagicSlab = 0x15C, // En_Sekihi
 
+        // bad for rando because requires multiple floor pieces
         [ActorInitVarOffset(0x37D0)]
         [FileID(315)]
         [ObjectListIndex(0x178)]
+        // switch flags
         Wizrobe = 0x15D, // En_Wiz
 
         [FileID(316)]
@@ -2194,6 +2210,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         // possible second switch at 0x3F8
         [SwitchFlagsPlacement(mask: 0x7F, shift:0)]
+        [TreasureFlagsPlacement(mask: 0x1F, shift: 8)] // 0x3FC
         CircleOfFire = 0x162, // Obj_Fireshield // tag: FireRing
 
         [FileID(321)]
@@ -2383,6 +2400,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(344)]
         [ObjectListIndex(0x18A)]
+        // switch flags
         Bg_Crace_Movebg = 0x17E, // Bg_Crace_Movebg
 
         // todo come back and figure out how to spawn regular 
@@ -2437,6 +2455,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0x3F, shift: 0)]
         [OnlyOneActorPerRoom]
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.StoneTowerTemple)]
+        // switch flags
         Eyegore = 0x184, // En_Egol
 
         [EnemizerEnabled]
@@ -2570,6 +2589,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(373)]
         [ObjectListIndex(0x195)]
+        // missing switch flags
         Monkey = 0x19E, // En_Mnk
 
         // ??
@@ -2632,6 +2652,7 @@ namespace MMR.Randomizer.GameObjects
         // some type of wooden door
         [FileID(382)]
         [ObjectListIndex(0x1)]
+        // switch flags
         En_Door_Etc = 0x1A7, // En_Door_Etc
         
         [FileID(383)]
@@ -2771,6 +2792,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(410)]
         [ObjectListIndex(0x1A7)]
+        // switch flags
         SwampSpiderHouseCutableIvy = 0x1BE, // Bg_Dkjail_Ivy
         
         Empty1BF = 0x1BF,
@@ -2790,6 +2812,7 @@ namespace MMR.Randomizer.GameObjects
         //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0146)] // treasure chest shop music
         [EnemizerScenesPlacementBlock(Scene.SouthClockTown)]
         [EnemizerScenesExcluded(Scene.TreasureChestShop)]
+        // switch flags
         BombchuGirl = 0x1C1, // En_Takaraya
         
         [FileID(413)]
@@ -2904,10 +2927,12 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(432)]
         [ObjectListIndex(0x1)]
+        // switch flags
         Elf_Msg4 = 0x1D7, // Elf_Msg4
         
         [FileID(433)]
         [ObjectListIndex(0x1)]
+        // switch flags
         Elf_Msg5 = 0x1D8, // Elf_Msg5
 
         // HP from labfish, Bomb from garo master boss
@@ -3493,6 +3518,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(516)]
         [ObjectListIndex(0x250)]
+        // switch flags
+        //[TreasureFlagsPlacement(mask: 0xFF, shift: 2)] // 0x3FC
         WoodenBarrel = 0x22D, // Obj_Taru
         
         [FileID(517)]
@@ -3782,6 +3809,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(559)]
         [ObjectListIndex(0x1E0)]
+        // switch flags
         Bg_Haka_Bombwall = 0x258, // Bg_Haka_Bombwall
         
         [FileID(560)]
@@ -4275,6 +4303,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(645)]
         [ObjectListIndex(0x1)]
+        // switch flags
         SpawnsItemFromSoil = 0x2AE, // Obj_Swprize
 
         // todo add as companion actor to a rich actor?

@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MMR.Randomizer.Attributes.Actor
 {
+    /// <summary>
+    ///  Placement of Switch flags (0x80) in an Actor's X Rotation
+    /// </summary>
     class SwitchFlagsPlacementXRotAttribute : Attribute { }
 
+    /// <summary>
+    ///  Placement of Switch flags (0x80) in an Actor's Z Rotation
+    /// </summary>
     class SwitchFlagsPlacementZRotAttribute : Attribute { }
 
+    /// <summary>
+    ///  Placement of Switch flags (0x80) in an Actor's params/variant
+    /// </summary>
     class SwitchFlagsPlacementAttribute : Attribute
     {
         public int Mask;
