@@ -1569,7 +1569,6 @@ namespace MMR.UI.Forms
                                 "Lensless Walls/Ceilings",
                                 "Pinnacle Rock without Seahorse",
                                 "Run Through Poisoned Water",
-                                "Quest Item Extra Storage",
                                 "Scarecrow's Song",
                                 "Take Damage",
                                 "WFT 2nd Floor Skip",
@@ -1672,7 +1671,8 @@ namespace MMR.UI.Forms
 
         private void UpdateNumTricksEnabled()
         {
-            lNumTricksEnabled.Text = $"{_configuration.GameplaySettings.EnabledTricks.Count} tricks enabled";
+            var count = _configuration.GameplaySettings.EnabledTricks.Count;
+            lNumTricksEnabled.Text = $"{count} trick{(count == 1 ? "s" : "")} enabled";
         }
 
         private void cBespokeItemPlacementOrder_CheckedChanged(object sender, EventArgs e)
