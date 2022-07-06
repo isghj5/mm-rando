@@ -202,7 +202,6 @@ namespace MMR.Randomizer.Models.Settings
             "Lensless Walls/Ceilings",
             "Pinnacle Rock without Seahorse",
             "Run Through Poisoned Water",
-            "Quest Item Extra Storage",
             "Scarecrow's Song",
             "Take Damage",
             "WFT 2nd Floor Skip",
