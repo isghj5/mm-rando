@@ -1362,7 +1362,7 @@ namespace MMR.Randomizer.Utils
                     };
                     RomData.TargetSequences.Add(newMusicSlot);
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     Debug.WriteLine("Error while converting an additional song slot to a sequence for music rando, slot: " + newslot.Name);
                 }

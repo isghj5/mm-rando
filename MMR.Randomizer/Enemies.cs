@@ -1087,6 +1087,7 @@ namespace MMR.Randomizer
             }
         }
 
+        // can we move this to actorUtils?
         public static void FixPatrollingEnemyVars(List<Actor> chosenReplacementEnemies)
         {
             /// fixes the patrolling enemy paths to make sure it matches the previous actor path
@@ -1140,10 +1141,113 @@ namespace MMR.Randomizer
                 // shift the path into the new location
                 var newPath = oldPathShifted << newdoldPathBehaviorAttr.Shift;
 
-                // set variant from cleaned old variant ored against the new path
+                // set variant from cleaned old variant ORed against the new path
                 actor.Variants[0] = newVarsWithoutPath | newPath;
             }
         }
+
+        public static void FixSwitchFlagVars(SceneEnemizerData thisSceneData)
+        {
+            thisSceneData.Log.AppendLine($"------------------------------------------------- ");
+            thisSceneData.Log.AppendLine($"  Switch flags: ");
+
+            List<int> usedSwitchFlags = new List<int>();
+            for (int mapNumber = 0; mapNumber < thisSceneData.Scene.Maps.Count; ++mapNumber)
+            {
+                thisSceneData.Log.AppendLine($" ======( MAP {mapNumber.ToString("X2")} )======");
+                for (int actorNumber = 0; actorNumber < thisSceneData.Scene.Maps[mapNumber].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapNumber].Actors)
+                {
+                    var mapActor = thisSceneData.Scene.Maps[mapNumber].Actors[actorNumber];
+                    var flags = ActorUtils.GetActorSwitchFlags(mapActor, (short)mapActor.OldVariant);
+                    if (flags >= 0)
+                    {
+                        usedSwitchFlags.Add(flags);
+                        thisSceneData.Log.AppendLine($"  [{actorNumber}][{mapActor.ActorEnum}] has flags: [{flags}]");
+                    }
+
+                }
+            }
+
+            // change all new actors with switch flags to some flag not yet used
+            var usableSwitches = new List<int>();
+            usableSwitches.AddRange(Enumerable.Range(1, 0x7E)); // 0x7F is popular
+            usableSwitches.RemoveAll(u => usedSwitchFlags.Contains(u));
+            usableSwitches.Reverse(); // we want to start at 0x7F and decend, under the assumption that they always used lower values
+
+            for (int i = 0; i < thisSceneData.Actors.Count; i++)
+            {
+                var actor = thisSceneData.Actors[i];
+                var switchFlags = ActorUtils.GetActorSwitchFlags(actor, (short)actor.Variants[0]);
+                if (switchFlags == -1) continue;
+                if (usableSwitches.Contains(switchFlags))
+                {
+                    usableSwitches.Remove(switchFlags);
+                }
+                else // we have switch flag and we have a collision, we need to change it
+                {
+                    var newSwitch = usableSwitches[0];
+                    ActorUtils.SetActorSwitchFlags(actor, (short)newSwitch);
+                    usableSwitches.Remove(newSwitch);
+                    thisSceneData.Log.AppendLine($" +++ [{i}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] +++");
+                }
+            }
+        }
+
+        public static void FixTreasureFlagVars(SceneEnemizerData thisSceneData)
+        {
+            thisSceneData.Log.AppendLine($"------------------------------------------------- ");
+            thisSceneData.Log.AppendLine($"  Treasure Flags: ");
+
+            List<int> usedTreasureFlags = new List<int>();
+            for (int mapNumber = 0; mapNumber < thisSceneData.Scene.Maps.Count; ++mapNumber)
+            {
+                thisSceneData.Log.AppendLine($" ======( MAP {mapNumber.ToString("X2")} )======");
+                for (int actorNumber = 0; actorNumber < thisSceneData.Scene.Maps[mapNumber].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapNumber].Actors)
+                {
+                    var mapActor = thisSceneData.Scene.Maps[mapNumber].Actors[actorNumber];
+                    var flags = ActorUtils.GetActorTreasureFlags(mapActor, (short)mapActor.OldVariant);
+                    if (flags >= 0)
+                    {
+                        usedTreasureFlags.Add(flags);
+                        thisSceneData.Log.AppendLine($"  [{actorNumber}][{mapActor.ActorEnum}] has flags: [{flags}]");
+                    }
+
+                }
+            }
+
+            // change all new actors with switch flags to some flag not yet used
+            var usableTreasureFlags = new List<int>();
+            usableTreasureFlags.AddRange(Enumerable.Range(0, 31));
+            usableTreasureFlags.RemoveAll(u => usedTreasureFlags.Contains(u));
+            usableTreasureFlags.Reverse(); // we want to start at 31 and decend, under the assumption that they always used lower values
+            // because there are significantly fewer treasure flags, if we run out, jut reuse the ones only our new actors are using
+            var copyOfUsable = usableTreasureFlags.ToList();
+
+            for (int i = 0; i < thisSceneData.Actors.Count; i++)
+            {
+                if (usableTreasureFlags.Count == 0)
+                {
+                    // we ran out, just start over with the ones only our new actors were using
+                    usableTreasureFlags = usableTreasureFlags.ToList();
+                }
+
+                var actor = thisSceneData.Actors[i];
+                var switchFlags = ActorUtils.GetActorTreasureFlags(actor, (short)actor.Variants[0]);
+                if (switchFlags == -1) continue;
+                if (usableTreasureFlags.Contains(switchFlags))
+                {
+                    usableTreasureFlags.Remove(switchFlags);
+                }
+                else // we have switch flag and we have a collision, we need to change it
+                {
+                    var newSwitch = usableTreasureFlags[0];
+                    ActorUtils.SetActorTreasureFlags(actor, (short)newSwitch);
+                    usableTreasureFlags.Remove(newSwitch);
+                    thisSceneData.Log.AppendLine($" +++ [{i}][{actor.ActorEnum}] had treasure flags modified to [{newSwitch}] +++");
+                }
+            }
+        }
+
 
         public static void ShuffleObjects(SceneEnemizerData thisSceneData)
         {
@@ -1176,7 +1280,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.TreasureChest)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Item_Etcetera)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.BadBat, GameObjects.Actor.Cow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
@@ -1222,6 +1326,18 @@ namespace MMR.Randomizer
 
         public static void ShuffleActors(SceneEnemizerData thisSceneData, int objectIndex, List<Actor> subMatches, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList)
         {
+            #region Special exception if building debug and this build requires actor that doesnt exist
+            #if DEBUG
+
+            if (subMatches.Count == 0)
+            {
+                throw new Exception(" SubMatches contain no actors for this chosen object.\n" +
+                                    " If you built the debug version, go back to VisualStudio and build \"Release\" instead\n " +
+                                    " Otherwise you probably forgot the actor isn't possible here.");
+            }
+            #endif
+            #endregion
+
             for (int actorIndex = 0; actorIndex < thisSceneData.ActorsPerObject[objectIndex].Count(); actorIndex++)
             {
                 var oldActor = thisSceneData.ActorsPerObject[objectIndex][actorIndex];
@@ -1804,7 +1920,6 @@ namespace MMR.Randomizer
             // more and more of this stuff needs to be passed to each function, if I want to tame the big mess that is SwapSceneEnemies
             // All common data we have/use in randomizing actors in one scene
 
-            // todo finish renaming all of these with Capital
             public Scene Scene;
             public StringBuilder Log;
             public Random RNG;
@@ -2054,6 +2169,9 @@ namespace MMR.Randomizer
                     $"was replaced by new enemy: [{thisSceneData.Actors[i].Variants[0].ToString("X4")}]" +
                     $"[{thisSceneData.Actors[i].Name}]");
             }
+
+            FixSwitchFlagVars(thisSceneData);
+            FixTreasureFlagVars(thisSceneData);
 
             // realign all scene companion actors
             MoveAlignedCompanionActors(thisSceneData.Actors, thisSceneData.RNG, thisSceneData.Log);
