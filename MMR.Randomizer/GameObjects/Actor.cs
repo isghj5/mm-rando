@@ -2677,8 +2677,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x163)]
         Obj_Ocarinalift = 0x1AA, // Obj_Ocarinalift
 
+        // song of soaring teaching block
         [FileID(392)]
-        [ObjectListIndex(0x1)]
+        [ObjectListIndex(0x1)] // no draw func
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         En_Time_Tag = 0x1AB, // En_Time_Tag
         
@@ -4013,10 +4014,14 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1BE)]
         SkullkidEffects = 0x275, // Eff_Stk
 
-        // todo: test randomizing
+        // todo: move his position to better spots as a better actor
+        //[ActorizerEnabled]
         [FileID(589)]
-        [ObjectListIndex(0x1E5)]
-        //ObjectListIndex(0x1D5)]
+        //[ObjectListIndex(0x1E5)] // where did this come from?
+        [GroundVariants(0x4)] // all vanilla are 0x4, even though the actor checks 0xFF range
+        [ObjectListIndex(0x1D5)] // OBJECT_DAI same object as big goron
+        [UnkillableAllVariants]
+        // do we need to stop him being randomized?
         LinkTheGoro = 0x276, // En_Ig
 
         [FileID(590)]
