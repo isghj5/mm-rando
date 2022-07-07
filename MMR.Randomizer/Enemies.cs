@@ -234,6 +234,7 @@ namespace MMR.Randomizer
             RepositionClockTownActors();
             ExpandGoronShineObjects();
             RandomlySwapOutZoraBandMember();
+            ExpandGoronRaceObjects();
 
             Shinanigans();
         }
@@ -1022,6 +1023,25 @@ namespace MMR.Randomizer
             zoraHallScene.Maps[0].Actors[28].Position = new vec16(-1002, 179, 1089); // near front door
         }
 
+        public static void ExpandGoronRaceObjects()
+        {
+            /// we cannot randomize any goron in the racetrack because they all use the same object
+            ///   this breaks the race because the racegorons cannot load their assets if their object is missing
+            /// except the one room uses 7 objects, odd number, and objects are padded in the room files to dma, so we can add one more
+            if (!ReplacementListContains(GameObjects.Actor.SmithyGoronAndGo)) return;
+
+            var goronRace = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GoronRacetrack.FileID());
+            goronRace.Maps[0].Objects.Add(GameObjects.Actor.SmithyGoronAndGo.ObjectIndex()); // add a second Generic Goron
+            // spring is a different setup, both need the same objects
+            goronRace.Maps[1].Objects.Add(GameObjects.Actor.SmithyGoronAndGo.ObjectIndex()); // add a second Generic Goron
+
+
+            // room file header 0xB describes object list offset in the file, but also describes size to load into memory, need to increase to 6
+            var goronRaceRoom0Data = RomData.MMFileList[GameObjects.Scene.GoronRacetrack.FileID() + 1].Data; // 1508
+            goronRaceRoom0Data[0x31] = 8; // increase object list to 8
+            // the second setup in this scene has a different object list, need to modify that onne too (690 is headers)
+            goronRaceRoom0Data[0x6B9] = 8; // increase object list to 8
+        }
 
         #endregion
 
@@ -1156,7 +1176,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Item_Etcetera)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.TreasureChest)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.BadBat, GameObjects.Actor.Cow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TwinIslands, GameObjects.Actor.Wolfos, GameObjects.Actor.BigPoe)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;

@@ -1914,8 +1914,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0xB78)]
         // 8 is smithy goron; blocked because he is too big
         // 7F85: standing outside of shop (complaining about noise)
+        // racetrack gorons
+        // 0x7FA1: jumping goron, 0x7FC1 stretching goron pair
+        // 0x7F81: single leg stretch goron, 0x7F81 single amr stretch goron
         //[GroundVariants(0x8, 0x7FE2)]
-        [GroundVariants(0x7FE2, 0x7F85, 0x7F86, 0x7F87)]
+        [GroundVariants(0x7FE2, 0x7F85, 0x7F86, 0x7F87,
+            0x7FA1, 0x7FC1, 0x7F81, 0x7FF2)] // racetrack
         [VariantsWithRoomMax(max:1,
             0x7FE2, 0x7F85, 0x7F86, 0x7F87)]
         [EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
