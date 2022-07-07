@@ -1839,6 +1839,7 @@ namespace MMR.Randomizer
                         }
                     }
                 }
+
                 if (drawCount < itemCombo.ItemDrawCount)
                 {
                     var junkChecks = string.Join(", ", itemCombo.CheckList.Where(u => _settings.CustomJunkLocations.Contains(u)));

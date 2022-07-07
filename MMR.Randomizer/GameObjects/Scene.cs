@@ -489,7 +489,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1506)]
         [SceneInternalId(0x6A)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
-            Actor.PoeBalloon, Actor.BigPoe, Actor.CircleOfFire, Actor.FloorMaster, Actor.En_Ani)]
+            Actor.PoeBalloon, Actor.BigPoe, Actor.CircleOfFire, Actor.FloorMaster,
+            Actor.GibdoIkana, Actor.ReDead, Actor.GibdoWell)]
         GormanTrack = 0x67,
 
         [FileID(1508)]

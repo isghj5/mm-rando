@@ -1715,7 +1715,7 @@ namespace MMR.Randomizer.GameObjects
 
         // unused actor, todo test
         [FileID(246)]
-        [ObjectListIndex(0x1)]
+        //[ObjectListIndex(0x1)]
         En_Bu = 0x111, // En_Bu
 
         //[EnemizerEnabled] //crash
