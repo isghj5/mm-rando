@@ -15,7 +15,13 @@ namespace MMR.Randomizer.Extensions
         }
         public static int FileID(this Scene scene)
         {
-            return scene.GetAttribute<FileIDAttribute>().ID;
+            var attr = scene.GetAttribute<FileIDAttribute>();
+            if (attr != null) {
+                return scene.GetAttribute<FileIDAttribute>().ID;
+            } else
+            {
+                return -1; // empty slots have no fid
+            }
         }
 
         public static bool IsClearEnemyPuzzleRoom(this Scene scene, int room)

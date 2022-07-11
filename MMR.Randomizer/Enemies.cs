@@ -1228,7 +1228,7 @@ namespace MMR.Randomizer
                 if (usableTreasureFlags.Count == 0)
                 {
                     // we ran out, just start over with the ones only our new actors were using
-                    usableTreasureFlags = usableTreasureFlags.ToList();
+                    usableTreasureFlags = copyOfUsable.ToList();
                 }
 
                 var actor = thisSceneData.Actors[i];
