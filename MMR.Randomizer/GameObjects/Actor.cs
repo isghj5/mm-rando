@@ -1561,8 +1561,9 @@ namespace MMR.Randomizer.GameObjects
             0x38CF, 0x3BE4, // west
             0x3425, 0x3946, 0x3967, 0xFF, 0x3986, 0x3995, 0x3955)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp, Scene.MilkRoad,
-            Scene.RomaniRanch, Scene.IkanaCanyon, Scene.LinkTrial)] // don't replace the originals as we might need for hints
+        [EnemizerScenesExcluded(Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.SouthernSwamp,
+            Scene.MilkRoad, Scene.RomaniRanch, Scene.CuccoShack, Scene.DoggyRacetrack,
+            Scene.IkanaCanyon, Scene.RoadToIkana, Scene.LinkTrial)] // don't replace the originals as we might need for hints
         //[EnemizerScenesExcluded(Scene.LinkTrial)] // supposidly, you can play storms on the gossip stone to open the door instead of bombchu
         [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)] // crash (reason unk)
         GossipStone = 0xEF, // En_Gs
