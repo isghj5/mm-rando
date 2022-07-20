@@ -51,6 +51,8 @@ namespace MMR.UI.Forms
             this.cMixSongs = new System.Windows.Forms.CheckBox();
             this.cEnemy = new System.Windows.Forms.CheckBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.lNumTricksEnabled = new System.Windows.Forms.Label();
+            this.cBespokeItemPlacementOrder = new System.Windows.Forms.CheckBox();
             this.bToggleTricks = new System.Windows.Forms.Button();
             this.cMode = new System.Windows.Forms.ComboBox();
             this.bLoadLogic = new System.Windows.Forms.Button();
@@ -235,7 +237,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cBespokeItemPlacementOrder = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -338,7 +339,7 @@ namespace MMR.UI.Forms
             // tOtherCustomizations
             // 
             this.tOtherCustomizations.Controls.Add(this.tOtherCustomization);
-            this.tOtherCustomizations.Location = new System.Drawing.Point(7, 130);
+            this.tOtherCustomizations.Location = new System.Drawing.Point(7, 146);
             this.tOtherCustomizations.Name = "tOtherCustomizations";
             this.tOtherCustomizations.SelectedIndex = 0;
             this.tOtherCustomizations.Size = new System.Drawing.Size(381, 160);
@@ -442,6 +443,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.lNumTricksEnabled);
             this.groupBox9.Controls.Add(this.cBespokeItemPlacementOrder);
             this.groupBox9.Controls.Add(this.bToggleTricks);
             this.groupBox9.Controls.Add(this.cMode);
@@ -452,19 +454,39 @@ namespace MMR.UI.Forms
             this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox9.Size = new System.Drawing.Size(379, 117);
+            this.groupBox9.Size = new System.Drawing.Size(379, 133);
             this.groupBox9.TabIndex = 29;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Generation Settings";
             // 
+            // lNumTricksEnabled
+            // 
+            this.lNumTricksEnabled.Location = new System.Drawing.Point(96, 22);
+            this.lNumTricksEnabled.Name = "lNumTricksEnabled";
+            this.lNumTricksEnabled.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lNumTricksEnabled.Size = new System.Drawing.Size(271, 18);
+            this.lNumTricksEnabled.TabIndex = 21;
+            this.lNumTricksEnabled.Text = "0 tricks enabled";
+            // 
+            // cBespokeItemPlacementOrder
+            // 
+            this.cBespokeItemPlacementOrder.AutoSize = true;
+            this.cBespokeItemPlacementOrder.Location = new System.Drawing.Point(13, 105);
+            this.cBespokeItemPlacementOrder.Name = "cBespokeItemPlacementOrder";
+            this.cBespokeItemPlacementOrder.Size = new System.Drawing.Size(189, 19);
+            this.cBespokeItemPlacementOrder.TabIndex = 20;
+            this.cBespokeItemPlacementOrder.Text = "Bespoke Item Placement Order";
+            this.cBespokeItemPlacementOrder.UseVisualStyleBackColor = true;
+            this.cBespokeItemPlacementOrder.CheckedChanged += new System.EventHandler(this.cBespokeItemPlacementOrder_CheckedChanged);
+            // 
             // bToggleTricks
             // 
-            this.bToggleTricks.Location = new System.Drawing.Point(271, 23);
+            this.bToggleTricks.Location = new System.Drawing.Point(271, 39);
             this.bToggleTricks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bToggleTricks.Name = "bToggleTricks";
             this.bToggleTricks.Size = new System.Drawing.Size(96, 27);
             this.bToggleTricks.TabIndex = 19;
-            this.bToggleTricks.Text = "Toggle Tricks";
+            this.bToggleTricks.Text = "Edit Tricks";
             this.bToggleTricks.UseVisualStyleBackColor = true;
             this.bToggleTricks.Click += new System.EventHandler(this.bToggleTricks_Click);
             // 
@@ -478,7 +500,7 @@ namespace MMR.UI.Forms
             "Vanilla Layout",
             "User Logic",
             "No Logic"});
-            this.cMode.Location = new System.Drawing.Point(96, 24);
+            this.cMode.Location = new System.Drawing.Point(96, 40);
             this.cMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cMode.Name = "cMode";
             this.cMode.Size = new System.Drawing.Size(167, 23);
@@ -487,7 +509,7 @@ namespace MMR.UI.Forms
             // 
             // bLoadLogic
             // 
-            this.bLoadLogic.Location = new System.Drawing.Point(13, 55);
+            this.bLoadLogic.Location = new System.Drawing.Point(13, 71);
             this.bLoadLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bLoadLogic.Name = "bLoadLogic";
             this.bLoadLogic.Size = new System.Drawing.Size(79, 28);
@@ -501,7 +523,7 @@ namespace MMR.UI.Forms
             this.lMode.AutoSize = true;
             this.lMode.BackColor = System.Drawing.Color.Transparent;
             this.lMode.ForeColor = System.Drawing.Color.Black;
-            this.lMode.Location = new System.Drawing.Point(10, 30);
+            this.lMode.Location = new System.Drawing.Point(10, 43);
             this.lMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lMode.Name = "lMode";
             this.lMode.Size = new System.Drawing.Size(75, 15);
@@ -510,7 +532,7 @@ namespace MMR.UI.Forms
             // 
             // tbUserLogic
             // 
-            this.tbUserLogic.Location = new System.Drawing.Point(96, 58);
+            this.tbUserLogic.Location = new System.Drawing.Point(96, 74);
             this.tbUserLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbUserLogic.Name = "tbUserLogic";
             this.tbUserLogic.ReadOnly = true;
@@ -2763,17 +2785,6 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cBespokeItemPlacementOrder
-            // 
-            this.cBespokeItemPlacementOrder.AutoSize = true;
-            this.cBespokeItemPlacementOrder.Location = new System.Drawing.Point(13, 89);
-            this.cBespokeItemPlacementOrder.Name = "cBespokeItemPlacementOrder";
-            this.cBespokeItemPlacementOrder.Size = new System.Drawing.Size(189, 19);
-            this.cBespokeItemPlacementOrder.TabIndex = 20;
-            this.cBespokeItemPlacementOrder.Text = "Bespoke Item Placement Order";
-            this.cBespokeItemPlacementOrder.UseVisualStyleBackColor = true;
-            this.cBespokeItemPlacementOrder.CheckedChanged += new System.EventHandler(this.cBespokeItemPlacementOrder_CheckedChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3072,6 +3083,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.NumericUpDown tLuckRollPercentage;
         private System.Windows.Forms.Button bSkip;
         private System.Windows.Forms.CheckBox cBespokeItemPlacementOrder;
+        private System.Windows.Forms.Label lNumTricksEnabled;
     }
 }
 

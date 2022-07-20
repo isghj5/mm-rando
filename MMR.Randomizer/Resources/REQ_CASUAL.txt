@@ -41595,6 +41595,9 @@
         ],
         [
           "Fierce Deity's Mask Anywhere"
+        ],
+        [
+          "Zora Boomerang Through Walls"
         ]
       ],
       "TimeNeeded": "None",
@@ -41956,8 +41959,7 @@
           "MaskZora"
         ],
         [
-          "Fewer Item Requirements",
-          "MaskGoron"
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -43575,8 +43577,7 @@
     {
       "Id": "CollectibleStrayFairyStoneTower2",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
-        "STT Eyegore Room Access"
+        "AreaStoneTowerTempleAccess"
       ],
       "ConditionalItems": [
         [
@@ -43584,66 +43585,14 @@
           "STT Masked Hiploop"
         ],
         [
-          "MaskZora",
-          "STT Eyegore Bridge Jumps"
-        ],
-        [
-          "FD Jumps",
-          "MaskZora"
-        ],
-        [
-          "FD Jumps",
           "STT Elegy Maze",
+          "STT Eyegore Room Key to Bridge",
           "1 Stone Tower Key"
         ],
         [
-          "FD Jumps",
-          "Clever Ice Platforms"
-        ],
-        [
-          "FD Difficult Jumps"
-        ],
-        [
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Clever Ice Platforms",
-          "Any Bomb Bag"
-        ],
-        [
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Clever Ice Platforms",
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg"
-        ],
-        [
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Long Jump",
-          "Any Bomb Bag"
-        ],
-        [
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Long Jump",
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "MaskBlast"
-        ],
-        [
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Recoil Flip",
-          "Any Bomb Bag"
-        ],
-        [
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Recoil Flip",
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "MaskBlast",
-          "Any Shield"
+          "Use Light Arrow",
+          "STT Water Tunnel",
+          "STT Eyegore Room Key to Bridge"
         ]
       ],
       "TimeNeeded": "None",
@@ -44720,7 +44669,7 @@
         ],
         [
           "Use Ice Arrow",
-          "Play Song of Soaring"
+          "Dungeon Entrance Return"
         ],
         [
           "GBT Iceless"
@@ -46918,7 +46867,7 @@
         ],
         [
           "Use Ice Arrow",
-          "Play Song of Soaring"
+          "Dungeon Entrance Return"
         ],
         [
           "GBT Iceless"
@@ -48957,7 +48906,7 @@
         ],
         [
           "Use Ice Arrow",
-          "Play Song of Soaring"
+          "Dungeon Entrance Return"
         ],
         [
           "GBT Iceless"
@@ -49547,7 +49496,8 @@
     {
       "Id": "CollectableStoneTowerTempleEyegoreRoomItem2",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess"
+        "AreaStoneTowerTempleAccess",
+        "STT Eyegore Key Chest Access"
       ],
       "ConditionalItems": [
         [
@@ -49556,40 +49506,25 @@
         ],
         [
           "Use Light Arrow",
-          "STT Water Tunnel as Human",
+          "MaskDeku"
+        ],
+        [
+          "Use Light Arrow",
           "Clever Ice Platforms"
         ],
         [
           "Use Light Arrow",
-          "STT Water Tunnel as Human",
           "Recoil Flip"
         ],
         [
-          "Use Light Arrow",
-          "STT Masked Hiploop",
-          "STT Eyegore Bridge Jumps",
-          "Recoil Flip",
-          "1 Stone Tower Key"
-        ],
-        [
-          "Use Light Arrow",
-          "STT Masked Hiploop",
-          "STT Eyegore Bridge Jumps",
-          "Clever Ice Platforms",
-          "1 Stone Tower Key"
-        ],
-        [
-          "STT Eyegore Key Chest Access",
           "Zora Boomerang Through Walls"
         ],
         [
-          "STT Eyegore Key Chest Access",
           "Goron Bomb Jump",
           "Take Damage",
           "Any Bomb Bag"
         ],
         [
-          "STT Eyegore Key Chest Access",
           "Goron Bomb Jump",
           "Take Damage",
           "Powder Kegs as Explosives",
@@ -49597,13 +49532,11 @@
           "STT Bridge Crystal Chest"
         ],
         [
-          "STT Eyegore Key Chest Access",
-          "FD Difficult Jumps"
-        ],
-        [
-          "STT Eyegore Key Chest Access",
           "FD Jumps",
           "Clever Ice Platforms"
+        ],
+        [
+          "FD Difficult Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -49647,6 +49580,19 @@
           "Fierce Deity's Mask Anywhere"
         ],
         [
+          "Use Light Arrow",
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Use Light Arrow",
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
           "Zora Boomerang Through Walls"
         ]
       ],
@@ -49677,6 +49623,19 @@
         [
           "Use Light Arrow",
           "Fierce Deity's Mask Anywhere"
+        ],
+        [
+          "Use Light Arrow",
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Use Light Arrow",
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
         ],
         [
           "Zora Boomerang Through Walls"
@@ -49717,6 +49676,15 @@
           "Clever Ice Platforms"
         ],
         [
+          "MaskDeku",
+          "FD Jumps"
+        ],
+        [
+          "MaskDeku",
+          "MaskGoron",
+          "Fewer Item Requirements"
+        ],
+        [
           "ItemHookshot",
           "MaskZora"
         ],
@@ -49730,12 +49698,31 @@
           "Clever Ice Platforms"
         ],
         [
+          "ItemHookshot",
+          "FD Jumps"
+        ],
+        [
+          "ItemHookshot",
+          "MaskGoron",
+          "Fewer Item Requirements"
+        ],
+        [
+          "OtherArrow",
           "FD Difficult Jumps",
           "Long Jump",
           "Take Damage",
           "Any Bomb Bag"
         ],
         [
+          "OtherArrow",
+          "FD Difficult Jumps",
+          "Long Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "OtherArrow",
           "FD Difficult Jumps",
           "Harder Long Jumps",
           "Take Damage",
@@ -49771,12 +49758,31 @@
           "Clever Ice Platforms"
         ],
         [
+          "ItemHookshot",
+          "FD Jumps"
+        ],
+        [
+          "ItemHookshot",
+          "MaskGoron",
+          "Fewer Item Requirements"
+        ],
+        [
+          "OtherArrow",
           "FD Difficult Jumps",
           "Long Jump",
           "Take Damage",
           "Any Bomb Bag"
         ],
         [
+          "OtherArrow",
+          "FD Difficult Jumps",
+          "Long Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "OtherArrow",
           "FD Difficult Jumps",
           "Harder Long Jumps",
           "Take Damage",
@@ -49983,15 +49989,30 @@
     {
       "Id": "CollectableDekuPalaceEastInnerGardenPot1",
       "RequiredItems": [
-        "AreaSouthAccess",
-        "MaskDeku"
+        "AreaDekuPalaceAccess"
       ],
       "ConditionalItems": [
         [
+          "MaskDeku",
+          "Water for Magic Bean",
+          "OtherMagicBean"
+        ],
+        [
+          "MaskDeku",
           "Deku Palace Bean Skip"
         ],
         [
-          "Water for Magic Bean"
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Zora Boomerang Through Walls"
         ]
       ],
       "TimeNeeded": "None",
@@ -50002,15 +50023,30 @@
     {
       "Id": "CollectableDekuPalaceEastInnerGardenPot2",
       "RequiredItems": [
-        "AreaSouthAccess",
-        "MaskDeku"
+        "AreaDekuPalaceAccess"
       ],
       "ConditionalItems": [
         [
+          "MaskDeku",
+          "Water for Magic Bean",
+          "OtherMagicBean"
+        ],
+        [
+          "MaskDeku",
           "Deku Palace Bean Skip"
         ],
         [
-          "Water for Magic Bean"
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Zora Boomerang Through Walls"
         ]
       ],
       "TimeNeeded": "None",
@@ -54333,7 +54369,19 @@
           "MaskZora"
         ],
         [
-          "Zora Jar Game with Explosives"
+          "Zora Jar Game with Explosives",
+          "MaskBlast",
+          "Take Damage"
+        ],
+        [
+          "Zora Jar Game with Explosives",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "Zora Jar Game with Explosives",
+          "ItemOcarina",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -54344,10 +54392,21 @@
     {
       "Id": "CollectableIkanaGraveyardDay2Bats1",
       "RequiredItems": [
-        "Ikana Graveyard Access",
-        "Short Ranged Weapon"
+        "Ikana Graveyard Access"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "Jump Slash Take Downs",
+          "Fierce Deity's Mask Anywhere"
+        ],
+        [
+          "Any Bomb Bag",
+          "Fewer Item Requirements"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "Day2",
       "TimeSetup": "Day1, Night1, Day2",
@@ -57022,15 +57081,14 @@
     {
       "Id": "Zora Jar Game with Explosives",
       "RequiredItems": [
-        "Any Bomb Bag",
-        "MaskBlast"
+        "Any Bomb Bag"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Drop a bomb near 3 of the jars, then use Blast Mask to break the remaining 2 jars at the same time.",
+      "TrickTooltip": "Blow up all the pots on the same frame. Can be \"buffered\" with Ocarina, or simply done with a well-timed Blast Mask explosion combined with a bomb.",
       "TrickCategory": "Hard"
     },
     {
@@ -58241,6 +58299,14 @@
           "Recoil Flip",
           "ISTT Updraft Recoil Flips",
           "Fierce Deity's Mask Anywhere"
+        ],
+        [
+          "STT Updrafts without Deku Mask",
+          "Recoil Flip",
+          "ISTT Updraft Recoil Flips",
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
         ]
       ],
       "TimeNeeded": "None",
@@ -58509,81 +58575,21 @@
         ],
         [
           "Use Light Arrow",
-          "1 Stone Tower Key",
-          "MaskZora"
+          "MaskZora",
+          "1 Stone Tower Key"
         ],
         [
           "Use Light Arrow",
-          "1 Stone Tower Key",
           "STT Water Tunnel as Human",
-          "Clever Ice Platforms",
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Any Bomb Bag",
-          "STT Eyegore Bridge Jumps"
+          "STT Eyegore Room Key to Bridge",
+          "STT Eyegore Bridge to Courtyard",
+          "1 Stone Tower Key"
         ],
         [
           "Use Light Arrow",
-          "1 Stone Tower Key",
-          "STT Water Tunnel as Human",
-          "Clever Ice Platforms",
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "STT Eyegore Bridge Jumps"
-        ],
-        [
-          "Use Light Arrow",
-          "1 Stone Tower Key",
-          "STT Water Tunnel as Human",
-          "Clever Ice Platforms",
-          "FD Jumps",
-          "STT Eyegore Bridge Jumps"
-        ],
-        [
-          "Use Light Arrow",
-          "2 Stone Tower Keys",
           "STT Masked Hiploop",
-          "STT Eyegore Bridge Jumps",
-          "Clever Ice Platforms"
-        ],
-        [
-          "Use Light Arrow",
-          "2 Stone Tower Keys",
-          "STT Masked Hiploop",
-          "STT Eyegore Bridge Jumps",
-          "Recoil Flip"
-        ],
-        [
-          "Use Light Arrow",
-          "1 Stone Tower Key",
-          "STT Water Tunnel as Human",
-          "STT Eyegore Bridge Jumps",
-          "FD Difficult Jumps",
-          "Recoil Flip"
-        ],
-        [
-          "Use Light Arrow",
-          "1 Stone Tower Key",
-          "STT Water Tunnel as Human",
-          "STT Eyegore Bridge Jumps",
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Recoil Flip",
-          "Any Bomb Bag"
-        ],
-        [
-          "Use Light Arrow",
-          "1 Stone Tower Key",
-          "STT Water Tunnel as Human",
-          "STT Eyegore Bridge Jumps",
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Recoil Flip",
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "MaskBlast"
+          "STT Eyegore Bridge to Courtyard",
+          "2 Stone Tower Keys"
         ]
       ],
       "TimeNeeded": "None",
@@ -58770,70 +58776,15 @@
         ],
         [
           "Use Light Arrow",
-          "STT Eyegore Bridge Jumps",
+          "STT Water Tunnel as Human",
+          "STT Eyegore Room Key to Bridge",
+          "STT Eyegore Bridge to Courtyard"
+        ],
+        [
+          "Use Light Arrow",
           "STT Masked Hiploop",
-          "Clever Ice Platforms",
+          "STT Eyegore Bridge to Courtyard",
           "1 Stone Tower Key"
-        ],
-        [
-          "Use Light Arrow",
-          "STT Eyegore Bridge Jumps",
-          "STT Masked Hiploop",
-          "Recoil Flip",
-          "1 Stone Tower Key"
-        ],
-        [
-          "Use Light Arrow",
-          "STT Eyegore Bridge Jumps",
-          "STT Water Tunnel",
-          "FD Jumps",
-          "Clever Ice Platforms"
-        ],
-        [
-          "Use Light Arrow",
-          "STT Eyegore Bridge Jumps",
-          "STT Water Tunnel",
-          "FD Difficult Jumps",
-          "Recoil Flip"
-        ],
-        [
-          "Use Light Arrow",
-          "STT Eyegore Bridge Jumps",
-          "STT Water Tunnel",
-          "Clever Ice Platforms",
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Any Bomb Bag"
-        ],
-        [
-          "Use Light Arrow",
-          "STT Eyegore Bridge Jumps",
-          "STT Water Tunnel",
-          "Clever Ice Platforms",
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg"
-        ],
-        [
-          "Use Light Arrow",
-          "STT Eyegore Bridge Jumps",
-          "STT Water Tunnel",
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Recoil Flip",
-          "Any Bomb Bag"
-        ],
-        [
-          "Use Light Arrow",
-          "STT Eyegore Bridge Jumps",
-          "STT Water Tunnel",
-          "Goron Bomb Jump",
-          "Take Damage",
-          "Recoil Flip",
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "MaskBlast"
         ]
       ],
       "TimeNeeded": "None",
@@ -58848,6 +58799,10 @@
         [
           "Use Light Arrow",
           "MaskZora"
+        ],
+        [
+          "Use Light Arrow",
+          "MaskDeku"
         ],
         [
           "Use Light Arrow",
@@ -60153,6 +60108,136 @@
           "Kill Deku Shrine Big Octo",
           "ItemHookshot",
           "Take Damage"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "STT Eyegore Room Key to Bridge",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "STT Garo Master Access",
+          "STT Masked Hiploop",
+          "2 Stone Tower Keys"
+        ],
+        [
+          "MaskZora",
+          "STT Eyegore Bridge Jumps"
+        ],
+        [
+          "MaskZora",
+          "Gainer",
+          "Long Jump",
+          "Take Damage"
+        ],
+        [
+          "MaskZora",
+          "Gainer",
+          "Recoil Flip"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag",
+          "Long Jump"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag",
+          "Recoil Flip"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "FD Jumps"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "Long Jump",
+          "MaskBlast"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "Recoil Flip",
+          "MaskBlast",
+          "Any Shield"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Clever Ice Platforms",
+          "Any Bomb Bag"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Clever Ice Platforms",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "Clever Ice Platforms",
+          "FD Jumps"
+        ],
+        [
+          "FD Difficult Jumps"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "STT Eyegore Bridge to Courtyard",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "STT Elegy Maze",
+          "1 Stone Tower Key"
+        ],
+        [
+          "STT Eyegore Bridge Jumps",
+          "Clever Ice Platforms"
+        ],
+        [
+          "STT Eyegore Bridge Jumps",
+          "Recoil Flip",
+          "Any Bomb Bag"
+        ],
+        [
+          "STT Eyegore Bridge Jumps",
+          "Recoil Flip",
+          "MaskBlast"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "AreaDekuPalaceAccess",
+      "RequiredItems": [
+        "AreaSouthAccess"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "Deku Guard Skip"
         ]
       ],
       "TimeNeeded": "None",

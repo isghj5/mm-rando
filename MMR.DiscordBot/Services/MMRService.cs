@@ -111,6 +111,16 @@ namespace MMR.DiscordBot.Services
             return Directory.EnumerateFiles(guildRoot);
         }
 
+        public string GetDefaultSettingsPath()
+        {
+            var settingsRoot = Path.Combine(_cliPath, "settings");
+            if (!Directory.Exists(settingsRoot))
+            {
+                Directory.CreateDirectory(settingsRoot);
+            }
+            return Path.Combine(settingsRoot, "default.json");
+        }
+
         public async Task<(string patchPath, string hashIconPath, string spoilerLogPath, string version)> GenerateSeed(DateTime now, string settingsPath, Func<int, Task> notifyOfPosition)
         {
             await _threadQueue.WaitAsync(notifyOfPosition);
@@ -161,10 +171,14 @@ namespace MMR.DiscordBot.Services
             var seed = await GetSeed();
             var processInfo = new ProcessStartInfo("dotnet");
             processInfo.WorkingDirectory = _cliPath;
-            processInfo.Arguments = $"{cliDllPath} -output \"{output}.z64\" -seed {seed} -maxImportanceWait 150 -spoiler -patch";
+            processInfo.Arguments = $"{cliDllPath} -output \"{output}.z64\" -seed {seed} -spoiler -patch";
             if (!string.IsNullOrWhiteSpace(settingsPath))
             {
-                processInfo.Arguments += $" -settings \"{settingsPath}\"";
+                processInfo.Arguments += $" -maxImportanceWait 150 -settings \"{settingsPath}\"";
+            }
+            else if (File.Exists(GetDefaultSettingsPath()))
+            {
+                processInfo.Arguments += $" -settings \"{GetDefaultSettingsPath()}\"";
             }
             processInfo.ErrorDialog = false;
             processInfo.UseShellExecute = false;

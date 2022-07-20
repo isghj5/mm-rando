@@ -37,7 +37,7 @@ namespace MMR.DiscordBot.Modules
             var guildMod = await GuildModRepository.Single(gm => gm.RoleId == role.Id && gm.GuildId == Context.Guild.Id);
             if (guildMod != null)
             {
-                await ReplyAsync("Role is already a mod role.");
+                await ReplyNoTagAsync("Role is already a mod role.");
                 return;
             }
             await GuildModRepository.Save(new GuildModEntity
@@ -45,7 +45,7 @@ namespace MMR.DiscordBot.Modules
                 GuildId = Context.Guild.Id,
                 RoleId = role.Id,
             });
-            await ReplyAsync("Added");
+            await ReplyNoTagAsync("Added");
         }
 
         [Command("remove-mod-role")]
@@ -56,11 +56,32 @@ namespace MMR.DiscordBot.Modules
             var guildMod = await GuildModRepository.Single(gm => gm.RoleId == role.Id && gm.GuildId == Context.Guild.Id);
             if (guildMod == null)
             {
-                await ReplyAsync("Role is already not a mod role.");
+                await ReplyNoTagAsync("Role is already not a mod role.");
                 return;
             }
             await GuildModRepository.DeleteById(guildMod.Id);
-            await ReplyAsync("Removed");
+            await ReplyNoTagAsync("Removed");
+        }
+
+        [RequireOwner]
+        [RequireContext(ContextType.Guild)]
+        [Command("tournament")]
+        public async Task ToggleTournament()
+        {
+            var tournamentChannel = await TournamentChannelRepository.Single(tc => tc.ChannelId == Context.Channel.Id);
+            if (tournamentChannel == null)
+            {
+                await TournamentChannelRepository.Save(new TournamentChannelEntity
+                {
+                    ChannelId = Context.Channel.Id,
+                });
+                await ReplyNoTagAsync("Enabled tournament mode for this channel.");
+            }
+            else
+            {
+                await TournamentChannelRepository.DeleteById(tournamentChannel.Id);
+                await ReplyNoTagAsync("Disabled tournament mode for this channel.");
+            }
         }
     }
 }

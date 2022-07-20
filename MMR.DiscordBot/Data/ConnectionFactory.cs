@@ -12,15 +12,13 @@ namespace MMR.DiscordBot.Data
 
             using (var db = this.Open())
             {
-                if (!db.TableExists<UserSeedEntity>())
-                {
-                    db.CreateTable<UserSeedEntity>();
-                }
+                db.CreateTableIfNotExists<UserSeedEntity>();
                 if (!db.ColumnExists<UserSeedEntity>(x => x.Version))
                 {
                     db.AddColumn<UserSeedEntity>(x => x.Version);
                 }
                 db.CreateTableIfNotExists<GuildModEntity>();
+                db.CreateTableIfNotExists<TournamentChannelEntity>();
             }
         }
     }

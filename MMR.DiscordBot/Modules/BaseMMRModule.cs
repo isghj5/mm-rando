@@ -21,6 +21,7 @@ namespace MMR.DiscordBot.Modules
     {
         public UserSeedRepository UserSeedRepository { get; set; }
         public GuildModRepository GuildModRepository { get; set; }
+        public TournamentChannelRepository TournamentChannelRepository { get; set;}
         private readonly MMRService _mmrService;
 
         public BaseMMRModule(MMRService mmrService)
@@ -28,24 +29,24 @@ namespace MMR.DiscordBot.Modules
             _mmrService = mmrService;
         }
 
-        private readonly IReadOnlyCollection<ulong> _tournamentChannels = new List<ulong>
-        {
-            709731024375906316, // ZoeyZolotova - tournament-admin
-            871199781454757969, // MMR - Season 2 Brackets - #bracket-seeds
-        }.AsReadOnly();
+        //private readonly IReadOnlyCollection<ulong> _tournamentChannels = new List<ulong>
+        //{
+        //    709731024375906316, // ZoeyZolotova - tournament-admin
+        //    871199781454757969, // MMR - Season 2 Brackets - #bracket-seeds
+        //}.AsReadOnly();
 
         protected virtual void AddHelp(Dictionary<string, string> commands)
         {
 
         }
 
-        private async Task<IUserMessage> ReplyNoTagAsync(string message)
+        protected async Task<IUserMessage> ReplyNoTagAsync(string message)
         {
-            var messageReference = new MessageReference(Context.Message.Id, Context.Channel.Id, Context.Guild.Id);
+            var messageReference = new MessageReference(Context.Message.Id, Context.Channel.Id);
             return await ReplyAsync(message, allowedMentions: AllowedMentions.None, messageReference: messageReference);
         }
 
-        private async Task ModifyNoTagAsync(IUserMessage message, Action<MessageProperties> func)
+        protected async Task ModifyNoTagAsync(IUserMessage message, Action<MessageProperties> func)
         {
             await message.ModifyAsync(mp =>
             {
@@ -54,7 +55,7 @@ namespace MMR.DiscordBot.Modules
             });
         }
 
-        public async Task<Discord.Rest.RestUserMessage> ReplySendFileAsync(string filepath)
+        protected async Task<Discord.Rest.RestUserMessage> ReplySendFileAsync(string filepath)
         {
             var messageReference = new MessageReference(Context.Message.Id, Context.Channel.Id, Context.Guild.Id);
             return await Context.Channel.SendFileAsync(filepath, allowedMentions: AllowedMentions.None, messageReference: messageReference);
@@ -68,7 +69,7 @@ namespace MMR.DiscordBot.Modules
                 {  "help", "See this help list." },
             };
 
-            if (_tournamentChannels.Contains(Context.Channel.Id))
+            if (await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
             {
                 commands.Add("seed (<@user>){2,}", "Generate a seed. The patch and hashIcons will be sent in a direct message to the tagged users. The spoiler log will be sent to you.");
             }
@@ -235,7 +236,7 @@ namespace MMR.DiscordBot.Modules
         [Command("seed")]
         public async Task Seed([Remainder] string settingName = null)
         {
-            if (_tournamentChannels.Contains(Context.Channel.Id))
+            if (await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
             {
                 await TournamentSeed();
                 return;
@@ -260,7 +261,7 @@ namespace MMR.DiscordBot.Modules
         [Command("spoiler")]
         public async Task Spoiler()
         {
-            if (_tournamentChannels.Contains(Context.Channel.Id))
+            if (await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
             {
                 // Silently ignore.
                 return;
@@ -541,6 +542,55 @@ namespace MMR.DiscordBot.Modules
                 return;
             }
             await GenerateSeed(settingPath);
+        }
+
+        [Command("set-default-settings")]
+        [RequireOwner]
+        public async Task SetDefaultSettings()
+        {
+            if (Context.Message.Attachments.Count != 1)
+            {
+                await ReplyNoTagAsync("Must attach one settings json file.");
+                return;
+            }
+
+            var settingsFile = Context.Message.Attachments.Single();
+
+            if (Path.GetExtension(settingsFile.Filename) != ".json")
+            {
+                await ReplyNoTagAsync("File must be a json file.");
+                return;
+            }
+
+            var replacing = false;
+            var settingsPath = _mmrService.GetDefaultSettingsPath();
+            if (File.Exists(settingsPath))
+            {
+                replacing = true;
+            }
+
+            using (var client = new WebClient())
+            {
+                await client.DownloadFileTaskAsync(new Uri(settingsFile.Url), settingsPath);
+            }
+
+            await ReplyNoTagAsync($"{(replacing ? "Replaced" : "Added")} default settings.");
+        }
+
+        [Command("delete-default-settings")]
+        [RequireOwner]
+        public async Task DeleteDefaultSettings()
+        {
+            var settingsPath = _mmrService.GetDefaultSettingsPath();
+            if (!File.Exists(settingsPath))
+            {
+                await ReplyNoTagAsync("No default setting file is set.");
+                return;
+            }
+
+            File.Delete(settingsPath);
+
+            await ReplyNoTagAsync("Deleted default settings.");
         }
     }
 }
