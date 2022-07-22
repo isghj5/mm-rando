@@ -319,7 +319,17 @@ namespace MMR.Randomizer.Utils
                             }
                             foreach (var line in categoryData.Split(delimitingChar))
                             {
-                                categoriesList.Add(Convert.ToInt32(line.Trim(), 16));
+                                try
+                                {
+                                    categoriesList.Add(Convert.ToInt32(line.Trim(), 16));
+                                }
+                                catch // empty line wont convert or bad category value, ignore
+                                {
+                                    #if RELEASE
+                                    continue; // Release ignores music bugs and keeps going
+                                    #endif
+                                    throw new Exception($"Error: Categories cannot be read: {currentSong.Name}");
+                                }
                             }
                             currentSong.Type = categoriesList;
                         }
