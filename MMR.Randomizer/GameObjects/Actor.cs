@@ -1029,10 +1029,22 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         Bombiwa = 0x92, // Obj_Bombiwa
 
+        // multiple different kinds of switches:
+        // floor switches, glass, eyeball, ect
+        [ActorizerEnabled]
         [FileID(138)]
         [ObjectListIndex(3)] // bleh, always with the dunegeon object
+        //[ObjectListIndex(0x4B)] // fake for object force testing
+        // params are filled
+        // type is 0x7 range,0/1 are floor switches, 2 is eye switch, 3 and 4 are crystal, 5 is draw again
+        // subtype describes if its set once or toggle or if it resets once you step off
+        [GroundVariants(0x0, 0x20, 0x1, 0x43, 0x14, 0x5)]
+        // TODO get wall rotations working so I can just set some on the wall, wall crystal switches make sense
+        [WallVariants(0x2)]
+        [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
-        FloorAndEyeSwitches = 0x93, // Obj_Switch
+        [EnemizerScenesExcluded(Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple)]
+        ObjSwitch = 0x93, // Obj_Switch
 
         Empty94 = 0x94, // Empty94
 
@@ -2308,7 +2320,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 5, variant: 0x8C, 0x28, 0x3C, 0x46, 0x32, 0x1, 0x5, 0x14)]
         [VariantsWithRoomMax(max: 1, variant: 0x8014, 0x8028, 0x8023, 0x0032, 0x0005, 0x0014)]
         [CompanionActor(ClayPot, ourVariant: -1, variant: 0x10B, 0x115, 0x106, 0x101, 0x102, 0x10F, 0x115, 0x11F, 0x113, 0x110, 0x10E)]
-        RealBombchu = 0x16F,
+        RealBombchu = 0x16F, // En_Rat
 
         [FileID(332)]
         [ObjectListIndex(0x182)]
