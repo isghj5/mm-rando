@@ -319,7 +319,9 @@ namespace MMR.Randomizer
                 piratesExteriorScene.Maps[0].Actors[13].ChangeActor(GameObjects.Actor.Empty, modifyOld: true); // dangeon object so no grotto, empty for now
                 // todo: 14/16 are also torches, we dont really need both here
 
-
+                // this torch is too close to spider, constantly actors get stuck, just move the damn torch
+                var swampSpiderHouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
+                swampSpiderHouseScene.Maps[3].Actors[3].Position.x = -480;
             }
         }
 
