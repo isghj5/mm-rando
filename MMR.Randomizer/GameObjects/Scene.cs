@@ -131,7 +131,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Skulltula, // weak enemies are kinda lame here
             Actor.BigPoe)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
-            Actor.GibdoWell, Actor.Peahat)] // We consider them killable, but killing this many...
+            Actor.GibdoWell, Actor.DeathArmos)] // Rarely Killable
         WoodfallTemple = 0x18,
 
         [FileID(1222)]
