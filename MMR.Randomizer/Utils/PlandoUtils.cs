@@ -24,6 +24,19 @@ namespace MMR.Randomizer.Utils
         public List<Item>   ItemList;
         public List<Item>   CheckList;
         public bool         SkipLogic = false;
+
+        public static PlandoItemCombo Copy(PlandoItemCombo pic)
+        {
+            return new PlandoItemCombo {
+                // to list makes a copy
+                ItemList = pic.ItemList.ToList(),
+                CheckList = pic.CheckList.ToList(),
+                SkipLogic = pic.SkipLogic,
+                ItemDrawCount = pic.ItemDrawCount,
+                Name = pic.Name,
+                Notes = pic.Notes
+            };
+        }
     }
 
     public class PlandoMusicCombo : PlandoCombo

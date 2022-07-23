@@ -1787,6 +1787,7 @@ namespace MMR.Randomizer
 
             foreach (PlandoItemCombo pic in plandoItemCombos)
             {
+                var oldPic = PlandoItemCombo.Copy(pic); // debugging
                 var itemCombo = PlandoUtils.CleanItemCombo(pic, Random, itemPool, ItemList);
                 if (itemCombo == null) // not possible to fullfill
                 {
@@ -1807,6 +1808,13 @@ namespace MMR.Randomizer
                     foreach (var item in previouslyPlacedChecks)
                     {
                         picDebug += "- [" + item.NewLocation.Value.Location() + "] was filled with item: [" + item.Item.Name() + "]\n";
+                    }
+
+                    var originalChecks = oldPic.CheckList;
+                    picDebug += "\nChecks this ItemCombo was supposed to use:\n";
+                    foreach (var item in originalChecks)
+                    {
+                        picDebug += "- [" + item.ToString() + "]\n";
                     }
 
                     throw new Exception("Error: Plando failed to build with this seed\n combo name: [" + pic.Name + "]\n\n" + picDebug);
