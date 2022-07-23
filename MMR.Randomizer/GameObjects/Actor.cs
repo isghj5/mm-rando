@@ -2180,8 +2180,9 @@ namespace MMR.Randomizer.GameObjects
         // one of these is sit on the wall bat from rtss: FF03/01/9F
         [VariantsWithRoomMax(max:1, 0xFF34)] // swarm
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
-        // switch flags
-        [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
+        // switch flags are only for the graveyard, no other version uses it
+        // hardcoded to use only in that scene too, so canno't use for anything else without modifying
+        //[SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         BadBat = 0x15B, // En_Bat
 
         // can hold many different types of graves or stones containing.. nothing bit broke
