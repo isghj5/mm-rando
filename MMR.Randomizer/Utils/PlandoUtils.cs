@@ -227,7 +227,8 @@ namespace MMR.Randomizer.Utils
             // clean combo of already placed items and checks
             foreach (Item item in returnCombo.ItemList.ToList()) 
             {
-                if (randomizerItemList[item].NewLocation.HasValue)
+                var itemVar = randomizerItemList[item];
+                if (itemVar.NewLocation.HasValue)
                 {
                     Debug.WriteLine("Item has already been placed. " + item);
                     returnCombo.ItemList.Remove(item);
