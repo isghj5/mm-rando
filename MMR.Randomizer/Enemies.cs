@@ -1296,6 +1296,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.BadBat, GameObjects.Actor.Cow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Torch, GameObjects.Actor.ObjSwitch)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
+                if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.PatrollingPirate)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
                 #endif
@@ -1410,6 +1411,26 @@ namespace MMR.Randomizer
                     throw new Exception("GenActorCandidatees: no candidates detected");
                 }
 
+                // HOTFIX: replace with something proper later
+                // this is currently the only instance of ground+pathing getting replacement by only pathing
+                if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.ZoraHall && objectIndex == 0)
+                {
+                    // for all candidates, check if they have only pathing and remove
+                    foreach(var candidate in newCandiateList.ToArray())
+                    {
+                        var pathingVariants = candidate.AllVariants[(int) GameObjects.ActorType.Pathing - 1];
+                        if (pathingVariants != null && pathingVariants.Count > 0)
+                        {
+                            var groundVariants = candidate.AllVariants[(int)GameObjects.ActorType.Ground - 1];
+
+                            if (groundVariants == null || groundVariants.Count == 0)
+                            {
+                                newCandiateList.Remove(candidate);
+                            }
+                        }
+                    }
+                }
+
                 thisSceneData.CandidatesPerObject.Add(newCandiateList);
             }
         }
@@ -1475,6 +1496,8 @@ namespace MMR.Randomizer
                     }
                 } // for each candidate end
             } // for each slot end
+
+            // todo check to make sure there are no pathing variants in 
 
             return enemyMatchesPool;
         }
@@ -1862,6 +1885,7 @@ namespace MMR.Randomizer
             }
         }
 
+        #region DeadFunctionCullOptionalActors 
         private static void CullOptionalActors(Scene scene, List<ValueSwap> objList, int loopCount)
         {
             /// issue: sometimes some of the big scenes get stuck in a weird spot where they can't find any actor combos that fit
@@ -1925,6 +1949,7 @@ namespace MMR.Randomizer
                 );
             }
         }
+        #endregion
 
         [System.Diagnostics.DebuggerDisplay("{Scene.ToString(\"X3\")}")]
         public class SceneEnemizerData
@@ -2701,7 +2726,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 35.3\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 35.4\n");
                 }
             }
             catch (Exception e)

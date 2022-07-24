@@ -2157,7 +2157,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(309)]
         [ObjectListIndex(0x16D)]
-        Obj_Smork = 0x157, // Obj_Smork
+        RomaniRanchChimneySmoke = 0x157, // Obj_Smork
         
         [FileID(310)]
         [ObjectListIndex(0x1)]
