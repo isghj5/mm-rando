@@ -11,3 +11,6 @@ trim_trailing_whitespace = true
 # Xml files
 [*.xml]
 indent_size = 2
+
+[Makefile]
+indent_style = tab
