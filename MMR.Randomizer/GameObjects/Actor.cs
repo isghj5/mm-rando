@@ -3284,12 +3284,14 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1ED)]
         DeepPython = 0x206, // En_Dragon
 
-        //[ActorizerEnabled] // spawns but invisible, can hit it but cannot see it in TF
+        // bad for ground variant because this actor only draws chain + gong, not the frame, that is part of the scene mesh
+        [ActorizerEnabled] // spawns but invisible, can hit it but cannot see it in TF
         // hmm, sword school special object is dungeon_keep
         [FileID(478)]
         [ObjectListIndex(0x1EE)]
-        [GroundVariants(0)]
+        [WallVariants(0)] // none
         [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.SwordsmansSchool)] // object used for multiple actors
         Gong = 0x207, // Obj_Dora
 
         [EnemizerEnabled]
