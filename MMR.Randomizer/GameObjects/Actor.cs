@@ -102,13 +102,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1B30)]
         [FileID(48)]
         [ObjectListIndex(0x9)]
-        // 0xFF00 is switch flags, booo
-        //[GroundVariants(1)] //issue: used for replacement, puts ground enemies in air
+        //[GroundVariants(1)] //issue: also used for replacement, puts ground enemies in air so we cannot
         [FlyingVariants(1)]
         // 81 is trapped in ice, floats back up to the ceiling after melting
-        [GroundVariants(0x81)] // todo limit?
-        [VariantsWithRoomMax(max:2, variant:0x81)]
-        [RespawningVariants(variant:0x81)] // if they fly away after melt they might not come down, so not killable
+        [GroundVariants(0x81)]
+        [VariantsWithRoomMax(max:1, variant:0x81)] // have to limit because it can block and I don't have variant blocking
+        [RespawningVariants(variant:0x81)] // if they fly away after melt they might not come down (bug), so not killable
         [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         //[EnemizerScenesPlacementBlock(Scene.TerminaField)] // temporary, melting them can unmelt the north ice block, but why
         WallMaster = 0xA, // En_Wallmas
@@ -600,14 +599,15 @@ namespace MMR.Randomizer.GameObjects
         [FileID(93)]
         [ObjectListIndex(0x75)]
         // 0x8000 removes the freeze timer, like market town in OOT
-        // 0x7F00 is a switch flag check ???
-        // 0x5/6/7 have different actionfuncs, dont seem to do anything..?
         // 3 is invisible, 2 is squatting
         // 4 spawns inside of an ice block
-        [GroundVariants(0x7F07,0x7F05,0x7F06, 0x7F03, 0x7F04, 0x8005, 0x8006, 0x8007, 0x8003)]
+        // 0x5/6/7 dance if the player wears a mask
+        // 0xFFFE is -2 = gibdo, does not stun
+        // 0xFFFE is -3 = gibdo that rises out of the coffin, from OOT, does not stun and looks weird so we wont use until I find a way to combine with a fake chest
+        [GroundVariants(0x7F07,0x7F05,0x7F06, 0x7F03, 0x7F04, 0x8005, 0x8006, 0x8007, 0x8003, 0xFFFE)]
         [VariantsWithRoomMax(max: 3, variant: 0x7F07, 0x7F05, 0x7F06, 0x7F02, 0x8005, 0x8006, 0x8007, 0x7F04)]
-        [VariantsWithRoomMax(max: 1, variant: 0x7F03, 0x8003)]
-        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        [VariantsWithRoomMax(max: 1, variant: 0x7F03, 0x8003, 0xFFFE)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 8)] // 0xFF00 is read, but only 0x7F of that gets set on death, never checked
         [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.BeneathTheWell)] // gibdo locations, but share the same object so gets detected
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows us down too much
         ReDead = 0x4C, // En_Rd
@@ -1009,10 +1009,22 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.Grottos)] // dont remove from peahat grotto
         GrassBush = 0x90, // En_Kusa
 
-        // bad idea to move because beans have paths
+        // this one might be a pain... without modification it looks like the actor wants to be doubled up on top of itself
+        [ActorizerEnabled]
         [FileID(136)]
         [ObjectListIndex(0xEE)]
+        // 8 is unused crack in the wall, only exists in unused ranch setup
+        // uses Z rot as a param, unknown use
+        // 0xC000 unk, can change draw type
+        // 0x80 determins if switch flags are active, great..
+        [GroundVariants(0x4000, 0x8000)]
+        [WallVariants(0x4000, 0x8000)]
+        // c and 0 crash without a path to follow, but with a path they instant kill which is odd...
+        // havent documented enough to know why
+        //[PathingVariants(0x4000)] // TODO figure out if I even can get this to work
+        [PathingTypeVarsPlacement(mask: 0x3F, shift: 8)] // 0x3F00
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        //[EnemizerScenesExcluded()] // we can actually just use generic params to avoid this
         SoftSoilAndBeans = 0x91, // Obj_Bean
 
         [ActorizerEnabled]
@@ -2971,10 +2983,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2940)]
         [FileID(435)]
         [ObjectListIndex(0x75)]
-        [GroundVariants(0x1E9, 0x1F4, 0x208, 0x214, 0x224, 0x236, 0x247, 0x253, 0x262, 0x275, 0x283, 0x291, 0x2A0)]
+        // params: switch flag(xFF0) and item used(0xF)
+        // 8 is bigpo, 0 is blue pot, 7 is hot spring, 9 is milk
+        [GroundVariants(1,2,3,4,5,6)]
+        [RespawningAllVariants] // only to stop them from showing up in places where you need to kill them, since its a hastle
         [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.IkanaCanyon)]
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Grottos)] // slows down player too much in a race setting
-        GibdoWell = 0x1DA,
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Grottos,
+            Scene.GoronRacetrack, Scene.GoronRacetrack)] // slows down player too much in a race setting
+        [SwitchFlagsPlacement(mask: 0xFF, shift: 4)]
+        GibdoWell = 0x1DA, // En_Talk_Gibud
 
         [FileID(436)]
         [ObjectListIndex(0x1B8)]
