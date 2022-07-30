@@ -730,11 +730,13 @@ namespace MMR.Randomizer.GameObjects
         Empty5D = 0x5D,
         Empty5E = 0x5E,
 
-        //[ActorizerEnabled] // broken: crash, does NOT use paths
-        // thought it might be that the actor's memory is just huge because it has 20 effects, but we measure that now // nope still crash
+        [ActorizerEnabled]
         [FileID(102)]
         [ObjectListIndex(0x280)]
         [FlyingVariants(1)]
+        //[GroundVariants(1)] // testing
+        // needs limits because it can overload the dyna 
+        [VariantsWithRoomMax(max:3, variant:0, 1)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [UnkillableAllVariants]
         MajoraBalloonSewer = 0x5F, // En_Encount2
@@ -955,7 +957,7 @@ namespace MMR.Randomizer.GameObjects
         // todo finish testing
         [EnemizerEnabled]
         [FileID(131)]
-        [ObjectListIndex(0003)]
+        [ObjectListIndex(3)]
         // 3 is vanilla wall of flames, 0 spits a single flame that chases you
         [WallVariants(0, 3)]
         [UnkillableAllVariants]
@@ -3460,19 +3462,34 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x12E)]
         [PathingVariants(0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
                 0x144B, 0x14EA, 0x18EA, 0x284B, 0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
+        // path == 0x3F ignores path, just stands in one spot
+        // 0x02 always looks forward for boats or something, FC00 will hear you and turn to look at you
+        [GroundVariants(0xFC00, 0xFC20)] 
+        [VariantsWithRoomMax(max: 2, variant: 0xFC00)]
+        [VariantsWithRoomMax(max: 1, variant: 0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
+                0x144B, 0x14EA, 0x18EA, 0x284B, 0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [PathingKickoutAddrVarsPlacement(mask:0x1F, shift: 0x0)]
-        [UnkillableAllVariants]
+        [RespawningAllVariants] // think they count as enemy, so can't put places
         [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.SwampSpiderHouse)]
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
         PatrollingPirate = 0x21E, // En_Ge2
 
-        // romani talking to cremia only
+        // romani talking to cremia and dinner and sleeping in bed
+        [ActorizerEnabled]
         [FileID(502)]
         [ObjectListIndex(0xB7)]
-        RomaniTalkingToCremia = 0x21F, // En_Ma_Yts
+        // 0xF000 is type
+        // 0xF000 is just standing there, wont talk or do anything
+        // 0x2000 is asleep night 2 in bed
+        // 0x3000 is credits cutscene, except without the cutscene they just stare in a straight line
+        [GroundVariants(0x1000, 0x2000, 0xF000, 0x3FF)]
+        [VariantsWithRoomMax(max: 1, variant: 0x2000)]
+        [VariantsWithRoomMax(max: 0, variant: 0x30FF)] // boring cutscene version just stares into the distance, do not re-shuffle
+        [EnemizerScenesExcluded(Scene.RanchBuildings)]
+        [UnkillableAllVariants]
+        Romani2 = 0x21F, // En_Ma_Yts
 
-        // todo
         [ActorizerEnabled]
         [FileID(503)]
         [ObjectListIndex(0xA7)]
@@ -3949,7 +3966,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(Scene.GreatBayCoast, Scene.ZoraCape)]
         Seagulls = 0x267, // En_Tanron4
 
-        //todo test these
+        // wont spawn, actor not documented, some weird morita bullshit
         [FileID(575)]
         [ObjectListIndex(0x15B)]
         DestructablePartsOfTwinmoldsArena = 0x268, // En_Tanron5
@@ -3957,9 +3974,6 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // this actor is EMPTY the code has nothing in it
         [FileID(576)]
         [ObjectListIndex(0x1EB)]
-        // m2c suggests either param 1 or 2 could work
-        // 1 spins in circles like giant bee, 2 did not spawn
-        [FlyingVariants(2)]
         En_Tanron6 = 0x269, // En_Tanron6
 
         // TODO: make this version a companion instead, so we have fewer of these guys placed everywhere
@@ -4141,11 +4155,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         PamelaHouseFatherInteractions = 0x284, // Obj_Mu_Pict
 
-        //todo explore
+        // keg breaking ceiling in ikana, no use for it
         [FileID(604)]
         [ObjectListIndex(0x236)]
-        IkanaCastleObjects = 0x285, // Bg_Ikninside
-        
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
+        IkanaCastleKegCieling = 0x285, // Bg_Ikninside
+
+        // assumed to be the stage lights in the Mikau healing thing
         [FileID(605)]
         [ObjectListIndex(0x255)]
         Eff_Zoraband = 0x286, // Eff_Zoraband
