@@ -2391,7 +2391,11 @@ namespace MMR.Randomizer
                             {
                                 /// overwrite the file now
                                 RomData.MMFileList[newFID].Data = overlayData;
-                                RomData.MMFileList[newFID].End = RomData.MMFileList[newFID].Addr + newBinLen;
+                                // we CANNOT update the .end because it breaks MMR's romaddr->file+offset calculations
+                                //   MMR will attempt to write romhacks for the following actor to our new bigger actor
+                                //   we would have to rewrite half of rando to get around that
+                                // thankfully, this updating end isn't actually necessary it seems, we can leave this vanilla
+                                //RomData.MMFileList[newFID].End = RomData.MMFileList[newFID].Addr + newBinLen;
                                 RomData.MMFileList[newFID].WasEdited = true;
                                 // injectedActor.overlayBin = overlayData; // we dont save bin if its a previous file
                             }
