@@ -500,6 +500,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1510)]
         [SceneInternalId(0x6C)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
+            Actor.ClocktowerGearsAndOrgan)] // organ is huge, covers the mayor's door
         EastClockTown = 0x69,
 
         [FileID(1512)]

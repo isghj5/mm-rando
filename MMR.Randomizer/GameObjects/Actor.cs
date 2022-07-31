@@ -2779,12 +2779,10 @@ namespace MMR.Randomizer.GameObjects
         HappyMaskSalesman = 0x1B5, // En_Osn
 
         //[ActorizerEnabled] // issue: cannot place organ because its waiting for the cutscene part to appear, also no hitbox
+        //  instead we modified it and inject changes to get it working
         [FileID(402)]
         [ObjectListIndex(0x88)]
-        // 3 is organ, the gears are other vars 
-        [GroundVariants(3)]
-        // should be both teh gears AND the organ
-        ClocktowerSurroundings = 0x1B6, // Bg_Ctower_Gear
+        ClocktowerGearsAndOrgan = 0x1B6, // Bg_Ctower_Gear
 
         [ActorizerEnabled]
         [FileID(403)]
@@ -4364,6 +4362,7 @@ namespace MMR.Randomizer.GameObjects
         En_Ending_Hero6 = 0x2AC, // En_Ending_Hero6
 
         // duplicate of anju cutscene?
+        // requires three objects: her own, OBJECT_AN4, OBJECT_MSMO,
         [FileID(644)]
         [ObjectListIndex(0xE2)]
         Dm_Gm = 0x2AD, // Dm_Gm
