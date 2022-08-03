@@ -73,3 +73,24 @@
 ;   addiu   a1, r0, 0x31F1
 .org 0x80869344 ; Offset: 0x1774
     addiu   a1, r0, 0x31A4
+
+;==================================================================================================
+; Fix Large Chest Ice Trap
+;==================================================================================================
+
+.headersize G_EN_BOX_DELTA
+
+; Replaces:
+;   LUI     AT, 0x4234
+;   MTC1    AT, F4
+;   LWC1    F6, 0x0174 (S0)
+;   C.LT.S  F4, F6
+;   NOP
+;   BC1FL   0x808695D8
+.org 0x8086959C
+    nop
+    nop
+    nop
+    jal     Chest_ShouldIceSmokeSpawn
+    or      a0, s0, r0
+    beqz    v0, 0x808695D8

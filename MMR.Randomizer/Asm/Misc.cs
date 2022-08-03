@@ -77,6 +77,11 @@ namespace MMR.Randomizer.Asm
         public bool BankMultiRewards { get; set; } = true;
 
         /// <summary>
+        /// Whether or not chests should always use the short opening animation.
+        /// </summary>
+        public bool ShortChestOpening { get; set; }
+
+        /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
@@ -91,6 +96,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FastBankRupees ? (uint)1 : 0) << 26;
             flags |= (this.DoubleArcheryRewards ? (uint)1 : 0) << 25;
             flags |= (this.BankMultiRewards ? (uint)1 : 0) << 24;
+            flags |= (this.ShortChestOpening ? (uint)1 : 0) << 23;
             return flags;
         }
     }
@@ -434,6 +440,7 @@ namespace MMR.Randomizer.Asm
             this.Speedups.SoundCheck = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.MilkBarPerformance);
             this.Speedups.DonGero = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.HungryGoron);
             this.Speedups.FastBankRupees = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText);
+            this.Speedups.ShortChestOpening = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.ShortChestOpening);
 
             // If using Adult Link model, allow Mikau cutscene to activate early.
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;

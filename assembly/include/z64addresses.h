@@ -63,6 +63,7 @@ extern void z2_PlayLoopingSfxAtActor(Actor* actor, u32 id);
 extern Actor* z2_SpawnActor(ActorContext* actorCtxt, GlobalContext* ctxt, u16 id, f32 x, f32 y, f32 z, u16 rx, u16 ry, u16 rz, u16 params);
 extern void z2_UpdateButtonUsability(GlobalContext* ctxt);
 extern void z2_WriteHeartColors(GlobalContext* ctxt);
+extern u8 z2_CheckItemObtainability(u32 item);
 extern void z2_RemoveItem(u32 item, u8 slot);
 extern void z2_ToggleSfxDampen(int enable);
 extern void z2_HandleInputVelocity(f32* linearVelocity, f32 inputVelocity, f32 increaseBy, f32 decreaseBy);

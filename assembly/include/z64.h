@@ -1506,14 +1506,16 @@ typedef struct {
 // En_Box actor (Treasure Chest).
 typedef struct {
     /* 0x000 */ Actor base;
-    /* 0x144 */ UNK_TYPE1 pad144[0xA8];
+    /* 0x144 */ UNK_TYPE1 pad144[0x18];
+    /* 0x15C */ SkelAnime skelanime;
+    /* 0x1A0 */ UNK_TYPE1 pad1A0[0x4C];
     /* 0x1EC */ s16 animCounter; // Used for fancy light animation?
     /* 0x1EE */ u8 unk1EE;
     /* 0x1EF */ u8 unk1EF;
     /* 0x1F0 */ u8 unk1F0;
     /* 0x1F1 */ u8 chestType;
     /* 0x1F2 */ UNK_TYPE1 pad1F2[0x28];
-    /* 0x21A */ s16 unk21A;
+    /* 0x21A */ s16 cutsceneId;
     /* 0x21C */ u32 giIndex;
     /* 0x220 */ u32 unk220;
 } ActorEnBox; // size = 0x224?

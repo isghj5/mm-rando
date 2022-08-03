@@ -40,6 +40,9 @@ namespace MMR.Randomizer.Models.Settings
         [Description("The dialog of the credits will proceed automatically.")]
         AutomaticCredits = 1 << 8,
 
+        [Description("All chests will open using the short animation.")]
+        ShortChestOpening = 1 << 9,
+
         [Description("Various cutscenes are skipped or otherwise shortened.")]
         [HackContent(nameof(Resources.mods.short_cutscenes))]
         EverythingElse = 1 << 31,
