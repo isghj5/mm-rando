@@ -615,6 +615,12 @@ namespace MMR.Randomizer.GameObjects
         [FileID(94)]
         [ObjectListIndex(0x5C)]
         [SwitchFlagsPlacement(mask: 0x7E, shift: 9)]
+        [GroundVariants(0)] // params are ignored, uses params as a variable for setting
+        [FlyingVariants(0)]
+        [WaterVariants(0)]
+        [VariantsWithRoomMax(max: 3, variant: 0)] // too much Bg is crash
+        [UnkillableAllVariants]
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack)]
         StoneTowerGreyStoneElevator = 0x4D, // Bg_F40_Flift
 
         // Has no File
@@ -630,7 +636,7 @@ namespace MMR.Randomizer.GameObjects
         [WaterVariants(0x6322)] // fish swimming in the water
         [UnkillableAllVariants]
         [VariantsWithRoomMax(max: 2, 0x3323, 0x2324, 0x4324)]
-        Bugs = 0x4F, // Obj_Mure // includes bugs and fish and butterflies
+        BugsFishButterfly = 0x4F, // Obj_Mure // includes bugs and fish and butterflies
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x3080)]
@@ -735,7 +741,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x280)]
         [FlyingVariants(1)]
         //[GroundVariants(1)] // testing
-        // needs limits because it can overload the dyna 
+        // needs limits because it can overload the dyna
         [VariantsWithRoomMax(max:3, variant:0, 1)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [UnkillableAllVariants]
@@ -761,19 +767,25 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0xF00)]
         [FileID(106)]
         [ObjectListIndex(0x8E)]
-        [WaterVariants(0)] // works on ground too but cannot add ground without ground enemies showing up in fish tank
+        // works on ground too but cannot add ground without ground enemies showing up in fish tank
+        // there is a bug sometimes on ground it loses its collider (in a small scene)
+        //[GroundVariants]
+        [WaterVariants(0)] 
         Shellblade = 0x64, // En_Sb
 
+        // miniboss
         [FileID(107)]
         [ObjectListIndex(0x128)]
-        En_Bigslime = 0x65, // En_Bigslime
+        MadJelly = 0x65, // En_Bigslime
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1B80)]
         [FileID(108)]
         [ObjectListIndex(0x31)]
-        [GroundVariants(1,2)] // both stiff and mini
-        [UnkillableAllVariants] // they grow back, dont count as killable
+        // 0 is weird, unattackable just spins forever
+        // 1 is stiff stick, 2 is mini
+        [GroundVariants(0, 1,2)] // both stiff and mini
+        [RespawningAllVariants] // they grow back, dont count as killable
         DekuBabaWithered = 0x66, // En_Karebaba
 
         [FileID(109)]
@@ -847,7 +859,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x124)]
         [FileID(114)]
         // params: FFFF is the main all-in-one
-        // 100-MAX is per-single fish
+        // < 100 is owner
+        // 100->115 is per-single fish
         // 200 is something, it causes splashes you can hear but if you get close to it it crashes
         [GroundVariants(0xFFFF)] // assumption, the main vars will be the man in the hat
         [WaterVariants(0xFFFF)] // assumption, the main vars will be the man in the hat
@@ -1021,6 +1034,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x80 determins if switch flags are active, great..
         [GroundVariants(0x4000, 0x8000)]
         [WallVariants(0x4000, 0x8000)]
+        [UnkillableAllVariants]
         // c and 0 crash without a path to follow, but with a path they instant kill which is odd...
         // havent documented enough to know why
         //[PathingVariants(0x4000)] // TODO figure out if I even can get this to work
@@ -1273,7 +1287,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x801, 0x1F02, 0x1F00, 0x0402)]
         [AlignedCompanionActor(Shiro, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0)] // shiro likes his rock friends
-        [AlignedCompanionActor(Bugs, CompanionAlignment.Above, ourVariant: -1,
+        [AlignedCompanionActor(BugsFishButterfly, CompanionAlignment.Above, ourVariant: -1,
             variant: 0x2324, 0x4324)] // butterflies over the bushes
         [AlignedCompanionActor(GrottoHole, CompanionAlignment.OnTop, ourVariant: 0402,
             variant: 0x8200, 0xA200, // secret japanese grottos, hidden
@@ -1364,9 +1378,16 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 8)]
         Elf_Msg2 = 0xC6, // Elf_Msg2
 
-        // ?
+        // unused floating/flying stone
+        [ActorizerEnabled]
         [FileID(171)]
         [ObjectListIndex(0x5C)]
+        [GroundVariants(0)]
+        [FlyingVariants(0)]
+        [WaterVariants(0)]
+        [VariantsWithRoomMax(max:3, variant: 0)] // too much Bg is crash
+        [UnkillableAllVariants]
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack)]
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
         EmptyC8 = 0xC8,
@@ -1442,6 +1463,7 @@ namespace MMR.Randomizer.GameObjects
         // ? cutscene related?
         [FileID(210)]
         [ObjectListIndex(0x1)]
+        [SwitchFlagsPlacement(mask: 0xFF, shift: 0)]
         Obj_Demo = 0xD8, // Obj_Demo
 
         [FileID(211)]
@@ -1450,7 +1472,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(212)]
         [ObjectListIndex(0x1)]
-        En_Nutsball = 0xDA, // En_Nutsball
+        DekuNutProjectile = 0xDA, // En_Nutsball
 
         EmptyDB = 0xDB,
         EmptyDC = 0xDC,
@@ -1519,13 +1541,16 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         BlueTargetSpot = 0xE7, // En_Hs2
 
+        //[ActorizerEnabled] // probably hard coded by zoey for rupee rando
         [FileID(220)]
         [ObjectListIndex(0x1)]
-        Obj_Mure3 = 0xE8, // Obj_Mure3
+        //[GroundVariants()]
+        GroupRupeeSpawner = 0xE8, // Obj_Mure3
 
+        // needed for honey and darling
         [FileID(221)]
         [ObjectListIndex(0x140)]
-        En_Tg = 0xE9, // En_Tg
+        TargetGame = 0xE9, // En_Tg
 
         EmptyEA = 0xEA,
         EmptyEB = 0xEB,
@@ -1610,7 +1635,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(226)]
         [ObjectListIndex(0x6)]
         [FlyingVariants(0, 1)]
-        [RespawningAllVariants]
+        [RespawningAllVariants] // yes really
         [VariantsWithRoomMax(max: 7, variant: 0, 1)]
         Guay = 0xF1,
 
@@ -1672,7 +1697,7 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         BronzeBoulder = 0xFC, // Obj_Hamishi
 
-        //[ActorizerEnabled] // overloads something, crashes in almost all cases
+        // glitchy early version of skullkid
         [FileID(234)]
         [ObjectListIndex(0x192)]
         // cutscene actor of some sort, if it doesnt crash it loads a tpose skullkid with missing model parts
@@ -1745,10 +1770,12 @@ namespace MMR.Randomizer.GameObjects
 
         Empty10A = 0x10A,
 
+        // single unit of grass
         [FileID(242)]
         [ObjectListIndex(0x2)]
         Obj_Grass = 0x10B, // Obj_Grass
 
+        // the version of grass you hold over your head, its separate for some reason
         [FileID(243)]
         [ObjectListIndex(0x2)]
         Obj_Grass_Carry = 0x10C, // Obj_Grass_Carry
@@ -1774,9 +1801,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x153)]
         Bg_Fire_Wall = 0x110, // Bg_Fire_Wall
 
-        // unused actor, todo test
+        // unused actor, now used by a new injected actor
         [FileID(246)]
-        //[ObjectListIndex(0x1)]
         En_Bu = 0x111, // En_Bu
 
         //[EnemizerEnabled] //crash
@@ -1818,7 +1844,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         WarpToTrialEntrance = 0x116, // En_Warp_tag
 
-       // dog race owner
+        // dog race owner
         [FileID(252)]
         [ObjectListIndex(0xD7)]
         MammauYan = 0x117, // En_Aob_01
@@ -1856,6 +1882,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x6)]
         En_Syateki_Crow = 0x120, // En_Syateki_Crow
 
+        // empty
         [FileID(261)]
         [ObjectListIndex(0x1)]
         En_Boj_04 = 0x121, // En_Boj_04
@@ -1885,6 +1912,7 @@ namespace MMR.Randomizer.GameObjects
         BabaIsUnused = 0x123, // En_Bba_01
 
         // wont spawn if you place him outside of his observatory, needs modification
+        // the astral observatory viewer
         [FileID(264)]
         [ObjectListIndex(0xDE)]
         Shikashi = 0x124, // En_Bji_01
@@ -2039,11 +2067,11 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(285)]
         [ObjectListIndex(0x141)]
-        En_Syateki_Wf = 0x141, // En_Syateki_Wf
+        ShootingGalleryDekuWolfos = 0x141, // En_Syateki_Wf
 
         [FileID(286)]
         [ObjectListIndex(0x3)]
-        Obj_Skateblock = 0x142, // Obj_Skateblock
+        PushableBlockOnIce = 0x142, // Obj_Skateblock
 
         [FileID(288)]
         [ObjectListIndex(0x167)]
@@ -2055,7 +2083,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(291)]
         [ObjectListIndex(0x40)]
-        En_Syateki_Dekunuts = 0x145, // En_Syateki_Dekunuts
+        ShootingGalleryDekuScrub = 0x145, // En_Syateki_Dekunuts
 
         [FileID(292)]
         [ObjectListIndex(0x1)]
@@ -2076,10 +2104,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x169)]
         Dm_Ravine = 0x148, // Dm_Ravine
 
-        // unused actor, in OOT was Saria but in MM uses skullkid object, code does nothing
+        // Dm_Sa was saria in OOT but in MM its an unused skullkid prototype
         [FileID(295)]
         [ObjectListIndex(0x192)]
-        Dm_Sa = 0x149, // Dm_Sa
+        BrokenSkullkid = 0x149, // Dm_Sa
 
         [EnemizerEnabled]
         [ActorInitVarOffset(0x2D30)]
@@ -2109,11 +2137,11 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(298)]
         [ObjectListIndex(0x16D)]
-        Obj_Toudai = 0x14C, // Obj_Toudai
+        UnusedClockTowerSpotlight = 0x14C, // Obj_Toudai
         
         [FileID(299)]
         [ObjectListIndex(0x16D)]
-        Obj_Entotu = 0x14D, // Obj_Entotu
+        ClockTownSmokingChimney = 0x14D, // Obj_Entotu
 
         [ActorizerEnabled]
         [FileID(300)]
@@ -2128,7 +2156,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(301)]
         [ObjectListIndex(0x5)]
-        En_Syateki_Okuta = 0x14F, // En_Syateki_Okuta
+        ShootingGalleryOctorok = 0x14F, // En_Syateki_Okuta
         
         Empty150 = 0x150,
 
@@ -2136,15 +2164,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16D)]
         Obj_Shutter = 0x151, // Obj_Shutter
 
-        // crashes in a lot of scenes, breaks them visually like gomess in others, cannot interact, doesn't have collisionbox
+        // made a custom replacement so she has some interaction instead of just using vanilla as this is cutscene only
         //[ActorizerEnabled]
         [FileID(303)]
         [ObjectListIndex(0x14B)]
-        // 0 is dark and crash
-        //[GroundVariants(0xFFFF)] //unk
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
-        Zelda_152 = 0x0152, // Dm_Zl
+        CutsceneZelda = 0x0152, // Dm_Zl
 
         [FileID(305)]
         [ObjectListIndex(0x1)]
@@ -2167,12 +2193,13 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(308)]
         [ObjectListIndex(0x166)]
-        Obj_Vspinyroll = 0x156, // Obj_Vspinyroll
+        SpikedRollers = 0x156, // Obj_Vspinyroll
         
         [FileID(309)]
         [ObjectListIndex(0x16D)]
         RomaniRanchChimneySmoke = 0x157, // Obj_Smork
-        
+
+        // "objects affected by lens"? wonder whats in here
         [FileID(310)]
         [ObjectListIndex(0x1)]
         En_Test2 = 0x158, // En_Test2
@@ -2252,8 +2279,11 @@ namespace MMR.Randomizer.GameObjects
         [TreasureFlagsPlacement(mask: 0x1F, shift: 8)] // 0x3FC
         CircleOfFire = 0x162, // Obj_Fireshield // tag: FireRing
 
+        // wont spawn without the switch flag, goes counter to our switch flag code currently
+        //[ActorizerEnabled]
         [FileID(321)]
         [ObjectListIndex(0x179)]
+        //[WallVariants(0)]
         [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         Bg_Ladder = 0x163, // Bg_Ladder
 
@@ -2278,7 +2308,7 @@ namespace MMR.Randomizer.GameObjects
         
         Empty166 = 0x166,
 
-        //??
+        // unused scene sized cutscene actor
         [FileID(324)]
         [ObjectListIndex(0x189)]
         [UnkillableAllVariants]
@@ -2286,7 +2316,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(325)]
         [ObjectListIndex(0x224)]
-        En_Dnh = 0x168, // En_Dnh
+        KoumeInKiosk = 0x168, // En_Dnh
 
         // code suggests even more params might exist than are used in vanilla
         [ActorizerEnabled]
@@ -2311,7 +2341,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x17E)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         TerminaFieldSpikedFence = 0x16C, // Bg_Keikoku_Saku
-        
+
+        // too big to go most places, doesn't have texture on backend so thats weird
         [FileID(329)]
         [ObjectListIndex(0x12A)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
@@ -2328,6 +2359,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(331)]
         [ObjectListIndex(0x181)]
         // the snowhead version that doesnt aggro is 01
+        // turns out the reason it doesnt agro is that param is agro range, its so short its inside of the actor
         [GroundVariants(0x8C, 0x28, 0x3C, 0x46, 0x32, 0x1, 0x8023, 0x5, 0x14, 0x8028, 0x8014)]
         [WallVariants(0x1)] // peaceful, just wants cheese
         [RespawningVariants(0x8014,0x8028,0x8023, // tested respawning
@@ -2345,7 +2377,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(333)]
         // reminder: even though its obj2, the actual keaton doesn't not spawn without its own object
         [ObjectListIndex(2)] // field_keep
-        [AlignedCompanionActor(Bugs, CompanionAlignment.Above, ourVariant: -1,
+        [AlignedCompanionActor(BugsFishButterfly, CompanionAlignment.Above, ourVariant: -1,
             variant: 0x2324, 0x4324)] // butterflies over the bushes
         [GroundVariants(0x7F00, 0x400, 0x1F00)] //400 is milkroad, 7F00 is opening area, spring is 1F00
         [UnkillableAllVariants] // untested
@@ -3473,20 +3505,20 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
         PatrollingPirate = 0x21E, // En_Ge2
 
-        // romani talking to cremia and dinner and sleeping in bed
-        [ActorizerEnabled]
+        [ActorizerEnabled] // romani talking to cremia and dinner and sleeping in bed
         [FileID(502)]
         [ObjectListIndex(0xB7)]
-        // 0xF000 is type
-        // 0xF000 is just standing there, wont talk or do anything
+        // 0xF000 is type, 0x00FF range is ignored by her actual code?
+        // 0xF000 is just standing there, wont talk or do anything, it falls under "default"
+        // 0x1000 is sitting at a table, we want to replace with the mmra version that comes with a box
         // 0x2000 is asleep night 2 in bed
         // 0x3000 is credits cutscene, except without the cutscene they just stare in a straight line
-        [GroundVariants(0x1000, 0x2000, 0xF000, 0x3FF)]
-        [VariantsWithRoomMax(max: 1, variant: 0x2000)]
+        //[GroundVariants(0x1000, 0x2000, 0xF000, 0x30FF)]
+        [VariantsWithRoomMax(max: 1, variant: 0x2000)] // one asleep to hint the others are out of body
         [VariantsWithRoomMax(max: 0, variant: 0x30FF)] // boring cutscene version just stares into the distance, do not re-shuffle
         [EnemizerScenesExcluded(Scene.RanchBuildings)]
         [UnkillableAllVariants]
-        Romani2 = 0x21F, // En_Ma_Yts
+        RomaniYts = 0x21F, // En_Ma_Yts
 
         [ActorizerEnabled]
         [FileID(503)]

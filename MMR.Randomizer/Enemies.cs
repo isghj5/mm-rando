@@ -1292,10 +1292,10 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.MajoraBalloonSewer)) continue;
-                if (TestHardSetObject(GameObjects.Scene.LotteryShop, GameObjects.Actor.Clock, GameObjects.Actor.Gong)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.StoneTowerGreyStoneElevator)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.LotteryShop, GameObjects.Actor.Clock, GameObjects.Actor.Gong)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Torch, GameObjects.Actor.ObjSwitch)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.BombFlower)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.PatrollingPirate)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
@@ -2605,7 +2605,7 @@ namespace MMR.Randomizer
                 // these files at the end of the vanilla DMA are unused in USA
                 1538, 1539, 1540, 1541, 1542, 1543, 1544, 1545, 1546, 1547, 1548, 1549, 1550, 1551,
                 // unused actors or objects:
-                GameObjects.Actor.Obj_Toudai.FileListIndex(),
+                GameObjects.Actor.UnusedClockTowerSpotlight.FileListIndex(),
                 GameObjects.Actor.Obj_Ocarinalift.FileListIndex(),
                 GameObjects.Actor.UnusedStoneTowerPlatform.FileListIndex(),
                 GameObjects.Actor.En_Boj_01.FileListIndex(),  // empty actors with nothing in them
