@@ -1292,7 +1292,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.StoneTowerGreyStoneElevator)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.StoneTowerGreyStoneElevator)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.LotteryShop, GameObjects.Actor.Clock, GameObjects.Actor.Gong)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Torch, GameObjects.Actor.ObjSwitch)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;

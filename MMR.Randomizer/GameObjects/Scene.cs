@@ -194,7 +194,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1284)]
         [SceneInternalId(0x27)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // blocking a few skulltulla
-            Actor.StockpotBell, Actor.Cow, Actor.IkanaGravestone, Actor.Bombiwa, Actor.Bumper, Actor.Postbox, Actor.En_Ani, Actor.Tijo, Actor.GoronElder)]
+            Actor.StockpotBell, Actor.IkanaGravestone, Actor.Bombiwa, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator,
+            Actor.Bumper, Actor.ClocktowerGearsAndOrgan)]
+        // old, should no longer be needed: Actor.En_Ani, Actor.GoronElder, Actor.Cow, Actor.Tijo , Actor.Postbox,
         SwampSpiderHouse = 0x24,
 
         [FileID(1291)]
@@ -259,12 +261,14 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1330)]
         [SceneInternalId(0x37)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.Leever, Actor.PoeBalloon)]
+        //[EnemizerSceneEnemyReplacementBlock(Actor.Leever, Actor.PoeBalloon)]
         GreatBayCoast = 0x34,
 
         [FileID(1332)]
         [SceneInternalId(0x38)]
-        [EnemizerSceneEnemyReplacementBlock(Actor.Leever, Actor.PoeBalloon)]
+        //[EnemizerSceneEnemyReplacementBlock(Actor.Leever, Actor.PoeBalloon)] // .. why?
+        [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo, Actor.Bombiwa, Actor.BronzeBoulder)]
         ZoraCape = 0x35,
 
         [FileID(1334)]
@@ -449,7 +453,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1466)]
         [SceneInternalId(0x61)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
-            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LikeLike)]
+            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LikeLike, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RosaSisters,
             Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.Eyegore)]
         StockPotInn = 0x5E,
@@ -491,7 +495,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x6A)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
             Actor.PoeBalloon, Actor.BigPoe, Actor.CircleOfFire, Actor.FloorMaster,
-            Actor.GibdoIkana, Actor.ReDead, Actor.GibdoWell)]
+            Actor.GibdoIkana, Actor.ReDead, Actor.GibdoWell, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
         GormanTrack = 0x67,
 
         [FileID(1508)]
@@ -501,7 +505,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1510)]
         [SceneInternalId(0x6C)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
-            Actor.ClocktowerGearsAndOrgan)] // organ is huge, covers the mayor's door
+            Actor.ClocktowerGearsAndOrgan, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // organ is huge, covers the mayor's door
         EastClockTown = 0x69,
 
         [FileID(1512)]

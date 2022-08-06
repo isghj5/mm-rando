@@ -621,7 +621,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 3, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack)]
-        StoneTowerGreyStoneElevator = 0x4D, // Bg_F40_Flift
+        UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
 
         // Has no File
         [ActorInstanceSize(0)] // unknown, never seen though
