@@ -1040,6 +1040,7 @@ namespace MMR.Randomizer.GameObjects
         //[PathingVariants(0x4000)] // TODO figure out if I even can get this to work
         [PathingTypeVarsPlacement(mask: 0x3F, shift: 8)] // 0x3F00
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        [EnemizerScenesExcluded(Scene.RomaniRanch)]
         //[EnemizerScenesExcluded()] // we can actually just use generic params to avoid this
         SoftSoilAndBeans = 0x91, // Obj_Bean
 
@@ -1583,6 +1584,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x28F0)]
         [FileID(224)]
         [ObjectListIndex(0x143)]
+        [SwitchFlagsPlacement(mask: 0x7F, shift:5)]
         //params: 0x0FE0 is switch flags (?) 0xF000 is sizetype, 0x001F is dialogue to use (params + 0x20D3 to get textId)
         // first row: all moon mask hints, which are free but since they are mask hints they are often worthless (0x1000 someetimes added)
         // second row: overworld variants: center, south north west east order
@@ -1592,10 +1594,11 @@ namespace MMR.Randomizer.GameObjects
             0x3BE3, 0x3BF6, 0x3BF6, 0x3716, 0x3BC2, 0x3722, // north
             0x38CF, 0x3BE4, // west
             0x3425, 0x3946, 0x3967, 0xFF, 0x3986, 0x3995, 0x3955)] // east
+        //[GroundVariants(0xD7)]
         [WallVariants(0x46, 0x67, 0x88, 0xA9, 0xCA, 0x4B, 0x6C, 0x8D, 0xAE, 0xCF, 0x50, 0x71, 0x92, 0xB3, 0xD4, 0x83, 0xA4, 0xC5, 0x41, 0x62,
             0xEE, 0xE8, 0xC9, 0xAA, 0x80, 0x6B, 0x51, 0xB4, 0xCC, 0xED, 0xF0, 0xF3, 0xF2,
-            0xF0, 0x01, 0xD7,
-            0xE3, 0xF6, 0xF6, 0x16, 0xC2, 0x22,
+            0x3BF0, 0x3C01, 0x3BD7,
+            0x3BE3, 0x3BF6, 0x3BF6, 0x3716, 0x3BC2, 0x3722,
             0xCF, 0xE4,
             0x25, 0x46, 0x67, 0xFF, 0x86, 0x95, 0x55)]
         // might need to come up with a version of this where we just say "each version can show up only once" without being explicit
