@@ -62,6 +62,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.Bo, Actor.Nejiron, Actor.RedBubble, Actor.Leever, Actor.Wolfos, Actor.Beamos)] // beamos is just because bomb locking this check early is prime seed killer
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
             Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, Actor.Bumper)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BioDekuBaba,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // 
         Grottos = 0x0A,
 
         // Unused = 0x0B,

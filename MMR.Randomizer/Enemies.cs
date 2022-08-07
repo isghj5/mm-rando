@@ -1292,9 +1292,9 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GossipStone)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.ChuChu, GameObjects.Actor.ClayPot)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.LotteryShop, GameObjects.Actor.Clock, GameObjects.Actor.Gong)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Torch, GameObjects.Actor.ObjSwitch)) continue;
+               // if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.ClayPot)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.PatrollingPirate)) continue;
 

@@ -3504,8 +3504,8 @@ namespace MMR.Randomizer.GameObjects
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [PathingKickoutAddrVarsPlacement(mask:0x1F, shift: 0x0)]
         [RespawningAllVariants] // think they count as enemy, so can't put places
-        [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.SwampSpiderHouse)]
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
+        [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.SwampSpiderHouse, Scene.MayorsResidence)]
         PatrollingPirate = 0x21E, // En_Ge2
 
         [ActorizerEnabled] // romani talking to cremia and dinner and sleeping in bed
