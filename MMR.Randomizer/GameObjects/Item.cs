@@ -68,7 +68,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Magic Bean"), LocationName("Bean Man"), Region(Region.DekuPalace)]
         [GossipLocationHint("a hidden merchant", "a gorging merchant"), GossipItemHint("a plant seed")]
         [ShopText("Plant it in soft soil.")]
-        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [GetItemIndex(0x11E), ItemPool(ItemCategory.MainInventory, LocationCategory.Purchases, ClassicCategory.BaseItemPool)]
         ItemMagicBean,
 
@@ -1770,7 +1770,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItemId(0x0A)]
         [ItemName("Magic Bean"), LocationName("Inverted Stone Tower Left Chest"), Region(Region.StoneTower)]
         [GossipLocationHint("a sky below"), GossipItemHint("a plant seed")]
-        [ChestType(ChestTypeAttribute.ChestType.LargeGold), Chest(0x02BC9000 + 0x256, ChestAttribute.AppearanceType.Normal)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold), Chest(0x02BC9000 + 0x256, ChestAttribute.AppearanceType.Normal)]
         [ShopText("Plant it in soft soil.")]
         [GetItemIndex(0x109), ItemPool(ItemCategory.MainInventory, LocationCategory.Chests, ClassicCategory.EverythingElse)]
         ChestInvertedStoneTowerBean,
@@ -3391,7 +3391,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Magic Bean"), LocationName("Swamp Scrub Purchase"), MultiLocation(ShopItemBusinessScrubMagicBeanInSwamp, ShopItemBusinessScrubMagicBeanInTown)]
         [GossipLocationHint("a southern merchant"), GossipItemHint("a plant seed")]
         [ShopText("Plant it in soft soil.")]
-        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
         [HackContent(nameof(Resources.mods.fix_shop_businessscrub_magicbean), false)]
         [GetItemIndex(0x19B), ItemPool(ItemCategory.MainInventory, LocationCategory.Purchases, ClassicCategory.ShopItems)]
         ShopItemBusinessScrubMagicBean,
