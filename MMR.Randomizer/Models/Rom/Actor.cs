@@ -11,7 +11,7 @@ using System;
 
 namespace MMR.Randomizer.Models.Rom
 {
-    [System.Diagnostics.DebuggerDisplay("[{ActorEnum.ToString()}][{ActorID}]")]
+    [System.Diagnostics.DebuggerDisplay("[{Name}][{ActorID}]")]
     public class Actor
     {
         // this is instance data, per actor, per scene.
@@ -171,6 +171,8 @@ namespace MMR.Randomizer.Models.Rom
                 newActor.RespawningVariants = newRespawningVariants;
             }
 
+            newActor.InjectedActor = this.InjectedActor;
+
             return newActor;
         }
 
@@ -321,7 +323,19 @@ namespace MMR.Randomizer.Models.Rom
             // TODO finish converting this from enum to actor base type
 
             var actor = this.ActorEnum;
-            if (actor != GameObjects.Actor.NULL)
+            if (this.InjectedActor != null) // injected actors have different rules
+            {
+                if (this.InjectedActor.unkillableAttr != null)
+                {                    // todo: specific injected actor unkillable variants
+                    return this.Variants;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+
+            if (actor != GameObjects.Actor.NULL) // vanilla enemies
             {
                 if (actor.GetAttribute<UnkillableAllVariantsAttribute>() != null) // all are unkillable
                 {
@@ -332,7 +346,6 @@ namespace MMR.Randomizer.Models.Rom
                     return actor.GetAttribute<UnkillableVariantsAttribute>()?.Variants;
                 }
             }
-            // todo: injected actor unkillable variants
             
             return this.Variants;
         }
