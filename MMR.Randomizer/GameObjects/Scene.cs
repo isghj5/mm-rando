@@ -508,18 +508,28 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x6C)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
             Actor.ClocktowerGearsAndOrgan, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // organ is huge, covers the mayor's door
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         EastClockTown = 0x69,
 
         [FileID(1512)]
         [SceneInternalId(0x6D)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         WestClockTown = 0x6A,
 
         [FileID(1514)]
         [SceneInternalId(0x6E)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         NorthClockTown = 0x6B,
 
         [FileID(1516)]
         [SceneInternalId(0x6F)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Carpenter,
+            Actor.PatrollingPirate)] // could be annoying, hard to leave
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
+            Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
         SouthClockTown = 0x6C,
 
         [FileID(1518)]

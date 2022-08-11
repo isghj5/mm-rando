@@ -76,8 +76,8 @@ namespace MMR.Randomizer.GameObjects
         //[AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
         //    variant: 2, 9)] // fairies around chests make sense, just not a full fairy fountain
         [EnemizerScenesExcluded(Scene.InvertedStoneTower)]
-        [EnemizerScenesPlacementBlock(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, 
-            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
+        // these were here because we didnt have switch flag detection, now we do
+        //[EnemizerScenesPlacementBlock(Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         [SwitchFlagsPlacementZRot]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 0)]
         TreasureChest = 0x6, // En_Box
@@ -160,7 +160,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(53)]
         [ObjectListIndex(0x1)] // gameplay_keep obj 1
-// TODO find more, there are a lot of params here
+        // TODO find more, there are a lot of params here
         // 4 is group of fairies out of a fountain, 6 is spawned by 4
         // 7 is large healing fairy, 9 is yellow fairy that sets 1000 (unused) A is also yellow, does not set 1000
         // 4 has been removed because its unlikely to make sense for the location, and if its in TF it might contribute hard to TFG
@@ -3498,14 +3498,14 @@ namespace MMR.Randomizer.GameObjects
         // path == 0x3F ignores path, just stands in one spot
         // 0x02 always looks forward for boats or something, FC00 will hear you and turn to look at you
         [GroundVariants(0xFC00, 0xFC20)] 
-        [VariantsWithRoomMax(max: 2, variant: 0xFC00)]
+        [VariantsWithRoomMax(max: 1, variant: 0xFC00, 0xFC20)]
         [VariantsWithRoomMax(max: 1, variant: 0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
                 0x144B, 0x14EA, 0x18EA, 0x284B, 0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         [PathingKickoutAddrVarsPlacement(mask:0x1F, shift: 0x0)]
         [RespawningAllVariants] // think they count as enemy, so can't put places
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
-        [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.SwampSpiderHouse, Scene.MayorsResidence)]
+        [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.SwampSpiderHouse, Scene.MayorsResidence, Scene.RanchBuildings)]
         PatrollingPirate = 0x21E, // En_Ge2
 
         [ActorizerEnabled] // romani talking to cremia and dinner and sleeping in bed
