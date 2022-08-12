@@ -304,7 +304,7 @@ namespace MMR.Randomizer.GameObjects
         // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
         // mirror blocks climbing
         [EnemizerSceneEnemyReplacementBlock(Actor.BadBat,
-            Actor.Bo, Actor.StoneTowerMirror)]
+            Actor.Bo, Actor.StoneTowerMirror, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
         RoadToSouthernSwamp = 0x3D,
 
         [FileID(1349)]

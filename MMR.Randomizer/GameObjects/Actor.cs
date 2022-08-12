@@ -615,9 +615,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(94)]
         [ObjectListIndex(0x5C)]
         [SwitchFlagsPlacement(mask: 0x7E, shift: 9)]
-        [GroundVariants(0)] // params are ignored, uses params as a variable for setting
+        //[GroundVariants(0)] // params are ignored, uses params as a variable for setting
         [FlyingVariants(0)]
-        [WaterVariants(0)]
+        //[WaterVariants(0)]
         [VariantsWithRoomMax(max: 3, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack)]
@@ -1383,9 +1383,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(171)]
         [ObjectListIndex(0x5C)]
-        [GroundVariants(0)]
+        //[GroundVariants(0)]
         [FlyingVariants(0)]
-        [WaterVariants(0)]
+        //[WaterVariants(0)]
         [VariantsWithRoomMax(max:3, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack)]
@@ -2135,7 +2135,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x16B)]
         [WaterVariants(0x0F00,0x0300)]
         [OnlyOneActorPerRoom]
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp)] // massive lag
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwamp, Scene.ZoraCape)] // massive lag
         Desbreko = 0x14B, // En_Pr (Pirana?)
 
         [FileID(298)]
