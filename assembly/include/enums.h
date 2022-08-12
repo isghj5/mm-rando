@@ -526,6 +526,7 @@ enum PlayerState3 {
     PLAYER_STATE3_DEKU_RISE   = 0x00000200, // Jumping out of Deku flower.
     PLAYER_STATE3_DEKU_DIVE   = 0x00000100, // Deku flower dive.
     PLAYER_STATE3_PULL_BOW    = 0x00000040, // Pull back bow string.
+    PLAYER_STATE3_HOOK_ARV    = 0x00000010, // After arriving at hookshot target?
     PLAYER_STATE3_ATTACK_2    = 0x00000008, // Post-attack.
     PLAYER_STATE3_JUMP_ATTACK = 0x00000002, // Beginning of jump attack.
 };

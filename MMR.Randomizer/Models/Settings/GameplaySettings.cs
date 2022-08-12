@@ -183,6 +183,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.HiddenRupeesSparkle = value; }
         }
 
+        public bool SaferGlitches
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.SaferGlitches; }
+            set { this.AsmOptions.MiscConfig.Flags.SaferGlitches = value; }
+        }
+
         #endregion
 
         #region Random Elements

@@ -11,6 +11,7 @@
 #include <unk.h>
 
 #include <z64actor.h>
+#include <z64audio.h>
 #include <z64animation.h>
 #include <z64collision_check.h>
 #include <z64cutscene.h>

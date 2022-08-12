@@ -229,6 +229,11 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool HiddenRupeesSparkle { get; set; }
 
+        /// <summary>
+        /// Whether or not to fix some code to prevent crashes when using various glitches.
+        /// </summary>
+        public bool SaferGlitches { get; set; } = true;
+
         public MiscFlags()
         {
         }
@@ -264,6 +269,7 @@ namespace MMR.Randomizer.Asm
             this.FillWallet = ((flags >> 9) & 1) == 1;
             this.AutoInvert = (AutoInvertState)((flags >> 7) & 3);
             this.HiddenRupeesSparkle = ((flags >> 6) & 1) == 1;
+            this.SaferGlitches = ((flags >> 5) & 1) == 1;
         }
 
         /// <summary>
@@ -296,6 +302,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FillWallet ? (uint)1 : 0) << 9;
             flags |= (((uint)this.AutoInvert) & 3) << 7;
             flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 6;
+            flags |= (this.SaferGlitches ? (uint)1 : 0) << 5;
             return flags;
         }
     }

@@ -1495,6 +1495,13 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.garo_hints);
             }
 
+            if (_randomized.Settings.SaferGlitches)
+            {
+                hacks.Add(Resources.mods.safer_glitches_sodt);
+                hacks.Add(Resources.mods.safer_glitches_tatl_text_zero_fourth_day);
+                hacks.Add(Resources.mods.safer_glitches_fix_0thday_erase);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);

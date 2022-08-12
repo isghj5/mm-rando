@@ -237,6 +237,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
+            this.cSaferGlitches = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1794,6 +1795,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cSaferGlitches);
             this.groupBox7.Controls.Add(this.cInvisSparkle);
             this.groupBox7.Controls.Add(this.cFillWallet);
             this.groupBox7.Controls.Add(this.cTargetHealth);
@@ -2785,6 +2787,18 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
+            // cSaferGlitches
+            // 
+            this.cSaferGlitches.AutoSize = true;
+            this.cSaferGlitches.Location = new System.Drawing.Point(10, 259);
+            this.cSaferGlitches.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSaferGlitches.Name = "cSaferGlitches";
+            this.cSaferGlitches.Size = new System.Drawing.Size(97, 19);
+            this.cSaferGlitches.TabIndex = 43;
+            this.cSaferGlitches.Text = "Safer Glitches";
+            this.cSaferGlitches.UseVisualStyleBackColor = true;
+            this.cSaferGlitches.CheckedChanged += new System.EventHandler(this.cSaferGlitches_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3084,6 +3098,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Button bSkip;
         private System.Windows.Forms.CheckBox cBespokeItemPlacementOrder;
         private System.Windows.Forms.Label lNumTricksEnabled;
+        private System.Windows.Forms.CheckBox cSaferGlitches;
     }
 }
 

@@ -53,6 +53,7 @@
 0x800BB498,z2_ActorRemove
 0x800BDC5C,z2_Actor_ChangeAnimation
 0x800C99D4,z2_GetFloorPhysicsType
+0x800CB7CC,z2_Camera_IsHookArrival
 0x800EE320,z2_BaseDrawGiModel
 0x800F1648,z2_ActorCutscene_ClearWaiting
 0x800F1678,z2_ActorCutscene_ClearNextCutscenes

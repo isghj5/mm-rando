@@ -55,6 +55,7 @@
 .definelabel z2_ActorRemove, 0x800BB498
 .definelabel z2_Actor_ChangeAnimation, 0x800BDC5C
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
+.definelabel z2_Camera_IsHookArrival, 0x800CB7CC
 .definelabel z2_BaseDrawGiModel, 0x800EE320
 .definelabel z2_ActorCutscene_ClearWaiting, 0x800F1648
 .definelabel z2_ActorCutscene_ClearNextCutscenes, 0x800F1678

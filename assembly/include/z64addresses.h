@@ -51,6 +51,7 @@ extern void z2_DrawButtonAmounts(GlobalContext* ctxt, u32 arg1, u16 alpha);
 extern void z2_DrawBButtonIcon(GlobalContext* ctxt);
 extern void z2_DrawCButtonIcons(GlobalContext* ctxt);
 extern u32 z2_GetFloorPhysicsType(void* arg0, void* arg1, u8 arg2);
+extern bool z2_Camera_IsHookArrival(Camera* camera);
 extern void z2_PushMatrixStackCopy();
 extern void z2_PopMatrixStack();
 extern f32* z2_GetMatrixStackTop();
