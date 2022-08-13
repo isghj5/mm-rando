@@ -318,7 +318,15 @@ mm-combat
 5,4,11A
 3
 1A
-mm-pianopractice
+mm-japas-basspractice
+16C
+13
+6C
+mm-tijo-drumpractice
+16D
+13
+6D
+mm-evan-pianopractice
 16E
 13
 6E
@@ -326,3 +334,7 @@ mm-finalhours
 157
 17
 57
+mm-kamaros-dance-rosa-sisters
+12A
+1F
+2A
