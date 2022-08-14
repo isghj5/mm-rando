@@ -742,7 +742,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(1)]
         //[GroundVariants(1)] // testing
         // needs limits because it can overload the dyna
-        [VariantsWithRoomMax(max:3, variant:0, 1)]
+        [VariantsWithRoomMax(max:1, variant:0, 1)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [UnkillableAllVariants]
         MajoraBalloonSewer = 0x5F, // En_Encount2
@@ -2331,7 +2331,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:1, variant:0x6, 0x2)]
         // crash on transition to witches area in swamp and secretary room in mayor's residence
         // Update crashes trying to update the skeleton, null pointer, reason unknown
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear, Scene.MayorsResidence)]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear, Scene.MayorsResidence, Scene.OceanSpiderHouse)]
         [UnkillableAllVariants]
         HallucinationScrub = 0x169, // En_Dnk
         
