@@ -3497,7 +3497,8 @@ namespace MMR.Randomizer.GameObjects
                 0x144B, 0x14EA, 0x18EA, 0x284B, 0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
         // path == 0x3F ignores path, just stands in one spot
         // 0x02 always looks forward for boats or something, FC00 will hear you and turn to look at you
-        [GroundVariants(0xFC00, 0xFC20)] 
+        //[GroundVariants(0xFC00, 0xFC20)] 
+        [GroundVariants(0xFC00)] // TODO fix issue where FC20 has a disabled collider, cannot shoot
         [VariantsWithRoomMax(max: 1, variant: 0xFC00, 0xFC20)]
         [VariantsWithRoomMax(max: 1, variant: 0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
                 0x144B, 0x14EA, 0x18EA, 0x284B, 0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
