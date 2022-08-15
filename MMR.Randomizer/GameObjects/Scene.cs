@@ -134,6 +134,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.BigPoe)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo,
             Actor.GibdoWell, Actor.DeathArmos)] // Rarely Killable
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Snapper,
+            Actor.WarpDoor, Actor.ClocktowerGearsAndOrgan)] // Snapper spawns just on top of its chest, its possible a non-killable actor is placed int he wya
         WoodfallTemple = 0x18,
 
         [FileID(1222)]
@@ -179,7 +181,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1258)]
         [SceneInternalId(0x23)]
         [ClearEnemyPuzzleRooms(0, 1, 2)] // three pirate minibosses
-        PiratesFortressRooms = 0x20,
+        PiratesFortressRooms = 0x20, // tag: Sewer
 
         [FileID(1276)]
         [SceneInternalId(0x24)]

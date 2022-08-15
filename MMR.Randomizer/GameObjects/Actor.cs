@@ -618,9 +618,10 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0)] // params are ignored, uses params as a variable for setting
         [FlyingVariants(0)]
         //[WaterVariants(0)]
-        [VariantsWithRoomMax(max: 3, variant: 0)] // too much Bg is crash
+        [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack)]
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
+            Scene.StoneTower)] // can over run BG
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
 
         // Has no File
@@ -1388,7 +1389,8 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants(0)]
         [VariantsWithRoomMax(max:3, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack)]
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
+            Scene.StoneTower)] // can over run BG
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
         EmptyC8 = 0xC8,
@@ -3524,6 +3526,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         RomaniYts = 0x21F, // En_Ma_Yts
 
+        // todo flesh this actor out
         [ActorizerEnabled]
         [FileID(503)]
         [ObjectListIndex(0xA7)]
