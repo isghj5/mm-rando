@@ -16,17 +16,13 @@ s32 BugFixes_PreventHessCrash(Vec3s* jointTable) {
     return 0;
 }
 
-// Prevents Action Swap Crash
-// Prevents 1st person bow as goron crash
-// Prevents other audio crashes
+// Fail-safe to prevent other audio crashes
 s32 BugFixes_PreventAudioCrash(SoundRequest* soundRequest) {
     u16 sfxId = soundRequest->sfxId;
     if (!MISC_CONFIG.flags.saferGlitches) {
         return sfxId;
     }
-    if (!IS_VALID_PTR(soundRequest->vol) || !IS_VALID_PTR(soundRequest->freqScale) || !IS_VALID_PTR(soundRequest->pos) || !IS_VALID_PTR(soundRequest->reverbAdd)) {
-        return 0;
-    }
+
     s32 sfxBankId = ((sfxId & 0xF000) >> 12) & 0xFF;
 
     // SFX Banks only number 0 through 6, but code allows up to F
@@ -45,4 +41,14 @@ bool BugFixes_PreventHookslideCrash(Camera* camera) {
         }
     }
     return z2_Camera_IsHookArrival(camera);
+}
+
+// Prevents Action Swap Crash
+// Prevents 1st person bow as goron crash
+void BugFixes_PlayEmptyWeaponSound(ActorPlayer* player, s16* soundEffects) {
+    s16 sfxIndex = player->unkB28;
+    if (MISC_CONFIG.flags.saferGlitches && sfxIndex != 1 && sfxIndex != 2) {
+        return;
+    }
+    z2_PlayPlayerSfx(player, soundEffects[sfxIndex]);
 }

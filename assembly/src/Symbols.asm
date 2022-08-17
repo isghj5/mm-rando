@@ -45,6 +45,7 @@
 .definelabel z2_IsMessageClosing, 0x800B867C
 .definelabel z2_SetGetItem, 0x800B8A1C
 .definelabel z2_SetGetItemLongrange, 0x800B8BD0
+.definelabel z2_PlayPlayerSfx, 0x800B8E58
 .definelabel z2_PlaySfxAtActor, 0x800B8EC8
 .definelabel z2_PlayLoopingSfxAtActor, 0x800B9010
 .definelabel z2_load_scene_flags, 0x800B9170

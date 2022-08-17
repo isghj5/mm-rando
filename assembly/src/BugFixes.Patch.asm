@@ -45,3 +45,21 @@
 ;   JAL     0x800CB7CC
 .org 0x800CBD98
     jal     BugFixes_PreventHookslideCrash
+
+;==================================================================================================
+; Fix Empty Weapon Sound
+;==================================================================================================
+
+.headersize G_PLAYER_ACTOR_DELTA
+
+; Replaces:
+;   LH      T5, 0x0B28 (S0)
+.org 0x80848DA8
+    or      t5, r0, r0
+
+; Replaces:
+;   JAL     0x800B8E58
+;   LHU     A1, 0xD5FA (A1)
+.org 0x80848DBC
+    jal     BugFixes_PlayEmptyWeaponSound
+    addiu   a1, a1, 0xD5FA

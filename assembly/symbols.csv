@@ -44,6 +44,7 @@
 0x800B867C,z2_IsMessageClosing
 0x800B8A1C,z2_SetGetItem
 0x800B8BD0,z2_SetGetItemLongrange
+0x800B8E58,z2_PlayPlayerSfx
 0x800B8EC8,z2_PlaySfxAtActor
 0x800B9170,z2_load_scene_flags
 0x800B9334,z2_spawn_map_actors

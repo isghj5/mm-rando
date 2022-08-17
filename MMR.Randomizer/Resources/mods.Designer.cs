@@ -893,6 +893,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] safer_glitches_fix_goron_bow {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_fix_goron_bow", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] safer_glitches_sodt {
             get {
                 object obj = ResourceManager.GetObject("safer_glitches_sodt", resourceCulture);
