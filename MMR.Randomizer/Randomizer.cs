@@ -1193,7 +1193,7 @@ namespace MMR.Randomizer
             }
         }
 
-        private void PlaceItem(Item currentItem, List<Item> targets, Func<Item, Item, bool> restriction = null)
+        private void PlaceItem(Item currentItem, List<Item> targets, Func<Item, Item, bool> restriction = null, bool placeJunk = false)
         {
             var currentItemObject = ItemList[currentItem];
             if (!_timeTravelPlaced && currentItem.IsFake())
@@ -1227,8 +1227,16 @@ namespace MMR.Randomizer
 
                 return;
             }
+
+            if (!placeJunk && ItemUtils.IsJunk(currentItemObject.Item))
+            {
+                // junk items are only placed within PlaceRemainingItems
+                return;
+            }
+
             if (currentItemObject.NewLocation.HasValue)
             {
+                // already placed
                 return;
             }
 
@@ -1541,7 +1549,7 @@ namespace MMR.Randomizer
                 }
             }
         }
-         
+
         private bool _timeTravelPlaced = true;
         private Stack<Item> _timeTravelPath = new Stack<Item>();
         private List<List<Item>> _timeTravelChosenConditionals = new List<List<Item>>();
@@ -1600,7 +1608,7 @@ namespace MMR.Randomizer
             var canPlaceSongs = !_settings.AddSongs;
             void PlaceBespokeItem(Item item)
             {
-                if (!_settings.CustomStartingItemList.Contains(item) && (!item.IsSong() || canPlaceSongs))
+                if (!item.IsSong() || canPlaceSongs)
                 {
                     PlaceItem(item, itemPool);
                 }
@@ -1769,11 +1777,11 @@ namespace MMR.Randomizer
         /// </summary>
         private void PlaceRemainingItems(List<Item> itemPool)
         {
-            foreach (var item in ItemUtils.AllLocations().OrderBy(ItemUtils.IsJunk))
+            foreach (var item in ItemUtils.AllLocations().OrderBy(item => ItemUtils.IsJunk(ItemList[item].Item)))
             {
                 if (ItemList[item].NewLocation == null)
                 {
-                    PlaceItem(item, itemPool);
+                    PlaceItem(item, itemPool, placeJunk: true);
                 }
             }
         }
@@ -1921,7 +1929,7 @@ namespace MMR.Randomizer
         {
             var songs = Enumerable.Range((int)Item.SongHealing, Item.SongOath - Item.SongHealing + 1).Cast<Item>();
 
-            foreach (var song in songs.OrderBy(s => _randomized.Settings.CustomStartingItemList.Contains(s)))
+            foreach (var song in songs)
             {
                 PlaceItem(song, itemPool);
             }
