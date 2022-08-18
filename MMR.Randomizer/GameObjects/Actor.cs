@@ -612,6 +612,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // slows us down too much
         ReDead = 0x4C, // En_Rd
 
+        [ActorizerEnabled]
         [FileID(94)]
         [ObjectListIndex(0x5C)]
         [SwitchFlagsPlacement(mask: 0x7E, shift: 9)]
@@ -620,8 +621,9 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
-            Scene.StoneTower)] // can over run BG
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack)]
+        //[EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
+        //    Scene.StoneTower)] // can over run BG
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
 
         // Has no File
@@ -2323,6 +2325,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x224)]
         KoumeInKiosk = 0x168, // En_Dnh
 
+        // TODO figure out why the hell its crashing
         // code suggests even more params might exist than are used in vanilla
         [ActorizerEnabled]
         [FileID(326)]
@@ -2333,7 +2336,8 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:1, variant:0x6, 0x2)]
         // crash on transition to witches area in swamp and secretary room in mayor's residence
         // Update crashes trying to update the skeleton, null pointer, reason unknown
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear, Scene.MayorsResidence, Scene.OceanSpiderHouse)]
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear, Scene.MayorsResidence,
+            Scene.OceanSpiderHouse, Scene.DekuPalace)]
         [UnkillableAllVariants]
         HallucinationScrub = 0x169, // En_Dnk
         
@@ -2821,7 +2825,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x88)]
         ClocktowerGearsAndOrgan = 0x1B6, // Bg_Ctower_Gear
 
-        [ActorizerEnabled]
+       // [ActorizerEnabled] // disabled since talking is softlock, need to figure that out
         [FileID(403)]
         [ObjectListIndex(0x18F)]
         // nothing in the other params other than path, the starting animation and stuff are all hardcoded to entrance
@@ -2856,7 +2860,7 @@ namespace MMR.Randomizer.GameObjects
         
         [FileID(408)]
         [ObjectListIndex(0x1A0)]
-        HomeAndDarlingWaterLevel = 0x1BC, // Bg_Fu_Mizu
+        HoneyAndDarlingWaterLevel = 0x1BC, // Bg_Fu_Mizu
 
         // wrong one, the one we want is burrowed, but he also does NOT come with a flower, its secondary
         [FileID(409)]
@@ -2895,7 +2899,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1A9)]
         GreatBayFisherman = 0x1C2, // En_Tsn
 
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // we have a better version as a custom actor now, less stupid
         [FileID(414)]
         [ObjectListIndex(0x1AA)]
         [GroundVariants(0)] // just stands around
@@ -4088,7 +4092,9 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1E5)]
         // 0xFC08, 0x1000 are clear swamp
         //0x4 is a flag, meaning the actor has a path, checks if 0xFC00 is a path or not and self terminates
-        [GroundVariants(0xFC08, 0x1000, 0xFC04, 0xFC07, 0x1001, 0x0402, 0xFC06, 0x0001, 0x1800, 0x1003)]
+        //[GroundVariants(0xFC08, 0x1000, 0xFC04, 0xFC07, 0x1001, 0x0402, 0xFC06, 0x0001, 0x1800, 0x1003)]
+        [PathingVariants(0xFC08, 0x1000, 0xFC04, 0xFC07, 0x1001, 0x0402, 0xFC06, 0x0001, 0x1800, 0x1003)]
+        [PathingTypeVarsPlacement(mask:0x3F, shift:10)]
         [OnlyOneActorPerRoom]
         //[VariantsWithRoomMax(max: 1, variant: )]
         [UnkillableAllVariants]
