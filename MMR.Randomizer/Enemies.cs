@@ -235,6 +235,7 @@ namespace MMR.Randomizer
             ExpandGoronShineObjects();
             RandomlySwapOutZoraBandMember();
             ExpandGoronRaceObjects();
+            SplitSpiderGrottoSkulltulaObject();
 
             Shinanigans();
         }
@@ -1059,6 +1060,23 @@ namespace MMR.Randomizer
             // the second setup in this scene has a different object list, need to modify that onne too (690 is headers)
             goronRaceRoom0Data[0x6B9] = 8; // increase object list to 8
         }
+
+        public static void SplitSpiderGrottoSkulltulaObject()
+        {
+            // in the spider grotto, we have a skullwalltula on the web and a skulltula hanging from the ceiling
+            // this scene room has 3 objects, one is dekubaba, wasted
+            // in order to split the actor, however, I have to change the actor to something else and give it a different object
+
+            if (!ReplacementListContains(GameObjects.Actor.Skulltula)) return;
+
+            var grottoScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Grottos.FileID());
+            var spiderRoom = grottoScene.Maps[1];
+
+            spiderRoom.Objects[2] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
+            spiderRoom.Actors[1].ChangeActor(GameObjects.Actor.SkulltulaDummy, vars:0, modifyOld: true);
+            spiderRoom.Actors[1].Position.y = 200; // way too high in the ceiling, bring down a touch
+        }
+
 
         #endregion
 
