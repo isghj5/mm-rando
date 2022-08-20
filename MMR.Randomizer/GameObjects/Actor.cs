@@ -313,6 +313,16 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x3F, shift: 0)]
         Skulltula = 0x24, // En_St
 
+        // In order to split the skullwalltula and skulltula in the spider gossip stone grotto into two objects,
+        // I have to make a new actor that uses a fake object
+        [EnemizerEnabled]
+        [ObjectListIndex(0x22D)] // empty object
+        [ActorInitVarOffset(0x2540)]
+        [FileID(67)] // actual file of skulltula in case it wasnts to know things like how big it is
+        [FlyingVariants(0)] // going to mark it flying for now
+        [VariantsWithRoomMax(max:0, variant:0)] // don't actually place garbage actor
+        SkulltulaDummy = 0x300, // fake
+
         Empty25 = 0x25,
 
         [ActorizerEnabled]
@@ -621,9 +631,11 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack)]
-        //[EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
-        //    Scene.StoneTower)] // can over run BG
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
+            Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
+            Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
+            Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.StoneTowerTemple)]
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
 
         // Has no File
@@ -1392,7 +1404,10 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:3, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
-            Scene.StoneTower)] // can over run BG
+            Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
+            Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
+            Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.StoneTowerTemple)]
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
         EmptyC8 = 0xC8,

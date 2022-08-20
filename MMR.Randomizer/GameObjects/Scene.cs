@@ -256,7 +256,6 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1326)]
         [SceneInternalId(0x35)]
-        //[EnemizerSceneEnemyReplacementBlock(Actor.Treee, Actor.Carpenter)]
         RomaniRanch = 0x32,
 
         [FileID(1328)]
@@ -265,7 +264,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1330)]
         [SceneInternalId(0x37)]
-        //[EnemizerSceneEnemyReplacementBlock(Actor.Leever, Actor.PoeBalloon)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Seagulls,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can stop him from falling, beacuse of hte seagulls flying around him
+        // Seagulls
         GreatBayCoast = 0x34,
 
         [FileID(1332)]
