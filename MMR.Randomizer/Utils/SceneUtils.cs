@@ -427,10 +427,6 @@ namespace MMR.Randomizer.Utils
                 var sceneFile = RomData.MMFileList[scene.File];
                 foreach (var setup in scene.Setups)
                 {
-                    if (setup.ActorCutscenes.Any(ac => ac.CameraIndex == -10))
-                    {
-                        continue;
-                    }
                     // fairy revive cutscene data doesn't appear to be important :pray:
                     var fairyReviveCutsceneIndex = setup.ActorCutscenes.FindIndex(ac => ac.CameraIndex == -9);
                     if (fairyReviveCutsceneIndex >= 0)
