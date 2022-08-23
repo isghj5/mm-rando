@@ -433,6 +433,9 @@
   <data name="update_chests" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\update-chests;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="update_chest_cutscene" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\update-chest-cutscene.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="update_kafei_mask_icon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\update-kafei-mask-icon;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
