@@ -882,7 +882,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (!_randomized.Settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.ShortChestOpening))
+            if (!_randomized.Settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.ShortChestOpening) && _randomized.Settings.UpdateChests)
             {
                 ResourceUtils.ApplyHack(Resources.mods.update_chest_cutscene);
                 ReadWriteUtils.WriteU16ToROM(0xB3C000 + 0x12B2B2, 0xFFF6); // Replace Fairy Revive Cutscene with Large Chest Opening
