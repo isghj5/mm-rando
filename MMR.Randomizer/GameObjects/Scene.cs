@@ -209,6 +209,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1298)]
         [SceneInternalId(0x29)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Scarecrow, // can block the stairs
+            Actor.ClocktowerGearsAndOrgan)]
         AstralObservatory = 0x26, // and sewer leading to it
 
         [FileID(1301)]
@@ -436,6 +438,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1451)]
         [SceneInternalId(0x5C)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Bo,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the twisted path into snowhead
         Snowhead = 0x59,
 
         [FileID(1453)]

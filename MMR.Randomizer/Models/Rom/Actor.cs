@@ -94,11 +94,13 @@ namespace MMR.Randomizer.Models.Rom
             {
                 new List<int>(),
                 injected.groundVariants,
-                new List<int>(),
+                injected.flyingVariants,
                 new List<int>(),
                 new List<int>(),
             };
-            this.Variants = injected.groundVariants;
+
+            // wasnt there a list of lists to static list we had?
+            this.Variants = injected.groundVariants.Concat(injected.flyingVariants).ToList();
             this.VariantsWithRoomMax = injected.limitedVariants;
             this.OnlyOnePerRoom = injected.onlyOnePerRoom;
             this.InjectedActor = injected;
@@ -439,6 +441,7 @@ namespace MMR.Randomizer.Models.Rom
 
             // should we add or replace variants? for now we add
             this.Variants.AddRange(injectedActor.groundVariants);
+            this.Variants.AddRange(injectedActor.flyingVariants);
             if (this.RespawningVariants == null)
             {
                 this.RespawningVariants = new List<int>();
@@ -447,7 +450,8 @@ namespace MMR.Randomizer.Models.Rom
 
 
             this.VariantsWithRoomMax.AddRange(injectedActor.limitedVariants);
-            this.AllVariants[1].AddRange(injectedActor.groundVariants);
+            this.AllVariants[(int)ActorType.Ground - 1].AddRange(injectedActor.groundVariants);
+            this.AllVariants[(int)ActorType.Flying - 1].AddRange(injectedActor.flyingVariants);
 
             // we want a list of all 
             /*if (injectedActor.unkillableAttr)

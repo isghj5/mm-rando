@@ -49,6 +49,7 @@ namespace MMR.Randomizer
         public uint initVarsLocation = 0;
 
         public List<int> groundVariants = new List<int>();
+        public List<int> flyingVariants = new List<int>();
         public List<int> respawningVariants = new List<int>();
         // variants with max
         public List<VariantsWithRoomMax> limitedVariants = new List<VariantsWithRoomMax>();
@@ -219,6 +220,8 @@ namespace MMR.Randomizer
             EnablePoFusenAnywhere();
 
             FixSpawnLocations();
+            DisableActorSpawnCutsceneData();
+
             ExtendGrottoDirectIndexByte();
             ShortenChickenPatience();
             //FixThornTraps();
@@ -236,6 +239,7 @@ namespace MMR.Randomizer
             RandomlySwapOutZoraBandMember();
             ExpandGoronRaceObjects();
             SplitSpiderGrottoSkulltulaObject();
+            SplitOceanSpiderhouseSpiderObject();
 
             Shinanigans();
         }
@@ -328,6 +332,43 @@ namespace MMR.Randomizer
                 var swampSpiderHouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
                 swampSpiderHouseScene.Maps[3].Actors[3].Position.x = -480;
             }
+        }
+
+        private static void DisableActorSpawnCutsceneData()
+        {
+            /// some actors index their cutscene as part of their spawn data,
+            /// if you put a new actor in that spot, their cutscene will start
+            /// but it will be the wrong type of cutscene and softlock
+            // IE Dinofos -> Zora Cape Scarecrow
+
+            // the actor's room spawn data for cutscene is in the 0x7F bits of y rotation, where 0x7F should be null (-1)
+
+            var capeScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.ZoraCape.FileID());
+            var greatfairyScarecrow = capeScene.Maps[0].Actors[74];
+            greatfairyScarecrow.Rotation.y |= 0x7F;
+            var beaverStepsScarecrow = capeScene.Maps[0].Actors[73];
+            beaverStepsScarecrow.Rotation.y |= 0x7F;
+
+            var zoraHallScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.ZoraHall.FileID());
+            var audienceScarecrow = zoraHallScene.Maps[0].Actors[30];
+            audienceScarecrow.Rotation.y |= 0x7F;
+
+            var graveyardGravesScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.BeneathGraveyard.FileID());
+            var day1Ironknuckle = graveyardGravesScene.Maps[2].Actors[1];
+            day1Ironknuckle.Rotation.y |= 0x7F;
+            var day2Ironknuckle = graveyardGravesScene.Maps[4].Actors[0];
+            day2Ironknuckle.Rotation.y |= 0x7F;
+
+            var linksTrialScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LinkTrial.FileID());
+            var trialIronKnuckle = linksTrialScene.Maps[3].Actors[1];
+            trialIronKnuckle.Rotation.y |= 0x7F;
+            var trialDinofos = linksTrialScene.Maps[1].Actors[0];
+            trialDinofos.Rotation.y |= 0x7F;
+
+            var woodfallTempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
+            var bowDinofos = linksTrialScene.Maps[7].Actors[0];
+            bowDinofos.Rotation.y |= 0x7F;
+
         }
 
 
@@ -1077,6 +1118,28 @@ namespace MMR.Randomizer
             spiderRoom.Actors[1].Position.y = 200; // way too high in the ceiling, bring down a touch
         }
 
+        public static void SplitOceanSpiderhouseSpiderObject()
+        {
+            // in the ocean spiderhouse there are two gold skulltula and there are skulltula (big spider)
+            // we cannot randomize one without the other because they both use the same object
+            // except... if we change the actor and object out for dummy, we can trick rando to allow us to change them cleverly
+
+            if (!ReplacementListContains(GameObjects.Actor.Skulltula)) return;
+
+            var grottoScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.OceanSpiderHouse.FileID());
+            var spiderChestRoom = grottoScene.Maps[4];
+
+            // object 6 is Bo, its not the spider object but I think thats is safer to replace in this spot
+            spiderChestRoom.Objects[6] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
+            spiderChestRoom.Actors[0].ChangeActor(GameObjects.Actor.SkulltulaDummy, vars: 0, modifyOld: true);
+
+            var spiderStorageRoom = grottoScene.Maps[5];
+
+            // object 9 is Stalchild, its not the spider object but I think thats is safer to replace in this spot
+            spiderStorageRoom.Objects[9] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
+            spiderStorageRoom.Actors[1].ChangeActor(GameObjects.Actor.SkulltulaDummy, vars: 0, modifyOld: true);
+        }
+
 
         #endregion
 
@@ -1315,11 +1378,11 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.TreasureChest)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BabaIsUnused)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.LotteryShop, GameObjects.Actor.Clock, GameObjects.Actor.Gong)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.RegularZora, GameObjects.Actor.TreasureChest)) continue;
+                if (TestHardSetObject(GameObjects.Scene.DekuShrine, GameObjects.Actor.MadShrub, GameObjects.Actor.Dinofos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.OOTPotionShopMan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.MilkroadCarpenter, GameObjects.Actor.KotakeOnBroom)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaCastle, GameObjects.Actor.Skulltula, GameObjects.Actor.MajoraBalloonSewer)) continue;
@@ -2284,6 +2347,14 @@ namespace MMR.Randomizer
                     newInjectedActor.groundVariants = newGroundVariantsShort;
                     continue;
                 }
+                if (command == "flying_variants")
+                {
+                    var newFlyingVariants = valueStr.Split(",").ToList();
+                    var newFlyingVariantsShort = newFlyingVariants.Select(u => Convert.ToInt32(u.Trim(), 16)).ToList();
+
+                    newInjectedActor.flyingVariants = newFlyingVariantsShort;
+                    continue;
+                }
                 if (command == "variant_with_max")
                 {
                     var newLimitedVariant = valueStr.Split(",").ToList();
@@ -2755,7 +2826,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 36.5\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 37.0\n");
                 }
             }
             catch (Exception e)

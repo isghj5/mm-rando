@@ -233,8 +233,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x17)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(max: 2, variant: 0)]
+        // crashes if placed on an actor that has cutscene data, because it tries to use that cutscene data as its intro cutscen
         [EnemizerScenesExcluded(Scene.SecretShrine)] // issue: spawn is too high, needs to be lowered
-        [EnemizerScenesPlacementBlock(Scene.BeneathGraveyard, Scene.DekuShrine, Scene.ClockTowerInterior)] // crash in graveyard
+        //[EnemizerScenesPlacementBlock(Scene.BeneathGraveyard, Scene.DekuShrine, Scene.ClockTowerInterior)] // crash in graveyard
+        [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)]
         Dinofos = 0x19,
 
         [FileID(59)]
@@ -315,15 +317,15 @@ namespace MMR.Randomizer.GameObjects
 
         // In order to split the skullwalltula and skulltula in the spider gossip stone grotto into two objects,
         // I have to make a new actor that uses a fake object
+        // also splitting ocean spiderhouse skulltulla and gold skulltula
         [EnemizerEnabled]
         [ObjectListIndex(0x22D)] // empty object
         [ActorInitVarOffset(0x2540)]
         [FileID(67)] // actual file of skulltula in case it wasnts to know things like how big it is
         [FlyingVariants(0)] // going to mark it flying for now
         [VariantsWithRoomMax(max:0, variant:0)] // don't actually place garbage actor
-        SkulltulaDummy = 0x300, // fake
-
-        Empty25 = 0x25,
+        SkulltulaDummy = 0x25, // fake
+        //Empty25 = 0x25, // originally empty
 
         [ActorizerEnabled]
         // FILE MISSING (always loaded)
@@ -751,7 +753,9 @@ namespace MMR.Randomizer.GameObjects
         Empty5D = 0x5D,
         Empty5E = 0x5E,
 
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // even one of them can overrun dyna in woodfall when you spawn the temple because of dyna
+        // we really dont need dyna here, it exists to stop the player from climbing the ladder in sewer only
+        // going to use new bombal without cutscene instead since that one is NOT dyna
         [FileID(102)]
         [ObjectListIndex(0x280)]
         [FlyingVariants(1)]
@@ -1401,7 +1405,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0)]
         [FlyingVariants(0)]
         //[WaterVariants(0)]
-        [VariantsWithRoomMax(max:3, variant: 0)] // too much Bg is crash
+        [VariantsWithRoomMax(max:1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
@@ -1923,13 +1927,14 @@ namespace MMR.Randomizer.GameObjects
         // beta bomb shop grandma
         [ActorizerEnabled]
         [FileID(263)]
+        // enhy nonsense, it has to load its inner-actor thing first, so its set to gameplay keep
         [ObjectListIndex(0xDF)] // 1
         // params: 0x007E is path range, 0x7E is max
         [PathingTypeVarsPlacement(mask:0x7E00, shift:9)]
         [PathingVariants(0x0)]
         [GroundVariants(0x7E00)] // todo check if 0x7F is a thing
         // Pathing Variants todo
-        [VariantsWithRoomMax(max: 3, variant:0x7E00)] // lag, probably from the realtime shadow generation
+        [VariantsWithRoomMax(max: 7, variant:0x7E00)] // lag, probably from the realtime shadow generation
         [UnkillableAllVariants]
         BabaIsUnused = 0x123, // En_Bba_01
 
@@ -2192,6 +2197,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x14B)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
+        [EnemizerScenesPlacementBlock(Scene.MountainVillageSpring)] // her new actor plays flute, this can break frog choir if close enough
         CutsceneZelda = 0x0152, // Dm_Zl
 
         [FileID(305)]
@@ -3541,8 +3547,9 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x1000, 0x2000, 0xF000, 0x30FF)]
         [VariantsWithRoomMax(max: 1, variant: 0x2000)] // one asleep to hint the others are out of body
         [VariantsWithRoomMax(max: 0, variant: 0x30FF)] // boring cutscene version just stares into the distance, do not re-shuffle
-        [EnemizerScenesExcluded(Scene.RanchBuildings)]
         [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.RanchBuildings)]
+        [EnemizerScenesPlacementBlock(Scene.MountainVillageSpring)] // her new actor sings, this can break frog choir if close enough
         RomaniYts = 0x21F, // En_Ma_Yts
 
         // todo flesh this actor out
