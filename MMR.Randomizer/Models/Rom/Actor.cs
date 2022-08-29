@@ -433,7 +433,7 @@ namespace MMR.Randomizer.Models.Rom
 
         public void UpdateActor(InjectedActor injectedActor)
         {
-            /// this function exists for actor injection, TODo rename to somethingth
+            /// this function exists for actor injection
 
             this.InjectedActor = injectedActor;
 
@@ -442,22 +442,19 @@ namespace MMR.Randomizer.Models.Rom
             // should we add or replace variants? for now we add
             this.Variants.AddRange(injectedActor.groundVariants);
             this.Variants.AddRange(injectedActor.flyingVariants);
+            this.Variants = this.Variants.Distinct().ToList(); // if variant copies with limits we can double dip, also bloats loops
+
             if (this.RespawningVariants == null)
             {
                 this.RespawningVariants = new List<int>();
             }
             this.RespawningVariants.AddRange(injectedActor.respawningVariants);
 
-
             this.VariantsWithRoomMax.AddRange(injectedActor.limitedVariants);
-            this.AllVariants[(int)ActorType.Ground - 1].AddRange(injectedActor.groundVariants);
-            this.AllVariants[(int)ActorType.Flying - 1].AddRange(injectedActor.flyingVariants);
-
-            // we want a list of all 
-            /*if (injectedActor.unkillableAttr)
-            {
-                this.UnkillableVariants = Variants
-            }*/
+            var groundVariantEntry = this.AllVariants[(int)ActorType.Ground - 1];
+            groundVariantEntry.AddRange(injectedActor.groundVariants.Except(groundVariantEntry));
+            var flyingVariantEntry = this.AllVariants[(int)ActorType.Ground - 1];
+            flyingVariantEntry.AddRange(injectedActor.flyingVariants.Except(flyingVariantEntry));
         }
     }
 }

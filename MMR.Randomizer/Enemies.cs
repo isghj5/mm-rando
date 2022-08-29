@@ -1378,12 +1378,12 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BabaIsUnused)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BabaIsUnused)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.LotteryShop, GameObjects.Actor.Clock, GameObjects.Actor.Gong)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
-                if (TestHardSetObject(GameObjects.Scene.DekuShrine, GameObjects.Actor.MadShrub, GameObjects.Actor.Dinofos)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.OOTPotionShopMan)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.DekuShrine, GameObjects.Actor.MadShrub, GameObjects.Actor.Dinofos)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Dinofos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.MilkroadCarpenter, GameObjects.Actor.KotakeOnBroom)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaCastle, GameObjects.Actor.Skulltula, GameObjects.Actor.MajoraBalloonSewer)) continue;
 
@@ -1604,6 +1604,7 @@ namespace MMR.Randomizer
                 for (int roomIndex = 0; roomIndex < thisSceneData.Scene.Maps.Count; ++roomIndex)
                 {
                     var roomActors = temporaryMatchEnemyList.FindAll(u => u.Room == roomIndex && u.ActorID == problemActor.ActorID);
+                    if (roomActors.Count == 0) continue; // nothing to trim
                     var roomIsClearPuzzleRoom = thisSceneData.Scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
                     //var roomFreeActors = SceneFreeActors.ToList(); // works but too small
                     var roomFreeActors = GetRoomFreeActors(thisSceneData.Scene, thisSceneData.ChosenReplacementObjectsPerMap[roomIndex], thisSceneData.SceneFreeActors);
@@ -2804,15 +2805,15 @@ namespace MMR.Randomizer
                 }
                 int seed = random.Next(); // order is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
 
-                Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
-                //foreach (var scene in newSceneList) // sequential for debugging only
+                //Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
+                foreach (var scene in newSceneList) // sequential for debugging only
                 {
                     var previousThreadPriority = Thread.CurrentThread.Priority;
                     Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
                     SwapSceneEnemies(settings, scene, seed);
                     Thread.CurrentThread.Priority = previousThreadPriority;
-                });
-                //}
+                //});
+                }
 
                 EnemizerLateFixes();
                 //LowerEnemiesResourceLoad();
