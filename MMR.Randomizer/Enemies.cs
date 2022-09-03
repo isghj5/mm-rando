@@ -1383,8 +1383,8 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuShrine, GameObjects.Actor.MadShrub, GameObjects.Actor.Dinofos)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Peahat, GameObjects.Actor.Dinofos)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.MilkRoad, GameObjects.Actor.MilkroadCarpenter, GameObjects.Actor.KotakeOnBroom)) continue;
+                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.RomaniYts)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Scarecrow, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaCastle, GameObjects.Actor.Skulltula, GameObjects.Actor.MajoraBalloonSewer)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
@@ -2271,9 +2271,9 @@ namespace MMR.Randomizer
             } // end while searching for compatible object/actors
 
             WriteOutput(" Loops used for match candidate: " + loopsCount);
-            /////////////////////////////
-            ///////   DEBUGGING   ///////
-            /////////////////////////////
+            ////////////////////////////////////////////
+            ///////   DEBUGGING: force an actor  ///////
+            ////////////////////////////////////////////
             #if DEBUG
             if (scene.SceneEnum == GameObjects.Scene.AstralObservatory) // force specific actor/variant for debugging
             {
@@ -2805,15 +2805,15 @@ namespace MMR.Randomizer
                 }
                 int seed = random.Next(); // order is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
 
-                //Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
-                foreach (var scene in newSceneList) // sequential for debugging only
+                Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
+                //foreach (var scene in newSceneList) // sequential for debugging only
                 {
                     var previousThreadPriority = Thread.CurrentThread.Priority;
                     Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
                     SwapSceneEnemies(settings, scene, seed);
                     Thread.CurrentThread.Priority = previousThreadPriority;
-                //});
-                }
+                });
+                //}
 
                 EnemizerLateFixes();
                 //LowerEnemiesResourceLoad();
@@ -2827,7 +2827,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 37.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 38.0\n");
                 }
             }
             catch (Exception e)

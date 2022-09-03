@@ -732,6 +732,7 @@ namespace MMR.Randomizer.GameObjects
             0x6233, 0x623B, 0x6218, 0x625C)] // grottos that might hold checks, also hidden
         [UnkillableAllVariants]
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)] // FIRE AND DARKNESS
+        [AlignedCompanionActor(Obj_Dowsing, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x110)] // rumble
         [EnemizerScenesExcluded(Scene.RoadToIkana, Scene.TerminaField, Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.PathToSnowhead)]
         GrottoHole = 0x55, // Door_Ana
 
@@ -1146,11 +1147,11 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.CuccoShack)]
         CuccoChick = 0x9D, // En_Nwc
 
-        // some weird calls chest actor wraparound
+        // unsused, might have been part of lens on chest effect they wanted to do like OOT
         [FileID(145)]
         [ObjectListIndex(0001)]
         [TreasureFlagsPlacement(mask: 0x1F, shift: 8)]
-        Item_Inbox = 0x9E, // Item_Inbox
+        Unused_Item_Inbox = 0x9E, // Item_Inbox
 
         // pirate that tells leader they cant get near the eggs because of seasnakes
         [ActorizerEnabled]
@@ -1563,7 +1564,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(219)]
         [ObjectListIndex(0x1)]
-        BlueTargetSpot = 0xE7, // En_Hs2
+        Unused_En_Hs2 = 0xE7, // En_Hs2
 
         //[ActorizerEnabled] // probably hard coded by zoey for rupee rando
         [FileID(220)]
@@ -3082,10 +3083,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1BF)]
         GoronShrineDoor = 0x1E0, // Bg_Tobira01
 
-        // ?
+        // Unused seahourse spawner
         [FileID(442)]
         [ObjectListIndex(0x1)]
-        En_Tag_Obj = 0x1E1, // En_Tag_Obj
+        Unused_En_Tag_Obj = 0x1E1, // En_Tag_Obj
         
         [FileID(443)]
         [ObjectListIndex(0x1C1)]
@@ -3164,10 +3165,15 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)] // doubt
         Fireworks = 0x1EB, // En_Hanabi
 
-        // ??
+        // rumble controller near it, good for hidden grottos
+        [ActorizerEnabled]
         [FileID(452)]
-        [ObjectListIndex(0x1)]
-        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
+        //[ObjectListIndex(0x1)]
+        [ObjectListIndex(0x2)] // not actually limited, but we only use it for hidden grottos so its fieldkeep only
+        // 0x7F are flags, whether treasure or switch flags, depending on type
+        // type is >> 7, so 0x1F0 1 is collectible, 2 is chest, 3 is switch, think we want switch flag since those are much more open
+        [GroundVariants(0x110)] // checks for switch flag
+        [SwitchFlagsPlacement(mask: 0x7F, shift: 0)] // technically correct, the vanilla game never uses this actor
         Obj_Dowsing = 0x1EC, // Obj_Dowsing
 
         // wind in ISTT and water current in PFInterior
@@ -4037,7 +4043,7 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // this actor is EMPTY the code has nothing in it
         [FileID(576)]
         [ObjectListIndex(0x1EB)]
-        En_Tanron6 = 0x269, // En_Tanron6
+        Unused_En_Tanron6 = 0x269, // En_Tanron6
 
         // TODO: make this version a companion instead, so we have fewer of these guys placed everywhere
         [ActorizerEnabled]
