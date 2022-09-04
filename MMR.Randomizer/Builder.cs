@@ -3397,7 +3397,7 @@ namespace MMR.Randomizer
             WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
             progressReporter.ReportProgress(73, "Writing music...");
-            SequenceUtils.MoveAudioBankTableToFile();
+            SequenceUtils.MoveAudioBankTableToFile(asm.Symbols);
             WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
             WriteMuteMusic();
             WriteEnemyCombatMusicMute();
