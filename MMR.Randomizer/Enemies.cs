@@ -247,6 +247,7 @@ namespace MMR.Randomizer
         public static void EnemizerLateFixes()
         {
             // changes after randomization, actors objects already written
+            // turns out this one can be early too, TODO
             FixDekuPalaceReceptionGuards();
 
         }
@@ -272,11 +273,11 @@ namespace MMR.Randomizer
 
             // the two wolfos spawn in twin islands spawn off scew, 
             //   redead falls through the floor when you approach them with this skew
-            var twinislandsRoom0FID = GameObjects.Scene.TwinIslands.FileID() + 1;
-            RomUtils.CheckCompressed(twinislandsRoom0FID);
-            var twinislandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslands.FileID());
-            ActorUtils.FlattenPitchRoll(twinislandsScene.Maps[0].Actors[26]);
-            ActorUtils.FlattenPitchRoll(twinislandsScene.Maps[0].Actors[27]);
+            // made redead flat code world wide, leaving this for notes right now
+            //var twinislandsRoom0FID = GameObjects.Scene.TwinIslands.FileID() + 1;
+            //var twinislandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslands.FileID());
+            //ActorUtils.FlattenPitchRoll(twinislandsScene.Maps[0].Actors[26]);
+            //ActorUtils.FlattenPitchRoll(twinislandsScene.Maps[0].Actors[27]);
 
             // in STT, move the bombchu in the first room 
             //   backward several feet from the chest, so replacement cannot block the chest
@@ -292,7 +293,6 @@ namespace MMR.Randomizer
 
             // one of the snappers is right in front of the chest, if actorizer, that actor could be something that doesnt have to be killable, could block the chest
             woodfalltempleScene.Maps[6].Actors[1].Position.z = -55; // room 7, z was -25, 
-
 
             // in OSH, the storage room bo spawns in the air in front of the mirror, 
             //  but as a land enemy it should be placed on the ground for its replacements
@@ -368,7 +368,6 @@ namespace MMR.Randomizer
             var woodfallTempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
             var bowDinofos = linksTrialScene.Maps[7].Actors[0];
             bowDinofos.Rotation.y |= 0x7F;
-
         }
 
 
@@ -379,7 +378,6 @@ namespace MMR.Randomizer
 
             if (ACTORSENABLED)
             {
-
                 //turn around this torch, because if its bean man hes facing into the wall and it hurts me
                 var laundryPoolScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LaundryPool.FileID());
                 laundryPoolScene.Maps[0].Actors[2].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, flags: 0x7F);
@@ -1244,6 +1242,26 @@ namespace MMR.Randomizer
             }
         }
 
+        public static void FixRedeadSpawnScew(SceneEnemizerData thisSceneData)
+        {
+            /// if a redead tries to spawn with a x or z rotation they can fall right through the floor once they start moving,
+            /// we need to fix that, but too many spawns, do it dynamically
+
+            var redeadObjDetected = thisSceneData.ChosenReplacementObjects.Find(v => v.ChosenV == GameObjects.Actor.GibdoWell.ObjectIndex()) != null;
+
+            if (redeadObjDetected)
+            {
+                for (int i = 0; i < thisSceneData.Actors.Count(); i++)
+                {
+                    var testActor = thisSceneData.Actors[i];
+                    if (testActor.ActorEnum == GameObjects.Actor.ReDead || testActor.ActorEnum == GameObjects.Actor.GibdoWell)
+                    {
+                        ActorUtils.FlattenPitchRoll(testActor);
+                    }
+                }
+            }
+        }
+
         public static void FixSwitchFlagVars(SceneEnemizerData thisSceneData)
         {
             thisSceneData.Log.AppendLine($"------------------------------------------------- ");
@@ -1383,7 +1401,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuShrine, GameObjects.Actor.MadShrub, GameObjects.Actor.Dinofos)) continue;
-                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.RomaniYts)) continue;
+                if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.Scarecrow, GameObjects.Actor.ReDead)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Scarecrow, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaCastle, GameObjects.Actor.Skulltula, GameObjects.Actor.MajoraBalloonSewer)) continue;
 
@@ -2201,15 +2219,6 @@ namespace MMR.Randomizer
                 ShuffleObjects(thisSceneData);
                 WriteOutput(" objects pick time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
-                // reset early if obviously too large
-                /* thisactors.SetNewActors(scene, chosenReplacementObjects);
-                if ( ! thisactors.isObjectSizeAcceptable())
-                {
-                    // at this point objects are as small as possible, if too big, we should reset now
-                    // before the slow free actor section
-                    continue;
-                } // */
-                // TODO write GetWhole RamSize here so we can get this info from our memory size list now that we have it
 
                 // enemizer is not smart enough if the new chosen objects are copies, and the game allows objects to load twice
                 // for now, remove them here after actors are chosen to reduce object size
@@ -2286,6 +2295,7 @@ namespace MMR.Randomizer
 
             // any patrolling types need their vars fixed
             FixPatrollingEnemyVars(thisSceneData.Actors);
+            FixRedeadSpawnScew(thisSceneData);
 
             // print debug actor locations
             for (int i = 0; i < thisSceneData.Actors.Count; i++)
