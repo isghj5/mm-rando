@@ -31,21 +31,14 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         /// <param name="symbols">Symbols</param>
         /// <param name="options">Options</param>
-        public void Apply(Symbols symbols, AsmOptionsGameplay options)
+        /// <returns></returns>
+        public int Apply(Symbols symbols, AsmOptionsGameplay options)
         {
             // Write patch data to existing MMFiles
             WriteToROM(symbols);
 
             // For our custom data, create and insert our own MMFile
-            var file = CreateMMFile(symbols);
-            RomUtils.AppendFile(file);
-
-            // Encode Symbols into a special MMFile and insert that too
-            var symbolsFile = symbols.CreateMMFile();
-            RomUtils.AppendFile(symbolsFile);
-
-            // Write subset of configuration (hardcoded into patch)
-            symbols.ApplyConfiguration(options);
+            return CreateMMFile(symbols);
         }
 
         /// <summary>
@@ -70,27 +63,16 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
-        /// Create a <see cref="MMFile"/> from patch data.
+        /// Create a <see cref="MMFile"/> from patch data and return the file index.
         /// </summary>
         /// <param name="symbols">Symbols</param>
-        /// <returns>MMFile</returns>
-        public MMFile CreateMMFile(Symbols symbols)
+        /// <returns></returns>
+        public int CreateMMFile(Symbols symbols)
         {
             var start = symbols.PayloadStart;
             var end = symbols.PayloadEnd;
-
             var data = GetFileData(start, end - start);
-
-            var file = new MMFile
-            {
-                Addr = (int)start,
-                End = (int)start + data.Length,
-                IsCompressed = false,
-                IsStatic = true,
-                Data = data,
-            };
-
-            return file;
+            return RomUtils.AppendFile(data);
         }
 
         /// <summary>

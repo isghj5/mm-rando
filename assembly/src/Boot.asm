@@ -4,8 +4,8 @@
 
 .headersize G_CODE_DELTA
 
-.orga (G_DMA_TABLE + (0x10 * 1544))
-.area 0x70, 0
+.orga (G_DMA_TABLE + (0x10 * 1552))
+.area 0x100, 0
     .word G_PAYLOAD_VROM, G_PAYLOAD_VROM + G_PAYLOAD_SIZE, G_PAYLOAD_VROM, 0
 .endarea
 
