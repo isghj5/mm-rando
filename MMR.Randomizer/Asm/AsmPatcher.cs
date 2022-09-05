@@ -8,7 +8,7 @@ namespace MMR.Randomizer.Asm
     /// <summary>
     /// Patcher for assembly patch file.
     /// </summary>
-    public class Patcher
+    public class AsmPatcher
     {
         private AlvReader.Entry[] _data;
 
@@ -18,12 +18,12 @@ namespace MMR.Randomizer.Asm
         const uint TABLE_END = 0x20700;
 
         /// <summary>
-        /// Apply patches using <see cref="Symbols"/> loaded from the internal resource.
+        /// Apply patches using <see cref="AsmSymbols"/> loaded from the internal resource.
         /// </summary>
         /// <param name="options">Options</param>
         public void Apply(AsmOptionsGameplay options)
         {
-            Apply(Symbols.Load(), options);
+            Apply(AsmSymbols.Load(), options);
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace MMR.Randomizer.Asm
         /// <param name="symbols">Symbols</param>
         /// <param name="options">Options</param>
         /// <returns></returns>
-        public int Apply(Symbols symbols, AsmOptionsGameplay options)
+        public int Apply(AsmSymbols symbols, AsmOptionsGameplay options)
         {
             // Write patch data to existing MMFiles
             WriteToROM(symbols);
@@ -67,7 +67,7 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         /// <param name="symbols">Symbols</param>
         /// <returns></returns>
-        public int CreateMMFile(Symbols symbols)
+        public int CreateMMFile(AsmSymbols symbols)
         {
             var start = symbols.PayloadStart;
             var end = symbols.PayloadEnd;
@@ -87,11 +87,11 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
-        /// Create <see cref="Patcher"/> from ALV data.
+        /// Create <see cref="AsmPatcher"/> from ALV data.
         /// </summary>
         /// <param name="rawBytes">ALV raw bytes</param>
-        /// <returns><see cref="Patcher"/>.</returns>
-        public static Patcher FromAlv(byte[] rawBytes)
+        /// <returns><see cref="AsmPatcher"/>.</returns>
+        public static AsmPatcher FromAlv(byte[] rawBytes)
         {
             var list = new List<AlvReader.Entry>();
             var alvReader = new AlvReader(rawBytes);
@@ -100,27 +100,27 @@ namespace MMR.Randomizer.Asm
                 if (IsAddressRelevant(entry.Address))
                     list.Add(entry);
             }
-            var patcher = new Patcher();
+            var patcher = new AsmPatcher();
             patcher._data = list.ToArray();
             return patcher;
         }
 
         /// <summary>
-        /// Create <see cref="Patcher"/> from GZip-compressed ALV data.
+        /// Create <see cref="AsmPatcher"/> from GZip-compressed ALV data.
         /// </summary>
         /// <param name="compressedBytes">GZip-compressed ALV data</param>
-        /// <returns><see cref="Patcher"/>.</returns>
-        public static Patcher FromCompressedAlv(byte[] compressedBytes)
+        /// <returns><see cref="AsmPatcher"/>.</returns>
+        public static AsmPatcher FromCompressedAlv(byte[] compressedBytes)
         {
             var decompressedBytes = CompressionUtils.GZipDecompress(compressedBytes);
             return FromAlv(decompressedBytes);
         }
 
         /// <summary>
-        /// Load a <see cref="Patcher"/> from the default resource file.
+        /// Load a <see cref="AsmPatcher"/> from the default resource file.
         /// </summary>
         /// <returns>Patcher</returns>
-        public static Patcher Load()
+        public static AsmPatcher Load()
         {
             return FromCompressedAlv(Resources.asm.rom_patch);
         }
@@ -128,7 +128,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Patch existing <see cref="MMFile"/> files.
         /// </summary>
-        public void WriteToROM(Symbols symbols)
+        public void WriteToROM(AsmSymbols symbols)
         {
             foreach (var data in _data)
                 if (TABLE_END <= data.Address && data.Address < symbols.PayloadStart)

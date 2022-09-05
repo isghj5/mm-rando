@@ -782,7 +782,7 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteToROM(0x00C2739C, new byte[] { 0x3C, 0x08, 0x80, 0x0A, 0x8D, 0x05, (byte)(offset >> 8), (byte)(offset & 0xFF) });
         }
 
-        public static void MoveAudioBankTableToFile(Symbols symbols)
+        public static void MoveAudioBankTableToFile(AsmSymbols symbols)
         {
             // grab original audiobanktable out of code, plus extra for modifying
             var table = ReadWriteUtils.ReadBytes(0xB3C000 + 0x13B6C0, 0x820);

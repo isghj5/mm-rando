@@ -12,7 +12,7 @@ namespace MMR.Randomizer.Models.Settings
     public class CosmeticSettings
     {
         /// <summary>
-        /// Options for the Asm <see cref="Patcher"/>.
+        /// Options for the Asm <see cref="AsmPatcher"/>.
         /// </summary>
         [JsonIgnore]
         public AsmOptionsCosmetic AsmOptions { get; set; } = new AsmOptionsCosmetic();

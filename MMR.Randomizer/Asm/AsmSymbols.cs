@@ -13,7 +13,7 @@ namespace MMR.Randomizer.Asm
     /// <summary>
     /// Symbols used in the ASM patch.
     /// </summary>
-    public class Symbols
+    public class AsmSymbols
     {
         private Dictionary<string, uint> _symbols = new Dictionary<string, uint>();
 
@@ -41,12 +41,12 @@ namespace MMR.Randomizer.Asm
         /// <returns></returns>
         public uint Offset(string name) => _symbols[name] - PayloadStart;
 
-        private Symbols()
+        private AsmSymbols()
             : this(new Dictionary<string, uint>())
         {
         }
 
-        private Symbols(Dictionary<string, uint> symbols)
+        private AsmSymbols(Dictionary<string, uint> symbols)
         {
             this._symbols = symbols;
         }
@@ -62,23 +62,23 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
-        /// Load <see cref="Symbols"/> from a JSON <see cref="string"/>.
+        /// Load <see cref="AsmSymbols"/> from a JSON <see cref="string"/>.
         /// </summary>
         /// <param name="json">JSON string</param>
         /// <returns>Symbols</returns>
-        public static Symbols FromJSON(string json)
+        public static AsmSymbols FromJSON(string json)
         {
             var result = JsonSerializer.Deserialize<Dictionary<string, string>>(json)
                 .Select(x => new KeyValuePair<string, uint>(x.Key, Convert.ToUInt32(x.Value, 16)))
                 .ToDictionary(x => x.Key, x => x.Value);
-            return new Symbols(result);
+            return new AsmSymbols(result);
         }
 
         /// <summary>
-        /// Load <see cref="Symbols"/> from the default resource file.
+        /// Load <see cref="AsmSymbols"/> from the default resource file.
         /// </summary>
         /// <returns>Symbols</returns>
-        public static Symbols Load()
+        public static AsmSymbols Load()
         {
             return FromJSON(Resources.asm.symbols);
         }

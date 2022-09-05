@@ -13,12 +13,12 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Patcher.
         /// </summary>
-        public Patcher Patcher { get; private set; }
+        public AsmPatcher Patcher { get; private set; }
 
         /// <summary>
         /// Symbols.
         /// </summary>
-        public Symbols Symbols { get; private set; }
+        public AsmSymbols Symbols { get; private set; }
 
         /// <summary>
         /// Extended <see cref="MessageTable"/>.
@@ -40,12 +40,12 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public int AsmIndex { get; private set; } = -1;
 
-        public AsmContext(Symbols symbols)
+        public AsmContext(AsmSymbols symbols)
             : this(null, symbols)
         {
         }
 
-        public AsmContext(Patcher patcher, Symbols symbols)
+        public AsmContext(AsmPatcher patcher, AsmSymbols symbols)
         {
             this.Patcher = patcher;
             this.Symbols = symbols;
@@ -70,7 +70,7 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
-        /// Apply configuration using the <see cref="Symbols"/> data.
+        /// Apply configuration using the <see cref="AsmSymbols"/> data.
         /// </summary>
         /// <param name="options">Options</param>
         public void ApplyConfigurationPostPatch(AsmOptionsCosmetic options)
@@ -142,8 +142,8 @@ namespace MMR.Randomizer.Asm
         /// <returns>AsmContext</returns>
         public static AsmContext LoadInternal()
         {
-            var patcher = Patcher.Load();
-            var symbols = Symbols.Load();
+            var patcher = AsmPatcher.Load();
+            var symbols = AsmSymbols.Load();
             return new AsmContext(patcher, symbols);
         }
 
@@ -226,7 +226,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Write a <see cref="DPadConfig"/> to the ROM.
         /// </summary>
-        /// <remarks>Assumes <see cref="Patcher"/> file has been inserted.</remarks>
+        /// <remarks>Assumes <see cref="AsmPatcher"/> file has been inserted.</remarks>
         /// <param name="config">D-Pad config</param>
         void WriteDPadConfigLegacy(DPadConfig config)
         {
