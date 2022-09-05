@@ -1,11 +1,6 @@
-﻿using MMR.Randomizer.GameObjects;
-using MMR.Randomizer.Models.Rom;
-using MMR.Randomizer.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 
 namespace MMR.Randomizer.Asm
@@ -55,7 +50,7 @@ namespace MMR.Randomizer.Asm
         /// Check if a certain symbol exists.
         /// </summary>
         /// <param name="name">Symbol name</param>
-        /// <returns>True if exists, false if not</returns>
+        /// <returns></returns>
         public bool Has(string name)
         {
             return this._symbols.ContainsKey(name);
@@ -65,7 +60,7 @@ namespace MMR.Randomizer.Asm
         /// Load <see cref="AsmSymbols"/> from a JSON <see cref="string"/>.
         /// </summary>
         /// <param name="json">JSON string</param>
-        /// <returns>Symbols</returns>
+        /// <returns></returns>
         public static AsmSymbols FromJSON(string json)
         {
             var result = JsonSerializer.Deserialize<Dictionary<string, string>>(json)
@@ -77,7 +72,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Load <see cref="AsmSymbols"/> from the default resource file.
         /// </summary>
-        /// <returns>Symbols</returns>
+        /// <returns></returns>
         public static AsmSymbols Load()
         {
             return FromJSON(Resources.asm.symbols);

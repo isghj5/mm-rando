@@ -40,11 +40,6 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public int AsmIndex { get; private set; } = -1;
 
-        public AsmContext(AsmSymbols symbols)
-            : this(null, symbols)
-        {
-        }
-
         public AsmContext(AsmPatcher patcher, AsmSymbols symbols)
         {
             this.Patcher = patcher;
@@ -61,7 +56,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Apply configuration which will be hardcoded into the patch file.
         /// </summary>
-        /// <param name="options">Options</param>
+        /// <param name="options"></param>
         public void ApplyConfiguration(AsmOptionsGameplay options)
         {
             this.WriteClockTownStrayFairyIcon();
@@ -72,7 +67,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Apply configuration using the <see cref="AsmSymbols"/> data.
         /// </summary>
-        /// <param name="options">Options</param>
+        /// <param name="options"></param>
         public void ApplyConfigurationPostPatch(AsmOptionsCosmetic options)
         {
             this.WriteDPadConfig(options.DPadConfig);
@@ -87,7 +82,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Try and apply configuration post-patch using the <see cref="Symbols"/> data.
         /// </summary>
-        /// <param name="options">Options</param>
+        /// <param name="options"></param>
         public void TryApplyConfigurationPostPatch(AsmOptionsCosmetic options)
         {
             this.TryWriteDPadConfig(options.DPadConfig);
@@ -102,10 +97,10 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Apply and write patch data.
         /// </summary>
-        /// <param name="options">Options</param>
+        /// <param name="options"></param>
         public void ApplyPatch(AsmOptionsGameplay options)
         {
-            this.AsmIndex = this.Patcher.Apply(this.Symbols, options);
+            this.AsmIndex = this.Patcher.Apply(this.Symbols);
             this.ApplyConfiguration(options);
             this.PatchLoadAddress();
             this.ExtraMessages = this.CreateInitialExtMessageTable();
@@ -115,7 +110,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Apply configuration after the patch file has been created (or applied) and the hash calculated.
         /// </summary>
-        /// <param name="options">Options</param>
+        /// <param name="options"></param>
         /// <param name="patch">Whether or not a patch file was applied</param>
         public void ApplyPostConfiguration(AsmOptionsCosmetic options, bool patch = false)
         {
@@ -139,7 +134,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Load from internal resource files.
         /// </summary>
-        /// <returns>AsmContext</returns>
+        /// <returns></returns>
         public static AsmContext LoadInternal()
         {
             var patcher = AsmPatcher.Load();
@@ -150,7 +145,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Create initial mimic item table for ice traps.
         /// </summary>
-        /// <returns>Mimic table.</returns>
+        /// <returns></returns>
         public MimicItemTable CreateMimicItemTable()
         {
             var addr = Resolve("ITEM_OVERRIDE_COUNT");
@@ -161,7 +156,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Create initial extended <see cref="MessageTable"/> for extra messages.
         /// </summary>
-        /// <returns>Extended MessageTable</returns>
+        /// <returns></returns>
         public MessageTable CreateInitialExtMessageTable()
         {
             var addr = Resolve("EXT_MSG_TABLE_COUNT");
@@ -174,6 +169,11 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public void PatchLoadAddress() => ReadWriteUtils.WriteCodeSignedHiLo(0x801748B4, AsmAddress);
 
+        /// <summary>
+        /// Read the hash icon table from the assembly payload file.
+        /// </summary>
+        /// <returns>Table bytes.</returns>
+        /// <exception cref="Exception"></exception>
         public byte[] ReadHashIconsTable()
         {
             var addr = Resolve("HASH_ICONS");
@@ -187,8 +187,8 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Write an <see cref="AsmConfig"/> structure to ROM.
         /// </summary>
-        /// <param name="symbol">Symbol</param>
-        /// <param name="config">Config</param>
+        /// <param name="symbol"></param>
+        /// <param name="config"></param>
         void WriteAsmConfig(string symbol, AsmConfig config)
         {
             var addr = Resolve(symbol);
@@ -208,42 +208,19 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
-        /// Write the D-Pad configuration structure to ROM.
-        /// </summary>
-        /// <param name="config">D-Pad config</param>
-        public void WriteDPadConfig(DPadConfig config)
-        {
-            // If there's a DPAD_STATE symbol, use the legacy function instead.
-            if (Symbols.Has("DPAD_STATE"))
-            {
-                WriteDPadConfigLegacy(config);
-                return;
-            }
-
-            WriteAsmConfig("DPAD_CONFIG", config);
-        }
-
-        /// <summary>
         /// Write a <see cref="DPadConfig"/> to the ROM.
         /// </summary>
-        /// <remarks>Assumes <see cref="AsmPatcher"/> file has been inserted.</remarks>
-        /// <param name="config">D-Pad config</param>
-        void WriteDPadConfigLegacy(DPadConfig config)
+        /// <param name="config"></param>
+        public void WriteDPadConfig(DPadConfig config)
         {
-            // Write DPad config bytes.
-            var addr = Resolve("DPAD_CONFIG");
-            ReadWriteUtils.WriteToROM((int)addr, config.Pad.Bytes);
-
-            // Write DPad state byte.
-            addr = Resolve("DPAD_STATE");
-            ReadWriteUtils.WriteToROM((int)addr, (byte)config.State);
+            WriteAsmConfig("DPAD_CONFIG", config);
         }
 
         /// <summary>
         /// Try and write a <see cref="DPadConfig"/> to the ROM.
         /// </summary>
-        /// <param name="config">D-Pad config</param>
-        /// <returns>True if successful, false if the <see cref="DPadConfig"/> symbol was not found.</returns>
+        /// <param name="config"></param>
+        /// <returns><see langword="true"/> if successful, <see langword="false"/> if the <see cref="DPadConfig"/> symbol was not found.</returns>
         public bool TryWriteDPadConfig(DPadConfig config)
         {
             try
@@ -266,9 +243,9 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
-        /// Write extended <see cref="MessageTable"/>.
+        /// Write the extended <see cref="MessageTable"/> to ROM.
         /// </summary>
-        /// <param name="table">Extended MessageTable</param>
+        /// <param name="table"></param>
         public void WriteExtMessageTable(MessageTable table)
         {
             // Write extended message table entries, and append new file for extended message table data.
@@ -301,7 +278,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Write a <see cref="HudColorsConfig"/> to the ROM.
         /// </summary>
-        /// <param name="config">HUD colors config</param>
+        /// <param name="config"></param>
         public void WriteHudColorsConfig(HudColorsConfig config)
         {
             WriteAsmConfig("HUD_COLOR_CONFIG", config);
@@ -310,8 +287,8 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Try and write a <see cref="HudColorsConfig"/> to the ROM.
         /// </summary>
-        /// <param name="config">HUD colors config</param>
-        /// <returns>True if successful, false if the <see cref="HudColorsConfig"/> symbol was not found.</returns>
+        /// <param name="config"></param>
+        /// <returns><see langword="true"/> if successful, <see langword="false"/> if the <see cref="HudColorsConfig"/> symbol was not found.</returns>
         public bool TryWriteHudColorsConfig(HudColorsConfig config)
         {
             try
@@ -334,9 +311,9 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
-        /// Write <see cref="MimicItemTable"/> table to ROM.
+        /// Write the <see cref="MimicItemTable"/> table to ROM.
         /// </summary>
-        /// <param name="table">Table</param>
+        /// <param name="table"></param>
         public void WriteMimicItemTable(MimicItemTable table)
         {
             var addr = Resolve("ITEM_OVERRIDE_ENTRIES");
@@ -346,7 +323,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Write a <see cref="MiscConfig"/> to the ROM.
         /// </summary>
-        /// <param name="config">Misc config</param>
+        /// <param name="config"></param>
         public void WriteMiscConfig(MiscConfig config)
         {
             WriteAsmConfig("MISC_CONFIG", config);
@@ -367,7 +344,7 @@ namespace MMR.Randomizer.Asm
         /// Try and write the <see cref="MiscConfig"/> hash bytes.
         /// </summary>
         /// <param name="hash">Hash bytes</param>
-        /// <returns>True if successful, false if the <see cref="MiscConfig"/> symbol was not found.</returns>
+        /// <returns><see langword="true"/> if successful, <see langword="false"/> if the <see cref="MiscConfig"/> symbol was not found.</returns>
         public bool TryWriteMiscHash(byte[] hash)
         {
             try
@@ -381,11 +358,20 @@ namespace MMR.Randomizer.Asm
             }
         }
 
+        /// <summary>
+        /// Write a <see cref="MusicConfig"/> to the ROM.
+        /// </summary>
+        /// <param name="config"></param>
         public void WriteMusicConfig(MusicConfig config)
         {
             WriteAsmConfig("MUSIC_CONFIG", config);
         }
 
+        /// <summary>
+        /// Try and write a <see cref="MusicConfig"/> to the ROM.
+        /// </summary>
+        /// <param name="config"></param>
+        /// <returns><see langword="true"/> if successful, <see langword="false"/> if the <see cref="MusicConfig"/> symbol was not found.</returns>
         public bool TryWriteMusicConfig(MusicConfig config)
         {
             try
@@ -402,7 +388,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Write a <see cref="MMRConfig"/> to the ROM.
         /// </summary>
-        /// <param name="config">MMR config</param>
+        /// <param name="config"></param>
         public void WriteMMRConfig(MMRConfig config)
         {
             WriteAsmConfig("MMR_CONFIG", config);
@@ -411,7 +397,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Write a <see cref="WorldColorsConfig"/> to the ROM.
         /// </summary>
-        /// <param name="config">World Colors config.</param>
+        /// <param name="config"></param>
         public void WriteWorldColorsConfig(WorldColorsConfig config)
         {
             config.PatchObjects();
@@ -421,8 +407,8 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Try and write a <see cref="WorldColorsConfig"/> to the ROM.
         /// </summary>
-        /// <param name="config">World Colors config.</param>
-        /// <returns>True if successful, false if the <see cref="WorldColorsConfig"/> symbol was not found.</returns>
+        /// <param name="config"></param>
+        /// <returns><see langword="true"/> if successful, <see langword="false"/> if the <see cref="WorldColorsConfig"/> symbol was not found.</returns>
         public bool TryWriteWorldColorsConfig(WorldColorsConfig config)
         {
             try
