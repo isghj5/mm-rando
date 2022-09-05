@@ -127,7 +127,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1D60)]
         [FileID(50)]
         [ObjectListIndex(0xB)]
-        [FlyingVariants(0x8003,0x04,0)] // which ones are fire and ice?
+        // params type: 0 is fire, 2 is normal, 3 is perched, 4 is ice
+        // 0x8000 is invisible
+        [FlyingVariants(0x0, 0x2, 0x04, 0x8000, 0x8002, 0x8004)] // which ones are fire and ice?
+        [WallVariants(0x8003, 0x3)]
         Keese = 0xC, // En_Firefly
 
         //[ActorizerEnabled] // crashes and other weird issues
@@ -204,7 +207,8 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(1)]
         [VariantsWithRoomMax(max: 3, variant: 0)]
         [VariantsWithRoomMax(max: 7, variant: 1)] // lag, not difficulty
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)] // too big, can block the butler race
+        //[EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall)] // too big, can block the butler race
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Peahat = 0x14, // En_Peehat
 
         [FileID(119)]
@@ -1830,6 +1834,7 @@ namespace MMR.Randomizer.GameObjects
 
         // unused actor, now used by a new injected actor
         [FileID(246)]
+        [EnemizerScenesPlacementBlock(Scene.StoneTower)] // dyna crash possible
         En_Bu = 0x111, // En_Bu
 
         //[EnemizerEnabled] //crash
@@ -2845,6 +2850,7 @@ namespace MMR.Randomizer.GameObjects
         //  instead we modified it and inject changes to get it working
         [FileID(402)]
         [ObjectListIndex(0x88)]
+        [EnemizerScenesPlacementBlock(Scene.StoneTower)] // dyna crash possible
         ClocktowerGearsAndOrgan = 0x1B6, // Bg_Ctower_Gear
 
        // [ActorizerEnabled] // disabled since talking is softlock, need to figure that out

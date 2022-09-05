@@ -1184,12 +1184,14 @@ namespace MMR.Randomizer
         }
 
         // can we move this to actorUtils?
-        public static void FixPatrollingEnemyVars(List<Actor> chosenReplacementEnemies)
+        public static void FixPatrollingEnemyVars(SceneEnemizerData thisSceneData)
         {
             /// fixes the patrolling enemy paths to make sure it matches the previous actor path
 
             // this also sets actor kickout address index to 0 (if they have one),
             // because they use different systems which are not compatible
+
+            var chosenReplacementEnemies = thisSceneData.Actors;
 
             // find all pathing enemies
             for (int i = 0; i < chosenReplacementEnemies.Count; i++)
@@ -1205,34 +1207,17 @@ namespace MMR.Randomizer
 
                 var oldPathBehaviorAttr = actor.OldActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
                 var newdoldPathBehaviorAttr = actor.ActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
-                if (oldPathBehaviorAttr == null || newdoldPathBehaviorAttr == null)
-                {
-                    continue; // this actor doesn't need it
-                }
-
                 // need to get the path value from the old variant
                 var oldVariant = actor.OldVariant;
                 var oldPathShifted = (oldVariant & (oldPathBehaviorAttr.Mask)) >> oldPathBehaviorAttr.Shift;
+                if (oldPathBehaviorAttr == null || newdoldPathBehaviorAttr == null)
+                {
+                    //continue; // this actor doesn't need it
+                    oldPathShifted = 0; // would this work as backup for actors not configured correctly? not sure
+                }
 
                 // clear the old path from this vars
                 var newVarsWithoutPath = actor.Variants[0] & ~newdoldPathBehaviorAttr.Mask;
-
-                // in addition, enemies with kickout addresses need their vars changed too
-                // ... so it turns out they dont use the same indexing system
-                // fornow, pass ZERO to both actors (use the main exit)
-                // it should give us a basic entrance to work with that wont crash anywhere where pathing enemies can exist
-                var newKickoutAttr = actor.ActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
-                if (newKickoutAttr != null) // new actor has kick out address, need to read the old one
-                {
-                    int kickoutMask; // separate for debuging
-                    int kickoutAddr = 0; // safest bet, there should always be at least one exit address per scene
-
-                    // erase the kick location from the old vars
-                    kickoutMask = newKickoutAttr.Mask << newKickoutAttr.Shift;
-                    newVarsWithoutPath &= ~(kickoutMask);
-                    // replace with new address
-                    newVarsWithoutPath |= (kickoutAddr << newKickoutAttr.Shift);
-                }
 
                 // shift the path into the new location
                 var newPath = oldPathShifted << newdoldPathBehaviorAttr.Shift;
@@ -1241,6 +1226,44 @@ namespace MMR.Randomizer
                 actor.Variants[0] = newVarsWithoutPath | newPath;
             }
         }
+
+        public static void FixKickoutEnemyVars(SceneEnemizerData thisSceneData)
+        {
+            // separated from pathing since its only two actors and we want to change kick for variants that do not path
+            var objectsContainKickoutActors = thisSceneData.ChosenReplacementObjects
+                                              .Find(objSwap =>
+                                                         objSwap.ChosenV == GameObjects.Actor.PatrollingPirate.ObjectIndex() ||
+                                                         objSwap.ChosenV == GameObjects.Actor.DekuPatrolGuard.ObjectIndex()
+                                                    ) != null;
+            if (! objectsContainKickoutActors) { return; }
+
+            for (int i = 0; i < thisSceneData.Actors.Count; i++)
+            {
+                Actor actor = thisSceneData.Actors[i];
+
+                // in addition, enemies with kickout addresses need their vars changed too
+                // ... so it turns out they dont use the same indexing system
+                // fornow, pass ZERO to both actors (use the main exit)
+                // it should give us a basic entrance to work with that wont crash anywhere where pathing enemies can exist
+                var newKickoutAttr = actor.ActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
+                if (newKickoutAttr != null) // new actor has kick out address, need to read the old one
+                {
+                    int kickoutAddr = 0; // safest bet, there should always be at least one exit address per scene
+                    if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.ZoraHall)
+                    {
+                        kickoutAddr = 1; // zora hall exit 0 is out the water door, softlock if you dont have zora or enough health
+                    }
+
+                    // erase the kick location from the old vars
+                    int kickoutMask = newKickoutAttr.Mask << newKickoutAttr.Shift;
+                    var newVarsWithoutKick = actor.Variants[0] & ~(kickoutMask);
+                    // replace with new address
+                    var newVarsWithKick = newVarsWithoutKick | (kickoutAddr << newKickoutAttr.Shift);
+                    actor.Variants[0] = newVarsWithKick;
+                }
+            }
+        }
+
 
         public static void FixRedeadSpawnScew(SceneEnemizerData thisSceneData)
         {
@@ -1401,7 +1424,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuShrine, GameObjects.Actor.MadShrub, GameObjects.Actor.Dinofos)) continue;
-                if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.Scarecrow, GameObjects.Actor.ReDead)) continue;
+                if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.MuteZora, GameObjects.Actor.PatrollingPirate)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Scarecrow, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaCastle, GameObjects.Actor.Skulltula, GameObjects.Actor.MajoraBalloonSewer)) continue;
 
@@ -2293,8 +2316,8 @@ namespace MMR.Randomizer
             #endif
             /////////////////////////////
 
-            // any patrolling types need their vars fixed
-            FixPatrollingEnemyVars(thisSceneData.Actors);
+            FixPatrollingEnemyVars(thisSceneData); // any patrolling types need their vars fixed
+            FixKickoutEnemyVars(thisSceneData);
             FixRedeadSpawnScew(thisSceneData);
 
             // print debug actor locations
