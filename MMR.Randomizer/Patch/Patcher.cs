@@ -53,7 +53,6 @@ namespace MMR.Randomizer.Patch
                     IsCompressed = false,
                     Data = data,
                     End = address + data.Length,
-                    IsStatic = header.Flags.HasFlag(PatchFlags.IsStatic),
                 };
                 RomUtils.AppendFile(newFile);
             }
@@ -181,7 +180,7 @@ namespace MMR.Randomizer.Patch
                         var address = (uint)file.Addr;
 
                         // Create header for appending new file.
-                        var header = PatchHeader.CreateNew(index, address, file.Data.Length, file.IsStatic);
+                        var header = PatchHeader.CreateNew(index, address, file.Data.Length);
                         header.Write(headerBytes);
 
                         // Write header bytes and file contents.
@@ -198,7 +197,7 @@ namespace MMR.Randomizer.Patch
                         var diff = VcDiffEncodeManaged(originalFile.Data, file.Data);
 
                         // Create header for patching existing file.
-                        var header = PatchHeader.CreateExisting(index, address, diff.Length, file.IsStatic);
+                        var header = PatchHeader.CreateExisting(index, address, diff.Length);
                         header.Write(headerBytes);
 
                         // Write header bytes and diff bytes.

@@ -53,12 +53,10 @@ namespace MMR.Randomizer.Patch
         /// <param name="index">File index.</param>
         /// <param name="address">File address.</param>
         /// <param name="length">Patch data length.</param>
-        /// <param name="isStatic">Whether or not file is static.</param>
         /// <returns></returns>
-        public static PatchHeader CreateExisting(uint index, uint address, int length, bool isStatic)
+        public static PatchHeader CreateExisting(uint index, uint address, int length)
         {
-            var flags = isStatic ? PatchFlags.IsStatic : PatchFlags.None;
-            return new PatchHeader(index, address, length, PatchCommand.ExistingFile, flags);
+            return new PatchHeader(index, address, length, PatchCommand.ExistingFile, PatchFlags.None);
         }
 
         /// <summary>
@@ -67,12 +65,10 @@ namespace MMR.Randomizer.Patch
         /// <param name="index">File index.</param>
         /// <param name="address">File address.</param>
         /// <param name="length">File data length.</param>
-        /// <param name="isStatic">Whether or not file is static.</param>
         /// <returns></returns>
-        public static PatchHeader CreateNew(uint index, uint address, int length, bool isStatic)
+        public static PatchHeader CreateNew(uint index, uint address, int length)
         {
-            var flags = isStatic ? PatchFlags.IsStatic : PatchFlags.None;
-            return new PatchHeader(index, address, length, PatchCommand.NewFile, flags);
+            return new PatchHeader(index, address, length, PatchCommand.NewFile, PatchFlags.None);
         }
 
         /// <summary>

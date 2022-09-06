@@ -12,7 +12,6 @@ namespace MMR.Randomizer.Models.Rom
         public byte[] Data;
         public bool IsCompressed;
         public bool WasEdited;
-        public bool IsStatic;
 
         public MMFile Clone()
         {
@@ -24,7 +23,6 @@ namespace MMR.Randomizer.Models.Rom
                 Cmp_End = Cmp_End,
                 IsCompressed = IsCompressed, // is normally compressed
                 WasEdited = WasEdited,
-                IsStatic = IsStatic,
                 Data = Data?.ToArray()
             };
         }

@@ -1,5 +1,6 @@
 ﻿using MMR.Randomizer.Models.Rom;
 using System;
+using System.Buffers.Binary;
 using System.IO;
 using System.Runtime.CompilerServices;
 
@@ -280,6 +281,60 @@ namespace MMR.Randomizer.Utils
         public static void WriteCodeNOP(uint vram)
         {
             WriteCodeUInt32(vram, 0);
+        }
+
+        /// <summary>
+        /// Get hi and lo values for a <c>lui</c>/<c>addiu</c> instruction pair.
+        /// </summary>
+        /// <param name="value">Full value</param>
+        /// <returns></returns>
+        public static (ushort, ushort) GetMipsSignedHiLo(uint value)
+        {
+            ushort hi = (ushort)(value >> 16);
+            ushort lo = (ushort)(value & 0xFFFF);
+            if (0x8000 <= lo)
+            {
+                return ((ushort)(hi + 1), lo);
+            }
+            return (hi, lo);
+        }
+
+        /// <summary>
+        /// Write value for a <c>lui</c>/<c>addiu</c> instruction pair.
+        /// </summary>
+        /// <param name="address">Address of contiguous instructions</param>
+        /// <param name="value">Full value</param>
+        public static void WriteCodeSignedHiLo(uint address, uint value)
+        {
+            WriteCodeSignedHiLo(address, address + 4, value);
+        }
+
+        /// <summary>
+        /// Write value for a <c>lui</c>/<c>addiu</c> instruction pair.
+        /// </summary>
+        /// <param name="hiAddress">Address of <c>lui</c> instruction</param>
+        /// <param name="loAddress">Address of <c>addiu</c> instruction</param>
+        /// <param name="value">Full value</param>
+        public static void WriteCodeSignedHiLo(uint hiAddress, uint loAddress, uint value)
+        {
+            var file = GetFile(FileIndex.code);
+            var span = new Span<byte>(file.Data);
+            var hiSpan = span.Slice((int)(hiAddress - CodeRAMStart), 4);
+            var loSpan = span.Slice((int)(loAddress - CodeRAMStart), 4);
+            WriteMipsSignedHiLo(hiSpan, loSpan, value);
+        }
+
+        /// <summary>
+        /// Write value for a <c>lui</c>/<c>addiu</c> instruction pair.
+        /// </summary>
+        /// <param name="hiSpan">Hi instruction span</param>
+        /// <param name="loSpan">Lo instruction span</param>
+        /// <param name="value">Full value</param>
+        public static void WriteMipsSignedHiLo(Span<byte> hiSpan, Span<byte> loSpan, uint value)
+        {
+            var (hi, lo) = GetMipsSignedHiLo(value);
+            BinaryPrimitives.WriteUInt16BigEndian(hiSpan.Slice(2, 2), hi);
+            BinaryPrimitives.WriteUInt16BigEndian(loSpan.Slice(2, 2), lo);
         }
 
         /// <summary>

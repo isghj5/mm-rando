@@ -8,7 +8,7 @@ namespace MMR.Randomizer.Asm
     /// <summary>
     /// Patcher for assembly patch file.
     /// </summary>
-    public class Patcher
+    public class AsmPatcher
     {
         private AlvReader.Entry[] _data;
 
@@ -18,41 +18,24 @@ namespace MMR.Randomizer.Asm
         const uint TABLE_END = 0x20700;
 
         /// <summary>
-        /// Apply patches using <see cref="Symbols"/> loaded from the internal resource.
-        /// </summary>
-        /// <param name="options">Options</param>
-        public void Apply(AsmOptionsGameplay options)
-        {
-            Apply(Symbols.Load(), options);
-        }
-
-        /// <summary>
         /// Apply patches.
         /// </summary>
-        /// <param name="symbols">Symbols</param>
-        /// <param name="options">Options</param>
-        public void Apply(Symbols symbols, AsmOptionsGameplay options)
+        /// <param name="symbols"></param>
+        /// <returns>Index of appended file.</returns>
+        public int Apply(AsmSymbols symbols)
         {
             // Write patch data to existing MMFiles
             WriteToROM(symbols);
 
             // For our custom data, create and insert our own MMFile
-            var file = CreateMMFile(symbols);
-            RomUtils.AppendFile(file);
-
-            // Encode Symbols into a special MMFile and insert that too
-            var symbolsFile = symbols.CreateMMFile();
-            RomUtils.AppendFile(symbolsFile);
-
-            // Write subset of configuration (hardcoded into patch)
-            symbols.ApplyConfiguration(options);
+            return CreateMMFile(symbols);
         }
 
         /// <summary>
         /// Generate the bytes for the <see cref="MMFile"/>.
         /// </summary>
         /// <param name="start">Start of virtual file</param>
-        /// <returns>Bytes</returns>
+        /// <returns></returns>
         public byte[] GetFileData(uint start, uint length)
         {
             var bytes = new byte[length];
@@ -70,34 +53,23 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
-        /// Create a <see cref="MMFile"/> from patch data.
+        /// Create a <see cref="MMFile"/> from patch data and return the file index.
         /// </summary>
-        /// <param name="symbols">Symbols</param>
-        /// <returns>MMFile</returns>
-        public MMFile CreateMMFile(Symbols symbols)
+        /// <param name="symbols"></param>
+        /// <returns></returns>
+        public int CreateMMFile(AsmSymbols symbols)
         {
             var start = symbols.PayloadStart;
             var end = symbols.PayloadEnd;
-
             var data = GetFileData(start, end - start);
-
-            var file = new MMFile
-            {
-                Addr = (int)start,
-                End = (int)start + data.Length,
-                IsCompressed = false,
-                IsStatic = true,
-                Data = data,
-            };
-
-            return file;
+            return RomUtils.AppendFile(data);
         }
 
         /// <summary>
         /// Get whether or not an address is relevant to be included in the patch data.
         /// </summary>
         /// <param name="address">Address to check</param>
-        /// <returns>true if relevant, false if not.</returns>
+        /// <returns></returns>
         public static bool IsAddressRelevant(uint address)
         {
             // If patch address is before or within MMFile table, ignore.
@@ -105,11 +77,11 @@ namespace MMR.Randomizer.Asm
         }
 
         /// <summary>
-        /// Create <see cref="Patcher"/> from ALV data.
+        /// Create <see cref="AsmPatcher"/> from ALV data.
         /// </summary>
         /// <param name="rawBytes">ALV raw bytes</param>
-        /// <returns><see cref="Patcher"/>.</returns>
-        public static Patcher FromAlv(byte[] rawBytes)
+        /// <returns></returns>
+        public static AsmPatcher FromAlv(byte[] rawBytes)
         {
             var list = new List<AlvReader.Entry>();
             var alvReader = new AlvReader(rawBytes);
@@ -118,27 +90,27 @@ namespace MMR.Randomizer.Asm
                 if (IsAddressRelevant(entry.Address))
                     list.Add(entry);
             }
-            var patcher = new Patcher();
+            var patcher = new AsmPatcher();
             patcher._data = list.ToArray();
             return patcher;
         }
 
         /// <summary>
-        /// Create <see cref="Patcher"/> from GZip-compressed ALV data.
+        /// Create <see cref="AsmPatcher"/> from GZip-compressed ALV data.
         /// </summary>
         /// <param name="compressedBytes">GZip-compressed ALV data</param>
-        /// <returns><see cref="Patcher"/>.</returns>
-        public static Patcher FromCompressedAlv(byte[] compressedBytes)
+        /// <returns></returns>
+        public static AsmPatcher FromCompressedAlv(byte[] compressedBytes)
         {
             var decompressedBytes = CompressionUtils.GZipDecompress(compressedBytes);
             return FromAlv(decompressedBytes);
         }
 
         /// <summary>
-        /// Load a <see cref="Patcher"/> from the default resource file.
+        /// Load a <see cref="AsmPatcher"/> from the default resource file.
         /// </summary>
-        /// <returns>Patcher</returns>
-        public static Patcher Load()
+        /// <returns></returns>
+        public static AsmPatcher Load()
         {
             return FromCompressedAlv(Resources.asm.rom_patch);
         }
@@ -146,7 +118,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Patch existing <see cref="MMFile"/> files.
         /// </summary>
-        public void WriteToROM(Symbols symbols)
+        public void WriteToROM(AsmSymbols symbols)
         {
             foreach (var data in _data)
                 if (TABLE_END <= data.Address && data.Address < symbols.PayloadStart)

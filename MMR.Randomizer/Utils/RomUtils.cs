@@ -421,17 +421,6 @@ namespace MMR.Randomizer.Utils
         }
 
         /// <summary>
-        /// Get the index of the tail-most <see cref="MMFile"/> which does not use a static virtual address.
-        /// </summary>
-        /// <returns>Index</returns>
-        public static int GetTailFileIndex()
-        {
-            var index = RomData.MMFileList.FindLastIndex(file => !file.IsStatic);
-            var result = index >= 0 ? (int?)index : (int?)null;
-            return result.Value;
-        }
-
-        /// <summary>
         /// Append a <see cref="MMFile"/> without a static virtual address to the end of the list.
         /// </summary>
         /// <param name="data">File data</param>
@@ -439,7 +428,7 @@ namespace MMR.Randomizer.Utils
         /// <returns>File index</returns>
         public static int AppendFile(byte[] data, bool isCompressed = false)
         {
-            var index = GetTailFileIndex();
+            var index = RomData.MMFileList.Count - 1;
             var tail = RomData.MMFileList[index];
             return AppendFile(tail.End, data, isCompressed);
         }
@@ -450,9 +439,8 @@ namespace MMR.Randomizer.Utils
         /// <param name="addr">File address</param>
         /// <param name="data">File data</param>
         /// <param name="isCompressed">Is file compressed</param>
-        /// <param name="isStatic">Is file address static</param>
         /// <returns>File index</returns>
-        public static int AppendFile(int addr, byte[] data, bool isCompressed = false, bool isStatic = false)
+        public static int AppendFile(int addr, byte[] data, bool isCompressed = false)
         {
             var file = new MMFile
             {
@@ -460,7 +448,6 @@ namespace MMR.Randomizer.Utils
                 End = addr + data.Length,
                 IsCompressed = isCompressed,
                 Data = data,
-                IsStatic = isStatic,
             };
 
             return AppendFile(file);
@@ -473,18 +460,8 @@ namespace MMR.Randomizer.Utils
         /// <returns>File index</returns>
         public static int AppendFile(MMFile file)
         {
-            if (!file.IsStatic)
-            {
-                // Insert before static files
-                var index = GetTailFileIndex() + 1;
-                RomData.MMFileList.Insert(index, file);
-                return index;
-            }
-            else
-            {
-                RomData.MMFileList.Add(file);
-                return RomData.MMFileList.Count - 1;
-            }
+            RomData.MMFileList.Add(file);
+            return RomData.MMFileList.Count - 1;
         }
     }
 

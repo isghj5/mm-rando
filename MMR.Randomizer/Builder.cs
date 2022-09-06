@@ -3171,7 +3171,7 @@ namespace MMR.Randomizer
                 var fileIndex = RomUtils.AppendFile(extended.Bundle.GetFull());
                 var file = RomData.MMFileList[fileIndex];
                 var baseAddr = (uint)file.Addr;
-                asm.Symbols.WriteExtendedObjects(extended.GetAddresses(baseAddr));
+                asm.WriteExtendedObjects(extended.GetAddresses(baseAddr));
             }
 
             // Add extra messages to message table.
@@ -3326,14 +3326,11 @@ namespace MMR.Randomizer
             var originalMMFileList = RomData.MMFileList.Select(file => file.Clone()).ToList();
 
             byte[] hash;
-            AsmContext asm;
+            var asm = AsmContext.LoadInternal();
             if (!string.IsNullOrWhiteSpace(outputSettings.InputPatchFilename))
             {
                 progressReporter.ReportProgress(50, "Applying patch...");
                 hash = Patch.Patcher.ApplyPatch(outputSettings.InputPatchFilename);
-
-                // Parse Symbols data from the ROM (specific MMFile)
-                asm = AsmContext.LoadFromROM();
 
                 // Apply Asm configuration post-patch
                 WriteAsmConfigPostPatch(asm, hash);
@@ -3417,7 +3414,6 @@ namespace MMR.Randomizer
                 }
 
                 // Load Asm data from internal resource files and apply
-                asm = AsmContext.LoadInternal();
                 progressReporter.ReportProgress(71, "Writing ASM patch...");
                 WriteAsmPatch(asm);
 
@@ -3437,7 +3433,7 @@ namespace MMR.Randomizer
 
                 if (_randomized.Settings.DrawHash || outputSettings.GeneratePatch)
                 {
-                    var iconStripIcons = asm.Symbols.ReadHashIconsTable();
+                    var iconStripIcons = asm.ReadHashIconsTable();
                     OutputHashIcons(ImageUtils.GetIconIndices(hash).Select(index => iconStripIcons[index]), Path.ChangeExtension(outputSettings.OutputROMFilename, "png"));
                 }
             }
@@ -3450,7 +3446,7 @@ namespace MMR.Randomizer
             WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
             progressReporter.ReportProgress(73, "Writing music...");
-            SequenceUtils.MoveAudioBankTableToFile();
+            SequenceUtils.MoveAudioBankTableToFile(asm.Symbols);
             WriteAudioSeq(new Random(BitConverter.ToInt32(hash, 0)), outputSettings);
             WriteMuteMusic();
             WriteEnemyCombatMusicMute();

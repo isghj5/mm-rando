@@ -806,7 +806,7 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteToROM(0x00C2739C, new byte[] { 0x3C, 0x08, 0x80, 0x0A, 0x8D, 0x05, (byte)(offset >> 8), (byte)(offset & 0xFF) });
         }
 
-        public static void MoveAudioBankTableToFile()
+        public static void MoveAudioBankTableToFile(AsmSymbols symbols)
         {
             // grab original audiobanktable out of code, plus extra for modifying
             var table = ReadWriteUtils.ReadBytes(0xB3C000 + 0x13B6C0, 0x820);
@@ -833,7 +833,6 @@ namespace MMR.Randomizer.Utils
             ReadWriteUtils.WriteCodeNOP(0x80190E7C);
             ReadWriteUtils.WriteCodeNOP(0x80190E80);
 
-            var symbols = Symbols.FromROM();
             var tableAddr = 0x80720000 + (symbols.PayloadEnd - symbols.PayloadStart); //payload ram address + length
             ReadWriteUtils.WriteU32ToROM(0xC776C0, tableAddr); //RAM address to move audiobanktable into
 

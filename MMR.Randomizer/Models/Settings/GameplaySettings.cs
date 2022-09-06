@@ -21,7 +21,7 @@ namespace MMR.Randomizer.Models.Settings
         public string Logic { get; set; }
 
         /// <summary>
-        /// Options for the Asm <see cref="Patcher"/>.
+        /// Options for the Asm <see cref="AsmPatcher"/>.
         /// </summary>
         [JsonIgnore]
         public AsmOptionsGameplay AsmOptions { get; set; } = new AsmOptionsGameplay();
