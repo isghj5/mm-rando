@@ -2860,7 +2860,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 38.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 38.1\n");
                 }
             }
             catch (Exception e)

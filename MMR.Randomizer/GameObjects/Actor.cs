@@ -2949,6 +2949,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(417)]
         [ObjectListIndex(0x1B6)]
         [GroundVariants(0x7F, 0x307F, 0x207F, 0x107F)]
+        [EnemizerScenesPlacementBlock(Scene.Woodfall)]
         [UnkillableAllVariants]
         GateSoldier = 0x1C7,
 
@@ -3881,6 +3882,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant:0)]
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.RoadToIkana)]
+        [EnemizerScenesPlacementBlock(Scene.Woodfall)]
         Shiro = 0x24A, // En_Stone_heishi
 
         [FileID(546)]
@@ -4091,6 +4093,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0)] // no params
         [VariantsWithRoomMax(max: 5, variant:0)]
         [UnkillableAllVariants]
+        [EnemizerScenesPlacementBlock(Scene.Woodfall)]
         UnusedShiro = 0x26E, // En_Demo_heishi
         
         [FileID(582)]
