@@ -142,6 +142,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFasterLabFish, "Change Lab Fish to only need to be fed one fish.");
             TooltipBuilder.SetTooltip(cFasterBank, "Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000. Also reduces maximum bank capacity from 5000 to 1000.");
             TooltipBuilder.SetTooltip(cDoubleArcheryRewards, "Grant both archery rewards with a sufficient score.");
+            TooltipBuilder.SetTooltip(cSpeedupBabyCucco, "Makes the location of baby cuccos show on the minimap.");
             TooltipBuilder.SetTooltip(cFastPush, "Increase the speed of pushing and pulling blocks and faucets.");
             TooltipBuilder.SetTooltip(cFreestanding, "Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.");
             TooltipBuilder.SetTooltip(cEnableNightMusic, "Enables playing daytime Background music during nighttime in the field.\n(Clocktown night music can be weird)");
@@ -1118,6 +1119,7 @@ namespace MMR.UI.Forms
             cFasterLabFish.Checked = _configuration.GameplaySettings.SpeedupLabFish;
             cFasterBank.Checked = _configuration.GameplaySettings.SpeedupBank;
             cDoubleArcheryRewards.Checked = _configuration.GameplaySettings.DoubleArcheryRewards;
+            cSpeedupBabyCucco.Checked = _configuration.GameplaySettings.SpeedupBabyCuccos;
 
             cDMult.SelectedIndex = (int)_configuration.GameplaySettings.DamageMode;
             cDType.SelectedIndex = (int)_configuration.GameplaySettings.DamageEffect;
@@ -1455,6 +1457,11 @@ namespace MMR.UI.Forms
         private void cFasterBank_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupBank = cFasterBank.Checked);
+        }
+
+        private void cSpeedupBabyCucco_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupBabyCuccos = cSpeedupBabyCucco.Checked);
         }
 
         private void cDrawHash_CheckedChanged(object sender, EventArgs e)
@@ -1956,6 +1963,7 @@ namespace MMR.UI.Forms
             cGoodDogRaceRNG.Enabled = v;
             cFasterBank.Enabled = v;
             cDoubleArcheryRewards.Enabled = v;
+            cSpeedupBabyCucco.Enabled = v;
 
             cDMult.Enabled = v;
             cDType.Enabled = v;

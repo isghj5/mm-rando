@@ -467,6 +467,11 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool SpeedupBank { get; set; } = true;
 
+        /// <summary>
+        /// Show the baby cuccos on the minimap.
+        /// </summary>
+        public bool SpeedupBabyCuccos { get; set; }
+
         #endregion
 
         #region Functions

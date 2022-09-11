@@ -1080,6 +1080,11 @@ namespace MMR.Randomizer
                     .Build()
                 );
             }
+
+            if (_randomized.Settings.SpeedupBabyCuccos)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.speedup_babycucco_minimap);
+            }
         }
 
         private void WriteGimmicks(MessageTable messageTable)

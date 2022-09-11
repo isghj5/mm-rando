@@ -152,6 +152,7 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cSaferGlitches = new System.Windows.Forms.CheckBox();
             this.cInvisSparkle = new System.Windows.Forms.CheckBox();
             this.cFillWallet = new System.Windows.Forms.CheckBox();
             this.cTargetHealth = new System.Windows.Forms.CheckBox();
@@ -237,7 +238,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cSaferGlitches = new System.Windows.Forms.CheckBox();
+            this.cSpeedupBabyCucco = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1492,6 +1493,7 @@ namespace MMR.UI.Forms
             // 
             // gSpeedUps
             // 
+            this.gSpeedUps.Controls.Add(this.cSpeedupBabyCucco);
             this.gSpeedUps.Controls.Add(this.cDoubleArcheryRewards);
             this.gSpeedUps.Controls.Add(this.cFasterBank);
             this.gSpeedUps.Controls.Add(this.cSkipBeaver);
@@ -1510,7 +1512,7 @@ namespace MMR.UI.Forms
             // cDoubleArcheryRewards
             // 
             this.cDoubleArcheryRewards.AutoSize = true;
-            this.cDoubleArcheryRewards.Location = new System.Drawing.Point(172, 77);
+            this.cDoubleArcheryRewards.Location = new System.Drawing.Point(140, 77);
             this.cDoubleArcheryRewards.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDoubleArcheryRewards.Name = "cDoubleArcheryRewards";
             this.cDoubleArcheryRewards.Size = new System.Drawing.Size(155, 19);
@@ -1534,7 +1536,7 @@ namespace MMR.UI.Forms
             // cSkipBeaver
             // 
             this.cSkipBeaver.AutoSize = true;
-            this.cSkipBeaver.Location = new System.Drawing.Point(10, 24);
+            this.cSkipBeaver.Location = new System.Drawing.Point(140, 25);
             this.cSkipBeaver.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cSkipBeaver.Name = "cSkipBeaver";
             this.cSkipBeaver.Size = new System.Drawing.Size(133, 19);
@@ -1558,7 +1560,7 @@ namespace MMR.UI.Forms
             // cGoodDogRaceRNG
             // 
             this.cGoodDogRaceRNG.AutoSize = true;
-            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(172, 51);
+            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(140, 51);
             this.cGoodDogRaceRNG.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cGoodDogRaceRNG.Name = "cGoodDogRaceRNG";
             this.cGoodDogRaceRNG.Size = new System.Drawing.Size(135, 19);
@@ -1570,7 +1572,7 @@ namespace MMR.UI.Forms
             // cGoodDampeRNG
             // 
             this.cGoodDampeRNG.AutoSize = true;
-            this.cGoodDampeRNG.Location = new System.Drawing.Point(172, 23);
+            this.cGoodDampeRNG.Location = new System.Drawing.Point(10, 25);
             this.cGoodDampeRNG.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cGoodDampeRNG.Name = "cGoodDampeRNG";
             this.cGoodDampeRNG.Size = new System.Drawing.Size(123, 19);
@@ -1821,6 +1823,18 @@ namespace MMR.UI.Forms
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
+            // 
+            // cSaferGlitches
+            // 
+            this.cSaferGlitches.AutoSize = true;
+            this.cSaferGlitches.Location = new System.Drawing.Point(10, 259);
+            this.cSaferGlitches.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSaferGlitches.Name = "cSaferGlitches";
+            this.cSaferGlitches.Size = new System.Drawing.Size(97, 19);
+            this.cSaferGlitches.TabIndex = 43;
+            this.cSaferGlitches.Text = "Safer Glitches";
+            this.cSaferGlitches.UseVisualStyleBackColor = true;
+            this.cSaferGlitches.CheckedChanged += new System.EventHandler(this.cSaferGlitches_CheckedChanged);
             // 
             // cInvisSparkle
             // 
@@ -2787,17 +2801,17 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cSaferGlitches
+            // cSpeedupBabyCucco
             // 
-            this.cSaferGlitches.AutoSize = true;
-            this.cSaferGlitches.Location = new System.Drawing.Point(10, 259);
-            this.cSaferGlitches.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cSaferGlitches.Name = "cSaferGlitches";
-            this.cSaferGlitches.Size = new System.Drawing.Size(97, 19);
-            this.cSaferGlitches.TabIndex = 43;
-            this.cSaferGlitches.Text = "Safer Glitches";
-            this.cSaferGlitches.UseVisualStyleBackColor = true;
-            this.cSaferGlitches.CheckedChanged += new System.EventHandler(this.cSaferGlitches_CheckedChanged);
+            this.cSpeedupBabyCucco.AutoSize = true;
+            this.cSpeedupBabyCucco.Location = new System.Drawing.Point(292, 25);
+            this.cSpeedupBabyCucco.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSpeedupBabyCucco.Name = "cSpeedupBabyCucco";
+            this.cSpeedupBabyCucco.Size = new System.Drawing.Size(121, 19);
+            this.cSpeedupBabyCucco.TabIndex = 6;
+            this.cSpeedupBabyCucco.Text = "Baby Cuccos Map";
+            this.cSpeedupBabyCucco.UseVisualStyleBackColor = true;
+            this.cSpeedupBabyCucco.CheckedChanged += new System.EventHandler(this.cSpeedupBabyCucco_CheckedChanged);
             // 
             // MainForm
             // 
@@ -3099,6 +3113,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cBespokeItemPlacementOrder;
         private System.Windows.Forms.Label lNumTricksEnabled;
         private System.Windows.Forms.CheckBox cSaferGlitches;
+        private System.Windows.Forms.CheckBox cSpeedupBabyCucco;
     }
 }
 
