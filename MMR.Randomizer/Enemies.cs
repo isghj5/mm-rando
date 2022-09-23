@@ -1253,6 +1253,10 @@ namespace MMR.Randomizer
                     {
                         kickoutAddr = 1; // zora hall exit 0 is out the water door, softlock if you dont have zora or enough health
                     }
+                    else if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos)
+                    {
+                        kickoutAddr = 0x1F; // Grottoes have broken kickout, but we can do this? maybe?
+                    }
 
                     // erase the kick location from the old vars
                     int kickoutMask = newKickoutAttr.Mask << newKickoutAttr.Shift;
@@ -1424,7 +1428,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.DekuShrine, GameObjects.Actor.MadShrub, GameObjects.Actor.Dinofos)) continue;
-                if (TestHardSetObject(GameObjects.Scene.ZoraHall, GameObjects.Actor.MuteZora, GameObjects.Actor.PatrollingPirate)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.PatrollingPirate)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Scarecrow, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaCastle, GameObjects.Actor.Skulltula, GameObjects.Actor.MajoraBalloonSewer)) continue;
 
