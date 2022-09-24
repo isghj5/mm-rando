@@ -220,7 +220,7 @@ namespace MMR.Randomizer
             EnablePoFusenAnywhere();
 
             FixSpawnLocations();
-            DisableActorSpawnCutsceneData();
+            //DisableActorSpawnCutsceneData();
 
             ExtendGrottoDirectIndexByte();
             ShortenChickenPatience();
@@ -333,43 +333,6 @@ namespace MMR.Randomizer
                 swampSpiderHouseScene.Maps[3].Actors[3].Position.x = -480;
             }
         }
-
-        private static void DisableActorSpawnCutsceneData()
-        {
-            /// some actors index their cutscene as part of their spawn data,
-            /// if you put a new actor in that spot, their cutscene will start
-            /// but it will be the wrong type of cutscene and softlock
-            // IE Dinofos -> Zora Cape Scarecrow
-
-            // the actor's room spawn data for cutscene is in the 0x7F bits of y rotation, where 0x7F should be null (-1)
-
-            var capeScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.ZoraCape.FileID());
-            var greatfairyScarecrow = capeScene.Maps[0].Actors[74];
-            greatfairyScarecrow.Rotation.y |= 0x7F;
-            var beaverStepsScarecrow = capeScene.Maps[0].Actors[73];
-            beaverStepsScarecrow.Rotation.y |= 0x7F;
-
-            var zoraHallScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.ZoraHall.FileID());
-            var audienceScarecrow = zoraHallScene.Maps[0].Actors[30];
-            audienceScarecrow.Rotation.y |= 0x7F;
-
-            var graveyardGravesScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.BeneathGraveyard.FileID());
-            var day1Ironknuckle = graveyardGravesScene.Maps[2].Actors[1];
-            day1Ironknuckle.Rotation.y |= 0x7F;
-            var day2Ironknuckle = graveyardGravesScene.Maps[4].Actors[0];
-            day2Ironknuckle.Rotation.y |= 0x7F;
-
-            var linksTrialScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LinkTrial.FileID());
-            var trialIronKnuckle = linksTrialScene.Maps[3].Actors[1];
-            trialIronKnuckle.Rotation.y |= 0x7F;
-            var trialDinofos = linksTrialScene.Maps[1].Actors[0];
-            trialDinofos.Rotation.y |= 0x7F;
-
-            var woodfallTempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
-            var bowDinofos = linksTrialScene.Maps[7].Actors[0];
-            bowDinofos.Rotation.y |= 0x7F;
-        }
-
 
         private static void Shinanigans()
         {
@@ -1289,6 +1252,27 @@ namespace MMR.Randomizer
             }
         }
 
+        public static void FixDinofosSpawnCutscene(SceneEnemizerData thisSceneData)
+        {
+            /// each spawn gets one cutscene
+            /// if a dinofos spawn has a cutscene it plays the cutscene but it breaks the game
+
+            var dinoObjDetected = thisSceneData.ChosenReplacementObjects.Find(v => v.ChosenV == GameObjects.Actor.Dinofos.ObjectIndex()) != null;
+
+            if (dinoObjDetected)
+            {
+                for (int i = 0; i < thisSceneData.Actors.Count(); i++)
+                {
+                    var testActor = thisSceneData.Actors[i];
+                    if (testActor.ActorEnum == GameObjects.Actor.Dinofos)
+                    {
+                        // remove the spawn data by setting spawn to 7F
+                        testActor.Rotation.y |= 0x7F;
+                    }
+                }
+            }
+        }
+
         public static void FixSwitchFlagVars(SceneEnemizerData thisSceneData)
         {
             thisSceneData.Log.AppendLine($"------------------------------------------------- ");
@@ -1427,7 +1411,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.LotteryShop, GameObjects.Actor.Clock, GameObjects.Actor.Gong)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.DekuShrine, GameObjects.Actor.MadShrub, GameObjects.Actor.Dinofos)) continue;
+                if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Scarecrow, GameObjects.Actor.Dinofos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.PatrollingPirate)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Scarecrow, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaCastle, GameObjects.Actor.Skulltula, GameObjects.Actor.MajoraBalloonSewer)) continue;
@@ -2323,6 +2307,7 @@ namespace MMR.Randomizer
             FixPatrollingEnemyVars(thisSceneData); // any patrolling types need their vars fixed
             FixKickoutEnemyVars(thisSceneData);
             FixRedeadSpawnScew(thisSceneData);
+            FixDinofosSpawnCutscene(thisSceneData);
 
             // print debug actor locations
             for (int i = 0; i < thisSceneData.Actors.Count; i++)
