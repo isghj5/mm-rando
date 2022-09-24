@@ -1239,38 +1239,42 @@ namespace MMR.Randomizer
 
             var redeadObjDetected = thisSceneData.ChosenReplacementObjects.Find(v => v.ChosenV == GameObjects.Actor.GibdoWell.ObjectIndex()) != null;
 
-            if (redeadObjDetected)
+            if ( ! redeadObjDetected) return;
+
+            for (int i = 0; i < thisSceneData.Actors.Count(); i++)
             {
-                for (int i = 0; i < thisSceneData.Actors.Count(); i++)
+                var testActor = thisSceneData.Actors[i];
+                if (testActor.ActorEnum == GameObjects.Actor.ReDead || testActor.ActorEnum == GameObjects.Actor.GibdoWell)
                 {
-                    var testActor = thisSceneData.Actors[i];
-                    if (testActor.ActorEnum == GameObjects.Actor.ReDead || testActor.ActorEnum == GameObjects.Actor.GibdoWell)
-                    {
-                        ActorUtils.FlattenPitchRoll(testActor);
-                    }
+                    ActorUtils.FlattenPitchRoll(testActor);
                 }
             }
         }
 
-        public static void FixDinofosSpawnCutscene(SceneEnemizerData thisSceneData)
+        public static void FixBrokenActorSpawnCutscenes(SceneEnemizerData thisSceneData)
         {
             /// each spawn gets one cutscene
             /// if a dinofos spawn has a cutscene it plays the cutscene but it breaks the game
 
-            var dinoObjDetected = thisSceneData.ChosenReplacementObjects.Find(v => v.ChosenV == GameObjects.Actor.Dinofos.ObjectIndex()) != null;
+            var listTroubleActorsObj = new List<int> { GameObjects.Actor.Dinofos.ObjectIndex(), GameObjects.Actor.Scarecrow.ObjectIndex() };
 
-            if (dinoObjDetected)
+
+            var dinoObjDetected = thisSceneData.ChosenReplacementObjects.Find(v => listTroubleActorsObj.Contains(v.ChosenV)) != null;
+
+            if ( ! dinoObjDetected) return;
+            
+            var listTroubleActors = new List<GameObjects.Actor> { GameObjects.Actor.Dinofos, GameObjects.Actor.Scarecrow };
+
+            for (int i = 0; i < thisSceneData.Actors.Count(); i++)
             {
-                for (int i = 0; i < thisSceneData.Actors.Count(); i++)
+                var testActor = thisSceneData.Actors[i];
+                if (listTroubleActors.Contains(testActor.ActorEnum))
                 {
-                    var testActor = thisSceneData.Actors[i];
-                    if (testActor.ActorEnum == GameObjects.Actor.Dinofos)
-                    {
-                        // remove the spawn data by setting spawn to 7F
-                        testActor.Rotation.y |= 0x7F;
-                    }
+                    // remove the spawn data by setting spawn to 7F
+                    testActor.Rotation.y |= 0x7F;
                 }
             }
+            
         }
 
         public static void FixSwitchFlagVars(SceneEnemizerData thisSceneData)
@@ -1407,8 +1411,8 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BabaIsUnused)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.LotteryShop, GameObjects.Actor.Clock, GameObjects.Actor.Gong)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Scarecrow)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.Scarecrow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
                 if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Scarecrow, GameObjects.Actor.Dinofos)) continue;
@@ -2307,7 +2311,7 @@ namespace MMR.Randomizer
             FixPatrollingEnemyVars(thisSceneData); // any patrolling types need their vars fixed
             FixKickoutEnemyVars(thisSceneData);
             FixRedeadSpawnScew(thisSceneData);
-            FixDinofosSpawnCutscene(thisSceneData);
+            FixBrokenActorSpawnCutscenes(thisSceneData);
 
             // print debug actor locations
             for (int i = 0; i < thisSceneData.Actors.Count; i++)

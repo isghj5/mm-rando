@@ -239,8 +239,9 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 2, variant: 0)]
         // crashes if placed on an actor that has cutscene data, because it tries to use that cutscene data as its intro cutscen
         [EnemizerScenesExcluded(Scene.SecretShrine)] // issue: spawn is too high, needs to be lowered
+        // these are no longer problem spawns because we now dynamically remove the cutscene from new dino spawns
         //[EnemizerScenesPlacementBlock(Scene.BeneathGraveyard, Scene.DekuShrine, Scene.ClockTowerInterior)] // crash in graveyard
-        [EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)]
+        //[EnemizerScenesPlacementBlock(Scene.ClockTowerInterior)]
         Dinofos = 0x19,
 
         [FileID(59)]
@@ -1432,10 +1433,13 @@ namespace MMR.Randomizer.GameObjects
         // trading post version is 1
         // wish I could spawn the ones that dance so they are always dancing when the player gets there
         [GroundVariants(1, 0x2800, 0x11D)]
-        [VariantsWithRoomMax(max: 5, variant: 1)]
+        [VariantsWithRoomMax(max: 1, variant: 1)]
+        [VariantsWithRoomMax(max: 0, variant: 0x11D)]
+        [VariantsWithRoomMax(max: 0, variant: 0x2800)] // below ground to replace, we want above ground placement only
         [UnkillableAllVariants]
         // crash: if you teach song to him in TF the ice block cutscene triggers
-        [EnemizerScenesPlacementBlock(Scene.TerminaField)]
+        // if you try to teach him a song with more than one it can lock
+        [EnemizerScenesPlacementBlock(Scene.TradingPost, Scene.TerminaField)]
         [EnemizerScenesExcluded(Scene.TradingPost, Scene.TwinIslands, Scene.SnowheadTemple, Scene.StoneTower,
             Scene.PathToSnowhead)]//, Scene.AstralObservatory)] // re-disable this if playing Entrando
         Scarecrow = 0xCA, // En_Kakasi
