@@ -412,6 +412,13 @@ namespace MMR.Randomizer
             twinislandsSceneData[0xD6] = 0xAE;
             twinislandsSceneData[0xD7] = 0x50; // 50 is behind the waterfall 
 
+            // attempt faster breman march, testing
+            //glabel D_8085E5A0
+            // 030B10 8085E5A0 3ECCCCCD  .float 0.4
+            RomUtils.CheckCompressed(38);
+            var playerCodeFile = RomData.MMFileList[38].Data;
+            ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x030B10, val: 0x40000000); // change to 2.0, double running speed
+
             //PrintActorValues();
         }
 
@@ -1216,10 +1223,10 @@ namespace MMR.Randomizer
                     {
                         kickoutAddr = 1; // zora hall exit 0 is out the water door, softlock if you dont have zora or enough health
                     }
-                    else if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos)
+                    /*else if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos)
                     {
                         kickoutAddr = 0x1F; // Grottoes have broken kickout, but we can do this? maybe?
-                    }
+                    }*/
 
                     // erase the kick location from the old vars
                     int kickoutMask = newKickoutAttr.Mask << newKickoutAttr.Shift;
@@ -1411,12 +1418,12 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Scarecrow)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Scarecrow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.Scarecrow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
-                if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Scarecrow, GameObjects.Actor.Dinofos)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.PatrollingPirate)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Scarecrow, GameObjects.Actor.Dinofos)) continue;
+                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.PatrollingPirate)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Scarecrow, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaCastle, GameObjects.Actor.Skulltula, GameObjects.Actor.MajoraBalloonSewer)) continue;
 
@@ -2853,7 +2860,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 38.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 39.0\n");
                 }
             }
             catch (Exception e)

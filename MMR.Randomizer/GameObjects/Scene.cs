@@ -61,7 +61,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Peahat, // hidden or very weak enemies suck here, but they are very common in this slot
             Actor.Bo, Actor.Nejiron, Actor.RedBubble, Actor.Leever, Actor.Wolfos, Actor.Beamos)] // beamos is just because bomb locking this check early is prime seed killer
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
-            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, Actor.Bumper , Actor.PatrollingPirate )]
+            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, Actor.Bumper /*, Actor.PatrollingPirate */ )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BioDekuBaba,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // 
         Grottos = 0x0A,
