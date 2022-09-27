@@ -45,6 +45,7 @@
 .definelabel z2_IsMessageClosing, 0x800B867C
 .definelabel z2_SetGetItem, 0x800B8A1C
 .definelabel z2_SetGetItemLongrange, 0x800B8BD0
+.definelabel z2_PlayPlayerSfx, 0x800B8E58
 .definelabel z2_PlaySfxAtActor, 0x800B8EC8
 .definelabel z2_PlayLoopingSfxAtActor, 0x800B9010
 .definelabel z2_load_scene_flags, 0x800B9170
@@ -56,6 +57,7 @@
 .definelabel z2_Actor_ChangeAnimation, 0x800BDC5C
 .definelabel z2_BgCheck_EntityCheckCeiling, 0x800C4F84
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
+.definelabel z2_Camera_IsHookArrival, 0x800CB7CC
 .definelabel z2_Collider_UpdateCylinder, 0x800E7DF8
 .definelabel z2_800EA0D4, 0x800EA0D4
 .definelabel z2_800EA0EC, 0x800EA0EC
@@ -93,6 +95,7 @@
 .definelabel z2_ReloadButtonTexture, 0x80112B40
 .definelabel z2_GiveItem, 0x80112E80
 .definelabel z2_IsItemKnown, 0x801143CC
+.definelabel z2_CheckItemObtainability, 0x80114978
 .definelabel z2_RemoveItem, 0x801149A0
 .definelabel z2_HasEmptyBottle, 0x80114E90
 .definelabel z2_HudSetAButtonText, 0x8011552C

@@ -881,6 +881,13 @@ namespace MMR.Randomizer
                     }
                 }
             }
+
+            if (!_randomized.Settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.ShortChestOpening) && _randomized.Settings.UpdateChests)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.update_chest_cutscene);
+                ReadWriteUtils.WriteU16ToROM(0xB3C000 + 0x12B2B2, 0xFFF6); // Replace Fairy Revive Cutscene with Large Chest Opening
+                SceneUtils.InsertLargeChestCutscene();
+            }
         }
 
         private void WriteDungeons()
@@ -1072,6 +1079,11 @@ namespace MMR.Randomizer
                     })
                     .Build()
                 );
+            }
+
+            if (_randomized.Settings.SpeedupBabyCuccos)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.speedup_babycucco_minimap);
             }
         }
 
@@ -1500,6 +1512,14 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.garo_hints);
             }
 
+            if (_randomized.Settings.SaferGlitches)
+            {
+                hacks.Add(Resources.mods.safer_glitches_sodt);
+                hacks.Add(Resources.mods.safer_glitches_tatl_text_zero_fourth_day);
+                hacks.Add(Resources.mods.safer_glitches_fix_0thday_erase);
+                hacks.Add(Resources.mods.safer_glitches_fix_goron_bow);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);
@@ -1588,7 +1608,7 @@ namespace MMR.Randomizer
                     ChestTypeAttribute.ChestType? overrideChestType = null;
                     if ((item.Item.Name().Contains("Bombchu") || item.Item.Name().Contains("Shield")) && _randomized.Logic.Any(il => il.RequiredItemIds?.Contains((int)item.Item) == true || il.ConditionalItemIds?.Any(c => c.Contains((int)item.Item)) == true))
                     {
-                        overrideChestType = ChestTypeAttribute.ChestType.LargeGold;
+                        overrideChestType = item.Item.IsTemporary(_randomized.Settings) ? ChestTypeAttribute.ChestType.SmallGold : ChestTypeAttribute.ChestType.LargeGold;
                     }
                     ItemSwapUtils.WriteNewItem(item, newMessages, _randomized.Settings, item.Mimic?.ChestType ?? overrideChestType, messageTable, _extendedObjects);
                 }

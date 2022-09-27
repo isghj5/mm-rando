@@ -1,5 +1,7 @@
 #include <stdbool.h>
 #include <z64.h>
+#include "ActorHelper.h"
+#include "ArrowCycle.h"
 #include "Misc.h"
 #include "Reloc.h"
 
@@ -20,15 +22,14 @@ struct ArrowInfo {
     u8 slot;
     u8 icon;
     u8 action;
-    s8 magic;
     u16 var;
 };
 
 static struct ArrowInfo gArrows[4] = {
-    { ITEM_BOW,         SLOT_BOW,         ITEM_BOW,             0x9, 0x0, 0x2, },
-    { ITEM_FIRE_ARROW,  SLOT_FIRE_ARROW,  ITEM_BOW_FIRE_ARROW,  0xA, 0x4, 0x3, },
-    { ITEM_ICE_ARROW,   SLOT_ICE_ARROW,   ITEM_BOW_ICE_ARROW,   0xB, 0x4, 0x4, },
-    { ITEM_LIGHT_ARROW, SLOT_LIGHT_ARROW, ITEM_BOW_LIGHT_ARROW, 0xC, 0x8, 0x5, },
+    { ITEM_BOW,         SLOT_BOW,         ITEM_BOW,             0x9, 0x2, },
+    { ITEM_FIRE_ARROW,  SLOT_FIRE_ARROW,  ITEM_BOW_FIRE_ARROW,  0xA, 0x3, },
+    { ITEM_ICE_ARROW,   SLOT_ICE_ARROW,   ITEM_BOW_ICE_ARROW,   0xB, 0x4, },
+    { ITEM_LIGHT_ARROW, SLOT_LIGHT_ARROW, ITEM_BOW_LIGHT_ARROW, 0xC, 0x5, },
 };
 
 static const struct ArrowInfo* GetInfo(u16 variable) {
@@ -50,6 +51,19 @@ static u16 GetNextArrowVariable(u16 variable) {
     }
 }
 
+static s8 GetMagicCostByInfo(const struct ArrowInfo *info) {
+    switch (info->item) {
+        case ITEM_FIRE_ARROW:
+            return ArrowCycle_GetMagicCost(0);
+        case ITEM_ICE_ARROW:
+            return ArrowCycle_GetMagicCost(1);
+        case ITEM_LIGHT_ARROW:
+            return ArrowCycle_GetMagicCost(2);
+        default:
+            return 0;
+    }
+}
+
 /**
  * Helper function for checking if the player has enough magic to switch to a different arrow type.
  **/
@@ -65,14 +79,15 @@ static bool HasEnoughMagic(s8 prevCost, s8 curCost) {
 
 static const struct ArrowInfo* GetNextInfo(u16 variable) {
     // Get magic cost of current arrow type.
-    s8 magicCost = GetInfo(variable)->magic;
+    s8 magicCost = GetMagicCostByInfo(GetInfo(variable));
     u16 current = variable;
     const struct ArrowInfo* info;
     for (int i = 0; i < 4; i++) {
         current = GetNextArrowVariable(current);
         info = GetInfo(current);
+        const s8 magic = GetMagicCostByInfo(info);
         // Calculate difference in magic cost and ensure that the player has enough magic to switch.
-        bool enoughMagic = HasEnoughMagic(magicCost, info->magic);
+        bool enoughMagic = HasEnoughMagic(magicCost, magic);
         if (info != NULL && info->item == gSaveContext.perm.inv.items[info->slot] && enoughMagic) {
             return info;
         }
@@ -125,6 +140,11 @@ static void UpdateCButton(ActorPlayer* player, GlobalContext* ctxt, const struct
  * Function called on delayed frame to finish processing the arrow cycle.
  **/
 static void HandleFrameDelay(ActorPlayer* player, GlobalContext* ctxt, Actor* arrow) {
+    // Sanity check: Ensure arrow is still an allocated actor after delay frame.
+    if (!ActorHelper_DoesActorExist(arrow, ctxt)) {
+        return;
+    }
+
     s16 prevEffectState = gSaveContext.extra.magicConsumeState;
     const struct ArrowInfo* curInfo = GetInfo(arrow->params);
     if (arrow != NULL && curInfo != NULL) {
@@ -152,7 +172,7 @@ static void HandleFrameDelay(ActorPlayer* player, GlobalContext* ctxt, Actor* ar
             }
         }
         // Set magic cost value to be subtracted when arrow effect state == 2.
-        gSaveContext.extra.magicConsumeCost = curInfo->magic;
+        gSaveContext.extra.magicConsumeCost = GetMagicCostByInfo(curInfo);
     }
 }
 
@@ -165,6 +185,20 @@ Actor* ArrowCycle_FindArrow(ActorPlayer* player, GlobalContext* ctxt) {
         return attached;
     } else {
         return NULL;
+    }
+}
+
+/**
+ * Get the magic cost by index from the array in player_actor.
+ **/
+s8 ArrowCycle_GetMagicCost(u8 index) {
+    if (index < 4) {
+        // Vanilla RDRAM: 0x8077A448
+        // 4-byte array for each cost: [Fire Arrow, Ice Arrow, Light Arrow, Deku Bubble]
+        const s8* costArray = (const s8*)Reloc_ResolvePlayerOverlay(&s801D0B70.playerActor, 0x8085CFB8);
+        return costArray[index];
+    } else {
+        return 0;
     }
 }
 
@@ -264,5 +298,12 @@ void ArrowCycle_Handle(ActorPlayer* player, GlobalContext* ctxt) {
     // Prepare for finishing cycle next frame.
     gArrowCycleState.arrow = arrow;
     gArrowCycleState.frameDelay++;
-    gArrowCycleState.magicCost = curInfo->magic;
+    gArrowCycleState.magicCost = GetMagicCostByInfo(curInfo);
+
+    // If cycling from normal arrow -> elemental arrow, reserve magic consume state.
+    // This prevents using Lens between now and processing the delay frame, and thus prevents
+    // mutating the magic consume state while Lens is active.
+    if (curInfo->item == ITEM_BOW) {
+        gSaveContext.extra.magicConsumeState = 3;
+    }
 }

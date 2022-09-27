@@ -893,6 +893,46 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] safer_glitches_fix_0thday_erase {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_fix_0thday_erase", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_fix_goron_bow {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_fix_goron_bow", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_sodt {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_sodt", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_tatl_text_zero_fourth_day {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_tatl_text_zero_fourth_day", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] short_cutscenes {
             get {
                 object obj = ResourceManager.GetObject("short_cutscenes", resourceCulture);
@@ -1003,6 +1043,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] speedup_babycucco_minimap {
+            get {
+                object obj = ResourceManager.GetObject("speedup_babycucco_minimap", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] speedup_bank {
             get {
                 object obj = ResourceManager.GetObject("speedup_bank", resourceCulture);
@@ -1066,6 +1116,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] title_screen {
             get {
                 object obj = ResourceManager.GetObject("title_screen", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] update_chest_cutscene {
+            get {
+                object obj = ResourceManager.GetObject("update_chest_cutscene", resourceCulture);
                 return ((byte[])(obj));
             }
         }

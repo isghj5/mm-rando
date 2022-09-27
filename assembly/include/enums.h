@@ -468,6 +468,7 @@ enum PlayerState1 {
     PLAYER_STATE1_SPECIAL_2   = 0x10000000, // Form transition, using ocarina.
     PLAYER_STATE1_SWIM        = 0x08000000, // Swimming.
     PLAYER_STATE1_DAMAGED     = 0x04000000, // Damaged.
+    PLAYER_STATE1_ZORA_FINS2  = 0x02000000, // Camera locked to thrown zora fins
     PLAYER_STATE1_ZORA_WEAPON = 0x01000000, // Zora fins are out, "Put Away" may be prompted.
     PLAYER_STATE1_EPONA       = 0x00800000, // On Epona.
     PLAYER_STATE1_SHIELD      = 0x00400000, // Shielding.
@@ -527,6 +528,7 @@ enum PlayerState3 {
     PLAYER_STATE3_DEKU_RISE   = 0x00000200, // Jumping out of Deku flower.
     PLAYER_STATE3_DEKU_DIVE   = 0x00000100, // Deku flower dive.
     PLAYER_STATE3_PULL_BOW    = 0x00000040, // Pull back bow string.
+    PLAYER_STATE3_HOOK_ARV    = 0x00000010, // After arriving at hookshot target?
     PLAYER_STATE3_ATTACK_2    = 0x00000008, // Post-attack.
     PLAYER_STATE3_JUMP_ATTACK = 0x00000002, // Beginning of jump attack.
 };

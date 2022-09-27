@@ -57,6 +57,173 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="label1.Text" xml:space="preserve">
+    <value>Speed Ups
+Skip Younger Beaver
+Modify Beavers to not have to race the younger beaver.
+
+Good Dampe RNG
+Change Dampe ghost flames to always have two on the ground floor and one up the ladder.
+
+Good Dog Race RNG
+Make Gold Dog always win if you have the Mask of Truth.
+
+Faster Lab Fish
+Change Lab Fish to only need to be fed one fish.
+
+Faster Bank
+Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000. Also reduces maximum bank capacity from 5000 to 1000.
+
+Double Archery Rewards
+Grant both archery rewards with a sufficient score.
+
+
+Comfort Options
+Disable crit wiggle
+You will no longer get weird movement when your health is low.
+
+Quick text
+Instantly print every text box.
+
+Increase push speed
+Increase the speed of pushing and pulling blocks and faucets.
+
+Close Cows
+When playing Epona's Song for a group of cows, the closest cow will respond, instead of the default behavior.
+
+Improved Pictobox
+Display extra text showing which type of picture was captured by the Pictobox.
+
+Lenient Goron Spikes
+Goron spikes can charge midair and keep their change. Minimum speed for goron spikes is removed.
+
+Target Health Bar
+Targeting an enemy shows their helath bar.
+
+Fill wallet on upgrade
+Fills wallet with max rupees upon finding a wallet upgrade.
+
+Hidden Rupees Sparkle
+Hit Tags and Invisible Rupees will emit a sparkle.
+
+Update shops
+In-game shops will display the model of the item for sale, as well as update the text of the items for sale. Other NPCs that sell items will also have their text updated to reflect what you're buying from them, including Tingle, Termina Field Business Scrub, other Business Scrubs, Gorman Bros Milk purchase, the Lottery, and the Milk Bar.
+
+Update chests
+Chest appearance will be updated to match the type of item they contain. Major items (including Bombchu and Hero's Shield if they are references in the logic) will be in Large Gold chests; Moderate items (such as small keys, skulltula tokens, stray fairies, quest items, and trade items) will be in Small Gold chests; Boss Keys will be in Boss Key chests; minor items (such as rupees, pieces of heart, and others) will be in Small Wooden chests.
+
+Update world models
+Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.
+
+No downgrades
+Finding a worse version of an item (such as finding the Adult Wallet while already having the Giant Wallet) will instead give you nothing, or a refill (e.g. having the Largest Quiver, but 0 arrows, then finding the Large Quiver will fill you back up to 40 arrows, but your max will remain at 50).
+
+Fix Epona Sword
+Ordinarily, riding Epona without having a Bow will change your sword button to a blank B button. This option prevents that, but may affect weird B glitches.
+
+Quest item extra storage
+Enable Quest Item Storage, which allows for storing multiple quest items in their dedicated inventory slot. Quest items will also always be consumed when used.
+
+Arrow cycling
+Cycle through arrow types when pressing R while an arrow is out when using the bow.
+
+Elegy speedups
+Applies various Elegy of Emptiness speedups.
+
+
+Gossip Stone Hints / Garo Hints
+Hint distribution
+Select a style of gossip stone hints and Garo hints. Default will not change hint text at all. Random will give random item location hints, sometimes fake hints, and sometimes junk hints. Relevant will attempt to provide a vanilla-like gossip stone hint experience. Competitive is a carefully crafted hint system intended to be used when multiple players are playing the same seed; it provides hints for some specific locations, and provides various hints as to the usefulness of regions.
+
+Free hints
+Gossip stones will not require you to be wearing the Mask of Truth to read their hints.
+
+Clear hints
+When using non-Vanilla Gossip Stone hints, the text will give exact location and item names, instead of cryptic hints.
+
+WotH / Foolish / Max CT
+Override the default number of Way of the Hero, Foolish and the maximum number of Clock Town Way of the Hero hints.
+
+
+Hints
+Indicate Importance
+Location hints indicate whether the item is required or not required. Items that are potentially useful (such as the Garo's Mask when the Gibdo Mask is also available) are technically "not required" and are labelled as such.
+
+Mix Gossip and Garo Hitns
+Garo hints distribution and gossip hint distribution will be mixed together. Only available if both Gossip Stone Hints and Garo Hints use the Competitive hint distribution.
+
+Customize Hint Priorities
+Allows you to override the default hint priorities.
+
+
+Cosmetic Customization
+Player model
+Choose a character model. Selecting Adult Link alters Link's movement speeds and hitbox size to be the same as zora and changes the voice set. Note that this change can affect some gameplay elements - you cannot fit through some deku palace doorways in human form.</value>
+  </data>
+  <data name="lCosmetic.Text" xml:space="preserve">
+    <value>All options in this tab can be used when applying a patch file.
+
+Form Customization
+Tunic colour
+Sets the colour of form's tunic. The dice button will choose a random color and hide the choice from you.
+
+Instrument
+Sets the instrument used when playing songs.
+
+Energy color
+ - Human: Sets the color of the Spin Attack and Great Spin Attack
+ - Deku: Sets the color of the sparkle effects when spinning, the puff of dust when entering and leaving a deku flower, and the sparkles when flying using a deku flower.
+ - Goron: Sets the color of the spike roll power up.
+ - Zora: Sets the color of the energy shield.
+ - Fierce Deity: Sets the color of the sword beam and sparkles.
+The dice button will choose random colors and hide the choices from you.
+
+
+Music / Sound
+Randomize SFX
+Various sound effects in the game will be replaced with other sound effects.
+
+Enable Night BGM
+Music will continue playing at night time.
+
+Disable Combat Music
+Disables combat music around all regular (non boss or miniboss) enemies in the game.
+
+Music
+Default will leave music as it is normally. Random will shuffle music around, insert music from other games, while attempting to keep music categorized. None will remove music from the game.
+
+Luck Roll Chance (%)
+Music Randomization comes with a change to accept a song from outside of its category. This option controls the percentage chance of a Luck Roll allowing out-of-category music placement. This is per specific slot+song check. Only songs with their first category being a general category (0-16) are Luck Rollable.
+
+Low Health SFX
+Set the low health sound effect.
+ - Default: plays the default sound.
+ - Disabled: plays no sound.
+ - Random: a random sound is chosen during randomization and that sound will be played.
+ - &lt;Choices&gt;: Play that sound.
+
+
+Other
+Tatl theme
+Select a colour scheme for Tatl.
+
+Default Hold Z-Target
+The game will set the initial Z-Target style to Hold instead of Switch.
+
+Instant Pictobox on Emulator
+Removes anti-aliasing from the Pictobox pictures, which is what makes Pictobox on emulator so slow. This also very slightly speeds up pictobox on Wii Virtual Console.
+
+
+HUD
+Hearts and Magic
+Customized will use the colors selected using the Customize button. Random Choice will pick random colors from a predefined list. Completely Random will pick a completely random color.
+
+Customize
+Completely customize the HUD colors. Click an element to choose a color, or right-click for more options.
+
+Randomize Hue of Miscellaneous UI
+Shifts the hue of various UI elements.</value>
+  </data>
   <data name="lUsage.Text" xml:space="preserve">
     <value>The process should be simple:
 1. Choose your desired settings
@@ -151,6 +318,9 @@ Small Key doors will always be open. Small Keys in the item pool will be replace
 2. Keep Within Dungeon
 Randomization algorithm will place any randomized Small Keys into a location within the same region, even if the Small Key has been replaced via another Small Key Mode.
 
+3. Keep Through Time
+Small Keys will go back in time with Link. Any used Small Keys will return to Link's inventory.
+
 
 Boss Key Mode
 1. Doors Open
@@ -159,6 +329,9 @@ Boss doors will always be open. Boss Keys in the item pool will be replaced with
 2. Keep Within Dungeon
 Randomization algorithm will place any randomized Boss Keys into a location within the same region, even if the Boss Key has been replaced via another Boss Key Mode.
 
+3. Keep Through Time
+Boss Keys will go back in time with Link.
+
 
 Dungeon Fairy Mode
 1. Chests Only
@@ -166,6 +339,28 @@ Stray Fairies in the item pool will be replaced with other items. Non-chest fair
 
 2. Keep Within Dungeon
 Randomization algorithm will place any randomized Stray Fairies into a location within the same region, even if the Stray Fairy has been replaced via another Dungeon Fairy Mode.
+
+
+Boss Remains Mode
+1. Great Fairy Rewards
+Boss Remains will be placed on the reward for collecting 15 stray fairies of their dungeon. Great Fairy Rewards must be randomized for this to take effect.
+
+2. Keep Within Dungeon
+Randomization algorithm will place any randomized Boss Remains into a location within the same region.
+
+
+Randomize Prices
+1. Purchases
+Prices for item purchases will be randomized.
+
+2. Minigames
+Prices for minigames will be randomized.
+
+3. Misc
+Pricces for other miscellaneous spending will be randomized.
+
+4. Account For Royal Wallet
+Price randomization will range from 1-999 instead of 1-500.
 
 
 Extra Starting Items
@@ -178,8 +373,84 @@ Choose from a list of locations that will only be randomized to junk items. Junk
 The Junk Location Editor lists every location in the game, even though not all of them are necessarily valid choices. If you don't Mix Songs With Items, then enforcing junk on any song location will fail to generate a seed, as none of the songs are considered junk. However, if you add a song as an Extra Starting Item then the Recovery Heart that would replace it can be placed on an Enforced Junk location. The bottle scoop locations ("Bottle: x") would generally not be valid as options, as none of the scoops are considered junk.</value>
   </data>
   <data name="lShuffle.Text" xml:space="preserve">
-    <value>The program provides a grid of options for which elements should be shuffled. Each labelled heading has a tooltip that explains what kind of items fit into the category.
-The Edit button in the top right opens a screen that allows you to select in detail exactly which elements should be shuffled.</value>
+    <value>The program provides a selection of options for which elements should be shuffled.
+
+The Edit button in the top right opens a screen that allows you to select in detail exactly which elements should be shuffled.
+
+Advanced View
+The program provides a grid of options for which elements should be shuffled. Each labelled heading has a tooltip that explains what kind of items fit into the category.
+
+When not in Advanced View, the checkboxes allow the user to specify which items should be included in the shuffle.
+
+Base Item Pool
+- All main items
+- All masks (excl. Fierce Deity)
+- All trade items
+- All upgrades
+- All sidequest heart pieces
+- All minigame heart pieces
+- All chest heart pieces (excl. secret shrine)
+- All songs
+
+Song of Soaring
+Song of Soaring will be randomized; it is often the most convenient method of getting around Termina so you might not want to randomize it.
+
+Dungeon items
+Includes small keys, dungeon maps, compasses, and boss keys. These items will then be found at any location and will indicate to which dungeon they belong.
+
+Shop items
+This allows any item to be found and bought at a shop while shuffling the regular shop items into the item mix. This includes almost anywhere where you spend money to immediately get an item. Notable exclusions: Bomb Shop Powder Keg, Bean Grotto Magic Beans. Note that this may make items such as potions and Chateau difficult to find. Shop items are always buyable as long as you have enough rupees with a few exceptions. If shop models show their item, then you will not be able to buy things you can't carry such as ammo or bottle contents. The left item in the witch shop also still requires you to provide a mushroom as the ingredient.
+
+Caught bottle contents
+This option only affects caught bottle contents, and these will only shuffle amongst themselves.
+
+Cow Milk
+Each cow in the game that ordinarily gives milk when you play Epona's Song for them will give a random item. Two cows in the Termina Field cow grotto. Two cows in the Great Bay Coast cow grotto. One cow beneath the well. Three cows in the Romani Ranch barn (the cow in the corner is not accessible casually). When this option is enabled, cows don't check if you have an empty bottle.
+
+Moon items
+The Fierce Deity's Mask, the four Moon Trial pieces of heart, the 2 chests in the Link trial. Logic will ensure that items on the moon are not required to get to the moon.
+
+Great Fairy Rewards
+This option includes each of the Great Fairy rewards: Magic Power (town fairy as non-human), Great Fairy Mask (town fairy as human), Spin Attack, Extended Magic Power, Double Defense, Great Fairy's Sword.
+
+Mundane Rewards
+Lottery purple rupee; Bank blue rupee (reward for 500 rupees); Deku Playground Any Day; Honey and Darling Any Day; Kotake payment for a mushroom; Pictograph contest blue rupee and red rupee; Zora Hall Stage Lights; Oceanside Spider House day 2 (purple rupee) and day 3 (red rupee); Pictographs of Lulu (blue rupee for a bad photo, red rupee for a good photo); Treasure Chest Game as Human/Deku/Zora; Curiosity Shop various payments (blue rupee, red rupee, purple rupee and gold rupee); the Seahorse.
+
+Skulltula Tokens
+30 tokens in the Swamp Spider House. 30 tokens in the Oceanside Spider House. When this option is enabled, the player doesn't lose the skulltula tokens they've collected after playing Song of Time. Players must enter the spider houses to view how many tokens they have.
+
+Stray Fairies
+All the Stray Fairies will instead reward a random item, including the Clock Town stray fairy, and each of the dungeon stray fairies. Chests with fairies in them will still spawn a stray fairy, which will reward a random item when collected. When this option is enabled, the player doesn't lose the stray fairies they've collected after playing Song of Time. Players must enter a temple to see how many fairies they've collected for it.
+
+Crazy starting items
+Adds the starting Sword and Shield to the item pool. Also reduces your starting health to 1 heart and adds two Heart Containers to the item pool. Instead of these items, you'll receive random starting items (assuming you didn't enable the No Starting Items option).
+
+Everything else
+Includes all other chests and heart pieces that are not randomised by default, as well as heart containers and maps sold by Tingle.
+
+Glitches Required
+Randomizes locations that require glitches, such as the pre-clocktown deku nut chest and the out of bounds deku palace rupee.
+
+Freestanding Rupees
+Randomize freestanding rupees.
+
+Fixed Minor Item Drops
+Randomizes fixed minor item drops.
+
+Hidden Rupees
+Randomize invisible rupees and hit tags.
+
+Soft Soil
+Randomize items from soft soil.
+
+Boss Remains
+Randomize the boss remains.
+
+Royal Wallet
+Add the Royal Wallet (999 capacity) to the item pool. A random junk item will be replaced to make room for it.
+
+Ocarina and Song Of Time
+Randomize the Ocarina of Time and the Song of Time. Use at your own risk as you will not be able to save your progress without these items and will probably have to reset multiple times to find them both. In addition, it is not guaranteed that there is enough in-game time to be able to find them, though the randomizer does try its best to ensure that there is.</value>
   </data>
   <data name="lGimmick.Text" xml:space="preserve">
     <value>This section allows some gameplay alterations. It does not affect the item placement logic.
@@ -199,9 +470,46 @@ Enable Quirks
 Ice traps will behave slightly differently from other items in certain situations.
 
 
+Challenges
+Damage mode
+This changes the way damage is handled. In doom mode, damage is as normal but Link will gradually lose health and die over a ~2 minute period. This only takes effect while in direct control of Link.
+
+Damage effects
+Sets the type of damage dealt to Link. In random mode, the damage type will change every time damage is taken.
+
+Death is Moon Crash.
+When you die, the moon crashes.
+
+BYO Ammo
+When you get Bow / Bombs / Bombchu on your B button, you'll never get unlimited ammo. Instead you'll use your own. Logic Modes other than No Logic will account for this.
+
+
+Movement
+Gravity / Speed
+Changes some basic movement mechanics. Item placement does not currently take this into account so note that low/high gravity could make some items significantly easier/harder to access.
+
+Floor types
+Sets the physics for the ground Link is standing on. In random mode, this will pick random types every ~25 seconds and will also include lava (voids deku/zora) and deep sand (voids goron).
+
+Continuous Deku Hopping.
+Press A while hopping across water to keep hopping.
+
+Hookshot Any Surface.
+Allows the hookshot to latch onto any type of terrain.
+
+Climb Most Surfaces
+Link can climb most surfaces.
+
+
 Clock
 Speed
 Increases or decreases how fast in-game time progresses. When set to faster than normal, clock speed when the Inverted Song of Time is enabled will be increased as well. At the slowest setting, the Inverted Song of Time will do nothing.
+
+Auto-invert
+Auto-inver time at the start of a cycle.
+ - Never: No change, vanilla behavior.
+ - First Cycle: At the start of the first cycle, time is inverted.
+ - Always: At the start of every cycle, time is inverted.
 
 Hide UI
 Removes the clock from the in-game UI. Players will have to rely on other means of telling the time, such as in-game clocks on walls, the Bombers' Notebook, or looking at the sun.
@@ -228,161 +536,8 @@ Enables the Sun's Song (&gt;v^&gt;v^) which speeds up time to 400 units per fram
 Allow Fierce Deity's Mask anywhere
 Allows the Fierce Deity's Mask to be used anywhere and fixes some softlocks that can be caused by Fierce Deity.
 
-
-Movement
-Gravity / Speed
-Changes some basic movement mechanics. Item placement does not currently take this into account so note that low/high gravity could make some items significantly easier/harder to access.
-
-Floor types
-Sets the physics for the ground Link is standing on. In random mode, this will pick random types every ~25 seconds and will also include lava (voids deku/zora) and deep sand (voids goron).
-
-Continuous Deku Hopping.
-Press A while hopping across water to keep hopping.
-
-Hookshot Any Surface.
-Allows the hookshot to latch onto any type of terrain.
-
-
-Challenges
-Damage mode
-This changes the way damage is handled. In doom mode, damage is as normal but Link will gradually lose health and die over a ~2 minute period. This only takes effect while in direct control of Link.
-
-Damage effects
-Sets the type of damage dealt to Link. In random mode, the damage type will change every time damage is taken.
-
-Death is Moon Crash.
-When you die, the moon crashes.
-
-BYO Ammo
-When you get Bow / Bombs / Bombchu on your B button, you'll never get unlimited ammo. Instead you'll use your own. Logic Modes other than No Logic will account for this.</value>
-  </data>
-  <data name="label1.Text" xml:space="preserve">
-    <value>Speed Ups
-Skip Younger Beaver
-Modify Beavers to not have to race the younger beaver.
-
-Good Dampe RNG
-Change Dampe ghost flames to always have two on the ground floor and one up the ladder.
-
-Good Dog Race RNG
-Make Gold Dog always win if you have the Mask of Truth.
-
-Faster Lab Fish
-Change Lab Fish to only need to be fed one fish.
-
-Faster Bank
-Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000. Also reduces maximum bank capacity from 5000 to 1000.
-
-
-Comfort Options
-Disable crit wiggle
-You will no longer get weird movement when your health is low.
-
-Quick text
-Instantly print every text box.
-
-Increase push speed
-Increase the speed of pushing and pulling blocks and faucets.
-
-Close Cows
-When playing Epona's Song for a group of cows, the closest cow will respond, instead of the default behavior.
-
-Update shops
-In-game shops will display the model of the item for sale, as well as update the text of the items for sale. Other NPCs that sell items will also have their text updated to reflect what you're buying from them, including Tingle, Termina Field Business Scrub, other Business Scrubs, Gorman Bros Milk purchase, the Lottery, and the Milk Bar.
-
-Update chests
-Chest appearance will be updated to match the type of item they contain. Major items (including Bombchu and Hero's Shield if they are references in the logic) will be in Large Gold chests; Moderate items (such as small keys, skulltula tokens, stray fairies, quest items, and trade items) will be in Small Gold chests; Boss Keys will be in Boss Key chests; minor items (such as rupees, pieces of heart, and others) will be in Small Wooden chests.
-
-Update world models
-Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.
-
-No downgrades
-Finding a worse version of an item (such as finding the Adult Wallet while already having the Giant Wallet) will instead give you nothing, or a refill (e.g. having the Largest Quiver, but 0 arrows, then finding the Large Quiver will fill you back up to 40 arrows, but your max will remain at 50).
-
-Fix Epona Sword
-Ordinarily, riding Epona without having a Bow will change your sword button to a blank B button. This option prevents that, but may affect weird B glitches.
-
-Quest item extra storage
-Enable Quest Item Storage, which allows for storing multiple quest items in their dedicated inventory slot. Quest items will also always be consumed when used.
-
-Arrow cycling
-Cycle through arrow types when pressing R while an arrow is out when using the bow.
-
-Elegy speedups
-Applies various Elegy of Emptiness speedups.
-
-
-Gossip Stone Hints
-Free hints
-Gossip stones will not require you to be wearing the Mask of Truth to read their hints.
-
-Clear hints
-When using non-Vanilla Gossip Stone hints, the text will give exact location and item names, instead of cryptic hints.
-
-Hint distribution
-Select a style of gossip stone hints. Default will not change gossip stone text at all. Random will give random item location hints, sometimes fake hints, and sometimes junk hints. Relevant will attempt to provide a vanilla-like gossip stone hint experience. Competitive is a carefully crafted hint system intended to be used when multiple players are playing the same seed; it provides hints for some specific locations, and provides various hints as to the usefulness of regions.
-
-
-Cosmetic Customization
-Player model
-Choose a character model. Selecting Adult Link alters Link's movement speeds and hitbox size to be the same as zora and changes the voice set. Note that this change can affect some gameplay elements - you cannot fit through some deku palace doorways in human form.</value>
-  </data>
-  <data name="lCosmetic.Text" xml:space="preserve">
-    <value>All options in this tab can be used when applying a patch file.
-
-Form Customization
-Tunic colour
-Sets the colour of form's tunic.
-
-Instrument
-Sets the instrument used when playing songs.
-
-Energy color
- - Human: Sets the color of the Spin Attack and Great Spin Attack
- - Deku: Sets the color of the sparkle effects when spinning, the puff of dust when entering and leaving a deku flower, and the sparkles when flying using a deku flower.
- - Goron: Sets the color of the spike roll power up.
- - Zora: Sets the color of the energy shield.
- - Fierce Deity: Sets the color of the sword beam and sparkles.
-
-
-Music / Sound
-Randomize SFX
-Various sound effects in the game will be replaced with other sound effects.
-
-Enable Night BGM
-Music will continue playing at night time.
-
-Disable Combat Music
-Disables combat music around all regular (non boss or miniboss) enemies in the game.
-
-Music
-Default will leave music as it is normally. Random will shuffle music around, insert music from other games, while attempting to keep music categorized. None will remove music from the game.
-
-Low Health SFX
-Set the low health sound effect.
- - Default: plays the default sound.
- - Disabled: plays no sound.
- - Random: a random sound is chosen during randomization and that sound will be played.
- - &lt;Choices&gt;: Play that sound.
-
-
-Other
-Tatl theme
-Select a colour scheme for Tatl.
-
-Default Hold Z-Target
-The game will set the initial Z-Target style to Hold instead of Switch.
-
-
-HUD
-Hearts and Magic
-Customized will use the colors selected using the Customize button. Random Choice will pick random colors from a predefined list. Completely Random will pick a completely random color.
-
-Customize
-Completely customize the HUD colors. Click an element to choose a color, or right-click for more options.
-
-Randomize Hue of Miscellaneous UI
-Shifts the hue of various UI elements.</value>
+Free Scarecrow's Song
+Spawn scarecrow automatically when using ocarina if within range.</value>
   </data>
   <data name="lHow.Text" xml:space="preserve">
     <value>The get item table is expanded to allow all randomised items to have a unique entry and during randomisation this table will be shuffled according to logic for the selected ruleset. The table format is slightly modified to allow for updates to certain items to work easily (mainly for dungeons and Tingle maps).

@@ -77,6 +77,11 @@ namespace MMR.Randomizer.Asm
         public bool BankMultiRewards { get; set; } = true;
 
         /// <summary>
+        /// Whether or not chests should always use the short opening animation.
+        /// </summary>
+        public bool ShortChestOpening { get; set; }
+
+        /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
@@ -91,6 +96,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FastBankRupees ? (uint)1 : 0) << 26;
             flags |= (this.DoubleArcheryRewards ? (uint)1 : 0) << 25;
             flags |= (this.BankMultiRewards ? (uint)1 : 0) << 24;
+            flags |= (this.ShortChestOpening ? (uint)1 : 0) << 23;
             return flags;
         }
     }
@@ -224,6 +230,11 @@ namespace MMR.Randomizer.Asm
         public bool HiddenRupeesSparkle { get; set; }
 
         /// <summary>
+        /// Whether or not to fix some code to prevent crashes when using various glitches.
+        /// </summary>
+        public bool SaferGlitches { get; set; } = true;
+
+        /// <summary>
         /// Whether or to enable logic needed for Giant Mask Anywhere to work.
         /// </summary>
         public bool GiantMaskAnywhere { get; set; }
@@ -263,7 +274,8 @@ namespace MMR.Randomizer.Asm
             this.FillWallet = ((flags >> 9) & 1) == 1;
             this.AutoInvert = (AutoInvertState)((flags >> 7) & 3);
             this.HiddenRupeesSparkle = ((flags >> 6) & 1) == 1;
-            this.GiantMaskAnywhere = ((flags >> 5) & 1) == 1;
+            this.SaferGlitches = ((flags >> 5) & 1) == 1;
+            this.GiantMaskAnywhere = ((flags >> 4) & 1) == 1;
         }
 
         /// <summary>
@@ -296,7 +308,8 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FillWallet ? (uint)1 : 0) << 9;
             flags |= (((uint)this.AutoInvert) & 3) << 7;
             flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 6;
-            flags |= (this.GiantMaskAnywhere ? (uint)1 : 0) << 5;
+            flags |= (this.SaferGlitches ? (uint)1 : 0) << 5;
+            flags |= (this.GiantMaskAnywhere ? (uint)1 : 0) << 4;
             return flags;
         }
     }
@@ -327,7 +340,7 @@ namespace MMR.Randomizer.Asm
     {
         public ushort CollectableTableFileIndex { get; set; }
 
-        public ushort BankWithdrawFee { get; set; }
+        public ushort BankWithdrawFee { get; set; } = 4;
 
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
@@ -441,6 +454,7 @@ namespace MMR.Randomizer.Asm
             this.Speedups.SoundCheck = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.MilkBarPerformance);
             this.Speedups.DonGero = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.HungryGoron);
             this.Speedups.FastBankRupees = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText);
+            this.Speedups.ShortChestOpening = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.ShortChestOpening);
 
             // If using Adult Link model, allow Mikau cutscene to activate early.
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;

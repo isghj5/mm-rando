@@ -47,6 +47,7 @@ namespace MMR.CLI
                     { "-output <path>", "Path to output the output ROM. Other outputs will be based on the filename in this path. If omitted, will output to \"output/{timestamp}.z64\"" },
                     { "-input <path>", "Path to the input Majora's Mask (U) ROM. If omitted, will try to use \"input.z64\"." },
                     { "-save", "Save the settings to the default settings.json file." },
+                    { "-maxImportanceWait", "Set the maximum amount of time (in seconds) that the randomizer should wait for item importance verification before skipping it." },
                 };
                 foreach (var kvp in helpTexts)
                 {
@@ -224,13 +225,28 @@ namespace MMR.CLI
                 return -1;
             }
 
+            var maxImportanceWaitArg = argsDictionary.GetValueOrDefault("-maxImportanceWait");
+            int? maxImportanceWait = null;
+            if (maxImportanceWaitArg != null)
+            {
+                if (maxImportanceWaitArg.Count > 1)
+                {
+                    throw new ArgumentException("Invalid argument.", "-maxImportanceWaitArg");
+                }
+                maxImportanceWait = int.Parse(maxImportanceWaitArg.SingleOrDefault());
+                if (maxImportanceWait < 5)
+                {
+                    maxImportanceWait = 5; // Threads don't cancel properly if you cancel the token too quickly.
+                }
+            }
+
             try
             {
                 string result;
                 using (var progressBar = new ProgressBar())
                 {
                     //var progressReporter = new TextWriterProgressReporter(Console.Out);
-                    var progressReporter = new ProgressBarProgressReporter(progressBar);
+                    var progressReporter = new ProgressBarProgressReporter(progressBar, maxImportanceWait);
                     result = ConfigurationProcessor.Process(configuration, seed, progressReporter);
                 }
                 if (result != null)
@@ -240,11 +256,6 @@ namespace MMR.CLI
                 else
                 {
                     Console.WriteLine($"Generation complete! Output to: {directory}");
-                    if (Environment.UserInteractive)
-                    {
-                        Console.Write("Press any key to continue . . .");
-                        Console.ReadKey(true);
-                    }
                 }
                 return result == null ? 0 : -1;
             }

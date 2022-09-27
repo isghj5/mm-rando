@@ -99,9 +99,10 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<GossipLocationHintAttribute>().Values;
         }
 
-        public static bool IsRepeatable(this Item item)
+        public static bool IsRepeatable(this Item item, GameplaySettings settings = null)
         {
-            return item.HasAttribute<RepeatableAttribute>();
+            var isTemporaryOrCantBe = settings == null || item.GetAttribute<TemporaryAttribute>()?.Condition(settings) != false;
+            return item.HasAttribute<RepeatableAttribute>() && isTemporaryOrCantBe;
         }
 
         public static bool IsReturnable(this Item item, GameplaySettings settings)

@@ -51,8 +51,9 @@ typedef struct {
     u32 fillWallet          : 1;
     u32 autoInvert          : 2;
     u32 hiddenRupeesSparkle : 1;
+    u32 saferGlitches       : 1;
     u32 giantMaskAnywhere   : 1;
-    u32                     : 5;
+    u32                     : 4;
 } MiscFlags;
 
 typedef union {
@@ -69,15 +70,16 @@ typedef struct {
 
 typedef struct {
     // Version 3 flags
-    u32 soundCheck     : 1;
-    u32 blastMaskThief : 1;
-    u32 fishermanGame  : 1;
-    u32 boatArchery    : 1;
-    u32 donGero        : 1;
-    u32 fastBankRupees : 1;
-    u32 doubleArchery  : 1;
-    u32 multiBank      : 1;
-    u32                : 24;
+    u32 soundCheck          : 1;
+    u32 blastMaskThief      : 1;
+    u32 fishermanGame       : 1;
+    u32 boatArchery         : 1;
+    u32 donGero             : 1;
+    u32 fastBankRupees      : 1;
+    u32 doubleArchery       : 1;
+    u32 multiBank           : 1;
+    u32 shortChestOpening   : 1;
+    u32                     : 23;
 } MiscSpeedups;
 
 typedef struct {

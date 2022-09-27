@@ -20,6 +20,8 @@ using MMR.Randomizer.Extensions;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using MMR.Randomizer.Constants;
+using System.Threading;
+using MMR.UI.Controls;
 
 namespace MMR.UI.Forms
 {
@@ -80,6 +82,7 @@ namespace MMR.UI.Forms
             // Main Settings
             TooltipBuilder.SetTooltip(cMode, "Select mode of logic:\n - Casual: The randomization logic ensures that the game can be beaten casually.\n - Using glitches: The randomization logic allows for placement of items that are only obtainable using known glitches.\n - Vanilla Layout: All items are left vanilla.\n - User logic: Upload your own custom logic to be used in the randomization.\n - No logic: Completely random, no guarantee the game is beatable.");
 
+            TooltipBuilder.SetTooltip(cBespokeItemPlacementOrder, "When enabled, items will be placed in a specific order designed to widen the variety in the generated seeds. When disabled, items will be placed in the default order.");
             TooltipBuilder.SetTooltip(cMixSongs, "Enable songs being placed among items in the randomization pool.");
             TooltipBuilder.SetTooltip(cProgressiveUpgrades, "Enable swords, wallets, magic, bomb bags and quivers to be found in the intended order.");
             TooltipBuilder.SetTooltip(cDEnt, "Enable randomization of dungeon entrances. \n\nStone Tower Temple is always vanilla, but Inverted Stone Tower Temple is randomized.");
@@ -140,6 +143,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFasterLabFish, "Change Lab Fish to only need to be fed one fish.");
             TooltipBuilder.SetTooltip(cFasterBank, "Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000. Also reduces maximum bank capacity from 5000 to 1000.");
             TooltipBuilder.SetTooltip(cDoubleArcheryRewards, "Grant both archery rewards with a sufficient score.");
+            TooltipBuilder.SetTooltip(cSpeedupBabyCucco, "Makes the location of baby cuccos show on the minimap.");
             TooltipBuilder.SetTooltip(cFastPush, "Increase the speed of pushing and pulling blocks and faucets.");
             TooltipBuilder.SetTooltip(cFreestanding, "Show world models as their actual item instead of the original item. This includes Pieces of Heart, Heart Containers, Skulltula Tokens, Stray Fairies, Moon's Tear and the Seahorse.");
             TooltipBuilder.SetTooltip(cEnableNightMusic, "Enables playing daytime Background music during nighttime in the field.\n(Clocktown night music can be weird)");
@@ -155,6 +159,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
             TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
             TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
+            TooltipBuilder.SetTooltip(cSaferGlitches, "Fixes HESS crash, Weirdshot crash, Action Swap crash, Song of Double Time softlock during 0th or 4th day, Tatl text softlock on 0th of 4th day, 0th day file deletion, hookslide crash, 0th day Goron Bow crash, TODO more...");
 
             TooltipBuilder.SetTooltip(nMaxGossipWotH, "Set the number of Way of the Hero hints that will appear on Gossip Stones.");
             TooltipBuilder.SetTooltip(nMaxGossipFoolish, "Set the number of Foolish hints that will appear on Gossip Stones.");
@@ -246,20 +251,6 @@ namespace MMR.UI.Forms
             var value = (int)propertyInfo.GetValue(_configuration.GameplaySettings);
             var newValue = checkBox.Checked ? value | cutsceneFlag : value & ~cutsceneFlag;
             UpdateSingleSetting(() => propertyInfo.SetValue(_configuration.GameplaySettings, newValue));
-        }
-
-        private class InvertIndeterminateCheckBox : CheckBox
-        {
-            protected override void OnClick(EventArgs e)
-            {
-                CheckState = CheckState switch
-                {
-                    CheckState.Checked => CheckState.Unchecked,
-                    CheckState.Unchecked => CheckState.Checked,
-                    CheckState.Indeterminate => CheckState.Checked,
-                    _ => CheckState,
-                };
-            }
         }
 
         private class LocationCategoryLabel : Label
@@ -822,11 +813,23 @@ namespace MMR.UI.Forms
             bgWorker.ProgressChanged += new ProgressChangedEventHandler(bgWorker_ProgressChanged);
         }
 
+        private void bSkip_Click(object sender, EventArgs e)
+        {
+            var button = (Button)sender;
+            var cancellationTokenSource = (CancellationTokenSource)button.Tag;
+            if (cancellationTokenSource != null)
+            {
+                cancellationTokenSource.Cancel();
+            }
+        }
+
         private void bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             pProgress.Value = e.ProgressPercentage;
-            var message = (string)e.UserState;
-            lStatus.Text = message;
+            var state = (BackgroundWorkerProgressState)e.UserState;
+            lStatus.Text = state.Message;
+            bSkip.Visible = state.CTSItemImportance != null;
+            bSkip.Tag = state.CTSItemImportance;
         }
 
         private void bgWorker_WorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
@@ -1049,6 +1052,7 @@ namespace MMR.UI.Forms
             cVC.Checked = _configuration.OutputSettings.OutputVC;
             cPatch.Checked = _configuration.OutputSettings.GeneratePatch;
 
+            cBespokeItemPlacementOrder.Checked = _configuration.GameplaySettings.BespokeItemPlacementOrder;
             cMixSongs.Checked = _configuration.GameplaySettings.AddSongs;
             cProgressiveUpgrades.Checked = _configuration.GameplaySettings.ProgressiveUpgrades;
             cDEnt.Checked = _configuration.GameplaySettings.RandomizeDungeonEntrances;
@@ -1116,6 +1120,7 @@ namespace MMR.UI.Forms
             cFasterLabFish.Checked = _configuration.GameplaySettings.SpeedupLabFish;
             cFasterBank.Checked = _configuration.GameplaySettings.SpeedupBank;
             cDoubleArcheryRewards.Checked = _configuration.GameplaySettings.DoubleArcheryRewards;
+            cSpeedupBabyCucco.Checked = _configuration.GameplaySettings.SpeedupBabyCuccos;
             cGiantMaskAnywhere.Checked = _configuration.GameplaySettings.GiantMaskAnywhere;
 
             cDMult.SelectedIndex = (int)_configuration.GameplaySettings.DamageMode;
@@ -1202,6 +1207,7 @@ namespace MMR.UI.Forms
             cFreeScarecrow.Checked = _configuration.GameplaySettings.FreeScarecrow;
             cFillWallet.Checked = _configuration.GameplaySettings.FillWallet;
             cInvisSparkle.Checked = _configuration.GameplaySettings.HiddenRupeesSparkle;
+            cSaferGlitches.Checked = _configuration.GameplaySettings.SaferGlitches;
 
             nMaxGossipWotH.Value = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints ?? 3;
             nMaxGossipFoolish.Value = _configuration.GameplaySettings.OverrideNumberOfNonRequiredGossipHints ?? 3;
@@ -1455,6 +1461,11 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupBank = cFasterBank.Checked);
         }
 
+        private void cSpeedupBabyCucco_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.SpeedupBabyCuccos = cSpeedupBabyCucco.Checked);
+        }
+
         private void cDrawHash_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.DrawHash = cDrawHash.Checked);
@@ -1557,9 +1568,127 @@ namespace MMR.UI.Forms
                 if (_configuration.GameplaySettings.LogicMode != logicMode)
                 {
                     _configuration.GameplaySettings.EnabledTricks.Clear();
+                    List<string> tricksToAdd;
+                    switch (logicMode)
+                    {
+                        case LogicMode.Casual:
+                            tricksToAdd = new List<string>
+                            {
+                                "Exit Ocean Spider House without Goron",
+                                "Lensless Chests",
+                                "Lensless Walking",
+                                "Lensless Walls/Ceilings",
+                                "Pinnacle Rock without Seahorse",
+                                "Run Through Poisoned Water",
+                                "Scarecrow's Song",
+                                "Take Damage",
+                                "WFT 2nd Floor Skip",
+                            };
+                            break;
+                        case LogicMode.Glitched:
+                            tricksToAdd = new List<string>
+                            {
+                                "Take Damage",
+                                "Scarecrow's Song",
+                                "Lensless Chests",
+                                "Hit Switches Through Walls",
+                                "Long Jump",
+                                "Run Through Poisoned Water",
+                                "Poisoned Water as Goron",
+                                "Swim to Zora Hall as Human",
+                                "Brute Force OSH Code",
+                                "Climb Stone Tower with One Transformation",
+                                "Deku Playground Rupee Displacement",
+                                "Death Warp",
+                                "Bomb Hovering",
+                                "Lensless Jumping",
+                                "Goron Roll Item Grabs",
+                                "Melt Sun Blocks With Water",
+                                "Powder Keg Storage",
+                                "Hookshot Clip",
+                                "Day 1 Grave Clip",
+                                "Icicle Clip",
+                                "Ocarina Dive",
+                                "Item Dive",
+                                "SHT BK Skip",
+                                "Lensless Walking",
+                                "Bomber Guard Skip",
+                                "Deku Guard Skip",
+                                "WFT 2nd Floor Skip",
+                                "Kill Deku Shrine Big Octo",
+                                "Deku Palace Bean Skip",
+                                "Ikana Castle Falling Ceiling Skip",
+                                "Goron Bomb Jump",
+                                "GBT Fireless",
+                                "Ikana Canyon Iceless",
+                                "SHT Zora Jumps",
+                                "Pinnacle Rock without Seahorse",
+                                "Jump Slash through One Sided Geometry",
+                                "Avoid Swamp Tree Bat",
+                                "Goron Pound onto Ledges",
+                                "Zora Hall Scrub Ledge Climb",
+                                "Lensless Walls/Ceilings",
+                                "Termina Stump with No Items",
+                                "ISTT Hookshot to Eyegore",
+                                "Ocean Skulltulas without Fire Arrows",
+                                "SHT Jump to Stray Fairies",
+                                "Clever Ice Platforms",
+                                "Inn Balcony as Zora",
+                                "Shoot Goht",
+                                "STT Water Tunnel as Human",
+                                "Clever Bombchu Usage",
+                                "STT Eyegore Bridge Jumps",
+                                "Out of Bounds",
+                                "Inn Balcony with Cucco",
+                                "STT Updrafts without Deku Mask",
+                                "Zora Boomerang Through Walls",
+                                "Ocarina Items",
+                                "Action Swap",
+                                "Long Bomb Hovers",
+                                "Stun Keeta with Bombs",
+                                "Time Stop",
+                                "Blast Mask Hovers",
+                                "Path to Snowhead without Magic",
+                                "Recoil Flip Through Ice",
+                                "Postman without Bunny Hood",
+                                "Deku Recoil",
+                                "Deliver Deku Princess Without Deku Mask",
+                                "Restricted Items",
+                                "Jump Slash Take Downs",
+                                "STT BK Skip",
+                                "Shoot Twinmold",
+                                "SHT Pillar Skip",
+                                "Lensless Climbing",
+                                "ISTT Early Boss Key",
+                                "Powder Kegs as Explosives",
+                                "Recoil Flip",
+                                "ISTT Lightless Boss Key",
+                                "Superslide",
+                            };
+                            break;
+                        default:
+                            tricksToAdd = new List<string>();
+                            break;
+                    }
+                    foreach (var trick in tricksToAdd)
+                    {
+                        _configuration.GameplaySettings.EnabledTricks.Add(trick);
+                    }
+                    UpdateNumTricksEnabled();
                 }
                 _configuration.GameplaySettings.LogicMode = logicMode;
             });
+        }
+
+        private void UpdateNumTricksEnabled()
+        {
+            var count = _configuration.GameplaySettings.EnabledTricks.Count;
+            lNumTricksEnabled.Text = $"{count} trick{(count == 1 ? "s" : "")} enabled";
+        }
+
+        private void cBespokeItemPlacementOrder_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.BespokeItemPlacementOrder = cBespokeItemPlacementOrder.Checked);
         }
 
         private void cClockSpeed_SelectedIndexChanged(object sender, EventArgs e)
@@ -1681,6 +1810,7 @@ namespace MMR.UI.Forms
         {
             var vanillaMode = _configuration.GameplaySettings.LogicMode == LogicMode.Vanilla;
             cMixSongs.Enabled = !vanillaMode;
+            cBespokeItemPlacementOrder.Enabled = !vanillaMode;
             cProgressiveUpgrades.Enabled = !vanillaMode;
             foreach (Control control in tabItemPool.Controls)
             {
@@ -1784,6 +1914,7 @@ namespace MMR.UI.Forms
             cMixSongs.Enabled = v;
             cProgressiveUpgrades.Enabled = v;
             cEnemy.Enabled = v;
+            cBespokeItemPlacementOrder.Enabled = v;
 
             //bHumanTunic.Enabled = v;
             tFormCosmetics.Enabled = v;
@@ -1826,6 +1957,7 @@ namespace MMR.UI.Forms
             cFreeScarecrow.Enabled = v;
             cFillWallet.Enabled = v;
             cInvisSparkle.Enabled = v;
+            cSaferGlitches.Enabled = v;
 
             cSkipBeaver.Enabled = v;
             cGoodDampeRNG.Enabled = v;
@@ -1833,6 +1965,7 @@ namespace MMR.UI.Forms
             cGoodDogRaceRNG.Enabled = v;
             cFasterBank.Enabled = v;
             cDoubleArcheryRewards.Enabled = v;
+            cSpeedupBabyCucco.Enabled = v;
 
             cDMult.Enabled = v;
             cDType.Enabled = v;
@@ -2149,7 +2282,7 @@ namespace MMR.UI.Forms
             ToggleCheckBoxes();
             tROMName.Text = _configuration.OutputSettings.InputROMFilename;
             tLuckRollPercentage.Value = _configuration.CosmeticSettings.MusicLuckRollChance;
-
+            UpdateNumTricksEnabled();
         }
 
         private void SaveSettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2214,6 +2347,7 @@ namespace MMR.UI.Forms
                 if (result == DialogResult.OK)
                 {
                     _configuration.GameplaySettings.EnabledTricks = dialog.Result;
+                    UpdateNumTricksEnabled();
                 }
             }
             catch (Exception ex)
@@ -2290,6 +2424,11 @@ namespace MMR.UI.Forms
         private void cInvisSparkle_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.HiddenRupeesSparkle = cInvisSparkle.Checked);
+        }
+
+        private void cSaferGlitches_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.SaferGlitches = cSaferGlitches.Checked);
         }
 
         private void cItemPoolAdvanced_CheckedChanged(object sender, EventArgs e)
@@ -2379,11 +2518,12 @@ namespace MMR.UI.Forms
         {
             try
             {
-                var dialog = new CustomizeHintPrioritiesForm(_configuration.GameplaySettings.OverrideHintPriorities);
+                var dialog = new CustomizeHintPrioritiesForm(_configuration.GameplaySettings.OverrideHintPriorities, _configuration.GameplaySettings.OverrideImportanceIndicatorTiers);
                 var result = dialog.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     _configuration.GameplaySettings.OverrideHintPriorities = dialog.Result;
+                    _configuration.GameplaySettings.OverrideImportanceIndicatorTiers = dialog.ResultTiersIndicateImportance;
                 }
             }
             catch (Exception ex)

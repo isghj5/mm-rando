@@ -189,6 +189,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.HiddenRupeesSparkle = value; }
         }
 
+        public bool SaferGlitches
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.SaferGlitches; }
+            set { this.AsmOptions.MiscConfig.Flags.SaferGlitches = value; }
+        }
+
         #endregion
 
         #region Random Elements
@@ -198,7 +204,9 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public LogicMode LogicMode { get; set; }
 
-        public List<string> EnabledTricks { get; set; } = new List<string>
+        public bool BespokeItemPlacementOrder { get; set; } = true;
+
+        public HashSet<string> EnabledTricks { get; set; } = new HashSet<string>
         {
             "Exit Ocean Spider House without Goron",
             "Lensless Chests",
@@ -206,7 +214,6 @@ namespace MMR.Randomizer.Models.Settings
             "Lensless Walls/Ceilings",
             "Pinnacle Rock without Seahorse",
             "Run Through Poisoned Water",
-            "Quest Item Extra Storage",
             "Scarecrow's Song",
             "Take Damage",
             "WFT 2nd Floor Skip",
@@ -413,6 +420,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public List<List<Item>> OverrideHintPriorities { get; set; }
 
+        public HashSet<int> OverrideImportanceIndicatorTiers { get; set; }
+
         /// <summary>
         /// Prevent downgrades
         /// </summary>
@@ -463,6 +472,11 @@ namespace MMR.Randomizer.Models.Settings
         /// Change the Bank reward thresholds to 200/500/1000 instead of 200/1000/5000.
         /// </summary>
         public bool SpeedupBank { get; set; } = true;
+
+        /// <summary>
+        /// Show the baby cuccos on the minimap.
+        /// </summary>
+        public bool SpeedupBabyCuccos { get; set; }
 
         #endregion
 

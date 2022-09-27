@@ -52,3 +52,31 @@ u32 Chest_GetNewGiIndex(ActorEnBox* actor, GlobalContext* ctxt, bool grant) {
     }
     return actor->giIndex;
 }
+
+bool Chest_IsLongOpening(ActorEnBox* chest, GlobalContext* ctxt, GetItemEntry* giEntry) {
+    if (MISC_CONFIG.speedups.shortChestOpening) {
+        return false;
+    }
+
+    if (MISC_CONFIG.internal.vanillaLayout) {
+        return giEntry->item != ITEM_NONE && (s8)(giEntry->graphic) >= 0 && z2_CheckItemObtainability(giEntry->item) == ITEM_NONE;
+    }
+
+    if (giEntry->item == ITEM_NONE && chest->giIndex != 0x76) {
+        return false;
+    }
+
+    if (chest->giIndex == 0x0A || MMR_GetGiFlag(chest->giIndex)) {
+        return false;
+    }
+
+    return chest->chestType & 0x8;
+}
+
+bool Chest_ShouldIceSmokeSpawn(ActorEnBox* actor) {
+    if (actor->animCounter > 0) {
+        return actor->animCounter >= 0x30;
+    } else {
+        return actor->skelanime.animCurrentFrame > 45;
+    }
+}

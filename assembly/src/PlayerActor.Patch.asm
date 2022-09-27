@@ -137,6 +137,39 @@
     .dh 0x8C46
 
 ;==================================================================================================
+; Handle chest cutscene
+;==================================================================================================
+
+.headersize G_PLAYER_ACTOR_DELTA
+
+; Replaces:
+;   LW      V1, 0x0024 (SP)
+;   ADDIU   AT, R0, 0x00FF
+;   LBU     A0, 0x0000 (V1)
+;   BEQ     A0, AT, 0x8083D5B4
+;   LW      T2, 0x002C (SP)
+;   LB      T5, 0x0002 (V1)
+;   BLTZ    T5, 0x8083D5B4
+;   NOP
+;   JAL     0x80114978
+;   NOP
+;   ADDIU   AT, R0, 0x00FF
+;   BNE     V0, AT, 0x8083D5B4
+.org 0x8083D534
+    lw      a0, 0x002C (sp) ; chest
+    lw      a1, 0x0034 (sp) ; GlobalContext
+    jal     Chest_IsLongOpening
+    lw      a2, 0x0024 (sp) ; GetItemEntry
+    beqz    v0, 0x8083D5B4
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
+;==================================================================================================
 ; Handle Giant Mask speed
 ;==================================================================================================
 

@@ -44,6 +44,7 @@
 0x800B867C,z2_IsMessageClosing
 0x800B8A1C,z2_SetGetItem
 0x800B8BD0,z2_SetGetItemLongrange
+0x800B8E58,z2_PlayPlayerSfx
 0x800B8EC8,z2_PlaySfxAtActor
 0x800B9170,z2_load_scene_flags
 0x800B9334,z2_spawn_map_actors
@@ -54,6 +55,7 @@
 0x800BDC5C,z2_Actor_ChangeAnimation
 0x800C4F84,z2_BgCheck_EntityCheckCeiling
 0x800C99D4,z2_GetFloorPhysicsType
+0x800CB7CC,z2_Camera_IsHookArrival
 0x800E7DF8,z2_Collider_UpdateCylinder
 0x800EA0D4,z2_800EA0D4
 0x800EA0EC,z2_800EA0EC
@@ -91,6 +93,7 @@
 0x80112B40,z2_ReloadButtonTexture
 0x80112E80,z2_GiveItem
 0x801143CC,z2_IsItemKnown
+0x80114978,z2_CheckItemObtainability
 0x801149A0,z2_RemoveItem
 0x80114E90,z2_HasEmptyBottle
 0x8011552C,z2_HudSetAButtonText

@@ -51,6 +51,8 @@ namespace MMR.UI.Forms
             this.cMixSongs = new System.Windows.Forms.CheckBox();
             this.cEnemy = new System.Windows.Forms.CheckBox();
             this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.lNumTricksEnabled = new System.Windows.Forms.Label();
+            this.cBespokeItemPlacementOrder = new System.Windows.Forms.CheckBox();
             this.bToggleTricks = new System.Windows.Forms.Button();
             this.cMode = new System.Windows.Forms.ComboBox();
             this.bLoadLogic = new System.Windows.Forms.Button();
@@ -74,6 +76,7 @@ namespace MMR.UI.Forms
             this.pLocationCategories = new System.Windows.Forms.Panel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.cGiantMaskAnywhere = new System.Windows.Forms.CheckBox();
             this.cFreeScarecrow = new System.Windows.Forms.CheckBox();
             this.cFDAnywhere = new System.Windows.Forms.CheckBox();
             this.cBlastCooldown = new System.Windows.Forms.ComboBox();
@@ -128,6 +131,7 @@ namespace MMR.UI.Forms
             this.label10 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.gSpeedUps = new System.Windows.Forms.GroupBox();
+            this.cSpeedupBabyCucco = new System.Windows.Forms.CheckBox();
             this.cDoubleArcheryRewards = new System.Windows.Forms.CheckBox();
             this.cFasterBank = new System.Windows.Forms.CheckBox();
             this.cSkipBeaver = new System.Windows.Forms.CheckBox();
@@ -150,6 +154,7 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cSaferGlitches = new System.Windows.Forms.CheckBox();
             this.cInvisSparkle = new System.Windows.Forms.CheckBox();
             this.cFillWallet = new System.Windows.Forms.CheckBox();
             this.cTargetHealth = new System.Windows.Forms.CheckBox();
@@ -234,7 +239,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings = new System.Windows.Forms.TabPage();
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
-            this.cGiantMaskAnywhere = new System.Windows.Forms.CheckBox();
+            this.bSkip = new System.Windows.Forms.Button();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -337,7 +342,7 @@ namespace MMR.UI.Forms
             // tOtherCustomizations
             // 
             this.tOtherCustomizations.Controls.Add(this.tOtherCustomization);
-            this.tOtherCustomizations.Location = new System.Drawing.Point(7, 111);
+            this.tOtherCustomizations.Location = new System.Drawing.Point(7, 146);
             this.tOtherCustomizations.Name = "tOtherCustomizations";
             this.tOtherCustomizations.SelectedIndex = 0;
             this.tOtherCustomizations.Size = new System.Drawing.Size(381, 160);
@@ -441,6 +446,8 @@ namespace MMR.UI.Forms
             // 
             // groupBox9
             // 
+            this.groupBox9.Controls.Add(this.lNumTricksEnabled);
+            this.groupBox9.Controls.Add(this.cBespokeItemPlacementOrder);
             this.groupBox9.Controls.Add(this.bToggleTricks);
             this.groupBox9.Controls.Add(this.cMode);
             this.groupBox9.Controls.Add(this.bLoadLogic);
@@ -450,19 +457,39 @@ namespace MMR.UI.Forms
             this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox9.Size = new System.Drawing.Size(379, 98);
+            this.groupBox9.Size = new System.Drawing.Size(379, 133);
             this.groupBox9.TabIndex = 29;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Generation Settings";
             // 
+            // lNumTricksEnabled
+            // 
+            this.lNumTricksEnabled.Location = new System.Drawing.Point(96, 22);
+            this.lNumTricksEnabled.Name = "lNumTricksEnabled";
+            this.lNumTricksEnabled.RightToLeft = System.Windows.Forms.RightToLeft.No;
+            this.lNumTricksEnabled.Size = new System.Drawing.Size(271, 18);
+            this.lNumTricksEnabled.TabIndex = 21;
+            this.lNumTricksEnabled.Text = "0 tricks enabled";
+            // 
+            // cBespokeItemPlacementOrder
+            // 
+            this.cBespokeItemPlacementOrder.AutoSize = true;
+            this.cBespokeItemPlacementOrder.Location = new System.Drawing.Point(13, 105);
+            this.cBespokeItemPlacementOrder.Name = "cBespokeItemPlacementOrder";
+            this.cBespokeItemPlacementOrder.Size = new System.Drawing.Size(189, 19);
+            this.cBespokeItemPlacementOrder.TabIndex = 20;
+            this.cBespokeItemPlacementOrder.Text = "Bespoke Item Placement Order";
+            this.cBespokeItemPlacementOrder.UseVisualStyleBackColor = true;
+            this.cBespokeItemPlacementOrder.CheckedChanged += new System.EventHandler(this.cBespokeItemPlacementOrder_CheckedChanged);
+            // 
             // bToggleTricks
             // 
-            this.bToggleTricks.Location = new System.Drawing.Point(271, 23);
+            this.bToggleTricks.Location = new System.Drawing.Point(271, 39);
             this.bToggleTricks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bToggleTricks.Name = "bToggleTricks";
             this.bToggleTricks.Size = new System.Drawing.Size(96, 27);
             this.bToggleTricks.TabIndex = 19;
-            this.bToggleTricks.Text = "Toggle Tricks";
+            this.bToggleTricks.Text = "Edit Tricks";
             this.bToggleTricks.UseVisualStyleBackColor = true;
             this.bToggleTricks.Click += new System.EventHandler(this.bToggleTricks_Click);
             // 
@@ -476,7 +503,7 @@ namespace MMR.UI.Forms
             "Vanilla Layout",
             "User Logic",
             "No Logic"});
-            this.cMode.Location = new System.Drawing.Point(96, 24);
+            this.cMode.Location = new System.Drawing.Point(96, 40);
             this.cMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cMode.Name = "cMode";
             this.cMode.Size = new System.Drawing.Size(167, 23);
@@ -485,7 +512,7 @@ namespace MMR.UI.Forms
             // 
             // bLoadLogic
             // 
-            this.bLoadLogic.Location = new System.Drawing.Point(13, 55);
+            this.bLoadLogic.Location = new System.Drawing.Point(13, 71);
             this.bLoadLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.bLoadLogic.Name = "bLoadLogic";
             this.bLoadLogic.Size = new System.Drawing.Size(79, 28);
@@ -499,7 +526,7 @@ namespace MMR.UI.Forms
             this.lMode.AutoSize = true;
             this.lMode.BackColor = System.Drawing.Color.Transparent;
             this.lMode.ForeColor = System.Drawing.Color.Black;
-            this.lMode.Location = new System.Drawing.Point(10, 30);
+            this.lMode.Location = new System.Drawing.Point(10, 43);
             this.lMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lMode.Name = "lMode";
             this.lMode.Size = new System.Drawing.Size(75, 15);
@@ -508,7 +535,7 @@ namespace MMR.UI.Forms
             // 
             // tbUserLogic
             // 
-            this.tbUserLogic.Location = new System.Drawing.Point(96, 58);
+            this.tbUserLogic.Location = new System.Drawing.Point(96, 74);
             this.tbUserLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbUserLogic.Name = "tbUserLogic";
             this.tbUserLogic.ReadOnly = true;
@@ -732,6 +759,20 @@ namespace MMR.UI.Forms
             this.groupBox12.TabIndex = 34;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Other";
+            // 
+            // cGiantMaskAnywhere
+            // 
+            this.cGiantMaskAnywhere.AutoSize = true;
+            this.cGiantMaskAnywhere.BackColor = System.Drawing.Color.Transparent;
+            this.cGiantMaskAnywhere.ForeColor = System.Drawing.Color.Black;
+            this.cGiantMaskAnywhere.Location = new System.Drawing.Point(148, 125);
+            this.cGiantMaskAnywhere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cGiantMaskAnywhere.Name = "cGiantMaskAnywhere";
+            this.cGiantMaskAnywhere.Size = new System.Drawing.Size(180, 19);
+            this.cGiantMaskAnywhere.TabIndex = 28;
+            this.cGiantMaskAnywhere.Text = "Allow Giant\'s Mask anywhere";
+            this.cGiantMaskAnywhere.UseVisualStyleBackColor = false;
+            this.cGiantMaskAnywhere.CheckedChanged += new System.EventHandler(this.cGiantMaskAnywhere_CheckedChanged);
             // 
             // cFreeScarecrow
             // 
@@ -1468,6 +1509,7 @@ namespace MMR.UI.Forms
             // 
             // gSpeedUps
             // 
+            this.gSpeedUps.Controls.Add(this.cSpeedupBabyCucco);
             this.gSpeedUps.Controls.Add(this.cDoubleArcheryRewards);
             this.gSpeedUps.Controls.Add(this.cFasterBank);
             this.gSpeedUps.Controls.Add(this.cSkipBeaver);
@@ -1483,10 +1525,22 @@ namespace MMR.UI.Forms
             this.gSpeedUps.TabStop = false;
             this.gSpeedUps.Text = "Speed Ups";
             // 
+            // cSpeedupBabyCucco
+            // 
+            this.cSpeedupBabyCucco.AutoSize = true;
+            this.cSpeedupBabyCucco.Location = new System.Drawing.Point(292, 25);
+            this.cSpeedupBabyCucco.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSpeedupBabyCucco.Name = "cSpeedupBabyCucco";
+            this.cSpeedupBabyCucco.Size = new System.Drawing.Size(121, 19);
+            this.cSpeedupBabyCucco.TabIndex = 6;
+            this.cSpeedupBabyCucco.Text = "Baby Cuccos Map";
+            this.cSpeedupBabyCucco.UseVisualStyleBackColor = true;
+            this.cSpeedupBabyCucco.CheckedChanged += new System.EventHandler(this.cSpeedupBabyCucco_CheckedChanged);
+            // 
             // cDoubleArcheryRewards
             // 
             this.cDoubleArcheryRewards.AutoSize = true;
-            this.cDoubleArcheryRewards.Location = new System.Drawing.Point(172, 77);
+            this.cDoubleArcheryRewards.Location = new System.Drawing.Point(140, 77);
             this.cDoubleArcheryRewards.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDoubleArcheryRewards.Name = "cDoubleArcheryRewards";
             this.cDoubleArcheryRewards.Size = new System.Drawing.Size(155, 19);
@@ -1510,7 +1564,7 @@ namespace MMR.UI.Forms
             // cSkipBeaver
             // 
             this.cSkipBeaver.AutoSize = true;
-            this.cSkipBeaver.Location = new System.Drawing.Point(10, 24);
+            this.cSkipBeaver.Location = new System.Drawing.Point(140, 25);
             this.cSkipBeaver.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cSkipBeaver.Name = "cSkipBeaver";
             this.cSkipBeaver.Size = new System.Drawing.Size(133, 19);
@@ -1534,7 +1588,7 @@ namespace MMR.UI.Forms
             // cGoodDogRaceRNG
             // 
             this.cGoodDogRaceRNG.AutoSize = true;
-            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(172, 51);
+            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(140, 51);
             this.cGoodDogRaceRNG.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cGoodDogRaceRNG.Name = "cGoodDogRaceRNG";
             this.cGoodDogRaceRNG.Size = new System.Drawing.Size(135, 19);
@@ -1546,7 +1600,7 @@ namespace MMR.UI.Forms
             // cGoodDampeRNG
             // 
             this.cGoodDampeRNG.AutoSize = true;
-            this.cGoodDampeRNG.Location = new System.Drawing.Point(172, 23);
+            this.cGoodDampeRNG.Location = new System.Drawing.Point(10, 25);
             this.cGoodDampeRNG.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cGoodDampeRNG.Name = "cGoodDampeRNG";
             this.cGoodDampeRNG.Size = new System.Drawing.Size(123, 19);
@@ -1771,6 +1825,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cSaferGlitches);
             this.groupBox7.Controls.Add(this.cInvisSparkle);
             this.groupBox7.Controls.Add(this.cFillWallet);
             this.groupBox7.Controls.Add(this.cTargetHealth);
@@ -1796,6 +1851,18 @@ namespace MMR.UI.Forms
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
+            // 
+            // cSaferGlitches
+            // 
+            this.cSaferGlitches.AutoSize = true;
+            this.cSaferGlitches.Location = new System.Drawing.Point(10, 259);
+            this.cSaferGlitches.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSaferGlitches.Name = "cSaferGlitches";
+            this.cSaferGlitches.Size = new System.Drawing.Size(97, 19);
+            this.cSaferGlitches.TabIndex = 43;
+            this.cSaferGlitches.Text = "Safer Glitches";
+            this.cSaferGlitches.UseVisualStyleBackColor = true;
+            this.cSaferGlitches.CheckedChanged += new System.EventHandler(this.cSaferGlitches_CheckedChanged);
             // 
             // cInvisSparkle
             // 
@@ -2751,19 +2818,16 @@ namespace MMR.UI.Forms
             this.bLoadPatch.UseVisualStyleBackColor = true;
             this.bLoadPatch.Click += new System.EventHandler(this.BLoadPatch_Click);
             // 
-            // cGiantMaskAnywhere
+            // bSkip
             // 
-            this.cGiantMaskAnywhere.AutoSize = true;
-            this.cGiantMaskAnywhere.BackColor = System.Drawing.Color.Transparent;
-            this.cGiantMaskAnywhere.ForeColor = System.Drawing.Color.Black;
-            this.cGiantMaskAnywhere.Location = new System.Drawing.Point(148, 125);
-            this.cGiantMaskAnywhere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cGiantMaskAnywhere.Name = "cGiantMaskAnywhere";
-            this.cGiantMaskAnywhere.Size = new System.Drawing.Size(180, 19);
-            this.cGiantMaskAnywhere.TabIndex = 28;
-            this.cGiantMaskAnywhere.Text = "Allow Giant\'s Mask anywhere";
-            this.cGiantMaskAnywhere.UseVisualStyleBackColor = false;
-            this.cGiantMaskAnywhere.CheckedChanged += new System.EventHandler(this.cGiantMaskAnywhere_CheckedChanged);
+            this.bSkip.Location = new System.Drawing.Point(704, 591);
+            this.bSkip.Name = "bSkip";
+            this.bSkip.Size = new System.Drawing.Size(75, 23);
+            this.bSkip.TabIndex = 17;
+            this.bSkip.Text = "Skip";
+            this.bSkip.UseVisualStyleBackColor = true;
+            this.bSkip.Visible = false;
+            this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
             // MainForm
             // 
@@ -2771,6 +2835,7 @@ namespace MMR.UI.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(792, 627);
+            this.Controls.Add(this.bSkip);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.bopen);
             this.Controls.Add(this.tROMName);
@@ -3060,6 +3125,11 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cFreeGaroHints;
         private System.Windows.Forms.Label lLuckRoll;
         private System.Windows.Forms.NumericUpDown tLuckRollPercentage;
+        private System.Windows.Forms.Button bSkip;
+        private System.Windows.Forms.CheckBox cBespokeItemPlacementOrder;
+        private System.Windows.Forms.Label lNumTricksEnabled;
+        private System.Windows.Forms.CheckBox cSaferGlitches;
+        private System.Windows.Forms.CheckBox cSpeedupBabyCucco;
         private System.Windows.Forms.CheckBox cGiantMaskAnywhere;
     }
 }

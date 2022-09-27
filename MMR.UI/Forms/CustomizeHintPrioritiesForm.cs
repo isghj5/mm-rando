@@ -17,26 +17,28 @@ namespace MMR.UI.Forms
     public partial class CustomizeHintPrioritiesForm : Form
     {
         public List<List<Item>> Result { get; private set; }
+        public HashSet<int> ResultTiersIndicateImportance { get; private set; }
 
-        public CustomizeHintPrioritiesForm(IEnumerable<List<Item>> overrideHintPriorities)
+        public CustomizeHintPrioritiesForm(IEnumerable<List<Item>> overrideHintPriorities, IEnumerable<int> tiersIndicateImportance)
         {
             InitializeComponent();
 
             tHintPriorities.MaximumSize = new Size(panel1.Width - SystemInformation.VerticalScrollBarWidth, 0);
 
             Result = overrideHintPriorities?.ToList() ?? new List<List<Item>>();
+            ResultTiersIndicateImportance = tiersIndicateImportance?.ToHashSet() ?? new HashSet<int>();
 
             if (Result != null)
             {
                 for (var i = 0; i < Result.Count; i++)
                 {
                     var list = Result[i];
-                    AddItems(list);
+                    AddItems(list, ResultTiersIndicateImportance.Contains(i));
                 }
             }
         }
 
-        private void AddItems(IEnumerable<Item> items)
+        private void AddItems(IEnumerable<Item> items, bool indicateImportance)
         {
             var i = tHintPriorities.RowCount - 1;
             tHintPriorities.RowCount++;
@@ -63,27 +65,37 @@ namespace MMR.UI.Forms
             deleteButton.Click += deleteButton_Click;
             tHintPriorities.Controls.Add(deleteButton, 1, i);
 
+            var indicateImportanceCheckbox = new CheckBox
+            {
+                Checked = indicateImportance,
+                Dock = DockStyle.Top,
+                Text = string.Empty,
+                CheckAlign = ContentAlignment.MiddleCenter,
+            };
+            indicateImportanceCheckbox.CheckedChanged += indicateImportanceCheckbox_CheckedChanged;
+            tHintPriorities.Controls.Add(indicateImportanceCheckbox, 2, i);
+
             var label = new Label
             {
                 Text = string.Join(", ", items.Select(item => item.Location())),
                 AutoSize = true,
                 Margin = new Padding(10, 10, 10, 10),
             };
-            tHintPriorities.Controls.Add(label, 2, i);
+            tHintPriorities.Controls.Add(label, 3, i);
 
             var upButton = new Button
             {
                 Text = "^",
             };
             upButton.Click += upButton_Click;
-            tHintPriorities.Controls.Add(upButton, 3, i);
+            tHintPriorities.Controls.Add(upButton, 4, i);
 
             var downButton = new Button
             {
                 Text = "v",
             };
             downButton.Click += downButton_Click;
-            tHintPriorities.Controls.Add(downButton, 4, i);
+            tHintPriorities.Controls.Add(downButton, 5, i);
         }
 
         private void upButton_Click(object sender, EventArgs e)
@@ -151,7 +163,7 @@ namespace MMR.UI.Forms
                 if (form.ReturnItems.Count > 0)
                 {
                     Result[index] = form.ReturnItems;
-                    var label = (Label)tHintPriorities.GetControlFromPosition(2, index);
+                    var label = (Label)tHintPriorities.GetControlFromPosition(3, index);
                     label.Text = string.Join(", ", Result[index].Select(item => item.Location()));
                 }
                 else
@@ -202,6 +214,20 @@ namespace MMR.UI.Forms
             }
         }
 
+        private void indicateImportanceCheckbox_CheckedChanged(object sender, EventArgs e)
+        {
+            var checkBox = (CheckBox)sender;
+            var index = tHintPriorities.GetRow(checkBox);
+            if (checkBox.Checked)
+            {
+                ResultTiersIndicateImportance.Add(index);
+            }
+            else
+            {
+                ResultTiersIndicateImportance.Remove(index);
+            }
+        }
+
         private void bOK_Click(object sender, EventArgs e)
         {
             if (Result?.Count == 0)
@@ -228,7 +254,7 @@ namespace MMR.UI.Forms
                 Result.Add(form.ReturnItems);
 
                 tHintPriorities.SuspendLayout();
-                AddItems(form.ReturnItems);
+                AddItems(form.ReturnItems, false);
                 tHintPriorities.ResumeLayout();
             }
         }
