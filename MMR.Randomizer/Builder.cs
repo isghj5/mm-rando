@@ -1495,6 +1495,17 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.garo_hints);
             }
 
+            if (_randomized.Settings.ChestGameMinimap != ChestGameMinimapState.Off)
+            {
+                // Write to chest game scene file the new minimap setting
+                ReadWriteUtils.WriteU16ToROM(0x02131000 + 0x1D8, 0x0018);
+                ReadWriteUtils.WriteToROM(0x02131000 + 0x1C8, new byte[] { 0x00, 0x01, 0xFD, 0x00, 0x00, 0x00, 0x02, 0x18, 0x00, 0x00});
+                // Include bitflag to enabled minimaps when Map of Clock Town is aquired
+                ReadWriteUtils.WriteToROM(0x00B3C000 + 0x0011C270 + 0x71, 0x80);
+                // Overwrite one of the placeholder minimaps in dangeon_keep
+                ReadWriteUtils.WriteToROM(0x01128000 + 0x42C8, Resources.mods.chestgame_minimap);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);

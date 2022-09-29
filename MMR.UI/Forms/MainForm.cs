@@ -94,6 +94,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cGravity, "Select a movement modifier:\n\n - Default: No movement modifier.\n - High speed: Link moves at a much higher velocity.\n - Super low gravity: Link can jump very high.\n - Low gravity: Link can jump high.\n - High gravity: Link can barely jump.");
             TooltipBuilder.SetTooltip(cLowHealthSFXComboBox, "Select a Low Health SFX setting:\n\n - Default: Vanilla sound.\n - Disabled: No sound will play.\n - Random: a random SFX will be chosen.\n - Specific SFX: a specific SFX will play as the low health sfx.");
             TooltipBuilder.SetTooltip(cNutAndStickDrops, "Adds Deku nuts and Deku sticks to drop tables in the field:\n\n - Default: No change, vanilla behavior.\n - Light: one stick and nut 1/16 chance termina bush.\n - Medium: More nuts, twice the chance\n - Extra: More sticks, more nuts, more drop locations.\n - Mayhem: You're crazy in the coconut!");
+            //TooltipBuilder.SetTooltip(cChestGameMinimap, "Draws a minimap during the Treasure Chest Game if you have the Map of Clock Town:\n\n - Off: No minimap, default vanilla behaviour.\n - Minimal: Minimap is displayed, blocks appear on minimap when triggered.\n - Conditional Spoiler: Minimal behaviour, and if (itemTODO) is aquired along with Map of Clock Town, spoil the maze layout.\n - Spoiler: Only Map of Clock Town needed to spoil the maze layout.");
             TooltipBuilder.SetTooltip(cFloors, "Select a floortype for every floor ingame:\n\n - Default: Vanilla floortypes.\n - Sand: Link sinks slowly into every floor, affecting movement speed.\n - Ice: Every floor is slippery.\n - Snow: Similar to sand. \n - Random: Any random floortypes of the above.");
             TooltipBuilder.SetTooltip(cClockSpeed, "Modify the speed of time.");
             TooltipBuilder.SetTooltip(cAutoInvert, "Auto-invert time at the start of a cycle.");
@@ -2508,5 +2509,10 @@ namespace MMR.UI.Forms
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        //private void cChestGameMinimap_SelectedIndexChanged(object sender, EventArgs e)
+        //{
+        //    UpdateSingleSetting(() => _configuration.GameplaySettings.ChestGameMinimap = (ChestGameMinimapState)cChestGameMinimap.SelectedIndex);
+        //}
     }
 }

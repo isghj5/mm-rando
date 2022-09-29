@@ -686,7 +686,9 @@ typedef struct {
     /* 0x09C */ s16 gravity;
     /* 0x09E */ UNK_TYPE1 pad9E[0x72];
     /* 0x110 */ u16 updateRate;
-} StaticContext; // size = 0x112
+    /* 0x112 */ UNK_TYPE1 pad112[0xA40];
+    /* 0xB52 */ u16 minimapToggle;
+} StaticContext; // size = 0xB54
 
 /// =============================================================
 /// Messagebox Context

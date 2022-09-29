@@ -183,6 +183,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.HiddenRupeesSparkle = value; }
         }
 
+        public ChestGameMinimapState ChestGameMinimap
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.ChestGameMinimap; }
+            set { this.AsmOptions.MiscConfig.Flags.ChestGameMinimap = value; }
+        }
+
         #endregion
 
         #region Random Elements
