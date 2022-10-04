@@ -875,7 +875,7 @@ bool Models_DrawSmithyItem(Actor* actor, GlobalContext* ctxt) {
     Vec3s rot;
     Vec3f pos;
 
-    pos.x = -192;
+    pos.x = -192.0;
     pos.y = 3076.0;
     pos.z = 8192.0;
     rot.x = 0x0000;
