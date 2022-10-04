@@ -98,6 +98,7 @@
 .definelabel z2_801242DC, 0x801242DC
 .definelabel z2_8012BC50, 0x8012BC50
 .definelabel z2_Gfx_CallSetupDL, 0x8012BF78
+.definelabel z2_Gfx_8012C28C, 0x8012C28C
 .definelabel z2_CallSetupDList, 0x8012C2DC
 .definelabel z2_8012C654, 0x8012C654
 .definelabel z2_LoadRoom, 0x8012E96C
@@ -114,6 +115,7 @@
 .definelabel z2_80147624, 0x80147624
 .definelabel z2_ShowMessage, 0x801518B0
 .definelabel z2_GetMessageState, 0x80152498
+.definelabel z2_801660B8, 0x801660B8
 .definelabel z2_load_scene, 0x801693D4
 .definelabel z2_check_scene_pairs, 0x80169CBC
 .definelabel z2_store_scene_flags, 0x80169D40

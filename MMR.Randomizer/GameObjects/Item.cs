@@ -218,6 +218,7 @@ namespace MMR.Randomizer.GameObjects
         //upgrades
         [Progressive]
         [Downgradable]
+        [Visible]
         [StartingItem(0xC5CE21, 0x02)]
         [StartingItem(0xC5CE00, 0x4E)]
         [ItemName("Razor Sword"), LocationName("Mountain Smithy Day 1"), Region(Region.MountainVillage)]
@@ -229,6 +230,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Progressive]
         [Downgradable]
+        [Visible]
         [StartingItem(0xC5CE21, 0x03)]
         [StartingItem(0xC5CE00, 0x4F)]
         [ItemName("Gilded Sword"), LocationName("Mountain Smithy Day 2"), Region(Region.MountainVillage)]

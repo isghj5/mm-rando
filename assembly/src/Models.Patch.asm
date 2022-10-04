@@ -567,3 +567,20 @@
     nop
     nop
     nop
+
+;==================================================================================================
+; Freestanding Models (Mountain Smithy)
+;==================================================================================================
+
+.headersize G_EN_KGY_DELTA
+; Replaces:
+;    lw     t6, 0x002C (sp)
+;    lw     a0, 0x0000 (t6)
+;    jal    0x8012C28C
+;    sw     a0, 0x001C (sp)
+
+.org 0x80B43084
+    lw      t6, 0x0000 (a1)
+    jal     Models_DrawSmithyItem
+    sw      t6, 0x001C (sp)
+    bnez    v0, 0x80B431C0
