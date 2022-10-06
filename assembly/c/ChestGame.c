@@ -20,9 +20,8 @@ void ChestGame_ResetMap() {
     for (int i = 0; i < 11; i++) {
         gMazeFogStruct.tileDisplayState[i] = 0;
     }
-    // Could use something other than Giant's Mask (maybe an event flag?) as the second spoiler requirement
     if (MISC_CONFIG.flags.chestGameMinimap == CHESTGAME_MINIMAP_SPOILER ||
-        ((MISC_CONFIG.flags.chestGameMinimap == CHESTGAME_MINIMAP_CONDITIONAL) && (gSaveContext.perm.inv.masks[SLOT_GIANT_MASK] == ITEM_GIANT_MASK))) {
+        ((MISC_CONFIG.flags.chestGameMinimap == CHESTGAME_MINIMAP_CONDITIONAL) && (gSaveContext.perm.inv.masks[SLOT_MASK_OF_TRUTH] == ITEM_MASK_OF_TRUTH))) {
         gMazeFogStruct.spoilerState = 1;
         }
     else {

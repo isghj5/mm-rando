@@ -235,7 +235,6 @@ namespace MMR.Randomizer.Asm
         /// Whether or not the Treasure Chest Game draws a spoiler minimap.
         /// </summary>
         public ChestGameMinimapState ChestGameMinimap { get; set; }
-        //public bool ChestGameMinimap { get; set; }
 
         public MiscFlags()
         {
