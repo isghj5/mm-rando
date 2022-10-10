@@ -215,7 +215,7 @@ namespace MMR.Randomizer.Utils
                 var codeFile = RomData.MMFileList[codeFID];
                 int audioseqIndexTableOffset = Addresses.SeqTable - codeFile.Addr;
 
-                int entryaddr = audioseqIndexTableOffset + (seq.Replaces * 16);
+                int entryaddr = audioseqIndexTableOffset + (seq.MM_seq * 16);
                 var size = (int) ReadWriteUtils.Arr_ReadU32(codeFile.Data, entryaddr + 4);
                 return RoundTo16(size);
             }
