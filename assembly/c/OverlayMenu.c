@@ -36,7 +36,7 @@ static struct DungeonEntry gDungeons[7] = {
     { 0, 0x5D, 1, 1, 0, "Woodfall" },
     { 1, 0x5E, 1, 1, 0, "Snowhead" },
     { 2, 0x5F, 1, 1, 0, "GreatBay" },
-    { 3, 0x60, 1, 1, 0, "StnTower" },
+    { 3, 0x60, 1, 1, 0, "StoneTwr" },
     { 4, 0,    0, 1, 0, "ClockTwn" },
     { 5, 0,    0, 0, 1, "Swamp" },
     { 6, 0,    0, 0, 2, "Ocean" },
