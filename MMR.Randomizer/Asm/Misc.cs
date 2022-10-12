@@ -31,6 +31,14 @@ namespace MMR.Randomizer.Asm
         Always,
     }
 
+    public enum ChestGameMinimapState : byte
+    {
+        Off,
+        Minimal,
+        ConditionalSpoiler,
+        Spoiler,
+    }
+
     /// <summary>
     /// Speedups.
     /// </summary>
@@ -230,6 +238,11 @@ namespace MMR.Randomizer.Asm
         public bool HiddenRupeesSparkle { get; set; }
 
         /// <summary>
+        /// Whether or not the Treasure Chest Game draws a spoiler minimap.
+        /// </summary>
+        public ChestGameMinimapState ChestGameMinimap { get; set; }
+
+        /// <summary>
         /// Whether or not to fix some code to prevent crashes when using various glitches.
         /// </summary>
         public bool SaferGlitches { get; set; } = true;
@@ -269,7 +282,8 @@ namespace MMR.Randomizer.Asm
             this.FillWallet = ((flags >> 9) & 1) == 1;
             this.AutoInvert = (AutoInvertState)((flags >> 7) & 3);
             this.HiddenRupeesSparkle = ((flags >> 6) & 1) == 1;
-            this.SaferGlitches = ((flags >> 5) & 1) == 1;
+            this.ChestGameMinimap = (ChestGameMinimapState)((flags >> 4) & 3);
+            this.SaferGlitches = ((flags >> 3) & 1) == 1;
         }
 
         /// <summary>
@@ -302,7 +316,8 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FillWallet ? (uint)1 : 0) << 9;
             flags |= (((uint)this.AutoInvert) & 3) << 7;
             flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 6;
-            flags |= (this.SaferGlitches ? (uint)1 : 0) << 5;
+            flags |= (((uint)this.ChestGameMinimap) & 3) << 4;
+            flags |= (this.SaferGlitches ? (uint)1 : 0) << 3;
             return flags;
         }
     }

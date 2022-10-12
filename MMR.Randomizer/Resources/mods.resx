@@ -121,6 +121,9 @@
   <data name="byo_ammo" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\byo-ammo;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="chestgame_minimap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\chestgame-minimap.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="chest_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\chest-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

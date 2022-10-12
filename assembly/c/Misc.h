@@ -21,6 +21,13 @@ enum AutoInvertState {
     AUTO_INVERT_ALWAYS,
 };
 
+enum ChestGameMiniMapState {
+    CHESTGAME_MINIMAP_OFF,
+    CHESTGAME_MINIMAP_MINIMAL,
+    CHESTGAME_MINIMAP_CONDITIONAL,
+    CHESTGAME_MINIMAP_SPOILER,
+};
+
 // Magic number for misc_config: "MISC"
 #define MISC_CONFIG_MAGIC 0x4D495343
 
@@ -51,8 +58,9 @@ typedef struct {
     u32 fillWallet          : 1;
     u32 autoInvert          : 2;
     u32 hiddenRupeesSparkle : 1;
+    u32 chestGameMinimap    : 2;
     u32 saferGlitches       : 1;
-    u32                     : 5;
+    u32                     : 3;
 } MiscFlags;
 
 typedef union {
