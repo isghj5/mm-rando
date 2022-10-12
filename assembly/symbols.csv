@@ -132,3 +132,10 @@
 0x8019F0C8,z2_PlaySfx
 0x801A3098,z2_SetBGM2
 0x800B9010,z2_PlayLoopingSfxAtActor
+0x80127A60,z2_PlayerBunnyHoodLimbs
+0x801284A0,z2_PlayerGreatFairyLimbs
+0x80127594,z2_PlayerGormanTears
+0x801278F8,z2_PlayerBlastMaskAnim
+0x801801E8,z2_CopyFromMatrixStackTop
+0x8018020C,z2_CopyToMatrixStackTop
+0x80128640,z2_80128640

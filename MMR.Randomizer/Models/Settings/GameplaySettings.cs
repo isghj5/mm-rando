@@ -185,8 +185,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public ChestGameMinimapState ChestGameMinimap
         {
-            get { return this.AsmOptions.MiscConfig.Flags.ChestGameMinimap; }
-            set { this.AsmOptions.MiscConfig.Flags.ChestGameMinimap = value; }
+            get { return this.AsmOptions.MiscConfig.Speedups.ChestGameMinimap; }
+            set { this.AsmOptions.MiscConfig.Speedups.ChestGameMinimap = value; }
         }
 
         public bool SaferGlitches

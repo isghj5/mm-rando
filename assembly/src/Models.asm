@@ -363,3 +363,37 @@ Models_DrawDekuScrubPlaygroundRupee_Hook:
     lw      ra, 0x0010 (sp)
     jr      ra
     addiu   sp, sp, 0x20
+
+Models_DrawKeatonMask_Hook:
+    addiu   sp, sp, -0x10
+    sw      ra, 0x0004 (sp)
+    or      a0, s1, r0
+    jal     Models_DrawKeatonMask
+    or      a1, s0, r0
+
+    lw      ra, 0x0004 (sp)
+    addiu   sp, sp, 0x10
+
+    lb      t4, 0x05dc (s0) ;; displaced code
+    jr      ra
+    lw      t5, 0x0060 (sp) ;; displaced code
+
+Models_DrawEnSshMaskOfTruth_Hook:
+    addiu   sp, sp, -0x10
+    sw      ra, 0x0004 (sp)
+    jal     Models_DrawEnSshMaskOfTruth
+    nop
+    lw      ra, 0x0004 (sp)
+    addiu   sp, sp, 0x10
+    jr      ra
+    lw      s0, 0x0020 (sp)
+
+Models_SetEnInMatrix_Hook:
+    addiu   sp, sp, -0x10
+    sw      ra, 0x0004 (sp)
+    jal     z2_CopyFromMatrixStackTop
+    nop
+    lw      ra, 0x0004 (sp)
+    addiu   sp, sp, 0x10
+    jr      ra
+    or      a0, a3, r0

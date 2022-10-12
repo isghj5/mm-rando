@@ -143,6 +143,12 @@ namespace MMR.Randomizer.Utils
                 newItem = RomData.GetItemList[item.GetItemIndex().Value];
             }
 
+            // set values for draw flags for some mask checks
+            if (getItemIndex is 0x80 or 0x81 or 0x84 or 0x88 or 0x8A)
+            {
+                MaskConfigUtils.UpdateMaskConfig(itemObject, newItem, item, getItemIndex);
+            }
+
             // Attempt to resolve extended object Id, which should affect "Exclusive Items" as well.
             var graphics = extendedObjects.ResolveGraphics(newItem);
             if (graphics.HasValue)
@@ -319,7 +325,6 @@ namespace MMR.Randomizer.Utils
                 }
             }
         }
-
     }
 
 }

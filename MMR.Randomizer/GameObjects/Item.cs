@@ -674,6 +674,7 @@ namespace MMR.Randomizer.GameObjects
         HeartPieceKnuckle,
 
         //mask
+        [Visible]
         [StartingItem(0xC5CE3C, 0x3E)]
         [ItemName("Postman's Hat"), LocationName("Postman's Freedom Reward"), Region(Region.EastClockTown)]
         [GossipLocationHint("a special delivery", "one last job"), GossipItemHint("a hard worker's hat")]
@@ -716,6 +717,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x131), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.GreatFairyRewards)]
         MaskGreatFairy,
 
+        [Visible]
         [StartingItem(0xC5CE42, 0x3A)]
         [ItemName("Keaton Mask"), LocationName("Curiosity Shop Man #1"), Region(Region.LaundryPool)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a popular mask", "a fox's mask")]
@@ -741,6 +743,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x7F), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskBunnyHood,
 
+        [Visible]
         [StartingItem(0xC5CE45, 0x42)]
         [ItemName("Don Gero's Mask"), LocationName("Hungry Goron"), Region(Region.MountainVillage)]
         [GossipLocationHint("a hungry goron", "a person in need"), GossipItemHint("a conductor's mask", "an amphibious mask")]
@@ -791,6 +794,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x85), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskCouple,
 
+        [Visible]
         [StartingItem(0xC5CE4C, 0x36)]
         [ItemName("Mask of Truth"), LocationName("Swamp Spider House Reward"), Region(Region.SouthernSwamp)]
         [GossipLocationHint("a gold spider"), GossipItemHint("a piercing gaze"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false)]
@@ -816,6 +820,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x87), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         MaskGibdo,
 
+        [Visible]
         [RupeeRepeatable]
         [StartingItem(0xC5CE50, 0x3B)]
         [ItemName("Garo's Mask"), LocationName("Gorman Bros Race"), Region(Region.MilkRoad)]

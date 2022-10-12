@@ -16,6 +16,13 @@ typedef struct {
     /* 0x0C */ Vec3s rot;
 } PosRot; // size = 0x14
 
+typedef struct {
+    /* 0x00 */ f32 x[4];
+    /* 0x10 */ f32 y[4];
+    /* 0x20 */ f32 z[4];
+    /* 0x30 */ f32 w[4];
+} z_Matrix; // size = 0x40
+
 typedef void(*ActorFunc)(struct Actor *this, struct GlobalContext *ctxt);
 
 typedef union {
@@ -204,6 +211,10 @@ typedef enum {
 } PlayerHeldItem;
 
 typedef struct {
+    /* 0x00 */ u32 maskDListEntry[24];
+} PlayerMaskDList; // size = 0x60
+
+typedef struct {
     /* 0x000 */ Actor base;
     /* 0x144 */ u8 pad144[0x2];
     /* 0x146 */ u8 itemButton;
@@ -222,7 +233,9 @@ typedef struct {
     /* 0x241 */ u8 unk241;
     /* 0x242 */ UNK_TYPE1 pad242[0x6];
     /* 0x248 */ PlayerAnimation currentAnimation;
-    /* 0x24C */ UNK_TYPE1 pad24C[0x100];
+    /* 0x24C */ UNK_TYPE1 pad24C[0xC];
+    /* 0x258 */ f32 animationCurrentFrame;
+    /* 0x25C */ UNK_TYPE1 pad25C[0xF0];
     /* 0x34C */ Actor* heldActor;
     /* 0x350 */ UNK_TYPE1 pad350[0x18];
     /* 0x368 */ Vec3f unk368;
@@ -270,7 +283,10 @@ typedef struct {
     /* 0xB72 */ u16 floorType; // Determines sound effect used while walking.
     /* 0xB74 */ UNK_TYPE1 padB74[0x28];
     /* 0xB9C */ Vec3f unkB9C;
-    /* 0xBA8 */ UNK_TYPE1 padBA8[0x1B4];
+    /* 0xBA8 */ UNK_TYPE1 padBA8[0x11C];
+    /* 0xCC4 */ z_Matrix attachmentMtx0; //not sure what uses this
+    /* 0xD04 */ z_Matrix attachmentMtx1; //used by mirror shield lightray actor
+    /* 0xD44 */ UNK_TYPE1 padD44[0x18];
     /* 0xD5C */ s8 invincibilityFrames;
     /* 0xD5D */ UNK_TYPE1 padD5D[0x1B];
 } ActorPlayer; // size = 0xD78

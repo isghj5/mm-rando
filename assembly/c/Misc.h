@@ -58,9 +58,12 @@ typedef struct {
     u32 fillWallet          : 1;
     u32 autoInvert          : 2;
     u32 hiddenRupeesSparkle : 1;
-    u32 chestGameMinimap    : 2;
     u32 saferGlitches       : 1;
-    u32                     : 3;
+    u32 drawDonGeroMask     : 1;
+    u32 drawPostmanHat      : 1;
+    u32 drawMaskOfTruth     : 1;
+    u32 drawGaroMask        : 1;
+    u32                     : 1;
 } MiscFlags;
 
 typedef union {
@@ -86,6 +89,7 @@ typedef struct {
     u32 doubleArchery       : 1;
     u32 multiBank           : 1;
     u32 shortChestOpening   : 1;
+    u32 chestGameMinimap    : 2;
     u32                     : 23;
 } MiscSpeedups;
 
@@ -93,6 +97,11 @@ typedef struct {
     u16 collectableTableFileIndex;
     u16 bankWithdrawFee;
 } MiscShorts;
+
+typedef struct {
+    u8 npcKafeiReplaceMask;
+    u8 pad[3];
+} MiscBytes;
 
 struct MiscConfig {
     /* 0x00 */ u32 magic;
@@ -102,7 +111,8 @@ struct MiscConfig {
     /* 0x1C */ MiscInternal internal;
     /* 0x20 */ MiscSpeedups speedups;
     /* 0x24 */ MiscShorts shorts;
-}; // size = 0x28
+    /* 0x28 */ MiscBytes MMRbytes;
+}; // size = 0x2C
 
 extern struct MiscConfig MISC_CONFIG;
 
