@@ -78,13 +78,17 @@ void Sprite_Load(DispBuf* db, Sprite* sprite, int startTile, int tileCount) {
 }
 
 void Sprite_Draw(DispBuf* db, Sprite* sprite, int tileIndex, int left, int top, int width, int height) {
+    Sprite_DrawCropped(db, sprite, tileIndex, left, top, width, height, CROP(0, 0));
+}
+
+void Sprite_DrawCropped(DispBuf* db, Sprite* sprite, int tileIndex, int left, int top, int width, int height, Crop crop) {
     int widthFactor = (1<<10) * sprite->tileW / width;
-    int heightFactor = (1<<10) * sprite->tileH / height;
+    int heightFactor = (1<<10) * (sprite->tileH - (crop.top + crop.bottom)) / height;
     gSPTextureRectangle(db->p++,
             left<<2, top<<2,
             (left + width)<<2, (top + height)<<2,
             0,
-            0, (tileIndex * sprite->tileH)<<5,
+            0, ((tileIndex * sprite->tileH) + crop.top)<<5,
             widthFactor, heightFactor);
 }
 

@@ -8,7 +8,7 @@ static bool gEnable = true;
 
 // Gold Skulltula HUD icon.
 static Sprite gSkulltulaIcon = {
-    NULL, 24, 18, 1,
+    NULL, 24, 24, 1,
     G_IM_FMT_RGBA, G_IM_SIZ_32b, 4
 };
 
@@ -249,7 +249,7 @@ void OverlayMenu_Draw(GlobalContext* ctxt) {
         } else if (d->hasTokens) {
             // Draw skulltula token icon.
             Sprite_Load(db, &gSkulltulaIcon, 0, 1);
-            Sprite_Draw(db, &gSkulltulaIcon, 0, left + 2, top, 16, 12);
+            Sprite_DrawCropped(db, &gSkulltulaIcon, 0, left + 2, top, 16, 12, CROP(0, 6));
         }
     }
     left += 20 + padding;
