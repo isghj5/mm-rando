@@ -148,10 +148,12 @@ extern void z2_BaseDrawGiModel(GlobalContext* ctxt, u32 graphicIdMinus1);
 extern void z2_CallSetupDList(GraphicsContext* gfx);
 extern Gfx* z2_8012BC50(Gfx* gfx, u8 r, u8 g, u8 b, u8 a, u16 unk_a5, f32 unk_a6);
 extern Gfx* z2_Gfx_CallSetupDL(Gfx* gfx, u32 i);
+extern void z2_Gfx_8012C28C(GraphicsContext* gfx, GlobalContext* ctxt);
 extern void z2_DrawHeartPiece(Actor* actor, GlobalContext* ctxt);
 extern void z2_DrawRupee(Actor* actor, GlobalContext* ctxt);
 extern void z2_PreDraw1(Actor* actor, GlobalContext* ctxt, u32 unknown);
 extern void z2_PreDraw2(Actor* actor, GlobalContext* ctxt, u32 unknown);
+extern void z2_801660B8(GlobalContext* ctxt, Gfx* gfx);
 
 // Function Prototypes (File Loading).
 extern s32 z2_RomToRam(u32 src, void* dst, u32 length);

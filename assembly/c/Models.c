@@ -866,6 +866,41 @@ void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
     *(ctxt->state.gfxCtx->polyOpa.p++) = backup;
 }
 
+bool Models_DrawSmithyItem(Actor* actor, GlobalContext* ctxt) {
+    if (!MISC_CONFIG.flags.freestanding){
+        return false;
+    }
+
+    z2_PushMatrixStackCopy();
+    Vec3s rot;
+    Vec3f pos;
+
+    pos.x = -192.0;
+    pos.y = 3076.0;
+    pos.z = 8192.0;
+    rot.x = 0x0000;
+    rot.y = 0xC000;
+    rot.z = 0xC000;
+    z2_TransformMatrixStackTop(&pos, &rot);
+
+    if (gSaveContext.perm.day == 1) {
+        DrawFromGiTable(actor, ctxt, 31.0, 0x38);
+    } else {
+        DrawFromGiTable(actor, ctxt, 31.0, 0x39);
+    }
+    z2_PopMatrixStack();
+
+    SceneObject* obj = FindObject(ctxt, OBJECT_KGY);
+    if (obj != NULL) {
+        // Restore object addresses in RDRAM table and DList.
+        gRspSegmentPhysAddrs.currentObject = (u32)obj->vramAddr & 0xFFFFFF;
+        SetObjectSegment(ctxt, (const void*)obj->vramAddr);
+    }
+
+    z2_Gfx_8012C28C(ctxt->state.gfxCtx, ctxt);
+    return true;
+}
+
 void Models_AfterActorDtor(Actor* actor) {
     if (MISC_CONFIG.flags.freestanding) {
         if (actor->id == ACTOR_EN_ELFORG) {
