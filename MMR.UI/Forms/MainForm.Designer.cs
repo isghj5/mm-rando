@@ -154,6 +154,8 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.lChestGame = new System.Windows.Forms.Label();
+            this.cChestGameMinimap = new System.Windows.Forms.ComboBox();
             this.cSaferGlitches = new System.Windows.Forms.CheckBox();
             this.cInvisSparkle = new System.Windows.Forms.CheckBox();
             this.cFillWallet = new System.Windows.Forms.CheckBox();
@@ -1825,6 +1827,8 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.lChestGame);
+            this.groupBox7.Controls.Add(this.cChestGameMinimap);
             this.groupBox7.Controls.Add(this.cSaferGlitches);
             this.groupBox7.Controls.Add(this.cInvisSparkle);
             this.groupBox7.Controls.Add(this.cFillWallet);
@@ -1851,6 +1855,33 @@ namespace MMR.UI.Forms
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
+            // 
+            // lChestGame
+            // 
+            this.lChestGame.AutoSize = true;
+            this.lChestGame.BackColor = System.Drawing.Color.Transparent;
+            this.lChestGame.ForeColor = System.Drawing.Color.Black;
+            this.lChestGame.Location = new System.Drawing.Point(8, 295);
+            this.lChestGame.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lChestGame.Name = "lChestGame";
+            this.lChestGame.Size = new System.Drawing.Size(156, 15);
+            this.lChestGame.TabIndex = 45;
+            this.lChestGame.Text = "Treasure Chest Game Spoiler";
+            // 
+            // cChestGameMinimap
+            // 
+            this.cChestGameMinimap.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cChestGameMinimap.FormattingEnabled = true;
+            this.cChestGameMinimap.Items.AddRange(new object[] {
+            "Off",
+            "Minimal",
+            "Conditional Spoiler",
+            "Spoiler"});
+            this.cChestGameMinimap.Location = new System.Drawing.Point(10, 310);
+            this.cChestGameMinimap.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cChestGameMinimap.Name = "cChestGameMinimap";
+            this.cChestGameMinimap.Size = new System.Drawing.Size(129, 23);
+            this.cChestGameMinimap.TabIndex = 44;
             // 
             // cSaferGlitches
             // 
@@ -3130,6 +3161,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lNumTricksEnabled;
         private System.Windows.Forms.CheckBox cSaferGlitches;
         private System.Windows.Forms.CheckBox cSpeedupBabyCucco;
+        private System.Windows.Forms.Label lChestGame;
+        private System.Windows.Forms.ComboBox cChestGameMinimap;
         private System.Windows.Forms.CheckBox cGiantMaskAnywhere;
     }
 }

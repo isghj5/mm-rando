@@ -106,8 +106,14 @@
 .definelabel z2_CanInteract2, 0x80123358
 .definelabel z2_CanInteract, 0x801233E4
 .definelabel z2_801242DC, 0x801242DC
+.definelabel z2_PlayerGormanTears, 0x80127594
+.definelabel z2_PlayerBlastMaskAnim, 0x801278F8
+.definelabel z2_PlayerBunnyHoodLimbs, 0x80127A60
+.definelabel z2_PlayerGreatFairyLimbs, 0x801284A0
+.definelabel z2_80128640, 0x80128640
 .definelabel z2_8012BC50, 0x8012BC50
 .definelabel z2_Gfx_CallSetupDL, 0x8012BF78
+.definelabel z2_Gfx_8012C28C, 0x8012C28C
 .definelabel z2_CallSetupDList, 0x8012C2DC
 .definelabel z2_8012C654, 0x8012C654
 .definelabel z2_LoadRoom, 0x8012E96C
@@ -127,6 +133,7 @@
 .definelabel ShrinkWindow_SetLetterboxTarget, 0x80160C00
 .definelabel z2_8016566C, 0x8016566C
 .definelabel z2_80165690, 0x80165690
+.definelabel z2_801660B8, 0x801660B8
 .definelabel z2_load_scene, 0x801693D4
 .definelabel z2_Play_CreateSubCamera, 0x801694DC
 .definelabel z2_Play_CameraChangeStatus, 0x80169590
@@ -138,6 +145,8 @@
 .definelabel z2_LoadVFileFromArchive, 0x80178E3C
 .definelabel z2_PushMatrixStackCopy, 0x8018019C
 .definelabel z2_PopMatrixStack, 0x801801CC
+.definelabel z2_CopyFromMatrixStackTop, 0x801801E8
+.definelabel z2_CopyToMatrixStackTop, 0x8018020C
 .definelabel z2_GetMatrixStackTop, 0x80180234
 .definelabel z2_Matrix_RotateY, 0x801809AC
 .definelabel z2_Matrix_InsertZRotation_f, 0x80180E90

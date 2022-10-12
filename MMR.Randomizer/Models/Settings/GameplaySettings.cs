@@ -189,6 +189,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.HiddenRupeesSparkle = value; }
         }
 
+        public ChestGameMinimapState ChestGameMinimap
+        {
+            get { return this.AsmOptions.MiscConfig.Speedups.ChestGameMinimap; }
+            set { this.AsmOptions.MiscConfig.Speedups.ChestGameMinimap = value; }
+        }
+
         public bool SaferGlitches
         {
             get { return this.AsmOptions.MiscConfig.Flags.SaferGlitches; }

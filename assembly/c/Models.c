@@ -866,6 +866,185 @@ void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
     *(ctxt->state.gfxCtx->polyOpa.p++) = backup;
 }
 
+bool Models_DrawSmithyItem(Actor* actor, GlobalContext* ctxt) {
+    if (!MISC_CONFIG.flags.freestanding){
+        return false;
+    }
+
+    z2_PushMatrixStackCopy();
+    Vec3s rot;
+    Vec3f pos;
+
+    pos.x = -192.0;
+    pos.y = 3076.0;
+    pos.z = 8192.0;
+    rot.x = 0x0000;
+    rot.y = 0xC000;
+    rot.z = 0xC000;
+    z2_TransformMatrixStackTop(&pos, &rot);
+
+    if (gSaveContext.perm.day == 1) {
+        DrawFromGiTable(actor, ctxt, 31.0, 0x38);
+    } else {
+        DrawFromGiTable(actor, ctxt, 31.0, 0x39);
+    }
+    z2_PopMatrixStack();
+
+    SceneObject* obj = FindObject(ctxt, OBJECT_KGY);
+    if (obj != NULL) {
+        // Restore object addresses in RDRAM table and DList.
+        gRspSegmentPhysAddrs.currentObject = (u32)obj->vramAddr & 0xFFFFFF;
+        SetObjectSegment(ctxt, (const void*)obj->vramAddr);
+    }
+
+    z2_Gfx_8012C28C(ctxt->state.gfxCtx);
+    return true;
+}
+
+void Models_DrawKeatonMask(GlobalContext* ctxt, ActorPlayer* actor) {
+    if (MISC_CONFIG.flags.freestanding) {
+        if (actor->mask == 0x05) {
+            if (MISC_CONFIG.MMRbytes.npcKafeiReplaceMask == 0) {
+                // hooks in kafei should have made this matrix
+                z2_PushMatrixStackCopy();
+                z2_CopyToMatrixStackTop(&actor->attachmentMtx1);
+                DrawFromGiTable(&actor->base, ctxt, 25.0, 0x80);
+                z2_PopMatrixStack();
+            }
+        }
+    }
+}
+
+void Models_DrawDonGeroMask(GlobalContext* ctxt, Actor* actor) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawDonGeroMask) {
+        z2_PushMatrixStackCopy();
+
+        Vec3f pos;
+        pos.x = 1536;
+        pos.y = 512;
+        pos.z = 0;
+
+        Vec3s rot;
+        rot.x = 0x1800;
+        rot.y = 0xc000;
+        rot.z = 0x8000;
+
+        z2_TransformMatrixStackTop(&pos, &rot);
+        DrawFromGiTable(actor, ctxt, 32.0, 0x88);
+        z2_PopMatrixStack();
+    } else {
+        z2_Gfx_8012C28C(ctxt->state.gfxCtx);
+        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x06004DB0);
+    }
+}
+
+void Models_DrawPostmanHat(Actor* actor, DispBuf* buf, GlobalContext* ctxt) {
+    // The skeleton function used doesn't update the polyOpa buffer pointer until
+    // it's entirely done, so we're updating it here. This -should- be okay, the hook
+    // is at the end of the postman's limbs and draw functions.
+    ctxt->state.gfxCtx->polyOpa.p = buf->p;
+
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawPostmanHat) {
+        Vec3f pos;
+        pos.x = 1024;
+        pos.y = 192;
+        pos.z = -512;
+
+        Vec3s rot;
+        rot.x = 0xF000;
+        rot.y = 0x8000;
+        rot.z = 0xc000;
+
+        z2_TransformMatrixStackTop(&pos, &rot);
+        DrawFromGiTable(actor, ctxt, 25.0, 0x84);
+    } else {
+        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x060085C8);
+    }
+    // update the stack-stored polyOpa pointer so the draw function finishes properly
+    buf->p = ctxt->state.gfxCtx->polyOpa.p;
+}
+
+bool Models_SetEnSshMatrix(GlobalContext* ctxt, ActorEnSsh* actor) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawMaskOfTruth) {
+        Vec3f pos;
+        Vec3s rot;
+
+        pos.x = 256;
+        pos.y = -384;
+        pos.z = 64;
+
+        rot.x = 0x5000;
+        rot.y = 0xD000;
+        rot.z = 0x0000;
+        z2_TransformMatrixStackTop(&pos, &rot);
+        z2_CopyFromMatrixStackTop(&actor->mtx0);
+        return false;
+    } else {
+        return true; // draw internal mask of truth
+    }
+}
+
+void Models_DrawEnSshMaskOfTruth(GlobalContext* ctxt, ActorEnSsh* actor) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawMaskOfTruth) {
+        z2_CopyToMatrixStackTop(&actor->mtx0);
+        DrawFromGiTable(&actor->base, ctxt, 12.0, 0x8A);
+    }
+}
+
+u16 Models_DrawEnSthMaskOfTruth(GlobalContext* ctxt, ActorEnSth* actor) {
+    if (actor->maskFlag & 0x0001) {
+        if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawMaskOfTruth) {
+            Vec3f pos;
+            Vec3s rot;
+
+            pos.x = 512;
+            pos.y = 768;
+            pos.z = 0;
+
+            rot.x = 0x0000;
+            rot.y = 0xC000;
+            rot.z = 0xC000;
+
+            z2_TransformMatrixStackTop(&pos, &rot);
+            DrawFromGiTable(&actor->base, ctxt, 25.0, 0x8A);
+            return 0x0000;
+        } else {
+            return 0x0001;
+        }
+    } else {
+        return 0x0000;
+    }
+}
+
+void Models_SetEnInHead(u32 *buf) {
+    if (!MISC_CONFIG.flags.freestanding || MISC_CONFIG.flags.drawGaroMask) {
+        u32 dl = 0x0601C528;
+        *buf = dl; // draw garo's mask
+    }
+}
+
+void Models_DrawGaroMask(GlobalContext* ctxt, ActorEnIn* actor) {
+    if (actor->modelFlag & 4) {
+        if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawGaroMask) {
+            z2_CopyToMatrixStackTop(&actor->mtx0);
+
+            Vec3f pos;
+            Vec3s rot;
+
+            pos.x = 1280;
+            pos.y = 967;
+            pos.z = 0;
+
+            rot.x = 0xC000;
+            rot.y = 0xC000;
+            rot.z = 0x0000;
+
+            z2_TransformMatrixStackTop(&pos, &rot);
+            DrawFromGiTable(&actor->base, ctxt, 25.0, 0x81);
+        }
+    }
+}
+
 void Models_AfterActorDtor(Actor* actor) {
     if (MISC_CONFIG.flags.freestanding) {
         if (actor->id == ACTOR_EN_ELFORG) {

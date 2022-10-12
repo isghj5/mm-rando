@@ -106,6 +106,7 @@
 0x801242DC,z2_801242DC
 0x8012BC50,z2_8012BC50
 0x8012BF78,z2_Gfx_CallSetupDL
+0x8012C28C,z2_Gfx_8012C28C
 0x8012C2DC,z2_CallSetupDList
 0x8012C654,z2_8012C654
 0x8012E96C,z2_LoadRoom
@@ -125,6 +126,7 @@
 0x80160C00,ShrinkWindow_SetLetterboxTarget
 0x8016566C,z2_8016566C
 0x80165690,z2_80165690
+0x801660B8,z2_801660B8
 0x801693D4,z2_load_scene
 0x801694DC,z2_Play_CreateSubCamera
 0x80169590,z2_Play_CameraChangeStatus
@@ -149,3 +151,10 @@
 0x8019F0C8,z2_PlaySfx
 0x801A3098,z2_SetBGM2
 0x800B9010,z2_PlayLoopingSfxAtActor
+0x80127A60,z2_PlayerBunnyHoodLimbs
+0x801284A0,z2_PlayerGreatFairyLimbs
+0x80127594,z2_PlayerGormanTears
+0x801278F8,z2_PlayerBlastMaskAnim
+0x801801E8,z2_CopyFromMatrixStackTop
+0x8018020C,z2_CopyToMatrixStackTop
+0x80128640,z2_80128640

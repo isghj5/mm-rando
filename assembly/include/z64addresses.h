@@ -83,6 +83,15 @@ extern void z2_8012C654(GraphicsContext* gfxCtx);
 extern Gfx* z2_8010CFBC(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a);
 extern Gfx* z2_8010D480(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a, u16 arg14, u16 arg15);
 
+extern void z2_80128640(GlobalContext* ctxt, ActorPlayer* actor);
+extern void z2_PlayerBunnyHoodLimbs(GlobalContext* ctxt);
+extern void z2_PlayerGormanTears(GlobalContext* ctxt, ActorPlayer* player);
+extern void z2_PlayerBlastMaskAnim(GlobalContext* ctxt, ActorPlayer* player);
+extern void z2_PlayerGreatFairyLimbs(GlobalContext* ctxt, ActorPlayer* player);
+extern void z2_CopyFromMatrixStackTop(z_Matrix* mtx);
+extern void z2_CopyToMatrixStackTop(z_Matrix* mtx);
+
+
 // Function Prototypes (Scene Flags).
 // TODO parameters
 extern void z2_get_generic_flag();
@@ -156,10 +165,12 @@ extern void z2_BaseDrawGiModel(GlobalContext* ctxt, u32 graphicIdMinus1);
 extern void z2_CallSetupDList(GraphicsContext* gfx);
 extern Gfx* z2_8012BC50(Gfx* gfx, u8 r, u8 g, u8 b, u8 a, u16 unk_a5, f32 unk_a6);
 extern Gfx* z2_Gfx_CallSetupDL(Gfx* gfx, u32 i);
+extern void z2_Gfx_8012C28C(GraphicsContext* gfx);
 extern void z2_DrawHeartPiece(Actor* actor, GlobalContext* ctxt);
 extern void z2_DrawRupee(Actor* actor, GlobalContext* ctxt);
 extern void z2_PreDraw1(Actor* actor, GlobalContext* ctxt, u32 unknown);
 extern void z2_PreDraw2(Actor* actor, GlobalContext* ctxt, u32 unknown);
+extern void z2_801660B8(GlobalContext* ctxt, Gfx* gfx);
 
 // Function Prototypes (File Loading).
 extern s32 z2_RomToRam(u32 src, void* dst, u32 length);
