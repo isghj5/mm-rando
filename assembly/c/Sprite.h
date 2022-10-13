@@ -26,7 +26,6 @@ extern Sprite gSpriteDpad;
 extern Sprite gSpriteFont;
 extern Sprite gSpriteIcon;
 extern Sprite gSpriteIcon24;
-extern Sprite gSpriteFairy;
 
 void Sprite_Draw(DispBuf* db, Sprite* sprite, int tileIndex, int left, int top, int width, int height);
 void Sprite_DrawCropped(DispBuf* db, Sprite* sprite, int tileIndex, int left, int top, int width, int height, Crop crop);

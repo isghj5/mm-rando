@@ -42,11 +42,6 @@ Sprite gSpriteIcon24 = {
     G_IM_FMT_RGBA, G_IM_SIZ_32b, 4
 };
 
-Sprite gSpriteFairy = {
-    NULL, 32, 24, 4,
-    G_IM_FMT_RGBA, G_IM_SIZ_32b, 4
-};
-
 // Sprite containing 5 item textures.
 // Depending on the game state, this is used for either the file select hash icons, or the d-pad icons.
 static Sprite gItemTexturesSprite = {
@@ -102,14 +97,6 @@ void Sprite_Init(void) {
     // Allocate space for item textures
     int size = Sprite_GetBytesTotal(&gItemTexturesSprite);
     gItemTexturesSprite.buf = Util_HeapAlloc(size);
-
-    // Initialize fairy sprite.
-    int fairyBytes = Sprite_GetBytesTotal(&gSpriteFairy);
-    gSpriteFairy.buf = Util_HeapAlloc(fairyBytes);
-    u8* temp = (u8*)0x80780000;
-    const u32 dataOffset = 0x1B80;
-    z2_DmaMgr_SendRequest0(temp, 0xA0A000, 0x4B80);
-    z2_memcpy(gSpriteFairy.buf, temp + dataOffset, fairyBytes);
 
     // Initialize font texture buffer.
     int fontBytes = Sprite_GetBytesTotal(&gSpriteFont);
