@@ -1393,7 +1393,7 @@ namespace MMR.Randomizer
         {
             if (_randomized.Settings.RandomizeEnemies)
             {
-                Enemies.ShuffleEnemies(outputSettings, new Random(_randomized.Seed));
+                Enemies.ShuffleEnemies(outputSettings, _randomized.Seed);
             }
         }
 
