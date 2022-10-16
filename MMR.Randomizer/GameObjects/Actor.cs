@@ -2204,7 +2204,8 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(Scene.EastClockTown)]
         [UnkillableAllVariants]
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.Woodfall, Scene.LaundryPool, Scene.PiratesFortress,
-            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower)] // big blocking
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTower, // big blocking
+            Scene.StoneTower)] // too much dyna, only one is allowed
         StockpotBell = 0x14E, // Obj_Bell
 
         [FileID(301)]
