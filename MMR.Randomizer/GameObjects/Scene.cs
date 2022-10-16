@@ -61,9 +61,10 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Peahat, // hidden or very weak enemies suck here, but they are very common in this slot
             Actor.Bo, Actor.Nejiron, Actor.RedBubble, Actor.Leever, Actor.Wolfos, Actor.Beamos)] // beamos is just because bomb locking this check early is prime seed killer
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
-            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, Actor.Bumper /*, Actor.PatrollingPirate */ )]
+            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, Actor.WarpDoor,
+            Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform /*, Actor.PatrollingPirate */ )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BioDekuBaba,
-            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // 
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // they can extend so far they can block the door leading out
         Grottos = 0x0A,
 
         // Unused = 0x0B,
@@ -210,6 +211,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1298)]
         [SceneInternalId(0x29)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Scarecrow, // can block the stairs
+            Actor.ClocktowerGearsAndOrgan)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // can block the stairs
             Actor.ClocktowerGearsAndOrgan)]
         AstralObservatory = 0x26, // and sewer leading to it
 
@@ -422,6 +425,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1442)]
         [SceneInternalId(0x58)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Beamos,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         StoneTower = 0x55,
 
         [FileID(1444)]

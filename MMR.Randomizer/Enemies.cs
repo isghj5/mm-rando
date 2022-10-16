@@ -419,6 +419,11 @@ namespace MMR.Randomizer
             var playerCodeFile = RomData.MMFileList[38].Data;
             ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x030B10, val: 0x40000000); // change to 2.0, double running speed
 
+            // can we remove an object from ikana to increase object budget to have more stuff?
+            var ikanaScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.IkanaCanyon.FileID());
+            ikanaScene.Maps[0].Objects[10] = SMALLEST_OBJ; // kafei
+            ikanaScene.Maps[0].Objects[18] = SMALLEST_OBJ; // flying scrub
+
             //PrintActorValues();
         }
 
@@ -1263,10 +1268,11 @@ namespace MMR.Randomizer
         public static void FixBrokenActorSpawnCutscenes(SceneEnemizerData thisSceneData)
         {
             /// each spawn gets one cutscene
-            /// if a dinofos spawn has a cutscene it plays the cutscene but it breaks the game
+            /// if a dinofos spawn has a cutscene it plays the cutscene
+            /// (supposed to be the drop from ceiling cutscene) but it breaks the game
+            /// so we have to disable it for any new dinofos spawns to avoid, also scarecrow
 
             var listTroubleActorsObj = new List<int> { GameObjects.Actor.Dinofos.ObjectIndex(), GameObjects.Actor.Scarecrow.ObjectIndex() };
-
 
             var dinoObjDetected = thisSceneData.ChosenReplacementObjects.Find(v => listTroubleActorsObj.Contains(v.ChosenV)) != null;
 
@@ -1283,8 +1289,46 @@ namespace MMR.Randomizer
                     testActor.Rotation.y |= 0x7F;
                 }
             }
-            
         }
+
+        public static void FixGroundToFlyingActorHeights(SceneEnemizerData thisSceneData)
+        {
+            /// for variety, I wanted to be able to put flying enemies where ground enemies used to be
+            /// the inverse is also interesting in idea, but harder to apply without micro-types
+            /// however, sometimes its weird because the flying enemy is too close to the ground
+            /// so for some, they will have values to specify they should be auto-matically raised
+            /// a bit higher than their ground spawn which is almost always the floor
+
+            int flyingTypeIndex = (int) GameObjects.ActorType.Flying - 1;
+
+            thisSceneData.Log.AppendLine(" ---------- ");
+
+            for (int i = 0; i < thisSceneData.Actors.Count(); i++)
+            {
+                var testActor = thisSceneData.Actors[i];
+                var flyingVariants = testActor.ActorEnum.GetAttribute<FlyingVariantsAttribute>();
+                var oldGroundVariants = testActor.OldActorEnum.GetAttribute<GroundVariantsAttribute>();
+                // if previous spawn was ground and the replacement actor has an attribute, adjust height
+                // bug: type for bee in mountain spring is FLYING, should be ground, todo fix
+                if (flyingVariants != null && oldGroundVariants != null && // our new actor can fly
+                    //testActor.Type == GameObjects.ActorType.Ground && // previous type was ground
+                    oldGroundVariants.Variants.Contains(testActor.OldVariant) && // previous type was ground
+                    flyingVariants.Variants.Contains(testActor.Variants[0])) // chosen variant is flying
+                {
+                    // if attribute exists, we need to adjust
+                    // todo we might want to add as injected actor, in which case this would be loading once
+                    var attr = testActor.ActorEnum.GetAttribute<FlyingToGroundHeightAdjustmentAttribute>();
+                    if (attr != null)
+                    {
+                        testActor.Position.y += (short) attr.Height;
+
+                        thisSceneData.Log.AppendLine($" + adjusted height of actor [{testActor.Name}] by [{attr.Height}]");
+                    }
+                }
+            }
+            thisSceneData.Log.AppendLine(" ---------- ");
+        }
+
         // TODO: change these so they only print out the "== MAP" stuff if themap actually has something we changed
         public static void FixSwitchFlagVars(SceneEnemizerData thisSceneData)
         {
@@ -1420,14 +1464,14 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.CuccoChick)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.UnusedStoneTowerPlatform)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.Scarecrow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.DragonFly)) continue;
+                if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Scarecrow, GameObjects.Actor.Dinofos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Scarecrow, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.IkanaCastle, GameObjects.Actor.Skulltula, GameObjects.Actor.MajoraBalloonSewer)) continue;
+                if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.Seagulls, GameObjects.Actor.FriendlyCucco)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
                 #endif
@@ -2321,6 +2365,7 @@ namespace MMR.Randomizer
             FixKickoutEnemyVars(thisSceneData);
             FixRedeadSpawnScew(thisSceneData);
             FixBrokenActorSpawnCutscenes(thisSceneData);
+            FixGroundToFlyingActorHeights(thisSceneData);
 
             // print debug actor locations
             for (int i = 0; i < thisSceneData.Actors.Count; i++)
@@ -2863,7 +2908,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 39.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 40.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

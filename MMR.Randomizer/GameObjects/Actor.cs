@@ -131,6 +131,7 @@ namespace MMR.Randomizer.GameObjects
         // 0x8000 is invisible
         [FlyingVariants(0x0, 0x2, 0x04, 0x8000, 0x8002, 0x8004)] // which ones are fire and ice?
         [WallVariants(0x8003, 0x3)]
+        [FlyingToGroundHeightAdjustment(150)]
         Keese = 0xC, // En_Firefly
 
         //[ActorizerEnabled] // crashes and other weird issues
@@ -178,8 +179,10 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled] // now that they are testy, lets count them as enemies
         [FileID(54)]
         [ObjectListIndex(0xF)]
+        // all variants less than zero get turned into zero, so we can add ones 
         [GroundVariants(0x0, 0xFFFF)] // FFFF is in ranch barn
-        [VariantsWithRoomMax(max: 6, variant:0xFFFF, 0x0)]
+        [FlyingVariants(0xFEEE)] // non-vanilla, want to see how they do if they spawn on flying, do they fall from the sky like normal?
+        [VariantsWithRoomMax(max: 6, variant:0xFFFF, 0x0, 0xFEEE)]
         [UnkillableAllVariants]
         // I would like a flying variant, but they seem to drop like a rock instead of float down
         //[EnemizerScenesExcluded(0x15, Scene.AstralObservatory, 0x35, 0x42, 0x10)]
@@ -372,6 +375,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(1,2,3,4,7)]
         [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
         [VariantsWithRoomMax(max: 10, variant: 0xFF)]
+        [FlyingToGroundHeightAdjustment(100)]
         [RespawningAllVariants] // they do NOT respawn, this is temporary: light arrow req makes them difficult to kill early in the game
         //[EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         // this old list of crash locations is for pathing versions, which we no longer use
@@ -504,6 +508,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x51)]
         [FlyingVariants(0xFFFF)]
         [VariantsWithRoomMax(max: 8, variant: 0xFFFF)]
+        [FlyingToGroundHeightAdjustment(50)]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         [UnkillableAllVariants] // respawning
         BlueBubble = 0x3E, // En_Bb
@@ -638,11 +643,14 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants(0)]
         [VariantsWithRoomMax(max: 1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
+        [FlyingToGroundHeightAdjustment(200)]
+        ///* 
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
             Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
+        //*/
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
 
         // Has no File
@@ -657,6 +665,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0x2324, 0x4324)] // butterlies in the air
         [WaterVariants(0x6322)] // fish swimming in the water
         [UnkillableAllVariants]
+        [FlyingToGroundHeightAdjustment(100)]
         [VariantsWithRoomMax(max: 2, 0x3323, 0x2324, 0x4324)]
         BugsFishButterfly = 0x4F, // Obj_Mure // includes bugs and fish and butterflies
 
@@ -768,6 +777,7 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(1)] // testing
         // needs limits because it can overload the dyna
         [VariantsWithRoomMax(max:1, variant:0, 1)]
+        [FlyingToGroundHeightAdjustment(150)]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         [UnkillableAllVariants]
         MajoraBalloonSewer = 0x5F, // En_Encount2
@@ -1414,11 +1424,14 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants(0)]
         [VariantsWithRoomMax(max:1, variant: 0)] // too much Bg is crash
         [UnkillableAllVariants]
+        [FlyingToGroundHeightAdjustment(200)]
+        ///*
         [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
             Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
+        //*/
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
         EmptyC8 = 0xC8,
@@ -1672,6 +1685,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x6)]
         [FlyingVariants(0, 1)]
         [RespawningAllVariants] // yes really
+        [FlyingToGroundHeightAdjustment(150)]
         [VariantsWithRoomMax(max: 7, variant: 0, 1)]
         Guay = 0xF1,
 
@@ -1802,6 +1816,7 @@ namespace MMR.Randomizer.GameObjects
         [FlyingVariants(0, 2, 3)]
         //[GroundVariants(1)] // works not sure what it does
         [VariantsWithRoomMax(max: 2, 0,2,3)]
+        [FlyingToGroundHeightAdjustment(150)]
         DragonFly = 0x109, // En_Grasshopper
 
         Empty10A = 0x10A,
@@ -2259,6 +2274,7 @@ namespace MMR.Randomizer.GameObjects
         [WallVariants(0xFF9F, 0x019F)]
         // one of these is sit on the wall bat from rtss: FF03/01/9F
         [VariantsWithRoomMax(max:1, 0xFF34)] // swarm
+        [FlyingToGroundHeightAdjustment(150)]
         [EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
         // switch flags are only for the graveyard, no other version uses it
         // hardcoded to use only in that scene too, so canno't use for anything else without modifying
@@ -2448,6 +2464,7 @@ namespace MMR.Randomizer.GameObjects
         // works as a wall enemy, but cannot be marked wall in case other walls replace tingle
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
+        [FlyingToGroundHeightAdjustment(150)]
         [EnemizerScenesExcluded(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
         [EnemizerScenesPlacementBlock(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
         Tingle = 0x176, // En_Bal
@@ -3157,7 +3174,6 @@ namespace MMR.Randomizer.GameObjects
         [CompanionActor(Flame, ourVariant: 0x100, variant: 0x4, 0x5)] // jo gets red flames
         [CompanionActor(Flame, ourVariant: 0x200, variant: 0x7FE)]    // beth gets blue flames
         [CompanionActor(Flame, ourVariant: 0x300, variant: 0x3)]      // amy gets green flames
-
         // no scene exclusion necessary, get spawned by the poe sisters minigame but they aren't actors in the scene to be randomized
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         PoeSisters = 0x1E8, // En_Po_Sisters
@@ -3349,7 +3365,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(475)]
         [ObjectListIndex(0x1EB)]
         // 0 is the lame bee that just spins in circles, 1/2 are aggressive and charge at you
-        [FlyingVariants(0,1,2,3,4,5)]
+        [FlyingVariants(0,1,2,3,4,5)] // vanilla 0 in mountain village
         [GroundVariants(0,1,2,3,4,5)]
         [VariantsWithRoomMax(max:4, variant: 0, 1, 2, 3, 4, 5)]
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // pirate beehive cutscene
@@ -4047,6 +4063,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x23F)]
         [FlyingVariants(7, 5)]
         [UnkillableAllVariants]
+        [FlyingToGroundHeightAdjustment(200)]
         [VariantsWithRoomMax(max: 2, variant: 7, 5)] // > severe lag over 10
         //[EnemizerScenesExcluded(Scene.GreatBayCoast, Scene.ZoraCape)]
         Seagulls = 0x267, // En_Tanron4
@@ -4231,6 +4248,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(601)]
         [ObjectListIndex(0x280)]
         [FlyingVariants(0)]
+        [FlyingToGroundHeightAdjustment(200)]
         //[UnkillableAllVariants]  // untested
         MajoraBalloonNCT = 0x282,
 
@@ -4318,6 +4336,7 @@ namespace MMR.Randomizer.GameObjects
         //[FlyingVariants(0, 1)] // two? one that steals and one that doesn't?
         [FlyingVariants(0)] // zero seems safe, does not steal sword or anything, 1 does not spawn
         [OnlyOneActorPerRoom]
+        [FlyingToGroundHeightAdjustment(100)]
         [EnemizerScenesExcluded(Scene.TerminaField)] // do not remove original, esp with rupeeland coming soon
         Takkuri = 0x291, // En_Theifbird
 

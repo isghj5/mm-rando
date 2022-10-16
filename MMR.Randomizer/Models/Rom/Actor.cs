@@ -207,7 +207,6 @@ namespace MMR.Randomizer.Models.Rom
             this.ActorID     = (int)newActorType;
             this.ObjectID    = newActorType.ObjectIndex();
 
-
             if (modifyOld)
             {
                 this.OldVariant     = vars;
@@ -240,6 +239,7 @@ namespace MMR.Randomizer.Models.Rom
             this.Name           = otherActor.Name;
             this.ActorID        = otherActor.ActorID;
             this.ObjectID       = otherActor.ObjectID;
+            //this.AllVariants    = otherActor.AllVariants; // other parts of the rando assume this is static
 
             if (vars != -1)
             {
