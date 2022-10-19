@@ -19,6 +19,7 @@ namespace MMR.Randomizer.Utils
         public static bool PostmanDrawHat { get; set; } = true;
         public static bool DrawMaskOfTruth { get; set; } = true;
         public static bool DrawGaroMask { get; set; } = true;
+        public static bool DrawPendantOfMemories { get; set; } = true;
 
         public static void UpdateMaskConfig(ItemObject itemObject, GetItemEntry newItem, Item item, ushort getItemIndex)
         {
@@ -46,6 +47,10 @@ namespace MMR.Randomizer.Utils
             if (getItemIndex == 0x81)
             {
                 UpdateGaroMaskConfig(itemObject, newItem, item);
+            }
+            if (getItemIndex == 0xAB)
+            {
+                UpdatePendantOfMemoriesConfig(itemObject, newItem, item);
             }
         }
 
@@ -219,6 +224,34 @@ namespace MMR.Randomizer.Utils
                 else
                 {
                     DrawGaroMask = false;
+                }
+            }
+        }
+
+        public static void UpdatePendantOfMemoriesConfig(ItemObject itemObject, GetItemEntry newItem, Item item)
+        {
+            if (newItem.ItemGained == 0xB0)
+            {
+                string itemMimicName = itemObject.Mimic.Item.GetAttribute<ItemNameAttribute>()?.Name;
+                if (itemMimicName == "Pendant of Memories")
+                {
+                    DrawPendantOfMemories = true;
+                }
+                else
+                {
+                    DrawPendantOfMemories = false;
+                }
+            }
+            else
+            {
+                string newItemName = item.GetAttribute<ItemNameAttribute>()?.Name;
+                if (newItemName == "Pendant of Memories")
+                {
+                    DrawPendantOfMemories = true;
+                }
+                else
+                {
+                    DrawPendantOfMemories = false;
                 }
             }
         }

@@ -583,6 +583,38 @@
     nop
 
 ;==================================================================================================
+; Freestanding Models (Pendant of Memories)
+;==================================================================================================
+
+.headersize G_EN_TEST3_DELTA
+
+; Replaces:
+;   lui     t9, 0xDE00
+;   lw      a0, 0x0000 (t7)
+;   lw      v1, 0x02B0 (t7)
+;   lui     t1, 0x0601
+;   addiu   t1, t1, 0xCB60
+;   addiu   t8, v1, 0x0008
+;   sw      t8, 0x02B0 (a0)
+;   sw      t1, 0x0004 (v1)
+;   sw      t9, 0x0000 (v1)
+.org 0x80A41254 ;offset 0x2A74
+    or      a0, s1, r0
+    or      a1, s0, r0
+    jal     Models_DrawPendantOfMemories
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
+; Replaces:
+;   jal     0x8012697C ;z2_Player_DrawGetItem
+.org 0x80A41510 ; offset 0x2D30
+    jal     Models_DrawPendantInHand
+
+;==================================================================================================
 ; Freestanding Models (Don Gero's Mask)
 ;==================================================================================================
 

@@ -80,7 +80,9 @@ typedef struct {
     u32 fastBankRupees : 1;
     u32 doubleArchery  : 1;
     u32 multiBank      : 1;
-    u32                : 24;
+    // TODO: Sort out drawing related flags into unique struct?
+    u32 drawPendant    : 1;
+    u32                : 23;
 } MiscSpeedups;
 
 typedef struct {

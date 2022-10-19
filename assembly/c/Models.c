@@ -885,9 +885,9 @@ void Models_DrawDonGeroMask(GlobalContext* ctxt, Actor* actor) {
         z2_PushMatrixStackCopy();
 
         Vec3f pos;
-        pos.x = 1536;
-        pos.y = 512;
-        pos.z = 0;
+        pos.x = 1536.0;
+        pos.y = 512.0;
+        pos.z = 0.0;
 
         Vec3s rot;
         rot.x = 0x1800;
@@ -911,9 +911,9 @@ void Models_DrawPostmanHat(Actor* actor, DispBuf* buf, GlobalContext* ctxt) {
 
     if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawPostmanHat) {
         Vec3f pos;
-        pos.x = 1024;
-        pos.y = 192;
-        pos.z = -512;
+        pos.x = 1024.0;
+        pos.y = 192.0;
+        pos.z = -512.0;
 
         Vec3s rot;
         rot.x = 0xF000;
@@ -934,9 +934,9 @@ bool Models_SetEnSshMatrix(GlobalContext* ctxt, ActorEnSsh* actor) {
         Vec3f pos;
         Vec3s rot;
 
-        pos.x = 256;
-        pos.y = -384;
-        pos.z = 64;
+        pos.x = 256.0;
+        pos.y = -384.0;
+        pos.z = 64.0;
 
         rot.x = 0x5000;
         rot.y = 0xD000;
@@ -962,9 +962,9 @@ u16 Models_DrawEnSthMaskOfTruth(GlobalContext* ctxt, ActorEnSth* actor) {
             Vec3f pos;
             Vec3s rot;
 
-            pos.x = 512;
-            pos.y = 768;
-            pos.z = 0;
+            pos.x = 512.0;
+            pos.y = 768.0;
+            pos.z = 0.0;
 
             rot.x = 0x0000;
             rot.y = 0xC000;
@@ -996,9 +996,9 @@ void Models_DrawGaroMask(GlobalContext* ctxt, ActorEnIn* actor) {
             Vec3f pos;
             Vec3s rot;
 
-            pos.x = 1280;
-            pos.y = 967;
-            pos.z = 0;
+            pos.x = 1280.0;
+            pos.y = 967.0;
+            pos.z = 0.0;
 
             rot.x = 0xC000;
             rot.y = 0xC000;
@@ -1007,6 +1007,52 @@ void Models_DrawGaroMask(GlobalContext* ctxt, ActorEnIn* actor) {
             z2_TransformMatrixStackTop(&pos, &rot);
             DrawFromGiTable(&actor->base, ctxt, 25.0, 0x81);
         }
+    }
+}
+
+void Models_DrawPendantOfMemories(GlobalContext* ctxt, ActorPlayer* actor) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.speedups.drawPendant) {
+        z2_PushMatrixStackCopy();
+        Vec3f pos;
+        Vec3s rot;
+
+        pos.x = 384.0;
+        pos.y = 416.0;
+        pos.z = 0.0;
+
+        rot.x = 0xC000;
+        rot.y = 0xC000;
+        rot.z = 0xF600;
+
+        z2_TransformMatrixStackTop(&pos, &rot);
+        DrawFromGiTable(&actor->base, ctxt, 10.0, 0xAB);
+        z2_PopMatrixStack();
+    } else {
+        gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x0600CB60);
+    }
+}
+
+void Models_DrawPendantInHand(GlobalContext* ctxt, ActorPlayer* actor) {
+    if (MISC_CONFIG.flags.freestanding && (!MISC_CONFIG.speedups.drawPendant) && ((actor->stateFlags.state1 & PLAYER_STATE1_GET_ITEM) == 0)) {
+        z2_TranslateMatrix(((z2_Math_Sins(actor->base.shape.rot.y)) * 3.3) + actor->bodyPartsPos[0xC].x,
+                            actor->bodyPartsPos[0xC].y + 8.0,
+                            ((z2_Math_CosS(actor->base.shape.rot.y)) * 3.3) + actor->bodyPartsPos[0xC].z, 0);
+
+        Vec3f pos;
+        Vec3s rot;
+
+        pos.x = 0.0;
+        pos.y = 0.0;
+        pos.z = 0.0;
+
+        rot.x = 0x0000;
+        rot.y = ctxt->state.frames * 1000;
+        rot.z = 0x0000;
+
+        z2_TransformMatrixStackTop(&pos, &rot);
+        DrawFromGiTable(&actor->base, ctxt, 0.2, 0xAB);
+    } else {
+    z2_Player_DrawGetItem(ctxt, actor);
     }
 }
 

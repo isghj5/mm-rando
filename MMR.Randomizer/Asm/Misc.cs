@@ -77,6 +77,13 @@ namespace MMR.Randomizer.Asm
         public bool BankMultiRewards { get; set; } = true;
 
         /// <summary>
+        /// A flag for a getItem draw hook, for whether to draw Kafei's in-model Pendant of Memories, or a getItem.
+        /// TODO: Reorganize draw related flags
+        /// </summary>
+        /// 
+        public bool DrawPendantOfMemories { get; set; }
+
+        /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
@@ -91,6 +98,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.FastBankRupees ? (uint)1 : 0) << 26;
             flags |= (this.DoubleArcheryRewards ? (uint)1 : 0) << 25;
             flags |= (this.BankMultiRewards ? (uint)1 : 0) << 24;
+            flags |= (this.DrawPendantOfMemories ? (uint)1 : 0) << 23;
             return flags;
         }
     }
@@ -283,7 +291,7 @@ namespace MMR.Randomizer.Asm
             this.HiddenRupeesSparkle = ((flags >> 6) & 1) == 1;
             this.DrawDonGeroMask = ((flags >> 5) & 1) == 1;
             this.DrawPostmanHat = ((flags >> 4) & 1) == 1;
-            this.DrawPostmanHat = ((flags >> 3) & 1) == 1;
+            this.DrawMaskOfTruth = ((flags >> 3) & 1) == 1;
             this.DrawGaroMask = ((flags >> 2) & 1) == 1;
         }
 
@@ -499,6 +507,7 @@ namespace MMR.Randomizer.Asm
             this.Flags.DrawPostmanHat = MaskConfigUtils.PostmanDrawHat;
             this.Flags.DrawMaskOfTruth = MaskConfigUtils.DrawMaskOfTruth;
             this.Flags.DrawGaroMask = MaskConfigUtils.DrawGaroMask;
+            this.Speedups.DrawPendantOfMemories = MaskConfigUtils.DrawPendantOfMemories;
 
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;

@@ -44,3 +44,15 @@
 .org 0x80A40F9C
     jal     NpcKafei_CheckHand
     or      a1, a3, r0
+
+;======================================================================
+; Kafei - remove inventory pendant check
+;======================================================================
+
+; Pendant check GetItem can stop drawing if the pendant is found in its quest slot.
+; Just change what item ID it wants to something impossible.
+; offset 0x2A40
+; Replaces:
+;    addiu  at, r0, 0x0030
+.org 0x80A41220
+    addiu   at, r0, 0x0002

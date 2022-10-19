@@ -55,6 +55,7 @@ extern void z2_PushMatrixStackCopy();
 extern void z2_PopMatrixStack();
 extern f32* z2_GetMatrixStackTop();
 extern void z2_TransformMatrixStackTop(Vec3f* pos, Vec3s* rot);
+extern void z2_TranslateMatrix(f32 x, f32 y, f32 z, u8 matrixMode);
 extern Gfx* z2_ShiftMatrix(GraphicsContext* gfxCtx);
 extern AudioInfo* z2_GetAudioTable(u8 audioType);
 extern void z2_PlaySfx(u32 id);
@@ -73,6 +74,7 @@ extern Gfx* z2_8010CFBC(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, 
 extern Gfx* z2_8010D480(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a, u16 arg14, u16 arg15);
 
 extern void z2_80128640(GlobalContext* ctxt, ActorPlayer* actor);
+extern void z2_Player_DrawGetItem(GlobalContext* ctxt, ActorPlayer* actor);
 extern void z2_PlayerBunnyHoodLimbs(GlobalContext* ctxt);
 extern void z2_PlayerGormanTears(GlobalContext* ctxt, ActorPlayer* player);
 extern void z2_PlayerBlastMaskAnim(GlobalContext* ctxt, ActorPlayer* player);
@@ -190,6 +192,7 @@ extern void z2_UpdateButtonsState(u32 state);
 
 // Function Prototypes (Math).
 extern f32 z2_Math_Sins(s16 angle);
+extern f32 z2_Math_CosS(s16 angle);
 extern f32 z2_Math_Vec3f_DistXZ(Vec3f* p1, Vec3f* p2);
 
 // Function Prototypes (Objects).
