@@ -881,7 +881,7 @@ void Models_DrawKeatonMask(GlobalContext* ctxt, ActorPlayer* actor) {
 }
 
 void Models_DrawDonGeroMask(GlobalContext* ctxt, Actor* actor) {
-    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawDonGeroMask) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawDonGeroMask) {
         z2_PushMatrixStackCopy();
 
         Vec3f pos;
@@ -909,7 +909,7 @@ void Models_DrawPostmanHat(Actor* actor, DispBuf* buf, GlobalContext* ctxt) {
     // is at the end of the postman's limbs and draw functions.
     ctxt->state.gfxCtx->polyOpa.p = buf->p;
 
-    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawPostmanHat) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawPostmanHat) {
         Vec3f pos;
         pos.x = 1024.0;
         pos.y = 192.0;
@@ -930,7 +930,7 @@ void Models_DrawPostmanHat(Actor* actor, DispBuf* buf, GlobalContext* ctxt) {
 }
 
 bool Models_SetEnSshMatrix(GlobalContext* ctxt, ActorEnSsh* actor) {
-    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawMaskOfTruth) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawMaskOfTruth) {
         Vec3f pos;
         Vec3s rot;
 
@@ -950,7 +950,7 @@ bool Models_SetEnSshMatrix(GlobalContext* ctxt, ActorEnSsh* actor) {
 }
 
 void Models_DrawEnSshMaskOfTruth(GlobalContext* ctxt, ActorEnSsh* actor) {
-    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawMaskOfTruth) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawMaskOfTruth) {
         z2_CopyToMatrixStackTop(&actor->mtx0);
         DrawFromGiTable(&actor->base, ctxt, 12.0, 0x8A);
     }
@@ -958,7 +958,7 @@ void Models_DrawEnSshMaskOfTruth(GlobalContext* ctxt, ActorEnSsh* actor) {
 
 u16 Models_DrawEnSthMaskOfTruth(GlobalContext* ctxt, ActorEnSth* actor) {
     if (actor->maskFlag & 0x0001) {
-        if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawMaskOfTruth) {
+        if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawMaskOfTruth) {
             Vec3f pos;
             Vec3s rot;
 
@@ -982,7 +982,7 @@ u16 Models_DrawEnSthMaskOfTruth(GlobalContext* ctxt, ActorEnSth* actor) {
 }
 
 void Models_SetEnInHead(u32 *buf) {
-    if (!MISC_CONFIG.flags.freestanding || MISC_CONFIG.flags.drawGaroMask) {
+    if (!MISC_CONFIG.flags.freestanding || MISC_CONFIG.drawFlags.drawGaroMask) {
         u32 dl = 0x0601C528;
         *buf = dl; // draw garo's mask
     }
@@ -990,7 +990,7 @@ void Models_SetEnInHead(u32 *buf) {
 
 void Models_DrawGaroMask(GlobalContext* ctxt, ActorEnIn* actor) {
     if (actor->modelFlag & 4) {
-        if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.flags.drawGaroMask) {
+        if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawGaroMask) {
             z2_CopyToMatrixStackTop(&actor->mtx0);
 
             Vec3f pos;
@@ -1011,7 +1011,7 @@ void Models_DrawGaroMask(GlobalContext* ctxt, ActorEnIn* actor) {
 }
 
 void Models_DrawPendantOfMemories(GlobalContext* ctxt, ActorPlayer* actor) {
-    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.speedups.drawPendant) {
+    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawPendant) {
         z2_PushMatrixStackCopy();
         Vec3f pos;
         Vec3s rot;
@@ -1033,7 +1033,7 @@ void Models_DrawPendantOfMemories(GlobalContext* ctxt, ActorPlayer* actor) {
 }
 
 void Models_DrawPendantInHand(GlobalContext* ctxt, ActorPlayer* actor) {
-    if (MISC_CONFIG.flags.freestanding && (!MISC_CONFIG.speedups.drawPendant) && ((actor->stateFlags.state1 & PLAYER_STATE1_GET_ITEM) == 0)) {
+    if (MISC_CONFIG.flags.freestanding && (!MISC_CONFIG.drawFlags.drawPendant) && ((actor->stateFlags.state1 & PLAYER_STATE1_GET_ITEM) == 0)) {
         z2_TranslateMatrix(((z2_Math_Sins(actor->base.shape.rot.y)) * 3.3) + actor->bodyPartsPos[0xC].x,
                             actor->bodyPartsPos[0xC].y + 8.0,
                             ((z2_Math_CosS(actor->base.shape.rot.y)) * 3.3) + actor->bodyPartsPos[0xC].z, 0);

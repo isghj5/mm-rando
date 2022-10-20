@@ -51,11 +51,7 @@ typedef struct {
     u32 fillWallet          : 1;
     u32 autoInvert          : 2;
     u32 hiddenRupeesSparkle : 1;
-    u32 drawDonGeroMask     : 1;
-    u32 drawPostmanHat      : 1;
-    u32 drawMaskOfTruth     : 1;
-    u32 drawGaroMask        : 1;
-    u32                     : 2;
+    u32                     : 6;
 } MiscFlags;
 
 typedef union {
@@ -80,9 +76,7 @@ typedef struct {
     u32 fastBankRupees : 1;
     u32 doubleArchery  : 1;
     u32 multiBank      : 1;
-    // TODO: Sort out drawing related flags into unique struct?
-    u32 drawPendant    : 1;
-    u32                : 23;
+    u32                : 24;
 } MiscSpeedups;
 
 typedef struct {
@@ -95,6 +89,16 @@ typedef struct {
     u8 pad[3];
 } MiscBytes;
 
+typedef struct {
+    u32 placeholder         : 1;
+    u32 drawDonGeroMask     : 1;
+    u32 drawPostmanHat      : 1;
+    u32 drawMaskOfTruth     : 1;
+    u32 drawGaroMask        : 1;
+    u32 drawPendant         : 1;
+    u32                     : 26;
+} MiscDrawFlags;
+
 struct MiscConfig {
     /* 0x00 */ u32 magic;
     /* 0x04 */ u32 version;
@@ -104,7 +108,8 @@ struct MiscConfig {
     /* 0x20 */ MiscSpeedups speedups;
     /* 0x24 */ MiscShorts shorts;
     /* 0x28 */ MiscBytes MMRbytes;
-}; // size = 0x2C
+    /* 0x2C */ MiscDrawFlags drawFlags;
+}; // size = 0x30
 
 extern struct MiscConfig MISC_CONFIG;
 
