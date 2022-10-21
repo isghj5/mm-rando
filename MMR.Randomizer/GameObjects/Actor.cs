@@ -645,10 +645,12 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [FlyingToGroundHeightAdjustment(200)]
         ///* 
-        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GormanTrack, Scene.GoronRacetrack,
-            Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
-            Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
-            Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
+        [EnemizerScenesPlacementBlock(
+            Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.PiratesFortressRooms,
+            Scene.DekuShrine, Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.GoronRacetrack,
+            Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard, Scene.DampesHouse,
+            Scene.SwampSpiderHouse, Scene.OceanSpiderHouse,
+            Scene.StockPotInn, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         //*/
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
@@ -1430,6 +1432,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
             Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
+            Scene.StockPotInn,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         //*/
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
@@ -3561,7 +3564,7 @@ namespace MMR.Randomizer.GameObjects
         [PathingVariants(0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
                 0x144B, 0x14EA, 0x18EA, 0x284B, 0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
         //[GroundVariants(0xFC00, 0xFC20)] 
-        [GroundVariants(0xFC00)] // TODO fix issue where FC20 has a disabled collider, cannot shoot
+        [GroundVariants(0xFC00)]
         [VariantsWithRoomMax(max: 0, variant: 0x4C24, 0xFC20)] // 0x--2- is unbonkable
         [VariantsWithRoomMax(max: 1, variant: 0xFC00)]
         [VariantsWithRoomMax(max: 1, variant: 0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,

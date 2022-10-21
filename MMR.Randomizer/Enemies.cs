@@ -1299,7 +1299,7 @@ namespace MMR.Randomizer
             /// so for some, they will have values to specify they should be auto-matically raised
             /// a bit higher than their ground spawn which is almost always the floor
 
-            int flyingTypeIndex = (int) GameObjects.ActorType.Flying - 1;
+            //int flyingTypeIndex = (int) GameObjects.ActorType.Flying - 1;
 
             thisSceneData.Log.AppendLine(" ---------- ");
 
