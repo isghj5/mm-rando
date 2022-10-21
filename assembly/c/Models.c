@@ -168,7 +168,7 @@ static void RotateActor(Actor* actor, GlobalContext* ctxt, u16 giIndex, u16 amou
  * Hook function for drawing Heart Piece actors as their new item.
  **/
 void Models_DrawHeartPiece(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         u16 index = actor->params + 0x80;
         DrawFromGiTable(actor, ctxt, 22.0, index);
     } else {
@@ -190,7 +190,7 @@ bool Models_DrawItem00(ActorEnItem00* actor, GlobalContext* ctxt) {
         return true;
     }
 
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         u16 giIndex = Rupee_GetGiIndex(&actor->base);
         if (giIndex > 0) {
             if (actor->unkState != 0x23) {
@@ -216,7 +216,7 @@ bool Models_DrawItem00(ActorEnItem00* actor, GlobalContext* ctxt) {
  * Hook function for setting Item00 scale during constructor.
  **/
 bool Models_Item00_SetActorSize(GlobalContext* ctxt, Actor* actor) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         if (Rupee_GetGiIndex(actor) > 0) {
             // Size set as if this is a Piece of Heart
             return true;
@@ -231,7 +231,7 @@ bool Models_Item00_SetActorSize(GlobalContext* ctxt, Actor* actor) {
  **/
 void Models_RotateEnItem00(Actor* actor, GlobalContext* ctxt) {
     u16 index = 0;
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         // MMR Heart Pieces use masked variable 0x1D or greater.
         if ((actor->params & 0xFF) >= 0x1D) {
             index = actor->params + 0x80;
@@ -259,7 +259,7 @@ bool Models_ShouldEnItem00Rotate(ActorEnItem00* actor, GlobalContext* ctxt) {
     if (actor->base.params >= 0x1D) {
         return true;
     }
-    if (MISC_CONFIG.flags.freestanding && Rupee_GetDrawGiIndex(&actor->base) > 0) {
+    if (MISC_CONFIG.drawFlags.freestanding && Rupee_GetDrawGiIndex(&actor->base) > 0) {
         return true;
     }
     return false;
@@ -292,7 +292,7 @@ static u16 GetSkulltulaTokenGiIndex(Actor* actor, GlobalContext* ctxt) {
  * Hook function for drawing Skulltula Token actors as their new item.
  **/
 void Models_DrawSkulltulaToken(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         u16 giIndex = GetSkulltulaTokenGiIndex(actor, ctxt);
         DrawFromGiTable(actor, ctxt, 1.0, giIndex);
     } else {
@@ -304,7 +304,7 @@ void Models_DrawSkulltulaToken(Actor* actor, GlobalContext* ctxt) {
  * Hook function for rotating Skulltula Token actors.
  **/
 void Models_RotateSkulltulaToken(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         u16 giIndex = GetSkulltulaTokenGiIndex(actor, ctxt);
         RotateActor(actor, ctxt, giIndex, 0x38E);
     } else {
@@ -353,7 +353,7 @@ static bool ShouldOverrideStrayFairyDraw(Actor* actor, GlobalContext* ctxt) {
 void Models_BeforeStrayFairyMain(Actor* actor, GlobalContext* ctxt) {
     // If not a Stray Fairy, rotate like En_Item00 does.
     bool draw = ShouldOverrideStrayFairyDraw(actor, ctxt);
-    if (MISC_CONFIG.flags.freestanding && draw) {
+    if (MISC_CONFIG.drawFlags.freestanding && draw) {
         GetItemEntry* entry;
         struct Model model;
         u16 giIndex = GetStrayFairyGiIndex(actor, ctxt);
@@ -375,7 +375,7 @@ void Models_BeforeStrayFairyMain(Actor* actor, GlobalContext* ctxt) {
  **/
 bool Models_DrawStrayFairy(Actor* actor, GlobalContext* ctxt) {
     bool draw = ShouldOverrideStrayFairyDraw(actor, ctxt);
-    if (MISC_CONFIG.flags.freestanding && draw) {
+    if (MISC_CONFIG.drawFlags.freestanding && draw) {
         GetItemEntry* entry;
         struct Model model;
         u16 giIndex = GetStrayFairyGiIndex(actor, ctxt);
@@ -423,7 +423,7 @@ static u16 GetHeartContainerGiIndex(GlobalContext* ctxt) {
  * Return true if overriding functionality, false if using original functionality.
  **/
 bool Models_DrawHeartContainer(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         u16 index = GetHeartContainerGiIndex(ctxt);
         DrawFromGiTable(actor, ctxt, 1.0, index);
         return true;
@@ -436,7 +436,7 @@ bool Models_DrawHeartContainer(Actor* actor, GlobalContext* ctxt) {
  * Hook function for rotating Heart Container actors.
  **/
 void Models_RotateHeartContainer(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         u16 giIndex = GetHeartContainerGiIndex(ctxt);
         RotateActor(actor, ctxt, giIndex, 0x400);
     } else {
@@ -471,7 +471,7 @@ void Models_WriteBossRemainsObjectSegment(GlobalContext* ctxt, u32 graphicIdMinu
 
 s16 Models_GetBossRemainRotation(Actor* actor, GlobalContext* ctxt) {
     s32 frameCount = ctxt->sceneFrameCount;
-    if (MISC_CONFIG.flags.freestanding && ShouldRotateBackwards(ctxt, Rupee_GetDrawGiIndex(actor))) {
+    if (MISC_CONFIG.drawFlags.freestanding && ShouldRotateBackwards(ctxt, Rupee_GetDrawGiIndex(actor))) {
         frameCount = -frameCount;
     }
     return (s16)(frameCount*1000);
@@ -481,7 +481,7 @@ s16 Models_GetBossRemainRotation(Actor* actor, GlobalContext* ctxt) {
  * Hook function for drawing Boss Remain actors as their new item.
  **/
 void Models_DrawBossRemains(Actor* actor, GlobalContext* ctxt, u32 graphicIdMinus1) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         //DrawFromGiTable(actor, ctxt, 1.0, 0x448 + actor->params);
 
         u16 giIndex = 0x448 + actor->params;
@@ -522,7 +522,7 @@ static bool ShouldOverrideMoonsTearDraw(Actor* actor, GlobalContext* ctxt) {
  * Hook function called before a Moon's Tear actor's main function.
  **/
 void Models_BeforeMoonsTearMain(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         if (ShouldOverrideMoonsTearDraw(actor, ctxt)) {
             // If the Moon's Tear on display, reposition and rotate.
             if (actor->params == 0) {
@@ -540,7 +540,7 @@ void Models_BeforeMoonsTearMain(Actor* actor, GlobalContext* ctxt) {
  * Hook function for drawing Moon's Tear actor as its new item.
  **/
 bool Models_DrawMoonsTear(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         if (ShouldOverrideMoonsTearDraw(actor, ctxt)) {
             struct Model model;
             bool resolve;
@@ -564,7 +564,7 @@ bool Models_DrawMoonsTear(Actor* actor, GlobalContext* ctxt) {
  * Hook function for drawing Lab Fish Heart Piece actor as its new item.
  **/
 bool Models_DrawLabFishHeartPiece(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         DrawFromGiTable(actor, ctxt, 25.0, 0x112);
         return true;
     } else {
@@ -576,7 +576,7 @@ bool Models_DrawLabFishHeartPiece(Actor* actor, GlobalContext* ctxt) {
  * Hook function for rotating Lab Fish Heart Piece actor.
  **/
 void Models_RotateLabFishHeartPiece(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         RotateActor(actor, ctxt, 0x112, 0x3E8);
     } else {
         actor->shape.rot.y += 0x3E8;
@@ -606,7 +606,7 @@ static bool ShouldOverrideSeahorseDraw(Actor* actor, GlobalContext* ctxt) {
  * Hook function called before a Seahorse actor's main function.
  **/
 void Models_BeforeSeahorseMain(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         if (ShouldOverrideSeahorseDraw(actor, ctxt)) {
             RotateActor(actor, ctxt, 0x95, 0x3C0);
             ApplyHoverFloat(actor, -1000.0, 1000.0);
@@ -618,7 +618,7 @@ void Models_BeforeSeahorseMain(Actor* actor, GlobalContext* ctxt) {
  * Hook function for drawing Seahorse actor as its new item.
  **/
 bool Models_DrawSeahorse(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         if (ShouldOverrideSeahorseDraw(actor, ctxt)) {
             DrawFromGiTable(actor, ctxt, 50.0, 0x95);
             return true;
@@ -629,7 +629,7 @@ bool Models_DrawSeahorse(Actor* actor, GlobalContext* ctxt) {
 }
 
 void Models_DrawShopInventory(ActorEnGirlA* actor, GlobalContext* ctxt, u32 graphicIdMinus1) {
-    if (MISC_CONFIG.flags.shopModels) {
+    if (MISC_CONFIG.drawFlags.shopModels) {
         DrawFromGiTable(&actor->base, ctxt, 1.0, actor->giIndex);
     } else {
         DrawModelLowLevel(&actor->base, ctxt, graphicIdMinus1);
@@ -637,7 +637,7 @@ void Models_DrawShopInventory(ActorEnGirlA* actor, GlobalContext* ctxt, u32 grap
 }
 
 bool Models_DrawScopecoin(Actor* actor, GlobalContext* ctxt) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         u16 giIndex = Scopecoin_GetGiIndex(actor);
         if (giIndex > 0) {
             DrawFromGiTable(actor, ctxt, 25.0, giIndex);
@@ -650,7 +650,7 @@ bool Models_DrawScopecoin(Actor* actor, GlobalContext* ctxt) {
 
 void Models_RotateScopecoin(Actor* actor, GlobalContext* ctxt) {
     u16 index = 0;
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         index = Scopecoin_GetGiIndex(actor);
     }
     if (index > 0) {
@@ -666,7 +666,7 @@ bool Models_DrawScRuppe(ActorEnScRuppe* actor, GlobalContext* ctxt) {
         Player_Pause(ctxt);
     }
 
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         u16 giIndex = Rupee_GetGiIndex(&actor->base);
         u16 giIndexToDraw = Rupee_GetDrawGiIndex(&actor->base);
         if (giIndex > 0 || giIndexToDraw > 0) {
@@ -691,7 +691,7 @@ bool Models_DrawScRuppe(ActorEnScRuppe* actor, GlobalContext* ctxt) {
 
 void Models_RotateScRuppe(Actor* actor, GlobalContext* ctxt) {
     u16 index = 0;
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         index = Rupee_GetDrawGiIndex(actor);
     }
     if (index > 0) {
@@ -707,7 +707,7 @@ bool Models_DrawDekuScrubPlaygroundRupee(ActorEnGamelupy* actor, GlobalContext* 
         Player_Pause(ctxt);
     }
 
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         u16 giIndex = Rupee_GetGiIndex(&actor->base);
         u16 giIndexToDraw = Rupee_GetDrawGiIndex(&actor->base);
         if (giIndex > 0 || giIndexToDraw > 0) {
@@ -732,7 +732,7 @@ bool Models_DrawDekuScrubPlaygroundRupee(ActorEnGamelupy* actor, GlobalContext* 
 
 void Models_RotateDekuScrubPlaygroundRupee(Actor* actor, GlobalContext* ctxt) {
     u16 index = 0;
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         index = Rupee_GetDrawGiIndex(actor);
     }
     if (index > 0) {
@@ -789,7 +789,7 @@ void Models_DrawCutsceneMask(GlobalContext* ctxt, Actor* actor, Vec3s* posRot, u
 }
 
 void Models_DrawZoraMask(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, bool* overrideLimbDraw, void* postLimbDraw, Actor* actor) {
-    if (!MISC_CONFIG.flags.freestanding) {
+    if (!MISC_CONFIG.drawFlags.freestanding) {
         z2_SkelAnime_DrawLimb(ctxt, skeleton, limbDrawTable, overrideLimbDraw, postLimbDraw, actor);
         return;
     }
@@ -798,7 +798,7 @@ void Models_DrawZoraMask(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTabl
 }
 
 void Models_DrawGoronMask(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, bool* overrideLimbDraw, void* postLimbDraw, Actor* actor) {
-    if (!MISC_CONFIG.flags.freestanding) {
+    if (!MISC_CONFIG.drawFlags.freestanding) {
         z2_SkelAnime_DrawLimb(ctxt, skeleton, limbDrawTable, overrideLimbDraw, postLimbDraw, actor);
         return;
     }
@@ -807,7 +807,7 @@ void Models_DrawGoronMask(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTab
 }
 
 void Models_DrawGibdoMask(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, Actor* actor) {
-    if (!MISC_CONFIG.flags.freestanding) {
+    if (!MISC_CONFIG.drawFlags.freestanding) {
         z2_SkelAnime_DrawLimb2(ctxt, skeleton, limbDrawTable, dListCount, overrideLimbDraw, postLimbDraw, actor);
         return;
     }
@@ -816,7 +816,7 @@ void Models_DrawGibdoMask(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTab
 }
 
 void Models_DrawOcarina(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, void* unkDraw, Actor* actor) {
-    if (!MISC_CONFIG.flags.freestanding) {
+    if (!MISC_CONFIG.drawFlags.freestanding) {
         z2_SkelAnime_DrawLimb3(ctxt, skeleton, limbDrawTable, dListCount, overrideLimbDraw, postLimbDraw, unkDraw, actor);
         return;
     }
@@ -838,7 +838,7 @@ void Models_DrawOcarina(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable
 }
 
 void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
-    if (!MISC_CONFIG.flags.freestanding) {
+    if (!MISC_CONFIG.drawFlags.freestanding) {
         gSPDisplayList(ctxt->state.gfxCtx->polyOpa.p++, 0x0600CAD0);
         return;
     }
@@ -867,7 +867,7 @@ void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
 }
 
 void Models_DrawKeatonMask(GlobalContext* ctxt, ActorPlayer* actor) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         if (actor->mask == 0x05) {
             if (MISC_CONFIG.MMRbytes.npcKafeiReplaceMask == 0) {
                 // hooks in kafei should have made this matrix
@@ -881,7 +881,7 @@ void Models_DrawKeatonMask(GlobalContext* ctxt, ActorPlayer* actor) {
 }
 
 void Models_DrawDonGeroMask(GlobalContext* ctxt, Actor* actor) {
-    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawDonGeroMask) {
+    if (MISC_CONFIG.drawFlags.freestanding && !MISC_CONFIG.drawFlags.drawDonGeroMask) {
         z2_PushMatrixStackCopy();
 
         Vec3f pos;
@@ -909,7 +909,7 @@ void Models_DrawPostmanHat(Actor* actor, DispBuf* buf, GlobalContext* ctxt) {
     // is at the end of the postman's limbs and draw functions.
     ctxt->state.gfxCtx->polyOpa.p = buf->p;
 
-    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawPostmanHat) {
+    if (MISC_CONFIG.drawFlags.freestanding && !MISC_CONFIG.drawFlags.drawPostmanHat) {
         Vec3f pos;
         pos.x = 1024.0;
         pos.y = 192.0;
@@ -930,7 +930,7 @@ void Models_DrawPostmanHat(Actor* actor, DispBuf* buf, GlobalContext* ctxt) {
 }
 
 bool Models_SetEnSshMatrix(GlobalContext* ctxt, ActorEnSsh* actor) {
-    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawMaskOfTruth) {
+    if (MISC_CONFIG.drawFlags.freestanding && !MISC_CONFIG.drawFlags.drawMaskOfTruth) {
         Vec3f pos;
         Vec3s rot;
 
@@ -950,7 +950,7 @@ bool Models_SetEnSshMatrix(GlobalContext* ctxt, ActorEnSsh* actor) {
 }
 
 void Models_DrawEnSshMaskOfTruth(GlobalContext* ctxt, ActorEnSsh* actor) {
-    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawMaskOfTruth) {
+    if (MISC_CONFIG.drawFlags.freestanding && !MISC_CONFIG.drawFlags.drawMaskOfTruth) {
         z2_CopyToMatrixStackTop(&actor->mtx0);
         DrawFromGiTable(&actor->base, ctxt, 12.0, 0x8A);
     }
@@ -958,7 +958,7 @@ void Models_DrawEnSshMaskOfTruth(GlobalContext* ctxt, ActorEnSsh* actor) {
 
 u16 Models_DrawEnSthMaskOfTruth(GlobalContext* ctxt, ActorEnSth* actor) {
     if (actor->maskFlag & 0x0001) {
-        if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawMaskOfTruth) {
+        if (MISC_CONFIG.drawFlags.freestanding && !MISC_CONFIG.drawFlags.drawMaskOfTruth) {
             Vec3f pos;
             Vec3s rot;
 
@@ -982,7 +982,7 @@ u16 Models_DrawEnSthMaskOfTruth(GlobalContext* ctxt, ActorEnSth* actor) {
 }
 
 void Models_SetEnInHead(u32 *buf) {
-    if (!MISC_CONFIG.flags.freestanding || MISC_CONFIG.drawFlags.drawGaroMask) {
+    if (!MISC_CONFIG.drawFlags.freestanding || MISC_CONFIG.drawFlags.drawGaroMask) {
         u32 dl = 0x0601C528;
         *buf = dl; // draw garo's mask
     }
@@ -990,7 +990,7 @@ void Models_SetEnInHead(u32 *buf) {
 
 void Models_DrawGaroMask(GlobalContext* ctxt, ActorEnIn* actor) {
     if (actor->modelFlag & 4) {
-        if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawGaroMask) {
+        if (MISC_CONFIG.drawFlags.freestanding && !MISC_CONFIG.drawFlags.drawGaroMask) {
             z2_CopyToMatrixStackTop(&actor->mtx0);
 
             Vec3f pos;
@@ -1011,7 +1011,7 @@ void Models_DrawGaroMask(GlobalContext* ctxt, ActorEnIn* actor) {
 }
 
 void Models_DrawPendantOfMemories(GlobalContext* ctxt, ActorPlayer* actor) {
-    if (MISC_CONFIG.flags.freestanding && !MISC_CONFIG.drawFlags.drawPendant) {
+    if (MISC_CONFIG.drawFlags.freestanding && !MISC_CONFIG.drawFlags.drawPendant) {
         z2_PushMatrixStackCopy();
         Vec3f pos;
         Vec3s rot;
@@ -1033,7 +1033,7 @@ void Models_DrawPendantOfMemories(GlobalContext* ctxt, ActorPlayer* actor) {
 }
 
 void Models_DrawPendantInHand(GlobalContext* ctxt, ActorPlayer* actor) {
-    if (MISC_CONFIG.flags.freestanding && (!MISC_CONFIG.drawFlags.drawPendant) && ((actor->stateFlags.state1 & PLAYER_STATE1_GET_ITEM) == 0)) {
+    if (MISC_CONFIG.drawFlags.freestanding && (!MISC_CONFIG.drawFlags.drawPendant) && ((actor->stateFlags.state1 & PLAYER_STATE1_GET_ITEM) == 0)) {
         z2_TranslateMatrix(((z2_Math_Sins(actor->base.shape.rot.y)) * 3.3) + actor->bodyPartsPos[0xC].x,
                             actor->bodyPartsPos[0xC].y + 8.0,
                             ((z2_Math_CosS(actor->base.shape.rot.y)) * 3.3) + actor->bodyPartsPos[0xC].z, 0);
@@ -1057,7 +1057,7 @@ void Models_DrawPendantInHand(GlobalContext* ctxt, ActorPlayer* actor) {
 }
 
 void Models_AfterActorDtor(Actor* actor) {
-    if (MISC_CONFIG.flags.freestanding) {
+    if (MISC_CONFIG.drawFlags.freestanding) {
         if (actor->id == ACTOR_EN_ELFORG) {
             LoadedModels_RemoveActorModel(actor);
         }

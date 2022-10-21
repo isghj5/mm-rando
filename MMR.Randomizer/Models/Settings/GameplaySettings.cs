@@ -91,8 +91,8 @@ namespace MMR.Randomizer.Models.Settings
         /// Whether or not to enable freestanding models.
         /// </summary>
         public bool UpdateWorldModels {
-            get { return this.AsmOptions.MiscConfig.Flags.FreestandingModels; }
-            set { this.AsmOptions.MiscConfig.Flags.FreestandingModels = value; }
+            get { return this.AsmOptions.MiscConfig.DrawFlags.FreestandingModels; }
+            set { this.AsmOptions.MiscConfig.DrawFlags.FreestandingModels = value; }
         }
 
         /// <summary>
@@ -125,8 +125,8 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool UpdateShopAppearance
         {
-            get { return this.AsmOptions.MiscConfig.Flags.ShopModels; }
-            set { this.AsmOptions.MiscConfig.Flags.ShopModels = value; }
+            get { return this.AsmOptions.MiscConfig.DrawFlags.ShopModels; }
+            set { this.AsmOptions.MiscConfig.DrawFlags.ShopModels = value; }
         }
 
         /// <summary>

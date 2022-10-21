@@ -166,7 +166,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Whether or not to enable freestanding models.
         /// </summary>
-        public bool FreestandingModels { get; set; } = true;
+        //public bool FreestandingModels { get; set; } = true;
 
         /// <summary>
         /// Whether or not to enable continuous deku hopping.
@@ -176,7 +176,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Whether or not to enable shop models.
         /// </summary>
-        public bool ShopModels { get; set; } = true;
+        //public bool ShopModels { get; set; } = true;
 
         /// <summary>
         /// Whether or not to enable progressive upgrades.
@@ -245,10 +245,10 @@ namespace MMR.Randomizer.Asm
             this.OcarinaUnderwater = ((flags >> 27) & 1) == 1;
             this.QuestItemStorage = ((flags >> 26) & 1) == 1;
             this.CloseCows = ((flags >> 25) & 1) == 1;
-            this.FreestandingModels = ((flags >> 24) & 1) == 1;
+            //this.FreestandingModels = ((flags >> 24) & 1) == 1;
             this.ArrowCycling = ((flags >> 21) & 1) == 1;
             this.ContinuousDekuHopping = ((flags >> 18) & 1) == 1;
-            this.ShopModels = ((flags >> 17) & 1) == 1;
+            //this.ShopModels = ((flags >> 17) & 1) == 1;
             this.ProgressiveUpgrades = ((flags >> 16) & 1) == 1;
             this.IceTrapQuirks = ((flags >> 15) & 1) == 1;
             this.EarlyMikau = ((flags >> 14) & 1) == 1;
@@ -274,13 +274,13 @@ namespace MMR.Randomizer.Asm
             flags |= (this.OcarinaUnderwater ? (uint)1 : 0) << 27;
             flags |= (this.QuestItemStorage ? (uint)1 : 0) << 26;
             flags |= (this.CloseCows ? (uint)1 : 0) << 25;
-            flags |= (this.FreestandingModels ? (uint)1 : 0) << 24;
+            //flags |= (this.FreestandingModels ? (uint)1 : 0) << 24;
             flags |= (((uint)this.QuestConsume) & 3) << 22;
             flags |= (this.ArrowCycling ? (uint)1 : 0) << 21;
             flags |= (this.ArrowMagic ? (uint)1 : 0) << 20;
             flags |= (this.ElegySpeedup ? (uint)1 : 0) << 19;
             flags |= (this.ContinuousDekuHopping ? (uint)1 : 0) << 18;
-            flags |= (this.ShopModels ? (uint)1 : 0) << 17;
+            //flags |= (this.ShopModels ? (uint)1 : 0) << 17;
             flags |= (this.ProgressiveUpgrades ? (uint)1 : 0) << 16;
             flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 15;
             flags |= (this.EarlyMikau ? (uint)1 : 0) << 14;
@@ -358,6 +358,11 @@ namespace MMR.Randomizer.Asm
     public class MiscDrawFlags
     {
         /// <summary>
+        /// Whether or not to enable freestanding models.
+        /// </summary>
+        public bool FreestandingModels { get; set; } = true;
+
+        /// <summary>
         /// A flag for a getItem draw hook, for whether to draw the hungry goron's Don Gero Mask, or a getItem.
         /// </summary>
         public bool DrawDonGeroMask { get; set; }
@@ -386,6 +391,11 @@ namespace MMR.Randomizer.Asm
         /// 
         public bool DrawPendantOfMemories { get; set; }
 
+        /// <summary>
+        /// Whether or not to enable shop models.
+        /// </summary>
+        public bool ShopModels { get; set; } = true;
+
 
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.
@@ -395,11 +405,13 @@ namespace MMR.Randomizer.Asm
         public uint ToInt()
         {
             uint flags = 0;
+            flags |= (this.FreestandingModels ? (uint)1 : 0) << 31;
             flags |= (this.DrawDonGeroMask ? (uint)1 : 0) << 30;
             flags |= (this.DrawPostmanHat ? (uint)1 : 0) << 29;
             flags |= (this.DrawMaskOfTruth ? (uint)1 : 0) << 28;
             flags |= (this.DrawGaroMask ? (uint)1 : 0) << 27;
             flags |= (this.DrawPendantOfMemories ? (uint)1 : 0) << 26;
+            flags |= (this.ShopModels ? (uint)1 : 0) << 25;
             return flags;
         }
     }

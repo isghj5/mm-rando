@@ -33,14 +33,14 @@ typedef struct {
     u32 questItemStorage    : 1;
     // Version 1 flags
     u32 closeCows           : 1;
-    u32 freestanding        : 1;
+    u32 freestandingOld     : 1;
     u32 questConsume        : 2;
     u32 arrowCycle          : 1;
     u32 arrowMagicShow      : 1;
     // Version 2 flags
     u32 elegySpeedup        : 1;
     u32 continuousDekuHop   : 1;
-    u32 shopModels          : 1;
+    u32 shopModelsOld       : 1;
     u32 progressiveUpgrades : 1;
     u32 iceTrapQuirks       : 1;
     u32 mikauEarlyBeach     : 1;
@@ -90,13 +90,14 @@ typedef struct {
 } MiscBytes;
 
 typedef struct {
-    u32 placeholder         : 1;
+    u32 freestanding        : 1;
     u32 drawDonGeroMask     : 1;
     u32 drawPostmanHat      : 1;
     u32 drawMaskOfTruth     : 1;
     u32 drawGaroMask        : 1;
     u32 drawPendant         : 1;
-    u32                     : 26;
+    u32 shopModels          : 1;
+    u32                     : 25;
 } MiscDrawFlags;
 
 struct MiscConfig {

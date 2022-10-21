@@ -75,7 +75,7 @@ ActorEnItem00* SoftSoilPrize_ItemSpawn(GlobalContext* ctxt, Actor* actor, u16 ty
     }
     if (giIndex > 0) {
         Rupee_CheckAndSetGiIndex(&item->base, ctxt, giIndex);
-        if (MISC_CONFIG.flags.freestanding) {
+        if (MISC_CONFIG.drawFlags.freestanding) {
             z2_SetActorSize(&item->base, 0.015);
             item->targetSize = 0.015;
             z2_SetShape(&item->base.shape, 750, (void*)0x800B3FC0, 6);

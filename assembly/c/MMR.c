@@ -382,7 +382,7 @@ bool MMR_GiveItemIfMinor(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
             return true;
         }
 
-        if (!isActorFreestanding || MISC_CONFIG.flags.freestanding) {
+        if (!isActorFreestanding || MISC_CONFIG.drawFlags.freestanding) {
             z2_PlaySfx(minorItemSfxId);
             z2_GiveItem(ctxt, entry->item);
             return true;
