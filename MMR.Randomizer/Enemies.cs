@@ -1311,9 +1311,9 @@ namespace MMR.Randomizer
                 // if previous spawn was ground and the replacement actor has an attribute, adjust height
                 // bug: type for bee in mountain spring is FLYING, should be ground, todo fix
                 if (flyingVariants != null &&
-                    (oldGroundVariants != null || testActor.OldActorEnum == GameObjects.Actor.BlueBubble) && // our new actor can fly
+                    ((oldGroundVariants != null && oldGroundVariants.Variants.Contains(testActor.OldVariant)) // previous ground
+                      || testActor.OldActorEnum == GameObjects.Actor.BlueBubble) && // our new actor can fly
                     //testActor.Type == GameObjects.ActorType.Ground && // previous type was ground
-                    oldGroundVariants.Variants.Contains(testActor.OldVariant) && // previous type was ground
                     flyingVariants.Variants.Contains(testActor.Variants[0])) // chosen variant is flying
                 {
                     // if attribute exists, we need to adjust
