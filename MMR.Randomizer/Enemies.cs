@@ -424,6 +424,10 @@ namespace MMR.Randomizer
             ikanaScene.Maps[0].Objects[10] = SMALLEST_OBJ; // kafei
             ikanaScene.Maps[0].Objects[18] = SMALLEST_OBJ; // flying scrub
 
+            // aparently there is an unused object in Termina Field we can remove ???
+            var tfScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
+            tfScene.Maps[0].Objects[0] = SMALLEST_OBJ;
+
             //PrintActorValues();
         }
 
