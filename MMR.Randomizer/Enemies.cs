@@ -95,14 +95,16 @@ namespace MMR.Randomizer
             //foreach (var actor in EmemiesOnly)
             foreach (var actor in VanillaEnemyList)
             {
-                ReplacementCandidateList.Add(new Actor(actor));
+                if ( actor.NoPlacableVariants() == false)
+                {
+                    ReplacementCandidateList.Add(new Actor(actor));
+                }
             }
 
             var freeCandidates = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
                                 .Where(u => u.ObjectIndex() <= 3
                                 && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized())))
                                 .ToList();
-            
 
             // because this list needs to be re-evaluated per scene, start smaller here once
             FreeCandidateList = freeCandidates.Select(u => new Actor(u)).ToList();
@@ -240,6 +242,7 @@ namespace MMR.Randomizer
             ExpandGoronRaceObjects();
             SplitSpiderGrottoSkulltulaObject();
             SplitOceanSpiderhouseSpiderObject();
+            FixDekuPalaceReceptionGuards();
 
             Shinanigans();
         }
@@ -248,7 +251,7 @@ namespace MMR.Randomizer
         {
             // changes after randomization, actors objects already written
             // turns out this one can be early too, TODO
-            FixDekuPalaceReceptionGuards();
+            //FixDekuPalaceReceptionGuards();
 
         }
 
@@ -331,6 +334,17 @@ namespace MMR.Randomizer
                 // this torch is too close to spider, constantly actors get stuck, just move the damn torch
                 var swampSpiderHouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
                 swampSpiderHouseScene.Maps[3].Actors[3].Position.x = -480;
+
+
+                var dekuPalace = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
+                // the torches are really close to the hole, we can spread them wider a bit
+                dekuPalace.Maps[1].Actors[26].Position.z -= 10; // left
+                dekuPalace.Maps[1].Actors[28].Position.z -= 10; // left
+                dekuPalace.Maps[1].Actors[27].Position.z += 10; // right
+                dekuPalace.Maps[1].Actors[25].Position.z += 10; // right
+                // west side torches face... north? turn them to face the player
+                dekuPalace.Maps[2].Actors[33].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[33].Rotation.y);
+                dekuPalace.Maps[2].Actors[34].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[34].Rotation.y);
             }
         }
 
@@ -376,6 +390,12 @@ namespace MMR.Randomizer
                 var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
                 dekuPalaceScene.Maps[2].Actors[25].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: 0x7F);
                 dekuPalaceScene.Maps[2].Actors[26].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalaceScene.Maps[2].Actors[26].Rotation.y);
+
+                // we can make him stronger
+                var playerFile = RomData.MMFileList[GameObjects.Actor.Player.FileListIndex()].Data;
+                ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE20C, val: 0x00000000); // 80834140 -> NOP
+                ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE214, val: 0x00000000); // 
+                ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE220, val: 0x00000000); // 
 
                 // RecreateFishing();
             }
@@ -756,15 +776,18 @@ namespace MMR.Randomizer
             if (!ReplacementListContains(GameObjects.Actor.DekuPatrolGuard)) return;
 
             var frontGuardOID = GameObjects.Actor.DekuPatrolGuard.ObjectIndex();
-            var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
+            var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
 
-            if (!dekuPalaceScene.Maps[0].Objects.Contains(frontGuardOID))
+            /*if (!dekuPalaceScene.Maps[0].Objects.Contains(frontGuardOID))
             {
                 // scene has already been written at this point, need to romhack it, faster than re-writing the whole scene file
                 var dekuPalaceRoom1FID = GameObjects.Scene.DekuPalace.FileID() + 1;
                 var dekuPalaceRoom1File = RomData.MMFileList[dekuPalaceRoom1FID].Data;
                 ReadWriteUtils.Arr_WriteU16(dekuPalaceRoom1File, Dest: 0x4E, (ushort)frontGuardOID);
-            }
+            } // */
+            dekuPalaceScene.Maps[0].Objects[7] = frontGuardOID;
+            dekuPalaceScene.Maps[1].Objects[7] = frontGuardOID;
+            dekuPalaceScene.Maps[2].Objects[7] = frontGuardOID;
         }
 
         public static void FixWoodfallTempleGekkoMiniboss()
@@ -1312,13 +1335,13 @@ namespace MMR.Randomizer
                 var testActor = thisSceneData.Actors[i];
                 var flyingVariants = testActor.ActorEnum.GetAttribute<FlyingVariantsAttribute>();
                 var oldGroundVariants = testActor.OldActorEnum.GetAttribute<GroundVariantsAttribute>();
+                var oldPathVariants = testActor.OldActorEnum.GetAttribute<PathingVariantsAttribute>();
                 // if previous spawn was ground and the replacement actor has an attribute, adjust height
                 // bug: type for bee in mountain spring is FLYING, should be ground, todo fix
-                if (flyingVariants != null &&
+                if ((flyingVariants != null && flyingVariants.Variants.Contains(testActor.Variants[0])) && // chosen variant is flying
                     ((oldGroundVariants != null && oldGroundVariants.Variants.Contains(testActor.OldVariant)) // previous ground
-                      || testActor.OldActorEnum == GameObjects.Actor.BlueBubble) && // our new actor can fly
-                    //testActor.Type == GameObjects.ActorType.Ground && // previous type was ground
-                    flyingVariants.Variants.Contains(testActor.Variants[0])) // chosen variant is flying
+                     || (oldPathVariants != null && oldPathVariants.Variants.Contains(testActor.OldVariant)) // previous pathing(ground)
+                      || testActor.OldActorEnum == GameObjects.Actor.BlueBubble) ) // our new actor can fly
                 {
                     // if attribute exists, we need to adjust
                     // todo we might want to add as injected actor, in which case this would be loading once
@@ -1476,7 +1499,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Scarecrow, GameObjects.Actor.Dinofos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Scarecrow, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                if (TestHardSetObject(GameObjects.Scene.GreatBayCoast, GameObjects.Actor.Seagulls, GameObjects.Actor.FriendlyCucco)) continue;
+                if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.PoeSisters)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
                 #endif
