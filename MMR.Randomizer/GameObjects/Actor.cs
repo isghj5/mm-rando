@@ -12,9 +12,9 @@ namespace MMR.Randomizer.GameObjects
         // fixing this is a performance loss, just dont be stupid
 
         //[ActorizerEnabled] // crashes, probably because there are now two players
-        //[FileID(38)]
+        [FileID(38)]
         //[GroundVariants(0x0E02)] // sitting in clocktown?
-        //Player = 0x0,
+        Player = 0x0,
         NULL = 0x0, // since we cant use player actor normally, leave this as NULL
 
         [FileID(39)]
@@ -651,7 +651,8 @@ namespace MMR.Randomizer.GameObjects
             Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard, Scene.DampesHouse,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse,
             Scene.StockPotInn, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
-            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
+            Scene.BeneathTheWell)]
         //*/
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
 
@@ -1432,8 +1433,8 @@ namespace MMR.Randomizer.GameObjects
             Scene.Grottos, Scene.AstralObservatory, Scene.ZoraHallRooms, Scene.DampesHouse, Scene.PiratesFortressRooms,
             Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
-            Scene.StockPotInn,
-            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
+            Scene.StockPotInn, Scene.BeneathTheWell)]
         //*/
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
