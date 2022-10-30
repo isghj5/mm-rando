@@ -3,7 +3,7 @@ using MMR.Randomizer.Attributes.Entrance;
 
 namespace MMR.Randomizer.GameObjects
 {
-    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
+    //[System.Diagnostics.DebuggerDisplay("{ToString()}")] // useless for enums
     public enum Scene
     {
         // base enumerator value matches the ST column, SceneInternal ID matches ID column (F)

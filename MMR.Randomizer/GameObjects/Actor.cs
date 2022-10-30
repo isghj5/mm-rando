@@ -3,7 +3,7 @@ using MMR.Randomizer.Attributes.Actor;
 
 namespace MMR.Randomizer.GameObjects
 {
-    [System.Diagnostics.DebuggerDisplay("{this}")]
+    //[System.Diagnostics.DebuggerDisplay("{ActorExtensions.GetActorName(this)}")] // useless for enums
     public enum Actor
     {
         /// the main enumator value is the vanilla actor list ID
