@@ -2877,7 +2877,7 @@ namespace MMR.Randomizer.GameObjects
         //  instead we modified it and inject changes to get it working
         [FileID(402)]
         [ObjectListIndex(0x88)]
-        [EnemizerScenesPlacementBlock(Scene.StoneTower)] // dyna crash possible
+        [EnemizerScenesPlacementBlock(Scene.StoneTower, Scene.DekuPlayground)] // dyna crash possible
         ClocktowerGearsAndOrgan = 0x1B6, // Bg_Ctower_Gear
 
        // [ActorizerEnabled] // disabled since talking is softlock, need to figure that out
@@ -3171,10 +3171,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(448)]
         [ObjectListIndex(0x1C5)]
         //0x100 is red, 0x200 is blue, 0x300 is green, 00 is purple, however, its difficult to fight more than 2
-        [FlyingVariants(0x300, 0x200, 0x100)]
-        [GroundVariants(0x300, 0x200, 0x100, 0)]
+        [FlyingVariants(0x300, 0x200, 0x100)] // not meg because I think she shows up too frequently
+        [GroundVariants(0x300, 0x200, 0x100, 0x000)]
         [RespawningVariants(0x0)] // meg does NOT respawn but her death doesnt always trigger kills rooms, not sure why
-        [VariantsWithRoomMax(max: 1, variant: 0, 0x100, 0x200, 0x300)] // only one per
+        [VariantsWithRoomMax(max: 1, variant: 0x000, 0x100, 0x200, 0x300)] // only one per
         [CompanionActor(Flame, ourVariant: 0x000, variant: 0xD)]      // meg gets purple flames // NOT DONE
         [CompanionActor(Flame, ourVariant: 0x100, variant: 0x4, 0x5)] // jo gets red flames
         [CompanionActor(Flame, ourVariant: 0x200, variant: 0x7FE)]    // beth gets blue flames
@@ -3440,7 +3440,7 @@ namespace MMR.Randomizer.GameObjects
         // FE03 is in SCT, he stares up at the moon, except doesn't know where the moon is, can face the wrong way
         // FE01 doesn't want to spawn, hmm, 02 is swamp spiderhouse, likely doesn't want to spawn either until house is cleared
         [GroundVariants(0xFE03)]
-        [VariantsWithRoomMax(max:0, variant:0xFE03)] // temp disable, as double object actor is broken
+        //[VariantsWithRoomMax(max:0, variant:0xFE03)] // temp disable, as double object actor is broken
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
@@ -3738,9 +3738,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(523)]
         [ObjectListIndex(0x23A)]
-        [GroundVariants(0x050B)]
-        [VariantsWithRoomMax(max:0, variant:0x050B)] // we dont want a sitting npc to be placed places, just replace
+        [GroundVariants(0x050B)] // sitting in mayors office
+        [VariantsWithRoomMax(max:0, variant:0x050B)] // we dont want a sitting npc to be placed places, just replace, also talking to is softlock, and we cannot modify because rando needs this actor for things
         [UnkillableAllVariants]
+        [SwitchFlagsPlacement(mask:0x7F, shift:0)]
         [EnemizerScenesExcluded(Scene.MilkBar)]
         Toto = 0x234, // En_Toto // manager zora band member
 
@@ -4200,7 +4201,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x26A)] // double object actor
         // uhhh code has no params, where did FE01 come from?
         [GroundVariants(0x0)]
-        [VariantsWithRoomMax(max:0, variant:0x0)] // temp disable as double object actors are borken
+        //[VariantsWithRoomMax(max:0, variant:0x0)] // temp disable as double object actors are borken
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.TerminaField)]
         // This is the seth you see in the telescope on grottos, same animation as cured skultula man in kak
