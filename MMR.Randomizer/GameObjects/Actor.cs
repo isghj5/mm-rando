@@ -3030,8 +3030,10 @@ namespace MMR.Randomizer.GameObjects
         // dont know what the differences are
         [WallVariants(0x1932, 0x3FFF)] // dont know what the differences are
         [GroundVariants(0x1932, 0x3FFF)]
+        [VariantsWithRoomMax(max: 8, variant: 0x1932, 0x3FFF)]
         [EnemizerScenesExcluded(Scene.InvertedStoneTowerTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
-        Dexihand = 0x1D1,// ???'s water logged brother
+        //[EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GoronRacetrack)]
+        Dexihand = 0x1D1, // ???'s water logged brother
 
         [FileID(427)]
         [ObjectListIndex(0x1)]
