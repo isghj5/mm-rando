@@ -2883,7 +2883,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.StoneTower, Scene.DekuPlayground)] // dyna crash possible
         ClocktowerGearsAndOrgan = 0x1B6, // Bg_Ctower_Gear
 
-       // [ActorizerEnabled] // disabled since talking is softlock, need to figure that out
+        // [ActorizerEnabled] // disabled since talking is softlock, need to figure that out
         [FileID(403)]
         [ObjectListIndex(0x18F)]
         // nothing in the other params other than path, the starting animation and stuff are all hardcoded to entrance
@@ -3582,7 +3582,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesExcluded(Scene.PiratesFortressRooms)] // because the ones in the hookshot room need to stay around
         // this actor is blocked from grotto deku baba because the kickout is crash, not sure why yet its a scene_table thing
         [EnemizerScenesPlacementBlock(Scene.SouthClockTown, Scene.SwampSpiderHouse, Scene.MayorsResidence, Scene.RanchBuildings,
-            Scene.DekuPlayground, Scene.DekuShrine)]
+            Scene.DekuPlayground, Scene.DekuShrine, Scene.TradingPost)]
         PatrollingPirate = 0x21E, // En_Ge2
 
         [ActorizerEnabled] // romani talking to cremia and dinner and sleeping in bed

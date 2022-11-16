@@ -345,7 +345,8 @@ namespace MMR.Randomizer.GameObjects
         //  we want the hiploop to be non-blocking actors, making them killable with this flag does the job
         [FairyDroppingEnemies(24, 25, 26)] // hiploops
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
-            Actor.Wolfos, Actor.Peahat, Actor.Seth1, Actor.Tijo, Actor.ArmosStatue)] // blocking enemies (wolfos:iceblock)
+            Actor.Peahat, Actor.Seth1, Actor.Tijo, Actor.ArmosStatue, Actor.ClocktowerGearsAndOrgan, // blocking bridges
+            Actor.Wolfos)] // wolfos:iceblock
         Woodfall = 0x43,
 
         [FileID(1364)]
@@ -541,7 +542,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1516)]
         [SceneInternalId(0x6F)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Carpenter,
-            Actor.IceBlock, Actor.Bumper, Actor.CircleOfFire, // can block day 3 chest, TODO move it so we can re-enable
+            Actor.IceBlock, Actor.Bumper, Actor.CircleOfFire, Actor.GoronElder, // can block day 3 chest, TODO move it so we can re-enable
             Actor.PatrollingPirate)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
