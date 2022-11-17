@@ -448,6 +448,12 @@ namespace MMR.Randomizer
             var tfScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
             tfScene.Maps[0].Objects[0] = SMALLEST_OBJ;
 
+            // HEAVY BOM
+            RomUtils.CheckCompressed(GameObjects.Actor.PowderKeg.FileListIndex());
+            var kegFile = RomData.MMFileList[GameObjects.Actor.PowderKeg.FileListIndex()].Data;
+            kegFile[0x1FF5] |= 0x02; // add ACTOR_FLAG_20000, makes it heavy 
+
+
             //PrintActorValues();
         }
 
