@@ -1610,12 +1610,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x3E40)]
         [FileID(222)]
         [ObjectListIndex(0x141)]
-        // params: 0x1 is winter coat, 0x800 is with ice block
+        // params: 0x1 is winter coat, 0x80 is with ice block
         // ice block versions are limited because they are complicated collision and really long draw distance
         [GroundVariants(0xFF01, 0xFF81, 0xFF00, 0xFF80)]
         // they don't respawn, but if placed on a spawn next to a wall they can get pushed back out
         // so we do not want to put them in rooms where you have to clear all enemies
-        [RespawningVariants(0xFF01, 0xFF81)] 
+        [RespawningVariants(0xFF80, 0xFF81)] 
         [VariantsWithRoomMax(max: 1, variant: 0xFF81)]
         [VariantsWithRoomMax(max: 1, variant: 0xFF80)]
         Wolfos = 0xEC, // En_Wf
