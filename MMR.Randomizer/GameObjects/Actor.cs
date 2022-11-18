@@ -652,7 +652,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse,
             Scene.StockPotInn, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
-            Scene.BeneathTheWell)]
+            Scene.BeneathTheWell, Scene.StoneTower)]
         //*/
         UnusedStoneTowerStoneElevator = 0x4D, // Bg_F40_Flift
 
@@ -1434,7 +1434,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.GoronRacetrack, Scene.WaterfallRapids, Scene.GormanTrack, Scene.RoadToIkana, Scene.IkanaCastle, Scene.BeneathGraveyard,
             Scene.SwampSpiderHouse, Scene.OceanSpiderHouse, Scene.GoronShrine, Scene.DekuShrine, Scene.ZoraHall,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
-            Scene.StockPotInn, Scene.BeneathTheWell)]
+            Scene.StockPotInn, Scene.BeneathTheWell, Scene.StoneTower)]
         //*/
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
