@@ -116,6 +116,26 @@ namespace MMR.Randomizer
             // write bigger music buffer
             ReadWriteUtils.WriteCodeUInt32(0x801DB9B4, 0x6000);
             ReadWriteUtils.WriteCodeUInt32(0x801DB9B8, 0x6000);
+
+            RemoveFanfaresFromShootingGaleryActors();
+        }
+
+        void RemoveFanfaresFromShootingGaleryActors()
+        {
+            /// If you hit wolfos or the distant scrubs they play a fanfare when you kill them instead of just regular sfx
+            /// this is annoying for BGM shuffle, you probably want to hear the minigame music, not the fanfare, some of which are really long
+
+            var wolfosFid = GameObjects.Actor.ShootingGalleryDekuWolfos.FileListIndex();
+            RomUtils.CheckCompressed(wolfosFid);
+            var wolfosData = RomData.MMFileList[wolfosFid].Data;
+            ReadWriteUtils.Arr_WriteU32(wolfosData, 0xD30, 0x0C067C32); // Jal AudioPlayFanfare -> jal play_sound
+            ReadWriteUtils.Arr_WriteU32(wolfosData, 0xD34, 0x24044807); // load 0x4807 into a0, the same sfx used in the rest of the game
+
+            var dekuNutsFid = GameObjects.Actor.ShootingGalleryDekuScrub.FileListIndex();
+            RomUtils.CheckCompressed(dekuNutsFid);
+            var dekuNutsData = RomData.MMFileList[dekuNutsFid].Data;
+            ReadWriteUtils.Arr_WriteU32(dekuNutsData, 0xC14, 0x0C067C32); // Jal AudioPlayFanfare -> jal play_sound
+            ReadWriteUtils.Arr_WriteU32(dekuNutsData, 0xC18, 0x24044807); // load 0x4807 into a0, the same sfx used in the rest of the game
         }
 
         private void WriteAudioSeq(Random random, OutputSettings _settings)
