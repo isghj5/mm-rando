@@ -3561,19 +3561,26 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(0x23)] // do not remove original, for now
         PirateColonel = 0x21D,
 
+        // TODO make the one that just looks at you a non-enemy type in the replacement
         [EnemizerEnabled]
         [FileID(501)]
         [ObjectListIndex(0x12E)]
+        // vanilla variants:
+        // Aviels room: 0xCB1
         // path == 0x3F ignores path, just stands in one spot
+        // in testing, 2 is not bonkable... so why does FC01 not bonk?, should be type 0
         // 0xE0 is type
+            // 0 GERUDO_PURPLE_TYPE_CUTSCENE, // CANNOT BONK in some cases
+            // 1 (2) GERUDO_PURPLE_TYPE_BOAT_SENTRY, //!< on boats
+            // 2 (4) GERUDO_PURPLE_TYPE_AVEIL_GUARD,
+            // 7 (E) GERUDO_PURPLE_TYPE_FORTRESS = 7 //!< In both courtyard and rooms
         // 0x02 always looks forward for boats or something, FC00 will hear you and turn to look at you
         [PathingVariants(0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
                 0x144B, 0x14EA, 0x18EA, 0x284B, 0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
-        //[GroundVariants(0xFC00, 0xFC20)] 
-        [GroundVariants(0xFC00)]
-        [VariantsWithRoomMax(max: 0, variant: 0x4C24, 0xFC20)] // 0x--2- is unbonkable
+        [GroundVariants(0xFC20, 0xFC40, 0xFCE0)]
+        [VariantsWithRoomMax(max: 0, variant: 0x4C24, 0xFC00, 0xFC01, 0x81F, 0xC1F)] // only type 7 (0xE0) should be bonkable
         [VariantsWithRoomMax(max: 1, variant: 0xFC00)]
-        [VariantsWithRoomMax(max: 1, variant: 0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
+        [VariantsWithRoomMax(max: 1, variant: 0x1F, 0xEA, 0x04EA, 0x8EA, 0xCEA, 0x101F, 0x104B, 0x10EA,
                 0x144B, 0x14EA, 0x18EA, 0x284B, 0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
         [PathingTypeVarsPlacement(mask: 0xFC00, shift: 10)]
         // if kickout is 1F it does nothing? interesting

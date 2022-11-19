@@ -1305,13 +1305,17 @@ namespace MMR.Randomizer
             /// (supposed to be the drop from ceiling cutscene) but it breaks the game
             /// so we have to disable it for any new dinofos spawns to avoid, also scarecrow
 
-            var listTroubleActorsObj = new List<int> { GameObjects.Actor.Dinofos.ObjectIndex(), GameObjects.Actor.Scarecrow.ObjectIndex() };
+            var listTroubleActorsObj = new List<int> {
+                GameObjects.Actor.Dinofos.ObjectIndex(),
+                GameObjects.Actor.Scarecrow.ObjectIndex(),
+                GameObjects.Actor.PatrollingPirate.ObjectIndex()
+            };
 
             var dinoObjDetected = thisSceneData.ChosenReplacementObjects.Find(v => listTroubleActorsObj.Contains(v.ChosenV)) != null;
 
             if ( ! dinoObjDetected) return;
             
-            var listTroubleActors = new List<GameObjects.Actor> { GameObjects.Actor.Dinofos, GameObjects.Actor.Scarecrow };
+            var listTroubleActors = new List<GameObjects.Actor> { GameObjects.Actor.Dinofos, GameObjects.Actor.Scarecrow, GameObjects.Actor.PatrollingPirate };
 
             for (int i = 0; i < thisSceneData.Actors.Count(); i++)
             {
@@ -1501,7 +1505,7 @@ namespace MMR.Randomizer
                 if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.PoeSisters)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.Scarecrow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
-                if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.DragonFly)) continue;
+                if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Scarecrow, GameObjects.Actor.PatrollingPirate)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Scarecrow, GameObjects.Actor.Dinofos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.DragonFly)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Scarecrow, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
@@ -2942,7 +2946,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 40.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 41.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
