@@ -1476,11 +1476,13 @@ namespace MMR.Randomizer
 
         public static void ShuffleObjects(SceneEnemizerData thisSceneData)
         {
-            /// Find replacement objects for swapped actors
+            /// Select replacement objects for the scene
+            // TODO: turns out objects are per-room, we could do this per room not per scene
 
             thisSceneData.ChosenReplacementObjects = new List<ValueSwap>();
             int newObjectSize = 0;
             var newActorList = new List<int>();
+            var previousObjectActors = new List<Actor>(); // already previously chosen, remove from the rest of the lists
 
             for (int objectIndex = 0; objectIndex < thisSceneData.Objects.Count; objectIndex++)
             {
@@ -1523,7 +1525,9 @@ namespace MMR.Randomizer
                 foreach (var objectSwap in thisSceneData.ChosenReplacementObjects)
                 {
                     // remove previously used objects: remove copies to increase variety
-                    reducedCandidateList.RemoveAll(u => u.ObjectID == objectSwap.NewV);
+                    //reducedCandidateList.RemoveAll(u => u.ObjectID == objectSwap.NewV);
+                    // should be faster to keep track of actors not objects
+                    reducedCandidateList.RemoveAll(actor => previousObjectActors.Contains(actor));
                 }
                 if (reducedCandidateList.Count == 0) // rarely, there are no available objects left
                 {
@@ -1553,6 +1557,7 @@ namespace MMR.Randomizer
                     NewV = randomEnemy.ObjectID
                 });
                 thisSceneData.ChosenReplacementObjects.Add(newReplacementObject);
+                previousObjectActors.AddRange(reducedCandidateList);
             } // end for for each object
         }
 
