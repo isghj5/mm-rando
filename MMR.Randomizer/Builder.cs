@@ -3116,6 +3116,8 @@ namespace MMR.Randomizer
             // we need to set 0x80082C1C to 0x1000000C which bypasses
             //   the conditional branches detecting if you haven't hit the right buttons, leaving function
             var bootFile = RomData.MMFileList[1].Data;
+            var codeFileData = RomData.MMFileList[31].Data; // assuming already decompressed by something else in rando long before we get here
+
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x2BBC, 0x1000000C);
 
             void SwapBytes(int start, int end, byte searchByte, byte replaceByte)
@@ -3139,47 +3141,42 @@ namespace MMR.Randomizer
             SwapBytes(0x181E0, 0x18230, (byte) 'x', (byte) 'X'); // dma section
             SwapBytes(0x18470, 0x18B04, (byte) 'x', (byte) 'X'); // the rest of hex values for the whole debug crasher
 
-            // show V-PC for overlays to help find vram address in actors, useful
-            // yes I know it shows this page _later_, but a lot of users will only wait for the first one,
+            // show V-PC (VRAM function address) for overlays in the stack trace, which identifies the actor it belongs to
+            // this turns the stack trace into a version that is shown LAST, why they show two, one with question marks and one with data?
             // no reason to have stupid question marks instead, it never made sense to show that at all.
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x31D8, 0x00000000); // replace branch with nop
 
             // again, convert lower case hex to upper case, this time for the actor overlay table printers
-            // also we dont want the actor id as a decimal either, we always use hex
-            var codeFileData = RomData.MMFileList[31].Data; // assuming already decompressed by something else in rando long before we get here
-            // the string used by actor_dftbls @ 137124 "%3d %08x-%08x %3d %s\n"
-            var stringOffset = 0x137124;
-            codeFileData[stringOffset +  2] = (byte) 'X';
-            codeFileData[stringOffset +  7] = (byte) 'X';
-            codeFileData[stringOffset + 12] = (byte) 'X';
-            // for some reason they set text padding to -2 which bunches everything together,
+
+            // they set the text padding of this text to -2 so they could show filenames, but retail rom doesnt show those anyway
             // changing it back to zero requires changing one instruction
             ReadWriteUtils.Arr_WriteU32(codeFileData, 0x19F00, 0x00002725); // li a0, -2   ->   or a0, $ZERO
+            ReadWriteUtils.Arr_WriteU32(codeFileData,  0xE034, 0x00002725); // li a0, -2   ->   or a0, $ZERO
 
             // want to change the table labels too so "Name", the unused field, is ignored and replaced with Num instead of "cn"
-            byte[] newTableLabelString = Encoding.ASCII.GetBytes("   Num  "); // replaces "cn  Name"
-            ReadWriteUtils.Arr_Insert(newTableLabelString, 0, newTableLabelString.Length, codeFileData, 0x137104 + 21);
+            // also "Id." changed to AID
+            byte[] newTableLabelString = Encoding.ASCII.GetBytes("A.Id RAMStart -   RAMEnd Num."); // replaces "No. RamStart- RamEnd cn  Name\n"
+            var newTableSubString = Encoding.ASCII.GetBytes("%4d %08X - %08X %4d "); // replaces "%3d %08x-%08x %3d %s\n"
+            ReadWriteUtils.Arr_Insert(newTableLabelString, 0, newTableLabelString.Length, codeFileData, 0x137104);
+            ReadWriteUtils.Arr_Insert(newTableSubString,   0, newTableSubString.Length,   codeFileData, 0x137124);
 
             // again, convert lower case hex to upper case, this time for the actor struct table printers
             // for some reason this one is even worse, it uses category twice...
             // we can change the second one to params with only two lines of code changed
-            newTableLabelString = Encoding.ASCII.GetBytes("A.Grp  RAM      Id.  Params  "); // replaces "No. Actor   Name Part SegName"
-            var newTableSubString = Encoding.ASCII.GetBytes("%5d  %08X %3X  %04X "); // replaces "%3d %08x %04x %3d %s"
-            ReadWriteUtils.Arr_Insert(newTableLabelString, 0, newTableLabelString.Length, codeFileData, 0x136F18);
-            ReadWriteUtils.Arr_Insert(newTableSubString,   0, newTableSubString.Length,   codeFileData, 0x136F38);
-
             codeFileData[0xE08B] = 0x1C; // lbu  t6,2(s0)   ->  lh  t6,0x1c(s0)
             codeFileData[0xE0B3] = 0x1C; // lbu  t6,2(s0)   ->  lh  t6,0x1c(s0)
-            //ReadWriteUtils.Arr_WriteU32(codeFileData, 0xE0B2, 0x001C); // lbu  t6,2(s0)   ->  lh  t6,0x1c(s0)
 
-            // again, with the -2 padding, weird
-            ReadWriteUtils.Arr_WriteU32(codeFileData, 0xE034, 0x00002725); // li a0, -2   ->   or a0, $ZERO
+            newTableLabelString = Encoding.ASCII.GetBytes("A.Grp  RAM       A.Id Params "); // replaces "No. Actor   Name Part SegName"
+            // Also change actor id from decimal to hex
+            newTableSubString = Encoding.ASCII.GetBytes("%5d  %08X  %4X %04X "); // replaces "%3d %08x %04x %3d %s\n"
+            ReadWriteUtils.Arr_Insert(newTableLabelString, 0, newTableLabelString.Length, codeFileData, 0x136F18);
+            ReadWriteUtils.Arr_Insert(newTableSubString,   0, newTableSubString.Length,   codeFileData, 0x136F38);
 
             // the stack dump by default shows us code that crashed around PC...
             // but I think there are better ways to see that since our code is not self-modifying
             // this should load SP instead of PC into the default address
             // wish I didnt break the controller inputs, since they could actually give us more control here
-            // I just wanted to make sure the player didnt have to do anything...
+            // I just wanted to make sure the player didnt have to do anything to record useful data...
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x2DA4, 0x00A0B025); // move  $s6, $a0   ->   move  $s6, $a1
 
             // now that the first stack trace shows us what we want, the second one is redundant and meaningless
