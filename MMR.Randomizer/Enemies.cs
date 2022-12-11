@@ -464,19 +464,19 @@ namespace MMR.Randomizer
 
         public static void DisableAllLocationRestrictions()
         {
-            // 19 = top of clock tower: if you can soar out its a problme
+            /// because, sometimes, enemies can be placed inside, all rules of society have shattered
+
+            // 19 = top of clock tower: if you can soar out its a problem (shrug)
             // 54 = sword school: hookshot can lock the player
-            var ignore_scenes = new List<int> { 0x19, 0x54};
+            var sceneSkipList = new List<int> { (int) GameObjects.Scene.ClockTowerRoof, (int) GameObjects.Scene.SwordsmansSchool};
 
-            // TODO fix: dont allow soaring on clocktower, dont allow hookshot in dojo
-
-            /// player item restrictions is a unique list in the code file (for some reason)
+            /// player item restrictions is a unique list in the code file (z_parameter)
             //var restrictionTableVRAMStart = 0x801BF6C0; // 0xC55C00 -> DC4 // offset: 119C00
             var tableOffset = 0x119C00;
             var codeFile = RomData.MMFileList[31].Data;
             while (tableOffset < 0x119DC4)
             {
-                if (! ignore_scenes.Contains(codeFile[tableOffset + 0]))
+                if (sceneSkipList.Contains(codeFile[tableOffset + 0]) == false)
                 {
                     // 0 offset is the scene value
                     codeFile[tableOffset + 1] = 0x00;
@@ -486,8 +486,6 @@ namespace MMR.Randomizer
 
                 tableOffset += 4;
             }
-
-            // todo re-disable item restrictions on the tower
         }
 
         private static void FixScarecrowTalk()
