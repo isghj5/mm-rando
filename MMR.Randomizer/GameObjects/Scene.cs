@@ -543,6 +543,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x6F)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Carpenter,
             Actor.IceBlock, Actor.Bumper, Actor.CircleOfFire, Actor.GoronElder, // can block day 3 chest, TODO move it so we can re-enable
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, // chest can raise to match height,putting it out of reach
             Actor.PatrollingPirate)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
