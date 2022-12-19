@@ -2393,8 +2393,10 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max:1, variant:0x6, 0x2)]
         // crash on transition to witches area in swamp and secretary room in mayor's residence
         // Update crashes trying to update the skeleton, null pointer, reason unknown
-        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear, Scene.MayorsResidence,
-            Scene.OceanSpiderHouse, Scene.DekuPalace)]
+        // seems to be room transition related, for now ban from any place where rooms change over
+        [EnemizerScenesPlacementBlock(Scene.SouthernSwampClear, Scene.SouthernSwamp, Scene.MayorsResidence,
+            Scene.OceanSpiderHouse, Scene.DekuPalace, Scene.SwampSpiderHouse, Scene.DekuShrine, Scene.IkanaCanyon,
+            Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.OceanSpiderHouse, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple)]
         [UnkillableAllVariants]
         HallucinationScrub = 0x169, // En_Dnk
         
