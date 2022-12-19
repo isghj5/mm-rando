@@ -472,7 +472,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
             Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LikeLike)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RosaSisters,
-            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.Eyegore)]
+            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LightBlock,
+            Actor.Eyegore)]
         StockPotInn = 0x5E,
 
         [FileID(1472)]
@@ -511,7 +512,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1506)]
         [SceneInternalId(0x6A)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
-            Actor.PoeBalloon, Actor.BigPoe, Actor.CircleOfFire, Actor.FloorMaster,
+            Actor.PoeBalloon, Actor.BigPoe, Actor.CircleOfFire, Actor.FloorMaster, Actor.LightBlock,
             Actor.GibdoIkana, Actor.ReDead, Actor.GibdoWell, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
         GormanTrack = 0x67,
 
@@ -542,7 +543,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1516)]
         [SceneInternalId(0x6F)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Carpenter,
-            Actor.IceBlock, Actor.Bumper, Actor.CircleOfFire, Actor.GoronElder, // can block day 3 chest, TODO move it so we can re-enable
+            Actor.IceBlock, Actor.Bumper, Actor.CircleOfFire, Actor.GoronElder, Actor.LightBlock, // can block day 3 chest, TODO move it so we can re-enable
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, // chest can raise to match height,putting it out of reach
             Actor.PatrollingPirate)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
