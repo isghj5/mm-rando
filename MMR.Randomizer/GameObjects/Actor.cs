@@ -3017,10 +3017,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(423)]
         [ObjectListIndex(0x1)]
         SoaringEffects = 0x1CE, // En_Test7
-        
+
+        //[ActorizerEnabled]
         [FileID(424)]
         [ObjectListIndex(0x1B3)]
-        Obj_Lightblock = 0x1CF, // Obj_Lightblock
+        [GroundVariants(0x101, 0x201)]
+        [WaterVariants(0x01)] // non vanilla
+        [SwitchFlagsPlacement(mask:0xF00, shift:8)]
+        LightBlock = 0x1CF, // Obj_Lightblock
 
         //[EnemizerEnabled] // no spawn, probably requires ikana king as parent
         [FileID(425)]
@@ -3623,7 +3627,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(504)]
         [ObjectListIndex(0x205)]
         SCTPillar = 0x221, // Obj_Tokei_Turret
-        
+
+        // the elevator that raise you out of water, cycling up and down
         [FileID(505)]
         [ObjectListIndex(0x184)]
         GreatBayTempleElevator = 0x222, // Bg_Dblue_Elevator
@@ -3689,10 +3694,18 @@ namespace MMR.Randomizer.GameObjects
         [FileID(512)]
         [ObjectListIndex(0x20D)]
         UglyTree = 0x229, // Obj_Tree
-        
+
+        // unused in vanilla, its just a mesh elevator like fire temple
+        [ActorizerEnabled]
         [FileID(513)]
         [ObjectListIndex(0x20E)]
-        UnusedElevator = 0x22A, // Obj_Y2lift
+        [FlyingToGroundHeightAdjustment(10)]
+        [FlyingVariants(0x0)]
+        [GroundVariants(0x0)]
+        [WaterVariants(0x0)]
+        [VariantsWithRoomMax(variant: 0, max: 1)]
+        //[OnlyOneActorPerRoom] // probably dyna crash to be worried about
+        UnusedPirateElevator = 0x22A, // Obj_Y2lift
         
         [FileID(514)]
         [ObjectListIndex(0x20E)]
