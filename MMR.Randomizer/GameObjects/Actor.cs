@@ -214,6 +214,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // too big, can block the butler race
         Peahat = 0x14, // En_Peehat
 
+        // ignored because we already have these as a different actor, extra seems redundant
         [FileID(119)]
         [ObjectListIndex(0x2)]
         Butterfly = 0x15, // En_Butte
@@ -3704,6 +3705,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0)]
         [WaterVariants(0x0)]
         [VariantsWithRoomMax(variant: 0, max: 1)]
+        [UnkillableAllVariants]
         //[OnlyOneActorPerRoom] // probably dyna crash to be worried about
         UnusedPirateElevator = 0x22A, // Obj_Y2lift
         
