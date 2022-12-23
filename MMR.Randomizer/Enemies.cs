@@ -1510,7 +1510,7 @@ namespace MMR.Randomizer
                 if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Scarecrow, GameObjects.Actor.Dinofos)) continue;
+                if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.Desbreko, GameObjects.Actor.UnusedPirateElevator)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Scarecrow, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
                 if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.WarpDoor)) continue;
@@ -1855,8 +1855,11 @@ namespace MMR.Randomizer
                         {
                             // just remove first one, not sure if there is an advantage of changing one over the other
                             // consideration: if the object list order changes, the scene load hickups, but so long as wel always replace first...
-                            var firstIndex = objList.FindIndex(obj => obj == uniqueObj);
-                            objList[firstIndex] = SMALLEST_OBJ;
+                            // we dont want the first we want to remove the last, as removing the first introduces more object list re-loads
+                            //var firstIndex = objList.FindIndex(obj => obj == uniqueObj);
+                            //objList[firstIndex] = SMALLEST_OBJ;
+                            var lastIndex = objList.FindLastIndex(obj => obj == uniqueObj);
+                            objList[lastIndex] = SMALLEST_OBJ;
                         }
                     }
                 }
