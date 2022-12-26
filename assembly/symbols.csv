@@ -37,6 +37,7 @@
 0x800B670C,z2_ActorUnload
 0x800B67E0,z2_SetActorSize
 0x800B6948,z2_ActorDtor
+0x800B6E6C,z2_Actor_OffsetOfPointInActorCoords
 0x800B8050,z2_PreDraw2
 0x800B8118,z2_PreDraw1
 0x800B84D0,z2_800B84D0
