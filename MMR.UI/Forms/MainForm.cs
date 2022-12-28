@@ -159,7 +159,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFreeScarecrow, "Spawn scarecrow automatically when using ocarina if within range.");
             TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
             TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
-            TooltipBuilder.SetTooltip(cSaferGlitches, "Fixes HESS crash, Weirdshot crash, Action Swap crash, Song of Double Time softlock during 0th or 4th day, Tatl text softlock on 0th of 4th day, 0th day file deletion, hookslide crash, 0th day Goron Bow crash, applies safety fixes for Fierce Deity even if Fierce Deity Anywhere is not enabled, TODO more...");
+            TooltipBuilder.SetTooltip(cSaferGlitches, "Fixes HESS crash, Weirdshot crash, Action Swap crash, Song of Double Time softlock during 0th or 4th day, Tatl text softlock on 0th of 4th day, 0th day file deletion, hookslide crash, 0th day Goron Bow crash, applies safety fixes for Fierce Deity even if Fierce Deity Anywhere is not enabled, index warp no longer crashes or softlocks (but you won't be able to use it to access the Debug Menu), TODO more...");
 
             TooltipBuilder.SetTooltip(nMaxGossipWotH, "Set the number of Way of the Hero hints that will appear on Gossip Stones.");
             TooltipBuilder.SetTooltip(nMaxGossipFoolish, "Set the number of Foolish hints that will appear on Gossip Stones.");

@@ -1529,6 +1529,7 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.safer_glitches_tatl_text_zero_fourth_day);
                 hacks.Add(Resources.mods.safer_glitches_fix_0thday_erase);
                 hacks.Add(Resources.mods.safer_glitches_fix_goron_bow);
+                hacks.Add(Resources.mods.safer_glitches_index_warp);
             }
 
             foreach (var hack in hacks)
