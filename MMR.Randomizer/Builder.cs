@@ -1138,6 +1138,11 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyHack(Resources.mods.fierce_deity_anywhere);
             }
 
+            if (_randomized.Settings.AllowFierceDeityAnywhere || _randomized.Settings.SaferGlitches)
+            {
+                ResourceUtils.ApplyHack(Resources.mods.safer_glitches_fierce_deity);
+            }
+
             if (_randomized.Settings.ByoAmmo)
             {
                 ResourceUtils.ApplyHack(Resources.mods.byo_ammo);

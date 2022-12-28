@@ -367,6 +367,9 @@
   <data name="replace_gi_table" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\replace-gi-table;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="safer_glitches_fierce_deity" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\safer-glitches-fierce-deity.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="safer_glitches_fix_0thday_erase" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\safer-glitches-fix-0thday-erase.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
