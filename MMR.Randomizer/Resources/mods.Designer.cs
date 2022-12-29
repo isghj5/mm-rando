@@ -903,6 +903,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] safer_glitches_fierce_deity {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_fierce_deity", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] safer_glitches_fix_0thday_erase {
             get {
                 object obj = ResourceManager.GetObject("safer_glitches_fix_0thday_erase", resourceCulture);
@@ -916,6 +926,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] safer_glitches_fix_goron_bow {
             get {
                 object obj = ResourceManager.GetObject("safer_glitches_fix_goron_bow", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] safer_glitches_index_warp {
+            get {
+                object obj = ResourceManager.GetObject("safer_glitches_index_warp", resourceCulture);
                 return ((byte[])(obj));
             }
         }
