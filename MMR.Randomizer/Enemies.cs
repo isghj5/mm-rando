@@ -1311,9 +1311,15 @@ namespace MMR.Randomizer
 
             var actorObjectsDetected = thisSceneData.ChosenReplacementObjects.Find(v => listTroubleActorsObj.Contains(v.ChosenV)) != null;
 
-            if ( !actorObjectsDetected) return;
+            // if field, we can have grottos, which should be checked for too
+            if ( !actorObjectsDetected && thisSceneData.Scene.SpecialObject != Scene.SceneSpecialObject.FieldKeep) return;
             
-            var listTroubleActors = new List<GameObjects.Actor> { GameObjects.Actor.Dinofos, GameObjects.Actor.Scarecrow, GameObjects.Actor.PatrollingPirate };
+            var listTroubleActors = new List<GameObjects.Actor> {
+                GameObjects.Actor.Dinofos,
+                GameObjects.Actor.Scarecrow,
+                GameObjects.Actor.PatrollingPirate,
+                GameObjects.Actor.GrottoHole
+            };
 
             for (int i = 0; i < thisSceneData.Actors.Count(); i++)
             {
