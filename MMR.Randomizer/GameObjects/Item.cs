@@ -797,7 +797,7 @@ namespace MMR.Randomizer.GameObjects
         [Visible]
         [StartingItem(0xC5CE4C, 0x36)]
         [ItemName("Mask of Truth"), LocationName("Swamp Spider House Reward"), Region(Region.SouthernSwamp)]
-        [GossipLocationHint("a gold spider"), GossipItemHint("a piercing gaze"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false)]
+        [GossipLocationHint("a gold spider"), GossipItemHint("a piercing gaze"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false, nameof(GameplaySettings.UpdateWorldModels), false)]
         [ShopText("Wear it to read the thoughts of Gossip Stones and animals.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x8A), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]

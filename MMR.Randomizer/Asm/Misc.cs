@@ -256,19 +256,16 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// A flag for a getItem draw hook, for whether to draw the postman's in-model hat, or a getItem.
         /// </summary>
-        ///
         public bool DrawPostmanHat { get; set; }
 
         /// <summary>
         /// A flag for a getItem draw hook, for whether to draw the cursed skulltula man's mask, or a getItem.
         /// </summary>
-        ///
         public bool DrawMaskOfTruth { get; set; }
 
         /// <summary>
         /// A flag for a getItem draw hook, for whether to draw the Gorman Brothers' Garo's Mask, or a getItem.
         /// </summary>
-        ///
         public bool DrawGaroMask { get; set; }
 
         public MiscFlags()
@@ -309,7 +306,7 @@ namespace MMR.Randomizer.Asm
             this.SaferGlitches = ((flags >> 5) & 1) == 1;
             this.DrawDonGeroMask = ((flags >> 4) & 1) == 1;
             this.DrawPostmanHat = ((flags >> 3) & 1) == 1;
-            this.DrawPostmanHat = ((flags >> 2) & 1) == 1;
+            this.DrawMaskOfTruth = ((flags >> 2) & 1) == 1;
             this.DrawGaroMask = ((flags >> 1) & 1) == 1;
         }
 
