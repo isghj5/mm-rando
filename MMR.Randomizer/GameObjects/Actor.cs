@@ -386,8 +386,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1D)]
         // the first byte is path, if its FF it should sit in one spot instead of pathing, which means no crash
         //   would be better if it patroled or something but better that crash at least
-        [FlyingVariants(0xFF)]
-        [GroundVariants(0xFF)]
+        //[FlyingVariants(0xFF)]
+        //[GroundVariants(0xFF)]
         [PathingVariants(1,2,3,4,7)]
         [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
         [VariantsWithRoomMax(max: 10, variant: 0xFF)]

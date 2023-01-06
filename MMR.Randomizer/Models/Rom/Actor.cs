@@ -358,6 +358,12 @@ namespace MMR.Randomizer.Models.Rom
 
         public List<int> KillableVariants(List<int> acceptableVariants = null)
         {
+            var allRespawning = this.ActorEnum.GetAttribute<RespawningAllVariantsAttribute>();
+            if (allRespawning != null)
+            {
+                return new List<int>();
+            }
+
             var killableVariants = acceptableVariants != null ? acceptableVariants : this.Variants;
             var unkillableVariants = this.UnkillableVariants();
             var respawningVariants = this.RespawningVariants;
