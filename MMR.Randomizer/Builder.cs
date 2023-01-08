@@ -1413,7 +1413,7 @@ namespace MMR.Randomizer
         {
             if (_randomized.Settings.RandomizeEnemies)
             {
-                Enemies.ShuffleEnemies(outputSettings, _randomized.Seed);
+                Enemies.ShuffleEnemies(outputSettings, _randomized, _randomized.Seed);
             }
         }
 
@@ -3479,11 +3479,13 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(65, "Writing speedups...");
                 WriteSpeedUps(messageTable);
 
-                progressReporter.ReportProgress(66, "Writing enemies...");
+
+                progressReporter.ReportProgress(6, "Writing items...");
+                WriteItems(messageTable);
+
+                progressReporter.ReportProgress(67, "Writing enemies...");
                 WriteEnemies(outputSettings);
 
-                progressReporter.ReportProgress(67, "Writing items...");
-                WriteItems(messageTable);
                 WriteMiscHacks();
 
                 progressReporter.ReportProgress(68, "Writing messages...");

@@ -73,6 +73,7 @@ namespace MMR.Randomizer
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
         private static Random seedrng;
+        private static Models.RandomizedResult _randomized;
 
         public static void PrepareEnemyLists()
         {
@@ -175,6 +176,12 @@ namespace MMR.Randomizer
             return sceneEnemyList;
         }
 
+        public static bool CheckRestrictedAllowed()
+        {
+            // shuffle htis here
+            return false;
+        }
+
         public static List<int> GetSceneEnemyObjects(Scene scene)
         {
             /// Gets all objects in a scene.
@@ -195,6 +202,30 @@ namespace MMR.Randomizer
                        //&& !objList.Contains(matchingEnemy.ObjectIndex())                          // not already extracted from this scene
                        && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
+                        // now we need to check if there could be an important item there
+                        var checkRestrictedAttr = matchingEnemy.GetAttribute<CheckRestrictedAttribute>();
+                        if (checkRestrictedAttr != null)
+                        {
+                            var checks = matchingEnemy.GetAttribute<CheckRestrictedAttribute>().Checks;
+                            var bad = false;
+                            for (int i = 0; i < checks.Count; i++)
+                            {
+                                // todo fix this later to make it random rather than yes/no
+                                var check = _randomized.ItemList[checks[i]];
+                                //var busted = _randomized.CheckedImportanceLocations[check.Item].Important;
+                                // works, now need to figure out how to generate a list of all items needed to beat the game
+
+                                var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == checks[i]);
+                                //if (check.IsRandomized && check.Item.)
+                                //if (_randomized.CheckedImportanceLocations[check.Item].Important)
+                                if (check.IsRandomized)
+                                {
+                                   bad = true;
+                                }
+                            }
+                            if (bad) continue;
+                        }
+
                         objList.Add(matchingEnemy.ObjectIndex());
                     }
                 }
@@ -2251,8 +2282,8 @@ namespace MMR.Randomizer
             var sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum);
             WriteOutput(" time to get scene objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
-            WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
-            WriteOutput(" time to find scene name: " + GET_TIME(thisSceneData.StartTime) + "ms");
+            // WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
+            // WriteOutput(" time to find scene name: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             // if actor does NOT exist, but object does, probably spawned by something else; remove from actors to randomize
             // TODO check for side objects that no longer need to exist and replace with possible alt objects
@@ -2898,11 +2929,12 @@ namespace MMR.Randomizer
 
         #endregion
 
-        public static void ShuffleEnemies(OutputSettings settings, int randomizedSeed)
+        public static void ShuffleEnemies(OutputSettings settings, Models.RandomizedResult randomized, int randomizedSeed)
         {
             try
             {
                 seedrng = new Random(randomizedSeed);
+                _randomized = randomized;
                 DateTime enemizerStartTime = DateTime.Now;
 
                 // for dingus that want moonwarp, re-enable dekupalace

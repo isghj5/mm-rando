@@ -4279,22 +4279,37 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x24F)]
         MysteryHand = 0x27D, // En_Bjt
 
-        // cannot be rando'd without breaking bomber kids
+        [ActorizerEnabled]// cannot be rando'd without breaking bomber kids
         [FileID(597)]
         [ObjectListIndex(0x110)]
+        [CheckRestricted(Item.ItemNotebook)]
+        [GroundVariants(0xFF00)]
+        [VariantsWithRoomMax(max:0, variant: 0xFF00)] // assumption: cannot be placed in other places because he looks for the balloon
+        [UnkillableAllVariants]
         JimTheBomber = 0x27E, // En_Bomjima
-        
+
+        //[ActorizerEnabled]
         [FileID(598)]
         [ObjectListIndex(0x110)]
+        [CheckRestricted(Item.ItemNotebook)]
+        //[GroundVariants]
+        [UnkillableAllVariants]
         BombersYouChase = 0x27F, // En_Bomjimb
 
-        // cannot be randoed without taking the object all bombers use, which breaks the rest
+        //[ActorizerEnabled]
         [FileID(599)]
         [ObjectListIndex(0x110)]
+        [CheckRestricted(Item.ItemNotebook)]
+        //[GroundVariants]
+        [UnkillableAllVariants]
         BombersBlueHat = 0x280, // En_Bombers
-        
+
+        //[ActorizerEnabled]
         [FileID(600)]
         [ObjectListIndex(0x110)]
+        [CheckRestricted(Item.ItemNotebook)]
+        //[GroundVariants]
+        [UnkillableAllVariants]
         BomberHideoutGuard = 0x281, // En_Bombers2
 
         //[ActorizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
