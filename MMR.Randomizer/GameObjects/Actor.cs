@@ -1990,8 +1990,13 @@ namespace MMR.Randomizer.GameObjects
 
         // wont spawn if you place him outside of his observatory, needs modification
         // the astral observatory viewer
+        [ActorizerEnabled]
         [FileID(264)]
         [ObjectListIndex(0xDE)]
+        [CheckRestricted(Item.TradeItemMoonTear)]
+        [GroundVariants(0xFFFF)]
+        [VariantsWithRoomMax(max:0, variant: 0xFFFF)]
+        [UnkillableAllVariants]
         Shikashi = 0x124, // En_Bji_01
 
         [ActorizerEnabled]
@@ -3884,9 +3889,12 @@ namespace MMR.Randomizer.GameObjects
         [FileID(535)]
         [ObjectListIndex(0x21E)]
         GoronShrineChandelier = 0x240, // Obj_Chan
-        
+
+        [ActorizerEnabled]
         [FileID(536)]
         [ObjectListIndex(0x220)]
+        [CheckRestricted(Item.HeartPieceEvan)]
+        [UnkillableAllVariants]
         Evan = 0x241, // En_Zos
 
         [ActorizerEnabled]
@@ -4288,36 +4296,38 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         JimTheBomber = 0x27E, // En_Bomjima
 
-        //[ActorizerEnabled]
+        [ActorizerEnabled]
         [FileID(598)]
         [ObjectListIndex(0x110)]
         [CheckRestricted(Item.ItemNotebook)]
-        //[GroundVariants]
+        [GroundVariants(0x0B11, 0x0B22, 0x50F, 0x0513, 0x0910)]
         [UnkillableAllVariants]
         BombersYouChase = 0x27F, // En_Bomjimb
 
-        //[ActorizerEnabled]
+        [ActorizerEnabled]
         [FileID(599)]
         [ObjectListIndex(0x110)]
         [CheckRestricted(Item.ItemNotebook)]
-        //[GroundVariants]
+        [GroundVariants(0x0, 0x01, 0x2, 0x3, 0x4, 0x10, 0x11, 0x12, 0x13, 0x14)]
         [UnkillableAllVariants]
         BombersBlueHat = 0x280, // En_Bombers
 
-        //[ActorizerEnabled]
+        [ActorizerEnabled]
         [FileID(600)]
         [ObjectListIndex(0x110)]
         [CheckRestricted(Item.ItemNotebook)]
-        //[GroundVariants]
+        [GroundVariants(0x0)]
         [UnkillableAllVariants]
         BomberHideoutGuard = 0x281, // En_Bombers2
 
-        //[ActorizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
+        [ActorizerEnabled] // broken: if you pop it, it locks you in a never ending cutscene
         [FileID(601)]
         [ObjectListIndex(0x280)]
+        [CheckRestricted(Item.ItemNotebook)]
         [FlyingVariants(0)]
         [FlyingToGroundHeightAdjustment(200)]
-        //[UnkillableAllVariants]  // untested
+        [VariantsWithRoomMax(max:0, variant:0)] // because of the unpoppable without cutscene thing, cannot put places
+        [UnkillableAllVariants]  // untested, assumed
         MajoraBalloonNCT = 0x282,
 
         [FileID(602)]

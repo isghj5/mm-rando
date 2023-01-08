@@ -182,6 +182,43 @@ namespace MMR.Randomizer
             return false;
         }
 
+        // if one of these already exists somewhere in the logic I did not find it
+        public static List<GameObjects.ItemCategory> junkCategories = new List<GameObjects.ItemCategory>{
+            GameObjects.ItemCategory.GreenRupees,
+            GameObjects.ItemCategory.BlueRupees,
+            GameObjects.ItemCategory.RedRupees, // should be lots of money in other locations this should be junk
+            GameObjects.ItemCategory.Arrows,
+            GameObjects.ItemCategory.Bombs,
+            GameObjects.ItemCategory.GreenPotions
+
+        };
+
+        private static bool ObjectIsCheckBlocked(GameObjects.Actor testActor)
+        {
+            /// checks if randomizing the actor would interfere with getting access to a check
+            /// and then checks if the item is junk, before allowing randimization
+
+            var checkRestrictedAttr = testActor.GetAttribute<CheckRestrictedAttribute>();
+            if (checkRestrictedAttr != null) // actor has check restrictions
+            {
+                var restrictedChecks = testActor.GetAttribute<CheckRestrictedAttribute>().Checks;
+                for (int checkIndex = 0; checkIndex < restrictedChecks.Count; checkIndex++)
+                {
+                    // TODO: make it random rather than yes/no
+                    //var check = _randomized.ItemList[checks[checkIndex]];
+
+                    var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]);
+                    var itemIsNotJunk = junkCategories.Contains((GameObjects.ItemCategory) itemInCheck.Item.ItemCategory()) == false;
+                    if (itemIsNotJunk)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+
         public static List<int> GetSceneEnemyObjects(Scene scene)
         {
             /// Gets all objects in a scene.
@@ -202,31 +239,12 @@ namespace MMR.Randomizer
                        //&& !objList.Contains(matchingEnemy.ObjectIndex())                          // not already extracted from this scene
                        && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
-                        // now we need to check if there could be an important item there
-                        var checkRestrictedAttr = matchingEnemy.GetAttribute<CheckRestrictedAttribute>();
-                        if (checkRestrictedAttr != null)
+                        
+                        if ( ! ObjectIsCheckBlocked(matchingEnemy))
                         {
-                            var checks = matchingEnemy.GetAttribute<CheckRestrictedAttribute>().Checks;
-                            var bad = false;
-                            for (int i = 0; i < checks.Count; i++)
-                            {
-                                // todo fix this later to make it random rather than yes/no
-                                var check = _randomized.ItemList[checks[i]];
-                                //var busted = _randomized.CheckedImportanceLocations[check.Item].Important;
-                                // works, now need to figure out how to generate a list of all items needed to beat the game
-
-                                var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == checks[i]);
-                                //if (check.IsRandomized && check.Item.)
-                                //if (_randomized.CheckedImportanceLocations[check.Item].Important)
-                                if (check.IsRandomized)
-                                {
-                                   bad = true;
-                                }
-                            }
-                            if (bad) continue;
+                            objList.Add(matchingEnemy.ObjectIndex());
                         }
-
-                        objList.Add(matchingEnemy.ObjectIndex());
+                        // else: ignore, the actors will remain vanilla
                     }
                 }
             }
