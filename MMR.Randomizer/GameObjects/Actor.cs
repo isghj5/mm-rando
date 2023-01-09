@@ -2565,10 +2565,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(343)]
         [ObjectListIndex(0x107)]
+        [CheckRestricted(Item.HeartPieceNotebookPostman)]
         [GroundVariants(0)] // no params
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.PostOffice)]
+        //[EnemizerScenesExcluded(Scene.PostOffice)]
         BedroomPostman = 0x17D, // En_Mm3
 
         [FileID(344)]
@@ -2989,8 +2990,13 @@ namespace MMR.Randomizer.GameObjects
         // manually sunsets switch 5, sets 5 separate switches based on player form, but I think these are all as a result of willing the game
         BombchuGirl = 0x1C1, // En_Takaraya
 
+        [ActorizerEnabled]
         [FileID(413)]
         [ObjectListIndex(0x1A9)]
+        [GroundVariants(0x001, 0x100, 0x101)]
+        // limit variants?
+        [CheckRestricted(Item.MundaneItemSeahorse)]
+        [UnkillableAllVariants]
         GreatBayFisherman = 0x1C2, // En_Tsn
 
         //[ActorizerEnabled] // we have a better version as a custom actor now, less stupid
@@ -4050,6 +4056,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x7)]
         //[CheckRestricted()]
         [GroundVariants(0)]
+        [VariantsWithRoomMax(0,0)]
         [UnkillableAllVariants]
         AnjusMother = 0x253, // En_Ah
         
@@ -4232,6 +4239,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x241)]
         [CheckRestricted(Item.HeartPieceNotebookMayor)]
         [GroundVariants(0)]
+        [VariantsWithRoomMax(0,0)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         Dotour = 0x26F, // En_Dt
@@ -4467,11 +4475,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x2E30)]
         [FileID(616)]
         [ObjectListIndex(0x22)]
+        [CheckRestricted(Item.CollectableTerminaFieldEnemy1)]
         //[FlyingVariants(0, 1)] // two? one that steals and one that doesn't?
         [FlyingVariants(0)] // zero seems safe, does not steal sword or anything, 1 does not spawn
         [OnlyOneActorPerRoom]
         [FlyingToGroundHeightAdjustment(100)]
-        [EnemizerScenesExcluded(Scene.TerminaField)] // do not remove original, esp with rupeeland coming soon
+        //[EnemizerScenesExcluded(Scene.TerminaField)] // do not remove original, esp with rupeeland coming soon
         Takkuri = 0x291, // En_Theifbird
 
         //todo

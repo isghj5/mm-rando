@@ -183,8 +183,10 @@ namespace MMR.Randomizer
             GameObjects.ItemCategory.RedRupees, // should be lots of money in other locations this should be junk
             GameObjects.ItemCategory.Arrows,
             GameObjects.ItemCategory.Bombs,
-            GameObjects.ItemCategory.GreenPotions
-
+            GameObjects.ItemCategory.DekuSticks,
+            GameObjects.ItemCategory.DekuNuts,
+            GameObjects.ItemCategory.GreenPotions,
+            GameObjects.ItemCategory.MagicJars
         };
 
         //private bool IsJunk
@@ -1628,7 +1630,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.AnjusMother)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GreatBayFisherman)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.Scarecrow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
