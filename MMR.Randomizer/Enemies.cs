@@ -187,6 +187,8 @@ namespace MMR.Randomizer
 
         };
 
+        //private bool IsJunk
+
         private static bool ObjectIsCheckBlocked(Scene scene, GameObjects.Actor testActor)
         {
             /// checks if randomizing the actor would interfere with getting access to a check
@@ -202,7 +204,7 @@ namespace MMR.Randomizer
                     //var check = _randomized.ItemList[checks[checkIndex]];
 
                     var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
-                    var itemIsNotJunk = (itemInCheck == GameObjects.Item.IceTrap) || (junkCategories.Contains((GameObjects.ItemCategory) itemInCheck.ItemCategory()) == false);
+                    var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory) itemInCheck.ItemCategory()) == false);
                     if (itemIsNotJunk)
                     {
                         return true;
@@ -236,34 +238,35 @@ namespace MMR.Randomizer
                     default:
                     case GameObjects.Scene.NorthClockTown:
                         map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapTown).Item;
-                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfallInTown).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfall).Item;
                         strawPulled = shortStrawTingle == 0;
                         break;
                     case GameObjects.Scene.RoadToSouthernSwamp:
-                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfallInSwamp).Item;
-                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowheadInSwamp).Item;
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfall).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowhead).Item;
                         strawPulled = shortStrawTingle == 1;
                         break;
                     case GameObjects.Scene.TwinIslands:
-                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowheadInMountain).Item;
-                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanchInMountain).Item;
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowhead).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanch).Item;
                         break;
                     case GameObjects.Scene.MilkRoad:
-                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanchInRanch).Item;
-                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBayInRanch).Item;
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanch).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBay).Item;
                         strawPulled = shortStrawTingle == 2;
                         break;
                     case GameObjects.Scene.GreatBayCoast:
-                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBayInOcean).Item;
-                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTowerInOcean).Item;
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBay).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTower).Item;
                         break;
                     case GameObjects.Scene.IkanaCanyon:
-                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTowerInCanyon).Item;
-                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapTownInCanyon).Item;
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTower).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapTown).Item;
                         break;
 
                 }
                 if ( ! ItemUtils.IsJunk(map1) ||  ! ItemUtils.IsJunk(map2))
+                //if (! junkCategories.Contains(map1.ItemCategory) || ! junkCategories.Contains(map1.ItemCategory))
                 {
                     return true;
                 }
@@ -1625,7 +1628,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Evan)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.AnjusMother)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.Scarecrow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
@@ -2365,7 +2368,7 @@ namespace MMR.Randomizer
             var sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum);
             WriteOutput(" time to get scene objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
-            // WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
+             WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
             // WriteOutput(" time to find scene name: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             // if actor does NOT exist, but object does, probably spawned by something else; remove from actors to randomize
@@ -2537,14 +2540,16 @@ namespace MMR.Randomizer
             FixGroundToFlyingActorHeights(thisSceneData); // putting flying actors on ground spawns can be weird
 
             // print debug actor locations
+            WriteOutput("####################################################### ");
             for (int a = 0; a < thisSceneData.Actors.Count; a++)
             {
                 var actor = thisSceneData.Actors[a];
-                WriteOutput($"Old Enemy actor:[{actor.OldName}] " +
+                WriteOutput($"  Old Enemy actor:[{actor.OldName}] " +
                     $"map [{actor.Room.ToString("D2")}] " +
                     $"was replaced by new enemy: [{actor.Variants[0].ToString("X4")}]" +
                     $"[{actor.Name}]");
             }
+            WriteOutput("####################################################### ");
 
             // realign all scene companion actors
             MoveAlignedCompanionActors(thisSceneData.Actors, thisSceneData.RNG, thisSceneData.Log);
