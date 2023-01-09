@@ -4,145 +4,145 @@ namespace MMR.Randomizer.GameObjects
 {
     public enum Region
     {
-        [RegionName("Misc")]
+        [RegionName("Misc"), RegionArea(RegionArea.None)]
         Misc,
 
-        [RegionName("Bottle Catch")]
+        [RegionName("Bottle Catch"), RegionArea(RegionArea.None)]
         BottleCatch,
 
-        [RegionName("Beneath Clocktown")]
+        [RegionName("Beneath Clocktown"), RegionArea(RegionArea.Town)]
         BeneathClocktown,
 
-        [RegionName("Clock Tower Roof")]
+        [RegionName("Clock Tower Roof"), RegionArea(RegionArea.Town)]
         ClockTowerRoof,
 
-        [RegionName("South Clock Town")]
+        [RegionName("South Clock Town"), RegionArea(RegionArea.Town)]
         SouthClockTown,
 
-        [RegionName("North Clock Town")]
+        [RegionName("North Clock Town"), RegionArea(RegionArea.Town)]
         NorthClockTown,
 
-        [RegionName("Deku Playground Items")]
+        [RegionName("Deku Playground Items"), RegionArea(RegionArea.Town)]
         DekuPlaygroundItems,
 
-        [RegionName("East Clock Town")]
+        [RegionName("East Clock Town"), RegionArea(RegionArea.Town)]
         EastClockTown,
 
-        [RegionName("Stock Pot Inn")]
+        [RegionName("Stock Pot Inn"), RegionArea(RegionArea.Town)]
         StockPotInn,
 
-        [RegionName("West Clock Town")]
+        [RegionName("West Clock Town"), RegionArea(RegionArea.Town)]
         WestClockTown,
 
-        [RegionName("Laundry Pool")]
+        [RegionName("Laundry Pool"), RegionArea(RegionArea.Town)]
         LaundryPool,
 
-        [RegionName("Termina Field")]
+        [RegionName("Termina Field"), RegionArea(RegionArea.Town)]
         TerminaField,
 
-        [RegionName("Road to Southern Swamp")]
+        [RegionName("Road to Southern Swamp"), RegionArea(RegionArea.Town)]
         RoadToSouthernSwamp,
 
-        [RegionName("Southern Swamp")]
+        [RegionName("Southern Swamp"), RegionArea(RegionArea.Swamp)]
         SouthernSwamp,
 
-        [RegionName("Swamp Spider House Items")]
+        [RegionName("Swamp Spider House Items"), RegionArea(RegionArea.Swamp)]
         SwampSpiderHouseItems,
 
-        [RegionName("Deku Palace")]
+        [RegionName("Deku Palace"), RegionArea(RegionArea.Swamp)]
         DekuPalace,
 
-        [RegionName("Butler Race Items")]
+        [RegionName("Butler Race Items"), RegionArea(RegionArea.Swamp)]
         ButlerRaceItems,
 
-        [RegionName("Woodfall")]
+        [RegionName("Woodfall"), RegionArea(RegionArea.Swamp)]
         Woodfall,
 
-        [RegionName("Woodfall Temple")]
+        [RegionName("Woodfall Temple"), RegionArea(RegionArea.Swamp)]
         WoodfallTemple,
 
-        [RegionName("Path to Mountain Village")]
+        [RegionName("Path to Mountain Village"), RegionArea(RegionArea.Town)]
         PathToMountainVillage,
 
-        [RegionName("Mountain Village")]
+        [RegionName("Mountain Village"), RegionArea(RegionArea.Mountain)]
         MountainVillage,
 
-        [RegionName("Twin Islands")]
+        [RegionName("Twin Islands"), RegionArea(RegionArea.Mountain)]
         TwinIslands,
 
-        [RegionName("Goron Race Items")]
+        [RegionName("Goron Race Items"), RegionArea(RegionArea.Mountain)]
         GoronRaceItems,
 
-        [RegionName("Goron Village")]
+        [RegionName("Goron Village"), RegionArea(RegionArea.Mountain)]
         GoronVillage,
 
-        [RegionName("Path to Snowhead")]
+        [RegionName("Path to Snowhead"), RegionArea(RegionArea.Mountain)]
         PathToSnowhead,
 
-        [RegionName("Snowhead")]
+        [RegionName("Snowhead"), RegionArea(RegionArea.Mountain)]
         Snowhead,
 
-        [RegionName("Snowhead Temple")]
+        [RegionName("Snowhead Temple"), RegionArea(RegionArea.Mountain)]
         SnowheadTemple,
 
-        [RegionName("Milk Road")]
+        [RegionName("Milk Road"), RegionArea(RegionArea.Ranch)]
         MilkRoad,
 
-        [RegionName("Romani Ranch")]
+        [RegionName("Romani Ranch"), RegionArea(RegionArea.Ranch)]
         RomaniRanch,
 
-        [RegionName("Great Bay Coast")]
+        [RegionName("Great Bay Coast"), RegionArea(RegionArea.Ocean)]
         GreatBayCoast,
 
-        [RegionName("Ocean Spider House Items")]
+        [RegionName("Ocean Spider House Items"), RegionArea(RegionArea.Ocean)]
         OceanSpiderHouseItems,
 
-        [RegionName("Zora Cape")]
+        [RegionName("Zora Cape"), RegionArea(RegionArea.Ocean)]
         ZoraCape,
 
-        [RegionName("Zora Hall")]
+        [RegionName("Zora Hall"), RegionArea(RegionArea.Ocean)]
         ZoraHall,
 
-        [RegionName("Pirates' Fortress Exterior")]
+        [RegionName("Pirates' Fortress Exterior"), RegionArea(RegionArea.Ocean)]
         PiratesFortressExterior,
 
-        [RegionName("Pirates' Fortress Sewer")]
+        [RegionName("Pirates' Fortress Sewer"), RegionArea(RegionArea.Ocean)]
         PiratesFortressSewer,
 
-        [RegionName("Pirates' Fortress Interior")]
+        [RegionName("Pirates' Fortress Interior"), RegionArea(RegionArea.Ocean)]
         PiratesFortressInterior,
 
-        [RegionName("Pinnacle Rock")]
+        [RegionName("Pinnacle Rock"), RegionArea(RegionArea.Ocean)]
         PinnacleRock,
 
-        [RegionName("Great Bay Temple")]
+        [RegionName("Great Bay Temple"), RegionArea(RegionArea.Ocean)]
         GreatBayTemple,
 
-        [RegionName("Road to Ikana")]
+        [RegionName("Road to Ikana"), RegionArea(RegionArea.Town)]
         RoadToIkana,
 
-        [RegionName("Ikana Graveyard")]
+        [RegionName("Ikana Graveyard"), RegionArea(RegionArea.Town)]
         IkanaGraveyard,
 
-        [RegionName("Ikana Canyon")]
+        [RegionName("Ikana Canyon"), RegionArea(RegionArea.Canyon)]
         IkanaCanyon,
 
-        [RegionName("Beneath the Well")]
+        [RegionName("Beneath the Well"), RegionArea(RegionArea.Canyon)]
         BeneathTheWell,
 
-        [RegionName("Ikana Castle")]
+        [RegionName("Ikana Castle"), RegionArea(RegionArea.Canyon)]
         IkanaCastle,
 
-        [RegionName("Stone Tower")]
+        [RegionName("Stone Tower"), RegionArea(RegionArea.Canyon)]
         StoneTower,
 
-        [RegionName("Stone Tower Temple")]
+        [RegionName("Stone Tower Temple"), RegionArea(RegionArea.Canyon)]
         StoneTowerTemple,
 
-        [RegionName("Secret Shrine")]
+        [RegionName("Secret Shrine"), RegionArea(RegionArea.Canyon)]
         SecretShrine,
 
-        [RegionName("The Moon")]
+        [RegionName("The Moon"), RegionArea(RegionArea.None)]
         TheMoon,
     }
 }

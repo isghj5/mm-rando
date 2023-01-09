@@ -249,6 +249,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public PriceMode PriceMode { get; set; }
 
+        public DungeonNavigationMode DungeonNavigationMode { get; set; }
+
 
         /// <summary>
         ///  Custom item list selections

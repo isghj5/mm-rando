@@ -343,10 +343,10 @@ namespace MMR.UI.Forms
             // tOtherCustomizations
             // 
             this.tOtherCustomizations.Controls.Add(this.tOtherCustomization);
-            this.tOtherCustomizations.Location = new System.Drawing.Point(7, 146);
+            this.tOtherCustomizations.Location = new System.Drawing.Point(7, 195);
             this.tOtherCustomizations.Name = "tOtherCustomizations";
             this.tOtherCustomizations.SelectedIndex = 0;
-            this.tOtherCustomizations.Size = new System.Drawing.Size(381, 160);
+            this.tOtherCustomizations.Size = new System.Drawing.Size(764, 160);
             this.tOtherCustomizations.TabIndex = 22;
             // 
             // tOtherCustomization
@@ -360,7 +360,7 @@ namespace MMR.UI.Forms
             this.tOtherCustomization.Location = new System.Drawing.Point(4, 24);
             this.tOtherCustomization.Name = "tOtherCustomization";
             this.tOtherCustomization.Padding = new System.Windows.Forms.Padding(3);
-            this.tOtherCustomization.Size = new System.Drawing.Size(373, 132);
+            this.tOtherCustomization.Size = new System.Drawing.Size(756, 132);
             this.tOtherCustomization.TabIndex = 0;
             this.tOtherCustomization.Text = "Other";
             this.tOtherCustomization.UseVisualStyleBackColor = true;
@@ -458,7 +458,7 @@ namespace MMR.UI.Forms
             this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.groupBox9.Name = "groupBox9";
             this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox9.Size = new System.Drawing.Size(379, 133);
+            this.groupBox9.Size = new System.Drawing.Size(379, 172);
             this.groupBox9.TabIndex = 29;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Generation Settings";

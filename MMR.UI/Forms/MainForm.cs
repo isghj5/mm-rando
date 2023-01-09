@@ -189,11 +189,12 @@ namespace MMR.UI.Forms
         {
             //var dungeonModeSettings = new List<Type> { typeof(SmallKeyMode), typeof(BossKeyMode), typeof(StrayFairyMode) };
             var properties = new List<PropertyInfo>();
-            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.SmallKeyMode)));
-            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossKeyMode)));
-            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.StrayFairyMode)));
-            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossRemainsMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.PriceMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossRemainsMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossKeyMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.SmallKeyMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.StrayFairyMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.DungeonNavigationMode)));
             foreach (var propertyInfo in properties)
             {
                 var tabPage = new TabPage

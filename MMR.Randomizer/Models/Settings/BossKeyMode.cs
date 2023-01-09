@@ -20,5 +20,8 @@ namespace MMR.Randomizer.Models
         [Description("Boss Keys will go back in time with Link.")]
         [HackContent(nameof(Resources.mods.key_boss_sot))]
         KeepThroughTime = 1 << 2,
+
+        [Description("Randomization algorithm will place any randomized Boss Keys into an overworld (non-dungeon) location near the temple.")]
+        KeepWithinArea = 1 << 3,
     }
 }

@@ -77,6 +77,11 @@ namespace MMR.Randomizer.Utils
                 return true;
             }
 
+            if (settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.KeepWithinDungeon) && DungeonNavigation().Contains(item))
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -123,6 +128,21 @@ namespace MMR.Randomizer.Utils
         public static IEnumerable<Item> DungeonStrayFairies()
         {
             return Enumerable.Range((int)Item.CollectibleStrayFairyWoodfall1, 60).Cast<Item>();
+        }
+
+        public static IEnumerable<Item> DungeonNavigation()
+        {
+            return new List<Item>
+            {
+                Item.ItemWoodfallMap,
+                Item.ItemWoodfallCompass,
+                Item.ItemSnowheadMap,
+                Item.ItemSnowheadCompass,
+                Item.ItemGreatBayMap,
+                Item.ItemGreatBayCompass,
+                Item.ItemStoneTowerMap,
+                Item.ItemStoneTowerCompass,
+            }.AsEnumerable();
         }
 
         public static IEnumerable<Item> BossRemains()

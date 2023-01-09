@@ -1870,6 +1870,36 @@ namespace MMR.Randomizer
                 return item.Region() == location.Region();
             }
 
+            var dungeonRegions = new List<Region> { Region.WoodfallTemple, Region.SnowheadTemple, Region.GreatBayTemple, Region.StoneTowerTemple };
+
+            var regionAreaDungeonEntrance = new Dictionary<RegionArea, Item>
+            {
+                { RegionArea.Swamp, Item.AreaWoodFallTempleAccess },
+                { RegionArea.Mountain, Item.AreaSnowheadTempleAccess },
+                { RegionArea.Ocean, Item.AreaGreatBayTempleAccess },
+                { RegionArea.Canyon, Item.AreaInvertedStoneTowerTempleAccess },
+            };
+
+            var dungeonEntranceRegionArea = regionAreaDungeonEntrance.ToDictionary(x => x.Value, x => x.Key);
+
+            bool LockRegionArea(Item item, Item location)
+            {
+                var itemRegionArea = item.RegionArea();
+                if (itemRegionArea.HasValue && regionAreaDungeonEntrance.ContainsKey(itemRegionArea.Value))
+                {
+                    var dungeonEntranceToFind = regionAreaDungeonEntrance[itemRegionArea.Value];
+                    var dungeonNewEntrance = ItemList[dungeonEntranceToFind].NewLocation ?? dungeonEntranceToFind;
+                    var newRegionArea = dungeonEntranceRegionArea[dungeonNewEntrance];
+                    return newRegionArea == location.RegionArea() && (!location.Region().HasValue || !dungeonRegions.Contains(location.Region().Value));
+                }
+                return item.RegionArea() == location.RegionArea();
+            }
+
+            bool LockRegionAreaOrRegion(Item item, Item location)
+            {
+                return LockRegionArea(item, location) || LockRegion(item, location);
+            }
+
             if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
             {
                 PlaceItem(Item.RemainsOdolwa, itemPool, (item, location) => location == Item.FairySpinAttack);
@@ -1878,35 +1908,78 @@ namespace MMR.Randomizer
                 PlaceItem(Item.RemainsTwinmold, itemPool, (item, location) => location == Item.ItemFairySword);
             }
 
-            if (_randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinDungeon))
+            if ((_randomized.Settings.StrayFairyMode & (StrayFairyMode.KeepWithinDungeon | StrayFairyMode.KeepWithinArea)) != 0)
             {
                 foreach (var item in ItemUtils.DungeonStrayFairies())
                 {
-                    PlaceItem(item, itemPool, LockRegion);
+                    PlaceItem(
+                        item,
+                        itemPool,
+                        _randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinDungeon | StrayFairyMode.KeepWithinArea)
+                            ? LockRegionAreaOrRegion :
+                            _randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinArea)
+                            ? LockRegionArea
+                            : LockRegion);
                 }
             }
 
-            if (_randomized.Settings.BossKeyMode.HasFlag(BossKeyMode.KeepWithinDungeon))
+            if ((_randomized.Settings.BossKeyMode & (BossKeyMode.KeepWithinDungeon | BossKeyMode.KeepWithinArea)) != 0)
             {
                 foreach (var item in ItemUtils.BossKeys())
                 {
-                    PlaceItem(item, itemPool, LockRegion);
+                    PlaceItem(
+                        item,
+                        itemPool,
+                        _randomized.Settings.BossKeyMode.HasFlag(BossKeyMode.KeepWithinDungeon | BossKeyMode.KeepWithinArea)
+                            ? LockRegionAreaOrRegion :
+                            _randomized.Settings.BossKeyMode.HasFlag(BossKeyMode.KeepWithinArea)
+                            ? LockRegionArea
+                            : LockRegion);
                 }
             }
 
-            if (_randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon))
+            if ((_randomized.Settings.SmallKeyMode & (SmallKeyMode.KeepWithinDungeon | SmallKeyMode.KeepWithinArea)) != 0)
             {
                 foreach (var item in ItemUtils.SmallKeys())
                 {
-                    PlaceItem(item, itemPool, LockRegion);
+                    PlaceItem(
+                        item,
+                        itemPool,
+                        _randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon | SmallKeyMode.KeepWithinArea)
+                            ? LockRegionAreaOrRegion :
+                            _randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinArea)
+                            ? LockRegionArea
+                            : LockRegion);
                 }
             }
 
-            if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinDungeon))
+            if ((_randomized.Settings.BossRemainsMode & (BossRemainsMode.KeepWithinDungeon | BossRemainsMode.KeepWithinArea)) != 0)
             {
                 foreach (var item in ItemUtils.BossRemains())
                 {
-                    PlaceItem(item, itemPool, LockRegion);
+                    PlaceItem(
+                        item,
+                        itemPool,
+                        _randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinDungeon | BossRemainsMode.KeepWithinArea)
+                            ? LockRegionAreaOrRegion :
+                            _randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinArea)
+                            ? LockRegionArea
+                            : LockRegion);
+                }
+            }
+
+            if ((_randomized.Settings.DungeonNavigationMode & (DungeonNavigationMode.KeepWithinDungeon | DungeonNavigationMode.KeepWithinArea)) != 0)
+            {
+                foreach (var item in ItemUtils.DungeonNavigation())
+                {
+                    PlaceItem(
+                        item,
+                        itemPool,
+                        _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.KeepWithinDungeon | DungeonNavigationMode.KeepWithinArea)
+                            ? LockRegionAreaOrRegion :
+                            _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.KeepWithinArea)
+                            ? LockRegionArea
+                            : LockRegion);
                 }
             }
         }

@@ -19,5 +19,8 @@ namespace MMR.Randomizer.Models
 
         [Description("Small Keys will go back in time with Link. Any used Small Keys will return to Link's inventory.")]
         KeepThroughTime = 1 << 2,
+
+        [Description("Randomization algorithm will place any randomized Small Keys into an overworld (non-dungeon) location near the temple.")]
+        KeepWithinArea = 1 << 3,
     }
 }

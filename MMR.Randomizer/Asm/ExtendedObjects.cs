@@ -22,6 +22,8 @@ namespace MMR.Randomizer.Asm
         public short? Milk;
         public short? BossKeys;
         public short? SmallKeys;
+        public short? Compasses;
+        public short? DungeonMaps;
     }
 
     /// <summary>
@@ -74,16 +76,32 @@ namespace MMR.Randomizer.Asm
                 return (Indexes.Milk.Value, 0x32);
             }
 
+            // Boss Keys
             if (entry.ItemGained == 0x74 && entry.Object == 0x92 && Indexes.BossKeys.HasValue)
             {
                 var index = entry.Type >> 4;
                 return ((short)(Indexes.BossKeys.Value + index), entry.Index);
             }
 
+            // Small Keys
             if (entry.ItemGained == 0x78 && entry.Object == 0x86 && Indexes.SmallKeys.HasValue)
             {
                 var index = entry.Type >> 4;
                 return ((short)(Indexes.SmallKeys.Value + index), entry.Index);
+            }
+
+            // Compasses
+            if (entry.ItemGained == 0x75 && entry.Object == 0x91 && Indexes.Compasses.HasValue)
+            {
+                var index = entry.Type >> 4;
+                return ((short)(Indexes.Compasses.Value + index), entry.Index);
+            }
+
+            // Dungeon Maps
+            if (entry.ItemGained == 0x76 && entry.Object == 0xA0 && Indexes.DungeonMaps.HasValue)
+            {
+                var index = entry.Type >> 4;
+                return ((short)(Indexes.DungeonMaps.Value + index), entry.Index);
             }
 
             // set DrawItem function for Spin Attack
@@ -172,6 +190,14 @@ namespace MMR.Randomizer.Asm
             // Add Small Keys
             AddSmallKeys();
             this.Indexes.SmallKeys = AdvanceIndex(4);
+
+            // Add Compasses
+            AddCompasses();
+            this.Indexes.Compasses = AdvanceIndex(4);
+
+            // Add Dungeon Maps
+            AddDungeonMaps();
+            this.Indexes.DungeonMaps = AdvanceIndex(4);
 
             // Include Spin Attack Energy model into Kokiri Sword
             ObjUtils.InsertObj(Resources.models.gi_spinattack, 0x148);
@@ -546,6 +572,50 @@ namespace MMR.Randomizer.Asm
             this.Offsets.Add(AddSmallKey(Color.FromArgb(0xAA, 0xFF, 0xAA), Color.FromArgb(0x00, 0x73, 0x00))); // Snowhead
             this.Offsets.Add(AddSmallKey(Color.FromArgb(0xAA, 0xFF, 0xFF), Color.FromArgb(0x00, 0x73, 0x73))); // Great Bay
             this.Offsets.Add(AddSmallKey(Color.FromArgb(0xFF, 0xFF, 0x00), Color.FromArgb(0x73, 0x73, 0x00))); // Stone Tower
+        }
+
+        #endregion
+
+        #region Compasses
+
+        (uint, uint) AddCompass(Color prim, Color env)
+        {
+            var data = CloneExistingData(723);
+
+            WriteByte(data, 0x97C, prim.ToBytesRGB());
+            WriteByte(data, 0x984, env.ToBytesRGB());
+
+            return this.Bundle.Append(data);
+        }
+
+        void AddCompasses()
+        {
+            this.Offsets.Add(AddCompass(Color.FromArgb(0x96, 0x32, 0x96), Color.FromArgb(0x28, 0x14, 0x28))); // Woodfall
+            this.Offsets.Add(AddCompass(Color.FromArgb(0x32, 0x96, 0x32), Color.FromArgb(0x14, 0x28, 0x14))); // Snowhead
+            this.Offsets.Add(AddCompass(Color.FromArgb(0x32, 0x96, 0x96), Color.FromArgb(0x14, 0x28, 0x28))); // Great Bay
+            this.Offsets.Add(AddCompass(Color.FromArgb(0x96, 0x96, 0x00), Color.FromArgb(0x28, 0x28, 0x00))); // Stone Tower
+        }
+
+        #endregion
+
+        #region Dungeon Maps
+
+        (uint, uint) AddDungeonMap(Color prim, Color env)
+        {
+            var data = CloneExistingData(733);
+
+            WriteByte(data, 0x3DC, prim.ToBytesRGB());
+            WriteByte(data, 0x3E4, env.ToBytesRGB());
+
+            return this.Bundle.Append(data);
+        }
+
+        void AddDungeonMaps()
+        {
+            this.Offsets.Add(AddDungeonMap(Color.FromArgb(0x96, 0x32, 0x96), Color.FromArgb(0x28, 0x14, 0x28))); // Woodfall
+            this.Offsets.Add(AddDungeonMap(Color.FromArgb(0x32, 0x96, 0x32), Color.FromArgb(0x14, 0x28, 0x14))); // Snowhead
+            this.Offsets.Add(AddDungeonMap(Color.FromArgb(0x32, 0x96, 0x96), Color.FromArgb(0x14, 0x28, 0x28))); // Great Bay
+            this.Offsets.Add(AddDungeonMap(Color.FromArgb(0x96, 0x96, 0x00), Color.FromArgb(0x28, 0x28, 0x00))); // Stone Tower
         }
 
         #endregion
