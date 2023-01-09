@@ -2305,7 +2305,7 @@ namespace MMR.Randomizer.GameObjects
         // one of these is sit on the wall bat from rtss: FF03/01/9F
         [VariantsWithRoomMax(max:1, 0xFF34)] // swarm
         [FlyingToGroundHeightAdjustment(150)]
-        [EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
+        //[EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
         // switch flags are only for the graveyard, no other version uses it
         // hardcoded to use only in that scene too, so canno't use for anything else without modifying
         //[SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
@@ -2497,8 +2497,8 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [FlyingToGroundHeightAdjustment(150)]
-        [EnemizerScenesExcluded(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
-        [EnemizerScenesPlacementBlock(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
+        //[EnemizerScenesExcluded(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
+        //[EnemizerScenesPlacementBlock(Scene.RoadToSouthernSwamp, Scene.TwinIslands, Scene.TwinIslandsSpring, Scene.NorthClockTown, Scene.MilkRoad, Scene.GreatBayCoast, Scene.IkanaCanyon)]
         Tingle = 0x176, // En_Bal
 
         [ActorizerEnabled]
@@ -3886,14 +3886,22 @@ namespace MMR.Randomizer.GameObjects
         //[WaterVariants(0)] // vars unknown, 0x0 crashes
         GyorgSpawn = 0x23F, // En_Tanron3
 
+        [ActorizerEnabled]
         [FileID(535)]
         [ObjectListIndex(0x21E)]
+        [CheckRestricted(Item.MaskDonGero)]
+        [FlyingVariants(0)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
         GoronShrineChandelier = 0x240, // Obj_Chan
 
         [ActorizerEnabled]
         [FileID(536)]
         [ObjectListIndex(0x220)]
         [CheckRestricted(Item.HeartPieceEvan)]
+        [GroundVariants(0xFE01, 0xFE02, 0xFE0F)]
+        [WaterVariants(0xFE01, 0xFE02, 0xFE0F)]
+        // no limits for now, don't know what his actor does
         [UnkillableAllVariants]
         Evan = 0x241, // En_Zos
 

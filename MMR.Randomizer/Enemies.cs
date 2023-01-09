@@ -176,12 +176,6 @@ namespace MMR.Randomizer
             return sceneEnemyList;
         }
 
-        public static bool CheckRestrictedAllowed()
-        {
-            // shuffle htis here
-            return false;
-        }
-
         // if one of these already exists somewhere in the logic I did not find it
         public static List<GameObjects.ItemCategory> junkCategories = new List<GameObjects.ItemCategory>{
             GameObjects.ItemCategory.GreenRupees,
@@ -193,7 +187,7 @@ namespace MMR.Randomizer
 
         };
 
-        private static bool ObjectIsCheckBlocked(GameObjects.Actor testActor)
+        private static bool ObjectIsCheckBlocked(Scene scene, GameObjects.Actor testActor)
         {
             /// checks if randomizing the actor would interfere with getting access to a check
             /// and then checks if the item is junk, before allowing randimization
@@ -207,14 +201,69 @@ namespace MMR.Randomizer
                     // TODO: make it random rather than yes/no
                     //var check = _randomized.ItemList[checks[checkIndex]];
 
-                    var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]);
-                    var itemIsNotJunk = junkCategories.Contains((GameObjects.ItemCategory) itemInCheck.Item.ItemCategory()) == false;
+                    var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
+                    var itemIsNotJunk = (itemInCheck == GameObjects.Item.IceTrap) || (junkCategories.Contains((GameObjects.ItemCategory) itemInCheck.ItemCategory()) == false);
                     if (itemIsNotJunk)
                     {
                         return true;
                     }
                 }
             }
+
+            // special edge cases for actors that would be hard to enum auto because of variants or scenes
+            // TODO replace these eventually
+
+            if (scene.SceneEnum == GameObjects.Scene.IkanaGraveyard)
+            {
+                if (testActor == GameObjects.Actor.BadBat)
+                {
+                    var crimsonRupReplacementItem = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.CollectableIkanaGraveyardDay2Bats1).Item;
+                    if ( ! ItemUtils.IsJunk(crimsonRupReplacementItem))
+                    {
+                        return true;
+                    }
+                }
+            }
+            if (testActor == GameObjects.Actor.Tingle)
+            {
+                GameObjects.Item map1;
+                GameObjects.Item map2;
+                switch (scene.SceneEnum)
+                {
+                    default:
+                    case GameObjects.Scene.NorthClockTown:
+                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapTown).Item;
+                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfallInTown).Item;
+                        break;
+                    case GameObjects.Scene.RoadToSouthernSwamp:
+                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfallInSwamp).Item;
+                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowheadInSwamp).Item;
+                        break;
+                    case GameObjects.Scene.TwinIslands:
+                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowheadInMountain).Item;
+                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanchInMountain).Item;
+                        break;
+                    case GameObjects.Scene.MilkRoad:
+                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanchInRanch).Item;
+                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBayInRanch).Item;
+                        break;
+                    case GameObjects.Scene.GreatBayCoast:
+                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBayInOcean).Item;
+                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTowerInOcean).Item;
+                        break;
+                    case GameObjects.Scene.IkanaCanyon:
+                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTowerInCanyon).Item;
+                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapTownInCanyon).Item;
+                        break;
+
+                }
+                if ( ! ItemUtils.IsJunk(map1) ||  ! ItemUtils.IsJunk(map2))
+                {
+                    return true;
+                }
+            }
+
+
             return false;
         }
 
@@ -240,7 +289,7 @@ namespace MMR.Randomizer
                        && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
                         
-                        if ( ! ObjectIsCheckBlocked(matchingEnemy))
+                        if ( ! ObjectIsCheckBlocked(scene, matchingEnemy))
                         {
                             objList.Add(matchingEnemy.ObjectIndex());
                         }
@@ -399,6 +448,11 @@ namespace MMR.Randomizer
                 // west side torches face... north? turn them to face the player
                 dekuPalace.Maps[2].Actors[33].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[33].Rotation.y);
                 dekuPalace.Maps[2].Actors[34].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[34].Rotation.y);
+
+                // Jim the bomber actually spawns within the tree to the north... move is spawn over a bit
+                var northClockTown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.NorthClockTown.FileID());
+                northClockTown.Maps[0].Actors[26].Position.x = -740;
+                northClockTown.Maps[0].Actors[26].Position.z = -1790;
             }
         }
 
@@ -1560,7 +1614,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.UnusedPirateElevator)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Evan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.Scarecrow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
