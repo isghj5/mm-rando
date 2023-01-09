@@ -215,7 +215,7 @@ namespace MMR.Randomizer
 
             if (scene.SceneEnum == GameObjects.Scene.IkanaGraveyard)
             {
-                if (testActor == GameObjects.Actor.BadBat)
+                if (testActor == GameObjects.Actor.BadBat || testActor == GameObjects.Actor.Dampe)
                 {
                     var crimsonRupReplacementItem = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.CollectableIkanaGraveyardDay2Bats1).Item;
                     if ( ! ItemUtils.IsJunk(crimsonRupReplacementItem))
@@ -226,38 +226,49 @@ namespace MMR.Randomizer
             }
             if (testActor == GameObjects.Actor.Tingle)
             {
+                // TODO we need to make sure one of them sticks around IF we need the photo
                 GameObjects.Item map1;
                 GameObjects.Item map2;
+                var shortStrawTingle = _randomized.Seed % 3;
+                bool strawPulled = false;
                 switch (scene.SceneEnum)
                 {
                     default:
                     case GameObjects.Scene.NorthClockTown:
-                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapTown).Item;
-                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfallInTown).Item;
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapTown).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfallInTown).Item;
+                        strawPulled = shortStrawTingle == 0;
                         break;
                     case GameObjects.Scene.RoadToSouthernSwamp:
-                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfallInSwamp).Item;
-                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowheadInSwamp).Item;
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfallInSwamp).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowheadInSwamp).Item;
+                        strawPulled = shortStrawTingle == 1;
                         break;
                     case GameObjects.Scene.TwinIslands:
-                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowheadInMountain).Item;
-                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanchInMountain).Item;
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowheadInMountain).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanchInMountain).Item;
                         break;
                     case GameObjects.Scene.MilkRoad:
-                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanchInRanch).Item;
-                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBayInRanch).Item;
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanchInRanch).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBayInRanch).Item;
+                        strawPulled = shortStrawTingle == 2;
                         break;
                     case GameObjects.Scene.GreatBayCoast:
-                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBayInOcean).Item;
-                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTowerInOcean).Item;
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBayInOcean).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTowerInOcean).Item;
                         break;
                     case GameObjects.Scene.IkanaCanyon:
-                        map1 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTowerInCanyon).Item;
-                        map2 = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.ItemTingleMapTownInCanyon).Item;
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTowerInCanyon).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapTownInCanyon).Item;
                         break;
 
                 }
                 if ( ! ItemUtils.IsJunk(map1) ||  ! ItemUtils.IsJunk(map2))
+                {
+                    return true;
+                }
+                // if heartpiece on picture is required, one of them has to remain
+                if (strawPulled &&  ! ItemUtils.IsJunk(GameObjects.Item.HeartPiecePictobox))
                 {
                     return true;
                 }
