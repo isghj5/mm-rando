@@ -925,7 +925,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0xFFFF)] // assumption, the main vars will be the man in the hat
         [WaterVariants(0xFFFF)] // assumption, the main vars will be the man in the hat
         [UnkillableAllVariants]
-        OOTFishing = 0x79,
+        OOTFishing = 0x79, // En_Fishing
 
         [FileID(115)]
         [ObjectListIndex(0003)]
@@ -2106,12 +2106,14 @@ namespace MMR.Randomizer.GameObjects
         // 0x7FA1: jumping goron, 0x7FC1 stretching goron pair
         // 0x7F81: single leg stretch goron, 0x7F81 single amr stretch goron
         //[GroundVariants(0x8, 0x7FE2)]
-        [GroundVariants(0x7FE2, 0x7F85, 0x7F86, 0x7F87,
+        [GroundVariants( 0x8, // smithy
+            0x7FE2, 0x7F85, 0x7F86, 0x7F87,
             0x7FA1, 0x7FC1, 0x7F81, 0x7FF2)] // racetrack
         [VariantsWithRoomMax(max: 1,
             0x7FE2, 0x7F85, 0x7F86, 0x7F87)]
+        [VariantsWithRoomMax(max: 0, 0x8)] // too big
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
+        //[EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x3F5F)]
         SmithyGoronAndGo = 0x138, // En_Go
@@ -3305,7 +3307,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0xC68)]
         [FileID(458)]
         [ObjectListIndex(0x1CB)]
-        [CheckRestricted(Item.TradeItemMamaLetter, Item.MaskKeaton, Item.HeartPiecePostBox, Item.MaskCouple)]
+        // for now, with no entrando, just randomize all but one
+        //[CheckRestricted(Item.TradeItemMamaLetter, Item.MaskKeaton, Item.HeartPiecePostBox, Item.MaskCouple)]
         [GroundVariants(0, 1, 2, 3)]
         [CompanionActor(LetterToPostman, ourVariant: -1, variant: 0)]
         [UnkillableAllVariants]
@@ -3492,11 +3495,14 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(482)]
         [ObjectListIndex(0x26A)] // the spreadsheet says he is obj 1 but that is a mistake
+        //[CheckRestricted(Item.MaskTruth)] // but we want to only change the one that is spiderhouse... hardcoded
+        // 0xFF02 is before you finish swamp spiderhouse
         // 0xFF03 crashes on approach
         // FE04/5 doesn't spawn, probably until you finish the spiderhouse
         // FE03 is in SCT, he stares up at the moon, except doesn't know where the moon is, can face the wrong way
         // FE01 doesn't want to spawn, hmm, 02 is swamp spiderhouse, likely doesn't want to spawn either until house is cleared
-        [GroundVariants(0xFE03)]
+        [GroundVariants(0xFE03)] // staring at the moon
+        [FlyingVariants(0xFF02)] // entrance to spiderhouse
         //[VariantsWithRoomMax(max:0, variant:0xFE03)] // temp disable, as double object actor is broken
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
@@ -3505,7 +3511,7 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.Grottos, Scene.InvertedStoneTower, Scene.BeneathGraveyard, Scene.BeneathTheWell,
             Scene.GoronShrine, Scene.IkanaCastle, Scene.OceanSpiderHouse, Scene.SwampSpiderHouse,
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple, Scene.Woodfall)]
-        Seth1 = 0x20B, // En_Set, the green shirt guy, "Seth"? spiderhouses, hands waving at you from telescope guy
+        Seth1 = 0x20B, // En_Sth, the green shirt guy, "Seth"? spiderhouses, hands waving at you from telescope guy
 
         [FileID(483)]
         [ObjectListIndex(0x1F4)]
@@ -3943,7 +3949,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax( max: 1,
             0x1E0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.BombShop)]//, Scene.GoronShrine)]
+        //[EnemizerScenesExcluded(Scene.BombShop)]//, Scene.GoronShrine)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
         GoronSGoro = 0x242, // En_S_Goro
@@ -3986,7 +3992,8 @@ namespace MMR.Randomizer.GameObjects
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
         // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
         // 02 is the music-only one that spawns so you can hear him through the walls of the inn
-        [GroundVariants(0x0)]
+        [GroundVariants(0x0, 0x1, 0x2)]
+        [VariantsWithRoomMax(max:0, variant:1)]
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom] // if two of them are near to each other, and player appears near his nearby music can break
         //[EnemizerScenesExcluded(Scene.StockPotInn, Scene.LaundryPool, Scene.MilkBar)] // think him being in milkbar is a credits thing
@@ -4239,7 +4246,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x241)]
         [CheckRestricted(Item.HeartPieceNotebookMayor)]
         [GroundVariants(0)]
-        [VariantsWithRoomMax(0,0)]
+        [VariantsWithRoomMax(0,0)] // talking to him without the rest of his group is crash
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         Dotour = 0x26F, // En_Dt
@@ -4291,8 +4298,8 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled]
         [FileID(589)]
         //[ObjectListIndex(0x1E5)] // where did this come from?
-        [GroundVariants(0x4)] // all vanilla are 0x4, even though the actor checks 0xFF range
         [ObjectListIndex(0x1D5)] // OBJECT_DAI same object as big goron
+        [GroundVariants(0x4)] // all vanilla are 0x4, even though the actor checks 0xFF range
         [UnkillableAllVariants]
         // do we need to stop him being randomized?
         LinkTheGoro = 0x276, // En_Ig

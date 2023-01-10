@@ -278,7 +278,54 @@ namespace MMR.Randomizer
                     return true;
                 }
             }
+            if (scene.SceneEnum == GameObjects.Scene.BombShop && testActor == GameObjects.Actor.GoronSGoro) // keg goron
+            {
+                // hard coded because this goron is multiple actors in different places
+                var eponaSongItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.SongEpona).Item;
+                var alienDefItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemBottleAliens).Item;
+                var cariageDefItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskCircusLeader).Item;
 
+                if ( ! ItemUtils.IsJunk(eponaSongItem) || ! ItemUtils.IsJunk(alienDefItem) || ! ItemUtils.IsJunk(cariageDefItem))
+                {
+                    return true;
+                }
+
+            }
+            if ((scene.SceneEnum == GameObjects.Scene.GoronVillage || scene.SceneEnum == GameObjects.Scene.GoronVillageSpring)
+                && testActor == GameObjects.Actor.SmithyGoronAndGo) // smithy goron
+            {
+                //var goronRaceIsBaren = ItemUtils.IsRequired(GameObjects.Item.ItemPowderKeg);//.Contains(GameObjects.Item.Race)
+                var importantItems = _randomized.ImportantLocations.ToList(); // this is a list of checks not regions considered important
+                var importantGoronRaceItems = importantItems.FindAll(item => item.Region() == GameObjects.Region.GoronRaceItems); //GameObjects.Region.GoronRaceItems.
+                if (importantGoronRaceItems.Count > 0) // not barren
+                {
+                    return true;
+                }
+            }
+            if (testActor == GameObjects.Actor.Postbox)
+            {
+                GameObjects.Item[] checksPostBoxLeadsTo = { GameObjects.Item.TradeItemMamaLetter, GameObjects.Item.MaskKeaton, GameObjects.Item.HeartPiecePostBox, GameObjects.Item.MaskCouple };
+                if (_randomized.ImportantLocations.Union(checksPostBoxLeadsTo).Count() > 0)
+                {
+                    // if we need a mailbox, keep one
+                    var shortStrawPostbox = _randomized.Seed % 3;
+                    GameObjects.Scene[] postboxScenes = { GameObjects.Scene.NorthClockTown, GameObjects.Scene.SouthClockTown, GameObjects.Scene.EastClockTown };
+                    if (postboxScenes[shortStrawPostbox] == scene.SceneEnum)
+                    {
+                        return true;
+                    }
+
+                }// else: randomize all
+            }
+            if(scene.SceneEnum == GameObjects.Scene.SwampSpiderHouse && testActor == GameObjects.Actor.Seth1)
+            {
+                // hard coded because we dont want to change the standing up and staring at the sky seth1
+                var maskOfTruthItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
+                if ( ! ItemUtils.IsJunk(maskOfTruthItem))
+                {
+                    return true;
+                }
+            }
 
             return false;
         }
@@ -469,6 +516,9 @@ namespace MMR.Randomizer
                 var northClockTown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.NorthClockTown.FileID());
                 northClockTown.Maps[0].Actors[26].Position.x = -740;
                 northClockTown.Maps[0].Actors[26].Position.z = -1790;
+
+                // the tree itself needs to be rotated as its facing the wall
+                northClockTown.Maps[0].Actors[21].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, northClockTown.Maps[0].Actors[21].Rotation.y);
             }
         }
 
