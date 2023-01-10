@@ -173,6 +173,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.PoeSisters, // weird behavior, if the killing blow of meg at long range can stop chests from spawning
             Actor.CircleOfFire, // if it gets placed on the one on top of a chest the player is screwed
             Actor.DragonFly, // if you kill it at long range or such that its dying body falls to first floor it wont count
+            Actor.WarpDoor, // Cannot walk through them to get to the chest under
             Actor.Wolfos)] // wolfos: ice wolfos can push the regular actual dog backwards through the wall
         [FairyDroppingEnemies(11, 2, 3)] // dinofos 
         SnowheadTemple = 0x1E,
