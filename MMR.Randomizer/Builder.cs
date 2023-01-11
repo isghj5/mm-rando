@@ -843,7 +843,7 @@ namespace MMR.Randomizer
                                 var newMessage = messages[j];
                                 var lines = newMessage.Count(c => c == '\x11') + 1;
                                 newMessage = newMessage.Replace("\u00BF", "") + "\u001C\u0000" + (char)(lines * 0x20) + "\u00BF";
-                                var newMessageId = (ushort) ((_extraMessages.Max(me => (ushort?)me.Id) ?? 0x9001) + 1);
+                                var newMessageId = (ushort) ((_extraMessages.Max(me => (ushort?)me.Id) ?? 0x9002) + 1);
                                 var newHeader = message.Header.ToArray();
                                 if (nextMessageId.HasValue)
                                 {
@@ -3424,6 +3424,22 @@ namespace MMR.Randomizer
                 {
                     WriteBankPromptText(messageTable);
                 }
+
+                // TODO? if respawn combo is enabled
+                ushort newMessageId = 0x9002;
+                _extraMessages.Add(new MessageEntryBuilder()
+                    .Id(newMessageId)
+                    .Message((it) =>
+                    {
+                        it.Text("Return to spawn?").NewLine()
+                        .StartGreenText().Text(" ").NewLine()
+                        .TwoChoices().Text("Yes").NewLine()
+                        .Text("No")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
 
                 WriteArcheryDoubleRewardText(messageTable);
                 WriteBankPostRewardText(messageTable);
