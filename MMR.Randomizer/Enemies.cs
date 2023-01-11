@@ -326,6 +326,16 @@ namespace MMR.Randomizer
                     return true;
                 }
             }
+            if (scene.SceneEnum == GameObjects.Scene.StockPotInn && testActor == GameObjects.Actor.Anju)
+            {
+                var roomKeyItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.TradeItemRoomKey).Item;
+                var letterToKafeiItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.TradeItemKafeiLetter).Item;
+                var coupleMaskItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskCouple).Item;
+                if (!ItemUtils.IsJunk(roomKeyItem) || !ItemUtils.IsJunk(letterToKafeiItem) || !ItemUtils.IsJunk(coupleMaskItem))
+                {
+                    return true;
+                }
+            }
 
             return false;
         }
@@ -3136,7 +3146,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 42.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 43.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

@@ -3415,11 +3415,17 @@ namespace MMR.Randomizer.GameObjects
         [FileID(474)]
         [ActorInstanceSize(0x3C8)]
         [ObjectListIndex(0xE2)]
+        // to nuke ONLY in stockpot, hardcoded
+        //[CheckRestricted(Item.TradeItemRoomKey, Item.TradeItemKafeiLetter, Item.MaskCouple)]
+        // 8001 is pathing to laundrypool
+        [GroundVariants(2 // inn
+            )]
         [PathingVariants(0x8001)] // really a pathing variant (walking through east/south to go see the laundry pool
         [PathingTypeVarsPlacement(mask: 0xFF, shift: 0)]
         [VariantsWithRoomMax(max: 0, variant: 0x8001)] // too hard coded to do anything with
+        [VariantsWithRoomMax(max: 0, variant: 2)] // too hard coded to do anything with
         // dont remove from laundrypool, its the only way to see link mask in the wild, and its a trip
-        [EnemizerScenesExcluded(Scene.LaundryPool, Scene.StockPotInn)]
+        [EnemizerScenesExcluded(Scene.LaundryPool/*, Scene.StockPotInn */)]
         [UnkillableAllVariants]
         Anju = 0x202, // En_An
 
@@ -4062,8 +4068,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(554)]
         [ObjectListIndex(0x7)]
         //[CheckRestricted()]
-        [GroundVariants(0)]
-        [VariantsWithRoomMax(0,0)]
+        [GroundVariants(0,2)]
+        [VariantsWithRoomMax(max:0, variant: 0, 2)]
         [UnkillableAllVariants]
         AnjusMother = 0x253, // En_Ah
         
@@ -4529,7 +4535,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         [EnemizerScenesPlacementBlock(Scene.TerminaField, Scene.GoronRacetrack)]
-        AnjuWeddingDress = 0x299, // En_And
+        AnjuWeddingDress = 0x299, // En_And "En_Ah + dress"
 
         [FileID(625)]
         [ObjectListIndex(0x1)]
