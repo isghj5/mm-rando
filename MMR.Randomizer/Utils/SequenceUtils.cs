@@ -235,7 +235,7 @@ namespace MMR.Randomizer.Utils
             throw new Exception("GetSequenceSize: Sequence File is missing");
         }
 
-        public static void ScanZSEQUENCE(string directory) // TODO make this folder identifiable, add directory and list of banks from scanned directory to this
+        public static void ScanZSEQUENCE(string directory)
         {
             // check if files were added by user to music directory
             // format: FILENAME_InstrumentSet_Categories-separated-by-commas.zseq

@@ -73,6 +73,7 @@ namespace MMR.Randomizer
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
         private static Random seedrng;
+        private static Models.RandomizedResult _randomized;
 
         public static void PrepareEnemyLists()
         {
@@ -175,6 +176,161 @@ namespace MMR.Randomizer
             return sceneEnemyList;
         }
 
+        // if one of these already exists somewhere in the logic I did not find it
+        public static List<GameObjects.ItemCategory> junkCategories = new List<GameObjects.ItemCategory>{
+            GameObjects.ItemCategory.GreenRupees,
+            GameObjects.ItemCategory.BlueRupees,
+            GameObjects.ItemCategory.RedRupees, // should be lots of money in other locations this should be junk
+            GameObjects.ItemCategory.Arrows,
+            GameObjects.ItemCategory.Bombs,
+            GameObjects.ItemCategory.DekuSticks,
+            GameObjects.ItemCategory.DekuNuts,
+            GameObjects.ItemCategory.GreenPotions,
+            GameObjects.ItemCategory.MagicJars
+        };
+
+        //private bool IsJunk
+
+        private static bool ObjectIsCheckBlocked(Scene scene, GameObjects.Actor testActor)
+        {
+            /// checks if randomizing the actor would interfere with getting access to a check
+            /// and then checks if the item is junk, before allowing randimization
+
+            var checkRestrictedAttr = testActor.GetAttribute<CheckRestrictedAttribute>();
+            if (checkRestrictedAttr != null) // actor has check restrictions
+            {
+                var restrictedChecks = testActor.GetAttribute<CheckRestrictedAttribute>().Checks;
+                for (int checkIndex = 0; checkIndex < restrictedChecks.Count; checkIndex++)
+                {
+                    // TODO: make it random rather than yes/no
+                    //var check = _randomized.ItemList[checks[checkIndex]];
+
+                    var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
+                    var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory) itemInCheck.ItemCategory()) == false);
+                    if (itemIsNotJunk)
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            // special edge cases for actors that would be hard to enum auto because of variants or scenes
+            // TODO replace these eventually
+
+            if (scene.SceneEnum == GameObjects.Scene.IkanaGraveyard)
+            {
+                if (testActor == GameObjects.Actor.BadBat || testActor == GameObjects.Actor.Dampe)
+                {
+                    var crimsonRupReplacementItem = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.CollectableIkanaGraveyardDay2Bats1).Item;
+                    if ( ! ItemUtils.IsJunk(crimsonRupReplacementItem))
+                    {
+                        return true;
+                    }
+                }
+            }
+            if (testActor == GameObjects.Actor.Tingle)
+            {
+                // TODO we need to make sure one of them sticks around IF we need the photo
+                GameObjects.Item map1;
+                GameObjects.Item map2;
+                var shortStrawTingle = _randomized.Seed % 3;
+                bool strawPulled = false;
+                switch (scene.SceneEnum)
+                {
+                    default:
+                    case GameObjects.Scene.NorthClockTown:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapTown).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfall).Item;
+                        strawPulled = shortStrawTingle == 0;
+                        break;
+                    case GameObjects.Scene.RoadToSouthernSwamp:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfall).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowhead).Item;
+                        strawPulled = shortStrawTingle == 1;
+                        break;
+                    case GameObjects.Scene.TwinIslands:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowhead).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanch).Item;
+                        break;
+                    case GameObjects.Scene.MilkRoad:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanch).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBay).Item;
+                        strawPulled = shortStrawTingle == 2;
+                        break;
+                    case GameObjects.Scene.GreatBayCoast:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBay).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTower).Item;
+                        break;
+                    case GameObjects.Scene.IkanaCanyon:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTower).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapTown).Item;
+                        break;
+
+                }
+                if ( ! ItemUtils.IsJunk(map1) ||  ! ItemUtils.IsJunk(map2))
+                //if (! junkCategories.Contains(map1.ItemCategory) || ! junkCategories.Contains(map1.ItemCategory))
+                {
+                    return true;
+                }
+                // if heartpiece on picture is required, one of them has to remain
+                if (strawPulled &&  ! ItemUtils.IsJunk(GameObjects.Item.HeartPiecePictobox))
+                {
+                    return true;
+                }
+            }
+            if (scene.SceneEnum == GameObjects.Scene.BombShop && testActor == GameObjects.Actor.GoronSGoro) // keg goron
+            {
+                // hard coded because this goron is multiple actors in different places
+                var eponaSongItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.SongEpona).Item;
+                var alienDefItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemBottleAliens).Item;
+                var cariageDefItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskCircusLeader).Item;
+
+                if ( ! ItemUtils.IsJunk(eponaSongItem) || ! ItemUtils.IsJunk(alienDefItem) || ! ItemUtils.IsJunk(cariageDefItem))
+                {
+                    return true;
+                }
+
+            }
+            if ((scene.SceneEnum == GameObjects.Scene.GoronVillage || scene.SceneEnum == GameObjects.Scene.GoronVillageSpring)
+                && testActor == GameObjects.Actor.SmithyGoronAndGo) // smithy goron
+            {
+                //var goronRaceIsBaren = ItemUtils.IsRequired(GameObjects.Item.ItemPowderKeg);//.Contains(GameObjects.Item.Race)
+                var importantItems = _randomized.ImportantLocations.ToList(); // this is a list of checks not regions considered important
+                var importantGoronRaceItems = importantItems.FindAll(item => item.Region() == GameObjects.Region.GoronRaceItems); //GameObjects.Region.GoronRaceItems.
+                if (importantGoronRaceItems.Count > 0) // not barren
+                {
+                    return true;
+                }
+            }
+            if (testActor == GameObjects.Actor.Postbox)
+            {
+                GameObjects.Item[] checksPostBoxLeadsTo = { GameObjects.Item.TradeItemMamaLetter, GameObjects.Item.MaskKeaton, GameObjects.Item.HeartPiecePostBox, GameObjects.Item.MaskCouple };
+                if (_randomized.ImportantLocations.Union(checksPostBoxLeadsTo).Count() > 0)
+                {
+                    // if we need a mailbox, keep one
+                    var shortStrawPostbox = _randomized.Seed % 3;
+                    GameObjects.Scene[] postboxScenes = { GameObjects.Scene.NorthClockTown, GameObjects.Scene.SouthClockTown, GameObjects.Scene.EastClockTown };
+                    if (postboxScenes[shortStrawPostbox] == scene.SceneEnum)
+                    {
+                        return true;
+                    }
+
+                }// else: randomize all
+            }
+            if(scene.SceneEnum == GameObjects.Scene.SwampSpiderHouse && testActor == GameObjects.Actor.Seth1)
+            {
+                // hard coded because we dont want to change the standing up and staring at the sky seth1
+                var maskOfTruthItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
+                if ( ! ItemUtils.IsJunk(maskOfTruthItem))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+
         public static List<int> GetSceneEnemyObjects(Scene scene)
         {
             /// Gets all objects in a scene.
@@ -195,7 +351,12 @@ namespace MMR.Randomizer
                        //&& !objList.Contains(matchingEnemy.ObjectIndex())                          // not already extracted from this scene
                        && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
-                        objList.Add(matchingEnemy.ObjectIndex());
+                        
+                        if ( ! ObjectIsCheckBlocked(scene, matchingEnemy))
+                        {
+                            objList.Add(matchingEnemy.ObjectIndex());
+                        }
+                        // else: ignore, the actors will remain vanilla
                     }
                 }
             }
@@ -350,6 +511,14 @@ namespace MMR.Randomizer
                 // west side torches face... north? turn them to face the player
                 dekuPalace.Maps[2].Actors[33].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[33].Rotation.y);
                 dekuPalace.Maps[2].Actors[34].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[34].Rotation.y);
+
+                // Jim the bomber actually spawns within the tree to the north... move is spawn over a bit
+                var northClockTown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.NorthClockTown.FileID());
+                northClockTown.Maps[0].Actors[26].Position.x = -740;
+                northClockTown.Maps[0].Actors[26].Position.z = -1790;
+
+                // the tree itself needs to be rotated as its facing the wall
+                northClockTown.Maps[0].Actors[21].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, northClockTown.Maps[0].Actors[21].Rotation.y);
             }
         }
 
@@ -1511,7 +1680,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.UnusedPirateElevator)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GreatBayFisherman)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.Scarecrow)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
@@ -2251,8 +2420,8 @@ namespace MMR.Randomizer
             var sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum);
             WriteOutput(" time to get scene objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
-            WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
-            WriteOutput(" time to find scene name: " + GET_TIME(thisSceneData.StartTime) + "ms");
+             WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
+            // WriteOutput(" time to find scene name: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             // if actor does NOT exist, but object does, probably spawned by something else; remove from actors to randomize
             // TODO check for side objects that no longer need to exist and replace with possible alt objects
@@ -2423,14 +2592,16 @@ namespace MMR.Randomizer
             FixGroundToFlyingActorHeights(thisSceneData); // putting flying actors on ground spawns can be weird
 
             // print debug actor locations
+            WriteOutput("####################################################### ");
             for (int a = 0; a < thisSceneData.Actors.Count; a++)
             {
                 var actor = thisSceneData.Actors[a];
-                WriteOutput($"Old Enemy actor:[{actor.OldName}] " +
+                WriteOutput($"  Old Enemy actor:[{actor.OldName}] " +
                     $"map [{actor.Room.ToString("D2")}] " +
                     $"was replaced by new enemy: [{actor.Variants[0].ToString("X4")}]" +
                     $"[{actor.Name}]");
             }
+            WriteOutput("####################################################### ");
 
             // realign all scene companion actors
             MoveAlignedCompanionActors(thisSceneData.Actors, thisSceneData.RNG, thisSceneData.Log);
@@ -2898,11 +3069,12 @@ namespace MMR.Randomizer
 
         #endregion
 
-        public static void ShuffleEnemies(OutputSettings settings, int randomizedSeed)
+        public static void ShuffleEnemies(OutputSettings settings, Models.RandomizedResult randomized, int randomizedSeed)
         {
             try
             {
                 seedrng = new Random(randomizedSeed);
+                _randomized = randomized;
                 DateTime enemizerStartTime = DateTime.Now;
 
                 // for dingus that want moonwarp, re-enable dekupalace
