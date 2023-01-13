@@ -550,7 +550,6 @@ namespace MMR.Randomizer.GameObjects
             0xF, // even bigger bush, was this EVER used? even in OOT?
             0x11, 0x12, // "Black" bushes, both big and small
             0x7)] // yellow tree, fall colors? dying?
-
         [VariantsWithRoomMax(max: 0, variant: 0xFF0D)] // 0xFF0D crashes TF do not use (is from the cucco shack)
         [VariantsWithRoomMax(max: 1, variant: 0xA1A, 0xFF1A)] // has EnAni, more than one is odd
         [VariantsWithRoomMax(max: 1, variant: 0xA)] // UGLY
@@ -2089,9 +2088,11 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // wont spawn because the required item objects are likely missing
         [FileID(276)]
         [ObjectListIndex(0xD0)]
-        [GroundVariants(0x3E0)]
+        // 2 is bombshop, 3E0 is zora shop
+        [GroundVariants(0x3E0,
+            0x2   )]
         [UnkillableAllVariants]
-        ZoraSeller = 0x135, // En_Sob1
+        ShopSeller = 0x135, // En_Sob1
 
         Empty136 = 0x136,
         Empty137 = 0x137,
@@ -2797,13 +2798,15 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x190)]
         RaisableSnowheadPillar = 0x1A3, // Bg_Hakugin_Elvpole
 
-        [ActorizerEnabled]
+        // cannot randomize even with checkchecking because her object must remain for invade poh
+        [ActorizerEnabled] // regular romani
         [FileID(379)]
         [ObjectListIndex(0xB7)] // 100 and FF00
-        [PathingVariants(0xFF00)] // all vanilla are 0xB7
+        //[CheckRestricted(Item.SongEpona, Item.ItemBottleAliens, Item.MaskCircusLeader)]
+        [PathingVariants(0xFF00, 0x100)] // all vanilla are 0xB7
         [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)] //zzz
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.RomaniRanch, Scene.RanchBuildings)]
+        //[EnemizerScenesExcluded(Scene.RomaniRanch, Scene.RanchBuildings)]
         Romani1 = 0x1A4, // En_Ma4
 
         // twig?
@@ -2980,17 +2983,18 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(412)]
         [ObjectListIndex(0x129)]
-        [GroundVariants(0xFFFF)] // zero is regular, -1 is credits?
+        [CheckRestricted(Item.HeartPieceTreasureChestGame, Item.MundaneItemTreasureChestGameDekuNuts, Item.MundaneItemTreasureChestGamePurpleRupee, Item.MundaneItemTreasureChestGameRedRupee)]
+        [GroundVariants(0xFFFF, 0)] // zero is regular, -1 is credits?
         //[GroundVariants(0)] // zero is regular, -1 is credits?
         [UnkillableAllVariants]
         [OnlyOneActorPerRoom]
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x3F5F)]
         //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0146)] // treasure chest shop music
         [EnemizerScenesPlacementBlock(Scene.SouthClockTown)]
-        [EnemizerScenesExcluded(Scene.TreasureChestShop)]
+        //[EnemizerScenesExcluded(Scene.TreasureChestShop)]
         // switch flags
         // manually sunsets switch 5, sets 5 separate switches based on player form, but I think these are all as a result of willing the game
-        BombchuGirl = 0x1C1, // En_Takaraya
+        Takaraya = 0x1C1, // En_Takaraya
 
         [ActorizerEnabled]
         [FileID(413)]

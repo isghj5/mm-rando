@@ -9,6 +9,8 @@ namespace MMR.Randomizer.GameObjects
         // base enumerator value matches the ST column, SceneInternal ID matches ID column (F)
         // https://docs.google.com/spreadsheets/d/1J-4OwmZzOKEv2hZ7wrygOpMm0YcRnephEo3Q2FooF6E/edit#gid=1593589171
 
+        NULL = -1,
+
         [FileID(1160)]
         [SceneInternalId(0x12)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Toto,
@@ -504,6 +506,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1502)]
         [SceneInternalId(0x68)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SmithyGoronAndGo,
+            Actor.PatrollingPirate, Actor.DekuPatrolGuard)]
         BombShop = 0x65,
 
         [FileID(1504)]

@@ -10,6 +10,8 @@ namespace MMR.Randomizer.Attributes.Actor
     class CheckRestrictedAttribute : Attribute
     {
         public List<GameObjects.Item> Checks { get; private set; }
+        public int Variant = -1;
+        public GameObjects.Scene Scene = GameObjects.Scene.NULL;
 
         public CheckRestrictedAttribute(GameObjects.Item check, params GameObjects.Item[] additionalChecks)
         {
