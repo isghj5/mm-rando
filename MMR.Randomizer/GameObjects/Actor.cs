@@ -3,6 +3,12 @@ using MMR.Randomizer.Attributes.Actor;
 
 namespace MMR.Randomizer.GameObjects
 {
+    public static class ActorConst
+    {
+        public const int ANY_VARIANT = 0xFFFFF; // variants are s16, this is too long to be a valid value
+        public const int ANY_SCENE = -1;
+    }
+
     //[System.Diagnostics.DebuggerDisplay("{ActorExtensions.GetActorName(this)}")] // useless for enums
     public enum Actor
     {
@@ -843,11 +849,13 @@ namespace MMR.Randomizer.GameObjects
         [RespawningAllVariants] // they grow back, dont count as killable
         DekuBabaWithered = 0x66, // En_Karebaba
 
+        // TODO fix so we can spawn them in the world
         [ActorizerEnabled]
         [FileID(109)]
         [ObjectListIndex(0x99)]
         [CheckRestricted(Item.ShopItemGormanBrosMilk, Item.MaskGaro)]
         [GroundVariants(0xFE03, 0xFE04)]
+        [VariantsWithRoomMax(max:0, 0xFE03, 0xFE04)] // inf loop if only one and not two
         [UnkillableAllVariants]
         GormanBros = 0x67, // En_In
 
@@ -1162,9 +1170,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0xF1)]
         [FileID(143)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor)]
         // 1 scoffing at poster, 2 is shouting at the sky looker
         // 0X03 is a walking type
-        [GroundVariants(1, 2)]
+        [GroundVariants(1, 2,
+            0)] // in mayor meeting
+        [VariantsWithRoomMax(max:0, variant:0)]
         [PathingVariants(0x603, 0x503)]
         [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)]
         //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0090)]
@@ -1952,12 +1963,26 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 0)]
         StalchildSpawner = 0x11B, // En_Encount4
 
+        // this is the version that spawns in east clock town to give you the book if you knew the password
+        [ActorizerEnabled]
         [FileID(257)]
         [ObjectListIndex(0x110)]
-        En_Bom_Bowl_Man = 0x11C, // En_Bom_Bowl_Man
+        [CheckRestricted(Item.ItemNotebook)]
+        [GroundVariants(0x510, 0x10)]
+        [VariantsWithRoomMax(max:0, variant: 0x510, 0x10)] // does not spawn except in cutscenes, dont place it will be empty
+        [UnkillableAllVariants]
+        JimboTheStalker = 0x11C, // En_Bom_Bowl_Man
+
+        [ActorizerEnabled]
         [FileID(258)]
         [ObjectListIndex(0x1AC)]
-        En_Syateki_Man = 0x11D, // En_Syateki_Man
+        [CheckRestricted(Scene.SwampShootingGallery, 0x000F, Item.UpgradeBigQuiver)]
+        [CheckRestricted(Scene.TownShootingGallery, 0xFF01, Item.UpgradeBiggestQuiver)]
+        [GroundVariants(0x000F, 0xFF01)]
+        //[VariantsWithRoomMax(max:0, 0x000F, 0xFF01)] // assumption, you cannot see their legs
+        [VariantsWithRoomMax(max:3, variant: 0x000F, 0xFF01)]
+        [UnkillableAllVariants]
+        ArcheryMiniGameMan = 0x11D, // En_Syateki_Man
 
         Empty11E = 0x11E,
 
@@ -1977,7 +2002,7 @@ namespace MMR.Randomizer.GameObjects
         // broken actor, needs two objects (animation is in another object) such a pain
         //[ActorizerEnabled]
         [FileID(262)]
-        [ObjectListIndex(0xDA)] // 1
+        [ObjectListIndex(0xDA)]
         // needs anime object and cne object, pain
         [GroundVariants(0x7E00)]
         [PathingVariants(0x0)]
@@ -2004,7 +2029,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(264)]
         [ObjectListIndex(0xDE)]
-        [CheckRestricted(Item.TradeItemMoonTear)]
+        [CheckRestricted(Item.TradeItemMoonTear, Item.HeartPieceTerminaBusinessScrub, Item.CollectableTerminaFieldTelescopeGuay1)]
         [GroundVariants(0xFFFF)]
         [VariantsWithRoomMax(max: 0, variant: 0xFFFF)]
         [UnkillableAllVariants]
@@ -2088,9 +2113,16 @@ namespace MMR.Randomizer.GameObjects
         //[ActorizerEnabled] // wont spawn because the required item objects are likely missing
         [FileID(276)]
         [ObjectListIndex(0xD0)]
-        // 2 is bombshop, 3E0 is zora shop
-        [GroundVariants(0x3E0,
-            0x2   )]
+        [CheckRestricted(Scene.BombShop, variant:02,
+            Item.ShopItemBombsBomb10, Item.ShopItemBombsBombchu10, Item.ItemBombBag, Item.UpgradeBigBombBag)]
+        [CheckRestricted(Scene.ZoraHallRooms, variant: 0x3E0,
+            Item.ShopItemZoraArrow10, Item.ShopItemZoraRedPotion, Item.ShopItemZoraShield)]
+        [CheckRestricted(Scene.GoronShop, variant: 0x3E1,
+            Item.ShopItemGoronArrow10, Item.ShopItemGoronBomb10, Item.ShopItemGoronRedPotion)]
+        // 2 is bombshop, 3E0 is zora shopf
+        [GroundVariants(0x3E0, // zora shop
+            0x3E1, // goron shop
+            0x2   )] // bomb shop
         [UnkillableAllVariants]
         ShopSeller = 0x135, // En_Sob1
 
@@ -2112,7 +2144,7 @@ namespace MMR.Randomizer.GameObjects
             0x7FA1, 0x7FC1, 0x7F81, 0x7FF2)] // racetrack
         [VariantsWithRoomMax(max: 1,
             0x7FE2, 0x7F85, 0x7F86, 0x7F87)]
-        [VariantsWithRoomMax(max: 0, 0x8)] // too big
+        [VariantsWithRoomMax(max: 0, variant: 0x8)] // too big
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
@@ -2568,7 +2600,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(343)]
         [ObjectListIndex(0x107)]
-        [CheckRestricted(Item.HeartPieceNotebookPostman)]
+        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma)]
         [GroundVariants(0)] // no params
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -2649,12 +2681,24 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         Obj_Purify = 0x186, // Obj_Purify
 
+        [ActorizerEnabled]
         [FileID(353)]
         [ObjectListIndex(0x18E)]
+        [CheckRestricted(Item.ItemPictobox)]
+        [GroundVariants(0)]
+        [VariantsWithRoomMax(0,0)] // crash reason unk
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
         InjuredKoume = 0x187, // En_Tru
 
+        // TODO get these two witches working in the world
+        [ActorizerEnabled]
         [FileID(354)]
         [ObjectListIndex(0x18F)]
+        [CheckRestricted(Item.ShopItemWitchBluePotion, Item.ShopItemWitchGreenPotion, Item.ShopItemWitchRedPotion, Item.ItemBottleWitch)]
+        [GroundVariants(0)]
+        [VariantsWithRoomMax(0, 0)] // no collider no interaction
+        [UnkillableAllVariants]
         ShopKeepKotake = 0x188, // En_Trt
 
         Empty189 = 0x189,
@@ -3017,9 +3061,10 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1AB)]
         CuriosityShopMan = 0x1C4, // En_Fsn
 
-        [ActorizerEnabled]
+        //[ActorizerEnabled]
         [FileID(416)]
         [ObjectListIndex(0x1AC)]
+        // this is not enough because he is boat master
         [CheckRestricted(Item.HeartPiecePictobox, Item.MundaneItemPictographContestBlueRupee, Item.MundaneItemPictographContestRedRupee)]
         [GroundVariants(0)]
         [VariantsWithRoomMax(0, 0)] // not sure he should be put places without legs
@@ -3111,12 +3156,14 @@ namespace MMR.Randomizer.GameObjects
         SnowCoveredTrees = 0x1D4, // En_Snowwd
 
         // I suspect since he has so few vars that he will be hard coded, and req decomp to fix
-        //[ActorizerEnabled]
+        [ActorizerEnabled]
         [FileID(430)]
-        [GroundVariants(0x0)] // 0: sitting in his room?
-        [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.WestClockTown, Scene.EastClockTown, Scene.NorthClockTown, Scene.SouthClockTown, Scene.PostOffice)]
         [ObjectListIndex(0x107)]
+        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma)]
+        [GroundVariants(0x0)] // 0: sitting in his room?
+        //[VariantsWithRoomMax()]
+        [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.WestClockTown, Scene.EastClockTown, Scene.NorthClockTown, Scene.SouthClockTown)]
         PostMan = 0x1D5, // En_Pm
 
         [FileID(431)]
@@ -3504,16 +3551,21 @@ namespace MMR.Randomizer.GameObjects
 
         [ActorizerEnabled]
         [FileID(482)]
-        [ObjectListIndex(0x26A)] // the spreadsheet says he is obj 1 but that is a mistake
+        [ObjectListIndex(0x26A)] // ocean spiderhouse version
+        //[ObjectListIndex(0xD9)] // swamp spiderhouse version
+        //[CheckRestricted(Scene.SwampSpiderHouse, variant: 0xFF02, Item.MaskTruth)]
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0xFE04, Item.UpgradeGiantWallet, Item.MundaneItemOceanSpiderHouseDay2PurpleRupee, Item.MundaneItemOceanSpiderHouseDay3RedRupee)]
+        [CheckRestricted(Scene.OceanSpiderHouse, variant: 0xFE05, Item.UpgradeGiantWallet, Item.MundaneItemOceanSpiderHouseDay2PurpleRupee, Item.MundaneItemOceanSpiderHouseDay3RedRupee)]
         //[CheckRestricted(Item.MaskTruth)] // but we want to only change the one that is spiderhouse... hardcoded
         // 0xFF02 is before you finish swamp spiderhouse
         // 0xFF03 crashes on approach
         // FE04/5 doesn't spawn, probably until you finish the spiderhouse
         // FE03 is in SCT, he stares up at the moon, except doesn't know where the moon is, can face the wrong way
         // FE01 doesn't want to spawn, hmm, 02 is swamp spiderhouse, likely doesn't want to spawn either until house is cleared
-        [GroundVariants(0xFE03)] // staring at the moon
-        [FlyingVariants(0xFF02)] // entrance to spiderhouse
-        //[VariantsWithRoomMax(max:0, variant:0xFE03)] // temp disable, as double object actor is broken
+        [GroundVariants(0xFE03, // staring at the moon
+            0xFF02, // swamp spiderhouse
+            0xFE04, 0xFE05)] // ocean spiderhouse
+        [VariantsWithRoomMax(max:0, variant: 0xFF02, 0xFE04, 0xFE05)] // temp disable, as double object actor is broken
         [UnkillableAllVariants]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
@@ -4225,20 +4277,31 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(578)]
         [ObjectListIndex(0xF0)]
-        [GroundVariants(0)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [GroundVariants(0,
+            1)] // mayor version
         [UnkillableAllVariants]
-        [VariantsWithRoomMax(max:0, variant:0)] // hard coded only spawn final night
-        [EnemizerScenesExcluded(Scene.MayorsResidence)]
+        [VariantsWithRoomMax(max:0, variant:0, // hard coded only spawn final night
+            1)] // mayors version
+        //[EnemizerScenesExcluded(Scene.MayorsResidence)]
         Mutoh = 0x26B, // En_Muto
 
-        // todo 
+        [ActorizerEnabled]
         [FileID(579)]
         [ObjectListIndex(0x247)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [GroundVariants(0, 0x1)] // mayors office
+        [VariantsWithRoomMax(max:0, variant: 0, 0x1)]
+        [UnkillableAllVariants]
         Viscen = 0x26C, // En_Baisen
 
-        // todo
+        [ActorizerEnabled]
         [FileID(580)]
         [ObjectListIndex(0x1B6)]
+        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [GroundVariants(0, 0x1)]
+        [VariantsWithRoomMax(max:0, variant:0, 0x1)]
+        [UnkillableAllVariants]
         MayorsResitenceGuard = 0x26D, // En_Heishi
 
         // bit lame as he doesnt do anything, but he exists
@@ -4288,6 +4351,8 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(587)]
         [ObjectListIndex(0x1E5)]
+        //[CheckRestricted(Scene.SouthernSwamp, variant: 0xFC05, Item.ShopItemBusinessScrubMagicBean, Item.HeartPieceSwampScrub)]
+        //[CheckRestricted(Scene.SouthernSwamp, variant: 0xFC05, Item.ShopItemBusinessScrubMagicBean, Item.HeartPieceSwampScrub)]
         // 0xFC08, 0x1000 are clear swamp
         //0x4 is a flag, meaning the actor has a path, checks if 0xFC00 is a path or not and self terminates
         //[GroundVariants(0xFC08, 0x1000, 0xFC04, 0xFC07, 0x1001, 0x0402, 0xFC06, 0x0001, 0x1800, 0x1003)]
@@ -4665,6 +4730,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         Empty = -1
     }
+
 
     public enum ActorType
     {

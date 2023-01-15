@@ -195,22 +195,27 @@ namespace MMR.Randomizer
         {
             /// checks if randomizing the actor would interfere with getting access to a check
             /// and then checks if the item is junk, before allowing randimization
+            const GameObjects.Scene ANYSCENE = (GameObjects.Scene) GameObjects.ActorConst.ANY_SCENE;
 
-            var checkRestrictedAttr = testActor.GetAttribute<CheckRestrictedAttribute>();
-            if (checkRestrictedAttr != null) // actor has check restrictions
+            var checkRestrictedAttr = testActor.GetAttributes<CheckRestrictedAttribute>();
+            if (checkRestrictedAttr != null && checkRestrictedAttr.Count() > 0) // actor has check restrictions
             {
-                var restrictedChecks = testActor.GetAttribute<CheckRestrictedAttribute>().Checks;
-                for (int checkIndex = 0; checkIndex < restrictedChecks.Count; checkIndex++)
+                foreach (var restriction in checkRestrictedAttr) // can have multiple rules
                 {
-                    // TODO: make it random rather than yes/no
-                    //var check = _randomized.ItemList[checks[checkIndex]];
+                    if (restriction.Scene != ANYSCENE && restriction.Scene != scene.SceneEnum) continue; 
 
-                    var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
-                    var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory) itemInCheck.ItemCategory()) == false);
-                    if (itemIsNotJunk)
+                    var restrictedChecks = restriction.Checks;
+                    for (int checkIndex = 0; checkIndex < restrictedChecks.Count; checkIndex++)
                     {
-                        return true;
+                        // TODO: make it random rather than yes/no
+                        var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
+                        var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
+                        if (itemIsNotJunk)
+                        {
+                            return true;
+                        }
                     }
+
                 }
             }
 
@@ -535,6 +540,21 @@ namespace MMR.Randomizer
 
                 // the tree itself needs to be rotated as its facing the wall
                 northClockTown.Maps[0].Actors[21].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, northClockTown.Maps[0].Actors[21].Rotation.y);
+
+                // jimbo in east clock town giving you the book is in an odd spot, move to the poster
+                var eastClockTown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.EastClockTown.FileID());
+                eastClockTown.Maps[0].Actors[46].Position = new vec16( 1335, 203, -1639 );
+
+                // the "trees" in trading post including bushes are in weird places, move them around the fire and the table
+                var tradingPost = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TradingPost.FileID());
+                tradingPost.Maps[0].Actors[2].Position = new vec16(-189, 3, 76); // first right bush
+                tradingPost.Maps[0].Actors[2].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 80, flags: tradingPost.Maps[0].Actors[2].Rotation.y);
+
+                tradingPost.Maps[0].Actors[5].Position = new vec16(120, 27, -81); // next to table to fish case
+                tradingPost.Maps[0].Actors[5].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 90, flags: tradingPost.Maps[0].Actors[2].Rotation.y);
+
+                // behind table should be facing table
+                tradingPost.Maps[0].Actors[4].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 210, flags: tradingPost.Maps[0].Actors[2].Rotation.y);
             }
         }
 
@@ -1696,8 +1716,8 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.GreatBayFisherman)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.Scarecrow)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BetaVampireGirl)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.BeanSeller)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
@@ -3152,7 +3172,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 43.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 43.1\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

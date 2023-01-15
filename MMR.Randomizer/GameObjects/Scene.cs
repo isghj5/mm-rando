@@ -9,8 +9,6 @@ namespace MMR.Randomizer.GameObjects
         // base enumerator value matches the ST column, SceneInternal ID matches ID column (F)
         // https://docs.google.com/spreadsheets/d/1J-4OwmZzOKEv2hZ7wrygOpMm0YcRnephEo3Q2FooF6E/edit#gid=1593589171
 
-        NULL = -1,
-
         [FileID(1160)]
         [SceneInternalId(0x12)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Toto,
@@ -97,11 +95,12 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x16)]
         [ClearEnemyPuzzleRooms(4, 7)]// basement lava
         [FairyDroppingEnemies(1, 2)] // eygore
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RealBombchu,
+            Actor.WarpDoor)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
             Actor.IkanaGravestone, Actor.Bumper, Actor.En_Ani)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Hiploop,
             Actor.En_Ani, Actor.Bumper, Actor.Tijo)]
-
         StoneTowerTemple = 0x13,
 
         [FileID(1188)]
@@ -227,6 +226,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1304)]
         [SceneInternalId(0x2B)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // can block the stairs
+            Actor.IceBlock)] // the big one can be too big
         DekuPalace = 0x28,
 
         [FileID(1308)]
