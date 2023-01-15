@@ -41,7 +41,8 @@ namespace MMR.Randomizer
         // and some adjustments we need to make based on where it gets placed in vram
         public int actorID = 0;
         public int objID   = 0;
-        public int fileID  = 0;
+        public int fileID = 0;
+        public int objectFid = 0;
 
         // if all new actor, we meed to know where the old vram start was when we shift VRAM for the actor
         public uint buildVramStart = 0;
@@ -1716,8 +1717,8 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BetaVampireGirl)) continue;
-                if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.BeanSeller)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BetaVampireGirl)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
@@ -2715,9 +2716,13 @@ namespace MMR.Randomizer
                 {
                     newInjectedActor.objID = value;
                 }
-                else if (command == "file_id")
+                else if (command == "file_id" || command == "actor_fid")
                 {
                     newInjectedActor.fileID = Convert.ToInt32(valueStr, fromBase: 10);
+                }
+                else if (command == "object_fid")
+                {
+                    newInjectedActor.objectFid = Convert.ToInt32(valueStr, fromBase: 10);
                 }
 
                 var uvalue = Convert.ToUInt32(valueStr, fromBase: 16);
@@ -2758,7 +2763,12 @@ namespace MMR.Randomizer
 
             if ( ! Directory.Exists(directory)) return;
 
+            uint END_VANILLA_OBJ_SEGMENT = 0x01E5E600;
+
             InjectedActors.Clear();
+            var codeFile = RomData.MMFileList[31].Data;
+            var objectTableOffset = 0x11CC80;
+
 
             foreach (string filePath in Directory.GetFiles(directory, "*.mmra"))
             {
@@ -2795,8 +2805,33 @@ namespace MMR.Randomizer
                             }
 
                             var injectedActor = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
-
                             injectedActor.filename = filePath; // debugging
+
+                            // we need to inject actors if we find them
+                            // TODO move this to a "load all objects" separate function where we rank them by size
+                            // so we can re-use some old spots instead of just extending
+                            var objectFileEntry = zip.GetEntry(filename + ".object");
+                            if (objectFileEntry != null) // object included
+                            {
+                                newBinLen = ((int)objectFileEntry.Length) + ((int)objectFileEntry.Length % 0x10); // dma padding
+                                var objectData = new byte[newBinLen];
+                                objectFileEntry.Open().Read(objectData, 0, objectData.Length);
+
+                                RomData.MMFileList[injectedActor.objectFid].Data = objectData;
+                                RomData.MMFileList[injectedActor.objectFid].WasEdited = true;
+
+                                // we need to update the object table with the size of the new object
+                                uint newSegmentROMStart = END_VANILLA_OBJ_SEGMENT;
+                                uint newSegmentROMEnd = newSegmentROMStart + (uint) objectData.Length;
+                                if (newSegmentROMEnd > 0x02000000)
+                                {
+                                    throw new Exception("Object segment overflow, reduce your actors that use custom objects");
+                                }
+                                END_VANILLA_OBJ_SEGMENT = newSegmentROMEnd;
+                                ReadWriteUtils.Arr_WriteU32(codeFile, (objectTableOffset + (2 * 4 * injectedActor.objID)), newSegmentROMStart);
+                                ReadWriteUtils.Arr_WriteU32(codeFile, (objectTableOffset + (2 * 4 * injectedActor.objID + 4)), newSegmentROMEnd);
+                            }
+
 
                             InjectedActors.Add(injectedActor);
 
