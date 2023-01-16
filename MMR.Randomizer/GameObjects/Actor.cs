@@ -550,7 +550,8 @@ namespace MMR.Randomizer.GameObjects
         // bush: 0xFF0B, small tree: 0xFF02
         // big tree: 0xFF00, big tree with shop man in it: 0x0A1A
         // 17,18 are leaf particles
-        [GroundVariants(0xFF00, 0xFF01, 0xFF02, 0xFF0B, // normal vanilla varieties
+        [GroundVariants(0xFF00, 0xFF01, 0xFF02,  // normal vanilla varieties
+            0xFF0B, 0xFF0D, // Bushes
             0x0A1A, 0xFF1A, // spawns with EnAni in the tree (if the object exists)
             0xA, // really big ugly tree from OOT adult kakariko?
             0xF, // even bigger bush, was this EVER used? even in OOT?
@@ -1536,8 +1537,13 @@ namespace MMR.Randomizer.GameObjects
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         Obj_Roomtimer = 0xD3, // Obj_Roomtimer
 
+        [ActorizerEnabled]
         [FileID(178)]
         [ObjectListIndex(0x127)]
+        [CheckRestricted(Item.MaskTruth)]
+        [FlyingVariants(0x0)]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
         CursedSwampSpiderhouseMan = 0xD4, // En_Ssh
 
         EmptyD5 = 0xD5, // EmptyD5

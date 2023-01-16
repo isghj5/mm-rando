@@ -347,11 +347,11 @@ namespace MMR.Randomizer
         }
 
 
-        public static List<int> GetSceneEnemyObjects(Scene scene)
+        public static List<int> GetSceneEnemyObjects(SceneEnemizerData thisSceneData)
         {
             /// Gets all objects in a scene.
             /// this is separate from actor because actors and objects are a different list in the scene/room data
-
+            var scene = thisSceneData.Scene;
             var objList = new List<int>();
             for (var m = 0; m < scene.Maps.Count(); m++)
             {
@@ -367,8 +367,13 @@ namespace MMR.Randomizer
                        //&& !objList.Contains(matchingEnemy.ObjectIndex())                          // not already extracted from this scene
                        && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
-                        
-                        if ( ! ObjectIsCheckBlocked(scene, matchingEnemy))
+
+                        if (ObjectIsCheckBlocked(scene, matchingEnemy))
+                        {
+                            thisSceneData.Actors.RemoveAll(act => act.ObjectID == obj);
+                            //thisSceneData.ActorsPerObject.
+                        }
+                        else
                         {
                             objList.Add(matchingEnemy.ObjectIndex());
                         }
@@ -1717,8 +1722,8 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BetaVampireGirl)) continue;
-                if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BetaVampireGirl)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
@@ -2453,7 +2458,7 @@ namespace MMR.Randomizer
             }
             WriteOutput("time to get scene enemies: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
-            thisSceneData.Objects = GetSceneEnemyObjects(scene);
+            thisSceneData.Objects = GetSceneEnemyObjects(thisSceneData);
             var sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum);
             WriteOutput(" time to get scene objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
