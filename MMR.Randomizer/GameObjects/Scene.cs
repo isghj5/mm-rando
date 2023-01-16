@@ -282,9 +282,10 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1332)]
         [SceneInternalId(0x38)]
-        //[EnemizerSceneEnemyReplacementBlock(Actor.Leever, Actor.PoeBalloon)] // .. why?
         [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
-            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo, Actor.Bombiwa, Actor.BronzeBoulder)]
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
+            Actor.Bombiwa, Actor.BronzeBoulder,
+            Actor.RegularZora, Actor.SwimmingZora, Actor.WarpDoor)]
         ZoraCape = 0x35,
 
         [FileID(1334)]
