@@ -80,6 +80,7 @@ namespace MMR.Randomizer.Models.Rom
             this.VariantsWithRoomMax = actor.GetAttributes<VariantsWithRoomMax>().ToList();
             this.OnlyOnePerRoom = actor.GetAttribute<OnlyOneActorPerRoom>();
             this.RespawningVariants = actor.RespawningVariants();
+            this.UnplaceableVariants = actor.GetUnPlacableVariants();
         }
 
         public Actor(InjectedActor injected, string name)
@@ -106,6 +107,7 @@ namespace MMR.Randomizer.Models.Rom
             // wasnt there a list of lists to static list we had?
             this.Variants = injected.groundVariants.Concat(injected.flyingVariants).ToList();
             this.VariantsWithRoomMax = injected.limitedVariants;
+            this.UnplaceableVariants = this.ActorEnum.GetUnPlacableVariants();
             this.OnlyOnePerRoom = injected.onlyOnePerRoom;
             this.InjectedActor = injected;
         }
@@ -178,6 +180,7 @@ namespace MMR.Randomizer.Models.Rom
             }
 
             newActor.InjectedActor = this.InjectedActor;
+            newActor.UnplaceableVariants = this.UnplaceableVariants;
 
             return newActor;
         }

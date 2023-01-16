@@ -146,22 +146,22 @@ namespace MMR.Randomizer.Extensions
             {
                 return new List<int>();
 
-            } else {
-
-                var unplacable = new List<int>();
-                foreach(var combo in limitedVariantsAttrs)
-                {
-                    if (combo.RoomMax == 0)
-                    {
-                        unplacable.AddRange(combo.Variants);
-                    }
-                }
-
-                return unplacable;
             }
+
+            var unplacable = new List<int>();
+            foreach(var combo in limitedVariantsAttrs)
+            {
+                if (combo.RoomMax == 0)
+                {
+                    unplacable.AddRange(combo.Variants);
+                }
+            }
+
+            return unplacable;
         }
 
-
+        // depreciated for the actor type, rather than this actor enum version
+        /*
         public static List<int> CompatibleVariants(this Actor actor, Actor otherActor, Random rng, int oldActorVariant)
         {
             // with mixed types, typing could be messy, keep it hidden here
@@ -209,7 +209,7 @@ namespace MMR.Randomizer.Extensions
                     {
                         ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
                     }
-                } */
+                }
 
                 // large chance of pathing enemies allowing ground or flying
                 if (randomVariant == ActorType.Pathing &&  ourAttr != null && otherAttr == null && rng.Next(100) < 80)
@@ -248,7 +248,7 @@ namespace MMR.Randomizer.Extensions
 
             return null;
         }
-
+*/
 
         public static ActorType GetType(this Actor actor, int variant)
         {
