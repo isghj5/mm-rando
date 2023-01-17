@@ -2357,9 +2357,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1500)]
         [FileID(313)]
         [ObjectListIndex(0x172)]
-        [FlyingVariants(0xFF34, 0xFF02, 0xFF03, 0x0102, 0x0103, 0xFF01)]
-        [WallVariants(0xFF9F, 0x019F)]
-        // one of these is sit on the wall bat from rtss: FF03/01/9F
+        [CheckRestricted(Scene.IkanaGraveyard, variant: ActorConst.ANY_VARIANT, Item.CollectableIkanaGraveyardDay2Bats1)]
+        [FlyingVariants(0xFF34,
+            0xFF02, 0xFF03, 0x0102, 0x0103, // graveyard
+            0xFF01)]
+        [WallVariants(0xFF9F, 0x019F)] // 19F graveyard
         [VariantsWithRoomMax(max: 1, 0xFF34)] // swarm
         [FlyingToGroundHeightAdjustment(150)]
         //[EnemizerScenesExcluded(Scene.IkanaGraveyard)] // need bats for dampe day 2 check
@@ -3477,7 +3479,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInstanceSize(0x3C8)]
         [ObjectListIndex(0xE2)]
         // to nuke ONLY in stockpot, hardcoded
-        //[CheckRestricted(Item.TradeItemRoomKey, Item.TradeItemKafeiLetter, Item.MaskCouple)]
+        [CheckRestricted(Scene.StockPotInn, variant: 2, Item.TradeItemRoomKey, Item.TradeItemKafeiLetter, Item.MaskCouple)]
         // 8001 is pathing to laundrypool
         [GroundVariants(2 // inn
             )]
@@ -4014,6 +4016,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(537)]        
         [ObjectListIndex(0xA1)]
+        [CheckRestricted(Scene.BombShop, variant:ActorConst.ANY_VARIANT, Item.SongEpona, Item.ItemBottleAliens, Item.MaskCircusLeader)]
         // 9 is the one that sells you kegs
         // 1 and 1E0 just stand around talking
         // assumption 0xF is talking ID

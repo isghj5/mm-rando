@@ -223,17 +223,6 @@ namespace MMR.Randomizer
             // special edge cases for actors that would be hard to enum auto because of variants or scenes
             // TODO replace these eventually
 
-            if (scene.SceneEnum == GameObjects.Scene.IkanaGraveyard)
-            {
-                if (testActor == GameObjects.Actor.BadBat || testActor == GameObjects.Actor.Dampe)
-                {
-                    var crimsonRupReplacementItem = _randomized.ItemList.Find(item => item.NewLocation == GameObjects.Item.CollectableIkanaGraveyardDay2Bats1).Item;
-                    if ( ! ItemUtils.IsJunk(crimsonRupReplacementItem))
-                    {
-                        return true;
-                    }
-                }
-            }
             if (testActor == GameObjects.Actor.Tingle)
             {
                 // TODO we need to make sure one of them sticks around IF we need the photo
@@ -284,19 +273,6 @@ namespace MMR.Randomizer
                     return true;
                 }
             }
-            if (scene.SceneEnum == GameObjects.Scene.BombShop && testActor == GameObjects.Actor.GoronSGoro) // keg goron
-            {
-                // hard coded because this goron is multiple actors in different places
-                var eponaSongItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.SongEpona).Item;
-                var alienDefItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemBottleAliens).Item;
-                var cariageDefItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskCircusLeader).Item;
-
-                if ( ! ItemUtils.IsJunk(eponaSongItem) || ! ItemUtils.IsJunk(alienDefItem) || ! ItemUtils.IsJunk(cariageDefItem))
-                {
-                    return true;
-                }
-
-            }
             if ((scene.SceneEnum == GameObjects.Scene.GoronVillage || scene.SceneEnum == GameObjects.Scene.GoronVillageSpring)
                 && testActor == GameObjects.Actor.SmithyGoronAndGo) // smithy goron
             {
@@ -322,25 +298,6 @@ namespace MMR.Randomizer
                     }
 
                 }// else: randomize all
-            }
-            if(scene.SceneEnum == GameObjects.Scene.SwampSpiderHouse && testActor == GameObjects.Actor.Seth1)
-            {
-                // hard coded because we dont want to change the standing up and staring at the sky seth1
-                var maskOfTruthItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskTruth).Item;
-                if ( ! ItemUtils.IsJunk(maskOfTruthItem))
-                {
-                    return true;
-                }
-            }
-            if (scene.SceneEnum == GameObjects.Scene.StockPotInn && testActor == GameObjects.Actor.Anju)
-            {
-                var roomKeyItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.TradeItemRoomKey).Item;
-                var letterToKafeiItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.TradeItemKafeiLetter).Item;
-                var coupleMaskItem = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.MaskCouple).Item;
-                if (!ItemUtils.IsJunk(roomKeyItem) || !ItemUtils.IsJunk(letterToKafeiItem) || !ItemUtils.IsJunk(coupleMaskItem))
-                {
-                    return true;
-                }
             }
 
             return false;
