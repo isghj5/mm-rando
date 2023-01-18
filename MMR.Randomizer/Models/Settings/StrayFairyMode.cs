@@ -14,10 +14,16 @@ namespace MMR.Randomizer.Models
         [HackContent(nameof(Resources.mods.fairies_chests_only))]
         ChestsOnly = 1,
 
+        [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinRegion)]
         [Description("Randomization algorithm will place any randomized Stray Fairies into a location within the same region, even if the Stray Fairy has been replaced via another Dungeon Fairy Mode.")]
         KeepWithinDungeon = 1 << 1,
 
-        [Description("Randomization algorithm will place any randomized Stray Fairies into an overworld (non-dungeon) location near the temple.")]
+        [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinArea)]
+        [Description("Randomization algorithm will place any randomized Stray Fairies into a location in or near the temple.")]
         KeepWithinArea = 1 << 2,
+
+        [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinOverworld)]
+        [Description("Randomization algorithm will place any randomized Stray Fairies into an overworld location.")]
+        KeepWithinOverworld = 1 << 3,
     }
 }

@@ -1865,40 +1865,7 @@ namespace MMR.Randomizer
 
         private void PlaceRestrictedDungeonItems(List<Item> itemPool)
         {
-            bool LockRegion(Item item, Item location)
-            {
-                return item.Region() == location.Region();
-            }
-
-            var dungeonRegions = new List<Region> { Region.WoodfallTemple, Region.SnowheadTemple, Region.GreatBayTemple, Region.StoneTowerTemple };
-
-            var regionAreaDungeonEntrance = new Dictionary<RegionArea, Item>
-            {
-                { RegionArea.Swamp, Item.AreaWoodFallTempleAccess },
-                { RegionArea.Mountain, Item.AreaSnowheadTempleAccess },
-                { RegionArea.Ocean, Item.AreaGreatBayTempleAccess },
-                { RegionArea.Canyon, Item.AreaInvertedStoneTowerTempleAccess },
-            };
-
-            var dungeonEntranceRegionArea = regionAreaDungeonEntrance.ToDictionary(x => x.Value, x => x.Key);
-
-            bool LockRegionArea(Item item, Item location)
-            {
-                var itemRegionArea = item.RegionArea();
-                if (itemRegionArea.HasValue && regionAreaDungeonEntrance.ContainsKey(itemRegionArea.Value))
-                {
-                    var dungeonEntranceToFind = regionAreaDungeonEntrance[itemRegionArea.Value];
-                    var dungeonNewEntrance = ItemList[dungeonEntranceToFind].NewLocation ?? dungeonEntranceToFind;
-                    var newRegionArea = dungeonEntranceRegionArea[dungeonNewEntrance];
-                    return newRegionArea == location.RegionArea() && (!location.Region().HasValue || !dungeonRegions.Contains(location.Region().Value));
-                }
-                return item.RegionArea() == location.RegionArea();
-            }
-
-            bool LockRegionAreaOrRegion(Item item, Item location)
-            {
-                return LockRegionArea(item, location) || LockRegion(item, location);
-            }
+            RestrictedPlacementAttribute.SetDungeonEntranceFunction((entrance) => ItemList[entrance].NewLocation ?? entrance);
 
             if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
             {
@@ -1908,78 +1875,73 @@ namespace MMR.Randomizer
                 PlaceItem(Item.RemainsTwinmold, itemPool, (item, location) => location == Item.ItemFairySword);
             }
 
-            if ((_randomized.Settings.StrayFairyMode & (StrayFairyMode.KeepWithinDungeon | StrayFairyMode.KeepWithinArea)) != 0)
+            var strayFairyRestrictions = Enum.GetValues<StrayFairyMode>()
+                .Where(m => _randomized.Settings.StrayFairyMode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
+                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+
+            if (strayFairyRestrictions.Any())
             {
+                var aggregatedRestrictions = strayFairyRestrictions
+                    .Aggregate((a, b) => (item, location) => a(item, location) && b(item, location));
                 foreach (var item in ItemUtils.DungeonStrayFairies())
                 {
-                    PlaceItem(
-                        item,
-                        itemPool,
-                        _randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinDungeon | StrayFairyMode.KeepWithinArea)
-                            ? LockRegionAreaOrRegion :
-                            _randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinArea)
-                            ? LockRegionArea
-                            : LockRegion);
+                    PlaceItem(item, itemPool, aggregatedRestrictions);
                 }
             }
 
-            if ((_randomized.Settings.BossKeyMode & (BossKeyMode.KeepWithinDungeon | BossKeyMode.KeepWithinArea)) != 0)
+            var bossKeyRestrictions = Enum.GetValues<BossKeyMode>()
+                .Where(m => _randomized.Settings.BossKeyMode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
+                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+
+            if (bossKeyRestrictions.Any())
             {
+                var aggregatedRestrictions = bossKeyRestrictions
+                    .Aggregate((a, b) => (item, location) => a(item, location) && b(item, location));
                 foreach (var item in ItemUtils.BossKeys())
                 {
-                    PlaceItem(
-                        item,
-                        itemPool,
-                        _randomized.Settings.BossKeyMode.HasFlag(BossKeyMode.KeepWithinDungeon | BossKeyMode.KeepWithinArea)
-                            ? LockRegionAreaOrRegion :
-                            _randomized.Settings.BossKeyMode.HasFlag(BossKeyMode.KeepWithinArea)
-                            ? LockRegionArea
-                            : LockRegion);
+                    PlaceItem(item, itemPool, aggregatedRestrictions);
                 }
             }
 
-            if ((_randomized.Settings.SmallKeyMode & (SmallKeyMode.KeepWithinDungeon | SmallKeyMode.KeepWithinArea)) != 0)
+            var smallKeyRestrictions = Enum.GetValues<SmallKeyMode>()
+                .Where(m => _randomized.Settings.SmallKeyMode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
+                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+
+            if (smallKeyRestrictions.Any())
             {
+                var aggregatedRestrictions = smallKeyRestrictions
+                    .Aggregate((a, b) => (item, location) => a(item, location) && b(item, location));
                 foreach (var item in ItemUtils.SmallKeys())
                 {
-                    PlaceItem(
-                        item,
-                        itemPool,
-                        _randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon | SmallKeyMode.KeepWithinArea)
-                            ? LockRegionAreaOrRegion :
-                            _randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinArea)
-                            ? LockRegionArea
-                            : LockRegion);
+                    PlaceItem(item, itemPool, aggregatedRestrictions);
                 }
             }
 
-            if ((_randomized.Settings.BossRemainsMode & (BossRemainsMode.KeepWithinDungeon | BossRemainsMode.KeepWithinArea)) != 0)
+            var bossRemainsRestrictions = Enum.GetValues<BossRemainsMode>()
+                .Where(m => _randomized.Settings.BossRemainsMode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
+                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+
+            if (bossRemainsRestrictions.Any())
             {
+                var aggregatedRestrictions = bossRemainsRestrictions
+                    .Aggregate((a, b) => (item, location) => a(item, location) && b(item, location));
                 foreach (var item in ItemUtils.BossRemains())
                 {
-                    PlaceItem(
-                        item,
-                        itemPool,
-                        _randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinDungeon | BossRemainsMode.KeepWithinArea)
-                            ? LockRegionAreaOrRegion :
-                            _randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinArea)
-                            ? LockRegionArea
-                            : LockRegion);
+                    PlaceItem(item, itemPool, aggregatedRestrictions);
                 }
             }
 
-            if ((_randomized.Settings.DungeonNavigationMode & (DungeonNavigationMode.KeepWithinDungeon | DungeonNavigationMode.KeepWithinArea)) != 0)
+            var dungeonNavigationRestrictions = Enum.GetValues<DungeonNavigationMode>()
+                .Where(m => _randomized.Settings.DungeonNavigationMode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
+                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+
+            if (dungeonNavigationRestrictions.Any())
             {
+                var aggregatedRestrictions = dungeonNavigationRestrictions
+                    .Aggregate((a, b) => (item, location) => a(item, location) && b(item, location));
                 foreach (var item in ItemUtils.DungeonNavigation())
                 {
-                    PlaceItem(
-                        item,
-                        itemPool,
-                        _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.KeepWithinDungeon | DungeonNavigationMode.KeepWithinArea)
-                            ? LockRegionAreaOrRegion :
-                            _randomized.Settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.KeepWithinArea)
-                            ? LockRegionArea
-                            : LockRegion);
+                    PlaceItem(item, itemPool, aggregatedRestrictions);
                 }
             }
         }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MMR.Randomizer.Attributes;
+using System;
 using System.ComponentModel;
 
 namespace MMR.Randomizer.Models
@@ -9,10 +10,16 @@ namespace MMR.Randomizer.Models
     {
         Default,
 
+        [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinRegion)]
         [Description("Randomization algorithm will place any randomized Dungeon Maps and Compasses into a location within the same region.")]
         KeepWithinDungeon = 1 << 1,
 
-        [Description("Randomization algorithm will place any randomized Dungeon Maps and Compasses into an overworld (non-dungeon) location near the temple.")]
+        [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinArea)]
+        [Description("Randomization algorithm will place any randomized Dungeon Maps and Compasses into a location in or near the temple.")]
         KeepWithinArea = 1 << 2,
+
+        [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinOverworld)]
+        [Description("Randomization algorithm will place any randomized Dungeon Maps and Compasses into an overworld location.")]
+        KeepWithinOverworld = 1 << 3,
     }
 }
