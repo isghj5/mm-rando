@@ -261,6 +261,39 @@ namespace MMR.Randomizer.Utils
             return item == Item.RecoveryHeart || item == Item.IceTrap || LogicallyJunkItems.Contains(item);
         }
 
+        private static List<Item> HintedJunkLocations;
+
+        public static void PrepareHintedJunkLocations(GameplaySettings settings, Random random)
+        {
+            if (settings.OverrideHintPriorities != null && settings.OverrideHintItemCaps != null)
+            {
+                HintedJunkLocations = settings.OverrideHintPriorities.SelectMany((tier, i) =>
+                {
+                    var cap = settings.OverrideHintItemCaps.ElementAtOrDefault(i);
+                    if (cap > 0)
+                    {
+                        var groupedLocations = tier.GroupBy(location => location.GetAttribute<GossipCombineAttribute>()?.CombinedName ?? location.ToString())
+                            .ToList();
+                        var numberOfLocationsToJunk = groupedLocations.Count - cap;
+                        return groupedLocations
+                            .Random(numberOfLocationsToJunk, random)
+                            .SelectMany(g => g)
+                            .ToList();
+                    }
+                    return tier;
+                }).ToList();
+            }
+            else
+            {
+                HintedJunkLocations = new List<Item>();
+            }
+        }
+
+        public static bool IsLocationJunk(Item location, GameplaySettings settings)
+        {
+            return settings.CustomJunkLocations.Contains(location) || (HintedJunkLocations?.Contains(location) ?? false);
+        }
+
         public static bool CanBeRequired(Item item)
         {
             return !item.Name().Contains("Heart")

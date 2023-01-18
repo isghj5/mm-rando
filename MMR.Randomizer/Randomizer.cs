@@ -671,6 +671,7 @@ namespace MMR.Randomizer
 
             UpdateLogicForSettings();
 
+            ItemUtils.PrepareHintedJunkLocations(_settings, Random);
             ItemUtils.PrepareJunkItems(ItemList);
             if (_settings.CustomJunkLocations.Count > ItemUtils.JunkItems.Count)
             {
@@ -1052,7 +1053,7 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            if ((_settings.CustomJunkLocations.Contains(target) || target == Item.UpgradeRoyalWallet) && !ItemUtils.IsJunk(currentItem))
+            if ((ItemUtils.IsLocationJunk(target, _settings) || target == Item.UpgradeRoyalWallet) && !ItemUtils.IsJunk(currentItem))
             {
                 return false;
             }
@@ -2054,7 +2055,7 @@ namespace MMR.Randomizer
                     List<Item?> availableItems = null;
                     if (location.IsSong() && !_settings.AddSongs)
                     {
-                        if (!_settings.CustomJunkLocations.Contains(location))
+                        if (!ItemUtils.IsLocationJunk(location, _settings))
                         {
                             availableItems = availableSongs;
                         }
@@ -2065,7 +2066,7 @@ namespace MMR.Randomizer
                     }
                     else
                     {
-                        if (!_settings.CustomJunkLocations.Contains(location))
+                        if (!ItemUtils.IsLocationJunk(location, _settings))
                         {
                             availableItems = availableStartingItems;
                         }

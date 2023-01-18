@@ -2515,12 +2515,13 @@ namespace MMR.UI.Forms
         {
             try
             {
-                var dialog = new CustomizeHintPrioritiesForm(_configuration.GameplaySettings.OverrideHintPriorities, _configuration.GameplaySettings.OverrideImportanceIndicatorTiers);
+                var dialog = new CustomizeHintPrioritiesForm(_configuration.GameplaySettings.OverrideHintPriorities, _configuration.GameplaySettings.OverrideImportanceIndicatorTiers, _configuration.GameplaySettings.OverrideHintItemCaps);
                 var result = dialog.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     _configuration.GameplaySettings.OverrideHintPriorities = dialog.Result;
                     _configuration.GameplaySettings.OverrideImportanceIndicatorTiers = dialog.ResultTiersIndicateImportance;
+                    _configuration.GameplaySettings.OverrideHintItemCaps = dialog.ResultTiersCap;
                 }
             }
             catch (Exception ex)

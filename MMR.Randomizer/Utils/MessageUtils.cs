@@ -70,7 +70,7 @@ namespace MMR.Randomizer.Utils
                     var itemRegion = locationForImportance.Region();
                     if (itemRegion.HasValue
                         && !preventRegions.Contains(itemRegion.Value)
-                        && !randomizedResult.Settings.CustomJunkLocations.Contains(item.NewLocation.Value))
+                        && !ItemUtils.IsLocationJunk(item.NewLocation.Value, randomizedResult.Settings))
                     {
                         if (!itemsInRegions.ContainsKey(itemRegion.Value))
                         {
@@ -106,7 +106,7 @@ namespace MMR.Randomizer.Utils
                         }
                     }
 
-                    if (randomizedResult.Settings.CustomJunkLocations.Contains(io.NewLocation.Value))
+                    if (ItemUtils.IsLocationJunk(item.NewLocation.Value, randomizedResult.Settings))
                     {
                         randomizedItems.Remove(item);
                         continue;

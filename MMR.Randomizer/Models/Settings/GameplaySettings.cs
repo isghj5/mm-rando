@@ -424,6 +424,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public HashSet<int> OverrideImportanceIndicatorTiers { get; set; }
 
+        public List<int> OverrideHintItemCaps { get; set; }
+
         /// <summary>
         /// Prevent downgrades
         /// </summary>
