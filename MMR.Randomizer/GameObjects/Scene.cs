@@ -227,7 +227,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1304)]
         [SceneInternalId(0x2B)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // can block the stairs
-            Actor.IceBlock)] // the big one can be too big
+            Actor.IceBlock,  // the big one can be too big
+            Actor.Dexihand)] // if it grabs you as you fall into a grotto hole it can hardlock
         DekuPalace = 0x28,
 
         [FileID(1308)]

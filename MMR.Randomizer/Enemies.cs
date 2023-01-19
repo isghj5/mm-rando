@@ -564,12 +564,29 @@ namespace MMR.Randomizer
                 dekuPalaceScene.Maps[2].Actors[25].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: 0x7F);
                 dekuPalaceScene.Maps[2].Actors[26].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalaceScene.Maps[2].Actors[26].Rotation.y);
 
-                // we can make him stronger
+                // goron underwater mode
                 var playerFile = RomData.MMFileList[GameObjects.Actor.Player.FileListIndex()].Data;
+                // changes made to function func_8083BB4C
                 ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE20C, val: 0x00000000); // 80834140 -> NOP
                 ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE214, val: 0x00000000); // 
-                ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE220, val: 0x00000000); // 
+                ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE220, val: 0x00000000); //
 
+                // no water restrictions
+                //var codeFile = RomData.MMFileList[31].Data;
+                //ReadWriteUtils.Arr_WriteU32(codeFile, Dest: 0x06AEF0, val: 0x00000000); // nop the store byte FF which would disable the buttons
+
+
+                // for now, remove all form restrictions to see what works and what does not work anymore
+                /*
+                var startLoc = 0x11C950;
+                var endLoc = 0x11CB8C;
+                var i = startLoc;
+                while (i < endLoc)
+                {
+                    codeFile[i] = 0xFF;
+                    i++;
+                }
+                // */
                 // RecreateFishing();
             }
 
@@ -1542,13 +1559,13 @@ namespace MMR.Randomizer
         {
             /// New actors can have switch flags, these are normally tailored to the scene so one actor could step on another
 
-            thisSceneData.Log.AppendLine($"------------------------------------------------- ");
-            thisSceneData.Log.AppendLine($"  Switch flags: ");
+            //thisSceneData.Log.AppendLine($"------------------------------------------------- ");
+            //thisSceneData.Log.AppendLine($"  Switch flags: ");
 
             List<int> claimedSwitchFlags = new List<int>();
             for (int mapIndex = 0; mapIndex < thisSceneData.Scene.Maps.Count; ++mapIndex)
             {
-                thisSceneData.Log.AppendLine($" ======( MAP {mapIndex.ToString("X2")} )======");
+                //thisSceneData.Log.AppendLine($" ======( MAP {mapIndex.ToString("X2")} )======");
                 for (int actorNumber = 0; actorNumber < thisSceneData.Scene.Maps[mapIndex].Actors.Count; ++actorNumber)
                 {
                     var mapActor = thisSceneData.Scene.Maps[mapIndex].Actors[actorNumber];
@@ -1556,7 +1573,7 @@ namespace MMR.Randomizer
                     if (flags >= 0)
                     {
                         claimedSwitchFlags.Add(flags);
-                        thisSceneData.Log.AppendLine($"  [{actorNumber}][{mapActor.ActorEnum}] has flags: [{flags}]");
+                        //thisSceneData.Log.AppendLine($"  [{actorNumber}][{mapActor.ActorEnum}] has flags: [{flags}]");
                     }
 
                 }
@@ -1593,13 +1610,13 @@ namespace MMR.Randomizer
         {
             /// Like switch flags, we want to avoid stepping on previously existing treasure flags
 
-            thisSceneData.Log.AppendLine($"------------------------------------------------- ");
-            thisSceneData.Log.AppendLine($"  Treasure Flags: ");
+            //thisSceneData.Log.AppendLine($"------------------------------------------------- ");
+            //thisSceneData.Log.AppendLine($"  Treasure Flags: ");
 
             var claimedTreasureFlags = new List<int>();
             for (int mapIndex = 0; mapIndex < thisSceneData.Scene.Maps.Count; ++mapIndex)
             {
-                thisSceneData.Log.AppendLine($" ======( MAP {mapIndex.ToString("X2")} )======");
+                //thisSceneData.Log.AppendLine($" ======( MAP {mapIndex.ToString("X2")} )======");
                 for (int actorIndex = 0; actorIndex < thisSceneData.Scene.Maps[mapIndex].Actors.Count; ++actorIndex)
                 {
                     var mapActor = thisSceneData.Scene.Maps[mapIndex].Actors[actorIndex];
@@ -1607,7 +1624,7 @@ namespace MMR.Randomizer
                     if (flags >= 0)
                     {
                         claimedTreasureFlags.Add(flags);
-                        thisSceneData.Log.AppendLine($"  [{actorIndex}][{mapActor.ActorEnum}] has flags: [{flags}]");
+                        //thisSceneData.Log.AppendLine($"  [{actorIndex}][{mapActor.ActorEnum}] has flags: [{flags}]");
                     }
                 }
             }
@@ -1679,7 +1696,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BetaVampireGirl)) continue;
+               //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.SnowheadBiggoron)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
@@ -3169,7 +3186,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 43.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 44.0\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
