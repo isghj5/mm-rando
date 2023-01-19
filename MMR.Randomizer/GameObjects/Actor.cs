@@ -4140,7 +4140,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(553)]
         [ObjectListIndex(0x22B)]
-        [CheckRestricted(Item.HeartContainerGreatBay)] // lol lets see what happens
+        [CheckRestricted(Item.MundaneItemLuluBadPictographBlueRupee, Item.MundaneItemLuluGoodPictographRedRupee)]
         // E01 is rehersal
         [GroundVariants(0xFE0F)]
         [WaterVariants(0xFE0F)]
