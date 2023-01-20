@@ -74,6 +74,11 @@ namespace MMR.Randomizer.Extensions
             return item.GetAttribute<RegionAttribute>()?.Region;
         }
 
+        public static RegionArea? RegionArea(this Item item)
+        {
+            return item.GetAttribute<RegionAreaAttribute>()?.RegionArea ?? item.Region()?.RegionArea();
+        }
+
         public static Item? MainLocation(this Item item)
         {
             return item.GetAttribute<MainLocationAttribute>()?.Location;

@@ -77,6 +77,11 @@ namespace MMR.Randomizer.Utils
                 return true;
             }
 
+            if (settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.KeepWithinDungeon) && DungeonNavigation().Contains(item))
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -123,6 +128,21 @@ namespace MMR.Randomizer.Utils
         public static IEnumerable<Item> DungeonStrayFairies()
         {
             return Enumerable.Range((int)Item.CollectibleStrayFairyWoodfall1, 60).Cast<Item>();
+        }
+
+        public static IEnumerable<Item> DungeonNavigation()
+        {
+            return new List<Item>
+            {
+                Item.ItemWoodfallMap,
+                Item.ItemWoodfallCompass,
+                Item.ItemSnowheadMap,
+                Item.ItemSnowheadCompass,
+                Item.ItemGreatBayMap,
+                Item.ItemGreatBayCompass,
+                Item.ItemStoneTowerMap,
+                Item.ItemStoneTowerCompass,
+            }.AsEnumerable();
         }
 
         public static IEnumerable<Item> BossRemains()
@@ -239,6 +259,39 @@ namespace MMR.Randomizer.Utils
         public static bool IsLogicallyJunk(Item item)
         {
             return item == Item.RecoveryHeart || item == Item.IceTrap || LogicallyJunkItems.Contains(item);
+        }
+
+        private static List<Item> HintedJunkLocations;
+
+        public static void PrepareHintedJunkLocations(GameplaySettings settings, Random random)
+        {
+            if (settings.OverrideHintPriorities != null && settings.OverrideHintItemCaps != null)
+            {
+                HintedJunkLocations = settings.OverrideHintPriorities.SelectMany((tier, i) =>
+                {
+                    var cap = settings.OverrideHintItemCaps.ElementAtOrDefault(i);
+                    if (cap > 0)
+                    {
+                        var groupedLocations = tier.GroupBy(location => location.GetAttribute<GossipCombineAttribute>()?.CombinedName ?? location.ToString())
+                            .ToList();
+                        var numberOfLocationsToJunk = groupedLocations.Count - cap;
+                        return groupedLocations
+                            .Random(numberOfLocationsToJunk, random)
+                            .SelectMany(g => g)
+                            .ToList();
+                    }
+                    return tier;
+                }).ToList();
+            }
+            else
+            {
+                HintedJunkLocations = new List<Item>();
+            }
+        }
+
+        public static bool IsLocationJunk(Item location, GameplaySettings settings)
+        {
+            return settings.CustomJunkLocations.Contains(location) || (HintedJunkLocations?.Contains(location) ?? false);
         }
 
         public static bool CanBeRequired(Item item)

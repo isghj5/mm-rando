@@ -334,6 +334,10 @@ mm-finalhours
 157
 17
 57
+mm-opening-a-chest
+12B
+3
+2B
 mm-kamaros-dance-rosa-sisters
 12A
 1F

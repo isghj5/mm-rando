@@ -504,7 +504,7 @@ namespace MMR.Randomizer.GameObjects
         HeartPieceSwordsmanSchool,
 
         [StartingItem(0xC5CE70, 0x10, true)]
-        [ItemName("Piece of Heart"), LocationName("Postbox"), MultiLocation(HeartPiecePostBoxInECT, HeartPiecePostBoxInNCT, HeartPiecePostBoxInSCT)]
+        [ItemName("Piece of Heart"), LocationName("Postbox"), MultiLocation(HeartPiecePostBoxInECT, HeartPiecePostBoxInNCT, HeartPiecePostBoxInSCT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("an information carrier", "a correspondence box"), GossipItemHint("a segment of health")]
         [ShopText("Collect four to assemble a new Heart Container.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
@@ -797,7 +797,7 @@ namespace MMR.Randomizer.GameObjects
         [Visible]
         [StartingItem(0xC5CE4C, 0x36)]
         [ItemName("Mask of Truth"), LocationName("Swamp Spider House Reward"), Region(Region.SouthernSwamp)]
-        [GossipLocationHint("a gold spider"), GossipItemHint("a piercing gaze"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false)]
+        [GossipLocationHint("a gold spider"), GossipItemHint("a piercing gaze"), GossipCompetitiveHint(0, ItemCategory.SkulltulaTokens, false, nameof(GameplaySettings.UpdateWorldModels), false)]
         [ShopText("Wear it to read the thoughts of Gossip Stones and animals.", isDefinite: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
         [GetItemIndex(0x8A), ItemPool(ItemCategory.Masks, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
@@ -1316,7 +1316,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable, Visible]
         [Repeatable, Temporary]
-        [ItemName("10 Bombs"), LocationName("Goron Shop 10 Bombs"), MultiLocation(ShopItemGoronBomb10InWinter, ShopItemGoronBomb10InSpring)]
+        [ItemName("10 Bombs"), LocationName("Goron Shop 10 Bombs"), MultiLocation(ShopItemGoronBomb10InWinter, ShopItemGoronBomb10InSpring), RegionArea(RegionArea.Mountain)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("explosives")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 0)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShopSpring, 0)]
@@ -1327,7 +1327,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable, Visible]
         [Repeatable, Temporary]
-        [ItemName("10 Arrows"), LocationName("Goron Shop 10 Arrows"), MultiLocation(ShopItemGoronArrow10InWinter, ShopItemGoronArrow10InSpring)]
+        [ItemName("10 Arrows"), LocationName("Goron Shop 10 Arrows"), MultiLocation(ShopItemGoronArrow10InWinter, ShopItemGoronArrow10InSpring), RegionArea(RegionArea.Mountain)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("a quiver refill", "a bundle of projectiles")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 1)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShopSpring, 1)]
@@ -1338,7 +1338,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Purchaseable, Visible]
         [Repeatable, Temporary, Overwritable]
-        [ItemName("Red Potion"), LocationName("Goron Shop Red Potion"), MultiLocation(ShopItemGoronRedPotionInWinter, ShopItemGoronRedPotionInSpring)]
+        [ItemName("Red Potion"), LocationName("Goron Shop Red Potion"), MultiLocation(ShopItemGoronRedPotionInWinter, ShopItemGoronRedPotionInSpring), RegionArea(RegionArea.Mountain)]
         [GossipLocationHint("a northern merchant", "a bored goron"), GossipItemHint("consumable strength", "a hearty drink", "a red drink")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShop, 2)]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.GoronShopSpring, 2)]
@@ -2820,7 +2820,7 @@ namespace MMR.Randomizer.GameObjects
         CollectibleOceanSpiderToken30,
 
         [Visible]
-        [ItemName("Clock Town Stray Fairy"), LocationName("Clock Town Stray Fairy"), MultiLocation(CollectibleStrayFairyClockTownInLaundryPool, CollectibleStrayFairyClockTownInECT)]
+        [ItemName("Clock Town Stray Fairy"), LocationName("Clock Town Stray Fairy"), MultiLocation(CollectibleStrayFairyClockTownInLaundryPool, CollectibleStrayFairyClockTownInECT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Return it to the Fairy Fountain in North Clock Town.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]

@@ -255,6 +255,8 @@ namespace MMR.Randomizer.Models.Settings
 
         public PriceMode PriceMode { get; set; }
 
+        public DungeonNavigationMode DungeonNavigationMode { get; set; }
+
 
         /// <summary>
         ///  Custom item list selections
@@ -427,6 +429,8 @@ namespace MMR.Randomizer.Models.Settings
         public List<List<Item>> OverrideHintPriorities { get; set; }
 
         public HashSet<int> OverrideImportanceIndicatorTiers { get; set; }
+
+        public List<int> OverrideHintItemCaps { get; set; }
 
         /// <summary>
         /// Prevent downgrades

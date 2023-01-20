@@ -190,11 +190,12 @@ namespace MMR.UI.Forms
         {
             //var dungeonModeSettings = new List<Type> { typeof(SmallKeyMode), typeof(BossKeyMode), typeof(StrayFairyMode) };
             var properties = new List<PropertyInfo>();
-            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.SmallKeyMode)));
-            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossKeyMode)));
-            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.StrayFairyMode)));
-            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossRemainsMode)));
             properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.PriceMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossRemainsMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.BossKeyMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.SmallKeyMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.StrayFairyMode)));
+            properties.Add(typeof(GameplaySettings).GetProperty(nameof(GameplaySettings.DungeonNavigationMode)));
             foreach (var propertyInfo in properties)
             {
                 var tabPage = new TabPage
@@ -2521,12 +2522,13 @@ namespace MMR.UI.Forms
         {
             try
             {
-                var dialog = new CustomizeHintPrioritiesForm(_configuration.GameplaySettings.OverrideHintPriorities, _configuration.GameplaySettings.OverrideImportanceIndicatorTiers);
+                var dialog = new CustomizeHintPrioritiesForm(_configuration.GameplaySettings.OverrideHintPriorities, _configuration.GameplaySettings.OverrideImportanceIndicatorTiers, _configuration.GameplaySettings.OverrideHintItemCaps);
                 var result = dialog.ShowDialog();
                 if (result == DialogResult.OK)
                 {
                     _configuration.GameplaySettings.OverrideHintPriorities = dialog.Result;
                     _configuration.GameplaySettings.OverrideImportanceIndicatorTiers = dialog.ResultTiersIndicateImportance;
+                    _configuration.GameplaySettings.OverrideHintItemCaps = dialog.ResultTiersCap;
                 }
             }
             catch (Exception ex)

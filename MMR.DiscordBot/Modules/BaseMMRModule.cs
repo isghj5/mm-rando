@@ -21,7 +21,9 @@ namespace MMR.DiscordBot.Modules
     {
         public UserSeedRepository UserSeedRepository { get; set; }
         public GuildModRepository GuildModRepository { get; set; }
-        public TournamentChannelRepository TournamentChannelRepository { get; set;}
+        public TournamentChannelRepository TournamentChannelRepository { get; set; }
+        public LogChannelRepository LogChannelRepository { get; set; }
+
         private readonly MMRService _mmrService;
 
         public BaseMMRModule(MMRService mmrService)
@@ -59,6 +61,17 @@ namespace MMR.DiscordBot.Modules
         {
             var messageReference = new MessageReference(Context.Message.Id, Context.Channel.Id, Context.Guild.Id);
             return await Context.Channel.SendFileAsync(filepath, allowedMentions: AllowedMentions.None, messageReference: messageReference);
+        }
+
+        protected async Task LogToDiscord(string message)
+        {
+            var logChannel = await LogChannelRepository.Single(_ => true);
+            if (logChannel == null)
+            {
+                return;
+            }
+            var channel = Context.Client.GetChannel(logChannel.ChannelId) as IMessageChannel;
+            await channel.SendMessageAsync(message);
         }
 
         [Command("help")]
@@ -128,6 +141,7 @@ namespace MMR.DiscordBot.Modules
                 return;
             }
             var tournamentSeedReply = await ReplyNoTagAsync("Generating seed...");
+            await LogToDiscord($"User {Context.User.Username} requested a tournament seed.");
             new Thread(async () =>
             {
                 try
@@ -156,16 +170,17 @@ namespace MMR.DiscordBot.Modules
                         File.Delete(patchPath);
                         File.Delete(hashIconPath);
                         await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "Success.");
+                        await LogToDiscord($"User {Context.User.Username} tournament seed successfully generated.");
                     }
                     else
                     {
                         throw new Exception("MMR.CLI succeeded, but output files not found.");
                     }
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    // TODO log exception.
                     await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "An error occured.");
+                    await LogToDiscord($"User {Context.User.Username} tournament seed failed to generate. Error: {ex.Message}");
                 }
             }).Start();
         }
@@ -192,6 +207,7 @@ namespace MMR.DiscordBot.Modules
             };
             await UserSeedRepository.Save(userSeedEntity);
             var messageResult = await ReplyNoTagAsync("Generating seed...");
+            await LogToDiscord($"User {Context.User.Username} requested a seed.");
             new Thread(async () =>
             {
                 try
@@ -224,11 +240,13 @@ namespace MMR.DiscordBot.Modules
                     File.Delete(hashIconPath);
                     userSeedEntity.Version = version;
                     await UserSeedRepository.Save(userSeedEntity);
+                    await LogToDiscord($"User {Context.User.Username} seed successfully generated.");
                 }
-                catch
+                catch (Exception ex)
                 {
                     await UserSeedRepository.DeleteById(Context.User.Id);
                     await ModifyNoTagAsync(messageResult, mp => mp.Content = "An error occured.");
+                    await LogToDiscord($"User {Context.User.Username} seed failed to generate. Error: {ex.Message}");
                 }
             }).Start();
         }
@@ -591,6 +609,31 @@ namespace MMR.DiscordBot.Modules
             File.Delete(settingsPath);
 
             await ReplyNoTagAsync("Deleted default settings.");
+        }
+
+        [Command("kill")]
+        public async Task Kill()
+        {
+            var logChannel = await LogChannelRepository.Single(_ => true);
+            if (logChannel != null && Context.Channel.Id == logChannel.ChannelId)
+            {
+                _mmrService.Kill();
+            }
+        }
+
+        [Command("log")]
+        [RequireOwner]
+        public async Task SetLog()
+        {
+            var logChannel = await LogChannelRepository.Single(_ => true);
+            if (logChannel != null)
+            {
+                await LogToDiscord($"No longer logging to channel {logChannel.ChannelId}");
+                await LogChannelRepository.DeleteById(logChannel.ChannelId);
+            }
+
+            await LogChannelRepository.Save(new LogChannelEntity { ChannelId = Context.Channel.Id });
+            await LogToDiscord($"Now logging to channel {Context.Channel.Id}");
         }
     }
 }

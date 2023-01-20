@@ -128,7 +128,8 @@
 .definelabel z2_SkelAnime_DrawLimb3, 0x801343C0
 .definelabel z2_UpdatePictoFlags, 0x8013A240
 .definelabel z2_InitButtonNoteColors, 0x80147564
-.definelabel z2_80147624, 0x80147624
+.definelabel z2_MessageShouldAdvance, 0x80147624
+.definelabel z2_MessageClose, 0x801477B4
 .definelabel z2_ShowMessage, 0x801518B0
 .definelabel z2_GetMessageState, 0x80152498
 .definelabel ShrinkWindow_SetLetterboxTarget, 0x80160C00
@@ -159,4 +160,6 @@
 .definelabel z2_GetAudioTable, 0x80190294
 .definelabel z2_ToggleSfxDampen, 0x8019C300
 .definelabel z2_PlaySfx, 0x8019F0C8
+.definelabel z2_PlaySfxDecide, 0x8019F208
+.definelabel z2_PlaySfxCancel, 0x8019F230
 .definelabel z2_SetBGM2, 0x801A3098

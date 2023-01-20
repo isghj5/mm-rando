@@ -67,6 +67,8 @@ extern void z2_Matrix_GetStateTranslationAndScaledY(f32 scale, Vec3f* dst);
 extern void z2_Matrix_GetStateTranslationAndScaledZ(f32 scale, Vec3f* dst);
 extern AudioInfo* z2_GetAudioTable(u8 audioType);
 extern void z2_PlaySfx(u32 id);
+extern void z2_PlaySfxDecide();
+extern void z2_PlaySfxCancel();
 extern void z2_PlayPlayerSfx(ActorPlayer* player, s16 sfxId);
 extern void z2_PlaySfxAtActor(Actor* actor, u32 id);
 extern void z2_PlayLoopingSfxAtActor(Actor* actor, u32 id);
@@ -240,6 +242,8 @@ extern u8 z2_GetMessageState(MessageContext* msgCtx);
 extern s32 z2_800B84D0(Actor* actor, GlobalContext* ctxt); // Actor_IsTalking
 extern s32 z2_800B85E0(Actor* actor, GlobalContext* ctxt, f32 uParm3, s32 uParm4);
 extern int z2_801242DC(GlobalContext* ctxt);
+extern s32 z2_MessageShouldAdvance(GlobalContext* ctxt);
+extern void z2_MessageClose(GlobalContext* ctxt);
 extern u32 z2_80147624(GlobalContext* ctxt);
 extern void z2_8016566C(s16 unkA0);
 extern void z2_Collider_UpdateCylinder(Actor* actor, ColCylinder* collider);

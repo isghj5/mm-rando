@@ -17,27 +17,32 @@ namespace MMR.Randomizer.Attributes
             Priority = priority;
         }
 
-        public GossipCompetitiveHintAttribute(int priority, string settingProperty, object settingValue)
+        public GossipCompetitiveHintAttribute(int priority, string settingProperty, object settingValue) : this(priority)
         {
-            Priority = priority;
-
-            if (settingProperty != null)
-            {
-                var parameter = Expression.Parameter(typeof(GameplaySettings));
-                Condition = Expression.Lambda<Func<GameplaySettings, bool>>(Expression.Equal(Expression.Property(parameter, settingProperty), Expression.Constant(settingValue)), parameter).Compile();
-            }
+            Condition = CreateConditionFunction(settingProperty, settingValue);
         }
 
-        public GossipCompetitiveHintAttribute(int priority, ItemCategory itemCategory, bool doesContain)
+        public GossipCompetitiveHintAttribute(int priority, ItemCategory itemCategory, bool doesContain) : this(priority)
         {
-            Priority = priority;
-            Condition = settings => settings.CustomItemList.Any(item => item.ItemCategory() == itemCategory) == doesContain;
+            Condition = CreateConditionFunction(itemCategory, doesContain);
         }
 
-        public GossipCompetitiveHintAttribute(int priority, ItemCategory itemCategory, bool doesContain, string settingFlagProperty, int flagValue, bool hasFlag)
+        public GossipCompetitiveHintAttribute(int priority, ItemCategory itemCategory, bool doesContain, string settingFlagProperty, int flagValue, bool hasFlag) : this(priority)
         {
-            Priority = priority;
-            Func<GameplaySettings, bool> itemCategoryFunc = settings => settings.CustomItemList.Any(item => item.ItemCategory() == itemCategory) == doesContain;
+            var itemCategoryFunc = CreateConditionFunction(itemCategory, doesContain);
+            var flagFunc = CreateConditionFunction(settingFlagProperty, flagValue, hasFlag);
+            Condition = settings => itemCategoryFunc(settings) && flagFunc(settings);
+        }
+
+        public GossipCompetitiveHintAttribute(int priority, ItemCategory itemCategory, bool doesContain, string settingProperty, object settingValue) : this(priority)
+        {
+            var itemCategoryFunc = CreateConditionFunction(itemCategory, doesContain);
+            var settingValueFunc = CreateConditionFunction(settingProperty, settingValue);
+            Condition = settings => itemCategoryFunc(settings) && settingValueFunc(settings);
+        }
+
+        private Func<GameplaySettings, bool> CreateConditionFunction(string settingFlagProperty, int flagValue, bool hasFlag)
+        {
             var parameter = Expression.Parameter(typeof(GameplaySettings));
 
             // settings => (((int)settings[settingFlagProperty] & flagValue) != 0) == hasFlag
@@ -51,9 +56,24 @@ namespace MMR.Randomizer.Attributes
                     ),
                 Expression.Constant(hasFlag)
             );
-            var flagFunc = Expression.Lambda<Func<GameplaySettings, bool>>(flagExpression, parameter).Compile();
+            return Expression.Lambda<Func<GameplaySettings, bool>>(flagExpression, parameter).Compile();
+        }
 
-            Condition = settings => itemCategoryFunc(settings) && flagFunc(settings);
+        private Func<GameplaySettings, bool> CreateConditionFunction(string settingProperty, object settingValue)
+        {
+            var parameter = Expression.Parameter(typeof(GameplaySettings));
+
+            // settings => settings[settingProperty] == settingValue
+            var settingExpression = Expression.Equal(
+                Expression.Property(parameter, settingProperty),
+                Expression.Constant(settingValue)
+            );
+            return Expression.Lambda<Func<GameplaySettings, bool>>(settingExpression, parameter).Compile();
+        }
+
+        private Func<GameplaySettings, bool> CreateConditionFunction(ItemCategory itemCategory, bool doesContain)
+        {
+            return settings => settings.CustomItemList.Any(item => item.ItemCategory() == itemCategory) == doesContain;
         }
     }
 }
