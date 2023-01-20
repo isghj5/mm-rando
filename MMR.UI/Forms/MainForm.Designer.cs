@@ -1866,6 +1866,7 @@ namespace MMR.UI.Forms
             this.cChestGameMinimap.Name = "cChestGameMinimap";
             this.cChestGameMinimap.Size = new System.Drawing.Size(129, 23);
             this.cChestGameMinimap.TabIndex = 44;
+            this.cChestGameMinimap.SelectedIndexChanged += new System.EventHandler(this.cChestGameMinimap_SelectedIndexChanged);
             // 
             // cSaferGlitches
             // 
