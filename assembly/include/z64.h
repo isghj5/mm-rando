@@ -695,6 +695,8 @@ typedef struct {
 /// Messagebox Context
 /// =============================================================
 
+#define FONT_CHAR_TEX_SIZE ((16 * 16) / 2) // 16x16 I4 texture
+
 // Font textures are loaded into here
 typedef struct {
     /* 0x0000 */ u8 unk0[2][120][128];

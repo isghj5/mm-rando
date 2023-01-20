@@ -165,7 +165,12 @@ namespace MMR.Randomizer.Models.Rom
         public class MessageBuilder
         {
             private string message = "";
-            private Stack<char> colorStack = new Stack<char>();
+            protected Stack<char> colorStack;
+
+            public MessageBuilder(MessageBuilder parent = null)
+            {
+                this.colorStack = parent?.colorStack ?? new Stack<char>();
+            }
 
             /// <summary>
             /// Appends the quick text start control character (0x17) to the message.
@@ -201,6 +206,13 @@ namespace MMR.Randomizer.Models.Rom
             /// <returns></returns>
             public MessageBuilder PictureSubject() =>
                 Append(0x09).Append(0x13);
+
+            /// <summary>
+            /// Appends the stray fairy region control characters (0x09 0x14) to the message.
+            /// </summary>
+            /// <returns></returns>
+            public MessageBuilder StrayFairyRegions(byte index) =>
+                Append(0x09).Append((byte)(0x14 + index));
 
             /// <summary>
             /// Appends the runtime item name start control characters (0x09 0x03) to the message and then appends the location's GetItemIndex
@@ -274,6 +286,14 @@ namespace MMR.Randomizer.Models.Rom
             /// <returns></returns>
             public MessageBuilder EndTextBox() =>
                 Append(0x10);
+
+
+            /// <summary>
+            /// Appends the reset cursor control character (0x13) to the message.
+            /// </summary>
+            /// <returns></returns>
+            public MessageBuilder ResetCursor() =>
+                Append(0x13);
 
             /// <summary>
             /// Appends the Stray Fairy count control character (0x0C) to the message.
@@ -498,7 +518,7 @@ namespace MMR.Randomizer.Models.Rom
         /// <returns></returns>
         public static MessageEntryBuilder.MessageBuilder CompileTimeWrap(this MessageEntryBuilder.MessageBuilder @this, Action<MessageEntryBuilder.MessageBuilder> action)
         {
-            var wrappedMessageBuilder = new MessageEntryBuilder.MessageBuilder();
+            var wrappedMessageBuilder = new MessageEntryBuilder.MessageBuilder(@this);
             action(wrappedMessageBuilder);
             var message = wrappedMessageBuilder.Build().Wrap(35, "\u0011", "\u0010");
             return @this.Text(message);

@@ -568,6 +568,8 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
             }
             gMessageExtensionState.currentChar = -1;
             currentCharacter = 0x01;
+        } else if (currentCharacter >= 0x14 && currentCharacter <= 0x17) {
+
         } else {
             index--;
         }

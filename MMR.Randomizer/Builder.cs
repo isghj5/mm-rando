@@ -2826,6 +2826,401 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyHack(Resources.mods.fix_fairies);
             }
 
+            //if (_randomized.Settings.NPCTextHints)
+            {
+                var clockTownFairyItem = _randomized.ItemList[Item.CollectibleStrayFairyClockTown];
+                if (clockTownFairyItem.NewLocation != Item.CollectibleStrayFairyClockTown)
+                {
+                    var region = clockTownFairyItem.NewLocation.Value.Region();
+                    var regionPreposition = region?.Preposition();
+                    var regionName = regionPreposition == null ? null : region?.Name();
+                    if (!string.IsNullOrWhiteSpace(regionPreposition))
+                    {
+                        regionPreposition += " ";
+                    }
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x578)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938)
+                            .StartLightBlueText().Text("Young one! Please hear my plea!").NewLine()
+                            .Text("I have been broken and shattered").NewLine()
+                            .Text("to pieces by the masked Skull Kid.")
+                            .EndTextBox()
+                            .CompileTimeWrap((wrapped) =>
+                            {
+                                wrapped.Text("Please, find the").Red(" one ").Text("Stray Fairy lost ")
+                                .Text(regionPreposition ?? "").Red(regionName ?? "somewhere").Text(", and bring her ")
+                                .Text("to this ").Red("Fairy Fountain").Text(".")
+                                ;
+                            })
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x580)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938)
+                            .StartLightBlueText().Text("You...kind young one.")
+                            .EndTextBox()
+                            .CompileTimeWrap((wrapped) =>
+                            {
+                                wrapped.Text("Please, find the").Red(" one ").Text("Stray Fairy who's lost ")
+                                .Text(regionPreposition ?? "").Red(regionName ?? "somewhere").Text(" and bring her ")
+                                .Text("back to this ").Red("Fairy's Fountain").Text(".")
+                                ;
+                            })
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                }
+
+                // TODO
+
+                // beaver race empty bottle
+
+                /*
+                The mask salesman said that if
+                you got back the precious thing
+                that was stolen from you, he
+                could return you to normal!
+                Did you completely forget or
+                what?
+
+                ---
+
+                Go to the shrine near the
+                North Gate. You'll find the
+                Great Fairy in there!
+
+                ---
+
+                ...The swamp, mountains, ocean and
+                canyon that Tael was trying to
+                tell us about...
+
+                I bet he was referring to the
+                four areas just outside town.
+                There's one in each compass
+                direction.
+                But what do you suppose he
+                meant by "the four who are
+                there?"
+
+                ---
+
+                Hey, aren't you going to the
+                Great Fairy's shrine near the
+                North Gate?
+
+                ---
+
+                Quick! We have to find the
+                Stray Fairy in town and return
+                the Great Fairy to normal!
+
+                ---
+
+                What are you doing?
+                Aren't you gonna take this fairy
+                to the shrine near the North
+                Gate?
+
+                ---
+
+                He said the secret route is in
+                East Clock Town...
+                So why aren't you going there?
+
+                ---
+
+                Win up to 150 Rupees per race.
+                Special gifts awarded for larger
+                winnings.
+
+                ---
+
+                If you break the record, you'll win
+                a spectacular prize!
+                Good luck!
+
+                ---
+
+                So, for a limited time, I'll give you
+                a special gift based on how much
+                you deposit.
+
+                For example, if you deposit
+                200 Rupees, you'll get an item
+                that holds a lot of Rupees.
+
+                ---
+
+                See! Doesn't it hold more than
+                your old one? Fill it up and bring
+                it all in to deposit!
+
+                ---
+
+                That's what they call interest!
+
+                ---
+
+                What is the name of the song
+                that Romani, the girl at the ranch,
+                teaches you?
+
+                Epona's Song
+                Song of Healing
+                Song of the Field
+
+                ---
+
+                What is the name of the vintage
+                milk sold at the Milk Bar?
+
+                Romani Run
+                Chateau Romani
+                Chateau Moroni
+
+                ---
+
+                Please find a way to return me to
+                the Fairy Fountain in North Clock
+                Town.
+
+                ---
+
+                Kind young one! Please hear my
+                plea! Please find the fairies
+                trapped inside Woodfall Temple 
+                who match our color.
+                Please bring them back to us!
+
+                Please find a way to save the
+                fairies trapped in Woodfall Temple,
+                and bring them back here!
+
+                There should still be ×
+                fairies trapped in Woodfall
+                Temple.
+
+                Please save the fairies so I can
+                be returned to my former shape!
+
+                Oh, kind, young one!
+                Please hear our plea! Please save
+                the fairies trapped in Snowhead
+                Temple.
+                Find the fairies who match our
+                color and bring them back to us!
+
+                Please find a way to save the
+                fairies trapped in Snowhead
+                Temple and bring them back here!
+
+                There should still be Ø fairies
+                trapped in Snowhead Temple.
+
+                Please bring them back here so
+                I can be returned to my former
+                shape!
+
+                Oh, kind young one!
+                Please find the fairies trapped in
+                Great Bay Temple.
+
+                Please find the fairies who are
+                the same color as we are and
+                bring them back to us!
+
+                Please find a way to save the
+                fairies trapped in Great Bay
+                Temple and bring them back here!
+
+                There should still be Ù
+                fairies trapped in Great Bay
+                Temple.
+
+                Please save them and bring them
+                back here!
+
+                Oh, kind young one!
+                Please hear our plea! Please find
+                the fairies trapped in Stone Tower
+                Temple.
+                Find the ones who are the same
+                color as we are and bring them
+                back to us!
+
+                Please save the fairies trapped in
+                Stone Tower Temple and bring
+                them back here!
+
+                There should still be Ú
+                fairies trapped in Stone Tower
+                Temple.
+
+                Please save them and bring them
+                back here so I can be returned
+                to my former shape!
+
+                ---
+
+                We're expecting to get our larger
+                bomb bag back in stock pretty
+                soon...
+
+                ---
+
+                We just a got a larger bomb bag
+                in stock.
+
+                Actually, we should've had
+                the larger bomb bag in stock, but
+                it seems there was an accident 
+                getting it here to the store.
+                I don't know when we'll be getting
+                it now...
+
+                ---
+
+                A nice fella helped me out, so we
+                can finally sell Big Bomb Bags!
+
+                ---
+
+                Umm, Mommy...
+                Don't go picking up bomb bags in
+                the middle of the night anymore.
+
+                It's like asking to be mugged.
+
+                And I've actually heard that a
+                thief has been lurking on the
+                outskirts of town...
+
+                But it's been our lifelong dream to
+                sell Big Bomb Bags since back in
+                your Daddy's day.
+
+                Since we can't get the Goron-made
+                goods, this was our big chance,
+                sonny!
+
+                I just don't want anything to
+                happen to you, Mommy...
+
+                Please try our Big Bomb Bag.
+
+                Look, Mommy, I don't want
+                anything bad to happen to you...
+
+                It's such a shame...
+                I thought we could finally sell Big
+                Bomb Bags...
+
+                Umm, Mommy...
+                Don't go picking up bomb bags in
+                the middle of the night anymore.
+
+                It's like asking to be mugged.
+
+                ---
+
+                OK, listen here. My instructor
+                works in the Goron Village Cave.
+
+                Come back here after he teaches
+                you the proper use and then
+                approves you to buy one.
+
+                ---
+
+                OK, listen here. My instructor
+                works in the Goron Village Cave.
+
+                Come back here after he teaches
+                you the proper use and then
+                approves you to buy one.
+
+                But the next time you come, I
+                might not be here.
+
+                Quick! Go to the Goron Village
+                Cave.
+
+                Ask my instructor to teach you
+                the proper way to use Powder
+                Kegs and get his approval.
+
+                ---
+
+                Quick, go to the Goron Village
+                Cave.
+
+                Ask my instructor to teach you
+                the proper way to use Powder
+                Kegs and get his approval.
+
+                ---
+
+                This is the Bombers' Notebook.
+                It contains the words we live by!
+                Read it over!
+
+                1. Find troubled people and add
+                    their names and pictures.
+                    Only 20 people will fit in
+                    your book.
+                2. Promise to help them.
+                    Mark promises with Promise
+                    Stickers. Never be late with
+                    fulfilling your promises.
+                3. Whenever you solve someone's
+                    problem, it makes you happy,
+                    so a Happy Sticker will be
+                    added to your book.
+                4. No removing stickers!
+                    Use Promise Stickers to keep
+                    track of people until everyone
+                    is happy.
+                Don't forget the rules!
+
+                ---
+
+                Oh!!
+                Well, if that's true, then take this
+                potion to her...
+                This isn't good...
+
+                ---
+
+                Quick! Take that potion to her!
+
+                ---
+
+                Oh! Did you give that potion to
+                Koume?
+                Don't tell me...
+                You didn't drink it all yourself, did
+                you?
+                .........
+
+                ---
+
+
+
+                 */
+
+                // stray fairy regions
+            }
+
             var dungeonItemMessageIds = new byte[] {
                 0x3C, 0x3D, 0x3E, 0x3F, 0x74,
                 0x40, 0x4D, 0x4E, 0x53, 0x75,
