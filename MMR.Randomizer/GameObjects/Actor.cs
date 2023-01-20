@@ -2858,12 +2858,12 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled] // regular romani
         [FileID(379)]
         [ObjectListIndex(0xB7)] // 100 and FF00
-        //[CheckRestricted(Item.SongEpona, Item.ItemBottleAliens, Item.MaskCircusLeader)]
-        [PathingVariants(0xFF00, 0x100)] // all vanilla are 0xB7
+        [CheckRestricted(Item.SongEpona, Item.ItemBottleAliens)]
+        [PathingVariants(0xFF00, 0x100)]
         [PathingTypeVarsPlacement(mask: 0xFF00, shift: 8)] //zzz
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.RomaniRanch, Scene.RanchBuildings)]
-        Romani1 = 0x1A4, // En_Ma4
+        RomaniWithBow = 0x1A4, // En_Ma4
 
         // twig?
         [FileID(380)]
