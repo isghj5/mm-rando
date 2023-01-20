@@ -2509,7 +2509,7 @@ namespace MMR.Randomizer
                             .EndTextBox()
                             .CompileTimeWrap((wrapped) =>
                             {
-                                wrapped.Text("He said he's steal my ")
+                                wrapped.Text("He said he'd steal my ")
                                 .Red(moonsTearItem.DisplayName())
                                 .Text("... There was no stopping him.")
                                 ;
