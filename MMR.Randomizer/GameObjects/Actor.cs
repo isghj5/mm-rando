@@ -2682,7 +2682,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(351)]
         [ObjectListIndex(0xBB)]
-        [WaterVariants(0x2002, 0x2006, 0x200B, 0x2003, 0x2004, 0x2005, 0x200C)]
+        [WaterVariants(0x2002, 0x2003, 0x2004, 0x2005, 0x2006, 0x200B, 0x200C, 0x200D)]
+        //[FlyingVariants(0x101E, 0x100D, 0x1011, 0x1019, 0x1014)] // loads more, think there are flags here
         // if I had a hanging from cieling thing like spiders this would work fine
         //[WallVariants(0x100D,  0x110E, 0x1011, 0x1014, 0x1016, 0x1017, 0x1019)]
         [UnkillableAllVariants] // actorcat PROP, not detected as enemy
@@ -3405,11 +3406,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(461)]
         [ObjectListIndex(0x1CE)]
+        [CheckRestricted(Item.SongNewWaveBossaNova)]
         // 2000 is hookshot room, 1A00 is twin barrel, 0x1E00 is barrel room, 1C00 is last room
         // the three at pinnacle rock are 0x1400, 0x1600, 0x1800
         // 0 loaded fine, what happens if we load smaller values? can we have 3 or more?
-        [WaterVariants(0x0, 0x1000, 0x1200, 0x1300, 0x1500, 0x1700)]
+        [WaterVariants(0x0, 0x1000, 0x1200, 0x1300, 0x1500, 0x1700, // non-vanilla
+            0x1200, 0x1400, 0x1600, // pinnacle
+            0x1C00, 0x1A00, 0x1E00, 0x2000)] // pirates
         [VariantsWithRoomMax(max: 1, variant: 0x0, 0x1000, 0x1200, 0x1300, 0x1500, 0x1700)]
+        [VariantsWithRoomMax(max: 0, variant: 0x0, 0x1400, 0x1600, 0x1500, 0x1C00, 0x1A00, 0x1E00, 0x2000)]
         [UnkillableAllVariants]
         [SwitchFlagsPlacement(mask: 0x7F, shift: 9)]
         ZoraEgg = 0x1F5, // En_Zoraegg
@@ -3712,7 +3717,7 @@ namespace MMR.Randomizer.GameObjects
         // Aviels room: 0xCB1
         // path == 0x3F ignores path, just stands in one spot
         // in testing, 2 is not bonkable... so why does FC01 not bonk?, should be type 0
-        // 0xE0 is type
+        // 0xE0 >> 5 is type
         // 0 GERUDO_PURPLE_TYPE_CUTSCENE, // CANNOT BONK in some cases
         // 1 (2) GERUDO_PURPLE_TYPE_BOAT_SENTRY, //!< on boats
         // 2 (4) GERUDO_PURPLE_TYPE_AVEIL_GUARD,
