@@ -280,7 +280,7 @@ namespace MMR.Randomizer.Utils
                             .SelectMany(g => g)
                             .ToList();
                     }
-                    return tier;
+                    return new List<Item>();
                 }).ToList();
             }
             else
