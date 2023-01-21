@@ -3236,6 +3236,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0)]
         [SwitchFlagsPlacement(mask: 0xFF, shift: 3)] // 0x7F8
         [UnkillableAllVariants]
+        [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.SecretShrine)]
         SpiritHouseOwner = 0x1DE, // En_Gb2
 
         // unused monkey instrument prompt
