@@ -2786,6 +2786,18 @@ namespace MMR.Randomizer
                             var injectedActor = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
                             injectedActor.filename = filePath; // debugging
 
+                            // check for duplicate actor
+                            var copyOvlFileSearch = InjectedActors.Find(act => act.fileID == injectedActor.fileID);
+                            if (copyOvlFileSearch != null)
+                            {
+                                throw new Exception("\n\n" +
+                                    "ERROR (Actor Inject):\n" +
+                                    " Two separate actor files are trying to overwrite the same file.\n" +
+                                    "File 1: " + injectedActor.filename + "\n" +
+                                    "File 2: " + copyOvlFileSearch.filename + "\n\n" +
+                                    "Please remove one before building another seed.\n");
+                            }
+
                             // we need to inject actors if we find them
                             // TODO move this to a "load all objects" separate function where we rank them by size
                             // so we can re-use some old spots instead of just extending
@@ -3186,7 +3198,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 44.3\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 44.4\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
