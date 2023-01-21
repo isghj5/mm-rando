@@ -534,6 +534,10 @@ namespace MMR.Randomizer.GameObjects
             Actor.ClocktowerGearsAndOrgan, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // organ is huge, covers the mayor's door
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BomberHideoutGuard,
+                Actor.Peahat, Actor.Tijo, Actor.ArmosStatue, Actor.ClocktowerGearsAndOrgan, Actor.CircleOfFire, Actor.GibdoWell, // worried about big blocking actors
+                Actor.Wolfos)]
+
         EastClockTown = 0x69,
 
         [FileID(1512)]
