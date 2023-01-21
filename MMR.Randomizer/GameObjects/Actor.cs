@@ -3107,6 +3107,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1E5)]
         En_Lift_Nuts = 0x1C9, // En_Lift_Nuts
 
+        // TODO try with new actor rando, ignore placement until I create a version that does not move
         //[ActorizerEnabled] //busted
         [FileID(420)]
         [ObjectListIndex(0x1AF)]
@@ -3114,6 +3115,8 @@ namespace MMR.Randomizer.GameObjects
         Dampe = 0x1CA, // En_Tk
 
         Empty1CB = 0x1CB,
+
+        // is this the west clocktown stairs?
         [FileID(421)]
         [ObjectListIndex(0x1B0)]
         Bg_Market_Step = 0x1CC, // Bg_Market_Step
@@ -3544,12 +3547,14 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerEnabled]
         [FileID(479)]
         [ObjectListIndex(0x1F1)]
+        [CheckRestricted(Scene.BeneathTheWell, variant: 0xFF00, Item.BottleCatchBigPoe)]
+        [CheckRestricted(Scene.BeneathGraveyard, variant: 0xFF01, Item.BottleCatchBigPoe, Item.ItemBottleDampe)]
         // params: 0xFF00 is switch flags, if switch flag is exactly 0xFF then switch flags are ignored
         //    0xFF is type, where 0 is well, 1 is suppmoned in dampe house, 2/3/4 are dampe fire subtypes
         // we should be able to use 0xFF00... but rando changes something that makes dampe po spawn instant and well po has a cutscene
         [FlyingVariants(0xFF01)]
         [GroundVariants(0xFF01)]
-        [EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
+        //[EnemizerScenesExcluded(Scene.BeneathTheWell, Scene.DampesHouse)] // well and dampe house must be vanilla for scoopsanity
         //[OnlyOneActorPerRoom]
         [VariantsWithRoomMax(max: 2, variant: 0xFF01, 0xFF00)]
         //[UnkillableAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
