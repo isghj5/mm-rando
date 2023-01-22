@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using MMR.Randomizer.Constants;
 using System.Threading;
+using MMR.UI.Controls;
 
 namespace MMR.UI.Forms
 {
@@ -249,20 +250,6 @@ namespace MMR.UI.Forms
             var value = (int)propertyInfo.GetValue(_configuration.GameplaySettings);
             var newValue = checkBox.Checked ? value | cutsceneFlag : value & ~cutsceneFlag;
             UpdateSingleSetting(() => propertyInfo.SetValue(_configuration.GameplaySettings, newValue));
-        }
-
-        private class InvertIndeterminateCheckBox : CheckBox
-        {
-            protected override void OnClick(EventArgs e)
-            {
-                CheckState = CheckState switch
-                {
-                    CheckState.Checked => CheckState.Unchecked,
-                    CheckState.Unchecked => CheckState.Checked,
-                    CheckState.Indeterminate => CheckState.Checked,
-                    _ => CheckState,
-                };
-            }
         }
 
         private class LocationCategoryLabel : Label
@@ -1574,9 +1561,122 @@ namespace MMR.UI.Forms
                 if (_configuration.GameplaySettings.LogicMode != logicMode)
                 {
                     _configuration.GameplaySettings.EnabledTricks.Clear();
+                    List<string> tricksToAdd;
+                    switch (logicMode)
+                    {
+                        case LogicMode.Casual:
+                            tricksToAdd = new List<string>
+                            {
+                                "Exit Ocean Spider House without Goron",
+                                "Lensless Chests",
+                                "Lensless Walking",
+                                "Lensless Walls/Ceilings",
+                                "Pinnacle Rock without Seahorse",
+                                "Run Through Poisoned Water",
+                                "Quest Item Extra Storage",
+                                "Scarecrow's Song",
+                                "Take Damage",
+                                "WFT 2nd Floor Skip",
+                            };
+                            break;
+                        case LogicMode.Glitched:
+                            tricksToAdd = new List<string>
+                            {
+                                "Take Damage",
+                                "Scarecrow's Song",
+                                "Lensless Chests",
+                                "Hit Switches Through Walls",
+                                "Long Jump",
+                                "Run Through Poisoned Water",
+                                "Poisoned Water as Goron",
+                                "Swim to Zora Hall as Human",
+                                "Brute Force OSH Code",
+                                "Climb Stone Tower with One Transformation",
+                                "Deku Playground Rupee Displacement",
+                                "Death Warp",
+                                "Bomb Hovering",
+                                "Lensless Jumping",
+                                "Goron Roll Item Grabs",
+                                "Melt Sun Blocks With Water",
+                                "Powder Keg Storage",
+                                "Hookshot Clip",
+                                "Day 1 Grave Clip",
+                                "Icicle Clip",
+                                "Ocarina Dive",
+                                "Item Dive",
+                                "SHT BK Skip",
+                                "Lensless Walking",
+                                "Bomber Guard Skip",
+                                "Deku Guard Skip",
+                                "WFT 2nd Floor Skip",
+                                "Kill Deku Shrine Big Octo",
+                                "Deku Palace Bean Skip",
+                                "Ikana Castle Falling Ceiling Skip",
+                                "Goron Bomb Jump",
+                                "GBT Fireless",
+                                "Ikana Canyon Iceless",
+                                "SHT Zora Jumps",
+                                "Pinnacle Rock without Seahorse",
+                                "Jump Slash through One Sided Geometry",
+                                "Avoid Swamp Tree Bat",
+                                "Goron Pound onto Ledges",
+                                "Zora Hall Scrub Ledge Climb",
+                                "Lensless Walls/Ceilings",
+                                "Termina Stump with No Items",
+                                "ISTT Hookshot to Eyegore",
+                                "Ocean Skulltulas without Fire Arrows",
+                                "SHT Jump to Stray Fairies",
+                                "Clever Ice Platforms",
+                                "Inn Balcony as Zora",
+                                "Shoot Goht",
+                                "STT Water Tunnel as Human",
+                                "Clever Bombchu Usage",
+                                "STT Eyegore Bridge Jumps",
+                                "Out of Bounds",
+                                "Inn Balcony with Cucco",
+                                "STT Updrafts without Deku Mask",
+                                "Zora Boomerang Through Walls",
+                                "Ocarina Items",
+                                "Action Swap",
+                                "Long Bomb Hovers",
+                                "Stun Keeta with Bombs",
+                                "Time Stop",
+                                "Blast Mask Hovers",
+                                "Path to Snowhead without Magic",
+                                "Recoil Flip Through Ice",
+                                "Postman without Bunny Hood",
+                                "Deku Recoil",
+                                "Deliver Deku Princess Without Deku Mask",
+                                "Restricted Items",
+                                "Jump Slash Take Downs",
+                                "STT BK Skip",
+                                "Shoot Twinmold",
+                                "SHT Pillar Skip",
+                                "Lensless Climbing",
+                                "ISTT Early Boss Key",
+                                "Powder Kegs as Explosives",
+                                "Recoil Flip",
+                                "ISTT Lightless Boss Key",
+                                "Superslide",
+                            };
+                            break;
+                        default:
+                            tricksToAdd = new List<string>();
+                            break;
+                    }
+                    foreach (var trick in tricksToAdd)
+                    {
+                        _configuration.GameplaySettings.EnabledTricks.Add(trick);
+                    }
+                    UpdateNumTricksEnabled();
                 }
                 _configuration.GameplaySettings.LogicMode = logicMode;
             });
+        }
+
+        private void UpdateNumTricksEnabled()
+        {
+            lNumTricksEnabled.Text = $"{_configuration.GameplaySettings.EnabledTricks.Count} tricks enabled";
         }
 
         private void cBespokeItemPlacementOrder_CheckedChanged(object sender, EventArgs e)
@@ -2175,7 +2275,7 @@ namespace MMR.UI.Forms
             ToggleCheckBoxes();
             tROMName.Text = _configuration.OutputSettings.InputROMFilename;
             tLuckRollPercentage.Value = _configuration.CosmeticSettings.MusicLuckRollChance;
-
+            UpdateNumTricksEnabled();
         }
 
         private void SaveSettingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2240,6 +2340,7 @@ namespace MMR.UI.Forms
                 if (result == DialogResult.OK)
                 {
                     _configuration.GameplaySettings.EnabledTricks = dialog.Result;
+                    UpdateNumTricksEnabled();
                 }
             }
             catch (Exception ex)
