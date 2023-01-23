@@ -2332,7 +2332,7 @@ namespace MMR.Randomizer
 
                 if (_settings.RandomizeDungeonEntrances)
                 {
-                    progressReporter.ReportProgress(120, "Shuffling entrances...");
+                    progressReporter.ReportProgress(20, "Shuffling entrances...");
                     EntranceShuffle();
                 }
 
