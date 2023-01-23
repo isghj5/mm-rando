@@ -241,6 +241,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
+            this.cShuffleBosses = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -351,6 +352,7 @@ namespace MMR.UI.Forms
             // 
             // tOtherCustomization
             // 
+            this.tOtherCustomization.Controls.Add(this.cShuffleBosses);
             this.tOtherCustomization.Controls.Add(this.cStartingItems);
             this.tOtherCustomization.Controls.Add(this.lStartingItems);
             this.tOtherCustomization.Controls.Add(this.cProgressiveUpgrades);
@@ -394,7 +396,7 @@ namespace MMR.UI.Forms
             this.cProgressiveUpgrades.AutoSize = true;
             this.cProgressiveUpgrades.BackColor = System.Drawing.Color.Transparent;
             this.cProgressiveUpgrades.ForeColor = System.Drawing.Color.Black;
-            this.cProgressiveUpgrades.Location = new System.Drawing.Point(193, 10);
+            this.cProgressiveUpgrades.Location = new System.Drawing.Point(380, 10);
             this.cProgressiveUpgrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cProgressiveUpgrades.Name = "cProgressiveUpgrades";
             this.cProgressiveUpgrades.Size = new System.Drawing.Size(139, 19);
@@ -411,9 +413,9 @@ namespace MMR.UI.Forms
             this.cDEnt.Location = new System.Drawing.Point(6, 10);
             this.cDEnt.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cDEnt.Name = "cDEnt";
-            this.cDEnt.Size = new System.Drawing.Size(129, 19);
+            this.cDEnt.Size = new System.Drawing.Size(168, 19);
             this.cDEnt.TabIndex = 7;
-            this.cDEnt.Text = "Dungeon entrances";
+            this.cDEnt.Text = "Shuffle dungeon entrances";
             this.cDEnt.UseVisualStyleBackColor = false;
             this.cDEnt.CheckedChanged += new System.EventHandler(this.cDEnt_CheckedChanged);
             // 
@@ -2845,6 +2847,20 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
+            // cShuffleBosses
+            // 
+            this.cShuffleBosses.AutoSize = true;
+            this.cShuffleBosses.BackColor = System.Drawing.Color.Transparent;
+            this.cShuffleBosses.ForeColor = System.Drawing.Color.Black;
+            this.cShuffleBosses.Location = new System.Drawing.Point(193, 10);
+            this.cShuffleBosses.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cShuffleBosses.Name = "cShuffleBosses";
+            this.cShuffleBosses.Size = new System.Drawing.Size(127, 19);
+            this.cShuffleBosses.TabIndex = 28;
+            this.cShuffleBosses.Text = "Shuffle boss rooms";
+            this.cShuffleBosses.UseVisualStyleBackColor = false;
+            this.cShuffleBosses.CheckedChanged += new System.EventHandler(this.cShuffleBosses_CheckedChanged);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3148,6 +3164,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cSpeedupBabyCucco;
         private System.Windows.Forms.Label lChestGame;
         private System.Windows.Forms.ComboBox cChestGameMinimap;
+        private System.Windows.Forms.CheckBox cShuffleBosses;
     }
 }
 

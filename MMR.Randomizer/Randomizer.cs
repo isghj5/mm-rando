@@ -178,6 +178,8 @@ namespace MMR.Randomizer
 
             var randomized = Enumerable.Range(0, 4).ToList().OrderBy(_ => Random.Next()).ToList();
 
+            var changesToMake = new Dictionary<Item, Item>();
+
             for (var i = 0; i < randomized.Count; i++)
             {
                 var fromIndex = i;
@@ -191,8 +193,63 @@ namespace MMR.Randomizer
 
                 ItemList[entrance].NewLocation = targetEntrance;
                 ItemList[entrance].IsRandomized = true;
+                changesToMake[exit] = ItemList.FirstOrDefault(io => io.NewLocation == targetExit)?.Item ?? targetExit;
+            }
+
+            foreach (var kvp in changesToMake)
+            {
+                ItemList[kvp.Key].NewLocation = kvp.Value;
+                ItemList[kvp.Key].IsRandomized = true;
+            }
+        }
+
+        private void BossShuffle()
+        {
+            var bossEntrances = new List<Item>
+            {
+                Item.AreaOdolwasLair,
+                Item.AreaGohtsLair,
+                Item.AreaGyorgsLair,
+                Item.AreaTwinmoldsLair,
+            };
+
+            var bossExits = new List<Item>
+            {
+                Item.AreaWoodFallTempleClear,
+                Item.AreaSnowheadTempleClear,
+                Item.AreaGreatBayTempleClear,
+                Item.AreaStoneTowerClear,
+            };
+
+            var bossKills = new List<Item>
+            {
+                Item.OtherKillOdolwa,
+                Item.OtherKillGoht,
+                Item.OtherKillGyorg,
+                Item.OtherKillTwinmold,
+            };
+
+            var randomized = Enumerable.Range(0, 4).ToList().OrderBy(_ => Random.Next()).ToList();
+
+            for (var i = 0; i < randomized.Count; i++)
+            {
+                var fromIndex = i;
+                var toIndex = randomized[i];
+
+                var entrance = bossEntrances[fromIndex];
+                var targetEntrance = bossEntrances[toIndex];
+
+                var exit = bossExits[fromIndex];
+                var targetExit = bossExits[toIndex];
+
+                var kill = bossKills[toIndex];
+                var targetKill = bossKills[fromIndex];
+
+                ItemList[entrance].NewLocation = targetEntrance;
+                ItemList[entrance].IsRandomized = true;
                 ItemList[exit].NewLocation = targetExit;
                 ItemList[exit].IsRandomized = true;
+                ItemList[kill].NewLocation = targetKill;
             }
         }
 
@@ -1078,7 +1135,7 @@ namespace MMR.Randomizer
 
             if (!_timeTravelPlaced || currentItem.IsTemporary(_randomized.Settings))
             {
-                if ((target.Region() == Region.TheMoon || target.Region() == Region.ClockTowerRoof) && currentItem.ItemCategory() != ItemCategory.TimeTravel)
+                if ((target.Region(ItemList) == Region.TheMoon || target.Region(ItemList) == Region.ClockTowerRoof) && currentItem.ItemCategory() != ItemCategory.TimeTravel)
                 {
                     Debug.WriteLine($"{currentItem} is temporary and cannot be placed on the moon or clock tower roof.");
                     return false;
@@ -1108,9 +1165,9 @@ namespace MMR.Randomizer
             ConditionsChecked = new List<Item>();
             CheckConditionals(currentItem, target, dependencyPath);
 
-            if (currentItem == Item.SongTime && (target.Region() != Region.TheMoon || target.Region() != Region.ClockTowerRoof))
+            if (currentItem == Item.SongTime && (target.Region(ItemList) != Region.TheMoon || target.Region(ItemList) != Region.ClockTowerRoof))
             {
-                foreach (var itemObject in ItemList.Where(io => (io.Item.Region() == Region.TheMoon || io.Item.Region() == Region.ClockTowerRoof)))
+                foreach (var itemObject in ItemList.Where(io => (io.Item.Region(ItemList) == Region.TheMoon || io.Item.Region(ItemList) == Region.ClockTowerRoof)))
                 {
                     itemObject.DependsOnItems.Add(Item.SongTime);
                 }
@@ -1194,7 +1251,7 @@ namespace MMR.Randomizer
             }
         }
 
-        private void PlaceItem(Item currentItem, List<Item> targets, Func<Item, Item, bool> restriction = null, bool placeJunk = false)
+        private void PlaceItem(Item currentItem, List<Item> targets, Func<Item, Item, ItemList, bool> restriction = null, bool placeJunk = false)
         {
             var currentItemObject = ItemList[currentItem];
             if (!_timeTravelPlaced && currentItem.IsFake())
@@ -1250,7 +1307,7 @@ namespace MMR.Randomizer
 
             if (restriction != null)
             {
-                availableItems.RemoveAll(location => !restriction(currentItem, location));
+                availableItems.RemoveAll(location => !restriction(currentItem, location, ItemList));
             }
 
             if (!_settings.AddSongs)
@@ -1866,14 +1923,12 @@ namespace MMR.Randomizer
 
         private void PlaceRestrictedDungeonItems(List<Item> itemPool)
         {
-            RestrictedPlacementAttribute.SetDungeonEntranceFunction((entrance) => ItemList[entrance].NewLocation ?? entrance);
-
             if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
             {
-                PlaceItem(Item.RemainsOdolwa, itemPool, (item, location) => location == Item.FairySpinAttack);
-                PlaceItem(Item.RemainsGoht, itemPool, (item, location) => location == Item.FairyDoubleMagic);
-                PlaceItem(Item.RemainsGyorg, itemPool, (item, location) => location == Item.FairyDoubleDefense);
-                PlaceItem(Item.RemainsTwinmold, itemPool, (item, location) => location == Item.ItemFairySword);
+                PlaceItem(Item.RemainsOdolwa, itemPool, (_, location, _) => location == Item.FairySpinAttack);
+                PlaceItem(Item.RemainsGoht, itemPool, (_, location, _) => location == Item.FairyDoubleMagic);
+                PlaceItem(Item.RemainsGyorg, itemPool, (_, location, _) => location == Item.FairyDoubleDefense);
+                PlaceItem(Item.RemainsTwinmold, itemPool, (_, location, _) => location == Item.ItemFairySword);
             }
 
             var strayFairyRestrictions = Enum.GetValues<StrayFairyMode>()
@@ -1883,7 +1938,7 @@ namespace MMR.Randomizer
             if (strayFairyRestrictions.Any())
             {
                 var aggregatedRestrictions = strayFairyRestrictions
-                    .Aggregate((a, b) => (item, location) => a(item, location) && b(item, location));
+                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
                 foreach (var item in ItemUtils.DungeonStrayFairies())
                 {
                     PlaceItem(item, itemPool, aggregatedRestrictions);
@@ -1897,7 +1952,7 @@ namespace MMR.Randomizer
             if (bossKeyRestrictions.Any())
             {
                 var aggregatedRestrictions = bossKeyRestrictions
-                    .Aggregate((a, b) => (item, location) => a(item, location) && b(item, location));
+                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
                 foreach (var item in ItemUtils.BossKeys())
                 {
                     PlaceItem(item, itemPool, aggregatedRestrictions);
@@ -1911,7 +1966,7 @@ namespace MMR.Randomizer
             if (smallKeyRestrictions.Any())
             {
                 var aggregatedRestrictions = smallKeyRestrictions
-                    .Aggregate((a, b) => (item, location) => a(item, location) && b(item, location));
+                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
                 foreach (var item in ItemUtils.SmallKeys())
                 {
                     PlaceItem(item, itemPool, aggregatedRestrictions);
@@ -1925,7 +1980,7 @@ namespace MMR.Randomizer
             if (bossRemainsRestrictions.Any())
             {
                 var aggregatedRestrictions = bossRemainsRestrictions
-                    .Aggregate((a, b) => (item, location) => a(item, location) && b(item, location));
+                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
                 foreach (var item in ItemUtils.BossRemains())
                 {
                     PlaceItem(item, itemPool, aggregatedRestrictions);
@@ -1939,7 +1994,7 @@ namespace MMR.Randomizer
             if (dungeonNavigationRestrictions.Any())
             {
                 var aggregatedRestrictions = dungeonNavigationRestrictions
-                    .Aggregate((a, b) => (item, location) => a(item, location) && b(item, location));
+                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
                 foreach (var item in ItemUtils.DungeonNavigation())
                 {
                     PlaceItem(item, itemPool, aggregatedRestrictions);
@@ -2269,9 +2324,15 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(5, "Preparing ruleset...");
                 PrepareRulesetItemData();
 
+                if (_settings.RandomizeBossRooms)
+                {
+                    progressReporter.ReportProgress(10, "Shuffling bosses...");
+                    BossShuffle();
+                }
+
                 if (_settings.RandomizeDungeonEntrances)
                 {
-                    progressReporter.ReportProgress(10, "Shuffling entrances...");
+                    progressReporter.ReportProgress(120, "Shuffling entrances...");
                     EntranceShuffle();
                 }
 
@@ -2343,7 +2404,7 @@ namespace MMR.Randomizer
                     foreach (var itemLogic in logicForImportance.Where(il => !freeItemIds.Contains(il.ItemId)))
                     {
                         var item = (Item)itemLogic.ItemId;
-                        var isFake = item.IsFake() && !item.Region().HasValue;
+                        var isFake = item.IsFake() && (!item.Region(ItemList).HasValue || item.Entrance() != null);
                         if (isFake && (!ItemList[itemLogic.ItemId].IsTrick || _settings.EnabledTricks.Contains(ItemList[itemLogic.ItemId].Name)) && !itemLogic.RequiredItemIds.Any() && !itemLogic.ConditionalItemIds.Any())
                         {
                             freeItemIds.Add(itemLogic.ItemId);
@@ -2380,7 +2441,7 @@ namespace MMR.Randomizer
 
                 var checkedLocations = new Dictionary<Item, LogicUtils.LogicPaths>();
                 var logicPaths = LogicUtils.GetImportantLocations(ItemList, _settings, Item.AreaMoonAccess, logicForImportance, checkedLocations: checkedLocations);
-                var importantLocations = logicPaths?.Important.Where(item => item.Region().HasValue).Distinct().ToHashSet();
+                var importantLocations = logicPaths?.Important.Where(item => item.Region(ItemList).HasValue && item.Entrance() == null).Distinct().ToHashSet();
                 var importantSongLocations = logicPaths?.ImportantSongLocations.ToList();
                 if (importantLocations == null)
                 {
@@ -2410,7 +2471,7 @@ namespace MMR.Randomizer
                         {
                             locationsRequiredForMoonAccess.Remove(location, out bool _);
                             importantLocationsMutex.WaitOne();
-                            importantLocations.UnionWith(checkPaths.Important.Distinct().Where(item => item.Region().HasValue));
+                            importantLocations.UnionWith(checkPaths.Important.Distinct().Where(item => item.Region(ItemList).HasValue && item.Entrance() == null));
                             importantLocationsMutex.ReleaseMutex();
 
                             importantSongLocationsMutex.WaitOne();

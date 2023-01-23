@@ -230,6 +230,11 @@ namespace MMR.Randomizer.Models.Settings
         public bool RandomizeDungeonEntrances { get; set; }
 
         /// <summary>
+        /// Randomize which boss room you appear in when entering one
+        /// </summary>
+        public bool RandomizeBossRooms { get; set; }
+
+        /// <summary>
         /// (Beta) Randomize enemies
         /// </summary>
         public bool RandomizeEnemies { get; set; }

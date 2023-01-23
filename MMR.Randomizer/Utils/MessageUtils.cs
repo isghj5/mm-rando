@@ -34,7 +34,12 @@ namespace MMR.Randomizer.Utils
             var itemsInRegions = new Dictionary<Region, List<(ItemObject io, Item locationForImportance)>>();
             foreach (var io in randomizedResult.ItemList)
             {
-                if ((!io.IsRandomized || !io.NewLocation.Value.Region().HasValue) && (!io.Item.MainLocation().HasValue || !randomizedResult.ItemList[io.Item.MainLocation().Value].IsRandomized))
+                if (io.Item.Entrance() != null)
+                {
+                    continue;
+                }
+
+                if ((!io.IsRandomized || !io.NewLocation.Value.Region(randomizedResult.ItemList).HasValue) && (!io.Item.MainLocation().HasValue || !randomizedResult.ItemList[io.Item.MainLocation().Value].IsRandomized))
                 {
                     continue;
                 }
@@ -67,7 +72,7 @@ namespace MMR.Randomizer.Utils
                 {
                     var preventRegions = new List<Region> { Region.TheMoon, Region.BottleCatch, Region.Misc };
                     var locationForImportance = io.Item.MainLocation().HasValue ? io.Item : io.NewLocation.Value;
-                    var itemRegion = locationForImportance.Region();
+                    var itemRegion = locationForImportance.Region(randomizedResult.ItemList);
                     if (itemRegion.HasValue
                         && !preventRegions.Contains(itemRegion.Value)
                         && !ItemUtils.IsLocationJunk(item.NewLocation.Value, randomizedResult.Settings))
@@ -439,7 +444,7 @@ namespace MMR.Randomizer.Utils
                 color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
             }
             itemNames.Add(article + color + item.Item.ProgressiveUpgradeName(randomizedResult.Settings.ProgressiveUpgrades) + TextCommands.ColorWhite + importance);
-            locationNames.Add(item.NewLocation.Value.Location());
+            locationNames.Add(item.NewLocation.Value.Location(randomizedResult.ItemList));
             if (hintStyle != GossipHintStyle.Relevant)
             {
                 var gossipCombineAttribute = item.NewLocation.Value.GetAttribute<GossipCombineAttribute>();
@@ -457,7 +462,7 @@ namespace MMR.Randomizer.Utils
                     }
                     else
                     {
-                        locationNames.AddRange(combined.Select(io => io.NewLocation.Value.Location()));
+                        locationNames.AddRange(combined.Select(io => io.NewLocation.Value.Location(randomizedResult.ItemList)));
                     }
                     itemNames.AddRange(combined.Select(io =>
                     {

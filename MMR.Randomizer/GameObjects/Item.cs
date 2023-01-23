@@ -999,11 +999,27 @@ namespace MMR.Randomizer.GameObjects
         OtherLimitlessBeans,
         OtherPlayDekuPlayground,
         OtherTimeTravel,
-        AreaWoodfallNew,
-        AreaSnowheadNew,
-        AreaGreatBayNew,
-        AreaLANew, // ??
-        AreaInvertedStoneTowerNew, // Seemingly not used
+
+        [EntranceName("Odolwa's Lair"), Region(Region.WoodfallTemple)]
+        [DungeonEntrance(DungeonEntrance.EntranceOdolwasLairFromWoodfallTemple)]
+        AreaOdolwasLair,
+
+        [EntranceName("Goht's Lair"), Region(Region.SnowheadTemple)]
+        [DungeonEntrance(DungeonEntrance.EntranceGohtsLairFromSnowheadTemple)]
+        AreaGohtsLair,
+
+        [EntranceName("Gyorg's Lair"), Region(Region.GreatBayTemple)]
+        [DungeonEntrance(DungeonEntrance.EntranceGyorgsLairFromGreatBayTemple)]
+        AreaGyorgsLair,
+
+        [EntranceName("Twinmold's Lair"), Region(Region.StoneTowerTemple)]
+        [DungeonEntrance(DungeonEntrance.EntranceTwinmoldsLairFromStoneTowerTempleInverted)]
+        AreaTwinmoldsLair,
+
+        OtherKillOdolwa,
+        OtherKillGoht,
+        OtherKillGyorg,
+        OtherKillTwinmold,
 
         //keysanity items
         [StartingItem(0xC5CE74, 0x04)]
@@ -2037,7 +2053,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC40E1B, 0x10, true)] // add respawn health
         [StartingItem(0xBDA683, 0x10, true)] // add minimum Song of Time health
         [StartingItem(0xBDA68F, 0x10, true)] // add minimum Song of Time health
-        [ItemName("Heart Container"), LocationName("Odolwa Heart Container"), Region(Region.WoodfallTemple)]
+        [ItemName("Heart Container"), LocationName("Woodfall Heart Container"), Region(AreaOdolwasLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("increased life")]
         [ShopText("Permanently increases your life energy.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -2050,7 +2066,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC40E1B, 0x10, true)] // add respawn health
         [StartingItem(0xBDA683, 0x10, true)] // add minimum Song of Time health
         [StartingItem(0xBDA68F, 0x10, true)] // add minimum Song of Time health
-        [ItemName("Heart Container"), LocationName("Goht Heart Container"), Region(Region.SnowheadTemple)]
+        [ItemName("Heart Container"), LocationName("Snowhead Heart Container"), Region(AreaGohtsLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("increased life")]
         [ShopText("Permanently increases your life energy.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -2063,7 +2079,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC40E1B, 0x10, true)] // add respawn health
         [StartingItem(0xBDA683, 0x10, true)] // add minimum Song of Time health
         [StartingItem(0xBDA68F, 0x10, true)] // add minimum Song of Time health
-        [ItemName("Heart Container"), LocationName("Gyorg Heart Container"), Region(Region.GreatBayTemple)]
+        [ItemName("Heart Container"), LocationName("Great Bay Heart Container"), Region(AreaGyorgsLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("increased life")]
         [ShopText("Permanently increases your life energy.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -2076,7 +2092,7 @@ namespace MMR.Randomizer.GameObjects
         [StartingItem(0xC40E1B, 0x10, true)] // add respawn health
         [StartingItem(0xBDA683, 0x10, true)] // add minimum Song of Time health
         [StartingItem(0xBDA68F, 0x10, true)] // add minimum Song of Time health
-        [ItemName("Heart Container"), LocationName("Twinmold Heart Container"), Region(Region.StoneTowerTemple)]
+        [ItemName("Heart Container"), LocationName("Stone Tower Heart Container"), Region(AreaTwinmoldsLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("increased life")]
         [ShopText("Permanently increases your life energy.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -9917,7 +9933,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [StartingItem(0xC5CE73, 0x01)]
-        [ItemName("Odolwa's Remains"), LocationName("Woodfall Boss Warp"), Region(Region.WoodfallTemple)]
+        [ItemName("Odolwa's Remains"), LocationName("Woodfall Boss Warp"), Region(AreaOdolwasLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
         [ShopText("The remains of the boss in Woodfall Temple.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -9927,7 +9943,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [StartingItem(0xC5CE73, 0x02)]
-        [ItemName("Goht's Remains"), LocationName("Snowhead Boss Warp"), Region(Region.SnowheadTemple)]
+        [ItemName("Goht's Remains"), LocationName("Snowhead Boss Warp"), Region(AreaGohtsLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
         [ShopText("The remains of the boss in Snowhead Temple.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -9937,7 +9953,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [StartingItem(0xC5CE73, 0x04)]
-        [ItemName("Gyorg's Remains"), LocationName("Great Bay Boss Warp"), Region(Region.GreatBayTemple)]
+        [ItemName("Gyorg's Remains"), LocationName("Great Bay Boss Warp"), Region(AreaGyorgsLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
         [ShopText("The remains of the boss in Great Bay Temple.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -9947,7 +9963,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [StartingItem(0xC5CE73, 0x08)]
-        [ItemName("Twinmold's Remains"), LocationName("Stone Tower Boss Warp"), Region(Region.StoneTowerTemple)]
+        [ItemName("Twinmold's Remains"), LocationName("Stone Tower Boss Warp"), Region(AreaTwinmoldsLair)]
         [GossipLocationHint("a masked evil"), GossipItemHint("an evil mask")]
         [ShopText("The remains of the boss in Stone Tower Temple.", isMultiple: true)]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
@@ -10011,16 +10027,16 @@ namespace MMR.Randomizer.GameObjects
         [MainLocation(HeartPieceKeatonQuiz), Region(Region.MountainVillage)]
         HeartPieceKeatonQuizInMountainVillage,
 
-        [MainLocation(SongOath), Region(Region.WoodfallTemple)]
+        [MainLocation(SongOath), Region(AreaOdolwasLair)]
         SongOathInWFT,
 
-        [MainLocation(SongOath), Region(Region.SnowheadTemple)]
+        [MainLocation(SongOath), Region(AreaGohtsLair)]
         SongOathInSHT,
 
-        [MainLocation(SongOath), Region(Region.GreatBayTemple)]
+        [MainLocation(SongOath), Region(AreaGyorgsLair)]
         SongOathInGBT,
 
-        [MainLocation(SongOath), Region(Region.StoneTowerTemple)]
+        [MainLocation(SongOath), Region(AreaTwinmoldsLair)]
         SongOathInISTT,
 
         [MainLocation(ShopItemGoronBomb10), Region(Region.GoronVillage)]

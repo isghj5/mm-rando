@@ -24,12 +24,12 @@ namespace MMR.Randomizer.Models
 
         public ItemCategory ItemCategory { get; set; }
 
-        public SpoilerItem(ItemObject itemObject, Region region, bool isRequired, bool isImportant, bool isImportantSong, bool progressiveUpgrades)
+        public SpoilerItem(ItemObject itemObject, Region region, bool isRequired, bool isImportant, bool isImportantSong, bool progressiveUpgrades, ItemList itemList)
         {
             Id = itemObject.ID;
             Name = itemObject.NameOverride ?? itemObject.Item.ProgressiveUpgradeName(progressiveUpgrades) ?? itemObject.Name;
             NewLocationId = (int)itemObject.NewLocation.Value;
-            NewLocationName = itemObject.NewLocation.Value.Location();
+            NewLocationName = itemObject.NewLocation.Value.Location(itemList);
             Region = region;
             IsJunk = ItemUtils.IsJunk(itemObject.Item);
             IsImportant = isImportant;

@@ -1,5 +1,5 @@
 {
-  "Version": 12,
+  "Version": 13,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -2092,7 +2092,7 @@
     {
       "Id": "AreaWoodFallTempleClear",
       "RequiredItems": [
-        "Access Odolwa",
+        "AreaOdolwasLair",
         "Kill Odolwa"
       ],
       "ConditionalItems": [],
@@ -2196,7 +2196,7 @@
     {
       "Id": "AreaSnowheadTempleClear",
       "RequiredItems": [
-        "Access Goht",
+        "AreaGohtsLair",
         "Kill Goht"
       ],
       "ConditionalItems": [],
@@ -2296,7 +2296,7 @@
     {
       "Id": "AreaGreatBayTempleClear",
       "RequiredItems": [
-        "Access Gyorg",
+        "AreaGyorgsLair",
         "Kill Gyorg"
       ],
       "ConditionalItems": [],
@@ -2406,7 +2406,7 @@
     {
       "Id": "AreaStoneTowerClear",
       "RequiredItems": [
-        "Access Twinmold",
+        "AreaTwinmoldsLair",
         "Kill Twinmold"
       ],
       "ConditionalItems": [],
@@ -2522,11 +2522,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaWoodfallNew",
+      "Id": "AreaOdolwasLair",
       "RequiredItems": [
-        "AreaWoodFallTempleAccess",
-        "MaskDeku",
-        "OtherArrow"
+        "Access Odolwa"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2535,14 +2533,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaSnowheadNew",
+      "Id": "AreaGohtsLair",
       "RequiredItems": [
-        "AreaSnowheadTempleAccess",
-        "MaskGoron",
-        "OtherExplosive",
-        "OtherArrow",
-        "ItemFireArrow",
-        "Magic Meter"
+        "Access Goht"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2551,15 +2544,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaGreatBayNew",
+      "Id": "AreaGyorgsLair",
       "RequiredItems": [
-        "AreaGreatBayTempleAccess",
-        "MaskZora",
-        "ItemHookshot",
-        "OtherArrow",
-        "ItemIceArrow",
-        "ItemFireArrow",
-        "Magic Meter"
+        "Access Gyorg"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2568,16 +2555,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaLANew",
+      "Id": "AreaTwinmoldsLair",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
-        "MaskGoron",
-        "MaskZora",
-        "Play Elegy of Emptiness",
-        "UpgradeMirrorShield",
-        "OtherExplosive",
-        "OtherArrow",
-        "MaskDeku"
+        "Access Twinmold"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2586,18 +2566,42 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaInvertedStoneTowerNew",
+      "Id": "OtherKillOdolwa",
       "RequiredItems": [
-        "AreaInvertedStoneTowerTempleAccess",
-        "OtherExplosive",
-        "OtherArrow",
-        "ItemLightArrow",
-        "MaskDeku",
-        "MaskGoron",
-        "MaskZora",
-        "Play Elegy of Emptiness",
-        "ItemHookshot",
-        "Magic Meter"
+        "Kill Odolwa"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherKillGoht",
+      "RequiredItems": [
+        "Kill Goht"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherKillGyorg",
+      "RequiredItems": [
+        "Kill Gyorg"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherKillTwinmold",
+      "RequiredItems": [
+        "Kill Twinmold"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -5101,7 +5105,7 @@
     {
       "Id": "HeartContainerWoodfall",
       "RequiredItems": [
-        "Access Odolwa",
+        "AreaOdolwasLair",
         "Kill Odolwa"
       ],
       "ConditionalItems": [],
@@ -5113,7 +5117,7 @@
     {
       "Id": "HeartContainerSnowhead",
       "RequiredItems": [
-        "Access Goht",
+        "AreaGohtsLair",
         "Kill Goht"
       ],
       "ConditionalItems": [],
@@ -5125,7 +5129,7 @@
     {
       "Id": "HeartContainerGreatBay",
       "RequiredItems": [
-        "Access Gyorg",
+        "AreaGyorgsLair",
         "Kill Gyorg"
       ],
       "ConditionalItems": [],
@@ -5137,7 +5141,7 @@
     {
       "Id": "HeartContainerStoneTower",
       "RequiredItems": [
-        "Access Twinmold",
+        "AreaTwinmoldsLair",
         "Kill Twinmold"
       ],
       "ConditionalItems": [],
@@ -54424,7 +54428,7 @@
     {
       "Id": "RemainsOdolwa",
       "RequiredItems": [
-        "Access Odolwa",
+        "AreaOdolwasLair",
         "Kill Odolwa"
       ],
       "ConditionalItems": [],
@@ -54436,7 +54440,7 @@
     {
       "Id": "RemainsGoht",
       "RequiredItems": [
-        "Access Goht",
+        "AreaGohtsLair",
         "Kill Goht"
       ],
       "ConditionalItems": [],
@@ -54448,7 +54452,7 @@
     {
       "Id": "RemainsGyorg",
       "RequiredItems": [
-        "Access Gyorg",
+        "AreaGyorgsLair",
         "Kill Gyorg"
       ],
       "ConditionalItems": [],
@@ -54460,7 +54464,7 @@
     {
       "Id": "RemainsTwinmold",
       "RequiredItems": [
-        "Access Twinmold",
+        "AreaTwinmoldsLair",
         "Kill Twinmold"
       ],
       "ConditionalItems": [],
@@ -54711,7 +54715,7 @@
     {
       "Id": "SongOathInWFT",
       "RequiredItems": [
-        "Access Odolwa",
+        "AreaOdolwasLair",
         "Kill Odolwa"
       ],
       "ConditionalItems": [],
@@ -54723,7 +54727,7 @@
     {
       "Id": "SongOathInSHT",
       "RequiredItems": [
-        "Access Goht",
+        "AreaGohtsLair",
         "Kill Goht"
       ],
       "ConditionalItems": [],
@@ -54735,7 +54739,7 @@
     {
       "Id": "SongOathInGBT",
       "RequiredItems": [
-        "Access Gyorg",
+        "AreaGyorgsLair",
         "Kill Gyorg"
       ],
       "ConditionalItems": [],
@@ -54747,7 +54751,7 @@
     {
       "Id": "SongOathInISTT",
       "RequiredItems": [
-        "Access Twinmold",
+        "AreaTwinmoldsLair",
         "Kill Twinmold"
       ],
       "ConditionalItems": [],
@@ -57866,7 +57870,7 @@
         ],
         [
           "Access Gyorg",
-          "Kill Gyorg"
+          "OtherKillGyorg"
         ],
         [
           "GBT Hookless Exit",
@@ -60019,7 +60023,7 @@
         [
           "ItemHookshot",
           "ItemStoneTowerBossKey",
-          "Kill Twinmold"
+          "OtherKillTwinmold"
         ],
         [
           "ISTT Eyegore Bridge to Maze",
