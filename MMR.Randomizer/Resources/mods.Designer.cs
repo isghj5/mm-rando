@@ -1133,6 +1133,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] tatl_remains_hint {
+            get {
+                object obj = ResourceManager.GetObject("tatl_remains_hint", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] title_screen {
             get {
                 object obj = ResourceManager.GetObject("title_screen", resourceCulture);

@@ -2939,7 +2939,7 @@ namespace MMR.Randomizer
                 var clockTownFairyItem = _randomized.ItemList[Item.CollectibleStrayFairyClockTown];
                 if (clockTownFairyItem.NewLocation != Item.CollectibleStrayFairyClockTown)
                 {
-                    var region = clockTownFairyItem.NewLocation.Value.Region();
+                    var region = clockTownFairyItem.NewLocation.Value.Region(_randomized.ItemList);
                     var regionPreposition = region?.Preposition();
                     var regionName = regionPreposition == null ? null : region?.Name();
                     if (!string.IsNullOrWhiteSpace(regionPreposition))
@@ -2986,6 +2986,95 @@ namespace MMR.Randomizer
                         })
                         .Build()
                     );
+                }
+
+                var remains = ItemUtils.BossRemains().Where(r => _randomized.ItemList[r].Item == r);
+                if (remains.Any(r => _randomized.ItemList[r].IsRandomized))
+                {
+                    var random = new Random(_randomized.Seed);
+                    var remainRegions = remains
+                        .OrderBy(_ => random.Next())
+                        .Select(remain => _randomized.ItemList[remain].NewLocation.Value.Region(_randomized.ItemList)?.Name() ?? "Termina")
+                        .Distinct()
+                        .ToList();
+                    remainRegions = new List<string>
+                    {
+                        Region.OceanSpiderHouseItems.Name(),
+                        Region.SwampSpiderHouseItems.Name(),
+                        Region.PiratesFortressExterior.Name(),
+                        Region.PiratesFortressInterior.Name(),
+                    };
+                    var remainsCount = MessageUtils.NumberToWords(remains.Count());
+                    var isAre = remains.Count() == 1 ? "is" : "are";
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x200B)
+                        .Message(it =>
+                        {
+                            it.StartPinkText().PlaySoundEffect(0x6851).CompileTimeWrap((wrapped) =>
+                            {
+                                foreach (var remainRegion in remainRegions)
+                                {
+                                    wrapped.Text(remainRegion).Text(". ").PauseText(10);
+                                }
+                                wrapped.Text("Hurry...").Red($"The {remainsCount}").Text($" who {isAre} there... Bring them ").Red("here").Text("...");
+                            })
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x216)
+                        .Message(it =>
+                        {
+                            it.StartLightBlueText()
+                            .Text("That mask...").NewLine()
+                            .PauseText(40)
+                            .Text("The Skull Kid uses the power of").NewLine()
+                            .Text("that mask to do those terrible").NewLine()
+                            .Text("things.")
+                            .EndTextBox()
+                            .Text("Well...whatever it takes, we've").NewLine()
+                            .Text("gotta do something about it.")
+                            .EndTextBox()
+                            .CompileTimeWrap((wrapped) =>
+                            {
+                                wrapped.Text("...The ");
+                                for (var i = 0; i < remainRegions.Count; i++)
+                                {
+                                    var remainRegion = remainRegions[i];
+                                    wrapped.Red(remainRegion);
+                                    if (i < remainRegions.Count - 2)
+                                    {
+                                        wrapped.Text(", ");
+                                    }
+                                    else if (i < remainRegions.Count - 1)
+                                    {
+                                        wrapped.Text(" and ");
+                                    }
+                                }
+                                wrapped.Text(" that Tael was trying to tell us about...");
+                            })
+                            .EndTextBox()
+                            .CompileTimeWrap("I have no idea what he was talking about...")
+                            .EndTextBox()
+                            .Text("And what do you suppose he").NewLine()
+                            .Text("meant by \"").Red(() =>
+                            {
+                                it.Text($"the {remainsCount} who {isAre}").NewLine()
+                                .Text("there");
+                            })
+                            .Text("?\"")
+                            .EndTextBox()
+                            .Text("I have no idea. He always").NewLine()
+                            .Text("skips important stuff. I guess we").NewLine()
+                            .Text("should just go and find out...")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    ResourceUtils.ApplyHack(Resources.mods.tatl_remains_hint);
                 }
 
                 // TODO

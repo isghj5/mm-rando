@@ -439,6 +439,9 @@
   <data name="standing_hearts" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\standing-hearts;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="tatl_remains_hint" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>mods\tatl-remains-hint.bin;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="title_screen" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>mods\title-screen;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
