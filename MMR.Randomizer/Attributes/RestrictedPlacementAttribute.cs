@@ -16,9 +16,8 @@ namespace MMR.Randomizer.Attributes
             KeepWithinOverworld,
         }
 
-        public Func<Item, Item, bool> RestrictPlacement { get; }
+        public Func<Item, Item, ItemList, bool> RestrictPlacement { get; }
 
-        private static Func<Item, Item> _getNewDungeonEntrance;
         private readonly IReadOnlyCollection<Region?> _dungeonRegions = new List<Region?> { Region.WoodfallTemple, Region.SnowheadTemple, Region.GreatBayTemple, Region.StoneTowerTemple }.AsReadOnly();
 
         public RestrictedPlacementAttribute(RestrictionType restrictionType)
@@ -37,28 +36,18 @@ namespace MMR.Randomizer.Attributes
             }
         }
 
-        public static void SetDungeonEntranceFunction(Func<Item, Item> getNewDungeonEntrance)
+        private bool KeepWithinRegion(Item item, Item location, ItemList itemList)
         {
-            _getNewDungeonEntrance = getNewDungeonEntrance;
+            return item.Region(itemList) == location.Region(itemList);
         }
 
-        private bool KeepWithinRegion(Item item, Item location)
+        private bool KeepWithinOverworld(Item item, Item location, ItemList itemList)
         {
-            return item.Region() == location.Region();
+            return !location.Region(itemList).HasValue || !_dungeonRegions.Contains(location.Region(itemList).Value);
         }
 
-        private bool KeepWithinOverworld(Item item, Item location)
+        private bool KeepWithinArea(Item item, Item location, ItemList itemList)
         {
-            return !location.Region().HasValue || !_dungeonRegions.Contains(location.Region().Value);
-        }
-
-        private bool KeepWithinArea(Item item, Item location)
-        {
-            if (_getNewDungeonEntrance == null)
-            {
-                throw new InvalidOperationException($"Must call {nameof(SetDungeonEntranceFunction)} before checking item restrictions.");
-            }
-
             var regionAreaDungeonEntrance = new Dictionary<RegionArea, Item>
             {
                 { RegionArea.Swamp, Item.AreaWoodFallTempleAccess },
@@ -69,19 +58,19 @@ namespace MMR.Randomizer.Attributes
 
             var dungeonEntranceRegionArea = regionAreaDungeonEntrance.ToDictionary(x => x.Value, x => x.Key);
 
-            RegionArea? getNewRegionArea(Item check)
+            RegionArea? getNewRegionArea(Item check, ItemList itemList)
             {
-                var regionArea = check.RegionArea();
+                var regionArea = check.RegionArea(itemList);
                 if (regionArea.HasValue && regionAreaDungeonEntrance.ContainsKey(regionArea.Value))
                 {
                     var dungeonEntranceToFind = regionAreaDungeonEntrance[regionArea.Value];
-                    var dungeonNewEntrance = _getNewDungeonEntrance(dungeonEntranceToFind);
+                    var dungeonNewEntrance = itemList[dungeonEntranceToFind].NewLocation ?? dungeonEntranceToFind;
                     regionArea = dungeonEntranceRegionArea[dungeonNewEntrance];
                 }
                 return regionArea;
             }
 
-            return getNewRegionArea(item) == (_dungeonRegions.Contains(location.Region()) ? getNewRegionArea(location) : location.RegionArea());
+            return getNewRegionArea(item, itemList) == (_dungeonRegions.Contains(location.Region(itemList)) ? getNewRegionArea(location, itemList) : location.RegionArea(itemList));
         }
     }
 }

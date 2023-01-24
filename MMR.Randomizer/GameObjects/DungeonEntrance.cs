@@ -64,5 +64,25 @@ namespace MMR.Randomizer.GameObjects
         [Region(Region.WoodfallTemple)]
         [Spawn(Scene.WoodfallTemple, 1)]
         EntranceWoodfallTemplePrisonFromOdolwasLair, // one way
+
+        [Region(Region.WoodfallTemple)]
+        [Exit(Scene.WoodfallTemple, 1)]
+        [Spawn(Scene.OdolwasLair, 0)]
+        EntranceOdolwasLairFromWoodfallTemple, // one way
+
+        [Region(Region.SnowheadTemple)]
+        [Exit(Scene.SnowheadTemple, 1)]
+        [Spawn(Scene.GohtsLair, 0)]
+        EntranceGohtsLairFromSnowheadTemple, // one way
+
+        [Region(Region.GreatBayTemple)]
+        [Exit(Scene.GreatBayTemple, 1)]
+        [Spawn(Scene.GyorgsLair, 0)]
+        EntranceGyorgsLairFromGreatBayTemple, // one way
+
+        [Region(Region.StoneTowerTemple)]
+        [Exit(Scene.InvertedStoneTowerTemple, 1)]
+        [Spawn(Scene.TwinmoldsLair, 0)]
+        EntranceTwinmoldsLairFromStoneTowerTempleInverted, // one way
     }
 }

@@ -16,11 +16,12 @@ namespace MMR.Randomizer.Utils
         public static void CreateSpoilerLog(RandomizedResult randomized, GameplaySettings settings, OutputSettings outputSettings)
         {
             var itemList = randomized.ItemList
-                .Where(io => (io.IsRandomized && io.NewLocation.Value.Region().HasValue) || (io.Item.MainLocation().HasValue && randomized.ItemList[io.Item.MainLocation().Value].IsRandomized))
+                .Where(io => io.Item.Entrance() == null)
+                .Where(io => (io.IsRandomized && io.NewLocation.Value.Region(randomized.ItemList).HasValue) || (io.Item.MainLocation().HasValue && randomized.ItemList[io.Item.MainLocation().Value].IsRandomized))
                 .Select(io => new {
                     ItemObject = io.Item.MainLocation().HasValue ? randomized.ItemList.Find(x => x.NewLocation == io.Item.MainLocation().Value) : io,
                     LocationForImportance = io.NewLocation ?? io.Item,
-                    Region = io.IsRandomized ? io.NewLocation.Value.Region().Value : io.Item.Region().Value,
+                    Region = io.IsRandomized ? io.NewLocation.Value.Region(randomized.ItemList).Value : io.Item.Region(randomized.ItemList).Value,
                 })
                 .Select(u => new SpoilerItem(
                     u.ItemObject,
@@ -28,7 +29,8 @@ namespace MMR.Randomizer.Utils
                     ItemUtils.IsRequired(u.ItemObject.Item, u.LocationForImportance, randomized),
                     ItemUtils.IsImportant(u.ItemObject.Item, u.LocationForImportance, randomized),
                     randomized.ImportantSongLocations?.Contains(u.LocationForImportance) == true,
-                    settings.ProgressiveUpgrades
+                    settings.ProgressiveUpgrades,
+                    randomized.ItemList
                 ));
 
             randomized.Logic.ForEach((il) =>
@@ -42,20 +44,26 @@ namespace MMR.Randomizer.Utils
             });
 
             Dictionary<Item, Item> dungeonEntrances = new Dictionary<Item, Item>();
+            var entrances = new List<Item>();
             if (settings.RandomizeDungeonEntrances)
             {
-                var entrances = new List<Item>
-                {
-                    Item.AreaWoodFallTempleAccess,
-                    Item.AreaSnowheadTempleAccess,
-                    Item.AreaGreatBayTempleAccess,
-                    Item.AreaInvertedStoneTowerTempleAccess,
-                };
-                foreach (var entrance in entrances.OrderBy(e => entrances.IndexOf(randomized.ItemList[e].NewLocation.Value)))
-                {
-                    dungeonEntrances.Add(randomized.ItemList[entrance].NewLocation.Value, entrance);
-                }
+                entrances.Add(Item.AreaWoodFallTempleAccess);
+                entrances.Add(Item.AreaSnowheadTempleAccess);
+                entrances.Add(Item.AreaGreatBayTempleAccess);
+                entrances.Add(Item.AreaInvertedStoneTowerTempleAccess);
             }
+            if (settings.RandomizeBossRooms)
+            {
+                entrances.Add(Item.AreaOdolwasLair);
+                entrances.Add(Item.AreaGohtsLair);
+                entrances.Add(Item.AreaGyorgsLair);
+                entrances.Add(Item.AreaTwinmoldsLair);
+            }
+            foreach (var entrance in entrances.OrderBy(e => entrances.IndexOf(randomized.ItemList[e].NewLocation.Value)))
+            {
+                dungeonEntrances.Add(randomized.ItemList[entrance].NewLocation.Value, entrance);
+            }
+
             var settingsString = settings.ToString();
 
             var directory = Path.GetDirectoryName(outputSettings.OutputROMFilename);

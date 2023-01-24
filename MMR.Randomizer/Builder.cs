@@ -892,7 +892,12 @@ namespace MMR.Randomizer
 
         private void WriteDungeons()
         {
-            if (_randomized.Settings.LogicMode == LogicMode.Vanilla || !_randomized.Settings.RandomizeDungeonEntrances)
+            if (_randomized.Settings.LogicMode == LogicMode.Vanilla)
+            {
+                return;
+            }
+
+            if (!_randomized.Settings.RandomizeDungeonEntrances && !_randomized.Settings.RandomizeBossRooms)
             {
                 return;
             }
@@ -900,19 +905,31 @@ namespace MMR.Randomizer
             SceneUtils.ReadSceneTable();
             SceneUtils.GetMaps();
 
-            var entrances = new List<Item>
+            var entrances = new List<Item>();
+            if (_randomized.Settings.RandomizeDungeonEntrances)
             {
-                Item.AreaWoodFallTempleAccess,
-                Item.AreaWoodFallTempleClear,
-                Item.AreaSnowheadTempleAccess,
-                Item.AreaSnowheadTempleClear,
-                Item.AreaGreatBayTempleAccess,
-                Item.AreaGreatBayTempleClear,
-                Item.AreaInvertedStoneTowerTempleAccess,
-                Item.AreaStoneTowerClear,
-            };
+                entrances.Add(Item.AreaWoodFallTempleAccess);
+                entrances.Add(Item.AreaWoodFallTempleClear);
+                entrances.Add(Item.AreaSnowheadTempleAccess);
+                entrances.Add(Item.AreaSnowheadTempleClear);
+                entrances.Add(Item.AreaGreatBayTempleAccess);
+                entrances.Add(Item.AreaGreatBayTempleClear);
+                entrances.Add(Item.AreaInvertedStoneTowerTempleAccess);
+                entrances.Add(Item.AreaStoneTowerClear);
+            }
+            if (_randomized.Settings.RandomizeBossRooms)
+            {
+                entrances.Add(Item.AreaWoodFallTempleClear);
+                entrances.Add(Item.AreaSnowheadTempleClear);
+                entrances.Add(Item.AreaGreatBayTempleClear);
+                entrances.Add(Item.AreaStoneTowerClear);
+                entrances.Add(Item.AreaOdolwasLair);
+                entrances.Add(Item.AreaGohtsLair);
+                entrances.Add(Item.AreaGyorgsLair);
+                entrances.Add(Item.AreaTwinmoldsLair);
+            }
 
-            foreach (var entrance in entrances)
+            foreach (var entrance in entrances.Distinct())
             {
                 var newSpawns = entrance.DungeonEntrances();
                 var exits = _randomized.ItemList[entrance].NewLocation.Value.DungeonEntrances();
@@ -970,6 +987,85 @@ namespace MMR.Randomizer
                 ReadWriteUtils.WriteROMAddr(dcFlagmaskAddr[i], new byte[] {
                     (byte)((Values.DCFlagMasks[newIndex] & 0xFF00) >> 8),
                     (byte)(Values.DCFlagMasks[newIndex] & 0xFF) });
+            }
+
+            if (_randomized.Settings.RandomizeBossRooms)
+            {
+                var bosses = new List<Item>
+                {
+                    Item.AreaOdolwasLair,
+                    Item.AreaGohtsLair,
+                    Item.AreaGyorgsLair,
+                    Item.AreaTwinmoldsLair,
+                };
+
+                var bossDoorAddr = ResourceUtils.GetAddresses(Resources.addresses.d_boss_door);
+                var bossWarpAddr = ResourceUtils.GetAddresses(Resources.addresses.d_boss_warp);
+                var bossDoorValues = new List<byte[]>
+                {
+                    new byte[] { 0x00, 0x1F, 0x01 },
+                    new byte[] { 0x00, 0x44, 0x02 },
+                    new byte[] { 0x00, 0x5F, 0x03 },
+                    new byte[] { 0x00, 0x36, 0x04 },
+                };
+                for (var i = 0; i < bosses.Count; i++)
+                {
+                    var boss = bosses[i];
+                    var newBoss = _randomized.ItemList[boss].NewLocation ?? boss;
+                    var addressIndex = bosses.IndexOf(newBoss);
+                    ReadWriteUtils.WriteROMAddr(bossDoorAddr[addressIndex], bossDoorValues[i]);
+                    ReadWriteUtils.WriteROMAddr(bossWarpAddr[addressIndex], new byte[] { (byte)(i + 2) });
+                }
+
+                var bossDoorTextureOffsets = new List<int> { 0x5BA0, 0x5C0, 0x4BA0, 0x3BA0 };
+
+                var bossAtSTT = _randomized.ItemList.Find(io => io.NewLocation == Item.AreaTwinmoldsLair)?.Item ?? Item.AreaTwinmoldsLair;
+                if (bossAtSTT != Item.AreaTwinmoldsLair)
+                {
+                    var indexToUse = bosses.IndexOf(bossAtSTT);
+
+                    var bossDoorTexture = ReadWriteUtils.ReadBytes(0x012F8000 + bossDoorTextureOffsets[indexToUse], 0x1000);
+                    var bossDoorTexturePixels = bossDoorTexture
+                        .Chunk(2)
+                        .Select(chunk => (ushort)((chunk[0] << 8) | chunk[1]))
+                        .ToArray();
+                    var paletteDict = bossDoorTexturePixels
+                        .GroupBy(x => x)
+                        .ToDictionary(x => x.Key, g => g.Count());
+                    while (paletteDict.Keys.Count > 256)
+                    {
+                        var leastUsedColor = paletteDict.OrderBy(kvp => kvp.Value).First();
+                        paletteDict.Remove(leastUsedColor.Key);
+                        var nearestColor = ColorUtils.FindNearestColor(paletteDict.Keys.Select(c => ColorUtils.FromRGBA5551(c)).ToArray(), ColorUtils.FromRGBA5551(leastUsedColor.Key));
+                        var toRGBA5551 = ColorUtils.ToRGBA5551(nearestColor);
+                        paletteDict[toRGBA5551] += leastUsedColor.Value;
+                        for (var i = 0; i < bossDoorTexturePixels.Length; i++)
+                        {
+                            if (bossDoorTexturePixels[i] == leastUsedColor.Key)
+                            {
+                                bossDoorTexturePixels[i] = toRGBA5551;
+                            }
+                        }
+                    }
+                    var palette = paletteDict.Keys.ToArray();
+                    var ci8 = bossDoorTexturePixels.Select(pix => (byte)Array.IndexOf(palette, pix)).ToArray();
+
+                    // STT Room 8
+                    ReadWriteUtils.WriteToROM(0x0211D000 + 0x4428, ci8);
+                    var f = RomUtils.GetFileIndexForWriting(0x0211D000);
+                    ReadWriteUtils.Arr_Insert(new byte[] { 0x03, 0x00, 0x4C, 0x40 }, 0, 4, RomData.MMFileList[f].Data, 0x3D4);
+                    var data = RomData.MMFileList[f].Data.ToList();
+                    data.InsertRange(0x4C40, palette.SelectMany(s => new byte[] { (byte)(s >> 8), (byte)(s & 0xFF) }));
+                    RomData.MMFileList[f].Data = data.ToArray();
+
+                    // STT Room 10
+                    ReadWriteUtils.WriteToROM(0x0212B000 + 0x4220, ci8);
+                    f = RomUtils.GetFileIndexForWriting(0x0212B000);
+                    ReadWriteUtils.Arr_Insert(new byte[] { 0x03, 0x00, 0x4A, 0x20 }, 0, 4, RomData.MMFileList[f].Data, 0x2434);
+                    data = RomData.MMFileList[f].Data.ToList();
+                    data.InsertRange(0x4A20, palette.SelectMany(s => new byte[] { (byte)(s >> 8), (byte)(s & 0xFF) }));
+                    RomData.MMFileList[f].Data = data.ToArray();
+                }
             }
         }
 
@@ -1598,6 +1694,13 @@ namespace MMR.Randomizer
             var newMessages = new List<MessageEntry>();
             _randomized.Settings.AsmOptions.MMRConfig.RupeeRepeatableLocations.Clear();
             _randomized.Settings.AsmOptions.MMRConfig.ItemsToReturnIds.Clear();
+            var killBosses = new List<Item>
+            {
+                Item.OtherKillOdolwa,
+                Item.OtherKillGoht,
+                Item.OtherKillGyorg,
+                Item.OtherKillTwinmold,
+            };
             foreach (var item in _randomized.ItemList)
             {
                 // Unused item
@@ -1607,6 +1710,11 @@ namespace MMR.Randomizer
                 }
 
                 if (item.Item.DungeonEntrances() != null)
+                {
+                    continue;
+                }
+
+                if (killBosses.Contains(item.Item))
                 {
                     continue;
                 }

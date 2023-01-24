@@ -86,6 +86,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cMixSongs, "Enable songs being placed among items in the randomization pool.");
             TooltipBuilder.SetTooltip(cProgressiveUpgrades, "Enable swords, wallets, magic, bomb bags and quivers to be found in the intended order.");
             TooltipBuilder.SetTooltip(cDEnt, "Enable randomization of dungeon entrances. \n\nStone Tower Temple is always vanilla, but Inverted Stone Tower Temple is randomized.");
+            TooltipBuilder.SetTooltip(cShuffleBosses, "Enable randomization of boss rooms.");
             TooltipBuilder.SetTooltip(cEnemy, "Enable randomization of enemies. May cause softlocks in some circumstances, use at your own risk.");
 
             // Gimmicks
@@ -1057,6 +1058,7 @@ namespace MMR.UI.Forms
             cMixSongs.Checked = _configuration.GameplaySettings.AddSongs;
             cProgressiveUpgrades.Checked = _configuration.GameplaySettings.ProgressiveUpgrades;
             cDEnt.Checked = _configuration.GameplaySettings.RandomizeDungeonEntrances;
+            cShuffleBosses.Checked = _configuration.GameplaySettings.RandomizeBossRooms;
             cSFX.Checked = _configuration.CosmeticSettings.RandomizeSounds;
             cEnemy.Checked = _configuration.GameplaySettings.RandomizeEnemies;
             if (_configuration.GameplaySettings.ShortenCutsceneSettings == null)
@@ -1295,6 +1297,11 @@ namespace MMR.UI.Forms
         private void cDEnt_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.RandomizeDungeonEntrances = cDEnt.Checked);
+        }
+
+        private void cShuffleBosses_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.RandomizeBossRooms = cShuffleBosses.Checked);
         }
 
         private void cDMult_SelectedIndexChanged(object sender, EventArgs e)
@@ -1822,6 +1829,7 @@ namespace MMR.UI.Forms
                 control.Enabled = !vanillaMode;
             }
             cDEnt.Enabled = !vanillaMode;
+            cShuffleBosses.Enabled = !vanillaMode;
             cSpoiler.Enabled = !vanillaMode;
             cHTMLLog.Enabled = !vanillaMode;
             cGossipHints.Enabled = !vanillaMode;
@@ -1911,6 +1919,7 @@ namespace MMR.UI.Forms
             tJunkLocationsList.Enabled = v;
 
             cDEnt.Enabled = v;
+            cShuffleBosses.Enabled = v;
             cStartingItems.Enabled = v;
             cMixSongs.Enabled = v;
             cProgressiveUpgrades.Enabled = v;

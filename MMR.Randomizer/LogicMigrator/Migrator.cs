@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 12;
+        public const int CurrentVersion = 13;
 
         public static string ApplyMigrations(string logic)
         {
@@ -182,6 +182,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 12)
             {
                 AddGaroHints(logicObject);
+            }
+
+            if (logicObject.Version < 13)
+            {
+                AddBossDoors(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3900,6 +3905,32 @@ namespace MMR.Randomizer.LogicMigrator
                 ConditionalItems = new List<List<string>>(),
             }));
             logicObject.Version = 12;
+        }
+
+        private static void AddBossDoors(JsonFormatLogic logicObject)
+        {
+            logicObject.Logic.RemoveRange(128, 5);
+
+            const int startIndex = 128;
+            var itemNames = new string[]
+            {
+                "AreaOdolwasLair",
+                "AreaGohtsLair",
+                "AreaGyorgsLair",
+                "AreaTwinmoldsLair",
+                "OtherKillOdolwa",
+                "OtherKillGoht",
+                "OtherKillGyorg",
+                "OtherKillTwinmold",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 13;
         }
 
         private class MigrationItem

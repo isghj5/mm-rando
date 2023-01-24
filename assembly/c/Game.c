@@ -33,7 +33,12 @@ static void CheckRespawn(GlobalContext* ctxt) {
         case 0: // TEXT_STATE_NONE
             if (curButtons.z && curButtons.r && curButtons.a && ctxt->state.input[0].pressEdge.buttons.s) {
                 ctxt->state.input[0].pressEdge.buttons.s = 0;
-                z2_ShowMessage(ctxt, respawnTextId, NULL);
+                if (GET_PLAYER(ctxt)->stateFlags.state1 & PLAYER_STATE1_EPONA) {
+                    z2_PlaySfx(0x4806); // NA_SE_SY_ERROR
+                    return;
+                } else {
+                    z2_ShowMessage(ctxt, respawnTextId, NULL);
+                }
             }
             break;
         case 4: // TEXT_STATE_CHOICE
