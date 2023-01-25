@@ -388,6 +388,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xAA), ItemPool(ItemCategory.TradeItems, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         TradeItemKafeiLetter,
 
+        [Visible]
         [Repeatable, Temporary, Overwritable]
         [ItemName("Pendant of Memories"), LocationName("Kafei"), Region(Region.LaundryPool)]
         [GossipLocationHint("a posted letter"), GossipItemHint("a cherished necklace", "a symbol of trust")]

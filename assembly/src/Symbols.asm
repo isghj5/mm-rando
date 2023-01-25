@@ -78,6 +78,7 @@
 .definelabel z2_ActorCutscene_SetReturnCamera, 0x800F23C4
 .definelabel z2_Kanfont_LoadAsciiChar, 0x800F4F54
 .definelabel z2_memcpy, 0x800FEC90
+.definelabel z2_Math_CosS, 0x800FED44
 .definelabel z2_Math_Sins, 0x800FED84
 .definelabel z2_HandleInputVelocity, 0x800FF2F8
 .definelabel z2_Math_Vec3f_DistXZ, 0x800FF92C
@@ -100,6 +101,7 @@
 .definelabel z2_CanInteract2, 0x80123358
 .definelabel z2_CanInteract, 0x801233E4
 .definelabel z2_801242DC, 0x801242DC
+.definelabel z2_Player_DrawGetItem, 0x8012697C
 .definelabel z2_PlayerGormanTears, 0x80127594
 .definelabel z2_PlayerBlastMaskAnim, 0x801278F8
 .definelabel z2_PlayerBunnyHoodLimbs, 0x80127A60
@@ -136,6 +138,7 @@
 .definelabel z2_CopyFromMatrixStackTop, 0x801801E8
 .definelabel z2_CopyToMatrixStackTop, 0x8018020C
 .definelabel z2_GetMatrixStackTop, 0x80180234
+.definelabel z2_TranslateMatrix, 0x8018029C
 .definelabel z2_TransformMatrixStackTop, 0x801812FC
 .definelabel z2_ShiftMatrix, 0x80181A40
 .definelabel z2_GetAudioTable, 0x80190294

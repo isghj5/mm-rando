@@ -143,8 +143,8 @@ namespace MMR.Randomizer.Utils
                 newItem = RomData.GetItemList[item.GetItemIndex().Value];
             }
 
-            // set values for draw flags for some mask checks
-            if (getItemIndex is 0x80 or 0x81 or 0x84 or 0x88 or 0x8A)
+            // set values for draw flags for some mask checks (and pendant of memories)
+            if (getItemIndex is 0x80 or 0x81 or 0x84 or 0x88 or 0x8A or 0xAB)
             {
                 MaskConfigUtils.UpdateMaskConfig(itemObject, newItem, item, getItemIndex);
             }
