@@ -1476,6 +1476,7 @@ namespace MMR.Randomizer.GameObjects
             Scene.WoodfallTemple, Scene.SnowheadTemple, Scene.GreatBayTemple, Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple,
             Scene.StockPotInn, Scene.BeneathTheWell, Scene.StoneTower)]
         //*/
+        [SwitchFlagsPlacement(mask: 0xFF, shift: 0)]
         UnusedStoneTowerPlatform = 0xC7, // Bg_F40_Swlift
 
         EmptyC8 = 0xC8,
@@ -2143,6 +2144,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(277)]
         [ObjectListIndex(0xA1)]
         [ActorInstanceSize(0xB78)]
+        [CheckRestricted(Scene.MountainVillage, variant:0x7F94, check:Item.MaskDonGero)] // share object with the sirloin goron
         // 8 is smithy goron; blocked because he is too big
         // 7F85: standing outside of shop (complaining about noise)
         // racetrack gorons
@@ -2151,7 +2153,8 @@ namespace MMR.Randomizer.GameObjects
         //[GroundVariants(0x8, 0x7FE2)]
         [GroundVariants(0x8, // smithy
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
-            0x7FA1, 0x7FC1, 0x7F81, 0x7FF2)] // racetrack
+            0x7FA1, 0x7FC1, 0x7F81, 0x7FF2, // racetrack
+            0x7F84, 0x7F94)] // outside of darmani's grave
         [VariantsWithRoomMax(max: 1,
             0x7FE2, 0x7F85, 0x7F86, 0x7F87)]
         [VariantsWithRoomMax(max: 0, variant: 0x8)] // too big
@@ -3981,8 +3984,14 @@ namespace MMR.Randomizer.GameObjects
         //[AlignedCompanionActor(VariousWorldSounds2, CompanionAlignment.OnTop, ourVariant: -1, variant: 0x0144)] // lottery music
         LotteryKiosk = 0x239, // En_Kujiya
 
+        [ActorizerEnabled]
         [FileID(529)]
         [ObjectListIndex(0xA1)]
+        [CheckRestricted(check: Item.MaskDonGero)]
+        [GroundVariants(0x0)]
+        //[VariantsWithRoomMax]
+        [OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
         GoronWithGeroMask = 0x23A, // En_Geg
 
         //[ActorizerEnabled] // boring since its hidden unless you wear one often junk mask, just decreases chances of noticable enemies
