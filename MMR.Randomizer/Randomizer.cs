@@ -229,7 +229,13 @@ namespace MMR.Randomizer
                 Item.OtherKillTwinmold,
             };
 
+            var bossRemains = ItemUtils.BossRemains().ToList();
+
             var randomized = Enumerable.Range(0, 4).ToList().OrderBy(_ => Random.Next()).ToList();
+
+            //var changes = new List<Action>();
+            var dependenciesToChange = new List<(int, int, Item)>();
+            var conditionalsToChange = new List<(int, int, int, Item)>();
 
             for (var i = 0; i < randomized.Count; i++)
             {
@@ -250,6 +256,40 @@ namespace MMR.Randomizer
                 ItemList[exit].NewLocation = targetExit;
                 ItemList[exit].IsRandomized = true;
                 ItemList[kill].NewLocation = targetKill;
+
+                var remain = bossRemains[toIndex];
+                var targetRemain = bossRemains[fromIndex];
+
+                foreach (var io in ItemList)
+                {
+                    for (var ci = 0; ci < io.Conditionals.Count; ci++)
+                    {
+                        for (var cj = 0; cj < io.Conditionals[ci].Count; cj++)
+                        {
+                            if (io.Conditionals[ci][cj] == remain)
+                            {
+                                conditionalsToChange.Add((io.ID, ci, cj, targetRemain));
+                            }
+                        }
+                    }
+                    for (var di = 0; di < io.DependsOnItems.Count; di++)
+                    {
+                        if (io.DependsOnItems[di] == remain)
+                        {
+                            dependenciesToChange.Add((io.ID, di, targetRemain));
+                        }
+                    }
+                }
+            }
+
+            foreach (var (item, i, j, newRemain) in conditionalsToChange)
+            {
+                ItemList[item].Conditionals[i][j] = newRemain;
+            }
+
+            foreach (var (item, i, newRemain) in dependenciesToChange)
+            {
+                ItemList[item].DependsOnItems[i] = newRemain;
             }
         }
 
