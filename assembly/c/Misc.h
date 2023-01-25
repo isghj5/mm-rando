@@ -40,14 +40,12 @@ typedef struct {
     u32 questItemStorage    : 1;
     // Version 1 flags
     u32 closeCows           : 1;
-    u32 freestandingOld     : 1;
     u32 questConsume        : 2;
     u32 arrowCycle          : 1;
     u32 arrowMagicShow      : 1;
     // Version 2 flags
     u32 elegySpeedup        : 1;
     u32 continuousDekuHop   : 1;
-    u32 shopModelsOld       : 1;
     u32 progressiveUpgrades : 1;
     u32 iceTrapQuirks       : 1;
     u32 mikauEarlyBeach     : 1;
@@ -59,7 +57,7 @@ typedef struct {
     u32 autoInvert          : 2;
     u32 hiddenRupeesSparkle : 1;
     u32 saferGlitches       : 1;
-    u32                     : 5;
+    u32                     : 7;
 } MiscFlags;
 
 typedef union {

@@ -269,21 +269,19 @@ namespace MMR.Randomizer.Asm
             this.OcarinaUnderwater = ((flags >> 27) & 1) == 1;
             this.QuestItemStorage = ((flags >> 26) & 1) == 1;
             this.CloseCows = ((flags >> 25) & 1) == 1;
-            //this.FreestandingModels = ((flags >> 24) & 1) == 1;
-            this.ArrowCycling = ((flags >> 21) & 1) == 1;
-            this.ContinuousDekuHopping = ((flags >> 18) & 1) == 1;
-            //this.ShopModels = ((flags >> 17) & 1) == 1;
-            this.ProgressiveUpgrades = ((flags >> 16) & 1) == 1;
-            this.IceTrapQuirks = ((flags >> 15) & 1) == 1;
-            this.EarlyMikau = ((flags >> 14) & 1) == 1;
-            this.FairyChests = ((flags >> 13) & 1) == 1;
-            this.TargetHealth = ((flags >> 12) & 1) == 1;
-            this.ClimbAnything = ((flags >> 11) & 1) == 1;
-            this.FreeScarecrow = ((flags >> 10) & 1) == 1;
-            this.FillWallet = ((flags >> 9) & 1) == 1;
-            this.AutoInvert = (AutoInvertState)((flags >> 7) & 3);
-            this.HiddenRupeesSparkle = ((flags >> 6) & 1) == 1;
-            this.SaferGlitches = ((flags >> 5) & 1) == 1;
+            this.ArrowCycling = ((flags >> 22) & 1) == 1;
+            this.ContinuousDekuHopping = ((flags >> 19) & 1) == 1;
+            this.ProgressiveUpgrades = ((flags >> 18) & 1) == 1;
+            this.IceTrapQuirks = ((flags >> 17) & 1) == 1;
+            this.EarlyMikau = ((flags >> 16) & 1) == 1;
+            this.FairyChests = ((flags >> 15) & 1) == 1;
+            this.TargetHealth = ((flags >> 14) & 1) == 1;
+            this.ClimbAnything = ((flags >> 13) & 1) == 1;
+            this.FreeScarecrow = ((flags >> 12) & 1) == 1;
+            this.FillWallet = ((flags >> 11) & 1) == 1;
+            this.AutoInvert = (AutoInvertState)((flags >> 9) & 3);
+            this.HiddenRupeesSparkle = ((flags >> 8) & 1) == 1;
+            this.SaferGlitches = ((flags >> 7) & 1) == 1;
         }
 
         /// <summary>
@@ -299,24 +297,22 @@ namespace MMR.Randomizer.Asm
             flags |= (this.OcarinaUnderwater ? (uint)1 : 0) << 27;
             flags |= (this.QuestItemStorage ? (uint)1 : 0) << 26;
             flags |= (this.CloseCows ? (uint)1 : 0) << 25;
-            //flags |= (this.FreestandingModels ? (uint)1 : 0) << 24;
-            flags |= (((uint)this.QuestConsume) & 3) << 22;
-            flags |= (this.ArrowCycling ? (uint)1 : 0) << 21;
-            flags |= (this.ArrowMagic ? (uint)1 : 0) << 20;
-            flags |= (this.ElegySpeedup ? (uint)1 : 0) << 19;
-            flags |= (this.ContinuousDekuHopping ? (uint)1 : 0) << 18;
-            //flags |= (this.ShopModels ? (uint)1 : 0) << 17;
-            flags |= (this.ProgressiveUpgrades ? (uint)1 : 0) << 16;
-            flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 15;
-            flags |= (this.EarlyMikau ? (uint)1 : 0) << 14;
-            flags |= (this.FairyChests ? (uint)1 : 0) << 13;
-            flags |= (this.TargetHealth ? (uint)1 : 0) << 12;
-            flags |= (this.ClimbAnything ? (uint)1 : 0) << 11;
-            flags |= (this.FreeScarecrow ? (uint)1 : 0) << 10;
-            flags |= (this.FillWallet ? (uint)1 : 0) << 9;
-            flags |= (((uint)this.AutoInvert) & 3) << 7;
-            flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 6;
-            flags |= (this.SaferGlitches ? (uint)1 : 0) << 5;
+            flags |= (((uint)this.QuestConsume) & 3) << 23;
+            flags |= (this.ArrowCycling ? (uint)1 : 0) << 22;
+            flags |= (this.ArrowMagic ? (uint)1 : 0) << 21;
+            flags |= (this.ElegySpeedup ? (uint)1 : 0) << 20;
+            flags |= (this.ContinuousDekuHopping ? (uint)1 : 0) << 19;
+            flags |= (this.ProgressiveUpgrades ? (uint)1 : 0) << 18;
+            flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 17;
+            flags |= (this.EarlyMikau ? (uint)1 : 0) << 16;
+            flags |= (this.FairyChests ? (uint)1 : 0) << 15;
+            flags |= (this.TargetHealth ? (uint)1 : 0) << 14;
+            flags |= (this.ClimbAnything ? (uint)1 : 0) << 13;
+            flags |= (this.FreeScarecrow ? (uint)1 : 0) << 12;
+            flags |= (this.FillWallet ? (uint)1 : 0) << 11;
+            flags |= (((uint)this.AutoInvert) & 3) << 9;
+            flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 8;
+            flags |= (this.SaferGlitches ? (uint)1 : 0) << 7;
             return flags;
         }
     }

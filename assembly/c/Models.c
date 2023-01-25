@@ -867,7 +867,7 @@ void Models_DrawOcarinaLimb(GlobalContext* ctxt, Actor* actor) {
 }
 
 bool Models_DrawSmithyItem(Actor* actor, GlobalContext* ctxt) {
-    if (!MISC_CONFIG.flags.freestanding){
+    if (!MISC_CONFIG.drawFlags.freestanding){
         return false;
     }
 
