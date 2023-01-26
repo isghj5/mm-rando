@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <z64.h>
+#include "ActorHelper.h"
 #include "ArrowCycle.h"
 #include "Misc.h"
 #include "Reloc.h"
@@ -139,6 +140,11 @@ static void UpdateCButton(ActorPlayer* player, GlobalContext* ctxt, const struct
  * Function called on delayed frame to finish processing the arrow cycle.
  **/
 static void HandleFrameDelay(ActorPlayer* player, GlobalContext* ctxt, Actor* arrow) {
+    // Sanity check: Ensure arrow is still an allocated actor after delay frame.
+    if (!ActorHelper_DoesActorExist(arrow, ctxt)) {
+        return;
+    }
+
     s16 prevEffectState = gSaveContext.extra.magicConsumeState;
     const struct ArrowInfo* curInfo = GetInfo(arrow->params);
     if (arrow != NULL && curInfo != NULL) {
