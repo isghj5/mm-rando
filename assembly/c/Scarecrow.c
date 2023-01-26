@@ -47,9 +47,7 @@ bool Scarecrow_ShouldSpawn(ActorEnKakasi* actor, GlobalContext* ctxt) {
         if (player->ocarinaCutsceneActor == &(actor->base)) {
             // Check if pulling out ocarina is complete (outside of typical actor cutscene).
             // Logic inferred from player_actor code. See (vanilla RDRAM): 0x8076FB2C
-            const bool condition1 = (player->unkAA5 == 4) || (player->unk241 != 0) || (player->frozenTimer != 0);
-            const bool condition2 = (player->frozenTimer != 0) && (ctxt->msgCtx.unk1202A == 4);
-            return condition1 && condition2;
+            return (player->frozenTimer != 0) && (ctxt->msgCtx.unk1202A == 4);
         }
     }
     // This is checking an extra condition for Free Scarecrow, so always return true if disabled.
