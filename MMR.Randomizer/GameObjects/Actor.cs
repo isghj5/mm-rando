@@ -1171,7 +1171,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0xF1)]
         [FileID(143)]
-        [CheckRestricted(Item.HeartPieceNotebookMayor)]
+        [CheckRestricted(Scene.MayorsResidence, variant:0, Item.HeartPieceNotebookMayor)]
         // 1 scoffing at poster, 2 is shouting at the sky looker
         // 0X03 is a walking type
         [GroundVariants(1, 2,
