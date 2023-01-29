@@ -71,7 +71,7 @@ namespace MMR.DiscordBot.Modules
                 return;
             }
             var channel = Context.Client.GetChannel(logChannel.ChannelId) as IMessageChannel;
-            await channel.SendMessageAsync(message);
+            await channel.SendMessageAsync($"<t:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}:f> [{_mmrService.GetType().Name}] - {message}");
         }
 
         [Command("help")]
@@ -619,21 +619,6 @@ namespace MMR.DiscordBot.Modules
             {
                 _mmrService.Kill();
             }
-        }
-
-        [Command("log")]
-        [RequireOwner]
-        public async Task SetLog()
-        {
-            var logChannel = await LogChannelRepository.Single(_ => true);
-            if (logChannel != null)
-            {
-                await LogToDiscord($"No longer logging to channel {logChannel.ChannelId}");
-                await LogChannelRepository.DeleteById(logChannel.ChannelId);
-            }
-
-            await LogChannelRepository.Save(new LogChannelEntity { ChannelId = Context.Channel.Id });
-            await LogToDiscord($"Now logging to channel {Context.Channel.Id}");
         }
     }
 }
