@@ -24,7 +24,7 @@ namespace MMR.Randomizer
 {
     public class Randomizer
     {
-        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString();
+        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString() + "-beta";
 
         private Random Random { get; set; }
 
@@ -229,7 +229,13 @@ namespace MMR.Randomizer
                 Item.OtherKillTwinmold,
             };
 
+            var bossRemains = ItemUtils.BossRemains().ToList();
+
             var randomized = Enumerable.Range(0, 4).ToList().OrderBy(_ => Random.Next()).ToList();
+
+            //var changes = new List<Action>();
+            var dependenciesToChange = new List<(int, int, Item)>();
+            var conditionalsToChange = new List<(int, int, int, Item)>();
 
             for (var i = 0; i < randomized.Count; i++)
             {
@@ -250,6 +256,40 @@ namespace MMR.Randomizer
                 ItemList[exit].NewLocation = targetExit;
                 ItemList[exit].IsRandomized = true;
                 ItemList[kill].NewLocation = targetKill;
+
+                var remain = bossRemains[toIndex];
+                var targetRemain = bossRemains[fromIndex];
+
+                foreach (var io in ItemList)
+                {
+                    for (var ci = 0; ci < io.Conditionals.Count; ci++)
+                    {
+                        for (var cj = 0; cj < io.Conditionals[ci].Count; cj++)
+                        {
+                            if (io.Conditionals[ci][cj] == remain)
+                            {
+                                conditionalsToChange.Add((io.ID, ci, cj, targetRemain));
+                            }
+                        }
+                    }
+                    for (var di = 0; di < io.DependsOnItems.Count; di++)
+                    {
+                        if (io.DependsOnItems[di] == remain)
+                        {
+                            dependenciesToChange.Add((io.ID, di, targetRemain));
+                        }
+                    }
+                }
+            }
+
+            foreach (var (item, i, j, newRemain) in conditionalsToChange)
+            {
+                ItemList[item].Conditionals[i][j] = newRemain;
+            }
+
+            foreach (var (item, i, newRemain) in dependenciesToChange)
+            {
+                ItemList[item].DependsOnItems[i] = newRemain;
             }
         }
 
@@ -1637,7 +1677,11 @@ namespace MMR.Randomizer
             PlaceOcarinaAndSongOfTime(itemPool);
             PlaceBossRemains(itemPool);
 
-            if (_settings.BespokeItemPlacementOrder)
+            if (_settings.ItemPlacement == ItemPlacement.Random)
+            {
+                PlaceRandomItems(itemPool);
+            }
+            else if (_settings.ItemPlacement == ItemPlacement.Bespoke)
             {
                 PlaceBespokeItems(itemPool);
             }
@@ -1661,11 +1705,141 @@ namespace MMR.Randomizer
             _randomized.ItemList = ItemList;
         }
 
+        /// <summary>
+        /// Items are placed in the following order:
+        /// 1. Songs if they are not placed with items. Epona's first, the the rest in a random order in order to minimize failures.
+        /// 2. All items that can effect progression in a random order.
+        /// 3. Everything else is placed by the old algorithm. The order shouldn't matter because they aren't tied to logic.
+        /// </summary>
+        private void PlaceRandomItems(List<Item> itemPool)
+        {
+
+            var itemList = new List<Item>();
+
+            for (var i = Item.TradeItemRoomKey; i <= Item.TradeItemMamaLetter; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.TradeItemMoonTear; i <= Item.TradeItemOceanDeed; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.ItemWoodfallMap; i <= Item.ItemStoneTowerKey4; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.StartingSword; i <= Item.StartingHeartContainer2; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.UpgradeRazorSword; i <= Item.UpgradeRoyalWallet; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.SongHealing; i <= Item.SongOath; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.MaskPostmanHat; i <= Item.MaskZora; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.MaskDeku; i <= Item.ItemNotebook; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.CollectibleSwampSpiderToken1; i <= Item.CollectibleOceanSpiderToken30; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.CollectibleStrayFairyClockTown; i <= Item.CollectibleStrayFairyStoneTower15; i++)
+            {
+                itemList.Add(i);
+            }
+
+            // Could maybe just add the items that affect logic but unless
+            // there's a bunch of seed rolling failures it's probably not a big deal.
+            // Same goes for trading shop items.
+            for (var i = Item.BottleCatchFairy; i <= Item.BottleCatchMushroom; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.ItemRanchBarnMainCowMilk; i <= Item.ItemCoastGrottoCowMilk2; i++)
+            {
+                itemList.Add(i);
+            }
+
+            for (var i = Item.ShopItemTradingPostRedPotion; i <= Item.ShopItemZoraRedPotion; i++)
+            {
+                itemList.Add(i);
+            }
+
+            itemList.RemoveAll(item => _settings.CustomStartingItemList.Contains(item));
+
+            if (!_settings.AddSongs)
+            {
+                var songs = new List<Item>();
+                foreach (var item in itemList)
+                {
+                    if (item.IsSong())
+                    {
+                        songs.Add(item);
+                    }
+                }
+
+                foreach (var song in songs)
+                {
+                    itemList.Remove(song);
+                }
+
+                if (songs.Contains(Item.SongEpona))
+                {
+                    PlaceItem(Item.SongEpona, itemPool);
+                    songs.Remove(Item.SongEpona);
+                }
+
+                while (songs.Count != 0)
+                {
+                    var song = songs.Random(Random);
+                    PlaceItem(song, itemPool);
+                    songs.Remove(song);
+                }
+            }
+
+            while (itemList.Count != 0)
+            {
+                var item = itemList.Random(Random);
+                PlaceItem(item, itemPool);
+                itemList.Remove(item);
+            }
+        }
+
+
         private void PlaceBespokeItems(List<Item> itemPool)
         {
+            var densityRating = (int)Math.Max(500 - Math.Floor((itemPool.Count - _randomized.Settings.CustomJunkLocations.Count) * Random.NextDouble(0.7, 1.3)), 0);
+
+            var alwaysOrdered = new List<List<Item>>
+            {
+                new List<Item> { Item.UpgradeRoyalWallet, Item.UpgradeGiantWallet, Item.UpgradeAdultWallet },
+            };
+
             var canPlaceSongs = !_settings.AddSongs;
             void PlaceBespokeItem(Item item)
             {
+                item = alwaysOrdered
+                    .FirstOrDefault(list => list.Contains(item))
+                    ?.FirstOrDefault(listItem => !ItemList[listItem].NewLocation.HasValue) ?? item;
                 if (!item.IsSong() || canPlaceSongs)
                 {
                     PlaceItem(item, itemPool);
@@ -1685,31 +1859,104 @@ namespace MMR.Randomizer
             PlaceBespokeItem(Item.UpgradeBiggestQuiver);
             PlaceBespokeItem(Item.UpgradeBigQuiver);
 
-            PlaceBespokeItemGroup(Enumerable.Range((int)Item.TradeItemRoomKey, 4).Cast<Item>().Append(Item.MaskKafei).ToList().Random(3, Random));
+            var tradeGroup = new List<Item>
+            {
+                Item.TradeItemRoomKey,
+                Item.TradeItemKafeiLetter,
+                Item.TradeItemMamaLetter,
+                Item.MaskKafei,
+            };
 
             if (_settings.PriceMode == PriceMode.None)
             {
                 PlaceBespokeItem(Item.UpgradeRoyalWallet);
-                PlaceBespokeItem(Item.UpgradeGiantWallet);
-                PlaceBespokeItem(Item.UpgradeAdultWallet);
+                tradeGroup.Add(Item.UpgradeGiantWallet);
+                tradeGroup.Add(Item.UpgradeAdultWallet);
             }
+            else
+            {
+                tradeGroup.Add(Item.UpgradeRoyalWallet);
+                tradeGroup.Add(Item.UpgradeGiantWallet);
+            }
+
+            PlaceBespokeItemGroup(tradeGroup.Random((int)Math.Round(densityRating / 70.0), Random));
+
+            var tier1 = new Item[]
+            {
+                Item.MaskGreatFairy,
+                Item.MaskScents,
+                Item.TradeItemKafeiLetter,
+                Item.TradeItemMamaLetter,
+                Item.MaskKafei,
+            };
+
+            var tier2 = new Item[]
+            {
+                Item.MaskPostmanHat,
+                Item.MaskAllNight,
+                Item.MaskKeaton,
+                Item.MaskBremen,
+                Item.MaskTruth,
+                Item.MaskBunnyHood,
+                Item.MaskRomani,
+                Item.MaskCircusLeader,
+                Item.MaskCouple,
+                Item.MaskKamaro,
+            };
+
+            var tier3 = new Item[]
+            {
+                Item.TradeItemMoonTear,
+                Item.TradeItemLandDeed,
+                Item.TradeItemSwampDeed,
+                Item.TradeItemMountainDeed,
+                Item.TradeItemOceanDeed,
+            };
+
+            var tier4 = new Item[]
+            {
+                Item.MaskStone,
+                Item.MaskDonGero,
+                Item.TradeItemRoomKey,
+                Item.TradeItemPendant,
+            };
+
+            var blastBomb = new Item[]
+            {
+                Item.ItemBombBag,
+                Item.MaskBlast,
+            };
+
+            var captainKeg = new Item[]
+            {
+                Item.ItemPowderKeg,
+                Item.MaskCaptainHat,
+            };
+
+            var newWaveElegy = new Item[]
+            {
+                Item.SongNewWaveBossaNova,
+                Item.SongElegy,
+            };
+
+            PlaceBespokeItemGroup(tier2.Random((int)Math.Round(densityRating / 50.0), Random));
+            PlaceBespokeItemGroup(tier3.Random(1, Random));
 
             var roll = Random.NextDouble();
             if (roll < 0.6)
             {
                 PlaceBespokeItemGroup(Item.ItemHookshot, Item.ItemBow, Item.MaskZora, Item.SongSonata, Item.SongLullaby);
+                PlaceBespokeItem(Item.MaskFierceDeity);
                 PlaceBespokeItem(Item.ItemLightArrow);
                 PlaceBespokeItem(Item.ItemIceArrow);
                 PlaceBespokeItem(Item.SongEpona);
                 PlaceBespokeItem(Item.SongHealing);
                 PlaceBespokeItem(Item.SongSoaring);
-                PlaceBespokeItem(Item.SongNewWaveBossaNova);
-                PlaceBespokeItem(Item.SongElegy);
+                PlaceBespokeItemGroup(newWaveElegy);
                 PlaceBespokeItem(Item.SongStorms);
                 PlaceBespokeItem(Item.SongOath);
                 PlaceBespokeItemGroup(Item.ItemFireArrow, Item.MaskDeku, Item.MaskGoron);
-                PlaceBespokeItem(Item.ItemBombBag);
-                PlaceBespokeItem(Item.MaskBlast);
+                PlaceBespokeItemGroup(blastBomb);
             }
             else if (roll < 0.85)
             {
@@ -1723,19 +1970,18 @@ namespace MMR.Randomizer
                 PlaceBespokeItem(Item.SongEpona);
                 PlaceBespokeItem(Item.SongHealing);
                 PlaceBespokeItem(Item.SongSoaring);
-                PlaceBespokeItem(Item.SongNewWaveBossaNova);
-                PlaceBespokeItem(Item.SongElegy);
+                PlaceBespokeItemGroup(newWaveElegy);
                 PlaceBespokeItem(Item.SongStorms);
                 PlaceBespokeItem(Item.SongLullaby);
                 PlaceBespokeItem(Item.SongOath);
+                PlaceBespokeItem(Item.MaskFierceDeity);
                 PlaceBespokeItem(Item.MaskZora);
                 PlaceBespokeItem(Item.ItemBow);
                 PlaceBespokeItem(Item.ItemFireArrow);
                 PlaceBespokeItem(Item.ItemLightArrow);
                 PlaceBespokeItem(Item.ItemIceArrow);
                 PlaceBespokeItem(Item.MaskDeku);
-                PlaceBespokeItem(Item.ItemBombBag);
-                PlaceBespokeItem(Item.MaskBlast);
+                PlaceBespokeItemGroup(blastBomb);
             }
             else
             {
@@ -1746,24 +1992,22 @@ namespace MMR.Randomizer
                 PlaceBespokeItem(Item.SongEpona);
                 PlaceBespokeItem(Item.SongHealing);
                 PlaceBespokeItem(Item.SongSoaring);
-                PlaceBespokeItem(Item.SongNewWaveBossaNova);
-                PlaceBespokeItem(Item.SongElegy);
+                PlaceBespokeItemGroup(newWaveElegy);
                 PlaceBespokeItem(Item.SongStorms);
                 PlaceBespokeItem(Item.SongOath);
+                PlaceBespokeItem(Item.MaskFierceDeity);
                 PlaceBespokeItem(Item.MaskZora);
                 PlaceBespokeItem(Item.MaskGoron);
                 PlaceBespokeItem(Item.ItemBow);
                 PlaceBespokeItem(Item.ItemFireArrow);
                 PlaceBespokeItem(Item.ItemLightArrow);
                 PlaceBespokeItem(Item.ItemIceArrow);
-                PlaceBespokeItem(Item.ItemBombBag);
-                PlaceBespokeItem(Item.MaskBlast);
+                PlaceBespokeItemGroup(blastBomb);
             }
 
             PlaceBespokeItem(Item.ItemPictobox);
             PlaceBespokeItem(Item.ItemLens);
-            PlaceBespokeItem(Item.ItemPowderKeg);
-            PlaceBespokeItem(Item.MaskCaptainHat);
+            PlaceBespokeItemGroup(captainKeg);
             PlaceBespokeItem(Item.UpgradeMirrorShield);
             PlaceBespokeItem(Item.FairyDoubleMagic);
             PlaceBespokeItem(Item.FairyMagic);
@@ -1772,26 +2016,31 @@ namespace MMR.Randomizer
             PlaceBespokeItem(Item.MaskGibdo);
             PlaceBespokeItem(Item.MaskGaro);
 
-            if (_settings.PriceMode != PriceMode.None)
-            {
-                PlaceBespokeItem(Item.UpgradeRoyalWallet);
-                PlaceBespokeItem(Item.UpgradeGiantWallet);
-                PlaceBespokeItem(Item.UpgradeAdultWallet);
-            }
+            PlaceBespokeItem(Item.UpgradeRoyalWallet);
+            PlaceBespokeItem(Item.UpgradeGiantWallet);
+            PlaceBespokeItem(Item.UpgradeAdultWallet);
 
             canPlaceSongs = true;
 
             if (_settings.AddSongs)
             {
                 PlaceBespokeItem(Item.SongEpona);
-                PlaceBespokeItem(Item.SongSonata);
-                PlaceBespokeItem(Item.SongLullaby);
-                PlaceBespokeItem(Item.SongNewWaveBossaNova);
-                PlaceBespokeItem(Item.SongElegy);
+                PlaceBespokeItemGroup(new Item[]
+                {
+                    Item.SongSonata,
+                    Item.SongLullaby,
+                    Item.SongNewWaveBossaNova,
+                    Item.SongElegy,
+                });
                 PlaceBespokeItem(Item.SongHealing);
                 PlaceBespokeItem(Item.SongOath);
                 PlaceBespokeItem(Item.SongSoaring);
             }
+
+            PlaceBespokeItemGroup(tier1);
+            PlaceBespokeItemGroup(tier2);
+            PlaceBespokeItemGroup(tier3);
+            PlaceBespokeItemGroup(tier4);
 
             for (var i = Item.MaskPostmanHat; i <= Item.MaskKamaro; i++)
             {
@@ -1806,10 +2055,14 @@ namespace MMR.Randomizer
                 PlaceBespokeItem(i);
             }
 
-            PlaceBespokeItem(Item.ItemFairySword);
-            PlaceBespokeItem(Item.FairySpinAttack);
+            PlaceBespokeItemGroup(new Item[]
+            {
+                Item.ItemFairySword,
+                Item.FairySpinAttack,
+                Item.UpgradeGildedSword,
+            });
+
             PlaceBespokeItem(Item.FairyDoubleDefense);
-            PlaceBespokeItem(Item.UpgradeGildedSword);
             PlaceBespokeItem(Item.UpgradeRazorSword);
             PlaceBespokeItem(Item.StartingSword);
 

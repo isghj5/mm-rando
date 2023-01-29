@@ -11,21 +11,21 @@ namespace MMR.Randomizer.Attributes
     {
         public enum RestrictionType
         {
-            KeepWithinRegion,
+            KeepWithinTemples,
             KeepWithinArea,
             KeepWithinOverworld,
         }
 
         public Func<Item, Item, ItemList, bool> RestrictPlacement { get; }
 
-        private readonly IReadOnlyCollection<Region?> _dungeonRegions = new List<Region?> { Region.WoodfallTemple, Region.SnowheadTemple, Region.GreatBayTemple, Region.StoneTowerTemple }.AsReadOnly();
+        private readonly IReadOnlyCollection<Region?> _templeRegions = new List<Region?> { Region.WoodfallTemple, Region.SnowheadTemple, Region.GreatBayTemple, Region.StoneTowerTemple }.AsReadOnly();
 
         public RestrictedPlacementAttribute(RestrictionType restrictionType)
         {
             switch (restrictionType)
             {
-                case RestrictionType.KeepWithinRegion:
-                    RestrictPlacement = KeepWithinRegion;
+                case RestrictionType.KeepWithinTemples:
+                    RestrictPlacement = KeepWithinTemples;
                     break;
                 case RestrictionType.KeepWithinArea:
                     RestrictPlacement = KeepWithinArea;
@@ -36,14 +36,14 @@ namespace MMR.Randomizer.Attributes
             }
         }
 
-        private bool KeepWithinRegion(Item item, Item location, ItemList itemList)
+        private bool KeepWithinTemples(Item item, Item location, ItemList itemList)
         {
-            return item.Region(itemList) == location.Region(itemList);
+            return location == Item.SongOath || (location.Region(itemList).HasValue && _templeRegions.Contains(location.Region(itemList).Value));
         }
 
         private bool KeepWithinOverworld(Item item, Item location, ItemList itemList)
         {
-            return !location.Region(itemList).HasValue || !_dungeonRegions.Contains(location.Region(itemList).Value);
+            return location != Item.SongOath && (!location.Region(itemList).HasValue || !_templeRegions.Contains(location.Region(itemList).Value));
         }
 
         private bool KeepWithinArea(Item item, Item location, ItemList itemList)
@@ -70,7 +70,7 @@ namespace MMR.Randomizer.Attributes
                 return regionArea;
             }
 
-            return getNewRegionArea(item, itemList) == (_dungeonRegions.Contains(location.Region(itemList)) ? getNewRegionArea(location, itemList) : location.RegionArea(itemList));
+            return getNewRegionArea(item, itemList) == (_templeRegions.Contains(location.Region(itemList)) ? getNewRegionArea(location, itemList) : location.RegionArea(itemList));
         }
     }
 }

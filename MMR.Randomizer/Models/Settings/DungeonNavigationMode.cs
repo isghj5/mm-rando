@@ -10,12 +10,12 @@ namespace MMR.Randomizer.Models
     {
         Default,
 
-        [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinRegion)]
-        [Description("Randomization algorithm will place any randomized Dungeon Maps and Compasses into a location within the same region.")]
-        KeepWithinDungeon = 1 << 1,
+        [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinTemples)]
+        [Description("Randomization algorithm will place any randomized Dungeon Maps and Compasses into any temple.")]
+        KeepWithinTemples = 1 << 1,
 
         [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinArea)]
-        [Description("Randomization algorithm will place any randomized Dungeon Maps and Compasses into a location in or near the temple.")]
+        [Description("Randomization algorithm will place any randomized Dungeon Maps and Compasses into a location in or near the temple they're for.")]
         KeepWithinArea = 1 << 2,
 
         [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.KeepWithinOverworld)]

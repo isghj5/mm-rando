@@ -71,7 +71,7 @@ namespace MMR.DiscordBot.Modules
                 return;
             }
             var channel = Context.Client.GetChannel(logChannel.ChannelId) as IMessageChannel;
-            await channel.SendMessageAsync(message);
+            await channel.SendMessageAsync($"<t:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}:f> [{_mmrService.GetType().Name}] - {message}");
         }
 
         [Command("help")]

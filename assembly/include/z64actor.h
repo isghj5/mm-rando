@@ -283,7 +283,8 @@ typedef struct {
     /* 0xB72 */ u16 floorType; // Determines sound effect used while walking.
     /* 0xB74 */ UNK_TYPE1 padB74[0x28];
     /* 0xB9C */ Vec3f unkB9C;
-    /* 0xBA8 */ UNK_TYPE1 padBA8[0x11C];
+    /* 0xBA8 */ UNK_TYPE1 padBA8[0x44];
+    /* 0xBEC */ Vec3f bodyPartsPos[0x12];
     /* 0xCC4 */ z_Matrix attachmentMtx0; //not sure what uses this
     /* 0xD04 */ z_Matrix attachmentMtx1; //used by mirror shield lightray actor
     /* 0xD44 */ UNK_TYPE1 padD44[0x18];

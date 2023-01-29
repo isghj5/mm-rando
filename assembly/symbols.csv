@@ -76,6 +76,7 @@
 0x800F23C4,z2_ActorCutscene_SetReturnCamera
 0x800F4F54,z2_Kanfont_LoadAsciiChar
 0x800FEC90,z2_memcpy
+0x800FED44,z2_Math_CosS
 0x800FED84,z2_Math_Sins
 0x800FF2F8,z2_HandleInputVelocity
 0x800FF92C,z2_Math_Vec3f_DistXZ
@@ -127,6 +128,7 @@
 0x8018019C,z2_PushMatrixStackCopy
 0x801801CC,z2_PopMatrixStack
 0x80180234,z2_GetMatrixStackTop
+0x8018029C,z2_TranslateMatrix
 0x801812FC,z2_TransformMatrixStackTop
 0x80181A40,z2_ShiftMatrix
 0x80190294,z2_GetAudioTable
@@ -136,6 +138,7 @@
 0x8019F230,z2_PlaySfxCancel
 0x801A3098,z2_SetBGM2
 0x800B9010,z2_PlayLoopingSfxAtActor
+0x8012697C,z2_Player_DrawGetItem
 0x80127A60,z2_PlayerBunnyHoodLimbs
 0x801284A0,z2_PlayerGreatFairyLimbs
 0x80127594,z2_PlayerGormanTears
