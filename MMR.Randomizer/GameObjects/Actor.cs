@@ -4520,6 +4520,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x110)]
         [CheckRestricted(Item.ItemNotebook)]
         [GroundVariants(0x0, 0x01, 0x2, 0x3, 0x4, 0x10, 0x11, 0x12, 0x13, 0x14)]
+        [VariantsWithRoomMax(max:0 , // for some reason these guys can break the game's ability to draw certain things also crash
+            variant: 0x0, 0x01, 0x2, 0x3, 0x4, 0x10, 0x11, 0x12, 0x13, 0x14)]
         [UnkillableAllVariants]
         BombersBlueHat = 0x280, // En_Bombers
 
