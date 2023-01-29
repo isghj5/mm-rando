@@ -320,7 +320,7 @@ namespace MMR.Randomizer.Asm
     {
         public ushort CollectableTableFileIndex { get; set; }
 
-        public ushort BankWithdrawFee { get; set; }
+        public ushort BankWithdrawFee { get; set; } = 4;
 
         /// <summary>
         /// Convert to a <see cref="uint"/> integer.

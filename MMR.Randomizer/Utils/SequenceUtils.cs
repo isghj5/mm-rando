@@ -203,7 +203,7 @@ namespace MMR.Randomizer.Utils
                 var codeFile = RomData.MMFileList[codeFID];
                 int audioseqIndexTableOffset = Addresses.SeqTable - codeFile.Addr;
 
-                int entryaddr = audioseqIndexTableOffset + (seq.Replaces * 16);
+                int entryaddr = audioseqIndexTableOffset + (seq.MM_seq * 16);
                 var size = (int) ReadWriteUtils.Arr_ReadU32(codeFile.Data, entryaddr + 4);
                 return RoundTo16(size);
             }
@@ -307,7 +307,17 @@ namespace MMR.Randomizer.Utils
                             }
                             foreach (var line in categoryData.Split(delimitingChar))
                             {
-                                categoriesList.Add(Convert.ToInt32(line.Trim(), 16));
+                                try
+                                {
+                                    categoriesList.Add(Convert.ToInt32(line.Trim(), 16));
+                                }
+                                catch // empty line wont convert or bad category value, ignore
+                                {
+                                    #if RELEASE
+                                    continue; // Release ignores music bugs and keeps going
+                                    #endif
+                                    throw new Exception($"Error: Categories cannot be read: {currentSong.Name}");
+                                }
                             }
                             currentSong.Type = categoriesList;
                         }
@@ -935,9 +945,7 @@ namespace MMR.Randomizer.Utils
             if (replacementSong != null)
             {
                 log.AppendLine(" * generalized replacement with " + replacementSong.Name + " song, with categories: " + String.Join(", ", replacementSong.Type.Select(x => "0x" + x.ToString("X2"))));
-                replacementSong.Replaces = targetSlot.Replaces;
-                log.AppendLine($"{targetSlot.Name,-50} {"APROX",+10} -> " + replacementSong.Name);
-                unassignedSequences.Remove(replacementSong);
+                AssignSequenceSlot(targetSlot, replacementSong, unassignedSequences, "APROX", log);
                 return;
             }
 
@@ -1000,7 +1008,7 @@ namespace MMR.Randomizer.Utils
 
         public static void AssignSequenceSlot(SequenceInfo slotSequence, SequenceInfo replacementSequence, List<SequenceInfo> remainingSequences, string debugString, StringBuilder log)
         {
-            // if the song has a custom instrument set, lock the sequence, update inst set value, debug output
+            // if the song has a custom instrument set: lock the sequence, update inst set value, debug output
             if (replacementSequence.SequenceBinaryList != null && replacementSequence.SequenceBinaryList[0] != null && replacementSequence.SequenceBinaryList[0].InstrumentSet != null)
             {
                 if (replacementSequence.SequenceBinaryList[0].InstrumentSet.BankSlot == CurrentFreeBank)
@@ -1021,6 +1029,7 @@ namespace MMR.Randomizer.Utils
                 }
                 replacementSequence.SequenceBinaryList = new List<SequenceBinaryData> { replacementSequence.SequenceBinaryList[0] }; // lock the one we want
             }
+
             replacementSequence.Replaces = slotSequence.Replaces; // tells the rando later what song to put into slot_seq
             //the -40 and +10 pad out the text to allign on the same middle section for visual clarity
             log.AppendLine($"{slotSequence.Name,-40} {debugString,+10} -> " + replacementSequence.Name);

@@ -2472,7 +2472,7 @@ namespace MMR.Randomizer
                             .EndTextBox()
                             .CompileTimeWrap((wrapped) =>
                             {
-                                wrapped.Text("He said he's steal my ")
+                                wrapped.Text("He said he'd steal my ")
                                 .Red(moonsTearItem.DisplayName())
                                 .Text("... There was no stopping him.")
                                 ;
@@ -3037,13 +3037,32 @@ namespace MMR.Randomizer
 
         private void WriteCrashDebuggerShow()
         {
-            /// in vanilla, if you hit the crash screen you have to know the secret button combo to see debug info
+            /// in vanilla, if you trigger the crash screen you have to know the secret button combo
+            /// to bypass the red bar and to see debug info
             /// here we bypass this to allow players to see the debug info and post it for us to help fix
 
-            // we need to set 0x80082C1C to 0x1000000C which bypasses
-            //   the conditional branches detecting if you haven't hit the right buttons, leaving function
-            var bootFile = RomData.MMFileList[1].Data;
-            ReadWriteUtils.Arr_WriteU32(bootFile, 0x2BBC, 0x1000000C);
+            var bootFile     = RomData.MMFileList[1].Data;
+            var codeFileData = RomData.MMFileList[31].Data;
+
+            // when you first enter the crash debugger you are greeted by red bar on black screen:
+            //   this means the crash debugger is waiting for a secret code to actually start showing data (Fault_WaitForButtonCombo)
+            // we want to avoid this dumb password, so we skip over the code that calls it
+            // but we also have to tell the fault to not auto-scroll, since that bugs me, you can still turn it back on with Gamepad-L
+            //  vanilla: 
+            // 003998 800839F8 91CF07CF /  lbu         $t7, 0x7CF($t6)
+            // 00399C 800839FC 11E00005 /  beqz        $t7, .L80083A14
+            // 0039A0 80083A00 00000000 /   nop
+            //  replacement:
+            // 003998 800839F8 240F0000 /  addiu       $t7 $zero $zero  # load 0 into t7
+            // 00399C 800839FC 1000000A /  b           0xA              # we want to skip the rest of the code
+            // 0039A0 80083A00 A1CF07CF /  sb          $t7, 0x7CF($t6)  # sFaultContext->autoscroll = 0 (false)
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x3998, 0x240F0000);
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x399C, 0x1000000A);
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x39A0, 0xA1CF07CF);
+
+            // a few lines later, autoscroll is set to ON: remove
+            // we don't branch past it because its buried in a jal delay slot for the color setting functions, which we want
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x39D0, 0x00000000); // disable autoscroll set to ON
 
             void SwapBytes(int start, int end, byte searchByte, byte replaceByte)
             {
@@ -3056,7 +3075,9 @@ namespace MMR.Randomizer
                 }
             }
 
-            // the H after each hex value for registers (H for base 16 'hex' ?) is hard for me to read
+            // the "H" character after each hex value for registers (H for base 16 'hex' ?)
+            //   is hard for me to read, my dumb brain keeps thinking its a valid digit and seeing 9 digits
+            // so I want to remove it from all of the hex values:
             // starts RAM 80098648, on rom it starts on 0x19640, within boot file its 0x185E0
             SwapBytes(0x185E0, 0x18720, (byte) 'H', (byte) ' '); // general registers
             SwapBytes(0x18760, 0x188D0, (byte) 'H', (byte) ' '); // floating point registers
@@ -3066,10 +3087,54 @@ namespace MMR.Randomizer
             SwapBytes(0x181E0, 0x18230, (byte) 'x', (byte) 'X'); // dma section
             SwapBytes(0x18470, 0x18B04, (byte) 'x', (byte) 'X'); // the rest of hex values for the whole debug crasher
 
-            // show V-PC for overlays to help find vram address in actors, useful
-            // yes I know it shows this page _later_, but a lot of users will only wait for the first one,
-            // no reason to have stupid question marks instead
+            // show V-PC (VRAM function address) for overlays in the stack trace, which identifies the actor it belongs to
+            // this turns the stack trace into a version that is shown LAST, why they show two, one with question marks and one with data?
+            //  probably does something useful in debug rom, but the questionmarks is useless to us, so switch to useful version
             ReadWriteUtils.Arr_WriteU32(bootFile, 0x31D8, 0x00000000); // replace branch with nop
+
+            // again, convert lower case hex to upper case, this time for the actor overlay table printers
+            //  but also, these tables have other problems, so multiple changes:
+
+            // change the table labels so "Name", the unused field of filenames, is removed and tiny "cn" is replaced with Num
+            // also "No." changed to A.ID, as "No." could be confused for count, but its actorId
+            byte[] newTableLabelString = Encoding.ASCII.GetBytes("A.Id RAMStart -   RAMEnd Num."); // replaces "No. RamStart- RamEnd cn  Name\n"
+            var newTableSubString = Encoding.ASCII.GetBytes("%4d %08X - %08X %4d "); // replaces "%3d %08x-%08x %3d %s\n"
+            ReadWriteUtils.Arr_Insert(newTableLabelString, 0, newTableLabelString.Length, codeFileData, 0x137104);
+            ReadWriteUtils.Arr_Insert(newTableSubString,   0, newTableSubString.Length,   codeFileData, 0x137124);
+
+            // again, convert lower case hex to upper case, this time for the actor struct table printers
+            newTableLabelString = Encoding.ASCII.GetBytes("A.Grp  RAM       A.Id Params "); // replaces "No. Actor   Name Part SegName"
+            newTableSubString = Encoding.ASCII.GetBytes("%5d  %08X  %4X %04X "); // replaces "%3d %08x %04x %3d %s\n"
+            ReadWriteUtils.Arr_Insert(newTableLabelString, 0, newTableLabelString.Length, codeFileData, 0x136F18);
+            ReadWriteUtils.Arr_Insert(newTableSubString,   0, newTableSubString.Length,   codeFileData, 0x136F38);
+
+            // for some reason this table is even worse, it shows both actor category and actor group,
+            //  the two should only be different if the actor has chosen to change its category after init... useless
+            // we can change the second one to params with only two lines of code changed
+            codeFileData[0xE08B] = 0x1C; //  lhu  t6,2(s0)   ->  lhu  t6,0x1C(s0)
+            codeFileData[0xE0B3] = 0x1C; //  lhu  t6,2(s0)   ->  lhu  t6,0x1C(s0)
+
+            // they set the text padding of this text to -2 so they could show filenames, but retail rom doesnt show those anyway
+            // changing it back to zero requires changing one instruction
+            ReadWriteUtils.Arr_WriteU32(codeFileData, 0x19F00, 0x00002725); //  li a0, -2   ->   or a0, $ZERO
+            ReadWriteUtils.Arr_WriteU32(codeFileData, 0xE034,  0x00002725); //  li a0, -2   ->   or a0, $ZERO
+
+            // the stack dump by default shows us code that crashed around PC...
+            // but I think there are better ways to see that since our code is not self-modifying
+            // this should load SP instead of PC into the default address
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x2DA4, 0x00A0B025); // move  $s6, $a0   ->   move  $s6, $a1
+
+            // now that the first stack trace shows us what we want, the second one is redundant and meaningless: remove
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x3A38, 0x00000000); // jal to Fault_DrawStackTrace -> NOP
+            // and after that second stack trace there is an extra wait, have to press two A buttons to get through it so remove
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x3A4C, 0x00000000); // jal to Fault_WaitForInput -> NOP
+
+            // the stack dump page, if you get there without autoscroll, resets the pos offset with the A button... but it seems broken
+            //  instead, A should just leave the stack dump, we can re-set to SP or PC from C buttons
+            ReadWriteUtils.Arr_WriteU32(bootFile, 0x2EBC, 0x10000022); // branch all the way down to the function exit
+
+            // todo: figure out if we can make the screenshots say they are screen shots at the top
+            // todo: can we add a symbol to the screen if autoscroll is turned on
         }
 
         private void WriteStartupStrings()

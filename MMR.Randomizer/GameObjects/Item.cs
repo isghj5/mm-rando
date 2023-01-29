@@ -72,7 +72,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x11E), ItemPool(ItemCategory.MainInventory, LocationCategory.Purchases, ClassicCategory.BaseItemPool)]
         ItemMagicBean,
 
-        [Repeatable]
+        [Repeatable, Purchaseable]
         [StartingItemId(0x0C)]
         [ItemName("Powder Keg"), LocationName("Powder Keg Challenge"), Region(Region.GoronVillage)]
         [GossipLocationHint("a large goron"), GossipItemHint("gunpowder", "a dangerous item", "an explosive barrel")]
