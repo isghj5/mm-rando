@@ -2144,14 +2144,14 @@ namespace MMR.Randomizer.GameObjects
         [FileID(277)]
         [ObjectListIndex(0xA1)]
         [ActorInstanceSize(0xB78)]
-        [CheckRestricted(Scene.MountainVillage, variant:0x7F94, check:Item.MaskDonGero)] // share object with the sirloin goron
+        //[CheckRestricted(Scene.MountainVillage, variant:0x7F94, check:Item.MaskDonGero)] // share object with the sirloin goron
         // 8 is smithy goron; blocked because he is too big
         // 7F85: standing outside of shop (complaining about noise)
         // racetrack gorons
         // 0x7FA1: jumping goron, 0x7FC1 stretching goron pair
         // 0x7F81: single leg stretch goron, 0x7F81 single amr stretch goron
         //[GroundVariants(0x8, 0x7FE2)]
-        [GroundVariants(0x8, // smithy
+        [GroundVariants(//0x8, // smithy goron
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
             0x7FA1, 0x7FC1, 0x7F81, 0x7FF2, // racetrack
             0x7F84, 0x7F94)] // outside of darmani's grave
@@ -3111,10 +3111,18 @@ namespace MMR.Randomizer.GameObjects
         En_Lift_Nuts = 0x1C9, // En_Lift_Nuts
 
         // TODO try with new actor rando, ignore placement until I create a version that does not move
-        //[ActorizerEnabled] //busted
+        [ActorizerEnabled] //busted
         [FileID(420)]
         [ObjectListIndex(0x1AF)]
+        [CheckRestricted(Scene.IkanaGraveyard, variant: 0x814, Item.CollectableIkanaGraveyardDay2Bats1)]
+        [CheckRestricted(Scene.DampesHouse, variant: 0x10, Item.ItemBottleDampe)]
+        [GroundVariants(0x1, 0x10, 0xFFF3,  // basement
+            0x12, // trembling
+            0x814)] // outside
+        [VariantsWithRoomMax(max: 0, variant: 0x1, 0x814)] //assumption is that hes too hardcoded to put places for now
+        [VariantsWithRoomMax(max: 0, variant: 0xFFF3, 0x814)] // dont put the digg spots without a digger its just weird, thats weird
         [SwitchFlagsPlacement(mask: 0x7F, shift: 4)]
+        [UnkillableAllVariants]
         Dampe = 0x1CA, // En_Tk
 
         Empty1CB = 0x1CB,
@@ -4506,6 +4514,7 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         BombersYouChase = 0x27F, // En_Bomjimb
 
+        // wait not the ones we chase...?
         [ActorizerEnabled]
         [FileID(599)]
         [ObjectListIndex(0x110)]

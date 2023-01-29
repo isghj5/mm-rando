@@ -2992,63 +2992,73 @@ namespace MMR.Randomizer
                 var fileID = injectedActor.fileID;
                 MMFile file = RomData.MMFileList[fileID];
 
-                int entryLoc = actorOvlTblOffset + (actorID * 32); // overlay table is sorted by actorID
+                try
+                {
 
-                uint oldVROMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x0);
-                uint oldVROMEnd   = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x4);
+                    int entryLoc = actorOvlTblOffset + (actorID * 32); // overlay table is sorted by actorID
 
-                // if build knows where VRAM used to start for this actor, use that
-                // else, use the old VRAM build for the given actor in this slot
-                uint oldVRAMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x08);
-                oldVRAMStart = (injectedActor.buildVramStart != 0) ? (injectedActor.buildVramStart) : (oldVRAMStart);
-                
-                // if it was edited, its not compressed, get new filesize, else diff old address values
-                var uncompresedVROMSize = (file.WasEdited) ? (file.Data.Length) : (file.End - file.Addr);
+                    uint oldVROMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x0);
+                    uint oldVROMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x4);
 
-                // for now since we have the space, just move all injected actors to the end, even if they are smaller
-                // TODO make a list of previously free holes we can stick stuff into and check that
-                file.Addr = previousLastVROMEnd;
-                file.End  = previousLastVROMEnd + uncompresedVROMSize;
-                previousLastVROMEnd = file.End;
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint) file.Addr);
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint) file.End);
+                    // if build knows where VRAM used to start for this actor, use that
+                    // else, use the old VRAM build for the given actor in this slot
+                    uint oldVRAMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x08);
+                    oldVRAMStart = (injectedActor.buildVramStart != 0) ? (injectedActor.buildVramStart) : (oldVRAMStart);
 
-                // we know where in the overlay pointers exist that need to be updated for VROM->VRAM
-                // .reloc stores this info for us as a table of words that contain enough info to help us update
-                // the very last byte in the overlay is (from end) offset
-                //   of the table that declares size of text/data/rodata/bss
-                // following those is a count of the reloc entries, followed by the actual entries
-                var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
-                // the table pointer at the end is an offset from the end, we need to swap it
-                int tableOffset = (int)(file.Data.Length - relocSize);
+                    // if it was edited, its not compressed, get new filesize, else diff old address values
+                    var uncompresedVROMSize = (file.WasEdited) ? (file.Data.Length) : (file.End - file.Addr);
 
-                // the section table only contains section sizes, we need to walk it to know the offsets
-                var sectionOffsets = new int[4];
-                sectionOffsets[0] = 0; // text (always at the start for our overlay system)
-                sectionOffsets[1] = sectionOffsets[0] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 0); // data
-                sectionOffsets[2] = sectionOffsets[1] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 4); // rodata
-                sectionOffsets[3] = sectionOffsets[2] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 8); // bss
+                    // for now since we have the space, just move all injected actors to the end, even if they are smaller
+                    // TODO make a list of previously free holes we can stick stuff into and check that
+                    file.Addr = previousLastVROMEnd;
+                    file.End = previousLastVROMEnd + uncompresedVROMSize;
+                    previousLastVROMEnd = file.End;
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint)file.Addr);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint)file.End);
 
-                // have to move the overlay vram location assume its bigger
-                // calculate the new VRAM and offset for our new overlay VRAM location
-                var  newVRAMSize   = sectionOffsets[3] + relocSize;
-                // TODO check if we can place it in an old hole left behind by a previously moved actor
-                var newVRAMStart = previousLastVRAMEnd;
-                var newVRAMEnd    = (uint)(newVRAMStart + newVRAMSize);
-                var newVRAMOffset = newVRAMStart - oldVRAMStart;
+                    // we know where in the overlay pointers exist that need to be updated for VROM->VRAM
+                    // .reloc stores this info for us as a table of words that contain enough info to help us update
+                    // the very last byte in the overlay is (from end) offset
+                    //   of the table that declares size of text/data/rodata/bss
+                    // following those is a count of the reloc entries, followed by the actual entries
+                    var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
+                    // the table pointer at the end is an offset from the end, we need to swap it
+                    int tableOffset = (int)(file.Data.Length - relocSize);
 
-                // all the pointers and vram locations in the file need to be updated too
-                UpdateOverlayVRAMReloc(file, sectionOffsets, newVRAMOffset);
+                    // the section table only contains section sizes, we need to walk it to know the offsets
+                    var sectionOffsets = new int[4];
+                    sectionOffsets[0] = 0; // text (always at the start for our overlay system)
+                    sectionOffsets[1] = sectionOffsets[0] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 0); // data
+                    sectionOffsets[2] = sectionOffsets[1] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 4); // rodata
+                    sectionOffsets[3] = sectionOffsets[2] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 8); // bss
 
-                uint newInitVarAddr = newVRAMStart + injectedActor.initVarsLocation;
+                    // have to move the overlay vram location assume its bigger
+                    // calculate the new VRAM and offset for our new overlay VRAM location
+                    var newVRAMSize = sectionOffsets[3] + relocSize;
+                    // TODO check if we can place it in an old hole left behind by a previously moved actor
+                    var newVRAMStart = previousLastVRAMEnd;
+                    var newVRAMEnd = (uint)(newVRAMStart + newVRAMSize);
+                    var newVRAMOffset = newVRAMStart - oldVRAMStart;
 
-                // write the VRAM sections of the overlay table entry
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x08, newVRAMStart);
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0C, newVRAMEnd);
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newInitVarAddr);
+                    // all the pointers and vram locations in the file need to be updated too
+                    UpdateOverlayVRAMReloc(file, sectionOffsets, newVRAMOffset);
 
-                previousLastVRAMEnd = newVRAMEnd + (newVRAMEnd % 0x10); // not sure if dma padding matters here
-                RomData.MMFileList[fileID] = file;
+                    uint newInitVarAddr = newVRAMStart + injectedActor.initVarsLocation;
+
+                    // write the VRAM sections of the overlay table entry
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x08, newVRAMStart);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0C, newVRAMEnd);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newInitVarAddr);
+
+                    previousLastVRAMEnd = newVRAMEnd + (newVRAMEnd % 0x10); // not sure if dma padding matters here
+                    RomData.MMFileList[fileID] = file;
+
+                } catch (Exception e)
+                {
+                    throw new Exception($"Error during actor overlay table reorder of" +
+                        $"  actor {actorID} file {fileID}:\n" +
+                        e.ToString());
+                }
             }// end Foreach overlay in overlaylist
         } // end UpdateOverlayTable
 

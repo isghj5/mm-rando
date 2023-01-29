@@ -285,7 +285,7 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x38)]
         [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
-            Actor.Bombiwa, Actor.BronzeBoulder,
+            Actor.Bombiwa, Actor.BronzeBoulder, Actor.CircleOfFire,
             Actor.RegularZora, Actor.SwimmingZora, Actor.WarpDoor)]
         ZoraCape = 0x35,
 
@@ -537,6 +537,8 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BomberHideoutGuard,
                 Actor.Peahat, Actor.Tijo, Actor.ArmosStatue, Actor.ClocktowerGearsAndOrgan, Actor.CircleOfFire, Actor.GibdoWell, // worried about big blocking actors
                 Actor.Wolfos)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BombersYouChase,
+            Actor.IceBlock)] // large one can block teh whole path to hidden chest
         EastClockTown = 0x69,
 
         [FileID(1512)]
