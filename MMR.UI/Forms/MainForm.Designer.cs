@@ -478,18 +478,19 @@ namespace MMR.UI.Forms
             this.lItemPlacement.Location = new System.Drawing.Point(13, 111);
             this.lItemPlacement.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lItemPlacement.Name = "lItemPlacement";
-            this.lItemPlacement.Size = new System.Drawing.Size(93, 15);
+            this.lItemPlacement.Size = new System.Drawing.Size(126, 15);
             this.lItemPlacement.TabIndex = 21;
-            this.lItemPlacement.Text = "Item Placement:";
+            this.lItemPlacement.Text = "Item Placement Order:";
             // 
             // cItemPlacement
             // 
+            this.cItemPlacement.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cItemPlacement.FormattingEnabled = true;
             this.cItemPlacement.Items.AddRange(new object[] {
             "Random",
             "Bespoke",
             "Classic"});
-            this.cItemPlacement.Location = new System.Drawing.Point(113, 103);
+            this.cItemPlacement.Location = new System.Drawing.Point(142, 104);
             this.cItemPlacement.Name = "cItemPlacement";
             this.cItemPlacement.Size = new System.Drawing.Size(121, 23);
             this.cItemPlacement.TabIndex = 20;
