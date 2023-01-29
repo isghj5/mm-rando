@@ -1671,7 +1671,7 @@ namespace MMR.UI.Forms
         private void UpdateNumTricksEnabled()
         {
             var count = _configuration.GameplaySettings.EnabledTricks.Count;
-            lNumTricksEnabled.Text = $"{count} trick{(count == 1 ? "s" : "")} enabled";
+            lNumTricksEnabled.Text = $"{count} trick{(count != 1 ? "s" : "")} enabled";
         }
 
         private void cItemPlacement_SelectedIndexChanged(object sender, EventArgs e)
