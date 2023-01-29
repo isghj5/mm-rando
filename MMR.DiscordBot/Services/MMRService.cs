@@ -192,7 +192,7 @@ namespace MMR.DiscordBot.Services
             processInfo.Arguments = $"{cliDllPath} -output \"{output}.z64\" -seed {seed} -spoiler -patch";
             if (!string.IsNullOrWhiteSpace(settingsPath))
             {
-                processInfo.Arguments += $" -maxImportanceWait 150 -settings \"{settingsPath}\"";
+                processInfo.Arguments += $" -settings \"{settingsPath}\"";
             }
             else if (File.Exists(GetDefaultSettingsPath()))
             {
