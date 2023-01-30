@@ -45,6 +45,7 @@ struct MessageExtensionState {
     s8 currentChar;
     char* currentReplacement;
     u16 currentReplacementLength;
+    char tempStrayFairyCount[4];
 };
 
 const static char articleIndefinite[] = "a "; // intentional trailing space.
@@ -417,6 +418,57 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
         } else if (currentCharacter == 0x02) {
             // end command
             // does nothing by itself
+        } else if (currentCharacter == 0x09) {
+            if (gMessageExtensionState.currentChar == -1) {
+                u16 giIndex = 0xFFFF;
+                u8 count = 0;
+                do {
+                    index++;
+                    giIndex = ctxt->msgCtx.currentMessageRaw[index] << 8;
+                    index++;
+                    giIndex |= ctxt->msgCtx.currentMessageRaw[index];
+                    if (giIndex != 0xFFFF && !MMR_GetGiFlag(giIndex)) {
+                        count++;
+                    }
+                } while (giIndex != 0xFFFF);
+
+                if (count > 0) {
+                    // TODO handle counts above 19
+                    u8 fairyCharIndex = 0;
+                    gMessageExtensionState.tempStrayFairyCount[fairyCharIndex++] = 1; // Red color
+                    if (count >= 10) {
+                        gMessageExtensionState.tempStrayFairyCount[fairyCharIndex++] = '1';
+                        count -= 10;
+                    }
+                    gMessageExtensionState.tempStrayFairyCount[fairyCharIndex++] = '0' + count;
+                    gMessageExtensionState.tempStrayFairyCount[fairyCharIndex++] = 5; // Light Blue color
+                    gMessageExtensionState.currentReplacement = gMessageExtensionState.tempStrayFairyCount;
+                    gMessageExtensionState.currentReplacementLength = fairyCharIndex;
+                    gMessageExtensionState.currentChar = 0;
+                } else {
+                    // TODO maybe clean this up, it's kind of a copy of command 0x01
+                    do {
+                        index++;
+                        currentCharacter = ctxt->msgCtx.currentMessageRaw[index];
+                    } while (currentCharacter != 0x09 || ctxt->msgCtx.currentMessageRaw[index+1] != 0x02);
+                    index++;
+                    args->outputIndex--;
+                    ctxt->msgCtx.currentMessageCharIndex = index;
+                    return -1;
+                }
+            }
+            currentCharacter = ProcessCurrentReplacement(ctxt, args);
+            if (currentCharacter != 0xFF) {
+                return currentCharacter;
+            } else {
+                u16 giIndex = 0xFFFF;
+                do {
+                    index++;
+                    giIndex = ctxt->msgCtx.currentMessageRaw[index] << 8;
+                    index++;
+                    giIndex |= ctxt->msgCtx.currentMessageRaw[index];
+                } while (giIndex != 0xFFFF);
+            }
         } else if (currentCharacter == 0x11) { // begin auto text wrapping
             gMessageExtensionState.isWrapping = true;
         } else if (currentCharacter == 0x12) { // end auto text wrapping
