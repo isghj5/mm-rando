@@ -2997,13 +2997,6 @@ namespace MMR.Randomizer
                         .Select(remain => _randomized.ItemList[remain].NewLocation.Value.Region(_randomized.ItemList)?.Name() ?? "Termina")
                         .Distinct()
                         .ToList();
-                    remainRegions = new List<string>
-                    {
-                        Region.OceanSpiderHouseItems.Name(),
-                        Region.SwampSpiderHouseItems.Name(),
-                        Region.PiratesFortressExterior.Name(),
-                        Region.PiratesFortressInterior.Name(),
-                    };
                     var remainsCount = MessageUtils.NumberToWords(remains.Count());
                     var isAre = remains.Count() == 1 ? "is" : "are";
                     newMessages.Add(new MessageEntryBuilder()

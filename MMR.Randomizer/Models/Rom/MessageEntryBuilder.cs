@@ -208,13 +208,6 @@ namespace MMR.Randomizer.Models.Rom
                 Append(0x09).Append(0x13);
 
             /// <summary>
-            /// Appends the stray fairy region control characters (0x09 0x14) to the message.
-            /// </summary>
-            /// <returns></returns>
-            public MessageBuilder StrayFairyRegions(byte index) =>
-                Append(0x09).Append((byte)(0x14 + index));
-
-            /// <summary>
             /// Appends the runtime item name start control characters (0x09 0x03) to the message and then appends the location's GetItemIndex
             /// </summary>
             /// <returns></returns>

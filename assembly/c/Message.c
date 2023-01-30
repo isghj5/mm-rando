@@ -3,18 +3,13 @@
 #include "MMR.h"
 #include "Pictobox.h"
 
-typedef struct String {
-    char* value;
-    u16 length;
-} String;
-
 typedef struct {
-    String name;
-    String description;
-    String article; // I sell Bombchu. I sell a Recovery Heart. I sell the Song of Storms. I sell an Empty Bottle.
-    String pronoun; // I'll buy it. I'll buy them.
-    String amount; // 150 Rupees for it. What about for 100 Rupees? 150 Rupees for one. What about one for 100 Rupees?
-    String verb; // Do you know what Bombchu are? Do you know what a Recovery Heart is?
+    const char* name;
+    const char* description;
+    const char* article; // I sell Bombchu. I sell a Recovery Heart. I sell the Song of Storms. I sell an Empty Bottle.
+    const char* pronoun; // I'll buy it. I'll buy them.
+    const char* amount; // 150 Rupees for it. What about for 100 Rupees? 150 Rupees for one. What about one for 100 Rupees?
+    const char* verb; // Do you know what Bombchu are? Do you know what a Recovery Heart is?
 } ItemInfo;
 
 struct MessageExtensionState {
@@ -52,45 +47,21 @@ struct MessageExtensionState {
     u16 currentReplacementLength;
 };
 
-const static String articleIndefinite = {
-    .value = "a ", // intentional trailing space.
-    .length = 2,
-};
+const static char articleIndefinite[] = "a "; // intentional trailing space.
 
-const static String articleIndefiniteVowel = {
-    .value = "an ", // intentional trailing space.
-    .length = 3,
-};
+const static char articleIndefiniteVowel[] = "an "; // intentional trailing space.
 
-const static String articleDefinite = {
-    .value = "the ", // intentional trailing space.
-    .length = 4,
-};
+const static char articleDefinite[] = "the "; // intentional trailing space.
 
-const static String articleEmpty = {
-    .value = "",
-    .length = 0,
-};
+const static char articleEmpty[] = "";
 
-const static String pronounSingular = {
-    .value = "it",
-    .length = 2,
-};
+const static char pronounSingular[] = "it";
 
-const static String amountSingular = {
-    .value = " one", // intentional leading space.
-    .length = 4,
-};
+const static char amountSingular[] = " one"; // intentional leading space.
 
-const static String amountDefinite = {
-    .value = " it", // intentional leading space.
-    .length = 3,
-};
+const static char amountDefinite[] = " it"; // intentional leading space.
 
-const static String verbSingular = {
-    .value = "is",
-    .length = 2,
-};
+const static char verbSingular[] = "is";
 
 static struct MessageExtensionState gMessageExtensionState = {
     .isWrapping = false,
@@ -98,14 +69,8 @@ static struct MessageExtensionState gMessageExtensionState = {
     .lastSpaceCursorPosition = 0,
 
     .recoveryHeart = {
-        .name = {
-            .value = "Recovery Heart",
-            .length = 14,
-        },
-        .description = {
-            .value = "Replenishes a small amount of your life energy.",
-            .length = 47,
-        },
+        .name = "Recovery Heart",
+        .description = "Replenishes a small amount of your life energy.",
         .article = articleIndefinite,
         .pronoun = pronounSingular,
         .amount = amountSingular,
@@ -113,10 +78,7 @@ static struct MessageExtensionState gMessageExtensionState = {
     },
 
     .redPotion = {
-        .name = {
-            .value = "Red Potion",
-            .length = 10,
-        },
+        .name = "Red Potion",
         .article = articleIndefinite,
         .pronoun = pronounSingular,
         .amount = amountSingular,
@@ -124,10 +86,7 @@ static struct MessageExtensionState gMessageExtensionState = {
     },
 
     .chateauRomani = {
-        .name = {
-            .value = "Chateau Romani",
-            .length = 14,
-        },
+        .name = "Chateau Romani",
         .article = articleEmpty,
         .pronoun = pronounSingular,
         .amount = amountDefinite,
@@ -135,10 +94,7 @@ static struct MessageExtensionState gMessageExtensionState = {
     },
 
     .milk = {
-        .name = {
-            .value = "Milk",
-            .length = 4,
-        },
+        .name = "Milk",
         .article = articleEmpty,
         .pronoun = pronounSingular,
         .amount = amountDefinite,
@@ -146,10 +102,7 @@ static struct MessageExtensionState gMessageExtensionState = {
     },
 
     .goldDust = {
-        .name = {
-            .value = "Gold Dust",
-            .length = 9,
-        },
+        .name = "Gold Dust",
         .article = articleEmpty,
         .pronoun = pronounSingular,
         .amount = amountDefinite,
@@ -157,42 +110,24 @@ static struct MessageExtensionState gMessageExtensionState = {
     },
 
     .swordKokiri = {
-        .name = {
-            .value = "Kokiri Sword",
-            .length = 12,
-        },
-        .description = {
-            .value = "A sword created by forest folk.",
-            .length = 31,
-        },
+        .name = "Kokiri Sword",
+        .description = "A sword created by forest folk.",
         .article = articleIndefinite,
         .pronoun = pronounSingular,
         .amount = amountSingular,
         .verb = verbSingular,
     },
     .swordRazor = {
-        .name = {
-            .value = "Razor Sword",
-            .length = 11,
-        },
-        .description = {
-            .value = "A sharp sword forged at the smithy.",
-            .length = 35,
-        },
+        .name = "Razor Sword",
+        .description = "A sharp sword forged at the smithy.",
         .article = articleIndefinite,
         .pronoun = pronounSingular,
         .amount = amountSingular,
         .verb = verbSingular,
     },
     .swordGilded = {
-        .name = {
-            .value = "Gilded Sword",
-            .length = 14,
-        },
-        .description = {
-            .value = "A very sharp sword forged from gold dust.",
-            .length = 41,
-        },
+        .name = "Gilded Sword",
+        .description = "A very sharp sword forged from gold dust.",
         .article = articleIndefinite,
         .pronoun = pronounSingular,
         .amount = amountSingular,
@@ -200,28 +135,16 @@ static struct MessageExtensionState gMessageExtensionState = {
     },
 
     .magicSmall = {
-        .name = {
-            .value = "Magic Power",
-            .length = 11,
-        },
-        .description = {
-            .value = "Grants the ability to use magic.",
-            .length = 32,
-        },
+        .name = "Magic Power",
+        .description = "Grants the ability to use magic.",
         .article = articleEmpty,
         .pronoun = pronounSingular,
         .amount = amountDefinite,
         .verb = verbSingular,
     },
     .magicLarge = {
-        .name = {
-            .value = "Extended Magic Power",
-            .length = 20,
-        },
-        .description = {
-            .value = "Grants the ability to use lots of magic.",
-            .length = 40,
-        },
+        .name = "Extended Magic Power",
+        .description = "Grants the ability to use lots of magic.",
         .article = articleEmpty,
         .pronoun = pronounSingular,
         .amount = amountDefinite,
@@ -229,42 +152,24 @@ static struct MessageExtensionState gMessageExtensionState = {
     },
 
     .walletAdult = {
-        .name = {
-            .value = "Adult Wallet",
-            .length = 12,
-        },
-        .description = {
-            .value = "This can hold up to a maximum of 200 rupees.",
-            .length = 44,
-        },
+        .name = "Adult Wallet",
+        .description = "This can hold up to a maximum of 200 rupees.",
         .article = articleIndefiniteVowel,
         .pronoun = pronounSingular,
         .amount = amountSingular,
         .verb = verbSingular,
     },
     .walletGiant = {
-        .name = {
-            .value = "Giant Wallet",
-            .length = 12,
-        },
-        .description = {
-            .value = "This can hold up to a maximum of 500 rupees.",
-            .length = 44,
-        },
+        .name = "Giant Wallet",
+        .description = "This can hold up to a maximum of 500 rupees.",
         .article = articleIndefinite,
         .pronoun = pronounSingular,
         .amount = amountSingular,
         .verb = verbSingular,
     },
     .walletRoyal = {
-        .name = {
-            .value = "Royal Wallet",
-            .length = 12,
-        },
-        .description = {
-            .value = "This can hold up to a maximum of 999 rupees.",
-            .length = 44,
-        },
+        .name = "Royal Wallet",
+        .description = "This can hold up to a maximum of 999 rupees.",
         .article = articleIndefinite,
         .pronoun = pronounSingular,
         .amount = amountSingular,
@@ -272,42 +177,24 @@ static struct MessageExtensionState gMessageExtensionState = {
     },
 
     .bombBagSmall = {
-        .name = {
-            .value = "Bomb Bag",
-            .length = 8,
-        },
-        .description = {
-            .value = "This can hold up to a maximum of 20 bombs.",
-            .length = 42,
-        },
+        .name = "Bomb Bag",
+        .description = "This can hold up to a maximum of 20 bombs.",
         .article = articleIndefinite,
         .pronoun = pronounSingular,
         .amount = amountSingular,
         .verb = verbSingular,
     },
     .bombBagBig = {
-        .name = {
-            .value = "Big Bomb Bag",
-            .length = 12,
-        },
-        .description = {
-            .value = "This can hold up to a maximum of 30 bombs.",
-            .length = 42,
-        },
+        .name = "Big Bomb Bag",
+        .description = "This can hold up to a maximum of 30 bombs.",
         .article = articleIndefinite,
         .pronoun = pronounSingular,
         .amount = amountSingular,
         .verb = verbSingular,
     },
     .bombBagBiggest = {
-        .name = {
-            .value = "Biggest Bomb Bag",
-            .length = 16,
-        },
-        .description = {
-            .value = "This can hold up to a maximum of 40 bombs.",
-            .length = 42,
-        },
+        .name = "Biggest Bomb Bag",
+        .description = "This can hold up to a maximum of 40 bombs.",
         .article = articleDefinite,
         .pronoun = pronounSingular,
         .amount = amountDefinite,
@@ -315,42 +202,24 @@ static struct MessageExtensionState gMessageExtensionState = {
     },
 
     .quiverSmall = {
-        .name = {
-            .value = "Hero's Bow",
-            .length = 10,
-        },
-        .description = {
-            .value = "Use it to shoot arrows.",
-            .length = 23,
-        },
+        .name = "Hero's Bow",
+        .description = "Use it to shoot arrows.",
         .article = articleIndefinite,
         .pronoun = pronounSingular,
         .amount = amountSingular,
         .verb = verbSingular,
     },
     .quiverLarge = {
-        .name = {
-            .value = "Large Quiver",
-            .length = 12,
-        },
-        .description = {
-            .value = "This can hold up to a maximum of 40 arrows.",
-            .length = 43,
-        },
+        .name = "Large Quiver",
+        .description = "This can hold up to a maximum of 40 arrows.",
         .article = articleIndefinite,
         .pronoun = pronounSingular,
         .amount = amountSingular,
         .verb = verbSingular,
     },
     .quiverLargest = {
-        .name = {
-            .value = "Largest Quiver",
-            .length = 14,
-        },
-        .description = {
-            .value = "This can hold up to a maximum of 50 arrows.",
-            .length = 47,
-        },
+        .name = "Largest Quiver",
+        .description = "This can hold up to a maximum of 50 arrows.",
         .article = articleDefinite,
         .pronoun = pronounSingular,
         .amount = amountDefinite,
@@ -420,6 +289,20 @@ static void CheckTextWrapping(GlobalContext* ctxt, MessageCharacterProcessVariab
     }
 }
 
+static u8 ProcessCurrentReplacement(GlobalContext* ctxt, MessageCharacterProcessVariables* args) {
+    if (gMessageExtensionState.currentChar >= 0 && gMessageExtensionState.currentChar < gMessageExtensionState.currentReplacementLength) {
+        ctxt->msgCtx.currentMessageCharIndex--;
+        u8 currentCharacter = gMessageExtensionState.currentReplacement[gMessageExtensionState.currentChar++];
+
+        CheckTextWrapping(ctxt, args, currentCharacter);
+
+        ctxt->msgCtx.currentMessageDisplayed[args->outputIndex] = currentCharacter;
+        return currentCharacter;
+    }
+    gMessageExtensionState.currentChar = -1;
+    return 0xFF;
+}
+
 /**
  * TODO
  **/
@@ -483,27 +366,25 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
 
                     if (itemSet) {
                         gMessageExtensionState.currentChar = 0;
+                        const char* text;
                         if (currentCharacter == 0x03) {
-                            gMessageExtensionState.currentReplacement = item.name.value;
-                            gMessageExtensionState.currentReplacementLength = item.name.length;
+                            text = item.name;
                         } else if (currentCharacter == 0x04) {
-                            gMessageExtensionState.currentReplacement = item.description.value;
-                            gMessageExtensionState.currentReplacementLength = item.description.length;
+                            text = item.description;
                         } else if (currentCharacter == 0x05) {
-                            gMessageExtensionState.currentReplacement = item.article.value;
-                            gMessageExtensionState.currentReplacementLength = item.article.length;
+                            text = item.article;
                         } else if (currentCharacter == 0x06) {
-                            gMessageExtensionState.currentReplacement = item.pronoun.value;
-                            gMessageExtensionState.currentReplacementLength = item.pronoun.length;
+                            text = item.pronoun;
                         } else if (currentCharacter == 0x07) {
-                            gMessageExtensionState.currentReplacement = item.amount.value;
-                            gMessageExtensionState.currentReplacementLength = item.amount.length;
+                            text = item.amount;
                         } else if (currentCharacter == 0x08) {
-                            gMessageExtensionState.currentReplacement = item.verb.value;
-                            gMessageExtensionState.currentReplacementLength = item.verb.length;
+                            text = item.verb;
                         } else {
+                            text = "";
                             // error?
                         }
+                        gMessageExtensionState.currentReplacement = (char*)text;
+                        gMessageExtensionState.currentReplacementLength = z2_strlen(text);
                     }
                 }
                 if (gMessageExtensionState.currentChar == -1) {
@@ -512,16 +393,10 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
                     return -1;
                 }
             }
-            if (gMessageExtensionState.currentChar < gMessageExtensionState.currentReplacementLength) {
-                ctxt->msgCtx.currentMessageCharIndex--;
-                currentCharacter = gMessageExtensionState.currentReplacement[gMessageExtensionState.currentChar++];
-
-                CheckTextWrapping(ctxt, args, currentCharacter);
-
-                ctxt->msgCtx.currentMessageDisplayed[args->outputIndex] = currentCharacter;
+            currentCharacter = ProcessCurrentReplacement(ctxt, args);
+            if (currentCharacter != 0xFF) {
                 return currentCharacter;
             }
-            gMessageExtensionState.currentChar = -1;
             currentCharacter = 0x01;
         }
 
@@ -557,19 +432,10 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
                 gMessageExtensionState.currentReplacementLength = z2_strlen(text);
                 gMessageExtensionState.currentChar = 0;
             }
-            if (gMessageExtensionState.currentChar < gMessageExtensionState.currentReplacementLength) {
-                ctxt->msgCtx.currentMessageCharIndex--;
-                currentCharacter = gMessageExtensionState.currentReplacement[gMessageExtensionState.currentChar++];
-
-                CheckTextWrapping(ctxt, args, currentCharacter);
-
-                ctxt->msgCtx.currentMessageDisplayed[args->outputIndex] = currentCharacter;
+            currentCharacter = ProcessCurrentReplacement(ctxt, args);
+            if (currentCharacter != 0xFF) {
                 return currentCharacter;
             }
-            gMessageExtensionState.currentChar = -1;
-            currentCharacter = 0x01;
-        } else if (currentCharacter >= 0x14 && currentCharacter <= 0x17) {
-
         } else {
             index--;
         }
