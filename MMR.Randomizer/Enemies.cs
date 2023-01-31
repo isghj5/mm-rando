@@ -210,7 +210,8 @@ namespace MMR.Randomizer
                     {
                         // TODO: make it random rather than yes/no
                         var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
-                        var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
+                        //var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
+                        var itemIsNotJunk = ! ItemUtils.IsJunk(itemInCheck);
                         if (itemIsNotJunk)
                         {
                             return true;
