@@ -1192,10 +1192,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(144)]
         [ObjectListIndex(0xF2)]
+        [CheckRestricted(Item.MaskBunnyHood)]
         [GroundVariants(0x0FFF)]
         [VariantsWithRoomMax(max: 9, variant: 0x0FFF)] // 10 without grog is probably broken
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.CuccoShack)]
+        //[EnemizerScenesExcluded(Scene.CuccoShack)]
         CuccoChick = 0x9D, // En_Nwc
 
         // unsused, might have been part of lens on chest effect they wanted to do like OOT
@@ -4054,7 +4055,8 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x220)]
         [CheckRestricted(Item.HeartPieceEvan)]
         [GroundVariants(0xFE01, 0xFE02, 0xFE0F)]
-        [WaterVariants(0xFE01, 0xFE02, 0xFE0F)]
+        //[WaterVariants(0xFE01, 0xFE02, 0xFE0F)] // also, do not put regular variant as water our typing system is dumb, doesnt know which is which
+        [VariantsWithRoomMax(max:0, variant:0xFE21, 0xFE02, 0xFE0F)]
         // no limits for now, don't know what his actor does
         [UnkillableAllVariants]
         Evan = 0x241, // En_Zos
@@ -4075,11 +4077,12 @@ namespace MMR.Randomizer.GameObjects
             variant: 2, 9)]
         GoronSGoro = 0x242, // En_S_Goro
 
-        //[ActorizerEnabled] // does not spawn, time varibles? second required object?
+        [ActorizerEnabled] 
         [FileID(538)]
         [ObjectListIndex(0x4)]
+        [CheckRestricted(Item.HeartPieceNotebookGran1, Item.HeartPieceNotebookGran2)]
         [GroundVariants(0)]
-        [VariantsWithRoomMax(max: 1, variant: 0)]
+        [VariantsWithRoomMax(max: 1, variant: 0)] // does not spawn, time varibles? second required object?
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.StockPotInn)]
         AnjusGrandma = 0x243, // En_Nb
@@ -4478,14 +4481,17 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [ObjectListIndex(0x24B)]
         [FileID(594)]
+        [CheckRestricted(Scene.WestClockTown, variant:0x7E02, Item.HeartPieceNotebookRosa)]
         // 0xA00 is lobby pacing
         // params: 8000 is a talking flag, 0x7E00 >> 9 is pathing, 0x7E00 is non-pathing though, the one value
-        [GroundVariants(0x7E01, 0xFE00, 0xFE01, 0x7E02, 0xFE02, 0x7E02)]
+        [GroundVariants(0x7E01, 0xFE00, 0xFE01,
+            0x7E02, // dancing in torch light
+            0xFE02)]
         [PathingVariants(0xA00, 0x7E01, 0x8000, 0xFE01, 0x7E02)]
         [PathingTypeVarsPlacement(mask: 0x7E00, shift:9)]
         //[OnlyOneActorPerRoom]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.WestClockTown)]
+        //[EnemizerScenesExcluded(Scene.WestClockTown)]
         RosaSisters = 0x27B, // En_Rz
 
         [FileID(595)]
