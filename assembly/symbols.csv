@@ -80,6 +80,7 @@
 0x800FED84,z2_Math_Sins
 0x800FF2F8,z2_HandleInputVelocity
 0x800FF92C,z2_Math_Vec3f_DistXZ
+0x80100504,z2_Lib_SegmentedToVirtual
 0x8010069C,z2_WriteHeartColors
 0x8010CFBC,z2_8010CFBC
 0x8010D480,z2_8010D480
@@ -110,6 +111,7 @@
 0x8012F2E0,z2_object_spawn
 0x8012F4FC,z2_load_objects
 0x8012F608,z2_GetObjectIndex
+0x80131758,z2_AnimatedMat_Draw
 0x80133B3C,z2_SkelAnime_DrawLimb
 0x80133F28,z2_SkelAnime_DrawLimb2
 0x801343C0,z2_SkelAnime_DrawLimb3
@@ -129,6 +131,8 @@
 0x801801CC,z2_PopMatrixStack
 0x80180234,z2_GetMatrixStackTop
 0x8018029C,z2_TranslateMatrix
+0x8018039C,z2_Matrix_Scale
+0x80180478,z2_Matrix_RotateXS
 0x801812FC,z2_TransformMatrixStackTop
 0x80181A40,z2_ShiftMatrix
 0x80190294,z2_GetAudioTable

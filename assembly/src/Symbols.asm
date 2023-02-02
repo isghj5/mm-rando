@@ -82,6 +82,7 @@
 .definelabel z2_Math_Sins, 0x800FED84
 .definelabel z2_HandleInputVelocity, 0x800FF2F8
 .definelabel z2_Math_Vec3f_DistXZ, 0x800FF92C
+.definelabel z2_Lib_SegmentedToVirtual, 0x80100504
 .definelabel z2_WriteHeartColors, 0x8010069C
 .definelabel z2_8010CFBC, 0x8010CFBC
 .definelabel z2_8010D480, 0x8010D480
@@ -118,6 +119,7 @@
 .definelabel z2_object_spawn, 0x8012F2E0
 .definelabel z2_load_objects, 0x8012F4FC
 .definelabel z2_GetObjectIndex, 0x8012F608
+.definelabel z2_AnimatedMat_Draw, 0x80131758
 .definelabel z2_SkelAnime_DrawLimb, 0x80133B3C
 .definelabel z2_SkelAnime_DrawLimb2, 0x80133F28
 .definelabel z2_SkelAnime_DrawLimb3, 0x801343C0
@@ -139,6 +141,8 @@
 .definelabel z2_CopyToMatrixStackTop, 0x8018020C
 .definelabel z2_GetMatrixStackTop, 0x80180234
 .definelabel z2_TranslateMatrix, 0x8018029C
+.definelabel z2_Matrix_Scale, 0x8018039C
+.definelabel z2_Matrix_RotateXS, 0x80180478
 .definelabel z2_TransformMatrixStackTop, 0x801812FC
 .definelabel z2_ShiftMatrix, 0x80181A40
 .definelabel z2_GetAudioTable, 0x80190294

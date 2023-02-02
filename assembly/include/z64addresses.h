@@ -57,6 +57,8 @@ extern void z2_PopMatrixStack();
 extern f32* z2_GetMatrixStackTop();
 extern void z2_TransformMatrixStackTop(Vec3f* pos, Vec3s* rot);
 extern void z2_TranslateMatrix(f32 x, f32 y, f32 z, u8 matrixMode);
+extern void z2_Matrix_Scale(f32 x, f32 y, f32 z, u8 matrixMode);
+extern void z2_Matrix_RotateXS(s16 x, u8 matrixMode);
 extern Gfx* z2_ShiftMatrix(GraphicsContext* gfxCtx);
 extern AudioInfo* z2_GetAudioTable(u8 audioType);
 extern void z2_PlaySfx(u32 id);
@@ -68,6 +70,7 @@ extern void z2_PlayLoopingSfxAtActor(Actor* actor, u32 id);
 extern Actor* z2_SpawnActor(ActorContext* actorCtxt, GlobalContext* ctxt, u16 id, f32 x, f32 y, f32 z, u16 rx, u16 ry, u16 rz, u16 params);
 extern void z2_UpdateButtonUsability(GlobalContext* ctxt);
 extern void z2_WriteHeartColors(GlobalContext* ctxt);
+extern void* z2_Lib_SegmentedToVirtual(void* ptr);
 extern u8 z2_CheckItemObtainability(u32 item);
 extern void z2_RemoveItem(u32 item, u8 slot);
 extern void z2_ToggleSfxDampen(int enable);
@@ -205,6 +208,7 @@ extern f32 z2_Math_Vec3f_DistXZ(Vec3f* p1, Vec3f* p2);
 // Function Prototypes (Objects).
 extern s8 z2_GetObjectIndex(const SceneContext* ctxt, u16 objectId);
 
+extern void z2_AnimatedMat_Draw(GlobalContext* play, AnimatedTexture* matAnim);
 extern void z2_SkelAnime_DrawLimb(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, bool* overrideLimbDraw, void* postLimbDraw, Actor* actor);
 extern void z2_SkelAnime_DrawLimb2(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, Actor* actor);
 extern void z2_SkelAnime_DrawLimb3(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, void* unkDraw, Actor* actor);

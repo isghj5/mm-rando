@@ -3,6 +3,7 @@ using MMR.Common.Extensions;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
+using System.Collections.Generic;
 using System.IO;
 
 namespace MMR.Randomizer.Asm
@@ -358,6 +359,56 @@ namespace MMR.Randomizer.Asm
         }
     }
 
+    public class MiscSmithyModel
+    {
+        public const int Size = 0xC;
+
+        private readonly short oldObjectId;
+        private readonly byte oldGraphicId;
+        private readonly short newObjectId;
+        private readonly uint displayListOffset;
+
+        public MiscSmithyModel(short oldObjectId, byte oldGraphicId, short newObjectId, uint displayListOffset)
+        {
+            this.oldObjectId = oldObjectId;
+            this.oldGraphicId = oldGraphicId;
+            this.newObjectId = newObjectId;
+            this.displayListOffset = displayListOffset;
+        }
+
+        public byte[] ToByteArray()
+        {
+            byte[] bytes = new byte[Size];
+            ReadWriteUtils.Arr_WriteU16(bytes, 0, (ushort)oldObjectId);
+            bytes[2] = oldGraphicId;
+            ReadWriteUtils.Arr_WriteU16(bytes, 4, (ushort)newObjectId);
+            ReadWriteUtils.Arr_WriteU32(bytes, 8, displayListOffset);
+            return bytes;
+        }
+    }
+
+    public class MiscSmithy
+    {
+        public List<MiscSmithyModel> Models { get; set; }
+
+        /// <summary>
+        /// Convert to a <see cref="uint"/> integer.
+        /// </summary>
+        /// <returns>Integer</returns>
+        public byte[] ToByteArray()
+        {
+            var result = new byte[MiscSmithyModel.Size * 10];
+
+            for (var i = 0; i < Models.Count; i++)
+            {
+                var model = Models[i];
+                ReadWriteUtils.Arr_Insert(model.ToByteArray(), 0, MiscSmithyModel.Size, result, i * MiscSmithyModel.Size);
+            }
+
+            return result;
+        }
+    }
+
     public class MiscBytes
     {
         public byte NpcKafeiReplaceMask { get; set; }
@@ -451,6 +502,7 @@ namespace MMR.Randomizer.Asm
         public uint Shorts;
         public uint MMRBytes;
         public uint DrawFlags;
+        public byte[] Smithy;
 
         /// <summary>
         /// Convert to bytes.
@@ -480,6 +532,7 @@ namespace MMR.Randomizer.Asm
                     writer.WriteUInt32(this.Shorts);
                     writer.WriteUInt32(this.MMRBytes);
                     writer.WriteUInt32(this.DrawFlags);
+                    writer.Write(this.Smithy);
                 }
 
                 return memStream.ToArray();
@@ -518,12 +571,14 @@ namespace MMR.Randomizer.Asm
 
         public MiscDrawFlags DrawFlags { get; set; }
 
+        public MiscSmithy Smithy { get; set; }
+
         public MiscConfig()
-            : this(new byte[0], new MiscFlags(), new InternalFlags(), new MiscSpeedups(), new MiscShorts(), new MiscBytes(), new MiscDrawFlags())
+            : this(new byte[0], new MiscFlags(), new InternalFlags(), new MiscSpeedups(), new MiscShorts(), new MiscBytes(), new MiscDrawFlags(), new MiscSmithy())
         {
         }
 
-        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags, MiscSpeedups speedups, MiscShorts shorts, MiscBytes mmrbytes, MiscDrawFlags drawFlags)
+        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags, MiscSpeedups speedups, MiscShorts shorts, MiscBytes mmrbytes, MiscDrawFlags drawFlags, MiscSmithy smithy)
         {
             this.Hash = hash;
             this.Flags = flags;
@@ -532,6 +587,7 @@ namespace MMR.Randomizer.Asm
             this.Shorts = shorts;
             this.MMRBytes = mmrbytes;
             this.DrawFlags = drawFlags;
+            this.Smithy = smithy;
         }
 
         /// <summary>
@@ -585,6 +641,7 @@ namespace MMR.Randomizer.Asm
                 Shorts = this.Shorts.ToInt(),
                 MMRBytes = this.MMRBytes.ToInt(),
                 DrawFlags = this.DrawFlags.ToInt(),
+                Smithy = this.Smithy.ToByteArray(),
             };
         }
     }

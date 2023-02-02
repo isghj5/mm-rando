@@ -4079,48 +4079,13 @@ namespace MMR.Randomizer
         {
             var addFairies = _randomized.Settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.StrayFairies);
             var addSkulltulas = _randomized.Settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.SkulltulaTokens);
-            var extended = _extendedObjects = ExtendedObjects.Create(addFairies, addSkulltulas);
 
-            foreach (var e in RomData.GetItemList.Values)
-            {
-                // Update gi-table for Skulltula Tokens.
-                if (e.ItemGained == 0x6E && e.Object == 0x125 && extended.Indexes.Skulltula != null)
-                {
-                    var index = e.Message == 0x51 ? 1 : 0;
-                    e.Object = (short)(extended.Indexes.Skulltula.Value + index);
-                }
+            var smithy1Item = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeRazorSword).DisplayItem;
+            var smithy2Item = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeGildedSword).DisplayItem;
 
-                // Update gi-table for Stray Fairies.
-                if (e.ItemGained == 0xA8 && e.Object == 0x13A && extended.Indexes.Fairies != null)
-                {
-                    var index = e.Type >> 4;
-                    e.Object = (short)(extended.Indexes.Fairies.Value + index);
-                }
+            var extended = _extendedObjects = ExtendedObjects.Create(smithy1Item, smithy2Item, addFairies, addSkulltulas, _randomized.Settings.ProgressiveUpgrades);
 
-                // Update gi-table for Double Defense.
-                if (e.ItemGained == 0xA7 && e.Object == 0x96 && extended.Indexes.DoubleDefense != null)
-                {
-                    e.Object = extended.Indexes.DoubleDefense.Value;
-                }
-
-                // Update gi-table for Notes.
-                if (((e.ItemGained >= 0x66 && e.ItemGained <= 0x6C) || e.ItemGained == 0x62) && e.Object == 0x8F && extended.Indexes.MusicNotes != null)
-                {
-                    e.Object = extended.Indexes.MusicNotes.Value;
-                }
-
-                // Update gi-table for Magic Power
-                if (e.ItemGained == 0xA5 && e.Object == 0xA4 && extended.Indexes.MagicPower != null)
-                {
-                    e.Object = extended.Indexes.MagicPower.Value;
-                }
-
-                // Update gi-table for Extra Rupees
-                if (e.ItemGained == 0xB1 && e.Object == 0x13F && extended.Indexes.Rupees != null)
-                {
-                    e.Object = extended.Indexes.Rupees.Value;
-                }
-            }
+            _randomized.Settings.AsmOptions.MiscConfig.Smithy.Models = extended.SmithyModels;
         }
 
         /// <summary>

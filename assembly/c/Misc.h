@@ -108,6 +108,15 @@ typedef struct {
     u32                     : 25;
 } MiscDrawFlags;
 
+typedef struct {
+    /* 0x00 */ u16 oldObjectId;
+    /* 0x02 */ u8 oldGraphicId;
+    /* 0x03 */ u8 padding03;
+    /* 0x04 */ u16 newObjectId;
+    /* 0x06 */ u16 padding06;
+    /* 0x08 */ u32 displayListOffset;
+} MiscSmithyModel; // size = 0xC;
+
 struct MiscConfig {
     /* 0x00 */ u32 magic;
     /* 0x04 */ u32 version;
@@ -118,7 +127,8 @@ struct MiscConfig {
     /* 0x24 */ MiscShorts shorts;
     /* 0x28 */ MiscBytes MMRbytes;
     /* 0x2C */ MiscDrawFlags drawFlags;
-}; // size = 0x30
+    /* 0x30 */ MiscSmithyModel smithyModels[10];
+}; // size = 0x34
 
 extern struct MiscConfig MISC_CONFIG;
 
