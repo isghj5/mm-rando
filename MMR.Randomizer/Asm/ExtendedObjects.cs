@@ -134,7 +134,7 @@ namespace MMR.Randomizer.Asm
             }
 
             // Update gi-table for Notes.
-            if (((entry.ItemGained >= 0x66 && entry.ItemGained <= 0x6C) || entry.ItemGained == 0x62) && entry.Object == 0x8F && Indexes.MusicNotes != null)
+            if (((entry.ItemGained >= 0x66 && entry.ItemGained <= 0x6C) || entry.ItemGained == 0x62 || entry.ItemGained == 0x73) && entry.Object == 0x8F && Indexes.MusicNotes != null)
             {
                 return (Indexes.MusicNotes.Value, entry.Index);
             }

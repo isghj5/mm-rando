@@ -42,6 +42,9 @@ namespace MMR.Randomizer.Asm
         public ushort LocationQuiverLarge;
         public ushort LocationQuiverLargest;
 
+        public ushort LocationLullaby;
+        public ushort LocationLullabyIntro;
+
         public byte ExtraStartingMaps;
         public byte[] ExtraStartingItemIds;
         public ushort ExtraStartingItemIdsLength;
@@ -91,6 +94,9 @@ namespace MMR.Randomizer.Asm
                 writer.WriteUInt16(this.LocationQuiverLarge);
                 writer.WriteUInt16(this.LocationQuiverLargest);
 
+                writer.WriteUInt16(this.LocationLullaby);
+                writer.WriteUInt16(this.LocationLullabyIntro);
+
                 writer.WriteByte(this.ExtraStartingMaps);
                 writer.WriteByte(0); // padding
                 writer.WriteBytes(this.ExtraStartingItemIds);
@@ -136,6 +142,9 @@ namespace MMR.Randomizer.Asm
         public ushort LocationQuiverSmall { get; set; }
         public ushort LocationQuiverLarge { get; set; }
         public ushort LocationQuiverLargest { get; set; }
+
+        public ushort LocationLullaby { get; set; }
+        public ushort LocationLullabyIntro { get; set; }
 
         public TingleMap ExtraStartingMaps { get; set; }
 
@@ -203,6 +212,9 @@ namespace MMR.Randomizer.Asm
                 LocationQuiverSmall = this.LocationQuiverSmall,
                 LocationQuiverLarge = this.LocationQuiverLarge,
                 LocationQuiverLargest = this.LocationQuiverLargest,
+
+                LocationLullaby = this.LocationLullaby,
+                LocationLullabyIntro = this.LocationLullabyIntro,
 
                 ExtraStartingMaps = (byte)this.ExtraStartingMaps,
                 ExtraStartingItemIds = extraStartingItemIds,

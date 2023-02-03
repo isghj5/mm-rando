@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 13;
+        public const int CurrentVersion = 14;
 
         public static string ApplyMigrations(string logic)
         {
@@ -187,6 +187,11 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 13)
             {
                 AddBossDoors(logicObject);
+            }
+
+            if (logicObject.Version < 14)
+            {
+                AddLullabyIntro(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3931,6 +3936,35 @@ namespace MMR.Randomizer.LogicMigrator
                 ConditionalItems = new List<List<string>>(),
             }));
             logicObject.Version = 13;
+        }
+
+        private static void AddLullabyIntro(JsonFormatLogic logicObject)
+        {
+            logicObject.Logic.Insert(1083, new JsonFormatLogicItem
+            {
+                Id = "SongLullabyIntro",
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>
+                {
+                    new List<string> { "SongLullabyIntroInMountainVillage" },
+                    new List<string> { "SongLullabyIntroInTwinIslands" },
+                },
+            });
+
+            const int startIndex = 1122;
+            var itemNames = new string[]
+            {
+                "SongLullabyIntroInMountainVillage",
+                "SongLullabyIntroInTwinIslands",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 14;
         }
 
         private class MigrationItem

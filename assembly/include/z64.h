@@ -1737,6 +1737,42 @@ typedef struct {
     /* 0x264 */ s16 animTimer;
 } ActorEnGinkoMan; // size = 0x268
 
+
+// En_Jg actor (Goron Elder)
+
+struct ActorEnJg;
+
+typedef void (*EnJgActionFunc)(struct ActorEnJg*, GlobalContext*);
+
+typedef struct ActorEnJg {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ Actor* shrineGoron;
+    /* 0x148 */ Actor* icePoly;
+    /* 0x14C */ ColCylinder collider;
+    /* 0x198 */ SkelAnime skelAnime;
+    /* 0x1DC */ EnJgActionFunc actionFunc;
+    /* 0x1E0 */ void* path; // TODO Path struct
+    /* 0x1E4 */ s32 currentPoint;
+    /* 0x1E8 */ Actor* drum;
+    /* 0x1EC */ Vec3s unusedRotation1; // probably meant to be a head rotation to look at the player
+    /* 0x1F2 */ Vec3s unusedRotation2; // probably meant to be a body rotation to look at the player
+    /* 0x1F8 */ Vec3s jointTable[35];
+    /* 0x2CA */ Vec3s morphTable[35];
+    /* 0x39C */ s16 rootRotationWhenTalking;
+    /* 0x39E */ s16 animIndex;
+    /* 0x3A0 */ s16 action;
+    /* 0x3A2 */ s16 freezeTimer;
+    /* 0x3A4 */ Vec3f breathPos;
+    /* 0x3B0 */ Vec3f breathVelocity;
+    /* 0x3BC */ Vec3f breathAccel;
+    /* 0x3C8 */ s16 cutscene;
+    /* 0x3CA */ u8 cutsceneAnimIndex;
+    /* 0x3CB */ u8 csAction;
+    /* 0x3CC */ u16 flags;
+    /* 0x3CE */ u16 textId;
+    /* 0x3D0 */ u8 focusedShrineGoronParam;
+} ActorEnJg; // size = 0x3D4
+
 // En_Ssh actor (Cursed Swamp Skulltula Guy)
 typedef struct {
     /* 0x000 */ Actor base;

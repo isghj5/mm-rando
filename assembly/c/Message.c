@@ -42,6 +42,9 @@ struct MessageExtensionState {
     ItemInfo quiverLarge;
     ItemInfo quiverLargest;
 
+    ItemInfo lullaby;
+    ItemInfo lullabyIntro;
+
     s8 currentChar;
     char* currentReplacement;
     u16 currentReplacementLength;
@@ -227,6 +230,23 @@ static struct MessageExtensionState gMessageExtensionState = {
         .verb = verbSingular,
     },
 
+    .lullaby = {
+        .name = "Goron Lullaby",
+        .description = "This melody blankets listeners in calm while making eyelids grow heavy.",
+        .article = articleDefinite,
+        .pronoun = pronounSingular,
+        .amount = amountDefinite,
+        .verb = verbSingular,
+    },
+    .lullabyIntro = {
+        .name = "Goron Lullaby Intro",
+        .description = "The soothing melody of a thoughtful father.",
+        .article = articleDefinite,
+        .pronoun = pronounSingular,
+        .amount = amountDefinite,
+        .verb = verbSingular,
+    },
+
     .currentChar = -1,
     .currentReplacementLength = 0,
 };
@@ -361,6 +381,10 @@ u8 Message_BeforeCharacterProcess(GlobalContext* ctxt, MessageCharacterProcessVa
                         item = gMessageExtensionState.quiverLarge;
                     } else if (newGiIndex == MMR_CONFIG.locations.quiverLargest) {
                         item = gMessageExtensionState.quiverLargest;
+                    } else if (newGiIndex == MMR_CONFIG.locations.lullaby) {
+                        item = gMessageExtensionState.lullaby;
+                    } else if (newGiIndex == MMR_CONFIG.locations.lullabyIntro) {
+                        item = gMessageExtensionState.lullabyIntro;
                     } else {
                         itemSet = false;
                     }

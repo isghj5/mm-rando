@@ -53,6 +53,7 @@
 .include "FloorPhysics.Patch.asm"
 .include "Game.Patch.asm"
 .include "GinkoMan.Patch.asm"
+.include "GoronElder.Patch.asm"
 .include "HitTag.Patch.asm"
 .include "HudColors.Patch.asm"
 .include "Input.Patch.asm"

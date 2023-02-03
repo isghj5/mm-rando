@@ -924,6 +924,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x73), ItemPool(ItemCategory.Songs, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
         SongSonata,
 
+        [Progressive]
         [StartingItem(0xC5CE73, 0x80)]
         [ItemName("Goron Lullaby"), LocationName("Baby Goron"), Region(Region.GoronVillage)]
         [GossipLocationHint("a lonely child", "an elder's son"), GossipItemHint("a sleepy melody", "a father's lullaby")]
@@ -9971,6 +9972,17 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x44B), ItemPool(ItemCategory.BossRemains, LocationCategory.BossFights, ClassicCategory.BossRemains)]
         RemainsTwinmold,
 
+        // TODO handle time of day stuff with regard to item importance calculation
+        // TODO move this to be with the other songs. Need to write a settings migrator first though.
+        [Progressive]
+        [StartingItem(0xC5CE70, 0x01)]
+        [ItemName("Goron Lullaby Intro"), LocationName("Goron Elder"), MultiLocation(SongLullabyIntroInMountainVillage, SongLullabyIntroInTwinIslands), RegionArea(RegionArea.Mountain)]
+        [GossipLocationHint("a thoughtful father", "an elder"), GossipItemHint("a soothing melody", "a father's lullaby")]
+        [ShopText("The soothing melody of a thoughtful father.", isDefinite: true)]
+        [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [GetItemIndex(0x44E), ItemPool(ItemCategory.Songs, LocationCategory.NpcRewards, ClassicCategory.BaseItemPool)]
+        SongLullabyIntro,
+
 
 
         //multilocation items
@@ -10087,6 +10099,12 @@ namespace MMR.Randomizer.GameObjects
 
         [MainLocation(CollectibleStrayFairyClockTown), Region(Region.EastClockTown)]
         CollectibleStrayFairyClockTownInECT,
+
+        [MainLocation(SongLullabyIntro), Region(Region.MountainVillage)]
+        SongLullabyIntroInMountainVillage,
+
+        [MainLocation(SongLullabyIntro), Region(Region.TwinIslands)]
+        SongLullabyIntroInTwinIslands,
 
 
         GossipTerminaSouth,

@@ -61,6 +61,10 @@ namespace MMR.Randomizer.Extensions
                 {
                     return "Bow Upgrade";
                 }
+                if (item == Item.SongLullaby || item == Item.SongLullabyIntro)
+                {
+                    return "Goron Lullaby Upgrade";
+                }
             }
             return item.Name();
         }

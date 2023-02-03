@@ -631,8 +631,46 @@ namespace MMR.Randomizer
                 };
                 ItemList.Add(magicLarge);
 
+                var lullabyAny = ItemList
+                    .FirstOrDefault(io =>
+                        io.Item.IsFake()
+                        && io.DependsOnItems.Count == 0
+                        && io.Conditionals.Count == 2
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.SongLullaby }))
+                        && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.SongLullabyIntro })));
+
+                var lullabyFull = new ItemObject
+                {
+                    ID = ItemList.Count,
+                    TimeAvailable = 63,
+                    DependsOnItems = new List<Item>
+                    {
+                        Item.SongLullaby,
+                        Item.SongLullabyIntro,
+                    },
+                };
+                ItemList.Add(lullabyFull);
+
                 foreach (var itemObject in ItemList)
                 {
+                    if (itemObject != lullabyFull && itemObject.DependsOnItems.Contains(Item.SongLullaby))
+                    {
+                        itemObject.DependsOnItems.Remove(Item.SongLullaby);
+                        itemObject.DependsOnItems.Add(lullabyFull.Item);
+                    }
+
+                    if (itemObject != lullabyAny)
+                    {
+                        foreach (var conditions in itemObject.Conditionals)
+                        {
+                            if (conditions.Contains(Item.SongLullaby))
+                            {
+                                conditions.Remove(Item.SongLullaby);
+                                conditions.Add(lullabyFull.Item);
+                            }
+                        }
+                    }
+
                     if (itemObject != magicLarge && itemObject.DependsOnItems.Contains(Item.FairyDoubleMagic))
                     {
                         itemObject.DependsOnItems.Remove(Item.FairyDoubleMagic);

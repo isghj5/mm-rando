@@ -1,5 +1,5 @@
 {
-  "Version": 13,
+  "Version": 14,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -54333,6 +54333,22 @@
       "IsTrick": false
     },
     {
+      "Id": "SongLullabyIntro",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "SongLullabyIntroInMountainVillage"
+        ],
+        [
+          "SongLullabyIntroInTwinIslands"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
       "Id": "ItemTingleMapTownInTown",
       "RequiredItems": [],
       "ConditionalItems": [
@@ -54856,6 +54872,56 @@
       ],
       "TimeNeeded": "None",
       "TimeAvailable": "Night1, Night2, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SongLullabyIntroInMountainVillage",
+      "RequiredItems": [
+        "AreaNorthAccess",
+        "Destroy Large Snowballs"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchHotSpringWater",
+          "Play Song of Soaring"
+        ],
+        [
+          "BottleCatchHotSpringWater",
+          "Unrandomized Bottled Contents",
+          "Hot Spring Water in Mountains"
+        ],
+        [
+          "Use Fire Arrow"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SongLullabyIntroInTwinIslands",
+      "RequiredItems": [
+        "AreaNorthAccess",
+        "Destroy Large Snowballs"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchHotSpringWater",
+          "Play Song of Soaring"
+        ],
+        [
+          "BottleCatchHotSpringWater",
+          "Unrandomized Bottled Contents",
+          "Hot Spring Water in Mountains"
+        ],
+        [
+          "Use Fire Arrow"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false
     },

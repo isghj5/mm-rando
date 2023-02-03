@@ -1758,6 +1758,9 @@ namespace MMR.Randomizer
             _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLarge = GetLocationIdOfItem(Item.UpgradeBigQuiver);
             _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLargest = GetLocationIdOfItem(Item.UpgradeBiggestQuiver);
 
+            _randomized.Settings.AsmOptions.MMRConfig.LocationLullaby = GetLocationIdOfItem(Item.SongLullaby);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationLullabyIntro = GetLocationIdOfItem(Item.SongLullabyIntro);
+
             if (_randomized.Settings.UpdateShopAppearance)
             {
                 // update tingle shops
