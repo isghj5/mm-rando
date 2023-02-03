@@ -822,6 +822,11 @@ namespace MMR.Randomizer.Asm
                     } while (displayListType != 0xDF); // gsSPEndDisplayList
                 }
 
+                if (displayListIndex == 8)
+                {
+                    break;
+                }
+
                 displayListIndex++;
                 displayListOffset = ReadWriteUtils.Arr_ReadS32(codeFile.Data, drawItemTableOffset + graphicId * 0x24 + displayListIndex * 4) & 0xFFFFFF;
             }
