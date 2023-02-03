@@ -40,8 +40,12 @@ namespace MMR.Randomizer.Models.Settings
         [Description("The dialog of the credits will proceed automatically.")]
         AutomaticCredits = 1 << 8,
 
+        [Description("The cutscene when delivering the Deku Princess will be skipped.")]
+        [HackContent(nameof(Resources.mods.shorten_cutscene_princess_delivery))]
+        PrincessDelivery = 1 << 9,
+
         [Description("All chests will open using the short animation.")]
-        ShortChestOpening = 1 << 9,
+        ShortChestOpening = 1 << 10,
 
         [Description("Various cutscenes are skipped or otherwise shortened.")]
         [HackContent(nameof(Resources.mods.short_cutscenes))]

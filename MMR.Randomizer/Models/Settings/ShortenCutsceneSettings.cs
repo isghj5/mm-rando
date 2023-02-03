@@ -12,6 +12,7 @@
             | ShortenCutsceneGeneral.FasterBankText
             | ShortenCutsceneGeneral.GoronVillageOwl
             | ShortenCutsceneGeneral.AutomaticCredits
+            | ShortenCutsceneGeneral.PrincessDelivery
             | ShortenCutsceneGeneral.EverythingElse
             ;
 
