@@ -1784,6 +1784,8 @@ namespace MMR.Randomizer
                 itemList.Add(i);
             }
 
+            itemList.Add(Item.SongLullabyIntro);
+
             for (var i = Item.MaskPostmanHat; i <= Item.MaskZora; i++)
             {
                 itemList.Add(i);
@@ -1957,6 +1959,7 @@ namespace MMR.Randomizer
                 Item.MaskDonGero,
                 Item.TradeItemRoomKey,
                 Item.TradeItemPendant,
+                Item.SongLullabyIntro,
             };
 
             var blastBomb = new Item[]
@@ -1989,6 +1992,7 @@ namespace MMR.Randomizer
                 PlaceBespokeItem(Item.ItemIceArrow);
                 PlaceBespokeItem(Item.SongEpona);
                 PlaceBespokeItem(Item.SongHealing);
+                PlaceBespokeItem(Item.SongLullabyIntro);
                 PlaceBespokeItem(Item.SongSoaring);
                 PlaceBespokeItemGroup(newWaveElegy);
                 PlaceBespokeItem(Item.SongStorms);
@@ -2011,6 +2015,7 @@ namespace MMR.Randomizer
                 PlaceBespokeItemGroup(newWaveElegy);
                 PlaceBespokeItem(Item.SongStorms);
                 PlaceBespokeItem(Item.SongLullaby);
+                PlaceBespokeItem(Item.SongLullabyIntro);
                 PlaceBespokeItem(Item.SongOath);
                 PlaceBespokeItem(Item.MaskFierceDeity);
                 PlaceBespokeItem(Item.MaskZora);
@@ -2029,6 +2034,7 @@ namespace MMR.Randomizer
                 PlaceBespokeItem(Item.SongSonata);
                 PlaceBespokeItem(Item.SongEpona);
                 PlaceBespokeItem(Item.SongHealing);
+                PlaceBespokeItem(Item.SongLullabyIntro);
                 PlaceBespokeItem(Item.SongSoaring);
                 PlaceBespokeItemGroup(newWaveElegy);
                 PlaceBespokeItem(Item.SongStorms);
@@ -2309,7 +2315,9 @@ namespace MMR.Randomizer
         /// </summary>
         private void PlaceSongs(List<Item> itemPool)
         {
-            var songs = Enumerable.Range((int)Item.SongHealing, Item.SongOath - Item.SongHealing + 1).Cast<Item>();
+            var songs = Enumerable.Range((int)Item.SongHealing, Item.SongOath - Item.SongHealing + 1)
+                .Cast<Item>()
+                .Append(Item.SongLullabyIntro);
 
             foreach (var song in songs)
             {

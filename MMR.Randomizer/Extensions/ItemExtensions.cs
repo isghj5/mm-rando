@@ -216,7 +216,7 @@ namespace MMR.Randomizer.Extensions
 
         public static bool IsSong(this Item item)
         {
-            return (Item.SongTime <= item && item <= Item.SongOath);
+            return (Item.SongTime <= item && item <= Item.SongOath) || item == Item.SongLullabyIntro;
         }
 
         public static ChestTypeAttribute.ChestType ChestType(this Item item)
