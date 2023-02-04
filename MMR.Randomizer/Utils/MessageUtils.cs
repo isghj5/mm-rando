@@ -140,7 +140,12 @@ namespace MMR.Randomizer.Utils
                                         .Aggregate(Enumerable.Empty<ItemObject>(), (g1, g2) => g1.Concat(g2))
                                         .Take(numberOfLocationHints)
                                         .ToList();
-                var combinedItems = hintableItems.Where(io => !unusedItems.Contains(io));
+                var combinedItems = unusedItems
+                    .SelectMany(io => io.NewLocation.Value.GetAttributes<GossipCombineAttribute>().SelectMany(gca => gca.OtherItems))
+                    .Where(item => randomizedItems.Any(io => io.NewLocation == item))
+                    .Select(item => randomizedItems.Single(io => io.NewLocation == item))
+                    .Where(io => !unusedItems.Contains(io) && hintableItems.Contains(io))
+                    ;
                 itemsToCombineWith.AddRange(combinedItems);
 
                 unusedItems.AddRange(unusedItems);
