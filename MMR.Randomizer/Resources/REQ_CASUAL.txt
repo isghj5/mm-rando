@@ -1587,7 +1587,14 @@
         "MaskGoron",
         "Magic Meter"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Play Goron Lullaby"
+        ],
+        [
+          "Use Fire Arrow"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -1965,7 +1972,14 @@
         "AreaNorthAccess",
         "MaskGoron"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Play Goron Lullaby"
+        ],
+        [
+          "Play Goron Lullaby Intro"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -57229,6 +57243,18 @@
       "RequiredItems": [
         "ItemOcarina",
         "SongSonata"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Play Goron Lullaby Intro",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongLullabyIntro"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
