@@ -573,12 +573,11 @@ namespace MMR.Randomizer
                 ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE220, val: 0x00000000); //
 
                 // no water restrictions
-                //var codeFile = RomData.MMFileList[31].Data;
+                var codeFile = RomData.MMFileList[31].Data;
                 //ReadWriteUtils.Arr_WriteU32(codeFile, Dest: 0x06AEF0, val: 0x00000000); // nop the store byte FF which would disable the buttons
 
-
                 // for now, remove all form restrictions to see what works and what does not work anymore
-                /*
+                ///*
                 var startLoc = 0x11C950;
                 var endLoc = 0x11CB8C;
                 var i = startLoc;

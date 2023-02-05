@@ -1173,7 +1173,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(143)]
         [CheckRestricted(Scene.MayorsResidence, variant:0, Item.HeartPieceNotebookMayor)]
         // 1 scoffing at poster, 2 is shouting at the sky looker
-        // 0X03 is a walking type
+        // 0x03 is a walking type
         [GroundVariants(1, 2,
             0)] // in mayor meeting
         [VariantsWithRoomMax(max: 0, variant: 0)]
@@ -4072,7 +4072,8 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax( max: 1,
             0x1E0, 1, 2, 3, 4, 5, 6, 7, 8, 9)]
         [UnkillableAllVariants]
-        //[EnemizerScenesExcluded(Scene.BombShop)]//, Scene.GoronShrine)]
+        // we dont have logic to check if this is important enough I guess
+        [EnemizerScenesExcluded(Scene.BombShop)]//, Scene.GoronShrine)]
         [AlignedCompanionActor(Fairy, CompanionAlignment.Above, ourVariant: -1,
             variant: 2, 9)]
         GoronSGoro = 0x242, // En_S_Goro
