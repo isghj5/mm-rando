@@ -547,6 +547,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1A0)]
         [FileID(86)]
         [ObjectListIndex(0x61)]
+        [CheckRestricted(Item.CollectableTerminaFieldTreeItem1)]
         // bush: 0xFF0B, small tree: 0xFF02
         // big tree: 0xFF00, big tree with shop man in it: 0x0A1A
         // 17,18 are leaf particles
@@ -562,7 +563,7 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1, variant: 0xA)] // UGLY
         //[GroundVariants(0xFF01, 0xFF1A)] //testing
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.TerminaField, Scene.TwinIslandsSpring)] // need to keep in termina field for rupee rando
+        //[EnemizerScenesExcluded(Scene.TerminaField, Scene.TwinIslandsSpring)] // need to keep in termina field for rupee rando
         Treee = 0x41, // En_Wood2
 
         Empty42 = 0x42,
@@ -1414,6 +1415,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(166)]
         [ObjectListIndex(0xC2)]
+        [CheckRestricted(Item.CollectableTerminaFieldTreeItem1)]
         // 0 does nothing just stands there and stares at you
         // 1 is climbing in the tree trying to get rups
         [GroundVariants(0)]
@@ -3572,8 +3574,8 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 2, variant: 0xFF01, 0xFF00)]
         //[UnkillableAllVariants] // only 1, the one with a no-respawn flag, spawns readily, so for now, assume the player kills one and can't kill another
         [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames for ghast
-        //[EnemizerScenesPlacementBlock( Scene.TerminaField, // suspected weird un-reproducable crashes always seems to happen when they are around
-        //    Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
+        [EnemizerScenesPlacementBlock( Scene.TerminaField, // annoying
+            Scene.SouthernSwamp, Scene.StoneTower)] // they either dont spawn, or when they appear they lock your controls, bad
         [SwitchFlagsPlacement(mask: 0xFF, shift: 8)]
         BigPoe = 0x208, // En_Bigpo
 
@@ -4499,9 +4501,13 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)]
         En_Scopecoin = 0x27C, // En_Scopecoin
 
-        // todo 
+        [ActorizerEnabled]
         [FileID(596)]
         [ObjectListIndex(0x24F)]
+        [CheckRestricted(Item.HeartPieceNotebookHand)]
+        [GroundVariants(0)]
+        [WaterVariants(0)]
+        [UnkillableAllVariants]
         MysteryHand = 0x27D, // En_Bjt
 
         [ActorizerEnabled]// cannot be rando'd without breaking bomber kids
