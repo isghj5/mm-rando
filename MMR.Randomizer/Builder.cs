@@ -3174,7 +3174,7 @@ namespace MMR.Randomizer
                         .Text("There should still be...")
                         .EndTextBox();
 
-                        foreach (var kvp in strayFairyRegionLocations[Region.SnowheadTemple])
+                        foreach (var kvp in strayFairyRegionLocations[Region.StoneTowerTemple])
                         {
                             it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
                         }
