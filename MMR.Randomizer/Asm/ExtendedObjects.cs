@@ -688,7 +688,12 @@ namespace MMR.Randomizer.Asm
         private Dictionary<byte, int[]> _displayListsToIgnore = new Dictionary<byte, int[]>
         {
             { 10, new int[] { 2 } }, // ignore compass glass
-            { 66, new int[] { 3, 4 } }, // ignore rupee glow?
+            { 66, new int[] { 3, 4 } }, // ignore gold rupee glow
+            { 79, new int[] { 3, 4 } }, // ignore green rupee glow
+            { 80, new int[] { 3, 4 } }, // ignore blue rupee glow
+            { 81, new int[] { 3, 4 } }, // ignore red rupee glow
+            { 83, new int[] { 3, 4 } }, // ignore purple rupee glow
+            { 84, new int[] { 3, 4 } }, // ignore silver rupee glow
             { 89, new int[] { 2 } }, // moons tear glow
             { 98, new int[] { 3 } }, // seahorse glow
         };
