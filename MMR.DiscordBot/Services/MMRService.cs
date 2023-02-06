@@ -12,26 +12,29 @@ namespace MMR.DiscordBot.Services
 {
     public class MMRService
     {
-        private const string MMR_CLI = "MMR_CLI";
         protected string _cliPath;
         private readonly HttpClient _httpClient;
         private readonly ThreadQueue _threadQueue = new ThreadQueue();
         private CancellationTokenSource _cancelTokenSource;
         private readonly Random _random = new Random();
 
+        protected virtual string MMR_CLI => "MMR_CLI";
+
         public MMRService()
         {
             _cliPath = Environment.GetEnvironmentVariable(MMR_CLI);
             if (string.IsNullOrWhiteSpace(_cliPath))
             {
-                throw new Exception($"Environment Variable '{MMR_CLI}' is missing.");
+                Console.WriteLine($"Warning: Environment Variable '{MMR_CLI}' is missing.");
             }
-            if (!Directory.Exists(_cliPath))
+            else if (!Directory.Exists(_cliPath))
             {
-                throw new Exception($"'{_cliPath}' is not a valid MMR.CLI path.");
+                Console.WriteLine($"Warning: Directory '{_cliPath}' does not exist.");
             }
-
-            Console.WriteLine($"MMR.CLI path = {_cliPath}");
+            else
+            {
+                Console.WriteLine($"{MMR_CLI} path = {_cliPath}");
+            }
 
             _httpClient = new HttpClient();
             _httpClient.Timeout = TimeSpan.FromSeconds(120);
@@ -40,7 +43,7 @@ namespace MMR.DiscordBot.Services
 
         public bool IsReady()
         {
-            return !string.IsNullOrWhiteSpace(_cliPath);
+            return !string.IsNullOrWhiteSpace(_cliPath) && Directory.Exists(_cliPath);
         }
 
         public (string filename, string patchPath, string hashIconPath, string spoilerLogPath, string version) GetSeedPaths(DateTime seedDate, string version)

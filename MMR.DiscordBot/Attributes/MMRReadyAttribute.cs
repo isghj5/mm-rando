@@ -27,7 +27,7 @@ namespace MMR.DiscordBot.Attributes
             }
             else
             {
-                return Task.FromResult(PreconditionResult.FromError("This command is currently unavailable."));
+                return Task.FromResult(PreconditionResult.FromError(ExecuteResult.FromError(CommandError.UnknownCommand, "This command is currently unavailable.")));
             }
         }
     }
