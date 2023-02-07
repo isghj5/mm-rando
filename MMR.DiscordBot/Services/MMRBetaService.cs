@@ -3,8 +3,8 @@ using System.IO;
 
 namespace MMR.DiscordBot.Services
 {
-    public class MMRBetaService : MMRService
+    public class MMRBetaService : MMRBaseService
     {
-        protected override string MMR_CLI => "MMRBETA_CLI";
+        protected override string Version => "beta";
     }
 }
