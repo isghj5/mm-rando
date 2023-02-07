@@ -54893,7 +54893,6 @@
       "Id": "SongLullabyIntroInMountainVillage",
       "RequiredItems": [
         "AreaNorthAccess",
-        "Destroy Large Snowballs",
         "MaskGoron"
       ],
       "ConditionalItems": [
@@ -54919,7 +54918,6 @@
       "Id": "SongLullabyIntroInTwinIslands",
       "RequiredItems": [
         "AreaNorthAccess",
-        "Destroy Large Snowballs",
         "MaskGoron"
       ],
       "ConditionalItems": [
