@@ -204,7 +204,7 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public LogicMode LogicMode { get; set; }
 
-        public ItemPlacement ItemPlacement { get; set; } = ItemPlacement.Random;
+        public ItemPlacement ItemPlacement { get; set; } = ItemPlacement.Bespoke;
 
         public HashSet<string> EnabledTricks { get; set; } = new HashSet<string>
         {

@@ -10,30 +10,35 @@ using MMR.Common.Utils;
 
 namespace MMR.DiscordBot.Services
 {
-    public class MMRService
+    public abstract class MMRBaseService
     {
+        private const string MMR_CLI = "MMR_CLI";
         protected string _cliPath;
         private readonly HttpClient _httpClient;
-        private readonly ThreadQueue _threadQueue = new ThreadQueue();
+        private static readonly ThreadQueue _threadQueue = new ThreadQueue();
         private CancellationTokenSource _cancelTokenSource;
         private readonly Random _random = new Random();
 
-        protected virtual string MMR_CLI => "MMR_CLI";
+        protected abstract string Version { get; }
 
-        public MMRService()
+        public MMRBaseService()
         {
             _cliPath = Environment.GetEnvironmentVariable(MMR_CLI);
             if (string.IsNullOrWhiteSpace(_cliPath))
             {
                 Console.WriteLine($"Warning: Environment Variable '{MMR_CLI}' is missing.");
             }
-            else if (!Directory.Exists(_cliPath))
-            {
-                Console.WriteLine($"Warning: Directory '{_cliPath}' does not exist.");
-            }
             else
             {
-                Console.WriteLine($"{MMR_CLI} path = {_cliPath}");
+                _cliPath = Path.Combine(_cliPath, Version);
+                if (!Directory.Exists(_cliPath))
+                {
+                    Console.WriteLine($"Warning: Directory '{_cliPath}' does not exist.");
+                }
+                else
+                {
+                    Console.WriteLine($"{MMR_CLI} path = {_cliPath}");
+                }
             }
 
             _httpClient = new HttpClient();
@@ -125,6 +130,12 @@ namespace MMR.DiscordBot.Services
                 Directory.CreateDirectory(settingsRoot);
             }
             return Path.Combine(settingsRoot, "default.json");
+        }
+
+        public string GetVersion()
+        {
+            var randomizerDllPath = Path.Combine(_cliPath, "MMR.Randomizer.dll");
+            return AssemblyName.GetAssemblyName(randomizerDllPath).Version.ToString();
         }
 
         public void Kill()

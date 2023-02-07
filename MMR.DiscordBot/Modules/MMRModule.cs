@@ -12,7 +12,7 @@ namespace MMR.DiscordBot.Modules
     [Group("mmr")]
     public class MMRModule : BaseMMRModule
     {
-        public MMRModule(MMRService mmrService) : base(mmrService)
+        public MMRModule(MMRReleaseService mmrService) : base(mmrService)
         {
 
         }
