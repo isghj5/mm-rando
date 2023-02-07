@@ -17,7 +17,7 @@ using System.Diagnostics;
 
 namespace MMR.DiscordBot.Modules
 {
-    public class BaseMMRModule : ModuleBase<SocketCommandContext>
+    public abstract class BaseMMRModule : ModuleBase<SocketCommandContext>
     {
         public UserSeedRepository UserSeedRepository { get; set; }
         public GuildModRepository GuildModRepository { get; set; }
