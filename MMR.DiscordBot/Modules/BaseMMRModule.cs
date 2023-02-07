@@ -17,16 +17,16 @@ using System.Diagnostics;
 
 namespace MMR.DiscordBot.Modules
 {
-    public class BaseMMRModule : ModuleBase<SocketCommandContext>
+    public abstract class BaseMMRModule : ModuleBase<SocketCommandContext>
     {
         public UserSeedRepository UserSeedRepository { get; set; }
         public GuildModRepository GuildModRepository { get; set; }
         public TournamentChannelRepository TournamentChannelRepository { get; set; }
         public LogChannelRepository LogChannelRepository { get; set; }
 
-        private readonly MMRService _mmrService;
+        private readonly MMRBaseService _mmrService;
 
-        public BaseMMRModule(MMRService mmrService)
+        public BaseMMRModule(MMRBaseService mmrService)
         {
             _mmrService = mmrService;
         }
@@ -80,7 +80,14 @@ namespace MMR.DiscordBot.Modules
             var commands = new Dictionary<string, string>()
             {
                 {  "help", "See this help list." },
+                {  "version", "See the MMR version for this command module." },
             };
+
+            var logChannel = await LogChannelRepository.Single(_ => true);
+            if (logChannel != null && Context.Channel.Id == logChannel.ChannelId)
+            {
+                commands.Add("kill", "Kill the current seed generation for this module.");
+            }
 
             if (await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
             {
@@ -619,6 +626,13 @@ namespace MMR.DiscordBot.Modules
             {
                 _mmrService.Kill();
             }
+        }
+
+        [Command("version")]
+        public async Task Version()
+        {
+            var version = _mmrService.GetVersion();
+            await ReplyNoTagAsync(version);
         }
     }
 }
