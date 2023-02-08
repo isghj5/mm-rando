@@ -10152,7 +10152,7 @@ namespace MMR.Randomizer.GameObjects
         [ExclusiveItem(0xB2)]
         [ExclusiveItemGraphic(0, 0)]
         [ExclusiveItemMessage(0x8FFF, "\u0017get rekt\u0018\u00BF")]
-        TintBomb = -3,
+        BombTrap = -3,
 
     }
 }

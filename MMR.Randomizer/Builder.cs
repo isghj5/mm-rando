@@ -3336,8 +3336,8 @@ namespace MMR.Randomizer
                 Item.IceTrap.ExclusiveItemMessage());
             _extraMessages.Add(entry);
             var entry2 = new MessageEntry(
-                Item.TintBomb.ExclusiveItemEntry().Message,
-                Item.TintBomb.ExclusiveItemMessage());
+                Item.BombTrap.ExclusiveItemEntry().Message,
+                Item.BombTrap.ExclusiveItemMessage());
             _extraMessages.Add(entry2);
         }
 

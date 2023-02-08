@@ -2413,13 +2413,13 @@ namespace MMR.Randomizer
                 // Run through placing bomb traps before ice traps.
                 if (currentbomb < totalbombtraps && !newLocation.IsBlockingBombTrapPlacement())
                 {
-                    item.ItemOverride = Item.TintBomb;
+                    item.ItemOverride = Item.BombTrap;
                     item.Mimic = mimic;
 
                     if (newLocation.IsVisible() || newLocation.IsPurchaseable())
                     {
                         // Store name override for logging in HTML tracker.
-                        item.NameOverride = $"{Item.TintBomb.Name()} ({mimic.Item.Name()})";
+                        item.NameOverride = $"{Item.BombTrap.Name()} ({mimic.Item.Name()})";
 
                         // If ice trap quirks enabled and placed as a shop item, use a fake shop item name.
                         if (_settings.IceTrapQuirks && newLocation.IsPurchaseable())
