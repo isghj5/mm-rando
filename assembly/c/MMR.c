@@ -163,7 +163,7 @@ u16 MMR_CheckProgressiveUpgrades(u16 giIndex) {
     return giIndex;
 }
 
-#define cycleRepeatableItemsLength 35
+#define cycleRepeatableItemsLength 36
 static u8 cycleRepeatableItems[cycleRepeatableItemsLength] = {
     0x06, // 1 Bomb
     0x07, // 10 Bombchu
@@ -199,6 +199,7 @@ static u8 cycleRepeatableItems[cycleRepeatableItemsLength] = {
     0xA0, // Milk
     0xA1, // Gold Dust
     0xB0, // Ice Trap
+    0xB2, // Bomb Trap
     0xFF, // ? Stray Fairy ?
 };
 bool MMR_IsCycleRepeatable(u16 giIndex) {
@@ -346,7 +347,7 @@ u32 MMR_GetMinorItemSfxId(u8 item) {
     if (item == ITEM_MAGIC_JAR || item == ITEM_MAGIC_JAR_LARGE || item == CUSTOM_ITEM_CRIMSON_RUPEE) {
         return 0x4824;
     }
-    if (item == CUSTOM_ITEM_ICE_TRAP) {
+    if (item == CUSTOM_ITEM_ICE_TRAP || item == CUSTOM_ITEM_BOMBTRAP) {
         return 0x31A4;
     }
     return 0;

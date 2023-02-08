@@ -9485,6 +9485,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass"), Region(Region.MilkRoad)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9495,6 +9496,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 2"), Region(Region.MilkRoad)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9505,6 +9507,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 3"), Region(Region.MilkRoad)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9515,6 +9518,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 4"), Region(Region.MilkRoad)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9525,6 +9529,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 5"), Region(Region.MilkRoad)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9535,6 +9540,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Milk Road Keaton Grass 6"), Region(Region.MilkRoad)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9575,6 +9581,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9585,6 +9592,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 2"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9595,6 +9603,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 3"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9605,6 +9614,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 4"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9615,6 +9625,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 5"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9625,6 +9636,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("North Clock Town Keaton Grass 6"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9665,6 +9677,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass"), Region(Region.MountainVillage)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9675,6 +9688,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 2"), Region(Region.MountainVillage)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9685,6 +9699,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 3"), Region(Region.MountainVillage)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9695,6 +9710,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 4"), Region(Region.MountainVillage)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9705,6 +9721,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 5"), Region(Region.MountainVillage)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -9715,6 +9732,7 @@ namespace MMR.Randomizer.GameObjects
 
         [Visible]
         [Repeatable]
+        [BlockBombTrapPlacement]
         [ItemName("Green Rupee"), LocationName("Mountain Village Spring Keaton Grass 6"), Region(Region.MountainVillage)]
         [GossipLocationHint("a living plant"), GossipItemHint("currency", "money", "cash", "wealth", "riches and stuff")]
         [ShopText("This is worth 1 rupee.")]
@@ -10126,6 +10144,15 @@ namespace MMR.Randomizer.GameObjects
         [ShopText("Replenishes a small amount of your life energy.")]
         [GetItemIndex(0x0A), ItemPool(ItemCategory.Fake, LocationCategory.Fake, ClassicCategory.Fake)]
         RecoveryHeart = -2,
+
+        [Repeatable]
+        [ItemName("Bomb Trap")]
+        [GossipItemHint("a startling kaboom")]
+        [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
+        [ExclusiveItem(0xB2)]
+        [ExclusiveItemGraphic(0, 0)]
+        [ExclusiveItemMessage(0x8FFF, "\u0017get rekt\u0018\u00BF")]
+        TintBomb = -3,
 
     }
 }

@@ -106,7 +106,7 @@ namespace MMR.Randomizer.Models.Settings
             { TransformationForm.Deku, Color.FromArgb(0x1E, 0x69, 0x1B) },
             { TransformationForm.Goron, Color.FromArgb(0x1E, 0x69, 0x1B) },
             { TransformationForm.Zora, Color.FromArgb(0x1E, 0x69, 0x1B) },
-            { TransformationForm.FierceDeity, Color.FromArgb(0x1E, 0x69, 0x1B) }
+            { TransformationForm.FierceDeity, Color.FromArgb(0xBD, 0xB5, 0xAD) }
         };
 
         public Dictionary<TransformationForm, Instrument> Instruments { get; set; } = new Dictionary<TransformationForm, Instrument>()

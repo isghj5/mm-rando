@@ -16,6 +16,9 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
         case CUSTOM_ITEM_ICE_TRAP:
             Icetrap_PushPending(DAMAGE_EFFECT_FREEZE);
             break;
+        case CUSTOM_ITEM_BOMBTRAP:
+            Icetrap_PushPending(DAMAGE_EFFECT_BOMBTRAP);
+            break;
         case CUSTOM_ITEM_CRIMSON_RUPEE:
             z2_AddRupees(30);
             break;

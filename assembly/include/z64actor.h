@@ -204,6 +204,10 @@ typedef enum {
 } PlayerHeldItem;
 
 typedef struct {
+    /* 0x00 */ u32 maskDListEntry[24];
+} PlayerMaskDList; // size = 0x60
+
+typedef struct {
     /* 0x000 */ Actor base;
     /* 0x144 */ u8 pad144[0x2];
     /* 0x146 */ u8 itemButton;

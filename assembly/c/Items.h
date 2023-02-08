@@ -20,6 +20,7 @@ enum CustomItem {
     CUSTOM_ITEM_ICE_TRAP           = 0xB0,
     // Other
     CUSTOM_ITEM_CRIMSON_RUPEE      = 0xB1,
+    CUSTOM_ITEM_BOMBTRAP           = 0xB2,
 };
 
 #endif // ITEMS_H

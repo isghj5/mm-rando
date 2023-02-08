@@ -104,6 +104,7 @@
 0x8012F2E0,z2_object_spawn
 0x8012F4FC,z2_load_objects
 0x8012F608,z2_GetObjectIndex
+0x80133710,z2_SkelAnime_DrawFlexLod
 0x80133B3C,z2_SkelAnime_DrawLimb
 0x80133F28,z2_SkelAnime_DrawLimb2
 0x801343C0,z2_SkelAnime_DrawLimb3

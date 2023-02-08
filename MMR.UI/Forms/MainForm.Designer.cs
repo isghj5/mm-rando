@@ -238,6 +238,8 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
+            this.cBombTraps = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -281,10 +283,10 @@ namespace MMR.UI.Forms
             // 
             // bopen
             // 
-            this.bopen.Location = new System.Drawing.Point(14, 434);
-            this.bopen.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bopen.Location = new System.Drawing.Point(20, 723);
+            this.bopen.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.bopen.Name = "bopen";
-            this.bopen.Size = new System.Drawing.Size(112, 31);
+            this.bopen.Size = new System.Drawing.Size(160, 52);
             this.bopen.TabIndex = 0;
             this.bopen.Text = "Open ROM";
             this.bopen.UseVisualStyleBackColor = true;
@@ -300,11 +302,11 @@ namespace MMR.UI.Forms
             // 
             // tROMName
             // 
-            this.tROMName.Location = new System.Drawing.Point(138, 438);
-            this.tROMName.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tROMName.Location = new System.Drawing.Point(197, 730);
+            this.tROMName.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tROMName.Name = "tROMName";
             this.tROMName.ReadOnly = true;
-            this.tROMName.Size = new System.Drawing.Size(639, 23);
+            this.tROMName.Size = new System.Drawing.Size(911, 31);
             this.tROMName.TabIndex = 1;
             // 
             // tSettings
@@ -315,11 +317,11 @@ namespace MMR.UI.Forms
             this.tSettings.Controls.Add(this.tabComfort);
             this.tSettings.Controls.Add(this.tabShortenCutscenes);
             this.tSettings.Controls.Add(this.tabCosmetics);
-            this.tSettings.Location = new System.Drawing.Point(4, 28);
-            this.tSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tSettings.Location = new System.Drawing.Point(6, 47);
+            this.tSettings.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tSettings.Name = "tSettings";
             this.tSettings.SelectedIndex = 0;
-            this.tSettings.Size = new System.Drawing.Size(788, 389);
+            this.tSettings.Size = new System.Drawing.Size(1126, 648);
             this.tSettings.TabIndex = 10;
             // 
             // tabMain
@@ -328,11 +330,11 @@ namespace MMR.UI.Forms
             this.tabMain.Controls.Add(this.groupBox9);
             this.tabMain.Controls.Add(this.groupBox6);
             this.tabMain.Controls.Add(this.groupBox4);
-            this.tabMain.Location = new System.Drawing.Point(4, 24);
-            this.tabMain.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabMain.Location = new System.Drawing.Point(4, 34);
+            this.tabMain.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tabMain.Name = "tabMain";
-            this.tabMain.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabMain.Size = new System.Drawing.Size(780, 361);
+            this.tabMain.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.tabMain.Size = new System.Drawing.Size(1118, 610);
             this.tabMain.TabIndex = 0;
             this.tabMain.Text = "Main Settings";
             this.tabMain.UseVisualStyleBackColor = true;
@@ -340,10 +342,11 @@ namespace MMR.UI.Forms
             // tOtherCustomizations
             // 
             this.tOtherCustomizations.Controls.Add(this.tOtherCustomization);
-            this.tOtherCustomizations.Location = new System.Drawing.Point(7, 146);
+            this.tOtherCustomizations.Location = new System.Drawing.Point(10, 243);
+            this.tOtherCustomizations.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tOtherCustomizations.Name = "tOtherCustomizations";
             this.tOtherCustomizations.SelectedIndex = 0;
-            this.tOtherCustomizations.Size = new System.Drawing.Size(381, 160);
+            this.tOtherCustomizations.Size = new System.Drawing.Size(544, 267);
             this.tOtherCustomizations.TabIndex = 22;
             // 
             // tOtherCustomization
@@ -354,10 +357,11 @@ namespace MMR.UI.Forms
             this.tOtherCustomization.Controls.Add(this.cDEnt);
             this.tOtherCustomization.Controls.Add(this.cMixSongs);
             this.tOtherCustomization.Controls.Add(this.cEnemy);
-            this.tOtherCustomization.Location = new System.Drawing.Point(4, 24);
+            this.tOtherCustomization.Location = new System.Drawing.Point(4, 34);
+            this.tOtherCustomization.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tOtherCustomization.Name = "tOtherCustomization";
-            this.tOtherCustomization.Padding = new System.Windows.Forms.Padding(3);
-            this.tOtherCustomization.Size = new System.Drawing.Size(373, 132);
+            this.tOtherCustomization.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tOtherCustomization.Size = new System.Drawing.Size(536, 229);
             this.tOtherCustomization.TabIndex = 0;
             this.tOtherCustomization.Text = "Other";
             this.tOtherCustomization.UseVisualStyleBackColor = true;
@@ -370,19 +374,20 @@ namespace MMR.UI.Forms
             "None",
             "Random",
             "Allow Temporary Items"});
-            this.cStartingItems.Location = new System.Drawing.Point(6, 71);
-            this.cStartingItems.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cStartingItems.Location = new System.Drawing.Point(9, 118);
+            this.cStartingItems.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cStartingItems.Name = "cStartingItems";
-            this.cStartingItems.Size = new System.Drawing.Size(160, 23);
+            this.cStartingItems.Size = new System.Drawing.Size(227, 33);
             this.cStartingItems.TabIndex = 27;
             this.cStartingItems.SelectedIndexChanged += new System.EventHandler(this.cStartingItems_SelectedIndexChanged);
             // 
             // lStartingItems
             // 
             this.lStartingItems.AutoSize = true;
-            this.lStartingItems.Location = new System.Drawing.Point(6, 56);
+            this.lStartingItems.Location = new System.Drawing.Point(9, 93);
+            this.lStartingItems.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lStartingItems.Name = "lStartingItems";
-            this.lStartingItems.Size = new System.Drawing.Size(80, 15);
+            this.lStartingItems.Size = new System.Drawing.Size(122, 25);
             this.lStartingItems.TabIndex = 22;
             this.lStartingItems.Text = "Starting Items";
             // 
@@ -391,10 +396,10 @@ namespace MMR.UI.Forms
             this.cProgressiveUpgrades.AutoSize = true;
             this.cProgressiveUpgrades.BackColor = System.Drawing.Color.Transparent;
             this.cProgressiveUpgrades.ForeColor = System.Drawing.Color.Black;
-            this.cProgressiveUpgrades.Location = new System.Drawing.Point(193, 10);
-            this.cProgressiveUpgrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cProgressiveUpgrades.Location = new System.Drawing.Point(276, 17);
+            this.cProgressiveUpgrades.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cProgressiveUpgrades.Name = "cProgressiveUpgrades";
-            this.cProgressiveUpgrades.Size = new System.Drawing.Size(139, 19);
+            this.cProgressiveUpgrades.Size = new System.Drawing.Size(211, 29);
             this.cProgressiveUpgrades.TabIndex = 21;
             this.cProgressiveUpgrades.Text = "Progressive Upgrades";
             this.cProgressiveUpgrades.UseVisualStyleBackColor = false;
@@ -405,10 +410,10 @@ namespace MMR.UI.Forms
             this.cDEnt.AutoSize = true;
             this.cDEnt.BackColor = System.Drawing.Color.Transparent;
             this.cDEnt.ForeColor = System.Drawing.Color.Black;
-            this.cDEnt.Location = new System.Drawing.Point(6, 10);
-            this.cDEnt.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDEnt.Location = new System.Drawing.Point(9, 17);
+            this.cDEnt.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cDEnt.Name = "cDEnt";
-            this.cDEnt.Size = new System.Drawing.Size(129, 19);
+            this.cDEnt.Size = new System.Drawing.Size(192, 29);
             this.cDEnt.TabIndex = 7;
             this.cDEnt.Text = "Dungeon entrances";
             this.cDEnt.UseVisualStyleBackColor = false;
@@ -419,10 +424,10 @@ namespace MMR.UI.Forms
             this.cMixSongs.AutoSize = true;
             this.cMixSongs.BackColor = System.Drawing.Color.Transparent;
             this.cMixSongs.ForeColor = System.Drawing.Color.Black;
-            this.cMixSongs.Location = new System.Drawing.Point(6, 36);
-            this.cMixSongs.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMixSongs.Location = new System.Drawing.Point(9, 60);
+            this.cMixSongs.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cMixSongs.Name = "cMixSongs";
-            this.cMixSongs.Size = new System.Drawing.Size(138, 19);
+            this.cMixSongs.Size = new System.Drawing.Size(205, 29);
             this.cMixSongs.TabIndex = 3;
             this.cMixSongs.Text = "Mix songs with items";
             this.cMixSongs.UseVisualStyleBackColor = false;
@@ -433,10 +438,10 @@ namespace MMR.UI.Forms
             this.cEnemy.AutoSize = true;
             this.cEnemy.BackColor = System.Drawing.Color.Transparent;
             this.cEnemy.ForeColor = System.Drawing.Color.Black;
-            this.cEnemy.Location = new System.Drawing.Point(193, 36);
-            this.cEnemy.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cEnemy.Location = new System.Drawing.Point(276, 60);
+            this.cEnemy.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cEnemy.Name = "cEnemy";
-            this.cEnemy.Size = new System.Drawing.Size(110, 19);
+            this.cEnemy.Size = new System.Drawing.Size(162, 29);
             this.cEnemy.TabIndex = 9;
             this.cEnemy.Text = "Enemies (BETA!)";
             this.cEnemy.UseVisualStyleBackColor = false;
@@ -452,21 +457,22 @@ namespace MMR.UI.Forms
             this.groupBox9.Controls.Add(this.bLoadLogic);
             this.groupBox9.Controls.Add(this.lMode);
             this.groupBox9.Controls.Add(this.tbUserLogic);
-            this.groupBox9.Location = new System.Drawing.Point(7, 7);
-            this.groupBox9.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox9.Location = new System.Drawing.Point(10, 12);
+            this.groupBox9.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox9.Size = new System.Drawing.Size(379, 133);
+            this.groupBox9.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.groupBox9.Size = new System.Drawing.Size(541, 222);
             this.groupBox9.TabIndex = 29;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Generation Settings";
             // 
             // lNumTricksEnabled
             // 
-            this.lNumTricksEnabled.Location = new System.Drawing.Point(96, 22);
+            this.lNumTricksEnabled.Location = new System.Drawing.Point(137, 37);
+            this.lNumTricksEnabled.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lNumTricksEnabled.Name = "lNumTricksEnabled";
             this.lNumTricksEnabled.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.lNumTricksEnabled.Size = new System.Drawing.Size(271, 18);
+            this.lNumTricksEnabled.Size = new System.Drawing.Size(387, 30);
             this.lNumTricksEnabled.TabIndex = 21;
             this.lNumTricksEnabled.Text = "0 tricks enabled";
             // 
@@ -475,10 +481,10 @@ namespace MMR.UI.Forms
             this.lItemPlacement.AutoSize = true;
             this.lItemPlacement.BackColor = System.Drawing.Color.Transparent;
             this.lItemPlacement.ForeColor = System.Drawing.Color.Black;
-            this.lItemPlacement.Location = new System.Drawing.Point(13, 111);
-            this.lItemPlacement.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lItemPlacement.Location = new System.Drawing.Point(19, 185);
+            this.lItemPlacement.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lItemPlacement.Name = "lItemPlacement";
-            this.lItemPlacement.Size = new System.Drawing.Size(126, 15);
+            this.lItemPlacement.Size = new System.Drawing.Size(189, 25);
             this.lItemPlacement.TabIndex = 21;
             this.lItemPlacement.Text = "Item Placement Order:";
             // 
@@ -490,18 +496,19 @@ namespace MMR.UI.Forms
             "Random",
             "Bespoke",
             "Classic"});
-            this.cItemPlacement.Location = new System.Drawing.Point(142, 104);
+            this.cItemPlacement.Location = new System.Drawing.Point(203, 173);
+            this.cItemPlacement.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cItemPlacement.Name = "cItemPlacement";
-            this.cItemPlacement.Size = new System.Drawing.Size(121, 23);
+            this.cItemPlacement.Size = new System.Drawing.Size(171, 33);
             this.cItemPlacement.TabIndex = 20;
             this.cItemPlacement.SelectedIndexChanged += new System.EventHandler(this.cItemPlacement_SelectedIndexChanged);
             // 
             // bToggleTricks
             // 
-            this.bToggleTricks.Location = new System.Drawing.Point(271, 39);
-            this.bToggleTricks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bToggleTricks.Location = new System.Drawing.Point(387, 65);
+            this.bToggleTricks.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.bToggleTricks.Name = "bToggleTricks";
-            this.bToggleTricks.Size = new System.Drawing.Size(96, 27);
+            this.bToggleTricks.Size = new System.Drawing.Size(137, 45);
             this.bToggleTricks.TabIndex = 19;
             this.bToggleTricks.Text = "Edit Tricks";
             this.bToggleTricks.UseVisualStyleBackColor = true;
@@ -517,19 +524,19 @@ namespace MMR.UI.Forms
             "Vanilla Layout",
             "User Logic",
             "No Logic"});
-            this.cMode.Location = new System.Drawing.Point(96, 40);
-            this.cMode.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMode.Location = new System.Drawing.Point(137, 67);
+            this.cMode.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cMode.Name = "cMode";
-            this.cMode.Size = new System.Drawing.Size(167, 23);
+            this.cMode.Size = new System.Drawing.Size(237, 33);
             this.cMode.TabIndex = 1;
             this.cMode.SelectedIndexChanged += new System.EventHandler(this.cMode_SelectedIndexChanged);
             // 
             // bLoadLogic
             // 
-            this.bLoadLogic.Location = new System.Drawing.Point(13, 71);
-            this.bLoadLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bLoadLogic.Location = new System.Drawing.Point(19, 118);
+            this.bLoadLogic.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.bLoadLogic.Name = "bLoadLogic";
-            this.bLoadLogic.Size = new System.Drawing.Size(79, 28);
+            this.bLoadLogic.Size = new System.Drawing.Size(113, 47);
             this.bLoadLogic.TabIndex = 17;
             this.bLoadLogic.Text = "Open Logic";
             this.bLoadLogic.UseVisualStyleBackColor = true;
@@ -540,20 +547,20 @@ namespace MMR.UI.Forms
             this.lMode.AutoSize = true;
             this.lMode.BackColor = System.Drawing.Color.Transparent;
             this.lMode.ForeColor = System.Drawing.Color.Black;
-            this.lMode.Location = new System.Drawing.Point(10, 43);
-            this.lMode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lMode.Location = new System.Drawing.Point(14, 72);
+            this.lMode.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lMode.Name = "lMode";
-            this.lMode.Size = new System.Drawing.Size(75, 15);
+            this.lMode.Size = new System.Drawing.Size(112, 25);
             this.lMode.TabIndex = 0;
             this.lMode.Text = "Mode/Logic:";
             // 
             // tbUserLogic
             // 
-            this.tbUserLogic.Location = new System.Drawing.Point(96, 74);
-            this.tbUserLogic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tbUserLogic.Location = new System.Drawing.Point(137, 123);
+            this.tbUserLogic.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tbUserLogic.Name = "tbUserLogic";
             this.tbUserLogic.ReadOnly = true;
-            this.tbUserLogic.Size = new System.Drawing.Size(271, 23);
+            this.tbUserLogic.Size = new System.Drawing.Size(385, 31);
             this.tbUserLogic.TabIndex = 18;
             // 
             // groupBox6
@@ -561,11 +568,11 @@ namespace MMR.UI.Forms
             this.groupBox6.Controls.Add(this.tJunkLocationsList);
             this.groupBox6.Controls.Add(this.bJunkLocationsEditor);
             this.groupBox6.Controls.Add(this.lJunkLocationsAmount);
-            this.groupBox6.Location = new System.Drawing.Point(394, 96);
-            this.groupBox6.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox6.Location = new System.Drawing.Point(563, 160);
+            this.groupBox6.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox6.Size = new System.Drawing.Size(377, 83);
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.groupBox6.Size = new System.Drawing.Size(539, 138);
             this.groupBox6.TabIndex = 28;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Enforce Junk Locations";
@@ -574,10 +581,10 @@ namespace MMR.UI.Forms
             // 
             this.tJunkLocationsList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tJunkLocationsList.Location = new System.Drawing.Point(13, 51);
-            this.tJunkLocationsList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tJunkLocationsList.Location = new System.Drawing.Point(19, 85);
+            this.tJunkLocationsList.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tJunkLocationsList.Name = "tJunkLocationsList";
-            this.tJunkLocationsList.Size = new System.Drawing.Size(309, 23);
+            this.tJunkLocationsList.Size = new System.Drawing.Size(440, 31);
             this.tJunkLocationsList.TabIndex = 26;
             this.tJunkLocationsList.Text = "--";
             this.tJunkLocationsList.TextChanged += new System.EventHandler(this.tJunkLocationsList_TextChanged);
@@ -586,10 +593,10 @@ namespace MMR.UI.Forms
             // 
             this.bJunkLocationsEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bJunkLocationsEditor.Location = new System.Drawing.Point(319, 50);
-            this.bJunkLocationsEditor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bJunkLocationsEditor.Location = new System.Drawing.Point(456, 83);
+            this.bJunkLocationsEditor.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.bJunkLocationsEditor.Name = "bJunkLocationsEditor";
-            this.bJunkLocationsEditor.Size = new System.Drawing.Size(46, 25);
+            this.bJunkLocationsEditor.Size = new System.Drawing.Size(66, 42);
             this.bJunkLocationsEditor.TabIndex = 26;
             this.bJunkLocationsEditor.Text = "Edit";
             this.bJunkLocationsEditor.UseVisualStyleBackColor = true;
@@ -598,10 +605,10 @@ namespace MMR.UI.Forms
             // lJunkLocationsAmount
             // 
             this.lJunkLocationsAmount.AutoSize = true;
-            this.lJunkLocationsAmount.Location = new System.Drawing.Point(10, 28);
-            this.lJunkLocationsAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lJunkLocationsAmount.Location = new System.Drawing.Point(14, 47);
+            this.lJunkLocationsAmount.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lJunkLocationsAmount.Name = "lJunkLocationsAmount";
-            this.lJunkLocationsAmount.Size = new System.Drawing.Size(121, 15);
+            this.lJunkLocationsAmount.Size = new System.Drawing.Size(184, 25);
             this.lJunkLocationsAmount.TabIndex = 27;
             this.lJunkLocationsAmount.Text = "0/0 locations selected";
             // 
@@ -610,11 +617,11 @@ namespace MMR.UI.Forms
             this.groupBox4.Controls.Add(this.tStartingItemList);
             this.groupBox4.Controls.Add(this.lCustomStartingItemAmount);
             this.groupBox4.Controls.Add(this.bStartingItemEditor);
-            this.groupBox4.Location = new System.Drawing.Point(394, 7);
-            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox4.Location = new System.Drawing.Point(563, 12);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox4.Size = new System.Drawing.Size(377, 83);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.groupBox4.Size = new System.Drawing.Size(539, 138);
             this.groupBox4.TabIndex = 17;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Extra Starting Items";
@@ -623,10 +630,10 @@ namespace MMR.UI.Forms
             // 
             this.tStartingItemList.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tStartingItemList.Location = new System.Drawing.Point(13, 52);
-            this.tStartingItemList.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tStartingItemList.Location = new System.Drawing.Point(19, 87);
+            this.tStartingItemList.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tStartingItemList.Name = "tStartingItemList";
-            this.tStartingItemList.Size = new System.Drawing.Size(309, 23);
+            this.tStartingItemList.Size = new System.Drawing.Size(440, 31);
             this.tStartingItemList.TabIndex = 26;
             this.tStartingItemList.Text = "--";
             this.tStartingItemList.TextChanged += new System.EventHandler(this.tStartingItemList_TextChanged);
@@ -634,10 +641,10 @@ namespace MMR.UI.Forms
             // lCustomStartingItemAmount
             // 
             this.lCustomStartingItemAmount.AutoSize = true;
-            this.lCustomStartingItemAmount.Location = new System.Drawing.Point(10, 29);
-            this.lCustomStartingItemAmount.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lCustomStartingItemAmount.Location = new System.Drawing.Point(14, 48);
+            this.lCustomStartingItemAmount.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lCustomStartingItemAmount.Name = "lCustomStartingItemAmount";
-            this.lCustomStartingItemAmount.Size = new System.Drawing.Size(102, 15);
+            this.lCustomStartingItemAmount.Size = new System.Drawing.Size(156, 25);
             this.lCustomStartingItemAmount.TabIndex = 27;
             this.lCustomStartingItemAmount.Text = "0/0 items selected";
             // 
@@ -645,10 +652,10 @@ namespace MMR.UI.Forms
             // 
             this.bStartingItemEditor.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bStartingItemEditor.Location = new System.Drawing.Point(320, 51);
-            this.bStartingItemEditor.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bStartingItemEditor.Location = new System.Drawing.Point(457, 85);
+            this.bStartingItemEditor.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.bStartingItemEditor.Name = "bStartingItemEditor";
-            this.bStartingItemEditor.Size = new System.Drawing.Size(46, 25);
+            this.bStartingItemEditor.Size = new System.Drawing.Size(66, 42);
             this.bStartingItemEditor.TabIndex = 26;
             this.bStartingItemEditor.Text = "Edit";
             this.bStartingItemEditor.UseVisualStyleBackColor = true;
@@ -663,9 +670,10 @@ namespace MMR.UI.Forms
             this.tabItemPool.Controls.Add(this.tItemPool);
             this.tabItemPool.Controls.Add(this.tableItemPool);
             this.tabItemPool.Controls.Add(this.pLocationCategories);
-            this.tabItemPool.Location = new System.Drawing.Point(4, 24);
+            this.tabItemPool.Location = new System.Drawing.Point(4, 34);
+            this.tabItemPool.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tabItemPool.Name = "tabItemPool";
-            this.tabItemPool.Size = new System.Drawing.Size(780, 361);
+            this.tabItemPool.Size = new System.Drawing.Size(1118, 610);
             this.tabItemPool.TabIndex = 6;
             this.tabItemPool.Text = "Item Randomization";
             this.tabItemPool.UseVisualStyleBackColor = true;
@@ -673,9 +681,10 @@ namespace MMR.UI.Forms
             // cItemPoolAdvanced
             // 
             this.cItemPoolAdvanced.AutoSize = true;
-            this.cItemPoolAdvanced.Location = new System.Drawing.Point(7, 52);
+            this.cItemPoolAdvanced.Location = new System.Drawing.Point(10, 87);
+            this.cItemPoolAdvanced.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cItemPoolAdvanced.Name = "cItemPoolAdvanced";
-            this.cItemPoolAdvanced.Size = new System.Drawing.Size(107, 19);
+            this.cItemPoolAdvanced.Size = new System.Drawing.Size(159, 29);
             this.cItemPoolAdvanced.TabIndex = 27;
             this.cItemPoolAdvanced.Text = "Advanced View";
             this.cItemPoolAdvanced.UseVisualStyleBackColor = true;
@@ -683,25 +692,28 @@ namespace MMR.UI.Forms
             // 
             // pClassicItemPool
             // 
-            this.pClassicItemPool.Location = new System.Drawing.Point(7, 77);
+            this.pClassicItemPool.Location = new System.Drawing.Point(10, 128);
+            this.pClassicItemPool.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pClassicItemPool.Name = "pClassicItemPool";
-            this.pClassicItemPool.Size = new System.Drawing.Size(765, 281);
+            this.pClassicItemPool.Size = new System.Drawing.Size(1093, 468);
             this.pClassicItemPool.TabIndex = 26;
             // 
             // lItemPoolText
             // 
             this.lItemPoolText.AutoSize = true;
-            this.lItemPoolText.Location = new System.Drawing.Point(7, 34);
+            this.lItemPoolText.Location = new System.Drawing.Point(10, 57);
+            this.lItemPoolText.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lItemPoolText.Name = "lItemPoolText";
-            this.lItemPoolText.Size = new System.Drawing.Size(122, 15);
+            this.lItemPoolText.Size = new System.Drawing.Size(187, 25);
             this.lItemPoolText.TabIndex = 25;
             this.lItemPoolText.Text = "0/0 items randomized";
             // 
             // bItemPoolEdit
             // 
-            this.bItemPoolEdit.Location = new System.Drawing.Point(697, 3);
+            this.bItemPoolEdit.Location = new System.Drawing.Point(996, 5);
+            this.bItemPoolEdit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.bItemPoolEdit.Name = "bItemPoolEdit";
-            this.bItemPoolEdit.Size = new System.Drawing.Size(75, 25);
+            this.bItemPoolEdit.Size = new System.Drawing.Size(107, 42);
             this.bItemPoolEdit.TabIndex = 24;
             this.bItemPoolEdit.Text = "Edit";
             this.bItemPoolEdit.UseVisualStyleBackColor = true;
@@ -709,9 +721,10 @@ namespace MMR.UI.Forms
             // 
             // tItemPool
             // 
-            this.tItemPool.Location = new System.Drawing.Point(7, 4);
+            this.tItemPool.Location = new System.Drawing.Point(10, 7);
+            this.tItemPool.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tItemPool.Name = "tItemPool";
-            this.tItemPool.Size = new System.Drawing.Size(684, 23);
+            this.tItemPool.Size = new System.Drawing.Size(975, 31);
             this.tItemPool.TabIndex = 23;
             this.tItemPool.TextChanged += new System.EventHandler(this.tItemPool_TextChanged);
             // 
@@ -721,19 +734,21 @@ namespace MMR.UI.Forms
             this.tableItemPool.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableItemPool.ColumnCount = 1;
             this.tableItemPool.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
-            this.tableItemPool.Location = new System.Drawing.Point(3, 160);
+            this.tableItemPool.Location = new System.Drawing.Point(4, 267);
+            this.tableItemPool.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tableItemPool.Name = "tableItemPool";
             this.tableItemPool.RowCount = 1;
             this.tableItemPool.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.tableItemPool.Size = new System.Drawing.Size(774, 198);
+            this.tableItemPool.Size = new System.Drawing.Size(1106, 330);
             this.tableItemPool.TabIndex = 22;
             this.tableItemPool.Visible = false;
             // 
             // pLocationCategories
             // 
-            this.pLocationCategories.Location = new System.Drawing.Point(7, 30);
+            this.pLocationCategories.Location = new System.Drawing.Point(10, 50);
+            this.pLocationCategories.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pLocationCategories.Name = "pLocationCategories";
-            this.pLocationCategories.Size = new System.Drawing.Size(770, 129);
+            this.pLocationCategories.Size = new System.Drawing.Size(1100, 215);
             this.pLocationCategories.TabIndex = 28;
             this.pLocationCategories.Visible = false;
             // 
@@ -745,11 +760,11 @@ namespace MMR.UI.Forms
             this.tabGimmicks.Controls.Add(this.groupBox5);
             this.tabGimmicks.Controls.Add(this.groupBox1);
             this.tabGimmicks.Controls.Add(this.label4);
-            this.tabGimmicks.Location = new System.Drawing.Point(4, 24);
-            this.tabGimmicks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabGimmicks.Location = new System.Drawing.Point(4, 34);
+            this.tabGimmicks.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tabGimmicks.Name = "tabGimmicks";
-            this.tabGimmicks.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabGimmicks.Size = new System.Drawing.Size(780, 361);
+            this.tabGimmicks.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.tabGimmicks.Size = new System.Drawing.Size(1118, 610);
             this.tabGimmicks.TabIndex = 3;
             this.tabGimmicks.Text = "Gimmicks";
             this.tabGimmicks.UseVisualStyleBackColor = true;
@@ -764,11 +779,11 @@ namespace MMR.UI.Forms
             this.groupBox12.Controls.Add(this.lBlastMask);
             this.groupBox12.Controls.Add(this.lNutAndStickDrops);
             this.groupBox12.Controls.Add(this.cNutAndStickDrops);
-            this.groupBox12.Location = new System.Drawing.Point(189, 92);
-            this.groupBox12.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox12.Location = new System.Drawing.Point(270, 153);
+            this.groupBox12.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.groupBox12.Name = "groupBox12";
-            this.groupBox12.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox12.Size = new System.Drawing.Size(377, 260);
+            this.groupBox12.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.groupBox12.Size = new System.Drawing.Size(539, 433);
             this.groupBox12.TabIndex = 34;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Other";
@@ -778,10 +793,10 @@ namespace MMR.UI.Forms
             this.cFreeScarecrow.AutoSize = true;
             this.cFreeScarecrow.BackColor = System.Drawing.Color.Transparent;
             this.cFreeScarecrow.ForeColor = System.Drawing.Color.Black;
-            this.cFreeScarecrow.Location = new System.Drawing.Point(148, 100);
-            this.cFreeScarecrow.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFreeScarecrow.Location = new System.Drawing.Point(211, 167);
+            this.cFreeScarecrow.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cFreeScarecrow.Name = "cFreeScarecrow";
-            this.cFreeScarecrow.Size = new System.Drawing.Size(143, 19);
+            this.cFreeScarecrow.Size = new System.Drawing.Size(215, 29);
             this.cFreeScarecrow.TabIndex = 27;
             this.cFreeScarecrow.Text = "Free Scarecrow\'s Song";
             this.cFreeScarecrow.UseVisualStyleBackColor = false;
@@ -792,10 +807,10 @@ namespace MMR.UI.Forms
             this.cFDAnywhere.AutoSize = true;
             this.cFDAnywhere.BackColor = System.Drawing.Color.Transparent;
             this.cFDAnywhere.ForeColor = System.Drawing.Color.Black;
-            this.cFDAnywhere.Location = new System.Drawing.Point(148, 75);
-            this.cFDAnywhere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFDAnywhere.Location = new System.Drawing.Point(211, 125);
+            this.cFDAnywhere.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cFDAnywhere.Name = "cFDAnywhere";
-            this.cFDAnywhere.Size = new System.Drawing.Size(213, 19);
+            this.cFDAnywhere.Size = new System.Drawing.Size(317, 29);
             this.cFDAnywhere.TabIndex = 23;
             this.cFDAnywhere.Text = "Allow Fierce Deity\'s Mask anywhere";
             this.cFDAnywhere.UseVisualStyleBackColor = false;
@@ -812,10 +827,10 @@ namespace MMR.UI.Forms
             "Short",
             "Long",
             "Very Long"});
-            this.cBlastCooldown.Location = new System.Drawing.Point(7, 35);
-            this.cBlastCooldown.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cBlastCooldown.Location = new System.Drawing.Point(10, 58);
+            this.cBlastCooldown.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cBlastCooldown.Name = "cBlastCooldown";
-            this.cBlastCooldown.Size = new System.Drawing.Size(123, 23);
+            this.cBlastCooldown.Size = new System.Drawing.Size(174, 33);
             this.cBlastCooldown.TabIndex = 20;
             this.cBlastCooldown.SelectedIndexChanged += new System.EventHandler(this.cBlastCooldown_SelectedIndexChanged);
             // 
@@ -823,10 +838,10 @@ namespace MMR.UI.Forms
             // 
             this.cUnderwaterOcarina.AutoSize = true;
             this.cUnderwaterOcarina.BackColor = System.Drawing.Color.Transparent;
-            this.cUnderwaterOcarina.Location = new System.Drawing.Point(148, 22);
-            this.cUnderwaterOcarina.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cUnderwaterOcarina.Location = new System.Drawing.Point(211, 37);
+            this.cUnderwaterOcarina.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cUnderwaterOcarina.Name = "cUnderwaterOcarina";
-            this.cUnderwaterOcarina.Size = new System.Drawing.Size(131, 19);
+            this.cUnderwaterOcarina.Size = new System.Drawing.Size(194, 29);
             this.cUnderwaterOcarina.TabIndex = 22;
             this.cUnderwaterOcarina.Text = "Underwater Ocarina";
             this.cUnderwaterOcarina.UseVisualStyleBackColor = false;
@@ -837,10 +852,10 @@ namespace MMR.UI.Forms
             this.cSunsSong.AutoSize = true;
             this.cSunsSong.BackColor = System.Drawing.Color.Transparent;
             this.cSunsSong.ForeColor = System.Drawing.Color.Black;
-            this.cSunsSong.Location = new System.Drawing.Point(148, 48);
-            this.cSunsSong.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSunsSong.Location = new System.Drawing.Point(211, 80);
+            this.cSunsSong.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cSunsSong.Name = "cSunsSong";
-            this.cSunsSong.Size = new System.Drawing.Size(122, 19);
+            this.cSunsSong.Size = new System.Drawing.Size(184, 29);
             this.cSunsSong.TabIndex = 21;
             this.cSunsSong.Text = "Enable Sun\'s Song";
             this.cSunsSong.UseVisualStyleBackColor = false;
@@ -849,20 +864,20 @@ namespace MMR.UI.Forms
             // lBlastMask
             // 
             this.lBlastMask.AutoSize = true;
-            this.lBlastMask.Location = new System.Drawing.Point(8, 18);
-            this.lBlastMask.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lBlastMask.Location = new System.Drawing.Point(11, 30);
+            this.lBlastMask.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lBlastMask.Name = "lBlastMask";
-            this.lBlastMask.Size = new System.Drawing.Size(121, 15);
+            this.lBlastMask.Size = new System.Drawing.Size(183, 25);
             this.lBlastMask.TabIndex = 19;
             this.lBlastMask.Text = "Blast Mask Cooldown";
             // 
             // lNutAndStickDrops
             // 
             this.lNutAndStickDrops.AutoSize = true;
-            this.lNutAndStickDrops.Location = new System.Drawing.Point(8, 62);
-            this.lNutAndStickDrops.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lNutAndStickDrops.Location = new System.Drawing.Point(11, 103);
+            this.lNutAndStickDrops.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lNutAndStickDrops.Name = "lNutAndStickDrops";
-            this.lNutAndStickDrops.Size = new System.Drawing.Size(112, 15);
+            this.lNutAndStickDrops.Size = new System.Drawing.Size(171, 25);
             this.lNutAndStickDrops.TabIndex = 25;
             this.lNutAndStickDrops.Text = "Nut and Stick Drops";
             // 
@@ -876,10 +891,10 @@ namespace MMR.UI.Forms
             "Medium",
             "Extra",
             "Mayhem"});
-            this.cNutAndStickDrops.Location = new System.Drawing.Point(7, 78);
-            this.cNutAndStickDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cNutAndStickDrops.Location = new System.Drawing.Point(10, 130);
+            this.cNutAndStickDrops.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cNutAndStickDrops.Name = "cNutAndStickDrops";
-            this.cNutAndStickDrops.Size = new System.Drawing.Size(123, 23);
+            this.cNutAndStickDrops.Size = new System.Drawing.Size(174, 33);
             this.cNutAndStickDrops.TabIndex = 26;
             this.cNutAndStickDrops.SelectedIndexChanged += new System.EventHandler(this.cNutAndStickDrops_SelectedIndexChanged);
             // 
@@ -891,11 +906,11 @@ namespace MMR.UI.Forms
             this.groupBox11.Controls.Add(this.cByoAmmo);
             this.groupBox11.Controls.Add(this.cDMult);
             this.groupBox11.Controls.Add(this.lDMult);
-            this.groupBox11.Location = new System.Drawing.Point(8, 187);
-            this.groupBox11.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox11.Location = new System.Drawing.Point(11, 312);
+            this.groupBox11.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.groupBox11.Name = "groupBox11";
-            this.groupBox11.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox11.Size = new System.Drawing.Size(174, 164);
+            this.groupBox11.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.groupBox11.Size = new System.Drawing.Size(249, 273);
             this.groupBox11.TabIndex = 33;
             this.groupBox11.TabStop = false;
             this.groupBox11.Text = "Challenges";
@@ -911,20 +926,20 @@ namespace MMR.UI.Forms
             "Shock",
             "Knockdown",
             "Random"});
-            this.cDType.Location = new System.Drawing.Point(7, 82);
-            this.cDType.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDType.Location = new System.Drawing.Point(10, 137);
+            this.cDType.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cDType.Name = "cDType";
-            this.cDType.Size = new System.Drawing.Size(159, 23);
+            this.cDType.Size = new System.Drawing.Size(225, 33);
             this.cDType.TabIndex = 0;
             this.cDType.SelectedIndexChanged += new System.EventHandler(this.cDType_SelectedIndexChanged);
             // 
             // lDType
             // 
             this.lDType.AutoSize = true;
-            this.lDType.Location = new System.Drawing.Point(7, 66);
-            this.lDType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lDType.Location = new System.Drawing.Point(10, 110);
+            this.lDType.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lDType.Name = "lDType";
-            this.lDType.Size = new System.Drawing.Size(89, 15);
+            this.lDType.Size = new System.Drawing.Size(136, 25);
             this.lDType.TabIndex = 1;
             this.lDType.Text = "Damage effects";
             // 
@@ -933,10 +948,10 @@ namespace MMR.UI.Forms
             this.cDeathMoonCrash.AutoSize = true;
             this.cDeathMoonCrash.BackColor = System.Drawing.Color.Transparent;
             this.cDeathMoonCrash.ForeColor = System.Drawing.Color.Black;
-            this.cDeathMoonCrash.Location = new System.Drawing.Point(7, 113);
-            this.cDeathMoonCrash.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDeathMoonCrash.Location = new System.Drawing.Point(10, 188);
+            this.cDeathMoonCrash.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cDeathMoonCrash.Name = "cDeathMoonCrash";
-            this.cDeathMoonCrash.Size = new System.Drawing.Size(136, 19);
+            this.cDeathMoonCrash.Size = new System.Drawing.Size(204, 29);
             this.cDeathMoonCrash.TabIndex = 25;
             this.cDeathMoonCrash.Text = "Death is Moon Crash";
             this.cDeathMoonCrash.UseVisualStyleBackColor = false;
@@ -947,10 +962,10 @@ namespace MMR.UI.Forms
             this.cByoAmmo.AutoSize = true;
             this.cByoAmmo.BackColor = System.Drawing.Color.Transparent;
             this.cByoAmmo.ForeColor = System.Drawing.Color.Black;
-            this.cByoAmmo.Location = new System.Drawing.Point(7, 140);
-            this.cByoAmmo.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cByoAmmo.Location = new System.Drawing.Point(10, 233);
+            this.cByoAmmo.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cByoAmmo.Name = "cByoAmmo";
-            this.cByoAmmo.Size = new System.Drawing.Size(89, 19);
+            this.cByoAmmo.Size = new System.Drawing.Size(130, 29);
             this.cByoAmmo.TabIndex = 24;
             this.cByoAmmo.Text = "BYO Ammo";
             this.cByoAmmo.UseVisualStyleBackColor = false;
@@ -966,20 +981,20 @@ namespace MMR.UI.Forms
             "4x",
             "1-hit KO",
             "Doom"});
-            this.cDMult.Location = new System.Drawing.Point(7, 38);
-            this.cDMult.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDMult.Location = new System.Drawing.Point(10, 63);
+            this.cDMult.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cDMult.Name = "cDMult";
-            this.cDMult.Size = new System.Drawing.Size(159, 23);
+            this.cDMult.Size = new System.Drawing.Size(225, 33);
             this.cDMult.TabIndex = 0;
             this.cDMult.SelectedIndexChanged += new System.EventHandler(this.cDMult_SelectedIndexChanged);
             // 
             // lDMult
             // 
             this.lDMult.AutoSize = true;
-            this.lDMult.Location = new System.Drawing.Point(7, 22);
-            this.lDMult.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lDMult.Location = new System.Drawing.Point(10, 37);
+            this.lDMult.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lDMult.Name = "lDMult";
-            this.lDMult.Size = new System.Drawing.Size(85, 15);
+            this.lDMult.Size = new System.Drawing.Size(131, 25);
             this.lDMult.TabIndex = 1;
             this.lDMult.Text = "Damage mode";
             // 
@@ -992,11 +1007,11 @@ namespace MMR.UI.Forms
             this.groupBox10.Controls.Add(this.lGravity);
             this.groupBox10.Controls.Add(this.cGravity);
             this.groupBox10.Controls.Add(this.cContinuousDekuHopping);
-            this.groupBox10.Location = new System.Drawing.Point(573, 7);
-            this.groupBox10.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox10.Location = new System.Drawing.Point(819, 12);
+            this.groupBox10.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox10.Size = new System.Drawing.Size(198, 193);
+            this.groupBox10.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.groupBox10.Size = new System.Drawing.Size(283, 322);
             this.groupBox10.TabIndex = 32;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Movement";
@@ -1006,10 +1021,10 @@ namespace MMR.UI.Forms
             this.cClimbMostSurfaces.AutoSize = true;
             this.cClimbMostSurfaces.BackColor = System.Drawing.Color.Transparent;
             this.cClimbMostSurfaces.ForeColor = System.Drawing.Color.Black;
-            this.cClimbMostSurfaces.Location = new System.Drawing.Point(7, 160);
-            this.cClimbMostSurfaces.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cClimbMostSurfaces.Location = new System.Drawing.Point(10, 267);
+            this.cClimbMostSurfaces.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cClimbMostSurfaces.Name = "cClimbMostSurfaces";
-            this.cClimbMostSurfaces.Size = new System.Drawing.Size(135, 19);
+            this.cClimbMostSurfaces.Size = new System.Drawing.Size(201, 29);
             this.cClimbMostSurfaces.TabIndex = 28;
             this.cClimbMostSurfaces.Text = "Climb Most Surfaces";
             this.cClimbMostSurfaces.UseVisualStyleBackColor = false;
@@ -1020,10 +1035,10 @@ namespace MMR.UI.Forms
             this.cHookshotAnySurface.AutoSize = true;
             this.cHookshotAnySurface.BackColor = System.Drawing.Color.Transparent;
             this.cHookshotAnySurface.ForeColor = System.Drawing.Color.Black;
-            this.cHookshotAnySurface.Location = new System.Drawing.Point(7, 135);
-            this.cHookshotAnySurface.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHookshotAnySurface.Location = new System.Drawing.Point(10, 225);
+            this.cHookshotAnySurface.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cHookshotAnySurface.Name = "cHookshotAnySurface";
-            this.cHookshotAnySurface.Size = new System.Drawing.Size(144, 19);
+            this.cHookshotAnySurface.Size = new System.Drawing.Size(216, 29);
             this.cHookshotAnySurface.TabIndex = 27;
             this.cHookshotAnySurface.Text = "Hookshot Any Surface";
             this.cHookshotAnySurface.UseVisualStyleBackColor = false;
@@ -1039,30 +1054,30 @@ namespace MMR.UI.Forms
             "Ice",
             "Snow",
             "Random"});
-            this.cFloors.Location = new System.Drawing.Point(7, 78);
-            this.cFloors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFloors.Location = new System.Drawing.Point(10, 130);
+            this.cFloors.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cFloors.Name = "cFloors";
-            this.cFloors.Size = new System.Drawing.Size(184, 23);
+            this.cFloors.Size = new System.Drawing.Size(261, 33);
             this.cFloors.TabIndex = 0;
             this.cFloors.SelectedIndexChanged += new System.EventHandler(this.cFloors_SelectedIndexChanged);
             // 
             // lFloors
             // 
             this.lFloors.AutoSize = true;
-            this.lFloors.Location = new System.Drawing.Point(7, 62);
-            this.lFloors.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lFloors.Location = new System.Drawing.Point(10, 103);
+            this.lFloors.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lFloors.Name = "lFloors";
-            this.lFloors.Size = new System.Drawing.Size(65, 15);
+            this.lFloors.Size = new System.Drawing.Size(101, 25);
             this.lFloors.TabIndex = 1;
             this.lFloors.Text = "Floor types";
             // 
             // lGravity
             // 
             this.lGravity.AutoSize = true;
-            this.lGravity.Location = new System.Drawing.Point(7, 18);
-            this.lGravity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lGravity.Location = new System.Drawing.Point(10, 30);
+            this.lGravity.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lGravity.Name = "lGravity";
-            this.lGravity.Size = new System.Drawing.Size(87, 15);
+            this.lGravity.Size = new System.Drawing.Size(134, 25);
             this.lGravity.TabIndex = 1;
             this.lGravity.Text = "Gravity / Speed";
             // 
@@ -1076,10 +1091,10 @@ namespace MMR.UI.Forms
             "Super low gravity",
             "Low gravity",
             "High gravity"});
-            this.cGravity.Location = new System.Drawing.Point(7, 35);
-            this.cGravity.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cGravity.Location = new System.Drawing.Point(10, 58);
+            this.cGravity.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cGravity.Name = "cGravity";
-            this.cGravity.Size = new System.Drawing.Size(184, 23);
+            this.cGravity.Size = new System.Drawing.Size(261, 33);
             this.cGravity.TabIndex = 0;
             this.cGravity.SelectedIndexChanged += new System.EventHandler(this.cGravity_SelectedIndexChanged);
             // 
@@ -1088,10 +1103,10 @@ namespace MMR.UI.Forms
             this.cContinuousDekuHopping.AutoSize = true;
             this.cContinuousDekuHopping.BackColor = System.Drawing.Color.Transparent;
             this.cContinuousDekuHopping.ForeColor = System.Drawing.Color.Black;
-            this.cContinuousDekuHopping.Location = new System.Drawing.Point(7, 110);
-            this.cContinuousDekuHopping.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cContinuousDekuHopping.Location = new System.Drawing.Point(10, 183);
+            this.cContinuousDekuHopping.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cContinuousDekuHopping.Name = "cContinuousDekuHopping";
-            this.cContinuousDekuHopping.Size = new System.Drawing.Size(168, 19);
+            this.cContinuousDekuHopping.Size = new System.Drawing.Size(251, 29);
             this.cContinuousDekuHopping.TabIndex = 26;
             this.cContinuousDekuHopping.Text = "Continuous Deku Hopping";
             this.cContinuousDekuHopping.UseVisualStyleBackColor = false;
@@ -1100,15 +1115,17 @@ namespace MMR.UI.Forms
             // groupBox5
             // 
             this.groupBox5.Controls.Add(this.label2);
+            this.groupBox5.Controls.Add(this.label11);
             this.groupBox5.Controls.Add(this.lIceTraps);
+            this.groupBox5.Controls.Add(this.cBombTraps);
             this.groupBox5.Controls.Add(this.cIceTraps);
             this.groupBox5.Controls.Add(this.cIceTrapsAppearance);
             this.groupBox5.Controls.Add(this.cIceTrapQuirks);
-            this.groupBox5.Location = new System.Drawing.Point(7, 7);
-            this.groupBox5.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox5.Location = new System.Drawing.Point(10, 12);
+            this.groupBox5.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox5.Size = new System.Drawing.Size(175, 174);
+            this.groupBox5.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.groupBox5.Size = new System.Drawing.Size(250, 290);
             this.groupBox5.TabIndex = 31;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Ice Traps";
@@ -1116,20 +1133,20 @@ namespace MMR.UI.Forms
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 62);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(10, 164);
+            this.label2.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(70, 15);
+            this.label2.Size = new System.Drawing.Size(106, 25);
             this.label2.TabIndex = 30;
             this.label2.Text = "Appearance";
             // 
             // lIceTraps
             // 
             this.lIceTraps.AutoSize = true;
-            this.lIceTraps.Location = new System.Drawing.Point(7, 18);
-            this.lIceTraps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lIceTraps.Location = new System.Drawing.Point(10, 30);
+            this.lIceTraps.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lIceTraps.Name = "lIceTraps";
-            this.lIceTraps.Size = new System.Drawing.Size(51, 15);
+            this.lIceTraps.Size = new System.Drawing.Size(77, 25);
             this.lIceTraps.TabIndex = 28;
             this.lIceTraps.Text = "Amount";
             // 
@@ -1143,10 +1160,10 @@ namespace MMR.UI.Forms
             "Extra",
             "Mayhem",
             "Onslaught"});
-            this.cIceTraps.Location = new System.Drawing.Point(7, 35);
-            this.cIceTraps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cIceTraps.Location = new System.Drawing.Point(10, 58);
+            this.cIceTraps.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cIceTraps.Name = "cIceTraps";
-            this.cIceTraps.Size = new System.Drawing.Size(160, 23);
+            this.cIceTraps.Size = new System.Drawing.Size(227, 33);
             this.cIceTraps.TabIndex = 26;
             this.cIceTraps.SelectedIndexChanged += new System.EventHandler(this.cIceTraps_SelectedIndexChanged);
             // 
@@ -1158,10 +1175,10 @@ namespace MMR.UI.Forms
             "Major Items",
             "Junk Items",
             "Anything"});
-            this.cIceTrapsAppearance.Location = new System.Drawing.Point(7, 78);
-            this.cIceTrapsAppearance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cIceTrapsAppearance.Location = new System.Drawing.Point(10, 194);
+            this.cIceTrapsAppearance.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cIceTrapsAppearance.Name = "cIceTrapsAppearance";
-            this.cIceTrapsAppearance.Size = new System.Drawing.Size(160, 23);
+            this.cIceTrapsAppearance.Size = new System.Drawing.Size(227, 33);
             this.cIceTrapsAppearance.TabIndex = 27;
             this.cIceTrapsAppearance.SelectedIndexChanged += new System.EventHandler(this.cIceTrapsAppearance_SelectedIndexChanged);
             // 
@@ -1170,10 +1187,10 @@ namespace MMR.UI.Forms
             this.cIceTrapQuirks.AutoSize = true;
             this.cIceTrapQuirks.BackColor = System.Drawing.Color.Transparent;
             this.cIceTrapQuirks.ForeColor = System.Drawing.Color.Black;
-            this.cIceTrapQuirks.Location = new System.Drawing.Point(7, 110);
-            this.cIceTrapQuirks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cIceTrapQuirks.Location = new System.Drawing.Point(10, 240);
+            this.cIceTrapQuirks.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cIceTrapQuirks.Name = "cIceTrapQuirks";
-            this.cIceTrapQuirks.Size = new System.Drawing.Size(98, 19);
+            this.cIceTrapQuirks.Size = new System.Drawing.Size(146, 29);
             this.cIceTrapQuirks.TabIndex = 29;
             this.cIceTrapQuirks.Text = "Enable Quirks";
             this.cIceTrapQuirks.UseVisualStyleBackColor = false;
@@ -1186,11 +1203,11 @@ namespace MMR.UI.Forms
             this.groupBox1.Controls.Add(this.cClockSpeed);
             this.groupBox1.Controls.Add(this.label6);
             this.groupBox1.Controls.Add(this.cHideClock);
-            this.groupBox1.Location = new System.Drawing.Point(574, 206);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox1.Location = new System.Drawing.Point(820, 343);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox1.Size = new System.Drawing.Size(197, 145);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.groupBox1.Size = new System.Drawing.Size(281, 242);
             this.groupBox1.TabIndex = 30;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Clock";
@@ -1203,20 +1220,20 @@ namespace MMR.UI.Forms
             "Never",
             "First Cycle",
             "Always"});
-            this.cAutoInvert.Location = new System.Drawing.Point(7, 82);
-            this.cAutoInvert.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cAutoInvert.Location = new System.Drawing.Point(10, 137);
+            this.cAutoInvert.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cAutoInvert.Name = "cAutoInvert";
-            this.cAutoInvert.Size = new System.Drawing.Size(164, 23);
+            this.cAutoInvert.Size = new System.Drawing.Size(233, 33);
             this.cAutoInvert.TabIndex = 18;
             this.cAutoInvert.SelectedIndexChanged += new System.EventHandler(this.cAutoInvert_SelectedIndexChanged);
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(4, 66);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(6, 110);
+            this.label3.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(68, 15);
+            this.label3.Size = new System.Drawing.Size(102, 25);
             this.label3.TabIndex = 19;
             this.label3.Text = "Auto-invert";
             // 
@@ -1231,20 +1248,20 @@ namespace MMR.UI.Forms
             "2x",
             "3x",
             "6x"});
-            this.cClockSpeed.Location = new System.Drawing.Point(7, 40);
-            this.cClockSpeed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cClockSpeed.Location = new System.Drawing.Point(10, 67);
+            this.cClockSpeed.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cClockSpeed.Name = "cClockSpeed";
-            this.cClockSpeed.Size = new System.Drawing.Size(164, 23);
+            this.cClockSpeed.Size = new System.Drawing.Size(233, 33);
             this.cClockSpeed.TabIndex = 15;
             this.cClockSpeed.SelectedIndexChanged += new System.EventHandler(this.cClockSpeed_SelectedIndexChanged);
             // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(4, 24);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(6, 40);
+            this.label6.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(39, 15);
+            this.label6.Size = new System.Drawing.Size(62, 25);
             this.label6.TabIndex = 16;
             this.label6.Text = "Speed";
             // 
@@ -1253,10 +1270,10 @@ namespace MMR.UI.Forms
             this.cHideClock.AutoSize = true;
             this.cHideClock.BackColor = System.Drawing.Color.Transparent;
             this.cHideClock.ForeColor = System.Drawing.Color.Black;
-            this.cHideClock.Location = new System.Drawing.Point(6, 111);
-            this.cHideClock.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHideClock.Location = new System.Drawing.Point(9, 185);
+            this.cHideClock.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cHideClock.Name = "cHideClock";
-            this.cHideClock.Size = new System.Drawing.Size(65, 19);
+            this.cHideClock.Size = new System.Drawing.Size(97, 29);
             this.cHideClock.TabIndex = 17;
             this.cHideClock.Text = "Hide UI";
             this.cHideClock.UseVisualStyleBackColor = false;
@@ -1267,10 +1284,10 @@ namespace MMR.UI.Forms
             this.label4.AutoSize = true;
             this.label4.BackColor = System.Drawing.Color.Transparent;
             this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.Location = new System.Drawing.Point(231, 16);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(330, 27);
+            this.label4.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(266, 60);
+            this.label4.Size = new System.Drawing.Size(404, 100);
             this.label4.TabIndex = 14;
             this.label4.Text = "WARNING!\r\nMost of these settings are not considered in logic\r\nand some can cause " +
     "the seed to be unbeatable.\r\nUse at your own risk!";
@@ -1284,11 +1301,11 @@ namespace MMR.UI.Forms
             this.tabComfort.Controls.Add(this.gHints);
             this.tabComfort.Controls.Add(this.groupBox8);
             this.tabComfort.Controls.Add(this.groupBox7);
-            this.tabComfort.Location = new System.Drawing.Point(4, 24);
-            this.tabComfort.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabComfort.Location = new System.Drawing.Point(4, 34);
+            this.tabComfort.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tabComfort.Name = "tabComfort";
-            this.tabComfort.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tabComfort.Size = new System.Drawing.Size(780, 361);
+            this.tabComfort.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.tabComfort.Size = new System.Drawing.Size(1118, 610);
             this.tabComfort.TabIndex = 1;
             this.tabComfort.Text = "Comfort";
             this.tabComfort.UseVisualStyleBackColor = true;
@@ -1298,18 +1315,21 @@ namespace MMR.UI.Forms
             this.gHintsGeneral.Controls.Add(this.bCustomizeHintPriorities);
             this.gHintsGeneral.Controls.Add(this.cHintImportance);
             this.gHintsGeneral.Controls.Add(this.cMixGaroWithGossip);
-            this.gHintsGeneral.Location = new System.Drawing.Point(7, 250);
+            this.gHintsGeneral.Location = new System.Drawing.Point(10, 417);
+            this.gHintsGeneral.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.gHintsGeneral.Name = "gHintsGeneral";
-            this.gHintsGeneral.Size = new System.Drawing.Size(206, 96);
+            this.gHintsGeneral.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.gHintsGeneral.Size = new System.Drawing.Size(294, 160);
             this.gHintsGeneral.TabIndex = 39;
             this.gHintsGeneral.TabStop = false;
             this.gHintsGeneral.Text = "Hints";
             // 
             // bCustomizeHintPriorities
             // 
-            this.bCustomizeHintPriorities.Location = new System.Drawing.Point(10, 67);
+            this.bCustomizeHintPriorities.Location = new System.Drawing.Point(14, 112);
+            this.bCustomizeHintPriorities.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.bCustomizeHintPriorities.Name = "bCustomizeHintPriorities";
-            this.bCustomizeHintPriorities.Size = new System.Drawing.Size(184, 23);
+            this.bCustomizeHintPriorities.Size = new System.Drawing.Size(263, 38);
             this.bCustomizeHintPriorities.TabIndex = 16;
             this.bCustomizeHintPriorities.Text = "Customize Hint Priorities";
             this.bCustomizeHintPriorities.UseVisualStyleBackColor = true;
@@ -1318,9 +1338,10 @@ namespace MMR.UI.Forms
             // cHintImportance
             // 
             this.cHintImportance.AutoSize = true;
-            this.cHintImportance.Location = new System.Drawing.Point(11, 20);
+            this.cHintImportance.Location = new System.Drawing.Point(16, 33);
+            this.cHintImportance.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cHintImportance.Name = "cHintImportance";
-            this.cHintImportance.Size = new System.Drawing.Size(132, 19);
+            this.cHintImportance.Size = new System.Drawing.Size(196, 29);
             this.cHintImportance.TabIndex = 0;
             this.cHintImportance.Text = "Indicate Importance";
             this.cHintImportance.UseVisualStyleBackColor = true;
@@ -1331,10 +1352,10 @@ namespace MMR.UI.Forms
             this.cMixGaroWithGossip.AutoSize = true;
             this.cMixGaroWithGossip.BackColor = System.Drawing.Color.Transparent;
             this.cMixGaroWithGossip.ForeColor = System.Drawing.Color.Black;
-            this.cMixGaroWithGossip.Location = new System.Drawing.Point(11, 45);
-            this.cMixGaroWithGossip.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMixGaroWithGossip.Location = new System.Drawing.Point(16, 75);
+            this.cMixGaroWithGossip.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cMixGaroWithGossip.Name = "cMixGaroWithGossip";
-            this.cMixGaroWithGossip.Size = new System.Drawing.Size(166, 19);
+            this.cMixGaroWithGossip.Size = new System.Drawing.Size(249, 29);
             this.cMixGaroWithGossip.TabIndex = 15;
             this.cMixGaroWithGossip.Text = "Mix Gossip and Garo Hints";
             this.cMixGaroWithGossip.UseVisualStyleBackColor = false;
@@ -1353,11 +1374,11 @@ namespace MMR.UI.Forms
             this.gGaroHints.Controls.Add(this.label5);
             this.gGaroHints.Controls.Add(this.label10);
             this.gGaroHints.Controls.Add(this.label9);
-            this.gGaroHints.Location = new System.Drawing.Point(221, 122);
-            this.gGaroHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGaroHints.Location = new System.Drawing.Point(316, 203);
+            this.gGaroHints.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.gGaroHints.Name = "gGaroHints";
-            this.gGaroHints.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGaroHints.Size = new System.Drawing.Size(207, 120);
+            this.gGaroHints.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.gGaroHints.Size = new System.Drawing.Size(296, 200);
             this.gGaroHints.TabIndex = 38;
             this.gGaroHints.TabStop = false;
             this.gGaroHints.Text = "Garo Hints";
@@ -1367,10 +1388,10 @@ namespace MMR.UI.Forms
             this.cFreeGaroHints.AutoSize = true;
             this.cFreeGaroHints.BackColor = System.Drawing.Color.Transparent;
             this.cFreeGaroHints.ForeColor = System.Drawing.Color.Black;
-            this.cFreeGaroHints.Location = new System.Drawing.Point(117, 20);
-            this.cFreeGaroHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFreeGaroHints.Location = new System.Drawing.Point(167, 33);
+            this.cFreeGaroHints.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cFreeGaroHints.Name = "cFreeGaroHints";
-            this.cFreeGaroHints.Size = new System.Drawing.Size(77, 19);
+            this.cFreeGaroHints.Size = new System.Drawing.Size(114, 29);
             this.cFreeGaroHints.TabIndex = 37;
             this.cFreeGaroHints.Text = "Free hints";
             this.cFreeGaroHints.UseVisualStyleBackColor = false;
@@ -1381,23 +1402,25 @@ namespace MMR.UI.Forms
             this.cCustomGaroWoth.AutoSize = true;
             this.cCustomGaroWoth.Checked = true;
             this.cCustomGaroWoth.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cCustomGaroWoth.Location = new System.Drawing.Point(15, 88);
+            this.cCustomGaroWoth.Location = new System.Drawing.Point(21, 147);
+            this.cCustomGaroWoth.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cCustomGaroWoth.Name = "cCustomGaroWoth";
-            this.cCustomGaroWoth.Size = new System.Drawing.Size(15, 14);
+            this.cCustomGaroWoth.Size = new System.Drawing.Size(22, 21);
             this.cCustomGaroWoth.TabIndex = 36;
             this.cCustomGaroWoth.UseVisualStyleBackColor = true;
             this.cCustomGaroWoth.CheckedChanged += new System.EventHandler(this.cCustomGaroWoth_CheckedChanged);
             // 
             // nMaxGaroCT
             // 
-            this.nMaxGaroCT.Location = new System.Drawing.Point(160, 85);
+            this.nMaxGaroCT.Location = new System.Drawing.Point(229, 142);
+            this.nMaxGaroCT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.nMaxGaroCT.Maximum = new decimal(new int[] {
             9,
             0,
             0,
             0});
             this.nMaxGaroCT.Name = "nMaxGaroCT";
-            this.nMaxGaroCT.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGaroCT.Size = new System.Drawing.Size(44, 31);
             this.nMaxGaroCT.TabIndex = 35;
             this.nMaxGaroCT.ValueChanged += new System.EventHandler(this.nMaxGaroCT_ValueChanged);
             // 
@@ -1406,23 +1429,24 @@ namespace MMR.UI.Forms
             this.lGaroHints.AutoSize = true;
             this.lGaroHints.BackColor = System.Drawing.Color.Transparent;
             this.lGaroHints.ForeColor = System.Drawing.Color.Black;
-            this.lGaroHints.Location = new System.Drawing.Point(13, 24);
-            this.lGaroHints.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lGaroHints.Location = new System.Drawing.Point(19, 40);
+            this.lGaroHints.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lGaroHints.Name = "lGaroHints";
-            this.lGaroHints.Size = new System.Drawing.Size(95, 15);
+            this.lGaroHints.Size = new System.Drawing.Size(143, 25);
             this.lGaroHints.TabIndex = 20;
             this.lGaroHints.Text = "Hint Distribution";
             // 
             // nMaxGaroFoolish
             // 
-            this.nMaxGaroFoolish.Location = new System.Drawing.Point(108, 85);
+            this.nMaxGaroFoolish.Location = new System.Drawing.Point(154, 142);
+            this.nMaxGaroFoolish.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.nMaxGaroFoolish.Maximum = new decimal(new int[] {
             9,
             0,
             0,
             0});
             this.nMaxGaroFoolish.Name = "nMaxGaroFoolish";
-            this.nMaxGaroFoolish.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGaroFoolish.Size = new System.Drawing.Size(44, 31);
             this.nMaxGaroFoolish.TabIndex = 34;
             this.nMaxGaroFoolish.Value = new decimal(new int[] {
             2,
@@ -1440,23 +1464,24 @@ namespace MMR.UI.Forms
             "Random",
             "Relevant",
             "Competitive"});
-            this.cGaroHint.Location = new System.Drawing.Point(15, 39);
-            this.cGaroHint.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cGaroHint.Location = new System.Drawing.Point(21, 65);
+            this.cGaroHint.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cGaroHint.Name = "cGaroHint";
-            this.cGaroHint.Size = new System.Drawing.Size(92, 23);
+            this.cGaroHint.Size = new System.Drawing.Size(130, 33);
             this.cGaroHint.TabIndex = 19;
             this.cGaroHint.SelectedIndexChanged += new System.EventHandler(this.cGaroHint_SelectedIndexChanged);
             // 
             // nMaxGaroWotH
             // 
-            this.nMaxGaroWotH.Location = new System.Drawing.Point(58, 85);
+            this.nMaxGaroWotH.Location = new System.Drawing.Point(83, 142);
+            this.nMaxGaroWotH.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.nMaxGaroWotH.Maximum = new decimal(new int[] {
             9,
             0,
             0,
             0});
             this.nMaxGaroWotH.Name = "nMaxGaroWotH";
-            this.nMaxGaroWotH.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGaroWotH.Size = new System.Drawing.Size(44, 31);
             this.nMaxGaroWotH.TabIndex = 33;
             this.nMaxGaroWotH.Value = new decimal(new int[] {
             2,
@@ -1470,10 +1495,10 @@ namespace MMR.UI.Forms
             this.cClearGaroHints.AutoSize = true;
             this.cClearGaroHints.BackColor = System.Drawing.Color.Transparent;
             this.cClearGaroHints.ForeColor = System.Drawing.Color.Black;
-            this.cClearGaroHints.Location = new System.Drawing.Point(117, 47);
-            this.cClearGaroHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cClearGaroHints.Location = new System.Drawing.Point(167, 78);
+            this.cClearGaroHints.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cClearGaroHints.Name = "cClearGaroHints";
-            this.cClearGaroHints.Size = new System.Drawing.Size(82, 19);
+            this.cClearGaroHints.Size = new System.Drawing.Size(120, 29);
             this.cClearGaroHints.TabIndex = 16;
             this.cClearGaroHints.Text = "Clear hints";
             this.cClearGaroHints.UseVisualStyleBackColor = false;
@@ -1482,27 +1507,30 @@ namespace MMR.UI.Forms
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(145, 87);
+            this.label5.Location = new System.Drawing.Point(207, 145);
+            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(12, 15);
+            this.label5.Size = new System.Drawing.Size(19, 25);
             this.label5.TabIndex = 32;
             this.label5.Text = "/";
             // 
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(58, 70);
+            this.label10.Location = new System.Drawing.Point(83, 117);
+            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(141, 15);
+            this.label10.Size = new System.Drawing.Size(212, 25);
             this.label10.TabIndex = 30;
             this.label10.Text = "WotH  / Foolish / Max CT";
             // 
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(95, 87);
+            this.label9.Location = new System.Drawing.Point(136, 145);
+            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(12, 15);
+            this.label9.Size = new System.Drawing.Size(19, 25);
             this.label9.TabIndex = 31;
             this.label9.Text = "/";
             // 
@@ -1514,11 +1542,11 @@ namespace MMR.UI.Forms
             this.gSpeedUps.Controls.Add(this.cFasterLabFish);
             this.gSpeedUps.Controls.Add(this.cGoodDogRaceRNG);
             this.gSpeedUps.Controls.Add(this.cGoodDampeRNG);
-            this.gSpeedUps.Location = new System.Drawing.Point(7, 7);
-            this.gSpeedUps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gSpeedUps.Location = new System.Drawing.Point(10, 12);
+            this.gSpeedUps.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.gSpeedUps.Name = "gSpeedUps";
-            this.gSpeedUps.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gSpeedUps.Size = new System.Drawing.Size(421, 109);
+            this.gSpeedUps.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.gSpeedUps.Size = new System.Drawing.Size(601, 182);
             this.gSpeedUps.TabIndex = 37;
             this.gSpeedUps.TabStop = false;
             this.gSpeedUps.Text = "Speed Ups";
@@ -1526,10 +1554,10 @@ namespace MMR.UI.Forms
             // cDoubleArcheryRewards
             // 
             this.cDoubleArcheryRewards.AutoSize = true;
-            this.cDoubleArcheryRewards.Location = new System.Drawing.Point(172, 77);
-            this.cDoubleArcheryRewards.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDoubleArcheryRewards.Location = new System.Drawing.Point(246, 128);
+            this.cDoubleArcheryRewards.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cDoubleArcheryRewards.Name = "cDoubleArcheryRewards";
-            this.cDoubleArcheryRewards.Size = new System.Drawing.Size(155, 19);
+            this.cDoubleArcheryRewards.Size = new System.Drawing.Size(232, 29);
             this.cDoubleArcheryRewards.TabIndex = 5;
             this.cDoubleArcheryRewards.Text = "Double Archery Rewards";
             this.cDoubleArcheryRewards.UseVisualStyleBackColor = true;
@@ -1538,10 +1566,10 @@ namespace MMR.UI.Forms
             // cFasterBank
             // 
             this.cFasterBank.AutoSize = true;
-            this.cFasterBank.Location = new System.Drawing.Point(10, 77);
-            this.cFasterBank.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFasterBank.Location = new System.Drawing.Point(14, 128);
+            this.cFasterBank.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cFasterBank.Name = "cFasterBank";
-            this.cFasterBank.Size = new System.Drawing.Size(86, 19);
+            this.cFasterBank.Size = new System.Drawing.Size(127, 29);
             this.cFasterBank.TabIndex = 4;
             this.cFasterBank.Text = "Faster Bank";
             this.cFasterBank.UseVisualStyleBackColor = true;
@@ -1550,10 +1578,10 @@ namespace MMR.UI.Forms
             // cSkipBeaver
             // 
             this.cSkipBeaver.AutoSize = true;
-            this.cSkipBeaver.Location = new System.Drawing.Point(10, 24);
-            this.cSkipBeaver.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSkipBeaver.Location = new System.Drawing.Point(14, 40);
+            this.cSkipBeaver.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cSkipBeaver.Name = "cSkipBeaver";
-            this.cSkipBeaver.Size = new System.Drawing.Size(133, 19);
+            this.cSkipBeaver.Size = new System.Drawing.Size(199, 29);
             this.cSkipBeaver.TabIndex = 0;
             this.cSkipBeaver.Text = "Skip Younger Beaver";
             this.cSkipBeaver.UseVisualStyleBackColor = true;
@@ -1562,10 +1590,10 @@ namespace MMR.UI.Forms
             // cFasterLabFish
             // 
             this.cFasterLabFish.AutoSize = true;
-            this.cFasterLabFish.Location = new System.Drawing.Point(10, 51);
-            this.cFasterLabFish.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFasterLabFish.Location = new System.Drawing.Point(14, 85);
+            this.cFasterLabFish.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cFasterLabFish.Name = "cFasterLabFish";
-            this.cFasterLabFish.Size = new System.Drawing.Size(103, 19);
+            this.cFasterLabFish.Size = new System.Drawing.Size(153, 29);
             this.cFasterLabFish.TabIndex = 2;
             this.cFasterLabFish.Text = "Faster Lab Fish";
             this.cFasterLabFish.UseVisualStyleBackColor = true;
@@ -1574,10 +1602,10 @@ namespace MMR.UI.Forms
             // cGoodDogRaceRNG
             // 
             this.cGoodDogRaceRNG.AutoSize = true;
-            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(172, 51);
-            this.cGoodDogRaceRNG.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cGoodDogRaceRNG.Location = new System.Drawing.Point(246, 85);
+            this.cGoodDogRaceRNG.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cGoodDogRaceRNG.Name = "cGoodDogRaceRNG";
-            this.cGoodDogRaceRNG.Size = new System.Drawing.Size(135, 19);
+            this.cGoodDogRaceRNG.Size = new System.Drawing.Size(206, 29);
             this.cGoodDogRaceRNG.TabIndex = 3;
             this.cGoodDogRaceRNG.Text = "Good Dog Race RNG";
             this.cGoodDogRaceRNG.UseVisualStyleBackColor = true;
@@ -1586,10 +1614,10 @@ namespace MMR.UI.Forms
             // cGoodDampeRNG
             // 
             this.cGoodDampeRNG.AutoSize = true;
-            this.cGoodDampeRNG.Location = new System.Drawing.Point(172, 23);
-            this.cGoodDampeRNG.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cGoodDampeRNG.Location = new System.Drawing.Point(246, 38);
+            this.cGoodDampeRNG.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cGoodDampeRNG.Name = "cGoodDampeRNG";
-            this.cGoodDampeRNG.Size = new System.Drawing.Size(123, 19);
+            this.cGoodDampeRNG.Size = new System.Drawing.Size(187, 29);
             this.cGoodDampeRNG.TabIndex = 1;
             this.cGoodDampeRNG.Text = "Good Dampe RNG";
             this.cGoodDampeRNG.UseVisualStyleBackColor = true;
@@ -1608,11 +1636,11 @@ namespace MMR.UI.Forms
             this.gHints.Controls.Add(this.cGossipHints);
             this.gHints.Controls.Add(this.cFreeHints);
             this.gHints.Controls.Add(this.cClearHints);
-            this.gHints.Location = new System.Drawing.Point(7, 122);
-            this.gHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gHints.Location = new System.Drawing.Point(10, 203);
+            this.gHints.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.gHints.Name = "gHints";
-            this.gHints.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gHints.Size = new System.Drawing.Size(206, 120);
+            this.gHints.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.gHints.Size = new System.Drawing.Size(294, 200);
             this.gHints.TabIndex = 36;
             this.gHints.TabStop = false;
             this.gHints.Text = "Gossip Stone Hints";
@@ -1622,23 +1650,25 @@ namespace MMR.UI.Forms
             this.cCustomGossipWoth.AutoSize = true;
             this.cCustomGossipWoth.Checked = true;
             this.cCustomGossipWoth.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.cCustomGossipWoth.Location = new System.Drawing.Point(15, 88);
+            this.cCustomGossipWoth.Location = new System.Drawing.Point(21, 147);
+            this.cCustomGossipWoth.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.cCustomGossipWoth.Name = "cCustomGossipWoth";
-            this.cCustomGossipWoth.Size = new System.Drawing.Size(15, 14);
+            this.cCustomGossipWoth.Size = new System.Drawing.Size(22, 21);
             this.cCustomGossipWoth.TabIndex = 30;
             this.cCustomGossipWoth.UseVisualStyleBackColor = true;
             this.cCustomGossipWoth.CheckedChanged += new System.EventHandler(this.cCustomGossipWoth_CheckedChanged);
             // 
             // nMaxGossipCT
             // 
-            this.nMaxGossipCT.Location = new System.Drawing.Point(153, 85);
+            this.nMaxGossipCT.Location = new System.Drawing.Point(219, 142);
+            this.nMaxGossipCT.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.nMaxGossipCT.Maximum = new decimal(new int[] {
             9,
             0,
             0,
             0});
             this.nMaxGossipCT.Name = "nMaxGossipCT";
-            this.nMaxGossipCT.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGossipCT.Size = new System.Drawing.Size(44, 31);
             this.nMaxGossipCT.TabIndex = 29;
             this.nMaxGossipCT.Value = new decimal(new int[] {
             2,
@@ -1650,14 +1680,15 @@ namespace MMR.UI.Forms
             // nMaxGossipFoolish
             // 
             this.nMaxGossipFoolish.Enabled = false;
-            this.nMaxGossipFoolish.Location = new System.Drawing.Point(101, 85);
+            this.nMaxGossipFoolish.Location = new System.Drawing.Point(144, 142);
+            this.nMaxGossipFoolish.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.nMaxGossipFoolish.Maximum = new decimal(new int[] {
             9,
             0,
             0,
             0});
             this.nMaxGossipFoolish.Name = "nMaxGossipFoolish";
-            this.nMaxGossipFoolish.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGossipFoolish.Size = new System.Drawing.Size(44, 31);
             this.nMaxGossipFoolish.TabIndex = 28;
             this.nMaxGossipFoolish.Value = new decimal(new int[] {
             3,
@@ -1669,14 +1700,15 @@ namespace MMR.UI.Forms
             // nMaxGossipWotH
             // 
             this.nMaxGossipWotH.Enabled = false;
-            this.nMaxGossipWotH.Location = new System.Drawing.Point(51, 85);
+            this.nMaxGossipWotH.Location = new System.Drawing.Point(73, 142);
+            this.nMaxGossipWotH.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.nMaxGossipWotH.Maximum = new decimal(new int[] {
             9,
             0,
             0,
             0});
             this.nMaxGossipWotH.Name = "nMaxGossipWotH";
-            this.nMaxGossipWotH.Size = new System.Drawing.Size(31, 23);
+            this.nMaxGossipWotH.Size = new System.Drawing.Size(44, 31);
             this.nMaxGossipWotH.TabIndex = 27;
             this.nMaxGossipWotH.Value = new decimal(new int[] {
             3,
@@ -1688,27 +1720,30 @@ namespace MMR.UI.Forms
             // label8
             // 
             this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(138, 87);
+            this.label8.Location = new System.Drawing.Point(197, 145);
+            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(12, 15);
+            this.label8.Size = new System.Drawing.Size(19, 25);
             this.label8.TabIndex = 25;
             this.label8.Text = "/";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(88, 87);
+            this.label7.Location = new System.Drawing.Point(126, 145);
+            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(12, 15);
+            this.label7.Size = new System.Drawing.Size(19, 25);
             this.label7.TabIndex = 23;
             this.label7.Text = "/";
             // 
             // lGossipWothConfig
             // 
             this.lGossipWothConfig.AutoSize = true;
-            this.lGossipWothConfig.Location = new System.Drawing.Point(51, 70);
+            this.lGossipWothConfig.Location = new System.Drawing.Point(73, 117);
+            this.lGossipWothConfig.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lGossipWothConfig.Name = "lGossipWothConfig";
-            this.lGossipWothConfig.Size = new System.Drawing.Size(141, 15);
+            this.lGossipWothConfig.Size = new System.Drawing.Size(212, 25);
             this.lGossipWothConfig.TabIndex = 21;
             this.lGossipWothConfig.Text = "WotH  / Foolish / Max CT";
             // 
@@ -1717,10 +1752,10 @@ namespace MMR.UI.Forms
             this.lGossip.AutoSize = true;
             this.lGossip.BackColor = System.Drawing.Color.Transparent;
             this.lGossip.ForeColor = System.Drawing.Color.Black;
-            this.lGossip.Location = new System.Drawing.Point(12, 24);
-            this.lGossip.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lGossip.Location = new System.Drawing.Point(17, 40);
+            this.lGossip.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lGossip.Name = "lGossip";
-            this.lGossip.Size = new System.Drawing.Size(95, 15);
+            this.lGossip.Size = new System.Drawing.Size(143, 25);
             this.lGossip.TabIndex = 20;
             this.lGossip.Text = "Hint Distribution";
             // 
@@ -1733,10 +1768,10 @@ namespace MMR.UI.Forms
             "Random",
             "Relevant",
             "Competitive"});
-            this.cGossipHints.Location = new System.Drawing.Point(15, 39);
-            this.cGossipHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cGossipHints.Location = new System.Drawing.Point(21, 65);
+            this.cGossipHints.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cGossipHints.Name = "cGossipHints";
-            this.cGossipHints.Size = new System.Drawing.Size(92, 23);
+            this.cGossipHints.Size = new System.Drawing.Size(130, 33);
             this.cGossipHints.TabIndex = 19;
             this.cGossipHints.SelectedIndexChanged += new System.EventHandler(this.cGossipHints_SelectedIndexChanged);
             // 
@@ -1745,10 +1780,10 @@ namespace MMR.UI.Forms
             this.cFreeHints.AutoSize = true;
             this.cFreeHints.BackColor = System.Drawing.Color.Transparent;
             this.cFreeHints.ForeColor = System.Drawing.Color.Black;
-            this.cFreeHints.Location = new System.Drawing.Point(117, 20);
-            this.cFreeHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFreeHints.Location = new System.Drawing.Point(167, 33);
+            this.cFreeHints.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cFreeHints.Name = "cFreeHints";
-            this.cFreeHints.Size = new System.Drawing.Size(77, 19);
+            this.cFreeHints.Size = new System.Drawing.Size(114, 29);
             this.cFreeHints.TabIndex = 15;
             this.cFreeHints.Text = "Free hints";
             this.cFreeHints.UseVisualStyleBackColor = false;
@@ -1759,10 +1794,10 @@ namespace MMR.UI.Forms
             this.cClearHints.AutoSize = true;
             this.cClearHints.BackColor = System.Drawing.Color.Transparent;
             this.cClearHints.ForeColor = System.Drawing.Color.Black;
-            this.cClearHints.Location = new System.Drawing.Point(117, 47);
-            this.cClearHints.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cClearHints.Location = new System.Drawing.Point(167, 78);
+            this.cClearHints.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cClearHints.Name = "cClearHints";
-            this.cClearHints.Size = new System.Drawing.Size(82, 19);
+            this.cClearHints.Size = new System.Drawing.Size(120, 29);
             this.cClearHints.TabIndex = 16;
             this.cClearHints.Text = "Clear hints";
             this.cClearHints.UseVisualStyleBackColor = false;
@@ -1772,11 +1807,11 @@ namespace MMR.UI.Forms
             // 
             this.groupBox8.Controls.Add(this.lLink);
             this.groupBox8.Controls.Add(this.cLink);
-            this.groupBox8.Location = new System.Drawing.Point(221, 250);
-            this.groupBox8.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox8.Location = new System.Drawing.Point(316, 417);
+            this.groupBox8.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox8.Size = new System.Drawing.Size(207, 96);
+            this.groupBox8.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.groupBox8.Size = new System.Drawing.Size(296, 160);
             this.groupBox8.TabIndex = 35;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Cosmetic Customization";
@@ -1786,10 +1821,10 @@ namespace MMR.UI.Forms
             this.lLink.AutoSize = true;
             this.lLink.BackColor = System.Drawing.Color.Transparent;
             this.lLink.ForeColor = System.Drawing.Color.Black;
-            this.lLink.Location = new System.Drawing.Point(4, 23);
-            this.lLink.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lLink.Location = new System.Drawing.Point(6, 38);
+            this.lLink.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lLink.Name = "lLink";
-            this.lLink.Size = new System.Drawing.Size(76, 15);
+            this.lLink.Size = new System.Drawing.Size(115, 25);
             this.lLink.TabIndex = 9;
             this.lLink.Text = "Player model";
             // 
@@ -1802,10 +1837,10 @@ namespace MMR.UI.Forms
             "Link (OoT)",
             "Adult Link (Risky!)",
             "Kafei"});
-            this.cLink.Location = new System.Drawing.Point(7, 38);
-            this.cLink.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cLink.Location = new System.Drawing.Point(10, 63);
+            this.cLink.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cLink.Name = "cLink";
-            this.cLink.Size = new System.Drawing.Size(129, 23);
+            this.cLink.Size = new System.Drawing.Size(183, 33);
             this.cLink.TabIndex = 10;
             this.cLink.SelectedIndexChanged += new System.EventHandler(this.cLink_SelectedIndexChanged);
             // 
@@ -1828,11 +1863,11 @@ namespace MMR.UI.Forms
             this.groupBox7.Controls.Add(this.cDisableCritWiggle);
             this.groupBox7.Controls.Add(this.cQuestItemStorage);
             this.groupBox7.Controls.Add(this.cNoDowngrades);
-            this.groupBox7.Location = new System.Drawing.Point(435, 7);
-            this.groupBox7.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.groupBox7.Location = new System.Drawing.Point(621, 12);
+            this.groupBox7.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.groupBox7.Size = new System.Drawing.Size(334, 339);
+            this.groupBox7.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.groupBox7.Size = new System.Drawing.Size(477, 565);
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
@@ -1840,10 +1875,10 @@ namespace MMR.UI.Forms
             // cInvisSparkle
             // 
             this.cInvisSparkle.AutoSize = true;
-            this.cInvisSparkle.Location = new System.Drawing.Point(10, 233);
-            this.cInvisSparkle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cInvisSparkle.Location = new System.Drawing.Point(14, 388);
+            this.cInvisSparkle.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cInvisSparkle.Name = "cInvisSparkle";
-            this.cInvisSparkle.Size = new System.Drawing.Size(147, 19);
+            this.cInvisSparkle.Size = new System.Drawing.Size(222, 29);
             this.cInvisSparkle.TabIndex = 42;
             this.cInvisSparkle.Text = "Hidden Rupees Sparkle";
             this.cInvisSparkle.UseVisualStyleBackColor = true;
@@ -1852,10 +1887,10 @@ namespace MMR.UI.Forms
             // cFillWallet
             // 
             this.cFillWallet.AutoSize = true;
-            this.cFillWallet.Location = new System.Drawing.Point(10, 207);
-            this.cFillWallet.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFillWallet.Location = new System.Drawing.Point(14, 345);
+            this.cFillWallet.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cFillWallet.Name = "cFillWallet";
-            this.cFillWallet.Size = new System.Drawing.Size(139, 19);
+            this.cFillWallet.Size = new System.Drawing.Size(207, 29);
             this.cFillWallet.TabIndex = 41;
             this.cFillWallet.Text = "Fill wallet on upgrade";
             this.cFillWallet.UseVisualStyleBackColor = true;
@@ -1864,10 +1899,10 @@ namespace MMR.UI.Forms
             // cTargetHealth
             // 
             this.cTargetHealth.AutoSize = true;
-            this.cTargetHealth.Location = new System.Drawing.Point(10, 181);
-            this.cTargetHealth.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTargetHealth.Location = new System.Drawing.Point(14, 302);
+            this.cTargetHealth.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cTargetHealth.Name = "cTargetHealth";
-            this.cTargetHealth.Size = new System.Drawing.Size(116, 19);
+            this.cTargetHealth.Size = new System.Drawing.Size(172, 29);
             this.cTargetHealth.TabIndex = 40;
             this.cTargetHealth.Text = "Target Health Bar";
             this.cTargetHealth.UseVisualStyleBackColor = true;
@@ -1876,10 +1911,10 @@ namespace MMR.UI.Forms
             // cLenientGoronSpikes
             // 
             this.cLenientGoronSpikes.AutoSize = true;
-            this.cLenientGoronSpikes.Location = new System.Drawing.Point(10, 155);
-            this.cLenientGoronSpikes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cLenientGoronSpikes.Location = new System.Drawing.Point(14, 258);
+            this.cLenientGoronSpikes.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cLenientGoronSpikes.Name = "cLenientGoronSpikes";
-            this.cLenientGoronSpikes.Size = new System.Drawing.Size(137, 19);
+            this.cLenientGoronSpikes.Size = new System.Drawing.Size(205, 29);
             this.cLenientGoronSpikes.TabIndex = 39;
             this.cLenientGoronSpikes.Text = "Lenient Goron Spikes";
             this.cLenientGoronSpikes.UseVisualStyleBackColor = true;
@@ -1888,10 +1923,10 @@ namespace MMR.UI.Forms
             // cImprovedPictobox
             // 
             this.cImprovedPictobox.AutoSize = true;
-            this.cImprovedPictobox.Location = new System.Drawing.Point(10, 129);
-            this.cImprovedPictobox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cImprovedPictobox.Location = new System.Drawing.Point(14, 215);
+            this.cImprovedPictobox.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cImprovedPictobox.Name = "cImprovedPictobox";
-            this.cImprovedPictobox.Size = new System.Drawing.Size(127, 19);
+            this.cImprovedPictobox.Size = new System.Drawing.Size(190, 29);
             this.cImprovedPictobox.TabIndex = 38;
             this.cImprovedPictobox.Text = "Improved Pictobox";
             this.cImprovedPictobox.UseVisualStyleBackColor = true;
@@ -1900,10 +1935,10 @@ namespace MMR.UI.Forms
             // cElegySpeedups
             // 
             this.cElegySpeedups.AutoSize = true;
-            this.cElegySpeedups.Location = new System.Drawing.Point(172, 207);
-            this.cElegySpeedups.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cElegySpeedups.Location = new System.Drawing.Point(246, 345);
+            this.cElegySpeedups.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cElegySpeedups.Name = "cElegySpeedups";
-            this.cElegySpeedups.Size = new System.Drawing.Size(107, 19);
+            this.cElegySpeedups.Size = new System.Drawing.Size(162, 29);
             this.cElegySpeedups.TabIndex = 37;
             this.cElegySpeedups.Text = "Elegy speedups";
             this.cElegySpeedups.UseVisualStyleBackColor = true;
@@ -1912,10 +1947,10 @@ namespace MMR.UI.Forms
             // cCloseCows
             // 
             this.cCloseCows.AutoSize = true;
-            this.cCloseCows.Location = new System.Drawing.Point(10, 103);
-            this.cCloseCows.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cCloseCows.Location = new System.Drawing.Point(14, 172);
+            this.cCloseCows.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cCloseCows.Name = "cCloseCows";
-            this.cCloseCows.Size = new System.Drawing.Size(87, 19);
+            this.cCloseCows.Size = new System.Drawing.Size(129, 29);
             this.cCloseCows.TabIndex = 36;
             this.cCloseCows.Text = "Close Cows";
             this.cCloseCows.UseVisualStyleBackColor = true;
@@ -1924,10 +1959,10 @@ namespace MMR.UI.Forms
             // cArrowCycling
             // 
             this.cArrowCycling.AutoSize = true;
-            this.cArrowCycling.Location = new System.Drawing.Point(172, 181);
-            this.cArrowCycling.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cArrowCycling.Location = new System.Drawing.Point(246, 302);
+            this.cArrowCycling.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cArrowCycling.Name = "cArrowCycling";
-            this.cArrowCycling.Size = new System.Drawing.Size(99, 19);
+            this.cArrowCycling.Size = new System.Drawing.Size(145, 29);
             this.cArrowCycling.TabIndex = 35;
             this.cArrowCycling.Text = "Arrow cycling";
             this.cArrowCycling.UseVisualStyleBackColor = true;
@@ -1936,10 +1971,10 @@ namespace MMR.UI.Forms
             // cFreestanding
             // 
             this.cFreestanding.AutoSize = true;
-            this.cFreestanding.Location = new System.Drawing.Point(172, 77);
-            this.cFreestanding.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFreestanding.Location = new System.Drawing.Point(246, 128);
+            this.cFreestanding.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cFreestanding.Name = "cFreestanding";
-            this.cFreestanding.Size = new System.Drawing.Size(139, 19);
+            this.cFreestanding.Size = new System.Drawing.Size(210, 29);
             this.cFreestanding.TabIndex = 34;
             this.cFreestanding.Text = "Update world models";
             this.cFreestanding.UseVisualStyleBackColor = true;
@@ -1948,10 +1983,10 @@ namespace MMR.UI.Forms
             // cFastPush
             // 
             this.cFastPush.AutoSize = true;
-            this.cFastPush.Location = new System.Drawing.Point(10, 77);
-            this.cFastPush.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cFastPush.Location = new System.Drawing.Point(14, 128);
+            this.cFastPush.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cFastPush.Name = "cFastPush";
-            this.cFastPush.Size = new System.Drawing.Size(132, 19);
+            this.cFastPush.Size = new System.Drawing.Size(199, 29);
             this.cFastPush.TabIndex = 31;
             this.cFastPush.Text = "Increase push speed";
             this.cFastPush.UseVisualStyleBackColor = true;
@@ -1962,10 +1997,10 @@ namespace MMR.UI.Forms
             this.cQText.AutoSize = true;
             this.cQText.BackColor = System.Drawing.Color.Transparent;
             this.cQText.ForeColor = System.Drawing.Color.Black;
-            this.cQText.Location = new System.Drawing.Point(10, 51);
-            this.cQText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cQText.Location = new System.Drawing.Point(14, 85);
+            this.cQText.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cQText.Name = "cQText";
-            this.cQText.Size = new System.Drawing.Size(80, 19);
+            this.cQText.Size = new System.Drawing.Size(117, 29);
             this.cQText.TabIndex = 6;
             this.cQText.Text = "Quick text";
             this.cQText.UseVisualStyleBackColor = false;
@@ -1976,10 +2011,10 @@ namespace MMR.UI.Forms
             this.cShopAppearance.AutoSize = true;
             this.cShopAppearance.BackColor = System.Drawing.Color.Transparent;
             this.cShopAppearance.ForeColor = System.Drawing.Color.Black;
-            this.cShopAppearance.Location = new System.Drawing.Point(172, 25);
-            this.cShopAppearance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cShopAppearance.Location = new System.Drawing.Point(246, 42);
+            this.cShopAppearance.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cShopAppearance.Name = "cShopAppearance";
-            this.cShopAppearance.Size = new System.Drawing.Size(98, 19);
+            this.cShopAppearance.Size = new System.Drawing.Size(149, 29);
             this.cShopAppearance.TabIndex = 21;
             this.cShopAppearance.Text = "Update shops";
             this.cShopAppearance.UseVisualStyleBackColor = false;
@@ -1990,10 +2025,10 @@ namespace MMR.UI.Forms
             this.cEponaSword.AutoSize = true;
             this.cEponaSword.BackColor = System.Drawing.Color.Transparent;
             this.cEponaSword.ForeColor = System.Drawing.Color.Black;
-            this.cEponaSword.Location = new System.Drawing.Point(172, 129);
-            this.cEponaSword.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cEponaSword.Location = new System.Drawing.Point(246, 215);
+            this.cEponaSword.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cEponaSword.Name = "cEponaSword";
-            this.cEponaSword.Size = new System.Drawing.Size(112, 19);
+            this.cEponaSword.Size = new System.Drawing.Size(168, 29);
             this.cEponaSword.TabIndex = 22;
             this.cEponaSword.Text = "Fix Epona sword";
             this.cEponaSword.UseVisualStyleBackColor = false;
@@ -2004,10 +2039,10 @@ namespace MMR.UI.Forms
             this.cUpdateChests.AutoSize = true;
             this.cUpdateChests.BackColor = System.Drawing.Color.Transparent;
             this.cUpdateChests.ForeColor = System.Drawing.Color.Black;
-            this.cUpdateChests.Location = new System.Drawing.Point(172, 51);
-            this.cUpdateChests.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cUpdateChests.Location = new System.Drawing.Point(246, 85);
+            this.cUpdateChests.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cUpdateChests.Name = "cUpdateChests";
-            this.cUpdateChests.Size = new System.Drawing.Size(100, 19);
+            this.cUpdateChests.Size = new System.Drawing.Size(150, 29);
             this.cUpdateChests.TabIndex = 23;
             this.cUpdateChests.Text = "Update chests";
             this.cUpdateChests.UseVisualStyleBackColor = false;
@@ -2017,10 +2052,10 @@ namespace MMR.UI.Forms
             // 
             this.cDisableCritWiggle.AutoSize = true;
             this.cDisableCritWiggle.BackColor = System.Drawing.Color.Transparent;
-            this.cDisableCritWiggle.Location = new System.Drawing.Point(10, 25);
-            this.cDisableCritWiggle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDisableCritWiggle.Location = new System.Drawing.Point(14, 42);
+            this.cDisableCritWiggle.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cDisableCritWiggle.Name = "cDisableCritWiggle";
-            this.cDisableCritWiggle.Size = new System.Drawing.Size(122, 19);
+            this.cDisableCritWiggle.Size = new System.Drawing.Size(182, 29);
             this.cDisableCritWiggle.TabIndex = 29;
             this.cDisableCritWiggle.Text = "Disable crit wiggle";
             this.cDisableCritWiggle.UseVisualStyleBackColor = false;
@@ -2030,10 +2065,10 @@ namespace MMR.UI.Forms
             // 
             this.cQuestItemStorage.AutoSize = true;
             this.cQuestItemStorage.BackColor = System.Drawing.Color.Transparent;
-            this.cQuestItemStorage.Location = new System.Drawing.Point(172, 155);
-            this.cQuestItemStorage.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cQuestItemStorage.Location = new System.Drawing.Point(246, 258);
+            this.cQuestItemStorage.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cQuestItemStorage.Name = "cQuestItemStorage";
-            this.cQuestItemStorage.Size = new System.Drawing.Size(155, 19);
+            this.cQuestItemStorage.Size = new System.Drawing.Size(233, 29);
             this.cQuestItemStorage.TabIndex = 30;
             this.cQuestItemStorage.Text = "Quest item extra storage";
             this.cQuestItemStorage.UseVisualStyleBackColor = false;
@@ -2044,10 +2079,10 @@ namespace MMR.UI.Forms
             this.cNoDowngrades.AutoSize = true;
             this.cNoDowngrades.BackColor = System.Drawing.Color.Transparent;
             this.cNoDowngrades.ForeColor = System.Drawing.Color.Black;
-            this.cNoDowngrades.Location = new System.Drawing.Point(172, 103);
-            this.cNoDowngrades.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cNoDowngrades.Location = new System.Drawing.Point(246, 172);
+            this.cNoDowngrades.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cNoDowngrades.Name = "cNoDowngrades";
-            this.cNoDowngrades.Size = new System.Drawing.Size(110, 19);
+            this.cNoDowngrades.Size = new System.Drawing.Size(166, 29);
             this.cNoDowngrades.TabIndex = 18;
             this.cNoDowngrades.Text = "No downgrades";
             this.cNoDowngrades.UseVisualStyleBackColor = false;
@@ -2056,21 +2091,21 @@ namespace MMR.UI.Forms
             // tabShortenCutscenes
             // 
             this.tabShortenCutscenes.Controls.Add(this.tShortenCutscenes);
-            this.tabShortenCutscenes.Location = new System.Drawing.Point(4, 24);
-            this.tabShortenCutscenes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabShortenCutscenes.Location = new System.Drawing.Point(4, 34);
+            this.tabShortenCutscenes.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tabShortenCutscenes.Name = "tabShortenCutscenes";
-            this.tabShortenCutscenes.Size = new System.Drawing.Size(780, 361);
+            this.tabShortenCutscenes.Size = new System.Drawing.Size(1118, 610);
             this.tabShortenCutscenes.TabIndex = 5;
             this.tabShortenCutscenes.Text = "Shorten Cutscenes";
             this.tabShortenCutscenes.UseVisualStyleBackColor = true;
             // 
             // tShortenCutscenes
             // 
-            this.tShortenCutscenes.Location = new System.Drawing.Point(8, 5);
-            this.tShortenCutscenes.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tShortenCutscenes.Location = new System.Drawing.Point(11, 8);
+            this.tShortenCutscenes.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tShortenCutscenes.Name = "tShortenCutscenes";
             this.tShortenCutscenes.SelectedIndex = 0;
-            this.tShortenCutscenes.Size = new System.Drawing.Size(758, 322);
+            this.tShortenCutscenes.Size = new System.Drawing.Size(1083, 537);
             this.tShortenCutscenes.TabIndex = 0;
             // 
             // tabCosmetics
@@ -2079,10 +2114,10 @@ namespace MMR.UI.Forms
             this.tabCosmetics.Controls.Add(this.gCosmeticMusicSound);
             this.tabCosmetics.Controls.Add(this.cHUDGroupBox);
             this.tabCosmetics.Controls.Add(this.tFormCosmetics);
-            this.tabCosmetics.Location = new System.Drawing.Point(4, 24);
-            this.tabCosmetics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tabCosmetics.Location = new System.Drawing.Point(4, 34);
+            this.tabCosmetics.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tabCosmetics.Name = "tabCosmetics";
-            this.tabCosmetics.Size = new System.Drawing.Size(780, 361);
+            this.tabCosmetics.Size = new System.Drawing.Size(1118, 610);
             this.tabCosmetics.TabIndex = 4;
             this.tabCosmetics.Text = "Cosmetics";
             this.tabCosmetics.UseVisualStyleBackColor = true;
@@ -2093,11 +2128,11 @@ namespace MMR.UI.Forms
             this.gCosmeticOther.Controls.Add(this.cTatl);
             this.gCosmeticOther.Controls.Add(this.lTatl);
             this.gCosmeticOther.Controls.Add(this.cTargettingStyle);
-            this.gCosmeticOther.Location = new System.Drawing.Point(299, 3);
-            this.gCosmeticOther.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gCosmeticOther.Location = new System.Drawing.Point(427, 5);
+            this.gCosmeticOther.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.gCosmeticOther.Name = "gCosmeticOther";
-            this.gCosmeticOther.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gCosmeticOther.Size = new System.Drawing.Size(468, 149);
+            this.gCosmeticOther.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.gCosmeticOther.Size = new System.Drawing.Size(669, 248);
             this.gCosmeticOther.TabIndex = 47;
             this.gCosmeticOther.TabStop = false;
             this.gCosmeticOther.Text = "Other";
@@ -2106,10 +2141,10 @@ namespace MMR.UI.Forms
             // 
             this.cInstantPictobox.AutoSize = true;
             this.cInstantPictobox.BackColor = System.Drawing.Color.Transparent;
-            this.cInstantPictobox.Location = new System.Drawing.Point(10, 90);
-            this.cInstantPictobox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cInstantPictobox.Location = new System.Drawing.Point(14, 150);
+            this.cInstantPictobox.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cInstantPictobox.Name = "cInstantPictobox";
-            this.cInstantPictobox.Size = new System.Drawing.Size(180, 19);
+            this.cInstantPictobox.Size = new System.Drawing.Size(268, 29);
             this.cInstantPictobox.TabIndex = 42;
             this.cInstantPictobox.Text = "Instant Pictobox on Emulator";
             this.cInstantPictobox.UseVisualStyleBackColor = false;
@@ -2126,10 +2161,10 @@ namespace MMR.UI.Forms
             "Cool",
             "Random",
             "Rainbow (cycle)"});
-            this.cTatl.Location = new System.Drawing.Point(10, 33);
-            this.cTatl.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTatl.Location = new System.Drawing.Point(14, 55);
+            this.cTatl.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cTatl.Name = "cTatl";
-            this.cTatl.Size = new System.Drawing.Size(150, 23);
+            this.cTatl.Size = new System.Drawing.Size(213, 33);
             this.cTatl.TabIndex = 41;
             this.cTatl.SelectedIndexChanged += new System.EventHandler(this.cTatl_SelectedIndexChanged);
             // 
@@ -2138,10 +2173,10 @@ namespace MMR.UI.Forms
             this.lTatl.AutoSize = true;
             this.lTatl.BackColor = System.Drawing.Color.Transparent;
             this.lTatl.ForeColor = System.Drawing.Color.Black;
-            this.lTatl.Location = new System.Drawing.Point(7, 18);
-            this.lTatl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lTatl.Location = new System.Drawing.Point(10, 30);
+            this.lTatl.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lTatl.Name = "lTatl";
-            this.lTatl.Size = new System.Drawing.Size(62, 15);
+            this.lTatl.Size = new System.Drawing.Size(93, 25);
             this.lTatl.TabIndex = 40;
             this.lTatl.Text = "Tatl theme";
             // 
@@ -2149,10 +2184,10 @@ namespace MMR.UI.Forms
             // 
             this.cTargettingStyle.AutoSize = true;
             this.cTargettingStyle.BackColor = System.Drawing.Color.Transparent;
-            this.cTargettingStyle.Location = new System.Drawing.Point(10, 65);
-            this.cTargettingStyle.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cTargettingStyle.Location = new System.Drawing.Point(14, 108);
+            this.cTargettingStyle.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cTargettingStyle.Name = "cTargettingStyle";
-            this.cTargettingStyle.Size = new System.Drawing.Size(140, 19);
+            this.cTargettingStyle.Size = new System.Drawing.Size(209, 29);
             this.cTargettingStyle.TabIndex = 37;
             this.cTargettingStyle.Text = "Default Hold Z-Target";
             this.cTargettingStyle.UseVisualStyleBackColor = false;
@@ -2169,11 +2204,11 @@ namespace MMR.UI.Forms
             this.gCosmeticMusicSound.Controls.Add(this.cEnableNightMusic);
             this.gCosmeticMusicSound.Controls.Add(this.cLowHealthSFXComboBox);
             this.gCosmeticMusicSound.Controls.Add(this.lLowHealthSFXComboBox);
-            this.gCosmeticMusicSound.Location = new System.Drawing.Point(8, 159);
-            this.gCosmeticMusicSound.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gCosmeticMusicSound.Location = new System.Drawing.Point(11, 265);
+            this.gCosmeticMusicSound.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.gCosmeticMusicSound.Name = "gCosmeticMusicSound";
-            this.gCosmeticMusicSound.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gCosmeticMusicSound.Size = new System.Drawing.Size(284, 195);
+            this.gCosmeticMusicSound.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.gCosmeticMusicSound.Size = new System.Drawing.Size(406, 325);
             this.gCosmeticMusicSound.TabIndex = 46;
             this.gCosmeticMusicSound.TabStop = false;
             this.gCosmeticMusicSound.Text = "Music / Sound";
@@ -2183,19 +2218,20 @@ namespace MMR.UI.Forms
             this.lLuckRoll.AutoSize = true;
             this.lLuckRoll.BackColor = System.Drawing.Color.Transparent;
             this.lLuckRoll.ForeColor = System.Drawing.Color.Black;
-            this.lLuckRoll.Location = new System.Drawing.Point(154, 99);
-            this.lLuckRoll.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lLuckRoll.Location = new System.Drawing.Point(220, 165);
+            this.lLuckRoll.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lLuckRoll.Name = "lLuckRoll";
-            this.lLuckRoll.Size = new System.Drawing.Size(119, 15);
+            this.lLuckRoll.Size = new System.Drawing.Size(173, 25);
             this.lLuckRoll.TabIndex = 47;
             this.lLuckRoll.Text = "Luck Roll Chance (%)";
             // 
             // tLuckRollPercentage
             // 
             this.tLuckRollPercentage.DecimalPlaces = 2;
-            this.tLuckRollPercentage.Location = new System.Drawing.Point(154, 114);
+            this.tLuckRollPercentage.Location = new System.Drawing.Point(220, 190);
+            this.tLuckRollPercentage.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.tLuckRollPercentage.Name = "tLuckRollPercentage";
-            this.tLuckRollPercentage.Size = new System.Drawing.Size(117, 23);
+            this.tLuckRollPercentage.Size = new System.Drawing.Size(167, 31);
             this.tLuckRollPercentage.TabIndex = 46;
             this.tLuckRollPercentage.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.tLuckRollPercentage.Value = new decimal(new int[] {
@@ -2210,10 +2246,10 @@ namespace MMR.UI.Forms
             this.lMusic.AutoSize = true;
             this.lMusic.BackColor = System.Drawing.Color.Transparent;
             this.lMusic.ForeColor = System.Drawing.Color.Black;
-            this.lMusic.Location = new System.Drawing.Point(4, 99);
-            this.lMusic.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lMusic.Location = new System.Drawing.Point(6, 165);
+            this.lMusic.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lMusic.Name = "lMusic";
-            this.lMusic.Size = new System.Drawing.Size(39, 15);
+            this.lMusic.Size = new System.Drawing.Size(58, 25);
             this.lMusic.TabIndex = 43;
             this.lMusic.Text = "Music";
             // 
@@ -2225,10 +2261,10 @@ namespace MMR.UI.Forms
             "Default",
             "Random",
             "None"});
-            this.cMusic.Location = new System.Drawing.Point(7, 114);
-            this.cMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cMusic.Location = new System.Drawing.Point(10, 190);
+            this.cMusic.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cMusic.Name = "cMusic";
-            this.cMusic.Size = new System.Drawing.Size(140, 23);
+            this.cMusic.Size = new System.Drawing.Size(198, 33);
             this.cMusic.TabIndex = 42;
             this.cMusic.SelectedIndexChanged += new System.EventHandler(this.cMusic_SelectedIndexChanged);
             // 
@@ -2237,10 +2273,10 @@ namespace MMR.UI.Forms
             this.cSFX.AutoSize = true;
             this.cSFX.BackColor = System.Drawing.Color.Transparent;
             this.cSFX.ForeColor = System.Drawing.Color.Black;
-            this.cSFX.Location = new System.Drawing.Point(7, 23);
-            this.cSFX.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSFX.Location = new System.Drawing.Point(10, 38);
+            this.cSFX.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cSFX.Name = "cSFX";
-            this.cSFX.Size = new System.Drawing.Size(107, 19);
+            this.cSFX.Size = new System.Drawing.Size(162, 29);
             this.cSFX.TabIndex = 36;
             this.cSFX.Text = "Randomize SFX";
             this.cSFX.UseVisualStyleBackColor = false;
@@ -2249,10 +2285,10 @@ namespace MMR.UI.Forms
             // cCombatMusicDisable
             // 
             this.cCombatMusicDisable.AutoSize = true;
-            this.cCombatMusicDisable.Location = new System.Drawing.Point(7, 76);
-            this.cCombatMusicDisable.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cCombatMusicDisable.Location = new System.Drawing.Point(10, 127);
+            this.cCombatMusicDisable.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cCombatMusicDisable.Name = "cCombatMusicDisable";
-            this.cCombatMusicDisable.Size = new System.Drawing.Size(145, 19);
+            this.cCombatMusicDisable.Size = new System.Drawing.Size(216, 29);
             this.cCombatMusicDisable.TabIndex = 45;
             this.cCombatMusicDisable.Text = "Disable Combat Music";
             this.cCombatMusicDisable.UseVisualStyleBackColor = true;
@@ -2261,10 +2297,10 @@ namespace MMR.UI.Forms
             // cEnableNightMusic
             // 
             this.cEnableNightMusic.AutoSize = true;
-            this.cEnableNightMusic.Location = new System.Drawing.Point(7, 50);
-            this.cEnableNightMusic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cEnableNightMusic.Location = new System.Drawing.Point(10, 83);
+            this.cEnableNightMusic.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cEnableNightMusic.Name = "cEnableNightMusic";
-            this.cEnableNightMusic.Size = new System.Drawing.Size(123, 19);
+            this.cEnableNightMusic.Size = new System.Drawing.Size(182, 29);
             this.cEnableNightMusic.TabIndex = 38;
             this.cEnableNightMusic.Text = "Enable Night BGM";
             this.cEnableNightMusic.UseVisualStyleBackColor = true;
@@ -2274,20 +2310,20 @@ namespace MMR.UI.Forms
             // 
             this.cLowHealthSFXComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cLowHealthSFXComboBox.FormattingEnabled = true;
-            this.cLowHealthSFXComboBox.Location = new System.Drawing.Point(7, 163);
-            this.cLowHealthSFXComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cLowHealthSFXComboBox.Location = new System.Drawing.Point(10, 272);
+            this.cLowHealthSFXComboBox.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cLowHealthSFXComboBox.Name = "cLowHealthSFXComboBox";
-            this.cLowHealthSFXComboBox.Size = new System.Drawing.Size(140, 23);
+            this.cLowHealthSFXComboBox.Size = new System.Drawing.Size(198, 33);
             this.cLowHealthSFXComboBox.TabIndex = 25;
             this.cLowHealthSFXComboBox.SelectedIndexChanged += new System.EventHandler(this.cLowHealthSFXComboBox_SelectedIndexChanged);
             // 
             // lLowHealthSFXComboBox
             // 
             this.lLowHealthSFXComboBox.AutoSize = true;
-            this.lLowHealthSFXComboBox.Location = new System.Drawing.Point(4, 142);
-            this.lLowHealthSFXComboBox.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lLowHealthSFXComboBox.Location = new System.Drawing.Point(6, 237);
+            this.lLowHealthSFXComboBox.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lLowHealthSFXComboBox.Name = "lLowHealthSFXComboBox";
-            this.lLowHealthSFXComboBox.Size = new System.Drawing.Size(89, 15);
+            this.lLowHealthSFXComboBox.Size = new System.Drawing.Size(135, 25);
             this.lLowHealthSFXComboBox.TabIndex = 25;
             this.lLowHealthSFXComboBox.Text = "Low Health SFX";
             // 
@@ -2295,11 +2331,11 @@ namespace MMR.UI.Forms
             // 
             this.cHUDGroupBox.Controls.Add(this.cHueShiftMiscUI);
             this.cHUDGroupBox.Controls.Add(this.cHUDTableLayoutPanel);
-            this.cHUDGroupBox.Location = new System.Drawing.Point(299, 159);
-            this.cHUDGroupBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHUDGroupBox.Location = new System.Drawing.Point(427, 265);
+            this.cHUDGroupBox.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cHUDGroupBox.Name = "cHUDGroupBox";
-            this.cHUDGroupBox.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cHUDGroupBox.Size = new System.Drawing.Size(468, 195);
+            this.cHUDGroupBox.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.cHUDGroupBox.Size = new System.Drawing.Size(669, 325);
             this.cHUDGroupBox.TabIndex = 44;
             this.cHUDGroupBox.TabStop = false;
             this.cHUDGroupBox.Text = "HUD";
@@ -2307,10 +2343,10 @@ namespace MMR.UI.Forms
             // cHueShiftMiscUI
             // 
             this.cHueShiftMiscUI.AutoSize = true;
-            this.cHueShiftMiscUI.Location = new System.Drawing.Point(10, 91);
-            this.cHueShiftMiscUI.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHueShiftMiscUI.Location = new System.Drawing.Point(14, 152);
+            this.cHueShiftMiscUI.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cHueShiftMiscUI.Name = "cHueShiftMiscUI";
-            this.cHueShiftMiscUI.Size = new System.Drawing.Size(216, 19);
+            this.cHueShiftMiscUI.Size = new System.Drawing.Size(323, 29);
             this.cHueShiftMiscUI.TabIndex = 1;
             this.cHueShiftMiscUI.Text = "Randomize Hue of Miscellaneous UI";
             this.cHueShiftMiscUI.UseVisualStyleBackColor = true;
@@ -2319,21 +2355,21 @@ namespace MMR.UI.Forms
             // cHUDTableLayoutPanel
             // 
             this.cHUDTableLayoutPanel.ColumnCount = 3;
-            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 58F));
+            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
             this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
+            this.cHUDTableLayoutPanel.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 130F));
             this.cHUDTableLayoutPanel.Controls.Add(this.cHUDHeartsComboBox, 1, 0);
             this.cHUDTableLayoutPanel.Controls.Add(this.cHeartsLabel, 0, 0);
             this.cHUDTableLayoutPanel.Controls.Add(this.cMagicLabel, 0, 1);
             this.cHUDTableLayoutPanel.Controls.Add(this.cHUDMagicComboBox, 1, 1);
             this.cHUDTableLayoutPanel.Controls.Add(this.btn_hud, 2, 0);
-            this.cHUDTableLayoutPanel.Location = new System.Drawing.Point(2, 18);
-            this.cHUDTableLayoutPanel.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHUDTableLayoutPanel.Location = new System.Drawing.Point(3, 30);
+            this.cHUDTableLayoutPanel.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cHUDTableLayoutPanel.Name = "cHUDTableLayoutPanel";
             this.cHUDTableLayoutPanel.RowCount = 2;
             this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.cHUDTableLayoutPanel.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.cHUDTableLayoutPanel.Size = new System.Drawing.Size(458, 66);
+            this.cHUDTableLayoutPanel.Size = new System.Drawing.Size(654, 110);
             this.cHUDTableLayoutPanel.TabIndex = 0;
             // 
             // cHUDHeartsComboBox
@@ -2341,10 +2377,10 @@ namespace MMR.UI.Forms
             this.cHUDHeartsComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cHUDHeartsComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cHUDHeartsComboBox.FormattingEnabled = true;
-            this.cHUDHeartsComboBox.Location = new System.Drawing.Point(62, 3);
-            this.cHUDHeartsComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHUDHeartsComboBox.Location = new System.Drawing.Point(89, 5);
+            this.cHUDHeartsComboBox.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cHUDHeartsComboBox.Name = "cHUDHeartsComboBox";
-            this.cHUDHeartsComboBox.Size = new System.Drawing.Size(301, 23);
+            this.cHUDHeartsComboBox.Size = new System.Drawing.Size(429, 33);
             this.cHUDHeartsComboBox.TabIndex = 32;
             this.cHUDHeartsComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDHeartsComboBox_SelectedIndexChanged);
             // 
@@ -2352,10 +2388,10 @@ namespace MMR.UI.Forms
             // 
             this.cHeartsLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cHeartsLabel.AutoSize = true;
-            this.cHeartsLabel.Location = new System.Drawing.Point(4, 9);
-            this.cHeartsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.cHeartsLabel.Location = new System.Drawing.Point(6, 15);
+            this.cHeartsLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.cHeartsLabel.Name = "cHeartsLabel";
-            this.cHeartsLabel.Size = new System.Drawing.Size(44, 15);
+            this.cHeartsLabel.Size = new System.Drawing.Size(67, 25);
             this.cHeartsLabel.TabIndex = 33;
             this.cHeartsLabel.Text = "Hearts:";
             // 
@@ -2363,10 +2399,10 @@ namespace MMR.UI.Forms
             // 
             this.cMagicLabel.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.cMagicLabel.AutoSize = true;
-            this.cMagicLabel.Location = new System.Drawing.Point(4, 42);
-            this.cMagicLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.cMagicLabel.Location = new System.Drawing.Point(6, 70);
+            this.cMagicLabel.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.cMagicLabel.Name = "cMagicLabel";
-            this.cMagicLabel.Size = new System.Drawing.Size(43, 15);
+            this.cMagicLabel.Size = new System.Drawing.Size(64, 25);
             this.cMagicLabel.TabIndex = 34;
             this.cMagicLabel.Text = "Magic:";
             // 
@@ -2375,10 +2411,10 @@ namespace MMR.UI.Forms
             this.cHUDMagicComboBox.Dock = System.Windows.Forms.DockStyle.Fill;
             this.cHUDMagicComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cHUDMagicComboBox.FormattingEnabled = true;
-            this.cHUDMagicComboBox.Location = new System.Drawing.Point(62, 36);
-            this.cHUDMagicComboBox.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHUDMagicComboBox.Location = new System.Drawing.Point(89, 60);
+            this.cHUDMagicComboBox.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cHUDMagicComboBox.Name = "cHUDMagicComboBox";
-            this.cHUDMagicComboBox.Size = new System.Drawing.Size(301, 23);
+            this.cHUDMagicComboBox.Size = new System.Drawing.Size(429, 33);
             this.cHUDMagicComboBox.TabIndex = 35;
             this.cHUDMagicComboBox.SelectedIndexChanged += new System.EventHandler(this.cHUDMagicComboBox_SelectedIndexChanged);
             // 
@@ -2386,11 +2422,11 @@ namespace MMR.UI.Forms
             // 
             this.btn_hud.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.btn_hud.AutoSize = true;
-            this.btn_hud.Location = new System.Drawing.Point(371, 11);
-            this.btn_hud.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.btn_hud.Location = new System.Drawing.Point(530, 19);
+            this.btn_hud.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.btn_hud.Name = "btn_hud";
             this.cHUDTableLayoutPanel.SetRowSpan(this.btn_hud, 2);
-            this.btn_hud.Size = new System.Drawing.Size(83, 43);
+            this.btn_hud.Size = new System.Drawing.Size(118, 72);
             this.btn_hud.TabIndex = 31;
             this.btn_hud.Text = "Customize";
             this.btn_hud.UseVisualStyleBackColor = true;
@@ -2398,11 +2434,11 @@ namespace MMR.UI.Forms
             // 
             // tFormCosmetics
             // 
-            this.tFormCosmetics.Location = new System.Drawing.Point(7, 3);
-            this.tFormCosmetics.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tFormCosmetics.Location = new System.Drawing.Point(10, 5);
+            this.tFormCosmetics.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tFormCosmetics.Name = "tFormCosmetics";
             this.tFormCosmetics.SelectedIndex = 0;
-            this.tFormCosmetics.Size = new System.Drawing.Size(285, 149);
+            this.tFormCosmetics.Size = new System.Drawing.Size(407, 248);
             this.tFormCosmetics.TabIndex = 39;
             // 
             // cDrawHash
@@ -2410,10 +2446,10 @@ namespace MMR.UI.Forms
             this.cDrawHash.AutoSize = true;
             this.cDrawHash.BackColor = System.Drawing.Color.Transparent;
             this.cDrawHash.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.cDrawHash.Location = new System.Drawing.Point(132, 74);
-            this.cDrawHash.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDrawHash.Location = new System.Drawing.Point(189, 123);
+            this.cDrawHash.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cDrawHash.Name = "cDrawHash";
-            this.cDrawHash.Size = new System.Drawing.Size(111, 19);
+            this.cDrawHash.Size = new System.Drawing.Size(166, 29);
             this.cDrawHash.TabIndex = 28;
             this.cDrawHash.Text = "Hash Icons .png";
             this.cDrawHash.UseVisualStyleBackColor = false;
@@ -2427,11 +2463,11 @@ namespace MMR.UI.Forms
             this.gGameOutput.Controls.Add(this.cSpoiler);
             this.gGameOutput.Controls.Add(this.cN64);
             this.gGameOutput.Controls.Add(this.cVC);
-            this.gGameOutput.Location = new System.Drawing.Point(15, 468);
-            this.gGameOutput.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.gGameOutput.Location = new System.Drawing.Point(21, 780);
+            this.gGameOutput.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.gGameOutput.Name = "gGameOutput";
-            this.gGameOutput.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.gGameOutput.Size = new System.Drawing.Size(264, 103);
+            this.gGameOutput.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.gGameOutput.Size = new System.Drawing.Size(377, 172);
             this.gGameOutput.TabIndex = 16;
             this.gGameOutput.TabStop = false;
             this.gGameOutput.Text = "Outputs";
@@ -2441,10 +2477,10 @@ namespace MMR.UI.Forms
             this.cHTMLLog.AutoSize = true;
             this.cHTMLLog.BackColor = System.Drawing.Color.Transparent;
             this.cHTMLLog.ForeColor = System.Drawing.Color.Black;
-            this.cHTMLLog.Location = new System.Drawing.Point(132, 48);
-            this.cHTMLLog.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cHTMLLog.Location = new System.Drawing.Point(189, 80);
+            this.cHTMLLog.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cHTMLLog.Name = "cHTMLLog";
-            this.cHTMLLog.Size = new System.Drawing.Size(121, 19);
+            this.cHTMLLog.Size = new System.Drawing.Size(178, 29);
             this.cHTMLLog.TabIndex = 14;
             this.cHTMLLog.Text = "Item Tracker .html";
             this.cHTMLLog.UseVisualStyleBackColor = false;
@@ -2455,10 +2491,10 @@ namespace MMR.UI.Forms
             this.cPatch.AutoSize = true;
             this.cPatch.BackColor = System.Drawing.Color.Transparent;
             this.cPatch.ForeColor = System.Drawing.Color.Black;
-            this.cPatch.Location = new System.Drawing.Point(19, 74);
-            this.cPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cPatch.Location = new System.Drawing.Point(27, 123);
+            this.cPatch.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cPatch.Name = "cPatch";
-            this.cPatch.Size = new System.Drawing.Size(88, 19);
+            this.cPatch.Size = new System.Drawing.Size(127, 29);
             this.cPatch.TabIndex = 15;
             this.cPatch.Text = "Patch .mmr";
             this.cPatch.UseVisualStyleBackColor = false;
@@ -2469,10 +2505,10 @@ namespace MMR.UI.Forms
             this.cSpoiler.AutoSize = true;
             this.cSpoiler.BackColor = System.Drawing.Color.Transparent;
             this.cSpoiler.ForeColor = System.Drawing.Color.Black;
-            this.cSpoiler.Location = new System.Drawing.Point(132, 22);
-            this.cSpoiler.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cSpoiler.Location = new System.Drawing.Point(189, 37);
+            this.cSpoiler.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cSpoiler.Name = "cSpoiler";
-            this.cSpoiler.Size = new System.Drawing.Size(102, 19);
+            this.cSpoiler.Size = new System.Drawing.Size(153, 29);
             this.cSpoiler.TabIndex = 8;
             this.cSpoiler.Text = "Spoiler log .txt";
             this.cSpoiler.UseVisualStyleBackColor = false;
@@ -2485,10 +2521,10 @@ namespace MMR.UI.Forms
             this.cN64.Checked = true;
             this.cN64.CheckState = System.Windows.Forms.CheckState.Checked;
             this.cN64.ForeColor = System.Drawing.Color.Black;
-            this.cN64.Location = new System.Drawing.Point(19, 21);
-            this.cN64.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cN64.Location = new System.Drawing.Point(27, 35);
+            this.cN64.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cN64.Name = "cN64";
-            this.cN64.Size = new System.Drawing.Size(100, 19);
+            this.cN64.Size = new System.Drawing.Size(154, 29);
             this.cN64.TabIndex = 10;
             this.cN64.Text = "N64 ROM .z64";
             this.cN64.UseVisualStyleBackColor = false;
@@ -2499,10 +2535,10 @@ namespace MMR.UI.Forms
             this.cVC.AutoSize = true;
             this.cVC.BackColor = System.Drawing.Color.Transparent;
             this.cVC.ForeColor = System.Drawing.Color.Black;
-            this.cVC.Location = new System.Drawing.Point(19, 47);
-            this.cVC.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cVC.Location = new System.Drawing.Point(27, 78);
+            this.cVC.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cVC.Name = "cVC";
-            this.cVC.Size = new System.Drawing.Size(89, 19);
+            this.cVC.Size = new System.Drawing.Size(132, 29);
             this.cVC.TabIndex = 9;
             this.cVC.Text = "Wii VC .wad";
             this.cVC.UseVisualStyleBackColor = false;
@@ -2511,19 +2547,19 @@ namespace MMR.UI.Forms
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(250, 420);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(357, 700);
+            this.label1.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(277, 15);
+            this.label1.Size = new System.Drawing.Size(418, 25);
             this.label1.TabIndex = 12;
             this.label1.Text = "ROM must be Majora\'s Mask (U) ending with \".z64\"";
             // 
             // bApplyPatch
             // 
-            this.bApplyPatch.Location = new System.Drawing.Point(357, 10);
-            this.bApplyPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bApplyPatch.Location = new System.Drawing.Point(510, 17);
+            this.bApplyPatch.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.bApplyPatch.Name = "bApplyPatch";
-            this.bApplyPatch.Size = new System.Drawing.Size(115, 54);
+            this.bApplyPatch.Size = new System.Drawing.Size(164, 90);
             this.bApplyPatch.TabIndex = 16;
             this.bApplyPatch.Text = "Apply Patch";
             this.bApplyPatch.UseVisualStyleBackColor = true;
@@ -2540,10 +2576,10 @@ namespace MMR.UI.Forms
             // 
             // bRandomise
             // 
-            this.bRandomise.Location = new System.Drawing.Point(357, 10);
-            this.bRandomise.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bRandomise.Location = new System.Drawing.Point(510, 17);
+            this.bRandomise.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.bRandomise.Name = "bRandomise";
-            this.bRandomise.Size = new System.Drawing.Size(115, 54);
+            this.bRandomise.Size = new System.Drawing.Size(164, 90);
             this.bRandomise.TabIndex = 5;
             this.bRandomise.Text = "Randomize";
             this.bRandomise.UseVisualStyleBackColor = true;
@@ -2565,8 +2601,8 @@ namespace MMR.UI.Forms
             this.mHelp});
             this.mMenu.Location = new System.Drawing.Point(0, 0);
             this.mMenu.Name = "mMenu";
-            this.mMenu.Padding = new System.Windows.Forms.Padding(7, 2, 0, 2);
-            this.mMenu.Size = new System.Drawing.Size(792, 24);
+            this.mMenu.Padding = new System.Windows.Forms.Padding(10, 3, 0, 3);
+            this.mMenu.Size = new System.Drawing.Size(1131, 35);
             this.mMenu.TabIndex = 12;
             this.mMenu.Text = "mMenu";
             // 
@@ -2577,20 +2613,20 @@ namespace MMR.UI.Forms
             this.loadSettingsToolStripMenuItem,
             this.mExit});
             this.mFile.Name = "mFile";
-            this.mFile.Size = new System.Drawing.Size(37, 20);
+            this.mFile.Size = new System.Drawing.Size(54, 29);
             this.mFile.Text = "File";
             // 
             // saveSettingsToolStripMenuItem
             // 
             this.saveSettingsToolStripMenuItem.Name = "saveSettingsToolStripMenuItem";
-            this.saveSettingsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.saveSettingsToolStripMenuItem.Size = new System.Drawing.Size(234, 34);
             this.saveSettingsToolStripMenuItem.Text = "Save Settings...";
             this.saveSettingsToolStripMenuItem.Click += new System.EventHandler(this.SaveSettingsToolStripMenuItem_Click);
             // 
             // loadSettingsToolStripMenuItem
             // 
             this.loadSettingsToolStripMenuItem.Name = "loadSettingsToolStripMenuItem";
-            this.loadSettingsToolStripMenuItem.Size = new System.Drawing.Size(154, 22);
+            this.loadSettingsToolStripMenuItem.Size = new System.Drawing.Size(234, 34);
             this.loadSettingsToolStripMenuItem.Text = "Load Settings...";
             this.loadSettingsToolStripMenuItem.Click += new System.EventHandler(this.LoadSettingsToolStripMenuItem_Click);
             // 
@@ -2598,7 +2634,7 @@ namespace MMR.UI.Forms
             // 
             this.mExit.Name = "mExit";
             this.mExit.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Alt | System.Windows.Forms.Keys.F4)));
-            this.mExit.Size = new System.Drawing.Size(154, 22);
+            this.mExit.Size = new System.Drawing.Size(234, 34);
             this.mExit.Text = "Exit";
             this.mExit.Click += new System.EventHandler(this.mExit_Click);
             // 
@@ -2607,13 +2643,13 @@ namespace MMR.UI.Forms
             this.mCustomise.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mDPadConfig});
             this.mCustomise.Name = "mCustomise";
-            this.mCustomise.Size = new System.Drawing.Size(75, 20);
+            this.mCustomise.Size = new System.Drawing.Size(111, 29);
             this.mCustomise.Text = "Customize";
             // 
             // mDPadConfig
             // 
             this.mDPadConfig.Name = "mDPadConfig";
-            this.mDPadConfig.Size = new System.Drawing.Size(184, 22);
+            this.mDPadConfig.Size = new System.Drawing.Size(277, 34);
             this.mDPadConfig.Text = "D-Pad Configuration";
             this.mDPadConfig.Click += new System.EventHandler(this.mDPadConfig_Click);
             // 
@@ -2622,13 +2658,13 @@ namespace MMR.UI.Forms
             this.toolsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mLogicEdit});
             this.toolsToolStripMenuItem.Name = "toolsToolStripMenuItem";
-            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
+            this.toolsToolStripMenuItem.Size = new System.Drawing.Size(69, 29);
             this.toolsToolStripMenuItem.Text = "Tools";
             // 
             // mLogicEdit
             // 
             this.mLogicEdit.Name = "mLogicEdit";
-            this.mLogicEdit.Size = new System.Drawing.Size(137, 22);
+            this.mLogicEdit.Size = new System.Drawing.Size(208, 34);
             this.mLogicEdit.Text = "Logic editor";
             this.mLogicEdit.Click += new System.EventHandler(this.mLogicEdit_Click);
             // 
@@ -2639,26 +2675,26 @@ namespace MMR.UI.Forms
             this.mSep1,
             this.mAbout});
             this.mHelp.Name = "mHelp";
-            this.mHelp.Size = new System.Drawing.Size(44, 20);
+            this.mHelp.Size = new System.Drawing.Size(65, 29);
             this.mHelp.Text = "Help";
             // 
             // mManual
             // 
             this.mManual.Name = "mManual";
             this.mManual.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.mManual.Size = new System.Drawing.Size(133, 22);
+            this.mManual.Size = new System.Drawing.Size(203, 34);
             this.mManual.Text = "Manual";
             this.mManual.Click += new System.EventHandler(this.mManual_Click);
             // 
             // mSep1
             // 
             this.mSep1.Name = "mSep1";
-            this.mSep1.Size = new System.Drawing.Size(130, 6);
+            this.mSep1.Size = new System.Drawing.Size(200, 6);
             // 
             // mAbout
             // 
             this.mAbout.Name = "mAbout";
-            this.mAbout.Size = new System.Drawing.Size(133, 22);
+            this.mAbout.Size = new System.Drawing.Size(203, 34);
             this.mAbout.Text = "About";
             this.mAbout.Click += new System.EventHandler(this.mAbout_Click);
             // 
@@ -2668,10 +2704,9 @@ namespace MMR.UI.Forms
             // 
             // pProgress
             // 
-            this.pProgress.Location = new System.Drawing.Point(15, 592);
-            this.pProgress.Margin = new System.Windows.Forms.Padding(2);
+            this.pProgress.Location = new System.Drawing.Point(21, 987);
             this.pProgress.Name = "pProgress";
-            this.pProgress.Size = new System.Drawing.Size(762, 22);
+            this.pProgress.Size = new System.Drawing.Size(1089, 37);
             this.pProgress.Style = System.Windows.Forms.ProgressBarStyle.Continuous;
             this.pProgress.TabIndex = 13;
             // 
@@ -2683,20 +2718,19 @@ namespace MMR.UI.Forms
             // 
             this.lStatus.AutoSize = true;
             this.lStatus.BackColor = System.Drawing.Color.Transparent;
-            this.lStatus.Location = new System.Drawing.Point(13, 573);
-            this.lStatus.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.lStatus.Location = new System.Drawing.Point(19, 955);
             this.lStatus.Name = "lStatus";
-            this.lStatus.Size = new System.Drawing.Size(48, 15);
+            this.lStatus.Size = new System.Drawing.Size(72, 25);
             this.lStatus.TabIndex = 13;
             this.lStatus.Text = "Ready...";
             // 
             // tSeed
             // 
-            this.tSeed.Location = new System.Drawing.Point(90, 12);
-            this.tSeed.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tSeed.Location = new System.Drawing.Point(129, 20);
+            this.tSeed.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tSeed.MaxLength = 10;
             this.tSeed.Name = "tSeed";
-            this.tSeed.Size = new System.Drawing.Size(259, 23);
+            this.tSeed.Size = new System.Drawing.Size(368, 31);
             this.tSeed.TabIndex = 2;
             this.tSeed.Enter += new System.EventHandler(this.tSeed_Enter);
             this.tSeed.KeyDown += new System.Windows.Forms.KeyEventHandler(this.tSeed_KeyDown);
@@ -2707,10 +2741,10 @@ namespace MMR.UI.Forms
             this.lSeed.AutoSize = true;
             this.lSeed.BackColor = System.Drawing.Color.Transparent;
             this.lSeed.ForeColor = System.Drawing.Color.Black;
-            this.lSeed.Location = new System.Drawing.Point(1, 15);
-            this.lSeed.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lSeed.Location = new System.Drawing.Point(1, 25);
+            this.lSeed.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
             this.lSeed.Name = "lSeed";
-            this.lSeed.Size = new System.Drawing.Size(82, 15);
+            this.lSeed.Size = new System.Drawing.Size(126, 25);
             this.lSeed.TabIndex = 3;
             this.lSeed.Text = "Random seed:";
             // 
@@ -2718,10 +2752,10 @@ namespace MMR.UI.Forms
             // 
             this.cDummy.AutoSize = true;
             this.cDummy.Enabled = false;
-            this.cDummy.Location = new System.Drawing.Point(684, 582);
-            this.cDummy.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cDummy.Location = new System.Drawing.Point(977, 970);
+            this.cDummy.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.cDummy.Name = "cDummy";
-            this.cDummy.Size = new System.Drawing.Size(83, 19);
+            this.cDummy.Size = new System.Drawing.Size(121, 29);
             this.cDummy.TabIndex = 9;
             this.cDummy.Text = "checkBox1";
             this.cDummy.UseVisualStyleBackColor = true;
@@ -2735,11 +2769,11 @@ namespace MMR.UI.Forms
             // 
             this.ttOutput.Controls.Add(this.tpOutputSettings);
             this.ttOutput.Controls.Add(this.tpPatchSettings);
-            this.ttOutput.Location = new System.Drawing.Point(289, 470);
-            this.ttOutput.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.ttOutput.Location = new System.Drawing.Point(413, 783);
+            this.ttOutput.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.ttOutput.Name = "ttOutput";
             this.ttOutput.SelectedIndex = 0;
-            this.ttOutput.Size = new System.Drawing.Size(490, 103);
+            this.ttOutput.Size = new System.Drawing.Size(700, 172);
             this.ttOutput.TabIndex = 15;
             this.ttOutput.SelectedIndexChanged += new System.EventHandler(this.ttOutput_Changed);
             // 
@@ -2748,11 +2782,11 @@ namespace MMR.UI.Forms
             this.tpOutputSettings.Controls.Add(this.bRandomise);
             this.tpOutputSettings.Controls.Add(this.tSeed);
             this.tpOutputSettings.Controls.Add(this.lSeed);
-            this.tpOutputSettings.Location = new System.Drawing.Point(4, 24);
-            this.tpOutputSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tpOutputSettings.Location = new System.Drawing.Point(4, 34);
+            this.tpOutputSettings.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tpOutputSettings.Name = "tpOutputSettings";
-            this.tpOutputSettings.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tpOutputSettings.Size = new System.Drawing.Size(482, 75);
+            this.tpOutputSettings.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.tpOutputSettings.Size = new System.Drawing.Size(692, 134);
             this.tpOutputSettings.TabIndex = 0;
             this.tpOutputSettings.Text = "Output settings";
             this.tpOutputSettings.UseVisualStyleBackColor = true;
@@ -2762,30 +2796,30 @@ namespace MMR.UI.Forms
             this.tpPatchSettings.Controls.Add(this.tPatch);
             this.tpPatchSettings.Controls.Add(this.bApplyPatch);
             this.tpPatchSettings.Controls.Add(this.bLoadPatch);
-            this.tpPatchSettings.Location = new System.Drawing.Point(4, 24);
-            this.tpPatchSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tpPatchSettings.Location = new System.Drawing.Point(4, 34);
+            this.tpPatchSettings.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tpPatchSettings.Name = "tpPatchSettings";
-            this.tpPatchSettings.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tpPatchSettings.Size = new System.Drawing.Size(482, 75);
+            this.tpPatchSettings.Padding = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.tpPatchSettings.Size = new System.Drawing.Size(692, 134);
             this.tpPatchSettings.TabIndex = 1;
             this.tpPatchSettings.Text = "Patch settings";
             this.tpPatchSettings.UseVisualStyleBackColor = true;
             // 
             // tPatch
             // 
-            this.tPatch.Location = new System.Drawing.Point(7, 40);
-            this.tPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.tPatch.Location = new System.Drawing.Point(10, 67);
+            this.tPatch.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.tPatch.Name = "tPatch";
             this.tPatch.ReadOnly = true;
-            this.tPatch.Size = new System.Drawing.Size(342, 23);
+            this.tPatch.Size = new System.Drawing.Size(487, 31);
             this.tPatch.TabIndex = 17;
             // 
             // bLoadPatch
             // 
-            this.bLoadPatch.Location = new System.Drawing.Point(6, 7);
-            this.bLoadPatch.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.bLoadPatch.Location = new System.Drawing.Point(9, 12);
+            this.bLoadPatch.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.bLoadPatch.Name = "bLoadPatch";
-            this.bLoadPatch.Size = new System.Drawing.Size(120, 30);
+            this.bLoadPatch.Size = new System.Drawing.Size(171, 50);
             this.bLoadPatch.TabIndex = 16;
             this.bLoadPatch.Text = "Load Patch...";
             this.bLoadPatch.UseVisualStyleBackColor = true;
@@ -2793,21 +2827,49 @@ namespace MMR.UI.Forms
             // 
             // bSkip
             // 
-            this.bSkip.Location = new System.Drawing.Point(704, 591);
+            this.bSkip.Location = new System.Drawing.Point(1006, 985);
+            this.bSkip.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.bSkip.Name = "bSkip";
-            this.bSkip.Size = new System.Drawing.Size(75, 23);
+            this.bSkip.Size = new System.Drawing.Size(107, 38);
             this.bSkip.TabIndex = 17;
             this.bSkip.Text = "Skip";
             this.bSkip.UseVisualStyleBackColor = true;
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
+            // cBombTraps
+            // 
+            this.cBombTraps.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBombTraps.FormattingEnabled = true;
+            this.cBombTraps.Items.AddRange(new object[] {
+            "None",
+            "Few",
+            "Half",
+            "Most",
+            "All"});
+            this.cBombTraps.Location = new System.Drawing.Point(10, 126);
+            this.cBombTraps.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
+            this.cBombTraps.Name = "cBombTraps";
+            this.cBombTraps.Size = new System.Drawing.Size(227, 33);
+            this.cBombTraps.TabIndex = 26;
+            this.cBombTraps.SelectedIndexChanged += new System.EventHandler(this.cBombTraps_SelectedIndexChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(10, 96);
+            this.label11.Margin = new System.Windows.Forms.Padding(6, 0, 6, 0);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(168, 25);
+            this.label11.TabIndex = 28;
+            this.label11.Text = "Bomb Trap Amount";
+            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.ClientSize = new System.Drawing.Size(792, 627);
+            this.ClientSize = new System.Drawing.Size(1131, 1045);
             this.Controls.Add(this.bSkip);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.bopen);
@@ -2823,7 +2885,7 @@ namespace MMR.UI.Forms
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.mMenu;
-            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Load += new System.EventHandler(this.mmrMain_Load);
@@ -3102,6 +3164,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.ComboBox cItemPlacement;
         private System.Windows.Forms.Label lItemPlacement;
         private System.Windows.Forms.Label lNumTricksEnabled;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.ComboBox cBombTraps;
     }
 }
 

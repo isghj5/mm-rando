@@ -106,6 +106,7 @@
 .definelabel z2_object_spawn, 0x8012F2E0
 .definelabel z2_load_objects, 0x8012F4FC
 .definelabel z2_GetObjectIndex, 0x8012F608
+.definelabel z2_SkelAnime_DrawFlexLod, 0x80133710
 .definelabel z2_SkelAnime_DrawLimb, 0x80133B3C
 .definelabel z2_SkelAnime_DrawLimb2, 0x80133F28
 .definelabel z2_SkelAnime_DrawLimb3, 0x801343C0

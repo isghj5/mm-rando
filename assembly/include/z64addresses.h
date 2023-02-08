@@ -149,6 +149,8 @@ extern void z2_DrawHeartPiece(Actor* actor, GlobalContext* ctxt);
 extern void z2_DrawRupee(Actor* actor, GlobalContext* ctxt);
 extern void z2_PreDraw1(Actor* actor, GlobalContext* ctxt, u32 unknown);
 extern void z2_PreDraw2(Actor* actor, GlobalContext* ctxt, u32 unknown);
+extern void z2_SkelAnime_DrawFlexLod(GlobalContext* ctxt, void** skeleton, Vec3s* jointTable, s32 dListCount,
+                                    void* overrideLimbDraw, void* postLimbDraw, Actor* actor, s32 lod);
 
 // Function Prototypes (File Loading).
 extern s32 z2_RomToRam(u32 src, void* dst, u32 length);

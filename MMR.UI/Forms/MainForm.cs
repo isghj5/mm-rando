@@ -100,6 +100,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cStartingItems, "Select a starting item mode:\n\nNone - You will not start with any randomized starting items.\nRandom - You will start with randomized starting items.\nAllow Temporary Items - You will start with randomized starting items including Keg, Magic Bean and Bottles with X.");
             TooltipBuilder.SetTooltip(cBlastCooldown, "Adjust the cooldown timer after using the Blast Mask.");
             TooltipBuilder.SetTooltip(cIceTraps, "Amount of ice traps to be added to pool by replacing junk items.");
+            TooltipBuilder.SetTooltip(cBombTraps, "Amount of bomb traps to mix in with ice traps.");
             TooltipBuilder.SetTooltip(cIceTrapsAppearance, "Appearance of ice traps in pool for world models.");
             TooltipBuilder.SetTooltip(cSunsSong, "Enable using the Sun's Song, which speeds up time to 400 units per frame (normal time speed is 3 units per frame) until dawn or dusk or a loading zone.");
             TooltipBuilder.SetTooltip(cUnderwaterOcarina, "Enable using the ocarina underwater.");
@@ -1130,6 +1131,7 @@ namespace MMR.UI.Forms
             cGaroHint.SelectedIndex = (int)_configuration.GameplaySettings.GaroHintStyle;
             cBlastCooldown.SelectedIndex = (int)_configuration.GameplaySettings.BlastMaskCooldown;
             cIceTraps.SelectedIndex = (int)_configuration.GameplaySettings.IceTraps;
+            cBombTraps.SelectedIndex = (int)_configuration.GameplaySettings.BombTraps;
             cIceTrapsAppearance.SelectedIndex = (int)_configuration.GameplaySettings.IceTrapAppearance;
             cMusic.SelectedIndex = (int)_configuration.CosmeticSettings.Music;
             foreach (TabPage cosmeticFormTab in tFormCosmetics.TabPages)
@@ -2506,6 +2508,11 @@ namespace MMR.UI.Forms
             {
                 MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void cBombTraps_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.BombTraps = (BombTraps)cBombTraps.SelectedIndex);
         }
     }
 }

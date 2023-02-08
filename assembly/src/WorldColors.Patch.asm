@@ -382,3 +382,146 @@
     sw      t4, 0x000C (v0)
     sw      t8, 0x0008 (v0)
 .endarea
+
+;==================================================================================================
+; Goron Ground Pound patching
+;==================================================================================================
+
+.headersize G_CODE_DELTA
+
+@GoronTunicEnvColor equ (WORLD_COLOR_CONFIG + 0x5C)
+
+; Xlu colour
+; Replaces:
+;    lw      v0, 0x02C0 (s1)
+;    lui     t2, 0xFB00
+;    addiu   t1, v0, 0x0008
+;    sw      t1, 0x02C0 (s1)
+;    sw      t2, 0x0000 (v0)
+;    lbu     t7, 0x0001 (s3)
+;    lbu     t4, 0x0000 (s3)
+;    lbu     t1, 0x0002 (s3)
+;    lbu     t6, 0x0001 (s2)
+;    sll     t8, t7, 16
+;    sll     t5, t4, 24
+;    or      t9, t5, t8
+;    sll     t2, t1, 8
+;    or      t3, t9, t2
+;    or      t7, t3, t6
+;    sw      t7, 0x0004 (v0)
+.org 0x80122E14
+    lw      v0, 0x02C0 (s1)
+    lui     t2, 0xFB00
+    addiu   t1, v0, 0x0010
+    sw      t1, 0x02C0 (s1)
+    sw      t2, 0x0000 (v0)
+    lbu     t6, 0x0001 (s2)
+    lui     t5, hi(@GoronTunicEnvColor)
+    lw      t3, lo(@GoronTunicEnvColor) (t5)
+    lui     t2, 0xFA00
+    or      t7, t3, t6
+    lui     t8, 0x8080
+    ori     t8, t8, 0x80B8
+    sw      t2, 0x0008 (v0)
+    sw      t8, 0x000C (v0)
+    nop
+    sw      t7, 0x0004 (v0)
+
+.headersize G_PLAYER_ACTOR_DELTA
+
+; Opa colour
+; Replaces:
+;    lw      v0, 0x02B0 (a1)
+;    lui     t2, 0xFB00
+;    addiu   t9, v0, 0x0008
+;    sw      t9, 0x02B0 (a1)
+;    sw      t2, 0x0000 (v0)
+;    lbu     t3, 0x00BC (sp)
+;    lbu     t7, 0x00BD (sp)
+;    lbu     t4, 0x00BE (sp)
+;    sll     t5, t3, 24
+;    sll     t8, t7, 16
+;    or      t9, t5, t8
+;    sll     t3, t4, 8
+;    or      t6, t9, t3
+;    ori     t7, t6, 0x00FF
+;    sw      t7, 0x0004 (v0)
+.org 0x8084690C ;80703d9c
+    lw      v0, 0x02B0 (a1)
+    lui     t2, 0xFA00
+    addiu   t9, v0, 0x0010
+    sw      t9, 0x02B0 (a1)
+    sw      t2, 0x0000 (v0)
+    lbu     t3, 0x00BC (sp)
+    lui     t4, 0x8080
+    ori     t4, t4, 0x8000
+    lui     t2, 0xFB00
+    or      t7, t3, t4
+    lui     t6, hi(@GoronTunicEnvColor)
+    lw      t5, lo(@GoronTunicEnvColor) (t6)
+    sw      t2, 0x0008 (v0)
+    sw      t5, 0x000C (v0)
+    sw      t7, 0x0004 (v0)
+
+;==================================================================================================
+; Player Model Colors
+;==================================================================================================
+
+.headersize G_CODE_DELTA
+
+; Replaces:
+;    jal     0x80133710 ; SkelAnime_DrawFlexLod
+.org 0x80124858
+    jal     WorldColors_SetPlayerEnvColor
+
+; Replaces:
+;    lui     t8, 0xDE00
+;    lui     t2, 0x801C
+;    lw      v0, 0x02B0 (t5)
+;    addiu   t6, v0, 0x0008
+;    sw      t6, 0x02B0 (t5)
+;    sw      t8, 0x0000 (v0)
+;    lw      t9, 0x0154 (sp)
+;    sll     t7, t9, 2
+;    addiu   t2, t2, t7
+;    lw      t2, 0x0B20 (t2)
+;    sw      t2, 0x0004 (v0)
+.org 0x801296F4
+    ori     a0, t5, 0x0000 ; gfxctx
+    lw      a1, 0x0154 (sp) ; mask ID - 1
+    lui     a2, 0x801C
+    jal     WorldColors_PlayerColorAfterMask
+    ori     a2, a2, 0x0B20 ; mask DLs
+    nop
+    nop
+    nop
+    nop
+    nop
+    nop
+
+;==================================================================================================
+; Zora Boomerang Colors
+;==================================================================================================
+
+.headersize G_EN_BOOM_DELTA
+
+; Replaces:
+;    lw      t8, 0x003C (sp)
+;    lui     t0, 0xDE00
+;    lw      v0, 0x02B0 (t8)
+;    addiu   t9, v0, 0x0008
+;    sw      t9, 0x02B0 (t8)
+;    sw      t0, 0x0000 (v0)
+;    lw      t1, 0x0058 (sp)
+;    lw      t2, 0x0000 (t1)
+;    sw      t2, 0x0004 (v0)
+.org 0x808A2FB8
+    lw      a0, 0x003C (sp) ; gfxctx
+    lw      t1, 0x0058 (sp)
+    jal     WorldColors_ZoraBoomerangColor
+    lw      a1, 0x0000 (t1) ; fin DL
+    nop
+    nop
+    nop
+    nop
+    nop

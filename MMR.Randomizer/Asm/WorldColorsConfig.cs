@@ -62,6 +62,7 @@ namespace MMR.Randomizer.Asm
                     ApplyEnergyColors(form, colors);
                 }
             }
+            SetWorldColorTunics(settings);
         }
 
         /// <summary>

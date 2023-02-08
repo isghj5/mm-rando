@@ -197,6 +197,7 @@ enum DamageEffect {
     DAMAGE_EFFECT_FLY_BACK_2, // Flies backwards.
     DAMAGE_EFFECT_FREEZE,     // Freezes.
     DAMAGE_EFFECT_ELECTRIC,   // Electrocutes.
+    DAMAGE_EFFECT_BOMBTRAP,   // Sets off a bomb.
 };
 
 enum FloorPhysicsType {

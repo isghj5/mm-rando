@@ -219,5 +219,10 @@ namespace MMR.Randomizer.Extensions
         {
             return item.IsBottleCatchContent() == other.IsBottleCatchContent();
         }
+
+        public static bool IsBlockingBombTrapPlacement(this Item item)
+        {
+            return item.HasAttribute<BlockBombTrapPlacementAttribute>();
+        }
     }
 }

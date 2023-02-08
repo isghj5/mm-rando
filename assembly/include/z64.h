@@ -1518,6 +1518,19 @@ typedef struct {
     /* 0x220 */ u32 unk220;
 } ActorEnBox; // size = 0x224?
 
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0xAC];
+    /* 0x1F0 */ s16 timer;
+    /* 0x1F2 */ s16 flashSpeedScale;
+    /* 0x1F4 */ f32 unk_1F4;
+    /* 0x1F8 */ u8 unk_1F8;
+    /* 0x1F9 */ u8 isPowderKeg;
+    /* 0x1FA */ s16 unk_1FA;
+    /* 0x1FC */ u8 unk_1FC;
+    /* 0x200 */ UNK_TYPE1 pad200[0x4];
+} ActorEnBom; // size = 0x204
+
 // En_Elf actor (Fairy).
 typedef struct {
     /* 0x000 */ Actor base;
