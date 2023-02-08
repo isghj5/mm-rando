@@ -1250,9 +1250,13 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(151)]
         [ObjectListIndex(0xF4)]
+        // TODO add all of the tiny rupees from secret shrine to this
+        [CheckRestricted(Item.ItemMagicBean,
+            Item.ChestTerminaStumpRedRupee,
+            Item.ChestInvertedStoneTowerBean, Item.ChestInvertedStoneTowerBombchu10, Item.ChestInvertedStoneTowerSilverRupee)]
         [GroundVariants(0)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.Grottos)]
+        //[EnemizerScenesExcluded(Scene.Grottos)]
         BeanSeller = 0xA5, // En_Ms
 
         [ActorizerEnabled]
@@ -3246,8 +3250,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(439)]
         [ObjectListIndex(0x144)]
-        [CheckRestricted(Item.HeartPiecePoeHut)]
+        [CheckRestricted(Scene.PoeHut, variant: 0x0, Item.HeartPiecePoeHut )]
         [GroundVariants(0x0)]
+        [VariantsWithRoomMax(max:0, variant:0x0)]
         [SwitchFlagsPlacement(mask: 0xFF, shift: 3)] // 0x7F8
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.IkanaCanyon, Scene.SecretShrine)]
