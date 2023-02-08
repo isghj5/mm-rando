@@ -1990,7 +1990,7 @@ namespace MMR.Randomizer
         /// </summary>
         private void PlaceRemainingItems(List<Item> itemPool)
         {
-            foreach (var item in ItemUtils.AllLocations().OrderBy(item => ItemUtils.IsJunk(ItemList[item].Item)))
+            foreach (var item in ItemUtils.AllLocations().OrderByDescending(item => !ItemUtils.IsJunk(ItemList[item].Item)).ThenByDescending(item => item.IsTemporary(_settings)))
             {
                 if (ItemList[item].NewLocation == null)
                 {
