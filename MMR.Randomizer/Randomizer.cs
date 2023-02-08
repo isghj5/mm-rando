@@ -837,7 +837,7 @@ namespace MMR.Randomizer
             }
 
             //check timing
-            if (currentItemObject.TimeNeeded != 0 && (!_timeTravelPlaced || dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary(_randomized.Settings))))
+            if (currentItemObject.TimeNeeded != 0 && (!_timeTravelPlaced || dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(i => i.NewLocation == p).Item.IsTemporary(_settings))))
             {
                 if ((currentItemObject.TimeNeeded & currentTargetObject.TimeAvailable) == 0)
                 {
@@ -970,7 +970,7 @@ namespace MMR.Randomizer
             //cycle through all things
             foreach (var dependency in currentTargetObject.DependsOnItems)
             {
-                if (!currentItem.IsTemporary(_randomized.Settings) && target == Item.MaskBlast && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
+                if (!currentItem.IsTemporary(_settings) && target == Item.MaskBlast && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
                 {
                     // Permanent items ignore Kafei Letter and Pendant on Blast Mask check.
                     continue;
@@ -1124,7 +1124,7 @@ namespace MMR.Randomizer
             var targetItemObject = ItemList[target];
             if (target == Item.MaskBlast)
             {
-                if (!currentItem.IsTemporary(_randomized.Settings))
+                if (!currentItem.IsTemporary(_settings))
                 {
                     targetItemObject.DependsOnItems?.Remove(Item.TradeItemKafeiLetter);
                     targetItemObject.DependsOnItems?.Remove(Item.TradeItemPendant);
@@ -1153,7 +1153,7 @@ namespace MMR.Randomizer
                         CheckConditionals(currentItem, location, childPath);
                     }
                 }
-                else if (ItemList[currentItem].TimeNeeded != 0 && dependency.IsTemporary(_randomized.Settings) && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary(_randomized.Settings)))
+                else if (ItemList[currentItem].TimeNeeded != 0 && dependency.IsTemporary(_settings) && dependencyPath.Skip(1).All(p => p.IsFake() || ItemList.Single(j => j.NewLocation == p).Item.IsTemporary(_settings)))
                 {
                     if (dependencyObject.TimeNeeded == 0)
                     {
@@ -1211,7 +1211,7 @@ namespace MMR.Randomizer
                 return false;
             }
 
-            if (!_timeTravelPlaced || currentItem.IsTemporary(_randomized.Settings))
+            if (!_timeTravelPlaced || currentItem.IsTemporary(_settings))
             {
                 if ((target.Region(ItemList) == Region.TheMoon || target.Region(ItemList) == Region.ClockTowerRoof) && currentItem.ItemCategory() != ItemCategory.TimeTravel)
                 {
@@ -1393,6 +1393,11 @@ namespace MMR.Randomizer
                 availableItems.RemoveAll(location => location.IsSong() != currentItem.IsSong());
             }
 
+            if (_settings.BossRemainsMode.HasFlag(BossRemainsMode.ShuffleOnly))
+            {
+                availableItems.RemoveAll(location => (location.ItemCategory() == ItemCategory.BossRemains) != (currentItem.ItemCategory() == ItemCategory.BossRemains));
+            }
+
             currentItem = currentItemObject.Item;
             while (true)
             {
@@ -1446,7 +1451,7 @@ namespace MMR.Randomizer
                 ItemList[item].ItemOverride = Item.RecoveryHeart;
             }
 
-            if (_randomized.Settings.SmallKeyMode.HasFlag(SmallKeyMode.DoorsOpen))
+            if (_settings.SmallKeyMode.HasFlag(SmallKeyMode.DoorsOpen))
             {
                 foreach (var item in ItemUtils.SmallKeys())
                 {
@@ -1454,7 +1459,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_randomized.Settings.BossKeyMode.HasFlag(BossKeyMode.DoorsOpen))
+            if (_settings.BossKeyMode.HasFlag(BossKeyMode.DoorsOpen))
             {
                 foreach (var item in ItemUtils.BossKeys())
                 {
@@ -1462,7 +1467,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            if (_randomized.Settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly))
+            if (_settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly))
             {
                 foreach (var item in ItemUtils.DungeonStrayFairies())
                 {
@@ -1695,7 +1700,7 @@ namespace MMR.Randomizer
 
             AddAllItems(itemPool);
 
-            PlaceRestrictedDungeonItems(itemPool);
+            PlaceRestrictedItems(itemPool);
 
             PlaceFreeItems(itemPool);
 
@@ -1867,7 +1872,7 @@ namespace MMR.Randomizer
 
         private void PlaceBespokeItems(List<Item> itemPool)
         {
-            var densityRating = (int)Math.Max(500 - Math.Floor((itemPool.Count - _randomized.Settings.CustomJunkLocations.Count) * Random.NextDouble(0.7, 1.3)), 0);
+            var densityRating = (int)Math.Max(500 - Math.Floor((itemPool.Count - _settings.CustomJunkLocations.Count) * Random.NextDouble(0.7, 1.3)), 0);
 
             var alwaysOrdered = new List<List<Item>>
             {
@@ -2218,9 +2223,24 @@ namespace MMR.Randomizer
             }
         }
 
-        private void PlaceRestrictedDungeonItems(List<Item> itemPool)
+        private Func<Item, Item, ItemList, bool> GetRestriction<TMode>(TMode mode) where TMode : struct, Enum
         {
-            if (_randomized.Settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
+            var restrictions = Enum.GetValues<TMode>()
+                .Where(m => mode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
+                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+
+            if (restrictions.Any())
+            {
+                return restrictions
+                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
+            }
+
+            return null;
+        }
+
+        private void PlaceRestrictedItems(List<Item> itemPool)
+        {
+            if (_settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
             {
                 PlaceItem(Item.RemainsOdolwa, itemPool, (_, location, _) => location == Item.FairySpinAttack);
                 PlaceItem(Item.RemainsGoht, itemPool, (_, location, _) => location == Item.FairyDoubleMagic);
@@ -2228,73 +2248,53 @@ namespace MMR.Randomizer
                 PlaceItem(Item.RemainsTwinmold, itemPool, (_, location, _) => location == Item.ItemFairySword);
             }
 
-            var strayFairyRestrictions = Enum.GetValues<StrayFairyMode>()
-                .Where(m => _randomized.Settings.StrayFairyMode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
-                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+            var strayFairyRestriction = GetRestriction(_settings.StrayFairyMode);
 
-            if (strayFairyRestrictions.Any())
+            if (strayFairyRestriction != null)
             {
-                var aggregatedRestrictions = strayFairyRestrictions
-                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
                 foreach (var item in ItemUtils.DungeonStrayFairies())
                 {
-                    PlaceItem(item, itemPool, aggregatedRestrictions);
+                    PlaceItem(item, itemPool, strayFairyRestriction);
                 }
             }
 
-            var bossKeyRestrictions = Enum.GetValues<BossKeyMode>()
-                .Where(m => _randomized.Settings.BossKeyMode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
-                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+            var bossKeyRestriction = GetRestriction(_settings.BossKeyMode);
 
-            if (bossKeyRestrictions.Any())
+            if (bossKeyRestriction != null)
             {
-                var aggregatedRestrictions = bossKeyRestrictions
-                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
                 foreach (var item in ItemUtils.BossKeys())
                 {
-                    PlaceItem(item, itemPool, aggregatedRestrictions);
+                    PlaceItem(item, itemPool, bossKeyRestriction);
                 }
             }
 
-            var smallKeyRestrictions = Enum.GetValues<SmallKeyMode>()
-                .Where(m => _randomized.Settings.SmallKeyMode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
-                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+            var smallKeyRestriction = GetRestriction(_settings.SmallKeyMode);
 
-            if (smallKeyRestrictions.Any())
+            if (smallKeyRestriction != null)
             {
-                var aggregatedRestrictions = smallKeyRestrictions
-                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
                 foreach (var item in ItemUtils.SmallKeys())
                 {
-                    PlaceItem(item, itemPool, aggregatedRestrictions);
+                    PlaceItem(item, itemPool, smallKeyRestriction);
                 }
             }
 
-            var bossRemainsRestrictions = Enum.GetValues<BossRemainsMode>()
-                .Where(m => _randomized.Settings.BossRemainsMode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
-                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+            var bossRemainsRestriction = GetRestriction(_settings.BossRemainsMode);
 
-            if (bossRemainsRestrictions.Any())
+            if (bossRemainsRestriction != null)
             {
-                var aggregatedRestrictions = bossRemainsRestrictions
-                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
                 foreach (var item in ItemUtils.BossRemains())
                 {
-                    PlaceItem(item, itemPool, aggregatedRestrictions);
+                    PlaceItem(item, itemPool, bossRemainsRestriction);
                 }
             }
 
-            var dungeonNavigationRestrictions = Enum.GetValues<DungeonNavigationMode>()
-                .Where(m => _randomized.Settings.DungeonNavigationMode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
-                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+            var dungeonNavigationRestriction = GetRestriction(_settings.DungeonNavigationMode);
 
-            if (dungeonNavigationRestrictions.Any())
+            if (dungeonNavigationRestriction != null)
             {
-                var aggregatedRestrictions = dungeonNavigationRestrictions
-                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
                 foreach (var item in ItemUtils.DungeonNavigation())
                 {
-                    PlaceItem(item, itemPool, aggregatedRestrictions);
+                    PlaceItem(item, itemPool, dungeonNavigationRestriction);
                 }
             }
         }
@@ -2377,7 +2377,7 @@ namespace MMR.Randomizer
                 freeItemLocations.Remove(Item.SongHealing);
             }
             var availableStartingItems = (_settings.StartingItemMode switch {
-                    StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary(_randomized.Settings) && item != Item.ItemPowderKeg),
+                    StartingItemMode.Random => ItemUtils.StartingItems().Where(item => !item.IsTemporary(_settings) && item != Item.ItemPowderKeg),
                     StartingItemMode.AllowTemporaryItems => ItemUtils.StartingItems(),
                     _ => Enumerable.Empty<Item>(),
                 })
@@ -2569,11 +2569,11 @@ namespace MMR.Randomizer
             var random = this.Random;
 
             // Select replaceable junk items of specified amount.
-            var items = IceTrapUtils.SelectJunkItems(_randomized.ItemList, iceTraps, random);
+            var items = IceTrapUtils.SelectJunkItems(ItemList, iceTraps, random);
 
             // Dynamically generate appearance set for ice traps.
-            // Only mimic song items if they are included in the main randomization pool (not in their own pool).
-            var mimics = IceTrapUtils.BuildIceTrapMimicSet(_randomized.ItemList, appearance, _randomized.Settings.AddSongs)
+            // Only mimic items if they are included in the main randomization pool (not in their own pool).
+            var mimics = IceTrapUtils.BuildIceTrapMimicSet(ItemList, appearance, (item) => item.IsPlacementHighlyRestricted(_settings))
                 .ToArray();
 
             var list = new List<ItemObject>();
@@ -2597,7 +2597,7 @@ namespace MMR.Randomizer
                     }
                 }
 
-                if (_randomized.Settings.UpdateChests)
+                if (_settings.UpdateChests)
                 {
                     // Choose chest type for ice trap appearance.
                     item.Mimic.ChestType = IceTrapUtils.GetIceTrapChestTypeOverride(appearance, random);
@@ -2643,7 +2643,7 @@ namespace MMR.Randomizer
                 ReplaceRecoveryHeartsWithJunk(); // TODO make this an option?
 
                 // Replace junk items with ice traps according to settings.
-                AddIceTraps(_randomized.Settings.IceTraps, _randomized.Settings.IceTrapAppearance);
+                AddIceTraps(_settings.IceTraps, _settings.IceTrapAppearance);
                 
                 var freeItemIds = _settings.CustomStartingItemList
                     .Cast<int>()

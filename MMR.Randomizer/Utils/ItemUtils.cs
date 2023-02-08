@@ -91,13 +91,6 @@ namespace MMR.Randomizer.Utils
                 || (location >= Item.StartingSword && location <= Item.StartingHeartContainer2);
         }
 
-        public static bool IsSong(Item item)
-        {
-            return (item >= Item.SongTime
-                && item <= Item.SongOath)
-                || (item.MainLocation().HasValue && IsSong(item.MainLocation().Value));
-        }
-
         public static IEnumerable<Item> SmallKeys()
         {
             return new List<Item>

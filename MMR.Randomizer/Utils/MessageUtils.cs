@@ -189,10 +189,15 @@ namespace MMR.Randomizer.Utils
                     var requiredItems = kvp.Value.Where(io => ItemUtils.IsRequired(io.io.Item, io.locationForImportance, randomizedResult) && !unusedItems.Contains(io.io) && !itemsToCombineWith.Contains(io.io)).ToList();
                     var importantItems = kvp.Value.Where(io => ItemUtils.IsImportant(io.io.Item, io.locationForImportance, randomizedResult)).ToList();
 
+                    if (randomizedResult.Settings.BossRemainsMode.HasFlag(BossRemainsMode.ShuffleOnly))
+                    {
+                        importantItems.RemoveAll(io => io.io.Item.ItemCategory() == ItemCategory.BossRemains);
+                    }
+
                     Dictionary<Region, List<(ItemObject, Item)>> dict;
                     if (requiredItems.Count == 0 && importantItems.Count > 0)
                     {
-                        if (!randomizedResult.Settings.AddSongs && importantItems.All(io => ItemUtils.IsSong(io.io.Item)))
+                        if (!randomizedResult.Settings.AddSongs && importantItems.All(io => io.io.Item.IsSong()))
                         {
                             dict = songOnlyRegionCounts;
                         }
@@ -216,7 +221,7 @@ namespace MMR.Randomizer.Utils
                     
                     dict[kvp.Key] = requiredItems;
 
-                    if (!randomizedResult.Settings.AddSongs && requiredItems.Count > 0 && requiredItems.All(io => ItemUtils.IsSong(io.io.Item)) && importantItems.All(io => ItemUtils.IsSong(io.io.Item)))
+                    if (!randomizedResult.Settings.AddSongs && requiredItems.Count > 0 && requiredItems.All(io => io.io.Item.IsSong()) && importantItems.All(io => io.io.Item.IsSong()))
                     {
                         songOnlyRegionCounts[kvp.Key] = requiredItems;
                     }

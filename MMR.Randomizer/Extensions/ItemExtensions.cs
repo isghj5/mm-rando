@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MMR.Randomizer.Models.Settings;
 using System;
+using MMR.Randomizer.Models;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -216,7 +217,22 @@ namespace MMR.Randomizer.Extensions
 
         public static bool IsSong(this Item item)
         {
-            return (Item.SongTime <= item && item <= Item.SongOath) || item == Item.SongLullabyIntro;
+            return (Item.SongTime <= item && item <= Item.SongOath)
+                || item == Item.SongLullabyIntro
+                || (item.MainLocation().HasValue && item.MainLocation().Value.IsSong());
+        }
+
+        public static bool IsPlacementHighlyRestricted(this Item item, GameplaySettings settings)
+        {
+            if (!settings.AddSongs && item.IsSong())
+            {
+                return true;
+            }
+            if (settings.BossRemainsMode.HasFlag(BossRemainsMode.ShuffleOnly) && item.ItemCategory() == GameObjects.ItemCategory.BossRemains)
+            {
+                return true;
+            }
+            return false;
         }
 
         public static ChestTypeAttribute.ChestType ChestType(this Item item)
