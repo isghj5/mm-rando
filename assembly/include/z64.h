@@ -757,7 +757,19 @@ typedef struct {
     /* 0x12084 */ void* messageTable;
     /* 0x12088 */ UNK_TYPE1 pad12088[0x8];
     /* 0x12090 */ s16 messageDataFile; // 0 = main file, 1 = credits file.
-    /* 0x12092 */ UNK_TYPE1 pad12092[0x2E];
+    /* 0x12092 */ s16 unk12092;
+    /* 0x12094 */ s8 unk12094;
+    /* 0x12095 */ UNK_TYPE1 unk12095[0x3];
+    /* 0x12098 */ f32 unk12098; // Text_Scale?
+    /* 0x1209C */ s16 unk1209C;
+    /* 0x1209E */ UNK_TYPE1 unk1209E[0x2];
+    /* 0x120A0 */ s32 unk120A0;
+    /* 0x120A4 */ s16 unk120A4[6];
+    /* 0x120B0 */ u8 unk120B0;
+    /* 0x120B1 */ u8 unk120B1;
+    /* 0x120B2 */ u8 unk120B2[0xA];
+    /* 0x120BC */ u16 unk_120BC;
+    /* 0x120BE */ s16 unk120BE;
     /* 0x120C0 */ s16 selectionStartIndex;
     /* 0x120C2 */ s16 selectionIndexOffset;
     /* 0x120C4 */ s32 unk120C4;

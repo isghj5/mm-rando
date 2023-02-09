@@ -80,7 +80,10 @@ u8* MMR_GiFlag(u16 giIndex) {
     if (giIndex >= 0x400) { // skip scenes 0xA through 0xD (Magic Hag's Potion Shop, Majora's Lair, Beneath the Graveyard, Curiosity Shop)
         address += 0x50;
     }
-    // if (giIndex >= 0x460) { address += 4; } // next threshold is giIndex 0x460
+    if (giIndex >= 0x460) {
+        address += 4;
+    }
+    // if (giIndex >= 0x4E0) { address += 4; } // next threshold is giIndex 0x4E0
     address += (giIndex >> 3);
     return address;
 }
@@ -262,7 +265,7 @@ u16 MMR_GetNewGiIndex(GlobalContext* ctxt, Actor* actor, u16 giIndex, bool grant
     return newGiIndex;
 }
 
-static u16 gFanfares[5] = { 0x0922, 0x0924, 0x0037, 0x0039, 0x0052 };
+static u16 gFanfares[] = { 0x4831, 0x4855, 0x0922, 0x0924, 0x0037, 0x0039, 0x0052 };
 
 #define ITEM_QUEUE_LENGTH 4
 static u16 itemQueue[ITEM_QUEUE_LENGTH] = { 0, 0, 0, 0 };
@@ -275,10 +278,11 @@ void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex) {
     *MMR_GetItemEntryContext = *entry;
     z2_ShowMessage(ctxt, entry->message, 0);
     u8 soundType = entry->type & 0x0F;
-    if (soundType == 0) {
-        z2_PlaySfx(0x4831);
+    u16 fanfare = gFanfares[soundType];
+    if (soundType < 2) {
+        z2_PlaySfx(fanfare);
     } else {
-        z2_SetBGM2(gFanfares[soundType-1]);
+        z2_SetBGM2(fanfare);
     }
     z2_GiveItem(ctxt, entry->item);
 }

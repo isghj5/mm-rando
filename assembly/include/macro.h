@@ -8,4 +8,9 @@
 #define VALUE_WITHIN_RANGE(value, min, max) (min <= value && value < max)
 #define IS_VALID_PTR(ptr) VALUE_WITHIN_RANGE((u32)ptr, 0x80000000, 0x80800000)
 
+#define WEEKEVENTREG(index) (gSaveContext.perm.weekEventReg.bytes[(index)])
+#define GET_WEEKEVENTREG(index) ((void)0, WEEKEVENTREG(index))
+#define CHECK_WEEKEVENTREG(flag) (WEEKEVENTREG((flag) >> 8) & ((flag) & 0xFF))
+#define SET_WEEKEVENTREG(flag) (WEEKEVENTREG((flag) >> 8) = GET_WEEKEVENTREG((flag) >> 8) | ((flag) & 0xFF))
+
 #endif
