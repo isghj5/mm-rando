@@ -347,8 +347,11 @@ u32 MMR_GetMinorItemSfxId(u8 item) {
     if (item == ITEM_MAGIC_JAR || item == ITEM_MAGIC_JAR_LARGE || item == CUSTOM_ITEM_CRIMSON_RUPEE) {
         return 0x4824;
     }
-    if (item == CUSTOM_ITEM_ICE_TRAP || item == CUSTOM_ITEM_BOMBTRAP) {
+    if (item == CUSTOM_ITEM_ICE_TRAP) {
         return 0x31A4;
+    }
+    if (item == CUSTOM_ITEM_BOMBTRAP) {
+        return 0x3A76;
     }
     return 0;
 }
@@ -379,6 +382,16 @@ bool MMR_GiveItemIfMinor(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
                 actor->draw = NULL;
             }
             z2_PlayLoopingSfxAtActor(actor, minorItemSfxId);
+            z2_GiveItem(ctxt, entry->item);
+            return true;
+        }
+
+        if (minorItemSfxId == 0x3A76) {
+            if (isActorFreestanding) {
+                actor->draw = NULL;
+            }
+            // Have IceTrap_Give handle sfx playback for this
+            //z2_PlaySfx(minorItemSfxId);
             z2_GiveItem(ctxt, entry->item);
             return true;
         }
