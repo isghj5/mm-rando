@@ -41,7 +41,8 @@ namespace MMR.Randomizer
         // and some adjustments we need to make based on where it gets placed in vram
         public int actorID = 0;
         public int objID   = 0;
-        public int fileID  = 0;
+        public int fileID = 0;
+        public int objectFid = 0;
 
         // if all new actor, we meed to know where the old vram start was when we shift VRAM for the actor
         public uint buildVramStart = 0;
@@ -73,19 +74,20 @@ namespace MMR.Randomizer
         private static Mutex EnemizerLogMutex = new Mutex();
         private static bool ACTORSENABLED = true;
         private static Random seedrng;
+        private static Models.RandomizedResult _randomized;
 
         public static void PrepareEnemyLists()
         {
 
             // list of slots to use
             VanillaEnemyList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                            .Where(u => u.ObjectIndex() > 3
-                                && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized()))) // both
+                            .Where(act => act.ObjectIndex() > 3
+                                && (act.IsEnemyRandomized() || (ACTORSENABLED && act.IsActorRandomized()))) // both
                             .ToList();
 
             /* var EmemiesOnly = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                            .Where(u => u.ObjectIndex() > 3
-                                && (u.IsEnemyRandomized()))
+                            .Where(act => act.ObjectIndex() > 3
+                                && (act.IsEnemyRandomized()))
                             .ToList();
             //*/
 
@@ -95,37 +97,39 @@ namespace MMR.Randomizer
             //foreach (var actor in EmemiesOnly)
             foreach (var actor in VanillaEnemyList)
             {
-                ReplacementCandidateList.Add(new Actor(actor));
+                if ( actor.NoPlacableVariants() == false)
+                {
+                    ReplacementCandidateList.Add(new Actor(actor));
+                }
             }
 
             var freeCandidates = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                                .Where(u => u.ObjectIndex() <= 3
-                                && (u.IsEnemyRandomized() || (ACTORSENABLED && u.IsActorRandomized())))
+                                .Where(act => act.ObjectIndex() <= 3
+                                && (act.IsEnemyRandomized() || (ACTORSENABLED && act.IsActorRandomized())))
                                 .ToList();
-            
 
             // because this list needs to be re-evaluated per scene, start smaller here once
-            FreeCandidateList = freeCandidates.Select(u => new Actor(u)).ToList();
+            FreeCandidateList = freeCandidates.Select(act => new Actor(act)).ToList();
 
             var freeOnlyCandidates = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                    .Where(u => ACTORSENABLED && u.IsActorFreeOnly())
+                    .Where(act => ACTORSENABLED && act.IsActorFreeOnly())
                     .ToList();
 
             // because this list needs to be re-evaluated per scene, start smaller here once
-            FreeOnlyCandidateList = freeOnlyCandidates.Select(u => new Actor(u)).ToList();
+            FreeOnlyCandidateList = freeOnlyCandidates.Select(act => new Actor(act)).ToList();
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static bool ReplacementListContains(GameObjects.Actor actor)
         {
-            return ReplacementCandidateList.Find(u => u.ActorEnum == actor) != null;
+            return ReplacementCandidateList.Find(act => act.ActorEnum == actor) != null;
         }
 
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ReplacementListRemove(List<Actor> replaceList, GameObjects.Actor actor)
         {
             // might be an easier one liner but this could get used a lot
-            var removeActor = replaceList.Find(u => u.ActorEnum == actor);
+            var removeActor = replaceList.Find(act => act.ActorEnum == actor);
             if (removeActor != null)
             {
                 replaceList.Remove(removeActor);
@@ -136,17 +140,18 @@ namespace MMR.Randomizer
 
         public static List<Actor> GetSceneEnemyActors(Scene scene)
         {
-            /// this is separate from object because actors and objects are a different list in the scene/room data
+            /// Gets all actors in a scene, that we want to randomize
+            /// this function is separate from object because actors and objects are a different list in the scene/room data
 
             // I prefer foreach, but in benchmarks it's considerably slower, and enemizer has performance issues
 
-            var SceneEnemyList = new List<Actor>();
-            for (int mapNumber = 0; mapNumber < scene.Maps.Count; ++mapNumber)
+            var sceneEnemyList = new List<Actor>();
+            for (int mapIndex = 0; mapIndex < scene.Maps.Count; ++mapIndex)
             {
-                for (int actorNumber = 0; actorNumber < scene.Maps[mapNumber].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapNumber].Actors)
+                for (int actorNumber = 0; actorNumber < scene.Maps[mapIndex].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapIndex].Actors)
                 {
-                    var mapActor = scene.Maps[mapNumber].Actors[actorNumber];
-                    var matchingEnemy = VanillaEnemyList.Find(u => (int)u == mapActor.ActorID);
+                    var mapActor = scene.Maps[mapIndex].Actors[actorNumber];
+                    var matchingEnemy = VanillaEnemyList.Find(act => (int) act == mapActor.ActorID);
                     if (matchingEnemy > 0) {
                         var listOfAcceptableVariants = matchingEnemy.AllVariants();
                         //var listOfAcceptableVariants = matchingEnemy.vVariants;
@@ -157,34 +162,180 @@ namespace MMR.Randomizer
                             // do this only after we know this is an actor we want
                             mapActor.Name = mapActor.ActorEnum.ToString();
                             mapActor.ObjectSize = ObjUtils.GetObjSize(mapActor.ActorEnum.ObjectIndex());
-                            mapActor.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(mapNumber)
-                                                   || scene.SceneEnum.IsFairyDroppingEnemy(mapNumber, actorNumber);
-                            mapActor.RoomActorIndex = scene.Maps[mapNumber].Actors.IndexOf(mapActor);
+                            mapActor.MustNotRespawn = scene.SceneEnum.IsClearEnemyPuzzleRoom(mapIndex)
+                                                   || scene.SceneEnum.IsFairyDroppingEnemy(mapIndex, actorNumber);
+                            //Debug.Assert(actorNumber == scene.Maps[mapIndex].Actors.IndexOf(mapActor));
+                            mapActor.RoomActorIndex = actorNumber;
+                            // TODO: type lookup is not always accurate
                             mapActor.Type = matchingEnemy.GetType(mapActor.OldVariant);
                             mapActor.AllVariants = Actor.BuildVariantList(matchingEnemy);
-                            SceneEnemyList.Add(mapActor);
+                            sceneEnemyList.Add(mapActor);
                         }
                     }
                 }
             }
-            return SceneEnemyList;
+            return sceneEnemyList;
         }
 
-        public static List<int> GetSceneEnemyObjects(Scene scene)
-        {
-            /// this is separate from actor because actors and objects are a different list in the scene/room data
+        // if one of these already exists somewhere in the logic I did not find it
+        public static List<GameObjects.ItemCategory> junkCategories = new List<GameObjects.ItemCategory>{
+            GameObjects.ItemCategory.GreenRupees,
+            GameObjects.ItemCategory.BlueRupees,
+            GameObjects.ItemCategory.RedRupees, // should be lots of money in other locations this should be junk
+            GameObjects.ItemCategory.Arrows,
+            GameObjects.ItemCategory.Bombs,
+            GameObjects.ItemCategory.DekuSticks,
+            GameObjects.ItemCategory.DekuNuts,
+            GameObjects.ItemCategory.GreenPotions,
+            GameObjects.ItemCategory.MagicJars
+        };
 
-            List<int> objList = new List<int>();
-            foreach (var sceneMap in scene.Maps)
+        //private bool IsJunk
+
+        private static bool ObjectIsCheckBlocked(Scene scene, GameObjects.Actor testActor)
+        {
+            /// checks if randomizing the actor would interfere with getting access to a check
+            /// and then checks if the item is junk, before allowing randimization
+            const GameObjects.Scene ANYSCENE = (GameObjects.Scene) GameObjects.ActorConst.ANY_SCENE;
+
+            var checkRestrictedAttr = testActor.GetAttributes<CheckRestrictedAttribute>();
+            if (checkRestrictedAttr != null && checkRestrictedAttr.Count() > 0) // actor has check restrictions
             {
-                foreach (var mapObject in sceneMap.Objects)
+                foreach (var restriction in checkRestrictedAttr) // can have multiple rules
                 {
-                    var matchingEnemy = VanillaEnemyList.Find(u => u.ObjectIndex() == mapObject);
-                    if (matchingEnemy > 0                                               // exists in the list
-                       && !objList.Contains(matchingEnemy.ObjectIndex())                     // not already extracted from this scene
+                    if (restriction.Scene != ANYSCENE && restriction.Scene != scene.SceneEnum) continue; 
+
+                    var restrictedChecks = restriction.Checks;
+                    for (int checkIndex = 0; checkIndex < restrictedChecks.Count; checkIndex++)
+                    {
+                        // TODO: make it random rather than yes/no
+                        var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
+                        //var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
+                        var itemIsNotJunk = ! ItemUtils.IsJunk(itemInCheck);
+                        if (itemIsNotJunk)
+                        {
+                            return true;
+                        }
+                    }
+
+                }
+            }
+
+            // special edge cases for actors that would be hard to enum auto because of variants or scenes
+            // TODO replace these eventually
+
+            if (testActor == GameObjects.Actor.Tingle)
+            {
+                // TODO we need to make sure one of them sticks around IF we need the photo
+                GameObjects.Item map1;
+                GameObjects.Item map2;
+                var shortStrawTingle = _randomized.Seed % 3;
+                bool strawPulled = false;
+                switch (scene.SceneEnum)
+                {
+                    default:
+                    case GameObjects.Scene.NorthClockTown:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapTown).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfall).Item;
+                        strawPulled = shortStrawTingle == 0;
+                        break;
+                    case GameObjects.Scene.RoadToSouthernSwamp:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapWoodfall).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowhead).Item;
+                        strawPulled = shortStrawTingle == 1;
+                        break;
+                    case GameObjects.Scene.TwinIslands:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapSnowhead).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanch).Item;
+                        break;
+                    case GameObjects.Scene.MilkRoad:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapRanch).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBay).Item;
+                        strawPulled = shortStrawTingle == 2;
+                        break;
+                    case GameObjects.Scene.GreatBayCoast:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapGreatBay).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTower).Item;
+                        break;
+                    case GameObjects.Scene.IkanaCanyon:
+                        map1 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapStoneTower).Item;
+                        map2 = _randomized.ItemList.Single(item => item.NewLocation == GameObjects.Item.ItemTingleMapTown).Item;
+                        break;
+
+                }
+                if ( ! ItemUtils.IsJunk(map1) ||  ! ItemUtils.IsJunk(map2))
+                //if (! junkCategories.Contains(map1.ItemCategory) || ! junkCategories.Contains(map1.ItemCategory))
+                {
+                    return true;
+                }
+                // if heartpiece on picture is required, one of them has to remain
+                if (strawPulled &&  ! ItemUtils.IsJunk(GameObjects.Item.HeartPiecePictobox))
+                {
+                    return true;
+                }
+            }
+            if ((scene.SceneEnum == GameObjects.Scene.GoronVillage || scene.SceneEnum == GameObjects.Scene.GoronVillageSpring)
+                && testActor == GameObjects.Actor.SmithyGoronAndGo) // smithy goron
+            {
+                //var goronRaceIsBaren = ItemUtils.IsRequired(GameObjects.Item.ItemPowderKeg);//.Contains(GameObjects.Item.Race)
+                var importantItems = _randomized.ImportantLocations.ToList(); // this is a list of checks not regions considered important
+                var importantGoronRaceItems = importantItems.FindAll(item => item.Region() == GameObjects.Region.GoronRaceItems); //GameObjects.Region.GoronRaceItems.
+                if (importantGoronRaceItems.Count > 0) // not barren
+                {
+                    return true;
+                }
+            }
+            if (testActor == GameObjects.Actor.Postbox)
+            {
+                GameObjects.Item[] checksPostBoxLeadsTo = { GameObjects.Item.TradeItemMamaLetter, GameObjects.Item.MaskKeaton, GameObjects.Item.HeartPiecePostBox, GameObjects.Item.MaskCouple };
+                if (_randomized.ImportantLocations.Union(checksPostBoxLeadsTo).Count() > 0)
+                {
+                    // if we need a mailbox, keep one
+                    var shortStrawPostbox = _randomized.Seed % 3;
+                    GameObjects.Scene[] postboxScenes = { GameObjects.Scene.NorthClockTown, GameObjects.Scene.SouthClockTown, GameObjects.Scene.EastClockTown };
+                    if (postboxScenes[shortStrawPostbox] == scene.SceneEnum)
+                    {
+                        return true;
+                    }
+
+                }// else: randomize all
+            }
+
+            return false;
+        }
+
+
+        public static List<int> GetSceneEnemyObjects(SceneEnemizerData thisSceneData)
+        {
+            /// Gets all objects in a scene.
+            /// this is separate from actor because actors and objects are a different list in the scene/room data
+            var scene = thisSceneData.Scene;
+            var objList = new List<int>();
+            for (var m = 0; m < scene.Maps.Count(); m++)
+            {
+                var map = scene.Maps[m];
+                for (var o = 0; o < map.Objects.Count(); o++)
+                {
+                    var obj = map.Objects[o];
+
+                    if (objList.Contains(obj)) { continue; } // already known
+
+                    var matchingEnemy = VanillaEnemyList.Find(act => act.ObjectIndex() == obj);
+                    if (matchingEnemy > 0                                                         // exists in the list of enemies we want to change
+                       //&& !objList.Contains(matchingEnemy.ObjectIndex())                          // not already extracted from this scene
                        && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
-                        objList.Add(matchingEnemy.ObjectIndex());
+
+                        if (ObjectIsCheckBlocked(scene, matchingEnemy))
+                        {
+                            thisSceneData.Actors.RemoveAll(act => act.ObjectID == obj);
+                            //thisSceneData.ActorsPerObject.
+                        }
+                        else
+                        {
+                            objList.Add(matchingEnemy.ObjectIndex());
+                        }
+                        // else: ignore, the actors will remain vanilla
                     }
                 }
             }
@@ -193,10 +344,10 @@ namespace MMR.Randomizer
 
         public static void SetSceneEnemyObjects(Scene scene, List<List<int>> newObjectsPerMap)
         {
-            for (var map = 0; map < scene.Maps.Count; map++)// sceneMap in scene.Maps)
+            for (var m = 0; m < scene.Maps.Count; m++)
             {
-                var objectsPerMap = newObjectsPerMap[map];
-                var sceneMap = scene.Maps[map];
+                var objectsPerMap = newObjectsPerMap[m];
+                var sceneMap = scene.Maps[m];
                 for (int sceneObjIndex = 0; sceneObjIndex < objectsPerMap.Count; sceneObjIndex++)
                 {
                     sceneMap.Objects[sceneObjIndex] = objectsPerMap[sceneObjIndex];
@@ -205,7 +356,6 @@ namespace MMR.Randomizer
         }
 
         #endregion
-
 
         private static void EnemizerEarlyFixes()
         {
@@ -224,7 +374,6 @@ namespace MMR.Randomizer
 
             ExtendGrottoDirectIndexByte();
             ShortenChickenPatience();
-            //FixThornTraps();
             FixSeth2();
             AllowGuruGuruOutside();
             RemoveSTTUnusedPoe();
@@ -240,6 +389,12 @@ namespace MMR.Randomizer
             ExpandGoronRaceObjects();
             SplitSpiderGrottoSkulltulaObject();
             SplitOceanSpiderhouseSpiderObject();
+            FixDekuPalaceReceptionGuards();
+
+            // to avoid randomizing medigoron's object
+            var goronVillageWinter = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.GoronVillage);
+            goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.SmithyGoronAndGo.ObjectIndex(); // square signpost
+
 
             Shinanigans();
         }
@@ -247,8 +402,7 @@ namespace MMR.Randomizer
         public static void EnemizerLateFixes()
         {
             // changes after randomization, actors objects already written
-            // turns out this one can be early too, TODO
-            FixDekuPalaceReceptionGuards();
+            // not currently needed, turns out all the old content here could be moved
 
         }
 
@@ -261,11 +415,11 @@ namespace MMR.Randomizer
             ///    we never notice because it falls to the ground before we can get there normally
             ///    but if its a stationary enemy, like a dekubaba, it hovers in the air
 
-            var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
+            var terminafieldScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
             terminafieldScene.Maps[0].Actors[144].Position.y = -245; // fixes the eeno that is way too high above ground
-            terminafieldScene.Maps[0].Actors[16].Position.y = -209; // fixes the eeno that is way too high above ground
-            terminafieldScene.Maps[0].Actors[17].Position.y = -185; // fixes the eeno that is too high above ground (bombchu explode)
-            terminafieldScene.Maps[0].Actors[60].Position.y = -60; // fixes the blue bubble that is too high
+            terminafieldScene.Maps[0].Actors[16].Position.y  = -209; // fixes the eeno that is way too high above ground
+            terminafieldScene.Maps[0].Actors[17].Position.y  = -185; // fixes the eeno that is too high above ground (bombchu explode)
+            terminafieldScene.Maps[0].Actors[60].Position.y  = -60;  // fixes the blue bubble that is too high
             terminafieldScene.Maps[0].Actors[107].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[110].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[121].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
@@ -275,20 +429,20 @@ namespace MMR.Randomizer
             //   redead falls through the floor when you approach them with this skew
             // made redead flat code world wide, leaving this for notes right now
             //var twinislandsRoom0FID = GameObjects.Scene.TwinIslands.FileID() + 1;
-            //var twinislandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslands.FileID());
+            //var twinislandsScene = RomData.SceneList.Find(scene => sceneu.File == GameObjects.Scene.TwinIslands.FileID());
             //ActorUtils.FlattenPitchRoll(twinislandsScene.Maps[0].Actors[26]);
             //ActorUtils.FlattenPitchRoll(twinislandsScene.Maps[0].Actors[27]);
 
             // in STT, move the bombchu in the first room 
             //   backward several feet from the chest, so replacement cannot block the chest
-            var stonetowertempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.StoneTowerTemple.FileID());
+            var stonetowertempleScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.StoneTowerTemple.FileID());
             stonetowertempleScene.Maps[0].Actors[3].Position.z = -630;
             // biobaba in the right room spawns under the bridge, if octarock it pops up through the tile, move to the side of the bridge
             stonetowertempleScene.Maps[3].Actors[19].Position.x = 1530;
 
             // in WFT, the dinofos spawn is near the roof, lower
             // TODO: do secret shrine too maybe if we randomize
-            var woodfalltempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
+            var woodfalltempleScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.WoodfallTemple.FileID());
             woodfalltempleScene.Maps[7].Actors[0].Position.y = -1208;
 
             // one of the snappers is right in front of the chest, if actorizer, that actor could be something that doesnt have to be killable, could block the chest
@@ -296,30 +450,30 @@ namespace MMR.Randomizer
 
             // in OSH, the storage room bo spawns in the air in front of the mirror, 
             //  but as a land enemy it should be placed on the ground for its replacements
-            var oceanspiderhouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.OceanSpiderHouse.FileID());
+            var oceanspiderhouseScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.OceanSpiderHouse.FileID());
             var storageroomBo = oceanspiderhouseScene.Maps[5].Actors[2];
             // lower to the floor 
             storageroomBo.Position = new vec16(-726, -118, -1651);
 
             // in GBT, the bombchus on the pipes are in bad spots to be replaced by something unpassable,
             // but most people dont notice where their original spawn even is so move them
-            var greatbaytempleScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayTemple.FileID());
+            var greatbaytempleScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GreatBayTemple.FileID());
             // the bombchu along the green pipe in the double seesaw room needs to be moved in case its an unmovable enemy
             greatbaytempleScene.Maps[10].Actors[3].Position = new vec16(3525, -180, 630);
             // the bombchu along the red pipe in the pre-wart room needs the same kind of moving
             greatbaytempleScene.Maps[6].Actors[7].Position = new vec16(-1840, -570, -870);
 
-            var linkTrialScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LinkTrial.FileID());
+            var linkTrialScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.LinkTrial.FileID());
             linkTrialScene.Maps[1].Actors[0].Position.y = 1; // up high dinofos spawn, red bubble would spawn in the air, lower to ground
 
             if (ACTORSENABLED)
             {
-                var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
+                var dekuPalaceScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuPalace.FileID());
                 var torchRotation = dekuPalaceScene.Maps[2].Actors[26].Rotation.z;
                 torchRotation = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: torchRotation); // reverse, so replacement isn't nose into the wall
 
                 // change the torch in pirates fort exterior to all day, remove second one, or free 
-                var piratesExteriorScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.PiratesFortressExterior.FileID());
+                var piratesExteriorScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.PiratesFortressExterior.FileID());
                 var nightTorch = piratesExteriorScene.Maps[0].Actors[15];
                 nightTorch.Rotation.x |= 0x7F; // always spawn flags
                 nightTorch.Rotation.z |= 0x7F;
@@ -329,20 +483,54 @@ namespace MMR.Randomizer
                 // todo: 14/16 are also torches, we dont really need both here
 
                 // this torch is too close to spider, constantly actors get stuck, just move the damn torch
-                var swampSpiderHouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SwampSpiderHouse.FileID());
+                var swampSpiderHouseScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SwampSpiderHouse.FileID());
                 swampSpiderHouseScene.Maps[3].Actors[3].Position.x = -480;
+
+
+                var dekuPalace = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuPalace.FileID());
+                // the torches are really close to the hole, we can spread them wider a bit
+                dekuPalace.Maps[1].Actors[26].Position.z -= 10; // left
+                dekuPalace.Maps[1].Actors[28].Position.z -= 10; // left
+                dekuPalace.Maps[1].Actors[27].Position.z += 10; // right
+                dekuPalace.Maps[1].Actors[25].Position.z += 10; // right
+                // west side torches face... north? turn them to face the player
+                dekuPalace.Maps[2].Actors[33].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[33].Rotation.y);
+                dekuPalace.Maps[2].Actors[34].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalace.Maps[2].Actors[34].Rotation.y);
+
+                // Jim the bomber actually spawns within the tree to the north... move is spawn over a bit
+                var northClockTown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.NorthClockTown.FileID());
+                northClockTown.Maps[0].Actors[26].Position.x = -740;
+                northClockTown.Maps[0].Actors[26].Position.z = -1790;
+
+                // the tree itself needs to be rotated as its facing the wall
+                northClockTown.Maps[0].Actors[21].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, northClockTown.Maps[0].Actors[21].Rotation.y);
+
+                // jimbo in east clock town giving you the book is in an odd spot, move to the poster
+                var eastClockTown = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.EastClockTown.FileID());
+                eastClockTown.Maps[0].Actors[46].Position = new vec16( 1335, 203, -1639 );
+
+                // the "trees" in trading post including bushes are in weird places, move them around the fire and the table
+                var tradingPost = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TradingPost.FileID());
+                tradingPost.Maps[0].Actors[2].Position = new vec16(-189, 3, 76); // first right bush
+                tradingPost.Maps[0].Actors[2].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 80, flags: tradingPost.Maps[0].Actors[2].Rotation.y);
+
+                tradingPost.Maps[0].Actors[5].Position = new vec16(120, 27, -81); // next to table to fish case
+                tradingPost.Maps[0].Actors[5].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 90, flags: tradingPost.Maps[0].Actors[2].Rotation.y);
+
+                // behind table should be facing table
+                tradingPost.Maps[0].Actors[4].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 210, flags: tradingPost.Maps[0].Actors[2].Rotation.y);
             }
         }
 
         private static void Shinanigans()
         {
-            var grottosScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Grottos.FileID());
+            var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
             grottosScene.Maps[13].Actors[1].Variants[0] = 1; // change the grass in peahat grotto to drop items like TF grass
 
             if (ACTORSENABLED)
             {
                 //turn around this torch, because if its bean man hes facing into the wall and it hurts me
-                var laundryPoolScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.LaundryPool.FileID());
+                var laundryPoolScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.LaundryPool.FileID());
                 laundryPoolScene.Maps[0].Actors[2].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 135, flags: 0x7F);
                 laundryPoolScene.Maps[0].Actors[2].Rotation.x = 0x7F;
                 laundryPoolScene.Maps[0].Actors[2].Rotation.z = 0x7F;
@@ -356,7 +544,7 @@ namespace MMR.Randomizer
                 laundryPoolScene.Maps[0].Actors[1].Position = new vec16(-1502, 35, 555); // old: new vec16(-1872, -120, 229);
 
                 // winter village has a gossip stone actor, but no object, lets use the non-used flying darmani ghost object and add it to enemizer
-                var winterVillage = RomData.SceneList.Find(u => u.File == GameObjects.Scene.MountainVillage.FileID());
+                var winterVillage = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.MountainVillage.FileID());
                 winterVillage.Maps[0].Objects[5] = GameObjects.Actor.GossipStone.ObjectIndex();
                 winterVillage.Maps[0].Actors[57].Variants[0] = 0x67; // the vars is for milkroad, change to a moon vars so it gets randomized
                 winterVillage.Maps[0].Actors[57].Position.y = -15; // floating a bit in the air, lower to ground
@@ -366,24 +554,46 @@ namespace MMR.Randomizer
                 //winterVillage.Maps[0].Actors[2].ChangeActor(GameObjects.Actor.GrottoHole, vars: 0x4000, modifyOld:true);
                 winterVillage.Maps[0].Actors[2].Position = new vec16(504, 365, 800);
 
-                var terminafieldScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
+                var terminafieldScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
                 var elf6grotto = terminafieldScene.Maps[0].Actors[2];
                 elf6grotto.Position = new vec16(-5539, -275, -701);
                 elf6grotto.ChangeActor(GameObjects.Actor.GrottoHole, vars: hiddenGrottos[seedrng.Next(hiddenGrottos.Count)], modifyOld: true);
 
                 // one of the torches in palace is facing into the wall, actors replacing it also face the same way, bad
                 // one of these is not required and does nothing
-                var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DekuPalace.FileID());
+                var dekuPalaceScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuPalace.FileID());
                 dekuPalaceScene.Maps[2].Actors[25].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: 0x7F);
                 dekuPalaceScene.Maps[2].Actors[26].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 180, flags: dekuPalaceScene.Maps[2].Actors[26].Rotation.y);
 
+                // goron underwater mode
+                var playerFile = RomData.MMFileList[GameObjects.Actor.Player.FileListIndex()].Data;
+                // changes made to function func_8083BB4C
+                ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE20C, val: 0x00000000); // 80834140 -> NOP
+                ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE214, val: 0x00000000); // 
+                ReadWriteUtils.Arr_WriteU32(playerFile, Dest: 0xE220, val: 0x00000000); //
+
+                // no water restrictions
+                var codeFile = RomData.MMFileList[31].Data;
+                //ReadWriteUtils.Arr_WriteU32(codeFile, Dest: 0x06AEF0, val: 0x00000000); // nop the store byte FF which would disable the buttons
+
+                // for now, remove all form restrictions to see what works and what does not work anymore
+                ///*
+                var startLoc = 0x11C950;
+                var endLoc = 0x11CB8C;
+                var i = startLoc;
+                while (i < endLoc)
+                {
+                    codeFile[i] = 0xFF;
+                    i++;
+                }
+                // */
                 // RecreateFishing();
             }
 
             // testing why zrotation can be so broken for grottos
             /* 
             var testScene = GameObjects.Scene.TerminaField;
-            var grottoSceneIndex = RomData.SceneList.FindIndex(u => u.File == testScene.FileID());
+            var grottoSceneIndex = RomData.SceneList.FindIndex(scene => scene.File == testScene.FileID());
             var grottoSceneActorAddr = RomData.SceneList[grottoSceneIndex].Maps[0].ActorAddr;
             int actorNumber = 211;
             // set actor value
@@ -397,7 +607,7 @@ namespace MMR.Randomizer
             // */
 
             // I like secrets
-            var twinislandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslands.FileID());
+            var twinislandsScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TwinIslands.FileID());
             //twinislandsScene.Maps[0].Actors[1].Position = new vec16(-583, 140, -20); // place: next to tree, testing
             twinislandsScene.Maps[0].Actors[1].Position = new vec16(349, -196, 970); // place: under the ice, sneaky like teh crabb
             //twinislandsScene.Maps[0].Actors[1].Variants[0] = 0x60CB; // set to unk check
@@ -419,24 +629,39 @@ namespace MMR.Randomizer
             var playerCodeFile = RomData.MMFileList[38].Data;
             ReadWriteUtils.Arr_WriteU32(playerCodeFile, Dest: 0x030B10, val: 0x40000000); // change to 2.0, double running speed
 
+            // can we remove an object from ikana to increase object budget to have more stuff?
+            var ikanaScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.IkanaCanyon.FileID());
+            ikanaScene.Maps[0].Objects[10] = SMALLEST_OBJ; // kafei
+            ikanaScene.Maps[0].Objects[18] = SMALLEST_OBJ; // flying scrub
+
+            // if we remove the woodfall object, we have more space for noticible actors and not a static backdrop woodfall
+            // so far this has been here over a month and nobody has noticed I removed woodfall
+            var tfScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
+            tfScene.Maps[0].Objects[0] = SMALLEST_OBJ;
+
+            // HEAVY BOM
+            RomUtils.CheckCompressed(GameObjects.Actor.PowderKeg.FileListIndex());
+            var kegFile = RomData.MMFileList[GameObjects.Actor.PowderKeg.FileListIndex()].Data;
+            kegFile[0x1FF5] |= 0x02; // add ACTOR_FLAG_20000, makes it heavy 
+
             //PrintActorValues();
         }
 
         public static void DisableAllLocationRestrictions()
         {
-            // 19 = top of clock tower: if you can soar out its a problme
+            /// because, sometimes, enemies can be placed inside, all rules of society have shattered
+
+            // 19 = top of clock tower: if you can soar out its a problem (shrug)
             // 54 = sword school: hookshot can lock the player
-            var ignore_scenes = new List<int> { 0x19, 0x54};
+            var sceneSkipList = new List<int> { (int) GameObjects.Scene.ClockTowerRoof, (int) GameObjects.Scene.SwordsmansSchool};
 
-            // TODO fix: dont allow soaring on clocktower, dont allow hookshot in dojo
-
-            /// player item restrictions is a unique list in the code file (for some reason)
+            /// player item restrictions is a unique list in the code file (z_parameter)
             //var restrictionTableVRAMStart = 0x801BF6C0; // 0xC55C00 -> DC4 // offset: 119C00
             var tableOffset = 0x119C00;
             var codeFile = RomData.MMFileList[31].Data;
             while (tableOffset < 0x119DC4)
             {
-                if (! ignore_scenes.Contains(codeFile[tableOffset + 0]))
+                if (sceneSkipList.Contains(codeFile[tableOffset + 0]) == false)
                 {
                     // 0 offset is the scene value
                     codeFile[tableOffset + 1] = 0x00;
@@ -446,8 +671,6 @@ namespace MMR.Randomizer
 
                 tableOffset += 4;
             }
-
-            // todo re-disable item restrictions on the tower
         }
 
         private static void FixScarecrowTalk()
@@ -485,7 +708,7 @@ namespace MMR.Randomizer
         /// </summary>
         public static void FixSouthernSwampDekuBaba()
         {
-            Scene southernswampScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SouthernSwamp.FileID());
+            Scene southernswampScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthernSwamp.FileID());
 
             // because this room is already borderline lag fest, turn one into a lillypad
             // actor 7 is the furthest back in the cave, unreachable
@@ -515,7 +738,7 @@ namespace MMR.Randomizer
 
             // the bat at the top of the tree is in the way (takes off flies around)
             // move them to the further wall as a wall/flying enemy
-            var roadtoswampScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.RoadToSouthernSwamp.FileID());
+            var roadtoswampScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.RoadToSouthernSwamp.FileID());
             var movedDownTreeBat = roadtoswampScene.Maps[0].Actors[7];
             movedDownTreeBat.Position = new vec16(927, -29, 2542); // placement: along the south east corner
             // match rotation with the wall
@@ -544,7 +767,7 @@ namespace MMR.Randomizer
             /// some likelikes dont follow the normal water/ground type variety, we want detection to correctly ID them
             ///  here we switch their types to match for replacement in enemizer auto-detection
 
-            var coastScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
+            var coastScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GreatBayCoast.FileID());
             // coast: shallow water likelike along the pillars is ground, should be water
             coastScene.Maps[0].Actors[21].Variants[0] = 2;
             // coast: bottom of the ocean east is ground, should be water
@@ -563,7 +786,7 @@ namespace MMR.Randomizer
             /// dampe's house wallmaster is an enounter actor, not a regular wallmaster,
             ///  we have to switch it to regular enemy for enemizer shuffle to find and replace it
 
-            var dampehouseScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.DampesHouse.FileID());
+            var dampehouseScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DampesHouse.FileID());
             var wallmaster = dampehouseScene.Maps[0].Actors[0];
             // move to center of the main room,
             wallmaster.Position.z = 0x40;
@@ -580,7 +803,7 @@ namespace MMR.Randomizer
             /// also we move them out of the cave in case its a water surface enemy, and to spread them out
             ///  default they are all stacked on top of the cave chest 
 
-            var twinislandsspringScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslandsSpring.FileID());
+            var twinislandsspringScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TwinIslandsSpring.FileID());
             var encounter1 = twinislandsspringScene.Maps[0].Actors[21];
             encounter1.ChangeActor(GameObjects.Actor.SkullFish, vars: 0, modifyOld: true);
             ActorUtils.FlattenPitchRoll(encounter1); // flatten encounter rotation (rotation parameters
@@ -606,7 +829,7 @@ namespace MMR.Randomizer
             /// some of these scenes would drop him into water or off the cliff where he cannot be reached
             if (!ReplacementListContains(GameObjects.Actor.Tingle)) return;
 
-            var woodfallexteriorScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Woodfall.FileID());
+            var woodfallexteriorScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Woodfall.FileID());
             var firstDragonfly = woodfallexteriorScene.Maps[0].Actors[4];
             firstDragonfly.Position.x = 990; // over a deku scrub
             firstDragonfly.Position.z = 690;
@@ -619,11 +842,11 @@ namespace MMR.Randomizer
             lilypad.Position.x = 615; // move lilypad over
             lilypad.Position.z = -495;
 
-            var coastScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GreatBayCoast.FileID());
+            var coastScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GreatBayCoast.FileID());
             coastScene.Maps[0].Actors[17].Position.z = 3033; // edge the guay over the land just a bit
 
             // to prevent him from falling to abyss
-            var snowheadKeese = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Snowhead.FileID()).Maps[0].Actors[0];
+            var snowheadKeese = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Snowhead.FileID()).Maps[0].Actors[0];
             snowheadKeese.Position.x = -758;
         }
 
@@ -717,7 +940,7 @@ namespace MMR.Randomizer
             //weirdly, even though the the telescope is a different SCENE, seth2 is found in the regular gamplay scene, his code just kills him
             // until I move him hes in a bad spot on top of grottos, for now just kill him
             // TODO: Free actor slots? 
-            var tfScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
+            var tfScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TerminaField.FileID());
             tfScene.Maps[0].Actors[28].ChangeActor(GameObjects.Actor.Empty);
             tfScene.Maps[0].Actors[29].ChangeActor(GameObjects.Actor.Empty);
             tfScene.Maps[0].Objects[21] = GameObjects.Actor.Empty.ObjectIndex();
@@ -747,15 +970,18 @@ namespace MMR.Randomizer
             if (!ReplacementListContains(GameObjects.Actor.DekuPatrolGuard)) return;
 
             var frontGuardOID = GameObjects.Actor.DekuPatrolGuard.ObjectIndex();
-            var dekuPalaceScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TerminaField.FileID());
+            var dekuPalaceScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.DekuPalace.FileID());
 
-            if (!dekuPalaceScene.Maps[0].Objects.Contains(frontGuardOID))
+            /*if (!dekuPalaceScene.Maps[0].Objects.Contains(frontGuardOID))
             {
                 // scene has already been written at this point, need to romhack it, faster than re-writing the whole scene file
                 var dekuPalaceRoom1FID = GameObjects.Scene.DekuPalace.FileID() + 1;
                 var dekuPalaceRoom1File = RomData.MMFileList[dekuPalaceRoom1FID].Data;
                 ReadWriteUtils.Arr_WriteU16(dekuPalaceRoom1File, Dest: 0x4E, (ushort)frontGuardOID);
-            }
+            } // */
+            dekuPalaceScene.Maps[0].Objects[7] = frontGuardOID;
+            dekuPalaceScene.Maps[1].Objects[7] = frontGuardOID;
+            dekuPalaceScene.Maps[2].Objects[7] = frontGuardOID;
         }
 
         public static void FixWoodfallTempleGekkoMiniboss()
@@ -764,7 +990,7 @@ namespace MMR.Randomizer
             /// beacuse he spawns a special snapper in this fight and he will de-spawn if he detects the object is missing
             /// add a second snapper object to the room so there is still one there
 
-            var woodfallScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.WoodfallTemple.FileID());
+            var woodfallScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.WoodfallTemple.FileID());
             var gekkoRoom = woodfallScene.Maps[8];
             // we cannot remove the woodflower object used by the giant flower, it breaks the door, so probably used by the door for textures
             gekkoRoom.Objects[2] = 0x1A6; // previously: boss blue warp, now snapper
@@ -797,7 +1023,7 @@ namespace MMR.Randomizer
         public static void RepositionClockTownActors()
         {
             // if actors are rando'd then the carpenters probably are too, remove their sounds
-            var southClockTownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.SouthClockTown.FileID());
+            var southClockTownScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.SouthClockTown.FileID());
             var carpenterSound = southClockTownScene.Maps[0].Actors[49];
             carpenterSound.ChangeActor(GameObjects.Actor.Carpenter, vars: 1, modifyOld: true); // non-pathing type
 
@@ -811,7 +1037,7 @@ namespace MMR.Randomizer
             carpenterSound.Rotation.z = 0x3 | 0x4 | 0x40; // all day 4, night 3, night 1
 
             // we can also hear the noises in west/east, those actors should also be removed
-            var eastClockTownScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.EastClockTown.FileID());
+            var eastClockTownScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.EastClockTown.FileID());
             var carpenterSound2 = eastClockTownScene.Maps[0].Actors[63];
 
             // change into a cremia actor, his object is here wasted and unused, we could rando it
@@ -867,11 +1093,11 @@ namespace MMR.Randomizer
             /// we can recover some headroom by removing it
             ///   remember to delete this if I ever get free objects working instead
 
-            var stonetowertempleScene = RomData.SceneList.Find(u => u.SceneEnum == GameObjects.Scene.StoneTowerTemple);
+            var stonetowertempleScene = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.StoneTowerTemple);
             for (int i = 0; i < stonetowertempleScene.Maps.Count; ++i)
             {
                 var room = stonetowertempleScene.Maps[i];
-                var poeIndex = room.Objects.FindIndex(u => u == 0x1C3);
+                var poeIndex = room.Objects.FindIndex(obj => obj == GameObjects.Actor.Poe.ObjectIndex());
                 if (poeIndex > 0)
                 {
                     room.Objects[poeIndex] = SMALLEST_OBJ;
@@ -899,11 +1125,13 @@ namespace MMR.Randomizer
             /// we need to remove it since its totally broken, its the primary reason dragon flies lag so much
             /// also should make dragonfly better so do that too, since 99% of the time we cant see its shadow as its at y=0 (bug)
 
+            /*
             var dragonflyFid = GameObjects.Actor.DragonFly.FileListIndex();
             RomUtils.CheckCompressed(dragonflyFid);
             var dragonflyData = RomData.MMFileList[dragonflyFid].Data;
             // similar to baba, we see a loop followed by a finishing function, we want to skip both in the main draw function
             ReadWriteUtils.Arr_WriteU32(dragonflyData, Dest: 0x2498, val: 0x10000018); // <irrelevant code> -> Jump to 24E4
+            */
 
             if (!ReplacementListContains(GameObjects.Actor.BabaIsUnused)) return;
 
@@ -921,7 +1149,7 @@ namespace MMR.Randomizer
 
             // to place in spring, we remove some  other actors and objects to get fishing working, as its huge
 
-            var springTwinIslandsScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.TwinIslandsSpring.FileID());
+            var springTwinIslandsScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.TwinIslandsSpring.FileID());
             var springTwinIsleMap = springTwinIslandsScene.Maps[0];
             // wolfos
             //springTwinIsleMap.Actors[0].ChangeActor(GameObjects.Actor.Empty); // woflos one, we want him to become fisherman
@@ -963,7 +1191,7 @@ namespace MMR.Randomizer
             /// turns out the grottos have unused objects, some of them can be swapped
             ///   without affecting the original enemy placement, and gives us some variety
 
-            var grottosScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Grottos.FileID());
+            var grottosScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
 
             // dodongo grotto has a blue icecycle object, switch to BO so we can get bo actors from jp grotto
             var dodongoGrottoObjectList = grottosScene.Maps[7].Objects;
@@ -1011,7 +1239,7 @@ namespace MMR.Randomizer
             ///   so there is a space object space in the list we can use
             if (!ReplacementListContains(GameObjects.Actor.GoronSGoro)) return;
 
-            var goronShrine = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GoronShrine.FileID());
+            var goronShrine = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GoronShrine.FileID());
             goronShrine.Maps[0].Objects = new List<int> {
                 GameObjects.Actor.GoronSGoro.ObjectIndex(),
                 GameObjects.Actor.GoronKid.ObjectIndex(),
@@ -1040,7 +1268,7 @@ namespace MMR.Randomizer
             // 2:japas, 3:evan, 5:tijo, can't remove lulu or the concert is completely broken? meh
             var replacableBandObj = new int[] { 2, 3, 5, 4 };
             var randomObjListIndex = replacableBandObj[seedrng.Next(replacableBandObj.Length)];
-            var zoraHallScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.ZoraHall.FileID());
+            var zoraHallScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.ZoraHall.FileID());
             zoraHallScene.Maps[0].Objects[randomObjListIndex] = GameObjects.Actor.RegularZora.ObjectIndex();
 
             // because of this change, the whole string of watchers are all active before the dungeon too,
@@ -1057,7 +1285,7 @@ namespace MMR.Randomizer
             /// except the one room uses 7 objects, odd number, and objects are padded in the room files to dma, so we can add one more
             if (!ReplacementListContains(GameObjects.Actor.SmithyGoronAndGo)) return;
 
-            var goronRace = RomData.SceneList.Find(u => u.File == GameObjects.Scene.GoronRacetrack.FileID());
+            var goronRace = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GoronRacetrack.FileID());
             goronRace.Maps[0].Objects.Add(GameObjects.Actor.SmithyGoronAndGo.ObjectIndex()); // add a second Generic Goron
             // spring is a different setup, both need the same objects
             goronRace.Maps[1].Objects.Add(GameObjects.Actor.SmithyGoronAndGo.ObjectIndex()); // add a second Generic Goron
@@ -1078,7 +1306,7 @@ namespace MMR.Randomizer
 
             if (!ReplacementListContains(GameObjects.Actor.Skulltula)) return;
 
-            var grottoScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.Grottos.FileID());
+            var grottoScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.Grottos.FileID());
             var spiderRoom = grottoScene.Maps[1];
 
             spiderRoom.Objects[2] = GameObjects.Actor.SkulltulaDummy.ObjectIndex();
@@ -1094,7 +1322,7 @@ namespace MMR.Randomizer
 
             if (!ReplacementListContains(GameObjects.Actor.Skulltula)) return;
 
-            var grottoScene = RomData.SceneList.Find(u => u.File == GameObjects.Scene.OceanSpiderHouse.FileID());
+            var grottoScene = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.OceanSpiderHouse.FileID());
             var spiderChestRoom = grottoScene.Maps[4];
 
             // object 6 is Bo, its not the spider object but I think thats is safer to replace in this spot
@@ -1113,10 +1341,10 @@ namespace MMR.Randomizer
 
         public static List<GameObjects.Actor> GetSceneFairyDroppingEnemyTypes(SceneEnemizerData thisSceneData)
         {
-            /// reads the list of specific actors of fairies, checks the list of actors we read from the scene, gets the actor types for GetMatches
+            /// Reads the list of specific actors of fairies, checks the list of actors we read from the scene, gets the actor types for GetMatches
             /// why? because our object focused code needs to whittle the list of actors for a enemy replacement, 
             ///   but has to know if even one enemy is used for fairies that it cannot be unkillable
-            /// doing that last second per-enemy would be expensive, so we need to check per-scene
+            /// doing that last second, per-enemy, would be expensive, so we need to check per-scene
             /// we COULD hard code these types into the scene data, but if someone in the distant future
             ///   doesn't realize they have to add both, might be a hard bug to find
 
@@ -1139,9 +1367,9 @@ namespace MMR.Randomizer
 
         public static void SetupGrottoActor(Actor enemy, int newVariant)
         {
-            /// grottos can get their address index from an array, where the index can be their Z rotation
+            /// Grottos can get their address index from an array, where the index can be their Z rotation.
             ///   so we re-encoded variants to hold the data we want, check out the actor enum entry for more info
-            ///   the lower two byes are used to set the chest, but we have a chest grotto with upper byte index, so reuse for rotation here
+            ///   the lower two bytes are used to set the chest, but we have a chest grotto with upper byte index, so reuse for rotation here
             ///   the game does not use the top two bits of the second byte, so we use one as a flag for rotation type grottos
             ///   we also set the time flags to always, because it makes no sense for a hole to only exist day or night, holes are forever
             enemy.ChangeActor(GameObjects.Actor.GrottoHole, vars: newVariant);
@@ -1154,16 +1382,12 @@ namespace MMR.Randomizer
         }
 
         // can we move this to actorUtils?
-        public static void FixPatrollingEnemyVars(SceneEnemizerData thisSceneData)
+        public static void FixPathingVars(SceneEnemizerData thisSceneData)
         {
-            /// fixes the patrolling enemy paths to make sure it matches the previous actor path
-
-            // this also sets actor kickout address index to 0 (if they have one),
-            // because they use different systems which are not compatible
+            /// Pathing actors need to have their paths updated to match the previous actor.
 
             var chosenReplacementEnemies = thisSceneData.Actors;
 
-            // find all pathing enemies
             for (int i = 0; i < chosenReplacementEnemies.Count; i++)
             {
                 Actor actor = chosenReplacementEnemies[i];
@@ -1172,18 +1396,18 @@ namespace MMR.Randomizer
                 if (!(actor.Type == GameObjects.ActorType.Pathing // set on scene actor load
                   && newType == GameObjects.ActorType.Pathing))  // pulled from replacement vars
                 {
-                    continue; // not pathing situation, do not update pathing values
+                    continue; // not pathing situation: do not update pathing values
                 }
 
                 var oldPathBehaviorAttr = actor.OldActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
                 var newdoldPathBehaviorAttr = actor.ActorEnum.GetAttribute<PathingTypeVarsPlacementAttribute>();
-                // need to get the path value from the old variant
+
+                // retreive the path value from the old variant
                 var oldVariant = actor.OldVariant;
                 var oldPathShifted = (oldVariant & (oldPathBehaviorAttr.Mask)) >> oldPathBehaviorAttr.Shift;
                 if (oldPathBehaviorAttr == null || newdoldPathBehaviorAttr == null)
                 {
-                    //continue; // this actor doesn't need it
-                    oldPathShifted = 0; // would this work as backup for actors not configured correctly? not sure
+                    oldPathShifted = 0; // backup for actors not configured correctly
                 }
 
                 // clear the old path from this vars
@@ -1199,9 +1423,11 @@ namespace MMR.Randomizer
 
         public static void FixKickoutEnemyVars(SceneEnemizerData thisSceneData)
         {
+            /// Two actors in the game will attempt to catch and "kickout" the player: DekuPatrolGuard and PatrollingPirate
+            /// Both actors need their kickout values to be something safe or even understandable, and not crashing.
+
             // separated from pathing since its only two actors and we want to change kick for variants that do not path
-            var objectsContainKickoutActors = thisSceneData.ChosenReplacementObjects
-                                              .Find(objSwap =>
+            var objectsContainKickoutActors = thisSceneData.ChosenReplacementObjects.Find(objSwap =>
                                                          objSwap.ChosenV == GameObjects.Actor.PatrollingPirate.ObjectIndex() ||
                                                          objSwap.ChosenV == GameObjects.Actor.DekuPatrolGuard.ObjectIndex()
                                                     ) != null;
@@ -1211,26 +1437,22 @@ namespace MMR.Randomizer
             {
                 Actor actor = thisSceneData.Actors[i];
 
-                // in addition, enemies with kickout addresses need their vars changed too
-                // ... so it turns out they dont use the same indexing system
-                // fornow, pass ZERO to both actors (use the main exit)
+                // note: the two actors use slightly different kickout methods
+                // for now, pass ZERO to both actors (use the main exit per area, all areas have at least one)
                 // it should give us a basic entrance to work with that wont crash anywhere where pathing enemies can exist
                 var newKickoutAttr = actor.ActorEnum.GetAttribute<PathingKickoutAddrVarsPlacementAttribute>();
-                if (newKickoutAttr != null) // new actor has kick out address, need to read the old one
+                if (newKickoutAttr != null)
                 {
                     int kickoutAddr = 0; // safest bet, there should always be at least one exit address per scene
                     if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.ZoraHall)
                     {
                         kickoutAddr = 1; // zora hall exit 0 is out the water door, softlock if you dont have zora or enough health
                     }
-                    /*else if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.Grottos)
-                    {
-                        kickoutAddr = 0x1F; // Grottoes have broken kickout, but we can do this? maybe?
-                    }*/
 
                     // erase the kick location from the old vars
                     int kickoutMask = newKickoutAttr.Mask << newKickoutAttr.Shift;
                     var newVarsWithoutKick = actor.Variants[0] & ~(kickoutMask);
+
                     // replace with new address
                     var newVarsWithKick = newVarsWithoutKick | (kickoutAddr << newKickoutAttr.Shift);
                     actor.Variants[0] = newVarsWithKick;
@@ -1241,8 +1463,8 @@ namespace MMR.Randomizer
 
         public static void FixRedeadSpawnScew(SceneEnemizerData thisSceneData)
         {
-            /// if a redead tries to spawn with a x or z rotation they can fall right through the floor once they start moving,
-            /// we need to fix that, but too many spawns, do it dynamically
+            /// If a redead tries to spawn with a x or z rotation they can fall right through the floor once they start moving.
+            /// We need to fix that, but too many possible spawns could have this actor, do it dynamically
 
             var redeadObjDetected = thisSceneData.ChosenReplacementObjects.Find(v => v.ChosenV == GameObjects.Actor.GibdoWell.ObjectIndex()) != null;
 
@@ -1260,47 +1482,98 @@ namespace MMR.Randomizer
 
         public static void FixBrokenActorSpawnCutscenes(SceneEnemizerData thisSceneData)
         {
-            /// each spawn gets one cutscene
-            /// if a dinofos spawn has a cutscene it plays the cutscene but it breaks the game
+            /// Each Actor spawn gets one cutscene in the scene/room data
+            /// if a dinofos is spanwed, and has a cutscene from the room spawn data, it plays the cutscene
+            /// (supposed to be the drop from ceiling cutscene) but it breaks the game
+            /// so we have to disable it for any new dinofos spawns to avoid
+            /// also other trouble actors that can take that cutscene and do things we dont want
 
-            var listTroubleActorsObj = new List<int> { GameObjects.Actor.Dinofos.ObjectIndex(), GameObjects.Actor.Scarecrow.ObjectIndex() };
+            var listTroubleActorsObj = new List<int> {
+                GameObjects.Actor.Dinofos.ObjectIndex(),
+                GameObjects.Actor.Scarecrow.ObjectIndex(),
+                GameObjects.Actor.PatrollingPirate.ObjectIndex()
+            };
 
+            var actorObjectsDetected = thisSceneData.ChosenReplacementObjects.Find(v => listTroubleActorsObj.Contains(v.ChosenV)) != null;
 
-            var dinoObjDetected = thisSceneData.ChosenReplacementObjects.Find(v => listTroubleActorsObj.Contains(v.ChosenV)) != null;
-
-            if ( ! dinoObjDetected) return;
+            // if field, we can have grottos, which should be checked for too
+            if ( !actorObjectsDetected && thisSceneData.Scene.SpecialObject != Scene.SceneSpecialObject.FieldKeep) return;
             
-            var listTroubleActors = new List<GameObjects.Actor> { GameObjects.Actor.Dinofos, GameObjects.Actor.Scarecrow };
+            var listTroubleActors = new List<GameObjects.Actor> {
+                GameObjects.Actor.Dinofos,
+                GameObjects.Actor.Scarecrow,
+                GameObjects.Actor.PatrollingPirate,
+                GameObjects.Actor.GrottoHole
+            };
 
             for (int i = 0; i < thisSceneData.Actors.Count(); i++)
             {
                 var testActor = thisSceneData.Actors[i];
                 if (listTroubleActors.Contains(testActor.ActorEnum))
                 {
-                    // remove the spawn data by setting spawn to 7F
+                    // remove the spawn data by setting spawn to 0x7F (-1)
                     testActor.Rotation.y |= 0x7F;
                 }
             }
-            
         }
 
+        public static void FixGroundToFlyingActorHeights(SceneEnemizerData thisSceneData)
+        {
+            /// For variety, I wanted to be able to put flying enemies where ground enemies used to be.
+            /// (the inverse is also interesting in idea, but harder to apply without micro-types)
+            ///   however, sometimes the swap is weird because the flying enemy is too close to the ground, or IN the ground
+            /// So, for some flying types, they will have values to specify they should be automatically raised
+            ///   a bit higher than their ground spawn which is almost always the floor
+
+            thisSceneData.Log.AppendLine(" ---------- ");
+
+            for (int actorIndex = 0; actorIndex < thisSceneData.Actors.Count(); actorIndex++)
+            {
+                var testActor = thisSceneData.Actors[actorIndex];
+                var flyingVariants = testActor.ActorEnum.GetAttribute<FlyingVariantsAttribute>();
+                var oldGroundVariants = testActor.OldActorEnum.GetAttribute<GroundVariantsAttribute>();
+                var oldPathVariants = testActor.OldActorEnum.GetAttribute<PathingVariantsAttribute>();
+                // if previous spawn was ground and the replacement actor has an attribute, adjust height
+                // bug: type for bee in mountain spring is FLYING, should be ground, todo fix
+                if ((flyingVariants != null && flyingVariants.Variants.Contains(testActor.Variants[0])) && // chosen variant is flying
+                    ((oldGroundVariants != null && oldGroundVariants.Variants.Contains(testActor.OldVariant)) // previous ground
+                     || (oldPathVariants != null && oldPathVariants.Variants.Contains(testActor.OldVariant)) // previous pathing(ground)
+                      || testActor.OldActorEnum == GameObjects.Actor.BlueBubble) ) // our new actor can fly
+                {
+                    // if attribute exists, we need to adjust
+                    // todo we might want to add as injected actor, in which case this would be loading once
+                    var attr = testActor.ActorEnum.GetAttribute<FlyingToGroundHeightAdjustmentAttribute>();
+                    if (attr != null)
+                    {
+                        testActor.Position.y += (short) attr.Height;
+
+                        thisSceneData.Log.AppendLine($" + adjusted height of actor [{testActor.Name}] by [{attr.Height}]");
+                    }
+                }
+            }
+            thisSceneData.Log.AppendLine(" ---------- ");
+        }
+
+        // TODO: change these so they only print out the "== MAP" stuff if themap actually has something we changed
         public static void FixSwitchFlagVars(SceneEnemizerData thisSceneData)
         {
-            thisSceneData.Log.AppendLine($"------------------------------------------------- ");
-            thisSceneData.Log.AppendLine($"  Switch flags: ");
+            /// New actors can have switch flags, these are normally tailored to the scene so one actor could step on another
 
-            List<int> usedSwitchFlags = new List<int>();
-            for (int mapNumber = 0; mapNumber < thisSceneData.Scene.Maps.Count; ++mapNumber)
+            //thisSceneData.Log.AppendLine($"------------------------------------------------- ");
+            //thisSceneData.Log.AppendLine($"  Switch flags: ");
+
+            List<int> claimedSwitchFlags = new List<int>();
+            for (int mapIndex = 0; mapIndex < thisSceneData.Scene.Maps.Count; ++mapIndex)
             {
-                thisSceneData.Log.AppendLine($" ======( MAP {mapNumber.ToString("X2")} )======");
-                for (int actorNumber = 0; actorNumber < thisSceneData.Scene.Maps[mapNumber].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapNumber].Actors)
+                //thisSceneData.Log.AppendLine($" ======( MAP {mapIndex.ToString("X2")} )======");
+                for (int actorNumber = 0; actorNumber < thisSceneData.Scene.Maps[mapIndex].Actors.Count; ++actorNumber)
                 {
-                    var mapActor = thisSceneData.Scene.Maps[mapNumber].Actors[actorNumber];
+                    var mapActor = thisSceneData.Scene.Maps[mapIndex].Actors[actorNumber];
                     var flags = ActorUtils.GetActorSwitchFlags(mapActor, (short)mapActor.OldVariant);
                     if (flags >= 0)
                     {
-                        usedSwitchFlags.Add(flags);
-                        thisSceneData.Log.AppendLine($"  [{actorNumber}][{mapActor.ActorEnum}] has flags: [{flags}]");
+                        claimedSwitchFlags.Add(flags);
+                        //thisSceneData.Log.AppendLine($"  [{actorNumber}][{mapActor.ActorEnum}] has flags: [{flags}]");
                     }
 
                 }
@@ -1309,15 +1582,17 @@ namespace MMR.Randomizer
             // change all new actors with switch flags to some flag not yet used
             var usableSwitches = new List<int>();
             usableSwitches.AddRange(Enumerable.Range(1, 0x7E)); // 0x7F is popular
-            usableSwitches.RemoveAll(u => usedSwitchFlags.Contains(u));
+            usableSwitches.RemoveAll(sflag => claimedSwitchFlags.Contains(sflag));
             usableSwitches.Reverse(); // we want to start at 0x7F and decend, under the assumption that they always used lower values
 
-            for (int i = 0; i < thisSceneData.Actors.Count; i++)
+            for (int actorIndex = 0; actorIndex < thisSceneData.Actors.Count; actorIndex++)
             {
-                var actor = thisSceneData.Actors[i];
+                var actor = thisSceneData.Actors[actorIndex];
                 var switchFlags = ActorUtils.GetActorSwitchFlags(actor, (short)actor.Variants[0]);
-                if (switchFlags == -1) continue;
-                if (usableSwitches.Contains(switchFlags))
+
+                if (switchFlags == -1) continue; // some actors can set th switch flag to -1 and ignore
+
+                if (usableSwitches.Contains(switchFlags)) // not used yet, claim
                 {
                     usableSwitches.Remove(switchFlags);
                 }
@@ -1326,62 +1601,63 @@ namespace MMR.Randomizer
                     var newSwitch = usableSwitches[0];
                     ActorUtils.SetActorSwitchFlags(actor, (short)newSwitch);
                     usableSwitches.Remove(newSwitch);
-                    thisSceneData.Log.AppendLine($" +++ [{i}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] +++");
+                    thisSceneData.Log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had switch flags modified to [{newSwitch}] +++");
                 }
             }
         }
 
         public static void FixTreasureFlagVars(SceneEnemizerData thisSceneData)
         {
-            thisSceneData.Log.AppendLine($"------------------------------------------------- ");
-            thisSceneData.Log.AppendLine($"  Treasure Flags: ");
+            /// Like switch flags, we want to avoid stepping on previously existing treasure flags
 
-            List<int> usedTreasureFlags = new List<int>();
-            for (int mapNumber = 0; mapNumber < thisSceneData.Scene.Maps.Count; ++mapNumber)
+            //thisSceneData.Log.AppendLine($"------------------------------------------------- ");
+            //thisSceneData.Log.AppendLine($"  Treasure Flags: ");
+
+            var claimedTreasureFlags = new List<int>();
+            for (int mapIndex = 0; mapIndex < thisSceneData.Scene.Maps.Count; ++mapIndex)
             {
-                thisSceneData.Log.AppendLine($" ======( MAP {mapNumber.ToString("X2")} )======");
-                for (int actorNumber = 0; actorNumber < thisSceneData.Scene.Maps[mapNumber].Actors.Count; ++actorNumber) // (var mapActor in scene.Maps[mapNumber].Actors)
+                //thisSceneData.Log.AppendLine($" ======( MAP {mapIndex.ToString("X2")} )======");
+                for (int actorIndex = 0; actorIndex < thisSceneData.Scene.Maps[mapIndex].Actors.Count; ++actorIndex)
                 {
-                    var mapActor = thisSceneData.Scene.Maps[mapNumber].Actors[actorNumber];
+                    var mapActor = thisSceneData.Scene.Maps[mapIndex].Actors[actorIndex];
                     var flags = ActorUtils.GetActorTreasureFlags(mapActor, (short)mapActor.OldVariant);
                     if (flags >= 0)
                     {
-                        usedTreasureFlags.Add(flags);
-                        thisSceneData.Log.AppendLine($"  [{actorNumber}][{mapActor.ActorEnum}] has flags: [{flags}]");
+                        claimedTreasureFlags.Add(flags);
+                        //thisSceneData.Log.AppendLine($"  [{actorIndex}][{mapActor.ActorEnum}] has flags: [{flags}]");
                     }
-
                 }
             }
 
-            // change all new actors with switch flags to some flag not yet used
             var usableTreasureFlags = new List<int>();
             usableTreasureFlags.AddRange(Enumerable.Range(0, 31));
-            usableTreasureFlags.RemoveAll(u => usedTreasureFlags.Contains(u));
+            usableTreasureFlags.RemoveAll(tflag => claimedTreasureFlags.Contains(tflag));
             usableTreasureFlags.Reverse(); // we want to start at 31 and decend, under the assumption that they always used lower values
-            // because there are significantly fewer treasure flags, if we run out, jut reuse the ones only our new actors are using
+            // Because of limited treasure flags, if we run out, just reuse the ones only our new actors are using
             var copyOfUsable = usableTreasureFlags.ToList();
 
-            for (int i = 0; i < thisSceneData.Actors.Count; i++)
+            for (int actorIndex = 0; actorIndex < thisSceneData.Actors.Count; actorIndex++)
             {
+                var actor = thisSceneData.Actors[actorIndex];
+
                 if (usableTreasureFlags.Count == 0)
                 {
-                    // we ran out, just start over with the ones only our new actors were using
+                    // We ran out of new flags, just start over with the ones only our new actors were using
                     usableTreasureFlags = copyOfUsable.ToList();
                 }
 
-                var actor = thisSceneData.Actors[i];
-                var switchFlags = ActorUtils.GetActorTreasureFlags(actor, (short)actor.Variants[0]);
-                if (switchFlags == -1) continue;
-                if (usableTreasureFlags.Contains(switchFlags))
+                var treasureFlags = ActorUtils.GetActorTreasureFlags(actor, (short) actor.Variants[0]);
+                if (treasureFlags == -1) continue;
+                if (usableTreasureFlags.Contains(treasureFlags))
                 {
-                    usableTreasureFlags.Remove(switchFlags);
+                    usableTreasureFlags.Remove(treasureFlags);
                 }
                 else // we have switch flag and we have a collision, we need to change it
                 {
                     var newSwitch = usableTreasureFlags[0];
-                    ActorUtils.SetActorTreasureFlags(actor, (short)newSwitch);
+                    ActorUtils.SetActorTreasureFlags(actor, (short) newSwitch);
                     usableTreasureFlags.Remove(newSwitch);
-                    thisSceneData.Log.AppendLine($" +++ [{i}][{actor.ActorEnum}] had treasure flags modified to [{newSwitch}] +++");
+                    thisSceneData.Log.AppendLine($" +++ [{actorIndex}][{actor.ActorEnum}] had treasure flags modified to [{newSwitch}] +++");
                 }
             }
         }
@@ -1389,11 +1665,13 @@ namespace MMR.Randomizer
 
         public static void ShuffleObjects(SceneEnemizerData thisSceneData)
         {
-            /// find replacement objects for objects that actors depend on
+            /// Select replacement objects for the scene
+            // TODO: turns out objects are per-room, we could do this per room not per scene
 
             thisSceneData.ChosenReplacementObjects = new List<ValueSwap>();
             int newObjectSize = 0;
             var newActorList = new List<int>();
+            var previousObjectActors = new List<Actor>(); // already previously chosen, remove from the rest of the lists
 
             for (int objectIndex = 0; objectIndex < thisSceneData.Objects.Count; objectIndex++)
             {
@@ -1418,14 +1696,15 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.Scarecrow)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.TradingPost, GameObjects.Actor.Treee, GameObjects.Actor.Scarecrow)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.PatrollingPirate)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.PatrollingPirate)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.SouthClockTown, GameObjects.Actor.Carpenter, GameObjects.Actor.OOTPotionShopMan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.GoronVillage, GameObjects.Actor.Scarecrow, GameObjects.Actor.Dinofos)) continue;
-                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.DekuBaba, GameObjects.Actor.PatrollingPirate)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.Desbreko, GameObjects.Actor.UnusedPirateElevator)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Dodongo, GameObjects.Actor.DeathArmos)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.AstralObservatory, GameObjects.Actor.Scarecrow, GameObjects.Actor.ClocktowerGearsAndOrgan)) continue;
-                //if (TestHardSetObject(GameObjects.Scene.IkanaCastle, GameObjects.Actor.Skulltula, GameObjects.Actor.MajoraBalloonSewer)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.DekuPalace, GameObjects.Actor.Torch, GameObjects.Actor.WarpDoor)) continue;
 
                 //TestHardSetObject(GameObjects.Scene.ClockTowerInterior, GameObjects.Actor.HappyMaskSalesman, GameObjects.Actor.FlyingPot);
                 #endif
@@ -1434,12 +1713,14 @@ namespace MMR.Randomizer
                 var reducedCandidateList = thisSceneData.CandidatesPerObject[objectIndex].ToList();
                 foreach (var objectSwap in thisSceneData.ChosenReplacementObjects)
                 {
-                    // remove previously used objects, remove copies to increase variety
-                    reducedCandidateList.RemoveAll(u => u.ObjectID == objectSwap.NewV);
+                    // remove previously used objects: remove copies to increase variety
+                    //reducedCandidateList.RemoveAll(act => u.ObjectID == objectSwap.NewV);
+                    // should be faster to keep track of actors not objects
+                    reducedCandidateList.RemoveAll(actor => previousObjectActors.Contains(actor));
                 }
                 if (reducedCandidateList.Count == 0) // rarely, there are no available objects left
                 {
-                    newObjectSize += 2 ^ 30; // should always error in the object size section
+                    newObjectSize += 2 ^ 30; // should always error in the object size overflow detection code
                     continue; // this enemy was starved by previous options, force error and try again
                 }
 
@@ -1447,7 +1728,8 @@ namespace MMR.Randomizer
                 Actor randomEnemy = reducedCandidateList[thisSceneData.RNG.Next(reducedCandidateList.Count)];
 
                 // keep track of sizes between this new enemy combo and what used to be in this scene
-                if (randomEnemy.ObjectID >= 4) // object 1 is gameplay keep, 3 is dungeon keep
+                // objects below 4 are always loaded, don't count to our object limit
+                if (randomEnemy.ObjectID > 3) // object 1 is gameplay_keep, 2 is field_keep, 3 is dungeon keep
                 {
                     newObjectSize += randomEnemy.ObjectSize;
                 }
@@ -1457,12 +1739,14 @@ namespace MMR.Randomizer
                 }
 
                 // add random enemy to list
-                thisSceneData.ChosenReplacementObjects.Add(new ValueSwap()
+                var newReplacementObject = (new ValueSwap()
                 {
                     OldV = thisSceneData.Objects[objectIndex],
                     ChosenV = randomEnemy.ObjectID,
                     NewV = randomEnemy.ObjectID
                 });
+                thisSceneData.ChosenReplacementObjects.Add(newReplacementObject);
+                previousObjectActors.AddRange(reducedCandidateList);
             } // end for for each object
         }
 
@@ -1483,7 +1767,7 @@ namespace MMR.Randomizer
             for (int actorIndex = 0; actorIndex < thisSceneData.ActorsPerObject[objectIndex].Count(); actorIndex++)
             {
                 var oldActor = thisSceneData.ActorsPerObject[objectIndex][actorIndex];
-                var actorsPerRoomCount = thisSceneData.ActorsPerObject[objectIndex].FindAll(u => u.Room == oldActor.Room).Count();
+                var actorsPerRoomCount = thisSceneData.ActorsPerObject[objectIndex].FindAll(act => act.Room == oldActor.Room).Count();
 
                 // this isn't really a loop, 99% of the time it matches on the first loop
                 // leaving this for now because its faster than shuffling the list even if it looks stupid
@@ -1492,8 +1776,6 @@ namespace MMR.Randomizer
                 while (true)
                 {
                     /// looking for a list of objects for the actors we chose that fit the actor types
-                    //|| (oldEnemy.Type == subMatches[testActor].Type && rng.Next(5) == 0)
-                    //  //&& oldEnemy.Stationary == subMatches[testActor].Stationary)
                     testActor = subMatches[thisSceneData.RNG.Next(subMatches.Count)];
 
                     if (testActor.IsCompanion && (oldActor.MustNotRespawn || actorsPerRoomCount <= 2))
@@ -1509,7 +1791,7 @@ namespace MMR.Randomizer
                 oldActor.ChangeActor(testActor, vars: testActor.Variants[thisSceneData.RNG.Next(testActor.Variants.Count)]);
 
                 temporaryMatchEnemyList.Add(oldActor);
-                var testSearch = previouslyAssignedCandidates.Find(u => u.ActorID == oldActor.ActorID);
+                var testSearch = previouslyAssignedCandidates.Find(act => act.ActorID == oldActor.ActorID);
                 if (testSearch == null)
                 {
                     previouslyAssignedCandidates.Add(testActor);
@@ -1519,18 +1801,18 @@ namespace MMR.Randomizer
 
         public static void GenerateActorCandidates(SceneEnemizerData thisSceneData, List<GameObjects.Actor> fairyDroppingActors)
         {
-            /// get a matching set of possible replacement objects and enemies that we can use
+            /// Generate a matching set of possible replacement objects and enemies that we can use
 
             thisSceneData.ActorsPerObject = new List<List<Actor>>();
             for (int objectIndex = 0; objectIndex < thisSceneData.Objects.Count; objectIndex++)
             {
                 // get a list of all enemies (in this room) that have the same OBJECT as our object that have an actor we also have
-                thisSceneData.ActorsPerObject.Add(thisSceneData.Actors.FindAll(u => u.OldObjectID == thisSceneData.Objects[objectIndex]));
+                thisSceneData.ActorsPerObject.Add(thisSceneData.Actors.FindAll(act => act.OldObjectID == thisSceneData.Objects[objectIndex]));
+                // we want to detect if this scene/actor combo can drop fairies early
+                var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(act => act.ObjectIndex() == thisSceneData.Objects[objectIndex]);
                 // get a list of matching actors that can fit in the place of the previous actor
-                var objectHasFairyDroppingEnemy = fairyDroppingActors.Any(u => u.ObjectIndex() == thisSceneData.Objects[objectIndex]);
                 var newCandiateList = GetMatchPool(thisSceneData, thisSceneData.ActorsPerObject[objectIndex], objectHasFairyDroppingEnemy);
-                var candidateTest = newCandiateList.Find(u => u.Variants.Count == 0);
-                if (candidateTest != null)
+                if (newCandiateList.Find(act => act.Variants.Count == 0) != null) // haven't gotten this error in awhile, but leaving here in case I break something
                 {
                     throw new Exception("GenActorCandidatees: zero variants detected");
                 }
@@ -1539,9 +1821,9 @@ namespace MMR.Randomizer
                     throw new Exception("GenActorCandidatees: no candidates detected");
                 }
 
-                // HOTFIX: replace with something proper later
-                // this is currently the only instance of ground+pathing getting replacement by only pathing
-                if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.ZoraHall && objectIndex == 0)
+                // HOTFIX: TODO replace with something proper later
+                // this is currently the only instance of ground+pathing getting replacement by only pathing, so handle it unique case
+                if (thisSceneData.Scene.SceneEnum == GameObjects.Scene.ZoraHall && objectIndex == 0) // object zora
                 {
                     // for all candidates, check if they have only pathing and remove
                     foreach(var candidate in newCandiateList.ToArray())
@@ -1566,25 +1848,27 @@ namespace MMR.Randomizer
         public static List<Actor> GetMatchPool(SceneEnemizerData thisSceneData, List<Actor> oldActors, bool containsFairyDroppingEnemy)
         {
             var reducedCandidateList = Actor.CopyActorList(thisSceneData.AcceptableCandidates);
-            List<Actor> enemyMatchesPool = new List<Actor>();
+            var enemyMatchesPool = new List<Actor>();
 
             // we cannot currently swap out specific enemies, so if ONE must be killable, all shared enemies must
             //  eg: one of the dragonflies in woodfall must be killable in the map room, so all in the dungeon must since we cannot isolate
-            bool MustBeKillable = oldActors.Any(u => u.MustNotRespawn);
+            bool MustBeKillable = oldActors.Any(act => act.MustNotRespawn);
 
             if (containsFairyDroppingEnemy)
             {
                 MustBeKillable = true; // we dont want respawning or unkillable enemies here
-                /// special case: armos does not drop stray fairies, and I dont know why
+                /// special case: armos does not drop stray fairies, and I dont know why. TODO attempt to fix instead of this code
                 ReplacementListRemove(reducedCandidateList, GameObjects.Actor.Armos);
             }
 
             // this could be per-enemy, but right now its only used where enemies and objects match,
             // so to save cpu cycles do it once per object not per enemy
-            //foreach (var enemy in thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors((GameObjects.Actor)oldActors[0].ActorID))
-            foreach (var enemy in thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(oldActors[0].OldActorEnum))
+            // TODO: this only removes one actor, if one object can have multiple actors we should check all ofthem
+            var blockedReplacementActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(oldActors[0].OldActorEnum);
+            for (var e = 0; e < blockedReplacementActors.Count; e++)
             {
-                ReplacementListRemove(reducedCandidateList, enemy);
+                var blockedActor = blockedReplacementActors[e];
+                ReplacementListRemove(reducedCandidateList, blockedActor);
             }
 
             // todo does this NEED to be a double loop? does anything change per enemy copy that we should worry about?
@@ -1595,14 +1879,13 @@ namespace MMR.Randomizer
                 // the enemy we got from the scene has the specific variant number, the general game object has all
                 foreach (var candidateEnemy in reducedCandidateList)
                 {
-                    //var enemy = candidateEnemy.ActorEnum;
                     var compatibleVariants = oldActor.CompatibleVariants(candidateEnemy, thisSceneData.RNG);
 
                     if (compatibleVariants == null || compatibleVariants.Count == 0) continue;
 
                     // if current test actor not already in the new pool
                     //   TODO why would we get duplicates this late? shouldnt the candidates be unique list?
-                    if (!enemyMatchesPool.Any(u => u.ActorID == candidateEnemy.ActorID))
+                    if (!enemyMatchesPool.Any(act => act.ActorID == candidateEnemy.ActorID))
                     {
                         var newEnemy = candidateEnemy.CopyActor();
 
@@ -1625,103 +1908,104 @@ namespace MMR.Randomizer
                 } // for each candidate end
             } // for each slot end
 
-            // todo check to make sure there are no pathing variants in 
-
             return enemyMatchesPool;
         }
 
         #region Trim and Free actors
 
-        public static void TrimAllActors(SceneEnemizerData thisSceneData, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList, int freeActorRate)
+        public static void TrimAllActors(SceneEnemizerData thisSceneData, List<Actor> previouslyAssignedCandidates, List<Actor> temporaryMatchEnemyList)
         {
-            // enemies can have max per room variants, if these show up we should cull the extra over the max
-            var restrictedActors = previouslyAssignedCandidates.FindAll(u => u.HasVariantsWithRoomLimits() || u.OnlyOnePerRoom != null);
-            for (int i = 0; i < restrictedActors.Count; ++i)
+            /// Actors can have maximum per-room variants, if these show up we should cull the extra over the max
+            /// e.g some Dynapoly actors cannot be placed too many times because they overload the dynapoly system
+            var restrictedActors = previouslyAssignedCandidates.FindAll(act => act.HasVariantsWithRoomLimits() || act.OnlyOnePerRoom != null);
+            for (int actorIndex = 0; actorIndex < restrictedActors.Count; ++actorIndex)
             {
-                var problemActor = restrictedActors[i];
+                var problemActor = restrictedActors[actorIndex];
 
                 // we need to split enemies per room
                 for (int roomIndex = 0; roomIndex < thisSceneData.Scene.Maps.Count; ++roomIndex)
                 {
-                    var roomActors = temporaryMatchEnemyList.FindAll(u => u.Room == roomIndex && u.ActorID == problemActor.ActorID);
-                    if (roomActors.Count == 0) continue; // nothing to trim
+                    var roomActors = temporaryMatchEnemyList.FindAll(act => act.Room == roomIndex && act.ActorID == problemActor.ActorID);
+                    if (roomActors.Count == 0) continue; // nothing to trim: no actors in this room
                     var roomIsClearPuzzleRoom = thisSceneData.Scene.SceneEnum.IsClearEnemyPuzzleRoom(roomIndex);
-                    //var roomFreeActors = SceneFreeActors.ToList(); // works but too small
                     var roomFreeActors = GetRoomFreeActors(thisSceneData.Scene, thisSceneData.ChosenReplacementObjectsPerMap[roomIndex], thisSceneData.SceneFreeActors);
 
                     if (problemActor.OnlyOnePerRoom != null)
                     {
-                        TrimSpecificActor(problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom, thisSceneData.RNG, randomRate: freeActorRate);
+                        TrimSpecificActor(thisSceneData, problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom);
                     }
                     else
                     {
-                        var limitedVariants = problemActor.Variants.FindAll(u => problemActor.VariantMaxCountPerRoom(u) >= 0);
+                        var limitedVariants = problemActor.Variants.FindAll(act => problemActor.VariantMaxCountPerRoom(act) >= 0);
                         foreach (var variant in limitedVariants)
                         {
-                            TrimSpecificActor(problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom, thisSceneData.RNG, variant: variant, randomRate: freeActorRate);
+                            TrimSpecificActor(thisSceneData, problemActor, roomActors, roomFreeActors, roomIsClearPuzzleRoom, variant: variant);
                         }
                     }
                 }
             } // end for trim restricted actors
         }
 
-        public static void TrimSpecificActor(Actor actorType, List<Actor> roomEnemies, List<Actor> roomFreeActors,
-                                           bool roomIsClearPuzzleRoom, Random rng, int variant = -1, int randomRate = 0x50)
+        public static void TrimSpecificActor(SceneEnemizerData thisSceneData, Actor actorType, List<Actor> roomActors, List<Actor> roomFreeActors,
+                                           bool roomIsClearPuzzleRoom, int variant = -1)
         {
             /// actors with maximum counts have their extras trimmed off, replaced with free or empty actors, depending on randomRate
 
-            List<Actor> roomEnemiesWithVariant;
+            List<Actor> trimCandidates;
             if (actorType.OnlyOnePerRoom != null)
             {
-                roomEnemiesWithVariant = roomEnemies;
+                trimCandidates = roomActors; // all of variants of this actor are valid for trimming as one pool
             }
             else
             {
-                roomEnemiesWithVariant = roomEnemies.FindAll(u => u.Variants[0] == variant);
+                trimCandidates = roomActors.FindAll(act => act.Variants[0] == variant);
             }
 
-            if (roomEnemiesWithVariant != null && roomEnemiesWithVariant.Count > 1)
+            if (trimCandidates != null && trimCandidates.Count > 1)
             {
-                int max = actorType.VariantMaxCountPerRoom(variant);
-                int removed = 0;
+                int variantMax = actorType.VariantMaxCountPerRoom(variant);
+                int removedCount = 0;
                 if (roomIsClearPuzzleRoom) // clear enemy room, only one enemy has to be killable
                 {
-                    // weirdly there isn't a single room in the game that has both a clear enemy to get item puzzle and a fairy dropping enemy, so we can reuse
-                    var randomEnemy = roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)];
-                    roomEnemiesWithVariant.Remove(randomEnemy); // leave at least one enemy alone
-                    removed++;
+                    // weirdly there isn't a single room in the game that has both a clear enemy to get item puzzle
+                    // and a fairy dropping enemy, so we can separate easily
+                    var randomEnemy = trimCandidates[thisSceneData.RNG.Next(trimCandidates.Count)];
+                    trimCandidates.Remove(randomEnemy); // leave at least one enemy alone
+                    removedCount++;
                 }
-                else
+                else // no clear puzzle room: protected enemies are fairy holding actors
                 {
-                    // if not a clear room, all protected enemies are fairy enemies or specific enemies, cannot remove any
-                    foreach (var protectedEnemy in roomEnemiesWithVariant.Where(u => u.MustNotRespawn == true).ToList())
+                    foreach (var protectedEnemy in trimCandidates.Where(act => act.MustNotRespawn == true).ToList())
                     {
-                        roomEnemiesWithVariant.Remove(protectedEnemy);
-                        removed++;
+                        trimCandidates.Remove(protectedEnemy); // we cannot remove any, fairies are sacred
+                        removedCount++;
                     }
                 }
 
                 // remove random enemies until max for variant is reached
-                for (int i = removed; i < max && i < roomEnemiesWithVariant.Count; ++i)
+                // TODO: test this
+                int extraCullCapacity = (trimCandidates.Count >= 1) ? (trimCandidates.Count - 1) : (0);
+                var extraCullChosen = thisSceneData.RNG.Next(0, extraCullCapacity);
+                for (int i = removedCount; (i + extraCullChosen < variantMax) && (i < trimCandidates.Count); ++i)
                 {
-                    roomEnemiesWithVariant.Remove(roomEnemiesWithVariant[rng.Next(roomEnemiesWithVariant.Count)]);
+                    trimCandidates.Remove(trimCandidates[thisSceneData.RNG.Next(trimCandidates.Count)]);
                 }
 
                 // if the actor being trimmed is a free actor, remove from possible replacements
-                var search = roomFreeActors.Find(u => u.ActorID == actorType.ActorID);
-                if (search != null)
+                var freeActorSearch = roomFreeActors.Find(act => act.ActorID == actorType.ActorID);
+                if (freeActorSearch != null)
                 {
-                    roomFreeActors.Remove(search);
+                    roomFreeActors.Remove(freeActorSearch);
                 }
 
-                // kill the rest of variant X since max is reached
-                foreach (var enemy in roomEnemiesWithVariant)
+                // kill the rest since max is reached
+                foreach (var enemy in trimCandidates)
                 {
-                    var enemyIndex = roomEnemies.IndexOf(enemy);
-                    EmptyOrFreeActor(enemy, rng, roomEnemies, roomFreeActors, roomIsClearPuzzleRoom, randomRate);
+                    var enemyIndex = roomActors.IndexOf(enemy);
+                    EmptyOrFreeActor(thisSceneData, enemy, roomActors, roomFreeActors, roomIsClearPuzzleRoom);
                 }
-            }
-        }
+            } // end If Room has Actors with Variants we want to trim
+        } // end TrimSpecificActor
 
         public static List<List<int>> TrimObjectList(SceneEnemizerData thisSceneData, StringBuilder log)
         {
@@ -1736,36 +2020,37 @@ namespace MMR.Randomizer
             for (int m = 0; m < scene.Maps.Count; ++m)
             {
                 var map = scene.Maps[m];
-                var objList = map.Objects.ToList(); // copy the old list, were modifying
+                var objList = map.Objects.ToList(); // copy the old list, since we're modifying
 
                 // first pass: generate a list of all objects per map, and replace objects as we go from the swaps
                 for (int swapIndex = 0; swapIndex < thisSceneData.ChosenReplacementObjects.Count; swapIndex++)
                 {
                     var swap = thisSceneData.ChosenReplacementObjects[swapIndex];
-                    var searchIndex = map.Objects.FindIndex(u => u == swap.OldV); // search original list so we dont catch the previous changes
-                    if (searchIndex != -1) // not all rooms will have the object
-                    {
-                        objList[searchIndex] = swap.NewV;
-                    }
+                    var searchIndex = map.Objects.FindIndex(obj => obj == swap.OldV); // search original list so we dont catch the previous changes
+                    if (searchIndex == -1) continue; // not all rooms will have the object, can ignore
+
+                    objList[searchIndex] = swap.NewV;
                 }
 
-                // find all objects that have duplicates
+                // find all objects that have no duplicates
                 var uniqueObjects = objList.Distinct().ToList();
 
                 // if they are the same size, no duplicates, keep going to next map
-                if (objList.Count() != uniqueObjects.Count())
+                if (objList.Count != uniqueObjects.Count)
                 {
-                    // couldnt find a simple way to get a list of duplicates, so instead starting with list of unique values
-
                     // second pass: remove all duplicates
-                    for (int u = 0; u < uniqueObjects.Count(); u++)
+                    for (int u = 0; u < uniqueObjects.Count; u++)
                     {
                         var uniqueObj = uniqueObjects[u];
-                        if (objList.Count(u => u == uniqueObj) > 1) // more than one exists, remove
+                        if (objList.Count(obj => obj == uniqueObj) > 1) // more than one exists, remove
                         {
                             // just remove first one, not sure if there is an advantage of changing one over the other
-                            var firstIndex = objList.FindIndex(u => u == uniqueObj);
-                            objList[firstIndex] = SMALLEST_OBJ;
+                            // consideration: if the object list order changes, the scene load hickups, but so long as wel always replace first...
+                            // we dont want the first we want to remove the last, as removing the first introduces more object list re-loads
+                            //var firstIndex = objList.FindIndex(obj => obj == uniqueObj);
+                            //objList[firstIndex] = SMALLEST_OBJ;
+                            var lastIndex = objList.FindLastIndex(obj => obj == uniqueObj);
+                            objList[lastIndex] = SMALLEST_OBJ;
                         }
                     }
                 }
@@ -1775,7 +2060,7 @@ namespace MMR.Randomizer
 
             if (replacedObjects.Count > 0)
             {
-                var objectAsHexString = replacedObjects.Select(u => u.ToString("X3"));
+                var objectAsHexString = replacedObjects.Select(obj => obj.ToString("X3"));
                 log.AppendLine($"Duplicate Objects: [{String.Join(", ", objectAsHexString)}]");
             }
 
@@ -1791,14 +2076,11 @@ namespace MMR.Randomizer
 
             var sceneIsDungeon = scene.HasDungeonObject();
             var sceneIsField = scene.HasFieldObject();
-            // todo: replace enum.IsEnemyRandomized
-            //var SceneFreeActors = ReplacementCandidateList.Where(u => (u.ObjectID == 1
-            var SceneFreeActors = FreeCandidateList.Where(u => (u.ObjectID == 1
-                                                    || (sceneIsField && u.ObjectID == (int)Scene.SceneSpecialObject.FieldKeep)
-                                                    || (sceneIsDungeon && u.ObjectID == (int)Scene.SceneSpecialObject.DungeonKeep))
-                                                 && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))).ToList();
-
-            // TODO: search all untouched objects and add those actors too
+            var SceneFreeActors = FreeCandidateList.Where(act => (act.ObjectID == 1
+                                                                || (sceneIsField && act.ObjectID == (int) Scene.SceneSpecialObject.FieldKeep)
+                                                                || (sceneIsDungeon && act.ObjectID == (int) Scene.SceneSpecialObject.DungeonKeep))
+                                                           && !(act.BlockedScenes != null && act.BlockedScenes.Contains(scene.SceneEnum))
+                                                          ).ToList();
 
             return SceneFreeActors;
         }
@@ -1810,28 +2092,28 @@ namespace MMR.Randomizer
                 SceneFreeActors = GetSceneEnemyActors(scene); // should never get this far
             }
 
-            var roomFreeActors = ReplacementCandidateList.Where(u => u.ObjectID >= 3
-                                     && objectList.Contains(u.ObjectID)
-                                     && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))
+            var roomFreeActors = ReplacementCandidateList.Where(act => act.ObjectID >= 3
+                                       && objectList.Contains(act.ObjectID)
+                                       && !(act.BlockedScenes != null && act.BlockedScenes.Contains(scene.SceneEnum))
                                      ).ToList();
 
-            var freeOnlyActors = FreeOnlyCandidateList.Where(u => objectList.Contains(u.ObjectID)
-                                     && !(u.BlockedScenes != null && u.BlockedScenes.Contains(scene.SceneEnum))
+            var freeOnlyActors = FreeOnlyCandidateList.Where(act => objectList.Contains(act.ObjectID)
+                                       && !(act.BlockedScenes != null && act.BlockedScenes.Contains(scene.SceneEnum))
                                      ).ToList();
 
             return SceneFreeActors.Union(roomFreeActors).Union(freeOnlyActors).ToList();
         }
 
-        public static void EmptyOrFreeActor(Actor oldActor, Random rng, List<Actor> currentRoomActorList,
-                                            List<Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false, int randomRate = 0x50)
+        public static void EmptyOrFreeActor(SceneEnemizerData thisSceneData,  Actor oldActor, List<Actor> currentRoomActorList,
+                                            List<Actor> acceptableFreeActors, bool roomIsClearPuzzleRoom = false)
         {
             /// returns an actor that is either an empty actor or a free actor that can be placed here beacuse it doesn't require a new unique object
 
             // roll dice: either get a free actor, or empty
-            if (rng.Next(100) < randomRate) // for now a static chance
+            if (thisSceneData.RNG.Next(100) < thisSceneData.FreeActorRate) // for now a static chance
             {
                 // pick random replacement by selecting random start of array and traversing sequentially until we find a match
-                int randomStart = rng.Next(acceptableFreeActors.Count);
+                int randomStart = thisSceneData.RNG.Next(acceptableFreeActors.Count);
                 for (int matchAttempt = 0; matchAttempt < acceptableFreeActors.Count; ++matchAttempt)
                 {
                     /// check the old enemy for available co-actors,
@@ -1840,13 +2122,13 @@ namespace MMR.Randomizer
                     int listIndex = (randomStart + matchAttempt) % acceptableFreeActors.Count;
                     var testEnemy = acceptableFreeActors[listIndex];
 
-                    var testEnemyCompatibleVariants = oldActor.CompatibleVariants(testEnemy, rng);
+                    var testEnemyCompatibleVariants = oldActor.CompatibleVariants(testEnemy, thisSceneData.RNG);
                     if (testEnemyCompatibleVariants == null) continue;  // no type compatibility, skip
 
                     var respawningVariants = testEnemy.RespawningVariants;
                     if ((oldActor.MustNotRespawn || roomIsClearPuzzleRoom) && respawningVariants != null)
                     {
-                        testEnemyCompatibleVariants.RemoveAll(u => respawningVariants.Contains(u));
+                        testEnemyCompatibleVariants.RemoveAll(variant => respawningVariants.Contains(variant));
                     }
 
                     if (testEnemyCompatibleVariants.Count == 0) continue;  // cannot use respawning enemies here, skip
@@ -1856,7 +2138,7 @@ namespace MMR.Randomizer
 
                     if (enemyHasMaximums)
                     {
-                        var enemiesInRoom = currentRoomActorList.FindAll(u => u.ActorID == testEnemy.ActorID);
+                        var enemiesInRoom = currentRoomActorList.FindAll(act => act.ActorID == testEnemy.ActorID);
                         if (enemiesInRoom.Count > 0)  // only test for specific variants if there are already some in the room
                         {
                             // find variant that is not maxed out
@@ -1864,7 +2146,7 @@ namespace MMR.Randomizer
                             {
                                 // if the varient limit has not been reached
                                 var variantMax = testEnemy.VariantMaxCountPerRoom(variant);
-                                var variantCount = enemiesInRoom.Count(u => u.OldVariant == variant);
+                                var variantCount = enemiesInRoom.Count(act => act.OldVariant == variant);
                                 if (variantCount < variantMax)
                                 {
                                     acceptableVariants.Add(variant);
@@ -1883,7 +2165,7 @@ namespace MMR.Randomizer
 
                     if (acceptableVariants.Count > 0)
                     {
-                        int randomVariant = acceptableVariants[rng.Next(acceptableVariants.Count)];
+                        int randomVariant = acceptableVariants[thisSceneData.RNG.Next(acceptableVariants.Count)];
                         if (testEnemy.ActorEnum == GameObjects.Actor.GrottoHole)
                         {
                             SetupGrottoActor(oldActor, randomVariant);
@@ -1895,7 +2177,7 @@ namespace MMR.Randomizer
                         return;
                     }
                 }
-            }
+            } // end We roll for Free Actor
             //else (and fallthrough): empty actor 
 
             oldActor.ChangeActor(GameObjects.Actor.Empty);
@@ -1932,7 +2214,6 @@ namespace MMR.Randomizer
                 if (actor.ActorEnum == GameObjects.Actor.ClayPot)
                 {
                     var newCompanion = new Actor(GameObjects.Actor.FlyingPot);
-                    //newCompanion.Variants = companion.Variants;
                     newCompanion.IsCompanion = true;
                     candidates.Add(newCompanion);
                 }
@@ -1941,12 +2222,12 @@ namespace MMR.Randomizer
 
         public static void MoveAlignedCompanionActors(List<Actor> changedEnemies, Random rng, StringBuilder log)
         {
-            /// companion actors can sometimes be alligned, to increase immersion
-            /// example: putting hidden grottos inside of a stone circle
-            /// example2: putting butterflies over bushes
+            /// Companion actors can sometimes be alligned to their host, to increase immersion
+            /// e.g: putting hidden grottos inside of a stone circle
+            /// e.g 2: putting butterflies over bushes
 
-            var actorsWithCompanions = changedEnemies.FindAll(u => ((GameObjects.Actor)u.ActorID).HasOptionalCompanions())
-                                                     .OrderBy(x => rng.Next()) // randomize list
+            var actorsWithCompanions = changedEnemies.FindAll(act => ((GameObjects.Actor) act.ActorID).HasOptionalCompanions())
+                                                     .OrderBy(act => rng.Next()) // randomize list
                                                      .ToList();
 
             if (actorsWithCompanions.Count <= 2) return;
@@ -1962,9 +2243,9 @@ namespace MMR.Randomizer
                     // todo detection of ourVars too
                     // scan for companions that can be moved
                     // for now, assume all previously used companions must be left untouched, no shuffling
-                    var eligibleCompanions = changedEnemies.FindAll(u => u.ActorID == (int)actorEnum        // correct actor
-                                                            && u.previouslyMovedCompanion == false          // not already used
-                                                            && companion.Variants.Contains(u.Variants[0])); // correct variant
+                    var eligibleCompanions = changedEnemies.FindAll(act => act.ActorID == (int) actorEnum     // correct actor
+                                                            && act.previouslyMovedCompanion == false          // not already used
+                                                            && companion.Variants.Contains(act.Variants[0])); // correct variant
 
                     if (eligibleCompanions != null && eligibleCompanions.Count > 0)
                     {
@@ -1992,7 +2273,7 @@ namespace MMR.Randomizer
 
         private static void SplitSceneLikeLikesIntoTwoActorObjects(SceneEnemizerData thisSceneData)
         {
-            /// special case: likelikes need to be split into two objects because ground and water share one object 
+            /// Special case: likelikes need to be split into two objects because ground and water share one object 
             /// but no other enemies work as dual replacement
 
             if ((thisSceneData.Scene.File == GameObjects.Scene.ZoraCape.FileID() || thisSceneData.Scene.File == GameObjects.Scene.GreatBayCoast.FileID())
@@ -2100,6 +2381,7 @@ namespace MMR.Randomizer
             public List<List<Actor>> ActorsPerObject     = new List<List<Actor>>();   
             public List<List<Actor>> CandidatesPerObject = new List<List<Actor>>();
             public ActorsCollection ActorCollection = null;
+            public int FreeActorRate = 75; // percentage chance of getting a free actor instead of an empty actor during trim
 
             public SceneEnemizerData(Scene scene)
             {
@@ -2113,6 +2395,7 @@ namespace MMR.Randomizer
         {
             /// randomize all enemies/actors in a single scene
 
+            // got tired of function with 10+ parameters, so now this thread has context to store all data in one place
             SceneEnemizerData thisSceneData = new SceneEnemizerData(scene);
 
             #region Log Handling functions
@@ -2149,19 +2432,23 @@ namespace MMR.Randomizer
             }
             WriteOutput("time to get scene enemies: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
-            thisSceneData.Objects = GetSceneEnemyObjects(scene);
+            thisSceneData.Objects = GetSceneEnemyObjects(thisSceneData);
             var sceneObjectLimit = SceneUtils.GetSceneObjectBankSize(scene.SceneEnum);
             WriteOutput(" time to get scene objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
-            WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
-            WriteOutput(" time to find scene name: " + GET_TIME(thisSceneData.StartTime) + "ms");
+             WriteOutput("For Scene: [" + scene.ToString() + "] with fid: " + scene.File + ", with sid: 0x"+ scene.Number.ToString("X2"));
+            // WriteOutput(" time to find scene name: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
-            // if actor doesn't exist but object does, probably spawned by something else, remove from actors to randomize
+            // if actor does NOT exist, but object does, probably spawned by something else; remove from actors to randomize
             // TODO check for side objects that no longer need to exist and replace with possible alt objects
             // example: dinofos has a second object: dodongo, just for the fire breath dlist
             foreach (int obj in thisSceneData.Objects.ToList())
             {
-                if ( ! (VanillaEnemyList.FindAll(u => u.ObjectIndex() == obj)).Any( u => thisSceneData.Actors.Any( w => w.ActorID == (int) u)))
+                // find all actors we want to replace that use this object
+                if ( (VanillaEnemyList.FindAll(act => act.ObjectIndex() == obj))
+                                        // check if any of those actors are in our actors list
+                                        .Any(actEnum => thisSceneData.Actors.Any(act => act.ActorID == (int) actEnum))
+                                        == false )
                 {
                     thisSceneData.Objects.Remove(obj);
                 }
@@ -2172,9 +2459,8 @@ namespace MMR.Randomizer
             WriteOutput(" time to finish removing unnecessary objects: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             // some scenes are blocked from having enemies, do this ONCE before GetMatcPool, which would do it per-enemy
-            //var sceneAcceptableEnemies = ReplacementCandidateList.FindAll( u => ! u.ActorEnum.BlockedScenes().Contains(scene.SceneEnum));
-            thisSceneData.AcceptableCandidates = ReplacementCandidateList.FindAll(u => !u.ActorEnum.BlockedScenes().Contains(scene.SceneEnum))
-                                                                         .FindAll(u => !u.NoPlacableVariants());
+            thisSceneData.AcceptableCandidates = ReplacementCandidateList.FindAll(act => !act.ActorEnum.BlockedScenes().Contains(scene.SceneEnum))
+                                                                         .FindAll(act => !act.NoPlacableVariants());
 
             // issue: this function is called in paralel, if the order is different the Random object will be different and not seed-reproducable
             // instead of passing the Random instance, we pass seed and add it to the unique scene number to get a replicatable, but random, seed
@@ -2182,18 +2468,16 @@ namespace MMR.Randomizer
 
             // we want to check for actor types that contain fairies per-scene for speed
             var fairyDroppingActors = GetSceneFairyDroppingEnemyTypes(thisSceneData);
-            // we group enemies with objects because some objects can be reused for multiple enemies, potential minor boost to variety
 
+            // we group enemies with objects because some objects can be reused for multiple enemies, potential minor boost to variety
             GenerateActorCandidates(thisSceneData, fairyDroppingActors);
             WriteOutput(" time to generate candidate list: " + GET_TIME(thisSceneData.StartTime) + "ms");
 
             int loopsCount = 0;
-            int freeEnemyRate = 75; // starting value, as attempts increase this shrinks which lowers budget
             var previousyAssignedCandidate = new List<Actor>();
-            var chosenReplacementEnemies = new List<Actor>(); // TODO chopping block
             thisSceneData.SceneFreeActors = GetSceneFreeActors(scene);
 
-            // keeping track of ram space usage is getting ugly, try some OO to clean it up
+            // keeping track of RAM space usage is getting ugly, try some OO to clean it up
             thisSceneData.ActorCollection = new ActorsCollection(scene);
 
             WriteOutput(" time to separate map/time actors: " + GET_TIME(thisSceneData.StartTime) + "ms");
@@ -2203,6 +2487,7 @@ namespace MMR.Randomizer
             while (true) /// bogo sort, try to find an actor/object combos that fits in the space we took it out of
             {
                 #region loopCounting
+                /// preventing inf looping, and re-adjustments due to poor looping results not finding a solution
                 bogoLog.Clear();
                 bogoStartTime = DateTime.Now;
 
@@ -2232,18 +2517,17 @@ namespace MMR.Randomizer
                     FlushLog();
                     throw new Exception(error);
                 }
-                if (loopsCount > 50 && freeEnemyRate > 0) // reduce free enemy rate 1 percentage per loop over 50
+                if (loopsCount > 50 && thisSceneData.FreeActorRate > 0) // reduce free enemy rate 1 percentage per loop over 50
                 {
-                    freeEnemyRate--; 
+                    thisSceneData.FreeActorRate--; 
                 }
                 #endregion
 
                 ShuffleObjects(thisSceneData);
                 WriteOutput(" objects pick time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
-
                 // enemizer is not smart enough if the new chosen objects are copies, and the game allows objects to load twice
-                // for now, remove them here after actors are chosen to reduce object size
+                // for now remove them here after objects are chosen, to reduce object size
                 StringBuilder objectReplacementLog = new StringBuilder();
                 TrimObjectList(thisSceneData, objectReplacementLog);
                 WriteOutput(" object trim time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
@@ -2255,7 +2539,7 @@ namespace MMR.Randomizer
                     //   issues: we would need to do a final actor trim pass after
 
                     var temporaryMatchEnemyList = new List<Actor>();
-                    List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(u => u.ObjectID == thisSceneData.ChosenReplacementObjects[objectIndex].ChosenV);
+                    List<Actor> subMatches = thisSceneData.CandidatesPerObject[objectIndex].FindAll(act => act.ObjectID == thisSceneData.ChosenReplacementObjects[objectIndex].ChosenV);
 
                     AddCompanionsToCandidates(thisSceneData, objectIndex, subMatches);
                     WriteOutput("  companions adding time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
@@ -2263,11 +2547,9 @@ namespace MMR.Randomizer
                     ShuffleActors(thisSceneData, objectIndex, subMatches, previousyAssignedCandidate, temporaryMatchEnemyList);
                     WriteOutput("  match time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
-                    TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList, freeEnemyRate);
+                    TrimAllActors(thisSceneData, previousyAssignedCandidate, temporaryMatchEnemyList);
                     WriteOutput("  trim/free time: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
-                    // add temp list back to chosenRepalcementEnemies
-                    //chosenReplacementEnemies.AddRange(temporaryMatchEnemyList);
                     previousyAssignedCandidate.Clear();
                 } // end for actors per object
 
@@ -2288,7 +2570,7 @@ namespace MMR.Randomizer
 
                 WriteOutput(" set for size check: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
-                if (thisSceneData.ActorCollection.isSizeAcceptable())
+                if (thisSceneData.ActorCollection.isSizeAcceptable()) // SUCCESS
                 {
                     WriteOutput(" after issizeacceptable: " + GET_TIME(bogoStartTime) + "ms", bogoLog);
 
@@ -2302,41 +2584,46 @@ namespace MMR.Randomizer
             } // end while searching for compatible object/actors
 
             WriteOutput(" Loops used for match candidate: " + loopsCount);
+
+            #region Debugging: Actor Forcing
+            #if DEBUG
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            #if DEBUG
             if (scene.SceneEnum == GameObjects.Scene.AstralObservatory) // force specific actor/variant for debugging
             {
                 thisSceneData.Actors[1].ChangeActor(GameObjects.Actor.FlyingPot, vars: 0x001); // first torc
-
             }
             /////////////////////////////
             #endif
             /////////////////////////////
+            #endregion
 
-            FixPatrollingEnemyVars(thisSceneData); // any patrolling types need their vars fixed
-            FixKickoutEnemyVars(thisSceneData);
-            FixRedeadSpawnScew(thisSceneData);
-            FixBrokenActorSpawnCutscenes(thisSceneData);
-
-            // print debug actor locations
-            for (int i = 0; i < thisSceneData.Actors.Count; i++)
-            {
-                WriteOutput($"Old Enemy actor:[{thisSceneData.Actors[i].OldName}] " +
-                    $"map [{thisSceneData.Actors[i].Room.ToString("D2")}] " +
-                    $"was replaced by new enemy: [{thisSceneData.Actors[i].Variants[0].ToString("X4")}]" +
-                    $"[{thisSceneData.Actors[i].Name}]");
-            }
-
+            FixPathingVars(thisSceneData); // any patrolling types need their vars fixed
+            FixKickoutEnemyVars(thisSceneData); // and same with the two actors that have kickout addresses
             FixSwitchFlagVars(thisSceneData);
             FixTreasureFlagVars(thisSceneData);
+            FixRedeadSpawnScew(thisSceneData); // redeads don't like x/z rotation
+            FixBrokenActorSpawnCutscenes(thisSceneData); // some actors dont like having bad cutscenes
+            FixGroundToFlyingActorHeights(thisSceneData); // putting flying actors on ground spawns can be weird
+
+            // print debug actor locations
+            WriteOutput("####################################################### ");
+            for (int a = 0; a < thisSceneData.Actors.Count; a++)
+            {
+                var actor = thisSceneData.Actors[a];
+                WriteOutput($"  Old Enemy actor:[{actor.OldName}] " +
+                    $"map [{actor.Room.ToString("D2")}] " +
+                    $"was replaced by new enemy: [{actor.Variants[0].ToString("X4")}]" +
+                    $"[{actor.Name}]");
+            }
+            WriteOutput("####################################################### ");
 
             // realign all scene companion actors
             MoveAlignedCompanionActors(thisSceneData.Actors, thisSceneData.RNG, thisSceneData.Log);
 
             SetSceneEnemyObjects(scene, thisSceneData.ChosenReplacementObjectsPerMap);
-            SceneUtils.UpdateScene(scene);
+            SceneUtils.UpdateScene(scene); // writes scene actors back to binary
             WriteOutput( " time to complete randomizing scene: " + GET_TIME(thisSceneData.StartTime) + "ms");
             FlushLog();
         }
@@ -2376,7 +2663,7 @@ namespace MMR.Randomizer
                 if (command == "ground_variants")
                 {
                     var newGroundVariants = valueStr.Split(",").ToList();
-                    var newGroundVariantsShort = newGroundVariants.Select(u => Convert.ToInt32(u.Trim(), 16)).ToList();
+                    var newGroundVariantsShort = newGroundVariants.Select(variant => Convert.ToInt32(variant.Trim(), 16)).ToList();
 
                     newInjectedActor.groundVariants = newGroundVariantsShort;
                     continue;
@@ -2384,7 +2671,7 @@ namespace MMR.Randomizer
                 if (command == "flying_variants")
                 {
                     var newFlyingVariants = valueStr.Split(",").ToList();
-                    var newFlyingVariantsShort = newFlyingVariants.Select(u => Convert.ToInt32(u.Trim(), 16)).ToList();
+                    var newFlyingVariantsShort = newFlyingVariants.Select(variant => Convert.ToInt32(variant.Trim(), 16)).ToList();
 
                     newInjectedActor.flyingVariants = newFlyingVariantsShort;
                     continue;
@@ -2408,9 +2695,13 @@ namespace MMR.Randomizer
                 {
                     newInjectedActor.objID = value;
                 }
-                else if (command == "file_id")
+                else if (command == "file_id" || command == "actor_fid")
                 {
                     newInjectedActor.fileID = Convert.ToInt32(valueStr, fromBase: 10);
+                }
+                else if (command == "object_fid")
+                {
+                    newInjectedActor.objectFid = Convert.ToInt32(valueStr, fromBase: 10);
                 }
 
                 var uvalue = Convert.ToUInt32(valueStr, fromBase: 16);
@@ -2426,7 +2717,7 @@ namespace MMR.Randomizer
             } // for each line end
 
             // update actor init vars in our actor
-            var actorGameObj = vanillaActors.Find(u =>u.FileListIndex() == newInjectedActor.fileID);
+            var actorGameObj = vanillaActors.Find(act => act.FileListIndex() == newInjectedActor.fileID);
             if (actorGameObj != 0)
             {
                 var initVarsAttr = actorGameObj.GetAttribute<ActorInitVarOffsetAttribute>();
@@ -2451,7 +2742,12 @@ namespace MMR.Randomizer
 
             if ( ! Directory.Exists(directory)) return;
 
+            uint END_VANILLA_OBJ_SEGMENT = 0x01E5E600;
+
             InjectedActors.Clear();
+            var codeFile = RomData.MMFileList[31].Data;
+            var objectTableOffset = 0x11CC80;
+
 
             foreach (string filePath in Directory.GetFiles(directory, "*.mmra"))
             {
@@ -2488,13 +2784,50 @@ namespace MMR.Randomizer
                             }
 
                             var injectedActor = ParseMMRAMeta(new StreamReader(metaFileEntry.Open(), Encoding.Default).ReadToEnd());
-
                             injectedActor.filename = filePath; // debugging
+
+                            // check for duplicate actor
+                            var copyOvlFileSearch = InjectedActors.Find(act => act.fileID == injectedActor.fileID);
+                            if (copyOvlFileSearch != null)
+                            {
+                                throw new Exception("\n\n" +
+                                    "ERROR (Actor Inject):\n" +
+                                    " Two separate actor files are trying to overwrite the same file.\n" +
+                                    "File 1: " + injectedActor.filename + "\n" +
+                                    "File 2: " + copyOvlFileSearch.filename + "\n\n" +
+                                    "Please remove one before building another seed.\n");
+                            }
+
+                            // we need to inject actors if we find them
+                            // TODO move this to a "load all objects" separate function where we rank them by size
+                            // so we can re-use some old spots instead of just extending
+                            var objectFileEntry = zip.GetEntry(filename + ".object");
+                            if (objectFileEntry != null) // object included
+                            {
+                                newBinLen = ((int)objectFileEntry.Length) + ((int)objectFileEntry.Length % 0x10); // dma padding
+                                var objectData = new byte[newBinLen];
+                                objectFileEntry.Open().Read(objectData, 0, objectData.Length);
+
+                                RomData.MMFileList[injectedActor.objectFid].Data = objectData;
+                                RomData.MMFileList[injectedActor.objectFid].WasEdited = true;
+
+                                // we need to update the object table with the size of the new object
+                                uint newSegmentROMStart = END_VANILLA_OBJ_SEGMENT;
+                                uint newSegmentROMEnd = newSegmentROMStart + (uint) objectData.Length;
+                                if (newSegmentROMEnd > 0x02000000)
+                                {
+                                    throw new Exception("Object segment overflow, reduce your actors that use custom objects");
+                                }
+                                END_VANILLA_OBJ_SEGMENT = newSegmentROMEnd;
+                                ReadWriteUtils.Arr_WriteU32(codeFile, (objectTableOffset + (2 * 4 * injectedActor.objID)), newSegmentROMStart);
+                                ReadWriteUtils.Arr_WriteU32(codeFile, (objectTableOffset + (2 * 4 * injectedActor.objID + 4)), newSegmentROMEnd);
+                            }
+
 
                             InjectedActors.Add(injectedActor);
 
                             // behavior now differs between replacement actors and brand new
-                            var replacementActorSearch = ReplacementCandidateList.Find(u => u.ActorID == injectedActor.actorID);
+                            var replacementActorSearch = ReplacementCandidateList.Find(act => act.ActorID == injectedActor.actorID);
                             if (replacementActorSearch != null) // previous actor
                             {
                                 replacementActorSearch.UpdateActor(injectedActor);
@@ -2647,7 +2980,7 @@ namespace MMR.Randomizer
             var actorList = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>().ToList();
             actorList.Remove(GameObjects.Actor.Empty);
             actorList.Remove(GameObjects.Actor.NULL);
-            actorList.RemoveAll(u => u.FileListIndex() < 38);
+            actorList.RemoveAll(act => act.FileListIndex() < 38);
             var fidSortedActors = actorList.OrderBy(x => x.FileListIndex()).ToList();
 
             uint previousLastVRAMEnd = theEndOfTakenVRAM;
@@ -2659,63 +2992,73 @@ namespace MMR.Randomizer
                 var fileID = injectedActor.fileID;
                 MMFile file = RomData.MMFileList[fileID];
 
-                int entryLoc = actorOvlTblOffset + (actorID * 32); // overlay table is sorted by actorID
+                try
+                {
 
-                uint oldVROMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x0);
-                uint oldVROMEnd   = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x4);
+                    int entryLoc = actorOvlTblOffset + (actorID * 32); // overlay table is sorted by actorID
 
-                // if build knows where VRAM used to start for this actor, use that
-                // else, use the old VRAM build for the given actor in this slot
-                uint oldVRAMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x08);
-                oldVRAMStart = (injectedActor.buildVramStart != 0) ? (injectedActor.buildVramStart) : (oldVRAMStart);
-                
-                // if it was edited, its not compressed, get new filesize, else diff old address values
-                var uncompresedVROMSize = (file.WasEdited) ? (file.Data.Length) : (file.End - file.Addr);
+                    uint oldVROMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x0);
+                    uint oldVROMEnd = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x4);
 
-                // for now since we have the space, just move all injected actors to the end, even if they are smaller
-                // TODO make a list of previously free holes we can stick stuff into and check that
-                file.Addr = previousLastVROMEnd;
-                file.End  = previousLastVROMEnd + uncompresedVROMSize;
-                previousLastVROMEnd = file.End;
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint) file.Addr);
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint) file.End);
+                    // if build knows where VRAM used to start for this actor, use that
+                    // else, use the old VRAM build for the given actor in this slot
+                    uint oldVRAMStart = ReadWriteUtils.Arr_ReadU32(actorOvlTblData, entryLoc + 0x08);
+                    oldVRAMStart = (injectedActor.buildVramStart != 0) ? (injectedActor.buildVramStart) : (oldVRAMStart);
 
-                // we know where in the overlay pointers exist that need to be updated for VROM->VRAM
-                // .reloc stores this info for us as a table of words that contain enough info to help us update
-                // the very last byte in the overlay is (from end) offset
-                //   of the table that declares size of text/data/rodata/bss
-                // following those is a count of the reloc entries, followed by the actual entries
-                var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
-                // the table pointer at the end is an offset from the end, we need to swap it
-                int tableOffset = (int)(file.Data.Length - relocSize);
+                    // if it was edited, its not compressed, get new filesize, else diff old address values
+                    var uncompresedVROMSize = (file.WasEdited) ? (file.Data.Length) : (file.End - file.Addr);
 
-                // the section table only contains section sizes, we need to walk it to know the offsets
-                var sectionOffsets = new int[4];
-                sectionOffsets[0] = 0; // text (always at the start for our overlay system)
-                sectionOffsets[1] = sectionOffsets[0] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 0); // data
-                sectionOffsets[2] = sectionOffsets[1] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 4); // rodata
-                sectionOffsets[3] = sectionOffsets[2] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 8); // bss
+                    // for now since we have the space, just move all injected actors to the end, even if they are smaller
+                    // TODO make a list of previously free holes we can stick stuff into and check that
+                    file.Addr = previousLastVROMEnd;
+                    file.End = previousLastVROMEnd + uncompresedVROMSize;
+                    previousLastVROMEnd = file.End;
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0, (uint)file.Addr);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x4, (uint)file.End);
 
-                // have to move the overlay vram location assume its bigger
-                // calculate the new VRAM and offset for our new overlay VRAM location
-                var  newVRAMSize   = sectionOffsets[3] + relocSize;
-                // TODO check if we can place it in an old hole left behind by a previously moved actor
-                var newVRAMStart = previousLastVRAMEnd;
-                var newVRAMEnd    = (uint)(newVRAMStart + newVRAMSize);
-                var newVRAMOffset = newVRAMStart - oldVRAMStart;
+                    // we know where in the overlay pointers exist that need to be updated for VROM->VRAM
+                    // .reloc stores this info for us as a table of words that contain enough info to help us update
+                    // the very last byte in the overlay is (from end) offset
+                    //   of the table that declares size of text/data/rodata/bss
+                    // following those is a count of the reloc entries, followed by the actual entries
+                    var relocSize = ReadWriteUtils.Arr_ReadU32(file.Data, file.Data.Length - 4);
+                    // the table pointer at the end is an offset from the end, we need to swap it
+                    int tableOffset = (int)(file.Data.Length - relocSize);
 
-                // all the pointers and vram locations in the file need to be updated too
-                UpdateOverlayVRAMReloc(file, sectionOffsets, newVRAMOffset);
+                    // the section table only contains section sizes, we need to walk it to know the offsets
+                    var sectionOffsets = new int[4];
+                    sectionOffsets[0] = 0; // text (always at the start for our overlay system)
+                    sectionOffsets[1] = sectionOffsets[0] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 0); // data
+                    sectionOffsets[2] = sectionOffsets[1] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 4); // rodata
+                    sectionOffsets[3] = sectionOffsets[2] + (int)ReadWriteUtils.Arr_ReadU32(file.Data, tableOffset + 8); // bss
 
-                uint newInitVarAddr = newVRAMStart + injectedActor.initVarsLocation;
+                    // have to move the overlay vram location assume its bigger
+                    // calculate the new VRAM and offset for our new overlay VRAM location
+                    var newVRAMSize = sectionOffsets[3] + relocSize;
+                    // TODO check if we can place it in an old hole left behind by a previously moved actor
+                    var newVRAMStart = previousLastVRAMEnd;
+                    var newVRAMEnd = (uint)(newVRAMStart + newVRAMSize);
+                    var newVRAMOffset = newVRAMStart - oldVRAMStart;
 
-                // write the VRAM sections of the overlay table entry
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x08, newVRAMStart);
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0C, newVRAMEnd);
-                ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newInitVarAddr);
+                    // all the pointers and vram locations in the file need to be updated too
+                    UpdateOverlayVRAMReloc(file, sectionOffsets, newVRAMOffset);
 
-                previousLastVRAMEnd = newVRAMEnd + (newVRAMEnd % 0x10); // not sure if dma padding matters here
-                RomData.MMFileList[fileID] = file;
+                    uint newInitVarAddr = newVRAMStart + injectedActor.initVarsLocation;
+
+                    // write the VRAM sections of the overlay table entry
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x08, newVRAMStart);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x0C, newVRAMEnd);
+                    ReadWriteUtils.Arr_WriteU32(actorOvlTblData, entryLoc + 0x14, newInitVarAddr);
+
+                    previousLastVRAMEnd = newVRAMEnd + (newVRAMEnd % 0x10); // not sure if dma padding matters here
+                    RomData.MMFileList[fileID] = file;
+
+                } catch (Exception e)
+                {
+                    throw new Exception($"Error during actor overlay table reorder of" +
+                        $"  actor {actorID} file {fileID}:\n" +
+                        e.ToString());
+                }
             }// end Foreach overlay in overlaylist
         } // end UpdateOverlayTable
 
@@ -2727,7 +3070,7 @@ namespace MMR.Randomizer
             if (InjectedActors.Count == 0)  return;
 
             var freeOverlaySlots = Enum.GetValues(typeof(GameObjects.Actor)).Cast<GameObjects.Actor>()
-                        .Where(u => u.ToString().Contains("Empty")).ToList();
+                        .Where(act => act.ToString().Contains("Empty")).ToList();
 
             // in case DMA is restricted, start with a list of known bunk files
             var freeFileSlots = new List<int>
@@ -2764,7 +3107,7 @@ namespace MMR.Randomizer
                 }
             }
 
-            foreach (var injectedActor in InjectedActors.FindAll(u => u.actorID == 0))
+            foreach (var injectedActor in InjectedActors.FindAll(act => act.actorID == (int) GameObjects.Actor.NULL))
             {
                 /// brand new actors, not replacement
                 if (injectedActor.buildVramStart == 0)
@@ -2798,11 +3141,12 @@ namespace MMR.Randomizer
 
         #endregion
 
-        public static void ShuffleEnemies(OutputSettings settings, Random random)
+        public static void ShuffleEnemies(OutputSettings settings, Models.RandomizedResult randomized, int randomizedSeed)
         {
             try
             {
-                seedrng = random;
+                seedrng = new Random(randomizedSeed);
+                _randomized = randomized;
                 DateTime enemizerStartTime = DateTime.Now;
 
                 // for dingus that want moonwarp, re-enable dekupalace
@@ -2825,28 +3169,32 @@ namespace MMR.Randomizer
                 InjectNewActors();
 
                 var newSceneList = RomData.SceneList;
-                newSceneList.RemoveAll(u => SceneSkip.Contains(u.SceneEnum) );
+                newSceneList.RemoveAll(scene => SceneSkip.Contains(scene.SceneEnum) );
 
                 // if using parallel, move biggest scenes to the front so that we dont get stuck waiting at the end for one big scene with multiple dead cores idle
                 // LIFO, biggest scenes at the back of this list of big scenes
                 // this should be all scenes that took > 500ms on Isghj's computer during alpha ~dec 2020
                 //  this is old, should be re-evaluated with different code
                 foreach (var sceneIndex in new int[]{ 1442, 1353, 1258, 1358, 1449, 1291, 1224,  1522, 1388, 1165, 1421, 1431, 1241, 1222, 1330, 1208, 1451, 1332, 1446, 1310 }){
-                    var item = newSceneList.Find(u => u.File == sceneIndex);
+                    var item = newSceneList.Find(scene => scene.File == sceneIndex);
                     newSceneList.Remove(item);
                     newSceneList.Insert(0, item);
                 }
-                int seed = random.Next(); // order is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
+                //int seed = random.Next(); // order is up to the cpu scheduler, to keep these matching the seed, set them all to start at the same value
+                int seed = randomizedSeed;
+
+                var previousThreadPriority = Thread.CurrentThread.Priority;
+                Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
 
                 Parallel.ForEach(newSceneList.AsParallel().AsOrdered(), scene =>
                 //foreach (var scene in newSceneList) // sequential for debugging only
                 {
-                    var previousThreadPriority = Thread.CurrentThread.Priority;
-                    Thread.CurrentThread.Priority = ThreadPriority.Lowest; // do not SLAM
                     SwapSceneEnemies(settings, scene, seed);
-                    Thread.CurrentThread.Priority = previousThreadPriority;
                 });
                 //}
+
+                Thread.CurrentThread.Priority = previousThreadPriority;
+
 
                 EnemizerLateFixes();
                 //LowerEnemiesResourceLoad();
@@ -2860,7 +3208,8 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 39.0\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 44.4\n");
+                    sw.Write("seed: [ " + seed + " ]");
                 }
             }
             catch (Exception e)
@@ -2888,10 +3237,11 @@ namespace MMR.Randomizer
         public BaseEnemiesCollection(List<Actor> actorList, List<int> objList, Scene s)
         {
             oldActorList = actorList;
-            var distinctActors = actorList.Select(u => u).DistinctBy(u => u);
+            //var distinctActors = actorList.Select(act => act).DistinctBy(act => act);
+            var distinctActors = actorList.DistinctBy(act => act);
             OverlayRamSize = distinctActors.Select(x => ActorUtils.GetOvlCodeRamSize(x.ActorID)).Sum();
-            ActorInstanceSum = actorList.Select(u => u.ActorID)
-                                        .Select(x => ActorUtils.GetOvlInstanceRamSize(x, Enemies.InjectedActors)).Sum();
+            ActorInstanceSum = actorList.Select(act => act.ActorID)
+                                        .Select(act => ActorUtils.GetOvlInstanceRamSize(act, Enemies.InjectedActors)).Sum();
             this.ObjectList = objList;
             this.objectSizes = objList.Select(x => ObjUtils.GetObjSize(x)).ToArray();
             this.ObjectRamSize = objectSizes.Sum();
@@ -2928,6 +3278,9 @@ namespace MMR.Randomizer
 
     }
 
+    /// <summary>
+    /// These classes down here exist to attempt to book-keep the ovl/struct/object sizes of all room/day/night combos
+    /// </summary>
     public class MapEnemiesCollection
     {
         public BaseEnemiesCollection day = null;
@@ -2938,8 +3291,8 @@ namespace MMR.Randomizer
             // split enemies into day and night, init two types
             int dayFlagMask = 0x2AA; // nigth is just shifted to the right by one
 
-            day = new BaseEnemiesCollection(actorList.FindAll(u => (u.GetTimeFlags() & dayFlagMask) > 0), objList, scene);
-            night = new BaseEnemiesCollection(actorList.FindAll(u => (u.GetTimeFlags() & (dayFlagMask >> 1)) > 0), objList, scene);
+            day = new BaseEnemiesCollection(actorList.FindAll(act => (act.GetTimeFlags() & dayFlagMask) > 0), objList, scene);
+            night = new BaseEnemiesCollection(actorList.FindAll(act => (act.GetTimeFlags() & (dayFlagMask >> 1)) > 0), objList, scene);
         }
     }
 

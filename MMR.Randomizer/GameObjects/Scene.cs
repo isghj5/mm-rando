@@ -3,7 +3,7 @@ using MMR.Randomizer.Attributes.Entrance;
 
 namespace MMR.Randomizer.GameObjects
 {
-    [System.Diagnostics.DebuggerDisplay("{ToString()}")]
+    //[System.Diagnostics.DebuggerDisplay("{ToString()}")] // useless for enums
     public enum Scene
     {
         // base enumerator value matches the ST column, SceneInternal ID matches ID column (F)
@@ -61,9 +61,10 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerSceneEnemyReplacementBlock(Actor.Peahat, // hidden or very weak enemies suck here, but they are very common in this slot
             Actor.Bo, Actor.Nejiron, Actor.RedBubble, Actor.Leever, Actor.Wolfos, Actor.Beamos)] // beamos is just because bomb locking this check early is prime seed killer
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
-            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, Actor.Bumper /*, Actor.PatrollingPirate */ )]
+            Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, Actor.WarpDoor,
+            Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.ClocktowerGearsAndOrgan /*, Actor.PatrollingPirate */ )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BioDekuBaba,
-            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // 
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // they can extend so far they can block the door leading out
         Grottos = 0x0A,
 
         // Unused = 0x0B,
@@ -94,11 +95,12 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x16)]
         [ClearEnemyPuzzleRooms(4, 7)]// basement lava
         [FairyDroppingEnemies(1, 2)] // eygore
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RealBombchu,
+            Actor.WarpDoor)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Beamos,
             Actor.IkanaGravestone, Actor.Bumper, Actor.En_Ani)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Hiploop,
             Actor.En_Ani, Actor.Bumper, Actor.Tijo)]
-
         StoneTowerTemple = 0x13,
 
         [FileID(1188)]
@@ -162,6 +164,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x21)]
         // 11 dinofos room, 6/12 wizrobe
         [ClearEnemyPuzzleRooms(1, 2, 5, 6, 9)] // 1:wolfos room, 2: east freezard, 5: north freezard, 6: wizr1, 9:chu room
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Wolfos, // can cover a switch, don't allow problem actors
+            Actor.WarpDoor, Actor.WarpToTrialEntrance, Actor.ClocktowerGearsAndOrgan, Actor.Bumper, Actor.IkanaGravestone, Actor.Tijo)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RedBubble, // spawns in hot lava, keep wood enemies out
             Actor.Peahat, Actor.MadShrub, Actor.Postbox, Actor.DekuBaba, Actor.DekuBabaWithered, Actor.Freezard, Actor.Eeno, Actor.Wolfos, Actor.Dinofos, Actor.Snapper)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Bo, // spawns in hot lava, keep wood enemies out
@@ -170,6 +174,7 @@ namespace MMR.Randomizer.GameObjects
             Actor.PoeSisters, // weird behavior, if the killing blow of meg at long range can stop chests from spawning
             Actor.CircleOfFire, // if it gets placed on the one on top of a chest the player is screwed
             Actor.DragonFly, // if you kill it at long range or such that its dying body falls to first floor it wont count
+            Actor.WarpDoor, // Cannot walk through them to get to the chest under
             Actor.Wolfos)] // wolfos: ice wolfos can push the regular actual dog backwards through the wall
         [FairyDroppingEnemies(11, 2, 3)] // dinofos 
         SnowheadTemple = 0x1E,
@@ -211,6 +216,8 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x29)]
         [EnemizerSceneEnemyReplacementBlock(Actor.Scarecrow, // can block the stairs
             Actor.ClocktowerGearsAndOrgan)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // can block the stairs
+            Actor.ClocktowerGearsAndOrgan)]
         AstralObservatory = 0x26, // and sewer leading to it
 
         [FileID(1301)]
@@ -219,6 +226,9 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1304)]
         [SceneInternalId(0x2B)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Torch, // can block the stairs
+            Actor.IceBlock,  // the big one can be too big
+            Actor.Dexihand)] // if it grabs you as you fall into a grotto hole it can hardlock
         DekuPalace = 0x28,
 
         [FileID(1308)]
@@ -273,9 +283,10 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1332)]
         [SceneInternalId(0x38)]
-        //[EnemizerSceneEnemyReplacementBlock(Actor.Leever, Actor.PoeBalloon)] // .. why?
         [EnemizerSceneEnemyReplacementBlock(Actor.LikeLike,
-            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo, Actor.Bombiwa, Actor.BronzeBoulder)]
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, Actor.Tijo,
+            Actor.Bombiwa, Actor.BronzeBoulder, Actor.CircleOfFire,
+            Actor.RegularZora, Actor.SwimmingZora, Actor.WarpDoor)]
         ZoraCape = 0x35,
 
         [FileID(1334)]
@@ -340,7 +351,8 @@ namespace MMR.Randomizer.GameObjects
         //  we want the hiploop to be non-blocking actors, making them killable with this flag does the job
         [FairyDroppingEnemies(24, 25, 26)] // hiploops
         [EnemizerSceneEnemyReplacementBlock(Actor.Hiploop, // respawning bo can show up here, but I dont want to mark the whole room to not place respawning enemies
-            Actor.Wolfos, Actor.Peahat, Actor.Seth1, Actor.Tijo, Actor.ArmosStatue)] // blocking enemies (wolfos:iceblock)
+            Actor.Peahat, Actor.Seth1, Actor.Tijo, Actor.ArmosStatue, Actor.ClocktowerGearsAndOrgan, // blocking bridges
+            Actor.Wolfos)] // wolfos:iceblock
         Woodfall = 0x43,
 
         [FileID(1364)]
@@ -422,6 +434,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1442)]
         [SceneInternalId(0x58)]
+        [EnemizerSceneEnemyReplacementBlock(Actor.Beamos,
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // can block the whole assension
         StoneTower = 0x55,
 
         [FileID(1444)]
@@ -462,9 +476,10 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1466)]
         [SceneInternalId(0x61)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Gorman,
-            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LikeLike, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
+            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LikeLike)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.RosaSisters,
-            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.Eyegore)]
+            Actor.StockpotBell, Actor.Bumper, Actor.CircleOfFire, Actor.LightBlock,
+            Actor.Eyegore)]
         StockPotInn = 0x5E,
 
         [FileID(1472)]
@@ -494,6 +509,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1502)]
         [SceneInternalId(0x68)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SmithyGoronAndGo,
+            Actor.PatrollingPirate, Actor.DekuPatrolGuard)]
         BombShop = 0x65,
 
         [FileID(1504)]
@@ -503,7 +520,7 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1506)]
         [SceneInternalId(0x6A)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Treee,
-            Actor.PoeBalloon, Actor.BigPoe, Actor.CircleOfFire, Actor.FloorMaster,
+            Actor.PoeBalloon, Actor.BigPoe, Actor.CircleOfFire, Actor.FloorMaster, Actor.LightBlock,
             Actor.GibdoIkana, Actor.ReDead, Actor.GibdoWell, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
         GormanTrack = 0x67,
 
@@ -517,6 +534,11 @@ namespace MMR.Randomizer.GameObjects
             Actor.ClocktowerGearsAndOrgan, Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // organ is huge, covers the mayor's door
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BomberHideoutGuard,
+                Actor.Peahat, Actor.Tijo, Actor.ArmosStatue, Actor.ClocktowerGearsAndOrgan, Actor.CircleOfFire, Actor.GibdoWell, // worried about big blocking actors
+                Actor.Wolfos)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BombersYouChase,
+            Actor.IceBlock)] // large one can block teh whole path to hidden chest
         EastClockTown = 0x69,
 
         [FileID(1512)]
@@ -534,6 +556,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1516)]
         [SceneInternalId(0x6F)]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Carpenter,
+            Actor.IceBlock, Actor.Bumper, Actor.CircleOfFire, Actor.GoronElder, Actor.LightBlock, // can block day 3 chest, TODO move it so we can re-enable
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator, // chest can raise to match height,putting it out of reach
             Actor.PatrollingPirate)] // could be annoying, hard to leave
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GateSoldier,
             Actor.PatrollingPirate, Actor.ClocktowerGearsAndOrgan)] // could be annoying, hard to leave

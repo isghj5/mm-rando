@@ -146,22 +146,22 @@ namespace MMR.Randomizer.Extensions
             {
                 return new List<int>();
 
-            } else {
-
-                var unplacable = new List<int>();
-                foreach(var combo in limitedVariantsAttrs)
-                {
-                    if (combo.RoomMax == 0)
-                    {
-                        unplacable.AddRange(combo.Variants);
-                    }
-                }
-
-                return unplacable;
             }
+
+            var unplacable = new List<int>();
+            foreach(var combo in limitedVariantsAttrs)
+            {
+                if (combo.RoomMax == 0)
+                {
+                    unplacable.AddRange(combo.Variants);
+                }
+            }
+
+            return unplacable;
         }
 
-
+        // depreciated for the actor type, rather than this actor enum version
+        /*
         public static List<int> CompatibleVariants(this Actor actor, Actor otherActor, Random rng, int oldActorVariant)
         {
             // with mixed types, typing could be messy, keep it hidden here
@@ -209,7 +209,7 @@ namespace MMR.Randomizer.Extensions
                     {
                         ourAttr = actor.GetAttribute<GroundVariantsAttribute>();
                     }
-                } */
+                }
 
                 // large chance of pathing enemies allowing ground or flying
                 if (randomVariant == ActorType.Pathing &&  ourAttr != null && otherAttr == null && rng.Next(100) < 80)
@@ -248,7 +248,7 @@ namespace MMR.Randomizer.Extensions
 
             return null;
         }
-
+*/
 
         public static ActorType GetType(this Actor actor, int variant)
         {
@@ -383,6 +383,7 @@ namespace MMR.Randomizer.Extensions
             return actor.GetAttribute<OnlyOneActorPerRoom>() != null;
         }
 
+        // as this is from the enum values, this happens before injected actors, if you see an injected actor getting snipped its fine
         public static bool NoPlacableVariants(this Actor actor)
         {
             var allVariantsAttrs = actor.GetAttributes<ActorVariantsAttribute>();
@@ -395,7 +396,7 @@ namespace MMR.Randomizer.Extensions
                 var allVariants = attr.Variants;
                 for (int i = 0; i < allVariants.Count(); i++)
                 {
-                    var max = VariantMaxCountPerRoom(actor, i);
+                    var max = VariantMaxCountPerRoom(actor, allVariants[i]);
                     // if -1, no max. if 1 or greater, does not quality as zero
                     if (max != 0)
                     {

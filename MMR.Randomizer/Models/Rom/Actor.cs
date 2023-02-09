@@ -80,6 +80,7 @@ namespace MMR.Randomizer.Models.Rom
             this.VariantsWithRoomMax = actor.GetAttributes<VariantsWithRoomMax>().ToList();
             this.OnlyOnePerRoom = actor.GetAttribute<OnlyOneActorPerRoom>();
             this.RespawningVariants = actor.RespawningVariants();
+            this.UnplaceableVariants = actor.GetUnPlacableVariants();
         }
 
         public Actor(InjectedActor injected, string name)
@@ -106,6 +107,7 @@ namespace MMR.Randomizer.Models.Rom
             // wasnt there a list of lists to static list we had?
             this.Variants = injected.groundVariants.Concat(injected.flyingVariants).ToList();
             this.VariantsWithRoomMax = injected.limitedVariants;
+            this.UnplaceableVariants = this.ActorEnum.GetUnPlacableVariants();
             this.OnlyOnePerRoom = injected.onlyOnePerRoom;
             this.InjectedActor = injected;
         }
@@ -178,6 +180,7 @@ namespace MMR.Randomizer.Models.Rom
             }
 
             newActor.InjectedActor = this.InjectedActor;
+            newActor.UnplaceableVariants = this.UnplaceableVariants;
 
             return newActor;
         }
@@ -206,7 +209,6 @@ namespace MMR.Randomizer.Models.Rom
             this.Name        = newActorType.ToString();
             this.ActorID     = (int)newActorType;
             this.ObjectID    = newActorType.ObjectIndex();
-
 
             if (modifyOld)
             {
@@ -240,6 +242,7 @@ namespace MMR.Randomizer.Models.Rom
             this.Name           = otherActor.Name;
             this.ActorID        = otherActor.ActorID;
             this.ObjectID       = otherActor.ObjectID;
+            //this.AllVariants    = otherActor.AllVariants; // other parts of the rando assume this is static
 
             if (vars != -1)
             {
@@ -358,6 +361,12 @@ namespace MMR.Randomizer.Models.Rom
 
         public List<int> KillableVariants(List<int> acceptableVariants = null)
         {
+            var allRespawning = this.ActorEnum.GetAttribute<RespawningAllVariantsAttribute>();
+            if (allRespawning != null)
+            {
+                return new List<int>();
+            }
+
             var killableVariants = acceptableVariants != null ? acceptableVariants : this.Variants;
             var unkillableVariants = this.UnkillableVariants();
             var respawningVariants = this.RespawningVariants;
