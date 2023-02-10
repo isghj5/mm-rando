@@ -10362,6 +10362,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising to find Kafei.")]
         [ChestType(ChestTypeAttribute.ChestType.LargeGold)]
+        [HackContent(nameof(Resources.mods.fix_notebook_madame_aroma), false)]
         [GetItemIndex(0x47B), ItemPool(ItemCategory.NotebookEntries, LocationCategory.NotebookEntries, ClassicCategory.NotebookEntries)]
         NotebookPromiseMadameAroma,
 
