@@ -66,6 +66,9 @@ namespace MMR.UI.Forms
             About = new AboutForm();
             HudConfig = new HudConfigForm();
 
+            this.AllowDrop = true;
+            this.DragEnter += new DragEventHandler(Main_ItemDragEnter);
+            this.DragDrop += new DragEventHandler(Main_ItemDragDrop);
 
             Text = $"Majora's Mask Randomizer v{Randomizer.AssemblyVersion}";
         }
@@ -773,6 +776,46 @@ namespace MMR.UI.Forms
             var form = (TransformationForm)comboBox.Tag;
             var value = (Instrument)comboBox.SelectedValue;
             _configuration.CosmeticSettings.Instruments[form] = value;
+        }
+
+        protected void Main_ItemDragEnter(object sender, DragEventArgs e)
+        {
+            // required for drag and drop to work
+            if (e.Data.GetDataPresent(DataFormats.FileDrop) ||
+                e.Data.GetDataPresent(DataFormats.UnicodeText) || e.Data.GetDataPresent(DataFormats.Text))
+            {
+                e.Effect = DragDropEffects.Copy;
+            }
+        }
+
+        protected void Main_ItemDragDrop(object sender, DragEventArgs e)
+        {
+            /// If the player DragAndDrops patch files, settings files, or seed values into the GUI I want them to auto load
+
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop); // can drop multiple files, for now just one
+            if (files != null && files.Length == 1)
+            {
+                var filename = files[0];
+                if (filename.Substring(filename.Length - 4) == ".mmr")
+                {
+                    this.ttOutput.SelectedTab = this.tpPatchSettings;
+
+                    this.tPatch.Text = filename;
+                }
+
+                else if (filename.Substring(filename.Length - 5) == ".json")
+                {
+                    LoadSettings(filename); // error handling should already be contained within, right?
+                }
+
+            }
+
+            string seedText = (string)e.Data.GetData(DataFormats.Text);
+            int intTest;
+            if (seedText != null && int.TryParse(seedText, out intTest))
+            {
+                this.tSeed.Text = seedText;
+            }
         }
 
         #region Forms Code
