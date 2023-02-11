@@ -3603,6 +3603,505 @@ namespace MMR.Randomizer
 
                 ---
 
+                Now then, please choose your
+                prize:
+                20 Rupees
+                Another boat cruise
+
+                ---
+
+                All right...Choose your prize...
+ 
+                5 Rupees
+                Another boat cruise
+
+                ---
+
+                Huh? Haven't you gotten a
+                pictograph box yet?
+
+                If you take the boat cruise, they'll
+                give you one for sure. Go ask at
+                that window.
+
+                ---
+
+                What? What?!? You say that
+                gold dust is the prize for winning
+                the Patriarch's Race that's held by
+                the Gorons every spring?
+
+                ---
+
+                But...
+                If you have gold dust, I'll buy it
+                off you for 40 Rupees.
+                How about it?
+
+                ---
+
+                So, come on...Will you sell it for
+                40 Rupees?
+
+                ---
+
+                There's a Goron in this village who
+                sells Powder Kegs, which are much
+                more powerful explosives.
+
+                ---
+
+                See, it was long ago when I used
+                to use this thing called a
+                hookshot to catch fish off the
+                coast...
+
+                But I was attacked by these
+                pirates, and they took it away
+                with them.
+
+                They say...
+                it's a legendary treasure..
+
+                ---
+
+                If you're set on meeting those
+                beautiful pirates, try going to the
+                valley on the other side of town!
+
+                I've heard there's a mask there
+                that lets the wearer escape
+                detection.
+
+                ---
+
+                You want an empty bottle, don't
+                you? You never learn your lesson!
+
+                ---
+
+                Koo, koo, koo.
+                If you want an empty bottle, I can
+                give you one...
+
+                ---
+
+                What?
+                An empty bottle?
+
+                Yeah...
+                An empty bottle.
+
+                ---
+
+                To us, empty bottles are a
+                treasure.
+
+                I can't give you one just because
+                you beat my little brother.
+
+                We can't just give you one.
+
+                I'll give you one after you race
+                once more against me.
+
+                ---
+
+                But we don't have any more empty
+                bottles...do we, little brother?
+
+                No, we don't have any, big
+                brother.
+
+                ---
+
+                If only you could have done
+                something about this place
+                yesterday...
+
+                I could have given you a wallet
+                that holds more Rupees...
+
+                ---
+
+                But dang, if only you could have
+                done something two days ago...
+
+                I could have given you a wallet
+                that holds more Rupees...
+
+                ---
+
+                I told you that the beavers above
+                the waterfall on the Zora Hall
+                coast have empty bottles, right?
+
+                ---
+
+                I already told you the beavers
+                above the waterfall have empty
+                bottles, right?
+
+                ---
+
+                Hey, aren't you Mikau?
+                Were you able to get an empty
+                bottle from the beavers on top of
+                the waterfall?
+
+                ---
+
+                But what do you need an empty
+                bottle for, Mikau?
+
+                ---
+
+                The melody that summons the
+                tears of angels rests here.
+
+                ---
+
+                A vessel that holds wandering
+                spirits rests here.
+
+                ---
+
+                A piece that heals the wounded
+                soul rests here.
+
+                When one who possesses eyes
+                that can see the truth arrives,
+                the piece far below shall awaken.
+
+                ---
+
+                Look!
+                There's a mask there!!!
+
+                It's the Sun's Mask!
+
+                ---
+
+                I got the Sun's Mask back!
+
+                ---
+
+                It's 'cause I'm about as impressive
+                as a stone, right?...I'm used to it,
+                though.
+
+                ---
+
+                I am no longer part of the
+                living...My sadness to the moon...
+                I haven't left my dance to the
+                world...I am filled with regret.
+                (Translation)             
+                I am disappointed, oh moon.
+                I have died!
+
+                Oh, I planned to bring the world
+                together and stir it into a giant
+                melting pot with my dance!
+
+                If only I had taught my new dance
+                to someone...
+
+                ---
+
+                And if you are not wearing the
+                mask that houses the wandering
+                spirits, which the black-hearted
+                one near the ranch has...
+                I will not let you pass.
+                Yee-hee-hee.
+
+                ---
+
+                But if you must enter, then you
+                must obtain the mask containing
+                wandering spirits that can be
+                found near the ranch.
+
+                ---
+
+                And if you are not wearing the
+                mask containing wandering spirits
+                which the black-hearted one near 
+                the ranch has...
+                I will not let you pass.
+                Yee-hee-hee!
+
+                ---
+
+                I know of a mysterious song that
+                allows you to manipulate the flow
+                of time...
+
+                Oh, yeah!
+                Now listen up!
+
+                If you play that mysterious song
+                backward, you can slow the flow
+                of time.
+
+                And if you play each note twice
+                in a row, you can move a half
+                day forward in time!
+
+                How's that? Pretty interesting,
+                isn't it?
+
+                ---
+
+                By the way...
+
+                I know of a mysterious song that
+                allows you to manipulate the flow
+                of time...
+
+                Do you want to learn it?
+ 
+                No
+                Yes
+
+                Oh, sorry. That's too bad.
+                In that case, let me hear a song
+                written by you, baby!
+
+                Oh, yeah!
+                Now listen up!
+
+                If you play that strange song
+                backward, you can slow the
+                flow of time.
+
+                And if you play each note twice
+                in a row, you can move a half day
+                forward through time.
+
+                How's that? Pretty interesting,
+                isn't it?
+
+                ---
+
+                I know of a mysterious song that
+                allows you to manipulate the flow
+                of time...
+
+                Would you like to learn it?
+ 
+                No
+                Yes
+
+                Oh, sorry! That's too bad.
+                In that case, see you later!
+
+                Oh, yeah!
+                Now listen up!
+
+                It seems that if you play that
+                mysterious song backward, you
+                can slow the passage of time.
+
+                And if you play each note twice
+                in a row, you can move a half day
+                forward through time.
+
+                How's that? Pretty interesting,
+                isn't it?
+
+                ---
+
+                Patron Guidelines for the 
+                Milk Bar, Latte:
+
+                We offer our customers limited-
+                run milk. Thus, we are a members-
+                only establishment.
+
+                Those who do not have proof of
+                membership will be refused
+                service.
+                             The Owner
+
+                ---
+
+                Now while I stand here waiting for
+                a fairy of my own, I sell maps to
+                help out my father.
+
+                ---
+
+                Yes! Yes! In exchange, I will sell
+                you a map for cheap as a sign of
+                my friendship.
+
+                Will you buy one of Tingle's maps?
+
+                ---
+
+                If you can get back the precious
+                item that was stolen from you,
+                I will return you to normal.
+
+                ---
+
+                Oh! Oh! Ohhh!!!
+                You got it! You got it!
+                You got it! You got it!!!
+
+                Then listen to me. Please play this
+                song that I am about to perform,
+                and remember it well...
+
+                This is a melody that heals evil
+                magic and troubled spirits, turning
+                them into masks.
+
+                I am sure it will be of assistance
+                to you in the future.
+
+                Ah, yes. I give you this mask in
+                commemoration of this day.
+
+                Fear not, for the magic has been
+                sealed inside the mask.
+
+                When you wear it, you will
+                transform into the shape you just
+                were. When you remove it, you
+                will return to normal.
+
+                ---
+
+                Green hat...
+                Green clothes...
+
+                ---
+
+                This pendant...
+                Give it to Anju.
+
+                ---
+
+                It's a Bomb Bag.
+                Check it out! Buy it!
+
+                x2
+
+                ---
+
+                Tonight's bargain is
+                the All-Night Mask for use at
+                bedtime.
+
+                I forgot when this was made, but
+                it sure is a freaky mask...See?
+
+                When you put it on, you can try 
+                and try to fall asleep, but you
+                won't be able to.
+                Pretty creepy, huh?
+
+                x2
+
+                ---
+
+                All it took was one glance at that
+                Keaton Mask he was carrying for
+                me to realize that I was looking
+                at my old friend.
+                I gave him that mask a long time
+                ago when he was just li'l Kafei.
+                Didn't know he kept it that well
+                for so long...
+
+                ---
+
+                For that, I'll give you
+                Þ.
+                I'll take it
+                No thanks
+
+                ---
+
+                Oh my. And I thought we would
+                finally be able to stock Bomb Bags
+                in our store. What a shame...
+
+                ---
+
+                And I thought we would finally be
+                able to stock Bomb Bags in our
+                shop. It's too bad...
+
+                Thank you. Since he didn't make
+                off with them, I can finally stock
+                Bomb Bags at our shop. Maybe I'll
+                put 'em out tomorrow.
+
+                ---
+
+                Yes, I must thank you. It's a
+                dangerous mask, but maybe you
+                could use it to throw your own
+                festival fireworks show.
+
+                ---
+
+                We're called a Milk Bar, and we
+                serve the milk of the night.
+
+                Our most popular, of course, is
+                Chateau Romani. It's a vintage
+                milk.
+
+                It comes from Romani Ranch, and
+                the current price is 200 Rupees!
+
+                ---
+
+                Milk Road is open to traffic!
+                Good! I can deliver milk to town
+                now!
+
+                Welcome to Romani Ranch,
+                Chateau Romani's Village.
+                Enjoy yourself.
+
+                These are Romani-bred.
+                My father left them for us.
+                An inheritance from the heavens...
+
+                The special Romani-bred cows
+                are the source of Chateau Romani,
+                the most desired of forbidden
+                milk!
+                It is a mystical milk that fills you
+                with Magic Power...
+
+                If you seek the dreamy milk of
+                Chateau Romani, please visit
+                Latte, near Clock Town's East
+                Gate.
+
+                ---
+
+                The special Romani-bred cows are
+                the source of Chateau Romani, the
+                most desired of forbidden milk!
+                It is a mystical milk that fills you
+                with Magic Power...
+                If you seek the dreamy milk of
+                Chateau Romani, please visit
+                Latte, near Clock Town's
+                East Gate.
+
+                ---
+
+
+
 
 
                  */
