@@ -51,7 +51,11 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x0D)]
         CuriosityShop = 0x07,
 
-        // TestMap = 0x08,
+        //[FileID(1520)]
+        //[SceneInternalId(0x0D)]
+        //[SceneInternalId(0x0E)]
+        //[SceneInternalId(0x08)]
+        //TEST01 = 0x08, // maybe it is JP only
 
         // Unused = 0x09,
 
@@ -74,8 +78,8 @@ namespace MMR.Randomizer.GameObjects
         // Unused = 0x0D,
 
         [FileID(1520)]
-        [SceneInternalId(0x12)]
-        CutsceneMap = 0x0E,
+        [SceneInternalId(0x08)]
+        SPOT00 = 0x0E, // cutscene map
 
         // Unused = 0x0F,
 
