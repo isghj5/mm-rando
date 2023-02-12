@@ -2167,8 +2167,8 @@ namespace MMR.Randomizer.GameObjects
         [VariantsWithRoomMax(max: 1,
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
             0x7F82, 0x7F92)]
-        [VariantsWithRoomMax(max: 0, variant: 0x8)] // too big
-        [VariantsWithRoomMax(max: 0, variant: 0x7F82, 0x7F92)] // crash? reason unknown
+        [VariantsWithRoomMax(max: 0, variant: 0x8, // too big
+            0x7F82, 0x7F92)] // crash? reason unknown
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,

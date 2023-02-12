@@ -208,6 +208,8 @@ namespace MMR.Randomizer
                     var restrictedChecks = restriction.Checks;
                     for (int checkIndex = 0; checkIndex < restrictedChecks.Count; checkIndex++)
                     {
+                        if (_randomized.ItemList == null) return true; // vanilla logic
+
                         // TODO: make it random rather than yes/no
                         var itemInCheck = _randomized.ItemList.Find(item => item.NewLocation == restrictedChecks[checkIndex]).Item;
                         //var itemIsNotJunk = (itemInCheck != GameObjects.Item.IceTrap) && (junkCategories.Contains((GameObjects.ItemCategory)itemInCheck.ItemCategory()) == false);
@@ -320,20 +322,23 @@ namespace MMR.Randomizer
 
                     if (objList.Contains(obj)) { continue; } // already known
 
-                    var matchingEnemy = VanillaEnemyList.Find(act => act.ObjectIndex() == obj);
-                    if (matchingEnemy > 0                                                         // exists in the list of enemies we want to change
+                    //var matchingEnemy = VanillaEnemyList.Find(act => act.ObjectIndex() == obj);
+                    Actor matchingEnemy = thisSceneData.Actors.Find(act => act.ObjectID == obj);
+                    if (matchingEnemy == null) continue;
+
+                    GameObjects.Actor matchingEnum = matchingEnemy.ActorEnum;
+                    if (matchingEnum > 0                                                         // exists in the list of enemies we want to change
                        //&& !objList.Contains(matchingEnemy.ObjectIndex())                          // not already extracted from this scene
-                       && !matchingEnemy.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
+                       && !matchingEnum.ScenesRandomizationExcluded().Contains(scene.SceneEnum)) // not excluded from being extracted from this scene
                     {
 
-                        if (ObjectIsCheckBlocked(scene, matchingEnemy))
+                        if (ObjectIsCheckBlocked(scene, matchingEnum))
                         {
                             thisSceneData.Actors.RemoveAll(act => act.ObjectID == obj);
-                            //thisSceneData.ActorsPerObject.
                         }
                         else
                         {
-                            objList.Add(matchingEnemy.ObjectIndex());
+                            objList.Add(matchingEnum.ObjectIndex());
                         }
                         // else: ignore, the actors will remain vanilla
                     }
