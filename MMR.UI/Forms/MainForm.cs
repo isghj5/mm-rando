@@ -829,6 +829,59 @@ namespace MMR.UI.Forms
                     LoadSettings(filename); // error handling should already be contained within, right?
                 }
 
+                else if (filename.Substring(filename.Length - 4) == ".txt")
+                {
+                    // test if proper spoiler log
+                    using (StreamReader Req = new StreamReader(File.OpenRead(filename)))
+                    {
+                        // rip settings out
+
+                        //var spoilerLog = Req.ReadToEnd();
+                        var firstLine = Req.ReadLine();
+                        var secondLine = Req.ReadLine(); // don't actually want other than to test
+                        if (firstLine.Length <= 7 ||
+                            firstLine.Substring(startIndex: 0, length:8) != "Version:" ||
+                            secondLine.Substring(startIndex: 0, length: 9) != "Settings:")
+                        {
+                            throw new Exception("Could not read drag and drop contents");
+                        }
+
+
+                        // as of 1.15, spoiler logs start with a version at the top, then the settings as a json, then spoiler after
+                        // does not work, serializer doesnt like this content, not sure why
+                        /*var spoilerLogSettings = "{\r\n";
+                        while (true)
+                        {
+                            var line = Req.ReadLine();
+                            spoilerLogSettings += line + "\r\n";
+                            if (line == "}")
+                            {
+                                break;
+                            }
+                        } // */
+                        /*
+                        var i = 0;
+                        while (true)
+                        { 
+                            i++;
+                            if (Req.ReadLine() != "}") break;
+                        }
+
+                        string spoilerLogSettings = File.ReadLines(filename).Skip(2).Take(i);
+                        // */
+
+                        if (spoilerLogSettings.Length == 1)
+                        {
+                            throw new Exception("Could not read drag and drop contents");
+                        }
+
+                        LoadSettings(filename:null, stringfile: spoilerLogSettings);
+                    }
+
+
+                    // rip seed out
+                }
+
             }
 
             string seedText = (string)e.Data.GetData(DataFormats.Text);
@@ -2261,18 +2314,31 @@ namespace MMR.UI.Forms
                 _configuration.GameplaySettings.Logic = null;
             }
         }
-        
-        private void LoadSettings(string filename = null)
+
+        private void LoadSettings(string filename = null, string stringfile = null)
         {
             var path = Path.ChangeExtension(filename ?? Path.Combine(Values.MainDirectory, DEFAULT_SETTINGS_FILENAME), SETTINGS_EXTENSION);
-            if (File.Exists(path))
+            if (File.Exists(path) || stringfile != null)
             {
                 try
                 {
                     Configuration newConfiguration;
-                    using (StreamReader Req = new StreamReader(File.OpenRead(path)))
+                    if (stringfile != null)
                     {
-                        newConfiguration = Configuration.FromJson(Req.ReadToEnd());
+                        newConfiguration = Configuration.FromJson(stringfile);
+                    }
+                    else
+                    {
+                        using (StreamReader Req = new StreamReader(File.OpenRead(path)))
+                        {
+                            var fileToString = Req.ReadToEnd();
+                            newConfiguration = Configuration.FromJson(fileToString);
+                        }
+                    }
+
+                    if (newConfiguration.GameplaySettings == null)
+                    {
+                        throw new Exception("Failed to read the settings file");
                     }
 
                     if (newConfiguration.GameplaySettings.Logic != null)
