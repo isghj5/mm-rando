@@ -858,7 +858,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.ShopItemGormanBrosMilk, Item.MaskGaro)]
         [GroundVariants(0xFE03, 0xFE04)]
         [VariantsWithRoomMax(max: 0, 0xFE03, 0xFE04)] // inf loop if only one and not two
-        [EnemizerScenesExcluded(Scene.GormanTrack)] // if they are missing it crashes cremia game
+        //[EnemizerScenesExcluded(Scene.GormanTrack)] // if they are missing it crashes cremia game
         [UnkillableAllVariants]
         GormanBros = 0x67, // En_In
 

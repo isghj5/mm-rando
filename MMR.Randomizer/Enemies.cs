@@ -519,6 +519,13 @@ namespace MMR.Randomizer
 
                 // behind table should be facing table
                 tradingPost.Maps[0].Actors[4].Rotation.y = ActorUtils.MergeRotationAndFlags(rotation: 210, flags: tradingPost.Maps[0].Actors[2].Rotation.y);
+
+                // we cannot randomize gorman brothers without randomizing their chasing horse counterparts
+                // except, this scene has an almost unused object: kanban, for the square sign you can only access if you go through the second fense
+                // what if we turn tht into the same actor as the tree, and turn the second object into a second ingo
+                var gormanTrack = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GormanTrack.FileID());
+                gormanTrack.Maps[0].Objects[11] = GameObjects.Actor.GormanBros.ObjectIndex();
+                gormanTrack.Maps[0].Actors[75].ChangeActor(GameObjects.Actor.Treee, vars: 0xFF02, modifyOld: true);
             }
         }
 
