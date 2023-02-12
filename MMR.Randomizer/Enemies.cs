@@ -1703,7 +1703,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.PatrollingPirate)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.AnjuMotherWedding)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.PatrollingPirate)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
@@ -3158,13 +3158,8 @@ namespace MMR.Randomizer
 
                 // for dingus that want moonwarp, re-enable dekupalace
                 var SceneSkip = new GameObjects.Scene[] {
-                    GameObjects.Scene.GreatBayCutscene,
-                    GameObjects.Scene.SwampShootingGallery,
-                    GameObjects.Scene.TownShootingGallery,
                     GameObjects.Scene.GiantsChamber,
-                    GameObjects.Scene.SakonsHideout,
-                    GameObjects.Scene.CutsceneMap,
-                    GameObjects.Scene.MilkBar };// , GameObjects.Scene.DekuPalace };
+                    GameObjects.Scene.SakonsHideout };// , GameObjects.Scene.DekuPalace };
 
                 PrepareEnemyLists();
                 SceneUtils.ReadSceneTable();

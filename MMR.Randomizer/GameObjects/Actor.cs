@@ -2162,10 +2162,13 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(//0x8, // smithy goron
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
             0x7FA1, 0x7FC1, 0x7F81, 0x7FF2, // racetrack
+            0x7F82, 0x7F92, // praising darmani in cutscene
             0x7F84, 0x7F94)] // outside of darmani's grave
         [VariantsWithRoomMax(max: 1,
-            0x7FE2, 0x7F85, 0x7F86, 0x7F87)]
+            0x7FE2, 0x7F85, 0x7F86, 0x7F87,
+            0x7F82, 0x7F92)]
         [VariantsWithRoomMax(max: 0, variant: 0x8)] // too big
+        [VariantsWithRoomMax(max: 0, variant: 0x7F82, 0x7F92)] // crash? reason unknown
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
@@ -2478,8 +2481,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(326)]
         [ObjectListIndex(0x40)] // 1? nah it uses something else
-        // 2 is smaller scrub that surrounds link
+        // 0x2 is smaller scrub that surrounds link in the cutscene
         // & 3 are separate params, but wont spawn? weird
+        // 0x6 is big one in nightmare cutscene that link waves to
         [GroundVariants(0x2, 0x6)]
         [VariantsWithRoomMax(max: 1, variant: 0x6, 0x2)]
         // crash on transition to witches area in swamp and secretary room in mayor's residence
@@ -3080,9 +3084,14 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         OOTPotionShopMan = 0x1C3, // En_Ds2n
 
-        // probably hard time coded
+        [ActorizerEnabled]
         [FileID(415)]
         [ObjectListIndex(0x1AB)]
+        [CheckRestricted(Scene.CuriosityShop, variant:0x1, Item.MaskKafei, Item.TradeItemMamaLetter)]
+        // zero is selling in the shop, 1 is giving behind the place
+        [GroundVariants(0x1)] // wedding and standing around indoors
+        //[OnlyOneActorPerRoom]
+        [UnkillableAllVariants]
         CuriosityShopMan = 0x1C4, // En_Fsn
 
         [ActorizerEnabled]
@@ -3786,7 +3795,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(503)]
         [ObjectListIndex(0xA7)]
-        [GroundVariants(0, 0x00FF)] // standing around day 1 is type 0, bottom 0xFF is unknown, not used in code?
+        [GroundVariants(0,
+            0x40FF, // wedding
+            0x00FF)] // standing around day 1 is type 0, bottom 0xFF is unknown, not used in code?
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         Cremia = 0x220, // En_Ma_Yto
@@ -3866,8 +3877,10 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(512)]
         [ObjectListIndex(0x20D)]
-        [CheckRestricted(Item.HeartPieceNorthClockTown)]
+        // both 0 and 0xFF on oposite sides
+        [CheckRestricted(Scene.NorthClockTown, variant: 0, Item.HeartPieceNorthClockTown)]
         [GroundVariants(0x0, 0xFF, 0x80FF)]
+        [VariantsWithRoomMax(max: 2, variant: 0x0, 0xFF, 0x80FF)]
         [UnkillableAllVariants]
         UglyTree = 0x229, // Obj_Tree
 
@@ -4121,7 +4134,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(543)]
         [ObjectListIndex(0xFF)]
-        [CheckRestricted(Item.MaskBremen)]
+        [CheckRestricted(Scene.LaundryPool, variant:0x01, Item.MaskBremen)]
         // 00 is the version from the inn, "dont talk to her shes thinking" meaning the rosa sister
         // 01 is laundry pool, but he only spawns at night, ignoring actor time spawn settings for a scene
         // 02 is the music-only one that spawns so you can hear him through the walls of the inn
@@ -4712,13 +4725,21 @@ namespace MMR.Randomizer.GameObjects
         [FileID(629)]
         [ObjectListIndex(0xE2)]
         AnjuCutscene = 0x29E, // Dm_An
-        
+
+        [ActorizerEnabled]
         [FileID(630)]
         [ObjectListIndex(0x7)]
-        AnjuMotherCutscene = 0x29F, // Dm_Ah
-        
+        [GroundVariants(0x0)]
+        [UnkillableAllVariants]
+        [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)] // red flames
+        AnjuMotherWedding = 0x29F, // Dm_Ah
+
+        [ActorizerEnabled]
         [FileID(631)]
         [ObjectListIndex(0x4)]
+        [GroundVariants(0x0)]
+        [UnkillableAllVariants]
+        [CompanionActor(Flame, ourVariant: -1, 0x7FE)] // blue flames
         AnjusGrandmaCredits = 0x2A0, // Dm_Nb
 
         //[ActorizerEnabled]
@@ -4764,20 +4785,30 @@ namespace MMR.Randomizer.GameObjects
         [UnkillableAllVariants]
         MoonBirdsBrown = 0x2A7, // En_Bh
 
+        [ActorizerEnabled]
         [FileID(639)]
         [ObjectListIndex(0x247)]
+        [GroundVariants(0)] // wedding
+        [UnkillableAllVariants]
         ViscenMoonLeaveCutscene = 0x2A8, // En_Ending_Hero2
-        
+
+        [ActorizerEnabled()]
         [FileID(640)]
         [ObjectListIndex(0xF0)]
+        [UnkillableAllVariants]
+        [GroundVariants(0)]
         MutoMoonLeaveCutscene = 0x2A9, // En_Ending_Hero3
         
         [FileID(641)]
         [ObjectListIndex(0x1B6)]
+        [UnkillableAllVariants]
         SoliderMoonLeaveCutscene = 0x2AA, // En_Ending_Hero4
-        
+
+        //[ActorizerEnabled]
         [FileID(642)]
         [ObjectListIndex(0xF1)]
+        //[GroundVariants()]
+        [UnkillableAllVariants]
         CarpentersMoonLeaveCutscene = 0x2AB, // En_Ending_Hero5
 
         // ???
