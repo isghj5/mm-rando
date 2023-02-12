@@ -547,7 +547,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1A0)]
         [FileID(86)]
         [ObjectListIndex(0x61)]
-        [CheckRestricted(Item.CollectableTerminaFieldTreeItem1)]
+        [CheckRestricted(Scene.TerminaField, variant:0x01, Item.CollectableTerminaFieldTreeItem1)]
         // bush: 0xFF0B, small tree: 0xFF02
         // big tree: 0xFF00, big tree with shop man in it: 0x0A1A
         // 17,18 are leaf particles
