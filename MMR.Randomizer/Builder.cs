@@ -3479,12 +3479,11 @@ namespace MMR.Randomizer
                 progressReporter.ReportProgress(65, "Writing speedups...");
                 WriteSpeedUps(messageTable);
 
-
-                progressReporter.ReportProgress(6, "Writing items...");
-                WriteItems(messageTable);
-
-                progressReporter.ReportProgress(67, "Writing enemies...");
+                progressReporter.ReportProgress(66, "Writing enemies...");
                 WriteEnemies(outputSettings);
+
+                progressReporter.ReportProgress(67, "Writing items...");
+                WriteItems(messageTable);
 
                 WriteMiscHacks();
 
