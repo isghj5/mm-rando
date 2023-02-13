@@ -3041,6 +3041,7 @@ namespace MMR.Randomizer
                         .Text("be returned to my former shape!")
                         .EndFinalTextBox();
                     })
+                    .ExcludeFromQuickText()
                     .Build()
                 );
 
@@ -3089,6 +3090,7 @@ namespace MMR.Randomizer
                         .Text("shape!")
                         .EndFinalTextBox();
                     })
+                    .ExcludeFromQuickText()
                     .Build()
                 );
 
@@ -3136,6 +3138,7 @@ namespace MMR.Randomizer
                         .Text("back here!")
                         .EndFinalTextBox();
                     })
+                    .ExcludeFromQuickText()
                     .Build()
                 );
 
@@ -3184,6 +3187,7 @@ namespace MMR.Randomizer
                         .Text("to my former shape!")
                         .EndFinalTextBox();
                     })
+                    .ExcludeFromQuickText()
                     .Build()
                 );
 
@@ -3271,8 +3275,6 @@ namespace MMR.Randomizer
 
                 // TODO
 
-                // beaver race empty bottle
-
                 /*
                 The mask salesman said that if
                 you got back the precious thing
@@ -3286,20 +3288,6 @@ namespace MMR.Randomizer
                 Go to the shrine near the
                 North Gate. You'll find the
                 Great Fairy in there!
-
-                ---
-
-                ...The swamp, mountains, ocean and
-                canyon that Tael was trying to
-                tell us about...
-
-                I bet he was referring to the
-                four areas just outside town.
-                There's one in each compass
-                direction.
-                But what do you suppose he
-                meant by "the four who are
-                there?"
 
                 ---
 
@@ -3382,82 +3370,6 @@ namespace MMR.Randomizer
                 Please find a way to return me to
                 the Fairy Fountain in North Clock
                 Town.
-
-                ---
-
-                Kind young one! Please hear my
-                plea! Please find the fairies
-                trapped inside Woodfall Temple 
-                who match our color.
-                Please bring them back to us!
-
-                Please find a way to save the
-                fairies trapped in Woodfall Temple,
-                and bring them back here!
-
-                There should still be ×
-                fairies trapped in Woodfall
-                Temple.
-
-                Please save the fairies so I can
-                be returned to my former shape!
-
-                Oh, kind, young one!
-                Please hear our plea! Please save
-                the fairies trapped in Snowhead
-                Temple.
-                Find the fairies who match our
-                color and bring them back to us!
-
-                Please find a way to save the
-                fairies trapped in Snowhead
-                Temple and bring them back here!
-
-                There should still be Ø fairies
-                trapped in Snowhead Temple.
-
-                Please bring them back here so
-                I can be returned to my former
-                shape!
-
-                Oh, kind young one!
-                Please find the fairies trapped in
-                Great Bay Temple.
-
-                Please find the fairies who are
-                the same color as we are and
-                bring them back to us!
-
-                Please find a way to save the
-                fairies trapped in Great Bay
-                Temple and bring them back here!
-
-                There should still be Ù
-                fairies trapped in Great Bay
-                Temple.
-
-                Please save them and bring them
-                back here!
-
-                Oh, kind young one!
-                Please hear our plea! Please find
-                the fairies trapped in Stone Tower
-                Temple.
-                Find the ones who are the same
-                color as we are and bring them
-                back to us!
-
-                Please save the fairies trapped in
-                Stone Tower Temple and bring
-                them back here!
-
-                There should still be Ú
-                fairies trapped in Stone Tower
-                Temple.
-
-                Please save them and bring them
-                back here so I can be returned
-                to my former shape!
 
                 ---
 
@@ -4508,15 +4420,11 @@ namespace MMR.Randomizer
             }
 
             // Add extra messages to message table.
+            asm.ExtraMessages.AddMessage(_extraMessages.ToArray());
             if (_randomized.Settings.QuickTextEnabled)
             {
-                var regex = new Regex("(?<!(?:\x1B|\x1C|\x1D|\x1E).?)(?:\x1F..|\x17|\x18)", RegexOptions.Singleline);
-                foreach (var entry in _extraMessages)
-                {
-                    entry.Message = regex.Replace(entry.Message, "");
-                }
+                asm.ExtraMessages.ApplyQuickText();
             }
-            asm.ExtraMessages.AddMessage(_extraMessages.ToArray());
             asm.WriteExtMessageTable();
 
             // Add item graphics to table and write to ROM.
