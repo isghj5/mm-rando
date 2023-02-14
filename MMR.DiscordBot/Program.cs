@@ -68,8 +68,10 @@ namespace MMR.DiscordBot
         private ServiceProvider ConfigureServices()
         {
             return new ServiceCollection()
-                .AddSingleton<MMRService>()
+                .AddSingleton<MMRReleaseService>()
                 .AddSingleton<MMRBetaService>()
+                .AddSingleton<MMRTournament1Service>()
+                .AddSingleton<MMRTournament2Service>()
                 .AddSingleton<DiscordSocketClient>()
                 .AddSingleton<CommandService>()
                 .AddSingleton<CommandHandlingService>()
@@ -77,6 +79,7 @@ namespace MMR.DiscordBot
                 .AddSingleton<UserSeedRepository>()
                 .AddSingleton<GuildModRepository>()
                 .AddSingleton<TournamentChannelRepository>()
+                .AddSingleton<LogChannelRepository>()
                 .AddSingleton<ConnectionFactory>()
                 .BuildServiceProvider();
         }

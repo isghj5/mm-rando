@@ -17,14 +17,16 @@ using System.Diagnostics;
 
 namespace MMR.DiscordBot.Modules
 {
-    public class BaseMMRModule : ModuleBase<SocketCommandContext>
+    public abstract class BaseMMRModule : ModuleBase<SocketCommandContext>
     {
         public UserSeedRepository UserSeedRepository { get; set; }
         public GuildModRepository GuildModRepository { get; set; }
-        public TournamentChannelRepository TournamentChannelRepository { get; set;}
-        private readonly MMRService _mmrService;
+        public TournamentChannelRepository TournamentChannelRepository { get; set; }
+        public LogChannelRepository LogChannelRepository { get; set; }
 
-        public BaseMMRModule(MMRService mmrService)
+        private readonly MMRBaseService _mmrService;
+
+        public BaseMMRModule(MMRBaseService mmrService)
         {
             _mmrService = mmrService;
         }
@@ -61,13 +63,31 @@ namespace MMR.DiscordBot.Modules
             return await Context.Channel.SendFileAsync(filepath, allowedMentions: AllowedMentions.None, messageReference: messageReference);
         }
 
+        protected async Task LogToDiscord(string message)
+        {
+            var logChannel = await LogChannelRepository.Single(_ => true);
+            if (logChannel == null)
+            {
+                return;
+            }
+            var channel = Context.Client.GetChannel(logChannel.ChannelId) as IMessageChannel;
+            await channel.SendMessageAsync($"<t:{DateTimeOffset.UtcNow.ToUnixTimeSeconds()}:f> [{_mmrService.GetType().Name}] - {message}");
+        }
+
         [Command("help")]
         public async Task Help()
         {
             var commands = new Dictionary<string, string>()
             {
                 {  "help", "See this help list." },
+                {  "version", "See the MMR version for this command module." },
             };
+
+            var logChannel = await LogChannelRepository.Single(_ => true);
+            if (logChannel != null && Context.Channel.Id == logChannel.ChannelId)
+            {
+                commands.Add("kill", "Kill the current seed generation for this module.");
+            }
 
             if (await TournamentChannelRepository.ExistsByChannelId(Context.Channel.Id))
             {
@@ -128,6 +148,7 @@ namespace MMR.DiscordBot.Modules
                 return;
             }
             var tournamentSeedReply = await ReplyNoTagAsync("Generating seed...");
+            await LogToDiscord($"User {Context.User.Username} requested a tournament seed.");
             new Thread(async () =>
             {
                 try
@@ -156,16 +177,17 @@ namespace MMR.DiscordBot.Modules
                         File.Delete(patchPath);
                         File.Delete(hashIconPath);
                         await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "Success.");
+                        await LogToDiscord($"User {Context.User.Username} tournament seed successfully generated.");
                     }
                     else
                     {
                         throw new Exception("MMR.CLI succeeded, but output files not found.");
                     }
                 }
-                catch (Exception e)
+                catch (Exception ex)
                 {
-                    // TODO log exception.
                     await ModifyNoTagAsync(tournamentSeedReply, mp => mp.Content = "An error occured.");
+                    await LogToDiscord($"User {Context.User.Username} tournament seed failed to generate. Error: {ex.Message}");
                 }
             }).Start();
         }
@@ -192,6 +214,7 @@ namespace MMR.DiscordBot.Modules
             };
             await UserSeedRepository.Save(userSeedEntity);
             var messageResult = await ReplyNoTagAsync("Generating seed...");
+            await LogToDiscord($"User {Context.User.Username} requested a seed.");
             new Thread(async () =>
             {
                 try
@@ -224,11 +247,13 @@ namespace MMR.DiscordBot.Modules
                     File.Delete(hashIconPath);
                     userSeedEntity.Version = version;
                     await UserSeedRepository.Save(userSeedEntity);
+                    await LogToDiscord($"User {Context.User.Username} seed successfully generated.");
                 }
-                catch
+                catch (Exception ex)
                 {
                     await UserSeedRepository.DeleteById(Context.User.Id);
                     await ModifyNoTagAsync(messageResult, mp => mp.Content = "An error occured.");
+                    await LogToDiscord($"User {Context.User.Username} seed failed to generate. Error: {ex.Message}");
                 }
             }).Start();
         }
@@ -591,6 +616,23 @@ namespace MMR.DiscordBot.Modules
             File.Delete(settingsPath);
 
             await ReplyNoTagAsync("Deleted default settings.");
+        }
+
+        [Command("kill")]
+        public async Task Kill()
+        {
+            var logChannel = await LogChannelRepository.Single(_ => true);
+            if (logChannel != null && Context.Channel.Id == logChannel.ChannelId)
+            {
+                _mmrService.Kill();
+            }
+        }
+
+        [Command("version")]
+        public async Task Version()
+        {
+            var version = _mmrService.GetVersion();
+            await ReplyNoTagAsync(version);
         }
     }
 }

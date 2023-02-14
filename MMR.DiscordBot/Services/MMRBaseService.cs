@@ -10,24 +10,35 @@ using MMR.Common.Utils;
 
 namespace MMR.DiscordBot.Services
 {
-    public class MMRService
+    public abstract class MMRBaseService
     {
         private const string MMR_CLI = "MMR_CLI";
         protected string _cliPath;
         private readonly HttpClient _httpClient;
-        private readonly ThreadQueue _threadQueue = new ThreadQueue();
+        private static readonly ThreadQueue _threadQueue = new ThreadQueue();
+        private CancellationTokenSource _cancelTokenSource;
         private readonly Random _random = new Random();
 
-        public MMRService()
+        protected abstract string Version { get; }
+
+        public MMRBaseService()
         {
             _cliPath = Environment.GetEnvironmentVariable(MMR_CLI);
             if (string.IsNullOrWhiteSpace(_cliPath))
             {
-                throw new Exception($"Environment Variable '{MMR_CLI}' is missing.");
+                Console.WriteLine($"Warning: Environment Variable '{MMR_CLI}' is missing.");
             }
-            if (!Directory.Exists(_cliPath))
+            else
             {
-                throw new Exception($"'{_cliPath}' is not a valid MMR.CLI path.");
+                _cliPath = Path.Combine(_cliPath, Version);
+                if (!Directory.Exists(_cliPath))
+                {
+                    Console.WriteLine($"Warning: Directory '{_cliPath}' does not exist.");
+                }
+                else
+                {
+                    Console.WriteLine($"{MMR_CLI} path = {_cliPath}");
+                }
             }
 
             _httpClient = new HttpClient();
@@ -37,7 +48,7 @@ namespace MMR.DiscordBot.Services
 
         public bool IsReady()
         {
-            return !string.IsNullOrWhiteSpace(_cliPath);
+            return !string.IsNullOrWhiteSpace(_cliPath) && Directory.Exists(_cliPath);
         }
 
         public (string filename, string patchPath, string hashIconPath, string spoilerLogPath, string version) GetSeedPaths(DateTime seedDate, string version)
@@ -121,10 +132,25 @@ namespace MMR.DiscordBot.Services
             return Path.Combine(settingsRoot, "default.json");
         }
 
+        public string GetVersion()
+        {
+            var randomizerDllPath = Path.Combine(_cliPath, "MMR.Randomizer.dll");
+            return AssemblyName.GetAssemblyName(randomizerDllPath).Version.ToString();
+        }
+
+        public void Kill()
+        {
+            if (_cancelTokenSource != null)
+            {
+                _cancelTokenSource.Cancel();
+            }
+        }
+
         public async Task<(string patchPath, string hashIconPath, string spoilerLogPath, string version)> GenerateSeed(DateTime now, string settingsPath, Func<int, Task> notifyOfPosition)
         {
             await _threadQueue.WaitAsync(notifyOfPosition);
             //await Task.Delay(1);
+            _cancelTokenSource = new CancellationTokenSource();
             await notifyOfPosition(-1);
             try
             {
@@ -134,7 +160,7 @@ namespace MMR.DiscordBot.Services
                 {
                     try
                     {
-                        var success = await GenerateSeed(filename, settingsPath);
+                        var success = await GenerateSeed(filename, settingsPath, _cancelTokenSource.Token);
                         if (success)
                         {
                             if (File.Exists(patchPath) && File.Exists(hashIconPath))
@@ -156,15 +182,21 @@ namespace MMR.DiscordBot.Services
                     }
                     attempts--;
                 }
-                throw new Exception("Failed to generate seed after 5 attempts.");
+                if (_cancelTokenSource.IsCancellationRequested)
+                {
+                    throw new Exception("Killed by admin.");
+                }
+                throw new Exception("Failed to generate seed.");
             }
             finally
             {
+                _cancelTokenSource.Dispose();
+                _cancelTokenSource = null;
                 await _threadQueue.ReleaseAsync();
             }
         }
 
-        private async Task<bool> GenerateSeed(string filename, string settingsPath)
+        private async Task<bool> GenerateSeed(string filename, string settingsPath, CancellationToken cancellationToken)
         {
             var cliDllPath = Path.Combine(_cliPath, "MMR.CLI.dll");
             var output = Path.Combine("output", filename);
@@ -174,7 +206,7 @@ namespace MMR.DiscordBot.Services
             processInfo.Arguments = $"{cliDllPath} -output \"{output}.z64\" -seed {seed} -spoiler -patch";
             if (!string.IsNullOrWhiteSpace(settingsPath))
             {
-                processInfo.Arguments += $" -maxImportanceWait 150 -settings \"{settingsPath}\"";
+                processInfo.Arguments += $" -settings \"{settingsPath}\"";
             }
             else if (File.Exists(GetDefaultSettingsPath()))
             {
@@ -191,7 +223,14 @@ namespace MMR.DiscordBot.Services
             proc.BeginErrorReadLine();
             proc.BeginOutputReadLine();
 
-            proc.WaitForExit();
+            while (!proc.WaitForExit(1000))
+            {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    proc.Kill();
+                }
+            }
+
             return proc.ExitCode == 0;
         }
 

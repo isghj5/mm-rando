@@ -12,7 +12,7 @@ namespace MMR.DiscordBot.Modules
     [Group("mmr")]
     public class MMRModule : BaseMMRModule
     {
-        public MMRModule(MMRService mmrService) : base(mmrService)
+        public MMRModule(MMRReleaseService mmrService) : base(mmrService)
         {
 
         }
@@ -82,6 +82,21 @@ namespace MMR.DiscordBot.Modules
                 await TournamentChannelRepository.DeleteById(tournamentChannel.Id);
                 await ReplyNoTagAsync("Disabled tournament mode for this channel.");
             }
+        }
+
+        [Command("log")]
+        [RequireOwner]
+        public async Task SetLog()
+        {
+            var logChannel = await LogChannelRepository.Single(_ => true);
+            if (logChannel != null)
+            {
+                await LogToDiscord($"No longer logging to channel {logChannel.ChannelId}");
+                await LogChannelRepository.DeleteById(logChannel.ChannelId);
+            }
+
+            await LogChannelRepository.Save(new LogChannelEntity { ChannelId = Context.Channel.Id });
+            await LogToDiscord($"Now logging to channel {Context.Channel.Id}");
         }
     }
 }
