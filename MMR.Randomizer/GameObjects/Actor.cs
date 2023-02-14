@@ -2019,13 +2019,18 @@ namespace MMR.Randomizer.GameObjects
         En_Boj_04 = 0x121, // En_Boj_04
 
         // broken actor, needs two objects (animation is in another object) such a pain
+        // we have replaced this actor with an injected replacement that doesnt require EnHy
         //[ActorizerEnabled]
         [FileID(262)]
         [ObjectListIndex(0xDA)]
         // needs anime object and cne object, pain
-        [GroundVariants(0x7E00)]
-        [PathingVariants(0x0)]
-        [PathingTypeVarsPlacement(mask: 0x7E00, shift: 9)]
+        //[GroundVariants(0x7E00)]
+        //[PathingVariants(0x0)] // dont trust this anymore, wait for actor fix
+        // 0 is vanessa, 1 is orange
+        [CompanionActor(Flame, ourVariant: 0, 0x7FE)] // blue flames
+        // todo find slightly off color flames
+        [PathingTypeVarsPlacement(mask: 0x7E00, shift: 9)] // still valid with injected actor
+        [OnlyOneActorPerRoom] // not sure if I need this, but with companions..
         [UnkillableAllVariants]
         BetaVampireGirl = 0x122, // En_Cne_01
 
@@ -3759,7 +3764,9 @@ namespace MMR.Randomizer.GameObjects
         // 7 (E) GERUDO_PURPLE_TYPE_FORTRESS = 7 //!< In both courtyard and rooms
         // 0x02 always looks forward for boats or something, FC00 will hear you and turn to look at you
         [PathingVariants(0x1F, 0xEA, 0x04EA, 0x81F, 0x8EA, 0xC1F, 0xCEA, 0x101F, 0x104B, 0x10EA,
-                0x144B, 0x14EA, 0x18EA, 0x284B, 0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
+                0x14EA, 0x18EA,
+            0x284B, 0x144B, // hookshotroom
+            0x28EB, 0x30EB, 0x34EB, 0x38EB, 0x3CEB, 0x4C24)]
         //[GroundVariants(0xFC20, 0xFC40 /*, 0xFCE0 */)]
         [VariantsWithRoomMax(max: 0, variant: 0x4C24, 0xFC00, 0xFC01, 0x81F, 0xC1F)] // only type 7 (0xE0) should be bonkable
         [VariantsWithRoomMax(max: 1, variant: 0xFC00)]
