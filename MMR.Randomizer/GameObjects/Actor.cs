@@ -1683,6 +1683,7 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x0032)] // 0x32: sitting around the fire
         [CompanionActor(Flame, ourVariant: -1, variant: 0x7F4)] // they like fire in this game
         [EnemizerScenesExcluded(Scene.IkanaGraveyard, Scene.OceanSpiderHouse)]
+        [UnkillableAllVariants]
         Stalchild = 0xED, // En_Skb
 
         EmptyEE = 0xEE,
