@@ -6,14 +6,17 @@
 const u16 baseGiIndex = 0x44F;
 
 bool BombersNotebook_ShouldGrant(GlobalContext* ctxt, u8 notebookEntryIndex) {
-    u16 giIndex = baseGiIndex + notebookEntryIndex;
-    if (!MISC_CONFIG.internal.vanillaLayout && MMR_GetGiEntry(giIndex)->message != 0) {
-        u16* D_801C6AB8 = (u16*)0x801C6AB8;
-        return gSaveContext.perm.inv.questStatus.bombersNotebook && D_801C6AB8[notebookEntryIndex] != 0 && !MMR_GetGiFlag(giIndex);
-    } else {
-        u16* D_801C6B28 = (u16*)0x801C6B28;
-        return (gSaveContext.perm.inv.questStatus.bombersNotebook || notebookEntryIndex >= 20) && !CHECK_WEEKEVENTREG(D_801C6B28[notebookEntryIndex]);
+    if (!gSaveContext.perm.inv.questStatus.bombersNotebook && notebookEntryIndex < 20) {
+        return false;
     }
+
+    if (MISC_CONFIG.internal.vanillaLayout) {
+        u16* sBombersNotebookEventWeekEventFlags = (u16*)0x801C6B28;
+        return !CHECK_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[notebookEntryIndex]);
+    }
+
+    u16* sBombersNotebookEventMessages = (u16*)0x801C6AB8;
+    return sBombersNotebookEventMessages[notebookEntryIndex] != 0 && !MMR_GetGiFlag(baseGiIndex + notebookEntryIndex);
 }
 
 s8 BombersNotebook_Grant(GlobalContext* ctxt) {
@@ -25,13 +28,8 @@ s8 BombersNotebook_Grant(GlobalContext* ctxt) {
 
     u8 notebookEntryIndex = msgCtx->unk120B2[msgCtx->unk120B1];
     u16 giIndex = baseGiIndex + notebookEntryIndex;
-
-    if (MMR_GetGiEntry(giIndex)->message == 0) {
-        return 0;
-    }
-
-    u16* D_801C6AB8 = (u16*)0x801C6AB8;
-    if (gSaveContext.perm.inv.questStatus.bombersNotebook && D_801C6AB8[notebookEntryIndex] != 0 && !MMR_GetGiFlag(giIndex)) {
+    u16* sBombersNotebookEventMessages = (u16*)0x801C6AB8;
+    if (gSaveContext.perm.inv.questStatus.bombersNotebook && sBombersNotebookEventMessages[notebookEntryIndex] != 0 && !MMR_GetGiFlag(giIndex)) {
         MMR_ProcessItem(ctxt, giIndex);
         z2_PlaySfx(0x4855); // NA_SE_SY_SCHEDULE_WRITE
         return 1;

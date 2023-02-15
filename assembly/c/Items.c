@@ -5,6 +5,7 @@
 #include "Misc.h"
 #include "MMR.h"
 #include "macro.h"
+#include "enums.h"
 
 /**
  * Helper function used to process receiving a custom item.
@@ -51,21 +52,21 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
             }
             break;
         case CUSTOM_ITEM_NOTEBOOK_ENTRY:;
-            u16* D_801C6B28 = (u16*)0x801C6B28;
+            u16* sBombersNotebookEventWeekEventFlags = (u16*)0x801C6B28;
             u8 entryIndex = MMR_GetItemEntryContext->flag;
-            SET_WEEKEVENTREG(D_801C6B28[entryIndex]);
+            SET_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[entryIndex]);
             switch (entryIndex) {
-                case 0x16:
-                    SET_WEEKEVENTREG(D_801C6B28[0x17]);
+                case BOMBERS_NOTEBOOK_EVENT_PROMISED_TO_MEET_KAFEI:
+                    SET_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[BOMBERS_NOTEBOOK_EVENT_RECEIVED_LETTER_TO_KAFEI]);
                     break;
-                case 0x1D:
-                    SET_WEEKEVENTREG(D_801C6B28[0x1E]);
+                case BOMBERS_NOTEBOOK_EVENT_DEFENDED_AGAINST_THEM:
+                    SET_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[BOMBERS_NOTEBOOK_EVENT_RECEIVED_MILK_BOTTLE]);
                     break;
-                case 0x1F:
-                    SET_WEEKEVENTREG(D_801C6B28[0x20]);
+                case BOMBERS_NOTEBOOK_EVENT_ESCORTED_CREMIA:
+                    SET_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[BOMBERS_NOTEBOOK_EVENT_RECEIVED_ROMANIS_MASK]);
                     break;
-                case 0x25:
-                    SET_WEEKEVENTREG(D_801C6B28[0x24]);
+                case BOMBERS_NOTEBOOK_EVENT_RECEIVED_BOMBERS_NOTEBOOK:
+                    SET_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[BOMBERS_NOTEBOOK_EVENT_LEARNED_SECRET_CODE]);
                     break;
             }
             break;

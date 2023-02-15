@@ -9985,7 +9985,6 @@ namespace MMR.Randomizer.GameObjects
 
 
 
-        [NullableItem]
         [ItemName("Notebook: Bombers"), LocationName("Notebook: Meeting the Bombers"), MultiLocation(NotebookMeetBombersInNCT, NotebookMeetBombersInECT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a group of children", "a town game"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
@@ -9994,7 +9993,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetBombers,
 
 
-        [NullableItem]
         [ItemName("Notebook: Anju"), LocationName("Notebook: Meeting Anju"), MultiLocation(NotebookMeetAnjuInInn, NotebookMeetAnjuInECT, NotebookMeetAnjuInSCT, NotebookMeetAnjuInLaundryPool, NotebookMeetAnjuInRanch)]
         [GossipLocationHint("a lady in town"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Anju.")]
@@ -10003,7 +10001,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetAnju,
 
 
-        [NullableItem]
         [ItemName("Notebook: Kafei"), LocationName("Notebook: Meeting Kafei"), MultiLocation(NotebookMeetKafeiInLaundryPool, NotebookMeetKafeiInIkanaCanyon, NotebookMeetKafeiInInn)]
         [GossipLocationHint("a cursed man"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Kafei.")]
@@ -10012,7 +10009,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetKafei,
 
 
-        [NullableItem]
         [ItemName("Notebook: Man from Curiosity Shop"), LocationName("Notebook: Meeting the Curiosity Shop Man"), MultiLocation(NotebookMeetCuriosityShopManInWCT, NotebookMeetCuriosityShopManInLaundryPool), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Man from Curiosity Shop.")]
@@ -10021,7 +10017,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetCuriosityShopMan,
 
 
-        [NullableItem]
         [ItemName("Notebook: Old Lady from Bomb Shop"), LocationName("Notebook: Meeting the Old Lady"), MultiLocation(NotebookMeetOldLadyInNCT, NotebookMeetOldLadyInWCT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("an old lady"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Old Lady from Bomb Shop.")]
@@ -10030,7 +10025,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetOldLady,
 
 
-        [NullableItem]
         [ItemName("Notebook: Romani"), LocationName("Notebook: Meeting Romani"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch girl"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Romani.")]
@@ -10039,7 +10033,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetRomani,
 
 
-        [NullableItem]
         [ItemName("Notebook: Cremia"), LocationName("Notebook: Meeting Cremia"), Region(Region.RomaniRanch)]
         [GossipLocationHint("the ranch lady"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Cremia.")]
@@ -10048,7 +10041,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetCremia,
 
 
-        [NullableItem]
         [ItemName("Notebook: Mr. Dotour"), LocationName("Notebook: Meeting Mayor Dotour"), Region(Region.EastClockTown)]
         [GossipLocationHint("a town leader", "an upstanding figure"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Mayor Dotour.")]
@@ -10057,7 +10049,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetMayorDotour,
 
 
-        [NullableItem]
         [ItemName("Notebook: Madame Aroma"), LocationName("Notebook: Meeting Madame Aroma"), Region(Region.EastClockTown)]
         [GossipLocationHint("an important lady", "an esteemed woman"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Madame Aroma.")]
@@ -10066,7 +10057,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetMadameAroma,
 
 
-        [NullableItem]
         [ItemName("Notebook: Toto"), LocationName("Notebook: Meeting Toto"), Region(Region.EastClockTown)]
         [GossipLocationHint("a band manager"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Toto.")]
@@ -10075,7 +10065,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetToto,
 
 
-        [NullableItem]
         [ItemName("Notebook: Gorman"), LocationName("Notebook: Meeting Gorman"), MultiLocation(NotebookMeetGormanInECT, NotebookMeetGormanInInn), RegionArea(RegionArea.Town)]
         [GossipLocationHint("an entertainer", "a miserable leader"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Gorman.")]
@@ -10084,7 +10073,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetGorman,
 
 
-        [NullableItem]
         [ItemName("Notebook: Postman"), LocationName("Notebook: Meeting the Postman"), MultiLocation(NotebookMeetPostmanInWCT, NotebookMeetPostmanInSCT, NotebookMeetPostmanInNCT, NotebookMeetPostmanInECT, NotebookMeetPostmanInInn, NotebookMeetPostmanInLaundryPool), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a hard worker", "a delivery person"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Postman.")]
@@ -10093,7 +10081,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetPostman,
 
 
-        [NullableItem]
         [ItemName("Notebook: Rosa Sisters"), LocationName("Notebook: Meeting the Rosa Sisters"), MultiLocation(NotebookMeetRosaSistersInWCT, NotebookMeetRosaSistersInInn), RegionArea(RegionArea.Town)]
         [GossipLocationHint("traveling sisters", "twin entertainers"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Rosa Sisters.")]
@@ -10102,7 +10089,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetRosaSisters,
 
 
-        [NullableItem]
         [ItemName("Notebook: ???"), LocationName("Notebook: Meeting the Toilet Hand"), Region(Region.StockPotInn)]
         [GossipLocationHint("a mystery appearance", "a strange palm"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Toilet Hand.")]
@@ -10111,7 +10097,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetToiletHand,
 
 
-        [NullableItem]
         [ItemName("Notebook: Anju's Grandmother"), LocationName("Notebook: Meeting Anju's Grandmother"), MultiLocation(NotebookMeetAnjusGrandmotherInInn, NotebookMeetAnjusGrandmotherInRanch)]
         [GossipLocationHint("an old lady"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Anju's Grandmother.")]
@@ -10120,7 +10105,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetAnjusGrandmother,
 
 
-        [NullableItem]
         [ItemName("Notebook: Kamaro"), LocationName("Notebook: Meeting Kamaro"), Region(Region.TerminaField)]
         [GossipLocationHint("a ghostly dancer", "a dancer"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Kamaro.")]
@@ -10129,7 +10113,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetKamaro,
 
 
-        [NullableItem]
         [ItemName("Notebook: Grog"), LocationName("Notebook: Meeting Grog"), Region(Region.RomaniRanch)]
         [GossipLocationHint("an ugly but kind heart", "a lover of chickens"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Grog.")]
@@ -10138,7 +10121,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetGrog,
 
 
-        [NullableItem]
         [ItemName("Notebook: Gorman Brothers"), LocationName("Notebook: Meeting the Gorman Brothers"), Region(Region.MilkRoad)]
         [GossipLocationHint("shady brothers"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Gorman Brothers.")]
@@ -10147,7 +10129,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetGormanBrothers,
 
 
-        [NullableItem]
         [ItemName("Notebook: Shiro"), LocationName("Notebook: Meeting Shiro"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a hidden soldier", "a stone circle"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Shiro.")]
@@ -10156,7 +10137,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetShiro,
 
 
-        [NullableItem]
         [ItemName("Notebook: Guru-Guru"), LocationName("Notebook: Meeting Guru-Guru"), MultiLocation(NotebookMeetGuruGuruInInn, NotebookMeetGuruGuruInLaundryPool), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a musician", "an entertainer"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Guru-Guru.")]
@@ -10165,7 +10145,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetGuruGuru,
 
 
-        [NullableItem]
         [ItemName("Notebook: Received Room Key"), LocationName("Notebook: Inn Reservation"), Region(Region.StockPotInn)]
         [GossipLocationHint("checking in", "check-in"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for the Inn Reservation.")]
@@ -10174,7 +10153,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookInnReservation,
 
 
-        [NullableItem]
         [ItemName("Notebook: Secret Night Meeting"), LocationName("Notebook: Promise Anju Meeting"), Region(Region.StockPotInn)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising to meet Anju.")]
@@ -10183,7 +10161,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseAnjuMeeting,
 
 
-        [NullableItem]
         [ItemName("Notebook: Promised to meet Kafei"), LocationName("Notebook: Promise Anju Delivery"), Region(Region.StockPotInn)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising Anju that you'll meet Kafei.")]
@@ -10195,7 +10172,6 @@ namespace MMR.Randomizer.GameObjects
         //GetItemIndex(0x466)
 
 
-        [NullableItem]
         [ItemName("Notebook: Deposit Letter to Kafei"), LocationName("Notebook: Deposit Letter to Kafei"), MultiLocation(NotebookDepositLetterToKafeiInSCT, NotebookDepositLetterToKafeiInNCT, NotebookDepositLetterToKafeiInECT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for depositing the Letter to Kafei.")]
@@ -10204,7 +10180,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookDepositLetterToKafei,
 
 
-        [NullableItem]
         [ItemName("Notebook: Pendant of Memories"), LocationName("Notebook: Promise Kafei"), Region(Region.LaundryPool)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising Kafei that you'll return to Anju.")]
@@ -10213,7 +10188,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseKafei,
 
 
-        [NullableItem]
         [ItemName("Notebook: Delivered Pendant"), LocationName("Notebook: Deliver Pendant"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for delivering the Pendant of Memories.")]
@@ -10222,7 +10196,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookDeliverPendant,
 
 
-        [NullableItem]
         [ItemName("Notebook: Escaped from Sakon's Hideout"), LocationName("Notebook: Escape from Sakon's Hideout"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for escaping Sakon's Hideout.")]
@@ -10231,7 +10204,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookEscapeFromSakonSHideout,
 
 
-        [NullableItem]
         [ItemName("Notebook: Became ranch hand"), LocationName("Notebook: Promise Romani"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising Romani that you'll help defend against the 'them'.")]
@@ -10240,7 +10212,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseRomani,
 
 
-        [NullableItem]
         [ItemName("Notebook: Saved cows from \"them\""), LocationName("Notebook: Save the Cows"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for saving the cows.")]
@@ -10252,7 +10223,6 @@ namespace MMR.Randomizer.GameObjects
         //GetItemIndex(0x46D)
 
 
-        [NullableItem]
         [ItemName("Notebook: Protected milk delivery"), LocationName("Notebook: Protect milk delivery"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for protecting Cremia.")]
@@ -10264,7 +10234,6 @@ namespace MMR.Randomizer.GameObjects
         //GetItemIndex(0x46F)
 
 
-        [NullableItem]
         [ItemName("Notebook: Keaton Mask"), LocationName("Notebook: Curiosity Shop Man's Gift"), Region(Region.LaundryPool)]
         [GossipLocationHint("a shady gentleman", "a dodgy seller", "a shady dealer"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for speaking with the Curiosity Shop man about Kafei.")]
@@ -10273,7 +10242,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookCuriosityShopManSGift,
 
 
-        [NullableItem]
         [ItemName("Notebook: Letter to Mama"), LocationName("Notebook: Promise Curiosity Shop Man"), Region(Region.LaundryPool)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising to deliver the Express Mail.")]
@@ -10282,7 +10250,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseCuriosityShopMan,
 
 
-        [NullableItem]
         [ItemName("Notebook: Chateau Romani"), LocationName("Notebook: Deliver Letter to Mama"), Region(Region.EastClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for delivering the Letter to Mama.")]
@@ -10294,7 +10261,6 @@ namespace MMR.Randomizer.GameObjects
         //GetItemIndex(0x473)
 
 
-        [NullableItem]
         [ItemName("Notebook: Bombers' Notebook"), LocationName("Notebook: Learn Bombers' Code"), MultiLocation(NotebookLearnBombersCodeInNCT, NotebookLearnBombersCodeInECT), RegionArea(RegionArea.Town)]
         [GossipLocationHint("a group of children", "a town game"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for the Bombers' Hideout code.")]
@@ -10303,7 +10269,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookLearnBombersCode,
 
 
-        [NullableItem]
         [ItemName("Notebook: Dotour's Thanks"), LocationName("Notebook: Dotour's Thanks"), Region(Region.EastClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for ending the Mayor's meeting.")]
@@ -10312,7 +10277,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookDotoursThanks,
 
 
-        [NullableItem]
         [ItemName("Notebook: Rosa Sisters' Thanks"), LocationName("Notebook: Rosa Sisters' Thanks"), Region(Region.WestClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for teaching the Rosa Sisters to dance.")]
@@ -10321,7 +10285,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookRosaSistersThanks,
 
 
-        [NullableItem]
         [ItemName("Notebook: Thanks for the paper"), LocationName("Notebook: Toilet Hand's Thanks"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for giving paper to the hand.")]
@@ -10330,7 +10293,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookToiletHandSThanks,
 
 
-        [NullableItem]
         [ItemName("Notebook: Reading Prize 1"), LocationName("Notebook: Grandma Short Story"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for staying awake for 2 hours.")]
@@ -10339,7 +10301,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookGrandmaShortStory,
 
 
-        [NullableItem]
         [ItemName("Notebook: Reading Prize 2"), LocationName("Notebook: Grandma Long Story"), Region(Region.StockPotInn)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for staying awake until morning.")]
@@ -10348,7 +10309,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookGrandmaLongStory,
 
 
-        [NullableItem]
         [ItemName("Notebook: Training Award"), LocationName("Notebook: Postman's Game"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town game"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for counting to 10 seconds.")]
@@ -10357,7 +10317,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookPostmansGame,
 
 
-        [NullableItem]
         [ItemName("Notebook: Kafei's Mask"), LocationName("Notebook: Promise Madame Aroma"), Region(Region.EastClockTown)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for promising to find Kafei.")]
@@ -10367,7 +10326,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseMadameAroma,
 
 
-        [NullableItem]
         [ItemName("Notebook: All-Night Mask"), LocationName("Notebook: Purchase Curiosity Shop Item"), Region(Region.WestClockTown)]
         [GossipLocationHint("a shady deal"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for buying the item from the Curiosity Shop on the final night.")]
@@ -10376,7 +10334,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookPurchaseCuriosityShopItem,
 
 
-        [NullableItem]
         [ItemName("Notebook: Bunny Hood"), LocationName("Notebook: Grog's Thanks"), Region(Region.RomaniRanch)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for growing the baby cuccos.")]
@@ -10385,7 +10342,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookGrogsThanks,
 
 
-        [NullableItem]
         [ItemName("Notebook: Garo's Mask"), LocationName("Notebook: Defeat Gorman Brothers"), Region(Region.MilkRoad)]
         [GossipLocationHint("a sporting event"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for defeating the Gorman Brothers.")]
@@ -10394,7 +10350,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookDefeatGormanBrothers,
 
 
-        [NullableItem]
         [ItemName("Notebook: Circus Leader's Mask"), LocationName("Notebook: Moving Gorman"), Region(Region.EastClockTown)]
         [GossipLocationHint("a moving performance"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for moving Gorman with a performance.")]
@@ -10403,7 +10358,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookMovingGorman,
 
 
-        [NullableItem]
         [ItemName("Notebook: Postman's Hat"), LocationName("Notebook: Postman's Freedom"), Region(Region.EastClockTown)]
         [GossipLocationHint("a special delivery", "one last job"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for allowing the Postman to flee.")]
@@ -10412,7 +10366,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookPostmansFreedom,
 
 
-        [NullableItem]
         [ItemName("Notebook: Couple's Mask"), LocationName("Notebook: Unite Anju and Kafei"), Region(Region.StockPotInn)]
         [GossipLocationHint("a reunion", "a lovers' reunion"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for reuniting Anju and Kafei.")]
@@ -10421,7 +10374,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookUniteAnjuAndKafei,
 
 
-        [NullableItem]
         [ItemName("Notebook: Blast Mask"), LocationName("Notebook: Save Old Lady"), Region(Region.NorthClockTown)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for saving the Old Lady.")]
@@ -10430,7 +10382,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookSaveOldLady,
 
 
-        [NullableItem]
         [ItemName("Notebook: Kamaro's Mask"), LocationName("Notebook: Promise Kamaro"), Region(Region.TerminaField)]
         [GossipLocationHint("a promise"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
@@ -10439,7 +10390,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookPromiseKamaro,
 
 
-        [NullableItem]
         [ItemName("Notebook: Stone Mask"), LocationName("Notebook: Save Invisible Soldier"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a good deed"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
@@ -10448,7 +10398,6 @@ namespace MMR.Randomizer.GameObjects
         NotebookSaveInvisibleSoldier,
 
 
-        [NullableItem]
         [ItemName("Notebook: Bremen Mask"), LocationName("Notebook: Guru-Guru"), Region(Region.LaundryPool)]
         [GossipLocationHint("a musician", "an entertainer"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting the Bombers.")]
