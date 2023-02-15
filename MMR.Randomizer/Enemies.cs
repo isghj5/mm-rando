@@ -430,6 +430,13 @@ namespace MMR.Randomizer
             terminafieldScene.Maps[0].Actors[121].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
             terminafieldScene.Maps[0].Actors[153].Position.y = -280; // fixes the leever spawn is too low (bombchu explode)
 
+            // the south field dekubaba to the east is facing south, because in vanilla its direction does not matter
+            // rotate to face out of the field
+            var southDekubaba = terminafieldScene.Maps[0].Actors[45];
+            southDekubaba.Rotation.y = ActorUtils.MergeRotationAndFlags(180 , flags: southDekubaba.Rotation.y); // fixes the leever spawn is too low (bombchu explode)
+            southDekubaba = terminafieldScene.Maps[0].Actors[44];
+            southDekubaba.Rotation.y = ActorUtils.MergeRotationAndFlags(180, flags: southDekubaba.Rotation.y); // fixes the leever spawn is too low (bombchu explode)
+
             // the two wolfos spawn in twin islands spawn off scew, 
             //   redead falls through the floor when you approach them with this skew
             // made redead flat code world wide, leaving this for notes right now
@@ -1708,7 +1715,7 @@ namespace MMR.Randomizer
                     return false;
                 }
 
-                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.BetaVampireGirl)) continue;
+                if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.DekuBaba, GameObjects.Actor.ArcheryMiniGameMan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.PatrollingPirate)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.RoadToSouthernSwamp, GameObjects.Actor.ChuChu, GameObjects.Actor.CutsceneZelda)) continue;
@@ -3215,7 +3222,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 45.1\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 45.2\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
