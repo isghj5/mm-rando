@@ -4684,10 +4684,9 @@ namespace MMR.Randomizer
             {
                 progressReporter.ReportProgress(75, "Building ROM...");
 
-                byte[] ROM = RomUtils.BuildROM();
-
                 if (outputSettings.GenerateROM)
                 {
+                    byte[] ROM = RomUtils.BuildROM();
                     if (ROM.Length > 0x4000000) // over 64mb
                     {
                         throw new ROMOverflowException("64 MB", "hardware (Everdrive)");
@@ -4698,6 +4697,25 @@ namespace MMR.Randomizer
 
                 if (outputSettings.OutputVC)
                 {
+                    var smithyFiles = new List<int> { 958 };
+                    var extObjectsFileTableAddr = (int)asm.Symbols["EXT_OBJECTS"];
+                    var extObjectsFileAddr = ReadWriteUtils.ReadU32(extObjectsFileTableAddr + 8);
+                    if (extObjectsFileAddr > 0)
+                    {
+                        var extObjectsFile = RomUtils.GetFileIndexForWriting((int)extObjectsFileAddr);
+                        smithyFiles.Add(extObjectsFile);
+                    }
+                    foreach (var file in smithyFiles)
+                    {
+                        RomUtils.CheckCompressed(file);
+                        RomData.MMFileList[file].Data = RomData.MMFileList[file].Data
+                            .FindAndReplace(
+                                new byte[] { 0xFC, 0x27, 0x2C, 0x40, 0x21, 0x0E, 0x92, 0xFF },
+                                new byte[] { 0xFC, 0x27, 0x2C, 0x03, 0x21, 0x0C, 0x92, 0xFF }
+                            );
+                    }
+
+                    byte[] ROM = RomUtils.BuildROM();
                     if (ROM.Length > 0x2000000) // over 32mb
                     {
                         throw new ROMOverflowException("32 MB", "WiiVC");
