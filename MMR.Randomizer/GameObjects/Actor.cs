@@ -3903,11 +3903,14 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(513)]
         [ObjectListIndex(0x20E)]
-        [FlyingToGroundHeightAdjustment(10)]
+        [FlyingToGroundHeightAdjustment(15)]
         [FlyingVariants(0x0)]
         [GroundVariants(0x0)]
         [WaterVariants(0x0)]
         [VariantsWithRoomMax(variant: 0, max: 1)]
+        [EnemizerScenesPlacementBlock(Scene.StoneTower, // too much dyna
+            Scene.SouthernSwamp, Scene.SouthernSwampClear,
+            Scene.GormanTrack, Scene.DekuTrial)] // blocking potentially
         [UnkillableAllVariants]
         //[OnlyOneActorPerRoom] // probably dyna crash to be worried about
         UnusedPirateElevator = 0x22A, // Obj_Y2lift
