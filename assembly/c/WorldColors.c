@@ -26,11 +26,11 @@ struct WorldColorConfig WORLD_COLOR_CONFIG = {
     .iceArrowEffectPri       = { 0xAA, 0xFF, 0xFF, },
     .lightArrowEffectEnv     = { 0xFF, 0xFF, 0x00, },
     .lightArrowEffectPri     = { 0xFF, 0xFF, 0xAA, },
-    .fierceDeityTunic        = { 0xBD, 0xB5, 0xAD, },
-    .goronTunic              = { 0x1E, 0x69, 0x1B, },
-    .zoraTunic               = { 0x1E, 0x69, 0x1B, },
-    .dekuTunic               = { 0x1E, 0x69, 0x1B, },
-    .humanTunic              = { 0x1E, 0x69, 0x1B, },
+    .formTunic[0]            = { 0xBD, 0xB5, 0xAD, },
+    .formTunic[1]            = { 0x1E, 0x69, 0x1B, },
+    .formTunic[2]            = { 0x1E, 0x69, 0x1B, },
+    .formTunic[3]            = { 0x1E, 0x69, 0x1B, },
+    .formTunic[4]            = { 0x1E, 0x69, 0x1B, },
 };
 
 u32 WorldColors_GetBlueBubbleColor(Actor* actor, GlobalContext* ctxt) {
@@ -54,23 +54,7 @@ void WorldColors_SetPlayerEnvColor(GlobalContext* ctxt, void** skeleton, Vec3s* 
     Color linkColor;
     u8 linkForm = ((ActorPlayer*)actor)->form;
 
-    switch (linkForm) {
-    case 0:
-        linkColor = WORLD_COLOR_CONFIG.fierceDeityTunic;
-        break;
-    case 1:
-        linkColor = WORLD_COLOR_CONFIG.goronTunic;
-        break;
-    case 2:
-        linkColor = WORLD_COLOR_CONFIG.zoraTunic;
-        break;
-    case 3:
-        linkColor = WORLD_COLOR_CONFIG.dekuTunic;
-        break;
-    case 4:
-        linkColor = WORLD_COLOR_CONFIG.humanTunic;
-        break;
-    }
+    linkColor = WORLD_COLOR_CONFIG.formTunic[linkForm];
 
     DispBuf* opa = &ctxt->state.gfxCtx->polyOpa;
     gDPSetEnvColor(opa->p++, linkColor.r, linkColor.g, linkColor.b, 0xFF);
@@ -80,11 +64,11 @@ void WorldColors_SetPlayerEnvColor(GlobalContext* ctxt, void** skeleton, Vec3s* 
 void WorldColors_PlayerColorAfterMask(GraphicsContext* gfxCtx, s32 maskIDMinusOne, PlayerMaskDList* maskDList) {
     u32 dl = maskDList->maskDListEntry[maskIDMinusOne];
     gSPDisplayList(gfxCtx->polyOpa.p++, dl);
-    gDPSetEnvColor(gfxCtx->polyOpa.p++, WORLD_COLOR_CONFIG.humanTunic.r, WORLD_COLOR_CONFIG.humanTunic.g, WORLD_COLOR_CONFIG.humanTunic.b, 0xFF);
+    gDPSetEnvColor(gfxCtx->polyOpa.p++, WORLD_COLOR_CONFIG.formTunic[4].r,WORLD_COLOR_CONFIG.formTunic[4].g, WORLD_COLOR_CONFIG.formTunic[4].b, 0xFF);
 }
 
 void WorldColors_ZoraBoomerangColor(GraphicsContext* gfxCtx, s32 finDL) {
-    gDPSetEnvColor(gfxCtx->polyOpa.p++, WORLD_COLOR_CONFIG.zoraTunic.r, WORLD_COLOR_CONFIG.zoraTunic.g, WORLD_COLOR_CONFIG.zoraTunic.b, 0xFF);
+    gDPSetEnvColor(gfxCtx->polyOpa.p++, WORLD_COLOR_CONFIG.formTunic[2].r, WORLD_COLOR_CONFIG.formTunic[2].g, WORLD_COLOR_CONFIG.formTunic[2].b, 0xFF);
     gSPDisplayList(gfxCtx->polyOpa.p++, finDL);
 }
 
@@ -96,23 +80,7 @@ void WorldColors_RandomizeTunic(ActorPlayer* actor) {
     tunicColor.g = randColor >> 16;
     tunicColor.b = randColor >> 8;
 
-    switch (linkForm) {
-    case 0:
-        WORLD_COLOR_CONFIG.fierceDeityTunic = tunicColor;
-        break;
-    case 1:
-        WORLD_COLOR_CONFIG.goronTunic = tunicColor;
-        break;
-    case 2:
-        WORLD_COLOR_CONFIG.zoraTunic = tunicColor;
-        break;
-    case 3:
-        WORLD_COLOR_CONFIG.dekuTunic = tunicColor;
-        break;
-    case 4:
-        WORLD_COLOR_CONFIG.humanTunic = tunicColor;
-        break;
-    }
+    WORLD_COLOR_CONFIG.formTunic[linkForm] = tunicColor;
 }
 
 void WorldColors_Init(void) {

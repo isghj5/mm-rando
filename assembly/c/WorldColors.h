@@ -28,11 +28,7 @@ struct WorldColorConfig {
     Color iceArrowEffectPri;
     Color lightArrowEffectEnv;
     Color lightArrowEffectPri;
-    Color fierceDeityTunic;
-    Color goronTunic;
-    Color zoraTunic;
-    Color dekuTunic;
-    Color humanTunic;
+    Color formTunic[5];
 };
 
 extern struct WorldColorConfig WORLD_COLOR_CONFIG;
