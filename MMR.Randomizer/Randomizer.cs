@@ -24,7 +24,7 @@ namespace MMR.Randomizer
 {
     public class Randomizer
     {
-        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString() + "-beta";
+        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString();
 
         private Random Random { get; set; }
 
@@ -1731,9 +1731,9 @@ namespace MMR.Randomizer
         {
             var densityRating = (int)Math.Max(500 - Math.Floor((itemPool.Count - _randomized.Settings.CustomJunkLocations.Count) * Random.NextDouble(0.7, 1.3)), 0);
 
-            var alwaysOrdered = new List<List<Item>>
+            var alwaysOrdered = new List<List<Item?>>
             {
-                new List<Item> { Item.UpgradeRoyalWallet, Item.UpgradeGiantWallet, Item.UpgradeAdultWallet },
+                new List<Item?> { Item.UpgradeRoyalWallet, Item.UpgradeGiantWallet, Item.UpgradeAdultWallet },
             };
 
             var canPlaceSongs = !_settings.AddSongs;
@@ -1741,7 +1741,7 @@ namespace MMR.Randomizer
             {
                 item = alwaysOrdered
                     .FirstOrDefault(list => list.Contains(item))
-                    ?.FirstOrDefault(listItem => !ItemList[listItem].NewLocation.HasValue) ?? item;
+                    ?.FirstOrDefault(listItem => !ItemList[listItem.Value].NewLocation.HasValue) ?? item;
                 if (!item.IsSong() || canPlaceSongs)
                 {
                     PlaceItem(item, itemPool);
@@ -1769,7 +1769,7 @@ namespace MMR.Randomizer
                 Item.MaskKafei,
             };
 
-            if (_settings.PriceMode == PriceMode.None)
+            if (_settings.PriceMode == PriceMode.None && _settings.CustomItemList.Contains(Item.UpgradeRoyalWallet))
             {
                 PlaceBespokeItem(Item.UpgradeRoyalWallet);
                 tradeGroup.Add(Item.UpgradeGiantWallet);
