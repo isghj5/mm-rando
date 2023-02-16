@@ -10,6 +10,7 @@ namespace MMR.Randomizer.Models
     {
         Default,
 
+        [RestrictedPlacement(RestrictedPlacementAttribute.RestrictionType.GreatFairyRewards)]
         [Description("Boss Remains will be placed on the reward for collecting 15 stray fairies of their dungeon. Great Fairy Rewards must be randomized for this to take effect.")]
         GreatFairyRewards = 1,
 

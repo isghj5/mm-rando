@@ -14,6 +14,7 @@ namespace MMR.Randomizer.Attributes
             KeepWithinTemples,
             KeepWithinArea,
             KeepWithinOverworld,
+            GreatFairyRewards,
         }
 
         public Func<Item, Item, ItemList, bool> RestrictPlacement { get; }
@@ -33,7 +34,16 @@ namespace MMR.Randomizer.Attributes
                 case RestrictionType.KeepWithinOverworld:
                     RestrictPlacement = KeepWithinOverworld;
                     break;
+                case RestrictionType.GreatFairyRewards:
+                    RestrictPlacement = GreatFairyRewards;
+                    break;
             }
+        }
+
+        private readonly IReadOnlyCollection<Item> _greatFairyRewards = new List<Item> { Item.FairySpinAttack, Item.FairyDoubleMagic, Item.FairyDoubleDefense, Item.ItemFairySword };
+        private bool GreatFairyRewards(Item item, Item location, ItemList itemList)
+        {
+            return _greatFairyRewards.Contains(location);
         }
 
         private bool KeepWithinTemples(Item item, Item location, ItemList itemList)

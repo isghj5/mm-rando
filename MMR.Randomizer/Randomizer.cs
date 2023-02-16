@@ -2223,80 +2223,50 @@ namespace MMR.Randomizer
             }
         }
 
-        private Func<Item, Item, ItemList, bool> GetRestriction<TMode>(TMode mode) where TMode : struct, Enum
-        {
-            var restrictions = Enum.GetValues<TMode>()
-                .Where(m => mode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
-                .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
-
-            if (restrictions.Any())
-            {
-                return restrictions
-                    .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
-            }
-
-            return null;
-        }
-
         private void PlaceRestrictedItems(List<Item> itemPool)
         {
+            Func<Item, Item, ItemList, bool> GetRestriction<TMode>(TMode mode) where TMode : struct, Enum
+            {
+                var restrictions = Enum.GetValues<TMode>()
+                    .Where(m => mode.HasFlag(m) && m.HasAttribute<RestrictedPlacementAttribute>())
+                    .Select(m => m.GetAttribute<RestrictedPlacementAttribute>().RestrictPlacement);
+
+                if (restrictions.Any())
+                {
+                    return restrictions
+                        .Aggregate((a, b) => (item, location, itemList) => a(item, location, itemList) && b(item, location, itemList));
+                }
+
+                return null;
+            }
+
+            void PlaceRestricted<TMode>(IEnumerable<Item> items, TMode mode) where TMode : struct, Enum
+            {
+                var restrictions = GetRestriction(mode);
+                if (restrictions != null)
+                {
+                    foreach (var item in items)
+                    {
+                        PlaceItem(item, itemPool, restrictions);
+                    }
+                }
+            }
+
             if (_settings.BossRemainsMode.HasFlag(BossRemainsMode.GreatFairyRewards))
             {
-                PlaceItem(Item.RemainsOdolwa, itemPool, (_, location, _) => location == Item.FairySpinAttack);
-                PlaceItem(Item.RemainsGoht, itemPool, (_, location, _) => location == Item.FairyDoubleMagic);
-                PlaceItem(Item.RemainsGyorg, itemPool, (_, location, _) => location == Item.FairyDoubleDefense);
-                PlaceItem(Item.RemainsTwinmold, itemPool, (_, location, _) => location == Item.ItemFairySword);
+                PlaceRestricted(ItemUtils.BossRemains(), _settings.BossRemainsMode);
             }
 
-            var strayFairyRestriction = GetRestriction(_settings.StrayFairyMode);
-
-            if (strayFairyRestriction != null)
+            if (_settings.BossKeyMode.HasFlag(BossKeyMode.GreatFairyRewards))
             {
-                foreach (var item in ItemUtils.DungeonStrayFairies())
-                {
-                    PlaceItem(item, itemPool, strayFairyRestriction);
-                }
+                PlaceRestricted(ItemUtils.BossKeys(), _settings.BossKeyMode);
             }
 
-            var bossKeyRestriction = GetRestriction(_settings.BossKeyMode);
-
-            if (bossKeyRestriction != null)
-            {
-                foreach (var item in ItemUtils.BossKeys())
-                {
-                    PlaceItem(item, itemPool, bossKeyRestriction);
-                }
-            }
-
-            var smallKeyRestriction = GetRestriction(_settings.SmallKeyMode);
-
-            if (smallKeyRestriction != null)
-            {
-                foreach (var item in ItemUtils.SmallKeys())
-                {
-                    PlaceItem(item, itemPool, smallKeyRestriction);
-                }
-            }
-
-            var bossRemainsRestriction = GetRestriction(_settings.BossRemainsMode);
-
-            if (bossRemainsRestriction != null)
-            {
-                foreach (var item in ItemUtils.BossRemains())
-                {
-                    PlaceItem(item, itemPool, bossRemainsRestriction);
-                }
-            }
-
-            var dungeonNavigationRestriction = GetRestriction(_settings.DungeonNavigationMode);
-
-            if (dungeonNavigationRestriction != null)
-            {
-                foreach (var item in ItemUtils.DungeonNavigation())
-                {
-                    PlaceItem(item, itemPool, dungeonNavigationRestriction);
-                }
-            }
+            PlaceRestricted(ItemUtils.DungeonStrayFairies(), _settings.StrayFairyMode);
+            PlaceRestricted(ItemUtils.BossKeys(), _settings.BossKeyMode);
+            PlaceRestricted(ItemUtils.SmallKeys(), _settings.SmallKeyMode);
+            PlaceRestricted(ItemUtils.BossRemains(), _settings.BossRemainsMode);
+            PlaceRestricted(ItemUtils.DungeonNavigation(), _settings.DungeonNavigationMode);
         }
 
         /// <summary>
