@@ -182,8 +182,8 @@ namespace MMR.Randomizer.Utils
                     }
                     else if (! RomData.SequenceList.Any(u => u.Name == i))
                     {
-                        DebugOut("Song does not exist in sequence pool, did you misspell the song Name? " + i);
-                        musicCombo.SongsList.Remove(i);
+                        throw new Exception("Music Plando Error: " +
+                            "Song does not exist in sequence pool, did you misspell the song Name? \n" + i);
                     }
                 }
 
@@ -197,20 +197,20 @@ namespace MMR.Randomizer.Utils
                     }
                     else if (!RomData.TargetSequences.Any(u => u.Name == i))
                     {
-                        DebugOut("Slot does not exist in slot pool, did you misspell the slot Name or forget to add it to seqs.txt? " + i);
-                        musicCombo.SlotsList.Remove(i);
+                        throw new Exception("Music Plando Error: " +
+                            "Slot does not exist in slot pool, did you misspell the slot Name or forget to add it to seqs.txt? \n" + i);
                     }
                 }
 
                 if (musicCombo.SongsList.Count == 0)
                 {
-                    DebugOut("Plando Music Combo is starved, all songs have already been placed: " + musicCombo.Name);
-                    continue;
+                    throw new Exception("Music Plando Error: " +
+                        "Plando Music Combo is starved, all songs have already been placed: \n" + musicCombo.Name);
                 }
                 if (musicCombo.SlotsList.Count == 0)
                 {
-                    DebugOut("Plando Music Combo is starved, all slots are already filled: " + musicCombo.Name);
-                    continue;
+                    throw new Exception("Music Plando Error: " +
+                        "Plando Music Combo is starved, all slots are already filled: \n" + musicCombo.Name);
                 }
 
                 if (musicCombo.ItemDrawCount <= -1 || musicCombo.ItemDrawCount > musicCombo.SongsList.Count)

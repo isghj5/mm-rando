@@ -607,6 +607,14 @@ namespace MMR.Randomizer
                 }
                 // */
                 // RecreateFishing();
+
+
+                // can we just boost the dynapoly memory size?
+                // data locations:
+                // default 23000 is an ORI at 3da8, a4 for tope byte
+                // IsSmallMemScene is F000 at 3d58
+                // termina field is in data at sSceneMemList, not sure exact space
+                //ReadWriteUtils.Arr_WriteU32(codeFile, 0x3DA8, 0x2);
             }
 
             // testing why zrotation can be so broken for grottos
@@ -662,6 +670,10 @@ namespace MMR.Randomizer
             RomUtils.CheckCompressed(GameObjects.Actor.PowderKeg.FileListIndex());
             var kegFile = RomData.MMFileList[GameObjects.Actor.PowderKeg.FileListIndex()].Data;
             kegFile[0x1FF5] |= 0x02; // add ACTOR_FLAG_20000, makes it heavy 
+
+
+
+
 
             //PrintActorValues();
         }
@@ -3222,7 +3234,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 45.2\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 45.3\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
