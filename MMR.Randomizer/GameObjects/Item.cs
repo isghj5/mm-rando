@@ -1040,7 +1040,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x3F), ItemPool(ItemCategory.Navigation, LocationCategory.Chests, ClassicCategory.DungeonItems)]
         ItemWoodfallCompass,
 
-        [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)SmallKeyMode.KeepThroughTime, false)]
+        [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)BossKeyMode.KeepThroughTime, false)]
         [ItemName("Woodfall Boss Key"), LocationName("Woodfall Boss Key Chest"), Region(Region.WoodfallTemple)]
         [GossipLocationHint("Woodfall Temple", "the sleeping temple"), GossipItemHint("an important key", "entry to evil's lair")]
         [ShopText("The key for the boss room in Woodfall Temple.", isDefinite: true)]
@@ -1072,7 +1072,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x57), ItemPool(ItemCategory.Navigation, LocationCategory.Chests, ClassicCategory.DungeonItems)]
         ItemSnowheadCompass,
 
-        [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)SmallKeyMode.KeepThroughTime, false)]
+        [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)BossKeyMode.KeepThroughTime, false)]
         [ItemName("Snowhead Boss Key"), LocationName("Snowhead Boss Key Chest"), Region(Region.SnowheadTemple)]
         [GossipLocationHint("Snowhead Temple", "an icy gale"), GossipItemHint("an important key", "entry to evil's lair")]
         [ShopText("The key for the boss room in Snowhead Temple.", isDefinite: true)]
@@ -1120,7 +1120,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x58), ItemPool(ItemCategory.Navigation, LocationCategory.Chests, ClassicCategory.DungeonItems)]
         ItemGreatBayCompass,
 
-        [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)SmallKeyMode.KeepThroughTime, false)]
+        [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)BossKeyMode.KeepThroughTime, false)]
         [ItemName("Great Bay Boss Key"), LocationName("Great Bay Boss Key Chest"), Region(Region.GreatBayTemple)]
         [GossipLocationHint("Great Bay Temple", "the ocean temple"), GossipItemHint("an important key", "entry to evil's lair")]
         [ShopText("The key for the boss room in Great Bay Temple.", isDefinite: true)]
@@ -1152,7 +1152,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x6C), ItemPool(ItemCategory.Navigation, LocationCategory.Chests, ClassicCategory.DungeonItems)]
         ItemStoneTowerCompass,
 
-        [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)SmallKeyMode.KeepThroughTime, false)]
+        [Repeatable, Temporary(nameof(GameplaySettings.BossKeyMode), (int)BossKeyMode.KeepThroughTime, false)]
         [ItemName("Stone Tower Boss Key"), LocationName("Stone Tower Boss Key Chest"), Region(Region.StoneTowerTemple)]
         [GossipLocationHint("Stone Tower Temple", "the cursed temple"), GossipItemHint("an important key", "entry to evil's lair")]
         [ShopText("The key for the boss room in Stone Tower Temple.", isDefinite: true)]
@@ -1323,7 +1323,7 @@ namespace MMR.Randomizer.GameObjects
         ShopItemBombsBomb10,
 
         [Purchaseable, Visible]
-        [Repeatable, Temporary]
+        [Repeatable, Temporary(nameof(GameplaySettings.BombchuDrops), false)]
         [ItemName("10 Bombchu"), LocationName("Bomb Shop 10 Bombchu"), Region(Region.WestClockTown)]
         [GossipLocationHint("a town merchant"), GossipItemHint("explosives")]
         [ShopInventory(ShopInventoryAttribute.ShopKeeper.BombShop, 2)]
@@ -1487,7 +1487,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xF5), ItemPool(ItemCategory.PurpleRupees, LocationCategory.Chests, ClassicCategory.EverythingElse)]
         ChestBadBatsGrottoPurpleRupee,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary(nameof(GameplaySettings.BombchuDrops), false)]
         [ItemName("5 Bombchu"), LocationName("Secret Shrine Grotto"), Region(Region.IkanaCanyon)]
         [GossipLocationHint("a waterfall cave"), GossipItemHint("explosive mice")]
         [ShopText("Mouse-shaped bombs that are practical, sleek and self-propelled.", isMultiple: true)]
@@ -1575,7 +1575,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xFC), ItemPool(ItemCategory.SilverRupees, LocationCategory.Chests, ClassicCategory.EverythingElse)]
         ChestBomberHideoutSilverRupee,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary(nameof(GameplaySettings.BombchuDrops), false)]
         [ItemName("Bombchu"), LocationName("Termina Field Pillar Grotto"), Region(Region.TerminaField)]
         [GossipLocationHint("a hollow pillar"), GossipItemHint("explosive mice")]
         [ShopText("Mouse-shaped bomb that is practical, sleek and self-propelled.")]
@@ -1639,7 +1639,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xEB), ItemPool(ItemCategory.RedRupees, LocationCategory.Chests, ClassicCategory.EverythingElse)]
         ChestGreatBayCapeLedge2, //contents? 
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary(nameof(GameplaySettings.BombchuDrops), false)]
         [ItemName("Bombchu"), LocationName("Zora Cape Grotto"), Region(Region.ZoraCape)]
         [GossipLocationHint("a beach cave"), GossipItemHint("explosive mice")]
         [ShopText("Mouse-shaped bomb that is practical, sleek and self-propelled.")]
@@ -1695,7 +1695,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xF7), ItemPool(ItemCategory.PurpleRupees, LocationCategory.Chests, ClassicCategory.EverythingElse)]
         ChestDogRacePurpleRupee,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary(nameof(GameplaySettings.BombchuDrops), false)]
         [ItemName("5 Bombchu"), LocationName("Ikana Graveyard Grotto"), Region(Region.IkanaGraveyard)]
         [ShopText("Mouse-shaped bombs that are practical, sleek and self-propelled.", isMultiple: true)]
         [GossipLocationHint("a circled cave"), GossipItemHint("explosive mice")]
@@ -1767,7 +1767,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xF1), ItemPool(ItemCategory.RedRupees, LocationCategory.Chests, ClassicCategory.EverythingElse)]
         ChestToIkanaRedRupee,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary(nameof(GameplaySettings.BombchuDrops), false)]
         [ItemName("Bombchu"), LocationName("Path to Ikana Grotto"), Region(Region.RoadToIkana)]
         [GossipLocationHint("a blocked cave"), GossipItemHint("explosive mice")]
         [ShopText("Mouse-shaped bomb that is practical, sleek and self-propelled.")]
@@ -1783,7 +1783,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0xFD), ItemPool(ItemCategory.SilverRupees, LocationCategory.Chests, ClassicCategory.EverythingElse)]
         ChestInvertedStoneTowerSilverRupee,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary(nameof(GameplaySettings.BombchuDrops), false)]
         [ItemName("10 Bombchu"), LocationName("Inverted Stone Tower Middle Chest"), Region(Region.StoneTower)]
         [GossipLocationHint("a sky below"), GossipItemHint("explosive mice")]
         [ShopText("Mouse-shaped bombs that are practical, sleek and self-propelled.", isMultiple: true)]
@@ -2157,7 +2157,7 @@ namespace MMR.Randomizer.GameObjects
         ItemTingleMapStoneTower,
 
         //oops I forgot one
-        [Repeatable, Temporary]
+        [Repeatable, Temporary(nameof(GameplaySettings.BombchuDrops), false)]
         [ItemName("Bombchu"), LocationName("Goron Racetrack Grotto"), Region(Region.TwinIslands)]
         [GossipLocationHint("a hidden cave"), GossipItemHint("explosive mice")]
         [ShopText("Mouse-shaped bomb that is practical, sleek and self-propelled.")]
@@ -2233,7 +2233,7 @@ namespace MMR.Randomizer.GameObjects
         [GetItemIndex(0x126), ItemPool(ItemCategory.Arrows, LocationCategory.MoonItems, ClassicCategory.MoonItems)]
         ChestLinkTrialArrow30,
 
-        [Repeatable, Temporary]
+        [Repeatable, Temporary(nameof(GameplaySettings.BombchuDrops), false)]
         [ItemName("10 Bombchu"), LocationName("Link Trial Iron Knuckle Chest"), Region(Region.TheMoon)]
         [GossipLocationHint("a masked child's game"), GossipItemHint("explosive mice")]
         [ShopText("Mouse-shaped bombs that are practical, sleek and self-propelled.", isMultiple: true)]

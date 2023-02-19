@@ -249,6 +249,11 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool SaferGlitches { get; set; } = true;
 
+        /// <summary>
+        /// Whether or not Bombchu should be able to be dropped.
+        /// </summary>
+        public bool BombchuDrops { get; set; }
+
         public MiscFlags()
         {
         }
@@ -283,6 +288,7 @@ namespace MMR.Randomizer.Asm
             this.AutoInvert = (AutoInvertState)((flags >> 9) & 3);
             this.HiddenRupeesSparkle = ((flags >> 8) & 1) == 1;
             this.SaferGlitches = ((flags >> 7) & 1) == 1;
+            this.BombchuDrops = ((flags >> 6) & 1) == 1;
         }
 
         /// <summary>
@@ -314,6 +320,7 @@ namespace MMR.Randomizer.Asm
             flags |= (((uint)this.AutoInvert) & 3) << 9;
             flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 8;
             flags |= (this.SaferGlitches ? (uint)1 : 0) << 7;
+            flags |= (this.BombchuDrops ? (uint)1 : 0) << 6;
             return flags;
         }
     }

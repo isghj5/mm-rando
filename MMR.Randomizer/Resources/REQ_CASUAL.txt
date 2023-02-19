@@ -54632,9 +54632,20 @@
     {
       "Id": "NotebookMeetShiro",
       "RequiredItems": [
+        "ItemLens",
+        "Magic Meter",
         "ItemNotebook"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Play Epona's Song"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",

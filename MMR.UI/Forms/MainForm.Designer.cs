@@ -243,6 +243,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
+            this.cAddBombchuDrops = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1844,6 +1845,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox7
             // 
+            this.groupBox7.Controls.Add(this.cAddBombchuDrops);
             this.groupBox7.Controls.Add(this.lChestGame);
             this.groupBox7.Controls.Add(this.cChestGameMinimap);
             this.groupBox7.Controls.Add(this.cSaferGlitches);
@@ -2842,7 +2844,7 @@ namespace MMR.UI.Forms
             this.tpPatchSettings.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tpPatchSettings.Name = "tpPatchSettings";
             this.tpPatchSettings.Padding = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.tpPatchSettings.Size = new System.Drawing.Size(482, 75);
+            this.tpPatchSettings.Size = new System.Drawing.Size(508, 75);
             this.tpPatchSettings.TabIndex = 1;
             this.tpPatchSettings.Text = "Patch settings";
             this.tpPatchSettings.UseVisualStyleBackColor = true;
@@ -2877,6 +2879,18 @@ namespace MMR.UI.Forms
             this.bSkip.UseVisualStyleBackColor = true;
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
+            // 
+            // cAddBombchuDrops
+            // 
+            this.cAddBombchuDrops.AutoSize = true;
+            this.cAddBombchuDrops.Location = new System.Drawing.Point(172, 233);
+            this.cAddBombchuDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cAddBombchuDrops.Name = "cAddBombchuDrops";
+            this.cAddBombchuDrops.Size = new System.Drawing.Size(137, 19);
+            this.cAddBombchuDrops.TabIndex = 46;
+            this.cAddBombchuDrops.Text = "Add Bombchu Drops";
+            this.cAddBombchuDrops.UseVisualStyleBackColor = true;
+            this.cAddBombchuDrops.CheckedChanged += new System.EventHandler(this.cAddBombchuDrops_CheckedChanged);
             // 
             // MainForm
             // 
@@ -3183,6 +3197,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.Label lChestGame;
         private System.Windows.Forms.ComboBox cChestGameMinimap;
         private System.Windows.Forms.CheckBox cShuffleBosses;
+        private System.Windows.Forms.CheckBox cAddBombchuDrops;
     }
 }
 

@@ -24,7 +24,7 @@ namespace MMR.Randomizer
 {
     public class Randomizer
     {
-        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString() + "-beta";
+        public static readonly string AssemblyVersion = typeof(Randomizer).Assembly.GetName().Version.ToString() + "-alpha";
 
         private Random Random { get; set; }
 
@@ -370,12 +370,17 @@ namespace MMR.Randomizer
                 ItemList.Add(arrows40);
             }
 
-            if (_settings.ByoAmmo && _settings.LogicMode != LogicMode.NoLogic)
+            var bombchu10 = ItemList
+                .FirstOrDefault(io =>
+                    io.Item.IsFake()
+                    && io.DependsOnItems.Count == 0
+                    && io.Conditionals.Count == 3
+                    && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ChestInvertedStoneTowerBombchu10 }))
+                    && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ChestLinkTrialBombchu10 })
+                    && io.Conditionals.Any(c => c.SequenceEqual(new List<Item> { Item.ShopItemBombsBombchu10 }))));
+            if (bombchu10 == null)
             {
-                ItemList[Item.ChestInvertedStoneTowerBombchu10].TimeNeeded = 1;
-                ItemList[Item.ChestLinkTrialBombchu10].TimeNeeded = 1;
-                ItemList[Item.ShopItemBombsBombchu10].TimeNeeded = 1;
-                var bombchu10 = new ItemObject
+                bombchu10 = new ItemObject
                 {
                     ID = ItemList.Count,
                     TimeAvailable = 63,
@@ -396,6 +401,13 @@ namespace MMR.Randomizer
                     },
                 };
                 ItemList.Add(bombchu10);
+            }
+
+            if (_settings.ByoAmmo && _settings.LogicMode != LogicMode.NoLogic)
+            {
+                ItemList[Item.ChestInvertedStoneTowerBombchu10].TimeNeeded = 1;
+                ItemList[Item.ChestLinkTrialBombchu10].TimeNeeded = 1;
+                ItemList[Item.ShopItemBombsBombchu10].TimeNeeded = 1;
 
                 ItemList[Item.UpgradeBigQuiver].DependsOnItems.Add(arrows40.Item);
                 ItemList[Item.UpgradeBiggestQuiver].DependsOnItems.Add(arrows40.Item);
@@ -785,6 +797,16 @@ namespace MMR.Randomizer
                         }
                     }
                 }
+            }
+
+            if (_settings.BombchuDrops && _settings.LogicMode != LogicMode.NoLogic)
+            {
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestIkanaSecretShrineGrotto });
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestTerminaGrottoBombchu });
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestGreatBayCapeGrotto });
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestGraveyardGrotto });
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestToIkanaGrotto });
+                bombchu10.Conditionals.Add(new List<Item> { Item.ChestToGoronRaceGrotto });
             }
         }
 

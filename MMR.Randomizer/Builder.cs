@@ -1628,6 +1628,11 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.safer_glitches_index_warp);
             }
 
+            if (_randomized.Settings.BombchuDrops)
+            {
+                hacks.Add(Resources.mods.add_bombchu_drops);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);

@@ -4,6 +4,7 @@
 #include "MMR.h"
 #include "Player.h"
 #include "BaseRupee.h"
+#include "macro.h"
 
 static u16 collectableTable[0x80];
 
@@ -106,4 +107,42 @@ s8 Item00_CanBeSpawned(u16 params) {
         }
     }
     return z2_item_can_be_spawned(params & 0xFF);
+}
+
+s16 Item00_GetAlteredDropId(s16 dropId) {
+    if ((((dropId == ITEM00_BOMBS_A) || (dropId == ITEM00_BOMBS_0) || (dropId == ITEM00_BOMBS_B)) &&
+         (INV_CONTENT(ITEM_BOMB) == ITEM_NONE)) ||
+        (((dropId == ITEM00_ARROWS_10) || (dropId == ITEM00_ARROWS_30) || (dropId == ITEM00_ARROWS_40) ||
+          (dropId == ITEM00_ARROWS_50)) &&
+         (INV_CONTENT(ITEM_BOW) == ITEM_NONE)) ||
+        (((dropId == ITEM00_MAGIC_LARGE) || (dropId == ITEM00_MAGIC_SMALL)) &&
+         (gSaveContext.perm.unk24.magicLevel == 0))) {
+        return ITEM00_NO_DROP;
+    }
+
+    if (dropId == ITEM00_RECOVERY_HEART) {
+        if (((void)0, gSaveContext.perm.unk24.maxLife) == ((void)0, gSaveContext.perm.unk24.currentLife)) {
+            return ITEM00_RUPEE_GREEN;
+        }
+    }
+
+    if (dropId == ITEM00_BOMBS_A && MISC_CONFIG.flags.bombchuDrops && INV_CONTENT(ITEM_BOMBCHU) != ITEM_NONE) {
+        u8 bombCount = AMMO(ITEM_BOMB);
+        u8 bombchuCount = AMMO(ITEM_BOMBCHU);
+        if (bombCount > 15 && bombchuCount > 15) {
+            if (z2_Rand_ZeroOne() < 0.5f) {
+                return dropId;
+            }
+
+            return ITEM00_BOMBS_0; // altered to be 5 Bombchu
+        }
+
+        if (bombCount <= bombchuCount) {
+            return dropId;
+        }
+
+        return ITEM00_BOMBS_0; // altered to be 5 Bombchu
+    }
+
+    return dropId;
 }

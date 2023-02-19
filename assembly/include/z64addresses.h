@@ -14,6 +14,7 @@
 #define GameStateTableAddr               0x801BD910
 #define ItemUpgradeCapacityAddr          0x801C1E04
 #define ItemTextureSegAddrTableAddr      0x801C1E6C // Segment address table used for item textures.
+#define ItemSlotsAddr                    0x801C2078
 #define ObjectTableAddr                  0x801C2740
 #define SongNotesAddr                    0x801CFC98
 #define SaveContextAddr                  0x801EF670
@@ -31,6 +32,7 @@
 #define gGlobalContext                   (*(GlobalContext*)          GlobalContextAddr)
 #define gGameStateInfo                   (*(GameStateTable*)         GameStateTableAddr)
 #define gGetItemGraphicTable             ((GetItemGraphicEntry*)     GetItemGraphicTableAddr)
+#define gItemSlots                       ((u8*)                      ItemSlotsAddr)
 #define gObjectFileTable                 ((ObjectFileTableEntry*)    ObjectTableAddr)
 #define gRspSegmentPhysAddrs             (*(SegmentTable*)           SegmentTableAddr)
 #define gSongNotes                       (*(SongNotes*)              SongNotesAddr)

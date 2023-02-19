@@ -195,6 +195,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.SaferGlitches = value; }
         }
 
+        public bool BombchuDrops
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.BombchuDrops; }
+            set { this.AsmOptions.MiscConfig.Flags.BombchuDrops = value; }
+        }
+
         #endregion
 
         #region Random Elements

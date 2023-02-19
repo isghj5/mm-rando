@@ -57,7 +57,8 @@ typedef struct {
     u32 autoInvert          : 2;
     u32 hiddenRupeesSparkle : 1;
     u32 saferGlitches       : 1;
-    u32                     : 7;
+    u32 bombchuDrops        : 1;
+    u32                     : 6;
 } MiscFlags;
 
 typedef union {
