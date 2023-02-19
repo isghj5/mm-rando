@@ -173,8 +173,16 @@ namespace MMR.Randomizer
 
         private void WritePlayerModel()
         {
+            // Apply mods for using environment colour for tunics.
+            ResourceUtils.ApplyHack(Resources.models.envcolour_fdlink_mod);
+            ResourceUtils.ApplyHack(Resources.models.envcolour_goronlink_mod);
+            ResourceUtils.ApplyHack(Resources.models.envcolour_zoralink_mod);
+            ResourceUtils.ApplyHack(Resources.models.gameplaykeep_fincolors);
+            ResourceUtils.ApplyHack(Resources.models.envcolour_dekulink_mod);
+            ResourceUtils.ApplyHack(Resources.models.gameplay_keep_swordenvs);
             if (_randomized.Settings.Character == Character.LinkMM)
             {
+                ResourceUtils.ApplyHack(Resources.models.envcolour_humanlink_mod);
                 return;
             }
 
@@ -4525,6 +4533,10 @@ namespace MMR.Randomizer
                 Item.IceTrap.ExclusiveItemEntry().Message,
                 Item.IceTrap.ExclusiveItemMessage());
             _extraMessages.Add(entry);
+            var entry2 = new MessageEntry(
+                Item.BombTrap.ExclusiveItemEntry().Message,
+                Item.BombTrap.ExclusiveItemMessage());
+            _extraMessages.Add(entry2);
         }
 
         public void MakeROM(OutputSettings outputSettings, IProgressReporter progressReporter)
@@ -4672,7 +4684,7 @@ namespace MMR.Randomizer
 
             progressReporter.ReportProgress(72, "Writing cosmetics...");
             WriteTatlColour(new Random(BitConverter.ToInt32(hash, 0)));
-            WriteTunicColor();
+            //WriteTunicColor();
             WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
             progressReporter.ReportProgress(73, "Writing music...");

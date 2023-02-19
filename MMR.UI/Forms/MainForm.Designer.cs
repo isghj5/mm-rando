@@ -155,6 +155,7 @@ namespace MMR.UI.Forms
             this.lLink = new System.Windows.Forms.Label();
             this.cLink = new System.Windows.Forms.ComboBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.cAddBombchuDrops = new System.Windows.Forms.CheckBox();
             this.lChestGame = new System.Windows.Forms.Label();
             this.cChestGameMinimap = new System.Windows.Forms.ComboBox();
             this.cSaferGlitches = new System.Windows.Forms.CheckBox();
@@ -243,7 +244,8 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cAddBombchuDrops = new System.Windows.Forms.CheckBox();
+            this.lBombTraps = new System.Windows.Forms.Label();
+            this.cBombTraps = new System.Windows.Forms.ComboBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1120,6 +1122,8 @@ namespace MMR.UI.Forms
             // 
             // groupBox5
             // 
+            this.groupBox5.Controls.Add(this.lBombTraps);
+            this.groupBox5.Controls.Add(this.cBombTraps);
             this.groupBox5.Controls.Add(this.label2);
             this.groupBox5.Controls.Add(this.lIceTraps);
             this.groupBox5.Controls.Add(this.cIceTraps);
@@ -1132,12 +1136,12 @@ namespace MMR.UI.Forms
             this.groupBox5.Size = new System.Drawing.Size(175, 174);
             this.groupBox5.TabIndex = 31;
             this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Ice Traps";
+            this.groupBox5.Text = "Traps";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(7, 62);
+            this.label2.Location = new System.Drawing.Point(7, 104);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(70, 15);
@@ -1150,9 +1154,9 @@ namespace MMR.UI.Forms
             this.lIceTraps.Location = new System.Drawing.Point(7, 18);
             this.lIceTraps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lIceTraps.Name = "lIceTraps";
-            this.lIceTraps.Size = new System.Drawing.Size(51, 15);
+            this.lIceTraps.Size = new System.Drawing.Size(94, 15);
             this.lIceTraps.TabIndex = 28;
-            this.lIceTraps.Text = "Amount";
+            this.lIceTraps.Text = "Ice Trap Amount";
             // 
             // cIceTraps
             // 
@@ -1179,7 +1183,7 @@ namespace MMR.UI.Forms
             "Major Items",
             "Junk Items",
             "Anything"});
-            this.cIceTrapsAppearance.Location = new System.Drawing.Point(7, 78);
+            this.cIceTrapsAppearance.Location = new System.Drawing.Point(7, 120);
             this.cIceTrapsAppearance.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cIceTrapsAppearance.Name = "cIceTrapsAppearance";
             this.cIceTrapsAppearance.Size = new System.Drawing.Size(160, 23);
@@ -1191,7 +1195,7 @@ namespace MMR.UI.Forms
             this.cIceTrapQuirks.AutoSize = true;
             this.cIceTrapQuirks.BackColor = System.Drawing.Color.Transparent;
             this.cIceTrapQuirks.ForeColor = System.Drawing.Color.Black;
-            this.cIceTrapQuirks.Location = new System.Drawing.Point(7, 110);
+            this.cIceTrapQuirks.Location = new System.Drawing.Point(7, 149);
             this.cIceTrapQuirks.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cIceTrapQuirks.Name = "cIceTrapQuirks";
             this.cIceTrapQuirks.Size = new System.Drawing.Size(98, 19);
@@ -1874,6 +1878,18 @@ namespace MMR.UI.Forms
             this.groupBox7.TabIndex = 34;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Comfort Options";
+            // 
+            // cAddBombchuDrops
+            // 
+            this.cAddBombchuDrops.AutoSize = true;
+            this.cAddBombchuDrops.Location = new System.Drawing.Point(172, 233);
+            this.cAddBombchuDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cAddBombchuDrops.Name = "cAddBombchuDrops";
+            this.cAddBombchuDrops.Size = new System.Drawing.Size(137, 19);
+            this.cAddBombchuDrops.TabIndex = 46;
+            this.cAddBombchuDrops.Text = "Add Bombchu Drops";
+            this.cAddBombchuDrops.UseVisualStyleBackColor = true;
+            this.cAddBombchuDrops.CheckedChanged += new System.EventHandler(this.cAddBombchuDrops_CheckedChanged);
             // 
             // lChestGame
             // 
@@ -2880,17 +2896,32 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cAddBombchuDrops
+            // lBombTraps
             // 
-            this.cAddBombchuDrops.AutoSize = true;
-            this.cAddBombchuDrops.Location = new System.Drawing.Point(172, 233);
-            this.cAddBombchuDrops.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cAddBombchuDrops.Name = "cAddBombchuDrops";
-            this.cAddBombchuDrops.Size = new System.Drawing.Size(137, 19);
-            this.cAddBombchuDrops.TabIndex = 46;
-            this.cAddBombchuDrops.Text = "Add Bombchu Drops";
-            this.cAddBombchuDrops.UseVisualStyleBackColor = true;
-            this.cAddBombchuDrops.CheckedChanged += new System.EventHandler(this.cAddBombchuDrops_CheckedChanged);
+            this.lBombTraps.AutoSize = true;
+            this.lBombTraps.Location = new System.Drawing.Point(7, 62);
+            this.lBombTraps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lBombTraps.Name = "lBombTraps";
+            this.lBombTraps.Size = new System.Drawing.Size(111, 15);
+            this.lBombTraps.TabIndex = 32;
+            this.lBombTraps.Text = "Bomb Trap Amount";
+            // 
+            // cBombTraps
+            // 
+            this.cBombTraps.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBombTraps.FormattingEnabled = true;
+            this.cBombTraps.Items.AddRange(new object[] {
+            "None",
+            "Few",
+            "Half",
+            "Most",
+            "All"});
+            this.cBombTraps.Location = new System.Drawing.Point(7, 78);
+            this.cBombTraps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cBombTraps.Name = "cBombTraps";
+            this.cBombTraps.Size = new System.Drawing.Size(160, 23);
+            this.cBombTraps.TabIndex = 31;
+            this.cBombTraps.SelectedIndexChanged += new System.EventHandler(this.cBombTraps_SelectedIndexChanged);
             // 
             // MainForm
             // 
@@ -3198,6 +3229,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.ComboBox cChestGameMinimap;
         private System.Windows.Forms.CheckBox cShuffleBosses;
         private System.Windows.Forms.CheckBox cAddBombchuDrops;
+        private System.Windows.Forms.Label lBombTraps;
+        private System.Windows.Forms.ComboBox cBombTraps;
     }
 }
 

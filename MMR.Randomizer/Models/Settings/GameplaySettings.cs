@@ -308,6 +308,11 @@ namespace MMR.Randomizer.Models.Settings
         public IceTraps IceTraps { get; set; }
 
         /// <summary>
+        /// Defines number of bomb traps.
+        /// </summary>
+        public BombTraps BombTraps { get; set; }
+
+        /// <summary>
         /// Defines appearance pool for visible ice traps.
         /// </summary>
         public IceTrapAppearance IceTrapAppearance { get; set; }

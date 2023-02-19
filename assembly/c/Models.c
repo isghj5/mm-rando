@@ -147,7 +147,7 @@ static bool ShouldRotateBackwards(GlobalContext* ctxt, u16 giIndex) {
     if (MISC_CONFIG.flags.iceTrapQuirks) {
         struct Model model;
         GetItemEntry* entry = PrepareGiEntry(&model, ctxt, giIndex, true);
-        return entry->item == CUSTOM_ITEM_ICE_TRAP;
+        return entry->item == CUSTOM_ITEM_ICE_TRAP || entry->item == CUSTOM_ITEM_BOMBTRAP;
     } else {
         return false;
     }

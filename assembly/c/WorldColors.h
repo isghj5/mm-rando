@@ -28,10 +28,12 @@ struct WorldColorConfig {
     Color iceArrowEffectPri;
     Color lightArrowEffectEnv;
     Color lightArrowEffectPri;
+    Color formTunic[5];
 };
 
 extern struct WorldColorConfig WORLD_COLOR_CONFIG;
 
 void WorldColors_Init(void);
+void WorldColors_RandomizeTunic(ActorPlayer* actor);
 
 #endif // WORLD_COLORS_H

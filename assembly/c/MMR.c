@@ -166,7 +166,7 @@ u16 MMR_CheckProgressiveUpgrades(u16 giIndex) {
     return giIndex;
 }
 
-#define cycleRepeatableItemsLength 35
+#define cycleRepeatableItemsLength 36
 static u8 cycleRepeatableItems[cycleRepeatableItemsLength] = {
     0x06, // 1 Bomb
     0x07, // 10 Bombchu
@@ -202,6 +202,7 @@ static u8 cycleRepeatableItems[cycleRepeatableItemsLength] = {
     0xA0, // Milk
     0xA1, // Gold Dust
     0xB0, // Ice Trap
+    0xB3, // Bomb Trap
     0xFF, // ? Stray Fairy ?
 };
 bool MMR_IsCycleRepeatable(u16 giIndex) {
@@ -353,6 +354,9 @@ u32 MMR_GetMinorItemSfxId(u8 item) {
     if (item == CUSTOM_ITEM_ICE_TRAP) {
         return 0x31A4;
     }
+    if (item == CUSTOM_ITEM_BOMBTRAP) {
+        return 0x3A76;
+    }
     return 0;
 }
 
@@ -382,6 +386,16 @@ bool MMR_GiveItemIfMinor(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
                 actor->draw = NULL;
             }
             z2_PlayLoopingSfxAtActor(actor, minorItemSfxId);
+            z2_GiveItem(ctxt, entry->item);
+            return true;
+        }
+
+        if (minorItemSfxId == 0x3A76) {
+            if (isActorFreestanding) {
+                actor->draw = NULL;
+            }
+            // Have IceTrap_Give handle sfx playback for this
+            //z2_PlaySfx(minorItemSfxId);
             z2_GiveItem(ctxt, entry->item);
             return true;
         }

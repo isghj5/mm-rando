@@ -127,5 +127,32 @@ namespace MMR.Randomizer.Utils
             } while (mimics.Count == 0);
             return mimics;
         }
+
+        /// <summary>
+        /// How many ice traps are set to be bomb traps instead.
+        /// </summary>
+        public static int GetBombTrapAmount(BombTraps bombtraps, int trapitemsamount)
+        {
+            if (bombtraps == BombTraps.None)
+            {
+                return 0;
+            }
+            else if (bombtraps == BombTraps.Few)
+            {
+                return trapitemsamount / 5;
+            }
+            else if (bombtraps == BombTraps.Half)
+            {
+                return trapitemsamount / 2;
+            }
+            else if (bombtraps == BombTraps.Most)
+            {
+                return (int)(trapitemsamount * .75);
+            }
+            else
+            {
+                return trapitemsamount;
+            }
+        }
     }
 }

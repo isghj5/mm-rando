@@ -21,6 +21,7 @@ enum CustomItem {
     // Other
     CUSTOM_ITEM_CRIMSON_RUPEE      = 0xB1,
     CUSTOM_ITEM_NOTEBOOK_ENTRY     = 0xB2,
+    CUSTOM_ITEM_BOMBTRAP           = 0xB3,
 };
 
 #endif // ITEMS_H
