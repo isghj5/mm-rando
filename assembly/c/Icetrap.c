@@ -89,7 +89,9 @@ bool Icetrap_Give(ActorPlayer* player, GlobalContext* ctxt) {
         if (bomb) {
             ((ActorEnBom*)bomb)->timer = 0;
             z2_PlaySfx(0x3A76);
-            WorldColors_RandomizeTunic(player);
+            if (WORLD_COLOR_CONFIG.flags.bombTrapTunicColor) {
+                WorldColors_RandomizeTunic(player);
+            }
             return true;
         }
     } else {

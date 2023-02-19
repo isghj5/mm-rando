@@ -3,6 +3,7 @@
 #include "OverlayMenu.h"
 #include "MMR.h"
 #include "Music.h"
+#include "WorldColors.h"
 
 bool Game_IsPlayerActor(void) {
     return s801D0B70.selected == &s801D0B70.playerActor;
@@ -75,6 +76,7 @@ void Game_AfterUpdate(GlobalContext* ctxt) {
     Music_Update(ctxt);
     if (Game_IsPlayerActor()) {
         MMR_ProcessItemQueue(ctxt);
+        WorldColors_CycleTunic(ctxt);
     } else {
         CheckRespawn(ctxt);
     }

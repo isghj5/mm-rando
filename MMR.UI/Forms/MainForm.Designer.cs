@@ -102,6 +102,8 @@ namespace MMR.UI.Forms
             this.cGravity = new System.Windows.Forms.ComboBox();
             this.cContinuousDekuHopping = new System.Windows.Forms.CheckBox();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.lBombTraps = new System.Windows.Forms.Label();
+            this.cBombTraps = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.lIceTraps = new System.Windows.Forms.Label();
             this.cIceTraps = new System.Windows.Forms.ComboBox();
@@ -180,6 +182,8 @@ namespace MMR.UI.Forms
             this.tShortenCutscenes = new System.Windows.Forms.TabControl();
             this.tabCosmetics = new System.Windows.Forms.TabPage();
             this.gCosmeticOther = new System.Windows.Forms.GroupBox();
+            this.cRainbowTunic = new System.Windows.Forms.CheckBox();
+            this.cBombTrapTunicColors = new System.Windows.Forms.CheckBox();
             this.cInstantPictobox = new System.Windows.Forms.CheckBox();
             this.cTatl = new System.Windows.Forms.ComboBox();
             this.lTatl = new System.Windows.Forms.Label();
@@ -244,8 +248,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.lBombTraps = new System.Windows.Forms.Label();
-            this.cBombTraps = new System.Windows.Forms.ComboBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -1137,6 +1139,33 @@ namespace MMR.UI.Forms
             this.groupBox5.TabIndex = 31;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Traps";
+            // 
+            // lBombTraps
+            // 
+            this.lBombTraps.AutoSize = true;
+            this.lBombTraps.Location = new System.Drawing.Point(7, 62);
+            this.lBombTraps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lBombTraps.Name = "lBombTraps";
+            this.lBombTraps.Size = new System.Drawing.Size(111, 15);
+            this.lBombTraps.TabIndex = 32;
+            this.lBombTraps.Text = "Bomb Trap Amount";
+            // 
+            // cBombTraps
+            // 
+            this.cBombTraps.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cBombTraps.FormattingEnabled = true;
+            this.cBombTraps.Items.AddRange(new object[] {
+            "None",
+            "Few",
+            "Half",
+            "Most",
+            "All"});
+            this.cBombTraps.Location = new System.Drawing.Point(7, 78);
+            this.cBombTraps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cBombTraps.Name = "cBombTraps";
+            this.cBombTraps.Size = new System.Drawing.Size(160, 23);
+            this.cBombTraps.TabIndex = 31;
+            this.cBombTraps.SelectedIndexChanged += new System.EventHandler(this.cBombTraps_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -2183,6 +2212,8 @@ namespace MMR.UI.Forms
             // 
             // gCosmeticOther
             // 
+            this.gCosmeticOther.Controls.Add(this.cRainbowTunic);
+            this.gCosmeticOther.Controls.Add(this.cBombTrapTunicColors);
             this.gCosmeticOther.Controls.Add(this.cInstantPictobox);
             this.gCosmeticOther.Controls.Add(this.cTatl);
             this.gCosmeticOther.Controls.Add(this.lTatl);
@@ -2195,6 +2226,32 @@ namespace MMR.UI.Forms
             this.gCosmeticOther.TabIndex = 47;
             this.gCosmeticOther.TabStop = false;
             this.gCosmeticOther.Text = "Other";
+            // 
+            // cRainbowTunic
+            // 
+            this.cRainbowTunic.AutoSize = true;
+            this.cRainbowTunic.BackColor = System.Drawing.Color.Transparent;
+            this.cRainbowTunic.Location = new System.Drawing.Point(10, 115);
+            this.cRainbowTunic.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cRainbowTunic.Name = "cRainbowTunic";
+            this.cRainbowTunic.Size = new System.Drawing.Size(104, 19);
+            this.cRainbowTunic.TabIndex = 44;
+            this.cRainbowTunic.Text = "Rainbow Tunic";
+            this.cRainbowTunic.UseVisualStyleBackColor = false;
+            this.cRainbowTunic.CheckedChanged += new System.EventHandler(this.cRainbowTunic_CheckedChanged);
+            // 
+            // cBombTrapTunicColors
+            // 
+            this.cBombTrapTunicColors.AutoSize = true;
+            this.cBombTrapTunicColors.BackColor = System.Drawing.Color.Transparent;
+            this.cBombTrapTunicColors.Location = new System.Drawing.Point(199, 37);
+            this.cBombTrapTunicColors.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cBombTrapTunicColors.Name = "cBombTrapTunicColors";
+            this.cBombTrapTunicColors.Size = new System.Drawing.Size(214, 19);
+            this.cBombTrapTunicColors.TabIndex = 43;
+            this.cBombTrapTunicColors.Text = "Bomb Traps Randomize Tunic Color";
+            this.cBombTrapTunicColors.UseVisualStyleBackColor = false;
+            this.cBombTrapTunicColors.CheckedChanged += new System.EventHandler(this.cBombTrapTunicColors_CheckedChanged);
             // 
             // cInstantPictobox
             // 
@@ -2896,33 +2953,6 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // lBombTraps
-            // 
-            this.lBombTraps.AutoSize = true;
-            this.lBombTraps.Location = new System.Drawing.Point(7, 62);
-            this.lBombTraps.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.lBombTraps.Name = "lBombTraps";
-            this.lBombTraps.Size = new System.Drawing.Size(111, 15);
-            this.lBombTraps.TabIndex = 32;
-            this.lBombTraps.Text = "Bomb Trap Amount";
-            // 
-            // cBombTraps
-            // 
-            this.cBombTraps.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cBombTraps.FormattingEnabled = true;
-            this.cBombTraps.Items.AddRange(new object[] {
-            "None",
-            "Few",
-            "Half",
-            "Most",
-            "All"});
-            this.cBombTraps.Location = new System.Drawing.Point(7, 78);
-            this.cBombTraps.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cBombTraps.Name = "cBombTraps";
-            this.cBombTraps.Size = new System.Drawing.Size(160, 23);
-            this.cBombTraps.TabIndex = 31;
-            this.cBombTraps.SelectedIndexChanged += new System.EventHandler(this.cBombTraps_SelectedIndexChanged);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3231,6 +3261,8 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cAddBombchuDrops;
         private System.Windows.Forms.Label lBombTraps;
         private System.Windows.Forms.ComboBox cBombTraps;
+        private System.Windows.Forms.CheckBox cRainbowTunic;
+        private System.Windows.Forms.CheckBox cBombTrapTunicColors;
     }
 }
 

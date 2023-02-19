@@ -1,6 +1,7 @@
 #include <z64.h>
 #include "ActorExt.h"
 #include "Color.h"
+#include "ColorConvert.h"
 #include "WorldColors.h"
 
 struct WorldColorConfig WORLD_COLOR_CONFIG = {
@@ -81,6 +82,19 @@ void WorldColors_RandomizeTunic(ActorPlayer* actor) {
     tunicColor.b = randColor >> 8;
 
     WORLD_COLOR_CONFIG.formTunic[linkForm] = tunicColor;
+}
+
+void WorldColors_CycleTunic(GlobalContext* ctxt) {
+    if (!WORLD_COLOR_CONFIG.flags.rainbowTunic) {
+        return;
+    }
+
+    ActorPlayer* player = GET_PLAYER(ctxt);
+    u8 linkForm = player->form;
+
+    u32 hue = (u32)Color_GetHue(WORLD_COLOR_CONFIG.formTunic[linkForm].rgb);
+    hue = (hue + 3) % 360;
+    WORLD_COLOR_CONFIG.formTunic[linkForm].rgb = Color_SetHue(WORLD_COLOR_CONFIG.formTunic[linkForm].rgb, (f64)hue);
 }
 
 void WorldColors_Init(void) {

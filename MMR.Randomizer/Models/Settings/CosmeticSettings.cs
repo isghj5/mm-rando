@@ -135,6 +135,18 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.HudColorsConfig.Colors = value; }
         }
 
+        public bool RainbowTunic
+        {
+            get { return this.AsmOptions.WorldColorsConfig.Flags.RainbowTunic; }
+            set { this.AsmOptions.WorldColorsConfig.Flags.RainbowTunic = value; }
+        }
+
+        public bool BombTrapsRandomizeTunicColor
+        {
+            get { return this.AsmOptions.WorldColorsConfig.Flags.BombTrapsRandomizeTunicColor; }
+            set { this.AsmOptions.WorldColorsConfig.Flags.BombTrapsRandomizeTunicColor = value; }
+        }
+
         #endregion
     }
 }
