@@ -65,7 +65,7 @@ namespace MMR.Common.Extensions
         {
             if (amount > list.Count)
             {
-                throw new IndexOutOfRangeException("Selection amount cannot exceed array length.");
+                amount = list.Count;
             }
 
             var result = new List<T>(amount);
