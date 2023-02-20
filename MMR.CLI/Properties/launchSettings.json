@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "MMR.CLI": {
+      "commandName": "Project",
+      "commandLineArgs": "-input m.z64"
+    }
+  }
+}
