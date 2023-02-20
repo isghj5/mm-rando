@@ -4798,6 +4798,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.HeartPieceOceanSpiderHouse)]
         [GroundVariants(0xF001, 0xF002, 0xF003, 0xF004, 0xF005, 0xF006)]
         [VariantsWithRoomMax(max: 1, variant:0xF001, 0xF002, 0xF003, 0xF004, 0xF005, 0xF006)]
+        [UnkillableAllVariants] // not enemy actor category
         StalchildHintGiver = 0x2A5, // En_Hint_Skb
 
         // ??
