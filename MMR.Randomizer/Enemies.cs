@@ -277,7 +277,7 @@ namespace MMR.Randomizer
                 }
             }
             if ((scene.SceneEnum == GameObjects.Scene.GoronVillage || scene.SceneEnum == GameObjects.Scene.GoronVillageSpring)
-                && testActor == GameObjects.Actor.SmithyGoronAndGo) // smithy goron
+                && testActor == GameObjects.Actor.GoGoron) // smithy goron
             {
                 //var goronRaceIsBaren = ItemUtils.IsRequired(GameObjects.Item.ItemPowderKeg);//.Contains(GameObjects.Item.Race)
                 var importantItems = _randomized.ImportantLocations.ToList(); // this is a list of checks not regions considered important
@@ -398,7 +398,7 @@ namespace MMR.Randomizer
 
             // to avoid randomizing medigoron's object
             var goronVillageWinter = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.GoronVillage);
-            goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.SmithyGoronAndGo.ObjectIndex(); // square signpost
+            goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.GoGoron.ObjectIndex(); // square signpost
 
 
             Shinanigans();
@@ -1277,7 +1277,7 @@ namespace MMR.Randomizer
                 GameObjects.Actor.FishingGameTorch.ObjectIndex(),
                 GameObjects.Actor.GoronShrineChandelier.ObjectIndex(),
                 GameObjects.Actor.ClayPot.ObjectIndex(),
-                GameObjects.Actor.SmithyGoronAndGo.ObjectIndex() // add a second Generic Goron
+                GameObjects.Actor.GoGoron.ObjectIndex() // add a second Generic Goron
             };
             goronShrine.Maps[1].Objects = goronShrine.Maps[0].Objects.ToList(); // think this needs a copy or its a pointer to the same list
 
@@ -1314,12 +1314,12 @@ namespace MMR.Randomizer
             /// we cannot randomize any goron in the racetrack because they all use the same object
             ///   this breaks the race because the racegorons cannot load their assets if their object is missing
             /// except the one room uses 7 objects, odd number, and objects are padded in the room files to dma, so we can add one more
-            if (!ReplacementListContains(GameObjects.Actor.SmithyGoronAndGo)) return;
+            if (!ReplacementListContains(GameObjects.Actor.GoGoron)) return;
 
             var goronRace = RomData.SceneList.Find(scene => scene.File == GameObjects.Scene.GoronRacetrack.FileID());
-            goronRace.Maps[0].Objects.Add(GameObjects.Actor.SmithyGoronAndGo.ObjectIndex()); // add a second Generic Goron
+            goronRace.Maps[0].Objects.Add(GameObjects.Actor.GoGoron.ObjectIndex()); // add a second Generic Goron
             // spring is a different setup, both need the same objects
-            goronRace.Maps[1].Objects.Add(GameObjects.Actor.SmithyGoronAndGo.ObjectIndex()); // add a second Generic Goron
+            goronRace.Maps[1].Objects.Add(GameObjects.Actor.GoGoron.ObjectIndex()); // add a second Generic Goron
 
 
             // room file header 0xB describes object list offset in the file, but also describes size to load into memory, need to increase to 6
@@ -1729,7 +1729,7 @@ namespace MMR.Randomizer
 
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.ArcheryMiniGameMan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
-                if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
+                //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
                 if (TestHardSetObject(GameObjects.Scene.DekuShrine, GameObjects.Actor.MadShrub, GameObjects.Actor.IronKnuckle)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.Desbreko, GameObjects.Actor.UnusedPirateElevator)) continue;
@@ -2621,9 +2621,10 @@ namespace MMR.Randomizer
             ////////////////////////////////////////////
             ///////   DEBUGGING: force an actor  ///////
             ////////////////////////////////////////////
-            if (scene.SceneEnum == GameObjects.Scene.AstralObservatory) // force specific actor/variant for debugging
+            if (scene.SceneEnum == GameObjects.Scene.DekuShrine) // force specific actor/variant for debugging
             {
-                thisSceneData.Actors[1].ChangeActor(GameObjects.Actor.FlyingPot, vars: 0x001); // first torc
+                //thisSceneData.Actors[12].ChangeActor(GameObjects.Actor.Empty, vars: 0x000); // first torc
+                thisSceneData.Scene.Maps[0].Actors[12].ChangeActor(GameObjects.Actor.Empty, vars: 0x000); // first torc
             }
             /////////////////////////////
             #endif

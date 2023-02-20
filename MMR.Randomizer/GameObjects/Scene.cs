@@ -513,7 +513,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1502)]
         [SceneInternalId(0x68)]
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SmithyGoronAndGo,
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.GoGoron,
             Actor.PatrollingPirate, Actor.DekuPatrolGuard)]
         BombShop = 0x65,
 

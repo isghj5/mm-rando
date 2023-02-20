@@ -2184,7 +2184,7 @@ namespace MMR.Randomizer.GameObjects
         //[EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
         [AlignedCompanionActor(CircleOfFire, CompanionAlignment.OnTop, ourVariant: -1,
             variant: 0x3F5F)]
-        SmithyGoronAndGo = 0x138, // En_Go
+        GoGoron = 0x138, // En_Go
 
         Empty139 = 0x139,
 
@@ -3106,7 +3106,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(415)]
         [ObjectListIndex(0x1AB)]
-        [CheckRestricted(Scene.CuriosityShop, variant:0x1, Item.MaskKeaton, Item.TradeItemMamaLetter)]
+        [CheckRestricted(Scene.CuriosityShop, variant:0x1, Item.MaskKeaton, Item.TradeItemMamaLetter, Item.MaskAllNight)]
         // zero is selling in the shop, 1 is giving behind the place
         [GroundVariants(0x1)] // wedding and standing around indoors
         //[OnlyOneActorPerRoom]
@@ -3818,9 +3818,9 @@ namespace MMR.Randomizer.GameObjects
         [FileID(503)]
         [ObjectListIndex(0xA7)]
         [CheckRestricted(Scene.TerminaField, variant:0x40FF, Item.MaskCircusLeader)]
-        [GroundVariants(0,
+        [GroundVariants(0, // standing around day 1 is type 0
             0x40FF, // wedding
-            0x00FF)] // standing around day 1 is type 0, bottom 0xFF is unknown, not used in code?
+            0x00FF)] // bottom 0xFF is unknown, not used in code?
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
         Cremia = 0x220, // En_Ma_Yto
