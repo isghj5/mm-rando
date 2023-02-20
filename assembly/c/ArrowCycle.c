@@ -141,7 +141,7 @@ static void UpdateCButton(ActorPlayer* player, GlobalContext* ctxt, const struct
  **/
 static void HandleFrameDelay(ActorPlayer* player, GlobalContext* ctxt, Actor* arrow) {
     // Sanity check: Ensure arrow is still an allocated actor after delay frame.
-    if (!ActorHelper_DoesActorExist(arrow, ctxt)) {
+    if (!ActorHelper_DoesActorExist(arrow, ctxt, ACTORTYPE_ITEMACTION)) {
         return;
     }
 
