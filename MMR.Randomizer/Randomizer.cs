@@ -1243,7 +1243,7 @@ namespace MMR.Randomizer
 
                 // This is to prevent business scrub relocation logic from potentially causing unbeatable seeds.
                 // TODO fix this in a nicer way.
-                if (target == Item.HeartPieceNotebookHand && !ItemUtils.IsLogicallyJunk(currentItem))
+                if ((target == Item.HeartPieceNotebookHand || target == Item.NotebookToiletHandSThanks) && !ItemUtils.IsLogicallyJunk(currentItem))
                 {
                     Debug.WriteLine($"{currentItem} is temporary and cannot be placed on {target}.");
                     return false;
