@@ -518,6 +518,11 @@
         ],
         [
           "Short Ranged Weapon"
+        ],
+        [
+          "ItemNotebook",
+          "NotebookMeetBombers",
+          "NotebookLearnBombersCode"
         ]
       ],
       "TimeNeeded": "None",
@@ -54669,9 +54674,7 @@
     },
     {
       "Id": "NotebookInnReservation",
-      "RequiredItems": [
-        "ItemNotebook"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "Night1",
       "TimeAvailable": "Day1",
@@ -54681,8 +54684,7 @@
     {
       "Id": "NotebookPromiseAnjuMeeting",
       "RequiredItems": [
-        "MaskKafei",
-        "ItemNotebook"
+        "MaskKafei"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54694,8 +54696,7 @@
       "Id": "NotebookPromiseAnjuDelivery",
       "RequiredItems": [
         "MaskKafei",
-        "Night Inn Access",
-        "ItemNotebook"
+        "Night Inn Access"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54725,8 +54726,7 @@
     {
       "Id": "NotebookPromiseKafei",
       "RequiredItems": [
-        "TradeItemKafeiLetter",
-        "ItemNotebook"
+        "TradeItemKafeiLetter"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54739,8 +54739,7 @@
       "RequiredItems": [
         "MaskKafei",
         "Night Inn Access",
-        "TradeItemPendant",
-        "ItemNotebook"
+        "TradeItemPendant"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54752,8 +54751,7 @@
       "Id": "NotebookEscapeFromSakonSHideout",
       "RequiredItems": [
         "TradeItemKafeiLetter",
-        "AreaEastAccess",
-        "ItemNotebook"
+        "AreaEastAccess"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54764,8 +54762,7 @@
     {
       "Id": "NotebookPromiseRomani",
       "RequiredItems": [
-        "OtherEpona",
-        "ItemNotebook"
+        "OtherEpona"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54776,8 +54773,7 @@
     {
       "Id": "NotebookSaveTheCows",
       "RequiredItems": [
-        "OtherEpona",
-        "ItemNotebook"
+        "OtherEpona"
       ],
       "ConditionalItems": [
         [
@@ -54795,8 +54791,7 @@
     {
       "Id": "NotebookProtectMilkDelivery",
       "RequiredItems": [
-        "OtherEpona",
-        "ItemNotebook"
+        "OtherEpona"
       ],
       "ConditionalItems": [
         [
@@ -54814,8 +54809,7 @@
     {
       "Id": "NotebookCuriosityShopManSGift",
       "RequiredItems": [
-        "TradeItemKafeiLetter",
-        "ItemNotebook"
+        "TradeItemKafeiLetter"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54826,8 +54820,7 @@
     {
       "Id": "NotebookPromiseCuriosityShopMan",
       "RequiredItems": [
-        "TradeItemKafeiLetter",
-        "ItemNotebook"
+        "TradeItemKafeiLetter"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54839,8 +54832,7 @@
       "Id": "NotebookDeliverLetterToMama",
       "RequiredItems": [
         "TradeItemMamaLetter",
-        "MaskKafei",
-        "ItemNotebook"
+        "MaskKafei"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54867,8 +54859,7 @@
     {
       "Id": "NotebookDotoursThanks",
       "RequiredItems": [
-        "MaskCouple",
-        "ItemNotebook"
+        "MaskCouple"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54879,8 +54870,7 @@
     {
       "Id": "NotebookRosaSistersThanks",
       "RequiredItems": [
-        "MaskKamaro",
-        "ItemNotebook"
+        "MaskKamaro"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54890,9 +54880,7 @@
     },
     {
       "Id": "NotebookToiletHandSThanks",
-      "RequiredItems": [
-        "ItemNotebook"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [
         [
           "TradeItemLandDeed"
@@ -54921,8 +54909,7 @@
     {
       "Id": "NotebookGrandmaShortStory",
       "RequiredItems": [
-        "MaskAllNight",
-        "ItemNotebook"
+        "MaskAllNight"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54933,8 +54920,7 @@
     {
       "Id": "NotebookGrandmaLongStory",
       "RequiredItems": [
-        "MaskAllNight",
-        "ItemNotebook"
+        "MaskAllNight"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -54944,9 +54930,7 @@
     },
     {
       "Id": "NotebookPostmansGame",
-      "RequiredItems": [
-        "ItemNotebook"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [
         [
           "MaskBunnyHood"
@@ -54962,9 +54946,7 @@
     },
     {
       "Id": "NotebookPromiseMadameAroma",
-      "RequiredItems": [
-        "ItemNotebook"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "Day1, Night1, Day2, Night2",
@@ -54974,8 +54956,7 @@
     {
       "Id": "NotebookPurchaseCuriosityShopItem",
       "RequiredItems": [
-        "Wallet (500)",
-        "ItemNotebook"
+        "Wallet (500)"
       ],
       "ConditionalItems": [
         [
@@ -55008,8 +54989,7 @@
     {
       "Id": "NotebookGrogsThanks",
       "RequiredItems": [
-        "MaskBremen",
-        "ItemNotebook"
+        "MaskBremen"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -55020,8 +55000,7 @@
     {
       "Id": "NotebookDefeatGormanBrothers",
       "RequiredItems": [
-        "Play Epona's Song",
-        "ItemNotebook"
+        "Play Epona's Song"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -55035,8 +55014,7 @@
         "MaskDeku",
         "MaskGoron",
         "MaskZora",
-        "MaskRomani",
-        "ItemNotebook"
+        "MaskRomani"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -55047,8 +55025,7 @@
     {
       "Id": "NotebookPostmansFreedom",
       "RequiredItems": [
-        "TradeItemMamaLetter",
-        "ItemNotebook"
+        "TradeItemMamaLetter"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -55063,8 +55040,7 @@
         "MaskKafei",
         "TradeItemKafeiLetter",
         "AreaEastAccess",
-        "Night Inn Access",
-        "ItemNotebook"
+        "Night Inn Access"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -55076,8 +55052,7 @@
       "Id": "NotebookSaveOldLady",
       "RequiredItems": [
         "TradeItemKafeiLetter",
-        "TradeItemPendant",
-        "ItemNotebook"
+        "TradeItemPendant"
       ],
       "ConditionalItems": [
         [
@@ -55101,8 +55076,7 @@
     {
       "Id": "NotebookPromiseKamaro",
       "RequiredItems": [
-        "Play Song of Healing",
-        "ItemNotebook"
+        "Play Song of Healing"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -55115,8 +55089,7 @@
       "RequiredItems": [
         "ItemLens",
         "Magic Meter",
-        "Any Healing Potion",
-        "ItemNotebook"
+        "Any Healing Potion"
       ],
       "ConditionalItems": [
         [
@@ -55135,9 +55108,7 @@
     },
     {
       "Id": "NotebookGuruGuru",
-      "RequiredItems": [
-        "ItemNotebook"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "Night1, Night2",
@@ -55746,8 +55717,9 @@
           "Short Ranged Weapon"
         ],
         [
-          "NotebookLearnBombersCode",
-          "ItemNotebook"
+          "ItemNotebook",
+          "NotebookMeetBombers",
+          "NotebookLearnBombersCode"
         ]
       ],
       "TimeNeeded": "None",
@@ -56049,8 +56021,7 @@
     {
       "Id": "NotebookDepositLetterToKafeiInSCT",
       "RequiredItems": [
-        "TradeItemKafeiLetter",
-        "ItemNotebook"
+        "TradeItemKafeiLetter"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -56061,8 +56032,7 @@
     {
       "Id": "NotebookDepositLetterToKafeiInNCT",
       "RequiredItems": [
-        "TradeItemKafeiLetter",
-        "ItemNotebook"
+        "TradeItemKafeiLetter"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -56073,8 +56043,7 @@
     {
       "Id": "NotebookDepositLetterToKafeiInECT",
       "RequiredItems": [
-        "TradeItemKafeiLetter",
-        "ItemNotebook"
+        "TradeItemKafeiLetter"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -56085,8 +56054,7 @@
     {
       "Id": "NotebookLearnBombersCodeInNCT",
       "RequiredItems": [
-        "Short Ranged Weapon",
-        "ItemNotebook"
+        "Short Ranged Weapon"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -56096,19 +56064,15 @@
     },
     {
       "Id": "NotebookLearnBombersCodeInECT",
-      "RequiredItems": [
-        "ItemNotebook"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [
         [
           "Guess Bomber Code"
         ],
         [
-          "Short Ranged Weapon"
-        ],
-        [
-          "NotebookLearnBombersCode",
-          "ItemNotebook"
+          "ItemNotebook",
+          "NotebookMeetBombers",
+          "NotebookLearnBombersCode"
         ]
       ],
       "TimeNeeded": "None",
