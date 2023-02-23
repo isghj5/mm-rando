@@ -85,7 +85,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cMixSongs, "Enable songs being placed among items in the randomization pool.");
             TooltipBuilder.SetTooltip(cProgressiveUpgrades, "Enable swords, wallets, magic, bomb bags, quivers and the Goron Lullaby to be found in the intended order.");
             TooltipBuilder.SetTooltip(cDEnt, "Enable randomization of dungeon entrances. \n\nStone Tower Temple is always vanilla, but Inverted Stone Tower Temple is randomized.");
-            TooltipBuilder.SetTooltip(cShuffleBosses, "Enable randomization of boss rooms.");
+            TooltipBuilder.SetTooltip(cShuffleBosses, "Enable randomization of boss rooms. The boss door texture will match the boss behind the door.");
             TooltipBuilder.SetTooltip(cEnemy, "Enable randomization of enemies. May cause softlocks in some circumstances, use at your own risk.");
 
             // Gimmicks
