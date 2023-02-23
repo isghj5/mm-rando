@@ -33,7 +33,7 @@
 ;   SLL     T6, T9, 1
 .org 0x80151CFC
     jal     BombersNotebook_Grant_Hook
-    nop
+    lw      a0, 0x0020 (sp)
     bgtzl   v0, 0x80151D90
     addiu   v0, r0, 0x0001
     bltz    v0, 0x80151CE4
