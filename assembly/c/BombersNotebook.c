@@ -29,7 +29,7 @@ s8 BombersNotebook_Grant(GlobalContext* ctxt) {
     u8 notebookEntryIndex = msgCtx->unk120B2[msgCtx->unk120B1];
     u16 giIndex = baseGiIndex + notebookEntryIndex;
     u16* sBombersNotebookEventMessages = (u16*)0x801C6AB8;
-    if (gSaveContext.perm.inv.questStatus.bombersNotebook && sBombersNotebookEventMessages[notebookEntryIndex] != 0 && !MMR_GetGiFlag(giIndex)) {
+    if (sBombersNotebookEventMessages[notebookEntryIndex] != 0 && !MMR_GetGiFlag(giIndex)) {
         MMR_ProcessItem(ctxt, giIndex);
         z2_PlaySfx(0x4855); // NA_SE_SY_SCHEDULE_WRITE
         return 1;
