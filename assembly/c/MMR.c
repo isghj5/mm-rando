@@ -28,6 +28,8 @@ struct MMRConfig MMR_CONFIG = {
         .quiverSmall = 0x22,
         .quiverLarge = 0x23,
         .quiverLargest = 0x24,
+        .lullaby = 0x74,
+        .lullabyIntro = 0x44E,
     },
 };
 
@@ -162,6 +164,12 @@ u16 MMR_CheckProgressiveUpgrades(u16 giIndex) {
             return MMR_CONFIG.locations.quiverLarge;
         }
         return MMR_CONFIG.locations.quiverLargest;
+    }
+    if (giIndex == MMR_CONFIG.locations.lullabyIntro || giIndex == MMR_CONFIG.locations.lullaby) {
+        if (gSaveContext.perm.inv.questStatus.lullabyIntro == 0) {
+            return MMR_CONFIG.locations.lullabyIntro;
+        }
+        return MMR_CONFIG.locations.lullaby;
     }
     return giIndex;
 }
