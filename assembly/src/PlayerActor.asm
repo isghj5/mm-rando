@@ -510,3 +510,35 @@ Player_ModifyGoronRollMultiplier_Hook:
 
     ; Displaced code:
     lwc1    f8, 0x00E4 (sp)
+
+Player_GetGoronMaxRoll_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+
+    jal     Player_GetGoronMaxRoll
+    swc1    f0, 0x0010 (sp)
+
+    mov.s   f16, f0
+    lwc1    f0, 0x0010 (sp)
+
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
+Player_GetGoronMaxSpikeRoll_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    sw      a0, 0x0018 (sp)
+    sw      a1, 0x001C (sp)
+
+    jal     Player_GetGoronMaxRoll
+    sw      a2, 0x0020 (sp)
+
+    mov.s   f10, f0
+
+    lw      a2, 0x0020 (sp)
+    lw      a1, 0x001C (sp)
+    lw      a0, 0x0018 (sp)
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18

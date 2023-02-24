@@ -477,6 +477,11 @@
 ; Goron Rolling
 
 ; Replaces:
+;   MTC1    AT, F10
+.org 0x80857E48
+    jal     Player_GetGoronMaxSpikeRoll_Hook; Into F10
+
+; Replaces:
 ;   JAL     0x800FF2F8
 .org 0x80857F8C
     jal     Player_HandleInputVelocity
@@ -491,7 +496,53 @@
 ;   LWC1    F8, 0x00E4 (SP)
 .org 0x80857F38
     jal     Player_ModifyGoronRollMultiplier_Hook
-    or      a0, at, r0
+    mtc1    at, f12
+
+; Replaces:
+;   LWC1    F4, 0x00BC (SP)
+;   LWC1    F6, 0x00AC (SP)
+;   LWC1    F8, 0x00A0 (SP)
+;   MUL.S   F10, F0, F4
+;   LWC1    F4, 0x00A4 (SP)
+;   LUI     AT, 0x4190
+;   MTC1    AT, F16
+.org 0x80858844
+    jal     Player_GetGoronMaxRoll_Hook ; Into F16
+    nop
+    lwc1    f4, 0x00BC (sp)
+    lwc1    f6, 0x00AC (sp)
+    lwc1    f8, 0x00A0 (sp)
+    mul.s   f10, f0, f4
+    lwc1    f4, 0x00A4 (sp)
+
+; Replaces:
+;   LUI     AT, 0x4190
+;   MTC1    AT, F4
+;   LUI     AT, 0x4190
+;   C.LT.S  F4, F12
+;   SWC1    F12, 0x0B08 (S0)
+;   BC1FL   0x80858A30
+;   LWC1    F8, 0x0B08 (S0)
+;   MTC1    AT, F10
+;   B       0x80858AF8
+;   SWC1    F10, 0x0B08 (S0)
+;   LWC1    F8, 0x0B08 (S0)
+;   B       0x80858AF8
+;   SWC1    F8, 0x0B08 (S0)
+.org 0x80858A1C
+    jal     Player_GetGoronMaxRoll
+    swc1    f12, 0x0B08 (s0)
+    lwc1    f12, 0x0B08 (s0)
+    c.lt.s  f0, f12
+    nop
+    bc1tl   0x80858A38
+    swc1    f0, 0x0B08 (s0)
+    b       0x80858AF8
+    nop
+    nop
+    nop
+    nop
+    nop
 
 ; Replaces:
 ;   ADDIU   T9, R0, 0x00C8
