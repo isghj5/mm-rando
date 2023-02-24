@@ -696,6 +696,8 @@ typedef struct {
 /// Messagebox Context
 /// =============================================================
 
+#define FONT_CHAR_TEX_SIZE ((16 * 16) / 2) // 16x16 I4 texture
+
 // Font textures are loaded into here
 typedef struct {
     /* 0x0000 */ u8 unk0[2][120][128];
@@ -756,7 +758,19 @@ typedef struct {
     /* 0x12084 */ void* messageTable;
     /* 0x12088 */ UNK_TYPE1 pad12088[0x8];
     /* 0x12090 */ s16 messageDataFile; // 0 = main file, 1 = credits file.
-    /* 0x12092 */ UNK_TYPE1 pad12092[0x2E];
+    /* 0x12092 */ s16 unk12092;
+    /* 0x12094 */ s8 unk12094;
+    /* 0x12095 */ UNK_TYPE1 unk12095[0x3];
+    /* 0x12098 */ f32 unk12098; // Text_Scale?
+    /* 0x1209C */ s16 unk1209C;
+    /* 0x1209E */ UNK_TYPE1 unk1209E[0x2];
+    /* 0x120A0 */ s32 unk120A0;
+    /* 0x120A4 */ s16 unk120A4[6];
+    /* 0x120B0 */ u8 unk120B0;
+    /* 0x120B1 */ u8 unk120B1;
+    /* 0x120B2 */ u8 unk120B2[0xA];
+    /* 0x120BC */ u16 unk_120BC;
+    /* 0x120BE */ s16 unk120BE;
     /* 0x120C0 */ s16 selectionStartIndex;
     /* 0x120C2 */ s16 selectionIndexOffset;
     /* 0x120C4 */ s32 unk120C4;
@@ -1536,6 +1550,19 @@ typedef struct {
     /* 0x220 */ u32 unk220;
 } ActorEnBox; // size = 0x224?
 
+typedef struct {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ UNK_TYPE1 pad144[0xAC];
+    /* 0x1F0 */ s16 timer;
+    /* 0x1F2 */ s16 flashSpeedScale;
+    /* 0x1F4 */ f32 unk_1F4;
+    /* 0x1F8 */ u8 unk_1F8;
+    /* 0x1F9 */ u8 isPowderKeg;
+    /* 0x1FA */ s16 unk_1FA;
+    /* 0x1FC */ u8 unk_1FC;
+    /* 0x200 */ UNK_TYPE1 pad200[0x4];
+} ActorEnBom; // size = 0x204
+
 // En_Elf actor (Fairy).
 typedef struct {
     /* 0x000 */ Actor base;
@@ -1747,6 +1774,42 @@ typedef struct {
     /* 0x262 */ s16 previousBankValue;
     /* 0x264 */ s16 animTimer;
 } ActorEnGinkoMan; // size = 0x268
+
+
+// En_Jg actor (Goron Elder)
+
+struct ActorEnJg;
+
+typedef void (*EnJgActionFunc)(struct ActorEnJg*, GlobalContext*);
+
+typedef struct ActorEnJg {
+    /* 0x000 */ Actor base;
+    /* 0x144 */ Actor* shrineGoron;
+    /* 0x148 */ Actor* icePoly;
+    /* 0x14C */ ColCylinder collider;
+    /* 0x198 */ SkelAnime skelAnime;
+    /* 0x1DC */ EnJgActionFunc actionFunc;
+    /* 0x1E0 */ void* path; // TODO Path struct
+    /* 0x1E4 */ s32 currentPoint;
+    /* 0x1E8 */ Actor* drum;
+    /* 0x1EC */ Vec3s unusedRotation1; // probably meant to be a head rotation to look at the player
+    /* 0x1F2 */ Vec3s unusedRotation2; // probably meant to be a body rotation to look at the player
+    /* 0x1F8 */ Vec3s jointTable[35];
+    /* 0x2CA */ Vec3s morphTable[35];
+    /* 0x39C */ s16 rootRotationWhenTalking;
+    /* 0x39E */ s16 animIndex;
+    /* 0x3A0 */ s16 action;
+    /* 0x3A2 */ s16 freezeTimer;
+    /* 0x3A4 */ Vec3f breathPos;
+    /* 0x3B0 */ Vec3f breathVelocity;
+    /* 0x3BC */ Vec3f breathAccel;
+    /* 0x3C8 */ s16 cutscene;
+    /* 0x3CA */ u8 cutsceneAnimIndex;
+    /* 0x3CB */ u8 csAction;
+    /* 0x3CC */ u16 flags;
+    /* 0x3CE */ u16 textId;
+    /* 0x3D0 */ u8 focusedShrineGoronParam;
+} ActorEnJg; // size = 0x3D4
 
 // En_Ssh actor (Cursed Swamp Skulltula Guy)
 typedef struct {

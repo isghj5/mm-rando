@@ -13,4 +13,14 @@
 #define CHECK_BTN_ALL(state, combo) (~((state) | ~(combo)) == 0)
 #define CHECK_BTN_ANY(state, combo) (((state) & (combo)) != 0)
 
+#define WEEKEVENTREG(index) (gSaveContext.perm.weekEventReg.bytes[(index)])
+#define GET_WEEKEVENTREG(index) ((void)0, WEEKEVENTREG(index))
+#define CHECK_WEEKEVENTREG(flag) (WEEKEVENTREG((flag) >> 8) & ((flag) & 0xFF))
+#define SET_WEEKEVENTREG(flag) (WEEKEVENTREG((flag) >> 8) = GET_WEEKEVENTREG((flag) >> 8) | ((flag) & 0xFF))
+
+#define SLOT(item) gItemSlots[item]
+#define AMMO(item) gSaveContext.perm.inv.quantities[SLOT(item)]
+#define INV_CONTENT(item) gSaveContext.perm.inv.items[SLOT(item)]
+#define GET_INV_CONTENT(item) ((void)0, gSaveContext.perm.inv.items)[SLOT(item)]
+
 #endif

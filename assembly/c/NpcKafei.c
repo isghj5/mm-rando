@@ -7,7 +7,7 @@
 //========================================================================
 
 void NpcKafei_KeatonMaskInit(ActorPlayer* actor) {
-    if (!MISC_CONFIG.flags.freestanding) {
+    if (!MISC_CONFIG.drawFlags.freestanding) {
         return;
     }
 
@@ -25,7 +25,7 @@ bool NpcKafei_ProcessMask(GlobalContext* ctxt, ActorPlayer* actor, u8 mask, bool
     bool setBackUp = false;
 
     if (mask == 0x05) {
-        if (MISC_CONFIG.flags.freestanding) {
+        if (MISC_CONFIG.drawFlags.freestanding) {
             if (MISC_CONFIG.MMRbytes.npcKafeiReplaceMask == 0) {
                 Vec3f pos;
                 Vec3s rot;
@@ -34,17 +34,17 @@ bool NpcKafei_ProcessMask(GlobalContext* ctxt, ActorPlayer* actor, u8 mask, bool
 
                 if (isHand) {
 
-                    pos.x = 32;
-                    pos.y = 768;
-                    pos.z = -128;
+                    pos.x = 32.0;
+                    pos.y = 768.0;
+                    pos.z = -128.0;
                     rot.x = 0x0000;
                     rot.y = 0x0800;
                     rot.z = 0xE000;
                 } else {
 
-                    pos.x = 768; // 1024
-                    pos.y = -192;
-                    pos.z = 0;
+                    pos.x = 768.0;
+                    pos.y = -192.0;
+                    pos.z = 0.0;
                     rot.x = 0x8000;
                     rot.y = 0xc000;
                     rot.z = 0x0000;

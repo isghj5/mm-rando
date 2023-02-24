@@ -11,6 +11,11 @@ namespace MMR.Randomizer.Extensions
             return region.GetAttribute<RegionNameAttribute>()?.Name;
         }
 
+        public static string Preposition(this Region region)
+        {
+            return region.GetAttribute<RegionNameAttribute>()?.Prepositsion;
+        }
+
         public static RegionArea? RegionArea(this Region region)
         {
             return region.GetAttribute<RegionAreaAttribute>()?.RegionArea;

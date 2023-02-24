@@ -1,6 +1,7 @@
 #include <z64.h>
 #include "Misc.h"
 #include "Sprite.h"
+#include "HudColors.h"
 
 #define StCtxt (*(StaticContext*)(0x803824D0))
 
@@ -53,7 +54,7 @@ void ChestGame_DrawMap(GlobalContext* ctxt, Actor* actor, MazeEntryColumn* maze)
     gSPDisplayList(db->p++, &gSetupDb);
     gDPSetCombineLERP(db->p++, 1, 0, PRIMITIVE, 0, 1, 0, PRIMITIVE, 0,
                                  1, 0, PRIMITIVE, 0, 1, 0, PRIMITIVE, 0);
-    gDPSetPrimColor(db->p++, 0, 0, 0x00, 0xFF, 0xFF, 0x9F);
+    gDPSetPrimColor(db->p++, 0, 0, HUD_COLOR_CONFIG.map.r, HUD_COLOR_CONFIG.map.g, HUD_COLOR_CONFIG.map.b, 0x9F);
 
     int drawLeft = SCREEN_WIDTH - 110;
     int drawUpper = SCREEN_HEIGHT - 66;

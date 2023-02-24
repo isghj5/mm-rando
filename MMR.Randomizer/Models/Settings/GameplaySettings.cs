@@ -91,8 +91,8 @@ namespace MMR.Randomizer.Models.Settings
         /// Whether or not to enable freestanding models.
         /// </summary>
         public bool UpdateWorldModels {
-            get { return this.AsmOptions.MiscConfig.Flags.FreestandingModels; }
-            set { this.AsmOptions.MiscConfig.Flags.FreestandingModels = value; }
+            get { return this.AsmOptions.MiscConfig.DrawFlags.FreestandingModels; }
+            set { this.AsmOptions.MiscConfig.DrawFlags.FreestandingModels = value; }
         }
 
         /// <summary>
@@ -125,8 +125,8 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public bool UpdateShopAppearance
         {
-            get { return this.AsmOptions.MiscConfig.Flags.ShopModels; }
-            set { this.AsmOptions.MiscConfig.Flags.ShopModels = value; }
+            get { return this.AsmOptions.MiscConfig.DrawFlags.ShopModels; }
+            set { this.AsmOptions.MiscConfig.DrawFlags.ShopModels = value; }
         }
 
         /// <summary>
@@ -201,6 +201,18 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.SaferGlitches = value; }
         }
 
+        public bool BombchuDrops
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.BombchuDrops; }
+            set { this.AsmOptions.MiscConfig.Flags.BombchuDrops = value; }
+        }
+
+        public bool InstantTransform
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.InstantTransform; }
+            set { this.AsmOptions.MiscConfig.Flags.InstantTransform = value; }
+        }
+
         #endregion
 
         #region Random Elements
@@ -210,7 +222,7 @@ namespace MMR.Randomizer.Models.Settings
         /// </summary>
         public LogicMode LogicMode { get; set; }
 
-        public bool BespokeItemPlacementOrder { get; set; } = true;
+        public ItemPlacement ItemPlacement { get; set; } = ItemPlacement.Bespoke;
 
         public HashSet<string> EnabledTricks { get; set; } = new HashSet<string>
         {
@@ -234,6 +246,11 @@ namespace MMR.Randomizer.Models.Settings
         /// Randomize which dungeon you appear in when entering one
         /// </summary>
         public bool RandomizeDungeonEntrances { get; set; }
+
+        /// <summary>
+        /// Randomize which boss room you appear in when entering one
+        /// </summary>
+        public bool RandomizeBossRooms { get; set; }
 
         /// <summary>
         /// (Beta) Randomize enemies
@@ -301,6 +318,11 @@ namespace MMR.Randomizer.Models.Settings
         /// Defines number of ice traps.
         /// </summary>
         public IceTraps IceTraps { get; set; }
+
+        /// <summary>
+        /// Defines number of bomb traps.
+        /// </summary>
+        public BombTraps BombTraps { get; set; }
 
         /// <summary>
         /// Defines appearance pool for visible ice traps.

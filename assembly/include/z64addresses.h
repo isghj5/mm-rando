@@ -14,6 +14,7 @@
 #define GameStateTableAddr               0x801BD910
 #define ItemUpgradeCapacityAddr          0x801C1E04
 #define ItemTextureSegAddrTableAddr      0x801C1E6C // Segment address table used for item textures.
+#define ItemSlotsAddr                    0x801C2078
 #define ObjectTableAddr                  0x801C2740
 #define SongNotesAddr                    0x801CFC98
 #define SaveContextAddr                  0x801EF670
@@ -33,6 +34,7 @@
 #define gGlobalContext                   (*(GlobalContext*)          GlobalContextAddr)
 #define gGameStateInfo                   (*(GameStateTable*)         GameStateTableAddr)
 #define gGetItemGraphicTable             ((GetItemGraphicEntry*)     GetItemGraphicTableAddr)
+#define gItemSlots                       ((u8*)                      ItemSlotsAddr)
 #define gObjectFileTable                 ((ObjectFileTableEntry*)    ObjectTableAddr)
 #define gRspSegmentPhysAddrs             (*(SegmentTable*)           SegmentTableAddr)
 #define gSongNotes                       (*(SongNotes*)              SongNotesAddr)
@@ -61,6 +63,9 @@ extern f32* z2_GetMatrixStackTop();
 extern void z2_Matrix_RotateY(s16 rotation, s32 appendToState);
 extern void z2_Matrix_InsertZRotation_f(f32 rotation, s32 appendToState);
 extern void z2_TransformMatrixStackTop(Vec3f* pos, Vec3s* rot);
+extern void z2_TranslateMatrix(f32 x, f32 y, f32 z, u8 matrixMode);
+extern void z2_Matrix_Scale(f32 x, f32 y, f32 z, u8 matrixMode);
+extern void z2_Matrix_RotateXS(s16 x, u8 matrixMode);
 extern Gfx* z2_ShiftMatrix(GraphicsContext* gfxCtx);
 extern void z2_Matrix_GetStateTranslationAndScaledX(f32 scale, Vec3f* dst);
 extern void z2_Matrix_GetStateTranslationAndScaledY(f32 scale, Vec3f* dst);
@@ -75,6 +80,7 @@ extern void z2_PlayLoopingSfxAtActor(Actor* actor, u32 id);
 extern Actor* z2_SpawnActor(ActorContext* actorCtxt, GlobalContext* ctxt, u16 id, f32 x, f32 y, f32 z, u16 rx, u16 ry, u16 rz, u16 params);
 extern void z2_UpdateButtonUsability(GlobalContext* ctxt);
 extern void z2_WriteHeartColors(GlobalContext* ctxt);
+extern void* z2_Lib_SegmentedToVirtual(void* ptr);
 extern u8 z2_CheckItemObtainability(u32 item);
 extern void z2_RemoveItem(u32 item, u8 slot);
 extern void z2_ToggleSfxDampen(int enable);
@@ -86,6 +92,7 @@ extern Gfx* z2_8010CFBC(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, 
 extern Gfx* z2_8010D480(Gfx* gfx, u32 arg1, u16 tileX, u16 tileY, u16 x, u16 y, u16 w, u16 h, u16 widthFactor, u16 heightFactor, s16 r, s16 g, s16 b, s16 a, u16 arg14, u16 arg15);
 
 extern void z2_80128640(GlobalContext* ctxt, ActorPlayer* actor);
+extern void z2_Player_DrawGetItem(GlobalContext* ctxt, ActorPlayer* actor);
 extern void z2_PlayerBunnyHoodLimbs(GlobalContext* ctxt);
 extern void z2_PlayerGormanTears(GlobalContext* ctxt, ActorPlayer* player);
 extern void z2_PlayerBlastMaskAnim(GlobalContext* ctxt, ActorPlayer* player);
@@ -173,6 +180,8 @@ extern void z2_DrawHeartPiece(Actor* actor, GlobalContext* ctxt);
 extern void z2_DrawRupee(Actor* actor, GlobalContext* ctxt);
 extern void z2_PreDraw1(Actor* actor, GlobalContext* ctxt, u32 unknown);
 extern void z2_PreDraw2(Actor* actor, GlobalContext* ctxt, u32 unknown);
+extern void z2_SkelAnime_DrawFlexLod(GlobalContext* ctxt, void** skeleton, Vec3s* jointTable, s32 dListCount,
+                                    void* overrideLimbDraw, void* postLimbDraw, Actor* actor, s32 lod);
 extern void z2_801660B8(GlobalContext* ctxt, Gfx* gfx);
 
 // Function Prototypes (File Loading).
@@ -205,6 +214,7 @@ extern void z2_UpdateButtonsState(u32 state);
 
 // Function Prototypes (Math).
 extern f32 z2_Math_Sins(s16 angle);
+extern f32 z2_Math_CosS(s16 angle);
 extern f32 z2_Math_Vec3f_DistXZ(Vec3f* p1, Vec3f* p2);
 extern f32 z2_Math_SmoothStepToF(f32* pValue, f32 target, f32 fraction, f32 step, f32 minStep);
 extern f32 Math_ApproachF(f32* a0, f32 a1, f32 a2, f32 a3);
@@ -213,6 +223,7 @@ extern f32 Math_ApproachZeroF(f32* a0, f32 a1, f32 a2);
 // Function Prototypes (Objects).
 extern s8 z2_GetObjectIndex(const SceneContext* ctxt, u16 objectId);
 
+extern void z2_AnimatedMat_Draw(GlobalContext* play, AnimatedTexture* matAnim);
 extern void z2_SkelAnime_DrawLimb(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, bool* overrideLimbDraw, void* postLimbDraw, Actor* actor);
 extern void z2_SkelAnime_DrawLimb2(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, Actor* actor);
 extern void z2_SkelAnime_DrawLimb3(GlobalContext* ctxt, u32* skeleton, Vec3s* limbDrawTable, s32 dListCount, bool* overrideLimbDraw, bool* postLimbDraw, void* unkDraw, Actor* actor);

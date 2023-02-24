@@ -28,6 +28,8 @@ struct MMRConfig MMR_CONFIG = {
         .quiverSmall = 0x22,
         .quiverLarge = 0x23,
         .quiverLargest = 0x24,
+        .lullaby = 0x74,
+        .lullabyIntro = 0x44E,
     },
 };
 
@@ -80,7 +82,10 @@ u8* MMR_GiFlag(u16 giIndex) {
     if (giIndex >= 0x400) { // skip scenes 0xA through 0xD (Magic Hag's Potion Shop, Majora's Lair, Beneath the Graveyard, Curiosity Shop)
         address += 0x50;
     }
-    // if (giIndex >= 0x460) { address += 4; } // next threshold is giIndex 0x460
+    if (giIndex >= 0x460) {
+        address += 4;
+    }
+    // if (giIndex >= 0x4E0) { address += 4; } // next threshold is giIndex 0x4E0
     address += (giIndex >> 3);
     return address;
 }
@@ -160,10 +165,16 @@ u16 MMR_CheckProgressiveUpgrades(u16 giIndex) {
         }
         return MMR_CONFIG.locations.quiverLargest;
     }
+    if (giIndex == MMR_CONFIG.locations.lullabyIntro || giIndex == MMR_CONFIG.locations.lullaby) {
+        if (gSaveContext.perm.inv.questStatus.lullabyIntro == 0) {
+            return MMR_CONFIG.locations.lullabyIntro;
+        }
+        return MMR_CONFIG.locations.lullaby;
+    }
     return giIndex;
 }
 
-#define cycleRepeatableItemsLength 35
+#define cycleRepeatableItemsLength 36
 static u8 cycleRepeatableItems[cycleRepeatableItemsLength] = {
     0x06, // 1 Bomb
     0x07, // 10 Bombchu
@@ -199,6 +210,7 @@ static u8 cycleRepeatableItems[cycleRepeatableItemsLength] = {
     0xA0, // Milk
     0xA1, // Gold Dust
     0xB0, // Ice Trap
+    0xB3, // Bomb Trap
     0xFF, // ? Stray Fairy ?
 };
 bool MMR_IsCycleRepeatable(u16 giIndex) {
@@ -262,7 +274,7 @@ u16 MMR_GetNewGiIndex(GlobalContext* ctxt, Actor* actor, u16 giIndex, bool grant
     return newGiIndex;
 }
 
-static u16 gFanfares[5] = { 0x0922, 0x0924, 0x0037, 0x0039, 0x0052 };
+static u16 gFanfares[] = { 0x4831, 0x4855, 0x0922, 0x0924, 0x0037, 0x0039, 0x0052 };
 
 #define ITEM_QUEUE_LENGTH 4
 static u16 itemQueue[ITEM_QUEUE_LENGTH] = { 0, 0, 0, 0 };
@@ -275,10 +287,11 @@ void MMR_ProcessItem(GlobalContext* ctxt, u16 giIndex) {
     *MMR_GetItemEntryContext = *entry;
     z2_ShowMessage(ctxt, entry->message, 0);
     u8 soundType = entry->type & 0x0F;
-    if (soundType == 0) {
-        z2_PlaySfx(0x4831);
+    u16 fanfare = gFanfares[soundType];
+    if (soundType < 2) {
+        z2_PlaySfx(fanfare);
     } else {
-        z2_SetBGM2(gFanfares[soundType-1]);
+        z2_SetBGM2(fanfare);
     }
     z2_GiveItem(ctxt, entry->item);
 }
@@ -349,6 +362,9 @@ u32 MMR_GetMinorItemSfxId(u8 item) {
     if (item == CUSTOM_ITEM_ICE_TRAP) {
         return 0x31A4;
     }
+    if (item == CUSTOM_ITEM_BOMBTRAP) {
+        return 0x3A76;
+    }
     return 0;
 }
 
@@ -382,7 +398,17 @@ bool MMR_GiveItemIfMinor(GlobalContext* ctxt, Actor* actor, u16 giIndex) {
             return true;
         }
 
-        if (!isActorFreestanding || MISC_CONFIG.flags.freestanding) {
+        if (minorItemSfxId == 0x3A76) {
+            if (isActorFreestanding) {
+                actor->draw = NULL;
+            }
+            // Have IceTrap_Give handle sfx playback for this
+            //z2_PlaySfx(minorItemSfxId);
+            z2_GiveItem(ctxt, entry->item);
+            return true;
+        }
+
+        if (!isActorFreestanding || MISC_CONFIG.drawFlags.freestanding) {
             z2_PlaySfx(minorItemSfxId);
             z2_GiveItem(ctxt, entry->item);
             return true;

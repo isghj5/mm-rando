@@ -11,6 +11,7 @@ enum ColorSpecialFlag {
 };
 
 ColorRGB8 Color_RandomizeHue(ColorRGB8 color);
+double Color_GetHue(ColorRGB8 color);
 ColorRGB8 Color_SetHue(ColorRGB8 color, double hue);
 
 #endif // COLOR_H

@@ -112,6 +112,9 @@ namespace MMR.Randomizer.GameObjects
         [Description("Randomize bottle scoops.")]
         ScoopedItems,
 
+        [Description("Randomize Bombers' Notebook entries.")]
+        NotebookEntries,
+
         [Description("Randomize Ocarina and Song of Time.")]
         TimeTravel,
 
@@ -190,6 +193,9 @@ namespace MMR.Randomizer.GameObjects
         [Description("Randomize bottle scoops.")]
         Scoops,
 
+        [Description("Randomize Bombers' Notebook entries.")]
+        NotebookEntries,
+
         [Description("Randomize items that require glitches to collect.")]
         GlitchesRequired,
     }
@@ -255,6 +261,9 @@ namespace MMR.Randomizer.GameObjects
 
         [Description("Randomize the boss remains.")]
         BossRemains,
+
+        [Description("Randomize Bombers' Notebook entries.")]
+        NotebookEntries,
 
         [Description("Add the Royal Wallet (999 capacity) to the item pool.")]
         RoyalWallet,

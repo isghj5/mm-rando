@@ -165,6 +165,32 @@ u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collis
     return collisionType;
 }
 
+void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actionParam) {
+    if (!MISC_CONFIG.flags.instantTransform || actionParam < PLAYER_IA_MASK_FIERCE_DEITY || actionParam > PLAYER_IA_MASK_DEKU) {
+        // Displaced code:
+        this->heldItemActionParam = actionParam;
+        this->unkAA5 = 5; // PLAYER_UNKAA5_5
+        return;
+    }
+
+    u8 playerForm;
+    s32 maskId = actionParam - PLAYER_IA_39;
+    if (maskId == this->mask) {
+        playerForm = PLAYER_FORM_HUMAN;
+    } else {
+        playerForm = actionParam - PLAYER_IA_MASK_FIERCE_DEITY;
+    }
+
+    gSaveContext.perm.currentForm = playerForm;
+    this->base.update = (ActorFunc)0x8012301C;
+    this->base.draw = NULL;
+    this->animTimer = 1;
+}
+
+bool Player_AfterTransformInit() {
+    return MISC_CONFIG.flags.instantTransform;
+}
+
 static const f32 giantSpeedModifier = 7.0f / 11.0f;
 void Player_HandleFormSpeed(GlobalContext* ctxt, ActorPlayer* player, f32* speed) {
     // Displaced code:

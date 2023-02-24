@@ -3,6 +3,7 @@ using MMR.Common.Extensions;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
 using MMR.Randomizer.Utils;
+using System.Collections.Generic;
 using System.IO;
 
 namespace MMR.Randomizer.Asm
@@ -186,7 +187,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Whether or not to enable freestanding models.
         /// </summary>
-        public bool FreestandingModels { get; set; } = true;
+        //public bool FreestandingModels { get; set; } = true;
 
         /// <summary>
         /// Whether or not to enable continuous deku hopping.
@@ -196,7 +197,7 @@ namespace MMR.Randomizer.Asm
         /// <summary>
         /// Whether or not to enable shop models.
         /// </summary>
-        public bool ShopModels { get; set; } = true;
+        //public bool ShopModels { get; set; } = true;
 
         /// <summary>
         /// Whether or not to enable progressive upgrades.
@@ -249,24 +250,14 @@ namespace MMR.Randomizer.Asm
         public bool SaferGlitches { get; set; } = true;
 
         /// <summary>
-        /// A flag for a getItem draw hook, for whether to draw the hungry goron's Don Gero Mask, or a getItem.
+        /// Whether or not Bombchu should be able to be dropped.
         /// </summary>
-        public bool DrawDonGeroMask { get; set; }
+        public bool BombchuDrops { get; set; }
 
         /// <summary>
-        /// A flag for a getItem draw hook, for whether to draw the postman's in-model hat, or a getItem.
+        /// Whether or not instant transformation should be enabled.
         /// </summary>
-        public bool DrawPostmanHat { get; set; }
-
-        /// <summary>
-        /// A flag for a getItem draw hook, for whether to draw the cursed skulltula man's mask, or a getItem.
-        /// </summary>
-        public bool DrawMaskOfTruth { get; set; }
-
-        /// <summary>
-        /// A flag for a getItem draw hook, for whether to draw the Gorman Brothers' Garo's Mask, or a getItem.
-        /// </summary>
-        public bool DrawGaroMask { get; set; }
+        public bool InstantTransform { get; set; }
 
         /// <summary>
         /// Whether or to enable logic needed for Giant Mask Anywhere to work.
@@ -294,26 +285,22 @@ namespace MMR.Randomizer.Asm
             this.OcarinaUnderwater = ((flags >> 27) & 1) == 1;
             this.QuestItemStorage = ((flags >> 26) & 1) == 1;
             this.CloseCows = ((flags >> 25) & 1) == 1;
-            this.FreestandingModels = ((flags >> 24) & 1) == 1;
-            this.ArrowCycling = ((flags >> 21) & 1) == 1;
-            this.ContinuousDekuHopping = ((flags >> 18) & 1) == 1;
-            this.ShopModels = ((flags >> 17) & 1) == 1;
-            this.ProgressiveUpgrades = ((flags >> 16) & 1) == 1;
-            this.IceTrapQuirks = ((flags >> 15) & 1) == 1;
-            this.EarlyMikau = ((flags >> 14) & 1) == 1;
-            this.FairyChests = ((flags >> 13) & 1) == 1;
-            this.TargetHealth = ((flags >> 12) & 1) == 1;
-            this.ClimbAnything = ((flags >> 11) & 1) == 1;
-            this.FreeScarecrow = ((flags >> 10) & 1) == 1;
-            this.FillWallet = ((flags >> 9) & 1) == 1;
-            this.AutoInvert = (AutoInvertState)((flags >> 7) & 3);
-            this.HiddenRupeesSparkle = ((flags >> 6) & 1) == 1;
-            this.SaferGlitches = ((flags >> 5) & 1) == 1;
-            this.DrawDonGeroMask = ((flags >> 4) & 1) == 1;
-            this.DrawPostmanHat = ((flags >> 3) & 1) == 1;
-            this.DrawMaskOfTruth = ((flags >> 2) & 1) == 1;
-            this.DrawGaroMask = ((flags >> 1) & 1) == 1;
-            this.GiantMaskAnywhere = ((flags >> 0) & 1) == 1;
+            this.ArrowCycling = ((flags >> 22) & 1) == 1;
+            this.ContinuousDekuHopping = ((flags >> 19) & 1) == 1;
+            this.ProgressiveUpgrades = ((flags >> 18) & 1) == 1;
+            this.IceTrapQuirks = ((flags >> 17) & 1) == 1;
+            this.EarlyMikau = ((flags >> 16) & 1) == 1;
+            this.FairyChests = ((flags >> 15) & 1) == 1;
+            this.TargetHealth = ((flags >> 14) & 1) == 1;
+            this.ClimbAnything = ((flags >> 13) & 1) == 1;
+            this.FreeScarecrow = ((flags >> 12) & 1) == 1;
+            this.FillWallet = ((flags >> 11) & 1) == 1;
+            this.AutoInvert = (AutoInvertState)((flags >> 9) & 3);
+            this.HiddenRupeesSparkle = ((flags >> 8) & 1) == 1;
+            this.SaferGlitches = ((flags >> 7) & 1) == 1;
+            this.BombchuDrops = ((flags >> 6) & 1) == 1;
+            this.InstantTransform = ((flags >> 5) & 1) == 1;
+            this.GiantMaskAnywhere = ((flags >> 4) & 1) == 1;
         }
 
         /// <summary>
@@ -329,29 +316,25 @@ namespace MMR.Randomizer.Asm
             flags |= (this.OcarinaUnderwater ? (uint)1 : 0) << 27;
             flags |= (this.QuestItemStorage ? (uint)1 : 0) << 26;
             flags |= (this.CloseCows ? (uint)1 : 0) << 25;
-            flags |= (this.FreestandingModels ? (uint)1 : 0) << 24;
-            flags |= (((uint)this.QuestConsume) & 3) << 22;
-            flags |= (this.ArrowCycling ? (uint)1 : 0) << 21;
-            flags |= (this.ArrowMagic ? (uint)1 : 0) << 20;
-            flags |= (this.ElegySpeedup ? (uint)1 : 0) << 19;
-            flags |= (this.ContinuousDekuHopping ? (uint)1 : 0) << 18;
-            flags |= (this.ShopModels ? (uint)1 : 0) << 17;
-            flags |= (this.ProgressiveUpgrades ? (uint)1 : 0) << 16;
-            flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 15;
-            flags |= (this.EarlyMikau ? (uint)1 : 0) << 14;
-            flags |= (this.FairyChests ? (uint)1 : 0) << 13;
-            flags |= (this.TargetHealth ? (uint)1 : 0) << 12;
-            flags |= (this.ClimbAnything ? (uint)1 : 0) << 11;
-            flags |= (this.FreeScarecrow ? (uint)1 : 0) << 10;
-            flags |= (this.FillWallet ? (uint)1 : 0) << 9;
-            flags |= (((uint)this.AutoInvert) & 3) << 7;
-            flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 6;
-            flags |= (this.SaferGlitches ? (uint)1 : 0) << 5;
-            flags |= (this.DrawDonGeroMask ? (uint)1 : 0) << 4;
-            flags |= (this.DrawPostmanHat ? (uint)1 : 0) << 3;
-            flags |= (this.DrawMaskOfTruth ? (uint)1 : 0) << 2;
-            flags |= (this.DrawGaroMask ? (uint)1 : 0) << 1;
-            flags |= (this.GiantMaskAnywhere ? (uint)1 : 0) << 0;
+            flags |= (((uint)this.QuestConsume) & 3) << 23;
+            flags |= (this.ArrowCycling ? (uint)1 : 0) << 22;
+            flags |= (this.ArrowMagic ? (uint)1 : 0) << 21;
+            flags |= (this.ElegySpeedup ? (uint)1 : 0) << 20;
+            flags |= (this.ContinuousDekuHopping ? (uint)1 : 0) << 19;
+            flags |= (this.ProgressiveUpgrades ? (uint)1 : 0) << 18;
+            flags |= (this.IceTrapQuirks ? (uint)1 : 0) << 17;
+            flags |= (this.EarlyMikau ? (uint)1 : 0) << 16;
+            flags |= (this.FairyChests ? (uint)1 : 0) << 15;
+            flags |= (this.TargetHealth ? (uint)1 : 0) << 14;
+            flags |= (this.ClimbAnything ? (uint)1 : 0) << 13;
+            flags |= (this.FreeScarecrow ? (uint)1 : 0) << 12;
+            flags |= (this.FillWallet ? (uint)1 : 0) << 11;
+            flags |= (((uint)this.AutoInvert) & 3) << 9;
+            flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 8;
+            flags |= (this.SaferGlitches ? (uint)1 : 0) << 7;
+            flags |= (this.BombchuDrops ? (uint)1 : 0) << 6;
+            flags |= (this.InstantTransform ? (uint)1 : 0) << 5;
+            flags |= (this.GiantMaskAnywhere ? (uint)1 : 0) << 4;
             return flags;
         }
     }
@@ -397,6 +380,56 @@ namespace MMR.Randomizer.Asm
         }
     }
 
+    public class MiscSmithyModel
+    {
+        public const int Size = 0xC;
+
+        private readonly short oldObjectId;
+        private readonly byte oldGraphicId;
+        private readonly short newObjectId;
+        private readonly uint displayListOffset;
+
+        public MiscSmithyModel(short oldObjectId, byte oldGraphicId, short newObjectId, uint displayListOffset)
+        {
+            this.oldObjectId = oldObjectId;
+            this.oldGraphicId = oldGraphicId;
+            this.newObjectId = newObjectId;
+            this.displayListOffset = displayListOffset;
+        }
+
+        public byte[] ToByteArray()
+        {
+            byte[] bytes = new byte[Size];
+            ReadWriteUtils.Arr_WriteU16(bytes, 0, (ushort)oldObjectId);
+            bytes[2] = oldGraphicId;
+            ReadWriteUtils.Arr_WriteU16(bytes, 4, (ushort)newObjectId);
+            ReadWriteUtils.Arr_WriteU32(bytes, 8, displayListOffset);
+            return bytes;
+        }
+    }
+
+    public class MiscSmithy
+    {
+        public List<MiscSmithyModel> Models { get; set; }
+
+        /// <summary>
+        /// Convert to a <see cref="uint"/> integer.
+        /// </summary>
+        /// <returns>Integer</returns>
+        public byte[] ToByteArray()
+        {
+            var result = new byte[MiscSmithyModel.Size * 10];
+
+            for (var i = 0; i < Models.Count; i++)
+            {
+                var model = Models[i];
+                ReadWriteUtils.Arr_Insert(model.ToByteArray(), 0, MiscSmithyModel.Size, result, i * MiscSmithyModel.Size);
+            }
+
+            return result;
+        }
+    }
+
     public class MiscBytes
     {
         public byte NpcKafeiReplaceMask { get; set; }
@@ -416,6 +449,67 @@ namespace MMR.Randomizer.Asm
 
     }
 
+    public class MiscDrawFlags
+    {
+        /// <summary>
+        /// Whether or not to enable freestanding models.
+        /// </summary>
+        public bool FreestandingModels { get; set; } = true;
+
+        /// <summary>
+        /// A flag for a getItem draw hook, for whether to draw the hungry goron's Don Gero Mask, or a getItem.
+        /// </summary>
+        public bool DrawDonGeroMask { get; set; }
+
+        /// <summary>
+        /// A flag for a getItem draw hook, for whether to draw the postman's in-model hat, or a getItem.
+        /// </summary>
+        ///
+        public bool DrawPostmanHat { get; set; }
+
+        /// <summary>
+        /// A flag for a getItem draw hook, for whether to draw the cursed skulltula man's mask, or a getItem.
+        /// </summary>
+        ///
+        public bool DrawMaskOfTruth { get; set; }
+
+        /// <summary>
+        /// A flag for a getItem draw hook, for whether to draw the Gorman Brothers' Garo's Mask, or a getItem.
+        /// </summary>
+        ///
+        public bool DrawGaroMask { get; set; }
+
+        /// <summary>
+        /// A flag for a getItem draw hook, for whether to draw Kafei's in-model Pendant of Memories, or a getItem.
+        /// </summary>
+        /// 
+        public bool DrawPendantOfMemories { get; set; }
+
+        /// <summary>
+        /// Whether or not to enable shop models.
+        /// </summary>
+        public bool ShopModels { get; set; } = true;
+
+
+        /// <summary>
+        /// Convert to a <see cref="uint"/> integer.
+        /// </summary>
+        /// <returns>Integer</returns>
+
+        public uint ToInt()
+        {
+            uint flags = 0;
+            flags |= (this.FreestandingModels ? (uint)1 : 0) << 31;
+            flags |= (this.DrawDonGeroMask ? (uint)1 : 0) << 30;
+            flags |= (this.DrawPostmanHat ? (uint)1 : 0) << 29;
+            flags |= (this.DrawMaskOfTruth ? (uint)1 : 0) << 28;
+            flags |= (this.DrawGaroMask ? (uint)1 : 0) << 27;
+            flags |= (this.DrawPendantOfMemories ? (uint)1 : 0) << 26;
+            flags |= (this.ShopModels ? (uint)1 : 0) << 25;
+            return flags;
+        }
+    }
+
     /// <summary>
     /// Miscellaneous configuration structure.
     /// </summary>
@@ -428,6 +522,8 @@ namespace MMR.Randomizer.Asm
         public uint Speedups;
         public uint Shorts;
         public uint MMRBytes;
+        public uint DrawFlags;
+        public byte[] Smithy;
 
         /// <summary>
         /// Convert to bytes.
@@ -456,6 +552,8 @@ namespace MMR.Randomizer.Asm
                     writer.WriteUInt32(this.Speedups);
                     writer.WriteUInt32(this.Shorts);
                     writer.WriteUInt32(this.MMRBytes);
+                    writer.WriteUInt32(this.DrawFlags);
+                    writer.Write(this.Smithy);
                 }
 
                 return memStream.ToArray();
@@ -492,12 +590,16 @@ namespace MMR.Randomizer.Asm
 
         public MiscBytes MMRBytes { get; set; }
 
+        public MiscDrawFlags DrawFlags { get; set; }
+
+        public MiscSmithy Smithy { get; set; }
+
         public MiscConfig()
-            : this(new byte[0], new MiscFlags(), new InternalFlags(), new MiscSpeedups(), new MiscShorts(), new MiscBytes())
+            : this(new byte[0], new MiscFlags(), new InternalFlags(), new MiscSpeedups(), new MiscShorts(), new MiscBytes(), new MiscDrawFlags(), new MiscSmithy())
         {
         }
 
-        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags, MiscSpeedups speedups, MiscShorts shorts, MiscBytes mmrbytes)
+        public MiscConfig(byte[] hash, MiscFlags flags, InternalFlags internalFlags, MiscSpeedups speedups, MiscShorts shorts, MiscBytes mmrbytes, MiscDrawFlags drawFlags, MiscSmithy smithy)
         {
             this.Hash = hash;
             this.Flags = flags;
@@ -505,6 +607,8 @@ namespace MMR.Randomizer.Asm
             this.Speedups = speedups;
             this.Shorts = shorts;
             this.MMRBytes = mmrbytes;
+            this.DrawFlags = drawFlags;
+            this.Smithy = smithy;
         }
 
         /// <summary>
@@ -527,10 +631,11 @@ namespace MMR.Randomizer.Asm
 
             this.Flags.FairyChests = settings.StrayFairyMode.HasFlag(StrayFairyMode.ChestsOnly);
 
-            this.Flags.DrawDonGeroMask = MaskConfigUtils.DonGeroGoronDrawMask;
-            this.Flags.DrawPostmanHat = MaskConfigUtils.PostmanDrawHat;
-            this.Flags.DrawMaskOfTruth = MaskConfigUtils.DrawMaskOfTruth;
-            this.Flags.DrawGaroMask = MaskConfigUtils.DrawGaroMask;
+            this.DrawFlags.DrawDonGeroMask = MaskConfigUtils.DonGeroGoronDrawMask;
+            this.DrawFlags.DrawPostmanHat = MaskConfigUtils.PostmanDrawHat;
+            this.DrawFlags.DrawMaskOfTruth = MaskConfigUtils.DrawMaskOfTruth;
+            this.DrawFlags.DrawGaroMask = MaskConfigUtils.DrawGaroMask;
+            this.DrawFlags.DrawPendantOfMemories = MaskConfigUtils.DrawPendantOfMemories;
 
             // Update internal flags.
             this.InternalFlags.VanillaLayout = settings.LogicMode == LogicMode.Vanilla;
@@ -556,6 +661,8 @@ namespace MMR.Randomizer.Asm
                 Speedups = this.Speedups.ToInt(),
                 Shorts = this.Shorts.ToInt(),
                 MMRBytes = this.MMRBytes.ToInt(),
+                DrawFlags = this.DrawFlags.ToInt(),
+                Smithy = this.Smithy.ToByteArray(),
             };
         }
     }

@@ -1,6 +1,8 @@
 ﻿using MMR.Randomizer.Extensions;
+using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models.Rom;
 using MMR.Randomizer.Utils;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -50,6 +52,8 @@ namespace MMR.Randomizer.Asm
         /// Object indexes.
         /// </summary>
         public ObjectIndexes Indexes { get; } = new ObjectIndexes();
+
+        public List<MiscSmithyModel> SmithyModels { get; } = new List<MiscSmithyModel>();
 
         /// <summary>
         /// Attempt to resolve the extended object Id for a <see cref="GetItemEntry"/>.
@@ -109,6 +113,43 @@ namespace MMR.Randomizer.Asm
             {
                 return (0x148, 0x4B);
             }
+            // Update gi-table for Skulltula Tokens.
+            if (entry.ItemGained == 0x6E && entry.Object == 0x125 && Indexes.Skulltula != null)
+            {
+                var index = entry.Message == 0x51 ? 1 : 0;
+                return ((short)(Indexes.Skulltula.Value + index), entry.Index);
+            }
+
+            // Update gi-table for Stray Fairies.
+            if (entry.ItemGained == 0xA8 && entry.Object == 0x13A && Indexes.Fairies != null)
+            {
+                var index = entry.Type >> 4;
+                return ((short)(Indexes.Fairies.Value + index), entry.Index);
+            }
+
+            // Update gi-table for Double Defense.
+            if (entry.ItemGained == 0xA7 && entry.Object == 0x96 && Indexes.DoubleDefense != null)
+            {
+                return (Indexes.DoubleDefense.Value, entry.Index);
+            }
+
+            // Update gi-table for Notes.
+            if (((entry.ItemGained >= 0x66 && entry.ItemGained <= 0x6C) || entry.ItemGained == 0x62 || entry.ItemGained == 0x73) && entry.Object == 0x8F && Indexes.MusicNotes != null)
+            {
+                return (Indexes.MusicNotes.Value, entry.Index);
+            }
+
+            // Update gi-table for Magic Power
+            if (entry.ItemGained == 0xA5 && entry.Object == 0xA4 && Indexes.MagicPower != null)
+            {
+                return (Indexes.MagicPower.Value, entry.Index);
+            }
+
+            // Update gi-table for Extra Rupees
+            if (entry.ItemGained == 0xB1 && entry.Object == 0x13F && Indexes.Rupees != null)
+            {
+                return (Indexes.Rupees.Value, entry.Index);
+            }
 
             return null;
 
@@ -121,10 +162,10 @@ namespace MMR.Randomizer.Asm
         /// <param name="fairies">Whether or not to include Stray Fairy objects</param>
         /// <param name="skulltulas">Whether or not to include Skulltula Token objects</param>
         /// <returns>ExtendedObjects</returns>
-        public static ExtendedObjects Create(bool fairies = false, bool skulltulas = false)
+        public static ExtendedObjects Create(Item smithy1Item, Item smithy2Item, bool fairies = false, bool skulltulas = false, bool progressiveUpgrades = false)
         {
             var result = new ExtendedObjects();
-            result.AddExtendedObjects(fairies, skulltulas);
+            result.AddExtendedObjects(smithy1Item, smithy2Item, fairies, skulltulas, progressiveUpgrades);
             return result;
         }
 
@@ -157,7 +198,7 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         /// <param name="fairies">Whether or not to include Stray Fairy objects</param>
         /// <param name="skulltulas">Whether or not to include Skulltula Token objects</param>
-        void AddExtendedObjects(bool fairies = false, bool skulltulas = false)
+        void AddExtendedObjects(Item smithy1Item, Item smithy2Item, bool fairies = false, bool skulltulas = false, bool progressiveUpgrades = false)
         {
             // Add Royal Wallet.
             this.Offsets.Add(AddRoyalWallet());
@@ -215,6 +256,8 @@ namespace MMR.Randomizer.Asm
                 AddAllStrayFairies();
                 this.Indexes.Fairies = AdvanceIndex(5);
             }
+
+            AddSmithyItems(smithy1Item, smithy2Item, progressiveUpgrades);
         }
 
         /// <summary>
@@ -640,7 +683,259 @@ namespace MMR.Randomizer.Asm
 
         #endregion
 
+        #region Smithy Items
+
+        private Dictionary<byte, int[]> _displayListsToIgnore = new Dictionary<byte, int[]>
+        {
+            { 10, new int[] { 2 } }, // ignore compass glass
+            { 66, new int[] { 3, 4 } }, // ignore gold rupee glow
+            { 79, new int[] { 3, 4 } }, // ignore green rupee glow
+            { 80, new int[] { 3, 4 } }, // ignore blue rupee glow
+            { 81, new int[] { 3, 4 } }, // ignore red rupee glow
+            { 83, new int[] { 3, 4 } }, // ignore purple rupee glow
+            { 84, new int[] { 3, 4 } }, // ignore silver rupee glow
+            { 89, new int[] { 2 } }, // moons tear glow
+            { 98, new int[] { 3 } }, // seahorse glow
+        };
+
+        private Dictionary<byte, int[]> _verticesToIgnore = new Dictionary<byte, int[]>
+        {
+            { 74, new int[] { 2 } }, // skip skulltula token flame
+        };
+
+        ((uint, uint), MiscSmithyModel) AddSmithyItem(Item location) => AddSmithyItem(location.GetItemIndex().Value);
+
+        ((uint, uint), MiscSmithyModel) AddSmithyItem(ushort giIndex)
+        {
+            var giEntry = RomData.GetItemList[giIndex];
+            var objectId = giEntry.Object;
+            var graphicId = giEntry.Index;
+
+            var graphics = ResolveGraphics(giEntry);
+            if (graphics.HasValue)
+            {
+                objectId = graphics.Value.objectId;
+                graphicId = graphics.Value.graphicId;
+            }
+
+            var objectToLoad = objectId;
+
+            if (objectToLoad == 0)
+            {
+                // Assume Boss Remains
+                objectToLoad = 0x1CC;
+            }
+
+            graphicId = (byte)((graphicId >= 0x80 ? 0x100 - graphicId : graphicId) - 1);
+            var codeFile = ReadWriteUtils.GetFile(FileIndex.code);
+            byte[] objectData;
+            if (objectToLoad < 0x283)
+            {
+                var objectFileTableOffset = 0x11CC80;
+                var objectAddress = ReadWriteUtils.Arr_ReadS32(codeFile.Data, objectFileTableOffset + objectToLoad * 8);
+                var objectFileNumber = RomUtils.AddrToFile(objectAddress);
+                objectData = GetExistingData(objectFileNumber);
+            }
+            else
+            {
+                objectData = this.Bundle.Get(objectToLoad - 0x283);
+            }
+            var drawItemTableOffset = 0x1156B0;
+            var displayListIndex = 1;
+            int displayListOffset = ReadWriteUtils.Arr_ReadS32(codeFile.Data, drawItemTableOffset + graphicId * 0x24 + displayListIndex * 4) & 0xFFFFFF;
+            var vertices = new List<byte[]>();
+            var displayLists = new List<byte[]>();
+            var displayListsToIgnore = _displayListsToIgnore.GetValueOrDefault(graphicId);
+            int[] verticesToIgnore = null;
+            if (objectId != 0x148) // spin attack reuses spider token drawTable entry
+            {
+                verticesToIgnore = _verticesToIgnore.GetValueOrDefault(graphicId);
+            }
+            var vertexCommandCount = 0;
+            var ignoringTriangles = false;
+            while (displayListOffset != 0)
+            {
+                if (displayListsToIgnore?.Contains(displayListIndex) != true)
+                {
+                    byte displayListType;
+                    var displayListEntryOffset = 0;
+                    var displayListStack = new Stack<(int listOffset, int entryOffset)>();
+                    do
+                    {
+                        var displayList = new byte[8];
+                        ReadWriteUtils.Arr_Insert(objectData, displayListOffset + displayListEntryOffset, 8, displayList, 0);
+                        displayListType = displayList[0];
+                        switch (displayListType)
+                        {
+                            case 0xDE: // gsSPDisplayList
+                                if (displayList[4] == 6)
+                                {
+                                    var addToStack = displayList[1] == 0;
+                                    var newOffset = ReadWriteUtils.Arr_ReadS32(displayList, 4) & 0xFFFFFF;
+                                    if (addToStack)
+                                    {
+                                        displayListStack.Push((displayListOffset, displayListEntryOffset));
+                                    }
+                                    displayListOffset = newOffset;
+                                    displayListEntryOffset = 0;
+                                    continue;
+                                }
+                                break;
+                            case 0xDF: // gsSPEndDisplayList
+                                if (displayListStack.Count > 0)
+                                {
+                                    var stackItem = displayListStack.Pop();
+                                    displayListOffset = stackItem.listOffset;
+                                    displayListEntryOffset = stackItem.entryOffset + 8;
+                                    displayListType = 0;
+                                    continue;
+                                }
+                                break;
+                            case 1: // gsSPVertex
+                                if (verticesToIgnore?.Contains(vertexCommandCount) == true)
+                                {
+                                    ignoringTriangles = true;
+                                    vertexCommandCount++;
+                                    break;
+                                }
+                                else
+                                {
+                                    vertexCommandCount++;
+                                    ignoringTriangles = false;
+                                }
+                                var numVertices = (ReadWriteUtils.Arr_ReadU16(displayList, 1) & 0x0FF0) >> 4;
+                                var verticesOffset = ReadWriteUtils.Arr_ReadS32(displayList, 4) & 0xFFFFFF;
+                                var newVerticesOffset = vertices.Count * 0x10;
+                                for (var i = 0; i < numVertices; i++)
+                                {
+                                    var vertex = new byte[0x10];
+                                    ReadWriteUtils.Arr_Insert(objectData, verticesOffset + i * 0x10, 0x10, vertex, 0);
+                                    vertices.Add(vertex);
+                                }
+                                ReadWriteUtils.Arr_WriteU32(displayList, 4, (uint)(newVerticesOffset | 0x06000000));
+                                displayLists.Add(displayList);
+                                break;
+                            case 6: // gsSP2Triangles
+                            case 5: // gsSP1Triangle
+                                if (!ignoringTriangles)
+                                {
+                                    displayLists.Add(displayList);
+                                }
+                                break;
+                        }
+                        displayListEntryOffset += 8;
+                    } while (displayListType != 0xDF); // gsSPEndDisplayList
+                }
+
+                if (displayListIndex == 8)
+                {
+                    break;
+                }
+
+                displayListIndex++;
+                displayListOffset = ReadWriteUtils.Arr_ReadS32(codeFile.Data, drawItemTableOffset + graphicId * 0x24 + displayListIndex * 4) & 0xFFFFFF;
+            }
+
+            displayLists.Add(new byte[] { 0xDF, 0, 0, 0, 0, 0, 0, 0 });
+
+            var result = new List<byte>();
+
+            var smithy = GetExistingData(958);
+
+            // copied vertices
+            result.AddRange(vertices.SelectMany(x => x));
+
+            // texture from smithy
+            var textureOffset = (ushort)result.Count;
+            result.AddRange(smithy.Skip(0xF6B0).Take(0x100));
+
+            var displayListEntry = (ushort)result.Count;
+
+            
+
+            // smithy setup
+            var smithySetup = smithy.Skip(0xE8F0).Take(0xC0).ToArray();
+            ReadWriteUtils.Arr_WriteU16(smithySetup, 0x46, textureOffset);
+            ReadWriteUtils.Arr_WriteU16(smithySetup, 0x7E, textureOffset);
+            result.AddRange(smithySetup);
+
+            result.AddRange(displayLists.SelectMany(x => x));
+
+            if (result.Count % 0x10 != 0)
+            {
+                result.AddRange(Enumerable.Repeat<byte>(0, 8));
+            }
+
+            var smithyModel = new MiscSmithyModel(objectId, (byte)(graphicId + 1), AdvanceIndex(), displayListEntry);
+
+            return (this.Bundle.Append(result.ToArray()), smithyModel);
+        }
+
+        private List<List<Item>> _progressiveItemsList = new List<List<Item>>
+        {
+            new List<Item> { Item.StartingSword, Item.UpgradeRazorSword, Item.UpgradeGildedSword },
+            new List<Item> { Item.FairyMagic, Item.FairyDoubleMagic },
+            new List<Item> { Item.UpgradeAdultWallet, Item.UpgradeGiantWallet, Item.UpgradeRoyalWallet },
+            new List<Item> { Item.ItemBombBag, Item.UpgradeBigBombBag, Item.UpgradeBiggestBombBag },
+            new List<Item> { Item.ItemBow, Item.UpgradeBigQuiver, Item.UpgradeBiggestQuiver },
+        };
+
+        private Dictionary<Item, ushort> _additionalItemsDict = new Dictionary<Item, ushort>
+        {
+            { Item.ItemBottleMadameAroma, 0x91 },
+            { Item.ItemBottleAliens, 0x92 },
+            { Item.ItemBottleWitch, 0x5B },
+            { Item.ItemBottleGoronRace, 0x93 },
+        };
+
+        void AddSmithyItemWithAdditionals(Item smithyItem, bool progressiveUpgrades)
+        {
+            var smithy = AddSmithyItem(smithyItem);
+            this.Offsets.Add(smithy.Item1);
+            SmithyModels.Add(smithy.Item2);
+
+            if (progressiveUpgrades)
+            {
+                var progressiveItems = _progressiveItemsList.FirstOrDefault(l => l.Contains(smithyItem));
+                if (progressiveItems != null)
+                {
+                    foreach (var item in progressiveItems.Where(item => item != smithyItem))
+                    {
+                        var itemResult = AddSmithyItem(item);
+                        this.Offsets.Add(itemResult.Item1);
+                        SmithyModels.Add(itemResult.Item2);
+                    }
+                }
+            }
+
+            if (_additionalItemsDict.ContainsKey(smithyItem))
+            {
+                var itemResult = AddSmithyItem(_additionalItemsDict[smithyItem]);
+                this.Offsets.Add(itemResult.Item1);
+                SmithyModels.Add(itemResult.Item2);
+            }
+        }
+
+        void AddSmithyItems(Item smithy1Item, Item smithy2Item, bool progressiveUpgrades)
+        {
+            var heart = AddSmithyItem(Item.RecoveryHeart);
+            this.Offsets.Add(heart.Item1);
+            SmithyModels.Add(heart.Item2);
+
+            AddSmithyItemWithAdditionals(smithy1Item, progressiveUpgrades);
+
+            AddSmithyItemWithAdditionals(smithy2Item, progressiveUpgrades);
+        }
+
+        #endregion
+
         #region Static Helper Functions
+
+        static byte[] GetExistingData(int fileIndex)
+        {
+            RomUtils.CheckCompressed(fileIndex);
+            return RomData.MMFileList[fileIndex].Data;
+        }
 
         /// <summary>
         /// Clone data from an existing <see cref="Models.Rom.MMFile"/>.

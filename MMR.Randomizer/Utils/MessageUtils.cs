@@ -34,7 +34,12 @@ namespace MMR.Randomizer.Utils
             var itemsInRegions = new Dictionary<Region, List<(ItemObject io, Item locationForImportance)>>();
             foreach (var io in randomizedResult.ItemList)
             {
-                if ((!io.IsRandomized || !io.NewLocation.Value.Region().HasValue) && (!io.Item.MainLocation().HasValue || !randomizedResult.ItemList[io.Item.MainLocation().Value].IsRandomized))
+                if (io.Item.Entrance() != null)
+                {
+                    continue;
+                }
+
+                if ((!io.IsRandomized || !io.NewLocation.Value.Region(randomizedResult.ItemList).HasValue) && (!io.Item.MainLocation().HasValue || !randomizedResult.ItemList[io.Item.MainLocation().Value].IsRandomized))
                 {
                     continue;
                 }
@@ -67,7 +72,7 @@ namespace MMR.Randomizer.Utils
                 {
                     var preventRegions = new List<Region> { Region.TheMoon, Region.BottleCatch, Region.Misc };
                     var locationForImportance = io.Item.MainLocation().HasValue ? io.Item : io.NewLocation.Value;
-                    var itemRegion = locationForImportance.Region();
+                    var itemRegion = locationForImportance.Region(randomizedResult.ItemList);
                     if (itemRegion.HasValue
                         && !preventRegions.Contains(itemRegion.Value)
                         && !ItemUtils.IsLocationJunk(item.NewLocation.Value, randomizedResult.Settings))
@@ -140,7 +145,12 @@ namespace MMR.Randomizer.Utils
                                         .Aggregate(Enumerable.Empty<ItemObject>(), (g1, g2) => g1.Concat(g2))
                                         .Take(numberOfLocationHints)
                                         .ToList();
-                var combinedItems = hintableItems.Where(io => !unusedItems.Contains(io));
+                var combinedItems = unusedItems
+                    .SelectMany(io => io.NewLocation.Value.GetAttributes<GossipCombineAttribute>().SelectMany(gca => gca.OtherItems))
+                    .Where(item => randomizedItems.Any(io => io.NewLocation == item))
+                    .Select(item => randomizedItems.Single(io => io.NewLocation == item))
+                    .Where(io => !unusedItems.Contains(io) && hintableItems.Contains(io))
+                    ;
                 itemsToCombineWith.AddRange(combinedItems);
 
                 unusedItems.AddRange(unusedItems);
@@ -179,10 +189,15 @@ namespace MMR.Randomizer.Utils
                     var requiredItems = kvp.Value.Where(io => ItemUtils.IsRequired(io.io.Item, io.locationForImportance, randomizedResult) && !unusedItems.Contains(io.io) && !itemsToCombineWith.Contains(io.io)).ToList();
                     var importantItems = kvp.Value.Where(io => ItemUtils.IsImportant(io.io.Item, io.locationForImportance, randomizedResult)).ToList();
 
+                    if (randomizedResult.Settings.BossRemainsMode.HasFlag(BossRemainsMode.ShuffleOnly))
+                    {
+                        importantItems.RemoveAll(io => io.io.Item.ItemCategory() == ItemCategory.BossRemains);
+                    }
+
                     Dictionary<Region, List<(ItemObject, Item)>> dict;
                     if (requiredItems.Count == 0 && importantItems.Count > 0)
                     {
-                        if (!randomizedResult.Settings.AddSongs && importantItems.All(io => ItemUtils.IsSong(io.io.Item)))
+                        if (!randomizedResult.Settings.AddSongs && importantItems.All(io => io.io.Item.IsSong()))
                         {
                             dict = songOnlyRegionCounts;
                         }
@@ -206,7 +221,7 @@ namespace MMR.Randomizer.Utils
                     
                     dict[kvp.Key] = requiredItems;
 
-                    if (!randomizedResult.Settings.AddSongs && requiredItems.Count > 0 && requiredItems.All(io => ItemUtils.IsSong(io.io.Item)) && importantItems.All(io => ItemUtils.IsSong(io.io.Item)))
+                    if (!randomizedResult.Settings.AddSongs && requiredItems.Count > 0 && requiredItems.All(io => io.io.Item.IsSong()) && importantItems.All(io => io.io.Item.IsSong()))
                     {
                         songOnlyRegionCounts[kvp.Key] = requiredItems;
                     }
@@ -439,7 +454,7 @@ namespace MMR.Randomizer.Utils
                 color = isRequired ? TextCommands.ColorYellow : TextCommands.ColorSilver;
             }
             itemNames.Add(article + color + item.Item.ProgressiveUpgradeName(randomizedResult.Settings.ProgressiveUpgrades) + TextCommands.ColorWhite + importance);
-            locationNames.Add(item.NewLocation.Value.Location());
+            locationNames.Add(item.NewLocation.Value.Location(randomizedResult.ItemList));
             if (hintStyle != GossipHintStyle.Relevant)
             {
                 var gossipCombineAttribute = item.NewLocation.Value.GetAttribute<GossipCombineAttribute>();
@@ -457,7 +472,7 @@ namespace MMR.Randomizer.Utils
                     }
                     else
                     {
-                        locationNames.AddRange(combined.Select(io => io.NewLocation.Value.Location()));
+                        locationNames.AddRange(combined.Select(io => io.NewLocation.Value.Location(randomizedResult.ItemList)));
                     }
                     itemNames.AddRange(combined.Select(io =>
                     {

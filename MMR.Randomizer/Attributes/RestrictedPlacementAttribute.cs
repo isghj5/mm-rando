@@ -11,22 +11,22 @@ namespace MMR.Randomizer.Attributes
     {
         public enum RestrictionType
         {
-            KeepWithinRegion,
+            KeepWithinTemples,
             KeepWithinArea,
             KeepWithinOverworld,
+            GreatFairyRewards,
         }
 
-        public Func<Item, Item, bool> RestrictPlacement { get; }
+        public Func<Item, Item, ItemList, bool> RestrictPlacement { get; }
 
-        private static Func<Item, Item> _getNewDungeonEntrance;
-        private readonly IReadOnlyCollection<Region?> _dungeonRegions = new List<Region?> { Region.WoodfallTemple, Region.SnowheadTemple, Region.GreatBayTemple, Region.StoneTowerTemple }.AsReadOnly();
+        private readonly IReadOnlyCollection<Region?> _templeRegions = new List<Region?> { Region.WoodfallTemple, Region.SnowheadTemple, Region.GreatBayTemple, Region.StoneTowerTemple }.AsReadOnly();
 
         public RestrictedPlacementAttribute(RestrictionType restrictionType)
         {
             switch (restrictionType)
             {
-                case RestrictionType.KeepWithinRegion:
-                    RestrictPlacement = KeepWithinRegion;
+                case RestrictionType.KeepWithinTemples:
+                    RestrictPlacement = KeepWithinTemples;
                     break;
                 case RestrictionType.KeepWithinArea:
                     RestrictPlacement = KeepWithinArea;
@@ -34,31 +34,30 @@ namespace MMR.Randomizer.Attributes
                 case RestrictionType.KeepWithinOverworld:
                     RestrictPlacement = KeepWithinOverworld;
                     break;
+                case RestrictionType.GreatFairyRewards:
+                    RestrictPlacement = GreatFairyRewards;
+                    break;
             }
         }
 
-        public static void SetDungeonEntranceFunction(Func<Item, Item> getNewDungeonEntrance)
+        private readonly IReadOnlyCollection<Item> _greatFairyRewards = new List<Item> { Item.FairySpinAttack, Item.FairyDoubleMagic, Item.FairyDoubleDefense, Item.ItemFairySword };
+        private bool GreatFairyRewards(Item item, Item location, ItemList itemList)
         {
-            _getNewDungeonEntrance = getNewDungeonEntrance;
+            return _greatFairyRewards.Contains(location);
         }
 
-        private bool KeepWithinRegion(Item item, Item location)
+        private bool KeepWithinTemples(Item item, Item location, ItemList itemList)
         {
-            return item.Region() == location.Region();
+            return location == Item.SongOath || (location.Region(itemList).HasValue && _templeRegions.Contains(location.Region(itemList).Value));
         }
 
-        private bool KeepWithinOverworld(Item item, Item location)
+        private bool KeepWithinOverworld(Item item, Item location, ItemList itemList)
         {
-            return !location.Region().HasValue || !_dungeonRegions.Contains(location.Region().Value);
+            return location != Item.SongOath && (!location.Region(itemList).HasValue || !_templeRegions.Contains(location.Region(itemList).Value));
         }
 
-        private bool KeepWithinArea(Item item, Item location)
+        private bool KeepWithinArea(Item item, Item location, ItemList itemList)
         {
-            if (_getNewDungeonEntrance == null)
-            {
-                throw new InvalidOperationException($"Must call {nameof(SetDungeonEntranceFunction)} before checking item restrictions.");
-            }
-
             var regionAreaDungeonEntrance = new Dictionary<RegionArea, Item>
             {
                 { RegionArea.Swamp, Item.AreaWoodFallTempleAccess },
@@ -69,19 +68,19 @@ namespace MMR.Randomizer.Attributes
 
             var dungeonEntranceRegionArea = regionAreaDungeonEntrance.ToDictionary(x => x.Value, x => x.Key);
 
-            RegionArea? getNewRegionArea(Item check)
+            RegionArea? getNewRegionArea(Item check, ItemList itemList)
             {
-                var regionArea = check.RegionArea();
+                var regionArea = check.RegionArea(itemList);
                 if (regionArea.HasValue && regionAreaDungeonEntrance.ContainsKey(regionArea.Value))
                 {
                     var dungeonEntranceToFind = regionAreaDungeonEntrance[regionArea.Value];
-                    var dungeonNewEntrance = _getNewDungeonEntrance(dungeonEntranceToFind);
+                    var dungeonNewEntrance = itemList[dungeonEntranceToFind].NewLocation ?? dungeonEntranceToFind;
                     regionArea = dungeonEntranceRegionArea[dungeonNewEntrance];
                 }
                 return regionArea;
             }
 
-            return getNewRegionArea(item) == (_dungeonRegions.Contains(location.Region()) ? getNewRegionArea(location) : location.RegionArea());
+            return getNewRegionArea(item, itemList) == (_templeRegions.Contains(location.Region(itemList)) ? getNewRegionArea(location, itemList) : location.RegionArea(itemList));
         }
     }
 }

@@ -82,12 +82,14 @@
 .definelabel z2_ActorCutscene_SetReturnCamera, 0x800F23C4
 .definelabel z2_Kanfont_LoadAsciiChar, 0x800F4F54
 .definelabel z2_memcpy, 0x800FEC90
+.definelabel z2_Math_CosS, 0x800FED44
 .definelabel z2_Math_Sins, 0x800FED84
 .definelabel z2_Math_AsymStepToF, 0x800FF2F8
 .definelabel z2_Math_Vec3f_DistXZ, 0x800FF92C
 .definelabel z2_Math_SmoothStepToF, 0x800FFCD8
 .definelabel Math_ApproachF, 0x800FFDF8
 .definelabel Math_ApproachZeroF, 0x800FFE68
+.definelabel z2_Lib_SegmentedToVirtual, 0x80100504
 .definelabel z2_WriteHeartColors, 0x8010069C
 .definelabel z2_8010CFBC, 0x8010CFBC
 .definelabel z2_8010D480, 0x8010D480
@@ -107,6 +109,7 @@
 .definelabel z2_CanInteract2, 0x80123358
 .definelabel z2_CanInteract, 0x801233E4
 .definelabel z2_801242DC, 0x801242DC
+.definelabel z2_Player_DrawGetItem, 0x8012697C
 .definelabel z2_PlayerGormanTears, 0x80127594
 .definelabel z2_PlayerBlastMaskAnim, 0x801278F8
 .definelabel z2_PlayerBunnyHoodLimbs, 0x80127A60
@@ -123,6 +126,8 @@
 .definelabel z2_object_spawn, 0x8012F2E0
 .definelabel z2_load_objects, 0x8012F4FC
 .definelabel z2_GetObjectIndex, 0x8012F608
+.definelabel z2_AnimatedMat_Draw, 0x80131758
+.definelabel z2_SkelAnime_DrawFlexLod, 0x80133710
 .definelabel z2_SkelAnime_DrawLimb, 0x80133B3C
 .definelabel z2_SkelAnime_DrawLimb2, 0x80133F28
 .definelabel z2_SkelAnime_DrawLimb3, 0x801343C0
@@ -150,6 +155,9 @@
 .definelabel z2_CopyFromMatrixStackTop, 0x801801E8
 .definelabel z2_CopyToMatrixStackTop, 0x8018020C
 .definelabel z2_GetMatrixStackTop, 0x80180234
+.definelabel z2_TranslateMatrix, 0x8018029C
+.definelabel z2_Matrix_Scale, 0x8018039C
+.definelabel z2_Matrix_RotateXS, 0x80180478
 .definelabel z2_Matrix_RotateY, 0x801809AC
 .definelabel z2_Matrix_InsertZRotation_f, 0x80180E90
 .definelabel z2_TransformMatrixStackTop, 0x801812FC

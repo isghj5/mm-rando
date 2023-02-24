@@ -1,5 +1,5 @@
 {
-  "Version": 12,
+  "Version": 15,
   "Logic": [
     {
       "Id": "MaskDeku",
@@ -379,8 +379,25 @@
           "MaskBlast"
         ],
         [
-          "MaskZora",
-          "GBT Iceless"
+          "GBT Iceless",
+          "FD Difficult Jumps"
+        ],
+        [
+          "GBT Iceless",
+          "Fierce Deity's Mask Anywhere",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "GBT Iceless",
+          "Fierce Deity's Mask Anywhere",
+          "Harder Long Jumps",
+          "Take Damage",
+          "MaskBlast"
+        ],
+        [
+          "Low% Ocean Great Fairy"
         ]
       ],
       "TimeNeeded": "None",
@@ -470,29 +487,11 @@
     {
       "Id": "ItemBottleDampe",
       "RequiredItems": [
+        "Ikana Graveyard Access",
         "MaskCaptainHat",
-        "Ikana Graveyard Access"
+        "Kill Big Poe"
       ],
-      "ConditionalItems": [
-        [
-          "OtherArrow"
-        ],
-        [
-          "MaskZora"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere",
-          "Magic Meter"
-        ],
-        [
-          "Fierce Deity's Mask Anywhere",
-          "Jump Slash Take Downs"
-        ],
-        [
-          "Any Bomb Bag",
-          "Fewer Item Requirements"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "Night3",
       "TimeSetup": "None",
@@ -519,6 +518,11 @@
         ],
         [
           "Short Ranged Weapon"
+        ],
+        [
+          "ItemNotebook",
+          "NotebookMeetBombers",
+          "NotebookLearnBombersCode"
         ]
       ],
       "TimeNeeded": "None",
@@ -542,6 +546,10 @@
         ],
         [
           "Use Fire Arrow"
+        ],
+        [
+          "Hot Spring Water in Mountains",
+          "Unrandomized Bottled Contents"
         ]
       ],
       "TimeNeeded": "None",
@@ -565,6 +573,10 @@
         ],
         [
           "Use Fire Arrow"
+        ],
+        [
+          "Hot Spring Water in Mountains",
+          "Unrandomized Bottled Contents"
         ]
       ],
       "TimeNeeded": "None",
@@ -1580,7 +1592,14 @@
         "MaskGoron",
         "Magic Meter"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Play Goron Lullaby"
+        ],
+        [
+          "Use Fire Arrow"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -1958,7 +1977,14 @@
         "AreaNorthAccess",
         "MaskGoron"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Play Goron Lullaby"
+        ],
+        [
+          "Play Goron Lullaby Intro"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -2092,7 +2118,7 @@
     {
       "Id": "AreaWoodFallTempleClear",
       "RequiredItems": [
-        "Access Odolwa",
+        "AreaOdolwasLair",
         "Kill Odolwa"
       ],
       "ConditionalItems": [],
@@ -2169,23 +2195,18 @@
       "Id": "AreaSnowheadTempleAccess",
       "RequiredItems": [
         "AreaNorthAccess",
-        "MaskGoron"
+        "MaskGoron",
+        "Play Goron Lullaby"
       ],
       "ConditionalItems": [
         [
-          "Play Goron Lullaby",
           "Path to Snowhead without Magic"
         ],
         [
-          "Play Goron Lullaby",
           "Magic Meter"
         ],
         [
-          "Play Goron Lullaby",
           "FD Jumps"
-        ],
-        [
-          "Lullaby Skip"
         ]
       ],
       "TimeNeeded": "None",
@@ -2196,7 +2217,7 @@
     {
       "Id": "AreaSnowheadTempleClear",
       "RequiredItems": [
-        "Access Goht",
+        "AreaGohtsLair",
         "Kill Goht"
       ],
       "ConditionalItems": [],
@@ -2296,7 +2317,7 @@
     {
       "Id": "AreaGreatBayTempleClear",
       "RequiredItems": [
-        "Access Gyorg",
+        "AreaGyorgsLair",
         "Kill Gyorg"
       ],
       "ConditionalItems": [],
@@ -2335,6 +2356,21 @@
           "ItemPowderKeg",
           "Play Epona's Song",
           "Play Song of Soaring"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Any Bomb Bag",
+          "Take Damage",
+          "Fewer Item Requirements"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "Take Damage",
+          "Play Epona's Song",
+          "Play Song of Soaring",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -2406,7 +2442,7 @@
     {
       "Id": "AreaStoneTowerClear",
       "RequiredItems": [
-        "Access Twinmold",
+        "AreaTwinmoldsLair",
         "Kill Twinmold"
       ],
       "ConditionalItems": [],
@@ -2484,16 +2520,9 @@
     {
       "Id": "OtherLimitlessBeans",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -2522,11 +2551,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaWoodfallNew",
+      "Id": "AreaOdolwasLair",
       "RequiredItems": [
-        "AreaWoodFallTempleAccess",
-        "MaskDeku",
-        "OtherArrow"
+        "Access Odolwa"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2535,14 +2562,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaSnowheadNew",
+      "Id": "AreaGohtsLair",
       "RequiredItems": [
-        "AreaSnowheadTempleAccess",
-        "MaskGoron",
-        "OtherExplosive",
-        "OtherArrow",
-        "ItemFireArrow",
-        "Magic Meter"
+        "Access Goht"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2551,15 +2573,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaGreatBayNew",
+      "Id": "AreaGyorgsLair",
       "RequiredItems": [
-        "AreaGreatBayTempleAccess",
-        "MaskZora",
-        "ItemHookshot",
-        "OtherArrow",
-        "ItemIceArrow",
-        "ItemFireArrow",
-        "Magic Meter"
+        "Access Gyorg"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2568,16 +2584,9 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaLANew",
+      "Id": "AreaTwinmoldsLair",
       "RequiredItems": [
-        "AreaStoneTowerTempleAccess",
-        "MaskGoron",
-        "MaskZora",
-        "Play Elegy of Emptiness",
-        "UpgradeMirrorShield",
-        "OtherExplosive",
-        "OtherArrow",
-        "MaskDeku"
+        "Access Twinmold"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2586,18 +2595,42 @@
       "IsTrick": false
     },
     {
-      "Id": "AreaInvertedStoneTowerNew",
+      "Id": "OtherKillOdolwa",
       "RequiredItems": [
-        "AreaInvertedStoneTowerTempleAccess",
-        "OtherExplosive",
-        "OtherArrow",
-        "ItemLightArrow",
-        "MaskDeku",
-        "MaskGoron",
-        "MaskZora",
-        "Play Elegy of Emptiness",
-        "ItemHookshot",
-        "Magic Meter"
+        "Kill Odolwa"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherKillGoht",
+      "RequiredItems": [
+        "Kill Goht"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherKillGyorg",
+      "RequiredItems": [
+        "Kill Gyorg"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "OtherKillTwinmold",
+      "RequiredItems": [
+        "Kill Twinmold"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -2608,7 +2641,8 @@
     {
       "Id": "ItemWoodfallMap",
       "RequiredItems": [
-        "AreaWoodFallTempleAccess"
+        "AreaWoodFallTempleAccess",
+        "Kill Snapper"
       ],
       "ConditionalItems": [
         [
@@ -2616,31 +2650,14 @@
         ],
         [
           "ItemHookshot",
-          "OtherExplosive",
           "Take Damage"
         ],
         [
           "ItemHookshot",
-          "MaskGoron",
-          "Take Damage"
+          "Use Fire Arrow"
         ],
         [
-          "ItemHookshot",
-          "Use Fire Arrow",
-          "OtherExplosive"
-        ],
-        [
-          "ItemHookshot",
-          "Use Fire Arrow",
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps",
-          "OtherExplosive"
-        ],
-        [
-          "FD Jumps",
-          "MaskGoron"
+          "FD Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -3010,6 +3027,13 @@
           "STT Elegy Maze",
           "UpgradeMirrorShield",
           "Fewer Item Requirements"
+        ],
+        [
+          "STT Elegy Maze",
+          "MaskZora",
+          "Fewer Item Requirements",
+          "Take Damage",
+          "Play Song of Soaring"
         ]
       ],
       "TimeNeeded": "None",
@@ -3583,12 +3607,6 @@
       ],
       "ConditionalItems": [
         [
-          "ItemLens",
-          "MaskGoron",
-          "Magic Meter",
-          "AreaNorthAccess"
-        ],
-        [
           "AreaSnowheadTempleClear",
           "AreaNorthAccess"
         ],
@@ -3598,34 +3616,14 @@
           "AreaNorthAccess"
         ],
         [
-          "MaskGoron",
-          "Lensless Climbing",
-          "AreaNorthAccess"
-        ],
-        [
           "Use Fire Arrow",
           "AreaNorthAccess"
         ],
         [
-          "MaskGibdo",
-          "AreaIkanaCanyonAccess",
-          "BottleCatchFish",
-          "Any Blue Potion",
-          "MaskZora"
+          "Hot Spring Water in Mountains"
         ],
         [
-          "MaskGibdo",
-          "AreaIkanaCanyonAccess",
-          "BottleCatchFish",
-          "Any Blue Potion",
-          "OtherExplosive"
-        ],
-        [
-          "MaskGibdo",
-          "AreaIkanaCanyonAccess",
-          "BottleCatchFish",
-          "Any Blue Potion",
-          "Fewer Item Requirements"
+          "Hot Spring Water in Well"
         ]
       ],
       "TimeNeeded": "None",
@@ -3769,26 +3767,15 @@
     {
       "Id": "ChestBeanGrottoRedRupee",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
       "ConditionalItems": [
         [
-          "ItemHookshot",
-          "MaskDeku"
-        ],
-        [
-          "ItemHookshot",
-          "Deku Guard Skip"
+          "ItemHookshot"
         ],
         [
           "OtherMagicBean",
-          "Water for Magic Bean",
-          "MaskDeku"
-        ],
-        [
-          "OtherMagicBean",
-          "Water for Magic Bean",
-          "Deku Guard Skip"
+          "Water for Magic Bean"
         ]
       ],
       "TimeNeeded": "None",
@@ -3803,9 +3790,15 @@
       ],
       "ConditionalItems": [
         [
-          "Play Song of Soaring",
+          "OtherExplosive",
           "BottleCatchHotSpringWater",
-          "OtherExplosive"
+          "Play Song of Soaring"
+        ],
+        [
+          "OtherExplosive",
+          "BottleCatchHotSpringWater",
+          "Hot Spring Water in Mountains",
+          "Unrandomized Bottled Contents"
         ],
         [
           "AreaSnowheadTempleClear",
@@ -3822,7 +3815,15 @@
         [
           "Powder Kegs as Explosives",
           "Powder Keg Challenge with Hot Spring Water",
-          "Fierce Deity's Mask Anywhere"
+          "Fierce Deity's Mask Anywhere",
+          "Play Song of Soaring"
+        ],
+        [
+          "Powder Kegs as Explosives",
+          "Powder Keg Challenge with Hot Spring Water",
+          "Fierce Deity's Mask Anywhere",
+          "Hot Spring Water in Mountains",
+          "Unrandomized Bottled Contents"
         ]
       ],
       "TimeNeeded": "None",
@@ -4806,16 +4807,9 @@
     {
       "Id": "HeartPieceDekuPalace",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -4953,6 +4947,11 @@
         ],
         [
           "FD Difficult Jumps"
+        ],
+        [
+          "FD Jumps",
+          "ItemHookshot",
+          "ItemOcarina"
         ]
       ],
       "TimeNeeded": "None",
@@ -5028,38 +5027,71 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "Ikana Castle Access",
-        "Use Fire Arrow",
-        "Jump along invisible platforms"
+        "Use Fire Arrow"
       ],
       "ConditionalItems": [
         [
+          "MaskDeku",
+          "Jump along invisible platforms"
+        ],
+        [
+          "FD Difficult Jumps"
+        ],
+        [
+          "FD Jumps",
           "MaskDeku"
+        ],
+        [
+          "FD Jumps",
+          "Long Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "FD Jumps",
+          "Long Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
+        ],
+        [
+          "FD Jumps",
+          "Harder Long Jumps",
+          "Take Damage"
+        ],
+        [
+          "FD Jumps",
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ],
+        [
+          "FD Jumps",
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
           "Take Damage",
+          "Jump along invisible platforms",
           "Goron Bomb Jump",
           "Any Bomb Bag"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
           "Take Damage",
+          "Jump along invisible platforms",
           "Goron Bomb Jump",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
-          "Use Light Arrow"
+          "Fierce Deity's Mask Anywhere"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
           "Take Damage",
-          "Goron Bomb Jump",
-          "Powder Kegs as Explosives",
-          "ItemPowderKeg",
-          "UpgradeMirrorShield"
-        ],
-        [
-          "Ikana Castle Falling Ceiling Skip",
-          "Take Damage",
+          "Jump along invisible platforms",
           "Goron Bomb Jump",
           "Powder Kegs as Explosives",
           "ItemPowderKeg",
@@ -5068,29 +5100,21 @@
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
-          "Fierce Deity's Mask Anywhere",
-          "Long Jump",
           "Take Damage",
-          "Any Bomb Bag"
-        ],
-        [
-          "Ikana Castle Falling Ceiling Skip",
-          "Fierce Deity's Mask Anywhere",
-          "Long Jump",
-          "Take Damage",
+          "Jump along invisible platforms",
+          "Goron Bomb Jump",
           "Powder Kegs as Explosives",
-          "ItemPowderKeg"
+          "ItemPowderKeg",
+          "ItemLightArrow"
         ],
         [
           "Ikana Castle Falling Ceiling Skip",
-          "Fierce Deity's Mask Anywhere",
-          "Harder Long Jumps",
-          "Take Damage"
-        ],
-        [
-          "Ikana Castle Falling Ceiling Skip",
-          "FD Difficult Jumps",
-          "Take Damage"
+          "Take Damage",
+          "Jump along invisible platforms",
+          "Goron Bomb Jump",
+          "Powder Kegs as Explosives",
+          "ItemPowderKeg",
+          "UpgradeMirrorShield"
         ]
       ],
       "TimeNeeded": "None",
@@ -5101,7 +5125,7 @@
     {
       "Id": "HeartContainerWoodfall",
       "RequiredItems": [
-        "Access Odolwa",
+        "AreaOdolwasLair",
         "Kill Odolwa"
       ],
       "ConditionalItems": [],
@@ -5113,7 +5137,7 @@
     {
       "Id": "HeartContainerSnowhead",
       "RequiredItems": [
-        "Access Goht",
+        "AreaGohtsLair",
         "Kill Goht"
       ],
       "ConditionalItems": [],
@@ -5125,7 +5149,7 @@
     {
       "Id": "HeartContainerGreatBay",
       "RequiredItems": [
-        "Access Gyorg",
+        "AreaGyorgsLair",
         "Kill Gyorg"
       ],
       "ConditionalItems": [],
@@ -5137,7 +5161,7 @@
     {
       "Id": "HeartContainerStoneTower",
       "RequiredItems": [
-        "Access Twinmold",
+        "AreaTwinmoldsLair",
         "Kill Twinmold"
       ],
       "ConditionalItems": [],
@@ -41223,15 +41247,28 @@
         "Play Epona's Song",
         "AreaIkanaCanyonAccess",
         "MaskGibdo",
-        "Play Song of Soaring",
         "BottleCatchHotSpringWater"
       ],
       "ConditionalItems": [
         [
+          "Play Song of Soaring",
           "OtherLimitlessBeans"
         ],
         [
+          "Play Song of Soaring",
           "Use Light Arrow"
+        ],
+        [
+          "OtherLimitlessBeans",
+          "Hot Spring Water in Well",
+          "Unrandomized Bottled Contents"
+        ],
+        [
+          "Use Light Arrow",
+          "Hot Spring Water in Well",
+          "Unrandomized Bottled Contents",
+          "Take Damage",
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -41266,10 +41303,17 @@
     {
       "Id": "ItemCoastGrottoCowMilk1",
       "RequiredItems": [
-        "ItemHookshot",
         "Play Epona's Song"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Fewer Item Requirements",
+          "Take Damage"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -41278,10 +41322,17 @@
     {
       "Id": "ItemCoastGrottoCowMilk2",
       "RequiredItems": [
-        "ItemHookshot",
         "Play Epona's Song"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Fewer Item Requirements",
+          "Take Damage"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -43063,6 +43114,10 @@
           "SHT Fireless",
           "SHT Elevator Room Access",
           "OtherArrow"
+        ],
+        [
+          "SHT Fireless",
+          "ItemHookshot"
         ]
       ],
       "TimeNeeded": "None",
@@ -43851,21 +43906,6 @@
         ],
         [
           "AreaInvertedStoneTowerTempleAccess",
-          "ISTT Reverse 2F",
-          "Recoil Flip",
-          "Any Bomb Bag",
-          "3 Stone Tower Keys"
-        ],
-        [
-          "AreaInvertedStoneTowerTempleAccess",
-          "ISTT Reverse 2F",
-          "Recoil Flip",
-          "MaskBlast",
-          "Any Shield",
-          "3 Stone Tower Keys"
-        ],
-        [
-          "AreaInvertedStoneTowerTempleAccess",
           "ISTT Lightless",
           "ItemHookshot",
           "3 Stone Tower Keys"
@@ -43884,54 +43924,41 @@
           "1 Stone Tower Key"
         ],
         [
-          "Hit Switches Through Walls",
           "Any Bomb Bag"
         ],
         [
-          "Hit Switches Through Walls",
           "MaskBlast",
           "Any Shield"
         ],
         [
-          "Hit Switches Through Walls",
-          "MaskBlast",
-          "Take Damage"
+          "MaskDeku",
+          "ItemPowderKeg",
+          "Powder Kegs as Explosives"
         ],
         [
-          "Hit Switches Through Walls",
-          "Powder Kegs as Explosives",
           "ItemPowderKeg",
-          "MaskDeku"
+          "MaskZora",
+          "Powder Kegs as Explosives"
         ],
         [
-          "Hit Switches Through Walls",
-          "Powder Kegs as Explosives",
           "ItemPowderKeg",
-          "MaskZora"
-        ],
-        [
-          "Hit Switches Through Walls",
           "Powder Kegs as Explosives",
-          "ItemPowderKeg",
           "FD Difficult Jumps"
         ],
         [
-          "Hit Switches Through Walls",
-          "Powder Kegs as Explosives",
           "ItemPowderKeg",
-          "Use Light Arrow"
+          "Use Light Arrow",
+          "Powder Kegs as Explosives"
         ],
         [
-          "Hit Switches Through Walls",
           "Zora Boomerang Through Walls"
         ],
         [
-          "Hit Switches Through Walls",
-          "Deku Stick Fighting",
-          "Fewer Item Requirements"
+          "FD Difficult Jumps",
+          "Jump Slash Take Downs"
         ],
         [
-          "Clever Bombchu Usage"
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -45208,16 +45235,9 @@
     {
       "Id": "CollectableDekuPalaceWestInnerGardenItem1",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -45226,16 +45246,9 @@
     {
       "Id": "CollectableDekuPalaceEastInnerGardenItem1",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -45244,16 +45257,9 @@
     {
       "Id": "CollectableDekuPalaceEastInnerGardenItem2",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -45262,16 +45268,9 @@
     {
       "Id": "CollectableDekuPalaceWestInnerGardenItem2",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -45280,16 +45279,9 @@
     {
       "Id": "CollectableDekuPalaceWestInnerGardenItem3",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -46601,7 +46593,8 @@
         ],
         [
           "MaskDeku",
-          "Any Sword"
+          "Any Sword",
+          "Jump Slash Take Downs"
         ],
         [
           "MaskDeku",
@@ -46609,10 +46602,12 @@
         ],
         [
           "MaskDeku",
-          "Fierce Deity's Mask Anywhere"
+          "Fierce Deity's Mask Anywhere",
+          "Jump Slash Take Downs"
         ],
         [
-          "FD Jumps"
+          "FD Jumps",
+          "Jump Slash Take Downs"
         ],
         [
           "Clever Bombchu Usage"
@@ -47005,16 +47000,20 @@
       "RequiredItems": [
         "AreaIkanaCanyonAccess",
         "Ikana Castle Access",
-        "Use Fire Arrow",
-        "Jump along invisible platforms"
+        "Use Fire Arrow"
       ],
       "ConditionalItems": [
         [
+          "Jump along invisible platforms",
           "MaskDeku"
         ],
         [
+          "Jump along invisible platforms",
           "Ikana Castle Falling Ceiling Skip",
           "Take Damage"
+        ],
+        [
+          "FD Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -47237,16 +47236,9 @@
     {
       "Id": "CollectableDekuPalaceEastInnerGardenItem3",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47255,16 +47247,9 @@
     {
       "Id": "CollectableDekuPalaceEastInnerGardenItem4",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47273,16 +47258,9 @@
     {
       "Id": "CollectableDekuPalaceEastInnerGardenItem5",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47291,16 +47269,9 @@
     {
       "Id": "CollectableDekuPalaceEastInnerGardenItem6",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47309,16 +47280,9 @@
     {
       "Id": "CollectableDekuPalaceEastInnerGardenItem7",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47327,16 +47291,9 @@
     {
       "Id": "CollectableDekuPalaceEastInnerGardenItem8",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47345,16 +47302,9 @@
     {
       "Id": "CollectableDekuPalaceWestInnerGardenItem4",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47363,16 +47313,9 @@
     {
       "Id": "CollectableDekuPalaceWestInnerGardenItem5",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47381,16 +47324,9 @@
     {
       "Id": "CollectableDekuPalaceWestInnerGardenItem6",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47404,13 +47340,7 @@
           "AreaMoonAccess"
         ],
         [
-          "AreaSouthAccess",
-          "MaskDeku",
-          "Zora Boomerang Through Walls"
-        ],
-        [
-          "AreaSouthAccess",
-          "Deku Guard Skip",
+          "AreaDekuPalaceAccess",
           "Zora Boomerang Through Walls"
         ]
       ],
@@ -47422,16 +47352,9 @@
     {
       "Id": "CollectableDekuPalaceWestInnerGardenItem8",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47440,16 +47363,9 @@
     {
       "Id": "CollectableDekuPalaceWestInnerGardenItem9",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -47458,16 +47374,9 @@
     {
       "Id": "CollectableDekuPalaceWestInnerGardenItem10",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -49436,6 +49345,9 @@
         [
           "ItemHookshot",
           "Fewer Item Requirements"
+        ],
+        [
+          "Clever Bombchu Usage"
         ]
       ],
       "TimeNeeded": "None",
@@ -49846,6 +49758,9 @@
           "Ikana Castle Falling Ceiling Skip",
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "FD Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -49868,6 +49783,9 @@
           "Ikana Castle Falling Ceiling Skip",
           "Long Jump",
           "Take Damage"
+        ],
+        [
+          "FD Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -51917,16 +51835,9 @@
     {
       "Id": "CollectableDekuPalaceRupeeCluster1",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -51935,16 +51846,9 @@
     {
       "Id": "CollectableDekuPalaceRupeeCluster2",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -51953,16 +51857,9 @@
     {
       "Id": "CollectableDekuPalaceRupeeCluster3",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -51971,16 +51868,9 @@
     {
       "Id": "CollectableDekuPalaceRupeeCluster4",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -51989,16 +51879,9 @@
     {
       "Id": "CollectableDekuPalaceRupeeCluster5",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -52007,16 +51890,9 @@
     {
       "Id": "CollectableDekuPalaceRupeeCluster6",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -52025,16 +51901,9 @@
     {
       "Id": "CollectableDekuPalaceRupeeCluster7",
       "RequiredItems": [
-        "AreaSouthAccess"
+        "AreaDekuPalaceAccess"
       ],
-      "ConditionalItems": [
-        [
-          "MaskDeku"
-        ],
-        [
-          "Deku Guard Skip"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -53918,11 +53787,15 @@
     },
     {
       "Id": "CollectableMilkRoadKeatonGrass6",
-      "RequiredItems": [
-        "Magic Meter",
-        "Any Sword"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Big Spin Attack"
+        ],
+        [
+          "Keaton Grass Small Spin"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -53930,11 +53803,15 @@
     },
     {
       "Id": "CollectableMilkRoadKeatonGrass7",
-      "RequiredItems": [
-        "Magic Meter",
-        "Any Sword"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Big Spin Attack"
+        ],
+        [
+          "Keaton Grass Small Spin"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -53942,11 +53819,15 @@
     },
     {
       "Id": "CollectableMilkRoadKeatonGrass8",
-      "RequiredItems": [
-        "Magic Meter",
-        "Any Sword"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Big Spin Attack"
+        ],
+        [
+          "Keaton Grass Small Spin"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -53954,22 +53835,13 @@
     },
     {
       "Id": "CollectableMilkRoadKeatonGrass9",
-      "RequiredItems": [
-        "Magic Meter",
-        "Any Sword"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [
         [
+          "Big Spin Attack"
+        ],
+        [
           "Keaton Grass Small Spin"
-        ],
-        [
-          "ItemFairySword"
-        ],
-        [
-          "UpgradeGildedSword"
-        ],
-        [
-          "FairySpinAttack"
         ]
       ],
       "TimeNeeded": "None",
@@ -54036,11 +53908,15 @@
     },
     {
       "Id": "CollectableNorthClockTownKeatonGrass6",
-      "RequiredItems": [
-        "Magic Meter",
-        "Any Sword"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Big Spin Attack"
+        ],
+        [
+          "Keaton Grass Small Spin"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54048,11 +53924,15 @@
     },
     {
       "Id": "CollectableNorthClockTownKeatonGrass7",
-      "RequiredItems": [
-        "Magic Meter",
-        "Any Sword"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Big Spin Attack"
+        ],
+        [
+          "Keaton Grass Small Spin"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54060,11 +53940,15 @@
     },
     {
       "Id": "CollectableNorthClockTownKeatonGrass8",
-      "RequiredItems": [
-        "Magic Meter",
-        "Any Sword"
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Big Spin Attack"
+        ],
+        [
+          "Keaton Grass Small Spin"
+        ]
       ],
-      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54072,22 +53956,13 @@
     },
     {
       "Id": "CollectableNorthClockTownKeatonGrass9",
-      "RequiredItems": [
-        "Magic Meter",
-        "Any Sword"
-      ],
+      "RequiredItems": [],
       "ConditionalItems": [
         [
+          "Big Spin Attack"
+        ],
+        [
           "Keaton Grass Small Spin"
-        ],
-        [
-          "ItemFairySword"
-        ],
-        [
-          "UpgradeGildedSword"
-        ],
-        [
-          "FairySpinAttack"
         ]
       ],
       "TimeNeeded": "None",
@@ -54161,11 +54036,16 @@
     {
       "Id": "CollectableMountainVillageSpringKeatonGrass6",
       "RequiredItems": [
-        "Magic Meter",
-        "Any Sword",
         "AreaSnowheadTempleClear"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Big Spin Attack"
+        ],
+        [
+          "Keaton Grass Small Spin"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54174,11 +54054,16 @@
     {
       "Id": "CollectableMountainVillageSpringKeatonGrass7",
       "RequiredItems": [
-        "Magic Meter",
-        "Any Sword",
         "AreaSnowheadTempleClear"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Big Spin Attack"
+        ],
+        [
+          "Keaton Grass Small Spin"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54187,11 +54072,16 @@
     {
       "Id": "CollectableMountainVillageSpringKeatonGrass8",
       "RequiredItems": [
-        "Magic Meter",
-        "Any Sword",
         "AreaSnowheadTempleClear"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Big Spin Attack"
+        ],
+        [
+          "Keaton Grass Small Spin"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54200,22 +54090,14 @@
     {
       "Id": "CollectableMountainVillageSpringKeatonGrass9",
       "RequiredItems": [
-        "Magic Meter",
-        "Any Sword",
         "AreaSnowheadTempleClear"
       ],
       "ConditionalItems": [
         [
+          "Big Spin Attack"
+        ],
+        [
           "Keaton Grass Small Spin"
-        ],
-        [
-          "ItemFairySword"
-        ],
-        [
-          "UpgradeGildedSword"
-        ],
-        [
-          "FairySpinAttack"
         ]
       ],
       "TimeNeeded": "None",
@@ -54424,7 +54306,7 @@
     {
       "Id": "RemainsOdolwa",
       "RequiredItems": [
-        "Access Odolwa",
+        "AreaOdolwasLair",
         "Kill Odolwa"
       ],
       "ConditionalItems": [],
@@ -54436,7 +54318,7 @@
     {
       "Id": "RemainsGoht",
       "RequiredItems": [
-        "Access Goht",
+        "AreaGohtsLair",
         "Kill Goht"
       ],
       "ConditionalItems": [],
@@ -54448,7 +54330,7 @@
     {
       "Id": "RemainsGyorg",
       "RequiredItems": [
-        "Access Gyorg",
+        "AreaGyorgsLair",
         "Kill Gyorg"
       ],
       "ConditionalItems": [],
@@ -54460,12 +54342,776 @@
     {
       "Id": "RemainsTwinmold",
       "RequiredItems": [
-        "Access Twinmold",
+        "AreaTwinmoldsLair",
         "Kill Twinmold"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SongLullabyIntro",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "SongLullabyIntroInMountainVillage"
+        ],
+        [
+          "SongLullabyIntroInTwinIslands"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetBombers",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetBombersInNCT"
+        ],
+        [
+          "NotebookMeetBombersInECT"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnju",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetAnjuInInn"
+        ],
+        [
+          "NotebookMeetAnjuInECT"
+        ],
+        [
+          "NotebookMeetAnjuInSCT"
+        ],
+        [
+          "NotebookMeetAnjuInLaundryPool"
+        ],
+        [
+          "NotebookMeetAnjuInRanch"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetKafei",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetKafeiInLaundryPool"
+        ],
+        [
+          "NotebookMeetKafeiInIkanaCanyon"
+        ],
+        [
+          "NotebookMeetKafeiInInn"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetCuriosityShopMan",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetCuriosityShopManInWCT"
+        ],
+        [
+          "NotebookMeetCuriosityShopManInLaundryPool"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetOldLady",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetOldLadyInNCT"
+        ],
+        [
+          "NotebookMeetOldLadyInWCT"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetRomani",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetCremia",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetMayorDotour",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2, Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetMadameAroma",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1, Day2, Night2",
+      "TimeSetup": "Day1, Night1, Day2, Night2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetToto",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1, Day2, Night2",
+      "TimeSetup": "Day1, Night1, Day2, Night2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGorman",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetGormanInECT"
+        ],
+        [
+          "NotebookMeetGormanInInn"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostman",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetPostmanInWCT"
+        ],
+        [
+          "NotebookMeetPostmanInSCT"
+        ],
+        [
+          "NotebookMeetPostmanInNCT"
+        ],
+        [
+          "NotebookMeetPostmanInECT"
+        ],
+        [
+          "NotebookMeetPostmanInInn"
+        ],
+        [
+          "NotebookMeetPostmanInLaundryPool"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetRosaSisters",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetRosaSistersInWCT"
+        ],
+        [
+          "NotebookMeetRosaSistersInInn"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetToiletHand",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2, Night3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjusGrandmother",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetAnjusGrandmotherInInn"
+        ],
+        [
+          "NotebookMeetAnjusGrandmotherInRanch"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetKamaro",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGrog",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGormanBrothers",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2, Day3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetShiro",
+      "RequiredItems": [
+        "ItemLens",
+        "Magic Meter",
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [
+        [
+          "Play Epona's Song"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGuruGuru",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookMeetGuruGuruInInn"
+        ],
+        [
+          "NotebookMeetGuruGuruInLaundryPool"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookInnReservation",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "Night1",
+      "TimeAvailable": "Day1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseAnjuMeeting",
+      "RequiredItems": [
+        "MaskKafei"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseAnjuDelivery",
+      "RequiredItems": [
+        "MaskKafei",
+        "Night Inn Access"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDepositLetterToKafei",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookDepositLetterToKafeiInSCT"
+        ],
+        [
+          "NotebookDepositLetterToKafeiInNCT"
+        ],
+        [
+          "NotebookDepositLetterToKafeiInECT"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseKafei",
+      "RequiredItems": [
+        "TradeItemKafeiLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2, Night2",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDeliverPendant",
+      "RequiredItems": [
+        "MaskKafei",
+        "Night Inn Access",
+        "TradeItemPendant"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2, Night2, Day3, Night3",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookEscapeFromSakonSHideout",
+      "RequiredItems": [
+        "TradeItemKafeiLetter",
+        "AreaEastAccess"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseRomani",
+      "RequiredItems": [
+        "OtherEpona"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookSaveTheCows",
+      "RequiredItems": [
+        "OtherEpona"
+      ],
+      "ConditionalItems": [
+        [
+          "Bowless Aliens"
+        ],
+        [
+          "OtherArrow"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookProtectMilkDelivery",
+      "RequiredItems": [
+        "OtherEpona"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "Bowless Aliens"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night2",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookCuriosityShopManSGift",
+      "RequiredItems": [
+        "TradeItemKafeiLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseCuriosityShopMan",
+      "RequiredItems": [
+        "TradeItemKafeiLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDeliverLetterToMama",
+      "RequiredItems": [
+        "TradeItemMamaLetter",
+        "MaskKafei"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookLearnBombersCode",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "NotebookLearnBombersCodeInNCT"
+        ],
+        [
+          "NotebookLearnBombersCodeInECT"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDotoursThanks",
+      "RequiredItems": [
+        "MaskCouple"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2, Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookRosaSistersThanks",
+      "RequiredItems": [
+        "MaskKamaro"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2",
+      "TimeSetup": "Day1, Night1, Day2, Night2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookToiletHandSThanks",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "TradeItemLandDeed"
+        ],
+        [
+          "TradeItemSwampDeed"
+        ],
+        [
+          "TradeItemMountainDeed"
+        ],
+        [
+          "TradeItemOceanDeed"
+        ],
+        [
+          "TradeItemKafeiLetter"
+        ],
+        [
+          "TradeItemMamaLetter"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookGrandmaShortStory",
+      "RequiredItems": [
+        "MaskAllNight"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2",
+      "TimeSetup": "Day1, Night1, Day2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookGrandmaLongStory",
+      "RequiredItems": [
+        "MaskAllNight"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2, Day3",
+      "TimeSetup": "Day1, Night1, Day2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPostmansGame",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskBunnyHood"
+        ],
+        [
+          "Postman without Bunny Hood"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseMadameAroma",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1, Day2, Night2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPurchaseCuriosityShopItem",
+      "RequiredItems": [
+        "Wallet (500)"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "ItemHookshot"
+        ],
+        [
+          "Any Sword"
+        ],
+        [
+          "MaskGoron"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "OtherExplosive"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookGrogsThanks",
+      "RequiredItems": [
+        "MaskBremen"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDefeatGormanBrothers",
+      "RequiredItems": [
+        "Play Epona's Song"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2, Day3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMovingGorman",
+      "RequiredItems": [
+        "MaskDeku",
+        "MaskGoron",
+        "MaskZora",
+        "MaskRomani"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2",
+      "TimeSetup": "Day1, Night1, Day2, Night2",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPostmansFreedom",
+      "RequiredItems": [
+        "TradeItemMamaLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1, Night1, Day2, Night2, Day3",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookUniteAnjuAndKafei",
+      "RequiredItems": [
+        "TradeItemPendant",
+        "MaskKafei",
+        "TradeItemKafeiLetter",
+        "AreaEastAccess",
+        "Night Inn Access"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookSaveOldLady",
+      "RequiredItems": [
+        "TradeItemKafeiLetter",
+        "TradeItemPendant"
+      ],
+      "ConditionalItems": [
+        [
+          "MaskGoron"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "Any Sword"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1",
+      "TimeSetup": "Day1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookPromiseKamaro",
+      "RequiredItems": [
+        "Play Song of Healing"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookSaveInvisibleSoldier",
+      "RequiredItems": [
+        "ItemLens",
+        "Magic Meter",
+        "Any Healing Potion"
+      ],
+      "ConditionalItems": [
+        [
+          "Play Epona's Song"
+        ],
+        [
+          "Goron Bomb Jump",
+          "Take Damage",
+          "Any Bomb Bag"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookGuruGuru",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2",
       "TimeSetup": "None",
       "IsTrick": false
     },
@@ -54537,10 +55183,17 @@
     {
       "Id": "ItemTingleMapSnowheadInMountain",
       "RequiredItems": [
-        "Short Ranged Weapon",
         "AreaNorthAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Jump Slash Take Downs"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54578,10 +55231,17 @@
     {
       "Id": "ItemTingleMapRanchInMountain",
       "RequiredItems": [
-        "Short Ranged Weapon",
         "AreaNorthAccess"
       ],
-      "ConditionalItems": [],
+      "ConditionalItems": [
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Jump Slash Take Downs"
+        ]
+      ],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -54711,7 +55371,7 @@
     {
       "Id": "SongOathInWFT",
       "RequiredItems": [
-        "Access Odolwa",
+        "AreaOdolwasLair",
         "Kill Odolwa"
       ],
       "ConditionalItems": [],
@@ -54723,7 +55383,7 @@
     {
       "Id": "SongOathInSHT",
       "RequiredItems": [
-        "Access Goht",
+        "AreaGohtsLair",
         "Kill Goht"
       ],
       "ConditionalItems": [],
@@ -54735,7 +55395,7 @@
     {
       "Id": "SongOathInGBT",
       "RequiredItems": [
-        "Access Gyorg",
+        "AreaGyorgsLair",
         "Kill Gyorg"
       ],
       "ConditionalItems": [],
@@ -54747,7 +55407,7 @@
     {
       "Id": "SongOathInISTT",
       "RequiredItems": [
-        "Access Twinmold",
+        "AreaTwinmoldsLair",
         "Kill Twinmold"
       ],
       "ConditionalItems": [],
@@ -54979,6 +55639,444 @@
       ],
       "TimeNeeded": "None",
       "TimeAvailable": "Night1, Night2, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SongLullabyIntroInMountainVillage",
+      "RequiredItems": [
+        "AreaNorthAccess",
+        "MaskGoron"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchHotSpringWater",
+          "Play Song of Soaring"
+        ],
+        [
+          "BottleCatchHotSpringWater",
+          "Unrandomized Bottled Contents",
+          "Hot Spring Water in Mountains"
+        ],
+        [
+          "Use Fire Arrow"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "SongLullabyIntroInTwinIslands",
+      "RequiredItems": [
+        "AreaNorthAccess",
+        "MaskGoron"
+      ],
+      "ConditionalItems": [
+        [
+          "BottleCatchHotSpringWater",
+          "Play Song of Soaring"
+        ],
+        [
+          "BottleCatchHotSpringWater",
+          "Unrandomized Bottled Contents",
+          "Hot Spring Water in Mountains"
+        ],
+        [
+          "Use Fire Arrow"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetBombersInNCT",
+      "RequiredItems": [
+        "Short Ranged Weapon",
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetBombersInECT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [
+        [
+          "Guess Bomber Code"
+        ],
+        [
+          "Short Ranged Weapon"
+        ],
+        [
+          "ItemNotebook",
+          "NotebookMeetBombers",
+          "NotebookLearnBombersCode"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjuInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1, Day2, Night2, Day3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjuInECT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjuInSCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjuInLaundryPool",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjuInRanch",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetKafeiInLaundryPool",
+      "RequiredItems": [
+        "TradeItemKafeiLetter",
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2, Night2",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetKafeiInIkanaCanyon",
+      "RequiredItems": [
+        "TradeItemKafeiLetter",
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetKafeiInInn",
+      "RequiredItems": [
+        "TradeItemKafeiLetter",
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetCuriosityShopManInWCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetCuriosityShopManInLaundryPool",
+      "RequiredItems": [
+        "TradeItemKafeiLetter",
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day3",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetOldLadyInNCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetOldLadyInWCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2, Night2, Day3, Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGormanInECT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGormanInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInWCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInSCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInNCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInECT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetPostmanInLaundryPool",
+      "RequiredItems": [
+        "TradeItemKafeiLetter",
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day2",
+      "TimeSetup": "Day1, Night1",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetRosaSistersInWCT",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetRosaSistersInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjusGrandmotherInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Night1, Day2, Night2, Day3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetAnjusGrandmotherInRanch",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night3",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGuruGuruInInn",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Day1, Day2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookMeetGuruGuruInLaundryPool",
+      "RequiredItems": [
+        "ItemNotebook"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "Night1, Night2",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDepositLetterToKafeiInSCT",
+      "RequiredItems": [
+        "TradeItemKafeiLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDepositLetterToKafeiInNCT",
+      "RequiredItems": [
+        "TradeItemKafeiLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookDepositLetterToKafeiInECT",
+      "RequiredItems": [
+        "TradeItemKafeiLetter"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookLearnBombersCodeInNCT",
+      "RequiredItems": [
+        "Short Ranged Weapon"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "NotebookLearnBombersCodeInECT",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "Guess Bomber Code"
+        ],
+        [
+          "ItemNotebook",
+          "NotebookMeetBombers",
+          "NotebookLearnBombersCode"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false
     },
@@ -56115,17 +57213,6 @@
       "TrickCategory": "Easy"
     },
     {
-      "Id": "Hit Switches Through Walls",
-      "RequiredItems": [],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Hit switches through walls using various means.",
-      "TrickCategory": "Easy"
-    },
-    {
       "Id": "Long Jump",
       "RequiredItems": [
         "OtherExplosive"
@@ -56958,20 +58045,6 @@
       "TrickCategory": "Moderate"
     },
     {
-      "Id": "Lullaby Skip",
-      "RequiredItems": [
-        "MaskGoron",
-        "Magic Meter"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Roll up past the ramp with Goron Spikes. Then use C-Up on enemies to not be blown off.",
-      "TrickCategory": "Very Hard"
-    },
-    {
       "Id": "Any Shield",
       "RequiredItems": [],
       "ConditionalItems": [
@@ -57093,13 +58166,16 @@
     },
     {
       "Id": "Keaton Grass Small Spin",
-      "RequiredItems": [],
+      "RequiredItems": [
+        "Any Sword",
+        "Magic Meter"
+      ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": true,
-      "TrickTooltip": "Hit all 9 keaton bushes with a small sword and small spin attack.",
+      "TrickTooltip": "Hit more than 5 Keaton bushes with a small sword and quick spin attacks.",
       "TrickCategory": "Hard"
     },
     {
@@ -57180,9 +58256,10 @@
           "RemainsGoht"
         ],
         [
-          "Use Fire Arrow",
           "ItemSnowheadBossKey",
-          "MaskGoron"
+          "MaskGoron",
+          "Magic Meter",
+          "SHT 4F"
         ]
       ],
       "TimeNeeded": "None",
@@ -57241,19 +58318,6 @@
       "TimeAvailable": "None",
       "TimeSetup": "None",
       "IsTrick": false
-    },
-    {
-      "Id": "Shoot Goht",
-      "RequiredItems": [
-        "OtherArrow"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "None",
-      "TimeSetup": "None",
-      "IsTrick": true,
-      "TrickTooltip": "Shoot Goht with Arrows.",
-      "TrickCategory": "Moderate"
     },
     {
       "Id": "Play Song of Time",
@@ -57320,6 +58384,18 @@
       "RequiredItems": [
         "ItemOcarina",
         "SongSonata"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Play Goron Lullaby Intro",
+      "RequiredItems": [
+        "ItemOcarina",
+        "SongLullabyIntro"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -57456,17 +58532,7 @@
       "RequiredItems": [
         "Use Fire Arrow"
       ],
-      "ConditionalItems": [
-        [
-          "MaskGoron"
-        ],
-        [
-          "Shoot Goht"
-        ],
-        [
-          "MaskFierceDeity"
-        ]
-      ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -57491,6 +58557,11 @@
         [
           "MaskFierceDeity",
           "OtherArrow",
+          "Fewer Item Requirements"
+        ],
+        [
+          "MaskFierceDeity",
+          "ItemHookshot",
           "Fewer Item Requirements"
         ]
       ],
@@ -57738,21 +58809,28 @@
           "Use Light Arrow"
         ],
         [
-          "MaskDeku",
-          "MaskGoron",
           "Use Fire Arrow",
-          "Jump along invisible platforms",
+          "MaskGoron",
           "ItemPowderKeg",
-          "UpgradeMirrorShield"
+          "UpgradeMirrorShield",
+          "MaskDeku",
+          "Jump along invisible platforms"
         ],
         [
+          "Use Fire Arrow",
+          "MaskGoron",
+          "ItemPowderKeg",
+          "UpgradeMirrorShield",
           "Ikana Castle Falling Ceiling Skip",
           "Take Damage",
-          "MaskGoron",
+          "Jump along invisible platforms"
+        ],
+        [
           "Use Fire Arrow",
-          "Jump along invisible platforms",
+          "MaskGoron",
           "ItemPowderKeg",
-          "UpgradeMirrorShield"
+          "UpgradeMirrorShield",
+          "FD Jumps"
         ]
       ],
       "TimeNeeded": "None",
@@ -57866,7 +58944,7 @@
         ],
         [
           "Access Gyorg",
-          "Kill Gyorg"
+          "OtherKillGyorg"
         ],
         [
           "GBT Hookless Exit",
@@ -57916,59 +58994,12 @@
     },
     {
       "Id": "Defeat WFT Gekko",
-      "RequiredItems": [],
-      "ConditionalItems": [
-        [
-          "MaskDeku",
-          "OtherArrow"
-        ],
-        [
-          "FD Difficult Jumps",
-          "Magic Meter",
-          "OtherExplosive"
-        ],
-        [
-          "FD Difficult Jumps",
-          "Magic Meter",
-          "MaskDeku"
-        ],
-        [
-          "FD Difficult Jumps",
-          "Magic Meter",
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps",
-          "Magic Meter",
-          "WFT 2nd Floor Skip",
-          "Take Damage",
-          "OtherExplosive"
-        ],
-        [
-          "FD Jumps",
-          "Magic Meter",
-          "WFT 2nd Floor Skip",
-          "Take Damage",
-          "MaskGoron"
-        ],
-        [
-          "FD Jumps",
-          "Magic Meter",
-          "WFT 2nd Floor Skip",
-          "Take Damage",
-          "MaskDeku"
-        ],
-        [
-          "FD Jumps",
-          "OtherArrow",
-          "OtherExplosive"
-        ],
-        [
-          "FD Jumps",
-          "OtherArrow",
-          "MaskGoron"
-        ]
+      "RequiredItems": [
+        "WFT 2nd Floor Access",
+        "Kill Snapper",
+        "Kill Gekko"
       ],
+      "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "None",
       "TimeSetup": "None",
@@ -58224,8 +59255,7 @@
     {
       "Id": "Powder Keg Challenge with Hot Spring Water",
       "RequiredItems": [
-        "BottleCatchHotSpringWater",
-        "Play Song of Soaring"
+        "BottleCatchHotSpringWater"
       ],
       "ConditionalItems": [],
       "TimeNeeded": "None",
@@ -58660,6 +59690,20 @@
           "Recoil Flip",
           "Death Warp",
           "Take Damage"
+        ],
+        [
+          "Fewer Item Requirements",
+          "Play Song of Soaring"
+        ],
+        [
+          "Fewer Item Requirements",
+          "STT Updrafts without Deku Mask",
+          "Use Light Arrow"
+        ],
+        [
+          "Fewer Item Requirements",
+          "Death Warp",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -58809,46 +59853,26 @@
           "Clever Ice Platforms"
         ],
         [
-          "Hit Switches Through Walls",
           "OtherExplosive"
         ],
         [
-          "Hit Switches Through Walls",
-          "Any Sword",
-          "Magic Meter",
-          "FairySpinAttack"
+          "Big Spin Attack"
         ],
         [
-          "Hit Switches Through Walls",
-          "UpgradeGildedSword",
-          "Magic Meter"
-        ],
-        [
-          "Hit Switches Through Walls",
-          "ItemFairySword",
-          "Magic Meter"
-        ],
-        [
-          "Hit Switches Through Walls",
           "Fierce Deity's Mask Anywhere"
         ],
         [
-          "Hit Switches Through Walls",
           "Zora Boomerang Through Walls"
-        ],
-        [
-          "Hit Switches Through Walls",
-          "Deku Stick Fighting"
         ],
         [
           "Clever Ice Platforms",
           "FD Jumps"
         ],
         [
-          "Clever Bombchu Usage"
+          "FD Difficult Jumps"
         ],
         [
-          "FD Difficult Jumps"
+          "Fewer Item Requirements"
         ]
       ],
       "TimeNeeded": "None",
@@ -58905,8 +59929,15 @@
           "Use Fire Arrow"
         ],
         [
+          "Fierce Deity's Mask Anywhere",
           "Powder Keg Challenge with Hot Spring Water",
-          "Fierce Deity's Mask Anywhere"
+          "Play Song of Soaring"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Powder Keg Challenge with Hot Spring Water",
+          "Hot Spring Water in Mountains",
+          "Unrandomized Bottled Contents"
         ]
       ],
       "TimeNeeded": "None",
@@ -59258,6 +60289,14 @@
           "SHT Fireless",
           "SHT Raise Pillar without Fire Arrows",
           "FD Difficult Jumps"
+        ],
+        [
+          "SHT Fireless",
+          "SHT Raise Pillar without Fire Arrows",
+          "SHT Zora Jumps",
+          "1 Snowhead Key",
+          "Harder Long Jumps",
+          "Take Damage"
         ]
       ],
       "TimeNeeded": "None",
@@ -59434,7 +60473,7 @@
           "Recoil Flip"
         ],
         [
-          "FD Difficult Jumps"
+          "FD Jumps"
         ],
         [
           "Clever Ice Platforms",
@@ -60019,7 +61058,7 @@
         [
           "ItemHookshot",
           "ItemStoneTowerBossKey",
-          "Kill Twinmold"
+          "OtherKillTwinmold"
         ],
         [
           "ISTT Eyegore Bridge to Maze",
@@ -60220,6 +61259,10 @@
           "STT Eyegore Bridge Jumps",
           "Recoil Flip",
           "MaskBlast"
+        ],
+        [
+          "STT Eyegore Bridge Jumps",
+          "MaskDeku"
         ]
       ],
       "TimeNeeded": "None",
@@ -60238,6 +61281,174 @@
         ],
         [
           "Deku Guard Skip"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Low% Ocean Great Fairy",
+      "RequiredItems": [
+        "MaskZora"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Get to the Fairy Fountain in Zora Cape with just Zora Mask and an explosive. You must swim into a wall and rebound upwards with a precise angle, and a precisely stored secondary camera angle.",
+      "TrickCategory": "Ludicrous!"
+    },
+    {
+      "Id": "Unrandomized Bottled Contents",
+      "RequiredItems": [],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Eases the restrictions for using some scoops, by assuming that they are not shuffled.",
+      "TrickCategory": "Setting"
+    },
+    {
+      "Id": "Hot Spring Water in Mountains",
+      "RequiredItems": [
+        "AreaNorthAccess",
+        "MaskGoron",
+        "Any Bottle"
+      ],
+      "ConditionalItems": [
+        [
+          "ItemLens",
+          "Magic Meter"
+        ],
+        [
+          "Lensless Climbing"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Hot Spring Water in Well",
+      "RequiredItems": [
+        "AreaIkanaCanyonAccess",
+        "MaskGibdo",
+        "Any Blue Potion",
+        "BottleCatchFish"
+      ],
+      "ConditionalItems": [
+        [
+          "OtherExplosive"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "Fewer Item Requirements"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Kill Big Poe",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "Fierce Deity's Mask Anywhere",
+          "Magic Meter"
+        ],
+        [
+          "Fewer Item Requirements"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Kill Snapper",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "MaskDeku"
+        ],
+        [
+          "MaskGoron"
+        ],
+        [
+          "OtherExplosive"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Jump Slash WFT Gekko",
+      "RequiredItems": [
+        "Any Bomb Bag"
+      ],
+      "ConditionalItems": [],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": true,
+      "TrickTooltip": "Manipulate where the Gekko will fall off his Snapper, and jump slash it when it tries to climb the wall.",
+      "TrickCategory": "Ludicrous!"
+    },
+    {
+      "Id": "Kill Gekko",
+      "RequiredItems": [],
+      "ConditionalItems": [
+        [
+          "OtherArrow"
+        ],
+        [
+          "MaskZora"
+        ],
+        [
+          "Magic Meter"
+        ],
+        [
+          "Jump Slash WFT Gekko"
+        ]
+      ],
+      "TimeNeeded": "None",
+      "TimeAvailable": "None",
+      "TimeSetup": "None",
+      "IsTrick": false
+    },
+    {
+      "Id": "Big Spin Attack",
+      "RequiredItems": [
+        "Magic Meter"
+      ],
+      "ConditionalItems": [
+        [
+          "ItemFairySword"
+        ],
+        [
+          "UpgradeGildedSword"
+        ],
+        [
+          "FairySpinAttack",
+          "Any Sword"
         ]
       ],
       "TimeNeeded": "None",

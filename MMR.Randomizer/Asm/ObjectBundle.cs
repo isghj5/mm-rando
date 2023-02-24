@@ -57,5 +57,10 @@ namespace MMR.Randomizer.Asm
             }
             return result;
         }
+
+        public byte[] Get(int index)
+        {
+            return _chunks[index];
+        }
     }
 }

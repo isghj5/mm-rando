@@ -187,7 +187,7 @@ void Misc_AfterDeath(GlobalContext* ctxt) {
 void Misc_Init(void) {
     if (MISC_CONFIG.internal.vanillaLayout) {
         // Mod files with code required for freestanding models are not included if using vanilla layout.
-        MISC_CONFIG.flags.freestanding = 0;
-        MISC_CONFIG.flags.shopModels = 0;
+        MISC_CONFIG.drawFlags.freestanding = 0;
+        MISC_CONFIG.drawFlags.shopModels = 0;
     }
 }

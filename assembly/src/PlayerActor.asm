@@ -125,6 +125,36 @@ Player_GetCollisionType_Hook:
     jr      ra
     addiu   sp, sp, 0x18
 
+Player_StartTransformation_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+    or      a1, s0, r0
+
+    jal     Player_StartTransformation
+    or      a2, s1, r0
+
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
+Player_AfterTransformInit_Hook:
+    addiu   sp, sp, -0x18
+    sw      ra, 0x0014 (sp)
+
+    jal     Player_AfterTransformInit
+    nop
+
+    or      v1, v0, r0
+
+    ; Displaced code:
+    or      a0, s1, r0
+    or      a1, s0, r0
+    lbu     v0, 0x0394 (s0)
+
+    lw      ra, 0x0014 (sp)
+    jr      ra
+    addiu   sp, sp, 0x18
+
 Player_HandleFormSpeed_Hook:
     addiu   sp, sp, -0x20
     sw      ra, 0x001C (sp)

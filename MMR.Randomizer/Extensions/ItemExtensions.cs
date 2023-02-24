@@ -6,6 +6,8 @@ using MMR.Randomizer.Attributes.Entrance;
 using System.Collections.Generic;
 using System.Linq;
 using MMR.Randomizer.Models.Settings;
+using System;
+using MMR.Randomizer.Models;
 
 namespace MMR.Randomizer.Extensions
 {
@@ -60,23 +62,65 @@ namespace MMR.Randomizer.Extensions
                 {
                     return "Bow Upgrade";
                 }
+                if (item == Item.SongLullaby || item == Item.SongLullabyIntro)
+                {
+                    return "Goron Lullaby Upgrade";
+                }
             }
             return item.Name();
         }
 
-        public static string Location(this Item item)
+        public static string Location(this Item item, ItemList itemList = null)
         {
-            return item.GetAttribute<LocationNameAttribute>()?.Name;
+            var locationAttribute = item.GetAttribute<LocationNameAttribute>();
+            if (locationAttribute == null)
+            {
+                return null;
+            }
+            if (itemList == null)
+            {
+                return locationAttribute.Name;
+            }
+
+            var reference = item.GetAttribute<RegionAttribute>()?.Reference;
+            if (reference == null)
+            {
+                return locationAttribute.Name;
+            }
+
+            var referenceNewLocation = itemList[reference.Value].NewLocation ?? reference.Value;
+            var itemCategory = item.GetAttribute<ItemPoolAttribute>()?.ItemCategory;
+
+            var alteredLocation = Enum.GetValues<Item>()
+                .Where(x => x.GetAttribute<ItemPoolAttribute>()?.ItemCategory == itemCategory)
+                .FirstOrDefault(x => x.GetAttribute<RegionAttribute>().Reference == referenceNewLocation);
+
+            return alteredLocation.Location();
         }
 
-        public static Region? Region(this Item item)
+        public static Region? Region(this Item item, ItemList itemList)
         {
-            return item.GetAttribute<RegionAttribute>()?.Region;
+            var regionAttribute = item.GetAttribute<RegionAttribute>();
+            if (regionAttribute == null)
+            {
+                return null;
+            }
+            if (regionAttribute.Region != null)
+            {
+                return regionAttribute.Region;
+            }
+            if (regionAttribute.Reference != null)
+            {
+                var reference = regionAttribute.Reference.Value;
+                var newLocation = itemList[reference].NewLocation ?? reference;
+                return newLocation.Region(itemList);
+            }
+            throw new System.Exception($"{nameof(RegionAttribute)} must have either {nameof(RegionAttribute.Region)} or {nameof(RegionAttribute.Reference)}");
         }
 
-        public static RegionArea? RegionArea(this Item item)
+        public static RegionArea? RegionArea(this Item item, ItemList itemList)
         {
-            return item.GetAttribute<RegionAreaAttribute>()?.RegionArea ?? item.Region()?.RegionArea();
+            return item.GetAttribute<RegionAreaAttribute>()?.RegionArea ?? item.Region(itemList)?.RegionArea();
         }
 
         public static Item? MainLocation(this Item item)
@@ -173,7 +217,22 @@ namespace MMR.Randomizer.Extensions
 
         public static bool IsSong(this Item item)
         {
-            return (Item.SongTime <= item && item <= Item.SongOath);
+            return (Item.SongTime <= item && item <= Item.SongOath)
+                || item == Item.SongLullabyIntro
+                || (item.MainLocation().HasValue && item.MainLocation().Value.IsSong());
+        }
+
+        public static bool IsPlacementHighlyRestricted(this Item item, GameplaySettings settings)
+        {
+            if (!settings.AddSongs && item.IsSong())
+            {
+                return true;
+            }
+            if (settings.BossRemainsMode.HasFlag(BossRemainsMode.ShuffleOnly) && item.ItemCategory() == GameObjects.ItemCategory.BossRemains)
+            {
+                return true;
+            }
+            return false;
         }
 
         public static ChestTypeAttribute.ChestType ChestType(this Item item)
@@ -223,6 +282,11 @@ namespace MMR.Randomizer.Extensions
         public static bool IsSameType(this Item item, Item other)
         {
             return item.IsBottleCatchContent() == other.IsBottleCatchContent();
+        }
+
+        public static bool IsBlockingBombTrapPlacement(this Item item)
+        {
+            return item.HasAttribute<BlockBombTrapPlacementAttribute>();
         }
     }
 }

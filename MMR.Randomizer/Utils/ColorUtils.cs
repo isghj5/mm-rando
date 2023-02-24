@@ -217,6 +217,47 @@ namespace MMR.Randomizer.Utils
             return Color.FromArgb(a, (int)(r * 255.0f / 31.0f), (int)(g * 255.0f / 31.0f), (int)(b * 255.0f / 31.0f));
         }
 
+        public static Color FindNearestColor(Color[] map, Color current)
+        {
+            int GetDistance(Color current, Color match)
+            {
+                int redDifference;
+                int greenDifference;
+                int blueDifference;
+                int alphaDifference;
+
+                alphaDifference = current.A - match.A;
+                redDifference = current.R - match.R;
+                greenDifference = current.G - match.G;
+                blueDifference = current.B - match.B;
+
+                return alphaDifference * alphaDifference + redDifference * redDifference + greenDifference * greenDifference + blueDifference * blueDifference;
+            }
+
+            int shortestDistance;
+            int index;
+
+            index = -1;
+            shortestDistance = int.MaxValue;
+
+            for (int i = 0; i < map.Length; i++)
+            {
+                Color match;
+                int distance;
+
+                match = map[i];
+                distance = GetDistance(current, match);
+
+                if (distance < shortestDistance)
+                {
+                    index = i;
+                    shortestDistance = distance;
+                }
+            }
+
+            return map[index];
+        }
+
     }
 
 }

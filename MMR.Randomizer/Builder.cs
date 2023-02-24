@@ -173,8 +173,16 @@ namespace MMR.Randomizer
 
         private void WritePlayerModel()
         {
+            // Apply mods for using environment colour for tunics.
+            ResourceUtils.ApplyHack(Resources.models.envcolour_fdlink_mod);
+            ResourceUtils.ApplyHack(Resources.models.envcolour_goronlink_mod);
+            ResourceUtils.ApplyHack(Resources.models.envcolour_zoralink_mod);
+            ResourceUtils.ApplyHack(Resources.models.gameplaykeep_fincolors);
+            ResourceUtils.ApplyHack(Resources.models.envcolour_dekulink_mod);
+            ResourceUtils.ApplyHack(Resources.models.gameplay_keep_swordenvs);
             if (_randomized.Settings.Character == Character.LinkMM)
             {
+                ResourceUtils.ApplyHack(Resources.models.envcolour_humanlink_mod);
                 return;
             }
 
@@ -892,7 +900,12 @@ namespace MMR.Randomizer
 
         private void WriteDungeons()
         {
-            if (_randomized.Settings.LogicMode == LogicMode.Vanilla || !_randomized.Settings.RandomizeDungeonEntrances)
+            if (_randomized.Settings.LogicMode == LogicMode.Vanilla)
+            {
+                return;
+            }
+
+            if (!_randomized.Settings.RandomizeDungeonEntrances && !_randomized.Settings.RandomizeBossRooms)
             {
                 return;
             }
@@ -900,19 +913,31 @@ namespace MMR.Randomizer
             SceneUtils.ReadSceneTable();
             SceneUtils.GetMaps();
 
-            var entrances = new List<Item>
+            var entrances = new List<Item>();
+            if (_randomized.Settings.RandomizeDungeonEntrances)
             {
-                Item.AreaWoodFallTempleAccess,
-                Item.AreaWoodFallTempleClear,
-                Item.AreaSnowheadTempleAccess,
-                Item.AreaSnowheadTempleClear,
-                Item.AreaGreatBayTempleAccess,
-                Item.AreaGreatBayTempleClear,
-                Item.AreaInvertedStoneTowerTempleAccess,
-                Item.AreaStoneTowerClear,
-            };
+                entrances.Add(Item.AreaWoodFallTempleAccess);
+                entrances.Add(Item.AreaWoodFallTempleClear);
+                entrances.Add(Item.AreaSnowheadTempleAccess);
+                entrances.Add(Item.AreaSnowheadTempleClear);
+                entrances.Add(Item.AreaGreatBayTempleAccess);
+                entrances.Add(Item.AreaGreatBayTempleClear);
+                entrances.Add(Item.AreaInvertedStoneTowerTempleAccess);
+                entrances.Add(Item.AreaStoneTowerClear);
+            }
+            if (_randomized.Settings.RandomizeBossRooms)
+            {
+                entrances.Add(Item.AreaWoodFallTempleClear);
+                entrances.Add(Item.AreaSnowheadTempleClear);
+                entrances.Add(Item.AreaGreatBayTempleClear);
+                entrances.Add(Item.AreaStoneTowerClear);
+                entrances.Add(Item.AreaOdolwasLair);
+                entrances.Add(Item.AreaGohtsLair);
+                entrances.Add(Item.AreaGyorgsLair);
+                entrances.Add(Item.AreaTwinmoldsLair);
+            }
 
-            foreach (var entrance in entrances)
+            foreach (var entrance in entrances.Distinct())
             {
                 var newSpawns = entrance.DungeonEntrances();
                 var exits = _randomized.ItemList[entrance].NewLocation.Value.DungeonEntrances();
@@ -970,6 +995,85 @@ namespace MMR.Randomizer
                 ReadWriteUtils.WriteROMAddr(dcFlagmaskAddr[i], new byte[] {
                     (byte)((Values.DCFlagMasks[newIndex] & 0xFF00) >> 8),
                     (byte)(Values.DCFlagMasks[newIndex] & 0xFF) });
+            }
+
+            if (_randomized.Settings.RandomizeBossRooms)
+            {
+                var bosses = new List<Item>
+                {
+                    Item.AreaOdolwasLair,
+                    Item.AreaGohtsLair,
+                    Item.AreaGyorgsLair,
+                    Item.AreaTwinmoldsLair,
+                };
+
+                var bossDoorAddr = ResourceUtils.GetAddresses(Resources.addresses.d_boss_door);
+                var bossWarpAddr = ResourceUtils.GetAddresses(Resources.addresses.d_boss_warp);
+                var bossDoorValues = new List<byte[]>
+                {
+                    new byte[] { 0x00, 0x1F, 0x01 },
+                    new byte[] { 0x00, 0x44, 0x02 },
+                    new byte[] { 0x00, 0x5F, 0x03 },
+                    new byte[] { 0x00, 0x36, 0x04 },
+                };
+                for (var i = 0; i < bosses.Count; i++)
+                {
+                    var boss = bosses[i];
+                    var newBoss = _randomized.ItemList[boss].NewLocation ?? boss;
+                    var addressIndex = bosses.IndexOf(newBoss);
+                    ReadWriteUtils.WriteROMAddr(bossDoorAddr[addressIndex], bossDoorValues[i]);
+                    ReadWriteUtils.WriteROMAddr(bossWarpAddr[addressIndex], new byte[] { (byte)(i + 2) });
+                }
+
+                var bossDoorTextureOffsets = new List<int> { 0x5BA0, 0x5C0, 0x4BA0, 0x3BA0 };
+
+                var bossAtSTT = _randomized.ItemList.Find(io => io.NewLocation == Item.AreaTwinmoldsLair)?.Item ?? Item.AreaTwinmoldsLair;
+                if (bossAtSTT != Item.AreaTwinmoldsLair)
+                {
+                    var indexToUse = bosses.IndexOf(bossAtSTT);
+
+                    var bossDoorTexture = ReadWriteUtils.ReadBytes(0x012F8000 + bossDoorTextureOffsets[indexToUse], 0x1000);
+                    var bossDoorTexturePixels = bossDoorTexture
+                        .Chunk(2)
+                        .Select(chunk => (ushort)((chunk[0] << 8) | chunk[1]))
+                        .ToArray();
+                    var paletteDict = bossDoorTexturePixels
+                        .GroupBy(x => x)
+                        .ToDictionary(x => x.Key, g => g.Count());
+                    while (paletteDict.Keys.Count > 256)
+                    {
+                        var leastUsedColor = paletteDict.OrderBy(kvp => kvp.Value).First();
+                        paletteDict.Remove(leastUsedColor.Key);
+                        var nearestColor = ColorUtils.FindNearestColor(paletteDict.Keys.Select(c => ColorUtils.FromRGBA5551(c)).ToArray(), ColorUtils.FromRGBA5551(leastUsedColor.Key));
+                        var toRGBA5551 = ColorUtils.ToRGBA5551(nearestColor);
+                        paletteDict[toRGBA5551] += leastUsedColor.Value;
+                        for (var i = 0; i < bossDoorTexturePixels.Length; i++)
+                        {
+                            if (bossDoorTexturePixels[i] == leastUsedColor.Key)
+                            {
+                                bossDoorTexturePixels[i] = toRGBA5551;
+                            }
+                        }
+                    }
+                    var palette = paletteDict.Keys.ToArray();
+                    var ci8 = bossDoorTexturePixels.Select(pix => (byte)Array.IndexOf(palette, pix)).ToArray();
+
+                    // STT Room 8
+                    ReadWriteUtils.WriteToROM(0x0211D000 + 0x4428, ci8);
+                    var f = RomUtils.GetFileIndexForWriting(0x0211D000);
+                    ReadWriteUtils.Arr_Insert(new byte[] { 0x03, 0x00, 0x4C, 0x40 }, 0, 4, RomData.MMFileList[f].Data, 0x3D4);
+                    var data = RomData.MMFileList[f].Data.ToList();
+                    data.InsertRange(0x4C40, palette.SelectMany(s => new byte[] { (byte)(s >> 8), (byte)(s & 0xFF) }));
+                    RomData.MMFileList[f].Data = data.ToArray();
+
+                    // STT Room 10
+                    ReadWriteUtils.WriteToROM(0x0212B000 + 0x4220, ci8);
+                    f = RomUtils.GetFileIndexForWriting(0x0212B000);
+                    ReadWriteUtils.Arr_Insert(new byte[] { 0x03, 0x00, 0x4A, 0x20 }, 0, 4, RomData.MMFileList[f].Data, 0x2434);
+                    data = RomData.MMFileList[f].Data.ToList();
+                    data.InsertRange(0x4A20, palette.SelectMany(s => new byte[] { (byte)(s >> 8), (byte)(s & 0xFF) }));
+                    RomData.MMFileList[f].Data = data.ToArray();
+                }
             }
         }
 
@@ -1537,6 +1641,11 @@ namespace MMR.Randomizer
                 hacks.Add(Resources.mods.safer_glitches_index_warp);
             }
 
+            if (_randomized.Settings.BombchuDrops)
+            {
+                hacks.Add(Resources.mods.add_bombchu_drops);
+            }
+
             foreach (var hack in hacks)
             {
                 ResourceUtils.ApplyHack(hack);
@@ -1603,6 +1712,13 @@ namespace MMR.Randomizer
             var newMessages = new List<MessageEntry>();
             _randomized.Settings.AsmOptions.MMRConfig.RupeeRepeatableLocations.Clear();
             _randomized.Settings.AsmOptions.MMRConfig.ItemsToReturnIds.Clear();
+            var killBosses = new List<Item>
+            {
+                Item.OtherKillOdolwa,
+                Item.OtherKillGoht,
+                Item.OtherKillGyorg,
+                Item.OtherKillTwinmold,
+            };
             foreach (var item in _randomized.ItemList)
             {
                 // Unused item
@@ -1612,6 +1728,11 @@ namespace MMR.Randomizer
                 }
 
                 if (item.Item.DungeonEntrances() != null)
+                {
+                    continue;
+                }
+
+                if (killBosses.Contains(item.Item))
                 {
                     continue;
                 }
@@ -1654,6 +1775,9 @@ namespace MMR.Randomizer
             _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverSmall = GetLocationIdOfItem(Item.ItemBow);
             _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLarge = GetLocationIdOfItem(Item.UpgradeBigQuiver);
             _randomized.Settings.AsmOptions.MMRConfig.LocationQuiverLargest = GetLocationIdOfItem(Item.UpgradeBiggestQuiver);
+
+            _randomized.Settings.AsmOptions.MMRConfig.LocationLullaby = GetLocationIdOfItem(Item.SongLullaby);
+            _randomized.Settings.AsmOptions.MMRConfig.LocationLullabyIntro = GetLocationIdOfItem(Item.SongLullabyIntro);
 
             if (_randomized.Settings.UpdateShopAppearance)
             {
@@ -2831,6 +2955,1090 @@ namespace MMR.Randomizer
                 ResourceUtils.ApplyHack(Resources.mods.fix_fairies);
             }
 
+            //if (_randomized.Settings.NPCTextHints)
+            {
+                var clockTownFairyItem = _randomized.ItemList[Item.CollectibleStrayFairyClockTown];
+                if (clockTownFairyItem.NewLocation != Item.CollectibleStrayFairyClockTown)
+                {
+                    var region = clockTownFairyItem.NewLocation.Value.Region(_randomized.ItemList);
+                    var regionPreposition = region?.Preposition();
+                    var regionName = regionPreposition == null ? null : region?.Name();
+                    if (!string.IsNullOrWhiteSpace(regionPreposition))
+                    {
+                        regionPreposition += " ";
+                    }
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x578)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938)
+                            .StartLightBlueText().Text("Young one! Please hear my plea!").NewLine()
+                            .Text("I have been broken and shattered").NewLine()
+                            .Text("to pieces by the masked Skull Kid.")
+                            .EndTextBox()
+                            .CompileTimeWrap((wrapped) =>
+                            {
+                                wrapped.Text("Please, find the").Red(" one ").Text("Stray Fairy lost ")
+                                .Text(regionPreposition ?? "").Red(regionName ?? "somewhere").Text(", and bring her ")
+                                .Text("to this ").Red("Fairy Fountain").Text(".")
+                                ;
+                            })
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x580)
+                        .Message(it =>
+                        {
+                            it.PlaySoundEffect(0x6938)
+                            .StartLightBlueText().Text("You...kind young one.")
+                            .EndTextBox()
+                            .CompileTimeWrap((wrapped) =>
+                            {
+                                wrapped.Text("Please, find the").Red(" one ").Text("Stray Fairy who's lost ")
+                                .Text(regionPreposition ?? "").Red(regionName ?? "somewhere").Text(" and bring her ")
+                                .Text("back to this ").Red("Fairy's Fountain").Text(".")
+                                ;
+                            })
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                }
+
+                var strayFairyRegionLocations = ItemUtils.DungeonStrayFairies().GroupBy(fairy => fairy.Region(_randomized.ItemList).Value)
+                    .ToDictionary(g => g.Key, g => g.Select(fairy => _randomized.ItemList[fairy].NewLocation.Value).GroupBy(location => location.Region(_randomized.ItemList))
+                        .Select(g2 => new KeyValuePair<Region?, Item[]>(g2.Key, g2.ToArray()))
+                    );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x582)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Kind young one! Please hear my").NewLine()
+                        .Text("plea! Please find the fairies").NewLine()
+                        .Text("who match our ").Red("color").Text(".")
+                        .EndTextBox()
+                        .Text("Please bring them back to us!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x583)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Please fine a way to save the").NewLine()
+                        .Text("fairies, and bring them back").NewLine()
+                        .Text("here!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x584)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("There should still be...")
+                        .EndTextBox();
+
+                        foreach (var kvp in strayFairyRegionLocations[Region.WoodfallTemple])
+                        {
+                            it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                        }
+
+                        it.Text("Please save the fairies so I can").NewLine()
+                        .Text("be returned to my former shape!")
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x585)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Oh, kind, young one!").NewLine()
+                        .Text("Please hear our plea! Please save").NewLine()
+                        .Text("the ").Green("fairies ").Text("who match our ").Green("color").Text(" and").NewLine()
+                        .Text("bring them back to us!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x586)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Please find a way to save the").NewLine()
+                        .Text("fairies and bring them back").NewLine()
+                        .Text("here!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x587)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("There should still be...")
+                        .EndTextBox();
+
+                        foreach (var kvp in strayFairyRegionLocations[Region.SnowheadTemple])
+                        {
+                            it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                        }
+
+                        it.Text("Please bring them back here so").NewLine()
+                        .Text("I can be returned to my former").NewLine()
+                        .Text("shape!")
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x588)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Oh, kind young one!").NewLine()
+                        .Text("Please find the fairies who are").NewLine()
+                        .Text("the same ").DarkBlue("color").Text(" as we are and")
+                        .Text("bring them back to us!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x589)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Please find a way to save the").NewLine()
+                        .Text("fairies, and bring them back").NewLine()
+                        .Text("here!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x58A)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("There should still be...")
+                        .EndTextBox();
+
+                        foreach (var kvp in strayFairyRegionLocations[Region.GreatBayTemple])
+                        {
+                            it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                        }
+
+                        it.Text("Please save them and bring them").NewLine()
+                        .Text("back here!")
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x58B)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Oh, kind young one!").NewLine()
+                        .Text("Please hear our plea! Please find").NewLine()
+                        .Text("the fairies who are the same").NewLine()
+                        .Yellow("color").Text(" as we are and bring them").NewLine()
+                        .Text("back to us!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x58C)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("Please save the the fairies and").NewLine()
+                        .Text("bring them back here!")
+                        .EndFinalTextBox();
+                    })
+                    .Build()
+                );
+
+                newMessages.Add(new MessageEntryBuilder()
+                    .Id(0x58D)
+                    .Message(it =>
+                    {
+                        it.PlaySoundEffect(0x6938).StartLightBlueText()
+                        .Text("There should still be...")
+                        .EndTextBox();
+
+                        foreach (var kvp in strayFairyRegionLocations[Region.StoneTowerTemple])
+                        {
+                            it.RuntimeStrayFairyLocations(kvp.Key, kvp.Value); // RuntimeWrap, EndTextBox and Red handled within or in code
+                        }
+
+                        it.Text("Please save them and bring them").NewLine()
+                        .Text("back here so I can be returned").NewLine()
+                        .Text("to my former shape!")
+                        .EndFinalTextBox();
+                    })
+                    .ExcludeFromQuickText()
+                    .Build()
+                );
+
+                var remains = ItemUtils.BossRemains().Where(r => _randomized.ItemList[r].Item == r);
+                if (remains.Any(r => _randomized.ItemList[r].IsRandomized))
+                {
+                    var random = new Random(_randomized.Seed);
+                    var remainRegions = remains
+                        .OrderBy(_ => random.Next())
+                        .Select(remain => _randomized.ItemList[remain].NewLocation.Value.Region(_randomized.ItemList)?.Name() ?? "Termina")
+                        .Distinct()
+                        .ToList();
+                    var remainsCount = MessageUtils.NumberToWords(remains.Count());
+                    var isAre = remains.Count() == 1 ? "is" : "are";
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x200B)
+                        .Message(it =>
+                        {
+                            it.StartPinkText().PlaySoundEffect(0x6851).CompileTimeWrap((wrapped) =>
+                            {
+                                foreach (var remainRegion in remainRegions)
+                                {
+                                    wrapped.Text(remainRegion).Text(". ").PauseText(10);
+                                }
+                                wrapped.Text("Hurry...").Red($"The {remainsCount}").Text($" who {isAre} there... Bring them ").Red("here").Text("...");
+                            })
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x216)
+                        .Message(it =>
+                        {
+                            it.StartLightBlueText()
+                            .Text("That mask...").NewLine()
+                            .PauseText(40)
+                            .Text("The Skull Kid uses the power of").NewLine()
+                            .Text("that mask to do those terrible").NewLine()
+                            .Text("things.")
+                            .EndTextBox()
+                            .Text("Well...whatever it takes, we've").NewLine()
+                            .Text("gotta do something about it.")
+                            .EndTextBox()
+                            .CompileTimeWrap((wrapped) =>
+                            {
+                                wrapped.Text("...The ");
+                                for (var i = 0; i < remainRegions.Count; i++)
+                                {
+                                    var remainRegion = remainRegions[i];
+                                    wrapped.Red(remainRegion);
+                                    if (i < remainRegions.Count - 2)
+                                    {
+                                        wrapped.Text(", ");
+                                    }
+                                    else if (i < remainRegions.Count - 1)
+                                    {
+                                        wrapped.Text(" and ");
+                                    }
+                                }
+                                wrapped.Text(" that Tael was trying to tell us about...");
+                            })
+                            .EndTextBox()
+                            .CompileTimeWrap("I have no idea what he was talking about...")
+                            .EndTextBox()
+                            .Text("And what do you suppose he").NewLine()
+                            .Text("meant by \"").Red(() =>
+                            {
+                                it.Text($"the {remainsCount} who {isAre}").NewLine()
+                                .Text("there");
+                            })
+                            .Text("?\"")
+                            .EndTextBox()
+                            .Text("I have no idea. He always").NewLine()
+                            .Text("skips important stuff. I guess we").NewLine()
+                            .Text("should just go and find out...")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+
+                    ResourceUtils.ApplyHack(Resources.mods.tatl_remains_hint);
+                }
+
+                // TODO
+
+                /*
+                The mask salesman said that if
+                you got back the precious thing
+                that was stolen from you, he
+                could return you to normal!
+                Did you completely forget or
+                what?
+
+                ---
+
+                Go to the shrine near the
+                North Gate. You'll find the
+                Great Fairy in there!
+
+                ---
+
+                Hey, aren't you going to the
+                Great Fairy's shrine near the
+                North Gate?
+
+                ---
+
+                Quick! We have to find the
+                Stray Fairy in town and return
+                the Great Fairy to normal!
+
+                ---
+
+                What are you doing?
+                Aren't you gonna take this fairy
+                to the shrine near the North
+                Gate?
+
+                ---
+
+                He said the secret route is in
+                East Clock Town...
+                So why aren't you going there?
+
+                ---
+
+                Win up to 150 Rupees per race.
+                Special gifts awarded for larger
+                winnings.
+
+                ---
+
+                If you break the record, you'll win
+                a spectacular prize!
+                Good luck!
+
+                ---
+
+                So, for a limited time, I'll give you
+                a special gift based on how much
+                you deposit.
+
+                For example, if you deposit
+                200 Rupees, you'll get an item
+                that holds a lot of Rupees.
+
+                ---
+
+                See! Doesn't it hold more than
+                your old one? Fill it up and bring
+                it all in to deposit!
+
+                ---
+
+                That's what they call interest!
+
+                ---
+
+                What is the name of the song
+                that Romani, the girl at the ranch,
+                teaches you?
+
+                Epona's Song
+                Song of Healing
+                Song of the Field
+
+                ---
+
+                What is the name of the vintage
+                milk sold at the Milk Bar?
+
+                Romani Run
+                Chateau Romani
+                Chateau Moroni
+
+                ---
+
+                Please find a way to return me to
+                the Fairy Fountain in North Clock
+                Town.
+
+                ---
+
+                We're expecting to get our larger
+                bomb bag back in stock pretty
+                soon...
+
+                ---
+
+                We just a got a larger bomb bag
+                in stock.
+
+                Actually, we should've had
+                the larger bomb bag in stock, but
+                it seems there was an accident 
+                getting it here to the store.
+                I don't know when we'll be getting
+                it now...
+
+                ---
+
+                A nice fella helped me out, so we
+                can finally sell Big Bomb Bags!
+
+                ---
+
+                Umm, Mommy...
+                Don't go picking up bomb bags in
+                the middle of the night anymore.
+
+                It's like asking to be mugged.
+
+                And I've actually heard that a
+                thief has been lurking on the
+                outskirts of town...
+
+                But it's been our lifelong dream to
+                sell Big Bomb Bags since back in
+                your Daddy's day.
+
+                Since we can't get the Goron-made
+                goods, this was our big chance,
+                sonny!
+
+                I just don't want anything to
+                happen to you, Mommy...
+
+                Please try our Big Bomb Bag.
+
+                Look, Mommy, I don't want
+                anything bad to happen to you...
+
+                It's such a shame...
+                I thought we could finally sell Big
+                Bomb Bags...
+
+                Umm, Mommy...
+                Don't go picking up bomb bags in
+                the middle of the night anymore.
+
+                It's like asking to be mugged.
+
+                ---
+
+                OK, listen here. My instructor
+                works in the Goron Village Cave.
+
+                Come back here after he teaches
+                you the proper use and then
+                approves you to buy one.
+
+                ---
+
+                OK, listen here. My instructor
+                works in the Goron Village Cave.
+
+                Come back here after he teaches
+                you the proper use and then
+                approves you to buy one.
+
+                But the next time you come, I
+                might not be here.
+
+                Quick! Go to the Goron Village
+                Cave.
+
+                Ask my instructor to teach you
+                the proper way to use Powder
+                Kegs and get his approval.
+
+                ---
+
+                Quick, go to the Goron Village
+                Cave.
+
+                Ask my instructor to teach you
+                the proper way to use Powder
+                Kegs and get his approval.
+
+                ---
+
+                This is the Bombers' Notebook.
+                It contains the words we live by!
+                Read it over!
+
+                1. Find troubled people and add
+                    their names and pictures.
+                    Only 20 people will fit in
+                    your book.
+                2. Promise to help them.
+                    Mark promises with Promise
+                    Stickers. Never be late with
+                    fulfilling your promises.
+                3. Whenever you solve someone's
+                    problem, it makes you happy,
+                    so a Happy Sticker will be
+                    added to your book.
+                4. No removing stickers!
+                    Use Promise Stickers to keep
+                    track of people until everyone
+                    is happy.
+                Don't forget the rules!
+
+                ---
+
+                Oh!!
+                Well, if that's true, then take this
+                potion to her...
+                This isn't good...
+
+                ---
+
+                Quick! Take that potion to her!
+
+                ---
+
+                Oh! Did you give that potion to
+                Koume?
+                Don't tell me...
+                You didn't drink it all yourself, did
+                you?
+                .........
+
+                ---
+
+                Now then, please choose your
+                prize:
+                20 Rupees
+                Another boat cruise
+
+                ---
+
+                All right...Choose your prize...
+ 
+                5 Rupees
+                Another boat cruise
+
+                ---
+
+                Huh? Haven't you gotten a
+                pictograph box yet?
+
+                If you take the boat cruise, they'll
+                give you one for sure. Go ask at
+                that window.
+
+                ---
+
+                What? What?!? You say that
+                gold dust is the prize for winning
+                the Patriarch's Race that's held by
+                the Gorons every spring?
+
+                ---
+
+                But...
+                If you have gold dust, I'll buy it
+                off you for 40 Rupees.
+                How about it?
+
+                ---
+
+                So, come on...Will you sell it for
+                40 Rupees?
+
+                ---
+
+                There's a Goron in this village who
+                sells Powder Kegs, which are much
+                more powerful explosives.
+
+                ---
+
+                See, it was long ago when I used
+                to use this thing called a
+                hookshot to catch fish off the
+                coast...
+
+                But I was attacked by these
+                pirates, and they took it away
+                with them.
+
+                They say...
+                it's a legendary treasure..
+
+                ---
+
+                If you're set on meeting those
+                beautiful pirates, try going to the
+                valley on the other side of town!
+
+                I've heard there's a mask there
+                that lets the wearer escape
+                detection.
+
+                ---
+
+                You want an empty bottle, don't
+                you? You never learn your lesson!
+
+                ---
+
+                Koo, koo, koo.
+                If you want an empty bottle, I can
+                give you one...
+
+                ---
+
+                What?
+                An empty bottle?
+
+                Yeah...
+                An empty bottle.
+
+                ---
+
+                To us, empty bottles are a
+                treasure.
+
+                I can't give you one just because
+                you beat my little brother.
+
+                We can't just give you one.
+
+                I'll give you one after you race
+                once more against me.
+
+                ---
+
+                But we don't have any more empty
+                bottles...do we, little brother?
+
+                No, we don't have any, big
+                brother.
+
+                ---
+
+                If only you could have done
+                something about this place
+                yesterday...
+
+                I could have given you a wallet
+                that holds more Rupees...
+
+                ---
+
+                But dang, if only you could have
+                done something two days ago...
+
+                I could have given you a wallet
+                that holds more Rupees...
+
+                ---
+
+                I told you that the beavers above
+                the waterfall on the Zora Hall
+                coast have empty bottles, right?
+
+                ---
+
+                I already told you the beavers
+                above the waterfall have empty
+                bottles, right?
+
+                ---
+
+                Hey, aren't you Mikau?
+                Were you able to get an empty
+                bottle from the beavers on top of
+                the waterfall?
+
+                ---
+
+                But what do you need an empty
+                bottle for, Mikau?
+
+                ---
+
+                The melody that summons the
+                tears of angels rests here.
+
+                ---
+
+                A vessel that holds wandering
+                spirits rests here.
+
+                ---
+
+                A piece that heals the wounded
+                soul rests here.
+
+                When one who possesses eyes
+                that can see the truth arrives,
+                the piece far below shall awaken.
+
+                ---
+
+                Look!
+                There's a mask there!!!
+
+                It's the Sun's Mask!
+
+                ---
+
+                I got the Sun's Mask back!
+
+                ---
+
+                It's 'cause I'm about as impressive
+                as a stone, right?...I'm used to it,
+                though.
+
+                ---
+
+                I am no longer part of the
+                living...My sadness to the moon...
+                I haven't left my dance to the
+                world...I am filled with regret.
+                (Translation)             
+                I am disappointed, oh moon.
+                I have died!
+
+                Oh, I planned to bring the world
+                together and stir it into a giant
+                melting pot with my dance!
+
+                If only I had taught my new dance
+                to someone...
+
+                ---
+
+                And if you are not wearing the
+                mask that houses the wandering
+                spirits, which the black-hearted
+                one near the ranch has...
+                I will not let you pass.
+                Yee-hee-hee.
+
+                ---
+
+                But if you must enter, then you
+                must obtain the mask containing
+                wandering spirits that can be
+                found near the ranch.
+
+                ---
+
+                And if you are not wearing the
+                mask containing wandering spirits
+                which the black-hearted one near 
+                the ranch has...
+                I will not let you pass.
+                Yee-hee-hee!
+
+                ---
+
+                I know of a mysterious song that
+                allows you to manipulate the flow
+                of time...
+
+                Oh, yeah!
+                Now listen up!
+
+                If you play that mysterious song
+                backward, you can slow the flow
+                of time.
+
+                And if you play each note twice
+                in a row, you can move a half
+                day forward in time!
+
+                How's that? Pretty interesting,
+                isn't it?
+
+                ---
+
+                By the way...
+
+                I know of a mysterious song that
+                allows you to manipulate the flow
+                of time...
+
+                Do you want to learn it?
+ 
+                No
+                Yes
+
+                Oh, sorry. That's too bad.
+                In that case, let me hear a song
+                written by you, baby!
+
+                Oh, yeah!
+                Now listen up!
+
+                If you play that strange song
+                backward, you can slow the
+                flow of time.
+
+                And if you play each note twice
+                in a row, you can move a half day
+                forward through time.
+
+                How's that? Pretty interesting,
+                isn't it?
+
+                ---
+
+                I know of a mysterious song that
+                allows you to manipulate the flow
+                of time...
+
+                Would you like to learn it?
+ 
+                No
+                Yes
+
+                Oh, sorry! That's too bad.
+                In that case, see you later!
+
+                Oh, yeah!
+                Now listen up!
+
+                It seems that if you play that
+                mysterious song backward, you
+                can slow the passage of time.
+
+                And if you play each note twice
+                in a row, you can move a half day
+                forward through time.
+
+                How's that? Pretty interesting,
+                isn't it?
+
+                ---
+
+                Patron Guidelines for the 
+                Milk Bar, Latte:
+
+                We offer our customers limited-
+                run milk. Thus, we are a members-
+                only establishment.
+
+                Those who do not have proof of
+                membership will be refused
+                service.
+                             The Owner
+
+                ---
+
+                Now while I stand here waiting for
+                a fairy of my own, I sell maps to
+                help out my father.
+
+                ---
+
+                Yes! Yes! In exchange, I will sell
+                you a map for cheap as a sign of
+                my friendship.
+
+                Will you buy one of Tingle's maps?
+
+                ---
+
+                If you can get back the precious
+                item that was stolen from you,
+                I will return you to normal.
+
+                ---
+
+                Oh! Oh! Ohhh!!!
+                You got it! You got it!
+                You got it! You got it!!!
+
+                Then listen to me. Please play this
+                song that I am about to perform,
+                and remember it well...
+
+                This is a melody that heals evil
+                magic and troubled spirits, turning
+                them into masks.
+
+                I am sure it will be of assistance
+                to you in the future.
+
+                Ah, yes. I give you this mask in
+                commemoration of this day.
+
+                Fear not, for the magic has been
+                sealed inside the mask.
+
+                When you wear it, you will
+                transform into the shape you just
+                were. When you remove it, you
+                will return to normal.
+
+                ---
+
+                Green hat...
+                Green clothes...
+
+                ---
+
+                This pendant...
+                Give it to Anju.
+
+                ---
+
+                It's a Bomb Bag.
+                Check it out! Buy it!
+
+                x2
+
+                ---
+
+                Tonight's bargain is
+                the All-Night Mask for use at
+                bedtime.
+
+                I forgot when this was made, but
+                it sure is a freaky mask...See?
+
+                When you put it on, you can try 
+                and try to fall asleep, but you
+                won't be able to.
+                Pretty creepy, huh?
+
+                x2
+
+                ---
+
+                All it took was one glance at that
+                Keaton Mask he was carrying for
+                me to realize that I was looking
+                at my old friend.
+                I gave him that mask a long time
+                ago when he was just li'l Kafei.
+                Didn't know he kept it that well
+                for so long...
+
+                ---
+
+                For that, I'll give you
+                Þ.
+                I'll take it
+                No thanks
+
+                ---
+
+                Oh my. And I thought we would
+                finally be able to stock Bomb Bags
+                in our store. What a shame...
+
+                ---
+
+                And I thought we would finally be
+                able to stock Bomb Bags in our
+                shop. It's too bad...
+
+                Thank you. Since he didn't make
+                off with them, I can finally stock
+                Bomb Bags at our shop. Maybe I'll
+                put 'em out tomorrow.
+
+                ---
+
+                Yes, I must thank you. It's a
+                dangerous mask, but maybe you
+                could use it to throw your own
+                festival fireworks show.
+
+                ---
+
+                We're called a Milk Bar, and we
+                serve the milk of the night.
+
+                Our most popular, of course, is
+                Chateau Romani. It's a vintage
+                milk.
+
+                It comes from Romani Ranch, and
+                the current price is 200 Rupees!
+
+                ---
+
+                Milk Road is open to traffic!
+                Good! I can deliver milk to town
+                now!
+
+                Welcome to Romani Ranch,
+                Chateau Romani's Village.
+                Enjoy yourself.
+
+                These are Romani-bred.
+                My father left them for us.
+                An inheritance from the heavens...
+
+                The special Romani-bred cows
+                are the source of Chateau Romani,
+                the most desired of forbidden
+                milk!
+                It is a mystical milk that fills you
+                with Magic Power...
+
+                If you seek the dreamy milk of
+                Chateau Romani, please visit
+                Latte, near Clock Town's East
+                Gate.
+
+                ---
+
+                The special Romani-bred cows are
+                the source of Chateau Romani, the
+                most desired of forbidden milk!
+                It is a mystical milk that fills you
+                with Magic Power...
+                If you seek the dreamy milk of
+                Chateau Romani, please visit
+                Latte, near Clock Town's
+                East Gate.
+
+                ---
+
+
+
+
+
+                 */
+
+                // stray fairy regions
+            }
+
             var dungeonItemMessageIds = new byte[] {
                 0x3C, 0x3D, 0x3E, 0x3F, 0x74,
                 0x40, 0x4D, 0x4E, 0x53, 0x75,
@@ -3230,15 +4438,11 @@ namespace MMR.Randomizer
             }
 
             // Add extra messages to message table.
+            asm.ExtraMessages.AddMessage(_extraMessages.ToArray());
             if (_randomized.Settings.QuickTextEnabled)
             {
-                var regex = new Regex("(?<!(?:\x1B|\x1C|\x1D|\x1E).?)(?:\x1F..|\x17|\x18)", RegexOptions.Singleline);
-                foreach (var entry in _extraMessages)
-                {
-                    entry.Message = regex.Replace(entry.Message, "");
-                }
+                asm.ExtraMessages.ApplyQuickText();
             }
-            asm.ExtraMessages.AddMessage(_extraMessages.ToArray());
             asm.WriteExtMessageTable();
 
             // Add item graphics to table and write to ROM.
@@ -3303,48 +4507,13 @@ namespace MMR.Randomizer
         {
             var addFairies = _randomized.Settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.StrayFairies);
             var addSkulltulas = _randomized.Settings.CustomItemList.Any(item => item.ItemCategory() == ItemCategory.SkulltulaTokens);
-            var extended = _extendedObjects = ExtendedObjects.Create(addFairies, addSkulltulas);
 
-            foreach (var e in RomData.GetItemList.Values)
-            {
-                // Update gi-table for Skulltula Tokens.
-                if (e.ItemGained == 0x6E && e.Object == 0x125 && extended.Indexes.Skulltula != null)
-                {
-                    var index = e.Message == 0x51 ? 1 : 0;
-                    e.Object = (short)(extended.Indexes.Skulltula.Value + index);
-                }
+            var smithy1Item = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeRazorSword).DisplayItem;
+            var smithy2Item = _randomized.ItemList.First(io => io.NewLocation == Item.UpgradeGildedSword).DisplayItem;
 
-                // Update gi-table for Stray Fairies.
-                if (e.ItemGained == 0xA8 && e.Object == 0x13A && extended.Indexes.Fairies != null)
-                {
-                    var index = e.Type >> 4;
-                    e.Object = (short)(extended.Indexes.Fairies.Value + index);
-                }
+            var extended = _extendedObjects = ExtendedObjects.Create(smithy1Item, smithy2Item, addFairies, addSkulltulas, _randomized.Settings.ProgressiveUpgrades);
 
-                // Update gi-table for Double Defense.
-                if (e.ItemGained == 0xA7 && e.Object == 0x96 && extended.Indexes.DoubleDefense != null)
-                {
-                    e.Object = extended.Indexes.DoubleDefense.Value;
-                }
-
-                // Update gi-table for Notes.
-                if (((e.ItemGained >= 0x66 && e.ItemGained <= 0x6C) || e.ItemGained == 0x62) && e.Object == 0x8F && extended.Indexes.MusicNotes != null)
-                {
-                    e.Object = extended.Indexes.MusicNotes.Value;
-                }
-
-                // Update gi-table for Magic Power
-                if (e.ItemGained == 0xA5 && e.Object == 0xA4 && extended.Indexes.MagicPower != null)
-                {
-                    e.Object = extended.Indexes.MagicPower.Value;
-                }
-
-                // Update gi-table for Extra Rupees
-                if (e.ItemGained == 0xB1 && e.Object == 0x13F && extended.Indexes.Rupees != null)
-                {
-                    e.Object = extended.Indexes.Rupees.Value;
-                }
-            }
+            _randomized.Settings.AsmOptions.MiscConfig.Smithy.Models = extended.SmithyModels;
         }
 
         /// <summary>
@@ -3369,6 +4538,10 @@ namespace MMR.Randomizer
                 Item.IceTrap.ExclusiveItemEntry().Message,
                 Item.IceTrap.ExclusiveItemMessage());
             _extraMessages.Add(entry);
+            var entry2 = new MessageEntry(
+                Item.BombTrap.ExclusiveItemEntry().Message,
+                Item.BombTrap.ExclusiveItemMessage());
+            _extraMessages.Add(entry2);
         }
 
         public void MakeROM(OutputSettings outputSettings, IProgressReporter progressReporter)
@@ -3516,7 +4689,7 @@ namespace MMR.Randomizer
 
             progressReporter.ReportProgress(72, "Writing cosmetics...");
             WriteTatlColour(new Random(BitConverter.ToInt32(hash, 0)));
-            WriteTunicColor();
+            //WriteTunicColor();
             WriteInstruments(new Random(BitConverter.ToInt32(hash, 0)));
 
             progressReporter.ReportProgress(73, "Writing music...");
@@ -3533,10 +4706,9 @@ namespace MMR.Randomizer
             {
                 progressReporter.ReportProgress(75, "Building ROM...");
 
-                byte[] ROM = RomUtils.BuildROM();
-
                 if (outputSettings.GenerateROM)
                 {
+                    byte[] ROM = RomUtils.BuildROM();
                     if (ROM.Length > 0x4000000) // over 64mb
                     {
                         throw new ROMOverflowException("64 MB", "hardware (Everdrive)");
@@ -3547,6 +4719,25 @@ namespace MMR.Randomizer
 
                 if (outputSettings.OutputVC)
                 {
+                    var smithyFiles = new List<int> { 958 };
+                    var extObjectsFileTableAddr = (int)asm.Symbols["EXT_OBJECTS"];
+                    var extObjectsFileAddr = ReadWriteUtils.ReadU32(extObjectsFileTableAddr + 8);
+                    if (extObjectsFileAddr > 0)
+                    {
+                        var extObjectsFile = RomUtils.GetFileIndexForWriting((int)extObjectsFileAddr);
+                        smithyFiles.Add(extObjectsFile);
+                    }
+                    foreach (var file in smithyFiles)
+                    {
+                        RomUtils.CheckCompressed(file);
+                        RomData.MMFileList[file].Data = RomData.MMFileList[file].Data
+                            .FindAndReplace(
+                                new byte[] { 0xFC, 0x27, 0x2C, 0x40, 0x21, 0x0E, 0x92, 0xFF },
+                                new byte[] { 0xFC, 0x27, 0x2C, 0x03, 0x21, 0x0C, 0x92, 0xFF }
+                            );
+                    }
+
+                    byte[] ROM = RomUtils.BuildROM();
                     if (ROM.Length > 0x2000000) // over 32mb
                     {
                         throw new ROMOverflowException("32 MB", "WiiVC");

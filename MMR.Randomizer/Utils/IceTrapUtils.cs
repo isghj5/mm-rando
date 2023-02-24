@@ -1,6 +1,7 @@
 ﻿using MMR.Common.Extensions;
 using MMR.Randomizer.Attributes;
 using MMR.Randomizer.Extensions;
+using MMR.Randomizer.GameObjects;
 using MMR.Randomizer.Models;
 using MMR.Randomizer.Models.Settings;
 using System;
@@ -93,9 +94,9 @@ namespace MMR.Randomizer.Utils
         /// </summary>
         /// <param name="itemList">Randomized items</param>
         /// <param name="appearance">Ice trap appearance setting</param>
-        /// <param name="songs">Whether or not song items may be used as mimic</param>
+        /// <param name="isHighlyRestricted">A function that indicates whether or not items may be used as mimic</param>
         /// <returns>Mimic item set.</returns>
-        public static HashSet<MimicItem> BuildIceTrapMimicSet(ItemList itemList, IceTrapAppearance appearance, bool songs = false)
+        public static HashSet<MimicItem> BuildIceTrapMimicSet(ItemList itemList, IceTrapAppearance appearance, Func<Item, bool> isHighlyRestricted)
         {
             var mimics = new HashSet<MimicItem>();
             bool allowNonRandomized = false;
@@ -104,8 +105,7 @@ namespace MMR.Randomizer.Utils
                 foreach (var itemObj in itemList.Where(io => allowNonRandomized || io.IsRandomized))
                 {
                     var index = itemObj.Item.GetItemIndex();
-                    var allowSong = songs || !itemObj.Item.IsSong();
-                    if (index.HasValue && allowSong)
+                    if (index.HasValue && !isHighlyRestricted(itemObj.Item))
                     {
                         var chestType = itemObj.Item.ChestType();
                         if ((appearance == IceTrapAppearance.MajorItems && chestType == ChestTypeAttribute.ChestType.LargeGold) ||
@@ -126,6 +126,33 @@ namespace MMR.Randomizer.Utils
                 allowNonRandomized = true;
             } while (mimics.Count == 0);
             return mimics;
+        }
+
+        /// <summary>
+        /// How many ice traps are set to be bomb traps instead.
+        /// </summary>
+        public static int GetBombTrapAmount(BombTraps bombtraps, int trapitemsamount)
+        {
+            if (bombtraps == BombTraps.None)
+            {
+                return 0;
+            }
+            else if (bombtraps == BombTraps.Few)
+            {
+                return trapitemsamount / 5;
+            }
+            else if (bombtraps == BombTraps.Half)
+            {
+                return trapitemsamount / 2;
+            }
+            else if (bombtraps == BombTraps.Most)
+            {
+                return (int)(trapitemsamount * .75);
+            }
+            else
+            {
+                return trapitemsamount;
+            }
         }
     }
 }

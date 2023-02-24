@@ -8,7 +8,7 @@ namespace MMR.Randomizer.LogicMigrator
 {
     public static partial class Migrator
     {
-        public const int CurrentVersion = 12;
+        public const int CurrentVersion = 15;
 
         public static string ApplyMigrations(string logic)
         {
@@ -182,6 +182,21 @@ namespace MMR.Randomizer.LogicMigrator
             if (logicObject.Version < 12)
             {
                 AddGaroHints(logicObject);
+            }
+
+            if (logicObject.Version < 13)
+            {
+                AddBossDoors(logicObject);
+            }
+
+            if (logicObject.Version < 14)
+            {
+                AddLullabyIntro(logicObject);
+            }
+
+            if (logicObject.Version < 15)
+            {
+                AddNotebookEntries(logicObject);
             }
 
             return JsonSerializer.Serialize(logicObject);
@@ -3900,6 +3915,173 @@ namespace MMR.Randomizer.LogicMigrator
                 ConditionalItems = new List<List<string>>(),
             }));
             logicObject.Version = 12;
+        }
+
+        private static void AddBossDoors(JsonFormatLogic logicObject)
+        {
+            logicObject.Logic.RemoveRange(128, 5);
+
+            const int startIndex = 128;
+            var itemNames = new string[]
+            {
+                "AreaOdolwasLair",
+                "AreaGohtsLair",
+                "AreaGyorgsLair",
+                "AreaTwinmoldsLair",
+                "OtherKillOdolwa",
+                "OtherKillGoht",
+                "OtherKillGyorg",
+                "OtherKillTwinmold",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 13;
+        }
+
+        private static void AddLullabyIntro(JsonFormatLogic logicObject)
+        {
+            logicObject.Logic.Insert(1083, new JsonFormatLogicItem
+            {
+                Id = "SongLullabyIntro",
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>
+                {
+                    new List<string> { "SongLullabyIntroInMountainVillage" },
+                    new List<string> { "SongLullabyIntroInTwinIslands" },
+                },
+            });
+
+            const int startIndex = 1122;
+            var itemNames = new string[]
+            {
+                "SongLullabyIntroInMountainVillage",
+                "SongLullabyIntroInTwinIslands",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 14;
+        }
+
+        private static void AddNotebookEntries(JsonFormatLogic logicObject)
+        {
+            const int startIndex = 1084;
+            var itemNames = new string[]
+            {
+                "NotebookMeetBombers",
+                "NotebookMeetAnju",
+                "NotebookMeetKafei",
+                "NotebookMeetCuriosityShopMan",
+                "NotebookMeetOldLady",
+                "NotebookMeetRomani",
+                "NotebookMeetCremia",
+                "NotebookMeetMayorDotour",
+                "NotebookMeetMadameAroma",
+                "NotebookMeetToto",
+                "NotebookMeetGorman",
+                "NotebookMeetPostman",
+                "NotebookMeetRosaSisters",
+                "NotebookMeetToiletHand",
+                "NotebookMeetAnjusGrandmother",
+                "NotebookMeetKamaro",
+                "NotebookMeetGrog",
+                "NotebookMeetGormanBrothers",
+                "NotebookMeetShiro",
+                "NotebookMeetGuruGuru",
+                "NotebookInnReservation",
+                "NotebookPromiseAnjuMeeting",
+                "NotebookPromiseAnjuDelivery",
+                "NotebookDepositLetterToKafei",
+                "NotebookPromiseKafei",
+                "NotebookDeliverPendant",
+                "NotebookEscapeFromSakonSHideout",
+                "NotebookPromiseRomani",
+                "NotebookSaveTheCows",
+                "NotebookProtectMilkDelivery",
+                "NotebookCuriosityShopManSGift",
+                "NotebookPromiseCuriosityShopMan",
+                "NotebookDeliverLetterToMama",
+                "NotebookLearnBombersCode",
+                "NotebookDotoursThanks",
+                "NotebookRosaSistersThanks",
+                "NotebookToiletHandSThanks",
+                "NotebookGrandmaShortStory",
+                "NotebookGrandmaLongStory",
+                "NotebookPostmansGame",
+                "NotebookPromiseMadameAroma",
+                "NotebookPurchaseCuriosityShopItem",
+                "NotebookGrogsThanks",
+                "NotebookDefeatGormanBrothers",
+                "NotebookMovingGorman",
+                "NotebookPostmansFreedom",
+                "NotebookUniteAnjuAndKafei",
+                "NotebookSaveOldLady",
+                "NotebookPromiseKamaro",
+                "NotebookSaveInvisibleSoldier",
+                "NotebookGuruGuru",
+            };
+
+            logicObject.Logic.InsertRange(startIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+
+            const int startMultiLocaitonIndex = 1175;
+            itemNames = new string[]
+            {
+                "NotebookMeetBombersInNCT",
+                "NotebookMeetBombersInECT",
+                "NotebookMeetAnjuInInn",
+                "NotebookMeetAnjuInECT",
+                "NotebookMeetAnjuInSCT",
+                "NotebookMeetAnjuInLaundryPool",
+                "NotebookMeetAnjuInRanch",
+                "NotebookMeetKafeiInLaundryPool",
+                "NotebookMeetKafeiInIkanaCanyon",
+                "NotebookMeetKafeiInInn",
+                "NotebookMeetCuriosityShopManInWCT",
+                "NotebookMeetCuriosityShopManInLaundryPool",
+                "NotebookMeetOldLadyInNCT",
+                "NotebookMeetOldLadyInWCT",
+                "NotebookMeetGormanInECT",
+                "NotebookMeetGormanInInn",
+                "NotebookMeetPostmanInWCT",
+                "NotebookMeetPostmanInSCT",
+                "NotebookMeetPostmanInNCT",
+                "NotebookMeetPostmanInECT",
+                "NotebookMeetPostmanInInn",
+                "NotebookMeetPostmanInLaundryPool",
+                "NotebookMeetRosaSistersInWCT",
+                "NotebookMeetRosaSistersInInn",
+                "NotebookMeetAnjusGrandmotherInInn",
+                "NotebookMeetAnjusGrandmotherInRanch",
+                "NotebookMeetGuruGuruInInn",
+                "NotebookMeetGuruGuruInLaundryPool",
+                "NotebookDepositLetterToKafeiInSCT",
+                "NotebookDepositLetterToKafeiInNCT",
+                "NotebookDepositLetterToKafeiInECT",
+                "NotebookLearnBombersCodeInNCT",
+                "NotebookLearnBombersCodeInECT",
+            };
+
+            logicObject.Logic.InsertRange(startMultiLocaitonIndex, itemNames.Select(name => new JsonFormatLogicItem
+            {
+                Id = name,
+                RequiredItems = new List<string>(),
+                ConditionalItems = new List<List<string>>(),
+            }));
+            logicObject.Version = 15;
         }
 
         private class MigrationItem

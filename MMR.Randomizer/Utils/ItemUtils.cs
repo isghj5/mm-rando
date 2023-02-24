@@ -52,22 +52,22 @@ namespace MMR.Randomizer.Utils
 
         public static bool IsRegionRestricted(GameplaySettings settings, Item item)
         {
-            if (settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinDungeon) && SmallKeys().Contains(item))
+            if (settings.SmallKeyMode.HasFlag(SmallKeyMode.KeepWithinTemples) && SmallKeys().Contains(item))
             {
                 return true;
             }
 
-            if (settings.BossKeyMode.HasFlag(BossKeyMode.KeepWithinDungeon) && BossKeys().Contains(item))
+            if (settings.BossKeyMode.HasFlag(BossKeyMode.KeepWithinTemples) && BossKeys().Contains(item))
             {
                 return true;
             }
 
-            if (settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinDungeon) && DungeonStrayFairies().Contains(item))
+            if (settings.StrayFairyMode.HasFlag(StrayFairyMode.KeepWithinTemples) && DungeonStrayFairies().Contains(item))
             {
                 return true;
             }
 
-            if (settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinDungeon) && BossRemains().Contains(item))
+            if (settings.BossRemainsMode.HasFlag(BossRemainsMode.KeepWithinTemples) && BossRemains().Contains(item))
             {
                 return true;
             }
@@ -77,7 +77,7 @@ namespace MMR.Randomizer.Utils
                 return true;
             }
 
-            if (settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.KeepWithinDungeon) && DungeonNavigation().Contains(item))
+            if (settings.DungeonNavigationMode.HasFlag(DungeonNavigationMode.KeepWithinTemples) && DungeonNavigation().Contains(item))
             {
                 return true;
             }
@@ -89,13 +89,6 @@ namespace MMR.Randomizer.Utils
         {
             return location == Item.MaskDeku || location == Item.SongHealing
                 || (location >= Item.StartingSword && location <= Item.StartingHeartContainer2);
-        }
-
-        public static bool IsSong(Item item)
-        {
-            return (item >= Item.SongTime
-                && item <= Item.SongOath)
-                || (item.MainLocation().HasValue && IsSong(item.MainLocation().Value));
         }
 
         public static IEnumerable<Item> SmallKeys()
@@ -280,7 +273,7 @@ namespace MMR.Randomizer.Utils
                             .SelectMany(g => g)
                             .ToList();
                     }
-                    return tier;
+                    return new List<Item>();
                 }).ToList();
             }
             else

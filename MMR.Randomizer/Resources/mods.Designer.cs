@@ -63,6 +63,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] add_bombchu_drops {
+            get {
+                object obj = ResourceManager.GetObject("add_bombchu_drops", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] byo_ammo {
             get {
                 object obj = ResourceManager.GetObject("byo_ammo", resourceCulture);
@@ -456,6 +466,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] fix_music {
             get {
                 object obj = ResourceManager.GetObject("fix_music", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] fix_notebook_madame_aroma {
+            get {
+                object obj = ResourceManager.GetObject("fix_notebook_madame_aroma", resourceCulture);
                 return ((byte[])(obj));
             }
         }
@@ -1053,6 +1073,16 @@ namespace MMR.Randomizer.Resources {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] shorten_cutscene_princess_delivery {
+            get {
+                object obj = ResourceManager.GetObject("shorten_cutscene_princess_delivery", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] shorten_cutscene_twinmold_intro {
             get {
                 object obj = ResourceManager.GetObject("shorten_cutscene_twinmold_intro", resourceCulture);
@@ -1136,6 +1166,16 @@ namespace MMR.Randomizer.Resources {
         internal static byte[] standing_hearts {
             get {
                 object obj = ResourceManager.GetObject("standing_hearts", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] tatl_remains_hint {
+            get {
+                object obj = ResourceManager.GetObject("tatl_remains_hint", resourceCulture);
                 return ((byte[])(obj));
             }
         }

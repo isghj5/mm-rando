@@ -82,10 +82,10 @@ namespace MMR.UI.Forms
             // Main Settings
             TooltipBuilder.SetTooltip(cMode, "Select mode of logic:\n - Casual: The randomization logic ensures that the game can be beaten casually.\n - Using glitches: The randomization logic allows for placement of items that are only obtainable using known glitches.\n - Vanilla Layout: All items are left vanilla.\n - User logic: Upload your own custom logic to be used in the randomization.\n - No logic: Completely random, no guarantee the game is beatable.");
 
-            TooltipBuilder.SetTooltip(cBespokeItemPlacementOrder, "When enabled, items will be placed in a specific order designed to widen the variety in the generated seeds. When disabled, items will be placed in the default order.");
             TooltipBuilder.SetTooltip(cMixSongs, "Enable songs being placed among items in the randomization pool.");
-            TooltipBuilder.SetTooltip(cProgressiveUpgrades, "Enable swords, wallets, magic, bomb bags and quivers to be found in the intended order.");
+            TooltipBuilder.SetTooltip(cProgressiveUpgrades, "Enable swords, wallets, magic, bomb bags, quivers and the Goron Lullaby to be found in the intended order.");
             TooltipBuilder.SetTooltip(cDEnt, "Enable randomization of dungeon entrances. \n\nStone Tower Temple is always vanilla, but Inverted Stone Tower Temple is randomized.");
+            TooltipBuilder.SetTooltip(cShuffleBosses, "Enable randomization of boss rooms. The boss door texture will match the boss behind the door.");
             TooltipBuilder.SetTooltip(cEnemy, "Enable randomization of enemies. May cause softlocks in some circumstances, use at your own risk.");
 
             // Gimmicks
@@ -102,6 +102,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cStartingItems, "Select a starting item mode:\n\nNone - You will not start with any randomized starting items.\nRandom - You will start with randomized starting items.\nAllow Temporary Items - You will start with randomized starting items including Keg, Magic Bean and Bottles with X.");
             TooltipBuilder.SetTooltip(cBlastCooldown, "Adjust the cooldown timer after using the Blast Mask.");
             TooltipBuilder.SetTooltip(cIceTraps, "Amount of ice traps to be added to pool by replacing junk items.");
+            TooltipBuilder.SetTooltip(cBombTraps, "Amount of bomb traps to mix in with ice traps.");
             TooltipBuilder.SetTooltip(cIceTrapsAppearance, "Appearance of ice traps in pool for world models.");
             TooltipBuilder.SetTooltip(cSunsSong, "Enable using the Sun's Song, which speeds up time to 400 units per frame (normal time speed is 3 units per frame) until dawn or dusk or a loading zone.");
             TooltipBuilder.SetTooltip(cUnderwaterOcarina, "Enable using the ocarina underwater.");
@@ -154,6 +155,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cHueShiftMiscUI, "Shifts the color of miscellaneous UI elements.");
             TooltipBuilder.SetTooltip(cElegySpeedups, "Applies various Elegy of Emptiness speedups.");
             TooltipBuilder.SetTooltip(cInstantPictobox, "Remove anti-aliasing from the Pictobox pictures, which is what makes Pictobox on emulator so slow.");
+            TooltipBuilder.SetTooltip(cBombTrapTunicColors, "When you find a Bomb Trap, Link's tunic will randomly change color.");
+            TooltipBuilder.SetTooltip(cRainbowTunic, "Link's tunic color will slowly cycle its hue.");
             TooltipBuilder.SetTooltip(cImprovedPictobox, "Display extra text showing which type of picture was captured by the Pictobox.");
             TooltipBuilder.SetTooltip(cLenientGoronSpikes, "Goron spikes can charge midair and keep their charge. Minimum speed for goron spikes is removed.");
             TooltipBuilder.SetTooltip(cTargetHealth, "Targeting an enemy shows their health bar.");
@@ -161,6 +164,8 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cFillWallet, "Fills wallet with max rupees upon finding a wallet upgrade.");
             TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
             TooltipBuilder.SetTooltip(cSaferGlitches, "Fixes HESS crash, Weirdshot crash, Action Swap crash, Song of Double Time softlock during 0th or 4th day, Tatl text softlock on 0th of 4th day, 0th day file deletion, hookslide crash, 0th day Goron Bow crash, applies safety fixes for Fierce Deity even if Fierce Deity Anywhere is not enabled, index warp no longer crashes or softlocks (but you won't be able to use it to access the Debug Menu), TODO more...");
+            TooltipBuilder.SetTooltip(cAddBombchuDrops, "If you have found Bombchu, then any random Bomb drop or fixed non-randomized Bomb drop will have a chance to drop Bombchu instead. Where relevant, Bombchu packs of 1 and 5 will be in logic in addition to packs of 10.");
+            TooltipBuilder.SetTooltip(cInstantTransformations, "Transforming using Deku Mask, Goron Mask, Zora Mask and Fierce Deity's Mask will be almost instant. These items can no longer be used as \"cutscene items\".");
 
             TooltipBuilder.SetTooltip(nMaxGossipWotH, "Set the number of Way of the Hero hints that will appear on Gossip Stones.");
             TooltipBuilder.SetTooltip(nMaxGossipFoolish, "Set the number of Foolish hints that will appear on Gossip Stones.");
@@ -323,7 +328,7 @@ namespace MMR.UI.Forms
             var locationCategoryLabel = new LocationCategoryLabel();
             locationCategoryLabel.Font = new Font("Microsoft Sans Serif", 8.25F, FontStyle.Regular, GraphicsUnit.Point);
             locationCategoryLabel.Location = new Point(locationCategoriesX + 24, 0);
-            locationCategoryLabel.Width = 610;
+            locationCategoryLabel.Width = 636;
             locationCategoryLabel.Height = 105;
             locationCategoryLabel.Lines = Enum.GetValues<LocationCategory>().Where(c => c > 0).Select(c => $"{addSpacesRegex.Replace(c.ToString(), " $1")}: +{itemsByLocationCategory[c].Count}").ToList();
 
@@ -1054,10 +1059,11 @@ namespace MMR.UI.Forms
             cVC.Checked = _configuration.OutputSettings.OutputVC;
             cPatch.Checked = _configuration.OutputSettings.GeneratePatch;
 
-            cBespokeItemPlacementOrder.Checked = _configuration.GameplaySettings.BespokeItemPlacementOrder;
+            cItemPlacement.SelectedIndex = (int)_configuration.GameplaySettings.ItemPlacement;
             cMixSongs.Checked = _configuration.GameplaySettings.AddSongs;
             cProgressiveUpgrades.Checked = _configuration.GameplaySettings.ProgressiveUpgrades;
             cDEnt.Checked = _configuration.GameplaySettings.RandomizeDungeonEntrances;
+            cShuffleBosses.Checked = _configuration.GameplaySettings.RandomizeBossRooms;
             cSFX.Checked = _configuration.CosmeticSettings.RandomizeSounds;
             cEnemy.Checked = _configuration.GameplaySettings.RandomizeEnemies;
             if (_configuration.GameplaySettings.ShortenCutsceneSettings == null)
@@ -1138,6 +1144,7 @@ namespace MMR.UI.Forms
             cGaroHint.SelectedIndex = (int)_configuration.GameplaySettings.GaroHintStyle;
             cBlastCooldown.SelectedIndex = (int)_configuration.GameplaySettings.BlastMaskCooldown;
             cIceTraps.SelectedIndex = (int)_configuration.GameplaySettings.IceTraps;
+            cBombTraps.SelectedIndex = (int)_configuration.GameplaySettings.BombTraps;
             cIceTrapsAppearance.SelectedIndex = (int)_configuration.GameplaySettings.IceTrapAppearance;
             cMusic.SelectedIndex = (int)_configuration.CosmeticSettings.Music;
             foreach (TabPage cosmeticFormTab in tFormCosmetics.TabPages)
@@ -1186,6 +1193,8 @@ namespace MMR.UI.Forms
             cTargettingStyle.Checked = _configuration.CosmeticSettings.EnableHoldZTargeting;
             cInstantPictobox.Checked = !_configuration.CosmeticSettings.KeepPictoboxAntialiasing;
             cEnableNightMusic.Checked = _configuration.CosmeticSettings.EnableNightBGM;
+            cBombTrapTunicColors.Checked = _configuration.CosmeticSettings.BombTrapsRandomizeTunicColor;
+            cRainbowTunic.Checked = _configuration.CosmeticSettings.RainbowTunic;
 
             // Misc config options
             cDisableCritWiggle.Checked = _configuration.GameplaySettings.CritWiggleDisable;
@@ -1210,6 +1219,8 @@ namespace MMR.UI.Forms
             cFillWallet.Checked = _configuration.GameplaySettings.FillWallet;
             cInvisSparkle.Checked = _configuration.GameplaySettings.HiddenRupeesSparkle;
             cSaferGlitches.Checked = _configuration.GameplaySettings.SaferGlitches;
+            cAddBombchuDrops.Checked = _configuration.GameplaySettings.BombchuDrops;
+            cInstantTransformations.Checked = _configuration.GameplaySettings.InstantTransform;
             cChestGameMinimap.SelectedIndex = (int)_configuration.GameplaySettings.ChestGameMinimap;
 
             nMaxGossipWotH.Value = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints ?? 3;
@@ -1297,6 +1308,11 @@ namespace MMR.UI.Forms
         private void cDEnt_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.RandomizeDungeonEntrances = cDEnt.Checked);
+        }
+
+        private void cShuffleBosses_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.RandomizeBossRooms = cShuffleBosses.Checked);
         }
 
         private void cDMult_SelectedIndexChanged(object sender, EventArgs e)
@@ -1686,12 +1702,12 @@ namespace MMR.UI.Forms
         private void UpdateNumTricksEnabled()
         {
             var count = _configuration.GameplaySettings.EnabledTricks.Count;
-            lNumTricksEnabled.Text = $"{count} trick{(count == 1 ? "s" : "")} enabled";
+            lNumTricksEnabled.Text = $"{count} trick{(count != 1 ? "s" : "")} enabled";
         }
 
-        private void cBespokeItemPlacementOrder_CheckedChanged(object sender, EventArgs e)
+        private void cItemPlacement_SelectedIndexChanged(object sender, EventArgs e)
         {
-            UpdateSingleSetting(() => _configuration.GameplaySettings.BespokeItemPlacementOrder = cBespokeItemPlacementOrder.Checked);
+            UpdateSingleSetting(() => _configuration.GameplaySettings.ItemPlacement = (ItemPlacement)cItemPlacement.SelectedIndex);
         }
 
         private void cClockSpeed_SelectedIndexChanged(object sender, EventArgs e)
@@ -1813,7 +1829,7 @@ namespace MMR.UI.Forms
         {
             var vanillaMode = _configuration.GameplaySettings.LogicMode == LogicMode.Vanilla;
             cMixSongs.Enabled = !vanillaMode;
-            cBespokeItemPlacementOrder.Enabled = !vanillaMode;
+            cItemPlacement.Enabled = !vanillaMode;
             cProgressiveUpgrades.Enabled = !vanillaMode;
             foreach (Control control in tabItemPool.Controls)
             {
@@ -1824,6 +1840,7 @@ namespace MMR.UI.Forms
                 control.Enabled = !vanillaMode;
             }
             cDEnt.Enabled = !vanillaMode;
+            cShuffleBosses.Enabled = !vanillaMode;
             cSpoiler.Enabled = !vanillaMode;
             cHTMLLog.Enabled = !vanillaMode;
             cGossipHints.Enabled = !vanillaMode;
@@ -1913,11 +1930,12 @@ namespace MMR.UI.Forms
             tJunkLocationsList.Enabled = v;
 
             cDEnt.Enabled = v;
+            cShuffleBosses.Enabled = v;
             cStartingItems.Enabled = v;
             cMixSongs.Enabled = v;
             cProgressiveUpgrades.Enabled = v;
             cEnemy.Enabled = v;
-            cBespokeItemPlacementOrder.Enabled = v;
+            cItemPlacement.Enabled = v;
 
             //bHumanTunic.Enabled = v;
             tFormCosmetics.Enabled = v;
@@ -1941,6 +1959,8 @@ namespace MMR.UI.Forms
 
             cTargettingStyle.Enabled = v;
             cInstantPictobox.Enabled = v;
+            cRainbowTunic.Enabled = v;
+            cBombTrapTunicColors.Enabled = v;
             cSFX.Enabled = v;
             cDisableCritWiggle.Enabled = v;
             cQText.Enabled = v;
@@ -1961,6 +1981,8 @@ namespace MMR.UI.Forms
             cFillWallet.Enabled = v;
             cInvisSparkle.Enabled = v;
             cSaferGlitches.Enabled = v;
+            cAddBombchuDrops.Enabled = v;
+            cInstantTransformations.Enabled = v;
             cChestGameMinimap.Enabled = v;
 
             cSkipBeaver.Enabled = v;
@@ -2435,6 +2457,16 @@ namespace MMR.UI.Forms
             UpdateSingleSetting(() => _configuration.GameplaySettings.SaferGlitches = cSaferGlitches.Checked);
         }
 
+        private void cAddBombchuDrops_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.BombchuDrops = cAddBombchuDrops.Checked);
+        }
+
+        private void cInstantTransformations_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.InstantTransform = cInstantTransformations.Checked);
+        }
+
         private void cItemPoolAdvanced_CheckedChanged(object sender, EventArgs e)
         {
             pLocationCategories.Visible = cItemPoolAdvanced.Checked;
@@ -2540,6 +2572,21 @@ namespace MMR.UI.Forms
         private void cChestGameMinimap_SelectedIndexChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.ChestGameMinimap = (ChestGameMinimapState)cChestGameMinimap.SelectedIndex);
+        }
+
+        private void cBombTraps_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.BombTraps = (BombTraps)cBombTraps.SelectedIndex);
+        }
+
+        private void cRainbowTunic_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.RainbowTunic = cRainbowTunic.Checked);
+        }
+
+        private void cBombTrapTunicColors_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.CosmeticSettings.BombTrapsRandomizeTunicColor = cBombTrapTunicColors.Checked);
         }
     }
 }

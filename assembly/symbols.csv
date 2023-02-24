@@ -80,12 +80,14 @@
 0x800F23C4,z2_ActorCutscene_SetReturnCamera
 0x800F4F54,z2_Kanfont_LoadAsciiChar
 0x800FEC90,z2_memcpy
+0x800FED44,z2_Math_CosS
 0x800FED84,z2_Math_Sins
 0x800FF2F8,z2_Math_AsymStepToF
 0x800FF92C,z2_Math_Vec3f_DistXZ
 0x800FFCD8,z2_Math_SmoothStepToF
 0x800FFDF8,Math_ApproachF
 0x800FFE68,Math_ApproachZeroF
+0x80100504,z2_Lib_SegmentedToVirtual
 0x8010069C,z2_WriteHeartColors
 0x8010CFBC,z2_8010CFBC
 0x8010D480,z2_8010D480
@@ -116,6 +118,8 @@
 0x8012F2E0,z2_object_spawn
 0x8012F4FC,z2_load_objects
 0x8012F608,z2_GetObjectIndex
+0x80131758,z2_AnimatedMat_Draw
+0x80133710,z2_SkelAnime_DrawFlexLod
 0x80133B3C,z2_SkelAnime_DrawLimb
 0x80133F28,z2_SkelAnime_DrawLimb2
 0x801343C0,z2_SkelAnime_DrawLimb3
@@ -141,6 +145,9 @@
 0x8018019C,z2_PushMatrixStackCopy
 0x801801CC,z2_PopMatrixStack
 0x80180234,z2_GetMatrixStackTop
+0x8018029C,z2_TranslateMatrix
+0x8018039C,z2_Matrix_Scale
+0x80180478,z2_Matrix_RotateXS
 0x801809AC,z2_Matrix_RotateY
 0x80180E90,z2_Matrix_InsertZRotation_f
 0x801812FC,z2_TransformMatrixStackTop
@@ -155,6 +162,7 @@
 0x8019F230,z2_PlaySfxCancel
 0x801A3098,z2_SetBGM2
 0x800B9010,z2_PlayLoopingSfxAtActor
+0x8012697C,z2_Player_DrawGetItem
 0x80127A60,z2_PlayerBunnyHoodLimbs
 0x801284A0,z2_PlayerGreatFairyLimbs
 0x80127594,z2_PlayerGormanTears

@@ -4,6 +4,8 @@
 #include "QuestItems.h"
 #include "Misc.h"
 #include "MMR.h"
+#include "macro.h"
+#include "enums.h"
 #include "GiantMask.h"
 
 /**
@@ -16,6 +18,9 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
             break;
         case CUSTOM_ITEM_ICE_TRAP:
             Icetrap_PushPending(DAMAGE_EFFECT_FREEZE);
+            break;
+        case CUSTOM_ITEM_BOMBTRAP:
+            Icetrap_PushPending(DAMAGE_EFFECT_BOMBTRAP);
             break;
         case CUSTOM_ITEM_CRIMSON_RUPEE:
             z2_AddRupees(30);
@@ -48,6 +53,25 @@ static void HandleCustomItem(GlobalContext* ctxt, u8 item) {
                 gSaveContext.perm.inv.strayFairies[type-1]++;
             } else {
                 gSaveContext.perm.weekEventReg.hasTownFairy = true;
+            }
+            break;
+        case CUSTOM_ITEM_NOTEBOOK_ENTRY:;
+            u16* sBombersNotebookEventWeekEventFlags = (u16*)0x801C6B28;
+            u8 entryIndex = MMR_GetItemEntryContext->flag;
+            SET_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[entryIndex]);
+            switch (entryIndex) {
+                case BOMBERS_NOTEBOOK_EVENT_PROMISED_TO_MEET_KAFEI:
+                    SET_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[BOMBERS_NOTEBOOK_EVENT_RECEIVED_LETTER_TO_KAFEI]);
+                    break;
+                case BOMBERS_NOTEBOOK_EVENT_DEFENDED_AGAINST_THEM:
+                    SET_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[BOMBERS_NOTEBOOK_EVENT_RECEIVED_MILK_BOTTLE]);
+                    break;
+                case BOMBERS_NOTEBOOK_EVENT_ESCORTED_CREMIA:
+                    SET_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[BOMBERS_NOTEBOOK_EVENT_RECEIVED_ROMANIS_MASK]);
+                    break;
+                case BOMBERS_NOTEBOOK_EVENT_RECEIVED_BOMBERS_NOTEBOOK:
+                    SET_WEEKEVENTREG(sBombersNotebookEventWeekEventFlags[BOMBERS_NOTEBOOK_EVENT_LEARNED_SECRET_CODE]);
+                    break;
             }
             break;
     }
