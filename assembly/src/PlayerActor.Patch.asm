@@ -168,3 +168,43 @@
     nop
     nop
     nop
+
+;==================================================================================================
+; Override transformation behavior
+;==================================================================================================
+
+; Replaces:
+;   BNEZL   T7, 0x80831BD8
+.org 0x80831BBC
+    bnez    t7, 0x80831BD4
+    nop
+
+
+; Replaces:
+;   ADDIU   A1, R0, 0x0005
+;   SB      S1, 0x014A (S0)
+.org 0x80831BD4
+    jal     Player_StartTransformation_Hook
+    lw      a0, 0x0068 (sp) ; GlobalContext
+
+; Replaces:
+;   SB      A1, 0x0AA5 (S0)
+.org 0x80831BE0
+    nop
+
+;==================================================================================================
+; Skip post-transformation init code if instant transformation is enabled
+;==================================================================================================
+
+; Replaces:
+;   LBU     V0, 0x0394 (S0)
+;   ADDIU   AT, R0, 0x0009
+;   OR      A0, S1, R0
+;   BEQ     V0, AT, 0x80841E98
+;   OR      A1, S0, R0
+.org 0x80841E78
+    jal     Player_AfterTransformInit_Hook
+    nop
+    bnez    v1, 0x808424FC
+    addiu   at, r0, 0x0009
+    beq     v0, at, 0x80841E98

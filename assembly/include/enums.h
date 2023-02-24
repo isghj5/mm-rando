@@ -485,12 +485,14 @@ enum PlayerState1 {
     PLAYER_STATE1_HOLD        = 0x00000800, // Hold above head.
     PLAYER_STATE1_GET_ITEM    = 0x00000400, // Hold new item over head.
     PLAYER_STATE1_TIME_STOP_2 = 0x00000200, // Time is stopped (does not affect Tatl, HUD animations).
+    PLAYER_STATE1_TRANSFORM   = 0x00000100, // Player is transforming?
     PLAYER_STATE1_DEAD        = 0x00000080, // Dead.
     PLAYER_STATE1_MOVE_SCENE  = 0x00000020, // When walking in a cutscene? Used during Postman's minigame.
     PLAYER_STATE1_BARRIER     = 0x00000010, // Zora electric barrier.
     PLAYER_STATE1_ITEM_OUT    = 0x00000008, // Item is out, may later prompt "Put Away." Relevant to Bow, Hookshot, not Great Fairy Sword.
     PLAYER_STATE1_LEDGE_CLIMB = 0x00000004, // Climbing ledge.
     PLAYER_STATE1_TIME_STOP_3 = 0x00000002, // Everything stopped and Link is stuck in place.
+    PLAYER_STATE1_GROTTO_OUT  = 0x00000001, // Link is exiting a grotto
 };
 
 enum PlayerState2 {
@@ -517,6 +519,7 @@ enum PlayerState2 {
 };
 
 enum PlayerState3 {
+    PLAYER_STATE3_PULL_ITEM   = 0x40000000, // Pulling out a held item.
     PLAYER_STATE3_BREMEN      = 0x20000000, // Bremen mask march.
     PLAYER_STATE3_ROLLING     = 0x08000000, // Rolling (non-Goron).
     PLAYER_STATE3_ATTACK      = 0x02000000, // Attacking with sword, B button weapon.
@@ -526,6 +529,7 @@ enum PlayerState3 {
     PLAYER_STATE3_TRANS_PART  = 0x00020000, // Transforming (latter-half).
     PLAYER_STATE3_ZORA_SWIM   = 0x00008000, // Zora swimming/diving.
     PLAYER_STATE3_DEKU_AIR    = 0x00002000, // Hover with flower petals.
+    PLAYER_STATE3_GORON_ROLL  = 0x00001000, // Goron rolling
     PLAYER_STATE3_DEKU_RISE   = 0x00000200, // Jumping out of Deku flower.
     PLAYER_STATE3_DEKU_DIVE   = 0x00000100, // Deku flower dive.
     PLAYER_STATE3_PULL_BOW    = 0x00000040, // Pull back bow string.

@@ -58,7 +58,8 @@ typedef struct {
     u32 hiddenRupeesSparkle : 1;
     u32 saferGlitches       : 1;
     u32 bombchuDrops        : 1;
-    u32                     : 6;
+    u32 instantTransform    : 1;
+    u32                     : 5;
 } MiscFlags;
 
 typedef union {

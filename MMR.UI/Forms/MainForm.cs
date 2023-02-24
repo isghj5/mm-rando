@@ -164,6 +164,7 @@ namespace MMR.UI.Forms
             TooltipBuilder.SetTooltip(cInvisSparkle, "Hit Tags and Invisible Rupees will emit a sparkle.");
             TooltipBuilder.SetTooltip(cSaferGlitches, "Fixes HESS crash, Weirdshot crash, Action Swap crash, Song of Double Time softlock during 0th or 4th day, Tatl text softlock on 0th of 4th day, 0th day file deletion, hookslide crash, 0th day Goron Bow crash, applies safety fixes for Fierce Deity even if Fierce Deity Anywhere is not enabled, index warp no longer crashes or softlocks (but you won't be able to use it to access the Debug Menu), TODO more...");
             TooltipBuilder.SetTooltip(cAddBombchuDrops, "If you have found Bombchu, then any random Bomb drop or fixed non-randomized Bomb drop will have a chance to drop Bombchu instead. Where relevant, Bombchu packs of 1 and 5 will be in logic in addition to packs of 10.");
+            TooltipBuilder.SetTooltip(cInstantTransformations, "Transforming using Deku Mask, Goron Mask, Zora Mask and Fierce Deity's Mask will be almost instant. These items can no longer be used as \"cutscene items\".");
 
             TooltipBuilder.SetTooltip(nMaxGossipWotH, "Set the number of Way of the Hero hints that will appear on Gossip Stones.");
             TooltipBuilder.SetTooltip(nMaxGossipFoolish, "Set the number of Foolish hints that will appear on Gossip Stones.");
@@ -1217,6 +1218,7 @@ namespace MMR.UI.Forms
             cInvisSparkle.Checked = _configuration.GameplaySettings.HiddenRupeesSparkle;
             cSaferGlitches.Checked = _configuration.GameplaySettings.SaferGlitches;
             cAddBombchuDrops.Checked = _configuration.GameplaySettings.BombchuDrops;
+            cInstantTransformations.Checked = _configuration.GameplaySettings.InstantTransform;
             cChestGameMinimap.SelectedIndex = (int)_configuration.GameplaySettings.ChestGameMinimap;
 
             nMaxGossipWotH.Value = _configuration.GameplaySettings.OverrideNumberOfRequiredGossipHints ?? 3;
@@ -1978,6 +1980,7 @@ namespace MMR.UI.Forms
             cInvisSparkle.Enabled = v;
             cSaferGlitches.Enabled = v;
             cAddBombchuDrops.Enabled = v;
+            cInstantTransformations.Enabled = v;
             cChestGameMinimap.Enabled = v;
 
             cSkipBeaver.Enabled = v;
@@ -2450,6 +2453,11 @@ namespace MMR.UI.Forms
         private void cAddBombchuDrops_CheckedChanged(object sender, EventArgs e)
         {
             UpdateSingleSetting(() => _configuration.GameplaySettings.BombchuDrops = cAddBombchuDrops.Checked);
+        }
+
+        private void cInstantTransformations_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateSingleSetting(() => _configuration.GameplaySettings.InstantTransform = cInstantTransformations.Checked);
         }
 
         private void cItemPoolAdvanced_CheckedChanged(object sender, EventArgs e)

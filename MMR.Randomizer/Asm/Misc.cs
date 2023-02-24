@@ -254,6 +254,11 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool BombchuDrops { get; set; }
 
+        /// <summary>
+        /// Whether or not instant transformation should be enabled.
+        /// </summary>
+        public bool InstantTransform { get; set; }
+
         public MiscFlags()
         {
         }
@@ -289,6 +294,7 @@ namespace MMR.Randomizer.Asm
             this.HiddenRupeesSparkle = ((flags >> 8) & 1) == 1;
             this.SaferGlitches = ((flags >> 7) & 1) == 1;
             this.BombchuDrops = ((flags >> 6) & 1) == 1;
+            this.InstantTransform = ((flags >> 5) & 1) == 1;
         }
 
         /// <summary>
@@ -321,6 +327,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.HiddenRupeesSparkle ? (uint)1 : 0) << 8;
             flags |= (this.SaferGlitches ? (uint)1 : 0) << 7;
             flags |= (this.BombchuDrops ? (uint)1 : 0) << 6;
+            flags |= (this.InstantTransform ? (uint)1 : 0) << 5;
             return flags;
         }
     }
