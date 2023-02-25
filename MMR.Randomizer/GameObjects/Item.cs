@@ -10738,7 +10738,7 @@ namespace MMR.Randomizer.GameObjects
         [ItemName("Bomb Trap")]
         [GossipItemHint("a startling kaboom")]
         [ChestType(ChestTypeAttribute.ChestType.SmallWooden)]
-        [ExclusiveItem(0xB2)]
+        [ExclusiveItem(0xB3)]
         [ExclusiveItemGraphic(0, 0)]
         [ExclusiveItemMessage(0x8FFF, "\u0017get rekt\u0018\u00BF")]
         BombTrap = -3,
