@@ -79,6 +79,7 @@ namespace MMR.UI.Forms
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
             this.cGiantMaskAnywhere = new System.Windows.Forms.CheckBox();
+            this.cInstantTransformations = new System.Windows.Forms.CheckBox();
             this.cFreeScarecrow = new System.Windows.Forms.CheckBox();
             this.cFDAnywhere = new System.Windows.Forms.CheckBox();
             this.cBlastCooldown = new System.Windows.Forms.ComboBox();
@@ -249,7 +250,6 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cInstantTransformations = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -807,7 +807,7 @@ namespace MMR.UI.Forms
             this.cGiantMaskAnywhere.AutoSize = true;
             this.cGiantMaskAnywhere.BackColor = System.Drawing.Color.Transparent;
             this.cGiantMaskAnywhere.ForeColor = System.Drawing.Color.Black;
-            this.cGiantMaskAnywhere.Location = new System.Drawing.Point(148, 125);
+            this.cGiantMaskAnywhere.Location = new System.Drawing.Point(148, 150);
             this.cGiantMaskAnywhere.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.cGiantMaskAnywhere.Name = "cGiantMaskAnywhere";
             this.cGiantMaskAnywhere.Size = new System.Drawing.Size(180, 19);
@@ -815,6 +815,20 @@ namespace MMR.UI.Forms
             this.cGiantMaskAnywhere.Text = "Allow Giant\'s Mask anywhere";
             this.cGiantMaskAnywhere.UseVisualStyleBackColor = false;
             this.cGiantMaskAnywhere.CheckedChanged += new System.EventHandler(this.cGiantMaskAnywhere_CheckedChanged);
+            // 
+            // cInstantTransformations
+            // 
+            this.cInstantTransformations.AutoSize = true;
+            this.cInstantTransformations.BackColor = System.Drawing.Color.Transparent;
+            this.cInstantTransformations.ForeColor = System.Drawing.Color.Black;
+            this.cInstantTransformations.Location = new System.Drawing.Point(148, 125);
+            this.cInstantTransformations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cInstantTransformations.Name = "cInstantTransformations";
+            this.cInstantTransformations.Size = new System.Drawing.Size(150, 19);
+            this.cInstantTransformations.TabIndex = 28;
+            this.cInstantTransformations.Text = "Instant Transformations";
+            this.cInstantTransformations.UseVisualStyleBackColor = false;
+            this.cInstantTransformations.CheckedChanged += new System.EventHandler(this.cInstantTransformations_CheckedChanged);
             // 
             // cFreeScarecrow
             // 
@@ -2970,20 +2984,6 @@ namespace MMR.UI.Forms
             this.bSkip.UseVisualStyleBackColor = true;
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
-            // 
-            // cInstantTransformations
-            // 
-            this.cInstantTransformations.AutoSize = true;
-            this.cInstantTransformations.BackColor = System.Drawing.Color.Transparent;
-            this.cInstantTransformations.ForeColor = System.Drawing.Color.Black;
-            this.cInstantTransformations.Location = new System.Drawing.Point(148, 125);
-            this.cInstantTransformations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cInstantTransformations.Name = "cInstantTransformations";
-            this.cInstantTransformations.Size = new System.Drawing.Size(150, 19);
-            this.cInstantTransformations.TabIndex = 28;
-            this.cInstantTransformations.Text = "Instant Transformations";
-            this.cInstantTransformations.UseVisualStyleBackColor = false;
-            this.cInstantTransformations.CheckedChanged += new System.EventHandler(this.cInstantTransformations_CheckedChanged);
             // 
             // MainForm
             // 
