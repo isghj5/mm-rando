@@ -52,6 +52,7 @@
 0x800BAC60,z2_SpawnActor
 0x800BAC60,z2_actor_spawn_1
 0x800BAE14,z2_actor_spawn_2
+0x800BB0C0,z2_Actor_SpawnAsChild
 0x800BB498,z2_ActorRemove
 0x800BDC5C,z2_Actor_ChangeAnimation
 0x800C99D4,z2_GetFloorPhysicsType
@@ -79,6 +80,9 @@
 0x800FED44,z2_Math_CosS
 0x800FED84,z2_Math_Sins
 0x800FF2F8,z2_HandleInputVelocity
+0x800FF50C,z2_Math_Vec3f_Copy
+0x800FF584,z2_Math_Vec3f_ToVec3s
+0x800FF6F8,z2_Math_Vec3f_Lerp
 0x800FF92C,z2_Math_Vec3f_DistXZ
 0x80100504,z2_Lib_SegmentedToVirtual
 0x8010069C,z2_WriteHeartColors
@@ -94,6 +98,7 @@
 0x80114E90,z2_HasEmptyBottle
 0x8011552C,z2_HudSetAButtonText
 0x801159EC,z2_AddRupees
+0x80115A14,z2_Inventory_ChangeAmmo
 0x80117BD0,z2_DrawButtonAmounts
 0x80118084,z2_DrawBButtonIcon
 0x80118890,z2_DrawCButtonIcons

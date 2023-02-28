@@ -207,6 +207,12 @@ namespace MMR.Randomizer.Models.Settings
             set { this.AsmOptions.MiscConfig.Flags.InstantTransform = value; }
         }
 
+        public bool BombArrows
+        {
+            get { return this.AsmOptions.MiscConfig.Flags.BombArrows; }
+            set { this.AsmOptions.MiscConfig.Flags.BombArrows = value; }
+        }
+
         #endregion
 
         #region Random Elements

@@ -259,6 +259,11 @@ namespace MMR.Randomizer.Asm
         /// </summary>
         public bool InstantTransform { get; set; }
 
+        /// <summary>
+        /// Whether or not bomb arrows should be enabled.
+        /// </summary>
+        public bool BombArrows { get; set; }
+
         public MiscFlags()
         {
         }
@@ -295,6 +300,7 @@ namespace MMR.Randomizer.Asm
             this.SaferGlitches = ((flags >> 7) & 1) == 1;
             this.BombchuDrops = ((flags >> 6) & 1) == 1;
             this.InstantTransform = ((flags >> 5) & 1) == 1;
+            this.BombArrows = ((flags >> 4) & 1) == 1;
         }
 
         /// <summary>
@@ -328,6 +334,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.SaferGlitches ? (uint)1 : 0) << 7;
             flags |= (this.BombchuDrops ? (uint)1 : 0) << 6;
             flags |= (this.InstantTransform ? (uint)1 : 0) << 5;
+            flags |= (this.BombArrows ? (uint)1 : 0) << 4;
             return flags;
         }
     }

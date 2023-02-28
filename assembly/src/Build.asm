@@ -33,6 +33,7 @@
 .include "Actor.Patch.asm"
 .include "ArrowMagic.Patch.asm"
 .include "BankAmount.Patch.asm"
+.include "Bomb.Patch.asm"
 .include "BombersNotebook.Patch.asm"
 .include "BusinessScrub.Patch.asm"
 .include "BugFixes.Patch.asm"

@@ -1539,7 +1539,9 @@ typedef struct {
 
 typedef struct {
     /* 0x000 */ Actor base;
-    /* 0x144 */ UNK_TYPE1 pad144[0xAC];
+    /* 0x144 */ ColCylinder collider1;
+    /* 0x190 */ ColSphereGroup collider2;
+    /* 0x1B0 */ ColSphereGroupElement collider3;
     /* 0x1F0 */ s16 timer;
     /* 0x1F2 */ s16 flashSpeedScale;
     /* 0x1F4 */ f32 unk_1F4;
@@ -1547,8 +1549,47 @@ typedef struct {
     /* 0x1F9 */ u8 isPowderKeg;
     /* 0x1FA */ s16 unk_1FA;
     /* 0x1FC */ u8 unk_1FC;
-    /* 0x200 */ UNK_TYPE1 pad200[0x4];
+    /* 0x200 */ void* actionFunc;
 } ActorEnBom; // size = 0x204
+
+typedef struct {
+    /* 0x00 */ s32 active;
+    /* 0x04 */ Vec3f tip;
+    /* 0x10 */ Vec3f base;
+} WeaponInfo; // size = 0x1C
+
+typedef struct {
+    /* 0x144 */ SkelAnime skelAnime;
+    /* 0x188 */ Vec3s jointTable[5];
+} ActorEnArrowArrow; // size = 0x1A8
+
+typedef struct {
+    /* 0x144 */ f32 unk_144;
+    /* 0x148 */ u8 unk_148;
+    /* 0x149 */ s8 unk_149;
+    /* 0x14A */ s16 unk_14A;
+    /* 0x14C */ s16 unk_14C;
+} ActorEnArrowBubble; // size = 0x150
+
+typedef struct EnArrow {
+    /* 0x000 */ Actor base;
+    union {
+        ActorEnArrowArrow arrow;
+        ActorEnArrowBubble bubble;
+    };
+    /* 0x1A8 */ ColQuad collider;
+    /* 0x228 */ Vec3f unk_228;
+    /* 0x234 */ Vec3f unk_234;
+    /* 0x240 */ s32 unk_240;
+    /* 0x244 */ WeaponInfo weaponInfo;
+    /* 0x260 */ u8 despawnTimer; // timer in OoT
+    /* 0x261 */ u8 hitFlags; // hitFlags in OoT
+    /* 0x262 */ u8 unk_262;
+    /* 0x263 */ u8 unk_263;
+    /* 0x264 */ Actor* actorBeingCarried;
+    /* 0x268 */ Vec3f unk_268;
+    /* 0x274 */ void* actionFunc;
+} ActorEnArrow; // size = 0x278
 
 // En_Elf actor (Fairy).
 typedef struct {

@@ -188,3 +188,25 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
 bool Player_AfterTransformInit() {
     return MISC_CONFIG.flags.instantTransform;
 }
+
+void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 actionParam) {
+    if (MISC_CONFIG.flags.bombArrows && item == ITEM_BOMB) {
+        ActorEnArrow* arrow = (ActorEnArrow*)ArrowCycle_FindArrow(player, ctxt);
+        if (arrow != NULL) {
+            if (arrow->base.child == NULL) {
+                ActorEnBom* bomb = (ActorEnBom*) z2_Actor_SpawnAsChild(&ctxt->actorCtx, &arrow->base, ctxt, ACTOR_EN_BOM,
+                                    arrow->base.currPosRot.pos.x, arrow->base.currPosRot.pos.y, arrow->base.currPosRot.pos.z,
+                                    0, arrow->base.shape.rot.y, 0, 0);
+                bomb->collider1.base.flagsAC &= ~8; // AC_TYPE_PLAYER Disable player-aligned damage
+                z2_SetActorSize(&bomb->base, 0.002);
+                z2_Inventory_ChangeAmmo(item, -1);
+                *z2_D_80862B4C = 1;
+            }
+            return;
+        }
+    }
+
+    // Displaced code:
+    player->unk148 = item;
+    player->stateFlags.state3 |= PLAYER_STATE3_PULL_ITEM;
+}

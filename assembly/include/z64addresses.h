@@ -123,6 +123,8 @@ extern void z2_random_drop_spawn();
 extern void z2_spawn_map_actors();
 extern void z2_actor_spawn_1();
 extern void z2_actor_spawn_2();
+extern Actor* z2_Actor_SpawnAsChild(ActorContext* actorCtx, Actor* parent, GlobalContext* ctxt, s16 actorId, f32 posX, f32 posY,
+                          f32 posZ, s16 rotX, s16 rotY, s16 rotZ, s32 params);
 extern void z2_object_spawn();
 extern void z2_load_objects();
 extern void z2_load_scene();
@@ -197,6 +199,7 @@ extern u8 z2_IsItemKnown(u8 itemId);
 extern bool z2_HasEmptyBottle();
 extern void z2_GiveMap(u32 mapIndex);
 extern void z2_AddRupees(s32 amount);
+extern void z2_Inventory_ChangeAmmo(s16 item, s16 ammoChange);
 
 // Function Prototypes (HUD).
 extern void z2_HudSetAButtonText(GlobalContext* ctxt, u16 textId);
@@ -207,6 +210,9 @@ extern void z2_UpdateButtonsState(u32 state);
 // Function Prototypes (Math).
 extern f32 z2_Math_Sins(s16 angle);
 extern f32 z2_Math_CosS(s16 angle);
+extern void z2_Math_Vec3f_Copy(Vec3f* dest, Vec3f* src);
+extern void z2_Math_Vec3f_ToVec3s(Vec3s* dest, Vec3f* src);
+extern void z2_Math_Vec3f_Lerp(Vec3f* a, Vec3f* b, f32 t, Vec3f* dest);
 extern f32 z2_Math_Vec3f_DistXZ(Vec3f* p1, Vec3f* p2);
 
 // Function Prototypes (Objects).
@@ -254,6 +260,9 @@ extern void z2_MessageClose(GlobalContext* ctxt);
 #define z2_PerformEnterWaterEffects_VRAM 0x8083B8D0
 #define z2_PlayerHandleBuoyancy_VRAM     0x808475B4
 #define z2_UseItem_VRAM                  0x80831990
+
+// Relocatable Data (player_actor).
+#define z2_D_80862B4C_VRAM               0x80862B4C
 
 // Relocatable Types (file_choose).
 #define FileChooseDataVRAM               0x80813DF0

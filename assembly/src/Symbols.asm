@@ -54,6 +54,7 @@
 .definelabel z2_SpawnActor, 0x800BAC60
 .definelabel z2_actor_spawn_1, 0x800BAC60
 .definelabel z2_actor_spawn_2, 0x800BAE14
+.definelabel z2_Actor_SpawnAsChild, 0x800BB0C0
 .definelabel z2_ActorRemove, 0x800BB498
 .definelabel z2_Actor_ChangeAnimation, 0x800BDC5C
 .definelabel z2_GetFloorPhysicsType, 0x800C99D4
@@ -81,6 +82,9 @@
 .definelabel z2_Math_CosS, 0x800FED44
 .definelabel z2_Math_Sins, 0x800FED84
 .definelabel z2_HandleInputVelocity, 0x800FF2F8
+.definelabel z2_Math_Vec3f_Copy, 0x800FF50C
+.definelabel z2_Math_Vec3f_ToVec3s, 0x800FF584
+.definelabel z2_Math_Vec3f_Lerp, 0x800FF6F8
 .definelabel z2_Math_Vec3f_DistXZ, 0x800FF92C
 .definelabel z2_Lib_SegmentedToVirtual, 0x80100504
 .definelabel z2_WriteHeartColors, 0x8010069C
@@ -96,6 +100,7 @@
 .definelabel z2_HasEmptyBottle, 0x80114E90
 .definelabel z2_HudSetAButtonText, 0x8011552C
 .definelabel z2_AddRupees, 0x801159EC
+.definelabel z2_Inventory_ChangeAmmo, 0x80115A14
 .definelabel z2_DrawButtonAmounts, 0x80117BD0
 .definelabel z2_DrawBButtonIcon, 0x80118084
 .definelabel z2_DrawCButtonIcons, 0x80118890

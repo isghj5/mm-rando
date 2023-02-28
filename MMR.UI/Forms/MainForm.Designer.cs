@@ -78,6 +78,7 @@ namespace MMR.UI.Forms
             this.pLocationCategories = new System.Windows.Forms.Panel();
             this.tabGimmicks = new System.Windows.Forms.TabPage();
             this.groupBox12 = new System.Windows.Forms.GroupBox();
+            this.cInstantTransformations = new System.Windows.Forms.CheckBox();
             this.cFreeScarecrow = new System.Windows.Forms.CheckBox();
             this.cFDAnywhere = new System.Windows.Forms.CheckBox();
             this.cBlastCooldown = new System.Windows.Forms.ComboBox();
@@ -248,7 +249,7 @@ namespace MMR.UI.Forms
             this.tPatch = new System.Windows.Forms.TextBox();
             this.bLoadPatch = new System.Windows.Forms.Button();
             this.bSkip = new System.Windows.Forms.Button();
-            this.cInstantTransformations = new System.Windows.Forms.CheckBox();
+            this.cBombArrows = new System.Windows.Forms.CheckBox();
             this.tSettings.SuspendLayout();
             this.tabMain.SuspendLayout();
             this.tOtherCustomizations.SuspendLayout();
@@ -782,6 +783,7 @@ namespace MMR.UI.Forms
             // 
             // groupBox12
             // 
+            this.groupBox12.Controls.Add(this.cBombArrows);
             this.groupBox12.Controls.Add(this.cInstantTransformations);
             this.groupBox12.Controls.Add(this.cFreeScarecrow);
             this.groupBox12.Controls.Add(this.cFDAnywhere);
@@ -799,6 +801,20 @@ namespace MMR.UI.Forms
             this.groupBox12.TabIndex = 34;
             this.groupBox12.TabStop = false;
             this.groupBox12.Text = "Other";
+            // 
+            // cInstantTransformations
+            // 
+            this.cInstantTransformations.AutoSize = true;
+            this.cInstantTransformations.BackColor = System.Drawing.Color.Transparent;
+            this.cInstantTransformations.ForeColor = System.Drawing.Color.Black;
+            this.cInstantTransformations.Location = new System.Drawing.Point(148, 125);
+            this.cInstantTransformations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cInstantTransformations.Name = "cInstantTransformations";
+            this.cInstantTransformations.Size = new System.Drawing.Size(150, 19);
+            this.cInstantTransformations.TabIndex = 28;
+            this.cInstantTransformations.Text = "Instant Transformations";
+            this.cInstantTransformations.UseVisualStyleBackColor = false;
+            this.cInstantTransformations.CheckedChanged += new System.EventHandler(this.cInstantTransformations_CheckedChanged);
             // 
             // cFreeScarecrow
             // 
@@ -2955,19 +2971,19 @@ namespace MMR.UI.Forms
             this.bSkip.Visible = false;
             this.bSkip.Click += new System.EventHandler(this.bSkip_Click);
             // 
-            // cInstantTransformations
+            // cBombArrows
             // 
-            this.cInstantTransformations.AutoSize = true;
-            this.cInstantTransformations.BackColor = System.Drawing.Color.Transparent;
-            this.cInstantTransformations.ForeColor = System.Drawing.Color.Black;
-            this.cInstantTransformations.Location = new System.Drawing.Point(148, 125);
-            this.cInstantTransformations.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
-            this.cInstantTransformations.Name = "cInstantTransformations";
-            this.cInstantTransformations.Size = new System.Drawing.Size(150, 19);
-            this.cInstantTransformations.TabIndex = 28;
-            this.cInstantTransformations.Text = "Instant Transformations";
-            this.cInstantTransformations.UseVisualStyleBackColor = false;
-            this.cInstantTransformations.CheckedChanged += new System.EventHandler(this.cInstantTransformations_CheckedChanged);
+            this.cBombArrows.AutoSize = true;
+            this.cBombArrows.BackColor = System.Drawing.Color.Transparent;
+            this.cBombArrows.ForeColor = System.Drawing.Color.Black;
+            this.cBombArrows.Location = new System.Drawing.Point(148, 150);
+            this.cBombArrows.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
+            this.cBombArrows.Name = "cBombArrows";
+            this.cBombArrows.Size = new System.Drawing.Size(98, 19);
+            this.cBombArrows.TabIndex = 29;
+            this.cBombArrows.Text = "Bomb Arrows";
+            this.cBombArrows.UseVisualStyleBackColor = false;
+            this.cBombArrows.CheckedChanged += new System.EventHandler(this.cBombArrows_CheckedChanged);
             // 
             // MainForm
             // 
@@ -3280,6 +3296,7 @@ namespace MMR.UI.Forms
         private System.Windows.Forms.CheckBox cRainbowTunic;
         private System.Windows.Forms.CheckBox cBombTrapTunicColors;
         private System.Windows.Forms.CheckBox cInstantTransformations;
+        private System.Windows.Forms.CheckBox cBombArrows;
     }
 }
 
