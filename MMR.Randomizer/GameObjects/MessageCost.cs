@@ -558,7 +558,7 @@ namespace MMR.Randomizer.GameObjects
             new MessageCost
             {
                 MessageIds = { (10713, 0), (10714, 0) },
-                LocationsAffected = { Item.MaskAllNight },
+                LocationsAffected = { Item.MaskAllNight, Item.NotebookPurchaseCuriosityShopItem },
             },
             new MessageCost
             {
