@@ -31,6 +31,7 @@
 .include "Boot.asm"
 .include "Hacks.asm"
 .include "Actor.Patch.asm"
+.include "Arrow.Patch.asm"
 .include "ArrowMagic.Patch.asm"
 .include "BankAmount.Patch.asm"
 .include "Bomb.Patch.asm"

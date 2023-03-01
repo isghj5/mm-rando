@@ -141,6 +141,7 @@
 0x80180478,z2_Matrix_RotateXS
 0x801812FC,z2_TransformMatrixStackTop
 0x80181A40,z2_ShiftMatrix
+0x80181A98,z2_Matrix_MultVec3f
 0x80190294,z2_GetAudioTable
 0x8019C300,z2_ToggleSfxDampen
 0x8019F0C8,z2_PlaySfx

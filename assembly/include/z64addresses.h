@@ -62,6 +62,7 @@ extern void z2_TranslateMatrix(f32 x, f32 y, f32 z, u8 matrixMode);
 extern void z2_Matrix_Scale(f32 x, f32 y, f32 z, u8 matrixMode);
 extern void z2_Matrix_RotateXS(s16 x, u8 matrixMode);
 extern Gfx* z2_ShiftMatrix(GraphicsContext* gfxCtx);
+extern void z2_Matrix_MultVec3f(Vec3f* src, Vec3f* dest);
 extern AudioInfo* z2_GetAudioTable(u8 audioType);
 extern void z2_PlaySfx(u32 id);
 extern void z2_PlaySfxDecide();

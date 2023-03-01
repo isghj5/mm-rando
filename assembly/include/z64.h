@@ -1559,6 +1559,12 @@ typedef struct {
 } WeaponInfo; // size = 0x1C
 
 typedef struct {
+    /* 0x00 */ Vec3f unk_00[2];
+    /* 0x18 */ Vec3f unk_18[2][2];
+    /* 0x48 */ Vec3f unk_48;
+} EnArrowUnkStruct; // size = 0x54
+
+typedef struct {
     /* 0x144 */ SkelAnime skelAnime;
     /* 0x188 */ Vec3s jointTable[5];
 } ActorEnArrowArrow; // size = 0x1A8
@@ -1571,7 +1577,7 @@ typedef struct {
     /* 0x14C */ s16 unk_14C;
 } ActorEnArrowBubble; // size = 0x150
 
-typedef struct EnArrow {
+typedef struct ActorEnArrow {
     /* 0x000 */ Actor base;
     union {
         ActorEnArrowArrow arrow;

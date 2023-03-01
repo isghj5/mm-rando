@@ -197,11 +197,13 @@ void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 ac
                 ActorEnBom* bomb = (ActorEnBom*) z2_Actor_SpawnAsChild(&ctxt->actorCtx, &arrow->base, ctxt, ACTOR_EN_BOM,
                                     arrow->base.currPosRot.pos.x, arrow->base.currPosRot.pos.y, arrow->base.currPosRot.pos.z,
                                     0, arrow->base.shape.rot.y, 0, 0);
-                bomb->collider1.base.flagsAC &= ~8; // AC_TYPE_PLAYER Disable player-aligned damage
-                z2_SetActorSize(&bomb->base, 0.002);
-                z2_Inventory_ChangeAmmo(item, -1);
-                *z2_D_80862B4C = 1;
+                if (bomb != NULL) {
+                    bomb->collider1.base.flagsAC &= ~8; // AC_TYPE_PLAYER Disable player-aligned damage
+                    z2_SetActorSize(&bomb->base, 0.002);
+                    z2_Inventory_ChangeAmmo(item, -1);
+                }
             }
+            *z2_D_80862B4C = 1;
             return;
         }
     }

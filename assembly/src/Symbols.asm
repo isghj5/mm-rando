@@ -151,6 +151,7 @@
 .definelabel z2_Matrix_RotateXS, 0x80180478
 .definelabel z2_TransformMatrixStackTop, 0x801812FC
 .definelabel z2_ShiftMatrix, 0x80181A40
+.definelabel z2_Matrix_MultVec3f, 0x80181A98
 .definelabel z2_GetAudioTable, 0x80190294
 .definelabel z2_ToggleSfxDampen, 0x8019C300
 .definelabel z2_PlaySfx, 0x8019F0C8
