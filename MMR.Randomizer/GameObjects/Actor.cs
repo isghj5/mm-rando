@@ -3109,7 +3109,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(415)]
         [ObjectListIndex(0x1AB)]
-        [CheckRestricted(Scene.CuriosityShop, variant:0x1, Item.MaskKeaton, Item.TradeItemMamaLetter, Item.MaskAllNight)]
+        [CheckRestricted(Scene.CuriosityShop, variant:0x1, Item.MaskKeaton, Item.TradeItemMamaLetter,
+            Item.MaskAllNight,
+            Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopGoldRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopRedRupee)]
         // zero is selling in the shop, 1 is giving behind the place
         [GroundVariants(0x1)] // wedding and standing around indoors
         //[OnlyOneActorPerRoom]
