@@ -3093,9 +3093,9 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(413)]
         [ObjectListIndex(0x1A9)]
+        [CheckRestricted(Item.MundaneItemSeahorse)]
         [GroundVariants(0x001, 0x100, 0x101)]
         // limit variants?
-        [CheckRestricted(Item.MundaneItemSeahorse)]
         [UnkillableAllVariants]
         GreatBayFisherman = 0x1C2, // En_Tsn
 
