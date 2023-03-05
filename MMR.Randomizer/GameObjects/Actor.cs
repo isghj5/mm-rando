@@ -504,8 +504,11 @@ namespace MMR.Randomizer.GameObjects
         [ActorInitVarOffset(0x1D30)]
         [FileID(81)]
         [ObjectListIndex(0x40)]
+        // 0 runs away
+        // 1 is passive
+        // 2 is hit once and die
         [GroundVariants(0xFF02, 0xFF00, 0xFF01)]
-        [UnkillableVariants(0xFF01)]
+        [RespawningVariants(0xFF01)] // doesnt seem to stop enemies, so it counts as enemy
         [CompanionActor(DekuFlower, ourVariant: -1, variant: 0x7F, 0x17F)] // do you think they make them or trade like hermitcrabs?
         [EnemizerScenesExcluded(Scene.Woodfall)]//, Scene.DekuPalace)]
         MadShrub = 0x3B, // En_Dekunuts
