@@ -26,6 +26,7 @@ namespace MMR.Randomizer.Asm
         public short? SmallKeys;
         public short? Compasses;
         public short? DungeonMaps;
+        public short? NotebookPage;
     }
 
     /// <summary>
@@ -62,6 +63,12 @@ namespace MMR.Randomizer.Asm
         /// <returns>Object Id if resolved.</returns>
         public (short objectId, byte graphicId)? ResolveGraphics(GetItemEntry entry)
         {
+            // Notebook Pages
+            if (entry.ItemGained == 0xB2 && entry.Object == 0x253 && Indexes.NotebookPage.HasValue)
+            {
+                return (Indexes.NotebookPage.Value, 0xC);
+            }
+
             // Royal Wallet.
             if (entry.ItemGained == 0xA4 && entry.Object == 0xA8 && Indexes.RoyalWallet.HasValue)
             {
@@ -200,6 +207,10 @@ namespace MMR.Randomizer.Asm
         /// <param name="skulltulas">Whether or not to include Skulltula Token objects</param>
         void AddExtendedObjects(Item smithy1Item, Item smithy2Item, bool fairies = false, bool skulltulas = false, bool progressiveUpgrades = false)
         {
+            // Add Notebook Page
+            this.Offsets.Add(AddNotebookPage());
+            Indexes.NotebookPage = AdvanceIndex();
+
             // Add Royal Wallet.
             this.Offsets.Add(AddRoyalWallet());
             Indexes.RoyalWallet = AdvanceIndex();
@@ -925,6 +936,29 @@ namespace MMR.Randomizer.Asm
             AddSmithyItemWithAdditionals(smithy1Item, progressiveUpgrades);
 
             AddSmithyItemWithAdditionals(smithy2Item, progressiveUpgrades);
+        }
+
+        #endregion
+
+        #region Notebook Page
+
+        (uint, uint) AddNotebookPage()
+        {
+            // Clone bombers notebook model
+            var data = CloneExistingData(1066);
+
+            // Remove cover label
+            WriteUint(data, 0xB00,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0,
+                0, 0, 0, 0
+            );
+
+            return this.Bundle.Append(data);
         }
 
         #endregion
