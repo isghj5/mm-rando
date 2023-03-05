@@ -992,7 +992,9 @@ namespace MMR.Randomizer
             //cycle through all things
             foreach (var dependency in currentTargetObject.DependsOnItems)
             {
-                if (!currentItem.IsTemporary(_settings) && target == Item.MaskBlast && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
+                if (!currentItem.IsTemporary(_settings)
+                    && (target == Item.MaskBlast || target == Item.NotebookSaveOldLady)
+                    && (dependency == Item.TradeItemKafeiLetter || dependency == Item.TradeItemPendant))
                 {
                     // Permanent items ignore Kafei Letter and Pendant on Blast Mask check.
                     continue;
@@ -1144,7 +1146,7 @@ namespace MMR.Randomizer
         private void CheckConditionals(Item currentItem, Item target, List<Item> dependencyPath)
         {
             var targetItemObject = ItemList[target];
-            if (target == Item.MaskBlast)
+            if (target == Item.MaskBlast || target == Item.NotebookSaveOldLady)
             {
                 if (!currentItem.IsTemporary(_settings))
                 {
