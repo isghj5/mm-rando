@@ -1397,7 +1397,7 @@ namespace MMR.Randomizer.GameObjects
         EmptyB7 = 0xB7,
 
         // unused water vortex from water temple
-        [ActorizerEnabled]
+        //[ActorizerEnabled] // we have a modified fix one now, adjusts height to water
         [FileID(163)]
         [WaterVariants(0)]
         [ObjectListIndex(0x106)]

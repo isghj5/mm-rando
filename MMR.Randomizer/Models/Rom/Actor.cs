@@ -97,7 +97,7 @@ namespace MMR.Randomizer.Models.Rom
             // for now injected actors can only be of type ground
             this.AllVariants = new List<List<int>>()
             {
-                new List<int>(),
+                injected.waterVariants,
                 injected.groundVariants,
                 injected.flyingVariants,
                 new List<int>(),
@@ -105,7 +105,8 @@ namespace MMR.Randomizer.Models.Rom
             };
 
             // wasnt there a list of lists to static list we had?
-            this.Variants = injected.groundVariants.Concat(injected.flyingVariants).ToList();
+            //this.Variants = injected.groundVariants.Concat(injected.flyingVariants).ToList();
+            this.Variants = AllVariants.SelectMany(x => x).ToList();
             this.VariantsWithRoomMax = injected.limitedVariants;
             this.UnplaceableVariants = this.ActorEnum.GetUnPlacableVariants();
             this.OnlyOnePerRoom = injected.onlyOnePerRoom;

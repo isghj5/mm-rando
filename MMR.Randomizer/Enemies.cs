@@ -34,7 +34,7 @@ namespace MMR.Randomizer
         public int ChosenV; // Copy of NewV, first pass result, but we might change NewV to something else if duplicate
     }
 
-    [System.Diagnostics.DebuggerDisplay("0x{actorID.ToString(\"X3\")}:{fileID}")]
+    [System.Diagnostics.DebuggerDisplay("[{filename}] 0x{actorID.ToString(\"X3\")}:{fileID}")]
     public class InjectedActor
     {
         // when we inject a new actor theres some data we need
@@ -51,6 +51,7 @@ namespace MMR.Randomizer
 
         public List<int> groundVariants = new List<int>();
         public List<int> flyingVariants = new List<int>();
+        public List<int> waterVariants = new List<int>();
         public List<int> respawningVariants = new List<int>();
         // variants with max
         public List<VariantsWithRoomMax> limitedVariants = new List<VariantsWithRoomMax>();
@@ -1731,7 +1732,7 @@ namespace MMR.Randomizer
                 //if (TestHardSetObject(GameObjects.Scene.TerminaField, GameObjects.Actor.Leever, GameObjects.Actor.ArcheryMiniGameMan)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.TouristCenter, GameObjects.Actor.SwampTouristGuide, GameObjects.Actor.SmithyGoronAndGo)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.IkanaGraveyard, GameObjects.Actor.BadBat, GameObjects.Actor.StoneTowerMirror)) continue;
-                if (TestHardSetObject(GameObjects.Scene.DekuPlayground, GameObjects.Actor.Torch, GameObjects.Actor.OOTPotionShopMan)) continue;
+                if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.BioDekuBaba, GameObjects.Actor.En_Stream)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.SouthernSwamp, GameObjects.Actor.DragonFly, GameObjects.Actor.WarpDoor)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.PiratesFortressRooms, GameObjects.Actor.Desbreko, GameObjects.Actor.UnusedPirateElevator)) continue;
                 //if (TestHardSetObject(GameObjects.Scene.Grottos, GameObjects.Actor.Dodongo, GameObjects.Actor.DeathArmos)) continue;
@@ -2393,7 +2394,7 @@ namespace MMR.Randomizer
         }
         #endregion
 
-        [System.Diagnostics.DebuggerDisplay("{Scene.ToString(\"X3\")}")]
+        [System.Diagnostics.DebuggerDisplay("{Scene.SceneEnum.ToString()}")]
         public class SceneEnemizerData
         {
             // more and more of this stuff needs to be passed to each function, if I want to tame the big mess that is SwapSceneEnemies
@@ -2707,6 +2708,14 @@ namespace MMR.Randomizer
                     var newFlyingVariantsShort = newFlyingVariants.Select(variant => Convert.ToInt32(variant.Trim(), 16)).ToList();
 
                     newInjectedActor.flyingVariants = newFlyingVariantsShort;
+                    continue;
+                }
+                if (command == "water_variants")
+                {
+                    var newWaterVariants = valueStr.Split(",").ToList();
+                    var newWaterVariantsShort = newWaterVariants.Select(variant => Convert.ToInt32(variant.Trim(), 16)).ToList();
+
+                    newInjectedActor.waterVariants = newWaterVariantsShort;
                     continue;
                 }
                 if (command == "variant_with_max")
@@ -3236,7 +3245,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 45.4\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 45.5\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
