@@ -204,7 +204,7 @@
 ;   OR      A1, S0, R0
 .org 0x80841E78
     jal     Player_AfterTransformInit_Hook
-    nop
+    or      a0, s0, r0
     bnez    v1, 0x808424FC
     addiu   at, r0, 0x0009
     beq     v0, at, 0x80841E98

@@ -163,8 +163,13 @@ u32 Player_GetCollisionType(ActorPlayer* player, GlobalContext* ctxt, u32 collis
     return collisionType;
 }
 
+static bool sSwimmingTransformation = false;
+
 void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actionParam) {
-    if (!MISC_CONFIG.flags.instantTransform || actionParam < PLAYER_IA_MASK_FIERCE_DEITY || actionParam > PLAYER_IA_MASK_DEKU) {
+    if (!MISC_CONFIG.flags.instantTransform
+        || actionParam < PLAYER_IA_MASK_FIERCE_DEITY
+        || actionParam > PLAYER_IA_MASK_DEKU
+        || (this->stateFlags.state2 & PLAYER_STATE2_DIVING)) {
         // Displaced code:
         this->heldItemActionParam = actionParam;
         this->unkAA5 = 5; // PLAYER_UNKAA5_5
@@ -183,10 +188,19 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
     this->base.update = (ActorFunc)0x8012301C;
     this->base.draw = NULL;
     this->animTimer = 1;
+
+    if (this->stateFlags.state2 & PLAYER_STATE2_DIVING_2) {
+        sSwimmingTransformation = true;
+        this->stateFlags.state2 &= ~PLAYER_STATE2_DIVING_2;
+    }
 }
 
-bool Player_AfterTransformInit() {
-    return MISC_CONFIG.flags.instantTransform;
+bool Player_AfterTransformInit(ActorPlayer* this) {
+    if (sSwimmingTransformation) {
+        this->stateFlags.state2 |= PLAYER_STATE2_DIVING_2;
+        sSwimmingTransformation = false;
+    }
+    return MISC_CONFIG.flags.instantTransform && !(this->stateFlags.state2 & PLAYER_STATE2_CLIMBING);
 }
 
 void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 actionParam) {
