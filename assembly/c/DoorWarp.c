@@ -4,8 +4,38 @@
 
 void DoorWarp_GiveItem(ActorDoorWarp1* actor, GlobalContext* ctxt) {
     actor->warpTimer--;
-    if (actor->warpTimer == 0 && !MISC_CONFIG.internal.vanillaLayout && !MMR_GetGiFlag(0x77)) {
-        MMR_ProcessItem(ctxt, 0x77);
+    if (actor->warpTimer == 0) {
+        if (!MISC_CONFIG.internal.vanillaLayout && !MMR_GetGiFlag(0x77)) {
+            MMR_ProcessItem(ctxt, 0x77);
+        }
+
+        u8 count = 0;
+
+        // TODO check if oath hint is enabled?
+        if (MISC_CONFIG.speedups.skipGiantsCutscene) {
+            count = ((gSaveContext.perm.inv.questStatus.value & 0x40F) == 0xF) ? 4 : 0;
+        } else {
+            if (gSaveContext.perm.inv.questStatus.odolwasRemains) {
+                count++;
+            }
+            if (gSaveContext.perm.inv.questStatus.gohtsRemains) {
+                count++;
+            }
+            if (gSaveContext.perm.inv.questStatus.gyorgsRemains) {
+                count++;
+            }
+            if (gSaveContext.perm.inv.questStatus.twinmoldsRemains) {
+                count++;
+            }
+        }
+
+        u8 oldCount = gSaveContext.perm.unk_ECC[1] & 0xFF;
+        if (count > oldCount) {
+            actor->unk_202 = count;
+            gSaveContext.perm.unk_ECC[1] = (gSaveContext.perm.unk_ECC[1] & 0xFFFFFF00) | count;
+        } else {
+            actor->unk_202 = 0;
+        }
     }
 }
 

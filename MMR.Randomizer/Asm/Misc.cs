@@ -96,6 +96,11 @@ namespace MMR.Randomizer.Asm
         public ChestGameMinimapState ChestGameMinimap { get; set; }
 
         /// <summary>
+        /// Whether or not the Giant's Cutscene Skip is enabled.
+        /// </summary>
+        public bool SkipGiantsCutscene { get; set; }
+
+        /// <summary>
         /// Convert to a <see cref="uint"/> integer.
         /// </summary>
         /// <returns>Integer</returns>
@@ -112,6 +117,7 @@ namespace MMR.Randomizer.Asm
             flags |= (this.BankMultiRewards ? (uint)1 : 0) << 24;
             flags |= (this.ShortChestOpening ? (uint)1 : 0) << 23;
             flags |= (((uint)this.ChestGameMinimap) & 3) << 21;
+            flags |= (this.SkipGiantsCutscene ? (uint)1 : 0) << 20;
             return flags;
         }
     }
@@ -625,6 +631,7 @@ namespace MMR.Randomizer.Asm
             this.Speedups.DonGero = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.HungryGoron);
             this.Speedups.FastBankRupees = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.FasterBankText);
             this.Speedups.ShortChestOpening = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.ShortChestOpening);
+            this.Speedups.SkipGiantsCutscene = settings.ShortenCutsceneSettings.General.HasFlag(ShortenCutsceneGeneral.EverythingElse);
 
             // If using Adult Link model, allow Mikau cutscene to activate early.
             this.Flags.EarlyMikau = settings.Character == Character.AdultLink;

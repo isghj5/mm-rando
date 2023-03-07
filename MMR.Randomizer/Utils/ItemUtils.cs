@@ -98,6 +98,11 @@ namespace MMR.Randomizer.Utils
                 {
                     return true;
                 }
+
+                if (item == Item.SongOath)
+                {
+                    return true;
+                }
             }
 
             return false;

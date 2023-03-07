@@ -3286,6 +3286,40 @@ namespace MMR.Randomizer
                     ResourceUtils.ApplyHack(Resources.mods.tatl_remains_hint);
                 }
 
+                var oathItem = _randomized.ItemList[Item.SongOath];
+                if (oathItem.IsRandomized)
+                {
+                    newMessages.Add(new MessageEntryBuilder()
+                        .Id(0x208B)
+                        .Message(it =>
+                        {
+                            it.StartLightBlueText()
+                            .PauseText(10)
+                            .Text("\"");
+                            var oathRegion = oathItem.NewLocation.Value.Region(_randomized.ItemList).Value.Name();
+                            for (var i = 0; i < oathRegion.Length; i++)
+                            {
+                                var c = oathRegion[i];
+                                it.Text(c.ToString());
+                                if (i == oathRegion.Length - 1)
+                                {
+                                    it.Text(".");
+                                }
+                                else if (c != ' ')
+                                {
+                                    it.PauseText(20);
+                                }
+                            }
+                            it.Text("\"").NewLine()
+                            .Text(" ").NewLine()
+                            .PauseText(10)
+                            .Text("That's what they're saying.")
+                            .EndFinalTextBox();
+                        })
+                        .Build()
+                    );
+                }
+
                 // TODO
 
                 /*

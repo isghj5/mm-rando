@@ -87,7 +87,8 @@ typedef struct {
     u32 multiBank           : 1;
     u32 shortChestOpening   : 1;
     u32 chestGameMinimap    : 2;
-    u32                     : 21;
+    u32 skipGiantsCutscene  : 1;
+    u32                     : 20;
 } MiscSpeedups;
 
 typedef struct {
