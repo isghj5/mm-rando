@@ -66,6 +66,11 @@ namespace MMR.Randomizer.Utils
                     continue;
                 }
 
+                if (ItemUtils.IsHinted(randomizedResult.Settings, item.Item))
+                {
+                    continue;
+                }
+
                 randomizedItems.Add(item);
 
                 if (hintStyle == GossipHintStyle.Competitive)

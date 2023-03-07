@@ -85,6 +85,24 @@ namespace MMR.Randomizer.Utils
             return false;
         }
 
+        public static bool IsHinted(GameplaySettings settings, Item item)
+        {
+            //if (settings.NPCTextHints)
+            {
+                if (BossRemains().Contains(item))
+                {
+                    return true;
+                }
+
+                if (item == Item.CollectibleStrayFairyClockTown)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
         public static bool IsStartingLocation(Item location)
         {
             return location == Item.MaskDeku || location == Item.SongHealing
