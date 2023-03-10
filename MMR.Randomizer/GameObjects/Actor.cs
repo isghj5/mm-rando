@@ -3109,12 +3109,15 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(415)]
         [ObjectListIndex(0x1AB)]
-        [CheckRestricted(Scene.CuriosityShop, variant:0x1, Item.MaskKeaton, Item.TradeItemMamaLetter,
+        [CheckRestricted(Scene.CuriosityShop, variant:0x1,
+            Item.MaskKeaton, Item.TradeItemMamaLetter,
             Item.MaskAllNight,
             Item.MundaneItemCuriosityShopBlueRupee, Item.MundaneItemCuriosityShopGoldRupee, Item.MundaneItemCuriosityShopPurpleRupee, Item.MundaneItemCuriosityShopRedRupee)]
         // zero is selling in the shop, 1 is giving behind the place
-        [GroundVariants(0x1)] // wedding and standing around indoors
+        //[GroundVariants(0x1)] // wedding and standing around indoors
+        [GroundVariants(0x0)] // inside of shop
         //[OnlyOneActorPerRoom]
+        [VariantsWithRoomMax(max:0, variant:1)] // wedding version is the same as day 3, gives too many checks
         [UnkillableAllVariants]
         CuriosityShopMan = 0x1C4, // En_Fsn
 
@@ -3123,7 +3126,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1AC)]
         // this is not enough because he is boat master
         [CheckRestricted(Item.HeartPiecePictobox, Item.MundaneItemPictographContestBlueRupee, Item.MundaneItemPictographContestRedRupee)]
-        [GroundVariants(0)] // he has LEGS
+        [GroundVariants(0)] // he has LEGS :O
         //[VariantsWithRoomMax(0, 0)]
         [EnemizerScenesExcluded(Scene.TouristCenter)]
         [UnkillableAllVariants]
