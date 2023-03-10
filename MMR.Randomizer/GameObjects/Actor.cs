@@ -3822,7 +3822,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(503)]
         [ObjectListIndex(0xA7)]
-        [CheckRestricted(Scene.TerminaField, variant:0x40FF, Item.MaskCircusLeader)]
+        [CheckRestricted(Scene.TerminaField, variant:0x40FF, Item.MaskRomani)]
         [GroundVariants(0, // standing around day 1 is type 0
             0x40FF, // wedding
             0x00FF)] // bottom 0xFF is unknown, not used in code?
