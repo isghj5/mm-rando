@@ -3331,7 +3331,45 @@ namespace MMR.Randomizer
                 }
 
                 var oathItem = _randomized.ItemList[Item.SongOath];
-                if (oathItem.IsRandomized)
+                if (!_randomized.Settings.AddSongs)
+                {
+                    switch (oathItem.NewLocation.Value)
+                    {
+                        case Item.SongTime:
+                            break;
+                        case Item.SongHealing:
+                            oathItem = null;
+                            break;
+                        case Item.SongEpona:
+                            oathItem = _randomized.ItemList[Item.ItemPowderKeg];
+                            break;
+                        case Item.SongSoaring:
+                            oathItem = _randomized.ItemList[Item.MaskDeku];
+                            break;
+                        case Item.SongStorms:
+                            oathItem = _randomized.ItemList[Item.MaskCaptainHat];
+                            break;
+                        case Item.SongSonata:
+                            oathItem = _randomized.ItemList[Item.MaskDeku];
+                            break;
+                        case Item.SongLullaby:
+                            oathItem = _randomized.ItemList[Item.MaskGoron];
+                            break;
+                        case Item.SongLullabyIntro:
+                            oathItem = _randomized.ItemList[Item.MaskGoron];
+                            break;
+                        case Item.SongNewWaveBossaNova:
+                            oathItem = _randomized.ItemList[Item.MaskZora];
+                            break;
+                        case Item.SongElegy:
+                            oathItem = _randomized.ItemList[Item.UpgradeMirrorShield];
+                            break;
+                        case Item.SongOath:
+                            oathItem = null;
+                            break;
+                    }
+                }
+                if (oathItem != null && oathItem.IsRandomized)
                 {
                     newMessages.Add(new MessageEntryBuilder()
                         .Id(0x208B)
