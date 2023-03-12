@@ -4043,8 +4043,6 @@ namespace MMR.Randomizer.LogicMigrator
                 "NotebookMeetBombersInNCT",
                 "NotebookMeetBombersInECT",
                 "NotebookMeetAnjuInInn",
-                "NotebookMeetAnjuInECT",
-                "NotebookMeetAnjuInSCT",
                 "NotebookMeetAnjuInLaundryPool",
                 "NotebookMeetAnjuInRanch",
                 "NotebookMeetKafeiInLaundryPool",

@@ -10012,7 +10012,7 @@ namespace MMR.Randomizer.GameObjects
         NotebookMeetBombers,
 
 
-        [ItemName("Notebook: Anju"), LocationName("Notebook: Meeting Anju"), MultiLocation(NotebookMeetAnjuInInn, NotebookMeetAnjuInECT, NotebookMeetAnjuInSCT, NotebookMeetAnjuInLaundryPool, NotebookMeetAnjuInRanch)]
+        [ItemName("Notebook: Anju"), LocationName("Notebook: Meeting Anju"), MultiLocation(NotebookMeetAnjuInInn, NotebookMeetAnjuInLaundryPool, NotebookMeetAnjuInRanch)]
         [GossipLocationHint("a lady in town"), GossipItemHint("a diary entry")]
         [ShopText("The Bombers' Notebook entry for meeting Anju.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
@@ -10560,12 +10560,6 @@ namespace MMR.Randomizer.GameObjects
 
         [MainLocation(NotebookMeetAnju), Region(Region.StockPotInn)]
         NotebookMeetAnjuInInn,
-
-        [MainLocation(NotebookMeetAnju), Region(Region.EastClockTown)]
-        NotebookMeetAnjuInECT,
-
-        [MainLocation(NotebookMeetAnju), Region(Region.SouthClockTown)]
-        NotebookMeetAnjuInSCT,
 
         [MainLocation(NotebookMeetAnju), Region(Region.LaundryPool)]
         NotebookMeetAnjuInLaundryPool,

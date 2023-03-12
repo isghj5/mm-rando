@@ -54391,12 +54391,6 @@
           "NotebookMeetAnjuInInn"
         ],
         [
-          "NotebookMeetAnjuInECT"
-        ],
-        [
-          "NotebookMeetAnjuInSCT"
-        ],
-        [
           "NotebookMeetAnjuInLaundryPool"
         ],
         [
@@ -55735,28 +55729,6 @@
       "ConditionalItems": [],
       "TimeNeeded": "None",
       "TimeAvailable": "Day1, Night1, Day2, Night2, Day3",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "NotebookMeetAnjuInECT",
-      "RequiredItems": [
-        "ItemNotebook"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "Day2",
-      "TimeSetup": "None",
-      "IsTrick": false
-    },
-    {
-      "Id": "NotebookMeetAnjuInSCT",
-      "RequiredItems": [
-        "ItemNotebook"
-      ],
-      "ConditionalItems": [],
-      "TimeNeeded": "None",
-      "TimeAvailable": "Day2",
       "TimeSetup": "None",
       "IsTrick": false
     },
