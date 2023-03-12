@@ -2842,6 +2842,7 @@ namespace MMR.Randomizer.GameObjects
         [GossipLocationHint("a lost creature"), GossipItemHint("a lost fairy")]
         [ShopText("Return it to the Fairy Fountain in North Clock Town.")]
         [ChestType(ChestTypeAttribute.ChestType.SmallGold)]
+        [HackContent(nameof(Resources.mods.fix_town_fairy_text))]
         [GetItemIndex(0x3B), ItemPool(ItemCategory.StrayFairies, LocationCategory.Freestanding, ClassicCategory.StrayFairies)]
         //[GetItemIndex(0x1A1)] // used as a flag to track if the actual fairy has been collected.
         CollectibleStrayFairyClockTown,
