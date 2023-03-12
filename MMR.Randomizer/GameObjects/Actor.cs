@@ -4519,7 +4519,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x26A)] // double object actor
         // uhhh code has no params, where did FE01 come from?
         [GroundVariants(0x0)]
-        //[VariantsWithRoomMax(max:0, variant:0x0)] // temp disable as double object actors are borken
+        [VariantsWithRoomMax(max:3, variant:0x0)] // temp disable as double object actors are borken
         [UnkillableAllVariants]
         [EnemizerScenesExcluded(Scene.TerminaField)]
         // This is the seth you see in the telescope on grottos, same animation as cured skultula man in kak

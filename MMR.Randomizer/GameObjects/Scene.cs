@@ -66,7 +66,8 @@ namespace MMR.Randomizer.GameObjects
             Actor.Bo, Actor.Nejiron, Actor.RedBubble, Actor.Leever, Actor.Wolfos, Actor.Beamos)] // beamos is just because bomb locking this check early is prime seed killer
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
             Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, Actor.WarpDoor,
-            Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.ClocktowerGearsAndOrgan /*, Actor.PatrollingPirate */ )]
+            Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.IceBlock,
+            Actor.ClocktowerGearsAndOrgan /*, Actor.PatrollingPirate */ )]
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.BioDekuBaba,
             Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)] // they can extend so far they can block the door leading out
         Grottos = 0x0A,
@@ -185,6 +186,8 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1256)]
         [SceneInternalId(0x22)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.Carpenter, // can cover a switch, don't allow problem actors
+            Actor.UnusedStoneTowerPlatform, Actor.UnusedStoneTowerStoneElevator)]
         MilkRoad = 0x1F,
 
         [FileID(1258)]
