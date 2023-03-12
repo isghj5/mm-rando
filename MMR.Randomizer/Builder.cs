@@ -2955,12 +2955,30 @@ namespace MMR.Randomizer
                 var clockTownFairyItem = _randomized.ItemList[Item.CollectibleStrayFairyClockTown];
                 if (clockTownFairyItem.NewLocation != Item.CollectibleStrayFairyClockTown)
                 {
-                    var region = clockTownFairyItem.NewLocation.Value.Region(_randomized.ItemList);
-                    var regionPreposition = region?.Preposition();
-                    var regionName = regionPreposition == null ? null : region?.Name();
-                    if (!string.IsNullOrWhiteSpace(regionPreposition))
+                    var newLocation = clockTownFairyItem.NewLocation.Value;
+                    string regionName;
+                    string regionPreposition;
+                    RegionArea? regionArea;
+                    Item[] multiRegionLocations;
+                    if ((regionArea = newLocation.GetAttribute<RegionAreaAttribute>()?.RegionArea).HasValue)
                     {
-                        regionPreposition += " ";
+                        regionName = regionArea.Value.Name();
+                        regionPreposition = regionArea.Value.Preposition();
+                    }
+                    else
+                    {
+                        if ((multiRegionLocations = newLocation.GetAttribute<MultiLocationAttribute>()?.Locations) != null)
+                        {
+                            newLocation = multiRegionLocations[0];
+                        }
+
+                        var region = newLocation.Region(_randomized.ItemList);
+                        regionPreposition = region?.Preposition();
+                        regionName = regionPreposition == null ? null : region?.Name();
+                        if (!string.IsNullOrWhiteSpace(regionPreposition))
+                        {
+                            regionPreposition += " ";
+                        }
                     }
 
                     newMessages.Add(new MessageEntryBuilder()
@@ -3004,9 +3022,35 @@ namespace MMR.Randomizer
                     );
                 }
 
-                var strayFairyRegionLocations = ItemUtils.DungeonStrayFairies().GroupBy(fairy => fairy.Region(_randomized.ItemList).Value)
-                    .ToDictionary(g => g.Key, g => g.Select(fairy => _randomized.ItemList[fairy].NewLocation.Value).GroupBy(location => location.Region(_randomized.ItemList))
-                        .Select(g2 => new KeyValuePair<Region?, Item[]>(g2.Key, g2.ToArray()))
+                var strayFairyRegionLocations = ItemUtils.DungeonStrayFairies()
+                    .GroupBy(fairy => fairy.Region(_randomized.ItemList).Value)
+                    .ToDictionary(g => g.Key, g =>
+                        g.SelectMany(fairy =>
+                        {
+                            var location = _randomized.ItemList[fairy].NewLocation.Value;
+                            var locations = location.GetAttribute<MultiLocationAttribute>()?.Locations;
+                            if (locations != null)
+                            {
+                                return locations.Select(loc => new
+                                {
+                                    Location = location,
+                                    Region = loc.Region(_randomized.ItemList).Value,
+                                });
+                            }
+                            else
+                            {
+                                return new []
+                                {
+                                    new
+                                    {
+                                        Location = location,
+                                        Region = location.Region(_randomized.ItemList).Value
+                                    }
+                                };
+                            }
+                        })
+                        .GroupBy(x => x.Region)
+                        .ToDictionary(g2 => g2.Key, g2 => g2.Select(x => x.Location).ToArray())
                     );
 
                 newMessages.Add(new MessageEntryBuilder()
