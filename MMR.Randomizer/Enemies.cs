@@ -397,11 +397,6 @@ namespace MMR.Randomizer
             SplitOceanSpiderhouseSpiderObject();
             FixDekuPalaceReceptionGuards();
 
-            // to avoid randomizing medigoron's object
-            var goronVillageWinter = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.GoronVillage);
-            goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.GoGoron.ObjectIndex(); // square signpost
-
-
             Shinanigans();
         }
 
@@ -409,6 +404,12 @@ namespace MMR.Randomizer
         {
             // changes after randomization, actors objects already written
             // not currently needed, turns out all the old content here could be moved
+
+            // to avoid randomizing medigoron's object
+            //var goronVillageWinter = RomData.SceneList.Find(scene => scene.SceneEnum == GameObjects.Scene.GoronVillage);
+            //goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.GoGoron.ObjectIndex(); // square signpost
+            //goronVillageWinter.Maps[0].Objects[7] = GameObjects.Actor.GoGoron.ObjectIndex(); // square signpost
+
 
         }
 
