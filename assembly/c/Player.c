@@ -20,6 +20,7 @@ void Player_BeforeUpdate(ActorPlayer* player, GlobalContext* ctxt) {
     ArrowCycle_Handle(player, ctxt);
     ArrowMagic_Handle(player, ctxt);
     DekuHop_Handle(player, ctxt);
+    Player_PreventDangerousStates(player);
 }
 
 bool Player_CanReceiveItem(GlobalContext* ctxt) {
@@ -225,4 +226,17 @@ void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 ac
     // Displaced code:
     player->unk148 = item;
     player->stateFlags.state3 |= PLAYER_STATE3_PULL_ITEM;
+}
+
+void Player_PreventDangerousStates(ActorPlayer* player) {
+    if (!MISC_CONFIG.flags.saferGlitches) {
+        return;
+    }
+
+    if (player->stateFlags.state1 & PLAYER_STATE1_TIME_STOP_3) {
+        if ((player->stateFlags.state1 & PLAYER_STATE1_AIR)
+            || (player->stateFlags.state3 & PLAYER_STATE3_JUMP_ATTACK)) {
+            player->stateFlags.state1 &= ~PLAYER_STATE1_TIME_STOP_3;
+        }
+    }
 }
