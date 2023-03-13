@@ -170,7 +170,8 @@ void Player_StartTransformation(GlobalContext* ctxt, ActorPlayer* this, s8 actio
     if (!MISC_CONFIG.flags.instantTransform
         || actionParam < PLAYER_IA_MASK_FIERCE_DEITY
         || actionParam > PLAYER_IA_MASK_DEKU
-        || (this->stateFlags.state2 & PLAYER_STATE2_DIVING)) {
+        || (this->stateFlags.state2 & PLAYER_STATE2_DIVING)
+        || (this->currentBoots == 4 && this->prevBoots == 5)) {
         // Displaced code:
         this->heldItemActionParam = actionParam;
         this->unkAA5 = 5; // PLAYER_UNKAA5_5
@@ -224,7 +225,7 @@ void Player_UseHeldItem(GlobalContext* ctxt, ActorPlayer* player, u8 item, u8 ac
     }
 
     // Displaced code:
-    player->unk148 = item;
+    player->heldItemId = item;
     player->stateFlags.state3 |= PLAYER_STATE3_PULL_ITEM;
 }
 

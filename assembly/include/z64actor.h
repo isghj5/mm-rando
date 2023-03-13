@@ -295,13 +295,18 @@ typedef struct {
     /* 0x00 */ u32 maskDListEntry[24];
 } PlayerMaskDList; // size = 0x60
 
-typedef struct {
+typedef void (*PlayerActionFunc)(struct ActorPlayer* this, struct GlobalContext* ctxt);
+
+#define PLAYER_LIMB_BUF_SIZE 159 // TODO (ALIGN16(sizeof(PlayerAnimationFrame)) + 0xF)
+
+typedef struct ActorPlayer {
     /* 0x000 */ Actor base;
-    /* 0x144 */ u8 pad144[0x2];
+    /* 0x144 */ s8 currentShield;
+    /* 0x145 */ s8 currentBoots;
     /* 0x146 */ u8 itemButton;
     /* 0x147 */ s8 itemActionParam;
-    /* 0x148 */ u8 unk148;
-    /* 0x149 */ u8 unk149;
+    /* 0x148 */ u8 heldItemId; // ItemId enum
+    /* 0x149 */ s8 prevBoots;
     /* 0x14A */ s8 heldItemActionParam; // Which item Link currently has out?
     /* 0x14B */ u8 form;
     /* 0x14C */ UNK_TYPE1 pad14C[0x5];
@@ -331,7 +336,15 @@ typedef struct {
     /* 0x3CE */ s8 unk3CE;
     /* 0x3CF */ UNK_TYPE1 pad3CF[0x361];
     /* 0x730 */ Actor* target;
-    /* 0x734 */ UNK_TYPE1 pad734[0x334];
+    /* 0x734 */ char unk_734[4];
+    /* 0x738 */ s32 unk_738;
+    /* 0x73C */ s32 meleeWeaponEffectIndex[3];
+    /* 0x748 */ PlayerActionFunc actionFunc;
+    /* 0x74C */ u8 jointTableBuffer[PLAYER_LIMB_BUF_SIZE];
+    /* 0x7EB */ u8 morphTableBuffer[PLAYER_LIMB_BUF_SIZE];
+    /* 0x88A */ u8 blendTableBuffer[PLAYER_LIMB_BUF_SIZE];
+    /* 0x929 */ u8 unk_929[PLAYER_LIMB_BUF_SIZE];
+    /* 0x9C8 */ u8 unk_9C8[PLAYER_LIMB_BUF_SIZE];
     /* 0xA68 */ f32 *tableA68; // Transformation-dependant f32 array, [11] used for distance to begin swimming.
     /* 0xA6C */ PlayerStateFlags stateFlags;
     /* 0xA78 */ UNK_TYPE1 padA78[0x8];

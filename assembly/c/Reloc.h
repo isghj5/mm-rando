@@ -20,6 +20,8 @@
 #define z2_PerformEnterWaterEffects Reloc_ResolvePlayerActorFunc(z2_PerformEnterWaterEffects)
 #define z2_PlayerHandleBuoyancy     Reloc_ResolvePlayerActorFunc(z2_PlayerHandleBuoyancy)
 #define z2_UseItem                  Reloc_ResolvePlayerActorFunc(z2_UseItem)
+// might need to use this for Player_StartTransformation when checking boots:
+#define z2_Player_func_80849FE0     Reloc_ResolvePlayerActorFunc(z2_Player_func_80849FE0)
 
 // Relocatable PlayerActor data
 #define z2_D_80862B4C               Reloc_ResolvePlayerActorData(z2_D_80862B4C, s32)

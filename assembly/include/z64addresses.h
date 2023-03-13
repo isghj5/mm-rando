@@ -261,6 +261,7 @@ extern void z2_MessageClose(GlobalContext* ctxt);
 #define z2_PerformEnterWaterEffects_VRAM 0x8083B8D0
 #define z2_PlayerHandleBuoyancy_VRAM     0x808475B4
 #define z2_UseItem_VRAM                  0x80831990
+#define z2_Player_func_80849FE0_VRAM     0x80849FE0
 
 // Relocatable Data (player_actor).
 #define z2_D_80862B4C_VRAM               0x80862B4C
@@ -277,5 +278,6 @@ typedef void (*z2_LinkInvincibility_Func)(ActorPlayer* player, u8 frames);
 typedef void (*z2_PerformEnterWaterEffects_Func)(GlobalContext* ctxt, ActorPlayer* player);
 typedef void (*z2_PlayerHandleBuoyancy_Func)(ActorPlayer* player);
 typedef void (*z2_UseItem_Func)(GlobalContext* ctxt, ActorPlayer* player, u8 item);
+typedef void (*z2_Player_func_80849FE0_Func)(ActorPlayer* player, GlobalContext* ctxt);
 
 #endif
