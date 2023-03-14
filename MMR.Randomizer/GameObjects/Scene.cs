@@ -63,7 +63,10 @@ namespace MMR.Randomizer.GameObjects
         [SceneInternalId(0x07)]
         [ClearEnemyPuzzleRooms(7, 13)] // 7:dodongo, 13:peahat
         [EnemizerSceneEnemyReplacementBlock(Actor.Peahat, // hidden or very weak enemies suck here, but they are very common in this slot
-            Actor.Bo, Actor.Nejiron, Actor.RedBubble, Actor.Leever, Actor.Wolfos, Actor.Beamos)] // beamos is just because bomb locking this check early is prime seed killer
+            Actor.Beamos, // beamos is just because bomb locking this check early is prime seed killer
+            Actor.Bo, Actor.Leever, // annoying boring enemies, need to spawn like 10
+            //Actor.Nejiron, Actor.RedBubble, 
+            Actor.IceBlock)] // blocking actors
         [EnemizerSceneEnemyReplacementBlock(Actor.DekuBabaWithered, // grottos are common, this can get silly
             Actor.Peahat, Actor.Beamos, Actor.LikeLike, Actor.Freezard, Actor.WarpDoor,
             Actor.Bumper, Actor.UnusedStoneTowerStoneElevator, Actor.UnusedStoneTowerPlatform, Actor.IceBlock,
