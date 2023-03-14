@@ -469,7 +469,8 @@ namespace MMR.Randomizer.GameObjects
 
         Empty37 = 0x37,
 
-        [ActorizerEnabled]
+        // Boss blue warp
+        //[ActorizerEnabled] // kinda boring, needs to be modified to it can appear after you clear the room and take you places that are interesting
         [ObjectListIndex(0x3E)]
         [FileID(78)]
         // params: type is 0xFF, address offset for type 0 is 0xFF00
