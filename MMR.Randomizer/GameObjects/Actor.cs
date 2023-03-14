@@ -3200,16 +3200,17 @@ namespace MMR.Randomizer.GameObjects
         [GroundVariants(0x1)]
         Mir_Ray2 = 0x1D0, // Mir_Ray2
 
+        // TODO lookup parametsr
         [EnemizerEnabled]
         [ActorInitVarOffset(0x1FD0)]
         [FileID(426)]
         [ObjectListIndex(0x1B5)]
         // dont know what the differences are
         [WallVariants(0x1932, 0x3FFF)] // dont know what the differences are
-        [GroundVariants(0x1932, 0x3FFF)]
+        [GroundVariants(0x1932, 0x3FFF, 0x191E)]
         [VariantsWithRoomMax(max: 8, variant: 0x1932, 0x3FFF)]
-        [EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
-        //[EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GoronRacetrack)]
+        //[EnemizerScenesExcluded(Scene.StoneTowerTemple, Scene.InvertedStoneTowerTemple, Scene.GreatBayTemple, Scene.InvertedStoneTowerTemple)]
+        [EnemizerScenesPlacementBlock(Scene.DekuShrine, Scene.GoronRacetrack)]
         Dexihand = 0x1D1, // ???'s water logged brother
 
         [FileID(427)]
@@ -3539,14 +3540,18 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x1)] // multiple object
         AllAlienEventActors = 0x200, // En_Invadepoh
 
-        //[ActorizerEnabled] // softlock if you enter the song teach cutscene, which in rando is proximity
+        [ActorizerEnabled]
         [FileID(473)]
         [ObjectListIndex(0x1DF)]
+        [CheckRestricted(Scene.GoronShrine, variant: 0x3FF1, Item.SongLullaby)]
+        [CheckRestricted(Scene.GoronRacetrack, variant: 0x3FF1, Item.ItemBottleGoronRace)]
+        //[CheckRestricted(Scene.TwinIslandsSpring, variant: 0x3FF1, Item.ItemBottleGoronRace)] // not sure this is required
         //[GroundVariants(0x1400)] // all other versions are 0x13** or 0x1402
         // 0x3FF1 does not spawn in winter, even in other scenes
         [GroundVariants(0x3FF1)]
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
+        [VariantsWithRoomMax(max:0, variant: 0x3FF1)] // softlock if you enter the song teach cutscene, which in rando is proximity
         [EnemizerScenesExcluded(Scene.GoronShrine, Scene.GoronRacetrack, Scene.TwinIslandsSpring)]
         [SwitchFlagsPlacement(mask: 0x3F, shift: 8)]
         GoronKid = 0x201, // En_Gk
@@ -4011,21 +4016,28 @@ namespace MMR.Randomizer.GameObjects
         [EnemizerScenesPlacementBlock(Scene.DekuShrine)] // might block everything
         GibdoIkana = 0x235, // En_Railgibud
 
+        [EnemizerEnabled] // does not spawn outside of ikana
         [FileID(525)]
+        [CheckRestricted(Item.MaskBlast)]
         [ObjectListIndex(0xDF)]
+        [PathingVariants(0x2FF)]
+        [VariantsWithRoomMax(max:0, variant: 0x2FF)] // probably time gated to hell
+        [UnkillableAllVariants]
         BombShopLady = 0x236, // En_Baba
 
-        //[ActorizerEnabled] // does not spawn, even the daytime frollicing one
+        [ActorizerEnabled] // does not spawn, even the daytime frollicing one
         // both of his vars are paths, sooo I'm guessing his behavior is hard coded
         [ObjectListIndex(0xE3)]
         [FileID(526)]
+        [CheckRestricted(Item.MaskBlast)]
         // dont replace any: for one, this object is used by multiple actors
         // can't replace the one in west clocktown without killing bank
         // can't replace the one in ikana without killing the kafei quest (even if they are different rooms)
         [PathingVariants(0x85FF)]
         [PathingTypeVarsPlacement(mask:0x7E00, shift:9)]
+        [VariantsWithRoomMax(max:0, variant: 0x85FF)]
         [UnkillableAllVariants]
-        [EnemizerScenesExcluded(Scene.NorthClockTown, Scene.WestClockTown, Scene.IkanaCanyon)]
+        [EnemizerScenesExcluded(/* Scene.NorthClockTown, */ Scene.WestClockTown, Scene.IkanaCanyon)]
         Sakon = 0x237, // En_Suttari
 
         [ActorizerEnabled]
