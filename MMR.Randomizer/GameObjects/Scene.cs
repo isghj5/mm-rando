@@ -196,8 +196,8 @@ namespace MMR.Randomizer.GameObjects
         [FileID(1258)]
         [SceneInternalId(0x23)]
         [ClearEnemyPuzzleRooms(0, 1, 2)] // three pirate minibosses
-        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SpikedMine, // spawns in hot lava, keep wood enemies out
-            Actor.LabFish)]
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SpikedMine,
+            Actor.LabFish)] // crash unknown reason, float math error
         PiratesFortressRooms = 0x20, // tag: Sewer
 
         [FileID(1276)]

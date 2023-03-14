@@ -3193,8 +3193,8 @@ namespace MMR.Randomizer
                 DateTime enemizerStartTime = DateTime.Now;
 
                 // for dingus that want moonwarp, re-enable dekupalace
-                var SceneSkip = new GameObjects.Scene[] {
-                    GameObjects.Scene.GiantsChamber,
+                var SceneSkip = new GameObjects.Scene[] { //};
+                    //GameObjects.Scene.GiantsChamber,
                     GameObjects.Scene.SakonsHideout };// , GameObjects.Scene.DekuPalace };
 
                 PrepareEnemyLists();
@@ -3233,7 +3233,6 @@ namespace MMR.Randomizer
 
                 Thread.CurrentThread.Priority = previousThreadPriority;
 
-
                 EnemizerLateFixes();
                 //LowerEnemiesResourceLoad();
                 if (ACTORSENABLED)
@@ -3246,7 +3245,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 45.5\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 45.6\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }
