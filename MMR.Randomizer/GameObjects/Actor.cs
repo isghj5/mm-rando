@@ -4022,6 +4022,7 @@ namespace MMR.Randomizer.GameObjects
         [CheckRestricted(Item.MaskBlast)]
         [ObjectListIndex(0xDF)]
         [PathingVariants(0x2FF)]
+        [PathingTypeVarsPlacement(mask: 0x3F00, shift: 8)]
         [VariantsWithRoomMax(max:0, variant: 0x2FF)] // probably time gated to hell
         [UnkillableAllVariants]
         BombShopLady = 0x236, // En_Baba
@@ -4030,7 +4031,7 @@ namespace MMR.Randomizer.GameObjects
         // both of his vars are paths, sooo I'm guessing his behavior is hard coded
         [ObjectListIndex(0xE3)]
         [FileID(526)]
-        [CheckRestricted(Item.MaskBlast)]
+        [CheckRestricted(Item.MaskBlast, Item.MaskAllNight)]
         // dont replace any: for one, this object is used by multiple actors
         // can't replace the one in west clocktown without killing bank
         // can't replace the one in ikana without killing the kafei quest (even if they are different rooms)

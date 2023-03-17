@@ -407,7 +407,7 @@ namespace MMR.Randomizer.GameObjects
 
         [FileID(1414)]
         [SceneInternalId(0x4F)]
-        //[ClearEnemyPuzzleRooms( unk )] // ignored by enemizer right now anyway
+        [ClearEnemyPuzzleRooms( 0x1 )] // the guantlet is only one big room
         SakonsHideout = 0x4C,
 
         [FileID(1417)]
