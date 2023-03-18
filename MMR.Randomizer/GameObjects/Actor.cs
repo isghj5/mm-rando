@@ -2178,11 +2178,12 @@ namespace MMR.Randomizer.GameObjects
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
             0x7FA1, 0x7FC1, 0x7F81, 0x7FF2, // racetrack
             0x7F82, 0x7F92, // praising darmani in cutscene
-            0x7F84, 0x7F94)] // outside of darmani's grave
+            0x7F84, 0x7F94 )] // outside of darmani's grave
         [VariantsWithRoomMax(max: 1,
             0x7FE2, 0x7F85, 0x7F86, 0x7F87,
             0x7F82, 0x7F92)]
         [VariantsWithRoomMax(max: 0, variant: 0x8, // too big
+            0x7F84, 0x7F94, // the two outside of darmani race need to be on the same thing
             0x7F82, 0x7F92)] // crash? reason unknown
         [UnkillableAllVariants]
         //[EnemizerScenesExcluded(Scene.GoronVillage, Scene.GoronVillageSpring)] // dont randomize smithy
