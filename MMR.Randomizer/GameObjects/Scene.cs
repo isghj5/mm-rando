@@ -198,6 +198,8 @@ namespace MMR.Randomizer.GameObjects
         [ClearEnemyPuzzleRooms(0, 1, 2)] // three pirate minibosses
         [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.SpikedMine,
             Actor.LabFish)] // crash unknown reason, float math error
+        [EnemizerSceneEnemyReplacementBlock(originalEnemy: Actor.ZoraEgg,
+            Actor.Tijo, Actor.Bombiwa, Actor.Bumper)] // blocking a chest
         PiratesFortressRooms = 0x20, // tag: Sewer
 
         [FileID(1276)]

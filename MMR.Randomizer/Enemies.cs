@@ -2220,7 +2220,6 @@ namespace MMR.Randomizer
         public static void AddCompanionsToCandidates(SceneEnemizerData thisSceneData, int objectIndex, List<Actor> candidates)
         {
             // for actors that have companions, add them now
-            // todo change this into a function
             foreach (var actor in candidates.ToList())
             {
                 var companionAttrs = actor.ActorEnum.GetAttributes<CompanionActorAttribute>();
@@ -2233,13 +2232,20 @@ namespace MMR.Randomizer
                     foreach (var companion in companionAttrs)
                     {
                         var cObj = companion.Companion.ObjectIndex();
-                        if (cObj == 1 || cObj == actor.ObjectID)    // todo: add object search across other actors chosen
+                        if (cObj != 1 && cObj != actor.ObjectID && !thisSceneData.Objects.Contains(cObj))
+                            continue;
+
+                        // if its banned on this actor slot, also avoid
+                        var blockedReplacementActors = thisSceneData.Scene.SceneEnum.GetBlockedReplacementActors(actor.OldActorEnum);
+                        if (blockedReplacementActors.Contains(companion.Companion))
                         {
-                            var newCompanion = new Actor(companion.Companion);
-                            newCompanion.Variants = companion.Variants;
-                            newCompanion.IsCompanion = true;
-                            candidates.Add(newCompanion);
+                            continue; // blocked
                         }
+
+                        var newCompanion = new Actor(companion.Companion);
+                        newCompanion.Variants = companion.Variants;
+                        newCompanion.IsCompanion = true;
+                        candidates.Add(newCompanion);
                     }
                 }
 
@@ -3195,7 +3201,8 @@ namespace MMR.Randomizer
                 // for dingus that want moonwarp, re-enable dekupalace
                 var SceneSkip = new GameObjects.Scene[] { //};
                     //GameObjects.Scene.GiantsChamber,
-                    GameObjects.Scene.SakonsHideout };// , GameObjects.Scene.DekuPalace };
+                    GameObjects.Scene.SakonsHideout // issue: the whole gaunlet is one long room, with two clear enemy room puzles
+                    };// , GameObjects.Scene.DekuPalace };
 
                 PrepareEnemyLists();
                 SceneUtils.ReadSceneTable();
@@ -3245,7 +3252,7 @@ namespace MMR.Randomizer
                 {
                     sw.WriteLine(""); // spacer from last flush
                     sw.WriteLine("Enemizer final completion time: " + ((DateTime.Now).Subtract(enemizerStartTime).TotalMilliseconds).ToString() + "ms ");
-                    sw.Write("Enemizer version: Isghj's Enemizer Test 45.6\n");
+                    sw.Write("Enemizer version: Isghj's Enemizer Test 45.7\n");
                     sw.Write("seed: [ " + seed + " ]");
                 }
             }

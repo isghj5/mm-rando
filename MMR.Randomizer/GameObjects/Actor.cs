@@ -2443,7 +2443,7 @@ namespace MMR.Randomizer.GameObjects
         [ObjectListIndex(0x26C)]
         GiantsChamberColumn = 0x161, // Dm_Statue
 
-        //[ActorizerEnabled] // temp disabled fighting collider issues
+        //[ActorizerEnabled] // this actor was turned into a companion instead, would show up too often because its gameplaykeep
         [FileID(320)]
         [ActorInstanceSize(0x2AC)] // 1AC, raised to reduce chance of getting
         [ObjectListIndex(0x1)]
