@@ -2650,7 +2650,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(343)]
         [ObjectListIndex(0x107)]
-        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma)]
+        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat)]
         [GroundVariants(0)] // no params
         [OnlyOneActorPerRoom]
         [UnkillableAllVariants]
@@ -3234,7 +3234,7 @@ namespace MMR.Randomizer.GameObjects
         [ActorizerEnabled]
         [FileID(430)]
         [ObjectListIndex(0x107)]
-        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma)]
+        [CheckRestricted(Item.HeartPieceNotebookPostman, Item.ItemBottleMadameAroma, Item.MaskPostmanHat)]
         [GroundVariants(0x0)] // 0: sitting in his room?
         //[VariantsWithRoomMax()]
         [UnkillableAllVariants]
